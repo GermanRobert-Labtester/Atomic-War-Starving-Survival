@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pickling_spoil_kahm_yeast_surface_pellicle",
+    "barrel_batch_code": "SAUERKRAUT_BARREL_OAK_104",
+    "food_substrate_type": "SHREDDED_WINTER_CABBAGE",
+    "salinity_percentage": 2.5,
+    "spoilage_organism": "PICHIA_MEMBRANIFACIENS_KAHM_YEAST",
+    "timestamp_relative": "YEAR_02_FERMENT_LOG_01",
+    "tags": ["fermentation", "pickling", "sauerkraut", "kahm_yeast", "pellicle"],
+    "prose": "An improper water-seal lock permitted air exposure across the surface of the cabbage fermentation vat. Aerobic *Pichia* kahm yeast formed a thick, wrinkled white skin that consumed lactic acid, raising pH and softening the crisp kraut into grey slime."
+  },
+  {
+    "id": "pickling_spoil_halophilic_bacteria_pink_slime",
+    "barrel_batch_code": "SALT_COD_BARREL_PINE_012",
+    "food_substrate_type": "DRIED_SALT_CURED_COD_FILLETS",
+    "salinity_percentage": 18.0,
+    "spoilage_organism": "HALOBACTERIUM_SALINARUM_PINK_SLIME",
+    "timestamp_relative": "YEAR_04_FERMENT_LOG_03",
+    "tags": ["fermentation", "salt_fish", "halophile", "pink_slime", "spoilage"],
+    "prose": "Scavenged solar sea salt containing red halophilic archaea contaminated eight barrels of salted fish. The bacteria flourished in the 18% salt brine, coating the fish in sticky pink mucus that gave off a putrid trimethylamine ammonia stench."
+  },
+  {
+    "id": "pickling_spoil_lactobacillus_ph_stall_butyric",
+    "barrel_batch_code": "FERMENTED_BEET_KVASS_VAT_03",
+    "food_substrate_type": "ROOT_BEET_SUGAR_MACERATE",
+    "salinity_percentage": 1.8,
+    "spoilage_organism": "CLOSTRIDIUM_BUTYRICUM_ANAEROBE",
+    "timestamp_relative": "YEAR_07_FERMENT_LOG_02",
+    "tags": ["fermentation", "kvass", "butyric_acid", "fermentation_stall", "spoilage"],
+    "prose": "Cold ambient bunker temperatures (8°C) stalled the initial *Lactobacillus* acid production curve at pH 4.9. *Clostridium butyricum* spores germinated in the sub-acid wort, converting sugar into nauseating butyric acid that reeked of human vomit."
+  },
+  {
+    "id": "pickling_spoil_oak_stave_tannin_blackening",
+    "barrel_batch_code": "PICKLED_TURNIP_BARREL_08",
+    "food_substrate_type": "PURPLE_TOP_WHITE_GLOBE_TURNIP",
+    "salinity_percentage": 6.0,
+    "spoilage_organism": "FERRIC_TANNATE_CHEMICAL_STAIN",
+    "timestamp_relative": "YEAR_09_FERMENT_LOG_04",
+    "tags": ["fermentation", "pickling", "tannin", "black_brine", "barrel_iron"],
+    "prose": "Iron nails used to repair a loose oak barrel stave reacted with wood gallotannins in the acidic brine. The resulting chemical ink turned the brine pitch-black and stained sixty gallons of pickled turnips an unappetizing slate grey."
+  },
+  {
+    "id": "pickling_spoil_salinometer_salinity_deficit_softening",
+    "barrel_batch_code": "SALT_DILL_CUCUMBER_VAT_15",
+    "food_substrate_type": "BUNKER_GREENHOUSE_CUCUMBER",
+    "salinity_percentage": 3.2,
+    "spoilage_organism": "PECTINOLYTIC_BACILLUS_SOFT_ROT",
+    "timestamp_relative": "YEAR_12_FERMENT_LOG_01",
+    "tags": ["fermentation", "pickling", "salinometer", "pectin_rot", "cucumber"],
+    "prose": "A cracked Baumé hydrometer gave a false high reading, causing cooks to mix a 3.2% salt brine instead of the required 8% cure. Pectinolytic *Bacillus* bacteria digested the cucumber cell walls, turning the vegetables into squishy hollow waterbags."
+  },
+  {
+    "id": "pickling_spoil_vinegar_mother_cellulose_mat_choke",
+    "barrel_batch_code": "CIDER_VINEGAR_CASING_02",
+    "food_substrate_type": "FERMENTED_APPLE_POMACE_MUST",
+    "salinity_percentage": 0.0,
+    "spoilage_organism": "KOMAGATAEIBACTER_XYLINUS_CELLULOSE",
+    "timestamp_relative": "YEAR_15_FERMENT_LOG_03",
+    "tags": ["fermentation", "vinegar", "vinegar_mother", "cellulose", "cider"],
+    "prose": "Wild *Komagataeibacter* bacteria in the vinegar cask synthesized an exceptionally dense, three-inch-thick rubbery pelt of pure microbial cellulose. The 'mother' mat sank and choked the bottom spigot, requiring the cask head to be smashed to retrieve vinegar."
+  },
+  {
+    "id": "pickling_spoil_airlock_water_seal_evaporation_maggots",
+    "barrel_batch_code": "SALT_FERMENT_SOY_MISO_TUB",
+    "food_substrate_type": "HYDROLYZED_SOYBEAN_GRAIN_MASH",
+    "salinity_percentage": 12.5,
+    "spoilage_organism": "PIOPHILA_CASEI_CHEESE_FLY_LARVAE",
+    "timestamp_relative": "YEAR_17_FERMENT_LOG_02",
+    "tags": ["fermentation", "airlock", "fly_maggots", "miso", "sanitation"],
+    "prose": "Evaporation of the glycerin water seal in the airlock allowed *Piophila casei* skipper flies to deposit eggs into the fermenting miso paste. Thousands of leaping maggots colonized the top crust, forcing the destruction of five hundred pounds of protein mash."
+  },
+  {
+    "id": "pickling_spoil_garlic_copper_blue_green_staining",
+    "barrel_batch_code": "HARD_BOILED_PICKLED_EGG_JAR",
+    "food_substrate_type": "POULTRY_FARM_PICKLED_EGGS",
+    "salinity_percentage": 5.0,
+    "spoilage_organism": "PYRROLE_COPPER_PIGMENT_COMPLEX",
+    "timestamp_relative": "YEAR_20_FERMENT_LOG_01",
+    "tags": ["fermentation", "pickling", "pickled_eggs", "garlic", "blue_stain"],
+    "prose": "Allicin in crushed wild garlic reacted with trace copper dissolved from brass ladle rivets in hot vinegar. The chemical reaction turned the egg yolks and garlic cloves an alarming electric neon-blue; while non-toxic, dwellers refused to eat the 'irradiated' eggs."
+  }
+]

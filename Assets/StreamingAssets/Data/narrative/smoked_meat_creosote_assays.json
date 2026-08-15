@@ -1,0 +1,72 @@
+[
+  {
+    "id": "smokehouse_assay_green_pine_tar_creosote_crust",
+    "smokehouse_facility_id": "COMMUNAL_SMOKEHOUSE_KILN_01",
+    "fuel_wood_species": "GREEN_PONDEROSA_PINE_SLASH",
+    "creosote_deposit_mg_kg": 420.0,
+    "curing_temperature_celsius": 78.0,
+    "timestamp_relative": "YEAR_02_SMOKE_LOG_01",
+    "tags": ["smokehouse", "curing", "creosote", "pine_tar", "bitter_flavor"],
+    "prose": "Burning unseasoned green pine branches rich in turpentine resin deposited a heavy black varnish of wood creosote across two hundred sides of pork bacon. The bitter tar imparted a caustic turpentine taste that caused severe stomach cramps when consumed."
+  },
+  {
+    "id": "smokehouse_assay_polycyclic_hydrocarbon_carcinogen",
+    "smokehouse_facility_id": "EXPEDITION_JERKY_SMOKE_TENT",
+    "fuel_wood_species": "ROTTED_BIRCH_PUNKY_DRIFTWOOD",
+    "creosote_deposit_mg_kg": 180.0,
+    "curing_temperature_celsius": 95.0,
+    "timestamp_relative": "YEAR_05_SMOKE_LOG_03",
+    "tags": ["smokehouse", "jerky", "pah", "carcinogen", "high_heat"],
+    "prose": "Excessive firebox draft allowed flame tongues to lick directly into the smoking chamber (95°C). The meat fat dripped into glowing coals, creating thick clouds of polycyclic aromatic hydrocarbons that left jerky strips smelling like asphalt roof shingles."
+  },
+  {
+    "id": "smokehouse_assay_hickory_sawdust_smolder_glow",
+    "smokehouse_facility_id": "BUNKER_SPECIAL_PROVISION_MEATERY",
+    "fuel_wood_species": "SEASONED_SHAGBARK_HICKORY_DUST",
+    "creosote_deposit_mg_kg": 18.0,
+    "curing_temperature_celsius": 28.0,
+    "timestamp_relative": "YEAR_08_SMOKE_LOG_02",
+    "tags": ["smokehouse", "cold_smoke", "hickory", "cured_ham", "preservation"],
+    "prose": "A maze-track smoke generator loaded with dry hickory sawdust maintained a flawless 28°C cold smoke for seventy-two hours. Phenolic vapor fractions penetrated deep into forty cured hams, giving a mahogany gloss and outstanding anti-microbial protection."
+  },
+  {
+    "id": "smokehouse_assay_sodium_nitrite_pink_cure_methemoglobinemia",
+    "smokehouse_facility_id": "SAUSAGE_PROCESSING_WORKSHOP_02",
+    "fuel_wood_species": "APPLEWOOD_CHIP_SMOLDER_TRAY",
+    "creosote_deposit_mg_kg": 25.0,
+    "curing_temperature_celsius": 60.0,
+    "timestamp_relative": "YEAR_11_SMOKE_LOG_04",
+    "tags": ["smokehouse", "sausage", "sodium_nitrite", "pink_salt", "toxicity"],
+    "prose": "A kitchen orderly confused grams and ounces, adding four times the safe dosage of sodium nitrite (Prague Powder #1) to a batch of blood sausages. Three squad members who ate the sausages developed blue lips and dizziness from acute methemoglobinemia."
+  },
+  {
+    "id": "smokehouse_assay_case_hardening_outer_rind_rot",
+    "smokehouse_facility_id": "HANGING_VENT_SMOKE_TOWER_04",
+    "fuel_wood_species": "DRY_RED_OAK_CORDWOOD",
+    "creosote_deposit_mg_kg": 65.0,
+    "curing_temperature_celsius": 85.0,
+    "timestamp_relative": "YEAR_14_SMOKE_LOG_01",
+    "tags": ["smokehouse", "case_hardening", "rind_rot", "bone_sour", "ham"],
+    "prose": "Rapid drying in a drafty, overheated smokehouse baked an impenetrable, leather-hard crust onto the outside of thirty-pound venison hams. Moisture trapped around the femur bone could not escape; anaerobic putrefaction rotted the ham interior into liquefied stench."
+  },
+  {
+    "id": "smokehouse_assay_blowfly_maggot_smokehouse_fly_strike",
+    "smokehouse_facility_id": "SURFACE_HUNT_PROCESSING_SHED",
+    "fuel_wood_species": "ALDER_WOOD_SAWDUST_BED",
+    "creosote_deposit_mg_kg": 30.0,
+    "curing_temperature_celsius": 22.0,
+    "timestamp_relative": "YEAR_17_SMOKE_LOG_03",
+    "tags": ["smokehouse", "blowfly", "fly_strike", "maggots", "mesh_failure"],
+    "prose": "A hole in the cheesecloth intake screen allowed green blowflies (*Lucilia sericata*) into the cold-smoke chamber during a draft lull. Flies struck twelve sides of hanging bacon, depositing thousands of egg clusters in meat crevices before smoke was rekindled."
+  },
+  {
+    "id": "smokehouse_assay_sugar_cured_bacon_caramel_char",
+    "smokehouse_facility_id": "FESTIVAL_RATION_SMOKE_PIT",
+    "fuel_wood_species": "SUGAR_MAPLE_KILN_DRIED_CHIPS",
+    "creosote_deposit_mg_kg": 50.0,
+    "curing_temperature_celsius": 75.0,
+    "timestamp_relative": "YEAR_20_SMOKE_LOG_01",
+    "tags": ["smokehouse", "sugar_cure", "caramelization", "char", "bacon"],
+    "prose": "Bacon bellies soaked in crude sorghum molasses cure were hung too close to the floor heat baffle. Heat caramelized and charred the surface sugars into a blackened, bitter crust that flaked off in frying pans and filled the dining hall with pungent sweet smoke."
+  }
+]

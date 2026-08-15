@@ -1,0 +1,72 @@
+[
+  {
+    "id": "cellar_rot_phytophthora_potato_late_blight",
+    "root_cellar_bay_id": "CELLAR_BAY_POTATO_VAULT_01",
+    "stored_crop_species": "RUSSET_BURBANK_SEED_POTATO",
+    "ambient_humidity_pct": 98.0,
+    "fungal_pathogen_name": "PHYTOPHTHORA_INFESTANS_LATE_BLIGHT",
+    "timestamp_relative": "YEAR_03_CELLAR_LOG_01",
+    "tags": ["root_cellar", "potatoes", "late_blight", "phytophthora", "crop_loss"],
+    "prose": "High relative humidity (98%) and condensation dripping from uninsulated concrete ceilings triggered a devastating late blight outbreak. In forty-eight hours, four tons of seed potatoes liquefied into a foul, rotting brown soup that dripped between slatted floorboards."
+  },
+  {
+    "id": "cellar_rot_botrytis_onion_neck_rot_slime",
+    "root_cellar_bay_id": "CELLAR_BAY_ALLIUM_HANGAR_03",
+    "stored_crop_species": "YELLOW_STORAGE_ONION_BULBS",
+    "ambient_humidity_pct": 92.0,
+    "fungal_pathogen_name": "BOTRYTIS_ALLII_NECK_ROT",
+    "timestamp_relative": "YEAR_05_CELLAR_LOG_03",
+    "tags": ["root_cellar", "onions", "botrytis", "neck_rot", "allium"],
+    "prose": "Braided onions hung in the damp intake draft developed grey velvety mold along their tops. The *Botrytis* fungus invaded the bulb centers, converting crisp onion layers into soft, slimy translucent bags of pungent liquid."
+  },
+  {
+    "id": "cellar_rot_sclerotinia_carrot_cottony_soft_rot",
+    "root_cellar_bay_id": "CELLAR_BAY_CARROT_SAND_BINS",
+    "stored_crop_species": "NANTES_HALF_LONG_ORANGE_CARROT",
+    "ambient_humidity_pct": 95.0,
+    "fungal_pathogen_name": "SCLEROTINIA_SCLEROTIORUM_COTTONY_ROT",
+    "timestamp_relative": "YEAR_08_CELLAR_LOG_02",
+    "tags": ["root_cellar", "carrots", "sclerotinia", "white_mold", "sand_storage"],
+    "prose": "A dense blanket of white, snow-like fungal mycelium spread silently through the sand-packed wooden carrot crates. Hard black sclerotia resting bodies formed across thousands of roots, reducing winter carrot reserves to watery mush."
+  },
+  {
+    "id": "cellar_rot_ethylene_gas_apple_potato_sprouting",
+    "root_cellar_bay_id": "CELLAR_BAY_COMBINED_PRODUCE_02",
+    "stored_crop_species": "MIXED_APPLES_AND_WHITE_POTATOES",
+    "ambient_humidity_pct": 88.0,
+    "fungal_pathogen_name": "ETHYLENE_PHYSIOLOGICAL_DISORDER",
+    "timestamp_relative": "YEAR_11_CELLAR_LOG_04",
+    "tags": ["root_cellar", "ethylene", "potato_sprouts", "solanine", "apples"],
+    "prose": "Storing thirty bushels of windfall wild apples in the same poorly ventilated bay as seed potatoes proved disastrous. Ethylene gas exhaled by ripening apples triggered rapid, spindly eye sprouting in the potatoes, filling tubers with toxic bitter solanine alkaloids."
+  },
+  {
+    "id": "cellar_rot_geothermal_warmth_turnip_woodiness",
+    "root_cellar_bay_id": "CELLAR_BAY_LOWER_ROOT_TRENCH",
+    "stored_crop_species": "RUTABAGA_SWEDE_ROOTS",
+    "ambient_humidity_pct": 75.0,
+    "fungal_pathogen_name": "PHYSIOLOGICAL_LIGNIN_WOODINESS",
+    "timestamp_relative": "YEAR_14_CELLAR_LOG_01",
+    "tags": ["root_cellar", "rutabaga", "lignin", "woodiness", "geothermal_heat"],
+    "prose": "Heat radiation from a buried subterranean geothermal steam pipe raised the lower trench temperature from 4°C to 16°C. The stored rutabagas broke dormancy, synthesizing dense vascular lignin that turned the edible flesh as woody and unchewable as pine branch knots."
+  },
+  {
+    "id": "cellar_rot_carbon_dioxide_sump_suffocation",
+    "root_cellar_bay_id": "CELLAR_BAY_DEEP_SINK_STORAGE",
+    "stored_crop_species": "SUGAR_BEET_WINTER_MOUNDS",
+    "ambient_humidity_pct": 96.0,
+    "fungal_pathogen_name": "ANAEROBIC_CO2_RESPIRATION_POCKET",
+    "timestamp_relative": "YEAR_17_CELLAR_LOG_03",
+    "tags": ["root_cellar", "suffocation", "co2_gas", "asphyxiation", "sugar_beets"],
+    "prose": "Mass respiration of decaying sugar beet mounds in the sunken cellar pit displaced atmospheric oxygen with 9% carbon dioxide gas. A commissary orderly descending the wooden ladder passed out instantly from asphyxiation, requiring emergency rope extraction."
+  },
+  {
+    "id": "cellar_rot_dry_sand_desiccation_parsnip_shrivel",
+    "root_cellar_bay_id": "CELLAR_BAY_SAND_PACK_AISLE_04",
+    "stored_crop_species": "HOLLOW_CROWN_WHITE_PARSNIP",
+    "ambient_humidity_pct": 45.0,
+    "fungal_pathogen_name": "MOISTURE_DESICCATION_LEATHER_SHRIVEL",
+    "timestamp_relative": "YEAR_20_CELLAR_LOG_01",
+    "tags": ["root_cellar", "parsnip", "desiccation", "sand_box", "shrivel"],
+    "prose": "Using unwashed, sun-baked quarry sand without regular moisture sprinkling drew every drop of water out of stored parsnips. By mid-winter, the roots shriveled into flexible, leathery brown straps that refused to soften even after four hours of boiling."
+  }
+]

@@ -92,7 +92,11 @@ namespace Ashfall.Core
             "slag_leach_", "carbide_tool_", "gear_quench_", "bullet_alloy_",
             "gasket_degrade_", "aramid_rot_", "tire_retread_", "celluloid_decay_",
             "prism_delam_", "sight_glass_", "rad_brown_", "scint_crystal_",
-            "rag_pulp_", "ink_assay_", "type_wear_", "stencil_smear_"
+            "rag_pulp_", "ink_assay_", "type_wear_", "stencil_smear_",
+            "ammonia_chiller_", "pickling_spoil_", "cellar_rot_", "smokehouse_assay_",
+            "lime_kiln_", "pozzolan_mortar_", "firebrick_spall_", "mudbrick_assay_",
+            "glass_melt_", "condenser_fracture_", "joint_grease_", "annealing_lehr_",
+            "oak_bark_tan_", "mineral_tan_", "rawhide_bate_", "leather_harness_"
         };
 
         /// <summary>
@@ -201,7 +205,19 @@ namespace Ashfall.Core
             "crystal_composition", "degradation_mode",
             "beater_station_id", "raw_fiber_source", "ink_formulation_code", "tannin_source",
             "pigment_complex", "font_case_identifier", "type_metal_composition", "wear_phenomenon",
-            "stencil_print_id", "matrix_material_type", "ink_pigment_base", "smear_artifact_description"
+            "stencil_print_id", "matrix_material_type", "ink_pigment_base", "smear_artifact_description",
+            "chiller_unit_id", "system_failure_mode", "barrel_batch_code", "food_substrate_type",
+            "spoilage_organism", "root_cellar_bay_id", "stored_crop_species", "fungal_pathogen_name",
+            "smokehouse_facility_id", "fuel_wood_species",
+            "kiln_structure_id", "feedstock_stone_type", "mortar_recipe_code", "pozzolanic_source",
+            "curing_environment", "furnace_zone_id", "refractory_brick_grade", "failure_mechanism",
+            "adobe_batch_identifier", "reinforcement_fiber_type", "clay_to_sand_ratio",
+            "furnace_pot_identifier", "batch_feedstock_formula", "optical_clarity_grade",
+            "distillation_rig_id", "glassware_component", "apparatus_station_id",
+            "lubricant_compound_used", "failure_outcome", "lehr_furnace_id", "annealed_glass_article",
+            "tannery_vat_id", "bark_source_botanical", "mineral_tan_liquor_id", "mineral_tanning_agent",
+            "beamhouse_pit_id", "deliming_chemical_agent", "phenolphthalein_test_status",
+            "currying_workshop_id", "fatliquor_compound_formula"
         };
 
         /// <summary>

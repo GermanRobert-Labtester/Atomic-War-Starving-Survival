@@ -1,0 +1,72 @@
+[
+  {
+    "id": "annealing_lehr_polarimeter_isochromatic_fringes",
+    "lehr_furnace_id": "CONTINUOUS_MESH_BELT_LEHR_01",
+    "annealed_glass_article": "FIVE_LITER_ROUND_BOTTOM_BOILING_FLASK",
+    "soak_temperature_celsius": 565.0,
+    "residual_stress_optical_retardance_nm_cm": 45.0,
+    "timestamp_relative": "YEAR_02_ANNEAL_LOG_01",
+    "tags": ["glassblowing", "annealing", "polarimeter", "birefringence", "residual_stress"],
+    "prose": "Inspection under crossed polarizing filters revealed dense magenta and cyan isochromatic fringes around the neck weld of five-liter boiling flasks. The high residual stress (45 nm/cm) requires re-soaking to prevent spontaneous explosive fracture during heating."
+  },
+  {
+    "id": "annealing_lehr_temperature_drift_strain_point",
+    "lehr_furnace_id": "BATCH_CHAMBER_ANNEALER_03",
+    "annealed_glass_article": "CYLINDRICAL_GRADUATED_SIGHT_TUBES",
+    "soak_temperature_celsius": 490.0,
+    "residual_stress_optical_retardance_nm_cm": 70.0,
+    "timestamp_relative": "YEAR_05_ANNEAL_LOG_03",
+    "tags": ["glassblowing", "strain_point", "lehr", "sight_glass", "thermal_drift"],
+    "prose": "Thermocouple calibration drift allowed the lehr to cool through the 510°C glass transformation range at 15°C per minute instead of the required 1.5°C. Permanent tensile stress froze into the wall center, causing twelve boiler sight tubes to snap under finger pressure."
+  },
+  {
+    "id": "annealing_lehr_prince_rupert_drop_explosive_tail",
+    "lehr_furnace_id": "HEAVY_CARBOY_COOLING_PIT",
+    "annealed_glass_article": "TWENTY_LITER_ACID_CARBOY_DEMIJOHN",
+    "soak_temperature_celsius": 450.0,
+    "residual_stress_optical_retardance_nm_cm": 120.0,
+    "timestamp_relative": "YEAR_08_ANNEAL_LOG_02",
+    "tags": ["glassblowing", "carboy", "prince_rupert", "explosive_shatter", "stress"],
+    "prose": "Air-cooling the massive three-quarter-inch thick base of a 20-liter acid carboy created extreme Prince Rupert drop stresses. When a worker set the vessel down on a tiny sand pebble, the localized shock released the tension, detonating the jug into glass dust."
+  },
+  {
+    "id": "annealing_lehr_tungsten_seal_lead_in_wire_stress",
+    "lehr_furnace_id": "ELECTRONIC_TUBE_SEAL_LEHR",
+    "annealed_glass_article": "HIGH_VOLTAGE_RECTIFIER_VACUUM_TUBE",
+    "soak_temperature_celsius": 580.0,
+    "residual_stress_optical_retardance_nm_cm": 15.0,
+    "timestamp_relative": "YEAR_11_ANNEAL_LOG_04",
+    "tags": ["glassblowing", "vacuum_tube", "tungsten_seal", "lead_in_wire", "rectifier"],
+    "prose": "Sealing heavy tungsten electrical leads through Nonex glass envelopes required precise temperature holding at 580°C. Careful annealing eliminated radial compressive stresses, preventing microscopic air leakage along the metal-glass boundary."
+  },
+  {
+    "id": "annealing_lehr_quartz_to_borosilicate_graded_seal",
+    "lehr_furnace_id": "PRECISION_GRADED_TUBE_OVEN",
+    "annealed_glass_article": "FIVE_STEP_GRADED_QUARTZ_PYREX_SEAL",
+    "soak_temperature_celsius": 610.0,
+    "residual_stress_optical_retardance_nm_cm": 8.0,
+    "timestamp_relative": "YEAR_14_ANNEAL_LOG_01",
+    "tags": ["glassblowing", "graded_seal", "quartz", "borosilicate", "expansion_gradient"],
+    "prose": "Joining pure fused quartz (CTE 5.5x10^-7) to borosilicate glass (CTE 33x10^-7) was achieved via five intermediate glass rings of stepping thermal expansion. Lehr annealing at 610°C for six hours produced an ultra-low retardance (8 nm/cm) leak-tight union."
+  },
+  {
+    "id": "annealing_lehr_thermal_birefringence_baking_soak",
+    "lehr_furnace_id": "OPTICAL_PRISM_BLANK_LEHR_02",
+    "annealed_glass_article": "RIGHT_ANGLE_SPECTROMETER_PRISM_BLANK",
+    "soak_temperature_celsius": 540.0,
+    "residual_stress_optical_retardance_nm_cm": 3.0,
+    "timestamp_relative": "YEAR_17_ANNEAL_LOG_03",
+    "tags": ["glassblowing", "optical_prism", "birefringence", "spectrometer", "fine_anneal"],
+    "prose": "A seventy-two-hour ultra-slow fine annealing cycle from 540°C down to 350°C relaxed optical anisotropy across four-inch borosilicate prism blanks. Residual retardance dropped below 3 nm/cm, ensuring zero double-refraction distortion in spectrometer optics."
+  },
+  {
+    "id": "annealing_lehr_conveyor_draft_asymmetric_warp",
+    "lehr_furnace_id": "TUNNEL_CONVEYOR_LEHR_NORTH_BAY",
+    "annealed_glass_article": "PRECISION_ONE_LITER_GRADUATED_CYLINDERS",
+    "soak_temperature_celsius": 550.0,
+    "residual_stress_optical_retardance_nm_cm": 35.0,
+    "timestamp_relative": "YEAR_20_ANNEAL_LOG_01",
+    "tags": ["glassblowing", "lehr_draft", "asymmetric_cooling", "warp", "graduated_cylinder"],
+    "prose": "Cold air drafting through an unsealed inspection port chilled the left side of the conveyor belt. The uneven cooling warped forty precision 1,000ml graduated cylinders into banana-like curves, rendering volumetric measurement graduations invalid."
+  }
+]

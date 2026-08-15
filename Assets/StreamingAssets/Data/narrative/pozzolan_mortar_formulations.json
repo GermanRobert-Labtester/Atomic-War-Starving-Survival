@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pozzolan_mortar_volcanic_ash_lime_reaction",
+    "mortar_recipe_code": "ROMAN_POZZOLAN_HYDRAULIC_01",
+    "pozzolanic_source": "FINE_PUMICE_VOLCANIC_FALLOUT_ASH",
+    "compressive_strength_mpa": 18.5,
+    "curing_environment": "SUBMERGED_AQUIFER_RESERVOIR",
+    "timestamp_relative": "YEAR_02_POZZOLAN_LOG_01",
+    "tags": ["masonry", "pozzolan", "hydraulic_mortar", "volcanic_ash", "aquifer"],
+    "prose": "Blending two parts reactive volcanic pumice ash with one part aged slaked lime created a self-healing hydraulic mortar. The mixture hardened underwater inside the flooded aquifer intake tunnel, reaching eighteen megapascals strength in ninety days."
+  },
+  {
+    "id": "pozzolan_mortar_crushed_pottery_grog_shrinkage",
+    "mortar_recipe_code": "OPUS_SIGNINUM_TERRACOTTA_GROG",
+    "pozzolanic_source": "CRUSHED_PRE_WAR_ROOF_TILE_SHARDS",
+    "compressive_strength_mpa": 14.0,
+    "curing_environment": "DAMP_UNDERGROUND_CISTERN_WALL",
+    "timestamp_relative": "YEAR_05_POZZOLAN_LOG_03",
+    "tags": ["masonry", "grog", "terracotta", "cistern", "waterproofing"],
+    "prose": "Milling scavenged clay roofing tiles into 2mm ceramic grog and blending with hydraulic lime produced a pink, watertight *opus signinum* plaster. The lining sealed the primary 50,000-gallon drinking water reservoir without shrinking or cracking."
+  },
+  {
+    "id": "pozzolan_mortar_fly_ash_coal_boiler_scavenge",
+    "mortar_recipe_code": "BOILER_FLY_ASH_CLASS_F_POUR",
+    "pozzolanic_source": "ELECTROSTATIC_COAL_FLY_ASH",
+    "compressive_strength_mpa": 26.0,
+    "curing_environment": "HEAVY_FOUNDATION_MASS_POUR",
+    "timestamp_relative": "YEAR_08_POZZOLAN_LOG_02",
+    "tags": ["masonry", "fly_ash", "pozzolan", "foundation", "high_strength"],
+    "prose": "Spherical glassy fly ash particles raked from boiler precipitator hoppers replaced 30% of Portland cement in the turbine pedestal mass pour. The pozzolanic reaction consumed calcium hydroxide, preventing alkali-silica reaction and lowering curing heat."
+  },
+  {
+    "id": "pozzolan_mortar_calcium_aluminate_seawater_attack",
+    "mortar_recipe_code": "HIGH_ALUMINA_SULFUR_SEEP_PATCH",
+    "pozzolanic_source": "CALCINED_BAUXITE_CLAY_DUST",
+    "compressive_strength_mpa": 9.5,
+    "curing_environment": "SULFURIC_GEOTHERMAL_RUNOFF_SUMP",
+    "timestamp_relative": "YEAR_11_POZZOLAN_LOG_04",
+    "tags": ["masonry", "sulfate_attack", "ettringite", "expansion_crack", "sump"],
+    "prose": "High-alumina mortar applied to repair a geothermal sump wall was attacked by dissolved sulfate ions. Formation of needle-like ettringite crystals exerted massive internal crystallization pressure, heaving mortar joints 20mm and spalling brick faces."
+  },
+  {
+    "id": "pozzolan_mortar_egg_white_albumen_waterproofing",
+    "mortar_recipe_code": "ALBUMEN_ORGANIC_SEALANT_PASTE",
+    "pozzolanic_source": "ANIMAL_BLOOD_AND_EGG_ALBUMEN",
+    "compressive_strength_mpa": 12.0,
+    "curing_environment": "ARCHED_VAULT_ROOF_OVERBURDEN",
+    "timestamp_relative": "YEAR_14_POZZOLAN_LOG_01",
+    "tags": ["masonry", "albumen", "organic_mortar", "waterproofing", "vault"],
+    "prose": "Whipping dehydrated egg albumen and rendered beef blood into slaked lime mortar generated micro-air bubbles and hydrophobic protein cross-links. Applied across vault roof masonry, it completely repelled acidic seepage water."
+  },
+  {
+    "id": "pozzolan_mortar_tufa_rock_aggregate_lightweight",
+    "mortar_recipe_code": "LIGHTWEIGHT_TUFA_VOLCANIC_CONCRETE",
+    "pozzolanic_source": "CELLULAR_VESICULAR_TUFA_GRAVEL",
+    "compressive_strength_mpa": 11.5,
+    "curing_environment": "SUSPENDED_CATWALK_FLOOR_SLAB",
+    "timestamp_relative": "YEAR_16_POZZOLAN_LOG_03",
+    "tags": ["masonry", "tufa", "lightweight_concrete", "aggregate", "catwalk"],
+    "prose": "Using crushed cellular volcanic tufa in place of dense granite gravel reduced concrete density from 2,400 kg/m³ to 1,350 kg/m³. The lightweight concrete allowed overhead sentry walkways to span twenty meters without intermediate structural steel pillars."
+  },
+  {
+    "id": "pozzolan_mortar_frost_thaw_scaling_air_entrain",
+    "mortar_recipe_code": "SURFACE_OBSERVATION_POST_CEMENT",
+    "pozzolanic_source": "DENSE_GRANITE_QUARRY_FINES",
+    "compressive_strength_mpa": 8.0,
+    "curing_environment": "SUB_ZERO_SURFACE_WIND_EXPOSURE",
+    "timestamp_relative": "YEAR_18_POZZOLAN_LOG_02",
+    "tags": ["masonry", "frost_damage", "freeze_thaw", "scaling", "observation_tower"],
+    "prose": "Mortar joints in the surface lookout turret lacked air-entraining soap agents. Trapped pore water froze during a -30°C winter cold snap; water expansion peeled the outer 15mm of mortar off like pie crust, loosening parapet stone blocks."
+  },
+  {
+    "id": "pozzolan_mortar_lead_dowel_setting_sulfur_pour",
+    "mortar_recipe_code": "MOLTEN_SULFUR_DOWEL_ANCHOR",
+    "pozzolanic_source": "SUBLIMED_BRIMSTONE_AND_LEAD_GRIT",
+    "compressive_strength_mpa": 35.0,
+    "curing_environment": "SOLID_BASALT_BLAST_DOOR_SILL",
+    "timestamp_relative": "YEAR_20_POZZOLAN_LOG_01",
+    "tags": ["masonry", "sulfur_anchor", "dowel", "blast_door", "solidification"],
+    "prose": "Heavy three-inch steel hinge pins for the outer blast door were anchored into solid basalt bedrock using molten brimstone sulfur mixed with lead grit. The sulfur solidified into rock-hard matrix in ninety seconds, withstanding 50-ton hinge shear loads."
+  }
+]

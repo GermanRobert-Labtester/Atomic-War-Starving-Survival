@@ -1,0 +1,65 @@
+[
+  {
+    "id": "rawhide_bate_ammonium_sulfate_deliming_stall",
+    "beamhouse_pit_id": "DELIMING_WASHER_PADDLE_01",
+    "deliming_chemical_agent": "AMMONIUM_SULFATE_FERTILIZER_RUNOFF",
+    "phenolphthalein_test_status": "STRONG_MAGENTA_ALKALINE_CORE",
+    "timestamp_relative": "YEAR_03_BEAMHOUSE_01",
+    "tags": ["tanning", "deliming", "lime_blast", "phenolphthalein", "beamhouse"],
+    "prose": "Testing a cross-section slice of steer hide with phenolphthalein indicator flashed bright magenta, revealing unneutralized calcium hydroxide locked in the middle third. When dried, the trapped lime formed insoluble calcium carbonate crystals that made the leather brittle and chalky."
+  },
+  {
+    "id": "rawhide_bate_pancreatic_trypsin_over_digestion",
+    "beamhouse_pit_id": "WARM_ENZYMATIC_BATING_TUB_03",
+    "deliming_chemical_agent": "PIG_PANCREAS_TRYPSIN_ENZYME",
+    "phenolphthalein_test_status": "OVER_BATED_FIBER_DISSOLUTION",
+    "timestamp_relative": "YEAR_05_BEAMHOUSE_03",
+    "tags": ["tanning", "bating", "trypsin", "fiber_loss", "soft_leather"],
+    "prose": "Leaving hides in the 38°C pancreatic enzyme bath for twelve hours instead of three over-digested the elastin and inter-fibrillar proteins. The hides emerged as limp, rag-like sheets with zero substance that tore under minimal sewing needle tension."
+  },
+  {
+    "id": "rawhide_bate_sodium_sulfide_unhairing_burn",
+    "beamhouse_pit_id": "HAIR_DISSOLVING_PADDLE_VAT_02",
+    "deliming_chemical_agent": "SODIUM_SULFIDE_CONCENTRATED_SLURRY",
+    "phenolphthalein_test_status": "GRAIN_KERATIN_CAUSTIC_MELT",
+    "timestamp_relative": "YEAR_08_BEAMHOUSE_02",
+    "tags": ["tanning", "unhairing", "sodium_sulfide", "caustic_burn", "grain_damage"],
+    "prose": "An overdose of caustic sodium sulfide intended to strip bristly hog hair rapidly dissolved the epidermal grain layer along with the hair roots. The leather surface was left pitted, rough, and permanently scarred with cratered follicles."
+  },
+  {
+    "id": "rawhide_bate_acid_swelling_pickling_rupture",
+    "beamhouse_pit_id": "HIGH_SALT_PICKLE_DRUM_04",
+    "deliming_chemical_agent": "SULFURIC_ACID_WITHOUT_SODIUM_CHLORIDE",
+    "phenolphthalein_test_status": "HYDRAULIC_ACID_SWELLING_BURST",
+    "timestamp_relative": "YEAR_11_BEAMHOUSE_04",
+    "tags": ["tanning", "pickling", "acid_swelling", "osmotic_rupture", "collagen"],
+    "prose": "Adding sulfuric acid to the pickle bath before establishing an 8% sodium chloride brine triggered catastrophic osmotic acid swelling. Water rushed into the collagen fibers, swelling the hide to triple its thickness and permanently rupturing fiber bundles."
+  },
+  {
+    "id": "rawhide_bate_fleshing_beam_knife_gouge",
+    "beamhouse_pit_id": "MANUAL_FLESHING_BEAM_STATION_B",
+    "deliming_chemical_agent": "MECHANICAL_TWO_HANDLED_BEAM_KNIFE",
+    "phenolphthalein_test_status": "CORIUM_GOUGE_GRADE_DOWNGRADE",
+    "timestamp_relative": "YEAR_14_BEAMHOUSE_01",
+    "tags": ["tanning", "fleshing", "beam_knife", "gouge_defect", "skiving"],
+    "prose": "A tired worker wielding a chipped curved fleshing knife gouged halfway through the dermal layer while scraping adipose fat from a horse hide. The deep knife score lines created localized weak zones, rendering the hide unusable for heavy load-bearing tow straps."
+  },
+  {
+    "id": "rawhide_bate_salt_stain_calcium_phosphate_speck",
+    "beamhouse_pit_id": "RAW_CURING_SALT_STORE_BAY",
+    "deliming_chemical_agent": "CRUDE_UNREFINED_ROCK_SALT_CURE",
+    "phenolphthalein_test_status": "CALCIUM_PHOSPHATE_STAIN_DEFECT",
+    "timestamp_relative": "YEAR_17_BEAMHOUSE_03",
+    "tags": ["tanning", "salt_stain", "calcium_phosphate", "curing_blemish", "rawhide"],
+    "prose": "Curing fresh hides with unwashed mineral salt rich in calcium and magnesium phosphates formed insoluble white mineral deposits in the flesh face. During subsequent chrome tanning, the stains resisted dye penetration, producing spotted reject leather."
+  },
+  {
+    "id": "rawhide_bate_bacterial_putrefaction_hair_slip",
+    "beamhouse_pit_id": "WARM_TRANSIT_HOLDING_CELLAR",
+    "deliming_chemical_agent": "ANAEROBIC_BACTERIAL_PUTREFACTION",
+    "phenolphthalein_test_status": "EPIDERMAL_SLIP_PUTRID_ROT",
+    "timestamp_relative": "YEAR_20_BEAMHOUSE_01",
+    "tags": ["tanning", "hair_slip", "putrefaction", "spoilage", "hide_loss"],
+    "prose": "Holding unsalted rawhides in a warm, humid geothermal cellar for four days allowed putrefactive bacteria to digest hair roots and grain collagen. Hair slipped off in rotten slimy clumps when touched, leaving the dermal skin spongy and unsalvageable."
+  }
+]

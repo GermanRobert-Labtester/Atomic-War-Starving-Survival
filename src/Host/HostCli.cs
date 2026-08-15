@@ -13,6 +13,9 @@ using Ashfall.Core.Verdict;
 using Ashfall.Core.Clock;
 using Ashfall.Core.Events;
 using Ashfall.Core.Flags;
+using Ashfall.Core.Shelter;
+using Ashfall.Core.Legacy;
+using Ashfall.Core.Endgame;
 using AtomicWar.GodotApp.YearOfAsh;
 using System;
 using System.IO;
@@ -67,7 +70,8 @@ namespace AtomicWar.GodotApp
         RngWiringSelfTest,
         DataIntegritySelfTest,
         CaravanSelfTest,
-        AssetRegistrySelfTest
+        AssetRegistrySelfTest,
+        StandaloneSystemsSelfTest
     }
 
     /// <summary>
@@ -171,6 +175,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.CaravanSelfTest;
             if (Has(args, "--asset-registry-selftest"))
                 return HostCliAction.AssetRegistrySelfTest;
+            if (Has(args, "--standalone-selftest"))
+                return HostCliAction.StandaloneSystemsSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -207,6 +213,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --dose-ledger-selftest       Dose Ledger save write → reload → restore → checksum/tamper checks");
             GD.Print("  --data-integrity-selftest  Cross-reference every id in the 55 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
             GD.Print("  --asset-registry-selftest  Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
+            GD.Print("  --standalone-selftest     SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance");
             GD.Print("  --economy-selftest        Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip)");
             GD.Print("  --host-help              This list");
         }

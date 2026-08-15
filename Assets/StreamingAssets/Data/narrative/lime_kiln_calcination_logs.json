@@ -1,0 +1,82 @@
+[
+  {
+    "id": "lime_kiln_limestone_calcination_temperature",
+    "kiln_structure_id": "VERTICAL_SHAFT_KILN_SECTOR_7",
+    "feedstock_stone_type": "CALCITIC_FOSSILIFEROUS_LIMESTONE",
+    "calcination_temp_celsius": 960.0,
+    "quicklime_yield_tons": 8.5,
+    "timestamp_relative": "YEAR_02_MASONRY_LOG_01",
+    "tags": ["masonry", "lime_kiln", "quicklime", "calcination", "limestone"],
+    "prose": "Seventy-two hours of continuous hardwood firing raised the vertical stone stack to 960°C, driving carbon dioxide out of thirty tons of quarry limestone. The resulting snow-white calcium oxide quicklime yields premium building mortar upon slaking."
+  },
+  {
+    "id": "lime_kiln_quicklime_hydration_steam_explosion",
+    "kiln_structure_id": "SLAKING_PIT_FOUNDRY_PLAZA",
+    "feedstock_stone_type": "HIGH_PURITY_CALCIUM_OXIDE_LUMP",
+    "calcination_temp_celsius": 940.0,
+    "quicklime_yield_tons": 3.0,
+    "timestamp_relative": "YEAR_04_MASONRY_LOG_03",
+    "tags": ["masonry", "slaking", "quicklime", "steam_explosion", "burn_hazard"],
+    "prose": "Pouring cold sump water too rapidly into five hundred pounds of fresh quicklime lumps triggered a violent exothermic steam eruption. Scalding 140°C alkaline lime milk geysered out of the slaking trough, blinding an apprentice who was operating without eye goggles."
+  },
+  {
+    "id": "lime_kiln_dolomitic_dead_burned_magnesia",
+    "kiln_structure_id": "DOLOMITE_HEARTH_KILN_02",
+    "feedstock_stone_type": "DOLOMITIC_MAGNESIAN_LIMESTONE",
+    "calcination_temp_celsius": 1250.0,
+    "quicklime_yield_tons": 6.2,
+    "timestamp_relative": "YEAR_07_MASONRY_LOG_02",
+    "tags": ["masonry", "dolomite", "dead_burned", "magnesia", "refractory"],
+    "prose": "Excessive forced-draft anthracite firing overheated the dolomitic stone charge to 1,250°C. The magnesium carbonate sintered into un-reactive 'dead-burned' periclase crystals that refused to hydrate, ruining the batch for masonry mortar but yielding refractory hearth lining."
+  },
+  {
+    "id": "lime_kiln_wood_gas_draft_choke_soot",
+    "kiln_structure_id": "UNDERGROUND_VENT_KILN_04",
+    "feedstock_stone_type": "QUARRY_SPALL_LIMESTONE_CHUNKS",
+    "calcination_temp_celsius": 780.0,
+    "quicklime_yield_tons": 2.1,
+    "timestamp_relative": "YEAR_09_MASONRY_LOG_04",
+    "tags": ["masonry", "lime_kiln", "draft_failure", "soot", "incomplete_burn"],
+    "prose": "Feeding green birch logs into the lower fireboxes choked the natural chimney draft. Pyrolysis soot coated the uncalcined limestone chunks in black greasy carbon, insulating the rock and leaving 45% unburnt limestone cores in the discharge hopper."
+  },
+  {
+    "id": "lime_kiln_arch_hanging_bridge_scaffold_collapse",
+    "kiln_structure_id": "HEAVY_MASONRY_SHAFT_KILN_01",
+    "feedstock_stone_type": "HIGH_CALCIUM_MARBLE_RUBBLE",
+    "calcination_temp_celsius": 1020.0,
+    "quicklime_yield_tons": 12.0,
+    "timestamp_relative": "YEAR_12_MASONRY_LOG_01",
+    "tags": ["masonry", "lime_kiln", "scaffold_bridge", "kiln_hang", "collapse"],
+    "prose": "Fused calcium silicate slag caused the descending stone column to bridge across the kiln waist. Stoker crews had to break the glowing eight-ton hanging arch from below with twenty-foot steel rods; the sudden fall crushed the bottom iron discharge grate."
+  },
+  {
+    "id": "lime_kiln_mortar_putty_pit_aging_maturation",
+    "kiln_structure_id": "CAVERN_SUB_FLOOR_PUTTY_VAT",
+    "feedstock_stone_type": "SLAKED_CALCIUM_HYDROXIDE_PASTE",
+    "calcination_temp_celsius": 920.0,
+    "quicklime_yield_tons": 15.0,
+    "timestamp_relative": "YEAR_15_MASONRY_LOG_03",
+    "tags": ["masonry", "lime_putty", "aging", "plasticity", "mortar"],
+    "prose": "Slaked lime putty submerged under a six-inch water layer in cool, dark Cavern 4 matured for eighteen months. Sub-microscopic platelet crystals grew, imparting buttery plasticity and zero-shrinkage setting for delicate vault ceiling fresco plastering."
+  },
+  {
+    "id": "lime_kiln_calcium_hydride_damp_air_slaking",
+    "kiln_structure_id": "BULK_QUICKLIME_STORAGE_SILO_B",
+    "feedstock_stone_type": "GROUND_QUICKLIME_POWDER_BAGS",
+    "calcination_temp_celsius": 950.0,
+    "quicklime_yield_tons": 10.0,
+    "timestamp_relative": "YEAR_17_MASONRY_LOG_02",
+    "tags": ["masonry", "quicklime", "spontaneous_heating", "humidity", "fire"],
+    "prose": "A roof drip into stacked burlap bags of pulverized quicklime initiated spontaneous atmospheric hydration. Internal bag temperature reached 220°C, igniting wooden storage pallets and filling the storeroom with choking alkaline dust."
+  },
+  {
+    "id": "lime_kiln_exhaust_carbon_monoxide_downdraft",
+    "kiln_structure_id": "LOWER_FLUE_EXHAUST_COLUMN",
+    "feedstock_stone_type": "COAL_BURNING_CONTINUOUS_KILN",
+    "calcination_temp_celsius": 980.0,
+    "quicklime_yield_tons": 7.5,
+    "timestamp_relative": "YEAR_20_MASONRY_LOG_01",
+    "tags": ["masonry", "lime_kiln", "carbon_monoxide", "downdraft", "asphyxiation"],
+    "prose": "A sudden nuclear winter barometric inversion reversed airflow through the external kiln exhaust chimney. Five hundred ppm carbon monoxide gas was pushed down into the adjacent laundry dormitory, sickening twenty-four workers before dampers could be slammed shut."
+  }
+]
