@@ -1,0 +1,72 @@
+[
+  {
+    "id": "chlorine_titration_dpd_free_residual_endpoint",
+    "dosing_station_id": "DISTRIBUTION_HEADER_CHLORINATOR",
+    "hypochlorite_reagent_grade": "COMMERCIAL_CALCIUM_HYPOCHLORITE_65PCT",
+    "free_chlorine_residual_mg_l": 0.55,
+    "water_ph_at_sampling": 7.3,
+    "timestamp_relative": "YEAR_03_CHLORINE_LOG_01",
+    "tags": ["water_treatment", "chlorine", "dpd_titration", "free_residual", "distribution_piping"],
+    "prose": "DPD ferrous titrimetric assays on tap water from the furthest bunker sector recorded a stable 0.55 mg/L free residual chlorine. The continuous residual prevented biofilm regrowth and pathogen recolonization across three kilometers of galvanized iron pipe."
+  },
+  {
+    "id": "chlorine_titration_breakpoint_chlorination_curve",
+    "dosing_station_id": "RAW_SURFACE_RUNOFF_CHLORINATOR",
+    "hypochlorite_reagent_grade": "CALCIUM_HYPOCHLORITE_GRANULES",
+    "free_chlorine_residual_mg_l": 1.2,
+    "water_ph_at_sampling": 7.0,
+    "timestamp_relative": "YEAR_05_CHLORINE_LOG_03",
+    "tags": ["water_treatment", "breakpoint_chlorination", "chloramines", "ammonia_demand", "disinfection"],
+    "prose": "Agricultural runoff carrying 1.8 mg/L ammonia nitrogen exerted heavy initial chlorine demand, forming irritating dichloramines. Operators boosted hypochlorite dosing past the 'breakpoint' inflection (14 mg/L dose), destroying all combined chloramines and establishing true free residual."
+  },
+  {
+    "id": "chlorine_titration_hypochlorite_stock_calcium_carbonate_crust",
+    "dosing_station_id": "CHEMICAL_DOSING_PUMP_SKID_02",
+    "hypochlorite_reagent_grade": "HIGH_TEST_HYPOCHLORITE_TABLETS",
+    "free_chlorine_residual_mg_l": 0.05,
+    "water_ph_at_sampling": 8.1,
+    "timestamp_relative": "YEAR_08_CHLORINE_LOG_02",
+    "tags": ["water_treatment", "dosing_pump", "calcium_carbonate", "scale_plug", "maintenance"],
+    "prose": "Dissolving calcium hypochlorite in hard well water precipitated insoluble calcium carbonate (CaCO3) sludge. The white crust clogged the suction foot valve and seized the diaphragm metering pump, dropping system chlorine residual to near zero."
+  },
+  {
+    "id": "chlorine_titration_trihalomethane_precursor_pre_ozonation",
+    "dosing_station_id": "ORGANIC_REDUCTION_PILOT_PLANT",
+    "hypochlorite_reagent_grade": "SODIUM_HYPOCHLORITE_LIQUID_12PCT",
+    "free_chlorine_residual_mg_l": 0.8,
+    "water_ph_at_sampling": 7.4,
+    "timestamp_relative": "YEAR_11_CHLORINE_LOG_04",
+    "tags": ["water_treatment", "trihalomethanes", "thm", "disinfection_byproduct", "humic_acid"],
+    "prose": "Direct chlorination of peaty sump water generated 120 ppb of total trihalomethanes (chloroform). Routing raw water through granular activated carbon prior to chlorination stripped humic precursors, cutting finished water THM concentration down to 18 ppb."
+  },
+  {
+    "id": "chlorine_titration_chloramine_monochloramine_secondary",
+    "dosing_station_id": "LONG_RANGE_OUTPOST_BOOSTER",
+    "hypochlorite_reagent_grade": "AMMONIUM_SULFATE_AND_HYPOCHLORITE",
+    "free_chlorine_residual_mg_l": 0.1,
+    "water_ph_at_sampling": 7.8,
+    "timestamp_relative": "YEAR_14_CHLORINE_LOG_01",
+    "tags": ["water_treatment", "monochloramine", "secondary_disinfection", "pipe_residence", "taste_odor"],
+    "prose": "Dosing ammonium sulfate at a 1:4 nitrogen-to-chlorine ratio synthesized monochloramine for the 10-kilometer remote outpost supply conduit. Monochloramine persisted through seventy-two hours of pipeline transit with zero chemical decay and minimal chlorinated taste."
+  },
+  {
+    "id": "chlorine_titration_amperometric_sensor_membrane_fouling",
+    "dosing_station_id": "AUTOMATED_RESIDUAL_ANALYZER_01",
+    "hypochlorite_reagent_grade": "CALCIUM_HYPOCHLORITE_SOLUTION",
+    "free_chlorine_residual_mg_l": 0.22,
+    "water_ph_at_sampling": 7.5,
+    "timestamp_relative": "YEAR_17_CHLORINE_LOG_03",
+    "tags": ["water_treatment", "amperometric_sensor", "fouling", "membrane_cleaning", "instrumentation"],
+    "prose": "Ferric iron precipitation coated the microporous Teflon membrane of the online amperometric chlorine probe with red silt. The fouled sensor reported a false 0.05 mg/L read, triggering automated overdosing until manual DPD colorimetric tests caught the offset."
+  },
+  {
+    "id": "chlorine_titration_high_ph_hypochlorite_ion_inactivation",
+    "dosing_station_id": "ALKALINE_AQUIFER_TREATMENT_BAY",
+    "hypochlorite_reagent_grade": "CALCIUM_HYPOCHLORITE_65PCT",
+    "free_chlorine_residual_mg_l": 1.5,
+    "water_ph_at_sampling": 8.7,
+    "timestamp_relative": "YEAR_20_CHLORINE_LOG_01",
+    "tags": ["water_treatment", "hypochlorous_acid", "ph_effect", "germicidal_efficiency", "acid_dosing"],
+    "prose": "At pH 8.7, over 85% of dissolved chlorine dissociated into the sluggish hypochlorite ion (OCl-), which has only 1/80th the germicidal efficacy of uncharged hypochlorous acid (HOCl). Injecting carbon dioxide to lower pH to 7.2 boosted bactericidal kill rates twenty-fold."
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "ozone_corona_dielectric_glass_tube_puncture",
+    "ozonator_unit_id": "MAIN_CORONA_GENERATOR_01",
+    "applied_voltage_kilovolts": 12.5,
+    "ozone_output_grams_per_hour": 180.0,
+    "contact_time_minutes": 5.0,
+    "timestamp_relative": "YEAR_02_OZONE_LOG_01",
+    "tags": ["water_treatment", "ozone", "corona_discharge", "dielectric_tube", "high_voltage"],
+    "prose": "A microscopic void in the borosilicate glass dielectric tube caused localized electric arcing under 12.5 kV. The intense plasma discharge punctured the glass wall, short-circuiting the power supply and reducing generator ozone output by half."
+  },
+  {
+    "id": "ozone_contact_venturi_injector_suction_loss",
+    "ozonator_unit_id": "VENTURI_CONTACT_SKID_02",
+    "applied_voltage_kilovolts": 10.0,
+    "ozone_output_grams_per_hour": 120.0,
+    "contact_time_minutes": 4.0,
+    "timestamp_relative": "YEAR_04_OZONE_LOG_03",
+    "tags": ["water_treatment", "ozone", "venturi_injector", "gas_suction", "mass_transfer"],
+    "prose": "Scale buildup inside the downstream booster pump impeller dropped differential pressure across the 316-stainless venturi educator. Without adequate pressure drop, vacuum suction failed, and ozone gas bubbles backed up into the safety check valve."
+  },
+  {
+    "id": "ozone_contact_counter_current_bubble_column",
+    "ozonator_unit_id": "SIX_METER_CONTACT_TOWER_01",
+    "applied_voltage_kilovolts": 14.0,
+    "ozone_output_grams_per_hour": 250.0,
+    "contact_time_minutes": 8.0,
+    "timestamp_relative": "YEAR_07_OZONE_LOG_02",
+    "tags": ["water_treatment", "ozone", "contact_tower", "counter_current", "disinfection"],
+    "prose": "Dispersing ozone gas through microporous ceramic diffusers at the base of a six-meter column established counter-current flow against descending water. The system achieved a CT value of 1.6 mg·min/L, inactivating 99.99% of enteric viruses."
+  },
+  {
+    "id": "ozone_contact_off_gas_thermal_catalytic_destructor",
+    "ozonator_unit_id": "OFF_GAS_DESTRUCTOR_UNIT_03",
+    "applied_voltage_kilovolts": 0.0,
+    "ozone_output_grams_per_hour": 0.0,
+    "contact_time_minutes": 0.5,
+    "timestamp_relative": "YEAR_09_OZONE_LOG_04",
+    "tags": ["water_treatment", "ozone", "off_gas", "catalytic_destructor", "air_safety"],
+    "prose": "Residual ozone off-gas venting from the contact chamber passed through a heated granular manganese dioxide catalyst bed. The catalytic reaction converted 99.9% of residual O3 back into breathable oxygen, keeping room air below the 0.1 ppm exposure limit."
+  },
+  {
+    "id": "ozone_contact_desiccant_dew_point_moisture_corrosion",
+    "ozonator_unit_id": "AIR_PREPARATION_DESICCANT_SKID",
+    "applied_voltage_kilovolts": 11.5,
+    "ozone_output_grams_per_hour": 90.0,
+    "contact_time_minutes": 4.5,
+    "timestamp_relative": "YEAR_12_OZONE_LOG_01",
+    "tags": ["water_treatment", "ozone", "dew_point", "nitric_acid", "corrosion"],
+    "prose": "Saturated molecular sieve desiccant allowed feed air dew point to rise from -60°C to -15°C. In the corona gap, atmospheric moisture reacted with nitrogen oxides to synthesize nitric acid vapor, corroding the aluminum discharge electrodes into white crumbly powder."
+  },
+  {
+    "id": "ozone_contact_bromate_byproduct_formation_control",
+    "ozonator_unit_id": "DEEP_BRACKISH_OZONATOR_04",
+    "applied_voltage_kilovolts": 13.0,
+    "ozone_output_grams_per_hour": 210.0,
+    "contact_time_minutes": 6.0,
+    "timestamp_relative": "YEAR_15_OZONE_LOG_03",
+    "tags": ["water_treatment", "ozone", "bromate", "disinfection_byproduct", "ph_control"],
+    "prose": "Ozonating brackish groundwater containing 0.3 mg/L bromide ions formed carcinogenic bromate (BrO3-) at 28 ppb. Dosing dilute sulfuric acid to suppress influent pH from 8.2 down to 6.5 shifted oxidation kinetics, keeping bromate below the 10 ppb safety threshold."
+  },
+  {
+    "id": "ozone_contact_elastomer_viton_gasket_embrittlement",
+    "ozonator_unit_id": "MANIFOLD_SEAL_REFIT_BAY",
+    "applied_voltage_kilovolts": 0.0,
+    "ozone_output_grams_per_hour": 0.0,
+    "contact_time_minutes": 0.0,
+    "timestamp_relative": "YEAR_17_OZONE_LOG_02",
+    "tags": ["water_treatment", "ozone", "elastomer", "viton", "embrittlement"],
+    "prose": "An erroneous maintenance replacement installed nitrile (Buna-N) flange gaskets on the concentrated ozone piping. Within ten days, ozone cleaved the polymer double bonds, cracking the gaskets into brittle crumbs; all seals were replaced with PTFE-encapsulated Viton."
+  },
+  {
+    "id": "ozone_contact_geiger_rad_water_micro_flocculation",
+    "ozonator_unit_id": "RAW_MINE_WATER_PRE_TREATMENT",
+    "applied_voltage_kilovolts": 12.0,
+    "ozone_output_grams_per_hour": 160.0,
+    "contact_time_minutes": 3.5,
+    "timestamp_relative": "YEAR_20_OZONE_LOG_01",
+    "tags": ["water_treatment", "ozone", "micro_flocculation", "iron_humate", "filtration_aid"],
+    "prose": "Low-dose pre-ozonation (0.8 mg/L) oxidized dissolved fulvic and humic acids chelating radioactive heavy metal ions. The micro-flocculation effect aggregated microscopic colloids into settleable flocs, improving downstream sand filter retention by 40%."
+  }
+]

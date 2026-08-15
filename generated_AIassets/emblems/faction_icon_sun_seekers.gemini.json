@@ -1,0 +1,13 @@
+{
+  "successful": true,
+  "data": {
+    "image": {
+      "mimetype": "image/png",
+      "name": "generated_image.png",
+      "s3url": "https://temp.4d4f16c61d89ec64e760039c4ec50717.r2.cloudflarestorage.com/1086334/gemini/GEMINI_GENERATE_IMAGE/response/5ec98319b51d03ec7cb1a4579a44dfee?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=7685aa30fee07632b83ea58979a398d0%2F20260815%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260815T175717Z&X-Amz-Expires=3600&X-Amz-Signature=c57402e08d6e8b5ddb5fce24ef303f84c97abdf90ff40176ee112360dd9c998c&X-Amz-SignedHeaders=host"
+    }
+  },
+  "error": null,
+  "logId": "log_dGeKqgB05Kut",
+  "permissionApproval": "cached_approved"
+}
