@@ -30,6 +30,29 @@ namespace AtomicWar.GodotApp
         public IReadOnlyList<string> CorruptionCorpus { get; private set; }
         private readonly ISeededRng _machineRng;
 
+        /// <summary>Flag-gate materialization: the six Verdict figures unlock from
+        /// real progress (evidence, phase, call). Hosts present this; no NPC gate is
+        /// a debug backdoor — each flag traces to an actual machine milestone.</summary>
+        public System.Collections.Generic.HashSet<string> MaterializedNpcFlags()
+        {
+            var flags = new System.Collections.Generic.HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            if (MachineLog.ReadCount() >= 1) flags.Add("flag_verdict_fuse_world_read");
+            if (MachineLog.ReadCount() >= 1) flags.Add("flag_verdict_relay_read");
+            if (Evidence.IsEnrolled("evidence_eden_log")) flags.Add("flag_verdict_eden_log_recovered");
+            if (Evidence.IsEnrolled("evidence_fuse_linen")) flags.Add("flag_verdict_fuse_world_read");
+            if (Evidence.IsEnrolled("evidence_fuse_linen")) flags.Add("flag_verdict_shift_charter_restored");
+            if (Evidence.IsEnrolled("evidence_geophone_hymn")) flags.Add("flag_verdict_clerk_met");
+            if (Reckoning.State.callResolved) flags.Add("flag_verdict_call_resolved");
+            return flags;
+        }
+
+        /// <summary>NPCs currently available given live progress (flag + phase + optional site).</summary>
+        public System.Collections.Generic.List<Ashfall.Core.Verdict.VerdictNpcEntry> AvailableNpcs(string locationId = null)
+        {
+            int phase = (int)Reckoning.Phase;
+            return Npcs.GetAvailable(MaterializedNpcFlags(), phase, locationId);
+        }
+
         public string LastEvent { get; private set; } = string.Empty;
 
         public event Action StateChanged;
@@ -83,10 +106,18 @@ namespace AtomicWar.GodotApp
             if (save != null)
             {
                 VerdictSaveCodec.Restore(save, session.MachineLog, session.Reckoning, session.Evidence, session.Npcs);
+                // Observability: remember which save version loaded and whether it migrated (C).
+                session.LoadedSaveVersion = save.saveVersion;
+                session.WasSaveMigrated = save.saveVersion != VerdictSave.CurrentSaveVersion;
                 session.LastEvent = "Verdict state restored from save.";
             }
             return session;
         }
+
+        /// <summary>Save version loaded at startup (observability; 0 = none).</summary>
+        public int LoadedSaveVersion { get; private set; }
+        /// <summary>True when the loaded save was migrated to the current version (v1→v2).</summary>
+        public bool WasSaveMigrated { get; private set; }
 
         /// <summary>Coarse game-time step — call once per sim-day, not per-frame.</summary>
         public void AdvanceDay(int day, int livingCount, int logReadCount)

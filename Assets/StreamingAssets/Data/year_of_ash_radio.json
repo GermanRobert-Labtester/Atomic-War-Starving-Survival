@@ -330,6 +330,123 @@
       "dayTrigger": 240,
       "source": "Sector 4 Garrison Command (Acting)",
       "message": "TO ALL SHELTERS. BY ORDER OF THE CONTINUITY RECLAMATION DECREE, EFFECTIVE IMMEDIATELY: Colonel Harven assumes command of Sector 4 Garrison. All standing orders issued under the previous command are revoked. Movement permits must be re-issued at Checkpoint Gamma. The previous command's coastal liaison detachments are closed. Reassignment orders dated prior to this broadcast are void. AMENDED: no further announcements will be made on this channel. KEEP THE WIRE CLEAR. CZC."
+    },
+    {
+      "id": "radio_verdict_call_open",
+      "frequency": "96.400 MHz",
+      "dayTrigger": 210,
+      "source": "The Tempest Automated Pilot",
+      "message": "THE RECKONING CALL IS OPEN. THE STANDARD STANDS AT ELEVEN PERCENT. ALL SECTOR REGISTERS MAY SUBMIT COUNT TO CARRIER WINDOW 04.",
+      "signalStrength": "S8",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_call_taken",
+      "frequency": "96.400 MHz",
+      "dayTrigger": 245,
+      "source": "The Tempest Automated Pilot",
+      "message": "THE CALL HAS BEEN TAKEN. PRESENTATION SCHEDULED. LOGGING RESUMES ON THE DIAL.",
+      "signalStrength": "S7",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_eden_was_here",
+      "frequency": "104.700 MHz",
+      "dayTrigger": 220,
+      "source": "Eden Vale (Recorded Relay)",
+      "message": "Still here. Static's thinning. That's not good news, that's a storm on the way. If anyone's reading, the array's drawing again. I don't know what it's drawing for. I don't think it draws for us.",
+      "signalStrength": "S5",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_carrier_on_window",
+      "frequency": "96.400 MHz",
+      "dayTrigger": 260,
+      "source": "The Tempest Pilot Tone",
+      "message": "CARRIER TONE CONSTANT. CENSUS WINDOW MONITORED. RECORDING PULSES 12-MINUTE CYCLE.",
+      "signalStrength": "S9",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_meter_reads",
+      "frequency": "calibration sub-band",
+      "dayTrigger": 205,
+      "source": "Tempest (data burst)",
+      "message": "The meter reads 11:42 — a data burst that is three numbers and nothing else.",
+      "signalStrength": "S4",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_fuse_serviced",
+      "frequency": "maintenance band",
+      "dayTrigger": 218,
+      "source": "Tempest (confirmation)",
+      "message": "The fuse serviced — a maintenance confirmation with a timestamp exactly matching a mortar period.",
+      "signalStrength": "S4",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_wing_sleeps",
+      "frequency": "drone-hive telemetry",
+      "dayTrigger": 243,
+      "source": "Tempest (readout)",
+      "message": "The wing sleeps — the drone-hive draw minus half a degree, first broadcast post-Call. A readout change only.",
+      "signalStrength": "S4",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_off_count_assessed",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 241,
+      "source": "Office of Censuses (automated tape)",
+      "message": "The off-count is assessed — the call's most human line, on a loop that is only the first six seconds.",
+      "signalStrength": "S5",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_count_is_open_amateur",
+      "frequency": "amateur band",
+      "dayTrigger": 240,
+      "source": "Office of Censuses (automated tape, amateur listen)",
+      "message": "The count is open — the call's full text, once, on a different band, the one amateur rigs were on.",
+      "signalStrength": "S3",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_clock_disagrees",
+      "frequency": "census registry feed",
+      "dayTrigger": 240,
+      "source": "Tempest (data)",
+      "message": "The clock disagrees — a three-day drift, presented as data. The machine and the sector's wars cannot agree on what day it is.",
+      "signalStrength": "S4",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_geophone_allotments",
+      "frequency": "geophone telemetry",
+      "dayTrigger": 210,
+      "source": "Tempest (unlabeled)",
+      "message": "Geophone taps under the Allotments — the farm's seismic signature, unlabeled, entered because the annex list says so.",
+      "signalStrength": "S4",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_valve_s36",
+      "frequency": "maintenance band",
+      "dayTrigger": 252,
+      "source": "Tempest (maintenance)",
+      "message": "Valve accessed per 36 — the shift-water readout, posted after the Shift 36 charter was restored.",
+      "signalStrength": "S4",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_verdict_reels_matter",
+      "frequency": "archive registry",
+      "dayTrigger": 260,
+      "source": "Tempest (counting)",
+      "message": "The reels matter — the archive's count, after the mattering reels were routed onward.",
+      "signalStrength": "S4",
+      "isEmergency": false
     }
   ]
 }

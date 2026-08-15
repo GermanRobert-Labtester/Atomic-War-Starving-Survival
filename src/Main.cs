@@ -282,7 +282,10 @@ namespace AtomicWar.GodotApp
             if (_diagnosticsLabel == null) return;
             double fps = Engine.GetFramesPerSecond();
             double memMb = (long)OS.GetStaticMemoryUsage() / (1024.0 * 1024.0);
-            _diagnosticsLabel.Text = $"FPS: {fps:F0} | Static Mem: {memMb:F1} MB | Godot {s_engineVersion}";
+            string verdictSave = _verdict != null
+                ? $" | VerdictSave v{_verdict.LoadedSaveVersion}{( _verdict.WasSaveMigrated ? " (migrated)" : "")}"
+                : string.Empty;
+            _diagnosticsLabel.Text = $"FPS: {fps:F0} | Static Mem: {memMb:F1} MB | Godot {s_engineVersion}{verdictSave}";
 
             _diagnosticsLogAccum += elapsed;
             if (_diagnosticsLogAccum >= 1.0)
@@ -2924,6 +2927,10 @@ namespace AtomicWar.GodotApp
                 SetupInventory();
                 _inventory.Add(result.grantItemId, result.grantItemQty);
                 if (_inventoryPanel != null) _inventoryPanel.RefreshView();
+
+                // Journal Items tab reveals the fragment once it is in hand.
+                SetupJournal();
+                _journal.UnlockItemSeen(result.grantItemId);
 
                 // evidence_* grants enroll into the Verdict's authoritative evidence ledger.
                 if (result.grantItemId.StartsWith("evidence_", StringComparison.Ordinal))
