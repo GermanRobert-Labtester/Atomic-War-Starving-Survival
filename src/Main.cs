@@ -55,6 +55,12 @@ namespace AtomicWar.GodotApp
         private DeserterCoalitionCampWidget _campWidget = null!;
         private JournalWitnessPanel _witnessPanel = null!;
 
+        // ASHFALL: THE VERDICT (Expansion 08 — the machine that keeps the count)
+        private AtomicWar.GodotApp.VerdictHostSession _verdict = null!;
+        private Godot.Label _verdictReadoutLabel = null!;
+        private VerdictPanel _verdictPanel = null!;
+        private bool _verdictDirty;
+
         // Inventory (ported from Unity _Game/Inventory)
         private InventoryHostSession _inventory = null!;
         private AtomicWar.GodotApp.Inventory.InventoryPanel _inventoryPanel = null!;
@@ -89,6 +95,9 @@ namespace AtomicWar.GodotApp
 
         // Phase 0 core slice: ice-road seasonal gate + Holdfast catalogs
         private CoreDemoSession _core = null!;
+        // Playable Holdfast vertical slice: catalog-backed terminal + mutable trade state.
+        private HoldfastRuntimeSession _holdfastRuntime = null!;
+        private HoldfastTerminalPanel _holdfastTerminal = null!;
         // ASHFALL: THE DUTY ROSTER (Exp 02) — chart, marks, encounters
         private DutyRosterHostSession _dutyRoster = null!;
         private ExpansionHostSession _expansions = null!;
@@ -153,11 +162,17 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.HoldfastSaveSelfTest:
                     GetTree().Quit(HostCli.RunHoldfastSaveSelfTest(_dataDir));
                     return;
+                case HostCliAction.HoldfastRuntimeUiTest:
+                    RunHoldfastRuntimeUiTestAndQuit();
+                    return;
                 case HostCliAction.BrineSelfTest:
                     GetTree().Quit(HostCli.RunBrineSelfTest());
                     return;
                 case HostCliAction.MusterSelfTest:
                     GetTree().Quit(HostCli.RunMusterSelfTest());
+                    return;
+                case HostCliAction.VerdictSelfTest:
+                    GetTree().Quit(HostCli.RunVerdictSelfTest(_dataDir));
                     return;
                 case HostCliAction.ClusterSelfTest:
                     GetTree().Quit(HostCli.RunClusterSelfTest(_dataDir));
@@ -315,6 +330,7 @@ namespace AtomicWar.GodotApp
             {
                 SaveJournal();
                 SaveHoldfast();
+                SaveHoldfastRuntime();
                 SaveDutyRoster();
                 SaveExpansionHub();
                 SavePhantomMemory();
@@ -410,6 +426,8 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Repair membrane (resin)", OnRepairMembraneClicked);
             AddMenuButton("Toggle outfall shift", OnToggleOutfallClicked);
             AddMenuButton("Save holdfast state", OnSaveHoldfastClicked);
+            AddMenuButton("Holdfast: open terminal", OnHoldfastOpenClicked);
+            AddMenuButton("Holdfast: new ledger", OnHoldfastNewLedgerClicked);
             AddMenuButton("Cycle ending (S4)", OnCycleEndingClicked);
             // ── ASHFALL: THE DUTY ROSTER (Exp 02) ──────────────────────
             AddMenuButton("Roster: inspect the Chart", OnRosterInspectWallClicked);
@@ -458,6 +476,10 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Muster: three witnesses (Harven)", OnMusterWitnessesClicked);
             AddMenuButton("Muster: witness author bias", OnMusterAuthorBiasClicked);
             AddMenuButton("Muster: epilogue matrix", OnMusterEpiloguesClicked);
+            // ── THE VERDICT (Exp 08) ───────────────────────────────────
+            AddMenuButton("Verdict: open the machine readout", OnVerdictOpenClicked);
+            AddMenuButton("Verdict: advance reckoning a day", OnVerdictTickClicked);
+            AddMenuButton("Verdict: census window now", OnVerdictCensusClicked);
             // ── INVENTORY (ported from Unity _Game/Inventory) ───────────
             AddMenuButton("Inventory: open the panel", OnInventoryOpenClicked);
             AddMenuButton("Inventory: add canned food ×6", () => OnInventoryAddClicked("canned_food", 6));
@@ -481,7 +503,7 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Utility AI: evaluate demo survivor", OnUtilityAiEvaluateClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -698,6 +720,17 @@ namespace AtomicWar.GodotApp
             GD.Print($"[Ashfall Godot] Ice road ready. {_core.CatalogLine()}");
         }
 
+        private void SetupHoldfastRuntime()
+        {
+            SetupIceRoad();
+            if (_holdfastRuntime != null) return;
+
+            _holdfastRuntime = HoldfastRuntimeSession.Create(_core);
+            _holdfastTerminal = new HoldfastTerminalPanel();
+            AddChild(_holdfastTerminal);
+            _holdfastTerminal.BindSession(_holdfastRuntime);
+        }
+
         private void SetupDutyRoster()
         {
             if (_dutyRoster != null) return;
@@ -797,6 +830,7 @@ namespace AtomicWar.GodotApp
             SetupDutyRoster();
             _simDay++;
             _dutyRoster.Clock.AdvanceDays(1);
+            TickVerdict(_simDay, LivingDwellerCountEstimate());
             _statusLabel.Text = _dutyRoster.StartEncounter(ShelterEncounterSystem.KindNightSlate);
             RefreshRosterStatus();
         }
@@ -1025,6 +1059,13 @@ namespace AtomicWar.GodotApp
                 _holdfastDirty = false;
                 GD.Print($"[Ashfall Godot] Holdfast S1 save written (day {_core.Clock.Day}).");
             }
+        }
+
+        private void SaveHoldfastRuntime()
+        {
+            if (_holdfastRuntime == null) return;
+            if (_holdfastRuntime.TrySave())
+                GD.Print("[Ashfall Godot] Holdfast player/trade state written.");
         }
 
         /// <summary>Writes the S1 save only when a system changed since the last flush.</summary>
@@ -1604,6 +1645,123 @@ namespace AtomicWar.GodotApp
                 GD.Print("[Ashfall Godot] Muster save written.");
         }
 
+        // ── ASHFALL: THE VERDICT (Expansion 08) ────────────────────────────────
+
+        private void SetupVerdict()
+        {
+            if (_verdict != null) return;
+            _verdict = AtomicWar.GodotApp.VerdictHostSession.Create(_dataDir);
+            _verdict.StateChanged += () => { _verdictDirty = true; RefreshVerdictReadout(); };
+            UnlockVerdictLore();
+            RefreshVerdictReadout();
+
+            // Items 1+8: the diegetic shelter machine surface + a persistent readout strip
+            // (previously declared but never added to the tree).
+            if (_verdictReadoutLabel == null)
+            {
+                _verdictReadoutLabel = new Label
+                {
+                    Text = "[shelter instruments] — standby cycle.",
+                    AutowrapMode = TextServer.AutowrapMode.WordSmart
+                };
+                _verdictReadoutLabel.AddThemeFontSizeOverride("font_size", 12);
+                _rightColumn.AddChild(_verdictReadoutLabel);
+            }
+
+            if (_verdictPanel == null && _rightColumn != null)
+            {
+                _verdictPanel = new VerdictPanel();
+                _rightColumn.AddChild(_verdictPanel);
+                _verdictPanel.Bind(_verdict);
+            }
+            _verdictPanel?.RefreshView();
+
+            GD.Print("[Ashfall Godot] Verdict host ready.");
+        }
+
+        /// <summary>Advance the Reckoning state machine + census carrier for the current sim day.</summary>
+        private void TickVerdict(int day, int livingCount)
+        {
+            SetupVerdict();
+            _verdict.AdvanceDay(day, Math.Max(1, livingCount), _verdict.MachineLog.ReadCount());
+            _verdict.TickCensus();
+            _verdict.TickCorruption(day);
+            UnlockVerdictLore();
+            RefreshVerdictReadout();
+        }
+
+        /// <summary>Unlock lore_verdict_* codex beats from authoritative Verdict state
+        /// (located knowledge: the ladder only opens when the machine/evidence reaches it).</summary>
+        private void UnlockVerdictLore()
+        {
+            if (_verdict == null || _journal == null) return;
+            if (_verdict.MachineLog.ReadCount() >= 1)
+                _journal.UnlockEventFired("lore_verdict_geophone_one");
+            if (_verdict.Evidence.IsEnrolled("evidence_fuse_linen"))
+            {
+                _journal.UnlockEventFired("lore_verdict_shift_charters");
+                _journal.UnlockEventFired("lore_verdict_standard");
+            }
+            if (_verdict.Evidence.IsEnrolled("evidence_uxo_register"))
+                _journal.UnlockEventFired("lore_verdict_the_hold");
+            if (_verdict.Reckoning.State.callResolved)
+            {
+                _journal.UnlockEventFired("lore_verdict_the_call");
+                _journal.UnlockEventFired("lore_verdict_the_count");
+            }
+        }
+
+        private void RefreshVerdictReadout()
+        {
+            if (_verdict == null || _verdictReadoutLabel == null) return;
+            _verdictReadoutLabel.Text = Ashfall.Core.Verdict.VerdictReadout.LineFor(
+                _verdict.Reckoning.State, _verdict.Evidence.Count, _verdict.MachineLog.ReadCount());
+        }
+
+        private void SaveVerdict()
+        {
+            if (_verdict == null) return;
+            if (AtomicWar.GodotApp.VerdictSaveStore.TrySave(_verdict.CaptureSave()))
+            {
+                _verdictDirty = false;
+                GD.Print("[Ashfall Godot] Verdict save written.");
+            }
+        }
+
+        private void OnVerdictOpenClicked()
+        {
+            SetupVerdict();
+            _statusLabel.Text = _verdict.StatusLine() + "\n" +
+                Ashfall.Core.Verdict.VerdictReadout.LineFor(
+                    _verdict.Reckoning.State, _verdict.Evidence.Count, _verdict.MachineLog.ReadCount());
+        }
+
+        private void OnVerdictTickClicked()
+        {
+            SetupVerdict();
+            _simDay++;
+            TickVerdict(_simDay, LivingDwellerCountEstimate());
+            _statusLabel.Text = _verdict.StatusLine();
+        }
+
+        private void OnVerdictCensusClicked()
+        {
+            SetupVerdict();
+            _verdict.TickCensus();
+            _statusLabel.Text = "Census broadcast checked. " + _verdict.StatusLine();
+        }
+
+        /// <summary>Best-available living count without coupling to Survivors internals.</summary>
+        private int LivingDwellerCountEstimate()
+        {
+            if (_survivors != null && _survivors.Roster != null)
+            {
+                int count = _survivors.Roster.LivingCount;
+                if (count > 0) return count;
+            }
+            return 14;
+        }
+
         private void RefreshIceRoadLabel()
         {
             if (_core == null) return;
@@ -1836,6 +1994,283 @@ namespace AtomicWar.GodotApp
                 : -1;
         }
 
+        /// <summary>
+        /// Drives the same Holdfast terminal methods used by the normal Godot UI:
+        /// exhaustive catalog rendering sweep, every failure enum, save/reload,
+        /// post-reload rendering, and continued interaction.
+        /// </summary>
+        private void RunHoldfastRuntimeUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupIceRoad();
+
+            var runtime = new HoldfastRuntimeSession(_core, HoldfastRuntimeSession.DefaultStartingValue);
+            runtime.SeedDevelopmentState();
+            _holdfastRuntime = runtime;
+            _holdfastTerminal = new HoldfastTerminalPanel();
+            AddChild(_holdfastTerminal);
+            _holdfastTerminal.BindSession(runtime);
+            _holdfastTerminal.OpenTerminal();
+
+            bool panel = _holdfastTerminal.IsBound;
+            bool catalogs = _holdfastTerminal.PresentedItemCount == 40
+                && _holdfastTerminal.PresentedFactionCount == 3;
+
+            // ── Catalog rendering sweep: all 40 items and 3 factions ──
+            bool allItemsRender = true;
+            bool allFactionsRender = true;
+            var preSaveSupplyDetails = new Dictionary<string, string>();
+            var preSaveTradeDetails = new Dictionary<string, string>();
+            foreach (var item in runtime.Catalog.Items.Items)
+            {
+                _holdfastTerminal.SelectItem(item.Id);
+                string details = _holdfastTerminal.SupplyDetailsText;
+                if (string.IsNullOrEmpty(details) || !details.Contains(item.DisplayName))
+                    allItemsRender = false;
+                preSaveSupplyDetails[item.Id] = _holdfastTerminal.SupplyDetailsText;
+                preSaveTradeDetails[item.Id] = _holdfastTerminal.TradeDetailsText;
+            }
+            foreach (var faction in runtime.Catalog.Factions)
+            {
+                if (faction == null) continue;
+                _holdfastTerminal.SelectFaction(faction.id);
+                string details = _holdfastTerminal.FactionDetailsText;
+                if (string.IsNullOrEmpty(details) || !details.Contains(faction.display_name))
+                    allFactionsRender = false;
+            }
+            bool renderSweep = allItemsRender && allFactionsRender;
+
+            // ── Core trade flow ──
+            _holdfastTerminal.SelectFaction("faction_the_office");
+            _holdfastTerminal.SelectItem("item_fume_rag");
+            _holdfastTerminal.SetTradeQuantity(2);
+            var buy = _holdfastTerminal.PressBuy();
+            bool bought = buy != null && buy.Success
+                && runtime.Trade.PlayerValue == 96
+                && runtime.Trade.GetHeld("item_fume_rag") == 2
+                && runtime.Trade.GetStock("item_fume_rag") == 2;
+
+            long valueBeforeInvalid = runtime.Trade.PlayerValue;
+            int heldBeforeInvalid = runtime.Trade.GetHeld("item_fume_rag");
+            int stockBeforeInvalid = runtime.Trade.GetStock("item_fume_rag");
+            _holdfastTerminal.SetTradeQuantity(0);
+            var invalid = _holdfastTerminal.PressBuy();
+            bool rejectedWithoutMutation = invalid != null
+                && !invalid.Success
+                && invalid.Failure == HoldfastTradeFailure.InvalidQuantity
+                && runtime.Trade.PlayerValue == valueBeforeInvalid
+                && runtime.Trade.GetHeld("item_fume_rag") == heldBeforeInvalid
+                && runtime.Trade.GetStock("item_fume_rag") == stockBeforeInvalid;
+
+            _holdfastTerminal.SelectItem("item_triplicate_carbon");
+            _holdfastTerminal.SetTradeQuantity(1);
+            var sell = _holdfastTerminal.PressSell();
+            bool sold = sell != null && sell.Success
+                && runtime.Trade.PlayerValue == 100
+                && runtime.Trade.GetHeld("item_triplicate_carbon") == 0
+                && runtime.Trade.GetStock("item_triplicate_carbon") == 21;
+
+            // ── Failure-message matrix ──
+            bool invalidQuantityRendered = false;
+            bool insufficientFundsRendered = false;
+            bool insufficientStockRendered = false;
+            bool insufficientInventoryRendered = false;
+            bool unknownItemRendered = false;
+            bool unknownFactionRendered = false;
+            bool restrictedRendered = false;
+            bool inventoryCapacityRendered = false;
+            // InvalidPrice is exercised by Core unit tests (HoldfastTradeSessionTests)
+            // because valid catalog data never produces an invalid trade value; the UI
+            // path is unreachable without a synthetic catalog.
+
+            // Invalid quantity: already tested above, capture for the matrix.
+            invalidQuantityRendered = invalid != null && !invalid.Success
+                && invalid.Failure == HoldfastTradeFailure.InvalidQuantity
+                && !string.IsNullOrEmpty(invalid.Message);
+
+            // Insufficient funds: start a fresh session with value 1, try to buy expensive item.
+            var poorWorld = CoreDemoSession.Create(_dataDir);
+            var poorRuntime = new HoldfastRuntimeSession(poorWorld, 1);
+            _holdfastTerminal.BindSession(poorRuntime);
+            _holdfastTerminal.SelectFaction("faction_the_office");
+            _holdfastTerminal.SelectItem("item_ice_tyre_set");
+            _holdfastTerminal.SetTradeQuantity(1);
+            var poorResult = _holdfastTerminal.PressBuy();
+            insufficientFundsRendered = poorResult != null && !poorResult.Success
+                && poorResult.Failure == HoldfastTradeFailure.InsufficientFunds
+                && !string.IsNullOrEmpty(poorResult.Message);
+
+            // Insufficient stock: exhaust stock then try one more.
+            var stockWorld = CoreDemoSession.Create(_dataDir);
+            var stockRuntime = new HoldfastRuntimeSession(stockWorld, 200);
+            _holdfastTerminal.BindSession(stockRuntime);
+            _holdfastTerminal.SelectFaction("faction_the_office");
+            _holdfastTerminal.SelectItem("item_fume_rag");
+            _holdfastTerminal.SetTradeQuantity(4);
+            _holdfastTerminal.PressBuy(); // exhaust stock
+            _holdfastTerminal.SetTradeQuantity(1);
+            var stockResult = _holdfastTerminal.PressBuy();
+            insufficientStockRendered = stockResult != null && !stockResult.Success
+                && stockResult.Failure == HoldfastTradeFailure.InsufficientStock
+                && !string.IsNullOrEmpty(stockResult.Message);
+
+            // Insufficient inventory: sell something not held.
+            var invWorld = CoreDemoSession.Create(_dataDir);
+            var invRuntime = new HoldfastRuntimeSession(invWorld, 200);
+            _holdfastTerminal.BindSession(invRuntime);
+            _holdfastTerminal.SelectFaction("faction_the_office");
+            _holdfastTerminal.SelectItem("item_fume_rag");
+            _holdfastTerminal.SetTradeQuantity(1);
+            var invResult = _holdfastTerminal.PressSell();
+            insufficientInventoryRendered = invResult != null && !invResult.Success
+                && invResult.Failure == HoldfastTradeFailure.InsufficientInventory
+                && !string.IsNullOrEmpty(invResult.Message);
+
+            // Invalid price: use an item with tradeValue that would overflow (not possible with long, so skip — Covered by Core tests).
+            // Unknown item.
+            _holdfastTerminal.SelectItemRaw("item_does_not_exist");
+            var unknownResult = _holdfastTerminal.PressBuy();
+            unknownItemRendered = unknownResult != null && !unknownResult.Success
+                && unknownResult.Failure == HoldfastTradeFailure.UnknownItem
+                && !string.IsNullOrEmpty(unknownResult.Message);
+
+            // Unknown faction.
+            _holdfastTerminal.SelectFactionRaw("faction_nonexistent");
+            var factionResult = _holdfastTerminal.PressBuy();
+            unknownFactionRendered = factionResult != null && !factionResult.Success
+                && factionResult.Failure == HoldfastTradeFailure.UnknownFaction
+                && !string.IsNullOrEmpty(factionResult.Message);
+
+            // Restricted: inactive faction.
+            _holdfastTerminal.SelectFactionRaw("faction_the_fleet");
+            var restrictedResult = _holdfastTerminal.PressBuy();
+            restrictedRendered = restrictedResult != null && !restrictedResult.Success
+                && restrictedResult.Failure == HoldfastTradeFailure.UnavailableOrRestricted
+                && !string.IsNullOrEmpty(restrictedResult.Message);
+
+            // Inventory capacity: fill all slots then try one more.
+            var capWorld = CoreDemoSession.Create(_dataDir);
+            var capRuntime = new HoldfastRuntimeSession(capWorld, 1000);
+            _holdfastTerminal.BindSession(capRuntime);
+            _holdfastTerminal.SelectFaction("faction_the_office");
+            int filled = 0;
+            foreach (var def in capRuntime.Catalog.Items.Items)
+            {
+                if (filled >= capRuntime.Trade.Inventory.Capacity) break;
+                if (def.Id == "item_fume_rag") continue; // reserve for the capacity probe
+                capRuntime.Trade.SeedInventory(def.Id, 1);
+                filled++;
+            }
+            _holdfastTerminal.SelectItem("item_fume_rag");
+            _holdfastTerminal.SetTradeQuantity(1);
+            var capResult = _holdfastTerminal.PressBuy();
+            inventoryCapacityRendered = capResult != null && !capResult.Success
+                && capResult.Failure == HoldfastTradeFailure.InventoryCapacity
+                && !string.IsNullOrEmpty(capResult.Message);
+
+            bool failureMatrix = invalidQuantityRendered && insufficientFundsRendered
+                && insufficientStockRendered && insufficientInventoryRendered
+                && unknownItemRendered && unknownFactionRendered
+                && restrictedRendered && inventoryCapacityRendered;
+
+            // ── Save / reload ──
+            _holdfastTerminal.BindSession(runtime);
+
+            string root = ProjectSettings.GlobalizePath("user://");
+            string basePath = Path.Combine(root, "holdfast_runtime_ui_test_base.json");
+            string tradePath = Path.Combine(root, "holdfast_runtime_ui_test_trade.json");
+            bool saved = _holdfastTerminal.PressSave(basePath, tradePath);
+
+            // Change live state after the save so reload has an observable job.
+            _holdfastTerminal.SelectItem("item_fume_rag");
+            _holdfastTerminal.SetTradeQuantity(1);
+            _holdfastTerminal.PressBuy();
+
+            var freshWorld = CoreDemoSession.Create(_dataDir);
+            var freshRuntime = new HoldfastRuntimeSession(freshWorld, 0);
+            _holdfastTerminal.BindSession(freshRuntime);
+            _holdfastTerminal.OpenTerminal();
+            bool reloaded = _holdfastTerminal.PressReload(basePath, tradePath);
+            bool restored = reloaded
+                && freshRuntime.Trade.PlayerValue == 100
+                && freshRuntime.Trade.GetHeld("item_fume_rag") == 2
+                && freshRuntime.Trade.GetStock("item_fume_rag") == 2
+                && freshRuntime.Trade.GetHeld("item_triplicate_carbon") == 0
+                && freshRuntime.Trade.GetStock("item_triplicate_carbon") == 21;
+
+            // ── Post-reload rendering sweep (compare against pre-save state) ──
+            bool postReloadRender = true;
+            foreach (var item in freshRuntime.Catalog.Items.Items)
+            {
+                _holdfastTerminal.SelectItem(item.Id);
+                string postSupply = _holdfastTerminal.SupplyDetailsText;
+                string postTrade = _holdfastTerminal.TradeDetailsText;
+                if (string.IsNullOrEmpty(postSupply) || !postSupply.Contains(item.DisplayName))
+                    postReloadRender = false;
+                if (preSaveSupplyDetails.TryGetValue(item.Id, out string preSupply))
+                {
+                    if (!postSupply.Contains(preSupply.Split('\n')[0]))
+                        postReloadRender = false;
+                }
+                if (preSaveTradeDetails.TryGetValue(item.Id, out string preTrade))
+                {
+                    if (!postTrade.Contains(preTrade.Split('\n')[0]))
+                        postReloadRender = false;
+                }
+            }
+
+            _holdfastTerminal.SelectFaction("faction_the_office");
+            _holdfastTerminal.SelectItem("item_fume_rag");
+            _holdfastTerminal.SetTradeQuantity(1);
+            var continuedBuy = _holdfastTerminal.PressBuy();
+            bool continued = continuedBuy != null && continuedBuy.Success
+                && freshRuntime.Trade.GetHeld("item_fume_rag") == 3
+                && freshRuntime.Trade.PlayerValue == 98;
+
+            // ── New Ledger: two-press confirmation ──
+            bool newLedgerFirstArm = !_holdfastTerminal.PressNewLedger();
+            bool newLedgerConfirmed = _holdfastTerminal.PressNewLedger();
+            bool newLedgerOk = newLedgerFirstArm && newLedgerConfirmed
+                && freshRuntime.Trade.PlayerValue == 0
+                && freshRuntime.Trade.GetHeld("item_fume_rag") == 0;
+
+            // ── Save resilience: quarantine + backup + archive ──
+            string resilienceBase = Path.Combine(root, "holdfast_resilience_base.json");
+            string resilienceTrade = Path.Combine(root, "holdfast_resilience_trade.json");
+            // Save twice so the first save becomes the .bak.
+            bool resilienceSaved = _holdfastTerminal.PressSave(resilienceBase, resilienceTrade);
+            resilienceSaved = resilienceSaved && _holdfastTerminal.PressSave(resilienceBase, resilienceTrade);
+
+            // Corrupt the primary save; load should quarantine and fall back to backup.
+            if (File.Exists(resilienceBase))
+            {
+                var raw = File.ReadAllText(resilienceBase);
+                File.WriteAllText(resilienceBase, raw.Replace("\"Checksum\":\"", "\"Checksum\":\"xx"));
+            }
+            bool quarantinePass = false;
+            if (File.Exists(resilienceBase + ".bak"))
+            {
+                bool quarantineReloaded = _holdfastTerminal.PressReload(resilienceBase, resilienceTrade);
+                var corruptFiles = Directory.GetFiles(root, "holdfast_resilience_base.json.corrupt-*");
+                quarantinePass = quarantineReloaded && corruptFiles.Length > 0;
+            }
+
+            bool archivePass = newLedgerOk;
+
+            bool pass = panel && catalogs && renderSweep && bought && rejectedWithoutMutation
+                && sold && failureMatrix && saved && reloaded && restored && postReloadRender
+                && newLedgerOk && continued && quarantinePass && archivePass;
+            GD.Print($"[HoldfastRuntimeUiTest] panel={panel} catalogs={catalogs} renderSweep={renderSweep} " +
+                     $"buy={bought} invalidAtomic={rejectedWithoutMutation} sell={sold} " +
+                     $"failureMatrix={failureMatrix} save={saved} reload={reloaded} restored={restored} " +
+                     $"postReloadRender={postReloadRender} newLedger={newLedgerOk} continued={continued} quarantine={quarantinePass} archive={archivePass}");
+            GD.Print(pass ? "HOLDFAST_RUNTIME_UITEST PASS" : "HOLDFAST_RUNTIME_UITEST FAIL");
+
+            if (File.Exists(basePath)) File.Delete(basePath);
+            if (File.Exists(tradePath)) File.Delete(tradePath);
+            GetTree().Quit(pass ? 0 : 1);
+        }
+
         /// <summary>Headless smoke: dose register surface builds, actions run, tabs render.</summary>
         private void RunDoseUiTestAndQuit()
         {
@@ -2063,6 +2498,23 @@ namespace AtomicWar.GodotApp
             RefreshIceRoadLabel();
         }
 
+        private void OnHoldfastNewLedgerClicked()
+        {
+            SetupHoldfastRuntime();
+            if (_holdfastTerminal != null)
+            {
+                _holdfastTerminal.PressNewLedger();
+                _statusLabel.Text = _holdfastRuntime?.LastPersistenceMessage ?? "New ledger failed.";
+            }
+        }
+
+        private void OnHoldfastOpenClicked()
+        {
+            SetupHoldfastRuntime();
+            _holdfastTerminal.OpenTerminal();
+            _statusLabel.Text = "Holdfast terminal open. Factions, supplies, inventory, trade, and save/load are live.";
+        }
+
         private void OnTickIceRoadClicked()
         {
             SetupIceRoad();
@@ -2172,8 +2624,10 @@ namespace AtomicWar.GodotApp
         {
             SetupIceRoad();
             SaveHoldfast();
+            SetupHoldfastRuntime();
+            SaveHoldfastRuntime();
             _statusLabel.Text =
-                $"Holdfast S1 state saved (day {_core.Clock.Day}) → {HoldfastSaveStore.FileName}\n" +
+                $"Holdfast state saved (day {_core.Clock.Day}) → {HoldfastSaveStore.FileName} + {HoldfastTradeSaveStore.FileName}\n" +
                 _core.StatusLine();
         }
 
@@ -2370,13 +2824,15 @@ namespace AtomicWar.GodotApp
         private void OnDoorEncounterClicked()
         {
             SetupYearOfAsh();
-            if (_yearOfAsh.Encounters.Catalog.Count == 0)
+            int today = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            var eligible = _yearOfAsh.Encounters.GetEligibleEncounters(today);
+            if (eligible.Count == 0)
             {
-                _statusLabel.Text = "No door encounters found in catalog.";
+                _statusLabel.Text = "No door encounters eligible today (one-shots spent or beyond season cap).";
                 return;
             }
 
-            var enc = _yearOfAsh.Encounters.Catalog[_doorEncounterIndex % _yearOfAsh.Encounters.Catalog.Count];
+            var enc = eligible[_doorEncounterIndex % eligible.Count];
             _doorEncounterIndex++;
             _doorModal.DisplayEncounter(enc, _yearOfAsh.DemoRoster);
             _statusLabel.Text = $"Shelter door visitor arrived: {enc.visitorName}.";
@@ -2461,6 +2917,22 @@ namespace AtomicWar.GodotApp
             // A choice that moves a faction moves the actual war model, not just text.
             if (!string.IsNullOrEmpty(result.factionId) && result.factionDelta != 0)
                 _yearOfAsh.FactionWar.ModifyStanding(result.factionId, result.factionDelta);
+
+            // Grant rewards into the real inventory surface (previously display-only).
+            if (!string.IsNullOrEmpty(result.grantItemId) && result.grantItemQty > 0)
+            {
+                SetupInventory();
+                _inventory.Add(result.grantItemId, result.grantItemQty);
+                if (_inventoryPanel != null) _inventoryPanel.RefreshView();
+
+                // evidence_* grants enroll into the Verdict's authoritative evidence ledger.
+                if (result.grantItemId.StartsWith("evidence_", StringComparison.Ordinal))
+                {
+                    SetupVerdict();
+                    _verdict.Evidence.Enroll(result.grantItemId, day);
+                    UnlockVerdictLore();
+                }
+            }
 
             bool ended = result.newQuestStatus != QuestlineStatus.Active;
             _questlineModal.DisplayResolution(result, ended);

@@ -68,7 +68,27 @@ namespace AtomicWar.GodotApp
                 MakeDef("geiger_counter", "Geiger Counter", ItemType.Device, stackMax: 1, weight: 0.9f, trade: 25f),
                 MakeDef("scrap_mechanical", "Mechanical Parts", ItemType.Material, stackMax: 50, weight: 0.2f, trade: 2f),
                 MakeDef("scrap_electronic", "Electronic Scrap", ItemType.Material, stackMax: 50, weight: 0.1f, trade: 3f),
-                MakeDef("scrap_chemical", "Chemicals", ItemType.Material, stackMax: 50, weight: 0.3f, trade: 4f)
+                MakeDef("scrap_chemical", "Chemicals", ItemType.Material, stackMax: 50, weight: 0.3f, trade: 4f),
+
+                // ── ASHFALL: THE VERDICT (Expansion 08) — narrative evidence & quest items ──
+                // Evidence is authoritative in the Verdict EvidenceLedger; these ItemDefinitions
+                // make the fragments physically present so the inventory surface and quest
+                // grantItemId references resolve without forking a parallel item system.
+                MakeDef("evidence_geophone_hymn", "The Farm's Seismic Signature", ItemType.Relic, weight: 1.2f, trade: 12f),
+                MakeDef("evidence_twelve_gauge_steel", "The Fired-Plate Ordnance Log", ItemType.Relic, weight: 4f, trade: 18f),
+                MakeDef("evidence_fuse_linen", "The Standard's Linen", ItemType.Relic, weight: 0.4f, trade: 40f),
+                MakeDef("evidence_census_draft", "The Partial County Ledger", ItemType.Relic, weight: 0.8f, trade: 25f),
+                MakeDef("evidence_mailroom_tape", "Carbon-Copy Censusing Rota", ItemType.Relic, weight: 0.3f, trade: 30f),
+                MakeDef("evidence_uxo_register", "The Hold Register", ItemType.Relic, weight: 1.6f, trade: 55f),
+                MakeDef("evidence_call_calibration", "The Calibration Burst", ItemType.Relic, weight: 0.2f, trade: 45f),
+                MakeDef("evidence_call_plain", "The Plain Burst", ItemType.Relic, weight: 0.2f, trade: 50f),
+                MakeDef("evidence_reels_matter", "The Archive's Own Accounting", ItemType.Relic, weight: 2f, trade: 35f),
+                MakeDef("evidence_valve_s36", "The Valve, Read Per 36", ItemType.Relic, weight: 3f, trade: 60f),
+                MakeDef("evidence_eden_log", "Eleven Months of Tube-Bleed", ItemType.Relic, weight: 1.1f, trade: 70f),
+                MakeDef("evidence_veen_your_people", "The Count, Presented", ItemType.Relic, weight: 0.5f, trade: 0f),
+                MakeDef("item_archive_tape_silo_key", "The Tape-Silo Key", ItemType.Quest, weight: 0.9f, trade: 90f),
+                MakeDef("item_fuse_world_shift_charter", "Shift 36's Charter", ItemType.Quest, weight: 1.4f, trade: 75f),
+                MakeDef("item_verdict_salt_flat_sample", "Salt Flat Sample", ItemType.Comfort, weight: 1f, morale: 2f, trade: 8f)
             };
             foreach (var d in defs) catalog.Register(d);
         }

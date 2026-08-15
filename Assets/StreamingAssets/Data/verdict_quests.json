@@ -1,0 +1,5 @@
+{
+  "deprecated": true,
+  "note": "LEGACY PRESENTATION CATALOG — SUPERSEDED. The playable Verdict quests live in verdict_questlines.json (runtime QuestlineDefinition stageId-DAG schema). This file exists only so old docs/codex references resolve; it is NOT loaded by any runtime consumer. Do not extend it. Remove once all references to verdict_quests.json are migrated.",
+  "quests": []
+}

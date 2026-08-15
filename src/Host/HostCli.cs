@@ -9,9 +9,14 @@ using Ashfall.Core.Economy;
 using Ashfall.Core.UtilityAI;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
+using Ashfall.Core.Verdict;
+using Ashfall.Core.Clock;
+using Ashfall.Core.Events;
+using Ashfall.Core.Flags;
 using AtomicWar.GodotApp.YearOfAsh;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace AtomicWar.GodotApp
 {
@@ -26,6 +31,7 @@ namespace AtomicWar.GodotApp
         HoldfastBriefing,
         IceRoadTickDemo,
         HoldfastSaveSelfTest,
+        HoldfastRuntimeUiTest,
         BrineSelfTest,
         MusterSelfTest,
         ClusterSelfTest,
@@ -45,6 +51,7 @@ namespace AtomicWar.GodotApp
         GreenhouseSelfTest,
         ExpansionsSelfTest,
         YearOfAshSaveSelfTest,
+        VerdictSelfTest,
         DutyRosterSaveSelfTest,
         ExpansionHubSaveSelfTest,
         DoseLedgerSelfTest,
@@ -104,6 +111,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.IceRoadTickDemo;
             if (Has(args, "--holdfast-save-selftest"))
                 return HostCliAction.HoldfastSaveSelfTest;
+            if (Has(args, "--holdfast-runtime-uitest") || Has(args, "--holdfast-runtime-ui-test") || Has(args, "--holdfast-runtime-selftest"))
+                return HostCliAction.HoldfastRuntimeUiTest;
             if (Has(args, "--brine-selftest") || Has(args, "--salt-steam-selftest"))
                 return HostCliAction.BrineSelfTest;
             if (Has(args, "--muster-selftest") || Has(args, "--expansion-06-selftest"))
@@ -128,6 +137,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.BridgeSelfTest;
             if (Has(args, "--year-of-ash-save-selftest"))
                 return HostCliAction.YearOfAshSaveSelfTest;
+            if (Has(args, "--verdict-selftest") || Has(args, "--expansion-08-selftest"))
+                return HostCliAction.VerdictSelfTest;
             if (Has(args, "--duty-roster-save-selftest"))
                 return HostCliAction.DutyRosterSaveSelfTest;
             if (Has(args, "--expansion-hub-save-selftest"))
@@ -178,6 +189,9 @@ namespace AtomicWar.GodotApp
             GD.Print("  --core-selftest          Ice road + census headless demos");
             GD.Print("  --ice-road-tick-demo     Unlock, clerk, 30 day ticks, print catalog + briefing");
             GD.Print("  --holdfast-save-selftest S1 save write → reload → restore → checksum/tamper checks");
+            GD.Print("  --holdfast-runtime-uitest        Godot Holdfast terminal browse → trade → failed trade → save → reload\n" +
+                      "  --holdfast-runtime-ui-test        alias for --holdfast-runtime-uitest\n" +
+                      "  --holdfast-runtime-selftest        alias for --holdfast-runtime-uitest");
             GD.Print("  --brine-selftest         BrineWaterHeadlessDemo (S2 salt & steam)");
             GD.Print("  --muster-selftest        MusterHeadlessDemo (Exp 06 the Muster)");
             GD.Print("  --cluster-selftest       Cluster12CHeadlessDemo (S3 order 12-C + quest snapshot)");
@@ -187,6 +201,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --journal-uitest         Build ledger UI, cycle tabs, quit");
             GD.Print("  --bridge-selftest        UnityEngine shim failure policy (semantic throws, cosmetic quiet)");
             GD.Print("  --year-of-ash-save-selftest Year of Ash save write → reload → restore → checksum/tamper checks");
+            GD.Print("  --verdict-selftest         The Verdict (Exp 08): machine log, reckoning phases, evidence, census, save");
             GD.Print("  --duty-roster-save-selftest Duty Roster save write → reload → restore → checksum/tamper checks");
             GD.Print("  --expansion-hub-save-selftest Expansion hub save write → reload → restore → checksum/tamper checks");
             GD.Print("  --dose-ledger-selftest       Dose Ledger save write → reload → restore → checksum/tamper checks");
@@ -214,7 +229,12 @@ namespace AtomicWar.GodotApp
         {
             var report = ExpansionMasterSession.RunAllSelfTests(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            if (report.ExitCode != 0)
+                return report.ExitCode;
+            // Chain the Verdict (Exp 08) gate into the full expansion suite so a
+            // CI/expansions run also proves the machine log / reckoning / census /
+            // evidence / ending / save chain (item 10).
+            return RunVerdictSelfTest(dataDirectory);
         }
 
         public static int RunGreenhouseSelfTest()
@@ -292,6 +312,112 @@ namespace AtomicWar.GodotApp
             var report = MusterHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
             return report.ExitCode;
+        }
+
+        /// <summary>
+        /// The Verdict (Expansion 08) headless gate: machine log, three Reckoning
+        /// phases, census carrier, evidence ledger, ending selection, and a
+        /// save round-trip with tamper rejection. Pure core — no UI nodes.
+        /// </summary>
+        public static int RunVerdictSelfTest(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+            string tmpPath = Path.Combine(
+                Path.GetTempPath(), "ashfall_verdict_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else { GD.Print("[FAIL] " + name); failures++; }
+            }
+
+            try
+            {
+                var clock = new Ashfall.Core.Clock.SimClock();
+                var bus = new SimpleEventBus();
+                var flags = new InMemoryFlagLedger();
+                var rng = new SeededRng(8841209);
+
+                var machineLog = new MachineLogSystem();
+                var reckoning = new ReckoningSystem();
+                var evidence = new EvidenceLedger();
+
+                // Dormancy → Knowing
+                Check(reckoning.Poll(100, 14, 0, 0).Count == 0, "dormant before Day 160");
+                Check(reckoning.Poll(160, 14, 1, 0).Contains("phase_knowing"), "Knowing at Day 160");
+
+                // Machine log: post + read (evidence enrollment)
+                machineLog.Post("loc_geophone_pit_1", 162, "operating", "a tap.", "evidence_geophone_hymn");
+                machineLog.Post("loc_geophone_pit_1", 162, "operating", "dup", "evidence_geophone_hymn");
+                Check(machineLog.Entries.Count == 1, "duplicate suppression");
+                string tag = machineLog.ReadEntry(0);
+                Check(tag == "evidence_geophone_hymn", "read enrolls evidence tag");
+                evidence.Enroll(tag, 162);
+
+                // Knowing → Culpable (evidence gate)
+                var fired2 = reckoning.Poll(211, 14, 1, evidence.Count);
+                Check(fired2.Contains("phase_culpable") && fired2.Contains("carrier_heard"),
+                    "Culpable + carrier armed (with evidence)");
+                Check(!reckoning.Poll(220, 14, 1, evidence.Count).Contains("carrier_heard"), "carrier one-shot");
+
+                // Census window + broadcast idempotency
+                var census = new VerdictCensusBroadcast(clock, bus, flags, rng, new SelftestCensus(14));
+                clock.SetTick(3 * Ashfall.Core.Clock.SimClock.TicksPerHour);
+                census.BroadcastIfDue();
+                Check(bus.PublishedEvents.Any(e => e.name == "radio.census.header"), "census header published");
+                int before = bus.PublishedEvents.Count;
+                census.BroadcastIfDue();
+                Check(bus.PublishedEvents.Count == before, "census broadcast once per window");
+
+                // Counted + Call
+                var fired3 = reckoning.Poll(241, 14, 2, evidence.Count);
+                Check(fired3.Contains("reckoning_call"), "reckoning call at Day 240+");
+                Check(reckoning.Phase == ReckoningPhase.Counted, "phase === Counted");
+
+                // Ending selection (mutually exclusive)
+                Check(reckoning.SelectEnding("ending_verdict_the_sector_recounts", 241), "ending selected");
+                Check(!reckoning.SelectEnding("ending_verdict_the_count_is_held", 242), "endings mutually exclusive");
+
+                // Save round-trip
+                var save = VerdictSaveCodec.Capture(241, machineLog, reckoning, evidence, census.LastWindowDay);
+                string encoded = VerdictSaveCodec.Encode(save, new SystemTextJsonSerializer());
+                VerdictSaveStore.TrySave(save, tmpPath);
+                var loaded = VerdictSaveStore.TryLoad(tmpPath);
+                Check(loaded != null, "verdict save loads back");
+                if (loaded != null)
+                {
+                    Check(loaded.reckoning.phase == ReckoningPhase.Counted, "phase restored");
+                    Check(loaded.reckoning.countPresented, "ending restored");
+                    Check(loaded.evidence.enrolled.Count == 1, "evidence restored");
+                }
+
+                // Tamper rejection
+                string tampered = encoded.Replace("\"simDay\":241", "\"simDay\":999");
+                Check(!VerdictSaveCodec.TryDecode(tampered, new SystemTextJsonSerializer(), out _),
+                    "tampered save rejected");
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] verdict selftest threw: " + e);
+                failures++;
+            }
+            finally
+            {
+                if (System.IO.File.Exists(tmpPath)) System.IO.File.Delete(tmpPath);
+            }
+
+            GD.Print(failures == 0
+                ? "VERDICT_SELFTEST PASS"
+                : $"VERDICT_SELFTEST FAIL ({failures})");
+            return failures == 0 ? 0 : 1;
+        }
+
+        private sealed class SelftestCensus : IWorldCensus
+        {
+            private readonly long _n;
+            public SelftestCensus(long n) { _n = n; }
+            public long LivingRegisteredSouls() => _n;
         }
 
         public static int RunClusterSelfTest(string dataDirectory)
@@ -951,10 +1077,12 @@ namespace AtomicWar.GodotApp
             string dump = HoldfastBriefingView.FormatCatalogDump(session.Catalog);
             GD.Print(dump);
             bool ok = session.LocationCount > 0 && session.QuestCount > 0
-                && session.Catalog.GetQuest("quest_holdfast_the_sheet") != null;
+                && session.Catalog.GetQuest("quest_holdfast_the_sheet") != null
+                && session.Catalog.Items.IsValid
+                && session.Catalog.Items.Count == 40;
             GD.Print(ok
-                ? $"HoldfastBriefing PASS locations={session.LocationCount} quests={session.QuestCount}"
-                : $"HoldfastBriefing FAIL locations={session.LocationCount} quests={session.QuestCount}");
+                ? $"HoldfastBriefing PASS items={session.Catalog.Items.Count} locations={session.LocationCount} quests={session.QuestCount}"
+                : $"HoldfastBriefing FAIL items={session.Catalog.Items.Count} locations={session.LocationCount} quests={session.QuestCount}");
             return ok ? 0 : 1;
         }
 

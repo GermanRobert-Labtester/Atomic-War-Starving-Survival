@@ -51,9 +51,12 @@ namespace AtomicWar.Journal
         public List<LocationDefinitionData> Locations = new List<LocationDefinitionData>();
         public List<SurvivorArchetypeData> Survivors = new List<SurvivorArchetypeData>();
         public List<GameEventData> Events = new List<GameEventData>();
+        /// <summary>Verdict world-history ladder (verdict_data.json.world_history_ladder).</summary>
+        public List<GameEventData> VerdictHistory = new List<GameEventData>();
 
         public bool IsEmpty =>
-            Items.Count == 0 && Locations.Count == 0 && Survivors.Count == 0 && Events.Count == 0;
+            Items.Count == 0 && Locations.Count == 0 && Survivors.Count == 0 && Events.Count == 0
+            && VerdictHistory.Count == 0;
     }
 
     public static class CatalogJsonLoader
@@ -78,7 +81,48 @@ namespace AtomicWar.Journal
             catalogs.Locations = LoadList<LocationDefinitionData>(Path.Combine(dataDir, "locations.json"));
             catalogs.Survivors = LoadList<SurvivorArchetypeData>(Path.Combine(dataDir, "survivors.json"));
             catalogs.Events = LoadList<GameEventData>(Path.Combine(dataDir, "events.json"));
+            catalogs.VerdictHistory = LoadVerdictHistory(dataDir);
             return catalogs;
+        }
+
+        /// <summary>Map verdict_data.json.world_history_ladder to codex event rows
+        /// (knowledge_key → id, title, body_summary → body).</summary>
+        private static List<GameEventData> LoadVerdictHistory(string dataDir)
+        {
+            var result = new List<GameEventData>();
+            try
+            {
+                string path = Path.Combine(dataDir, "verdict_data.json");
+                if (!File.Exists(path)) return result;
+                string json = File.ReadAllText(path);
+                var root = JsonSerializer.Deserialize<VerdictDataRaw>(json, s_options);
+                if (root?.world_history_ladder == null) return result;
+                foreach (var l in root.world_history_ladder)
+                {
+                    if (l == null || string.IsNullOrEmpty(l.knowledge_key)) continue;
+                    result.Add(new GameEventData
+                    {
+                        id = l.knowledge_key,
+                        title = l.title,
+                        bodyText = l.body_summary
+                    });
+                }
+            }
+            catch (Exception) { /* tolerate */ }
+            return result;
+        }
+
+        private class VerdictLadderRaw
+        {
+            public string? knowledge_key;
+            public string? title;
+            public string? body_summary;
+            public string? discovery_location_id;
+        }
+
+        private class VerdictDataRaw
+        {
+            public List<VerdictLadderRaw>? world_history_ladder;
         }
 
         private static List<T> LoadList<T>(string path)

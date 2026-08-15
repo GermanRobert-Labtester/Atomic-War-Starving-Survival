@@ -55,6 +55,10 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 var serializer = new SystemTextJsonSerializer();
                 DoorEncounterCatalogLoader.LoadAndRegister(session.Encounters, dataDir, fileIO, serializer);
                 YearOfAshCatalogLoader.LoadAndRegisterQuests(session.Quests, dataDir, fileIO, serializer);
+                // ASHFALL: THE VERDICT (Expansion 08) — register its runtime questlines
+                // into the same QuestlineSystem so they surface via GetPlayableQuestlines
+                // and persist through the existing YearOfAshSave envelope.
+                Ashfall.Core.Verdict.VerdictQuestCatalogLoader.LoadAndRegister(session.Quests, dataDir, fileIO, serializer);
             }
 
             var existingSave = YearOfAshSaveStore.TryLoad();

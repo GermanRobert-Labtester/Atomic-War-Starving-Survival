@@ -219,6 +219,27 @@ namespace AtomicWar.Journal
                     }
                     : JournalCodexRow.Locked(evt.title ?? evt.id));
             }
+
+            // Verdict world-history ladder (lore_verdict_*) — gated the same way:
+            // a beat is only readable once the Verdict host has unlocked it.
+            if (_catalogs.VerdictHistory != null)
+            {
+                for (int i = 0; i < _catalogs.VerdictHistory.Count; i++)
+                {
+                    var beat = _catalogs.VerdictHistory[i];
+                    if (beat == null || string.IsNullOrEmpty(beat.id)) continue;
+                    rows.Add(_journal.IsEventFired(beat.id)
+                        ? new JournalCodexRow
+                        {
+                            DisplayName = beat.title ?? beat.id,
+                            Meta = "The machine's register",
+                            Body = beat.bodyText ?? string.Empty,
+                            IsLocked = false
+                        }
+                        : JournalCodexRow.Locked(beat.title ?? beat.id));
+                }
+            }
+
             return rows;
         }
     }
