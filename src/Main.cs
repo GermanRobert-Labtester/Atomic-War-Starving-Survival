@@ -2641,6 +2641,23 @@ namespace AtomicWar.GodotApp
 
             // Save final state
             SaveAll();
+
+            // A finished run must not be continuable: the saved state is a dead
+            // (or won) ledger. Clear the holdfast saves so ReturnToMenu keeps the
+            // Continue button disabled instead of resurrecting an ended run.
+            ClearContinuableSaves();
+        }
+
+        /// <summary>Remove the holdfast base + trade saves (and backup) so a
+        /// completed run cannot be continued into an immediate game-over loop.</summary>
+        private void ClearContinuableSaves()
+        {
+            if (System.IO.File.Exists(HoldfastSaveStore.SavePath))
+                System.IO.File.Delete(HoldfastSaveStore.SavePath);
+            if (System.IO.File.Exists(HoldfastTradeSaveStore.SavePath))
+                System.IO.File.Delete(HoldfastTradeSaveStore.SavePath);
+            if (System.IO.File.Exists(HoldfastTradeSaveStore.BackupPath))
+                System.IO.File.Delete(HoldfastTradeSaveStore.BackupPath);
         }
 
         private void UpdateHud()
