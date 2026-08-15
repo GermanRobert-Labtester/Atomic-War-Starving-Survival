@@ -160,7 +160,7 @@ namespace Ashfall.Core.Tests
             sys.OnSharedHazardEndured(new List<string>(), "hazard");
             sys.OnSharedHazardEndured(new List<string> { "sv_1" }, "hazard");
             sys.OnSharedHazardEndured(
-                new List<string> { null, "sv_2" }, "hazard");
+                new List<string> { null!, "sv_2" }, "hazard");
 
             Assert.Equal(0, sys.GetBondCount("sv_1"));
         }

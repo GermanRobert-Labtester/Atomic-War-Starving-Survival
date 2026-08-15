@@ -14,7 +14,7 @@ namespace Ashfall.Core.Tests
         }
 
         private static Recipe MakeRecipe(string id, ItemDefinition result,
-            (ItemDefinition, int)[] ingredients, float hours = 0f, string stationId = null)
+            (ItemDefinition, int)[] ingredients, float hours = 0f, string stationId = null!)
         {
             var r = new Recipe
             {

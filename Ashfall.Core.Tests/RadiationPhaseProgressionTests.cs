@@ -12,7 +12,7 @@ namespace Ashfall.Core.Tests
             return new PhaseProgressionState { Id = id, Health = 100f, LungCapacity = 100f };
         }
 
-        private static RadiationPhaseProgression CreateSystem(ISeededRng rng = null)
+        private static RadiationPhaseProgression CreateSystem(ISeededRng? rng = null)
         {
             return new RadiationPhaseProgression(rng ?? new SeededRng(42));
         }

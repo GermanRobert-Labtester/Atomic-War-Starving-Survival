@@ -95,8 +95,12 @@ namespace Ashfall.Core.Tests
 
             var restored = new SkyLayerArmorSystem();
             restored.RestoreState(save);
-            Assert.Equal(80f, restored.CaptureState().cells.Find(c => c.gridX == 0).currentDurability);
-            Assert.Equal(50f, restored.CaptureState().cells.Find(c => c.gridX == 5).currentDurability);
+            var c0 = restored.CaptureState().cells.Find(c => c.gridX == 0);
+            var c5 = restored.CaptureState().cells.Find(c => c.gridX == 5);
+            Assert.NotNull(c0);
+            Assert.NotNull(c5);
+            Assert.Equal(80f, c0.currentDurability);
+            Assert.Equal(50f, c5.currentDurability);
         }
 
         [Fact]

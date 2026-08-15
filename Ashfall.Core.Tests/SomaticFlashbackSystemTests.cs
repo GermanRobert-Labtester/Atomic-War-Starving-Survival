@@ -11,7 +11,7 @@ namespace Ashfall.Core.Tests
 
         private static SomaticFlashbackSystem CreateSystem(
             IReadOnlyList<string> aliveSurvivors,
-            Func<string, string, bool> companionCheck = null,
+            Func<string, string, bool> companionCheck = null!,
             int rngSeed = 42)
         {
             var sys = new SomaticFlashbackSystem

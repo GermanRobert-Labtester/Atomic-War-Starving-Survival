@@ -603,9 +603,10 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(items);
             Assert.True(items.Count >= 15, $"expected >=15 verdict items, got {items?.Count ?? 0}");
 
-            foreach (var item in items)
+            foreach (var item in items!)
             {
-                Assert.False(string.IsNullOrEmpty(item.id), $"item has empty id");
+                Assert.NotNull(item);
+                Assert.False(string.IsNullOrEmpty(item!.id), $"item has empty id");
                 Assert.False(string.IsNullOrEmpty(item.displayName), $"item {item.id} has empty displayName");
             }
         }

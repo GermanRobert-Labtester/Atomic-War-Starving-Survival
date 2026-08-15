@@ -137,7 +137,7 @@ namespace Ashfall.Core.Tests
             return GoodsCatalogLoader.ToCatalog(result);
         }
 
-        private static MarketSystem NewMarket(GoodsCatalog catalog = null)
+        private static MarketSystem NewMarket(GoodsCatalog? catalog = null)
         {
             var sys = new MarketSystem();
             sys.BindCatalog(catalog ?? Catalog(("water", 8f, 0.1f, 1f)));
@@ -219,7 +219,8 @@ namespace Ashfall.Core.Tests
             Assert.Equal(sys.TickCount, restored.TickCount);
             Assert.Equal(sys.GetDemandMultiplier("w"), restored.GetDemandMultiplier("w"));
             Assert.Equal(sys.GetPrice("w"), restored.GetPrice("w"));
-            Assert.Equal(sys.State.ledger.Count, restored.State.ledger.Count);
+            Assert.NotNull(restored.State);
+            Assert.Equal(sys.State!.ledger.Count, restored.State!.ledger.Count);
         }
 
         [Fact]

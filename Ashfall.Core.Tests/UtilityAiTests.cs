@@ -285,6 +285,7 @@ namespace Ashfall.Core.Tests
             var defs = UtilityActionCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
             var weigh = defs.Find(d => d.id == "action_weigh_goods");
+            Assert.NotNull(weigh);
             // Unity parity: base 0.40, + skill * 0.25, fatigue gate 85.
             Assert.Equal(0.40f, weigh.baseScore);
             Assert.Equal(0.25f, weigh.skillBonusFactor);

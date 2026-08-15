@@ -236,6 +236,7 @@ namespace Ashfall.Core.Tests
             var defs = NarrativeEncounterCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
             var deadLetter = defs.Find(d => d.id == "enc_dead_letter_office");
+            Assert.NotNull(deadLetter);
             // Unity: base 2.0, stealth x0.5 = 1.0, speed x1.5 = 3.0.
             Assert.Equal(1.0f, deadLetter.GetEffectiveWeight("Stealth", 1f, null));
             Assert.Equal(3.0f, deadLetter.GetEffectiveWeight("Speed", 1f, null));
