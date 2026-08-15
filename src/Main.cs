@@ -69,6 +69,16 @@ namespace AtomicWar.GodotApp
         private ExpeditionHostSession _expeditions = null!;
         private bool _expeditionDirty;
 
+        // Narrative (encounters port), Medical (chemical dependency), World (weather), Crafting
+        private NarrativeHostSession _narrative = null!;
+        private bool _narrativeDirty;
+        private MedicalHostSession _medical = null!;
+        private bool _medicalDirty;
+        private WorldHostSession _world = null!;
+        private bool _worldDirty;
+        private CraftingHostSession _crafting = null!;
+        private bool _craftingDirty;
+
         // ASHFALL: traveling caravans (Expansion V spec §3.3 — wandering merchants)
         private TravelingCaravanHostSession _caravans = null!;
         private bool _caravansDirty;
@@ -529,6 +539,15 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Expedition: tick 2 hours", OnExpeditionTickClicked);
             AddMenuButton("Expedition: start Sovereign dive", OnExpeditionDiveClicked);
             AddMenuButton("Expedition: advance dive", OnExpeditionAdvanceDiveClicked);
+            // ── NARRATIVE · MEDICAL · WORLD · CRAFTING ─────────────────
+            AddMenuButton("Narrative: open the encounter", OnNarrativeOpenClicked);
+            AddMenuButton("Medical: dose Mikhail (opioid)", () => OnMedicalDoseClicked("survivor_gunner_mikhail"));
+            AddMenuButton("Medical: tick 6h + vigil", OnMedicalTickClicked);
+            AddMenuButton("World: tick 6h weather", OnWorldTickClicked);
+            AddMenuButton("World: force fallout storm", OnWorldStormClicked);
+            AddMenuButton("World: plate sky armor (lead)", () => OnWorldSkyArmorClicked("lead"));
+            AddMenuButton("Crafting: start bandage", OnCraftingStartClicked);
+            AddMenuButton("Crafting: finish all", OnCraftingFinishClicked);
             // ── TRAVELING CARAVANS (Exp V §3.3) ─────────────────────────
             AddMenuButton("Caravan: spawn Menders' cart", OnCaravanSpawnClicked);
             AddMenuButton("Caravan: tick a day", OnCaravanTickClicked);
@@ -556,7 +575,7 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Utility AI: evaluate demo survivor", OnUtilityAiEvaluateClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveCaravans(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -1929,6 +1948,133 @@ namespace AtomicWar.GodotApp
             _statusLabel.Text = _expeditions.AdvanceDiveDemo() + "\n" + _expeditions.DiveStatusLine();
         }
 
+        // ── NARRATIVE · MEDICAL · WORLD · CRAFTING ────────────────────────────
+
+        private void SetupNarrative()
+        {
+            if (_narrative != null) return;
+            _narrative = NarrativeHostSession.Create(_dataDir);
+            _narrative.StateChanged += () => _narrativeDirty = true;
+            GD.Print("[Ashfall Godot] Narrative host ready.");
+        }
+
+        private void SaveNarrative()
+        {
+            if (_narrative == null) return;
+            if (NarrativeSaveStore.TrySave(_narrative.CaptureSave()))
+            {
+                _narrativeDirty = false;
+                GD.Print("[Ashfall Godot] Narrative save written.");
+            }
+        }
+
+        private void OnNarrativeOpenClicked()
+        {
+            SetupNarrative();
+            _statusLabel.Text = _narrative.SelectDemo("cautious", 0.5f, "loc_denial_cut_substation")
+                + "\n" + _narrative.StatusLine();
+        }
+
+        private void SetupMedical()
+        {
+            if (_medical != null) return;
+            _medical = MedicalHostSession.Create(_dataDir);
+            _medical.StateChanged += () => _medicalDirty = true;
+            GD.Print("[Ashfall Godot] Medical host ready.");
+        }
+
+        private void SaveMedical()
+        {
+            if (_medical == null) return;
+            if (MedicalSaveStore.TrySave(_medical.CaptureSave()))
+            {
+                _medicalDirty = false;
+                GD.Print("[Ashfall Godot] Medical save written.");
+            }
+        }
+
+        private void OnMedicalDoseClicked(string survivorId)
+        {
+            SetupMedical();
+            _statusLabel.Text = _medical.DoseDemo(survivorId, "morphine", Ashfall.Core.Medical.ChemicalDependencyKind.Opioid)
+                + "\n" + _medical.StatusLine();
+        }
+
+        private void OnMedicalTickClicked()
+        {
+            SetupMedical();
+            _statusLabel.Text = _medical.TickDemo(6f) + "\n" +
+                _medical.StartVigilDemo("dweller_save", new[] { "n1", "n2" }) + "\n" +
+                _medical.TickVigilDemo(30f);
+        }
+
+        private void SetupWorld()
+        {
+            if (_world != null) return;
+            _world = WorldHostSession.Create(_dataDir);
+            _world.StateChanged += () => _worldDirty = true;
+            GD.Print("[Ashfall Godot] World host ready.");
+        }
+
+        private void SaveWorld()
+        {
+            if (_world == null) return;
+            if (WorldSaveStore.TrySave(_world.CaptureSave()))
+            {
+                _worldDirty = false;
+                GD.Print("[Ashfall Godot] World save written.");
+            }
+        }
+
+        private void OnWorldTickClicked()
+        {
+            SetupWorld();
+            _statusLabel.Text = _world.TickDemo(6f) + "\n" + _world.StatusLine();
+        }
+
+        private void OnWorldStormClicked()
+        {
+            SetupWorld();
+            _statusLabel.Text = _world.ForceDemo(WeatherKind.FalloutStorm) + "\n" + _world.StatusLine();
+        }
+
+        private void OnWorldSkyArmorClicked(string material)
+        {
+            SetupWorld();
+            _statusLabel.Text = _world.SetSkyArmorDemo(0, material, 1f) + "\n" + _world.SkyArmorStatusLine();
+        }
+
+        private void SetupCrafting()
+        {
+            if (_crafting != null) return;
+            SetupInventory();
+            _crafting = CraftingHostSession.Create(_dataDir, _inventory.Inventory);
+            _crafting.StateChanged += () => _craftingDirty = true;
+            GD.Print("[Ashfall Godot] Crafting host ready.");
+        }
+
+        private void SaveCrafting()
+        {
+            if (_crafting == null) return;
+            if (CraftingSaveStore.TrySave(_crafting.CaptureSave()))
+            {
+                _craftingDirty = false;
+                GD.Print("[Ashfall Godot] Crafting save written.");
+            }
+        }
+
+        private void OnCraftingStartClicked()
+        {
+            SetupCrafting();
+            _statusLabel.Text = _crafting.Start("recipe_bandage") + "\n" + _crafting.CraftingLine();
+        }
+
+        private void OnCraftingFinishClicked()
+        {
+            SetupCrafting();
+            _statusLabel.Text = _crafting.CompleteAll(1f) + "\n" + _crafting.CraftingLine();
+        }
+
         // ── TRAVELING CARAVANS (Exp V spec §3.3) ─────────────────────────────
 
         private void SetupCaravans()
@@ -2857,6 +3003,10 @@ namespace AtomicWar.GodotApp
             SaveVerdict();
             SaveMaritime();
             SaveExpeditions();
+            SaveNarrative();
+            SaveMedical();
+            SaveWorld();
+            SaveCrafting();
             SaveCaravans();
         }
 
