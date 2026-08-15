@@ -87,7 +87,7 @@ namespace Ashfall.Core.Tests
         public void Tick_NightFalseAlarm_FiresEvents()
         {
             var sys = new CombatTraumaSystem();
-            sys.Rng = new System.Random(42);
+            sys.Rng = new SeededRng(42);
             // Raise hypervigilance enough to trigger false alarm (> 0.1)
             for (int i = 0; i < 5; i++)
                 sys.OnCombatSurvived("sv_1");
@@ -242,17 +242,23 @@ namespace Ashfall.Core.Tests
         // ── Test helpers ───────────────────────────────────────────────
 
         /// <summary>Always returns 0.0 from NextDouble — guarantees threshold checks pass.</summary>
-        private sealed class AlwaysZeroRandom : System.Random
+        private sealed class AlwaysZeroRandom : ISeededRng
         {
-            public override double NextDouble() => 0.0;
+            public int Seed => 0;
+            public int Next(int minInclusive, int maxExclusive) => minInclusive;
+            public double NextDouble() => 0.0;
+            public float NextFloat() => 0f;
         }
 
         /// <summary>Returns a fixed value from NextDouble.</summary>
-        private sealed class FixedRandom : System.Random
+        private sealed class FixedRandom : ISeededRng
         {
             private readonly double _value;
             public FixedRandom(double value) { _value = value; }
-            public override double NextDouble() => _value;
+            public int Seed => 0;
+            public int Next(int minInclusive, int maxExclusive) => minInclusive;
+            public double NextDouble() => _value;
+            public float NextFloat() => (float)_value;
         }
     }
 }

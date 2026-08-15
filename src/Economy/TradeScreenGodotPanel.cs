@@ -822,6 +822,11 @@ namespace AtomicWar.GodotApp.Economy
                 _lblFactionAskWorth.Text = $"Demand Worth: {FormatWorthLabel(factionVal)} ({_factionAskCounts.Count} items)";
             }
 
+            foreach (var pair in _bioCountLabels)
+            {
+                pair.Value.Text = _bioOfferCounts.GetValueOrDefault(pair.Key, 0).ToString();
+            }
+
             bool isFair = playerVal >= factionVal;
             if (_lblFairness != null)
             {

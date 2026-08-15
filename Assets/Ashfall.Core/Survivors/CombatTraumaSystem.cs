@@ -50,7 +50,7 @@ namespace Ashfall.Core.Survivors
 
         // ── Host hooks ─────────────────────────────────────────────────
         public Action<string, float> ApplyMoraleDelta;
-        public System.Random Rng;
+        public ISeededRng Rng;
 
         // ── Internal state ─────────────────────────────────────────────
         private readonly Dictionary<string, CombatTraumaSurvivorState> _bySurvivor =

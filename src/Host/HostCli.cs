@@ -1239,8 +1239,9 @@ namespace AtomicWar.GodotApp
             {
                 // ── 1. SkyLayerArmorSystem ──────────────────────────────
                 var sky = new SkyLayerArmorSystem();
-                sky.SetCellArmor(0, CeilingMaterialTier.ReinforcedConcrete, 0.5f);
-                sky.SetCellArmor(1, CeilingMaterialTier.LeadSheeting, 0.1f);
+                // Equal thickness so the comparison isolates the material tier.
+                sky.SetCellArmor(0, CeilingMaterialTier.ReinforcedConcrete, 1.0f);
+                sky.SetCellArmor(1, CeilingMaterialTier.LeadSheeting, 1.0f);
 
                 float att0 = sky.GetAttenuationFactor(0);
                 float att1 = sky.GetAttenuationFactor(1);
@@ -1253,13 +1254,13 @@ namespace AtomicWar.GodotApp
                 // Whether it breaches depends on tuning; just verify it returned a bool.
                 Check(true, "kinetic impact evaluation completed");
 
-                // Save round-trip
+                // Save round-trip (compare against the current, post-impact state).
                 var skySave = sky.CaptureState();
                 Check(skySave != null && skySave.cells != null && skySave.cells.Count == 2,
                     "sky armor capture has 2 cells");
                 var sky2 = new SkyLayerArmorSystem();
                 sky2.RestoreState(skySave);
-                Check(Math.Abs(sky2.GetAttenuationFactor(0) - att0) < 1e-5f,
+                Check(Math.Abs(sky2.GetAttenuationFactor(0) - sky.GetAttenuationFactor(0)) < 1e-5f,
                     "sky armor attenuation restored after roundtrip");
 
                 // ── 2. VigilStateMachine (Medical) ──────────────────────
@@ -1326,23 +1327,23 @@ namespace AtomicWar.GodotApp
                 // ── 4. EpilogueMatrixRuntime ────────────────────────────
                 var epilogue = new EpilogueMatrixRuntime();
 
-                // Fate 1: CommonwealthFounded — high pop, treaty, children
+                // Fate 1: CommonwealthFounded — treaty + burned ledgers, no decommission
                 var ctx1 = new EpilogueEvaluationContext
                 {
                     totalDaysSurvived = 800, livingDwellerCount = 30,
                     totalDeathsRecorded = 5, grandTreatySigned = true,
-                    tempestDecommissioned = true, debtLedgersBurned = true,
+                    tempestDecommissioned = false, debtLedgersBurned = true,
                     childrenSurvived = true, velSecretExposed = false
                 };
                 var fate1 = epilogue.EvaluateRegionalFate(ctx1);
                 Check(fate1 == RegionalFate.CommonwealthFounded,
                     "epilogue: commonwealth founded fate");
 
-                // Fate 2: GarrisonMartialLaw — high pop, no treaty, no decommission
+                // Fate 2: GarrisonMartialLaw — treaty signed, ledgers kept
                 var ctx2 = new EpilogueEvaluationContext
                 {
                     totalDaysSurvived = 600, livingDwellerCount = 25,
-                    totalDeathsRecorded = 10, grandTreatySigned = false,
+                    totalDeathsRecorded = 10, grandTreatySigned = true,
                     tempestDecommissioned = false, debtLedgersBurned = false,
                     childrenSurvived = true, velSecretExposed = false
                 };
@@ -1362,11 +1363,11 @@ namespace AtomicWar.GodotApp
                 Check(fate3 == RegionalFate.FracturedWarlords,
                     "epilogue: fractured warlords fate");
 
-                // Fate 4: TempestSterilization — tempest still active
+                // Fate 4: TempestSterilization — Tempest still active, heavy losses
                 var ctx4 = new EpilogueEvaluationContext
                 {
                     totalDaysSurvived = 500, livingDwellerCount = 15,
-                    totalDeathsRecorded = 12, grandTreatySigned = false,
+                    totalDeathsRecorded = 60, grandTreatySigned = false,
                     tempestDecommissioned = false, debtLedgersBurned = false,
                     childrenSurvived = false, velSecretExposed = true
                 };
@@ -1374,12 +1375,12 @@ namespace AtomicWar.GodotApp
                 Check(fate4 == RegionalFate.TempestSterilization,
                     "epilogue: tempest sterilization fate");
 
-                // Fate 5: TrueReconciliation — burned ledgers, exposed secret, treaty
+                // Fate 5: TrueReconciliation — burned ledgers, decommissioned, treaty
                 var ctx5 = new EpilogueEvaluationContext
                 {
                     totalDaysSurvived = 700, livingDwellerCount = 20,
                     totalDeathsRecorded = 8, grandTreatySigned = true,
-                    tempestDecommissioned = false, debtLedgersBurned = true,
+                    tempestDecommissioned = true, debtLedgersBurned = true,
                     childrenSurvived = true, velSecretExposed = true
                 };
                 var fate5 = epilogue.EvaluateRegionalFate(ctx5);
@@ -1417,6 +1418,10 @@ namespace AtomicWar.GodotApp
                 bool adv2 = dive.Advance();
                 Check(adv2 && dive.CurrentRoom == DiveRoom.hold_approach,
                     "dive advanced to hold_approach");
+
+                bool adv3 = dive.Advance();
+                Check(adv3 && dive.CurrentRoom == DiveRoom.the_hold,
+                    "dive advanced to the hold");
 
                 // Oxygen tick
                 int oxyBefore = dive.OxygenRemaining;

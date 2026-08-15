@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
@@ -8,7 +9,8 @@ namespace AtomicWar.GodotApp
 {
     /// <summary>
     /// Expedition (Encounters port) save persistence — thin pattern sibling of
-    /// the other host stores: user:// path, try/catch, codec serialization.
+    /// the other host stores: user:// path, try/catch, checksummed envelope.
+    /// Legacy bare-state saves (pre-checksum) still load.
     /// </summary>
     public static class ExpeditionSaveStore
     {
@@ -22,16 +24,18 @@ namespace AtomicWar.GodotApp
 
         public static bool Exists => s_files.FileExists(SavePath);
 
-        public static bool TrySave(System.Collections.Generic.List<ExpeditionState> state)
+        public static bool TrySave(List<ExpeditionState> state)
         {
             try
             {
                 if (state == null) return false;
+                var envelope = new ExpeditionHostSave { State = state };
+                envelope.Checksum = SaveChecksum.Compute(envelope);
                 string path = SavePath;
                 string dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(state));
+                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
                 return true;
             }
             catch (Exception e)
@@ -41,7 +45,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static System.Collections.Generic.List<ExpeditionState> TryLoad()
+        public static List<ExpeditionState> TryLoad()
         {
             try
             {
@@ -49,7 +53,24 @@ namespace AtomicWar.GodotApp
                 if (!s_files.FileExists(path)) return null;
                 string raw = s_files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(raw)) return null;
-                return s_json.Deserialize<System.Collections.Generic.List<ExpeditionState>>(raw);
+
+                var envelope = s_json.Deserialize<ExpeditionHostSave>(raw);
+                if (envelope != null && envelope.State != null)
+                {
+                    if (!string.IsNullOrEmpty(envelope.Checksum))
+                    {
+                        string actual = SaveChecksum.Compute(envelope);
+                        if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
+                        {
+                            GD.PrintErr("[Expedition] load failed: checksum mismatch (corrupt or foreign save).");
+                            return null;
+                        }
+                    }
+                    return envelope.State;
+                }
+
+                // Legacy bare-state save (written before the checksum envelope).
+                return s_json.Deserialize<List<ExpeditionState>>(raw);
             }
             catch (Exception e)
             {
@@ -57,5 +78,12 @@ namespace AtomicWar.GodotApp
                 return null;
             }
         }
+    }
+
+    /// <summary>Expedition save envelope: engine state + integrity checksum.</summary>
+    public class ExpeditionHostSave
+    {
+        public List<ExpeditionState> State;
+        public string Checksum = string.Empty;
     }
 }

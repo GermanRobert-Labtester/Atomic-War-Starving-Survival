@@ -8,7 +8,8 @@ namespace AtomicWar.GodotApp
 {
     /// <summary>
     /// Medical (Chemical Dependency port) save persistence — thin pattern
-    /// sibling of the other host stores: user:// path, try/catch, codec.
+    /// sibling of the other host stores: user:// path, try/catch,
+    /// checksummed envelope. Legacy bare-state saves still load.
     /// </summary>
     public static class MedicalSaveStore
     {
@@ -27,11 +28,13 @@ namespace AtomicWar.GodotApp
             try
             {
                 if (state == null) return false;
+                var envelope = new MedicalHostSave { State = state };
+                envelope.Checksum = SaveChecksum.Compute(envelope);
                 string path = SavePath;
                 string dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(state));
+                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
                 return true;
             }
             catch (Exception e)
@@ -49,6 +52,23 @@ namespace AtomicWar.GodotApp
                 if (!s_files.FileExists(path)) return null;
                 string raw = s_files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(raw)) return null;
+
+                var envelope = s_json.Deserialize<MedicalHostSave>(raw);
+                if (envelope != null && envelope.State != null)
+                {
+                    if (!string.IsNullOrEmpty(envelope.Checksum))
+                    {
+                        string actual = SaveChecksum.Compute(envelope);
+                        if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
+                        {
+                            GD.PrintErr("[Medical] load failed: checksum mismatch (corrupt or foreign save).");
+                            return null;
+                        }
+                    }
+                    return envelope.State;
+                }
+
+                // Legacy bare-state save (written before the checksum envelope).
                 return s_json.Deserialize<ChemicalDependencyLedgerState>(raw);
             }
             catch (Exception e)
@@ -57,5 +77,12 @@ namespace AtomicWar.GodotApp
                 return null;
             }
         }
+    }
+
+    /// <summary>Medical save envelope: engine state + integrity checksum.</summary>
+    public class MedicalHostSave
+    {
+        public ChemicalDependencyLedgerState State;
+        public string Checksum = string.Empty;
     }
 }

@@ -8,7 +8,7 @@ namespace Ashfall.Core.Tests
         private static FinalWishSystem CreateSystem(int? seed = 42)
         {
             var sys = new FinalWishSystem();
-            sys.Rng = seed.HasValue ? new System.Random(seed.Value) : null;
+            sys.Rng = seed.HasValue ? new SeededRng(seed.Value) : null;
             return sys;
         }
 

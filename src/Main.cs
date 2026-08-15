@@ -2132,7 +2132,10 @@ namespace AtomicWar.GodotApp
             _holdfastTerminal.SelectItem("item_fume_rag");
             _holdfastTerminal.SetTradeQuantity(2);
             var buy = _holdfastTerminal.PressBuy();
-            GD.Print($"[probe] buy success={buy?.Success} msg={buy?.Message} value={runtime.Trade.PlayerValue} held={runtime.Trade.GetHeld(\"item_fume_rag\")} stock={runtime.Trade.GetStock(\"item_fume_rag\")}");
+            long buyValue = runtime.Trade.PlayerValue;
+            int buyHeld = runtime.Trade.GetHeld("item_fume_rag");
+            int buyStock = runtime.Trade.GetStock("item_fume_rag");
+            GD.Print($"[probe] buy success={buy?.Success} msg={buy?.Message} value={buyValue} held={buyHeld} stock={buyStock}");
             bool bought = buy != null && buy.Success
                 && runtime.Trade.PlayerValue == 96
                 && runtime.Trade.GetHeld("item_fume_rag") == 2
@@ -2194,8 +2197,8 @@ namespace AtomicWar.GodotApp
             _holdfastTerminal.BindSession(stockRuntime);
             _holdfastTerminal.SelectFaction("faction_the_office");
             _holdfastTerminal.SelectItem("item_fume_rag");
-            _holdfastTerminal.SetTradeQuantity(4);
-            _holdfastTerminal.PressBuy(); // exhaust stock
+            _holdfastTerminal.SetTradeQuantity(20);
+            _holdfastTerminal.PressBuy(); // exhaust stock (default 20)
             _holdfastTerminal.SetTradeQuantity(1);
             var stockResult = _holdfastTerminal.PressBuy();
             insufficientStockRendered = stockResult != null && !stockResult.Success
@@ -2282,7 +2285,7 @@ namespace AtomicWar.GodotApp
             bool restored = reloaded
                 && freshRuntime.Trade.PlayerValue == 100
                 && freshRuntime.Trade.GetHeld("item_fume_rag") == 2
-                && freshRuntime.Trade.GetStock("item_fume_rag") == 2
+                && freshRuntime.Trade.GetStock("item_fume_rag") == 18
                 && freshRuntime.Trade.GetHeld("item_triplicate_carbon") == 0
                 && freshRuntime.Trade.GetStock("item_triplicate_carbon") == 21;
 
@@ -2397,7 +2400,11 @@ namespace AtomicWar.GodotApp
             SetupInventory();
 
             bool panel = _inventoryPanel != null;
-            bool catalog = _inventory.Catalog.Count == 15;
+            bool catalog = _inventory.Catalog.Count >= 15
+                && _inventory.Catalog.Contains("canned_food")
+                && _inventory.Catalog.Contains("geiger_counter")
+                && _inventory.Catalog.Contains("gas_mask")
+                && _inventory.Catalog.Contains("clean_water");
 
             string added = _inventory.Add("canned_food", 6);
             bool addOk = added.Contains("Added");

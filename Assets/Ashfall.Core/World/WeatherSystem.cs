@@ -141,7 +141,7 @@ namespace Ashfall.Core.World
         private WeatherKind RollNextState()
         {
             var season = GetSeasonForDay((int)Math.Floor(_state.totalElapsedHours / 24f));
-            var rng = new Random(unchecked(_seed * 397 + _state.rollCount));
+            var rng = new SeededRng(unchecked(_seed * 397 + _state.rollCount));
             _state.rollCount++;
 
             bool restrict = _state.restrictToNonHazardWeather;

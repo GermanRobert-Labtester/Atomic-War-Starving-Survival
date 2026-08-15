@@ -22,15 +22,15 @@ namespace AtomicWar.GodotApp
             if (string.IsNullOrEmpty(path)) return null;
 
             string resPath = path.StartsWith("res://") ? path : ("res://" + path);
-            if (Godot.ResourceLoader.Exists(resPath))
-                return ResourceLoader.Load<Texture2D>(resPath);
+            var texture = AtomicWar.GodotApp.UI.AshfallUiHelpers.TryLoadTexture(resPath);
+            if (texture != null) return texture;
 
             string fallbackPath = Ashfall.Core.UI.FactionIconCatalog.FallbackIconPath;
             if (fallbackPath != path)
             {
                 string fallbackRes = fallbackPath.StartsWith("res://") ? fallbackPath : ("res://" + fallbackPath);
-                if (Godot.ResourceLoader.Exists(fallbackRes))
-                    return ResourceLoader.Load<Texture2D>(fallbackRes);
+                texture = AtomicWar.GodotApp.UI.AshfallUiHelpers.TryLoadTexture(fallbackRes);
+                if (texture != null) return texture;
             }
             return null;
         }

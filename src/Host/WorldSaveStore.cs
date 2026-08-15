@@ -8,7 +8,8 @@ namespace AtomicWar.GodotApp
 {
     /// <summary>
     /// World (weather port) save persistence — thin pattern sibling of the
-    /// other host stores: user:// path, try/catch, codec.
+    /// other host stores: user:// path, try/catch, checksummed envelope.
+    /// Legacy bare-state saves (pre-checksum) still load.
     /// </summary>
     public static class WorldSaveStore
     {
@@ -27,11 +28,13 @@ namespace AtomicWar.GodotApp
             try
             {
                 if (state == null) return false;
+                var envelope = new WorldHostSave { State = state };
+                envelope.Checksum = SaveChecksum.Compute(envelope);
                 string path = SavePath;
                 string dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(state));
+                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
                 return true;
             }
             catch (Exception e)
@@ -49,6 +52,23 @@ namespace AtomicWar.GodotApp
                 if (!s_files.FileExists(path)) return null;
                 string raw = s_files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(raw)) return null;
+
+                var envelope = s_json.Deserialize<WorldHostSave>(raw);
+                if (envelope != null && envelope.State != null)
+                {
+                    if (!string.IsNullOrEmpty(envelope.Checksum))
+                    {
+                        string actual = SaveChecksum.Compute(envelope);
+                        if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
+                        {
+                            GD.PrintErr("[World] load failed: checksum mismatch (corrupt or foreign save).");
+                            return null;
+                        }
+                    }
+                    return envelope.State;
+                }
+
+                // Legacy bare-state save (written before the checksum envelope).
                 return s_json.Deserialize<WorldWeatherState>(raw);
             }
             catch (Exception e)
@@ -57,5 +77,12 @@ namespace AtomicWar.GodotApp
                 return null;
             }
         }
+    }
+
+    /// <summary>World save envelope: engine state + integrity checksum.</summary>
+    public class WorldHostSave
+    {
+        public WorldWeatherState State;
+        public string Checksum = string.Empty;
     }
 }

@@ -30,14 +30,36 @@ namespace Ashfall.Core.Inventory
 
         public ProceduralItemInstance() { }
 
+        /// <summary>Stable per-process counter feeding the deterministic instance id.</summary>
+        private static int _instanceCounter;
+
         public ProceduralItemInstance(string itemId, int quantity = 1,
             float condition = 1f, float contamination = 0f)
         {
-            InstanceId = Guid.NewGuid().ToString("N").Substring(0, 8);
+            InstanceId = MakeInstanceId(itemId ?? string.Empty);
             ItemId = itemId;
             Quantity = quantity;
             ConditionPct = MathfCompat.Clamp01(condition);
             ContaminationPct = MathfCompat.Clamp01(contamination);
+        }
+
+        /// <summary>
+        /// Deterministic 8-char hex instance id (FNV-1a over itemId + counter).
+        /// No Guid.NewGuid, no string.GetHashCode: both are runtime-dependent and
+        /// would violate the cross-host determinism invariant.
+        /// </summary>
+        private static string MakeInstanceId(string itemId)
+        {
+            int n = System.Threading.Interlocked.Increment(ref _instanceCounter);
+            ulong h = 1469598103934665603UL;
+            for (int i = 0; i < itemId.Length; i++)
+            {
+                h ^= itemId[i];
+                h *= 1099511628211UL;
+            }
+            h ^= (uint)n;
+            h *= 1099511628211UL;
+            return (h & 0xFFFFFFFFUL).ToString("x8");
         }
 
         public float EffectiveValueMultiplier

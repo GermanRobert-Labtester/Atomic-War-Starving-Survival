@@ -63,7 +63,7 @@ namespace Ashfall.Core.Survivors
         public Action<float> ApplyPermanentShelterMoraleBuff;
         public Func<string, string> GetWishNarrativeText;
         // wishId → localized text
-        public System.Random Rng;
+        public ISeededRng Rng;
 
         // ── State ──────────────────────────────────────────────────────
         /// <summary>ArchetypeId → wish type.</summary>
