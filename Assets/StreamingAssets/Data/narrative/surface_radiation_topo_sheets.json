@@ -1,0 +1,82 @@
+[
+  {
+    "id": "topo_sheet_ground_zero_trinitite_basin",
+    "quadrangle_name": "GROUND_ZERO_CRATER_BASIN_QUAD",
+    "grid_scale_ratio": "1_TO_25000",
+    "peak_gamma_field_r_hr": 18.5,
+    "dominant_terrain_feature": "VITRIFIED_GREEN_GLASS_LAKE",
+    "timestamp_relative": "YEAR_02_CARTOGRAPHY_01",
+    "tags": ["cartography", "topo", "crater", "trinitite", "radiation_map"],
+    "prose": "Detailed 1:25,000 contour survey of the central detonation crater. The basin floor is paved with a continuous three-inch pavement of translucent olive-green trinitite glass; gamma dosimeters register 18.5 R/hr at ground level, dropping to 4.2 R/hr along the outer ejecta rim."
+  },
+  {
+    "id": "topo_sheet_ridge_crest_windward_hot_plume",
+    "quadrangle_name": "RIDGE_CREST_DIVIDE_SECTOR_4",
+    "grid_scale_ratio": "1_TO_50000",
+    "peak_gamma_field_r_hr": 6.8,
+    "dominant_terrain_feature": "WINDWARD_HOT_ASH_DEPOSITION",
+    "timestamp_relative": "YEAR_04_CARTOGRAPHY_03",
+    "tags": ["cartography", "topo", "ridge", "windward", "cesium"],
+    "prose": "Topographic map illustrating prevailing southwesterly fallout plumes across the crest. The windward granite face is encrusted with dense black fallout dust (6.8 R/hr), while the leeward cliff face lies in a deep radiation shadow with readings below 0.1 R/hr."
+  },
+  {
+    "id": "topo_sheet_alluvial_fan_isotope_silt_delta",
+    "quadrangle_name": "RIVER_DELTA_SEDIMENT_CONFLUENCE",
+    "grid_scale_ratio": "1_TO_10000",
+    "peak_gamma_field_r_hr": 11.2,
+    "dominant_terrain_feature": "RADIOACTIVE_MUD_ALLUVIAL_FAN",
+    "timestamp_relative": "YEAR_07_CARTOGRAPHY_02",
+    "tags": ["cartography", "topo", "alluvial_fan", "silt", "delta"],
+    "prose": "Mapping of the four-meter-deep silt deposits where mountain storm runoff empties into the valley floor. Fine particulate cobalt-60 and strontium-90 bound to river clay particles form an impassable delta of radioactive mud."
+  },
+  {
+    "id": "topo_sheet_caldera_fog_inversion_radon_pocket",
+    "quadrangle_name": "OLD_VOLCANIC_CALDERA_SINK",
+    "grid_scale_ratio": "1_TO_25000",
+    "peak_gamma_field_r_hr": 3.4,
+    "dominant_terrain_feature": "THERMAL_INVERSION_RADON_LAKE",
+    "timestamp_relative": "YEAR_09_CARTOGRAPHY_04",
+    "tags": ["cartography", "topo", "caldera", "radon", "inversion"],
+    "prose": "Topographic sink with 200-meter sheer rim walls. Atmospheric temperature inversions trap heavy radon-222 gas and stagnant sulfur dioxide fog in the caldera floor; traversing the bottom without positive-pressure air supply causes acute suffocation."
+  },
+  {
+    "id": "topo_sheet_railway_cut_shielding_corridor",
+    "quadrangle_name": "MOUNTAIN_SPUR_RAIL_DEEP_CUT",
+    "grid_scale_ratio": "1_TO_5000",
+    "peak_gamma_field_r_hr": 0.05,
+    "dominant_terrain_feature": "BASALT_RAILWAY_SHIELDING_TRENCH",
+    "timestamp_relative": "YEAR_12_CARTOGRAPHY_01",
+    "tags": ["cartography", "topo", "railway_cut", "terrain_shielding", "safe_route"],
+    "prose": "A thirty-meter-deep blasting cut through solid basalt bedrock excavated for the pre-war railway. The steep stone walls provide 85% geometric gamma attenuation from surface fallout, creating the safest north-south scavenger transit corridor in the region."
+  },
+  {
+    "id": "topo_sheet_pine_barrens_red_forest_kill_zone",
+    "quadrangle_name": "NORTHERN_PINE_BARRENS_TRACT",
+    "grid_scale_ratio": "1_TO_50000",
+    "peak_gamma_field_r_hr": 8.0,
+    "dominant_terrain_feature": "STAND_DEAD_RED_PINE_FOREST",
+    "timestamp_relative": "YEAR_15_CARTOGRAPHY_03",
+    "tags": ["cartography", "topo", "red_forest", "dead_wood", "fire_hazard"],
+    "prose": "Forty square kilometers of dead, brick-red pine timber killed by initial prompt radiation. The wood does not decompose due to the absence of soil fungi and insects; a massive dry fuel load that presents an extreme risk of catastrophic radioactive forest fires."
+  },
+  {
+    "id": "topo_sheet_esker_gravel_ridge_traversal_route",
+    "quadrangle_name": "GLACIAL_ESKER_HIGH_CREST",
+    "grid_scale_ratio": "1_TO_20000",
+    "peak_gamma_field_r_hr": 0.15,
+    "dominant_terrain_feature": "ELEVATED_GRAVEL_ESKER_SPINE",
+    "timestamp_relative": "YEAR_18_CARTOGRAPHY_02",
+    "tags": ["cartography", "topo", "esker", "gravel_ridge", "navigation"],
+    "prose": "A narrow, sinuous gravel ridge rising fifteen meters above the surrounding flooded muskeg. The fast-draining coarse sand and lack of fine silt prevent radioactive particle accumulation, offering excellent visibility and firm footing for laden sledges."
+  },
+  {
+    "id": "topo_sheet_mine_tailings_dam_breach_floodplain",
+    "quadrangle_name": "TAILINGS_BASIN_WASHOUT_SECTOR",
+    "grid_scale_ratio": "1_TO_25000",
+    "peak_gamma_field_r_hr": 14.0,
+    "dominant_terrain_feature": "URANIUM_SLURRY_OUTWASH_PLAIN",
+    "timestamp_relative": "YEAR_20_CARTOGRAPHY_01",
+    "tags": ["cartography", "topo", "tailings_dam", "washout", "uranium_slurry"],
+    "prose": "Contour overlay of the earthen dam breach at Uranium Mine 9. Five million tons of acidic radium-bearing slime swept three miles down the creek bed, burying highway bridges under two meters of toxic grey mud that emits 14 R/hr."
+  }
+]

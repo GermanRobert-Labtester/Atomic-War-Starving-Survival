@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "cycle": "cycle_d",
+  "templates": [
+    {
+      "template_id": "jrnl_foundry_first_heat",
+      "expansion_id": "exp_10_the_silent_foundry",
+      "author_role": "foundryman",
+      "title": "First Cast Iron",
+      "body_template": "The cupola furnace reached 1,200 degrees at noon. When we tapped the spout, the molten stream was yellow-white and smelled of sulfur and wet slag. We poured eighteen plowshares and forty structural T-beams. For the first time in five years, the metal in our hands was not scrap cut from a wrecked truck; it was new iron, smelted from local river ore. The children stopped playing in the slag heap to watch the molds cool.",
+      "tags": ["foundry", "industry", "iron", "rebirth", "labor"],
+      "stress_delta": -5.0,
+      "hope_earned": 5.0
+    },
+    {
+      "template_id": "jrnl_foundry_strike",
+      "expansion_id": "exp_10_the_silent_foundry",
+      "author_role": "schoolmistress",
+      "title": "The Tools on the Floor",
+      "body_template": "Katya's class walked out of the charging floor at 08:00 and sat on the frozen rail spur. Fourteen children with soot on their faces refusing to lift the coal shovels. The council told them the winter would freeze the bunker without steam pressure. The children did not shout; they only pointed to the classroom chalkboards where the grammar lessons had been erased for production quotas. We have to decide if we are building a city or a grave.",
+      "tags": ["foundry", "strike", "children", "morals", "constitutional"],
+      "stress_delta": 7.0,
+      "hope_earned": 2.0
+    },
+    {
+      "template_id": "jrnl_harpoon_first_strike",
+      "expansion_id": "exp_11_the_orbital_harrow",
+      "author_role": "sentinel",
+      "title": "The Falling Spear",
+      "body_template": "There was no siren. Just a supersonic crack that shattered every glass gauge in the turbine room, followed by the ceiling dropping two inches into the dirt. A tungsten penetrator the size of a telephone pole had come down through three layers of reinforced concrete. It had no explosive warhead — only kinetic weight dropped from eight hundred kilometers up. The Keeper called on 104.7 MHz thirty seconds later: 'Orbital track 42 confirmed. Deorbit decay is accelerating. You have four days.'",
+      "tags": ["orbital", "harrow", "kinetic", "sky_armor", "keeper"],
+      "stress_delta": 12.0,
+      "hope_earned": 0.0
+    },
+    {
+      "template_id": "jrnl_constitution_ratified",
+      "expansion_id": "exp_12_the_century_seed",
+      "author_role": "elder",
+      "title": "The Signatures on Slate",
+      "body_template": "Today the twelve districts signed the Valley Constitution on three polished slabs of slate from the lower crypt. No titles were used. Sonya signed first, using the same carbon pencil Dr. Vel gave her ten years ago. Under Article 4, the right of any child to refuse labor in the blast furnace is made irrevocable. When the reading was done, the bell in the tower rang seven times for the living and seven times for the buried. We have survived the war.",
+      "tags": ["constitution", "century_seed", "reconciliation", "victory", "legacy"],
+      "stress_delta": -15.0,
+      "hope_earned": 10.0
+    }
+  ]
+}

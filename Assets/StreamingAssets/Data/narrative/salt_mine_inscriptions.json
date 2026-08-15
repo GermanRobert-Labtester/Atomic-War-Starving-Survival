@@ -1,0 +1,72 @@
+[
+  {
+    "id": "salt_mine_shaft_tally_340_days",
+    "mine_gallery": "LEVEL_04_HALITE_DRIFT_WEST",
+    "rock_medium": "PINK_SYLVINITE_CRYSTAL",
+    "inscription_tool": "CARBIDE_PICK_POINT",
+    "recorder_identity": "MINER_TOMAS_HELLER",
+    "timestamp_relative": "YEAR_01_DAY_340",
+    "tags": ["salt_mine", "tally", "confinement", "isolation", "abyss"],
+    "prose": "Three hundred and forty vertical notches carved in clusters of five into the translucent pink salt face. Underneath, a single jagged sentence reads: 'The hoist cable broke on the Tuesday before snow. We still hear the surface wind through the air shaft, but it smells only of dust and sulfur.'"
+  },
+  {
+    "id": "salt_mine_brine_spring_warning",
+    "mine_gallery": "LEVEL_06_DEEP_SUMP_ROOM",
+    "rock_medium": "COMPACT_HALITE_BEDROCK",
+    "inscription_tool": "COLD_CHISEL_AND_MALLET",
+    "recorder_identity": "SHIFT_FOREMAN_VANCE",
+    "timestamp_relative": "YEAR_03_DAY_112",
+    "tags": ["salt_mine", "brine_flood", "warning", "hazard", "abyss"],
+    "prose": "Deeply chiseled block letters bordered by double gouge lines: 'DO NOT DRILL WEST OF SPAN 14. PRESSURIZED 60-BAR BRINE VEIN BEHIND WALL. THREE MEN DROWNED IN THREE MINUTES. LEAVE THE ROCK SEALED.'"
+  },
+  {
+    "id": "salt_mine_blind_mule_memorial",
+    "mine_gallery": "LEVEL_02_HAULAGE_STABLE",
+    "rock_medium": "WHITE_HALITE_WALL",
+    "inscription_tool": "ACETYLENE_TORCH_CARBON_SOOT",
+    "recorder_identity": "STABLE_HAND_ELI",
+    "timestamp_relative": "YEAR_05_DAY_080",
+    "tags": ["salt_mine", "memorial", "mule", "companionship", "abyss"],
+    "prose": "Drawn in thick black acetylene soot across a white salt pillar: an outline of a draft mule with a carved limestone headstone underneath: 'Barnaby. Born in the daylight, 1974. Lowered down Shaft 2 in 1980. Hauled 40,000 tons of rock in the dark and never kicked a man. Died of cold, Month 62.'"
+  },
+  {
+    "id": "salt_mine_airlock_collapse_last_words",
+    "mine_gallery": "LEVEL_05_EMERGENCY_CRAWLWAY",
+    "rock_medium": "STEEL_BULKHEAD_AND_SALT_JAMB",
+    "inscription_tool": "GRAPHITE_PENCIL_AND_BLOOD",
+    "recorder_identity": "SEVEN_MEN_OF_SHIFT_3",
+    "timestamp_relative": "YEAR_06_DAY_290",
+    "tags": ["salt_mine", "last_words", "tragedy", "sealed_bulkhead", "abyss"],
+    "prose": "Faint pencil cursive covering the grey painted steel of the collapsed airlock door: 'To our families in Shelter Sector 2: We have two days of carbide left and six gallons of clean water. The salt is completely dry. We are sitting together and singing hymns. Tell the children the dark is not scary once you close your eyes.'"
+  },
+  {
+    "id": "salt_mine_crystalline_shrine_vow",
+    "mine_gallery": "CAVERN_OF_THE_SWORDS_GEODE",
+    "rock_medium": "SELENITE_GYPSUM_CRYSTAL_FACET",
+    "inscription_tool": "DIAMOND_GLASS_SCRIBE",
+    "recorder_identity": "CULT_OF_THE_CRYSTAL_BREATH",
+    "timestamp_relative": "YEAR_09_DAY_150",
+    "tags": ["salt_mine", "cult", "shrine", "selenite", "abyss"],
+    "prose": "Delicate script engraved across a two-meter clear selenite crystal blade: 'The salt cleanses the radiation that burned our eyes. Here in the cool white silence, the earth does not remember war. We breathe the dry mineral dust and wait for the iron world above to rot away.'"
+  },
+  {
+    "id": "salt_mine_methane_pocket_marker",
+    "mine_gallery": "LEVEL_03_NORTH_ADVANCE_HEADING",
+    "rock_medium": "ANHYDRITE_CAP_ROCK",
+    "inscription_tool": "RED_LEAD_PRIMER_PAINT",
+    "recorder_identity": "MINE_SAFETY_INSPECTOR_ROSS",
+    "timestamp_relative": "YEAR_11_DAY_005",
+    "tags": ["salt_mine", "methane", "danger", "hazard", "abyss"],
+    "prose": "A stark two-foot red paint cross with skull stencil on the overhead anhydrite roof: 'METHANE BLEED 4.8%. NO OPEN FLAMES. DAVY LAMPS ONLY. IF FLAME TURNS BLUE, RUN TOWARD THE UPCAST SHAFT.'"
+  },
+  {
+    "id": "salt_mine_scrip_forgery_workshop_graffiti",
+    "mine_gallery": "ABANDONED_EXPLOSIVES_MAGAZINE_7",
+    "rock_medium": "DRY_HALITE_BENCH",
+    "inscription_tool": "SCALPEL_SCRATCHES",
+    "recorder_identity": "CONTRABAND_FORGER_STASH",
+    "timestamp_relative": "YEAR_13_DAY_312",
+    "tags": ["salt_mine", "black_market", "forgery", "scrip_exchange", "abyss"],
+    "prose": "A clandestine trade ledger scratched into the flat table-top of a salt bench: '1 lead token = 2 liters brine-distilled water. 1 morph ampoule = 12 tokens. 1 box carbide = 5 tokens. If the watch sergeant comes down the ladder, drop the punch dies down Sump 4.'"
+  }
+]

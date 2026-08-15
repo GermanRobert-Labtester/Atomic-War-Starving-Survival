@@ -1,0 +1,82 @@
+[
+  {
+    "id": "sight_glass_steam_caustic_alkali_grooving",
+    "boiler_system_id": "MAIN_STEAM_GENERATOR_BOILER_01",
+    "glass_composition": "TEMPERED_BOROSILICATE_TYPE_3_3",
+    "operating_pressure_bar": 22.5,
+    "failure_classification": "CAUSTIC_ALKALI_CHEMICAL_ETCH",
+    "timestamp_relative": "YEAR_03_GLASS_LOG_01",
+    "tags": ["optics", "boiler", "sight_glass", "borosilicate", "alkali_etch"],
+    "prose": "High boiler water pH (11.8) maintained with caustic soda to prevent tube corrosion dissolved the silica matrix of the tubular sight glass. After four months, deep horizontal etched grooves thinned the wall from 5mm down to 1.8mm, risking an explosive steam burst."
+  },
+  {
+    "id": "sight_glass_mica_shield_delamination_scour",
+    "boiler_system_id": "AUXILIARY_DIESEL_HEAT_RECOVERY",
+    "glass_composition": "HIGH_PRESSURE_REFLEX_GLASS_SLAB",
+    "operating_pressure_bar": 18.0,
+    "failure_classification": "MICA_PROTECTIVE_LAMINATION_FLAKE",
+    "timestamp_relative": "YEAR_05_GLASS_LOG_03",
+    "tags": ["optics", "boiler", "sight_glass", "mica_shield", "steam_erosion"],
+    "prose": "The split natural muscovite mica shield protecting the gauge glass against steam impingement delaminated under turbulent flow. Stripped of mica protection, the underlying glass was frosted opaque by boiling steam wash within two weeks."
+  },
+  {
+    "id": "sight_glass_cold_water_spray_spallation_rupture",
+    "boiler_system_id": "DEEP_SUMP_GEOTHERMAL_SEPARATOR",
+    "glass_composition": "TOUGHENED_ALUMINOSILICATE_DISC",
+    "operating_pressure_bar": 30.0,
+    "failure_classification": "THERMAL_SHOCK_SPALLATION_RUPTURE",
+    "timestamp_relative": "YEAR_08_GLASS_LOG_02",
+    "tags": ["optics", "boiler", "sight_glass", "thermal_shock", "rupture"],
+    "prose": "A burst overhead cold water condensate line sprayed 4°C water directly onto the exterior of the 210°C aluminosilicate sight port. The sudden 200°C thermal gradient fractured the 15mm thick glass with explosive violence, discharging 30-bar steam into the engine room."
+  },
+  {
+    "id": "sight_glass_gland_packing_asbestos_crush",
+    "boiler_system_id": "DISTILLATION_EVAPORATOR_COLUMN_02",
+    "glass_composition": "HEAVY_WALL_BOROSILICATE_TUBULAR",
+    "operating_pressure_bar": 8.5,
+    "failure_classification": "UNEVEN_GLAND_NUT_POINT_STRESS",
+    "timestamp_relative": "YEAR_11_GLASS_LOG_04",
+    "tags": ["optics", "boiler", "sight_glass", "gland_packing", "point_stress"],
+    "prose": "An apprentice mechanic over-tightened the brass gland nut using a cheater bar, crushing the hardened graphite-asbestos packing ring unevenly. The concentrated bending moment snapped the borosilicate tube cleanly at the packing neck during morning warm-up."
+  },
+  {
+    "id": "sight_glass_thermal_gradient_bowing_deflection",
+    "boiler_system_id": "HOT_WATER_DISTRICT_HEATING_PLANT",
+    "glass_composition": "EXTRUDED_SODA_LIME_SAFETY_TUBE",
+    "operating_pressure_bar": 12.0,
+    "failure_classification": "DIFFERENTIAL_EXPANSION_BOWING",
+    "timestamp_relative": "YEAR_14_GLASS_LOG_01",
+    "tags": ["optics", "boiler", "sight_glass", "thermal_gradient", "bowing"],
+    "prose": "Using cheap soda-lime replacement glass tubes in place of low-expansion borosilicate caused severe thermal expansion mismatches. The glass tube bowed outward 4mm under high temperature, breaking the lower silicone sealing O-ring and leaking boiling water."
+  },
+  {
+    "id": "sight_glass_iron_oxide_magnetite_plating",
+    "boiler_system_id": "TURBINE_CONDENSER_HOTWELL_01",
+    "glass_composition": "TRANSPARENT_BOROSILICATE_GAUGE",
+    "operating_pressure_bar": 5.0,
+    "failure_classification": "MAGNETITE_SLUDGE_ENCRUSTATION",
+    "timestamp_relative": "YEAR_16_GLASS_LOG_03",
+    "tags": ["optics", "boiler", "sight_glass", "magnetite", "sludge_deposit"],
+    "prose": "Suspended black magnetite (Fe3O4) boiler sludge deposited a continuous metallic coating on the inside of the gauge glass. Operators misread the blackened tube as full of water, failing to detect a dry boiler condition that scorched three furnace flues."
+  },
+  {
+    "id": "sight_glass_hydrofluoric_leaching_quarry_dust",
+    "boiler_system_id": "AIR_SCRUBBER_RECIRCULATION_SUMP",
+    "glass_composition": "OPTICAL_GRADE_FUSED_QUARTZ_WINDOW",
+    "operating_pressure_bar": 3.0,
+    "failure_classification": "FLUORIDE_ACID_ETCH_OPACIFICATION",
+    "timestamp_relative": "YEAR_18_GLASS_LOG_02",
+    "tags": ["optics", "scrubber", "sight_glass", "hydrofluoric", "quartz_etch"],
+    "prose": "Volcanic ash containing soluble fluoride salts reacted with acidic sulfuric wash water to generate trace hydrofluoric acid. The HF attacked the fused quartz inspection window, etching the smooth optical surface into rough, opaque white frosted glass."
+  },
+  {
+    "id": "sight_glass_reflex_prism_groove_erosion",
+    "boiler_system_id": "HIGH_PRESSURE_FEEDWATER_DEAERATOR",
+    "glass_composition": "PRECISION_MOLDED_REFLEX_GLASS",
+    "operating_pressure_bar": 15.0,
+    "failure_classification": "PRISMATIC_V_GROOVE_STEAM_ROUNDING",
+    "timestamp_relative": "YEAR_20_GLASS_LOG_01",
+    "tags": ["optics", "boiler", "sight_glass", "reflex_glass", "prism_erosion"],
+    "prose": "Continuous high-velocity steam blowdown eroded the sharp ninety-degree prismatic V-grooves on the inner face of the reflex gauge glass. The rounded grooves lost their total internal reflection capability, making steam appear dark like water and confusing watchstanders."
+  }
+]

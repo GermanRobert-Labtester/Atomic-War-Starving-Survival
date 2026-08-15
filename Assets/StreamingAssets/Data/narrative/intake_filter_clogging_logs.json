@@ -1,0 +1,72 @@
+[
+  {
+    "id": "filter_clog_volcanic_ash_cake_compaction",
+    "filter_bank_id": "MAIN_SURFACE_INTAKE_BANK_ALPHA",
+    "filter_stage": "STAGE_1_COARSE_DUST_PREFILTER",
+    "differential_pressure_pascals": 1450.0,
+    "airflow_loss_pct": 82,
+    "timestamp_relative": "YEAR_02_FILTER_MAINT_01",
+    "tags": ["architecture", "ventilation", "ash_clog", "filters", "bunker_air"],
+    "prose": "Fine stratospheric volcanic silicate ash mixed with atmospheric humidity formed a rock-hard, cement-like cake eighty millimeters thick across the coarse louvers. Intake blowers overloaded on thermal protection; airflow dropped from 22,000 CFM down to barely 3,900 CFM."
+  },
+  {
+    "id": "filter_clog_activated_charcoal_bed_saturation",
+    "filter_bank_id": "CHEMICAL_ADSORPTION_MANIFOLD_02",
+    "filter_stage": "STAGE_3_ACTIVATED_CARBON_BED",
+    "differential_pressure_pascals": 820.0,
+    "airflow_loss_pct": 35,
+    "timestamp_relative": "YEAR_05_FILTER_MAINT_03",
+    "tags": ["architecture", "carbon_filter", "adsorption", "chemical_breakthrough", "air"],
+    "prose": "Photoionization detector on the clean air plenum registered complete breakthrough of sulfur dioxide and benzene vapors. The two-ton coconut-shell activated charcoal bed has reached 100% moisture and hydrocarbon saturation after thirty months of continuous run."
+  },
+  {
+    "id": "filter_clog_hepa_fiberglass_mat_rad_embrittlement",
+    "filter_bank_id": "FALLOUT_ISOLATION_CELL_04",
+    "filter_stage": "STAGE_2_HIGH_EFFICIENCY_HEPA_MAT",
+    "differential_pressure_pascals": 1900.0,
+    "airflow_loss_pct": 70,
+    "timestamp_relative": "YEAR_08_FILTER_MAINT_02",
+    "tags": ["architecture", "hepa", "radiation_damage", "filter_mat", "safety"],
+    "prose": "Accumulated beta activity (over 12,000 disintegrations/sec/cm²) degraded the borosilicate micro-fiberglass binder. The filter medium turned dark yellow and brittle as dry leaves; differential air pressure blew twelve large tears through the paper pleats."
+  },
+  {
+    "id": "filter_clog_blast_valve_spring_soot_seizure",
+    "filter_bank_id": "RAPID_ACTING_BLAST_VALVE_01",
+    "filter_stage": "MECHANICAL_PRESSURE_POPPET",
+    "differential_pressure_pascals": 640.0,
+    "airflow_loss_pct": 45,
+    "timestamp_relative": "YEAR_11_FILTER_MAINT_04",
+    "tags": ["architecture", "blast_valve", "poppet", "soot", "jammed_valve"],
+    "prose": "Heavy carbon soot from diesel exhaust backwash baked onto the chromium-plated poppet guide shafts. When tested with a 2-bar simulated shock wave, the primary blast valve seized at 40% travel, failing to achieve positive pressure lock."
+  },
+  {
+    "id": "filter_clog_condensation_freezing_ice_glaze",
+    "filter_bank_id": "NORTH_RIDGE_WEATHER_HOOD_03",
+    "filter_stage": "STAGE_0_WEATHER_LOUVER_SCREEN",
+    "differential_pressure_pascals": 2200.0,
+    "airflow_loss_pct": 92,
+    "timestamp_relative": "YEAR_14_FILTER_MAINT_01",
+    "tags": ["architecture", "ice_glaze", "winter", "intake_hood", "hypoxia"],
+    "prose": "Sub-zero -32°C winter fog froze solid across the stainless steel insect and debris mesh, forming a six-inch impenetrable sheet of clear glaze ice. Bunker oxygen levels dropped to 17.5% across all sleeping quarters before an emergency crew chipped the ice clear with axes."
+  },
+  {
+    "id": "filter_clog_vermin_corpse_airway_occlusion",
+    "filter_bank_id": "AUXILIARY_DIESEL_AIR_RUN_B",
+    "filter_stage": "STAGE_1_ROUGHING_EXPANDED_METAL",
+    "differential_pressure_pascals": 1100.0,
+    "airflow_loss_pct": 50,
+    "timestamp_relative": "YEAR_17_FILTER_MAINT_03",
+    "tags": ["architecture", "vermin", "decay", "airway_blockage", "hygiene"],
+    "prose": "Dozens of mutated roof rats and bats seeking heat from the intake duct died against the pre-filter face during a severe winter blizzard. Decomposing carcasses blocked half the cross-sectional intake area and filled the lower workshops with sickening putrefaction odors."
+  },
+  {
+    "id": "filter_clog_reverse_pulse_air_jet_failure",
+    "filter_bank_id": "AUTOMATED_BAGHOUSE_CELL_09",
+    "filter_stage": "STAGE_1_PULSE_JET_FABRIC_BAGS",
+    "differential_pressure_pascals": 2600.0,
+    "airflow_loss_pct": 95,
+    "timestamp_relative": "YEAR_20_FILTER_MAINT_02",
+    "tags": ["architecture", "baghouse", "pulse_jet", "filter_collapse", "maintenance"],
+    "prose": "Failure of the six-bar compressed air regulator prevented the automatic cleaning reverse-pulse solenoid valves from firing. The heavy woven Nomex filter bags collapsed inward under two tons of accumulated dry fallout dust, stalling the main ventilation motors."
+  }
+]

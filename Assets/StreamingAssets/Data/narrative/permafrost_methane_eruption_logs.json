@@ -1,0 +1,72 @@
+[
+  {
+    "id": "methane_eruption_clathrate_hydrate_explosive_outgassing",
+    "vault_geological_sector": "PERMAFROST_VAULT_DECK_4_SUB",
+    "estimated_methane_volume_m3": 14500.0,
+    "structural_displacement_cm": 85.0,
+    "eruption_trigger": "GEOTHERMAL_THAW_HYDRATE_DISSOCIATION",
+    "timestamp_relative": "YEAR_04_PERMAFROST_LOG_01",
+    "tags": ["permafrost", "methane", "clathrate", "outgassing", "geology"],
+    "prose": "Geothermal heat bleeding down from the emergency diesel exhaust trench raised permafrost temperatures above 2°C. Subterranean methane hydrate crystals dissociated explosively, blowing an eighty-five-centimeter heave through the unreinforced floor slab and filling the gallery with pure methane."
+  },
+  {
+    "id": "methane_eruption_pingo_heave_concrete_buckling",
+    "vault_geological_sector": "FOUNDATION_BED_SECTOR_7_EAST",
+    "estimated_methane_volume_m3": 3200.0,
+    "structural_displacement_cm": 120.0,
+    "eruption_trigger": "OPEN_SYSTEM_PINGO_ICE_CORE_GROWTH",
+    "timestamp_relative": "YEAR_06_PERMAFROST_LOG_03",
+    "tags": ["permafrost", "pingo", "frost_heave", "foundation_crack", "ice_core"],
+    "prose": "Pressurized sub-permafrost groundwater fed the growth of an internal massive ice core (pingo) directly beneath Seed Vault Annex B. The expanding ice dome pushed the sixty-centimeter reinforced foundation slab four feet upward, snapping structural tie-beams."
+  },
+  {
+    "id": "methane_eruption_thermokarst_slump_casing_shear",
+    "vault_geological_sector": "PERMAFROST_SLOPE_NORTH_PORTAL",
+    "estimated_methane_volume_m3": 800.0,
+    "structural_displacement_cm": 240.0,
+    "eruption_trigger": "RETROGRESSIVE_THAW_SLUMP",
+    "timestamp_relative": "YEAR_09_PERMAFROST_LOG_02",
+    "tags": ["permafrost", "thermokarst", "slump", "pipe_shear", "mudflow"],
+    "prose": "Thawing of ground ice wedges along the northern slope triggered a massive retrogressive mud slump. Three thousand tons of liquefied permafrost silt flowed downhill, shearing the main insulated liquid nitrogen fill casing and exposing the portal to surface air."
+  },
+  {
+    "id": "methane_eruption_talik_sub_permafrost_aquifer_inrush",
+    "vault_geological_sector": "DEEP_CORE_CRYO_VAULT_LEVEL_6",
+    "estimated_methane_volume_m3": 6500.0,
+    "structural_displacement_cm": 45.0,
+    "eruption_trigger": "TALIK_HYDROSTATIC_BURST",
+    "timestamp_relative": "YEAR_12_PERMAFROST_LOG_01",
+    "tags": ["permafrost", "talik", "aquifer_burst", "flooding", "sub_permafrost"],
+    "prose": "An unfrozen, highly pressurized groundwater pocket (talik) beneath the hundred-meter permafrost layer breached an exploratory core hole. Sub-zero mineralized brine and dissolved methane erupted into Level 6 at forty bar, coating cryo-tanks in frozen salt rime."
+  },
+  {
+    "id": "methane_eruption_clathrate_mud_volcano_venting",
+    "vault_geological_sector": "AIR_INTAKE_SHAFT_PERIMETER_D",
+    "estimated_methane_volume_m3": 18000.0,
+    "structural_displacement_cm": 150.0,
+    "eruption_trigger": "CRYOMUD_VOLCANO_OVERPRESSURE",
+    "timestamp_relative": "YEAR_15_PERMAFROST_LOG_04",
+    "tags": ["permafrost", "mud_volcano", "methane", "intake_shaft", "plug"],
+    "prose": "Overpressurized methane bubbling through saturated permafrost clay created a cold mud volcano inside the air intake canyon. A ten-meter cone of liquid blue clay and gravel plugged the emergency air filtration intake louvers."
+  },
+  {
+    "id": "methane_eruption_anaerobic_bog_methanogenesis_pulse",
+    "vault_geological_sector": "EMERGENCY_ESCAPE_STAIRWELL_02",
+    "estimated_methane_volume_m3": 4200.0,
+    "structural_displacement_cm": 10.0,
+    "eruption_trigger": "MICROBIAL_PEAT_FERMENTATION_PULSE",
+    "timestamp_relative": "YEAR_17_PERMAFROST_LOG_02",
+    "tags": ["permafrost", "methanogenesis", "peat_bog", "explosion_hazard", "gas"],
+    "prose": "Warming of an ancient, uncompacted interglacial peat layer beneath Stairwell 2 triggered intense methanogenic bacterial activity. Methane gas seeped through masonry expansion joints, reaching a 9% explosive concentration that detonated when an emergency relay clicked."
+  },
+  {
+    "id": "methane_eruption_ice_wedge_polygonal_fracture_burst",
+    "vault_geological_sector": "PERIMETER_GALLERY_WEST_WALL",
+    "estimated_methane_volume_m3": 1200.0,
+    "structural_displacement_cm": 65.0,
+    "eruption_trigger": "POLYGONAL_ICE_WEDGE_THERMAL_SHOCK",
+    "timestamp_relative": "YEAR_20_PERMAFROST_LOG_01",
+    "tags": ["permafrost", "ice_wedge", "polygonal_ground", "rock_fracture", "shear"],
+    "prose": "Rapid temperature cycling between winter surface cold (-45°C) and bunker internal exhaust (+15°C) created extreme thermal contraction stresses in massive ground ice wedges. A four-meter ice wedge fractured with a sound like a naval cannon, cleaving the tunnel shotcrete."
+  }
+]

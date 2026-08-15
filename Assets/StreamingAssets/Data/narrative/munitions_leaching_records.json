@@ -1,0 +1,82 @@
+[
+  {
+    "id": "munitions_leaching_white_phosphorus_casing_rupture",
+    "magazine_vault_id": "VAULT_EIGHT_ORDNANCE_STORE",
+    "chemical_agent": "WHITE_PHOSPHORUS_PYROPHORIC",
+    "storage_temperature_celsius": 18.5,
+    "hazard_tier": "CRITICAL_SPONTANEOUS_COMBUSTION",
+    "timestamp_relative": "YEAR_03_MUNITIONS_LOG_01",
+    "tags": ["military", "munitions", "white_phosphorus", "pyrophoric", "chemical"],
+    "prose": "Sub-surface dampness corroded the thin sheet-metal casing of twenty-four 81mm smoke mortar rounds. When the crate was shifted, atmospheric oxygen penetrated the cracked seals, causing white phosphorus to spontaneously ignite with dense white phosphoric pentoxide smoke."
+  },
+  {
+    "id": "munitions_leaching_cyclotrimethylene_rdx_crystallization",
+    "magazine_vault_id": "DEEP_BARRACKS_AMMO_LOCKER_04",
+    "chemical_agent": "CYCLOTRIMETHYLENETRINITRAMINE_RDX",
+    "storage_temperature_celsius": 14.0,
+    "hazard_tier": "EXTREME_SHOCK_SENSITIVE_CRYSTALS",
+    "timestamp_relative": "YEAR_05_MUNITIONS_LOG_03",
+    "tags": ["military", "munitions", "rdx", "crystallization", "explosives"],
+    "prose": "Water infiltration through the storage bay ceiling leached plasticizer from hundred-pound blocks of Composition C-4. Pure, needle-like RDX crystals precipitated across the concrete floor and wooden pallet slats, rendering ordinary footsteps a lethal detonation hazard."
+  },
+  {
+    "id": "munitions_leaching_lead_azide_primer_friction_sensitization",
+    "magazine_vault_id": "SUB_LEVEL_4_FUZE_MAGAZINE",
+    "chemical_agent": "LEAD_AZIDE_PRIMARY_EXPLOSIVE",
+    "storage_temperature_celsius": 16.0,
+    "hazard_tier": "HIGH_FRICTION_DETONATION_RISK",
+    "timestamp_relative": "YEAR_08_MUNITIONS_LOG_02",
+    "tags": ["military", "munitions", "lead_azide", "primer", "friction"],
+    "prose": "Electrochemical corrosion between brass fuse cups and copper booster sleeves caused copper azide and lead azide salts to leach into the packing straw. A technician sweeping the storage floor triggered a sharp micro-detonation with a stiff broom that tore through his boot."
+  },
+  {
+    "id": "munitions_leaching_nitrocellulose_propellant_acid_sweat",
+    "magazine_vault_id": "HEAVY_ARTILLERY_POWDER_CELLAR",
+    "chemical_agent": "NITROGLYCERIN_PROPEL_SWEAT",
+    "storage_temperature_celsius": 24.0,
+    "hazard_tier": "CATASTROPHIC_EXPLOSION_UNSTABLE",
+    "timestamp_relative": "YEAR_11_MUNITIONS_LOG_01",
+    "tags": ["military", "munitions", "nitroglycerin", "powder_sweat", "propellant"],
+    "prose": "Depletion of chemical diphenylamine stabilizer in forty-year-old double-base propellant charges caused oily beads of free liquid nitroglycerin to 'sweat' through silk powder bags. The yellow liquid pooled in zinc storage containers, giving off sharp acrid nitric acid fumes."
+  },
+  {
+    "id": "munitions_leaching_mustard_gas_corroded_burster_leak",
+    "magazine_vault_id": "REDACTED_PROJECT_ANNEX_SECTOR_9",
+    "chemical_agent": "BIS_2_CHLOROETHYL_SULFIDE_HD",
+    "storage_temperature_celsius": 12.0,
+    "hazard_tier": "LETHAL_VESICANT_VAPOR_LEAK",
+    "timestamp_relative": "YEAR_13_MUNITIONS_LOG_04",
+    "tags": ["military", "munitions", "mustard_gas", "vesicant", "chemical_weapon"],
+    "prose": "Burster casings inside four 155mm chemical artillery shells corroded through, allowing oily amber sulfur mustard liquid to seep into the floor drain. The garlic-scented vapor drifted through cable ducts, blinding three security personnel and causing massive blistering."
+  },
+  {
+    "id": "munitions_leaching_depleted_uranium_dust_inhalation",
+    "magazine_vault_id": "ARMORED_VEHICLE_AMMUNITION_BAY",
+    "chemical_agent": "URANIUM_DIOXIDE_PYROPHORIC_DUST",
+    "storage_temperature_celsius": 15.0,
+    "hazard_tier": "HEAVY_METAL_PULMONARY_TOXICITY",
+    "timestamp_relative": "YEAR_16_MUNITIONS_LOG_02",
+    "tags": ["military", "munitions", "depleted_uranium", "toxic_dust", "inhalation"],
+    "prose": "Unsealed depleted uranium 120mm APFSDS dart penetrators underwent galvanic oxidation in moist bunker air. The surface flaked into fine, black pyrophoric UO2 powder that settled across ammunition racks, creating severe alpha-inhalation and heavy-metal kidney toxicity hazards."
+  },
+  {
+    "id": "munitions_leaching_mercury_fulminate_salts_corrosion",
+    "magazine_vault_id": "SMALL_ARMS_SURPLUS_CELLAR_02",
+    "chemical_agent": "MERCURIC_FULMINATE_CRYSTALS",
+    "storage_temperature_celsius": 17.0,
+    "hazard_tier": "MERCURY_POISONING_AND_SHOCK",
+    "timestamp_relative": "YEAR_18_MUNITIONS_LOG_01",
+    "tags": ["military", "munitions", "mercury_fulminate", "primers", "small_arms"],
+    "prose": "Millions of pre-war corrosive-primed 7.62mm rifle rounds stored in damp wooden cases broke down, leaching grey mercuric salts. The salts chemically attacked the zinc lining of ammo cans, forming liquid elemental mercury globules that pooled in floor grooves."
+  },
+  {
+    "id": "munitions_leaching_ammonium_picrate_dunnite_staining",
+    "magazine_vault_id": "COASTAL_DEFENSE_BOMB_SHELF",
+    "chemical_agent": "AMMONIUM_PICRATE_DUNNITE",
+    "storage_temperature_celsius": 19.0,
+    "hazard_tier": "TOXIC_CARCINOGEN_CRYSTALLIZATION",
+    "timestamp_relative": "YEAR_20_MUNITIONS_LOG_03",
+    "tags": ["military", "munitions", "dunnite", "explosive_salts", "staining"],
+    "prose": "Old naval armor-piercing shells filled with Explosive D wept bright canary-yellow ammonium picrate salts through cracked base plugs. The bitter yellow powder stained masonry walls, contaminated sump drainage water, and turned the skin of maintenance workers bright yellow."
+  }
+]

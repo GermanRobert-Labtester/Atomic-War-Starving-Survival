@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "cycle": "cycle_c",
+  "templates": [
+    {
+      "template_id": "jrnl_vel_vigil",
+      "expansion_id": "exp_07_the_dose",
+      "author_role": "witness",
+      "title": "The Thirty-One Names",
+      "body_template": "Dr. Vel died this morning at 04:12. She did not ask for water at the end. She spoke thirty-one names from the triage ledger, in order of arrival, without pause, until her breath caught on the name of the child from Sector 4. After she stopped, the room went so quiet that the ice cracking on the roof sounded like footsteps. Then, at the dark end of the hall, there were three knocks on the airlock door. Slow. Practiced. We did not open it. She held the medicine chest keys until her fingers went cold. I have them now.",
+      "tags": ["vigil", "vel", "keys", "phantom_knock", "grief"],
+      "stress_delta": 4.5,
+      "hope_earned": 1.0
+    },
+    {
+      "template_id": "jrnl_vel_refused_glass",
+      "expansion_id": "exp_07_the_dose",
+      "author_role": "witness",
+      "title": "The Unspoken Names",
+      "body_template": "She reached for the water before the list was finished. Her hand was shaking so hard the tin cup rattled against her teeth. She looked at me once — not angry, just finished — and closed her eyes. Eleven names remained on the paper. I folded the leaf into my pocket. Some debts are never read aloud. The room felt colder after that.",
+      "tags": ["vigil", "vel", "refusal", "unfinished", "guilt"],
+      "stress_delta": 8.0,
+      "hope_earned": 0.0
+    },
+    {
+      "template_id": "jrnl_census_first_carrier",
+      "expansion_id": "exp_08_the_verdict",
+      "author_role": "radio_operator",
+      "title": "Carrier at 99.0 MHz",
+      "body_template": "At 03:00 the static on 99.0 tightened into a high, clean tone. Four seconds of hum, then a synthesized voice that spoke without commas or inflection. It said the expected provincial population was two hundred eleven thousand and four souls. Then it paused — exactly the length of a held breath — and read our number. Not an estimate. The exact count of living dwellers sleeping in these bunks, plus the two traders camped in the tunnel. It knows we are here. It does not ask why we survived. It only calculates the discrepancy.",
+      "tags": ["census", "tempest", "carrier", "surveillance", "dread"],
+      "stress_delta": 5.0,
+      "hope_earned": 0.0
+    },
+    {
+      "template_id": "jrnl_machine_degraded_count",
+      "expansion_id": "exp_08_the_verdict",
+      "author_role": "radio_operator",
+      "title": "The Broken Grammar of Tempest",
+      "body_template": "The broadcast changed tonight. The formal preamble is gone. The machine no longer recites the baseline; it simply opened the channel and said: 'Window open. Minus forty-two. Window closes.' The speech synthesis is losing its vowels. Even the relay switches in the bunker deep beneath us are rotting from the salt in the air.",
+      "tags": ["census", "decay", "degradation", "tempest"],
+      "stress_delta": 3.0,
+      "hope_earned": 0.5
+    },
+    {
+      "template_id": "jrnl_sovereign_one_line",
+      "expansion_id": "exp_09_the_black_flotilla",
+      "author_role": "diver",
+      "title": "The Drowned Hold",
+      "body_template": "We reached the lower hold of the Sovereign through four meters of black brine. The hull was intact. Five hundred crates of medical-grade potassium iodide, packed in cosmoline and sealed with lead foil before the war. Untouched. Pristine. While half the province died of thyroid fever in the mud, this ship sat in the salt marsh with enough medicine to save two generations. We were never poor. We were robbed.",
+      "tags": ["sovereign", "dive", "iodine", "scandal", "wrath"],
+      "stress_delta": 6.0,
+      "hope_earned": 2.0
+    },
+    {
+      "template_id": "jrnl_sovereign_burned",
+      "expansion_id": "exp_09_the_black_flotilla",
+      "author_role": "diver",
+      "title": "Ash on the Water",
+      "body_template": "We dropped the magnesium flares into the lower hold and sealed the hatch behind us. The chemical fire boiled the water in the bilge until the deck plates vibrated under our boots. No syndicate broker will ever sell a five-milligram tablet for a child's boots again. When Tempest opens its census window next Tuesday, the discrepancy will be absolute.",
+      "tags": ["sovereign", "arson", "defiance", "tempest_denial"],
+      "stress_delta": 4.0,
+      "hope_earned": 3.0
+    }
+  ]
+}

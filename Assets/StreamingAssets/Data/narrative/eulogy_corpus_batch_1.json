@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "eulogies": [
+    {
+      "archetype_id": "eulogy_doctor",
+      "opening": "We lay down the hands that sutured our cuts when the power was dark.",
+      "shift_line": "{name} served {shifts_worked} shifts in the clinic, never turning away a neighbor who coughed from the ash.",
+      "cooking_line": "At supper, {name} gave away the extra bread portion to the children in bunk 4.",
+      "relic_line": "In their pocket was {keepsake}, worn smooth by ten thousand hours of quiet worry.",
+      "closing": "Let the granite wall hold their name so long as water flows clean through these pipes."
+    },
+    {
+      "archetype_id": "eulogy_stoker",
+      "opening": "The boilers are quiet for an hour while we stand beside the grave.",
+      "shift_line": "{name} shoveled {shifts_worked} watches of anthracite into Boiler #2, keeping the frost from our beds.",
+      "cooking_line": "We remember how {name} could bake a loaf of rye right against the hot flue draft.",
+      "relic_line": "They left behind {keepsake}, stained with coal soot and oil.",
+      "closing": "The fire they kept alive is the warmth we still have. Rest in the cold earth."
+    },
+    {
+      "archetype_id": "eulogy_sentry",
+      "opening": "The watch is relieved. The gate is secure.",
+      "shift_line": "{name} stood {shifts_worked} freezing watches at the surface intake, watching the whiteout storms.",
+      "cooking_line": "They drank the chicory tea cold so the stove wouldn't smoke during storm alerts.",
+      "relic_line": "Their hands held {keepsake} when the blizzard rattled the steel hatch.",
+      "closing": "No intruder breached our perimeter while they watched. We carry their watch forward."
+    },
+    {
+      "archetype_id": "eulogy_machinist",
+      "opening": "The lathe is turned off, and the belt is slack.",
+      "shift_line": "{name} turned {shifts_worked} shifts on the foot-lathe, cutting brass valves from scrap copper.",
+      "cooking_line": "They always saved the marrow bones to boil grease for the shaft bearings.",
+      "relic_line": "They kept {keepsake} in their tool chest, calibrated to the thousandth of an inch.",
+      "closing": "Every wheel that turns in this bunker was trued by their eye. Peace to their bones."
+    }
+  ]
+}

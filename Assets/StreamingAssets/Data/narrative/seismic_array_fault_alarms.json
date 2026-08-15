@@ -1,0 +1,82 @@
+[
+  {
+    "id": "alarm_seismic_overpressure_fault_rupture",
+    "station_id": "SEISMIC-MONITOR-STATION-03",
+    "richter_magnitude": 4.2,
+    "depth_km": 14.5,
+    "alert_tier": "CRITICAL_FAULT_DISPLACEMENT",
+    "timestamp_relative": "YEAR_03_DAY_088",
+    "tags": ["seismic", "earthquake", "faultline", "alarm", "ground_motion"],
+    "prose": "Horizontal slip along the regional strike-slip fault registered magnitude 4.2 at 14.5 kilometers depth. The shear wave triggered the automated hydraulic interlocks on Blast Door 2, slamming eighteen tons of steel shut in two-point-four seconds."
+  },
+  {
+    "id": "alarm_seismic_magma_chamber_inflation",
+    "station_id": "SEISMIC-MONITOR-STATION-07",
+    "richter_magnitude": 2.8,
+    "depth_km": 3.2,
+    "alert_tier": "VOLCANIC_HARMONIC_TREMOR",
+    "timestamp_relative": "YEAR_05_DAY_210",
+    "tags": ["seismic", "magma", "volcanic", "harmonic_tremor", "geology"],
+    "prose": "A continuous monochromatic 1.8 Hz harmonic tremor recorded for seventy-two hours. Telemetry indicates a shallow magma body inflating three kilometers below the caldera. Groundwater temperature in the sump well rose fourteen degrees in twenty-four hours."
+  },
+  {
+    "id": "alarm_seismic_sub_surface_nuclear_test_echo",
+    "station_id": "SEISMIC-MONITOR-STATION-01",
+    "richter_magnitude": 5.6,
+    "depth_km": 0.8,
+    "alert_tier": "PROMPT_NUCLEAR_GROUND_SHOCK",
+    "timestamp_relative": "YEAR_07_DAY_340",
+    "tags": ["seismic", "nuclear_detonation", "ground_shock", "warhead", "p_wave"],
+    "prose": "A sharp, high-frequency compressional P-wave arrival with virtually zero shear wave tail—the unmistakable seismic signature of a 150-kiloton deep underground nuclear detonation. Epicenter triangulated to the abandoned missile proving grounds three hundred kilometers north."
+  },
+  {
+    "id": "alarm_seismic_mine_gallery_implosion_shock",
+    "station_id": "SEISMIC-MONITOR-STATION-05",
+    "richter_magnitude": 3.4,
+    "depth_km": 0.6,
+    "alert_tier": "MINE_COLLAPSE_IMPLOSION",
+    "timestamp_relative": "YEAR_09_DAY_145",
+    "tags": ["seismic", "mine_collapse", "implosion", "void_failure"],
+    "prose": "Catastrophic roof fall in the flooded anthracite coal workings of Sector 6. The sudden collapse of four square kilometers of unsupported galleries produced a sharp atmospheric pressure pulse that blew out ventilation duct inspection covers across three shelter levels."
+  },
+  {
+    "id": "alarm_seismic_hydro_fracture_brine_surge",
+    "station_id": "SEISMIC-MONITOR-STATION-02",
+    "richter_magnitude": 2.1,
+    "depth_km": 2.8,
+    "alert_tier": "INDUCED_HYDRO_SEISMICITY",
+    "timestamp_relative": "YEAR_12_DAY_019",
+    "tags": ["seismic", "brine_surge", "geothermal", "hydro_fracture"],
+    "prose": "A swarm of eighty micro-earthquakes within two hours following high-pressure brine injection into the deep heat-exchange borehole. Induced fracturing cracked the impermeable cap rock, allowing scalding mineral water to flood into the Level 5 drainage adit."
+  },
+  {
+    "id": "alarm_seismic_bedrock_strain_gauge_overflow",
+    "station_id": "SEISMIC-MONITOR-STATION-09",
+    "richter_magnitude": 0.0,
+    "depth_km": 0.1,
+    "alert_tier": "STRAIN_GAUGE_SATURATION",
+    "timestamp_relative": "YEAR_14_DAY_280",
+    "tags": ["seismic", "strain_gauge", "rock_pressure", "bunker_stress"],
+    "prose": "Piezoresistive quartz strain gauges embedded in the main bunker support pillars saturated at 4,000 micro-strain. Concrete core samples show microscopic diagonal shear cracks forming along the structural load-bearing archways of Sector 1."
+  },
+  {
+    "id": "alarm_seismic_glaciation_isostatic_rebound",
+    "station_id": "SEISMIC-MONITOR-STATION-04",
+    "richter_magnitude": 4.8,
+    "depth_km": 22.0,
+    "alert_tier": "ISOSTATIC_CRUSTAL_UPLIFT",
+    "timestamp_relative": "YEAR_17_DAY_102",
+    "tags": ["seismic", "isostasy", "crustal_rebound", "ice_melt", "geology"],
+    "prose": "The continental plate, rebounding rapidly as miles of surface ice sublimated into volcanic winter clouds, sheared along an ancient Precambrian fault. The bunker shifted eight millimeters vertically, snapping cast-iron sewage drainage pipes across three sectors."
+  },
+  {
+    "id": "alarm_seismic_perimetr_ground_shock_confirmation",
+    "station_id": "SEISMIC-MONITOR-STATION-08",
+    "richter_magnitude": 5.1,
+    "depth_km": 1.2,
+    "alert_tier": "AUTONOMIC_DEAD_HAND_SHOCK",
+    "timestamp_relative": "YEAR_19_DAY_360",
+    "tags": ["seismic", "dead_hand", "silo_launch", "perimetr", "doomsday"],
+    "prose": "High-amplitude ground shock confirming the successful subterranean launch of an automated nuclear-tipped communication rocket from Silo 04. The seismic pulse was registered by surviving monitoring arrays across forty thousand square kilometers of empty continent."
+  }
+]

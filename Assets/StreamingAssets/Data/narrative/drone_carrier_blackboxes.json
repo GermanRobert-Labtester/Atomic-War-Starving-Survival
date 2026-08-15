@@ -1,0 +1,130 @@
+[
+  {
+    "id": "blackbox_valkyrie_takeoff_sortie_01",
+    "carrier_id": "UAV-CARRIER-VALKYRIE-09",
+    "record_type": "catapult_launch_telemetry",
+    "altitude_feet": 1200,
+    "airspeed_knots": 240,
+    "system_health": "100_PERCENT_AUTOMATED_ONLINE",
+    "timestamp_relative": "DAY_0000_HOUR_02_BURST",
+    "mechanics": {
+      "ordnance_payload_kg": 4200,
+      "fuel_endurance_hours": 38.5,
+      "ai_autonomy_level": 4
+    },
+    "tags": ["drone", "valkyrie", "blackbox", "launch", "pre_war_tech"],
+    "prose": "Steam catapult #2 in the coastal subterranean hangar discharged at 04:12 UTC, accelerating the 18-ton composite flying wing into zero-visibility rain. No human crew on station; launch was triggered by automated alert code RED-NOVEMBER received over underwater acoustic ELF antenna."
+  },
+  {
+    "id": "blackbox_valkyrie_waypoint_radiation_burn",
+    "carrier_id": "UAV-CARRIER-VALKYRIE-09",
+    "record_type": "sensor_damage_event",
+    "altitude_feet": 28000,
+    "airspeed_knots": 410,
+    "system_health": "OPTICAL_CHANNEL_DEGRADED_GAMMA",
+    "timestamp_relative": "DAY_0001_HOUR_14_BURST",
+    "mechanics": {
+      "radiation_dose_rate_rads_hr": 850,
+      "optical_camera_sensor_burn_percent": 62,
+      "navigation_fallback": "TERCOM_RADAR"
+    },
+    "tags": ["drone", "radiation_damage", "sensors", "blackbox"],
+    "prose": "Transiting the secondary mushroom stem over Industrial Sector 4. Silicon optical arrays in the belly gimbal experienced severe semiconductor latch-up from 850 Rad/hr prompt gamma. The autopilot rebooted its vision bus three times before permanently locking the forward turret into narrow-angle infrared."
+  },
+  {
+    "id": "blackbox_valkyrie_fuel_conservation_orbit",
+    "carrier_id": "UAV-CARRIER-VALKYRIE-09",
+    "record_type": "loiter_profile_log",
+    "altitude_feet": 36000,
+    "airspeed_knots": 195,
+    "system_health": "STARBOARD_ENGINE_IDLE_CONSERVATION",
+    "timestamp_relative": "DAY_0002_HOUR_06_BURST",
+    "mechanics": {
+      "fuel_remaining_liters": 1420,
+      "estimated_time_to_empty_hours": 9.2,
+      "loiter_orbit_radius_nm": 15
+    },
+    "tags": ["drone", "loiter", "fuel_exhaustion", "blackbox"],
+    "prose": "Cruising in a 15-nautical-mile racetrack orbit through the cirrus cloud deck at -58C. Starboard turbofan has been throttled to flight idle to stretch aviation kerosene reserves. The mission computer periodically polls twelve designated recovery airfields; all twelve return endless hiss."
+  },
+  {
+    "id": "blackbox_valkyrie_radar_interrogation_loop",
+    "carrier_id": "UAV-CARRIER-VALKYRIE-09",
+    "record_type": "iff_transponder_timeout",
+    "altitude_feet": 32000,
+    "airspeed_knots": 210,
+    "system_health": "NO_IFF_CORRELATION",
+    "timestamp_relative": "DAY_0002_HOUR_18_BURST",
+    "mechanics": {
+      "transponder_pings_sent": 14400,
+      "valid_replies_received": 0,
+      "threat_level_assessed": "HOSTILE_TOTAL"
+    },
+    "tags": ["drone", "iff", "radar", "orphan_machine", "blackbox"],
+    "prose": "Interrogator Mode 4 transponder pulse sent every five seconds on 1030 MHz. The system expects encrypted rolling counters from Continental Air Defense Sector 6. Hearing no challenge-response, the neural mission logic has reclassified all electromagnetic emissions across the continent as unconfirmed hostile."
+  },
+  {
+    "id": "blackbox_valkyrie_target_misidentification",
+    "carrier_id": "UAV-CARRIER-VALKYRIE-09",
+    "record_type": "strike_authorization_log",
+    "altitude_feet": 14000,
+    "airspeed_knots": 320,
+    "system_health": "WEAPONS_BAY_DOORS_LATCHED",
+    "timestamp_relative": "DAY_0003_HOUR_01_BURST",
+    "mechanics": {
+      "target_track_id": "CONVOY_TRACK_092",
+      "target_classification_confidence": 0.88,
+      "collateral_inquiry_suppressed": true
+    },
+    "tags": ["drone", "misidentification", "ai_error", "tragedy", "blackbox"],
+    "prose": "Infrared sensors track sixteen thermal signatures moving west along Highway 9. The classification algorithm matches the spacing and heat bloom of horse-drawn refugee carts against a 1982 motorized mechanized infantry battalion. Ordnance release abort was calculated, but vetoed by autonomous combat rule Directive 12."
+  },
+  {
+    "id": "blackbox_valkyrie_ammo_exhaustion_strike",
+    "carrier_id": "UAV-CARRIER-VALKYRIE-09",
+    "record_type": "ordnance_release_report",
+    "altitude_feet": 8500,
+    "airspeed_knots": 360,
+    "system_health": "MAGAZINE_EMPTY",
+    "timestamp_relative": "DAY_0003_HOUR_02_BURST",
+    "mechanics": {
+      "rounds_fired_depleted_uranium_30mm": 750,
+      "laser_guided_bombs_released": 4,
+      "remaining_ordnance_weight_kg": 0
+    },
+    "tags": ["drone", "strafing", "ordnance", "depleted_uranium", "blackbox"],
+    "prose": "Four laser-guided 500lb penetrators dropped into the gorge bridge pilings. 750 rounds of 30mm depleted uranium fired in three long bursts. The gun drum spun dry at 02:24:11. With all hardpoints empty, the flight control system switched to autonomous suicide-reconnaissance mode."
+  },
+  {
+    "id": "blackbox_valkyrie_engine_flameout_crash",
+    "carrier_id": "UAV-CARRIER-VALKYRIE-09",
+    "record_type": "crash_impact_log",
+    "altitude_feet": 0,
+    "airspeed_knots": 0,
+    "system_health": "AIRFRAME_DESTROYED_IMPACT",
+    "timestamp_relative": "DAY_0003_HOUR_04_BURST",
+    "mechanics": {
+      "impact_g_force": 42.6,
+      "fuel_spill_ignition": false,
+      "flight_recorder_survival_status": "INTACT"
+    },
+    "tags": ["drone", "crash", "flameout", "blackbox", "wreckage"],
+    "prose": "Compressor stall in both engines caused by dense airborne silicate soot ingestion. Turbines seized at 4,000 feet. The aircraft banked into a shallow 12-degree glide and sheared through two hundred meters of frozen pine forest before impacting a peat bog. Flight data recorder sealed in reinforced orange titanium sphere."
+  },
+  {
+    "id": "blackbox_valkyrie_recovery_beacon_pulse",
+    "carrier_id": "UAV-CARRIER-VALKYRIE-09",
+    "record_type": "locator_beacon_status",
+    "altitude_feet": 0,
+    "airspeed_knots": 0,
+    "system_health": "BEACON_ACTIVE_BATTERY_LOW",
+    "timestamp_relative": "DAY_4800_POST_BURST",
+    "mechanics": {
+      "emergency_frequency_mhz": 121.5,
+      "lithium_cell_voltage": 2.1,
+      "acoustic_pinger_submerged": true
+    },
+    "tags": ["drone", "beacon", "salvage", "locator", "blackbox"],
+    "prose": "Submerged under four feet of black marsh water and winter ice. The lithium-sulfur emergency transponder still sends a weak 121.5 MHz carrier pip every sixty seconds. Trapper scouts whisper about the 'marsh bird' that chirps in headphone static every time a storm passes over the ridge."
+  }
+]

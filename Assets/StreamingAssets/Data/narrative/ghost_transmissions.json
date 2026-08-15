@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "collection_id": "ghost_transmission_archive",
+  "transmissions": [
+    {
+      "transmission_id": "ghost_01_the_ticking_chime",
+      "frequency_khz": 4625.0,
+      "broadcast_format": "Continuous mechanical escapement chime + synthetic female voice reciting 5-digit phonetic groups",
+      "estimated_origin": "Abandoned Salt Mine Silo Complex (Sector 14)",
+      "signal_anomaly": "Signal strength increases during severe geomagnetic storms and drops during clear daylight",
+      "transcript": "[RHYTHMIC CLOCKWORK ESCAPEMENT: 24 TICKS/MIN] ... 'ULYANA ... DMITRI ... 4 - 8 - 1 - 0 - 9 ... 4 - 8 - 1 - 0 - 9 ... THE CRADLE IS EMPTY IN THE WEST ... 7 - 0 - 0 - 2 - 1 ... [DOUBLE BELL CHIME] ... STAND BY FOR CARRIER.'",
+      "cipher_clue": "Numbers match the coordinates of the sealed fertilizer depot at Lock 6.",
+      "mystery_thread": "q_mystery_salt_silo",
+      "tags": ["numbers_station", "clockwork", "salt_mine", "cipher", "eerie"]
+    },
+    {
+      "transmission_id": "ghost_02_the_drowned_organ",
+      "frequency_khz": 6890.0,
+      "broadcast_format": "Sub-audible 32Hz organ pedal drone interrupted by 3-tone flute arpeggios",
+      "estimated_origin": "Submerged Cathedral in Lake Tessarat",
+      "signal_anomaly": "Frequency modulates with underwater acoustic tides in the flooded basin",
+      "transcript": "[LOW 32Hz SUB-BASS ORGAN HUM] ... [THREE WOOD FLUTE NOTES: A-FLAT, C, E] ... 'SEVEN HUNDRED FATHOMS OF COLD SILT ... DO NOT DIG BENEATH THE SANCTUARY FLOOR ... WE ARE COUNTING THE RINGS ON THE BELL ... 0 - 0 - 9 - 4 - 2 ...'",
+      "cipher_clue": "Relates to the bronze sanctuary bell unrecovered during the Lock 4 evacuation.",
+      "mystery_thread": "q_mystery_drowned_bell",
+      "tags": ["organ", "flute", "submerged", "cathedral", "acoustic"]
+    },
+    {
+      "transmission_id": "ghost_03_the_linemans_loop",
+      "frequency_khz": 1205.0,
+      "broadcast_format": "Endless magnetic wire loop playing a telephone operator's test greeting recorded in 1968",
+      "estimated_origin": "Mountain Relay Station 12 (Buried in Glacier)",
+      "signal_anomaly": "Background audio contains the sound of a woman crying and turning blueprint pages",
+      "transcript": "[SCRATCHY WIRE HISS] ... 'This is District Relay 12 test loop. All twelve lines to the capital are occupied. Please hold the wire. The operator will reconnect when the switchboard cools down... [PAGES RUSTLING] ... He took the key with him, mama... [FAINT SOBBING] ... This is District Relay 12 test loop...'",
+      "cipher_clue": "Points to the location of the master telegraph cable under the Glacier pass.",
+      "mystery_thread": "q_mystery_lineman_wire",
+      "tags": ["wire_loop", "telephone", "glacier", "distress", "memory"]
+    },
+    {
+      "transmission_id": "ghost_04_the_seismic_geophone_pulse",
+      "frequency_khz": 174.0,
+      "broadcast_format": "Very Low Frequency (VLF) rhythmic thumping matching geophone pulses at 40 bpm",
+      "estimated_origin": "Deep Crustal Fault -120m below Silent Foundry",
+      "signal_anomaly": "Acoustic vibration travels through bedrock and can be heard by putting an ear against bunker water pipes",
+      "transcript": "[HEAVY DULL IMPACT: THUMP ... THUMP ... THUMP (40 BPM)] ... [SYNTHETIC VOCODER WHISPER]: 'STRATA 4 SHIFTING ... SEVEN CENTIMETERS TOWARD THE RIVER ... THE ANVIL CANNOT HOLD THE BEDROCK ... REINFORCE SECTOR B BEFORE THE RUNOFF ...'",
+      "cipher_clue": "Predicts structural stress points in the bunker's lower foundation walls.",
+      "mystery_thread": "q_mystery_crustal_pulse",
+      "tags": ["vlf", "seismic", "foundry", "bedrock", "structural_warning"]
+    },
+    {
+      "transmission_id": "ghost_05_the_dead_aviators_beacon",
+      "frequency_khz": 8812.0,
+      "broadcast_format": "Automated aviation emergency beacon transmitting broken Morse code every 90 seconds",
+      "estimated_origin": "Crashed Cargo Transport on North Ridge",
+      "signal_anomaly": "Carrier fades into harmonic whistling when wind speeds exceed 60 km/h",
+      "transcript": "[MORSE AUDIO BEAT]: ... --- ... / -... --- -..- / .---- -...- ....- / -.. . .- -.. // (SOS / BOX 1-4 / DEAD) ... [VOICE SQUAWK]: 'Altitude zero. Cargo uncompromised. Sixty drums of winter turbine lubricant intact. Do not send searchers until spring melt.'",
+      "cipher_clue": "Exact coordinates for the North Ridge aircraft wreckage and its lubricant cache.",
+      "mystery_thread": "q_mystery_plane_crash",
+      "tags": ["aviation", "morse", "cargo", "plane_wreck", "north_ridge"]
+    },
+    {
+      "transmission_id": "ghost_06_the_kindergarten_numbers",
+      "frequency_khz": 3220.0,
+      "broadcast_format": "A small child reciting multiplication tables in Russian, interrupted by a metronome",
+      "estimated_origin": "Civil Defense Bunker 04 (Sealed Since Day 1)",
+      "signal_anomaly": "Broadcast triggers exclusively at 02:15 AM local time for exactly seven minutes",
+      "transcript": "[METRONOME: 72 BPM] ... 'Six times seven is forty-two. Six times eight is forty-eight. The air filter smells like burnt honey. Seven times seven is forty-nine... We turned off the red lamp because it got too hot... Seven times eight is fifty-six...'",
+      "cipher_clue": "Burnt honey is the distinct smell of overheating potassium superoxide canisters.",
+      "mystery_thread": "q_mystery_bunker_four",
+      "tags": ["child", "metronome", "bunker", "oxygen_failure", "tragic"]
+    },
+    {
+      "transmission_id": "ghost_07_the_automated_weather_buoy",
+      "frequency_khz": 5150.0,
+      "broadcast_format": "Digital telemetry packet followed by synthesized barometric pressure readings",
+      "estimated_origin": "Offshore Weather Mast on the Ash-Sea",
+      "signal_anomaly": "Transmits water acidity pH values that correlate with toxic storm severity",
+      "transcript": "[FSK DATA BURST: 1200 BAUD] ... 'BUOY NINE ALPHA. SURFACE WATER TEMPERATURE: MINUS THREE POINT TWO. ACIDITY: PH 3.1 (EXTREME SULFURIC RUNOFF). GAMMA BACKGROUND AT SURFACE: 1.4 MILLISIEVERTS PER HOUR. VESSEL TRAFFIC: ZERO. THE SEA IS EMPTY.'",
+      "cipher_clue": "Provides real-time warning before high-acidity squalls reach the harbor.",
+      "mystery_thread": "q_mystery_weather_buoy",
+      "tags": ["telemetry", "buoy", "ash_sea", "ph_sensor", "weather"]
+    },
+    {
+      "transmission_id": "ghost_08_the_radar_dome_whisperer",
+      "frequency_khz": 10110.0,
+      "broadcast_format": "Phased array sweep radar whine modulated with faint human radio chatter",
+      "estimated_origin": "Summit Early Warning Radar Sphere",
+      "signal_anomaly": "Echo reflects off the ionized boundary layer created by high-altitude fallout",
+      "transcript": "[ROTATING RADAR CHIRP: 3.5s SWEEP] ... 'Target track 901 lost over the sea... [STATIC BURST] ... No return from Sector 4... Is that rain on the radome or lead shot? ... [SWEEP CHIRP] ... Track confirmed zero... The sweep is clean...'",
+      "cipher_clue": "Points to the high-frequency radar receiver components needed to repair the bunker's storm scanner.",
+      "mystery_thread": "q_mystery_radar_dome",
+      "tags": ["radar", "early_warning", "summit", "electronic_warfare"]
+    },
+    {
+      "transmission_id": "ghost_09_the_black_mercury_loop",
+      "frequency_khz": 775.0,
+      "broadcast_format": "Continuous 50Hz electrical transformer hum overlaid with intermittent telegraph clicks",
+      "estimated_origin": "Station 0 Lower Busbar Terminal",
+      "signal_anomaly": "Fires only when the 4,000V dead-hand system encounters ground leakage",
+      "transcript": "[HEAVY 50Hz MAINS HUM] ... [TELEGRAPH TICKING]: '-.-. --- -.. . / ----. ----. / -.. . -... -' (CODE 99 DEBT) ... [SYNTHESIZED CLOCK VOICE]: 'RECONCILIATION COUNTER: INCREMENTED. THE CHARTER IS RECORDED IN MERCURY.'",
+      "cipher_clue": "Direct link to the reconciliation debt counter in exp_08 and exp_12.",
+      "mystery_thread": "q_mystery_mercury_busbar",
+      "tags": ["station_zero", "mains_hum", "debt", "mercury", "reconciliation"]
+    },
+    {
+      "transmission_id": "ghost_10_the_lost_diver_comm",
+      "frequency_khz": 2840.0,
+      "broadcast_format": "Acoustic ultrasonic through-water voice communication transceiver",
+      "estimated_origin": "Sunken Submarine Trench in Tessarat Fjord",
+      "signal_anomaly": "Can only be received using underwater hydrophone probes hooked to radio antenna",
+      "transcript": "[ULTRASONIC HYDROPHONE BUBBLES] ... 'Tether four is caught on the propeller shaft... [GASP OF OXYGEN] ... The lead door on Hold Three is locked from the inside... There is no water inside Hold Three... I repeat, Hold Three is completely dry...'",
+      "cipher_clue": "Reveals the secret airtight survival pocket inside the sunken hull.",
+      "mystery_thread": "q_mystery_dry_hold",
+      "tags": ["hydrophone", "underwater", "submarine", "diver", "secret_compartment"]
+    },
+    {
+      "transmission_id": "ghost_11_the_orbital_telemetry_deathrattle",
+      "frequency_khz": 14220.0,
+      "broadcast_format": "High-frequency FM carrier with decaying sinusoidal telemetry tone",
+      "estimated_origin": "Deorbiting Military Satellite Harrow-4",
+      "signal_anomaly": "Frequency exhibits severe Doppler shift as satellite orbits overhead (+/- 12 kHz)",
+      "transcript": "[DOPPLER WHINE: DESCENDING PITCH] ... [HIGH SPEED TELEMETRY BEEPING] ... 'CORE TEMPERATURE: 840 KELVIN ... HEAT SHIELD INTEGRITY: TWELVE PERCENT ... IMPACT VECTOR CALCULATED: SECTOR NINE TESSARAT ... TUNGSTEN PAYLOAD LOCKED ...'",
+      "cipher_clue": "Enables early calculation of kinetic impact coordinates for exp_11 sky armor preparation.",
+      "mystery_thread": "q_mystery_orbital_decay",
+      "tags": ["satellite", "doppler", "harrow", "kinetic_impact", "orbital"]
+    },
+    {
+      "transmission_id": "ghost_12_the_phantom_anthem",
+      "frequency_khz": 920.0,
+      "broadcast_format": "Warped brass band playing a slow pre-war national anthem through extreme wow and flutter",
+      "estimated_origin": "Automated Civil Defense Tower in the Ruined Capital",
+      "signal_anomaly": "Audio slows down by 2% each year as the backup battery voltage drains towards absolute zero",
+      "transcript": "[SLOW, DISTORTED BRASS BAND: DRAGGING TEMPO] ... [METALLIC SCRATCH OF TURNTABLE NEEDLE] ... [FAINT DISTANT CHEERING FROM A 1970 PARADE RECORDING] ... [SUDDEN CARRIER DROP TO COMPLETE SILENCE FOR 60 SECONDS] ... [REPEATS]",
+      "cipher_clue": "Symbol of the dead world whose memory slowly runs down in the frost.",
+      "mystery_thread": "q_mystery_phantom_anthem",
+      "tags": ["turntable", "anthem", "nostalgia", "decay", "haunting"]
+    }
+  ]
+}

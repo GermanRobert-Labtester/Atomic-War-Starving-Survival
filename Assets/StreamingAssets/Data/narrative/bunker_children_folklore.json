@@ -1,0 +1,65 @@
+[
+  {
+    "id": "folklore_children_the_clicking_beetle_rhyme",
+    "tradition_type": "JUMP_ROPE_RHYME",
+    "origin_sector": "DORMITORY_C_DAYCARE",
+    "folk_theme": "GEIGER_COUNTER_AWARENESS",
+    "timestamp_relative": "YEAR_04_OBSERVED",
+    "tags": ["folklore", "children", "rhyme", "geiger", "bunker_culture"],
+    "prose": "'Click-a-click-one, the beetle has begun. / Click-a-click-two, the yellow dust is true. / Click-a-click-ten, run to the pen. / Click like a bee, you cannot see me!' Chanted by eight-year-olds skipping over braided telephone wire in the gymnasium corridor."
+  },
+  {
+    "id": "folklore_children_the_grey_man_of_the_vents",
+    "tradition_type": "BEDTIME_NURSERY_TALE",
+    "origin_sector": "NURSERY_LEVEL_02",
+    "folk_theme": "VENTILATION_MONSTER_MYTH",
+    "timestamp_relative": "YEAR_06_OBSERVED",
+    "tags": ["folklore", "children", "nursery_tale", "vents", "monster"],
+    "prose": "A tale mothers whisper to keep toddlers from climbing into the air intake grates. The 'Grey Man' is made of asbestos dust and turbine grease; he has rubber fingers and no face, and if a child leaves their cot during blackout, he pulls them into the exhaust fans to turn them into filter fluff."
+  },
+  {
+    "id": "folklore_children_the_sun_is_a_yellow_lamp",
+    "tradition_type": "SCHOOLROOM_CATECHISM_SONG",
+    "origin_sector": "EDUCATION_ROOM_SECTOR_1",
+    "folk_theme": "MYTH_OF_THE_SURFACE_SUN",
+    "timestamp_relative": "YEAR_08_OBSERVED",
+    "tags": ["folklore", "children", "sun", "mythology", "bunker_culture"],
+    "prose": "'The Sun was a bulb that lived in the blue, / A billion times bigger than Room Twenty-Two. / It burned without coal, it burned without wire, / And nobody choked when it made its warm fire.' Sung in unison by children who have never seen open sky or shadows cast by natural light."
+  },
+  {
+    "id": "folklore_children_the_iron_door_whisper",
+    "tradition_type": "CLANDESTINE_COURAGE_GAME",
+    "origin_sector": "AIRLOCK_VESTIBULE_APPROACH",
+    "folk_theme": "SURFACE_FEAR_RITUAL",
+    "timestamp_relative": "YEAR_10_OBSERVED",
+    "tags": ["folklore", "children", "game", "airlock", "bravery"],
+    "prose": "Children dare each other to touch the freezing cold steel of Blast Door Alpha with bare tongues or palms. Whoever holds their ear to the rubber gasket longest without running from the sound of howling winter wind is declared the 'Outpost King' for the week."
+  },
+  {
+    "id": "folklore_children_the_cabbage_soup_counting_song",
+    "tradition_type": "MEALTIME_COUNTING_RHYME",
+    "origin_sector": "COMMISSARY_MESS_HALL_A",
+    "folk_theme": "RATION_RITUAL_HUMOR",
+    "timestamp_relative": "YEAR_13_OBSERVED",
+    "tags": ["folklore", "children", "rations", "counting_rhyme", "soup"],
+    "prose": "'One leaf of green, the cook is clean. / Two leaves of grey, we work all day. / Three leaves of brown, the roof falls down. / Four leaves of grit, eat every bit!' Chanted while stirring thin cabbage broth with bent aluminum mess spoons."
+  },
+  {
+    "id": "folklore_children_the_red_siren_dance",
+    "tradition_type": "DRILL_STATUE_GAME",
+    "origin_sector": "COMMUNAL_ATRIUM",
+    "folk_theme": "ALARM_RESPONSE_CONDITIONING",
+    "timestamp_relative": "YEAR_15_OBSERVED",
+    "tags": ["folklore", "children", "air_raid_drill", "conditioning", "play"],
+    "prose": "Whenever the intermittent red rotating warning beacons pulse during a monthly seal test, the children immediately freeze into frozen statues. If a child blinks or moves before the horn sounds the all-clear waver, their playmates drag them into a pretend 'Decon Shower'."
+  },
+  {
+    "id": "folklore_children_the_tree_that_ate_light",
+    "tradition_type": "HOPE_LEGEND",
+    "origin_sector": "SECTOR_3_LIBRARY_CORNER",
+    "folk_theme": "CENTURY_TREE_PROPHECY",
+    "timestamp_relative": "YEAR_18_OBSERVED",
+    "tags": ["folklore", "children", "prophecy", "apple_tree", "century_seed", "hope"],
+    "prose": "A beloved myth that the little sapling in Level 4 is drinking up all the sadness from the bunker air, and when it grows forty feet tall, its branches will break through the sixty feet of reinforced concrete ceiling, letting in real green rain and sweet yellow apples for everyone."
+  }
+]

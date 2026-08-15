@@ -1,0 +1,72 @@
+[
+  {
+    "id": "sonar_fault_piezoelectric_ceramic_cracking",
+    "hydrophone_station_id": "PERIMETER_ACOUSTIC_LINE_NORTH",
+    "transducer_element_type": "LEAD_ZIRCONATE_TITANATE_PZT4",
+    "attenuation_loss_db": 24.5,
+    "failure_classification": "PIEZO_CERAMIC_DISC_FRACTURE",
+    "timestamp_relative": "YEAR_03_SONAR_LOG_01",
+    "tags": ["military", "sonar", "hydrophone", "piezoelectric", "perimeter"],
+    "prose": "Deep tectonic ground settling generated a 4.2-magnitude seismic shockwave that shattered the brittle PZT-4 ceramic discs inside Hydrophones 3 and 4. The listening post lost all acoustic sensitivity above 200 Hz, leaving the northern perimeter blind to excavation tunneling."
+  },
+  {
+    "id": "sonar_fault_cable_armoring_galvanic_breach",
+    "hydrophone_station_id": "SUB_LAKE_ACOUSTIC_BARRIER_WEST",
+    "transducer_element_type": "BARIUM_TITANATE_CYLINDER",
+    "attenuation_loss_db": 40.0,
+    "failure_classification": "ARMOR_GALVANIC_SHEATH_BREACH",
+    "timestamp_relative": "YEAR_06_SONAR_LOG_03",
+    "tags": ["military", "sonar", "cable_breach", "galvanic_corrosion", "water"],
+    "prose": "Electrochemical potential between the galvanized steel wire armor and bronze connector shells destroyed the neoprene cable jacket. Conductive mineral lake water flooded the coaxial signal lines, grounding the output and producing infinite attenuation."
+  },
+  {
+    "id": "sonar_fault_preamplifier_fet_transistor_drift",
+    "hydrophone_station_id": "DEEP_FAULT_MONITORING_ARRAY",
+    "transducer_element_type": "DIFFUSED_SILICON_PIEZORESISTIVE",
+    "attenuation_loss_db": 15.0,
+    "failure_classification": "PREAMP_JFET_THRESHOLD_DRIFT",
+    "timestamp_relative": "YEAR_09_SONAR_LOG_02",
+    "tags": ["military", "sonar", "jfet_drift", "radiation", "preamplifier"],
+    "prose": "Gamma radiation from deep groundwater radon accumulation induced threshold voltage drift across the low-noise JFET input transistors. Preamplifier gain fell by 15 dB and background thermal noise tripled, masking slow vehicular movements."
+  },
+  {
+    "id": "sonar_fault_oil_filled_neoprene_boot_leak",
+    "hydrophone_station_id": "SWAMP_DRAINAGE_OUTFLOW_SONAR",
+    "transducer_element_type": "MINERAL_OIL_COUPLED_PZT",
+    "attenuation_loss_db": 18.2,
+    "failure_classification": "ACOUSTIC_BOOT_DEPRESSURIZATION",
+    "timestamp_relative": "YEAR_12_SONAR_LOG_04",
+    "tags": ["military", "sonar", "neoprene_boot", "oil_leak", "acoustic_impedance"],
+    "prose": "A muskrat chewed through the oil-filled neoprene acoustic matching boot on Sensor Alpha. Dielectric castor oil bled out into the marsh, replaced by air bubbles that caused massive acoustic impedance mismatch and deafened the hydrophone."
+  },
+  {
+    "id": "sonar_fault_biological_biofouling_barnacle_crust",
+    "hydrophone_station_id": "ESTUARY_TIDAL_PERIMETER_GRID",
+    "transducer_element_type": "POLYVINYLIDENE_FLUORIDE_PVDF",
+    "attenuation_loss_db": 22.0,
+    "failure_classification": "CALCAREOUS_BIOFOULING_ENCRUSTATION",
+    "timestamp_relative": "YEAR_15_SONAR_LOG_01",
+    "tags": ["military", "sonar", "biofouling", "crust", "acoustic_damping"],
+    "prose": "A three-centimeter-thick colony of mutated calcified freshwater barnacles encrusted the flexible PVDF sensor diaphragm. The rigid biological shell dampened all mechanical oscillations, attenuating surface watercraft acoustic signatures by 22 dB."
+  },
+  {
+    "id": "sonar_fault_grounding_loop_60hz_hum_masking",
+    "hydrophone_station_id": "MINE_GALLERY_ACOUSTIC_SENTRY",
+    "transducer_element_type": "ACCELEROMETER_SEISMIC_POD",
+    "attenuation_loss_db": 8.0,
+    "failure_classification": "GROUND_LOOP_ELECTRICAL_HUM",
+    "timestamp_relative": "YEAR_17_SONAR_LOG_02",
+    "tags": ["military", "sonar", "ground_loop", "60hz_hum", "interference"],
+    "prose": "Installation of an ungrounded emergency arc welder in the maintenance shop created a 60 Hz ground loop through the rock stratum. A continuous 90-millivolt hum overwhelmed the audio console amplifiers, preventing operators from hearing footstep gravel crunches."
+  },
+  {
+    "id": "sonar_fault_cavitating_sump_pump_acoustic_jam",
+    "hydrophone_station_id": "SUMP_PIT_LOW_FREQUENCY_ARRAY",
+    "transducer_element_type": "BROADBAND_HYDROPHONE_OMNI",
+    "attenuation_loss_db": 35.0,
+    "failure_classification": "CAVITATION_ACOUSTIC_INTERFERENCE",
+    "timestamp_relative": "YEAR_20_SONAR_LOG_01",
+    "tags": ["military", "sonar", "cavitation", "sump_pump", "acoustic_jam"],
+    "prose": "A worn cast-iron impeller on Sump Pump 3 developed severe vapor cavitation, generating a deafening 120 dB acoustic roar across the 500 Hz to 8 kHz spectrum. The sound flooded the entire subterranean drainage network, completely blinding the defensive acoustic tripwire."
+  }
+]

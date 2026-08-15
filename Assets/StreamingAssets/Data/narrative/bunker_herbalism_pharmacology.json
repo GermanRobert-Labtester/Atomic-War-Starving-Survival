@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pharma_powdered_willow_bark_salicylate",
+    "compound_name": "CRUDE_SALICYLATE_PULVER",
+    "active_agent": "SALICYLIC_ACID_DERIVATIVE",
+    "preparation_method": "PULVERIZED_DRIED_WILLOW_SHOOT",
+    "efficacy_rating": "MODERATE_ANALGESIC_ANTIPYRETIC",
+    "timestamp_relative": "YEAR_02_PHARMA_FORMULARY",
+    "tags": ["pharma", "herbalism", "aspirin", "salicylate", "fever"],
+    "prose": "Roots and inner bark of indoor willow cuttings dried on the bakery oven top and ground in a porcelain mortar. Half a teaspoon steeped in boiling water reduces bunkhouse fevers and joint aches, though prolonged use causes severe gastric ulceration."
+  },
+  {
+    "id": "pharma_prussian_blue_sump_pigment",
+    "compound_name": "FERRIC_FERROCYANIDE_CHELATOR",
+    "active_agent": "INSOLUBLE_PRUSSIAN_BLUE",
+    "preparation_method": "PRECIPITATED_IRON_SULFATE_CYANIDE",
+    "efficacy_rating": "HIGH_CESIUM_ELIMINATION",
+    "timestamp_relative": "YEAR_04_PHARMA_FORMULARY",
+    "tags": ["pharma", "chelation", "prussian_blue", "cesium", "rad_medicine"],
+    "prose": "Synthesized in five-liter glass carboys by reacting scrap iron sulfate with industrial cyanide salts salvaged from the plating shop. Administered in three-gram oral capsules to scavengers returning from hot zones to bind radioactive cesium-137 in the digestive tract."
+  },
+  {
+    "id": "pharma_fermented_poppy_straw_laudanum",
+    "compound_name": "BUNKER_LAUDANUM_TINCTURE",
+    "active_agent": "MORPHINE_CODEINE_ALKALOIDS",
+    "preparation_method": "HYDRO_ALCOHOLIC_MACERATION",
+    "efficacy_rating": "POTENT_NARCOTIC_ANALGESIA",
+    "timestamp_relative": "YEAR_06_PHARMA_FORMULARY",
+    "tags": ["pharma", "laudanum", "morphine", "pain_relief", "contraband"],
+    "prose": "Crushed poppy capsules grown in the locked hydroponics quarantine bay, macerated for twenty days in 80-proof potato alcohol. Kept under triple padlocks in the chief surgeon's desk; used exclusively for traumatic amputations and terminal radiation hospice cases."
+  },
+  {
+    "id": "pharma_activated_charcoal_toast_biscuits",
+    "compound_name": "CARBO_ACTIVATUS_BISCUIT",
+    "active_agent": "POROUS_CARBON_MATRIX",
+    "preparation_method": "STEAM_ACTIVATED_HARDTACK_CHAR",
+    "efficacy_rating": "MODERATE_TOXIN_ADSORBENT",
+    "timestamp_relative": "YEAR_08_PHARMA_FORMULARY",
+    "tags": ["pharma", "charcoal", "hardtack", "digestive_filter", "rations"],
+    "prose": "Standard wheat ration biscuits charred black in a closed iron retort and superheated with pressurized steam. Ground into a gritty black slurry and ingested within thirty minutes of drinking unverified cistern runoff to trap dissolved fallout isotopes before intestinal absorption."
+  },
+  {
+    "id": "pharma_zinc_ointment_linseed_paste",
+    "compound_name": "PASTA_ZINCI_BUNKERIS",
+    "active_agent": "ZINC_OXIDE_IN_FLAX_LIPIDS",
+    "preparation_method": "OXIDIZED_ZINC_SHAVINGS_IN_OIL",
+    "efficacy_rating": "HIGH_DERMAL_BARRIER_PROTECTION",
+    "timestamp_relative": "YEAR_11_PHARMA_FORMULARY",
+    "tags": ["pharma", "zinc_ointment", "beta_burns", "dermatology", "wound_care"],
+    "prose": "Pure zinc metal filings burned in an air furnace to produce zinc oxide powder, then levigated with cold-pressed flaxseed oil and rendered mutton tallow. Spread generously over raw weeping beta burns and chemical dermatoses to prevent bacterial crusting."
+  },
+  {
+    "id": "pharma_ephedrine_tea_ma_huang_extract",
+    "compound_name": "EPHEDRA_STIMULANT_DECOCTION",
+    "active_agent": "EPHEDRINE_HYDROCHLORIDE_ANALOG",
+    "preparation_method": "AQUEOUS_LEAF_EXTRACTION",
+    "efficacy_rating": "POTENT_CNS_BRONCHODILATOR",
+    "timestamp_relative": "YEAR_13_PHARMA_FORMULARY",
+    "tags": ["pharma", "stimulant", "ephedra", "sentry_watch", "alertness"],
+    "prose": "Green segmented twigs of Ephedra sinica harvested from the Level 3 sand beds, boiled for forty minutes with dried orange peel. Given to boiler technicians during 36-hour emergency repair shifts to maintain respiratory drive and cognitive focus."
+  },
+  {
+    "id": "pharma_penicillium_bread_crust_compress",
+    "compound_name": "PENICILLIUM_MOLD_COMPRESS",
+    "active_agent": "CRUDE_PENICILLIN_FILTRATE",
+    "preparation_method": "TOPICAL_MYCELIAL_POULTICE",
+    "efficacy_rating": "VARIABLE_LOCAL_ANTIBACTERIAL",
+    "timestamp_relative": "YEAR_16_PHARMA_FORMULARY",
+    "tags": ["pharma", "antibiotic", "penicillin", "mold", "infection"],
+    "prose": "Blue-green mold cultured on sterilized damp cornmeal paste in flat petri dishes. The living mycelial mat is lifted with a spatula and bound directly against infected puncture wounds and shrapnel tracks. Highly effective against staphylococcal trench infections, though 5% of patients develop acute anaphylaxis."
+  },
+  {
+    "id": "pharma_calcium_gluconate_chalk_slurry",
+    "compound_name": "CALCIUM_NEUTRALIZER_GEL",
+    "active_agent": "CALCIUM_CARBONATE_GLUCONATE",
+    "preparation_method": "PRECIPITATED_EGG_SHELL_CALCIUM",
+    "efficacy_rating": "CRITICAL_FLUORIDE_BINDER",
+    "timestamp_relative": "YEAR_19_PHARMA_FORMULARY",
+    "tags": ["pharma", "calcium", "neutralizer", "coolant_burns", "chemical_safety"],
+    "prose": "Crushed eggshells and limestone dust dissolved in mild acetic acid and thickened with kelp agar. Rubbed immediately into the skin of engineers exposed to freon or fluorinated heat-exchange coolant leaks to prevent deep bone decalcification and systemic hypocalcemia."
+  }
+]

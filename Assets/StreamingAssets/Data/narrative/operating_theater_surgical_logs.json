@@ -1,0 +1,72 @@
+[
+  {
+    "id": "surgery_log_triage_amputation_crushed_femur",
+    "operation_code": "SURG-OR-OP-011",
+    "lead_surgeon": "DR_ELENA_ROSTOVA",
+    "anesthetic_used": "ETHER_AND_POTATO_SPIRIT",
+    "survival_outcome": "SURVIVED_DISCHARGED_TO_COT",
+    "timestamp_relative": "YEAR_02_MONTH_05_SURG",
+    "tags": ["surgery", "amputation", "operating_theater", "trauma", "triage"],
+    "prose": "Patient pinned beneath a three-ton hydraulic blast door counterweight. Performed rapid circular guillotine amputation at the proximal third of the right femur in eight minutes under flickering kerosene mantle lamps. Hemostasis achieved by hot iron cautery and four silk ligatures."
+  },
+  {
+    "id": "surgery_log_hot_shrapnel_thoracotomy",
+    "operation_code": "SURG-OR-OP-034",
+    "lead_surgeon": "DR_MARCUS_VANCE",
+    "anesthetic_used": "LOCAL_PROCAINE_INFILTRATION",
+    "survival_outcome": "SURVIVED_PARTIAL_PNEUMONECTOMY",
+    "timestamp_relative": "YEAR_04_MONTH_09_SURG",
+    "tags": ["surgery", "thoracotomy", "hot_shrapnel", "lungs", "trauma"],
+    "prose": "Fifth-rib resection under local procaine. A jagged 12-gram tungsten flechette extracted from the middle lobe of the right lung. The fragment was so intensely radioactive (4.8 R/hr on the probe) that the scrub nurse dropped it into a lead-lined biohazard box with thirty-centimeter barbecue tongs."
+  },
+  {
+    "id": "surgery_log_peritoneal_lavage_saline_scarcity",
+    "operation_code": "SURG-OR-OP-058",
+    "lead_surgeon": "DR_ELENA_ROSTOVA",
+    "anesthetic_used": "CHLOROFORM_VAPOR_DRIP",
+    "survival_outcome": "EXPIRED_PERITONITIS_DAY_03",
+    "timestamp_relative": "YEAR_07_MONTH_01_SURG",
+    "tags": ["surgery", "lavage", "scarcity", "peritonitis", "infection"],
+    "prose": "Multiple blast perforations across the transverse colon. Because the pharmacy was out of sterile isotonic saline, the abdominal cavity was lavaged with four liters of double-boiled condensation water dosed with a trace of salt and potassium permanganate. Patient succumbed to sepsis on Day 3."
+  },
+  {
+    "id": "surgery_log_cataract_couching_needle_extraction",
+    "operation_code": "SURG-OR-OP-076",
+    "lead_surgeon": "MEDIC_HELEN_VOSS",
+    "anesthetic_used": "COCAINE_OPHTHALMIC_DROPS",
+    "survival_outcome": "PARTIAL_VISION_RESTORED",
+    "timestamp_relative": "YEAR_10_MONTH_08_SURG",
+    "tags": ["surgery", "cataracts", "couching", "ophthalmology", "radiation"],
+    "prose": "Total opacification of the posterior lens capsule in a forty-year-old hydro-engineer due to chronic neutron exposure. Lacking micro-surgical instruments, the surgeon performed ancient needle couching, depressing the opaque lens into the vitreous humor with a polished stainless steel needle. Patient regained gross finger-counting vision."
+  },
+  {
+    "id": "surgery_log_trepanation_subdural_hematoma",
+    "operation_code": "SURG-OR-OP-092",
+    "lead_surgeon": "DR_MARCUS_VANCE",
+    "anesthetic_used": "ETHYL_CHLORIDE_FREEZING_SPRAY",
+    "survival_outcome": "SURVIVED_FULL_CONSCIOUSNESS",
+    "timestamp_relative": "YEAR_13_MONTH_04_SURG",
+    "tags": ["surgery", "trepanation", "hematoma", "neurosurgery", "blast_shock"],
+    "prose": "Patient comatose with unilateral blown pupil following airlock back-blast shockwave. Performed emergency temporal burr hole using a modified hand-cranked carpenter's brace and 14mm bit. Evacuated eighty milliliters of dark tarry blood clot; brain pulsated immediately and pupil symmetry restored."
+  },
+  {
+    "id": "surgery_log_tendon_repair_piano_wire",
+    "operation_code": "SURG-OR-OP-115",
+    "lead_surgeon": "MEDIC_HELEN_VOSS",
+    "anesthetic_used": "BRACHIAL_PLEXUS_BLOCK",
+    "survival_outcome": "PARTIAL_GRIP_RESTORED",
+    "timestamp_relative": "YEAR_16_MONTH_11_SURG",
+    "tags": ["surgery", "tendon", "piano_wire", "orthopedics", "salvage"],
+    "prose": "Machinist suffered clean laceration of four flexor tendons in the dominant right hand from a sheared lathe drive belt. Sutured tendon ends with 0.1mm steel wire stripped from a wrecked grand piano. Hand immobilized in a splint made from galvanized stovepipe sheet."
+  },
+  {
+    "id": "surgery_log_tracheostomy_smoke_inhalation",
+    "operation_code": "SURG-OR-OP-133",
+    "lead_surgeon": "DR_ELENA_ROSTOVA",
+    "anesthetic_used": "NONE_UNCONSCIOUS",
+    "survival_outcome": "SURVIVED_AIRWAY_PATENT",
+    "timestamp_relative": "YEAR_19_MONTH_03_SURG",
+    "tags": ["surgery", "tracheostomy", "smoke_inhalation", "emergency", "airway"],
+    "prose": "Boiler room flash fire resulted in acute laryngeal edema and total upper airway obstruction. Emergency cricothyroidotomy performed in the hallway with a sterilized scalpel blade; a hollow stainless steel ballpoint pen barrel was inserted into the trachea and secured with cotton twill tape."
+  }
+]

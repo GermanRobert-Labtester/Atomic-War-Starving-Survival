@@ -1,0 +1,72 @@
+[
+  {
+    "id": "emp_sniffer_high_altitude_e1_spike",
+    "detector_id": "EMP-SNIFFER-MAST-ALPHA",
+    "e1_field_strength_volts_per_meter": 52000.0,
+    "rise_time_nanoseconds": 2.4,
+    "pulse_classification": "HEMP_EXO_ATMOSPHERIC_BURST",
+    "timestamp_relative": "DAY_0000_T_PLUS_02_SEC",
+    "tags": ["emp", "hemp", "e1_pulse", "electronics", "prompt_strike"],
+    "prose": "Prompt gamma rays interacting with the upper stratosphere generated a 52,000 V/m electromagnetic shockwave with a rise time of 2.4 nanoseconds. Unshielded semiconductor junctions, telephone lines, and radio receivers across a twelve-hundred-kilometer radius were vaporized in eight milliseconds."
+  },
+  {
+    "id": "emp_sniffer_magnetohydrodynamic_e3_surge",
+    "detector_id": "EMP-SNIFFER-GROUND-LOOP-02",
+    "e1_field_strength_volts_per_meter": 120.0,
+    "rise_time_nanoseconds": 45000000.0,
+    "pulse_classification": "MHD_E3_GEOMAGNETIC_HEAVE",
+    "timestamp_relative": "DAY_0000_T_PLUS_45_SEC",
+    "tags": ["emp", "e3_pulse", "geomagnetic", "transformers", "grid_collapse"],
+    "prose": "The expanding fireball deformed the Earth's geomagnetic field lines, inducing quasi-DC currents of 800 amperes through long subterranean railway tracks and grounded pipe networks. Main step-up transformer cores in the power station saturated, superheated, and exploded in fountains of burning mineral oil."
+  },
+  {
+    "id": "emp_sniffer_ionospheric_absorption_blackout",
+    "detector_id": "EMP-SNIFFER-HF-SWEEP-04",
+    "e1_field_strength_volts_per_meter": 450.0,
+    "rise_time_nanoseconds": 12000.0,
+    "pulse_classification": "D_LAYER_TOTAL_ABSORPTION",
+    "timestamp_relative": "DAY_0001_HOUR_06",
+    "tags": ["emp", "blackout", "ionosphere", "radio_silence", "hf"],
+    "prose": "Intense soft X-ray and beta flux created extreme ionization in the ionospheric D-layer, increasing radio wave attenuation to 90 dB. All high-frequency shortwave communication between 3 MHz and 30 MHz was completely silenced for seventy-two hours, plunging the continent into acoustic isolation."
+  },
+  {
+    "id": "emp_sniffer_coaxial_sheath_induced_arcing",
+    "detector_id": "EMP-SNIFFER-ANTENNA-LEAD-01",
+    "e1_field_strength_volts_per_meter": 18500.0,
+    "rise_time_nanoseconds": 8.0,
+    "pulse_classification": "CABLE_SHEATH_INDUCED_BREAKDOWN",
+    "timestamp_relative": "DAY_0000_T_PLUS_15_MIN",
+    "tags": ["emp", "cables", "spark_gap", "arcing", "bunker_defense"],
+    "prose": "Induced transients traveling down the five-hundred-meter surface antenna cable flashed over the gas-discharge surge arresters, producing a blinding ten-kilovolt blue spark across the communications room terminal board. The lead operator's headphones melted onto his wool cap."
+  },
+  {
+    "id": "emp_sniffer_silicon_junction_burnout",
+    "detector_id": "EMP-SNIFFER-LAB-BENCH-03",
+    "e1_field_strength_volts_per_meter": 34000.0,
+    "rise_time_nanoseconds": 4.5,
+    "pulse_classification": "MICROPROCESSOR_THERMAL_LATCHUP",
+    "timestamp_relative": "DAY_0000_T_PLUS_01_HR",
+    "tags": ["emp", "semiconductors", "burnout", "silicon", "hardware"],
+    "prose": "Diagnostic inspection of thirty pre-war CMOS logic boards revealed microscopic molten silicon craters across the arithmetic logic units. Only legacy vacuum-tube radios and magnetic-core memory racks in the hardened inner vault survived without gate degradation."
+  },
+  {
+    "id": "emp_sniffer_auroral_electrojet_modulation",
+    "detector_id": "EMP-SNIFFER-FLUXGATE-09",
+    "e1_field_strength_volts_per_meter": 85.0,
+    "rise_time_nanoseconds": 180000000.0,
+    "pulse_classification": "ARTIFICIAL_AURORA_ELECTROJET",
+    "timestamp_relative": "DAY_0002_NIGHT",
+    "tags": ["emp", "aurora", "geomagnetic", "fluxgate", "atmosphere"],
+    "prose": "High-altitude fission debris trapped in the geomagnetic mirror points created blood-red artificial auroral curtains visible through the stratospheric ash haze. Fluxgate magnetometers recorded massive 400-nanotesla field oscillations that induced glowing coronas on surface barbed-wire fences."
+  },
+  {
+    "id": "emp_sniffer_post_strike_geomagnetic_calm",
+    "detector_id": "EMP-SNIFFER-MASTER-ARRAY",
+    "e1_field_strength_volts_per_meter": 0.2,
+    "rise_time_nanoseconds": 0.0,
+    "pulse_classification": "POST_CASCADE_GEOMAGNETIC_QUIET",
+    "timestamp_relative": "YEAR_05_DAY_001",
+    "tags": ["emp", "electromagnetic_silence", "calm", "dead_ether"],
+    "prose": "Background electromagnetic noise floor dropped to -145 dBm—a level of spectral silence unseen since the 1880s. With every civilian transmitter, power grid, and industrial motor dead across the continent, the ether is clean enough to hear the faint cosmic whisper of Jupiter's radio storms."
+  }
+]

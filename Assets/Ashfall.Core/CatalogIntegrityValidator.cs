@@ -91,7 +91,8 @@ namespace Ashfall.Core
             "topo_sheet_", "scav_route_", "mudflow_report_", "crater_lake_",
             "slag_leach_", "carbide_tool_", "gear_quench_", "bullet_alloy_",
             "gasket_degrade_", "aramid_rot_", "tire_retread_", "celluloid_decay_",
-            "prism_delam_", "sight_glass_", "rad_brown_", "scint_crystal_"
+            "prism_delam_", "sight_glass_", "rad_brown_", "scint_crystal_",
+            "rag_pulp_", "ink_assay_", "type_wear_", "stencil_smear_"
         };
 
         /// <summary>
@@ -197,7 +198,10 @@ namespace Ashfall.Core
             "periscope_assembly_id", "optical_glass_type", "optical_cement_type",
             "boiler_system_id", "glass_composition", "optic_system_id",
             "substrate_material", "solarization_spectral_band", "detector_unit_id",
-            "crystal_composition", "degradation_mode"
+            "crystal_composition", "degradation_mode",
+            "beater_station_id", "raw_fiber_source", "ink_formulation_code", "tannin_source",
+            "pigment_complex", "font_case_identifier", "type_metal_composition", "wear_phenomenon",
+            "stencil_print_id", "matrix_material_type", "ink_pigment_base", "smear_artifact_description"
         };
 
         /// <summary>

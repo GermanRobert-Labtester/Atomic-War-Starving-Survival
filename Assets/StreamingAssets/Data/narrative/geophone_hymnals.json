@@ -1,0 +1,72 @@
+[
+  {
+    "id": "hymnal_geophone_tuning_of_the_pickup_coil",
+    "monastery_circle": "ORDER_OF_THE_BEDROCK_EAR",
+    "hymn_number": "HYMN_01",
+    "resonant_frequency_hz": 4.5,
+    "liturgical_acoustic_mode": "INFRASONIC_THROAT_HUM",
+    "timestamp_relative": "YEAR_05_DAY_042",
+    "tags": ["geophone", "hymnal", "seismic", "monks", "acoustics"],
+    "prose": "The monks press copper horn headphones wired directly to moving-coil velocity transducers bolted to the granite floor. They hum in low, gravelly sub-harmonics at 4.5 Hz, tuning their vocal cords to the natural resonant frequency of the seismometer pickup suspensions."
+  },
+  {
+    "id": "hymnal_geophone_dirge_of_the_p_wave",
+    "monastery_circle": "ORDER_OF_THE_BEDROCK_EAR",
+    "hymn_number": "HYMN_04",
+    "resonant_frequency_hz": 18.0,
+    "liturgical_acoustic_mode": "RAPID_CHEST_PERCUSSION",
+    "timestamp_relative": "YEAR_08_DAY_190",
+    "tags": ["geophone", "p_wave", "earthquake", "warning", "seismic"],
+    "prose": "A sharp, rapid percussive recitation warning of the primary compressional wave. 'The stone punches forward before it shakes; the fist of the deep travels straight as a bullet through the feldspar. Rise from your bunks, children of the dark, before the second blow strikes.'"
+  },
+  {
+    "id": "hymnal_geophone_chant_of_the_shear_s_wave",
+    "monastery_circle": "ORDER_OF_THE_BEDROCK_EAR",
+    "hymn_number": "HYMN_07",
+    "resonant_frequency_hz": 2.2,
+    "liturgical_acoustic_mode": "SWAYING_RESPONSORIAL",
+    "timestamp_relative": "YEAR_10_DAY_315",
+    "tags": ["geophone", "s_wave", "shear", "resonance", "seismic"],
+    "prose": "The blind chanters lock arms and sway horizontally in rhythm with the transverse shear wave. 'Now comes the snake in the stone; the rock twists upon the pillar, the mortar turns to dry sand, the iron hinges scream like gulls in the gale.'"
+  },
+  {
+    "id": "hymnal_geophone_lament_of_the_roof_fall",
+    "monastery_circle": "ORDER_OF_THE_BEDROCK_EAR",
+    "hymn_number": "HYMN_11",
+    "resonant_frequency_hz": 120.0,
+    "liturgical_acoustic_mode": "STACCATO_CLICKING",
+    "timestamp_relative": "YEAR_13_DAY_088",
+    "tags": ["geophone", "roof_fall", "collapse", "lament", "seismic"],
+    "prose": "High-frequency brittle clicks produced by tongue clacks mimicking the sound of tension micro-cracks spreading across the shale ceiling. When this chant begins, bunker maintenance engineers drop their ration bowls and rush to install hydraulic roof jacks in the main gallery."
+  },
+  {
+    "id": "hymnal_geophone_psalm_of_the_fault_silence",
+    "monastery_circle": "ORDER_OF_THE_BEDROCK_EAR",
+    "hymn_number": "HYMN_15",
+    "resonant_frequency_hz": 0.1,
+    "liturgical_acoustic_mode": "TOTAL_MEDITATIVE_QUIET",
+    "timestamp_relative": "YEAR_15_DAY_240",
+    "tags": ["geophone", "silence", "faultline", "tension", "seismic"],
+    "prose": "The most terrifying chant is no chant at all. When the moving-coil needle goes completely flat for six hours, the monks stand motionless in their blindfolds. 'When the earth stops groaning, it is not resting; the teeth of the fault are locked, gathering the fury of ten thousand winters.'"
+  },
+  {
+    "id": "hymnal_geophone_echo_of_the_deep_bore",
+    "monastery_circle": "ORDER_OF_THE_BEDROCK_EAR",
+    "hymn_number": "HYMN_19",
+    "resonant_frequency_hz": 60.0,
+    "liturgical_acoustic_mode": "OVERTONE_DRONE",
+    "timestamp_relative": "YEAR_17_DAY_112",
+    "tags": ["geophone", "deep_bore", "steam", "overtones", "seismic"],
+    "prose": "A sustained sixty-cycle overtone drone imitating the sound of geothermal steam escaping through borehole casing threads three thousand meters below. The monks translate the pitch shifts into daily pressure forecasts for the turbine engineers."
+  },
+  {
+    "id": "hymnal_geophone_final_rest_in_the_bedrock",
+    "monastery_circle": "ORDER_OF_THE_BEDROCK_EAR",
+    "hymn_number": "HYMN_24",
+    "resonant_frequency_hz": 1.0,
+    "liturgical_acoustic_mode": "WHISPERED_UNISON",
+    "timestamp_relative": "YEAR_20_DAY_001",
+    "tags": ["geophone", "funeral", "bedrock", "burial", "seismic"],
+    "prose": "The deceased monk is lowered into a dry vertical borehole without a box or shroud, covered in washed gravel to maximize acoustic coupling with the granite. 'Your ears were open in life; now your bones shall vibrate with every tremor until the mantle cools into crystal.'"
+  }
+]

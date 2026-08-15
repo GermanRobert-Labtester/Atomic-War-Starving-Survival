@@ -1,0 +1,79 @@
+[
+  {
+    "id": "fraud_ration_sawdust_flour_dilution",
+    "case_id": "COMMISSARY-AUDIT-CASE-012",
+    "infraction_type": "FLOUR_ADULTERATION",
+    "accused_culprit": "BAKER_HANS_MULLER",
+    "contraband_weight_kg": 45.0,
+    "verdict_penalty": "THIRTY_DAYS_EXPEDITION_COAL_HAULAGE",
+    "timestamp_relative": "YEAR_03_MONTH_04_AUDIT",
+    "tags": ["ration_fraud", "sawdust", "flour", "adulteration", "commissary"],
+    "prose": "Laboratory sieving revealed 15% sifted pine sawdust blended into standard rye flour bins. Muller admitted using fine wood dust from the carpentry shop to stretch the loaf quota, claiming 'the fiber keeps the bowels moving.' Sentenced to one month of shovel labor in the coal hopper."
+  },
+  {
+    "id": "fraud_ration_diluted_chicory_extract",
+    "case_id": "COMMISSARY-AUDIT-CASE-024",
+    "infraction_type": "BEVERAGE_SKIMMING",
+    "accused_culprit": "BEVERAGE_DISPENSER_TOMAS",
+    "contraband_weight_kg": 12.0,
+    "verdict_penalty": "RATION_DEDUCTION_HALF_SCALE",
+    "timestamp_relative": "YEAR_05_MONTH_08_AUDIT",
+    "tags": ["ration_fraud", "chicory", "tea", "skimming", "commissary"],
+    "prose": "Chief brewer skimmed 40% of real roasted barley malt and replaced it with double-boiled roasted dandelion roots and chicory. The diverted malt syrup was traded to maintenance mechanics for six bottles of brake fluid distilled into moonshine."
+  },
+  {
+    "id": "fraud_ration_counterfeit_punch_card",
+    "case_id": "COMMISSARY-AUDIT-CASE-041",
+    "infraction_type": "GHOST_IDENTITY_RATION_THEFT",
+    "accused_culprit": "CLERK_MARGARET_WEBB",
+    "contraband_weight_kg": 0.0,
+    "verdict_penalty": "PERMANENT_LOSS_OF_COMMISSARY_DESK",
+    "timestamp_relative": "YEAR_08_MONTH_01_AUDIT",
+    "tags": ["ration_fraud", "punch_card", "forgery", "ghost_ration", "commissary"],
+    "prose": "Maintained the active Hollerith punch card of Dweller Aris eighteen months after her death in the infirmary. Webb collected one additional bowl of broth and two crackers daily, caching the surplus dried food under floor tiles in the records vault."
+  },
+  {
+    "id": "fraud_ration_water_injected_lard_blocks",
+    "case_id": "COMMISSARY-AUDIT-CASE-058",
+    "infraction_type": "FAT_BLOCK_MASS_FALSIFICATION",
+    "accused_culprit": "BUTCHER_ASSISTANT_KLEIN",
+    "contraband_weight_kg": 28.0,
+    "verdict_penalty": "COMMISSARY_BAN_AND_LATRINE_DUTY",
+    "timestamp_relative": "YEAR_10_MONTH_09_AUDIT",
+    "tags": ["ration_fraud", "lard", "water_injection", "mass_fraud", "commissary"],
+    "prose": "Whipped warm distilled water and lecithin emulsifier into solid rendered pork fat before chilling it in molds. The resulting blocks weighed 22% heavier on the commissary balance, allowing Klein to steal six kilograms of pure fat over three months."
+  },
+  {
+    "id": "fraud_ration_salt_cellar_calcium_chalk",
+    "case_id": "COMMISSARY-AUDIT-CASE-072",
+    "infraction_type": "MINERAL_DILUTION_CRIME",
+    "accused_culprit": "PANTRY_STEWARD_VOSS",
+    "contraband_weight_kg": 8.5,
+    "verdict_penalty": "TEN_DAYS_SOLITARY_CONFINEMENT",
+    "timestamp_relative": "YEAR_13_MONTH_02_AUDIT",
+    "tags": ["ration_fraud", "salt", "chalk", "dilution", "commissary"],
+    "prose": "Ground drywall plaster (calcium sulfate) added to the table salt dispensers in Mess Hall B to conceal the disappearance of five kilograms of coarse pickling salt. Discovered when dwellers complained their soup smelled like wet gypsum plaster."
+  },
+  {
+    "id": "fraud_ration_sugar_cubes_in_the_flue",
+    "case_id": "COMMISSARY-AUDIT-CASE-089",
+    "infraction_type": "EMERGENCY_HOARDING",
+    "accused_culprit": "NIGHT_COOK_DARREN",
+    "contraband_weight_kg": 3.2,
+    "verdict_penalty": "PUBLIC_CENSURE_AND_SCRIP_FINE",
+    "timestamp_relative": "YEAR_15_MONTH_11_AUDIT",
+    "tags": ["ration_fraud", "sugar", "hoarding", "flue_stash", "commissary"],
+    "prose": "Sixty-four white pre-war sugar cubes individually wrapped in waxed paper discovered inside the soot damper of the decommissioned bakery chimney. Darren had stolen one cube per week from the officers' tea canister over more than a year."
+  },
+  {
+    "id": "fraud_ration_secret_still_condensate_tap",
+    "case_id": "COMMISSARY-AUDIT-CASE-104",
+    "infraction_type": "ILLICIT_DISTILLATION_RIG",
+    "accused_culprit": "MAINTENANCE_ENG_GRAHAM",
+    "contraband_weight_kg": 0.0,
+    "verdict_penalty": "EXILE_TO_OUTER_DECON_STATION",
+    "timestamp_relative": "YEAR_18_MONTH_06_AUDIT",
+    "tags": ["ration_fraud", "moonshine", "still", "condensate", "commissary"],
+    "prose": "A copper 1/4-inch tubing tap welded into the pressure-relief riser of the industrial potato steamer. Graham diverted alcohol vapor from fermented potato skins into a water-cooled coiled copper pipe inside a paint can, producing two liters of ninety-proof liquor every Saturday night."
+  }
+]

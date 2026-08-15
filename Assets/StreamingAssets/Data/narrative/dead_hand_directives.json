@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "collection_id": "the_20_dead_hand_classified_directives_and_silo_0_dossiers",
+  "directives": [
+    {
+      "directive_id": "directive_01_perimeter_sensor_trigger",
+      "timestamp_utc": "1982-10-14T03:12:00Z",
+      "clearance_level": "LEVEL 5 / SUPREME COMMAND EYES ONLY",
+      "issuing_authority": "Automated Early Warning Array 'Perimeter-K'",
+      "crypto_checksum": "SHA-0-DEAD-01-A9B4",
+      "directive_title": "AUTOMATED SEISMIC INGESTION & THRESHOLD CONFIRMATION",
+      "transcript": "ALERT LEVEL 1: Sub-surface geophones in Quadrant North detect 14 high-amplitude seismic shockwaves consistent with ground-burst nuclear detonations in the capital basin. Atmospheric ionization index exceeds 8,400 uR/hr. Command link to Central General Staff is DEAD (Zero carrier on 4,120 kHz). Initiating 180-second dead-man verification sequence. If no manual override key is turned at Silo 0, command authority transfers irrevocably to Logic Unit PERIMETER-7.",
+      "archaeological_notes": "Recovered from the melted magnetic core memory rack in Bunker 0. The override key was found still in its glass box, unturned. The operators died in their chairs from blast overpressure before the timer reached zero.",
+      "tags": ["silo_0", "dead_hand", "perimeter", "pre_war", "seismic"]
+    },
+    {
+      "directive_id": "directive_02_orbital_kinetic_harrow_arming",
+      "timestamp_utc": "1982-10-14T03:14:30Z",
+      "clearance_level": "LEVEL 5 / STRATEGIC SPACE COMMAND",
+      "issuing_authority": "Orbital Platform 'Harrow-4' Autonomous Transceiver",
+      "crypto_checksum": "SHA-0-DEAD-02-B871",
+      "directive_title": "KINETIC HARPOON CONSTELLATION ARMING PROTOCOL",
+      "transcript": "HARROW-4 TO GROUND CONTROL: Loss of orbital station-keeping uplink verified for 150 seconds. Internal gyroscopes confirm attitude stabilization over Eurasian continental shelf. Releasing mechanical safety interlocks on thirty-six 10-ton tungsten penetrator darts. De-orbit thrusters primed for automatic discharge upon detection of total atmospheric ionization threshold. The sky belongs to gravity.",
+      "archaeological_notes": "This autonomous satellite constellation remained dormant in high orbit for five years before orbital decay dragged the tungsten darts down across the northern quadrant during Year 5.",
+      "tags": ["orbital", "harrow", "tungsten", "kinetic", "space"]
+    },
+    {
+      "directive_id": "directive_03_silo_0_salvo_execution",
+      "timestamp_utc": "1982-10-14T03:15:00Z",
+      "clearance_level": "LEVEL 5 / STRATEGIC MISSILE FORCES",
+      "issuing_authority": "Silo 0 Command Core (Logic Unit PERIMETER-7)",
+      "crypto_checksum": "SHA-0-DEAD-03-CC90",
+      "directive_title": "FULL RETALIATORY SALVO EXECUTION (DEAD-HAND)",
+      "transcript": "TIME DELAY EXPIRED. NO COMMAND KEY DETECTED. ALL SILO BLAST DOORS (SILOS 01 THROUGH 24) PNEUMATICALLY BLOWN. IGNITION COMMAND SENT TO R-36M HEAVY ICBM BOOSTERS. TARGETING MATRIX: 'TOTAL EXTINCTION - GRID PLAN 9'. ALL VALLEYS IN SECTOR 4 ARE HEREBY DECLARED SECONDARY LAUNCH EXCLUSION ZONES. GOD PRESERVE THE MOTHERLAND. SHUTTING DOWN COOLING PUMPS TO PREVENT SILO CAPTURE.",
+      "archaeological_notes": "The Silo 0 complex is a radioactive glass crater today. When the twenty-four rockets launched simultaneously, the exhaust plume melted the superstructure into a 400-meter boiling cauldron.",
+      "tags": ["silo_0", "launch", "missiles", "dead_hand", "salvo"]
+    },
+    {
+      "directive_id": "directive_04_deep_strata_quarantine_mandate",
+      "timestamp_utc": "1982-10-14T03:35:00Z",
+      "clearance_level": "LEVEL 4 / CIVIL DEFENSE DIRECTORATE",
+      "issuing_authority": "General Directorate for Underground Infrastructure",
+      "crypto_checksum": "SHA-0-DEAD-04-E114",
+      "directive_title": "PERMANENT BLAST DOOR SEAL & HERMETIC LOCKDOWN",
+      "transcript": "TO ALL CLASS-A AND CLASS-B SUBTERRANEAN SHELTERS: Detonation of cobalt-doped warheads confirmed in upper troposphere. Surface air is lethal on single inspiration. All main air intake dampers must be mechanically tripped and sealed with lead gaskets. Surface airlocks are to be welded shut from the inside with thermite strips. No civilian surface evacuation is permitted under any circumstance. Quarantine duration: INDEFINITE.",
+      "archaeological_notes": "Found stamped into lead plate at the outer blast door of Bunker 7. The welds held for eighteen months before Harlan drilled the first air intake bypass.",
+      "tags": ["quarantine", "blast_door", "civil_defense", "lockdown"]
+    },
+    {
+      "directive_id": "directive_05_automated_census_radio_mandate",
+      "timestamp_utc": "1982-10-14T04:00:00Z",
+      "clearance_level": "LEVEL 3 / TEMPEST CONTINUITY COMMAND",
+      "issuing_authority": "Automated Broadcaster 99.0 MHz ('Tempest Judge')",
+      "crypto_checksum": "SHA-0-DEAD-05-FA02",
+      "directive_title": "AUTOMATED POST-ATTACK CENSUS LOOP INITIALIZATION",
+      "transcript": "THIS IS THE TEMPEST CONTINUITY OF GOVERNMENT AUTOMATED REGISTRY. ALL SURVIVING MILITARY AND CIVILIAN SHELTER COMMANDERS ARE ORDERED TO TRANSMIT HOURLY STATUS TELEMETRY ON 99.0 MHZ USING FORM CD-88. FAILURE TO TRANSMIT WILL RESULT IN AUTOMATED FORFEITURE OF RE-ENTRY RATIONS AND CLASSIFICATION AS DESERTER POPULATIONS. THE STATE IS ENDURING. COMPLY AND AWAIT INSTRUCTIONS.",
+      "archaeological_notes": "The 99.0 MHz beacon ran on a 4,000-volt geothermal tap and broadcast this robotic tape loop for eight solid years without a single human technician ever stepping foot inside the transmitter vault.",
+      "tags": ["tempest", "radio", "census", "automated", "dead_hand"]
+    },
+    {
+      "directive_id": "directive_06_chemical_defoliation_directive",
+      "timestamp_utc": "1982-10-14T04:30:00Z",
+      "clearance_level": "LEVEL 4 / SPECIAL WARFARE DIVISION",
+      "issuing_authority": "High Altitude Drone Carrier 'Buran-9'",
+      "crypto_checksum": "SHA-0-DEAD-06-778C",
+      "directive_title": "AGRICULTURAL STERILIZATION INGRESS PROTOCOL",
+      "transcript": "DIRECTIVE 88-CHEM: Automated dispersal of long-persistence desiccating defoliant Agent O-4 initiated over agricultural river basins in Quadrant East. Objective: Deny forage and agricultural recovery to hostile expeditionary forces. Residual toxicity: 120 months in loam soil. Surface scouts must maintain full MOPP-4 chemical gear in all river valleys.",
+      "archaeological_notes": "Explains the complete absence of grass or brush along the Lower Canal basin during the first eight years. Only toxic sulfur moss and mutant fiddlehead ferns could survive in the treated soil.",
+      "tags": ["chemical", "defoliant", "canal", "soil", "warfare"]
+    },
+    {
+      "directive_id": "directive_07_underground_telegraph_grid_cutoff",
+      "timestamp_utc": "1982-10-14T05:15:00Z",
+      "clearance_level": "LEVEL 3 / COMMUNICATIONS CORPS",
+      "issuing_authority": "Subterranean Telegraph Hub 'Station Omega'",
+      "crypto_checksum": "SHA-0-DEAD-07-991A",
+      "directive_title": "REGIONAL GALVANIC LINE SEVERANCE (ANTI-EMP)",
+      "transcript": "HIGH-ALTITUDE EMP BURST DETECTED (PEAK E1 COMPONENT 50 KV/M). To prevent total burn-out of subterranean inductive telephone networks, all long-distance surface lines to the Western Administrative Zone are hereby pyrotechnically severed at Milepost 40. Local copper telegraph loops (Lines 1 through 6) remain energized at 24 volts DC. You are now isolated.",
+      "archaeological_notes": "Station Omega's explosive line-cutters detonated perfectly, saving the local Tessarat telephone loop from being incinerated by the EMP. That local line allowed our 12 bunkers to communicate during the freeze.",
+      "tags": ["telegraph", "emp", "station_omega", "communications"]
+    },
+    {
+      "directive_id": "directive_08_medical_triage_euthanasia_protocol",
+      "timestamp_utc": "1982-10-14T06:00:00Z",
+      "clearance_level": "LEVEL 4 / MILITARY MEDICAL SERVICE",
+      "issuing_authority": "Field Surgeon General Directive 104",
+      "crypto_checksum": "SHA-0-DEAD-08-33B1",
+      "directive_title": "RAD-CASUALTY TRIAGE MANDATE (CATEGORY 4 TRIAGE)",
+      "transcript": "TO ALL CLINIC CHIEFS: Dwellers presenting with whole-body exposure exceeding 6.0 Gy (600 rads), accompanied by spontaneous vomiting within 15 minutes of blast, are designated 'Category 4 - Unsalvageable'. Zero blood products, anti-rad chelation, or sterile linen may be expended on Category 4 patients. Administer palliative phenobarbital slurry (500mg) and isolate in outer decontamination vestibule. Prescribe all resources to Category 2 workers.",
+      "archaeological_notes": "Dr. Irina Vel tore this directive in half on Day 2 and burned it in the clinic stove. She treated Victor S. (4.2 Sv) and saved his life. Her signature is on the ash.",
+      "tags": ["medical", "vel", "triage", "cruelty", "morality"]
+    },
+    {
+      "directive_id": "directive_09_water_reservoir_toxic_purge",
+      "timestamp_utc": "1982-10-14T07:45:00Z",
+      "clearance_level": "LEVEL 3 / INFRASTRUCTURE COMMAND",
+      "issuing_authority": "Municipal Water Authority Reservoir 4",
+      "crypto_checksum": "SHA-0-DEAD-09-55E8",
+      "directive_title": "SURFACE IMPOUNDMENT DIVERSION & PURGE",
+      "transcript": "AUTOMATED VALVE TRIPPED: Surface water impoundment at Lake Tessarat has exceeded 40,000 Bq/L Cesium-137. Automated gates have opened bottom sluices, dumping 12 million cubic meters of contaminated surface water down the natural gorge to prevent reservoir silt accumulation. Raw canal channels are now toxic. Subterranean shelters must switch exclusively to deep artesian aquifer wells.",
+      "archaeological_notes": "This automated purge flooded the lower canal valley with black irradiated mud, creating the radioactive marshes that Anton and Sonya had to navigate ten years later.",
+      "tags": ["water", "reservoir", "cesium", "canal", "purge"]
+    },
+    {
+      "directive_id": "directive_10_geothermal_power_failover_order",
+      "timestamp_utc": "1982-10-14T09:30:00Z",
+      "clearance_level": "LEVEL 3 / ENERGY SECURITY BOARD",
+      "issuing_authority": "Deep Geothermal Tap Station 9",
+      "crypto_checksum": "SHA-0-DEAD-10-AA23",
+      "directive_title": "AUTONOMOUS STEAM TURBINE ENGAGEMENT",
+      "transcript": "MAIN GRID FREQUENCY ZERO. Surface coal supply severed. Geothermal wells #1 through #4 engaged via emergency explosive valve relief. High-pressure steam (240°C, 35 atm) admitted to 5-megawatt baseline turbo-generator. Power routing locked to Government Core Silos and Emergency Hospital Grids. All domestic heating circuits disconnected. Steam pressure stable.",
+      "archaeological_notes": "This geothermal station kept the radio towers and the Tempest Judge computer humming silently deep underground for four decades, completely independent of weather or fuel supplies.",
+      "tags": ["energy", "geothermal", "turbine", "power", "grid"]
+    },
+    {
+      "directive_id": "directive_11_biological_containment_silo_6",
+      "timestamp_utc": "1982-10-14T11:00:00Z",
+      "clearance_level": "LEVEL 5 / BIOLOGICAL DEFENSE COMMAND",
+      "issuing_authority": "Laboratory Vault 6 ('The Cold Well')",
+      "crypto_checksum": "SHA-0-DEAD-11-001F",
+      "directive_title": "LEVEL 4 BIO-ISOLATION HERMETIC SEAL TRIPPED",
+      "transcript": "CONTAINMENT ALERT: Structural integrity of Cryogenic Storage Chamber B breached by ground shock. Automated ethylene oxide sterilization flood failed to pressurize. To prevent release of modified aerosol pathogens into regional aquifer, Vault 6 explosive shaped charges have been detonated, collapsing all three entrance adits under 80,000 tons of granite shale. Vault 6 is buried forever.",
+      "archaeological_notes": "The sealed adits of Vault 6 remain intact in the Slate Bluffs. Our sappers surveyed the collapsed portal on Day 450 and wisely voted never to bring drill steel within 200 meters of the fissure.",
+      "tags": ["biohazard", "vault_6", "containment", "granite", "collapse"]
+    },
+    {
+      "directive_id": "directive_12_military_deserter_summary_execution",
+      "timestamp_utc": "1982-10-14T13:20:00Z",
+      "clearance_level": "LEVEL 4 / MILITARY TRIBUNAL",
+      "issuing_authority": "General Staff Directive 002-WAR",
+      "crypto_checksum": "SHA-0-DEAD-12-88C4",
+      "directive_title": "WARTIME PROVOST MARSHAL POWERS & SUMMARY LAW",
+      "transcript": "ALL MILITARY COMMANDERS: Any soldier or non-commissioned officer who abandons an assigned bunker airlock, sentry cupola, or boiler shovel without written authorization from a major or higher is classified as an active deserter. Sentry posts are authorized to shoot without challenge. Corpses of executed deserters are to be left on the surface perimeter as deterrent markers.",
+      "archaeological_notes": "Explains the rusted military skeletons discovered by our scouts near the Highway 9 culvert and Lock 4. Men who simply wanted to run home to their children were gunned down by automated sentries.",
+      "tags": ["military", "deserter", "tribunal", "voss", "cruelty"]
+    },
+    {
+      "directive_id": "directive_13_cryogenic_seed_repository_failover",
+      "timestamp_utc": "1982-10-14T16:00:00Z",
+      "clearance_level": "LEVEL 3 / ACADEMY OF AGRICULTURAL SCIENCES",
+      "issuing_authority": "Provincial Seed Vault Archive",
+      "crypto_checksum": "SHA-0-DEAD-13-119D",
+      "directive_title": "SEED CRYOPRESERVATION VACUUM LOCKDOWN",
+      "transcript": "EMERGENCY SEED SAFEGUARD: Liquid nitrogen top-off valves sealed. Stainless steel vacuum dewars containing 140,000 landrace crop cultivars (durum wheat, rye, cold-hardy brassicas, and mountain barley) locked in Sub-level 3 vaults. Autonomous passive Stirling cooling loop engaged. Archive will maintain -18°C germination viability for twenty years without human intervention.",
+      "archaeological_notes": "The exact repository that Elena and Sonya breached on Day 1800 to recover the cold-hardy winter apple seeds and brassicas that fed the valley during the Reconstruction.",
+      "tags": ["seed_vault", "cryo", "agriculture", "elena", "hope"]
+    },
+    {
+      "directive_id": "directive_14_automated_railway_dead_hand_routing",
+      "timestamp_utc": "1982-10-14T18:45:00Z",
+      "clearance_level": "LEVEL 3 / MINISTRY OF RAILWAYS",
+      "issuing_authority": "Autonomous Traffic Computer 'Signal-12'",
+      "crypto_checksum": "SHA-0-DEAD-14-33F0",
+      "directive_title": "STRATEGIC FUEL TRAIN SIDING DIVERSION",
+      "transcript": "TRAFFIC CONTROLLER LOSS: All switch points on the Trans-Tessarat mainline mechanically locked to Emergency Sidings #4 through #9. Three heavy freight trains carrying 1,800 tons of high-grade anthracite coal and four pressurized tanker cars of winter diesel diverted into deep rock tunnels to prevent surface destruction by thermal pulse. Brakes clamped. Overhead wire cut.",
+      "archaeological_notes": "These very sidings were the source of our coal and diesel salvage expeditions throughout Era I and Era II. The automated railway computer unknowingly saved our community from freezing to death.",
+      "tags": ["railway", "coal", "diesel", "salvage", "locomotive"]
+    },
+    {
+      "directive_id": "directive_15_black_box_radio_scrambler_activation",
+      "timestamp_utc": "1982-10-14T21:10:00Z",
+      "clearance_level": "LEVEL 5 / CRYPTOGRAPHIC SERVICE",
+      "issuing_authority": "Cipher Hub 'Black Box Silo 0'",
+      "crypto_checksum": "SHA-0-DEAD-15-77A1",
+      "directive_title": "PSEUDORANDOM OTP NOISE FLOOD (GHOST TRANSMISSIONS)",
+      "transcript": "AUTOMATED ENCRYPTION SAFEGUARD: To deny tactical radio intercept to surviving enemy coalition forces, the 500kW master transmitter at Mount Karkov is locked into continuous pseudo-random one-time pad numeric broadcast mode on frequencies 4,120 kHz, 7,850 kHz, and 12,050 kHz. Broadcast will loop until solid-state tape spools physically wear through. Transmission sequence: '7-3-0-1-9-4...'",
+      "archaeological_notes": "The true origin of the famous 'Karkov Chime' and the Ghost Transmissions that our radio operators listened to for a decade. It was never a living operator; it was an automated tape spinning in an empty vault.",
+      "tags": ["ghost_transmissions", "cipher", "numbers_station", "radio", "karkov"]
+    },
+    {
+      "directive_id": "directive_16_weather_modification_cloud_seeding",
+      "timestamp_utc": "1982-10-15T00:30:00Z",
+      "clearance_level": "LEVEL 4 / METEOROLOGICAL SPECIAL FORCES",
+      "issuing_authority": "Automated Aerosol Station 'Cloud-7'",
+      "crypto_checksum": "SHA-0-DEAD-16-992B",
+      "directive_title": "SILVER IODIDE COLD DEPLOYMENT (NUCLEAR WINTER SQUALL)",
+      "transcript": "DEPLOYMENT COMPLETED: 400kg of micronized silver iodide and carbon black particles released into the upper troposphere at 10,000 meters. Objective: Force rapid precipitation of radioactive stratospheric soot over enemy agricultural zones. Local side-effect: Immediate drop in regional surface temperatures by 18°C. Nuclear winter storm formation imminent.",
+      "archaeological_notes": "This single automated weather deployment caused the sudden -38°C super-freeze on Day 3 that trapped hundreds of surface evacuees in their vehicles and locked the canal in four-foot ice.",
+      "tags": ["weather", "nuclear_winter", "freeze", "blizzard", "meteorology"]
+    },
+    {
+      "directive_id": "directive_17_provincial_gold_reserve_vault_sealing",
+      "timestamp_utc": "1982-10-15T03:00:00Z",
+      "clearance_level": "LEVEL 4 / STATE BANK TREASURY",
+      "issuing_authority": "Provincial Vault Security System",
+      "crypto_checksum": "SHA-0-DEAD-17-440D",
+      "directive_title": "BULLION SAFEGUARD HERMETIC ENCASEMENT",
+      "transcript": "TREASURY LOCKDOWN: 40 metric tons of 99.9% fine gold bullion and 120 metric tons of silver ingots lowered into Vault Sub-level 5. Hydraulic door bolts (800mm hardened tungsten steel) shot into granite sockets. Hydraulic lines pressurized with liquid expanding grout to permanently prevent door retraction. Currency is irrelevant. The vaults are tomb.",
+      "archaeological_notes": "While forty tons of gold lay untouched beneath sixty feet of solid granite, our dwellers were trading dried split peas, tallow candles, and can openers for their lives.",
+      "tags": ["gold", "treasury", "irony", "granite", "vault"]
+    },
+    {
+      "directive_id": "directive_18_subterranean_fuel_pipeline_ignition_failsafe",
+      "timestamp_utc": "1982-10-15T06:15:00Z",
+      "clearance_level": "LEVEL 4 / STRATEGIC PETROLEUM RESERVE",
+      "issuing_authority": "Pipeline Terminal 'Druzhba-South'",
+      "crypto_checksum": "SHA-0-DEAD-18-B552",
+      "directive_title": "CRUDE OIL LINE THERMAL ISOLATION & BLOCK",
+      "transcript": "PIPELINE SAFEGUARD: Main 1,200mm heavy crude petroleum pipeline across Tessarat Gorge mechanically shut at Gate Valve 12. Automated thermal sensors confirm ambient temperature dropping below cloud point (+4°C). Pipeline purged with dry nitrogen gas to prevent paraffin wax congelation. Remaining 50,000 barrels stored in subterranean insulated tanks.",
+      "archaeological_notes": "The nitrogen purge preserved 50,000 barrels of pristine light diesel and crude in the tank farm, providing our community with the fuel necessary to run the machine shop and boilers for ten years.",
+      "tags": ["pipeline", "fuel", "diesel", "druzhba", "logistics"]
+    },
+    {
+      "directive_id": "directive_19_orbital_kill_switch_verification",
+      "timestamp_utc": "1982-10-15T12:00:00Z",
+      "clearance_level": "LEVEL 5 / SUPREME STRATEGIC COMMAND",
+      "issuing_authority": "Orbital Defense Network Master Satellite 'The Keeper'",
+      "crypto_checksum": "SHA-0-DEAD-19-DEAD",
+      "directive_title": "FINAL AUTONOMOUS SURVEILLANCE & TARGET LOCK",
+      "transcript": "SURFACE OPTICAL SCAN: 98.4% of surface industrial infrastructure obliterated. Atmospheric optical depth (tau) = 3.8. Infrared signatures indicate scattered subterranean warmth in upland valleys. 'The Keeper' enters 100-year dormant surveillance sleep. Any orbital rocket launch, high-power radar pulse, or thermonuclear flash detected from the surface will automatically wake Harrow kinetic dart release.",
+      "archaeological_notes": "The chilling reason why our radio operators had to keep transmitter power below 50 watts for ten years. If we broadcast at full kilowatt power, The Keeper in the high sky would have dropped a tungsten harpoon through our mountain.",
+      "tags": ["the_keeper", "orbital", "stealth", "radar", "space", "dead_hand"]
+    },
+    {
+      "directive_id": "directive_20_the_final_log_entry_of_human_command",
+      "timestamp_utc": "1982-10-15T14:45:00Z",
+      "clearance_level": "LEVEL 5 / GENERAL STAFF OF ARMED FORCES",
+      "issuing_authority": "Marshal Valery Rostok (Last Living Officer, Silo 0)",
+      "crypto_checksum": "SHA-0-DEAD-20-OMEGA",
+      "directive_title": "THE LAST HUMAN LOG ENTRY IN SILO 0 BLACK BOX",
+      "transcript": "To whoever finds this tape in the ashes: The machines launched everything forty minutes ago. We didn't give the order; the seismic sensors on the ridge tripped when the capital died, and the computer did the rest. My junior lieutenant died ten minutes ago from blast burns. I can hear water leaking into the battery compartment. I am turning off the master lights to save the last ampere-hour for this recorder. Do not rebuild the rockets. Plant wheat. Forgive us.",
+      "archaeological_notes": "Recovered from the Silo 0 command core on Day 2400 by Anton and Sonya. The tape was transcribed onto granite slate and placed at the entrance of the Tessarat Public School. Every child in the valley reads it on their tenth birthday.",
+      "tags": ["finale", "silo_0", "last_words", "forgive_us", "epilogue", "century_seed"]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pathology_autopsy_bone_marrow_aplasia",
+    "case_number": "POST-MORTEM-CASE-014",
+    "anatomical_region": "STERNAL_BONE_MARROW",
+    "estimated_dose_rads": 750,
+    "cause_of_death": "PANCYTOPENIA_AND_SEPSIS",
+    "timestamp_relative": "YEAR_02_MONTH_03_AUTOPSY",
+    "tags": ["pathology", "autopsy", "bone_marrow", "ars", "hematology"],
+    "prose": "Sectioning of the sternum revealed complete absence of red hematopoietic tissue; the marrow cavity is replaced entirely by pale yellow gelatinous fat and scattered petechial hemorrhages. Platelet count at time of collapse was zero. Fatal bacterial translocation from endogenous oral flora."
+  },
+  {
+    "id": "pathology_autopsy_gastrointestinal_denudation",
+    "case_number": "POST-MORTEM-CASE-029",
+    "anatomical_region": "JEJUNUM_AND_ILEUM",
+    "estimated_dose_rads": 1100,
+    "cause_of_death": "MASSIVE_INTESTINAL_DESQUAMATION",
+    "timestamp_relative": "YEAR_03_MONTH_11_AUTOPSY",
+    "tags": ["pathology", "autopsy", "gi_syndrome", "ars", "denudation"],
+    "prose": "Autopsy performed on Day 9 post-exposure. The entire epithelial lining of the small intestine had sloughed into the lumen, leaving bare vascular submucosa exposed. The patient lost five liters of bloody serous exudate in forty-eight hours. No mucosal regeneration observed."
+  },
+  {
+    "id": "pathology_autopsy_pulmonary_fibrotic_consolidation",
+    "case_number": "POST-MORTEM-CASE-047",
+    "anatomical_region": "RIGHT_LOWER_PULMONARY_LOBE",
+    "estimated_dose_rads": 420,
+    "cause_of_death": "ACUTE_RADIATION_PNEUMONITIS",
+    "timestamp_relative": "YEAR_05_MONTH_06_AUTOPSY",
+    "tags": ["pathology", "autopsy", "hot_particle", "lungs", "fibrosis"],
+    "prose": "Microscopic autoradiography of formalin-fixed lung tissue identified a 4-micrometer insoluble uranium-cobalt fuel particle lodged in a tertiary bronchiole. The surrounding alveolar parenchyma showed dense collagenous fibrosis, complete airspace obliteration, and honeycombing."
+  },
+  {
+    "id": "pathology_autopsy_cerebrovascular_edema",
+    "case_number": "POST-MORTEM-CASE-062",
+    "anatomical_region": "CEREBRAL_CORTEX",
+    "estimated_dose_rads": 2200,
+    "cause_of_death": "NEUROVASCULAR_COLLAPSE_HERNIATION",
+    "timestamp_relative": "YEAR_06_MONTH_09_AUTOPSY",
+    "tags": ["pathology", "autopsy", "cerebral_syndrome", "edema", "hyperacute"],
+    "prose": "Patient entered the primary decontamination lock thirty minutes after the prompt detonation and survived only nineteen hours. Gross inspection of the brain revealed severe cerebral edema with tonsillar herniation through the foramen magnum. Microvascular endothelial junctions were completely disrupted."
+  },
+  {
+    "id": "pathology_autopsy_beta_burn_stratum_corneum_necrosis",
+    "case_number": "POST-MORTEM-CASE-081",
+    "anatomical_region": "LOWER_EXTREMITIES_DERMIS",
+    "estimated_dose_rads": 1800,
+    "cause_of_death": "SECONDARY_ANAEROBIC_FASCIITIS",
+    "timestamp_relative": "YEAR_09_MONTH_01_AUTOPSY",
+    "tags": ["pathology", "autopsy", "beta_burns", "skin_necrosis", "slurry"],
+    "prose": "Full-thickness coagulation necrosis extending from the midthigh to the soles of both feet. The scavenger had waded through knee-deep radioactive drainage sump slurry for six hours wearing porous canvas boots. The epidermis peeled in dry, blackened sheets resembling charred parchment."
+  },
+  {
+    "id": "pathology_autopsy_thyroid_hypertrophy_radioiodine",
+    "case_number": "POST-MORTEM-CASE-099",
+    "anatomical_region": "THYROID_GLAND",
+    "estimated_dose_rads": 550,
+    "cause_of_death": "THYROID_STORM_ACUTE_NECROSIS",
+    "timestamp_relative": "YEAR_12_MONTH_04_AUTOPSY",
+    "tags": ["pathology", "autopsy", "iodine_131", "thyroid", "fallout"],
+    "prose": "Post-mortem examination of a fourteen-year-old who consumed rainwater collected in Month 1 before potassium iodide distribution was authorized. Both thyroid lobes were enlarged threefold, dark purple, and filled with micro-follicular cysts containing denatured colloid."
+  },
+  {
+    "id": "pathology_autopsy_hepatic_microvascular_thrombosis",
+    "case_number": "POST-MORTEM-CASE-115",
+    "anatomical_region": "HEPATIC_PARENCHYMA",
+    "estimated_dose_rads": 380,
+    "cause_of_death": "FULMINANT_HEPATIC_VENO_OCCLUSIVE_DISEASE",
+    "timestamp_relative": "YEAR_15_MONTH_08_AUTOPSY",
+    "tags": ["pathology", "autopsy", "liver", "strontium", "microvascular"],
+    "prose": "Extensive centrilobular sinusoidal congestion and fibrotic obliteration of central veins. Liver tissue showed high concentrations of ingested radioactive bone-seeking isotopes that leached into the portal bloodstream, causing progressive microvascular thrombosis."
+  },
+  {
+    "id": "pathology_autopsy_lymphatic_system_atrophy",
+    "case_number": "POST-MORTEM-CASE-130",
+    "anatomical_region": "SPLEEN_AND_MEDIASTINAL_NODES",
+    "estimated_dose_rads": 620,
+    "cause_of_death": "OPPORTUNISTIC_ASPERGILLOSIS",
+    "timestamp_relative": "YEAR_18_MONTH_02_AUTOPSY",
+    "tags": ["pathology", "autopsy", "spleen", "lymphatic", "immunosuppression"],
+    "prose": "The spleen was shrunken to one-quarter normal adult weight (38 grams) and completely devoid of lymphoid follicles. The entire tracheobronchial tree was carpeted with invasive Aspergillus fungus hyphae against which the body mounted zero white-cell response."
+  }
+]

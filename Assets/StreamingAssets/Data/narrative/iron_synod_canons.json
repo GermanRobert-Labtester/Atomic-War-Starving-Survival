@@ -1,0 +1,82 @@
+[
+  {
+    "id": "canon_synod_first_law_of_temper",
+    "synod_chapter": "CHAPTER_01_THE_UNBROKEN_GRAIN",
+    "canon_number": "CANON_I",
+    "metallurgical_rule": "SCRAP_PRESERVATION_MANDATE",
+    "sacred_temperature_celsius": 1250,
+    "timestamp_relative": "YEAR_04_FOUNDING_COUNCIL",
+    "tags": ["iron_synod", "canons", "metallurgy", "scrap", "re_forging"],
+    "prose": "Whosoever casts away a nail, a washer, a broken leaf spring, or a corroded pipe fitting into the dirt shall be condemned to three days at the bellows. Iron is the bone of the world; flesh is merely the rust that falls from it."
+  },
+  {
+    "id": "canon_synod_rite_of_the_slag_baptism",
+    "synod_chapter": "CHAPTER_02_THE_MOLTEN_BOND",
+    "canon_number": "CANON_IV",
+    "metallurgical_rule": "SLAG_ABSOLUTION",
+    "sacred_temperature_celsius": 1420,
+    "timestamp_relative": "YEAR_07_SPRING_MELT",
+    "tags": ["iron_synod", "baptism", "slag", "initiation", "re_forging"],
+    "prose": "Cooled granular black silicate slag from the master cupola furnace is ground into coarse sand and rubbed into the hands of every apprentice until their skin bleeds black. 'By the fire you were purged; by the slag you are sealed against the softness of the pre-war deceit.'"
+  },
+  {
+    "id": "canon_synod_crucible_oath_of_alloy",
+    "synod_chapter": "CHAPTER_03_THE_STRENGTH_OF_CARBON",
+    "canon_number": "CANON_VII",
+    "metallurgical_rule": "ALLOY_STRICTNESS_VOW",
+    "sacred_temperature_celsius": 1580,
+    "timestamp_relative": "YEAR_09_DAY_114",
+    "tags": ["iron_synod", "crucible", "carbon", "alloy", "re_forging"],
+    "prose": "The master melter shall swear before the hearth to add no sulfur and no excess phosphorus. Four parts per thousand of carbon for resilience, twelve parts of manganese for hardness. To cast brittle iron for an axe or a pry-bar is high treason against the survival of the Clan."
+  },
+  {
+    "id": "canon_synod_heresy_of_the_plastic_mold",
+    "synod_chapter": "CHAPTER_04_THE_FALSE_MATERIALS",
+    "canon_number": "CANON_XI",
+    "metallurgical_rule": "ANATHEMA_OF_POLYMERS",
+    "sacred_temperature_celsius": 300,
+    "timestamp_relative": "YEAR_11_DAY_080",
+    "tags": ["iron_synod", "heresy", "polymers", "plastic", "re_forging"],
+    "prose": "Bakelite, nylon, vinyl, and polycarbonate are declared unclean substances of the lazy ancestors. Any tool hafted in plastic shall have its synthetic sleeve burned away in open charcoal, and the tang shall be wrapped in raw hammered copper wire and dipped in lead."
+  },
+  {
+    "id": "canon_synod_anointing_with_quench_oil",
+    "synod_chapter": "CHAPTER_05_THE_OIL_OF_PEACE",
+    "canon_number": "CANON_XIV",
+    "metallurgical_rule": "QUENCH_OIL_BLESSING",
+    "sacred_temperature_celsius": 80,
+    "timestamp_relative": "YEAR_13_DAY_220",
+    "tags": ["iron_synod", "anointing", "quench_oil", "ritual", "re_forging"],
+    "prose": "Heavy sulfurized lard-cutting oil salvaged from the lathe sump is blessed by the Smith-Prefect and used to anoint the joints of elders crippled by foundry arthritis. It smells of charred tallow and iron filings, conferring the sacred sheen of seasoned steel to withered skin."
+  },
+  {
+    "id": "canon_synod_tithing_of_the_casing_brass",
+    "synod_chapter": "CHAPTER_06_THE_WAR_HARVEST",
+    "canon_number": "CANON_XVIII",
+    "metallurgical_rule": "BRASS_TITHE_MANDATE",
+    "sacred_temperature_celsius": 950,
+    "timestamp_relative": "YEAR_15_DAY_015",
+    "tags": ["iron_synod", "brass", "tithe", "cartridge_casings", "re_forging"],
+    "prose": "Every scavenger returning from the surface perimeter shall deposit one-tenth of all recovered 7.62mm and 12.7mm brass cartridge cases into the Synod crucible chest. This brass shall be remelted only for lathe bushings, pump impellers, and steam valve seats."
+  },
+  {
+    "id": "canon_synod_sacrament_of_the_file_stroke",
+    "synod_chapter": "CHAPTER_07_THE_DAILY_LABOR",
+    "canon_number": "CANON_XXII",
+    "metallurgical_rule": "MANUAL_ABRASION_DISCIPLINE",
+    "sacred_temperature_celsius": 20,
+    "timestamp_relative": "YEAR_17_DAY_300",
+    "tags": ["iron_synod", "bastard_file", "discipline", "sacrament", "re_forging"],
+    "prose": "Before taking the morning ration wafer, every smith must execute one hundred long, flat strokes with a double-cut bastard file across a scrap rail steel block. The rhythmic rasp of thirty files in unison across the cold workshop floor is the Synod's morning prayer."
+  },
+  {
+    "id": "canon_synod_funeral_of_the_iron_ingot",
+    "synod_chapter": "CHAPTER_08_THE_FINAL_HEAT",
+    "canon_number": "CANON_XXVI",
+    "metallurgical_rule": "MEMORIAL_CASTING",
+    "sacred_temperature_celsius": 1600,
+    "timestamp_relative": "YEAR_19_DAY_350",
+    "tags": ["iron_synod", "funeral", "ingot", "memorial", "re_forging"],
+    "prose": "When a Master of the Furnace dies, his tongs, hammer face, and leather apron buckles are thrown into the crucible alongside his favorite anvil chisel. The resulting ten-kilogram grey cast-iron ingot is stamped with his foundry mark and set into the floor of the foundry adit to be walked upon forever."
+  }
+]

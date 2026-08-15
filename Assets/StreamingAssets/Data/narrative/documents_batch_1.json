@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "documents": [
+    {
+      "doc_id": "doc_telegraph_strip_001",
+      "title": "Punched Paper Tape #409",
+      "origin": "Central Telemetry Vault -40m",
+      "material": "Oiled paper strip with perforated 5-channel Baudot punch",
+      "physical_description": "Yellowed, brittle paper ribbon with grease stains around the sprocket holes. Burn marks along the right margin.",
+      "transcript": "00:04:12 ZULU // ALL CHANNELS CARRIER LOST // SECTOR 9 GRID OFF // DO NOT ATTEMPT MANUAL RESTORE // AUTO-LOCK SEQUENCE ACTIVE // MAY GOD WITNESS OUR DUTY",
+      "lore_flags": ["flag_lore_telegraph_tape_found"],
+      "item_id_source": "item_punched_tape"
+    },
+    {
+      "doc_id": "doc_ration_ledger_crop_14",
+      "title": "Commissary Requisition Voucher #112",
+      "origin": "District 4 Sub-Basement",
+      "material": "Triplicate carbon copy on grey pulp paper",
+      "physical_description": "Faded purple hectograph ink. Stamped with the triangular seal of the Provincial Grain Directorate. Smudged with coal soot.",
+      "transcript": "ISSUED TO: Sapper Morozov, G. // COMMODITY: 50kg Ammonium Nitrate, 2 rolls safety fuse // RATIONALE: Canal lock clearance // AUTHORIZED BY: Voss, V. (Col.) // NOTE: Do not inform township.",
+      "lore_flags": ["flag_lore_canal_voucher_found"],
+      "item_id_source": "item_triplicate_carbon"
+    },
+    {
+      "doc_id": "doc_foundry_metallurgy_note",
+      "title": "Slag Chemistry Note from Master Blacksmith",
+      "origin": "Silent Foundry Floor",
+      "material": "Reverse side of a 1982 wall calendar",
+      "physical_description": "Scrawled in graphite pencil with thumbprints of red hematite dust. Calculations crossed out twice in frustration.",
+      "transcript": "Lime ratio must stay at 1.4 or the silica eats the firebricks in 40 hours. If the children skip the dolomite wash on the ladle linings, the molten lead will crack the iron floor. Tell Katya no books during the tap.",
+      "lore_flags": ["flag_lore_foundry_chemistry_found"],
+      "item_id_source": "item_foundry_notebook"
+    },
+    {
+      "doc_id": "doc_coroner_tag_vel",
+      "title": "Coroner's Lead Shroud Tag #031",
+      "origin": "Upper Meadow Crypt Shelf #14",
+      "material": "Stamped lead sheet with copper wire tie",
+      "physical_description": "Heavy, malleable metal tag with stamped alphanumeric characters. Oxidized white around the edges.",
+      "transcript": "NAME: VEL, IRINA // OCCUPATION: Chief Medical Officer // CAUSE: Progressive pulmonary fibrosis / chronic internal emitter (Cs-137) // CULPABILITY: Zero // FINAL POSSESSION: 1 brass key ring (passed to Sonya).",
+      "lore_flags": ["flag_lore_vel_coroner_tag_found"],
+      "item_id_source": "item_coroner_tag"
+    },
+    {
+      "doc_id": "doc_orbital_decay_chart",
+      "title": "Station 0 Geostationary Orbital Track Chart",
+      "origin": "Observation Post 09",
+      "material": "Drafting vellum overlaid on blueprint grid",
+      "physical_description": "Hand-plotted hyperbolic curves drawn with black india ink and red drafting pencil. Multiple orbital intersections marked with small asterisks.",
+      "transcript": "CONSTELLATION: HARROW-4 // PERIGEE: 184 KM (CRITICAL) // APOGEE: 790 KM // BALLISTIC PREDICTION: Impact footprint spans Tessarat Valley between Day 720 and 740. Shield the roof or evacuate below -50m.",
+      "lore_flags": ["flag_lore_orbital_chart_found"],
+      "item_id_source": "item_orbital_chart"
+    }
+  ]
+}
