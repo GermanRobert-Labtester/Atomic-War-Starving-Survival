@@ -1685,16 +1685,51 @@ namespace AtomicWar.GodotApp
             GD.Print("[Ashfall Godot] Verdict host ready.");
         }
 
-        /// <summary>Advance the Reckoning state machine + census carrier for the current sim day.</summary>
+        /// <summary>Advance the Reckoning state machine + census carrier + chain recorders for the current sim day.</summary>
         private void TickVerdict(int day, int livingCount)
         {
             SetupVerdict();
             _verdict.AdvanceDay(day, Math.Max(1, livingCount), _verdict.MachineLog.ReadCount());
             _verdict.TickCensus();
             _verdict.TickCorruption(day);
+
+            // Phase 6.D Chain 1 (Census / Human Cost): record any dwellings that
+            // dropped out of coverage between this day and the previous tick.
+            // DriftTotal grows monotonically; day boundaries reset the delta.
+            int driftDelta = ComputeDwellingDriftDelta(livingCount, day);
+            if (driftDelta > 0) _verdict.Reckoning.RecordDrift(day, driftDelta);
+
             UnlockVerdictLore();
             RefreshVerdictReadout();
         }
+
+        // Chain 1 tracking: previous-tick living-count snapshot held in host
+        // state. Day boundary resets so we do not attribute today's losses
+        // to last week. Threshold is observed but the doctrine check lives
+        // in ReckoningSystem.
+        private int _previousLivingCount = -1;
+        private int _previousLivingDay = -1;
+
+        private int ComputeDwellingDriftDelta(int livingCount, int day)
+        {
+            int delta = 0;
+            if (day != _previousLivingDay && _previousLivingDay != -1)
+            {
+                if (_previousLivingCount > livingCount) delta = _previousLivingCount - livingCount;
+            }
+            _previousLivingDay = day;
+            _previousLivingCount = livingCount;
+            return Math.Max(0, delta);
+        }
+
+        // Phase 6.D Chain 3 (Survival Reckoning) hook surface. Real survivor
+        // dose aggregates from Ashfall.Core.Survivors are not yet exposed;
+        // this helper returns 0 and preserves the API for a future commit
+        // that adds SurvivorsHostSession.TotalSieverts. Until then, the
+        // ReckoningSystem.RecordCumulativeDose contract is exercised by
+        // VerdictChainTests and reachable from any host that does supply a
+        // value.
+        public float LivingCumulativeDoseSieverts() => 0f;
 
         /// <summary>Unlock lore_verdict_* codex beats from authoritative Verdict state
         /// (located knowledge: the ladder only opens when the machine/evidence reaches it).</summary>

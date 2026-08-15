@@ -297,7 +297,7 @@ namespace AtomicWar.GodotApp.Radio
             // Update Faction Badge & Callsign
             if (!string.IsNullOrEmpty(intercept.FactionId))
             {
-                _textureFactionBadge.Texture = LoadTexture($"res://Assets/UI/Icons/faction_icon_{intercept.FactionId}.png");
+                _textureFactionBadge.Texture = AtomicWar.GodotApp.FactionIconLoader.LoadFor(intercept.FactionId);
                 _lblFactionCallsign.Text = $"{intercept.Callsign}\n{intercept.FactionId.ToUpper().Replace('_', ' ')}";
                 _lblCrtLiveHeader.Text = $"[ LIVE INTERCEPT — {intercept.Callsign} ({_currentFrequency:00.00} MHz) ]";
             }

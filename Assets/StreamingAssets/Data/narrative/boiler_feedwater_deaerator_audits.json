@@ -1,0 +1,72 @@
+[
+  {
+    "id": "boiler_deaerator_dissolved_oxygen_pitting",
+    "boiler_plant_id": "MAIN_WATER_TUBE_BOILER_01",
+    "dissolved_oxygen_ppb": 85.0,
+    "feedwater_ph": 9.2,
+    "sludge_blowdown_interval_hours": 8.0,
+    "timestamp_relative": "YEAR_03_BOILER_LOG_01",
+    "tags": ["steam_power", "boiler", "deaerator", "oxygen_pitting", "water_tube"],
+    "prose": "Clogged spray nozzles in the thermal deaerator dome failed to strip dissolved oxygen, leaving 85 ppb O2 in the boiler feedwater. Deep, hemispherical oxygen pits perforated three radiant water-wall tubes under high heat flux."
+  },
+  {
+    "id": "boiler_deaerator_sodium_sulfite_scavenger_depletion",
+    "boiler_plant_id": "AUXILIARY_COAL_FIRED_BOILER_03",
+    "dissolved_oxygen_ppb": 120.0,
+    "feedwater_ph": 8.4,
+    "sludge_blowdown_interval_hours": 12.0,
+    "timestamp_relative": "YEAR_05_BOILER_LOG_03",
+    "tags": ["steam_power", "boiler", "chemical_dosing", "sodium_sulfite", "oxygen_scavenger"],
+    "prose": "A crystallized diaphragm in the chemical metering pump halted sodium sulfite injection into the feedwater line. Residual oxygen passed un-scavenged into the economizer, converting smooth black magnetite protective passivating films into loose red rust."
+  },
+  {
+    "id": "boiler_deaerator_bottom_mud_drum_sludge_compaction",
+    "boiler_plant_id": "HIGH_PRESSURE_PACKAGE_BOILER_02",
+    "dissolved_oxygen_ppb": 15.0,
+    "feedwater_ph": 10.5,
+    "sludge_blowdown_interval_hours": 24.0,
+    "timestamp_relative": "YEAR_08_BOILER_LOG_02",
+    "tags": ["steam_power", "mud_drum", "blowdown", "calcium_phosphate", "sludge"],
+    "prose": "Skipping mandatory four-hour bottom blowdowns allowed soft hydroxyapatite sludge to bake into a rock-hard six-inch cake in the bottom mud drum. The solid sediment blocked the blowdown drain port, requiring boiler depressurization and mechanical rod reaming."
+  },
+  {
+    "id": "boiler_deaerator_caustic_gouging_under_deposit",
+    "boiler_plant_id": "DISTRICT_HEATING_STEAM_PLANT_04",
+    "dissolved_oxygen_ppb": 5.0,
+    "feedwater_ph": 11.8,
+    "sludge_blowdown_interval_hours": 6.0,
+    "timestamp_relative": "YEAR_11_BOILER_LOG_04",
+    "tags": ["steam_power", "caustic_gouging", "under_deposit", "tube_corrosion", "boiler"],
+    "prose": "Porous iron oxide boiler scale allowed boiler water to concentrate sodium hydroxide beneath the deposits to over 10,000 ppm. The caustic solution dissolved protective magnetite and gouged wide, horseshoe-shaped trenches into the boiler tube steel."
+  },
+  {
+    "id": "boiler_deaerator_carryover_foaming_high_tds",
+    "boiler_plant_id": "MAIN_WATER_TUBE_BOILER_01",
+    "dissolved_oxygen_ppb": 10.0,
+    "feedwater_ph": 10.8,
+    "sludge_blowdown_interval_hours": 16.0,
+    "timestamp_relative": "YEAR_14_BOILER_LOG_01",
+    "tags": ["steam_power", "foaming", "carryover", "tds", "water_hammer"],
+    "prose": "Total dissolved solids (TDS) in the steam drum climbed past 3,800 ppm due to restricted continuous surface blowdown. High surface tension induced violent boiler water foaming, carrying slugs of alkaline water over into the superheater and bursting drain valves."
+  },
+  {
+    "id": "boiler_deaerator_silica_volatilization_high_pressure",
+    "boiler_plant_id": "SUPERCRITICAL_RESEARCH_BOILER_01",
+    "dissolved_oxygen_ppb": 3.0,
+    "feedwater_ph": 9.5,
+    "sludge_blowdown_interval_hours": 4.0,
+    "timestamp_relative": "YEAR_17_BOILER_LOG_03",
+    "tags": ["steam_power", "silica_volatilization", "high_pressure", "steam_purity", "boiler"],
+    "prose": "At operating pressures above 65 bar, silicic acid selectively volatilized from boiler water into the vapor phase. The gaseous silica carried straight through mechanical steam separators, depositing as insoluble glassy quartz coatings across high-pressure turbine nozzles."
+  },
+  {
+    "id": "boiler_deaerator_economizer_acid_dewpoint_corrosion",
+    "boiler_plant_id": "COAL_FIRED_STOKER_BOILER_02",
+    "dissolved_oxygen_ppb": 20.0,
+    "feedwater_ph": 9.0,
+    "sludge_blowdown_interval_hours": 8.0,
+    "timestamp_relative": "YEAR_20_BOILER_LOG_01",
+    "tags": ["steam_power", "economizer", "acid_dewpoint", "sulfuric_acid", "cold_feedwater"],
+    "prose": "Feeding unheated 35°C well water into the boiler economizer chilled the outer tube surfaces below the 130°C sulfur trioxide acid dewpoint. Flue gas moisture reacted with SO3 to form concentrated sulfuric acid, dissolving the carbon steel finned tubes from the outside in."
+  }
+]

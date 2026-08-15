@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pendulum_thermal_invar_alloy_aging_drift",
+    "pendulum_assembly_id": "MASTER_INVAR_PENDULUM_01",
+    "rod_material_alloy": "INVAR_36_NICKEL_IRON_ALLOY",
+    "thermal_expansion_coefficient_ppm_k": 1.2,
+    "bob_mass_kg": 12.5,
+    "timestamp_relative": "YEAR_02_PENDULUM_01",
+    "tags": ["horology", "pendulum", "invar", "thermal_expansion", "aging_drift"],
+    "prose": "Natural metallurgical aging and carbon migration in the 36% nickel Invar pendulum rod caused an irreversible elongation of 0.85 microns per year. The gradual expansion lengthened the period, causing the master astronomical regulator to lose one second every forty days."
+  },
+  {
+    "id": "pendulum_thermal_zinc_steel_gridiron_mismatch",
+    "pendulum_assembly_id": "HARRISON_GRIDIRON_ASSEMBLY_03",
+    "rod_material_alloy": "NINE_ROD_ZINC_AND_STEEL_GRID",
+    "thermal_expansion_coefficient_ppm_k": 14.5,
+    "bob_mass_kg": 8.0,
+    "timestamp_relative": "YEAR_05_PENDULUM_03",
+    "tags": ["horology", "gridiron", "zinc_tube", "thermal_compensation", "friction"],
+    "prose": "Differential thermal expansion between the inner zinc tubes and outer steel rods caused binding at the lower guide yoke. When geothermal heat rose 6°C, the stuck zinc tube suddenly broke free with a loud snap, jumping clock error by two seconds."
+  },
+  {
+    "id": "pendulum_thermal_mercury_jar_temperature_compensation",
+    "pendulum_assembly_id": "GRAHAM_MERCURY_COMPENSATED_BOB",
+    "rod_material_alloy": "STEEL_ROD_WITH_TWIN_MERCURY_JARS",
+    "thermal_expansion_coefficient_ppm_k": 0.4,
+    "bob_mass_kg": 15.0,
+    "timestamp_relative": "YEAR_07_PENDULUM_02",
+    "tags": ["horology", "mercury_bob", "thermal_compensation", "center_of_gravity", "graham"],
+    "prose": "As seasonal temperature rose, the thermal expansion of twelve pounds of elemental mercury in twin glass cylinders rose upward. This precisely countered the downward lengthening of the steel suspension rod, keeping the center of oscillation within 0.05 microns."
+  },
+  {
+    "id": "pendulum_thermal_barometric_buoyancy_aneroid_capsule",
+    "pendulum_assembly_id": "BAROMETRIC_COMPENSATED_REGULATOR",
+    "rod_material_alloy": "SUPER_INVAR_ALLOY_ROD",
+    "thermal_expansion_coefficient_ppm_k": 0.6,
+    "bob_mass_kg": 10.0,
+    "timestamp_relative": "YEAR_10_PENDULUM_04",
+    "tags": ["horology", "barometric_error", "buoyancy", "aneroid_capsule", "air_density"],
+    "prose": "Atmospheric pressure surges from external fallout storm fronts changed ambient air density by 4%. The resulting change in pendulum bob air buoyancy shifted the daily clock rate by 0.35 seconds until an aneroid capsule weight lifter was mounted to the rod."
+  },
+  {
+    "id": "pendulum_thermal_earthquake_seismic_shock_trip",
+    "pendulum_assembly_id": "SEISMIC_ISOLATED_VAULT_CLOCK",
+    "rod_material_alloy": "QUARTZ_GLASS_TUBULAR_ROD",
+    "thermal_expansion_coefficient_ppm_k": 0.5,
+    "bob_mass_kg": 6.5,
+    "timestamp_relative": "YEAR_13_PENDULUM_01",
+    "tags": ["horology", "seismic_shock", "agate_bearing", "knife_edge", "pendulum_trip"],
+    "prose": "A minor subterranean rockburst (magnitude 2.8) transmitted shear waves up the masonry pier. The ground acceleration threw the agate knife-edge pendulum pivot off its V-groove bearing block, causing the 6.5-kg bob to crash into the safety catch."
+  },
+  {
+    "id": "pendulum_thermal_vacuum_tank_hermetic_seal_leak",
+    "pendulum_assembly_id": "RIEFLER_VACUUM_CHAMBER_CLOCK",
+    "rod_material_alloy": "INVAR_ROD_IN_20MM_VACUUM_TANK",
+    "thermal_expansion_coefficient_ppm_k": 0.9,
+    "bob_mass_kg": 11.0,
+    "timestamp_relative": "YEAR_16_PENDULUM_03",
+    "tags": ["horology", "vacuum_tank", "aerodynamic_drag", "riefler", "gasket_leak"],
+    "prose": "O-ring gasket degradation on the copper vacuum cylinder allowed chamber pressure to rise from 20 mmHg to 180 mmHg. Increased aerodynamic air drag against the cylindrical bob reduced pendulum Q-factor from 65,000 to 18,000, increasing energy loss per beat."
+  },
+  {
+    "id": "pendulum_thermal_invar_braze_joint_corrosion",
+    "pendulum_assembly_id": "STORAGE_VAULT_SYNCHRONIZER_02",
+    "rod_material_alloy": "INVAR_WITH_SILVER_SOLDERED_ENDS",
+    "thermal_expansion_coefficient_ppm_k": 1.5,
+    "bob_mass_kg": 9.5,
+    "timestamp_relative": "YEAR_18_PENDULUM_02",
+    "tags": ["horology", "invar", "galvanic_corrosion", "braze_joint", "rating_error"],
+    "prose": "Condensation pooling around the silver-soldered brass end-fitting of the Invar rod set up a localized galvanic cell. Dezincification weakened the threaded rod joint, causing the heavy bob to slip down half a thread and retarding the clock 18 seconds."
+  },
+  {
+    "id": "pendulum_thermal_q_factor_amplitude_arc_error",
+    "pendulum_assembly_id": "PRECISION_ASTRONOMICAL_CLOCK",
+    "rod_material_alloy": "CARBON_FIBER_COMPOSITE_CORE",
+    "thermal_expansion_coefficient_ppm_k": 0.2,
+    "bob_mass_kg": 7.0,
+    "timestamp_relative": "YEAR_20_PENDULUM_01",
+    "tags": ["horology", "circular_error", "arc_amplitude", "q_factor", "dust_drag"],
+    "prose": "Microscopic mineral dust accumulating across the lens-shaped pendulum bob increased surface friction. Pendulum swing arc decayed from 2.2° to 1.8°, altering circular error geometry and accelerating clock rate by 0.6 seconds per day."
+  }
+]

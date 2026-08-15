@@ -29,6 +29,14 @@ namespace Ashfall.Core.Verdict
         public bool offerIsLease;          // DISCHARGE chosen
         public int enrolledEvidence;
         public int driftDays = 3;          // the machine's clock disagrees with the wars' by 3 days
+        // Chain 1 (Survivor drift / housing-collapse): count of dwellings that
+        // did not answer census. Distinct from the lore evidence ledger.
+        public int dwellingDriftTotal;     // running count of lost/withdrew/drifted/yielded dwellings
+        public int lastDriftDay = -1;
+        public int lastDriftDeltaToday;    // delta applied on lastDriftDay
+        // Chain 3 (Survivor cumulative dose triggers Reckoning): aggregate Sv.
+        public float cumulativeDoseSieverts;
+        public bool highDosePromoted;      // one-shot auto-promote past Knowing from dose
     }
 
     /// <summary>
@@ -44,6 +52,13 @@ namespace Ashfall.Core.Verdict
         public const int CountedDay = 240;
         public const int EvidenceCulpableGate = 1;   // at least one read entry to open CULPABLE early is allowed
         public const int ExpectedProvincialCount = 211004;
+        // Chain 3 doctrine threshold: aggregate dose that forces Reckoning to
+        // acknowledge early (CANON §Verdict doctrine §Meter). Crossing this
+        // promotes Dormant → Knowing regardless of day. One-shot.
+        public const float HighDoseKnowingThresholdSieverts = 4.0f;
+        // Chain 3 secondary threshold: at this dose the phase must already be
+        // Knowing or deeper; surviving dwellings cannot be a quiet majority.
+        public const float HighDoseCulpableFloorSieverts = 8.0f;
 
         private readonly ReckoningState _state;
 
@@ -149,7 +164,12 @@ namespace Ashfall.Core.Verdict
                 countHeld = _state.countHeld,
                 offerIsLease = _state.offerIsLease,
                 enrolledEvidence = _state.enrolledEvidence,
-                driftDays = _state.driftDays
+                driftDays = _state.driftDays,
+                dwellingDriftTotal = _state.dwellingDriftTotal,
+                lastDriftDay = _state.lastDriftDay,
+                lastDriftDeltaToday = _state.lastDriftDeltaToday,
+                cumulativeDoseSieverts = _state.cumulativeDoseSieverts,
+                highDosePromoted = _state.highDosePromoted
             };
         }
 
@@ -165,6 +185,11 @@ namespace Ashfall.Core.Verdict
             _state.offerIsLease = state.offerIsLease;
             _state.enrolledEvidence = state.enrolledEvidence;
             _state.driftDays = state.driftDays > 0 ? state.driftDays : 3;
+            _state.dwellingDriftTotal = state.dwellingDriftTotal;
+            _state.lastDriftDay = state.lastDriftDay;
+            _state.lastDriftDeltaToday = state.lastDriftDeltaToday;
+            _state.cumulativeDoseSieverts = state.cumulativeDoseSieverts < 0f ? 0f : state.cumulativeDoseSieverts;
+            _state.highDosePromoted = state.highDosePromoted;
         }
 
         private void SetPhase(int day, ReckoningPhase to, System.Collections.Generic.List<string> fired)
@@ -174,5 +199,65 @@ namespace Ashfall.Core.Verdict
             OnPhaseChanged?.Invoke(to);
             fired.Add("phase_" + to.ToString().ToLowerInvariant());
         }
+
+        // ── Phase 6.D Chains 1 + 3: Verdict systemic hazards ──────────────
+
+        /// <summary>
+        /// Chain 1 (Census / Human Cost). Records a today-vs-yesterday delta of
+        /// dwellings that did not answer — `count` is the number of survivors
+        /// who dropped out of coverage today. Multiple deltas on the same day
+        /// are summed; never negative; total grows monotonically.
+        /// </summary>
+        public void RecordDrift(int day, int count)
+        {
+            if (count <= 0) return;
+            if (_state.lastDriftDay == day)
+            {
+                _state.lastDriftDeltaToday += count;
+            }
+            else
+            {
+                _state.lastDriftDay = day;
+                _state.lastDriftDeltaToday = count;
+            }
+            _state.dwellingDriftTotal += count;
+        }
+
+        /// <summary>
+        /// Chain 3 (Survival Reckoning). Today's aggregate dose in sieverts; if
+        /// the cross-threshold has not been recorded yet AND cumulative dose
+        /// crosses the doctrine limit, promotes Dormant → Knowing regardless
+        /// of day. Idempotent across ticks: once <see cref="ReckoningState.highDosePromoted"/>
+        /// is true, this method never re-promotes. The phase floor for
+        /// <see cref="HighDoseCulpableFloorSieverts"/> is enforced after this
+        /// method returns by whoever holds the host clock.
+        /// </summary>
+        public void RecordCumulativeDose(int day, float sieverts)
+        {
+            if (sieverts < 0f) sieverts = 0f;
+            _state.cumulativeDoseSieverts = sieverts;
+            if (!_state.highDosePromoted
+                && _state.cumulativeDoseSieverts >= HighDoseKnowingThresholdSieverts)
+            {
+                _state.highDosePromoted = true;
+                if (_state.phase == ReckoningPhase.Dormant)
+                {
+                    SetPhase(day, ReckoningPhase.Knowing, _emptyFired);
+                }
+            }
+        }
+
+        private static readonly System.Collections.Generic.List<string> _emptyFired =
+            new System.Collections.Generic.List<string>(0);
+
+        /// <summary>
+        /// Read-only access to the running dwelling drift count (Chain 1
+        /// readout line). Distinct from <see cref="ReckoningState.enrolledEvidence"/>.
+        /// </summary>
+        public int DwellingDriftTotal => _state.dwellingDriftTotal;
+        public int LastDriftDeltaToday => _state.lastDriftDeltaToday;
+        public int LastDriftDay => _state.lastDriftDay;
+        public float CumulativeDoseSieverts => _state.cumulativeDoseSieverts;
+        public bool HighDosePromoted => _state.highDosePromoted;
     }
 }

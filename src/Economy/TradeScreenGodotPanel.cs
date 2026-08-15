@@ -526,7 +526,7 @@ namespace AtomicWar.GodotApp.Economy
 
             // 1. Update Header Fields
             _lblFactionName.Text = $"FACTION: {_activeFactionId.ToUpper().Replace('_', ' ')}";
-            _textureFactionEmblem.Texture = LoadTexture($"res://Assets/UI/Icons/faction_icon_{_activeFactionId}.png");
+            _textureFactionEmblem.Texture = AtomicWar.GodotApp.FactionIconLoader.LoadFor(_activeFactionId);
 
             float trust = _stanceProvider?.GetEffectiveTrust(_activeFactionId) ?? 0f;
             var stance = _stanceProvider?.GetStance(_activeFactionId) ?? TradeStance.Trade;
@@ -587,7 +587,7 @@ namespace AtomicWar.GodotApp.Economy
             _lblFactionName.Text = vm.FactionName.Length > 0
                 ? $"FACTION: {vm.FactionName.ToUpperInvariant()}"
                 : "FACTION: —";
-            _textureFactionEmblem.Texture = LoadTexture($"res://Assets/UI/Icons/faction_icon_{vm.FactionId}.png");
+            _textureFactionEmblem.Texture = AtomicWar.GodotApp.FactionIconLoader.LoadFor(vm.FactionId);
             _lblLeader.Text = $"Leader: {vm.LeaderName} (gen {vm.SuccessionGeneration})";
             _badgeStance.Text = vm.StanceBadgeText;
             _badgeStance.AddThemeColorOverride("font_color", GetStanceColor(vm.Stance));

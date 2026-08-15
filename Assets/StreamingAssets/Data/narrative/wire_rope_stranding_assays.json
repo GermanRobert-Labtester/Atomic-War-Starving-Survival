@@ -1,0 +1,82 @@
+[
+  {
+    "id": "wire_rope_6x19_seale_construction_fatigue",
+    "cable_spool_identifier": "HOIST_SHAFT_MAIN_CABLE_01",
+    "wire_rope_construction": "6X19_SEALE_INDEPENDENT_WIRE_CORE",
+    "nominal_diameter_mm": 28.0,
+    "breaking_strength_metric_tons": 54.0,
+    "timestamp_relative": "YEAR_02_WIRE_LOG_01",
+    "tags": ["cordage", "wire_rope", "seale_construction", "mine_hoist", "hoist_cable"],
+    "prose": "Closing six outer strands of nine large wires over nine small inner wires around an independent steel core produced a 28mm Seale rope. The large outer wires resisted brutal abrasion against manganese steel headframe sheaves while sustaining 54 tons ultimate tension."
+  },
+  {
+    "id": "wire_rope_sisal_fiber_core_dryout_corrosion",
+    "cable_spool_identifier": "SLOPE_HAULAGE_TRAMWAY_CABLE",
+    "wire_rope_construction": "6X7_HAULAGE_ROPE_SISAL_CORE",
+    "nominal_diameter_mm": 22.0,
+    "breaking_strength_metric_tons": 26.5,
+    "timestamp_relative": "YEAR_05_WIRE_LOG_03",
+    "tags": ["cordage", "wire_rope", "fiber_core", "internal_corrosion", "core_dryout"],
+    "prose": "Failure to pressure-lubricate the 22mm haulage cable allowed the saturated petroleum grease in the sisal fiber core to evaporate. The dried fiber acted as a sponge for acidic tunnel condensation, rusting the interior strand valleys while the exterior appeared clean."
+  },
+  {
+    "id": "wire_rope_lang_lay_sheave_scrubbing_wear",
+    "cable_spool_identifier": "HIGH_SPEED_PERSONNEL_CAGE_ROPE",
+    "wire_rope_construction": "6X25_FILLER_WIRE_LANGS_LAY",
+    "nominal_diameter_mm": 32.0,
+    "breaking_strength_metric_tons": 72.0,
+    "timestamp_relative": "YEAR_07_WIRE_LOG_02",
+    "tags": ["cordage", "wire_rope", "langs_lay", "sheave_wear", "personnel_hoist"],
+    "prose": "Laying both the wires in the strands and the strands in the rope in the same direction (Lang's lay) distributed sheave contact across longer elliptical wire crowns. Outer wire wear decreased by 40%, eliminating the crown flatting common in regular lay cables."
+  },
+  {
+    "id": "wire_rope_birdcaging_torsional_shock_load",
+    "cable_spool_identifier": "HEAVY_CARGO_CRANE_BOOM_LINE",
+    "wire_rope_construction": "18X7_NON_ROTATING_MULTI_STRAND",
+    "nominal_diameter_mm": 19.0,
+    "breaking_strength_metric_tons": 21.0,
+    "timestamp_relative": "YEAR_10_WIRE_LOG_04",
+    "tags": ["cordage", "wire_rope", "birdcaging", "shock_load", "torsional_twist"],
+    "prose": "A sudden mechanical winch brake grab while lowering a 10-ton diesel engine induced violent torsional recoil. Outer counter-wound strands uncoiled and expanded into an irreversible, ballooned 'birdcage' basket, permanently ruining the 19mm non-rotating line."
+  },
+  {
+    "id": "wire_rope_socketing_molten_zinc_spelter_cone",
+    "cable_spool_identifier": "TERMINAL_DEAD_END_SOCKET_BAY",
+    "wire_rope_construction": "HIGH_PURITY_MOLTEN_ZINC_POUR",
+    "nominal_diameter_mm": 36.0,
+    "breaking_strength_metric_tons": 88.0,
+    "timestamp_relative": "YEAR_13_WIRE_LOG_01",
+    "tags": ["cordage", "socketing", "zinc_spelter", "terminal_end", "cone_anchor"],
+    "prose": "Broaching and acid-cleaning the frayed 'broomed' wire ends of a 36mm hoist rope inside a forged conical socket followed by a 450°C pure molten zinc pour created a solid metal matrix. Pull tests confirmed 100% breaking efficiency without wire slippage."
+  },
+  {
+    "id": "wire_rope_crown_wire_break_discard_criteria",
+    "cable_spool_identifier": "BLAST_DOOR_COUNTERWEIGHT_CABLE",
+    "wire_rope_construction": "6X36_WARP_FLEXIBLE_CABLE",
+    "nominal_diameter_mm": 25.0,
+    "breaking_strength_metric_tons": 45.0,
+    "timestamp_relative": "YEAR_16_WIRE_LOG_03",
+    "tags": ["cordage", "wire_rope", "wire_breaks", "discard_criteria", "safety_inspection"],
+    "prose": "Visual and magnetic NDT inspection detected fourteen broken crown wires within a single six-diameter lay length (150mm). The fatigue fractures exceeded statutory safety limits; the counterweight cable was immediately condemned and retired."
+  },
+  {
+    "id": "wire_rope_synthetic_polypropylene_core_crush",
+    "cable_spool_identifier": "AUXILIARY_WINCH_DRUM_LINE",
+    "wire_rope_construction": "6X19_POLYPROPYLENE_CORE_ROPE",
+    "nominal_diameter_mm": 16.0,
+    "breaking_strength_metric_tons": 14.5,
+    "timestamp_relative": "YEAR_18_WIRE_LOG_02",
+    "tags": ["cordage", "wire_rope", "core_crush", "synthetic_core", "drum_crush"],
+    "prose": "High radial squeezing under four layers of tight winch drum spooling crushed the soft polypropylene synthetic core. The steel outer strands collapsed inward into a flattened oval cross-section, causing severe strand pinching and rapid inter-wire nicking."
+  },
+  {
+    "id": "wire_rope_galvanized_zinc_coating_acid_mine_strip",
+    "cable_spool_identifier": "DEEP_DRAINAGE_SUMP_PUMP_LIFTER",
+    "wire_rope_construction": "HOT_DIP_GALVANIZED_PLOW_STEEL",
+    "nominal_diameter_mm": 20.0,
+    "breaking_strength_metric_tons": 24.0,
+    "timestamp_relative": "YEAR_20_WIRE_LOG_01",
+    "tags": ["cordage", "wire_rope", "galvanizing", "acid_drainage", "zinc_strip"],
+    "prose": "Acidic geothermal mine runoff (pH 2.8) chemically dissolved the 40-micron hot-dip galvanized zinc coating from the sump pump lifting cable in four months. The unprotected high-carbon plow steel developed pitting corrosion that reduced breaking strength by 35%."
+  }
+]

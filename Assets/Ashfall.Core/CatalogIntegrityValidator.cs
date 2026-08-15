@@ -96,7 +96,12 @@ namespace Ashfall.Core
             "ammonia_chiller_", "pickling_spoil_", "cellar_rot_", "smokehouse_assay_",
             "lime_kiln_", "pozzolan_mortar_", "firebrick_spall_", "mudbrick_assay_",
             "glass_melt_", "condenser_fracture_", "joint_grease_", "annealing_lehr_",
-            "oak_bark_tan_", "mineral_tan_", "rawhide_bate_", "leather_harness_"
+            "oak_bark_tan_", "mineral_tan_", "rawhide_bate_", "leather_harness_",
+            "steam_well_", "turbine_blade_", "boiler_deaerator_", "steam_trap_",
+            "escapement_wear_", "pendulum_thermal_", "mainspring_fatigue_", "clepsydra_silt_",
+            "hemp_fiber_", "wire_rope_", "manila_hawser_", "rope_transmission_",
+            "timber_creosote_", "square_set_", "dry_rot_", "mortise_tenon_",
+            "crucible_slag_", "cupola_melting_", "pattern_maker_", "green_sand_"
         };
 
         /// <summary>
@@ -217,7 +222,19 @@ namespace Ashfall.Core
             "lubricant_compound_used", "failure_outcome", "lehr_furnace_id", "annealed_glass_article",
             "tannery_vat_id", "bark_source_botanical", "mineral_tan_liquor_id", "mineral_tanning_agent",
             "beamhouse_pit_id", "deliming_chemical_agent", "phenolphthalein_test_status",
-            "currying_workshop_id", "fatliquor_compound_formula"
+            "currying_workshop_id", "fatliquor_compound_formula",
+            "wellhead_designation", "turbine_unit_identifier", "boiler_plant_id",
+            "steam_distribution_bay_id", "trap_mechanism_type",
+            "clock_mechanism_id", "escapement_type", "pendulum_assembly_id", "rod_material_alloy",
+            "spring_barrel_id", "spring_alloy_type", "clepsydra_station_id", "orifice_material_type",
+            "retting_floor_id", "raw_stalk_crop_origin", "cable_spool_identifier", "wire_rope_construction",
+            "hawser_coil_id", "fiber_botanical_origin", "drive_line_shaft_id", "rope_drive_system",
+            "treatment_retort_id", "wood_species_treated", "stope_location_id", "timber_framing_system",
+            "infestation_site_id", "fungal_species_identified", "framing_assembly_id", "joint_geometry_type",
+            "peg_material_species",
+            "crucible_pot_id", "crucible_lining_formula", "cupola_furnace_id", "coke_to_iron_charge_ratio",
+            "pattern_shop_job_id", "timber_pattern_material", "shrinkage_allowance_fraction",
+            "sand_muller_batch_id", "clay_binder_type"
         };
 
         /// <summary>

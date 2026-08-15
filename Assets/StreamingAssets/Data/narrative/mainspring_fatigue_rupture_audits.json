@@ -1,0 +1,72 @@
+[
+  {
+    "id": "mainspring_fatigue_micro_crack_arbor_eye_snap",
+    "spring_barrel_id": "MARINE_CHRONOMETER_BARREL_01",
+    "spring_alloy_type": "HIGH_CARBON_BLUE_TEMPERED_STEEL",
+    "full_windup_torque_nm": 4.8,
+    "failure_cycle_count": 1850,
+    "timestamp_relative": "YEAR_03_SPRING_LOG_01",
+    "tags": ["horology", "mainspring", "arbor_eye", "fatigue_snap", "chronometer"],
+    "prose": "Cyclic winding stress concentrated at the punched inner hook eye of the blue-tempered steel mainspring. The inner coil snapped clean across the arbor hole under full wind, instantly cutting motive power to the expedition marine chronometer."
+  },
+  {
+    "id": "mainspring_fatigue_set_deformation_torque_loss",
+    "spring_barrel_id": "BUNKER_POCKET_WATCH_UNIT_14",
+    "spring_alloy_type": "UNALLOYED_CARBON_SPRING_STRIP",
+    "full_windup_torque_nm": 0.8,
+    "failure_cycle_count": 3200,
+    "timestamp_relative": "YEAR_05_SPRING_LOG_03",
+    "tags": ["horology", "mainspring", "spring_set", "torque_loss", "power_reserve"],
+    "prose": "Repeated over-winding without intermediate letdown caused plastic deformation, known as taking a 'set.' The spring lost its outward convex curve, reducing running reserve from forty hours down to a meager eighteen hours."
+  },
+  {
+    "id": "mainspring_fatigue_explosive_unwind_gear_tooth_strip",
+    "spring_barrel_id": "EIGHT_DAY_WALL_CLOCK_BARREL_02",
+    "spring_alloy_type": "HIGH_TENSILE_CR_V_SPRING_STEEL",
+    "full_windup_torque_nm": 12.5,
+    "failure_cycle_count": 850,
+    "timestamp_relative": "YEAR_08_SPRING_LOG_02",
+    "tags": ["horology", "mainspring", "explosive_rupture", "gear_strip", "barrel"],
+    "prose": "Brittle fracture in the outer coil of the 12.5 Nm wall clock mainspring released its full energy in five milliseconds. The explosive shock wave shattered the internal barrel teeth and sheared six teeth off the mating second-wheel pinion."
+  },
+  {
+    "id": "mainspring_fatigue_s_shaped_reverse_curve_stress",
+    "spring_alloy_type": "NIVAFLEX_COBALT_NICKEL_ALLOY",
+    "spring_barrel_id": "PRECISION_PORTABLE_REGULATOR",
+    "full_windup_torque_nm": 2.2,
+    "failure_cycle_count": 4500,
+    "timestamp_relative": "YEAR_11_SPRING_LOG_04",
+    "tags": ["horology", "nivaflex", "reverse_curve", "micro_tears", "constant_torque"],
+    "prose": "Extreme tensile bending in the S-shaped reverse-curved Nivaflex spring caused sub-surface micro-void delamination. The spring developed localized kinks that rubbed against the barrel lid, generating severe torque fluctuations across the winding curve."
+  },
+  {
+    "id": "mainspring_fatigue_fusee_chain_link_rupture",
+    "spring_barrel_id": "HARRISON_FUSEE_CHRONOMETER_02",
+    "spring_alloy_type": "SWISS_STEEL_MICRO_FUSEE_CHAIN",
+    "full_windup_torque_nm": 6.0,
+    "failure_cycle_count": 1200,
+    "timestamp_relative": "YEAR_14_SPRING_LOG_01",
+    "tags": ["horology", "fusee_chain", "link_snap", "chain_rupture", "torque_equalizer"],
+    "prose": "A worn 0.8mm steel rivet in the miniature three-piece fusee chain sheared under maximum windup tension. The snapped chain whipped violently into the maintaining power ratchet, bending the spring arbor and gouging the grooved brass conical fusee."
+  },
+  {
+    "id": "mainspring_fatigue_stopwork_maltese_cross_jam",
+    "spring_barrel_id": "SECTOR_CHIEF_OFFICE_CLOCK",
+    "spring_alloy_type": "GENEVA_MALTESE_STOPWORK_DRUM",
+    "full_windup_torque_nm": 3.5,
+    "failure_cycle_count": 2100,
+    "timestamp_relative": "YEAR_17_SPRING_LOG_03",
+    "tags": ["horology", "geneva_stopwork", "maltese_cross", "arbor_jam", "winding"],
+    "prose": "Dirt in the Maltese cross cutout prevented the stop finger from rotating freely into the four-tooth star wheel. The mechanism jammed prematurely on the second winding turn, causing an orderly to force the key and twist off the square winding arbor."
+  },
+  {
+    "id": "mainspring_fatigue_graphite_tallow_spring_lube_dryout",
+    "spring_barrel_id": "HEAVY_TURRET_STRIKING_BARREL",
+    "spring_alloy_type": "TEMPERED_SWEDISH_SPRING_BAND",
+    "full_windup_torque_nm": 28.0,
+    "failure_cycle_count": 600,
+    "timestamp_relative": "YEAR_20_SPRING_LOG_01",
+    "tags": ["horology", "spring_lube", "graphite", "coil_binding", "jumping"],
+    "prose": "Desiccation of the mutton tallow carrier left dry flake graphite packed between the heavy 28 Nm spring coils. Inter-coil friction caused the spring to bind and release in loud, violent 'knocking' jumps, transmitting brutal shocks down the entire gear train."
+  }
+]

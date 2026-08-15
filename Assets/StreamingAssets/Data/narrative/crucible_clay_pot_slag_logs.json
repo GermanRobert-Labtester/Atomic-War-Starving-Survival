@@ -1,0 +1,82 @@
+[
+  {
+    "id": "crucible_slag_plumbago_graphite_wall_wash",
+    "crucible_pot_id": "STOURBRIDGE_GRAPHITE_POT_01",
+    "crucible_lining_formula": "60_PERCENT_PLUMBAGO_40_PERCENT_FIRECLAY",
+    "melt_temperature_celsius": 1580.0,
+    "slag_erosion_depth_mm": 14.5,
+    "timestamp_relative": "YEAR_02_FOUNDRY_LOG_01",
+    "tags": ["foundry", "crucible", "huntsman_steel", "plumbago", "slag_erosion"],
+    "prose": "Melting 50 lbs of high-carbon blister steel sheared from converted iron bars at 1,580°C washed away 14.5mm of the plumbago pot wall at the slag line. The molten iron silicate slag rapidly dissolved graphite flakes, leaving a paper-thin clay shell."
+  },
+  {
+    "id": "crucible_slag_manganese_dioxide_flux_corrosion",
+    "crucible_pot_id": "DERBYSHIRE_CLAY_CRUCIBLE_03",
+    "crucible_lining_formula": "DERBYSHIRE_ALUMINA_FIRECLAY",
+    "melt_temperature_celsius": 1620.0,
+    "slag_erosion_depth_mm": 22.0,
+    "timestamp_relative": "YEAR_04_FOUNDRY_LOG_03",
+    "tags": ["foundry", "crucible", "pyrolusite", "manganese_flux", "chemical_attack"],
+    "prose": "Adding 1.5% pulverized pyrolusite (MnO2) as a deoxidizing flux created a highly basic, aggressive manganese silicate slag. The basic fluid chemically attacked the acidic silica fireclay lining, cutting a deep horizontal gutter into the crucible belly."
+  },
+  {
+    "id": "crucible_slag_coke_hole_draft_temperature_surge",
+    "crucible_pot_id": "MELTING_HOLE_FURNACE_04",
+    "crucible_lining_formula": "GRAPHITE_SILICON_CARBIDE_BOND",
+    "melt_temperature_celsius": 1680.0,
+    "slag_erosion_depth_mm": 8.0,
+    "timestamp_relative": "YEAR_07_FOUNDRY_LOG_02",
+    "tags": ["foundry", "coke_hole", "temperature_surge", "pot_subsidence", "refractory_stand"],
+    "prose": "Excess chimney draft boosted coke furnace temperature past 1,680°C. The intense thermal surge softened the fireclay pot base, causing the 60-lb crucible to sag and fuse onto its cylindrical refractory stand, preventing removal by tongs."
+  },
+  {
+    "id": "crucible_slag_silicon_reduction_acid_lining",
+    "crucible_pot_id": "SHEFFIELD_WHITE_POT_02",
+    "crucible_lining_formula": "HIGH_PURITY_SILICA_FIRECLAY",
+    "melt_temperature_celsius": 1560.0,
+    "slag_erosion_depth_mm": 5.0,
+    "timestamp_relative": "YEAR_09_FOUNDRY_LOG_04",
+    "tags": ["foundry", "crucible", "silicon_reduction", "acid_refractory", "tool_steel"],
+    "prose": "Carbon in the liquid steel bath reduced silica (SiO2) from the white clay crucible walls directly into elemental silicon. The 0.35% silicon pickup deoxidized the melt completely, yielding sound, pore-free tool steel ingots suitable for metalworking chisels."
+  },
+  {
+    "id": "crucible_slag_tongs_clamping_fracture_teeming",
+    "crucible_pot_id": "TEEMING_PIT_CRUCIBLE_01",
+    "crucible_lining_formula": "PRESSED_NATURAL_CLAY_POT",
+    "melt_temperature_celsius": 1540.0,
+    "slag_erosion_depth_mm": 18.0,
+    "timestamp_relative": "YEAR_12_FOUNDRY_LOG_01",
+    "tags": ["foundry", "tongs", "clamping_fracture", "teeming_accident", "spill_hazard"],
+    "prose": "As the puller-out hoisted the white-hot crucible from the melting hole, worn curved tong jaws exerted point pressure against a slag-eroded thin spot. The pot split in half mid-air, dumping forty pounds of liquid steel into the pit ash grate."
+  },
+  {
+    "id": "crucible_slag_killing_time_gas_evolution_quiet",
+    "crucible_pot_id": "MASTER_MELTER_BENCH_POT",
+    "crucible_lining_formula": "ZIRCON_GRAPHITE_COMPOSITE",
+    "melt_temperature_celsius": 1590.0,
+    "slag_erosion_depth_mm": 3.5,
+    "timestamp_relative": "YEAR_15_FOUNDRY_LOG_03",
+    "tags": ["foundry", "killing_time", "degassing", "quiescent_melt", "sound_ingot"],
+    "prose": "Holding the molten steel at 1,590°C for thirty minutes of 'killing' allowed all dissolved carbon monoxide and nitrogen gas bubbles to rise to the slag surface. The completely quiescent, glassy bath teemed without sparking or mushrooming in the ingot mold."
+  },
+  {
+    "id": "crucible_slag_zirconia_washcoat_erosion_barrier",
+    "crucible_pot_id": "EXTENDED_LIFE_CRUCIBLE_02",
+    "crucible_lining_formula": "MICRONIZED_ZIRCONIA_SLIP_COAT",
+    "melt_temperature_celsius": 1600.0,
+    "slag_erosion_depth_mm": 1.2,
+    "timestamp_relative": "YEAR_17_FOUNDRY_LOG_02",
+    "tags": ["foundry", "zirconia", "washcoat", "erosion_barrier", "pot_longevity"],
+    "prose": "Painting the inside of reclaimed graphite crucibles with two coats of micronized zirconium silicate slurry created an inert chemical shield. Slag corrosion depth was held to 1.2mm across four consecutive heats, tripling crucible working life."
+  },
+  {
+    "id": "crucible_slag_ingot_pipe_shrinkage_hot_top",
+    "crucible_pot_id": "TOOL_INGOT_CASTING_FLOOR",
+    "crucible_lining_formula": "PRE_HEATED_REFRACTORY_DOZZLE",
+    "melt_temperature_celsius": 1520.0,
+    "slag_erosion_depth_mm": 0.0,
+    "timestamp_relative": "YEAR_20_FOUNDRY_LOG_01",
+    "tags": ["foundry", "hot_top", "dozzle", "shrinkage_pipe", "sound_billet"],
+    "prose": "Fitting a red-hot insulating clay dozzle atop the cast-iron ingot mold provided a liquid metal reservoir during solid-state volumetric shrinkage. The secondary feeder eliminated the deep central shrinkage pipe, yielding 92% usable forged billet length."
+  }
+]

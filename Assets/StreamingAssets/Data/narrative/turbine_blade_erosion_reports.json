@@ -1,0 +1,82 @@
+[
+  {
+    "id": "turbine_blade_last_stage_water_droplet_erosion",
+    "turbine_unit_identifier": "TURBINE_GENERATOR_SET_01",
+    "rotor_speed_rpm": 3000.0,
+    "steam_wetness_fraction_pct": 11.5,
+    "blade_stage_number": 8,
+    "timestamp_relative": "YEAR_02_TURBINE_LOG_01",
+    "tags": ["steam_power", "turbine", "blade_erosion", "wet_steam", "generator"],
+    "prose": "Supersonic water droplets (600 m/s) striking the leading edges of the 8th-stage low-pressure turbine blades gouged deep serrations into the 12% chrome stainless steel. Blade weight loss caused progressive dynamic rotor unbalance."
+  },
+  {
+    "id": "turbine_blade_stellite_shield_braze_delamination",
+    "turbine_unit_identifier": "TURBINE_GENERATOR_SET_02",
+    "rotor_speed_rpm": 3600.0,
+    "steam_wetness_fraction_pct": 9.0,
+    "blade_stage_number": 7,
+    "timestamp_relative": "YEAR_05_TURBINE_LOG_03",
+    "tags": ["steam_power", "stellite_shield", "braze_failure", "blade_tip", "vibration"],
+    "prose": "Cyclic centrifugal and aerodynamic fluttering sheared the silver-braze bond on a cobalt Stellite erosion strip. The four-inch hard alloy shield tore free at 3,600 RPM, ricocheting through the exhaust casing and chewing adjacent stationary nozzle vanes."
+  },
+  {
+    "id": "turbine_blade_governor_hunting_frequency_surge",
+    "turbine_unit_identifier": "AUXILIARY_HOUSE_TURBINE_03",
+    "rotor_speed_rpm": 3000.0,
+    "steam_wetness_fraction_pct": 2.0,
+    "blade_stage_number": 1,
+    "timestamp_relative": "YEAR_08_TURBINE_LOG_02",
+    "tags": ["steam_power", "governor", "hunting", "grid_frequency", "speed_control"],
+    "prose": "Mechanical wear in the flyweight governor fulcrum pins introduced excessive control deadband. Steam throttle valves oscillated between 20% and 80% open, sending the micro-grid frequency into wild 47 to 54 Hertz power surges."
+  },
+  {
+    "id": "turbine_blade_labyrinth_gland_steam_leakage",
+    "turbine_unit_identifier": "MAIN_BASELOAD_TURBINE_01",
+    "rotor_speed_rpm": 3000.0,
+    "steam_wetness_fraction_pct": 0.0,
+    "blade_stage_number": 0,
+    "timestamp_relative": "YEAR_11_TURBINE_LOG_04",
+    "tags": ["steam_power", "labyrinth_seal", "gland_steam", "bearing_oil", "water_in_oil"],
+    "prose": "Worn brass labyrinth seal teeth on the high-pressure shaft gland allowed steam to escape directly into Bearing Pedestal #1. The condensate emulsified the turbine lubrication oil into creamy white froth, triggering high bearing temperature alarms."
+  },
+  {
+    "id": "turbine_blade_rotor_differential_expansion_rub",
+    "turbine_unit_identifier": "RAPID_START_PEAKING_TURBINE",
+    "rotor_speed_rpm": 3000.0,
+    "steam_wetness_fraction_pct": 1.0,
+    "blade_stage_number": 4,
+    "timestamp_relative": "YEAR_14_TURBINE_LOG_01",
+    "tags": ["steam_power", "differential_expansion", "rotor_rub", "thermal_growth", "casing"],
+    "prose": "Admitting full steam before the heavy cast-steel turbine casing reached thermal equilibrium caused the rotor to expand longitudinally 4mm faster than the shell. Blade shroud bands rubbed against stationary diaphragm faces, generating loud screeching and heavy spark showers."
+  },
+  {
+    "id": "turbine_blade_sodium_chloride_stress_corrosion_pit",
+    "turbine_unit_identifier": "GEOTHERMAL_CONDENSING_TURBINE_02",
+    "rotor_speed_rpm": 3000.0,
+    "steam_wetness_fraction_pct": 4.5,
+    "blade_stage_number": 5,
+    "timestamp_relative": "YEAR_16_TURBINE_LOG_03",
+    "tags": ["steam_power", "stress_corrosion", "blade_root", "fir_tree_root", "chloride"],
+    "prose": "Microscopic salt carryover in saturated steam deposited concentrated sodium chloride in the Wilson line moisture transition zone. Pitting corrosion at the root of a fir-tree blade fastening initiated a fatigue crack that split the blade root in half."
+  },
+  {
+    "id": "turbine_blade_turning_gear_thermal_bow_seize",
+    "turbine_unit_identifier": "MAIN_BASELOAD_TURBINE_01",
+    "rotor_speed_rpm": 0.0,
+    "steam_wetness_fraction_pct": 0.0,
+    "blade_stage_number": 0,
+    "timestamp_relative": "YEAR_18_TURBINE_LOG_02",
+    "tags": ["steam_power", "turning_gear", "rotor_bow", "thermal_sag", "maintenance"],
+    "prose": "A blown electrical fuse on the barring motor stopped the slow 4 RPM turning gear while the turbine rotor was hot (320°C). Natural convection cooled the bottom half faster than the top, freezing a 0.38mm banana-bow into the 5-ton shaft that locked it tight against the gland rings."
+  },
+  {
+    "id": "turbine_blade_overspeed_trip_bolt_unseating",
+    "turbine_unit_identifier": "EMERGENCY_VENT_EXPANDER_04",
+    "rotor_speed_rpm": 3320.0,
+    "steam_wetness_fraction_pct": 5.0,
+    "blade_stage_number": 1,
+    "timestamp_relative": "YEAR_20_TURBINE_LOG_01",
+    "tags": ["steam_power", "overspeed_trip", "emergency_stop", "centrifugal_bolt", "shutdown"],
+    "prose": "Spring relaxation in the eccentric centrifugal overspeed trip mechanism caused the trip bolt to fly out at 3,320 RPM (110% rating) during a sudden grid load shed. The main stop valve slammed shut in 80 milliseconds, cutting all power to the shelter hydroponic lights."
+  }
+]
