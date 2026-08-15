@@ -65,6 +65,10 @@ namespace AtomicWar.GodotApp
         private MaritimeHostSession _maritime = null!;
         private bool _maritimeDirty;
 
+        // Expedition (Encounters port + dive instance)
+        private ExpeditionHostSession _expeditions = null!;
+        private bool _expeditionDirty;
+
         // ASHFALL: traveling caravans (Expansion V spec §3.3 — wandering merchants)
         private TravelingCaravanHostSession _caravans = null!;
         private bool _caravansDirty;
@@ -520,6 +524,11 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Maritime: tick dive 10s", OnMaritimeTickDiveClicked);
             AddMenuButton("Maritime: scavenge stadium", OnMaritimeScavengeClicked);
             AddMenuButton("Maritime: contaminate Mikhail", OnMaritimeContaminateClicked);
+            // ── EXPEDITIONS (Encounters port) ───────────────────────────
+            AddMenuButton("Expedition: send Mikhail to Allotments", () => OnExpeditionStartClicked("loc_the_allotments"));
+            AddMenuButton("Expedition: tick 2 hours", OnExpeditionTickClicked);
+            AddMenuButton("Expedition: start Sovereign dive", OnExpeditionDiveClicked);
+            AddMenuButton("Expedition: advance dive", OnExpeditionAdvanceDiveClicked);
             // ── TRAVELING CARAVANS (Exp V §3.3) ─────────────────────────
             AddMenuButton("Caravan: spawn Menders' cart", OnCaravanSpawnClicked);
             AddMenuButton("Caravan: tick a day", OnCaravanTickClicked);
@@ -547,7 +556,7 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Utility AI: evaluate demo survivor", OnUtilityAiEvaluateClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveCaravans(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveCaravans(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -1875,6 +1884,51 @@ namespace AtomicWar.GodotApp
             _statusLabel.Text = _maritime.ContaminateDemo("survivor_gunner_mikhail", "location_automated_abattoir");
         }
 
+        // ── EXPEDITIONS (Encounters port) ─────────────────────────────────────
+
+        private void SetupExpeditions()
+        {
+            if (_expeditions != null) return;
+            _expeditions = ExpeditionHostSession.Create(_dataDir);
+            _expeditions.StateChanged += () => _expeditionDirty = true;
+            GD.Print("[Ashfall Godot] Expedition host ready: encounters · dive instance.");
+        }
+
+        private void SaveExpeditions()
+        {
+            if (_expeditions == null) return;
+            if (ExpeditionSaveStore.TrySave(_expeditions.CaptureSave()))
+            {
+                _expeditionDirty = false;
+                GD.Print("[Ashfall Godot] Expedition save written.");
+            }
+        }
+
+        private void OnExpeditionStartClicked(string locationId)
+        {
+            SetupExpeditions();
+            _statusLabel.Text = _expeditions.StartDemoExpedition("survivor_gunner_mikhail", locationId)
+                + "\n" + _expeditions.StatusLine();
+        }
+
+        private void OnExpeditionTickClicked()
+        {
+            SetupExpeditions();
+            _statusLabel.Text = _expeditions.TickDemoHours(2f) + "\n" + _expeditions.StatusLine();
+        }
+
+        private void OnExpeditionDiveClicked()
+        {
+            SetupExpeditions();
+            _statusLabel.Text = _expeditions.StartDiveDemo();
+        }
+
+        private void OnExpeditionAdvanceDiveClicked()
+        {
+            SetupExpeditions();
+            _statusLabel.Text = _expeditions.AdvanceDiveDemo() + "\n" + _expeditions.DiveStatusLine();
+        }
+
         // ── TRAVELING CARAVANS (Exp V spec §3.3) ─────────────────────────────
 
         private void SetupCaravans()
@@ -2802,6 +2856,7 @@ namespace AtomicWar.GodotApp
             SaveEconomy();
             SaveVerdict();
             SaveMaritime();
+            SaveExpeditions();
             SaveCaravans();
         }
 
