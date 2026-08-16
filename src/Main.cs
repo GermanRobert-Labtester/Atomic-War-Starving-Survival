@@ -153,6 +153,15 @@ namespace AtomicWar.GodotApp
         private FactionsPanel _factionsPanel = null!;
         private ResearchPanel _researchPanel = null!;
         private ShelterPanel _shelterPanel = null!;
+        private CombatPanel _combatPanel = null!;
+        private MapPanel _mapPanel = null!;
+        private SurvivorDetailPanel _survivorDetailPanel = null!;
+        private InventoryDetailPanel _inventoryDetailPanel = null!;
+        private QuestDetailPanel _questDetailPanel = null!;
+        private AchievementsPanel _achievementsPanel = null!;
+        private SaveLoadPanel _saveLoadPanel = null!;
+        private TutorialPanel _tutorialPanel = null!;
+        private AfflictionsPanel _afflictionsPanel = null!;
         private enum GameState { Menu, Playing, GameOver }
         private GameState _state = GameState.Menu;
 
@@ -511,6 +520,51 @@ namespace AtomicWar.GodotApp
             _shelterPanel.OnClose += CloseShelterPanel;
             gameUiContainer.AddChild(_shelterPanel);
 
+            // ── Combat panel (overlay) ──
+            _combatPanel = new CombatPanel();
+            _combatPanel.OnClose += CloseCombatPanel;
+            gameUiContainer.AddChild(_combatPanel);
+
+            // ── Map panel (overlay) ──
+            _mapPanel = new MapPanel();
+            _mapPanel.OnClose += CloseMapPanel;
+            gameUiContainer.AddChild(_mapPanel);
+
+            // ── Survivor Detail panel (overlay) ──
+            _survivorDetailPanel = new SurvivorDetailPanel();
+            _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
+            gameUiContainer.AddChild(_survivorDetailPanel);
+
+            // ── Inventory Detail panel (overlay) ──
+            _inventoryDetailPanel = new InventoryDetailPanel();
+            _inventoryDetailPanel.OnClose += CloseInventoryDetailPanel;
+            gameUiContainer.AddChild(_inventoryDetailPanel);
+
+            // ── Quest Detail panel (overlay) ──
+            _questDetailPanel = new QuestDetailPanel();
+            _questDetailPanel.OnClose += CloseQuestDetailPanel;
+            gameUiContainer.AddChild(_questDetailPanel);
+
+            // ── Achievements panel (overlay) ──
+            _achievementsPanel = new AchievementsPanel();
+            _achievementsPanel.OnClose += CloseAchievementsPanel;
+            gameUiContainer.AddChild(_achievementsPanel);
+
+            // ── Save/Load panel (overlay) ──
+            _saveLoadPanel = new SaveLoadPanel();
+            _saveLoadPanel.OnClose += CloseSaveLoadPanel;
+            gameUiContainer.AddChild(_saveLoadPanel);
+
+            // ── Tutorial panel (overlay) ──
+            _tutorialPanel = new TutorialPanel();
+            _tutorialPanel.OnClose += CloseTutorialPanel;
+            gameUiContainer.AddChild(_tutorialPanel);
+
+            // ── Afflictions panel (overlay) ──
+            _afflictionsPanel = new AfflictionsPanel();
+            _afflictionsPanel.OnClose += CloseAfflictionsPanel;
+            gameUiContainer.AddChild(_afflictionsPanel);
+
             // ── Game content area ──
             var margin = new MarginContainer();
             margin.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -689,6 +743,12 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Factions: open panel", () => { _factionsPanel.Open(); });
             AddMenuButton("Research: open panel", () => { _researchPanel.Open(); });
             AddMenuButton("Shelter: open panel", () => { _shelterPanel.Open(); });
+            AddMenuButton("Combat: open panel", () => { _combatPanel.Open(); });
+            AddMenuButton("Map: open panel", () => { _mapPanel.Open(); });
+            AddMenuButton("Achievements: open panel", () => { _achievementsPanel.Open(); });
+            AddMenuButton("Save/Load: open panel", () => { _saveLoadPanel.Open(); });
+            AddMenuButton("Tutorial: open panel", () => { _tutorialPanel.Open(); });
+            AddMenuButton("Afflictions: open panel", () => { _afflictionsPanel.Open(); });
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); GetTree().Quit(); });
 
             _statusLabel = new Label
@@ -3325,6 +3385,51 @@ namespace AtomicWar.GodotApp
         private void CloseShelterPanel()
         {
             _shelterPanel.Visible = false;
+        }
+
+        private void CloseCombatPanel()
+        {
+            _combatPanel.Visible = false;
+        }
+
+        private void CloseMapPanel()
+        {
+            _mapPanel.Visible = false;
+        }
+
+        private void CloseSurvivorDetailPanel()
+        {
+            _survivorDetailPanel.Visible = false;
+        }
+
+        private void CloseInventoryDetailPanel()
+        {
+            _inventoryDetailPanel.Visible = false;
+        }
+
+        private void CloseQuestDetailPanel()
+        {
+            _questDetailPanel.Visible = false;
+        }
+
+        private void CloseAchievementsPanel()
+        {
+            _achievementsPanel.Visible = false;
+        }
+
+        private void CloseSaveLoadPanel()
+        {
+            _saveLoadPanel.Visible = false;
+        }
+
+        private void CloseTutorialPanel()
+        {
+            _tutorialPanel.Visible = false;
+        }
+
+        private void CloseAfflictionsPanel()
+        {
+            _afflictionsPanel.Visible = false;
         }
 
         private void ShowGameOver(string cause, string stats)
