@@ -147,6 +147,8 @@ namespace AtomicWar.GodotApp
         private DutyRosterPanel _dutyRosterPanel = null!;
         private EconomyOverlayPanel _economyOverlayPanel = null!;
         private ExpeditionPanel _expeditionPanel = null!;
+        private WeatherPanel _weatherPanel = null!;
+        private QuestsPanel _questsPanel = null!;
         private enum GameState { Menu, Playing, GameOver }
         private GameState _state = GameState.Menu;
 
@@ -475,6 +477,16 @@ namespace AtomicWar.GodotApp
             _expeditionPanel.OnClose += CloseExpeditionPanel;
             gameUiContainer.AddChild(_expeditionPanel);
 
+            // ── Weather panel (overlay) ──
+            _weatherPanel = new WeatherPanel();
+            _weatherPanel.OnClose += CloseWeatherPanel;
+            gameUiContainer.AddChild(_weatherPanel);
+
+            // ── Quests panel (overlay) ──
+            _questsPanel = new QuestsPanel();
+            _questsPanel.OnClose += CloseQuestsPanel;
+            gameUiContainer.AddChild(_questsPanel);
+
             // ── Game content area ──
             var margin = new MarginContainer();
             margin.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -647,6 +659,8 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Duty Roster: open panel", () => { _dutyRosterPanel.Open(); });
             AddMenuButton("Economy: open panel", () => { _economyOverlayPanel.Open(); });
             AddMenuButton("Expeditions: open panel", () => { _expeditionPanel.Open(); });
+            AddMenuButton("Weather: open panel", () => { _weatherPanel.Open(); });
+            AddMenuButton("Quests: open panel", () => { _questsPanel.Open(); });
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); GetTree().Quit(); });
 
             _statusLabel = new Label
@@ -3253,6 +3267,16 @@ namespace AtomicWar.GodotApp
         private void CloseExpeditionPanel()
         {
             _expeditionPanel.Visible = false;
+        }
+
+        private void CloseWeatherPanel()
+        {
+            _weatherPanel.Visible = false;
+        }
+
+        private void CloseQuestsPanel()
+        {
+            _questsPanel.Visible = false;
         }
 
         private void ShowGameOver(string cause, string stats)
