@@ -706,6 +706,8 @@ namespace AtomicWar.GodotApp
 
         private void SetupJournal()
         {
+            if (_journal != null) return;
+
             var catalogs = CatalogJsonLoader.Load(_dataDir);
             _journal = new JournalSystem();
             // Mark dirty rather than writing the whole save file per entry; the
@@ -716,9 +718,12 @@ namespace AtomicWar.GodotApp
 
             _journalCodex = new JournalCodex(_journal, catalogs);
 
-            _journalBook = new JournalBookUI();
-            _journalBook.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(_journalBook);
+            if (_journalBook == null || !_journalBook.IsInsideTree())
+            {
+                _journalBook = new JournalBookUI();
+                _journalBook.SetAnchorsPreset(LayoutPreset.FullRect);
+                AddChild(_journalBook);
+            }
             _journalBook.Bind(
                 _journal,
                 tab => _journalCodex.BuildRows(tab),
@@ -828,8 +833,11 @@ namespace AtomicWar.GodotApp
             if (_holdfastRuntime != null) return;
 
             _holdfastRuntime = HoldfastRuntimeSession.Create(_core);
-            _holdfastTerminal = new HoldfastTerminalPanel();
-            AddChild(_holdfastTerminal);
+            if (_holdfastTerminal == null || !_holdfastTerminal.IsInsideTree())
+            {
+                _holdfastTerminal = new HoldfastTerminalPanel();
+                AddChild(_holdfastTerminal);
+            }
             _holdfastTerminal.BindSession(_holdfastRuntime);
 
             // ── Wire death event ──
@@ -3036,6 +3044,9 @@ namespace AtomicWar.GodotApp
         {
             _core = null!;
             _holdfastRuntime = null!;
+            if (_holdfastTerminal != null && _holdfastTerminal.IsInsideTree())
+                RemoveChild(_holdfastTerminal);
+            _holdfastTerminal = null!;
             _dutyRoster = null!;
             _expansions = null!;
             _phantomMemory = null!;
@@ -3055,6 +3066,22 @@ namespace AtomicWar.GodotApp
             _crafting = null!;
             _caravans = null!;
             _yearOfAsh = null!;
+            // The Year of Ash panel holds widgets bound to the old session; drop it
+            // so BuildYearOfAshPanel re-creates and rebinds to the fresh session.
+            if (_yearOfAshPanel != null && _rightColumn != null && _yearOfAshPanel.IsInsideTree())
+                _rightColumn.RemoveChild(_yearOfAshPanel);
+            _yearOfAshPanel = null!;
+            _factionWarMap = null!;
+            _geothermalWidget = null!;
+            _radonWidget = null!;
+            _radioTerminal = null!;
+
+            // Journal: drop the codex + book so they re-create and re-bind once;
+            // keeping the book and re-binding would stack OnClosed handlers.
+            if (_journalBook != null && _journalBook.IsInsideTree())
+                RemoveChild(_journalBook);
+            _journalBook = null!;
+            _journalCodex = null!;
 
             _verdictDirty = false;
             _maritimeDirty = false;
