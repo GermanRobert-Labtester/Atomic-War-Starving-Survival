@@ -195,4 +195,85 @@ namespace Ashfall.Core.Tests
             Assert.True(MathfCompat.Approximately(0.1f + 0.2f, 0.3f));
         }
     }
+
+    /// <summary>
+    /// H10 hardening: NeedsSystem / RadiationSystem state must survive a
+    /// cross-host JSON round-trip losslessly (Invariant 3). The state IS the
+    /// save unit (no separate CaptureState), so a field added to the DTO without
+    /// being serialized would silently drop — these gate the mutation-sensitive
+    /// fields, not just defaults.
+    /// </summary>
+    public class SaveRoundTripTests
+    {
+        [Fact]
+        public void SurvivorNeedsState_RoundTrips_MutatedValues()
+        {
+            var json = new SystemTextJsonSerializer();
+            var original = new SurvivorNeedsState
+            {
+                Id = "sv_farmer",
+                Hunger = 77.5f, Thirst = 66.25f, Fatigue = 45f,
+                Warmth = 30f, Morale = 12f, Health = 55f, Hygiene = 4f,
+                WasHungerCritical = true, WasThirstCritical = false, WasWarmthCritical = true,
+                MaxHealthCap = 70f, IsAlive = true, IsDead = false
+            };
+
+            var restored = json.Deserialize<SurvivorNeedsState>(json.Serialize(original));
+            Assert.NotNull(restored);
+            Assert.Equal(original.Id, restored.Id);
+            Assert.Equal(original.Hunger, restored.Hunger, 3);
+            Assert.Equal(original.Thirst, restored.Thirst, 3);
+            Assert.Equal(original.Fatigue, restored.Fatigue, 3);
+            Assert.Equal(original.Warmth, restored.Warmth, 3);
+            Assert.Equal(original.Morale, restored.Morale, 3);
+            Assert.Equal(original.Health, restored.Health, 3);
+            Assert.Equal(original.Hygiene, restored.Hygiene, 3);
+            Assert.Equal(original.WasHungerCritical, restored.WasHungerCritical);
+            Assert.Equal(original.WasWarmthCritical, restored.WasWarmthCritical);
+            Assert.Equal(original.MaxHealthCap, restored.MaxHealthCap, 3);
+            Assert.Equal(original.IsAliveState, restored.IsAliveState);
+        }
+
+        [Fact]
+        public void SurvivorRadState_RoundTrips_MutatedValues()
+        {
+            var json = new SystemTextJsonSerializer();
+            var original = new SurvivorRadState
+            {
+                Id = "sv_geiger",
+                RadiationDose = 92f, LifetimeRadiationExposure = 505f,
+                HasRadResistance = true, RadResistanceHoursRemaining = 3.5f,
+                IodineProtectionTimer = 1.25f,
+                HasAcuteRadiationSickness = true, HasChronicIllness = true,
+                HasAcuteRadiationSyndrome = false, IsAlive = true
+            };
+
+            var restored = json.Deserialize<SurvivorRadState>(json.Serialize(original));
+            Assert.NotNull(restored);
+            Assert.Equal(original.Id, restored.Id);
+            Assert.Equal(original.RadiationDose, restored.RadiationDose, 3);
+            Assert.Equal(original.LifetimeRadiationExposure, restored.LifetimeRadiationExposure, 3);
+            Assert.Equal(original.HasRadResistance, restored.HasRadResistance);
+            Assert.Equal(original.RadResistanceHoursRemaining, restored.RadResistanceHoursRemaining, 3);
+            Assert.Equal(original.IodineProtectionTimer, restored.IodineProtectionTimer, 3);
+            Assert.Equal(original.HasAcuteRadiationSickness, restored.HasAcuteRadiationSickness);
+            Assert.Equal(original.HasChronicIllness, restored.HasChronicIllness);
+            Assert.Equal(original.IsAlive, restored.IsAlive);
+        }
+
+        [Fact]
+        public void RadiationSystem_RegisteredDoseSurvivesRoundTrip()
+        {
+            var sys = new RadiationSystem();
+            var s = new SurvivorRadState { Id = "sv_probe" };
+            sys.Expose(s, 60f, 1f);
+            Assert.True(s.RadiationDose > 0f);
+
+            var json = new SystemTextJsonSerializer();
+            var restored = json.Deserialize<SurvivorRadState>(json.Serialize(s));
+            Assert.NotNull(restored);
+            Assert.Equal(s.RadiationDose, restored.RadiationDose, 3);
+            Assert.Equal(s.LifetimeRadiationExposure, restored.LifetimeRadiationExposure, 3);
+        }
+    }
 }
