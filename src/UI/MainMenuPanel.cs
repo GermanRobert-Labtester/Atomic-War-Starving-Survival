@@ -21,51 +21,12 @@ namespace AtomicWar.GodotApp
         private Button _btnContinue = null!;
         private Label _lblVersion = null!;
 
-        // ── Background rotation state ──
-        private TextureRect _bgLayerA = null!;
-        private TextureRect _bgLayerB = null!;
-        private ColorRect _overlay = null!;
-        private int _currentBgIndex = 0;
-        private readonly string[] _backgroundPaths = {
-            "res://Assets/UI/Textures/Backgrounds/title_screen_bg.png",
-            "res://Assets/UI/Textures/Backgrounds/inventory_bg.png",
-            "res://Assets/UI/Textures/Backgrounds/medical_bg.png"
-        };
-        private float _transitionProgress = 0f;
-        private bool _transitioning = false;
-        private const float TransitionDuration = 1.5f; // seconds
-
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
 
-            // ── Dual-layer background for crossfade ──
-            _bgLayerA = new TextureRect
-            {
-                StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
-                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize
-            };
-            _bgLayerA.SetAnchorsPreset(LayoutPreset.FullRect);
-            LoadBackgroundToLayer(_bgLayerA, _currentBgIndex);
-            AddChild(_bgLayerA);
-
-            _bgLayerB = new TextureRect
-            {
-                StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
-                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize
-            };
-            _bgLayerB.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(_bgLayerB);
-
-            _overlay = new ColorRect
-            {
-                Color = new Color(0, 0, 0, 0.65f)
-            };
-            _overlay.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(_overlay);
-
-            // Fade overlay in gradually
-            QueueTweenOverlay();
+            // ── Rotating full-screen background ──
+            AddChild(new UiBackgroundCarousel(UiAssetManifest.MainMenuBackgrounds, 0.65f));
 
             // ── Center container ──
             var center = new CenterContainer
@@ -151,84 +112,12 @@ namespace AtomicWar.GodotApp
             QueueFadeInUI(center, delaySeconds: 1.2f);
         }
 
-        private void LoadBackgroundToLayer(TextureRect layer, int bgIndex)
-        {
-            if (bgIndex >= 0 && bgIndex < _backgroundPaths.Length)
-            {
-                var tex = AshfallUiHelpers.TryLoadTexture(_backgroundPaths[bgIndex]);
-                if (tex != null)
-                {
-                    layer.Texture = tex;
-                    layer.Visible = true;
-                }
-                else
-                {
-                    // No texture found — hide this layer so another one shows through
-                    layer.Visible = false;
-                }
-            }
-        }
-
         private void QueueFadeInUI(Control uiNode, float delaySeconds = 0f)
         {
             var tw = CreateTween();
             tw.TweenInterval(delaySeconds);
             tw.TweenProperty(uiNode, "modulate:a", 1f, 1.0f).SetTrans(Tween.TransitionType.Sine)
                 .SetEase(Tween.EaseType.Out);
-        }
-
-        private void QueueTweenOverlay()
-        {
-            var tw = CreateTween();
-            tw.TweenProperty(_overlay, "color:a", 0.65f, TransitionDuration)
-                .SetTrans(Tween.TransitionType.Sine)
-                .SetEase(Tween.EaseType.InOut);
-        }
-
-        public override void _Process(double delta)
-        {
-            if (!Visible) return;
-
-            // Background crossfade transition
-            if (_transitioning)
-            {
-                _transitionProgress += (float)delta / TransitionDuration;
-                if (_transitionProgress >= 1f)
-                {
-                    _transitioning = false;
-                    _transitionProgress = 0f;
-                    // Swap layers cleanly and restart cycle
-                    var nextIdx = (_currentBgIndex + 1) % _backgroundPaths.Length;
-                    LoadBackgroundToLayer(_bgLayerA, _currentBgIndex);
-                    LoadBackgroundToLayer(_bgLayerB, nextIdx);
-                    // Re-orient which is foreground
-                    var tempLayer = _bgLayerA;
-                    _bgLayerA = _bgLayerB;
-                    _bgLayerB = tempLayer;
-                    _currentBgIndex = nextIdx;
-                    // Start next transition
-                    StartCrossfade();
-                }
-                else
-                {
-                    // Crossfade: A fades out, B fades in
-                    var alpha = SmoothStep(_transitionProgress);
-                    _bgLayerA.Modulate = new Color(1, 1, 1, 1f - alpha);
-                    _bgLayerB.Modulate = new Color(1, 1, 1, alpha);
-                }
-            }
-        }
-
-        private void StartCrossfade()
-        {
-            _transitioning = true;
-            _transitionProgress = 0f;
-        }
-
-        private static float SmoothStep(float t)
-        {
-            t = Mathf.Clamp(t, 0f, 1f);
-            return t * t * (3f - 2f * t);
         }
 
         /// <summary>

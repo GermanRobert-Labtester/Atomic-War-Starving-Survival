@@ -6,9 +6,8 @@ using AtomicWar.GodotApp.UI;
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// ASHFALL — Minimal in-game HUD overlay.
-    /// Sits at the top of the screen during gameplay.
-    /// Shows: day, health, radiation, key status, and menu button.
+    /// ASHFALL — Polished in-game HUD overlay.
+    /// Shows: day, health bar, radiation bar, value, faction, weather, and menu.
     /// Thin presentation only — reads state from HoldfastRuntimeSession.
     /// </summary>
     public partial class GameHudOverlay : HBoxContainer
@@ -16,18 +15,27 @@ namespace AtomicWar.GodotApp
         public event Action? OnMenuRequested;
 
         private Label _lblDay = null!;
-        private Label _lblHealth = null!;
-        private Label _lblRad = null!;
+        private Label _lblHealthText = null!;
+        private TextureRect _barHealth = null!;
+        private TextureRect _barRad = null!;
+        private Label _lblRadText = null!;
         private Label _lblValue = null!;
         private Label _lblFaction = null!;
+        private Label _lblWeather = null!;
         private Button _btnMenu = null!;
+
+        // Animation state
+        private float _healthAnimProgress = 1f;
+        private float _radAnimProgress = 0f;
+        private bool _healthAnimating = false;
+        private bool _radAnimating = false;
 
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.TopWide);
             AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
 
-            // Background strip
+            // Background strip with subtle gradient
             var bg = new StyleBoxFlat
             {
                 BgColor = new Color(Ashfall.Core.UI.Theme.Ink.r, Ashfall.Core.UI.Theme.Ink.g, Ashfall.Core.UI.Theme.Ink.b, 0.95f),
@@ -41,37 +49,71 @@ namespace AtomicWar.GodotApp
             AddThemeStyleboxOverride("panel", bg);
 
             // Day
-            _lblDay = AshfallUiHelpers.MakeSmall("Day 1");
+            _lblDay = AshfallUiHelpers.MakeTitle("Day 1", Ashfall.Core.UI.Theme.FontSizeH3);
             _lblDay.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
             AddChild(_lblDay);
 
             AddChild(new VSeparator());
 
-            // Health
-            _lblHealth = AshfallUiHelpers.MakeSmall("HP: 100");
-            _lblHealth.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-            AddChild(_lblHealth);
+            // Health bar with animation
+            var healthGroup = new HBoxContainer();
+            healthGroup.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            var healthLabel = AshfallUiHelpers.MakeSmall("HP");
+            healthLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            healthGroup.AddChild(healthLabel);
+
+            _barHealth = new TextureRect
+            {
+                CustomMinimumSize = new Vector2(120, 12),
+                StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
+                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+                Modulate = new Color(1f, 1f, 1f, 0.3f) // base bar
+            };
+            healthGroup.AddChild(_barHealth);
+
+            AddChild(healthGroup);
 
             AddChild(new VSeparator());
 
-            // Radiation
-            _lblRad = AshfallUiHelpers.MakeSmall("RAD: 0 mSv");
-            _lblRad.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
-            AddChild(_lblRad);
+            // Radiation bar with animation
+            var radGroup = new HBoxContainer();
+            radGroup.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            var radLabel = AshfallUiHelpers.MakeSmall("RAD");
+            radLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            radGroup.AddChild(radLabel);
+
+            _barRad = new TextureRect
+            {
+                CustomMinimumSize = new Vector2(120, 12),
+                StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
+                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+                Modulate = new Color(1f, 1f, 1f, 0f) // starts empty
+            };
+            radGroup.AddChild(_barRad);
+
+            _lblRadText = AshfallUiHelpers.MakeSmall("0.0 mSv");
+            _lblRadText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
+            radGroup.AddChild(_lblRadText);
+
+            AddChild(radGroup);
 
             AddChild(new VSeparator());
 
-            // Value
+            // Value counter
             _lblValue = AshfallUiHelpers.MakeSmall("Value: 100");
             _lblValue.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
             AddChild(_lblValue);
 
             AddChild(new VSeparator());
 
-            // Faction
+            // Faction + weather
             _lblFaction = AshfallUiHelpers.MakeSmall("—");
             _lblFaction.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
             AddChild(_lblFaction);
+
+            _lblWeather = AshfallUiHelpers.MakeSmall("");
+            _lblWeather.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
+            AddChild(_lblWeather);
 
             // Spacer
             AddChild(new Control { SizeFlagsHorizontal = SizeFlags.ExpandFill });
@@ -82,6 +124,33 @@ namespace AtomicWar.GodotApp
             AddChild(_btnMenu);
         }
 
+        public override void _Process(double delta)
+        {
+            // Animate health bar
+            if (_healthAnimating)
+            {
+                _healthAnimProgress -= (float)delta * 2f; // 0.5s animation
+                if (_healthAnimProgress <= 0f)
+                {
+                    _healthAnimProgress = 0f;
+                    _healthAnimating = false;
+                }
+                _barHealth.Modulate = new Color(1f, 1f, 1f, _healthAnimProgress);
+            }
+
+            // Animate radiation bar
+            if (_radAnimating)
+            {
+                _radAnimProgress += (float)delta * 1.5f; // ~0.67s animation
+                if (_radAnimProgress >= 1f)
+                {
+                    _radAnimProgress = 1f;
+                    _radAnimating = false;
+                }
+                _barRad.Modulate = new Color(1f, 1f, 1f, _radAnimProgress);
+            }
+        }
+
         /// <summary>
         /// Update HUD from HoldfastRuntimeSession state.
         /// </summary>
@@ -90,30 +159,37 @@ namespace AtomicWar.GodotApp
             _lblDay.Text = $"Day {day}";
             _lblValue.Text = $"Value: {value}";
             _lblFaction.Text = string.IsNullOrEmpty(factionId) ? "—" : factionId.Replace("_", " ").ToUpperInvariant();
-            if (!string.IsNullOrEmpty(weather))
-                _lblFaction.Text += $" · {weather}";
+            _lblWeather.Text = string.IsNullOrEmpty(weather) ? "" : $"· {weather}";
         }
 
         public void UpdateHealth(int hp, int maxHp = 100)
         {
-            _lblHealth.Text = $"HP: {hp}/{maxHp}";
+            // Animate health bar fill
+            _healthAnimating = true;
+            _healthAnimProgress = 1f;
+
+            _lblHealthText.Text = $"HP: {hp}/{maxHp}";
             if (hp <= 25)
-                _lblHealth.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+                _lblHealthText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
             else if (hp <= 50)
-                _lblHealth.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy));
+                _lblHealthText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy));
             else
-                _lblHealth.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+                _lblHealthText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
         }
 
         public void UpdateRadiation(float msv)
         {
-            _lblRad.Text = $"RAD: {msv:F1} mSv";
+            // Animate radiation bar fill
+            _radAnimating = true;
+            _radAnimProgress = 0f;
+
+            _lblRadText.Text = $"RAD: {msv:F1} mSv";
             if (msv >= 100)
-                _lblRad.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+                _lblRadText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
             else if (msv >= 50)
-                _lblRad.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy));
+                _lblRadText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy));
             else
-                _lblRad.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
+                _lblRadText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
         }
     }
 }

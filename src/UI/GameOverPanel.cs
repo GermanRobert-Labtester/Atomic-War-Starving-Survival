@@ -23,36 +23,10 @@ namespace AtomicWar.GodotApp
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            // ── Background image ──
-            var bgTex = AshfallUiHelpers.TryLoadTexture("res://Assets/UI/Textures/Backgrounds/game_over_bg.png");
-            if (bgTex != null)
-            {
-                var bgRect = new TextureRect
-                {
-                    Texture = bgTex,
-                    StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
-                    ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize
-                };
-                bgRect.SetAnchorsPreset(LayoutPreset.FullRect);
-                AddChild(bgRect);
-
-                // Dark overlay
-                var overlay = new ColorRect
-                {
-                    Color = new Color(0, 0, 0, 0.80f)
-                };
-                overlay.SetAnchorsPreset(LayoutPreset.FullRect);
-                AddChild(overlay);
-            }
-            else
-            {
-                var overlay = new ColorRect
-                {
-                    Color = new Color(0, 0, 0, 0.92f)
-                };
-                overlay.SetAnchorsPreset(LayoutPreset.FullRect);
-                AddChild(overlay);
-            }
+            // ── Rotating background ──
+            // Reuse the same crossfade behavior as the entry menu, but keep
+            // the game-over palette to the medical/inventory surfaces.
+            AddChild(new UiBackgroundCarousel(UiAssetManifest.GameOverBackgrounds, 0.80f));
 
             // ── Center content ──
             var center = new CenterContainer();

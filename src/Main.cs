@@ -18,6 +18,7 @@ using AtomicWar.GodotApp.Muster;
 using AtomicWar.GodotApp.Dose;
 using AtomicWar.GodotApp.UtilityAI;
 using AtomicWar.GodotApp.Radio;
+using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
 {
@@ -137,6 +138,11 @@ namespace AtomicWar.GodotApp
         private GameOverPanel _gameOver = null!;
         private GameHudOverlay _hudOverlay = null!;
         private VBoxContainer _gameUiContainer = null!;
+        private SettingsPanel _settingsPanel = null!;
+        private InventoryPanel _inventoryOverlay = null!;
+        private SurvivorsPanel _survivorsOverlay = null!;
+        private CraftingPanel _craftingPanel = null!;
+        private RadioPanel _radioPanel = null!;
         private enum GameState { Menu, Playing, GameOver }
         private GameState _state = GameState.Menu;
 
@@ -420,6 +426,31 @@ namespace AtomicWar.GodotApp
             _hudOverlay.OnMenuRequested += ReturnToMenu;
             gameUiContainer.AddChild(_hudOverlay);
 
+            // ── Settings panel (overlay) ──
+            _settingsPanel = new SettingsPanel();
+            _settingsPanel.OnClose += CloseSettingsPanel;
+            gameUiContainer.AddChild(_settingsPanel);
+
+            // ── Inventory overlay panel ──
+            _inventoryOverlay = new InventoryPanel();
+            _inventoryOverlay.OnClose += CloseInventoryOverlay;
+            gameUiContainer.AddChild(_inventoryOverlay);
+
+            // ── Survivors overlay panel ──
+            _survivorsOverlay = new SurvivorsPanel();
+            _survivorsOverlay.OnClose += CloseSurvivorsOverlay;
+            gameUiContainer.AddChild(_survivorsOverlay);
+
+            // ── Crafting panel (overlay) ──
+            _craftingPanel = new CraftingPanel();
+            _craftingPanel.OnClose += CloseCraftingPanel;
+            gameUiContainer.AddChild(_craftingPanel);
+
+            // ── Radio panel (overlay) ──
+            _radioPanel = new RadioPanel();
+            _radioPanel.OnClose += CloseRadioPanel;
+            gameUiContainer.AddChild(_radioPanel);
+
             // ── Game content area ──
             var margin = new MarginContainer();
             margin.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -585,6 +616,9 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Utility AI: evaluate demo survivor", OnUtilityAiEvaluateClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
+            AddMenuButton("Settings: audio & gameplay", () => { _settingsPanel.Open(); });
+            AddMenuButton("Crafting: open panel", () => { _craftingPanel.Open(); });
+            AddMenuButton("Radio: open panel", () => { _radioPanel.Open(); });
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); GetTree().Quit(); });
 
             _statusLabel = new Label
@@ -3135,12 +3169,42 @@ namespace AtomicWar.GodotApp
             _gameOver.Visible = false;
             _mainMenu.Visible = true;
 
+            // Close any open overlays
+            _settingsPanel.Visible = false;
+            _inventoryOverlay.Visible = false;
+            _survivorsOverlay.Visible = false;
+
             // Save before returning
             SaveAll();
 
             // Check for existing save
             bool hasSave = System.IO.File.Exists(HoldfastSaveStore.SavePath);
             _mainMenu.EnableContinue(hasSave);
+        }
+
+        private void CloseSettingsPanel()
+        {
+            _settingsPanel.Visible = false;
+        }
+
+        private void CloseInventoryOverlay()
+        {
+            _inventoryOverlay.Visible = false;
+        }
+
+        private void CloseSurvivorsOverlay()
+        {
+            _survivorsOverlay.Visible = false;
+        }
+
+        private void CloseCraftingPanel()
+        {
+            _craftingPanel.Visible = false;
+        }
+
+        private void CloseRadioPanel()
+        {
+            _radioPanel.Visible = false;
         }
 
         private void ShowGameOver(string cause, string stats)
