@@ -1,0 +1,121 @@
+{
+  "broadcasts": [
+    {
+      "id": "radio_verdict_meter_reads_1142",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 210,
+      "source": "Census Carrier, Machine Registers",
+      "message": "11:42. 11:42. 11:42. The meter reads 11:42 and nothing else. A data burst that is three numbers and no hand.",
+      "signalStrength": "S1",
+      "kind": "telemetry"
+    },
+    {
+      "id": "radio_verdict_fuse_serviced",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 211,
+      "source": "Fuse World, Service Bay",
+      "message": "Fuse serviced. Service order logged. Timestamp matches Mortar Period exactly. Nothing was wrong; the schedule simply said it was time.",
+      "signalStrength": "S2",
+      "kind": "maintenance"
+    },
+    {
+      "id": "radio_verdict_wing_sleeps",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 242,
+      "source": "Drone Hive, Draw Readout",
+      "message": "The wing sleeps. Draw down 0.5 degrees. First broadcast post-Call. No flight movement registered; the roost is cold.",
+      "signalStrength": "S2",
+      "kind": "telemetry"
+    },
+    {
+      "id": "radio_verdict_off_count_assessed",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 240,
+      "source": "The Office of Censuses",
+      "message": "Off-count is a penalty assessed against the holder.",
+      "signalStrength": "S3",
+      "kind": "call"
+    },
+    {
+      "id": "radio_verdict_eden_was_here",
+      "frequency": "88.5 MHz",
+      "dayTrigger": 245,
+      "source": "Eden Vale, Tube Bleed",
+      "message": "Eden was here. Eleven months of bleed, one day's worth, in the vocabulary of the Weather Service: visibility, pressure, front. She never asked to be counted. She was counted anyway.",
+      "signalStrength": "S2",
+      "kind": "witness"
+    },
+    {
+      "id": "radio_verdict_count_is_open",
+      "frequency": "88.5 MHz",
+      "dayTrigger": 240,
+      "source": "The Office of Censuses",
+      "message": "This is the Office of Censuses. The count is open. All persons having custody of persons must present them. Off-count is a penalty assessed against the holder. This message will repeat. The count is open.",
+      "signalStrength": "S3",
+      "kind": "call"
+    },
+    {
+      "id": "radio_verdict_clock_disagrees",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 213,
+      "source": "Machine Registers, Clock",
+      "message": "Clock drift: 3 days. The machine's calendar and the civil calendar do not agree. This is presented as data, because it is data. There is no name for the disagreement and none is needed.",
+      "signalStrength": "S1",
+      "kind": "telemetry"
+    },
+    {
+      "id": "radio_verdict_geophone_taps",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 218,
+      "source": "Geophone Pit, Array 1",
+      "message": "Tap. Tap. Tap at ploughing, tap at harvest, a tap for every worker who walked the Allotments. The array reads the ground as one slow heartbeat. Unlabeled. Unclaimed.",
+      "signalStrength": "S2",
+      "kind": "readings"
+    },
+    {
+      "id": "radio_verdict_valve_accessed_36",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 250,
+      "source": "Water Plant, Valve S36",
+      "message": "Valve S36 accessed per §36. Shift-water readout logged. The valve knows which hand turned it, and the meter keeps the account.",
+      "signalStrength": "S2",
+      "kind": "maintenance"
+    },
+    {
+      "id": "radio_verdict_reels_matter",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 255,
+      "source": "Archive Tape-Silo",
+      "message": "The reels matter. Twenty-one racks, four years per rack. The archive is not in the habit of taking dictation. Every reel dated five years the day it was cut.",
+      "signalStrength": "S2",
+      "kind": "count"
+    },
+    {
+      "id": "radio_verdict_presentation_names_holders",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 260,
+      "source": "The Office of Censuses",
+      "message": "The presentation names the holders. The count was taken; it was presented; and the presentation does not require being read. It was read anyway, by someone with custody.",
+      "signalStrength": "S3",
+      "kind": "call"
+    },
+    {
+      "id": "radio_verdict_carrier_on_window",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 210,
+      "source": "Census Carrier, Pilot Tone",
+      "message": "A thin A/B tone, one second on, one second off, on a dead band. Occupied — not speech. To a radio-craft survivor it reads as a census carrier. The countdown is environment, not adversary.",
+      "signalStrength": "S1",
+      "kind": "carrier"
+    },
+    {
+      "id": "radio_verdict_reckoning_call",
+      "frequency": "99.0 MHz",
+      "dayTrigger": 241,
+      "source": "The Office of Censuses — Reckoning",
+      "message": "The Office of Censuses is convening. The count is open. All persons having custody of persons must present them. This message will repeat once per hour for three hours, then hold the carrier open until a signature is received.",
+      "signalStrength": "S3",
+      "kind": "call"
+    }
+  ]
+}

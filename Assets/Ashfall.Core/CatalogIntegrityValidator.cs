@@ -323,6 +323,7 @@ namespace Ashfall.Core
             "guilt_refugee_turned",  // guilt-source pattern ids used by events "add_trait" effects
             "guilt_water_trade", "guilt_stranded_rescue", "cruel_trader_death",
             "none",                  // "no faction / no id" sentinel
+            "faction_none",          // "no external faction" sentinel for internal quests
             "Paranoid", "Cautious", "Realist", "Reckless", "Denialist", "Fatalist",
                                      // RiskBiasTrait enum members (events requiredTrait gates)
             "a", "b",                // narrative-arc branch designators (branch_a/branch_b siblings)

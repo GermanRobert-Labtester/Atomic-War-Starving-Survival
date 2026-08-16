@@ -267,12 +267,95 @@ namespace Ashfall.Core.World
             RaiseChanged();
         }
 
+        /// <summary>
+        /// Deterministically peeks upcoming forecast for N days ahead without mutating simulation roll count or RNG state.
+        /// </summary>
+        public List<WeatherForecastEntry> PeekForecast(int daysAhead = 3)
+        {
+            var list = new List<WeatherForecastEntry>();
+            int currentDay = (int)Math.Floor(_state.totalElapsedHours / 24f);
+
+            for (int i = 0; i < daysAhead; i++)
+            {
+                int targetDay = currentDay + i;
+                var season = GetSeasonForDay(targetDay);
+                var rng = new SeededRng(unchecked(_seed * 397 + (_state.rollCount + i)));
+
+                bool restrict = _state.restrictToNonHazardWeather;
+                float clear = Math.Max(0f, season.clearWeight);
+                float rain = Math.Max(0f, season.rainWeight);
+                float overcast = Math.Max(0f, season.overcastWeight);
+                float ashfall = restrict ? 0f : Math.Max(0f, season.ashfallWeight);
+                float storm = restrict ? 0f : Math.Max(0f, season.falloutStormWeight);
+                float blizzard = restrict ? 0f : Math.Max(0f, season.blizzardWeight);
+                float blackRain = restrict ? 0f : Math.Max(0f, season.blackRainWeight);
+                float total = clear + rain + overcast + ashfall + storm + blizzard + blackRain;
+
+                WeatherKind predicted = WeatherKind.Clear;
+                if (i == 0)
+                {
+                    predicted = Current;
+                }
+                else if (total > 0f)
+                {
+                    double roll = rng.NextDouble() * total;
+                    if (roll < clear) predicted = WeatherKind.Clear;
+                    else if ((roll -= clear) < rain) predicted = WeatherKind.Rain;
+                    else if ((roll -= rain) < overcast) predicted = WeatherKind.Overcast;
+                    else if ((roll -= overcast) < ashfall) predicted = WeatherKind.Ashfall;
+                    else if ((roll -= ashfall) < storm) predicted = WeatherKind.FalloutStorm;
+                    else if ((roll -= storm) < blizzard) predicted = WeatherKind.Blizzard;
+                    else predicted = WeatherKind.BlackRain;
+                }
+
+                float rad = predicted switch
+                {
+                    WeatherKind.BlackRain => BlackRainOutdoorRadModifier,
+                    WeatherKind.FalloutStorm => FalloutStormOutdoorRadModifier,
+                    WeatherKind.Ashfall => 45.0f,
+                    _ => 0f
+                };
+
+                float vis = predicted switch
+                {
+                    WeatherKind.FalloutStorm or WeatherKind.BlackRain => 0f,
+                    WeatherKind.Blizzard => BlizzardVisibilityFactor,
+                    WeatherKind.Ashfall => 0.65f,
+                    _ => 1f
+                };
+
+                list.Add(new WeatherForecastEntry
+                {
+                    Day = targetDay + 1,
+                    Kind = predicted,
+                    OutdoorRad = rad,
+                    Visibility = vis,
+                    Summary = predicted.ToString()
+                });
+            }
+
+            return list;
+        }
+
         private static WeatherKind ParseKind(string kind)
         {
             return Enum.TryParse(kind, out WeatherKind parsed) ? parsed : WeatherKind.Clear;
         }
 
         private void RaiseChanged() => OnStateChanged?.Invoke(_state);
+    }
+
+    /// <summary>
+    /// Deterministic daily weather forecast entry.
+    /// </summary>
+    [Serializable]
+    public class WeatherForecastEntry
+    {
+        public int Day;
+        public WeatherKind Kind;
+        public float OutdoorRad;
+        public float Visibility;
+        public string Summary = string.Empty;
     }
 
     /// <summary>Engine-agnostic loader for weather_seasons.json.</summary>

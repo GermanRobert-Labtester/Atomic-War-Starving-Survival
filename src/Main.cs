@@ -18,6 +18,7 @@ using AtomicWar.GodotApp.Muster;
 using AtomicWar.GodotApp.Dose;
 using AtomicWar.GodotApp.UtilityAI;
 using AtomicWar.GodotApp.Radio;
+using AtomicWar.GodotApp.Audio;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
@@ -80,6 +81,7 @@ namespace AtomicWar.GodotApp
         private bool _medicalDirty;
         private WorldHostSession _world = null!;
         private bool _worldDirty;
+        private RadioHostSession _radio = null!;
         private CraftingHostSession _crafting = null!;
         private bool _craftingDirty;
 
@@ -103,6 +105,8 @@ namespace AtomicWar.GodotApp
         private JournalSystem _journal = null!;
         private JournalCodex _journalCodex = null!;
         private JournalBookUI _journalBook = null!;
+        private Ashfall.Core.Events.SimpleEventBus _eventBus = new Ashfall.Core.Events.SimpleEventBus();
+        private AtomicWar.GodotApp.Host.HostEventAdapter _hostEventAdapter = null!;
         private string _dataDir = string.Empty;
         private int _simDay = 4;
 
@@ -139,7 +143,9 @@ namespace AtomicWar.GodotApp
         private MainMenuPanel _mainMenu = null!;
         private GameOverPanel _gameOver = null!;
         private GameHudOverlay _hudOverlay = null!;
+        private GameDashboardPanel _dashboard = null!;
         private VBoxContainer _gameUiContainer = null!;
+        private AudioManager _audio = null!;
         private SettingsPanel _settingsPanel = null!;
         private InventoryPanel _inventoryOverlay = null!;
         private SurvivorsPanel _survivorsOverlay = null!;
@@ -155,6 +161,12 @@ namespace AtomicWar.GodotApp
         private FactionsPanel _factionsPanel = null!;
         private ResearchPanel _researchPanel = null!;
         private ShelterPanel _shelterPanel = null!;
+        private StartingLevelHostSession _startingLevel = null!;
+        private bool _startingLevelDirty;
+        private OpeningProtocolModal _openingProtocolModal = null!;
+        private GreenhouseHostSession _greenhouse = null!;
+        private GreenhousePanel _greenhousePanel = null!;
+        private bool _greenhouseDirty;
         private CombatPanel _combatPanel = null!;
         private MapPanel _mapPanel = null!;
         private SurvivorDetailPanel _survivorDetailPanel = null!;
@@ -181,6 +193,17 @@ namespace AtomicWar.GodotApp
         private CombatHistoryPanel _combatHistoryPanel = null!;
         private MapDetailPanel _mapDetailPanel = null!;
         private EventDetailPanel _eventDetailPanel = null!;
+        private StatusPanel _statusPanel = null!;
+        private SurvivalDetailPanel _survivalDetailPanel = null!;
+        private CraftingDetailPanel _craftingDetailPanel = null!;
+        private TradeDetailPanel _tradeDetailPanel = null!;
+        private ResearchDetailPanel _researchDetailPanel = null!;
+        private WeatherHistoryPanel _weatherHistoryPanel = null!;
+        private FactionHistoryPanel _factionHistoryPanel = null!;
+        private MedicalHistoryPanel _medicalHistoryPanel = null!;
+        private ExpeditionHistoryPanel _expeditionHistoryPanel = null!;
+        private ShelterHistoryPanel _shelterHistoryPanel = null!;
+        private CraftingHistoryPanel _craftingHistoryPanel = null!;
         private enum GameState { Menu, Playing, GameOver }
         private GameState _state = GameState.Menu;
 
@@ -261,11 +284,20 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.JournalUiTest:
                     RunJournalUiTestAndQuit();
                     return;
+                case HostCliAction.DashboardUiTest:
+                    RunDashboardUiTestAndQuit();
+                    return;
+                case HostCliAction.PlayerPanelsUiTest:
+                    RunPlayerPanelsUiTestAndQuit();
+                    return;
                 case HostCliAction.MusterUiTest:
                     RunMusterUiTestAndQuit();
                     return;
                 case HostCliAction.DoseUiTest:
                     RunDoseUiTestAndQuit();
+                    return;
+                case HostCliAction.VerdictUiTest:
+                    RunVerdictUiTestAndQuit();
                     return;
                 case HostCliAction.EconomyUiTest:
                     RunEconomyUiTestAndQuit();
@@ -333,8 +365,30 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.Phase0SelfTest:
                     GetTree().Quit(HostCli.RunPhase0SelfTest());
                     return;
+                case HostCliAction.Day1PlayableSelfTest:
+                    GetTree().Quit(HostCli.RunDay1PlayableSelfTest(_dataDir));
+                    return;
+                case HostCliAction.UiLayoutSelfTest:
+                    GetTree().Quit(HostCli.RunUiLayoutSelfTest(_dataDir));
+                    return;
+                case HostCliAction.SettingsSelfTest:
+                    GetTree().Quit(HostCli.RunSettingsSelfTest(_dataDir));
+                    return;
+                case HostCliAction.PlayableShellSelfTest:
+                    GetTree().Quit(HostCli.RunPlayableShellSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ShelterHazardLoopSelfTest:
+                    GetTree().Quit(HostCli.RunShelterHazardLoopSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ShelterOperationsSelfTest:
+                    GetTree().Quit(HostCli.RunShelterOperationsSelfTest(_dataDir));
+                    return;
+                case HostCliAction.AudioSelfTest:
+                    GetTree().Quit(AtomicWar.GodotApp.Audio.AudioSelfTest.Run());
+                    return;
             }
 
+            AtomicWar.GodotApp.Settings.UserSettingsStore.Apply(AtomicWar.GodotApp.Settings.UserSettingsStore.Current);
             BuildUserInterface();
             SetupJournal();
             SetupIceRoad();
@@ -400,7 +454,15 @@ namespace AtomicWar.GodotApp
 
             if (key.Keycode == Key.J)
             {
-                ToggleJournal();
+                if (_state == GameState.Playing && _dashboard.Visible)
+                    OpenPlayerPanel("journal");
+                else
+                    ToggleJournal();
+                GetViewport().SetInputAsHandled();
+            }
+            else if (key.Keycode == Key.F1 && _state == GameState.Playing)
+            {
+                ToggleDeveloperConsole();
                 GetViewport().SetInputAsHandled();
             }
             else if (_journalBook != null && _journalBook.IsOpen)
@@ -456,6 +518,33 @@ namespace AtomicWar.GodotApp
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
+            // ── Audio manager (buses + playback) ──
+            _audio = new AudioManager();
+            AddChild(_audio);
+
+            // ── Player-facing game shell ──
+            // The old developer workbench remains available behind the DEV CONSOLE
+            // action, but it is not the first thing a player sees after starting a run.
+            _dashboard = new GameDashboardPanel();
+            _dashboard.OnMenuRequested += ReturnToMenu;
+            _dashboard.OnAdvanceDayRequested += OnTickIceRoadClicked;
+            _dashboard.OnSaveRequested += SaveAll;
+            _dashboard.OnDeveloperRequested += ToggleDeveloperConsole;
+            _dashboard.OnOpenPanelRequested += OpenPlayerPanel;
+            _dashboard.OnServiceFilterRequested += () =>
+            {
+                SetupStartingLevel();
+                _startingLevel?.ServiceAirFilter();
+                UpdateHud();
+            };
+            _dashboard.OnReplaceFilterRequested += () =>
+            {
+                SetupStartingLevel();
+                _startingLevel?.ReplaceAirFilter();
+                UpdateHud();
+            };
+            AddChild(_dashboard);
+
             // ── Game UI container (hidden initially) ──
             var gameUiContainer = new VBoxContainer();
             gameUiContainer.SetAnchorsPreset(LayoutPreset.FullRect);
@@ -471,182 +560,264 @@ namespace AtomicWar.GodotApp
             // ── Settings panel (overlay) ──
             _settingsPanel = new SettingsPanel();
             _settingsPanel.OnClose += CloseSettingsPanel;
-            gameUiContainer.AddChild(_settingsPanel);
+            _settingsPanel.OnSettingChanged += OnAudioSettingChanged;
+            AddChild(_settingsPanel);
 
             // ── Inventory overlay panel ──
             _inventoryOverlay = new InventoryPanel();
             _inventoryOverlay.OnClose += CloseInventoryOverlay;
-            gameUiContainer.AddChild(_inventoryOverlay);
+            AddChild(_inventoryOverlay);
 
             // ── Survivors overlay panel ──
             _survivorsOverlay = new SurvivorsPanel();
             _survivorsOverlay.OnClose += CloseSurvivorsOverlay;
-            gameUiContainer.AddChild(_survivorsOverlay);
+            AddChild(_survivorsOverlay);
 
             // ── Crafting panel (overlay) ──
             _craftingPanel = new CraftingPanel();
             _craftingPanel.OnClose += CloseCraftingPanel;
-            gameUiContainer.AddChild(_craftingPanel);
+            AddChild(_craftingPanel);
 
             // ── Radio panel (overlay) ──
             _radioPanel = new RadioPanel();
             _radioPanel.OnClose += CloseRadioPanel;
-            gameUiContainer.AddChild(_radioPanel);
+            _radioPanel.OnRadioBroadcastSent += UpdateHud;
+            AddChild(_radioPanel);
 
             // ── Medical panel (overlay) ──
             _medicalPanel = new MedicalPanel();
             _medicalPanel.OnClose += CloseMedicalPanel;
-            gameUiContainer.AddChild(_medicalPanel);
+            _medicalPanel.OnTreatmentAdministered += UpdateHud;
+            AddChild(_medicalPanel);
 
             // ── Duty Roster panel (overlay) ──
             _dutyRosterPanel = new DutyRosterPanel();
             _dutyRosterPanel.OnClose += CloseDutyRosterPanel;
-            gameUiContainer.AddChild(_dutyRosterPanel);
+            _dutyRosterPanel.OnAssignmentChanged += UpdateHud;
+            AddChild(_dutyRosterPanel);
 
             // ── Economy panel (overlay) ──
             _economyOverlayPanel = new EconomyOverlayPanel();
             _economyOverlayPanel.OnClose += CloseEconomyPanel;
-            gameUiContainer.AddChild(_economyOverlayPanel);
+            AddChild(_economyOverlayPanel);
 
             // ── Expedition panel (overlay) ──
             _expeditionPanel = new ExpeditionPanel();
             _expeditionPanel.OnClose += CloseExpeditionPanel;
-            gameUiContainer.AddChild(_expeditionPanel);
+            _expeditionPanel.OnExpeditionUpdated += UpdateHud;
+            _expeditionPanel.OnLootDeposited += loot =>
+            {
+                UpdateHud();
+                GD.Print($"[Expeditions] Recovered {loot.Count} loot items.");
+            };
+            AddChild(_expeditionPanel);
 
             // ── Weather panel (overlay) ──
             _weatherPanel = new WeatherPanel();
             _weatherPanel.OnClose += CloseWeatherPanel;
-            gameUiContainer.AddChild(_weatherPanel);
+            AddChild(_weatherPanel);
 
             // ── Quests panel (overlay) ──
             _questsPanel = new QuestsPanel();
             _questsPanel.OnClose += CloseQuestsPanel;
-            gameUiContainer.AddChild(_questsPanel);
+            AddChild(_questsPanel);
 
             // ── Journal panel (overlay) ──
             _journalPanel = new JournalPanel();
             _journalPanel.OnClose += CloseJournalPanel;
-            gameUiContainer.AddChild(_journalPanel);
+            AddChild(_journalPanel);
 
             // ── Factions panel (overlay) ──
             _factionsPanel = new FactionsPanel();
             _factionsPanel.OnClose += CloseFactionsPanel;
-            gameUiContainer.AddChild(_factionsPanel);
+            AddChild(_factionsPanel);
 
             // ── Research panel (overlay) ──
             _researchPanel = new ResearchPanel();
             _researchPanel.OnClose += CloseResearchPanel;
-            gameUiContainer.AddChild(_researchPanel);
+            AddChild(_researchPanel);
 
             // ── Shelter panel (overlay) ──
             _shelterPanel = new ShelterPanel();
             _shelterPanel.OnClose += CloseShelterPanel;
-            gameUiContainer.AddChild(_shelterPanel);
+            AddChild(_shelterPanel);
+
+            // ── Greenhouse panel (overlay) ──
+            _greenhousePanel = new GreenhousePanel();
+            _greenhousePanel.OnClose += CloseGreenhousePanel;
+            AddChild(_greenhousePanel);
 
             // ── Combat panel (overlay) ──
             _combatPanel = new CombatPanel();
             _combatPanel.OnClose += CloseCombatPanel;
-            gameUiContainer.AddChild(_combatPanel);
+            AddChild(_combatPanel);
 
             // ── Map panel (overlay) ──
             _mapPanel = new MapPanel();
             _mapPanel.OnClose += CloseMapPanel;
-            gameUiContainer.AddChild(_mapPanel);
+            AddChild(_mapPanel);
 
             // ── Survivor Detail panel (overlay) ──
             _survivorDetailPanel = new SurvivorDetailPanel();
             _survivorDetailPanel.OnClose += CloseSurvivorDetailPanel;
-            gameUiContainer.AddChild(_survivorDetailPanel);
+            AddChild(_survivorDetailPanel);
 
             // ── Inventory Detail panel (overlay) ──
             _inventoryDetailPanel = new InventoryDetailPanel();
             _inventoryDetailPanel.OnClose += CloseInventoryDetailPanel;
-            gameUiContainer.AddChild(_inventoryDetailPanel);
+            AddChild(_inventoryDetailPanel);
 
             // ── Quest Detail panel (overlay) ──
             _questDetailPanel = new QuestDetailPanel();
             _questDetailPanel.OnClose += CloseQuestDetailPanel;
-            gameUiContainer.AddChild(_questDetailPanel);
+            AddChild(_questDetailPanel);
 
             // ── Achievements panel (overlay) ──
             _achievementsPanel = new AchievementsPanel();
             _achievementsPanel.OnClose += CloseAchievementsPanel;
-            gameUiContainer.AddChild(_achievementsPanel);
+            AddChild(_achievementsPanel);
 
             // ── Weather Detail panel (overlay) ──
             _weatherDetailPanel = new WeatherDetailPanel();
             _weatherDetailPanel.OnClose += CloseWeatherDetailPanel;
-            gameUiContainer.AddChild(_weatherDetailPanel);
+            AddChild(_weatherDetailPanel);
 
             // ── Radiation Detail panel (overlay) ──
             _radiationDetailPanel = new RadiationDetailPanel();
             _radiationDetailPanel.OnClose += CloseRadiationDetailPanel;
-            gameUiContainer.AddChild(_radiationDetailPanel);
+            AddChild(_radiationDetailPanel);
 
             // ── Events Log panel (overlay) ──
             _eventsLogPanel = new EventsLogPanel();
             _eventsLogPanel.OnClose += CloseEventsLogPanel;
-            gameUiContainer.AddChild(_eventsLogPanel);
+            AddChild(_eventsLogPanel);
 
             // ── Duty Roster Detail panel (overlay) ──
             _dutyRosterDetailPanel = new DutyRosterDetailPanel();
             _dutyRosterDetailPanel.OnClose += CloseDutyRosterDetailPanel;
-            gameUiContainer.AddChild(_dutyRosterDetailPanel);
+            AddChild(_dutyRosterDetailPanel);
 
             // ── Economy Detail panel (overlay) ──
             _economyDetailPanel = new EconomyDetailPanel();
             _economyDetailPanel.OnClose += CloseEconomyDetailPanel;
-            gameUiContainer.AddChild(_economyDetailPanel);
+            AddChild(_economyDetailPanel);
 
             // ── Combat Detail panel (overlay) ──
             _combatDetailPanel = new CombatDetailPanel();
             _combatDetailPanel.OnClose += CloseCombatDetailPanel;
-            gameUiContainer.AddChild(_combatDetailPanel);
+            AddChild(_combatDetailPanel);
 
             // ── Save/Load panel (overlay) ──
             _saveLoadPanel = new SaveLoadPanel();
             _saveLoadPanel.OnClose += CloseSaveLoadPanel;
-            gameUiContainer.AddChild(_saveLoadPanel);
+            AddChild(_saveLoadPanel);
 
             // ── Tutorial panel (overlay) ──
             _tutorialPanel = new TutorialPanel();
             _tutorialPanel.OnClose += CloseTutorialPanel;
-            gameUiContainer.AddChild(_tutorialPanel);
+            AddChild(_tutorialPanel);
 
             // ── Afflictions panel (overlay) ──
             _afflictionsPanel = new AfflictionsPanel();
             _afflictionsPanel.OnClose += CloseAfflictionsPanel;
-            gameUiContainer.AddChild(_afflictionsPanel);
+            AddChild(_afflictionsPanel);
+
+            // ── Status panel (overlay) ──
+            _statusPanel = new StatusPanel();
+            _statusPanel.OnClose += CloseStatusPanel;
+            AddChild(_statusPanel);
+
+            // ── Survival Detail panel (overlay) ──
+            _survivalDetailPanel = new SurvivalDetailPanel();
+            _survivalDetailPanel.OnClose += CloseSurvivalDetailPanel;
+            AddChild(_survivalDetailPanel);
 
             // ── Weather Forecast panel (overlay) ──
             _weatherForecastPanel = new WeatherForecastPanel();
             _weatherForecastPanel.OnClose += CloseWeatherForecastPanel;
-            gameUiContainer.AddChild(_weatherForecastPanel);
+            AddChild(_weatherForecastPanel);
 
             // ── Radiation History panel (overlay) ──
             _radiationHistoryPanel = new RadiationHistoryPanel();
             _radiationHistoryPanel.OnClose += CloseRadiationHistoryPanel;
-            gameUiContainer.AddChild(_radiationHistoryPanel);
+            AddChild(_radiationHistoryPanel);
 
             // ── Journal Detail panel (overlay) ──
             _journalDetailPanel = new JournalDetailPanel();
             _journalDetailPanel.OnClose += CloseJournalDetailPanel;
-            gameUiContainer.AddChild(_journalDetailPanel);
+            AddChild(_journalDetailPanel);
 
             // ── Combat History panel (overlay) ──
             _combatHistoryPanel = new CombatHistoryPanel();
             _combatHistoryPanel.OnClose += CloseCombatHistoryPanel;
-            gameUiContainer.AddChild(_combatHistoryPanel);
+            AddChild(_combatHistoryPanel);
 
             // ── Map Detail panel (overlay) ──
             _mapDetailPanel = new MapDetailPanel();
             _mapDetailPanel.OnClose += CloseMapDetailPanel;
-            gameUiContainer.AddChild(_mapDetailPanel);
+            AddChild(_mapDetailPanel);
 
             // ── Event Detail panel (overlay) ──
             _eventDetailPanel = new EventDetailPanel();
             _eventDetailPanel.OnClose += CloseEventDetailPanel;
-            gameUiContainer.AddChild(_eventDetailPanel);
+            AddChild(_eventDetailPanel);
+
+            // ── Opening Protocol Directives Modal (Day 1 vertical slice) ──
+            _openingProtocolModal = new OpeningProtocolModal();
+            _openingProtocolModal.OnClose += CloseOpeningProtocolModal;
+            _openingProtocolModal.OnRationPolicySelected += policy =>
+            {
+                SetupStartingLevel();
+                _startingLevel.ResolveMorningRationTriage(policy);
+                int day = _holdfastRuntime?.Day ?? 1;
+                SetupJournal();
+                _journal.TryAddRawEntry(
+                    $"directive_ration_{day}_{policy}",
+                    $"Day {day}: Set ration policy to {policy}. Stores adjusted for the cohort.",
+                    author: null!,
+                    day: day);
+                UpdateHud();
+            };
+            _openingProtocolModal.OnMaintenanceDirectiveSelected += directive =>
+            {
+                SetupStartingLevel();
+                _startingLevel.ResolveMiddayMaintenance(directive);
+                SetupInventory();
+                if (directive == Ashfall.Core.StartingLevel.MaintenanceDirective.ServiceFilterStack)
+                {
+                    _inventory.Remove("scrap_mechanical", 1);
+                }
+                else if (directive == Ashfall.Core.StartingLevel.MaintenanceDirective.FortifyBunksLead)
+                {
+                    _inventory.Remove("scrap_mechanical", 2);
+                    SetupSurvivors();
+                    _survivors.Shelter.UpgradeCeiling("room_bunks_living", Ashfall.Core.Shelter.MaterialShieldingSystem.WallMaterial.Lead);
+                }
+                int day = _holdfastRuntime?.Day ?? 1;
+                SetupJournal();
+                _journal.TryAddRawEntry(
+                    $"directive_maint_{day}_{directive}",
+                    $"Day {day}: Maintenance priority {directive} completed. Structural integrity confirmed.",
+                    author: null!,
+                    day: day);
+                UpdateHud();
+            };
+            _openingProtocolModal.OnRadioProtocolSelected += protocol =>
+            {
+                SetupStartingLevel();
+                _startingLevel.ResolveEveningRadio(protocol);
+                int day = _holdfastRuntime?.Day ?? 1;
+                SetupRadio();
+                _radio.Listen(142.85f);
+                SetupJournal();
+                _journal.TryAddRawEntry(
+                    $"directive_radio_{day}_{protocol}",
+                    $"Day {day}: Radio protocol {protocol} executed on 142.850 MHz carrier frequency.",
+                    author: null!,
+                    day: day);
+                UpdateHud();
+            };
+            AddChild(_openingProtocolModal);
 
             // ── Game content area ──
             var margin = new MarginContainer();
@@ -703,147 +874,97 @@ namespace AtomicWar.GodotApp
             _menuContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             leftBox.AddChild(_menuContainer);
 
-            AddMenuButton("Start Survival Simulation", OnStartGameClicked);
-            AddMenuButton("Tick ice-road day", OnTickIceRoadClicked);
-            AddMenuButton("Cycle weather", OnCycleWeatherClicked);
-            AddMenuButton("Show quest briefing", OnShowBriefingClicked);
-            AddMenuButton("Census honour levy", OnCensusLevyClicked);
-            AddMenuButton("Order 12-C (office acts)", OnOrder12CClicked);
-            AddMenuButton("Unlock plant (salt trade)", OnUnlockPlantClicked);
-            AddMenuButton("Repair membrane (resin)", OnRepairMembraneClicked);
-            AddMenuButton("Toggle outfall shift", OnToggleOutfallClicked);
-            AddMenuButton("Save holdfast state", OnSaveHoldfastClicked);
-            AddMenuButton("Holdfast: open terminal", OnHoldfastOpenClicked);
-            AddMenuButton("Holdfast: new ledger", OnHoldfastNewLedgerClicked);
-            AddMenuButton("Cycle ending (S4)", OnCycleEndingClicked);
-            // ── ASHFALL: THE DUTY ROSTER (Exp 02) ──────────────────────
-            AddMenuButton("Roster: inspect the Chart", OnRosterInspectWallClicked);
-            AddMenuButton("Roster: morning row (pencil)", OnRosterPencilClicked);
-            AddMenuButton("Roster: ink the wall (ending)", OnRosterInkClicked);
-            AddMenuButton("Roster: burn the chart", OnRosterBurnClicked);
-            AddMenuButton("Roster: tick a night (encounters)", OnRosterTickNightClicked);
-            AddMenuButton("Roster: queue a visitor (hatch)", OnRosterVisitorClicked);
-            AddMenuButton("Duty Roster: Second Winter", OnRosterSecondWinterClicked);
-            // ── Waystation · Standing Record · Crossing · Greenhouse ──────
-            AddMenuButton("Waystation: unlock + tick", OnWaystationTickClicked);
-            AddMenuButton("Waystation: assign watch", OnWaystationWatchClicked);
-            AddMenuButton("Standing Record: inspect", OnStandingRecordClicked);
-            AddMenuButton("Standing Record: walk Km 19", OnRecordWalkKm19Clicked);
-            AddMenuButton("Crossing: grant vouch (Osran)", OnCrossingVouchClicked);
-            AddMenuButton("Crossing: burn vouch", OnCrossingBurnClicked);
-            AddMenuButton("Arbitration: load backers", OnArbitrationLoadBackersClicked);
-            AddMenuButton("Arbitration: call Standing", OnArbitrationCallStandingClicked);
-            AddMenuButton("Arbitration: bribe a backer", OnArbitrationBribeClicked);
-            AddMenuButton("Arbitration: overturn ruling", OnArbitrationOverturnClicked);
-            AddMenuButton("Ledger: present + sign contract", OnLedgerSignClicked);
-            AddMenuButton("Ledger: tick day", OnLedgerTickClicked);
-            AddMenuButton("Ledger: pay contract", OnLedgerPayClicked);
-            AddMenuButton("Greenhouse: plant + water", OnGreenhousePlantClicked);
-            AddMenuButton("Greenhouse: tick + harvest", OnGreenhouseTickClicked);
-            AddMenuButton("Hatch Encounter (Year of Ash)", OnDoorEncounterClicked);
-            AddMenuButton("Tick Year of Ash (+10 Days)", OnTickYearOfAshClicked);
-            AddMenuButton("Year of Ash: questlines", OnQuestlinesClicked);
-            // ── Phantom Memory (Antigravity #41) ─────────────────────────
-            AddMenuButton("Phantom Memory: scavenge item", OnPhantomScavengeClicked);
-            AddMenuButton("Phantom Memory: tick hour", OnPhantomTickClicked);
-            AddMenuButton("Phase-0: scavenge trigger", OnPhase0ScavengeClicked);
-            AddMenuButton("Phase-0: raise noise (flashbacks)", OnPhase0NoiseClicked);
-            AddMenuButton("Phase-0: craft specialty item", OnPhase0CraftClicked);
-            AddMenuButton("Phase-0: tick 6 hours", OnPhase0TickClicked);
-            // ── THE DOSE (Exp 07) ───────────────────────────────────────
-            AddMenuButton("Dose: seal dosimeters", OnDoseSealClicked);
-            AddMenuButton("Dose: book a reading", OnDoseScribeClicked);
-            AddMenuButton("Dose: name to Sick List", OnDoseDiagnoseClicked);
-            AddMenuButton("Dose: book a Cohort child", OnDoseCohortClicked);
-            AddMenuButton("Dose: sign a volunteer", OnDoseVolunteerClicked);
-            AddMenuButton("Dose: open the Register", OnDoseRegisterClicked);
-            // ── THE MUSTER (Exp 06) ────────────────────────────────────
-            AddMenuButton("Muster: escalate to Day 260", OnMusterEscalateClicked);
-            AddMenuButton("Muster: show currents (15)", OnMusterRosterClicked);
-            AddMenuButton("Muster: Rate Card War approaches", OnMusterRateCardClicked);
-            AddMenuButton("Muster: rally a deserter", OnMusterRallyClicked);
-            AddMenuButton("Muster: strategy B (Standing Ground)", OnMusterStrategyBClicked);
-            AddMenuButton("Muster: strategy D (Blood Price)", OnMusterStrategyDClicked);
-            AddMenuButton("Muster: three witnesses (Harven)", OnMusterWitnessesClicked);
-            AddMenuButton("Muster: witness author bias", OnMusterAuthorBiasClicked);
-            AddMenuButton("Muster: epilogue matrix", OnMusterEpiloguesClicked);
-            // ── THE VERDICT (Exp 08) ───────────────────────────────────
-            AddMenuButton("Verdict: open the machine readout", OnVerdictOpenClicked);
-            AddMenuButton("Verdict: advance reckoning a day", OnVerdictTickClicked);
-            AddMenuButton("Verdict: census window now", OnVerdictCensusClicked);
-            // ── THE BLACK FLOTILLA (Exp 09 — maritime salvage) ──────────
-            AddMenuButton("Maritime: start stealth dive", OnMaritimeStartDiveClicked);
-            AddMenuButton("Maritime: tick dive 10s", OnMaritimeTickDiveClicked);
-            AddMenuButton("Maritime: scavenge stadium", OnMaritimeScavengeClicked);
-            AddMenuButton("Maritime: contaminate Mikhail", OnMaritimeContaminateClicked);
-            // ── EXPEDITIONS (Encounters port) ───────────────────────────
-            AddMenuButton("Expedition: send Mikhail to Allotments", () => OnExpeditionStartClicked("loc_the_allotments"));
-            AddMenuButton("Expedition: tick 2 hours", OnExpeditionTickClicked);
-            AddMenuButton("Expedition: start Sovereign dive", OnExpeditionDiveClicked);
-            AddMenuButton("Expedition: advance dive", OnExpeditionAdvanceDiveClicked);
-            // ── NARRATIVE · MEDICAL · WORLD · CRAFTING ─────────────────
-            AddMenuButton("Narrative: open the encounter", OnNarrativeOpenClicked);
-            AddMenuButton("Medical: dose Mikhail (opioid)", () => OnMedicalDoseClicked("survivor_gunner_mikhail"));
-            AddMenuButton("Medical: tick 6h + vigil", OnMedicalTickClicked);
-            AddMenuButton("World: tick 6h weather", OnWorldTickClicked);
-            AddMenuButton("World: force fallout storm", OnWorldStormClicked);
-            AddMenuButton("World: plate sky armor (lead)", () => OnWorldSkyArmorClicked("lead"));
-            AddMenuButton("Crafting: start bandage", OnCraftingStartClicked);
-            AddMenuButton("Crafting: finish all", OnCraftingFinishClicked);
-            // ── TRAVELING CARAVANS (Exp V §3.3) ─────────────────────────
-            AddMenuButton("Caravan: spawn Menders' cart", OnCaravanSpawnClicked);
-            AddMenuButton("Caravan: tick a day", OnCaravanTickClicked);
-            AddMenuButton("Caravan: buy water ×2", OnCaravanBuyClicked);
-            // ── INVENTORY (ported from Unity _Game/Inventory) ───────────
-            AddMenuButton("Inventory: open the panel", OnInventoryOpenClicked);
-            AddMenuButton("Inventory: add canned food ×6", () => OnInventoryAddClicked("canned_food", 6));
-            AddMenuButton("Inventory: add clean water ×4", () => OnInventoryAddClicked("clean_water", 4));
-            AddMenuButton("Inventory: add geiger counter", () => OnInventoryAddClicked("geiger_counter", 1));
-            AddMenuButton("Inventory: add gas mask", () => OnInventoryAddClicked("gas_mask", 1));
-            AddMenuButton("Inventory: item check", OnInventoryCheckClicked);
-            // ── SURVIVORS (needs + radiation, from Unity) ──────────────
-            AddMenuButton("Survivors: open panel", OnSurvivorsOpenClicked);
-            AddMenuButton("Survivors: tick 6 hours", OnSurvivorsTickClicked);
-            AddMenuButton("Survivors: expose Mikhail to 60 mSv/hr", () => OnSurvivorsExposeClicked("survivor_gunner_mikhail", 60f));
-            AddMenuButton("Survivors: iodine for Mikhail", () => OnSurvivorsIodineClicked("survivor_gunner_mikhail"));
-            AddMenuButton("Survivors: anti-rad for Mikhail", () => OnSurvivorsAntiRadClicked("survivor_gunner_mikhail", 30f));
-            // ── ECONOMY (market core) ─────────────────────────────────
-            AddMenuButton("Economy: open market", OnEconomyOpenClicked);
-            AddMenuButton("Economy: tick 1 day", OnEconomyTickClicked);
-            AddMenuButton("Economy: buy 4 clean water", () => OnEconomyBuyClicked("clean_water", 4));
-            AddMenuButton("Economy: barter 20 scrap for water", () => OnEconomyBarterClicked("scrap_metal", 20, "clean_water"));
-            AddMenuButton("Economy: save", OnEconomySaveClicked);
-            // ── UTILITY AI (NPC decisions) ───────────────────────────
-            AddMenuButton("Utility AI: evaluate demo survivor", OnUtilityAiEvaluateClicked);
-            AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
-            AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Settings: audio & gameplay", () => { _settingsPanel.Open(); });
-            AddMenuButton("Crafting: open panel", () => { _craftingPanel.Open(); });
-            AddMenuButton("Radio: open panel", () => { _radioPanel.Open(); });
-            AddMenuButton("Medical: open panel", () => { _medicalPanel.Open(); });
-            AddMenuButton("Duty Roster: open panel", () => { _dutyRosterPanel.Open(); });
-            AddMenuButton("Economy: open panel", () => { _economyOverlayPanel.Open(); });
-            AddMenuButton("Expeditions: open panel", () => { _expeditionPanel.Open(); });
-            AddMenuButton("Weather: open panel", () => { _weatherPanel.Open(); });
-            AddMenuButton("Quests: open panel", () => { _questsPanel.Open(); });
-            AddMenuButton("Journal: open panel", () => { _journalPanel.Open(); });
-            AddMenuButton("Factions: open panel", () => { _factionsPanel.Open(); });
-            AddMenuButton("Research: open panel", () => { _researchPanel.Open(); });
-            AddMenuButton("Shelter: open panel", () => { _shelterPanel.Open(); });
-            AddMenuButton("Combat: open panel", () => { _combatPanel.Open(); });
-            AddMenuButton("Map: open panel", () => { _mapPanel.Open(); });
-            AddMenuButton("Achievements: open panel", () => { _achievementsPanel.Open(); });
-            AddMenuButton("Save/Load: open panel", () => { _saveLoadPanel.Open(); });
-            AddMenuButton("Tutorial: open panel", () => { _tutorialPanel.Open(); });
-            AddMenuButton("Afflictions: open panel", () => { _afflictionsPanel.Open(); });
-            AddMenuButton("Weather Forecast: open panel", () => { _weatherForecastPanel.Open(); });
-            AddMenuButton("Radiation History: open panel", () => { _radiationHistoryPanel.Open(); });
-            AddMenuButton("Journal Detail: open panel", () => { _journalDetailPanel.Open(); });
-            AddMenuButton("Combat History: open panel", () => { _combatHistoryPanel.Open(); });
-            AddMenuButton("Map Detail: open panel", () => { _mapDetailPanel.Open(); });
-            AddMenuButton("Event Detail: open panel", () => { _eventDetailPanel.Open(); });
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); GetTree().Quit(); });
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); SavePhase0(); GetTree().Quit(); });
+            MainMenuBuilder.BuildMenu(
+                _menuContainer,
+                AddMenuButton,
+                AddSectionHeader,
+                OnColdCountClicked,
+                OnHydroBaronsClicked,
+                OnIronRaidersClicked,
+                OnLongWalkClicked,
+                OnProvisionedClicked,
+                OnScavengerGuildClicked,
+                OnStartGameClicked,
+                OnTickIceRoadClicked,
+                OnCycleWeatherClicked,
+                OnShowBriefingClicked,
+                OnCensusLevyClicked,
+                OnOrder12CClicked,
+                OnUnlockPlantClicked,
+                OnRepairMembraneClicked,
+                OnToggleOutfallClicked,
+                OnSaveHoldfastClicked,
+                OnHoldfastOpenClicked,
+                OnHoldfastNewLedgerClicked,
+                OnCycleEndingClicked,
+                OnRosterInspectWallClicked,
+                OnRosterPencilClicked,
+                OnRosterInkClicked,
+                OnRosterBurnClicked,
+                OnRosterTickNightClicked,
+                OnRosterVisitorClicked,
+                OnRosterSecondWinterClicked,
+                OnWaystationTickClicked,
+                OnWaystationWatchClicked,
+                OnStandingRecordClicked,
+                OnRecordWalkKm19Clicked,
+                OnCrossingVouchClicked,
+                OnCrossingBurnClicked,
+                OnArbitrationLoadBackersClicked,
+                OnArbitrationCallStandingClicked,
+                OnArbitrationBribeClicked,
+                OnArbitrationOverturnClicked,
+                OnLedgerSignClicked,
+                OnLedgerTickClicked,
+                OnLedgerPayClicked,
+                OnGreenhousePlantClicked,
+                OnGreenhouseTickClicked,
+                OnDoorEncounterClicked,
+                OnTickYearOfAshClicked,
+                OnQuestlinesClicked,
+                OnPhantomScavengeClicked,
+                OnPhantomTickClicked,
+                OnPhase0ScavengeClicked,
+                OnPhase0NoiseClicked,
+                OnPhase0CraftClicked,
+                OnPhase0TickClicked,
+                OnDoseSealClicked,
+                OnDoseScribeClicked,
+                OnDoseDiagnoseClicked,
+                OnDoseCohortClicked,
+                OnDoseVolunteerClicked,
+                OnDoseRegisterClicked,
+                OnMusterEscalateClicked,
+                OnMusterRallyClicked,
+                OnMusterWitnessesClicked,
+                OnVerdictOpenClicked,
+                OnVerdictTickClicked,
+                OnVerdictCensusClicked,
+                OnMaritimeStartDiveClicked,
+                OnMaritimeTickDiveClicked,
+                OnMaritimeScavengeClicked,
+                OnExpeditionTickClicked,
+                OnExpeditionDiveClicked,
+                OnViewCodexClicked,
+                OnDiagnosticsClicked,
+                OnEconomyOpenClicked,
+                OnInventoryOpenClicked,
+                OnSurvivorsOpenClicked,
+                OpenSettingsPanel,
+                OpenCraftingPanel,
+                OpenRadioPanel,
+                OpenMedicalPanel,
+                OpenDutyRosterPanel,
+                OpenExpeditionPanel,
+                OpenWeatherPanel,
+                OpenQuestsPanel,
+                OpenJournalPanel,
+                OpenFactionsPanel,
+                OpenShelterPanel,
+                OpenCombatPanel,
+                OpenMapPanel,
+                OpenSaveLoadPanel,
+                OnExitGameClicked);
 
             _statusLabel = new Label
             {
@@ -929,6 +1050,9 @@ namespace AtomicWar.GodotApp
             _mainMenu = new MainMenuPanel();
             _mainMenu.OnNewGame += StartNewGame;
             _mainMenu.OnContinue += ContinueGame;
+            _mainMenu.OnSettings += () => { _settingsPanel.Open(); };
+            _mainMenu.OnCodex += () => { OpenPlayerPanel("codex"); };
+            _mainMenu.OnJournal += () => { OpenPlayerPanel("journal"); };
             _mainMenu.OnQuit += () => { SaveAll(); GetTree().Quit(); };
             AddChild(_mainMenu);
 
@@ -956,6 +1080,13 @@ namespace AtomicWar.GodotApp
             btn.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             btn.Pressed += callback;
             _menuContainer.AddChild(btn);
+        }
+
+        private void AddSectionHeader(string title)
+        {
+            var lbl = AtomicWar.GodotApp.UI.AshfallUiHelpers.MakeSectionHeader(title);
+            lbl.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+            _menuContainer.AddChild(lbl);
         }
 
         // -----------------------------------------------------------------
@@ -1033,6 +1164,20 @@ namespace AtomicWar.GodotApp
             if (_journal == null) return;
             JournalSaveStore.Save(_journal.CaptureState());
             _journalDirty = false;
+        }
+
+        private void SetupEventAdapter()
+        {
+            if (_hostEventAdapter != null) return;
+            SetupJournal();
+            if (_eventBus == null) _eventBus = new Ashfall.Core.Events.SimpleEventBus();
+            _hostEventAdapter = new AtomicWar.GodotApp.Host.HostEventAdapter(_eventBus, _journal);
+            _hostEventAdapter.OnEventDispatched += (id, desc) =>
+            {
+                if (_statusLabel != null)
+                    _statusLabel.Text = $"[EVENT DISPATCHED] {id}: {desc}";
+                _journalDirty = true;
+            };
         }
 
         /// <summary>
@@ -1237,6 +1382,18 @@ namespace AtomicWar.GodotApp
             if (_holdfastRuntime != null && !_holdfastRuntime.IsDead)
                 _holdfastRuntime.TickDay();
 
+            SetupStartingLevel();
+            _startingLevel.TickDay();
+
+            SetupInventory();
+            int foodToConsume = _startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Half ? 2 : 3;
+            int waterToConsume = _startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Irradiated ? 0 : (_startingLevel.System.State.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Half ? 2 : 3);
+            _inventory.Remove("canned_food", foodToConsume);
+            if (waterToConsume > 0)
+                _inventory.Remove("clean_water", waterToConsume);
+            else
+                _inventory.Remove("irradiated_water", 2);
+
             TickVerdict(day, LivingDwellerCountEstimate());
 
             // Year of Ash (Days 180–360): advance the timeline + faction war +
@@ -1257,6 +1414,16 @@ namespace AtomicWar.GodotApp
             SetupExpansions();
             if (_expansions.Greenhouse.PlotCount > 0)
                 _expansions.TickGreenhouse(day);
+
+            SetupGreenhouse();
+            _greenhouse.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.04f);
+
+            SetupEventAdapter();
+            bool hydroAudit = _muster?.HydroBarons?.AdminReform ?? false;
+            bool hydroSeized = _muster?.HydroBarons?.PlantSeized ?? false;
+            bool osteophageInquiry = (_yearOfAsh != null && _yearOfAsh.Timeline.CurrentDay >= 205) || day >= 205;
+            bool coldCountBroadcast = _muster?.ColdCount?.BroadcastSent ?? false;
+            _hostEventAdapter?.EvaluateTriggers(day, hydroAudit, hydroSeized, osteophageInquiry, coldCountBroadcast);
 
             UpdateHud();
             SaveAll();
@@ -1783,7 +1950,15 @@ namespace AtomicWar.GodotApp
         {
             if (_inventory != null) return;
             _inventory = InventoryHostSession.Create(_dataDir);
-            _inventory.StateChanged += () => SaveInventory();
+            _inventory.StateChanged += () =>
+            {
+                SaveInventory();
+                _inventoryPanel?.RefreshView();
+                _inventoryOverlay?.RefreshView();
+                _medicalPanel?.RefreshView();
+                _shelterPanel?.RefreshView();
+                if (_state == GameState.Playing) UpdateHud();
+            };
 
             if (_inventoryPanel == null && _rightColumn != null)
             {
@@ -1795,6 +1970,7 @@ namespace AtomicWar.GodotApp
                 _inventoryPanel.Bind(_inventory);
                 _inventoryPanel.RefreshView();
             }
+            _inventoryOverlay?.Bind(_inventory);
         }
 
         private void OnInventoryOpenClicked()
@@ -1858,7 +2034,14 @@ namespace AtomicWar.GodotApp
             _survivors = new SurvivorsHostSession();
             _survivors.LoadCatalog(_dataDir);
             _survivors.SeedDemoRoster();
-            _survivors.StateChanged += () => SaveSurvivors();
+            _survivors.StateChanged += () =>
+            {
+                SaveSurvivors();
+                _survivorsOverlay?.RefreshView();
+                _medicalPanel?.RefreshView();
+                _shelterPanel?.RefreshView();
+                if (_state == GameState.Playing) UpdateHud();
+            };
 
             var save = SurvivorsSaveStore.TryLoad();
             if (save != null && save.survivors.Count > 0)
@@ -2061,7 +2244,115 @@ namespace AtomicWar.GodotApp
                      (_muster.Engine.MusterTriggered ? " — THE MUSTER IS OPEN." : "."));
         }
 
-        private void OnMusterEscalateClicked()
+        public void OnColdCountClicked()
+        {
+            SetupMuster();
+            var cc = _muster.ColdCount;
+            _codexViewer.Text =
+                "=== FACTION: COLD COUNT (142.850 MHz) ===\n" +
+                $"Is Active: {cc.State.isActive}\n" +
+                $"Power Supplied Days: {cc.PowerSuppliedDays}/{Ashfall.Core.Muster.ColdCountState.RequiredPowerDays}\n" +
+                $"Shielding Delivered: {cc.ShieldingDelivered}/{Ashfall.Core.Muster.ColdCountState.RequiredShieldingUnits}\n" +
+                $"Provenance Complete: {cc.ProvenanceDataComplete}\n" +
+                $"Broadcast Sent: {cc.BroadcastSent} (Day {cc.State.broadcastDay})\n" +
+                $"Trust: {cc.State.trust:F1}\n\n" +
+                "The four researchers at loc_low_background_lab hold the isotopic provenance of who fired first.";
+            _statusLabel.Text = $"Cold Count: {cc.PowerSuppliedDays}d power, {cc.ShieldingDelivered} shielding units.";
+        }
+
+        public void OnHydroBaronsClicked()
+        {
+            SetupMuster();
+            var hb = _muster.HydroBarons;
+            _codexViewer.Text =
+                "=== FACTION: COASTAL HYDRO-BARONS ===\n" +
+                $"Is Active: {hb.State.isActive}\n" +
+                $"Rate Card Revised: {hb.RateCardRevised}\n" +
+                $"Plant Seized: {hb.PlantSeized}\n" +
+                $"Admin Reform: {hb.AdminReform}\n" +
+                $"Queue Position: {hb.QueuePosition}\n" +
+                $"Trust: {hb.State.trust:F1}\n" +
+                $"Approach: {(string.IsNullOrEmpty(hb.State.approach) ? "Unresolved" : hb.State.approach)}\n\n" +
+                "The Rate Card War at Desalination Unit 4. The iron chit queue governs fresh water allocation.";
+            _statusLabel.Text = $"Hydro-Barons: Queue Pos {hb.QueuePosition}, Approach {hb.State.approach}.";
+        }
+
+        public void OnIronRaidersClicked()
+        {
+            SetupMuster();
+            var ir = _muster.IronRaiders;
+            _codexViewer.Text =
+                "=== FACTION: IRON RAIDERS (DEN DEFENSE) ===\n" +
+                $"Is Active: {ir.State.isActive}\n" +
+                $"Aggression Level: {ir.AggressionLevel:P0}\n" +
+                $"Shelter Visibility: {ir.State.shelterVisibility:P0}\n" +
+                $"Raid Chance Today: {ir.EvaluateRaidChance():P0}\n" +
+                $"Raids This Season: {ir.RaidsThisSeason}\n\n" +
+                "The Toll's den at loc_iron_raiders_den. Fortifying approach routes reduces shelter visibility and raid chance.";
+            _statusLabel.Text = $"Iron Raiders: Aggression {ir.AggressionLevel:P0}, Raid Chance {ir.EvaluateRaidChance():P0}.";
+        }
+
+        public void OnLongWalkClicked()
+        {
+            SetupMuster();
+            var lw = _muster.LongWalk;
+            _codexViewer.Text =
+                "=== FACTION: THE LONG WALK (CIRCUIT TRADER) ===\n" +
+                $"Is Active: {lw.State.isActive}\n" +
+                $"Current Region: {lw.State.currentRegion}\n" +
+                $"Days Until Departure: {lw.State.daysUntilDeparture}\n" +
+                $"Crossings Completed: {lw.State.crossingsCompleted}\n" +
+                $"Escort Count: {lw.State.escortCount}\n" +
+                $"Resupply Count: {lw.State.resupplyCount}\n\n" +
+                "Osric Fane's circuit trader across six regions. Requests return a deliberately stale situation report.";
+            _statusLabel.Text = $"Long Walk: in {lw.State.currentRegion}, departs in {lw.State.daysUntilDeparture} days.";
+        }
+
+        public void OnProvisionedClicked()
+        {
+            SetupMuster();
+            var ps = _muster.Provisioned;
+            _codexViewer.Text =
+                "=== FACTION: THE PROVISIONED (SECOND WINTER) ===\n" +
+                $"Is Active: {ps.State.isActive}\n" +
+                $"Respect Score: {ps.RespectScore}/{Ashfall.Core.Muster.ProvisionedState.ContactThreshold}\n" +
+                $"Contact Made: {ps.HaveMadeContact}\n" +
+                $"Unlocked Trades: {ps.State.unlockedTradeIds.Count}\n\n" +
+                "Pre-war stockholders behind Quenna Brix at loc_second_winter_homestead. Respect is earned unprompted.";
+            _statusLabel.Text = $"The Provisioned: Respect {ps.RespectScore}, Contact: {ps.HaveMadeContact}.";
+        }
+
+        public void OnScavengerGuildClicked()
+        {
+            SetupMuster();
+            var sg = _muster.ScavengerGuild;
+            _codexViewer.Text =
+                "=== FACTION: SCAVENGER GUILD (CLAIM MAP) ===\n" +
+                $"Is Active: {sg.State.isActive}\n" +
+                $"Claimed Sites: {sg.State.claimedSiteIds.Count}\n" +
+                $"Blacklisted Shelters: {sg.State.blacklistedShelterIds.Count}\n" +
+                $"Trust: {sg.Trust:F1}\n\n" +
+                "Brannick Sten's two-color claim ledger at loc_scavenger_guildhall. Over-stripping permanently blacklists.";
+            _statusLabel.Text = $"Scavenger Guild: {sg.State.claimedSiteIds.Count} claims, Trust {sg.Trust:F1}.";
+        }
+
+        public void OpenSettingsPanel() => _settingsPanel?.Open();
+        public void OpenCraftingPanel() => _craftingPanel?.Open();
+        public void OpenRadioPanel() => _radioPanel?.Open();
+        public void OpenMedicalPanel() => _medicalPanel?.Open();
+        public void OpenDutyRosterPanel() => _dutyRosterPanel?.Open();
+        public void OpenExpeditionPanel() => _expeditionPanel?.Open();
+        public void OpenWeatherPanel() => _weatherPanel?.Open();
+        public void OpenQuestsPanel() => _questsPanel?.Open();
+        public void OpenJournalPanel() => _journalPanel?.Open();
+        public void OpenFactionsPanel() => _factionsPanel?.Open();
+        public void OpenShelterPanel() => _shelterPanel?.Open();
+        public void OpenCombatPanel() => _combatPanel?.Open();
+        public void OpenMapPanel() => _mapPanel?.Open();
+        public void OpenSaveLoadPanel() => _saveLoadPanel?.Open();
+        public void OnExitGameClicked() { SaveAll(); GetTree().Quit(); }
+
+        public void OnMusterEscalateClicked()
         {
             SetupMuster();
             int target = Math.Min(360, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay + 10 : _simDay + 10);
@@ -2226,6 +2517,8 @@ namespace AtomicWar.GodotApp
             _verdict.AdvanceDay(day, Math.Max(1, livingCount), _verdict.MachineLog.ReadCount());
             _verdict.TickCensus();
             _verdict.TickCorruption(day);
+            _verdict.TickRadio(day);
+            _verdict.EnrollEvidenceFromItems(day);
 
             // Phase 6.D Chain 1 (Census / Human Cost): record any dwellings that
             // dropped out of coverage between this day and the previous tick.
@@ -2423,7 +2716,11 @@ namespace AtomicWar.GodotApp
         {
             if (_medical != null) return;
             _medical = MedicalHostSession.Create(_dataDir);
-            _medical.StateChanged += () => _medicalDirty = true;
+            _medical.StateChanged += () =>
+            {
+                _medicalDirty = true;
+                _medicalPanel?.RefreshView();
+            };
             GD.Print("[Ashfall Godot] Medical host ready.");
         }
 
@@ -2456,8 +2753,27 @@ namespace AtomicWar.GodotApp
         {
             if (_world != null) return;
             _world = WorldHostSession.Create(_dataDir);
-            _world.StateChanged += () => _worldDirty = true;
+            _world.StateChanged += () =>
+            {
+                _worldDirty = true;
+                _weatherPanel?.RefreshView();
+                _shelterPanel?.RefreshView();
+                if (_state == GameState.Playing) UpdateHud();
+            };
             GD.Print("[Ashfall Godot] World host ready.");
+        }
+
+        private void SetupRadio()
+        {
+            if (_radio != null)
+            {
+                _radio.SetDay(_core != null ? _core.Clock.Day : _simDay);
+                return;
+            }
+
+            _radio = RadioHostSession.Create(_dataDir, _core != null ? _core.Clock.Day : _simDay);
+            _radio.StateChanged += () => _radioPanel?.RefreshView();
+            GD.Print("[Ashfall Godot] Radio host ready.");
         }
 
         private void SaveWorld()
@@ -2553,6 +2869,71 @@ namespace AtomicWar.GodotApp
         private void FlushYearOfAshIfDirty()
         {
             if (_yearOfAshDirty) SaveYearOfAsh();
+        }
+
+        // ── STARTING LEVEL & HOLDFAST DIRECTIVES ───────────────────────
+
+        private void SetupStartingLevel()
+        {
+            if (_startingLevel != null) return;
+            _startingLevel = StartingLevelHostSession.Create();
+            _startingLevel.StateChanged += () =>
+            {
+                _startingLevelDirty = true;
+                _openingProtocolModal?.RefreshView();
+                if (_state == GameState.Playing) UpdateHud();
+            };
+            if (_openingProtocolModal != null)
+                _openingProtocolModal.Bind(_startingLevel);
+            GD.Print("[Ashfall Godot] Starting level host ready.");
+        }
+
+        private void SaveStartingLevel()
+        {
+            if (_startingLevel == null) return;
+            if (StartingLevelSaveStore.TrySave(_startingLevel.CaptureState()))
+            {
+                _startingLevelDirty = false;
+                GD.Print("[Ashfall Godot] Starting level save written.");
+            }
+        }
+
+        private void CloseOpeningProtocolModal()
+        {
+            _openingProtocolModal.Visible = false;
+        }
+
+        // ── GREENHOUSE / THE GLASS ORCHARD (Exp 05 / XI) ───────────────
+
+        private void SetupGreenhouse()
+        {
+            if (_greenhouse != null) return;
+            SetupInventory();
+            _greenhouse = GreenhouseHostSession.Create(_inventory);
+            _greenhouse.StateChanged += () =>
+            {
+                _greenhouseDirty = true;
+                _greenhousePanel?.RefreshView();
+                if (_state == GameState.Playing) UpdateHud();
+            };
+            if (_greenhousePanel != null)
+                _greenhousePanel.Bind(_greenhouse);
+            GD.Print("[Ashfall Godot] Greenhouse host ready.");
+        }
+
+        private void SaveGreenhouse()
+        {
+            if (_greenhouse == null) return;
+            if (GreenhouseSaveStore.TrySave(_greenhouse.CaptureSave()))
+            {
+                _greenhouseDirty = false;
+                GD.Print("[Ashfall Godot] Greenhouse save written.");
+            }
+        }
+
+        private void CloseGreenhousePanel()
+        {
+            _greenhousePanel.Visible = false;
         }
 
         private void OnCaravanSpawnClicked()
@@ -3154,6 +3535,50 @@ namespace AtomicWar.GodotApp
             GetTree().Quit(pass ? 0 : 1);
         }
 
+        /// <summary>Headless smoke: THE MACHINE'S REGISTER panel builds, binds to the
+        /// Verdict session, the TRANSMISSIONS section renders all 13 broadcasts once
+        /// the Reckoning reaches Culpable with radio fired, and refresh is leak-free.</summary>
+        private void RunVerdictUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupVerdict();
+
+            bool panel = _verdictPanel != null;
+            bool session = _verdict != null;
+
+            // Drive a machine-log read to enroll a first piece of evidence.
+            _verdict.MachineLog.Post("loc_geophone_pit_1", 166, "operating", "a tap.", "evidence_geophone_hymn");
+            _verdict.MachineLog.ReadEntry(0);
+            _verdict.Evidence.Enroll("evidence_geophone_hymn", 166);
+
+            // Advance Knowing → Culpable (evidence gate, day >= 210) then fire radio.
+            int living = 14;
+            _verdict.AdvanceDay(200, living, _verdict.MachineLog.ReadCount()); // → Knowing
+            _verdict.AdvanceDay(211, living, _verdict.MachineLog.ReadCount()); // → Culpable
+            _verdict.TickRadio(211); // pilot carrier (trigger 210) fires immediately in the window
+            bool carrierOpenSoon = _verdict.Radio.HasFired("radio_verdict_carrier_on_window");
+
+            _verdict.TickRadio(260); // fires the corpus whose dayTrigger <= 260
+            bool someFired = _verdict.Radio.FiredCount > 0;
+
+            // Refresh the panel and count rendered transmission rows (expect all 13).
+            _verdictPanel.RefreshView();
+            int rows = _verdictPanel.RenderedRadioRowCount();
+            bool transmissions = rows == 13;
+
+            // Leak check: repeat refresh must not double the row count.
+            _verdictPanel.RefreshView();
+            int rows2 = _verdictPanel.RenderedRadioRowCount();
+            bool noLeak = rows2 == 13;
+
+            bool pass = panel && session && carrierOpenSoon && someFired && transmissions && noLeak;
+            GD.Print($"[VerdictUiTest] panel={panel} session={session} " +
+                     $"carrierOpenSoon={carrierOpenSoon} someFired={someFired} " +
+                     $"transmissions={transmissions}({rows}) noLeak={noLeak}");
+            GD.Print(pass ? "VERDICT_UITEST PASS" : "VERDICT_UITEST FAIL");
+            GetTree().Quit(pass ? 0 : 1);
+        }
+
         /// <summary>Headless smoke: inventory panel builds, add/equip/check flow, save roundtrip.</summary>
         private void RunInventoryUiTestAndQuit()
         {
@@ -3297,6 +3722,85 @@ namespace AtomicWar.GodotApp
             GetTree().Quit(pass ? 0 : 1);
         }
 
+        /// <summary>Headless smoke test for the player-facing Godot shell.</summary>
+        private void RunDashboardUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupHoldfastRuntime();
+            UpdateHud();
+            _dashboard.Visible = true;
+
+            bool shellBuilt = _dashboard.GetChildCount() > 0 && _dashboard.Visible;
+            bool overlayParentedToRoot = _inventoryOverlay.GetParent() == this;
+            OpenPlayerPanel("inventory");
+            bool inventoryOpened = _inventoryOverlay.Visible;
+            CloseAllOverlayPanels();
+
+            bool liveSources = _world != null && _inventory != null && _survivors != null;
+            bool pass = shellBuilt && overlayParentedToRoot && inventoryOpened && liveSources;
+            GD.Print($"[DashboardUiTest] shell={shellBuilt} rootOverlay={overlayParentedToRoot} inventory={inventoryOpened} liveSources={liveSources}");
+            GD.Print(pass ? "DASHBOARD_UITEST PASS" : "DASHBOARD_UITEST FAIL");
+            GetTree().Quit(pass ? 0 : 1);
+        }
+
+        /// <summary>
+        /// Headless smoke for the five player-facing session panels. Each view
+        /// is bound, opened, and checked through its live read-model surface.
+        /// </summary>
+        private void RunPlayerPanelsUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupSurvivors();
+            SetupInventory();
+            SetupMedical();
+            SetupWorld();
+            SetupRadio();
+
+            _survivorsOverlay.Bind(_survivors);
+            _survivorsOverlay.Open();
+            bool survivors = _survivorsOverlay.IsBound
+                && _survivorsOverlay.RenderedSurvivorCount == _survivors.RosterState.Count
+                && _survivorsOverlay.Visible;
+            CloseAllOverlayPanels();
+
+            _medicalPanel.Bind(_medical, _survivors, _inventory);
+            _medicalPanel.Open();
+            bool medical = _medicalPanel.IsBound
+                && _medicalPanel.RenderedHealthCount >= _survivors.RosterState.Count
+                && _medicalPanel.Visible;
+            CloseAllOverlayPanels();
+
+            _world.ForceDemo(Ashfall.Core.WeatherKind.FalloutStorm);
+            _weatherPanel.Bind(_world);
+            _weatherPanel.Open();
+            bool weather = _weatherPanel.IsBound
+                && _weatherPanel.BoundWeather == Ashfall.Core.WeatherKind.FalloutStorm
+                && _weatherPanel.RenderedHazardCount > 0
+                && _weatherPanel.Visible;
+            CloseAllOverlayPanels();
+
+            _radioPanel.Bind(_radio);
+            _radioPanel.Open();
+            bool radio = _radioPanel.IsBound
+                && _radio.Engine.FactionCount > 0
+                && _radioPanel.RenderedSignalCount > 0
+                && _radioPanel.Visible;
+            CloseAllOverlayPanels();
+
+            _shelterPanel.Bind(_survivors, _world, _inventory);
+            _shelterPanel.Open();
+            bool shelter = _shelterPanel.IsBound
+                && _shelterPanel.RenderedStructureCount > 0
+                && _shelterPanel.Visible;
+            CloseAllOverlayPanels();
+
+            bool pass = survivors && medical && weather && radio && shelter;
+            GD.Print($"[PlayerPanelsUiTest] survivors={survivors} medical={medical} weather={weather} " +
+                     $"radio={radio} shelter={shelter}");
+            GD.Print(pass ? "PLAYER_PANELS_UITEST PASS" : "PLAYER_PANELS_UITEST FAIL");
+            GetTree().Quit(pass ? 0 : 1);
+        }
+
         // -----------------------------------------------------------------
         // Menu callbacks
         // -----------------------------------------------------------------
@@ -3348,17 +3852,27 @@ namespace AtomicWar.GodotApp
             _state = GameState.Playing;
             _mainMenu.Visible = false;
             _gameOver.Visible = false;
-            _gameUiContainer.Visible = true;
+            _gameUiContainer.Visible = false;
+            _dashboard.Visible = true;
+            CloseAllOverlayPanels();
+
+            _audio?.StopMusic();
+            _audio?.PlayGameplayMusic();
+            _audio?.StartBunkerAmbience();
 
             // A new game must not inherit the previous run's in-memory sessions or
             // on-disk saves. Null every session so the next SetupXxx re-creates clean,
             // and delete the store files so Continue stays disabled for a fresh run.
             ResetAllSessions();
 
-            // Initialize Holdfast
+            // Initialize Holdfast & Starting Level
             SetupHoldfastRuntime();
             _holdfastTerminal.PressNewLedger();
             _holdfastTerminal.OpenTerminal();
+
+            SetupStartingLevel();
+            _openingProtocolModal.Bind(_startingLevel);
+            _openingProtocolModal.Open();
 
             // Update HUD
             UpdateHud();
@@ -3398,6 +3912,8 @@ namespace AtomicWar.GodotApp
             _crafting = null!;
             _caravans = null!;
             _yearOfAsh = null!;
+            _startingLevel = null!;
+            _greenhouse = null!;
             // The Year of Ash panel holds widgets bound to the old session; drop it
             // so BuildYearOfAshPanel re-creates and rebinds to the fresh session.
             if (_yearOfAshPanel != null && _rightColumn != null && _yearOfAshPanel.IsInsideTree())
@@ -3424,6 +3940,8 @@ namespace AtomicWar.GodotApp
             _craftingDirty = false;
             _caravansDirty = false;
             _phase0Dirty = false;
+            _startingLevelDirty = false;
+            _greenhouseDirty = false;
 
             foreach (var file in new[]
             {
@@ -3433,7 +3951,8 @@ namespace AtomicWar.GodotApp
                 "economy_save.json", "muster_save.json", "verdict_save.json",
                 "maritime_save.json", "expedition_save.json", "narrative_save.json",
                 "medical_save.json", "world_save.json", "crafting_save.json",
-                "caravan_save.json", "journal_save.json", "year_of_ash_save.json"
+                "caravan_save.json", "journal_save.json", "year_of_ash_save.json",
+                "starting_level_save.json", "greenhouse_save.json"
             })
             {
                 string p = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), file);
@@ -3444,18 +3963,48 @@ namespace AtomicWar.GodotApp
         }
 
 
+        /// <summary>
+        /// Restore every persisted subsystem and rebuild player-facing UI so a continued
+        /// campaign presents the same state that was saved — no silent resets, no fresh-state seeding.
+        /// </summary>
         private void ContinueGame()
         {
             _state = GameState.Playing;
             _mainMenu.Visible = false;
             _gameOver.Visible = false;
-            _gameUiContainer.Visible = true;
+            _gameUiContainer.Visible = false;
+            _dashboard.Visible = true;
+            CloseAllOverlayPanels();
 
-            // Load existing save
+            // Restore sessions in dependency-safe order. Each SetupXxx calls its *SaveStore.TryLoad()
+            // when present; if no save exists it creates clean/default state so panels never see null.
             SetupHoldfastRuntime();
             _holdfastTerminal.OpenTerminal();
 
-            // Update HUD
+            SetupStartingLevel();
+            SetupSurvivors();
+            SetupInventory();
+            SetupMedical();
+            SetupWorld();
+            SetupRadio();
+            SetupCrafting();
+            SetupCaravans();
+            SetupExpeditions();
+            SetupNarrative();
+            SetupEconomy();
+            SetupUtilityAi();
+            SetupDutyRoster();
+            SetupVerdict();
+            SetupMaritime();
+            SetupPhantom();
+            SetupPhase0();
+            SetupDoseLedger();
+            SetupMuster();
+            SetupYearOfAsh();
+            SetupExpansions();
+            SetupGreenhouse();
+
+            // Update HUD after everything is restored/bound.
             UpdateHud();
 
             _statusLabel.Text = "Save loaded. The ledger continues.";
@@ -3465,13 +4014,14 @@ namespace AtomicWar.GodotApp
         {
             _state = GameState.Menu;
             _gameUiContainer.Visible = false;
+            _dashboard.Visible = false;
             _gameOver.Visible = false;
             _mainMenu.Visible = true;
 
-            // Close any open overlays
-            _settingsPanel.Visible = false;
-            _inventoryOverlay.Visible = false;
-            _survivorsOverlay.Visible = false;
+            _audio?.StopAmbience();
+            _audio?.StopMusic();
+
+            CloseAllOverlayPanels();
 
             // Save before returning
             SaveAll();
@@ -3481,9 +4031,175 @@ namespace AtomicWar.GodotApp
             _mainMenu.EnableContinue(hasSave);
         }
 
+        private void ToggleDeveloperConsole()
+        {
+            bool showConsole = !_gameUiContainer.Visible;
+            _gameUiContainer.Visible = showConsole;
+            _dashboard.Visible = !showConsole;
+            if (showConsole)
+            {
+                CloseAllOverlayPanels();
+                _statusLabel.Text = "Developer console active. Use the player shell when you are ready to resume.";
+            }
+            else
+            {
+                _dashboard.SetDeveloperMode(false);
+                UpdateHud();
+            }
+        }
+
+        private void OpenPlayerPanel(string panelId)
+        {
+            CloseAllOverlayPanels();
+
+            switch (panelId)
+            {
+                case "survivors":
+                    SetupSurvivors();
+                    _survivorsOverlay.Bind(_survivors);
+                    _survivorsOverlay.Open();
+                    break;
+                case "inventory":
+                    SetupInventory();
+                    _inventoryOverlay.Bind(_inventory);
+                    _inventoryOverlay.RefreshView();
+                    _inventoryOverlay.Open();
+                    break;
+                case "crafting":
+                    SetupCrafting();
+                    _craftingPanel.Open();
+                    break;
+                case "medical":
+                    SetupSurvivors();
+                    SetupInventory();
+                    SetupMedical();
+                    _medicalPanel.Bind(_medical, _survivors, _inventory);
+                    _medicalPanel.Open();
+                    break;
+                case "expeditions":
+                    SetupExpeditions();
+                    SetupSurvivors();
+                    SetupInventory();
+                    _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+                    _expeditionPanel.Open();
+                    break;
+                case "weather":
+                    SetupWorld();
+                    _weatherPanel.Bind(_world);
+                    _weatherPanel.Open();
+                    break;
+                case "radio":
+                    SetupRadio();
+                    _radioPanel.Bind(_radio);
+                    _radioPanel.Open();
+                    break;
+                case "map":
+                    _mapPanel.Open();
+                    break;
+                case "shelter":
+                    SetupSurvivors();
+                    SetupWorld();
+                    SetupInventory();
+                    _shelterPanel.Bind(_survivors, _world, _inventory);
+                    _shelterPanel.Open();
+                    break;
+                case "factions":
+                    _factionsPanel.Open();
+                    break;
+                case "quests":
+                    _questsPanel.Open();
+                    break;
+                case "journal":
+                    SetupJournal();
+                    _journalBook.Open();
+                    break;
+                case "protocol":
+                    SetupStartingLevel();
+                    _openingProtocolModal.Bind(_startingLevel);
+                    _openingProtocolModal.Open();
+                    break;
+                case "greenhouse":
+                    SetupGreenhouse();
+                    _greenhousePanel.Bind(_greenhouse);
+                    _greenhousePanel.Open();
+                    break;
+                case "duty_roster":
+                    SetupDutyRoster();
+                    SetupSurvivors();
+                    _dutyRosterPanel.Bind(_dutyRoster, _survivors);
+                    _dutyRosterPanel.Open();
+                    break;
+                case "save":
+                    SaveAll();
+                    _saveLoadPanel.Open();
+                    break;
+            }
+        }
+
+        private void CloseAllOverlayPanels()
+        {
+            Control[] panels =
+            {
+                _settingsPanel, _inventoryOverlay, _survivorsOverlay, _craftingPanel,
+                _radioPanel, _medicalPanel, _dutyRosterPanel, _economyOverlayPanel,
+                _expeditionPanel, _weatherPanel, _questsPanel, _journalPanel,
+                _factionsPanel, _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
+                _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel,
+                _achievementsPanel, _weatherDetailPanel, _radiationDetailPanel,
+                _eventsLogPanel, _dutyRosterDetailPanel, _economyDetailPanel,
+                _combatDetailPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
+                _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
+                _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
+                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal
+            };
+
+            foreach (Control panel in panels)
+            {
+                if (panel != null)
+                    panel.Visible = false;
+            }
+
+            if (_journalBook != null && _journalBook.IsOpen)
+                _journalBook.Close();
+        }
+
         private void CloseSettingsPanel()
         {
             _settingsPanel.Visible = false;
+        }
+
+        private void OnAudioSettingChanged(string key, bool value)
+        {
+            if (_audio == null) return;
+            var settings = AtomicWar.GodotApp.Audio.AudioSettings.Instance;
+            switch (key)
+            {
+                case "music":
+                    settings.MusicMute = !value;
+                    settings.NotifyChanged();
+                    _audio.ApplySettings(settings);
+                    if (value && _state == GameState.Menu)
+                        _audio.PlayMainMenuMusic();
+                    else if (!value)
+                        _audio.StopMusic();
+                    break;
+                case "sfx":
+                    settings.SfxMute = !value;
+                    settings.NotifyChanged();
+                    _audio.ApplySettings(settings);
+                    break;
+                case "music_volume":
+                    settings.MusicVolume = value ? 70f : 0f;
+                    settings.NotifyChanged();
+                    _audio.ApplySettings(settings);
+                    break;
+                case "sfx_volume":
+                    settings.SfxVolume = value ? 80f : 0f;
+                    settings.NotifyChanged();
+                    _audio.ApplySettings(settings);
+                    break;
+            }
+            settings.Save();
         }
 
         private void CloseInventoryOverlay()
@@ -3631,6 +4347,16 @@ namespace AtomicWar.GodotApp
             _afflictionsPanel.Visible = false;
         }
 
+        private void CloseStatusPanel()
+        {
+            _statusPanel.Visible = false;
+        }
+
+        private void CloseSurvivalDetailPanel()
+        {
+            _survivalDetailPanel.Visible = false;
+        }
+
         private void CloseWeatherForecastPanel()
         {
             _weatherForecastPanel.Visible = false;
@@ -3665,6 +4391,7 @@ namespace AtomicWar.GodotApp
         {
             _state = GameState.GameOver;
             _gameUiContainer.Visible = false;
+            _dashboard.Visible = false;
             _mainMenu.Visible = false;
             _gameOver.ShowGameOver(cause, stats);
 
@@ -3692,12 +4419,73 @@ namespace AtomicWar.GodotApp
         private void UpdateHud()
         {
             if (_holdfastRuntime == null) return;
+            SetupWorld();
+            SetupInventory();
+            SetupSurvivors();
+
             long value = _holdfastRuntime.Trade.PlayerValue;
             string faction = _holdfastTerminal?.SelectedFactionId ?? "";
-            string weather = _world != null ? _world.Weather.Current.ToString() : "";
+            string weather = _world.Weather.Current.ToString();
             _hudOverlay.UpdateState(_holdfastRuntime.Day, value, faction, weather);
             _hudOverlay.UpdateHealth(_holdfastRuntime.Health, HoldfastRuntimeSession.MaxHealth);
             _hudOverlay.UpdateRadiation(_holdfastRuntime.Radiation);
+
+            int totalSurvivors = 0;
+            int livingSurvivors = 0;
+            float livingHealth = 0f;
+            for (int i = 0; i < _survivors.RosterState.Count; i++)
+            {
+                var survivor = _survivors.RosterState[i];
+                if (survivor == null) continue;
+                totalSurvivors++;
+                if (!survivor.IsAliveState) continue;
+                livingSurvivors++;
+                livingHealth += survivor.Health;
+            }
+
+            var stores = _inventory.Inventory;
+            int filterSpares = stores.CountById("air_filter")
+                + stores.CountById("filter_item")
+                + stores.CountById("water_filter")
+                + stores.CountById("respirator_filter")
+                + stores.CountById("respirator_filter_box_5");
+            string lastEvent = !string.IsNullOrWhiteSpace(_holdfastRuntime.World.LastEvent)
+                ? _holdfastRuntime.World.LastEvent
+                : !string.IsNullOrWhiteSpace(_world.LastEvent)
+                    ? _world.LastEvent
+                    : _survivors.LastEvent;
+
+            SetupStartingLevel();
+            string intakeAssignee = _dutyRoster?.Roster.GetAssignment(Ashfall.Core.DutyRosterSystem.RoleIntakeSleeper) ?? "Dr. Sarah Chen";
+
+            _dashboard.UpdateState(new GameDashboardPanel.DashboardSnapshot
+            {
+                Day = _holdfastRuntime.Day,
+                Health = _holdfastRuntime.Health,
+                MaxHealth = HoldfastRuntimeSession.MaxHealth,
+                Radiation = _holdfastRuntime.Radiation,
+                Hunger = _holdfastRuntime.Hunger,
+                Thirst = _holdfastRuntime.Thirst,
+                Value = value,
+                Weather = weather,
+                WeatherVisibility = _world.Weather.VisibilityFactor,
+                OutdoorRadiation = _world.Weather.OutdoorRadModifier,
+                LivingSurvivors = livingSurvivors,
+                TotalSurvivors = totalSurvivors,
+                AverageSurvivorHealth = livingSurvivors > 0 ? livingHealth / livingSurvivors : 0f,
+                CleanWater = stores.CountById("clean_water"),
+                Food = stores.CountById("canned_food"),
+                MedicalStock = stores.CountByType(ItemType.Medical),
+                FilterSpares = _startingLevel?.System.State.filterSparesCount ?? filterSpares,
+                MechanicalScrap = _startingLevel?.System.State.mechanicalScrapCount ?? 6,
+                AirFilterHealth = _startingLevel?.System.State.airFilterHealthPercent ?? 100.0f,
+                AirQuality = _startingLevel?.System.State.airQualityPercent ?? 100.0f,
+                RadonLevel = _startingLevel?.System.State.radonLevelBqm3 ?? 12.0f,
+                AirWarning = _startingLevel?.System.State.airHazardWarning ?? false,
+                FilterDutyAssignee = intakeAssignee,
+                Forecast = _world.Weather.PeekForecast(3),
+                LastEvent = lastEvent
+            });
         }
 
         private void OnPlayerDied(string cause)
@@ -3739,13 +4527,47 @@ namespace AtomicWar.GodotApp
             SaveCaravans();
             SaveYearOfAsh();
             SavePhase0();
+            SaveStartingLevel();
+            SaveGreenhouse();
+        }
+
+        private bool AnyOverlayPanelOpen()
+        {
+            if (_journalBook != null && _journalBook.IsOpen) return true;
+            Control[] panels =
+            {
+                _settingsPanel, _inventoryOverlay, _survivorsOverlay, _craftingPanel,
+                _radioPanel, _medicalPanel, _dutyRosterPanel, _economyOverlayPanel,
+                _expeditionPanel, _weatherPanel, _questsPanel, _journalPanel,
+                _factionsPanel, _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
+                _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel,
+                _achievementsPanel, _weatherDetailPanel, _radiationDetailPanel,
+                _eventsLogPanel, _dutyRosterDetailPanel, _economyDetailPanel,
+                _combatDetailPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
+                _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
+                _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
+                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal
+            };
+
+            foreach (Control panel in panels)
+            {
+                if (panel != null && panel.Visible)
+                    return true;
+            }
+            return false;
         }
 
         public override void _UnhandledInput(InputEvent @event)
         {
-            if (_state == GameState.Playing && @event is InputEventKey key && key.Pressed)
+            if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
             {
-                if (key.Keycode == Key.Escape)
+                if (AnyOverlayPanelOpen())
+                {
+                    CloseAllOverlayPanels();
+                    GetViewport().SetInputAsHandled();
+                    return;
+                }
+                if (_state == GameState.Playing)
                 {
                     ReturnToMenu();
                     GetViewport().SetInputAsHandled();

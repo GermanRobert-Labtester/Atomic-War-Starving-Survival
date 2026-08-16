@@ -16,8 +16,8 @@ namespace AtomicWar.GodotApp
 
         private Label _lblDay = null!;
         private Label _lblHealthText = null!;
-        private TextureRect _barHealth = null!;
-        private TextureRect _barRad = null!;
+        private ProgressBar _barHealth = null!;
+        private ProgressBar _barRad = null!;
         private Label _lblRadText = null!;
         private Label _lblValue = null!;
         private Label _lblFaction = null!;
@@ -35,19 +35,6 @@ namespace AtomicWar.GodotApp
             SetAnchorsPreset(LayoutPreset.TopWide);
             AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
 
-            // Background strip with subtle gradient
-            var bg = new StyleBoxFlat
-            {
-                BgColor = new Color(Ashfall.Core.UI.Theme.Ink.r, Ashfall.Core.UI.Theme.Ink.g, Ashfall.Core.UI.Theme.Ink.b, 0.95f),
-                BorderColor = AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Line),
-            };
-            bg.SetBorderWidthAll(1);
-            bg.ContentMarginLeft = Ashfall.Core.UI.Theme.SpacingMd;
-            bg.ContentMarginRight = Ashfall.Core.UI.Theme.SpacingMd;
-            bg.ContentMarginTop = Ashfall.Core.UI.Theme.SpacingSm;
-            bg.ContentMarginBottom = Ashfall.Core.UI.Theme.SpacingSm;
-            AddThemeStyleboxOverride("panel", bg);
-
             // Day
             _lblDay = AshfallUiHelpers.MakeTitle("Day 1", Ashfall.Core.UI.Theme.FontSizeH3);
             _lblDay.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
@@ -62,14 +49,13 @@ namespace AtomicWar.GodotApp
             healthLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             healthGroup.AddChild(healthLabel);
 
-            _barHealth = new TextureRect
-            {
-                CustomMinimumSize = new Vector2(120, 12),
-                StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
-                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
-                Modulate = new Color(1f, 1f, 1f, 0.3f) // base bar
-            };
+            _barHealth = MakeMeter(Ashfall.Core.UI.Theme.Warm);
             healthGroup.AddChild(_barHealth);
+
+            _lblHealthText = AshfallUiHelpers.MakeSmall("100/100");
+            _lblHealthText.CustomMinimumSize = new Vector2(60, 0);
+            _lblHealthText.HorizontalAlignment = HorizontalAlignment.Right;
+            healthGroup.AddChild(_lblHealthText);
 
             AddChild(healthGroup);
 
@@ -82,13 +68,7 @@ namespace AtomicWar.GodotApp
             radLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             radGroup.AddChild(radLabel);
 
-            _barRad = new TextureRect
-            {
-                CustomMinimumSize = new Vector2(120, 12),
-                StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered,
-                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
-                Modulate = new Color(1f, 1f, 1f, 0f) // starts empty
-            };
+            _barRad = MakeMeter(Ashfall.Core.UI.Theme.Lethe);
             radGroup.AddChild(_barRad);
 
             _lblRadText = AshfallUiHelpers.MakeSmall("0.0 mSv");
@@ -126,29 +106,11 @@ namespace AtomicWar.GodotApp
 
         public override void _Process(double delta)
         {
-            // Animate health bar
-            if (_healthAnimating)
-            {
-                _healthAnimProgress -= (float)delta * 2f; // 0.5s animation
-                if (_healthAnimProgress <= 0f)
-                {
-                    _healthAnimProgress = 0f;
-                    _healthAnimating = false;
-                }
-                _barHealth.Modulate = new Color(1f, 1f, 1f, _healthAnimProgress);
-            }
-
-            // Animate radiation bar
-            if (_radAnimating)
-            {
-                _radAnimProgress += (float)delta * 1.5f; // ~0.67s animation
-                if (_radAnimProgress >= 1f)
-                {
-                    _radAnimProgress = 1f;
-                    _radAnimating = false;
-                }
-                _barRad.Modulate = new Color(1f, 1f, 1f, _radAnimProgress);
-            }
+            // The HUD is retained as a lightweight diagnostics surface. The player
+            // shell uses GameDashboardPanel; keeping these flags avoids churn for
+            // older callers while the meters themselves remain immediately legible.
+            _healthAnimating = false;
+            _radAnimating = false;
         }
 
         /// <summary>
@@ -164,11 +126,9 @@ namespace AtomicWar.GodotApp
 
         public void UpdateHealth(int hp, int maxHp = 100)
         {
-            // Animate health bar fill
-            _healthAnimating = true;
-            _healthAnimProgress = 1f;
-
             _lblHealthText.Text = $"HP: {hp}/{maxHp}";
+            _barHealth.MaxValue = Math.Max(1, maxHp);
+            _barHealth.Value = Math.Clamp(hp, 0, (int)_barHealth.MaxValue);
             if (hp <= 25)
                 _lblHealthText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
             else if (hp <= 50)
@@ -179,17 +139,33 @@ namespace AtomicWar.GodotApp
 
         public void UpdateRadiation(float msv)
         {
-            // Animate radiation bar fill
-            _radAnimating = true;
-            _radAnimProgress = 0f;
-
             _lblRadText.Text = $"RAD: {msv:F1} mSv";
+            _barRad.MaxValue = 100f;
+            _barRad.Value = Mathf.Clamp(msv, 0f, 100f);
             if (msv >= 100)
                 _lblRadText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
             else if (msv >= 50)
                 _lblRadText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy));
             else
                 _lblRadText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
+        }
+
+        private static ProgressBar MakeMeter((float r, float g, float b, float a) fillColor)
+        {
+            var meter = new ProgressBar
+            {
+                MinValue = 0,
+                MaxValue = 100,
+                Value = 0,
+                ShowPercentage = false,
+                CustomMinimumSize = new Vector2(96, 12)
+            };
+            meter.AddThemeStyleboxOverride("background", AshfallUiHelpers.MakeFlatBg(
+                new Color(Ashfall.Core.UI.Theme.Ink.r, Ashfall.Core.UI.Theme.Ink.g, Ashfall.Core.UI.Theme.Ink.b, 0.9f),
+                AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.LineSoft), 1, Ashfall.Core.UI.Theme.RadiusSm));
+            meter.AddThemeStyleboxOverride("fill", AshfallUiHelpers.MakeFlatBg(
+                new Color(fillColor.r, fillColor.g, fillColor.b, 0.92f), null, 0, Ashfall.Core.UI.Theme.RadiusSm));
+            return meter;
         }
     }
 }

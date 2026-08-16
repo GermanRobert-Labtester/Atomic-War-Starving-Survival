@@ -2,56 +2,118 @@ using System;
 using Godot;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
     /// ASHFALL — Main menu screen.
-    /// Cold, utilitarian entry point. No gloss, no fantasy.
-    /// Offers: New Game, Continue (if save exists), Quit.
-    /// Backgrounds rotate with crossfade transitions.
+    /// Cold, utilitarian post-exchange entry point.
+    /// Provides responsive navigation: New Game, Continue, Settings, Codex / Records, Quit.
     /// </summary>
     public partial class MainMenuPanel : Control
     {
         public event Action? OnNewGame;
         public event Action? OnContinue;
+        public event Action? OnSettings;
+        public event Action? OnCodex;
+        public event Action? OnJournal;
         public event Action? OnQuit;
 
-        private Label _lblSubtitle = null!;
+        private Button _btnNewGame = null!;
         private Button _btnContinue = null!;
+        private Button _btnSettings = null!;
+        private Button _btnCodex = null!;
+        private Button _btnQuit = null!;
+        private Label _lblStatus = null!;
+        private Label _lblSubtitle = null!;
         private Label _lblVersion = null!;
 
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
+            BuildLayout();
+        }
 
-            // ── Rotating full-screen background ──
-            AddChild(new UiBackgroundCarousel(UiAssetManifest.MainMenuBackgrounds, 0.65f));
-
-            // ── Center container ──
-            var center = new CenterContainer
+        public void SetContinueEnabled(bool enabled)
+        {
+            if (_btnContinue != null)
             {
-                Modulate = new Color(1, 1, 1, 0f) // start invisible for fade-in
+                _btnContinue.Disabled = !enabled;
+                _btnContinue.Text = enabled ? "CONTINUE EXPEDITION" : "CONTINUE (NO ACTIVE SAVE)";
+            }
+        }
+
+        public void EnableContinue(bool enabled) => SetContinueEnabled(enabled);
+
+        public void SetStatusMessage(string msg)
+        {
+            if (_lblStatus != null)
+            {
+                _lblStatus.Text = msg;
+                _lblStatus.Visible = !string.IsNullOrWhiteSpace(msg);
+            }
+        }
+
+        public void FocusPrimary()
+        {
+            if (_btnContinue != null && !_btnContinue.Disabled)
+            {
+                _btnContinue.GrabFocus();
+            }
+            else if (_btnNewGame != null)
+            {
+                _btnNewGame.GrabFocus();
+            }
+        }
+
+        private void BuildLayout()
+        {
+            // ── Background Carousel / Solid Underlay ──
+            var bgSolid = new ColorRect
+            {
+                Color = AshfallUiHelpers.ToColor(DesignTheme.Ink)
             };
+            bgSolid.SetAnchorsPreset(LayoutPreset.FullRect);
+            AddChild(bgSolid);
+
+            // Add carousel with safe fallback
+            try
+            {
+                var carousel = new UiBackgroundCarousel(UiAssetManifest.MainMenuBackgrounds, 0.55f);
+                carousel.SetAnchorsPreset(LayoutPreset.FullRect);
+                AddChild(carousel);
+            }
+            catch
+            {
+                // Fall back to solid background
+            }
+
+            // ── Center Container for Responsive Scaling ──
+            var center = new CenterContainer();
             center.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(center);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXl);
-            vbox.CustomMinimumSize = new Vector2(480, 0);
-            center.AddChild(vbox);
+            // ── Main Content Box ──
+            var panel = AshfallUiHelpers.MakePanel(520, 0);
+            center.AddChild(panel);
 
-            // ── Title block ──
-            var titleLabel = AshfallUiHelpers.MakeTitle("ASHFALL", Ashfall.Core.UI.Theme.FontSizeH1);
+            var vbox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingMd);
+            vbox.CustomMinimumSize = new Vector2(480, 0);
+            panel.AddChild(vbox);
+
+            // ── Title Block ──
+            var titleLabel = AshfallUiHelpers.MakeTitle("ASHFALL", DesignTheme.FontSizeH1);
             titleLabel.HorizontalAlignment = HorizontalAlignment.Center;
             vbox.AddChild(titleLabel);
 
             _lblSubtitle = new Label
             {
-                Text = "ATOMIC WAR: STARVING SURVIVAL",
+                Text = "ATOMIC WAR // STARVING SURVIVAL",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            _lblSubtitle.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH3);
-            _lblSubtitle.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
+            _lblSubtitle.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeH3);
+            _lblSubtitle.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Lethe));
             vbox.AddChild(_lblSubtitle);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -59,98 +121,64 @@ namespace AtomicWar.GodotApp
             // ── Tagline ──
             var tagline = new Label
             {
-                Text = "The exchange is over. The ash is settling.\nYou have a bunker, a dosimeter, and whatever you carried down the stairs.",
+                Text = "The nuclear exchange is concluded. Atmospheric fallout is descending.\nManage radiation, rations, air filtration, and human survival.",
                 HorizontalAlignment = HorizontalAlignment.Center,
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            tagline.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-            tagline.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            tagline.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+            tagline.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
             vbox.AddChild(tagline);
+
+            _lblStatus = new Label
+            {
+                Text = string.Empty,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Visible = false
+            };
+            _lblStatus.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
+            _lblStatus.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
+            vbox.AddChild(_lblStatus);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // ── Buttons ──
-            var btnNewGame = AshfallUiHelpers.MakeButton("NEW GAME", () => OnNewGame?.Invoke());
-            btnNewGame.CustomMinimumSize = new Vector2(280, 48);
-            btnNewGame.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH3);
-            vbox.AddChild(btnNewGame);
-
-            _btnContinue = AshfallUiHelpers.MakeButton("CONTINUE", () => OnContinue?.Invoke());
-            _btnContinue.CustomMinimumSize = new Vector2(280, 48);
-            _btnContinue.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH3);
-            _btnContinue.Disabled = true; // enabled when save exists
+            // ── Navigation Buttons ──
+            _btnContinue = AshfallUiHelpers.MakeButton("CONTINUE (NO ACTIVE SAVE)", () => OnContinue?.Invoke());
+            _btnContinue.CustomMinimumSize = new Vector2(320, 46);
+            _btnContinue.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeH3);
+            _btnContinue.Disabled = true;
             vbox.AddChild(_btnContinue);
 
-            var btnQuit = AshfallUiHelpers.MakeButton("QUIT", () => OnQuit?.Invoke());
-            btnQuit.CustomMinimumSize = new Vector2(280, 48);
-            btnQuit.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-            vbox.AddChild(btnQuit);
+            _btnNewGame = AshfallUiHelpers.MakeButton("COMMENCE NEW GAME", () => OnNewGame?.Invoke());
+            _btnNewGame.CustomMinimumSize = new Vector2(320, 46);
+            _btnNewGame.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeH3);
+            vbox.AddChild(_btnNewGame);
 
-            // ── Version / footer ──
+            _btnSettings = AshfallUiHelpers.MakeButton("SETTINGS & CONFIGURATION", () => OnSettings?.Invoke());
+            _btnSettings.CustomMinimumSize = new Vector2(320, 40);
+            _btnSettings.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+            vbox.AddChild(_btnSettings);
+
+            _btnCodex = AshfallUiHelpers.MakeButton("ARCHIVE & CODEX RECORDS", () => OnCodex?.Invoke());
+            _btnCodex.CustomMinimumSize = new Vector2(320, 40);
+            _btnCodex.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+            vbox.AddChild(_btnCodex);
+
+            _btnQuit = AshfallUiHelpers.MakeButton("QUIT TO SYSTEM", () => OnQuit?.Invoke());
+            _btnQuit.CustomMinimumSize = new Vector2(320, 40);
+            _btnQuit.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+            vbox.AddChild(_btnQuit);
+
+            // ── Footer ──
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             _lblVersion = new Label
             {
-                Text = "v0.1 · Godot 4.7+ · .NET Edition",
+                Text = "ASHFALL v1.0.0 // GODOT 4.7+ .NET ENGINE // HOST REVISION ACTIVE",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            _lblVersion.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            _lblVersion.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            _lblVersion.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
+            _lblVersion.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
             vbox.AddChild(_lblVersion);
-
-            // ── Controls hint ──
-            var controls = new Label
-            {
-                Text = "[Enter] New Game  ·  [C] Continue  ·  [Esc] Quit",
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-            controls.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            controls.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(controls);
-
-            // Fade in entire menu content after background establishes itself
-            QueueFadeInUI(center, delaySeconds: 1.2f);
-        }
-
-        private void QueueFadeInUI(Control uiNode, float delaySeconds = 0f)
-        {
-            var tw = CreateTween();
-            tw.TweenInterval(delaySeconds);
-            tw.TweenProperty(uiNode, "modulate:a", 1f, 1.0f).SetTrans(Tween.TransitionType.Sine)
-                .SetEase(Tween.EaseType.Out);
-        }
-
-        /// <summary>
-        /// Enable the Continue button when a save file exists.
-        /// </summary>
-        public void EnableContinue(bool enabled)
-        {
-            _btnContinue.Disabled = !enabled;
-        }
-
-        public override void _UnhandledInput(InputEvent @event)
-        {
-            if (!Visible) return;
-
-            if (@event is InputEventKey key && key.Pressed)
-            {
-                switch (key.Keycode)
-                {
-                    case Key.Enter:
-                        OnNewGame?.Invoke();
-                        GetViewport().SetInputAsHandled();
-                        break;
-                    case Key.C:
-                        if (!_btnContinue.Disabled)
-                            OnContinue?.Invoke();
-                        GetViewport().SetInputAsHandled();
-                        break;
-                    case Key.Escape:
-                        OnQuit?.Invoke();
-                        GetViewport().SetInputAsHandled();
-                        break;
-                }
-            }
         }
     }
 }

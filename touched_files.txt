@@ -1,0 +1,55 @@
+ M Assets/Ashfall.Core/CatalogIntegrityValidator.cs
+ M Assets/StreamingAssets/Data/year_of_ash_events.json
+ D Assets/ui/Textures/Backgrounds/codex_alt_01.png
+ D Assets/ui/Textures/Backgrounds/codex_alt_02.png
+ M src/Host/DoseLedgerHostSession.cs
+ M src/Host/HostCli.cs
+ M src/Host/MusterHostSession.cs
+ M src/Host/MusterSaveStore.cs
+ M src/Main.cs
+ M src/UI/AshfallUiHelpers.cs
+ M src/UI/GameHudOverlay.cs
+ M src/UI/InventoryPanel.cs
+ M src/UI/MedicalPanel.cs
+ M src/UI/RadioPanel.cs
+ M src/UI/ShelterPanel.cs
+ M src/UI/SurvivorsPanel.cs
+ M src/UI/WeatherPanel.cs
+?? .editorconfig
+?? Ashfall.Core.Tests/DoseContentCatalogTests.cs
+?? Ashfall.Core.Tests/EventTriggerTests.cs
+?? Ashfall.Core.Tests/MusterCurrentSystemsTests.cs
+?? Assets/Ashfall.Core/DoseContentCatalog.cs
+?? Assets/Ashfall.Core/Muster/ColdCountSystem.cs
+?? Assets/Ashfall.Core/Muster/HydroBaronsSystem.cs
+?? Assets/Ashfall.Core/Muster/IronRaidersSystem.cs
+?? Assets/Ashfall.Core/Muster/LongWalkSystem.cs
+?? Assets/Ashfall.Core/Muster/ProvisionedSystem.cs
+?? Assets/Ashfall.Core/Muster/ScavengerGuildSystem.cs
+?? Assets/StreamingAssets/Data/dose_items.json
+?? Assets/StreamingAssets/Data/dose_locations.json
+?? Assets/StreamingAssets/Data/dose_quests.json
+?? generated_AIassets/_failures.json
+?? generated_AIassets/_manifest.json
+?? generated_AIassets/backgrounds/
+?? generated_AIassets/badges/
+?? generated_AIassets/items/
+?? generated_AIassets/vector/
+?? scripts/
+?? src/Host/HostEventAdapter.cs
+?? src/Host/RadioHostSession.cs
+?? src/UI/AchievementDetailPanel.cs
+?? src/UI/CraftingDetailPanel.cs
+?? src/UI/CraftingHistoryPanel.cs
+?? src/UI/ExpeditionHistoryPanel.cs
+?? src/UI/FactionHistoryPanel.cs
+?? src/UI/GameDashboardPanel.cs
+?? src/UI/MainMenuBuilder.cs
+?? src/UI/MedicalHistoryPanel.cs
+?? src/UI/ResearchDetailPanel.cs
+?? src/UI/ShelterHistoryPanel.cs
+?? src/UI/StatusPanel.cs
+?? src/UI/SurvivalDetailPanel.cs
+?? src/UI/TradeDetailPanel.cs
+?? src/UI/WeatherHistoryPanel.cs
+?? touched_files.txt

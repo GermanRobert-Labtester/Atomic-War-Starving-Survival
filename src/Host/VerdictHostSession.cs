@@ -26,7 +26,10 @@ namespace AtomicWar.GodotApp
         public EvidenceLedger Evidence { get; }
         public VerdictNpcSystem Npcs { get; }
         public VerdictCensusBroadcast Census { get; }
+        public VerdictRadioSystem Radio { get; internal set; }
         public IReadOnlyList<VerdictCatalogLoader.VerdictLocationEntry> Locations { get; }
+        public IReadOnlyList<VerdictCatalogLoader.VerdictItemEntry> Items { get; }
+        public IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> RadioEntries { get; }
         public IReadOnlyList<string> CorruptionCorpus { get; private set; }
         private readonly ISeededRng _machineRng;
 
@@ -63,7 +66,9 @@ namespace AtomicWar.GodotApp
             EvidenceLedger evidence = null,
             VerdictNpcSystem npcs = null,
             VerdictCensusBroadcast census = null,
-            IReadOnlyList<VerdictCatalogLoader.VerdictLocationEntry> locations = null)
+            IReadOnlyList<VerdictCatalogLoader.VerdictLocationEntry> locations = null,
+            IReadOnlyList<VerdictCatalogLoader.VerdictItemEntry> items = null,
+            IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> radio = null)
         {
             MachineLog = machineLog ?? new MachineLogSystem();
             Reckoning = reckoning ?? new ReckoningSystem();
@@ -71,6 +76,8 @@ namespace AtomicWar.GodotApp
             Npcs = npcs ?? new VerdictNpcSystem();
             Census = census;
             Locations = locations ?? new List<VerdictCatalogLoader.VerdictLocationEntry>();
+            Items = items ?? new List<VerdictCatalogLoader.VerdictItemEntry>();
+            RadioEntries = radio ?? new List<VerdictCatalogLoader.VerdictRadioEntry>();
             CorruptionCorpus = new List<string>();
             _machineRng = new SeededRng(8841209 + 17);
 
@@ -97,15 +104,18 @@ namespace AtomicWar.GodotApp
             radioRng = radioRng ?? new SeededRng(8841209);
 
             var locations = VerdictCatalogLoader.LoadLocations(dataDir, s_files, s_json);
+            var items = VerdictCatalogLoader.LoadItems(dataDir, s_files, s_json);
+            var radioEntries = VerdictCatalogLoader.LoadRadio(dataDir, s_files, s_json);
             var censusBroadcast = new VerdictCensusBroadcast(clock, bus, flags, radioRng, census);
-            var session = new VerdictHostSession(census: censusBroadcast, locations: locations);
+            var session = new VerdictHostSession(census: censusBroadcast, locations: locations, items: items, radio: radioEntries);
+            session.Radio = new VerdictRadioSystem(bus, clock, radioEntries);
             VerdictNpcCatalogLoader.LoadAndRegister(session.Npcs, dataDir, s_files, s_json);
             session.CorruptionCorpus = VerdictCatalogLoader.LoadCorruptionCorpus(dataDir, s_files, s_json);
 
             var save = VerdictSaveStore.TryLoad();
             if (save != null)
             {
-                VerdictSaveCodec.Restore(save, session.MachineLog, session.Reckoning, session.Evidence, session.Npcs);
+                VerdictSaveCodec.Restore(save, session.MachineLog, session.Reckoning, session.Evidence, session.Npcs, session.Radio);
                 // Observability: remember which save version loaded and whether it migrated (C).
                 session.LoadedSaveVersion = save.saveVersion;
                 session.WasSaveMigrated = save.saveVersion != VerdictSave.CurrentSaveVersion;
@@ -132,6 +142,43 @@ namespace AtomicWar.GodotApp
             Census.BroadcastIfDue();
         }
 
+        /// <summary>Evaluate the diegetic radio corpus against the current day and phase.
+        /// Broadcasts fire once each, gated on the Culpable+ census carrier window.
+        /// Returns the ids fired this call (observability).</summary>
+        public System.Collections.Generic.List<string> TickRadio(int day)
+        {
+            if (Radio == null) return new System.Collections.Generic.List<string>();
+            var fired = Radio.Poll(day, Reckoning.Phase);
+            if (fired.Count > 0) LastEvent = "radio:" + string.Join(";", fired);
+            if (fired.Count > 0) StateChanged?.Invoke();
+            return fired;
+        }
+
+        /// <summary>
+        /// Enroll evidence from the reachable verdict items where the authored
+        /// mechanical_effects.enrolled_evidence is non-zero. Idempotent via the
+        /// EvidenceLedger; never double-enrolls. Returns count enrolled this call.
+        /// </summary>
+        public int EnrollEvidenceFromItems(int day)
+        {
+            if (Items == null) return 0;
+            int enrolled = 0;
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var it = Items[i];
+                if (it == null || string.IsNullOrEmpty(it.id)) continue;
+                int amount = it.mechanical_effects != null ? it.mechanical_effects.enrolled_evidence : 0;
+                if (amount <= 0) continue;
+                if (Evidence.Enroll(it.id, day)) enrolled++;
+            }
+            if (enrolled > 0)
+            {
+                LastEvent = "evidence_from_items:" + enrolled;
+                StateChanged?.Invoke();
+            }
+            return enrolled;
+        }
+
         /// <summary>Corruption tick: in Culpable+ phases, post a data-corrupted log entry
         /// at a deterministic schedule (every 11th day of the countdown). Data-driven corpus.</summary>
         public void TickCorruption(int day)
@@ -144,12 +191,12 @@ namespace AtomicWar.GodotApp
         public VerdictSave CaptureSave()
         {
             return VerdictSaveCodec.Capture(
-                CurrentDaySafe(), MachineLog, Reckoning, Evidence, Census.LastWindowDay, Npcs);
+                CurrentDaySafe(), MachineLog, Reckoning, Evidence, Census.LastWindowDay, Npcs, Radio);
         }
 
         public void RestoreSave(VerdictSave save)
         {
-            VerdictSaveCodec.Restore(save, MachineLog, Reckoning, Evidence, Npcs);
+            VerdictSaveCodec.Restore(save, MachineLog, Reckoning, Evidence, Npcs, Radio);
             LastEvent = "Verdict state restored.";
         }
 

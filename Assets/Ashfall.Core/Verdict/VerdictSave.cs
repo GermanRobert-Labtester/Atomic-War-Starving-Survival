@@ -19,6 +19,7 @@ namespace Ashfall.Core.Verdict
         public ReckoningState reckoning = new ReckoningState();
         public EvidenceLedgerState evidence = new EvidenceLedgerState();
         public VerdictNpcState npcs = new VerdictNpcState();
+        public VerdictRadioSystem.VerdictRadioState radio = new VerdictRadioSystem.VerdictRadioState();
         public int censusLastWindowDay = -1;
 
         public string Checksum = string.Empty;
@@ -32,7 +33,8 @@ namespace Ashfall.Core.Verdict
             ReckoningSystem reckoning,
             EvidenceLedger evidence,
             int censusLastWindowDay,
-            VerdictNpcSystem npcs = null)
+            VerdictNpcSystem npcs = null,
+            VerdictRadioSystem radio = null)
         {
             var save = new VerdictSave
             {
@@ -41,6 +43,7 @@ namespace Ashfall.Core.Verdict
                 reckoning = reckoning.CaptureState(),
                 evidence = evidence.CaptureState(),
                 npcs = npcs != null ? npcs.CaptureState() : new VerdictNpcState(),
+                radio = radio != null ? radio.CaptureState() : new VerdictRadioSystem.VerdictRadioState(),
                 censusLastWindowDay = censusLastWindowDay
             };
             save.Checksum = SaveChecksum.Compute(save);
@@ -80,6 +83,7 @@ namespace Ashfall.Core.Verdict
                         reckoning = decoded.reckoning,
                         evidence = decoded.evidence,
                         npcs = decoded.npcs ?? new VerdictNpcState(),
+                        radio = decoded.radio ?? new VerdictRadioSystem.VerdictRadioState(),
                         censusLastWindowDay = decoded.censusLastWindowDay
                     };
                     migrated.Checksum = SaveChecksum.Compute(migrated);
@@ -98,7 +102,8 @@ namespace Ashfall.Core.Verdict
             MachineLogSystem machineLog,
             ReckoningSystem reckoning,
             EvidenceLedger evidence,
-            VerdictNpcSystem npcs = null)
+            VerdictNpcSystem npcs = null,
+            VerdictRadioSystem radio = null)
         {
             if (save == null) return;
             machineLog.RestoreState(save.machineLog);
@@ -106,6 +111,8 @@ namespace Ashfall.Core.Verdict
             evidence.RestoreState(save.evidence);
             if (npcs != null)
                 npcs.RestoreState(save.npcs ?? new VerdictNpcState());
+            if (radio != null)
+                radio.RestoreState(save.radio ?? new VerdictRadioSystem.VerdictRadioState());
         }
     }
 }

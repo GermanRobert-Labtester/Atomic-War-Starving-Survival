@@ -59,6 +59,12 @@ namespace AtomicWar.GodotApp
             Vigil.OnVigilCompleted += skipped => { LastEvent = $"Vigil completed (skipped: {skipped})"; StateChanged?.Invoke(); };
         }
 
+        public void AddCareEntry(string survivorId, string treatmentDetails)
+        {
+            LastEvent = $"Medical care: {survivorId} — {treatmentDetails}";
+            StateChanged?.Invoke();
+        }
+
         public static MedicalHostSession Create(string dataDir)
         {
             var session = new MedicalHostSession();

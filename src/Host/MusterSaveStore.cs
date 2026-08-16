@@ -6,11 +6,18 @@ using Ashfall.Core.Muster;
 
 namespace AtomicWar.GodotApp
 {
-    /// <summary>Combined Muster envelope: escalation state + coalition camp.</summary>
+    /// <summary>Combined Muster envelope: escalation state + coalition camp + the six
+    /// Section V current state machines + Hydro-Barons.</summary>
     public class MusterHostSave
     {
         public MusterState Muster;
         public CoalitionCampState Camp;
+        public ColdCountState ColdCount;
+        public ProvisionedState Provisioned;
+        public LongWalkState LongWalk;
+        public ScavengerGuildState ScavengerGuild;
+        public IronRaidersState IronRaiders;
+        public HydroBaronsState HydroBarons;
         public string Checksum = string.Empty;
     }
 

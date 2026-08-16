@@ -43,7 +43,31 @@ namespace AtomicWar.GodotApp
                 session.RestoreSave(save);
                 session.LastEvent = "Inventory state restored from save.";
             }
+            else
+            {
+                session.SeedStartingSupplies();
+            }
             return session;
+        }
+
+        public void SeedStartingSupplies()
+        {
+            Add("clean_water", 12);
+            Add("canned_food", 16);
+            Add("irradiated_water", 4);
+            Add("item_air_filter_hepa", 2);
+            Add("item_desal_membrane", 1);
+            Add("iodine_pills", 4);
+            Add("bandage", 2);
+            Add("rad_away", 1);
+            Add("item_dosimeter_pen", 1);
+            Add("item_geiger_m3", 1);
+            Add("gas_mask", 1);
+            Add("hazmat_suit", 1);
+            Add("battery", 4);
+            Add("scrap_mechanical", 6);
+            Add("scrap_electronic", 3);
+            LastEvent = "Starting supplies loaded into Holdfast storage.";
         }
 
         /// <summary>
@@ -66,6 +90,19 @@ namespace AtomicWar.GodotApp
                 MakeDef("gas_mask", "Gas Mask", ItemType.Protective, stackMax: 1, weight: 1.2f, equip: true, equipSlot: EquipSlot.Face, radProt: 0.35f, durability: 100f, trade: 30f),
                 MakeDef("hazmat_suit", "Hazmat Suit", ItemType.Protective, stackMax: 1, weight: 3f, equip: true, equipSlot: EquipSlot.Body, radProt: 0.55f, durability: 100f, trade: 45f),
                 MakeDef("geiger_counter", "Geiger Counter", ItemType.Device, stackMax: 1, weight: 0.9f, trade: 25f),
+                MakeDef("item_geiger_m3", "Geiger Counter (M3)", ItemType.Device, stackMax: 1, weight: 0.9f, trade: 35f),
+                MakeDef("item_dosimeter_pen", "Quartz Pen Dosimeter", ItemType.Device, stackMax: 2, weight: 0.1f, trade: 15f),
+                MakeDef("item_air_filter_hepa", "HEPA Filtration Core", ItemType.Material, stackMax: 4, weight: 1.5f, trade: 25f),
+                MakeDef("item_desal_membrane", "Desalination Membrane", ItemType.Material, stackMax: 2, weight: 0.8f, trade: 30f),
+                MakeDef("item_seed_mushroom", "Mushroom Spores", ItemType.Material, stackMax: 20, weight: 0.05f, trade: 5f),
+                MakeDef("item_seed_tuber", "Tuber Eyes", ItemType.Material, stackMax: 20, weight: 0.1f, trade: 6f),
+                MakeDef("item_seed_grain", "Hardy Grain Seeds", ItemType.Material, stackMax: 20, weight: 0.05f, trade: 8f),
+                MakeDef("item_seed_wheat", "Pre-War Wheat Seeds", ItemType.Material, stackMax: 20, weight: 0.05f, trade: 15f),
+                MakeDef("crop_mushroom", "Harvested Fungal Caps", ItemType.Food, stackMax: 10, weight: 0.2f, hunger: 25f, trade: 6f),
+                MakeDef("crop_tuber", "Harvested Tubers", ItemType.Food, stackMax: 10, weight: 0.4f, hunger: 35f, trade: 8f),
+                MakeDef("crop_grain", "Harvested Grain", ItemType.Food, stackMax: 10, weight: 0.3f, hunger: 30f, trade: 10f),
+                MakeDef("crop_wheat", "Harvested Pre-War Wheat", ItemType.Food, stackMax: 10, weight: 0.3f, hunger: 50f, trade: 20f),
+                MakeDef("item_blight_treatment", "Antifungal Chemical Wash", ItemType.Material, stackMax: 5, weight: 0.5f, trade: 15f),
                 MakeDef("scrap_mechanical", "Mechanical Parts", ItemType.Material, stackMax: 50, weight: 0.2f, trade: 2f),
                 MakeDef("scrap_electronic", "Electronic Scrap", ItemType.Material, stackMax: 50, weight: 0.1f, trade: 3f),
                 MakeDef("scrap_chemical", "Chemicals", ItemType.Material, stackMax: 50, weight: 0.3f, trade: 4f),

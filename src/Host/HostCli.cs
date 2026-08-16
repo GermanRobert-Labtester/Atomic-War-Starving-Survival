@@ -17,6 +17,8 @@ using Ashfall.Core.Shelter;
 using Ashfall.Core.Legacy;
 using Ashfall.Core.Endgame;
 using AtomicWar.GodotApp.YearOfAsh;
+using AtomicWar.GodotApp.Settings;
+using AtomicWar.GodotApp.UI;
 using System;
 using System.IO;
 using System.Linq;
@@ -41,8 +43,11 @@ namespace AtomicWar.GodotApp
         EndingsSelfTest,
         JournalSelfTest,
         JournalUiTest,
+        DashboardUiTest,
+        PlayerPanelsUiTest,
         MusterUiTest,
         DoseUiTest,
+        VerdictUiTest,
         InventoryUiTest,
         SurvivorsUiTest,
         BridgeSelfTest,
@@ -72,7 +77,14 @@ namespace AtomicWar.GodotApp
         CaravanSelfTest,
         AssetRegistrySelfTest,
         StandaloneSystemsSelfTest,
-        Phase0SelfTest
+        Phase0SelfTest,
+        Day1PlayableSelfTest,
+        UiLayoutSelfTest,
+        SettingsSelfTest,
+        PlayableShellSelfTest,
+        ShelterHazardLoopSelfTest,
+        ShelterOperationsSelfTest,
+        AudioSelfTest
     }
 
     /// <summary>
@@ -88,6 +100,20 @@ namespace AtomicWar.GodotApp
 
             if (Has(args, "--host-help") || Has(args, "--help"))
                 return HostCliAction.Help;
+            if (Has(args, "--shelter-operations-selftest") || Has(args, "--operations-selftest") || Has(args, "--shelter-ops-selftest"))
+                return HostCliAction.ShelterOperationsSelfTest;
+            if (Has(args, "--shelter-hazard-loop-selftest") || Has(args, "--shelter-hazard-selftest") || Has(args, "--duty-roster-loop-selftest"))
+                return HostCliAction.ShelterHazardLoopSelfTest;
+            if (Has(args, "--ui-layout-selftest") || Has(args, "--layout-selftest"))
+                return HostCliAction.UiLayoutSelfTest;
+            if (Has(args, "--settings-selftest") || Has(args, "--settings-test"))
+                return HostCliAction.SettingsSelfTest;
+            if (Has(args, "--playable-shell-selftest") || Has(args, "--shell-selftest") || Has(args, "--playable-loop-selftest"))
+                return HostCliAction.PlayableShellSelfTest;
+            if (Has(args, "--audio-selftest") || Has(args, "--audio-test"))
+                return HostCliAction.AudioSelfTest;
+            if (Has(args, "--day1-selftest") || Has(args, "--day-1-selftest") || Has(args, "--day1-playable-selftest"))
+                return HostCliAction.Day1PlayableSelfTest;
             if (Has(args, "--expansions-selftest") || Has(args, "--all-expansions-selftest"))
                 return HostCliAction.ExpansionsSelfTest;
             if (Has(args, "--holdfast-selftest"))
@@ -130,6 +156,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.JournalSelfTest;
             if (Has(args, "--journal-uitest"))
                 return HostCliAction.JournalUiTest;
+            if (Has(args, "--dashboard-uitest"))
+                return HostCliAction.DashboardUiTest;
+            if (Has(args, "--player-panels-uitest") || Has(args, "--player-panels-ui-test"))
+                return HostCliAction.PlayerPanelsUiTest;
             if (Has(args, "--muster-uitest"))
                 return HostCliAction.MusterUiTest;
             if (Has(args, "--inventory-uitest") || Has(args, "--inventory-selftest"))
@@ -144,6 +174,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.YearOfAshSaveSelfTest;
             if (Has(args, "--verdict-selftest") || Has(args, "--expansion-08-selftest"))
                 return HostCliAction.VerdictSelfTest;
+            if (Has(args, "--verdict-uitest"))
+                return HostCliAction.VerdictUiTest;
             if (Has(args, "--duty-roster-save-selftest"))
                 return HostCliAction.DutyRosterSaveSelfTest;
             if (Has(args, "--expansion-hub-save-selftest"))
@@ -208,9 +240,11 @@ namespace AtomicWar.GodotApp
             GD.Print("  --holdfast-briefing      Print location count and every Holdfast quest briefing");
             GD.Print("  --journal-selftest       Journal domain + save roundtrip");
             GD.Print("  --journal-uitest         Build ledger UI, cycle tabs, quit");
+            GD.Print("  --player-panels-uitest  Bind and render Survivors, Medical, Weather, Radio, Shelter panels");
             GD.Print("  --bridge-selftest        UnityEngine shim failure policy (semantic throws, cosmetic quiet)");
             GD.Print("  --year-of-ash-save-selftest Year of Ash save write → reload → restore → checksum/tamper checks");
             GD.Print("  --verdict-selftest         The Verdict (Exp 08): machine log, reckoning phases, evidence, census, save");
+            GD.Print("  --verdict-uitest          Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free");
             GD.Print("  --duty-roster-save-selftest Duty Roster save write → reload → restore → checksum/tamper checks");
             GD.Print("  --expansion-hub-save-selftest Expansion hub save write → reload → restore → checksum/tamper checks");
             GD.Print("  --dose-ledger-selftest       Dose Ledger save write → reload → restore → checksum/tamper checks");
@@ -381,6 +415,37 @@ namespace AtomicWar.GodotApp
                 census.BroadcastIfDue();
                 Check(bus.PublishedEvents.Count == before, "census broadcast once per window");
 
+                // Diegetic radio corpus (verdict_radio.json) fires once, gated on Culpable+.
+                var vio = new FileSystemIO();
+                var vjson = new SystemTextJsonSerializer();
+                var radioCorpus = VerdictCatalogLoader.LoadRadio(dataDirectory, vio, vjson);
+                var radioSys = radioCorpus.Count == 13
+                    ? new VerdictRadioSystem(bus, clock, radioCorpus)
+                    : new VerdictRadioSystem();
+                Check(radioSys.Corpus.Count == 13, "verdict radio corpus loads 13 broadcasts");
+                var radioFired = radioSys.Poll(211, reckoning.Phase);
+                Check(radioFired.Contains("radio_verdict_carrier_on_window"), "pilot carrier fires in Culpable window");
+                Check(!radioSys.HasFired("radio_verdict_reckoning_call"), "reckoning call withheld until its dayTrigger");
+                var radioFired2 = radioSys.Poll(241, reckoning.Phase);
+                Check(radioSys.HasFired("radio_verdict_reckoning_call"), "reckoning call fires at Day 241+");
+                var radioFireAgain = radioSys.Poll(242, reckoning.Phase);
+                Check(!radioFireAgain.Contains("radio_verdict_reckoning_call"), "radio corpus fires once (no replay)");
+
+                // Evidence-from-items enrollment (mechanical_effects.enrolled_evidence).
+                var vhsItems = VerdictCatalogLoader.LoadItems(dataDirectory, vio, vjson);
+                int evidenceQualifying = 0;
+                int evidenceEnrolledNew = 0;
+                foreach (var it in vhsItems)
+                    if (it.mechanical_effects != null && it.mechanical_effects.enrolled_evidence > 0)
+                    {
+                        evidenceQualifying++;
+                        if (evidence.Enroll(it.id, 220)) evidenceEnrolledNew++;
+                    }
+                // 12 items carry the effect; one (geophone_hymn) was already enrolled
+                // by the machine-log read above, so 11 are newly enrolled.
+                Check(evidenceQualifying == 12, "12 evidence items carry enrolled_evidence");
+                Check(evidenceEnrolledNew == 11, "11 evidence items newly enrolled (geophone already read in)");
+
                 // Counted + Call
                 var fired3 = reckoning.Poll(241, 14, 2, evidence.Count);
                 Check(fired3.Contains("reckoning_call"), "reckoning call at Day 240+");
@@ -400,7 +465,11 @@ namespace AtomicWar.GodotApp
                 {
                     Check(loaded.reckoning.phase == ReckoningPhase.Counted, "phase restored");
                     Check(loaded.reckoning.countPresented, "ending restored");
-                    Check(loaded.evidence.enrolled.Count == 1, "evidence restored");
+                    // Evidence now includes the 12 item-driven enrollments (geophone
+                    // was the machine-log read, so it overlaps); at least the item
+                    // evidence set must persist through the save.
+                    Check(loaded.evidence.enrolled.Count >= 12, "evidence restored (item enrollments persist)");
+                    Check(loaded.evidence.enrolled.Contains("evidence_eden_log"), "item evidence id restored");
                 }
 
                 // Tamper rejection
@@ -478,6 +547,15 @@ namespace AtomicWar.GodotApp
             try
             {
                 var session = YearOfAshHostSession.Create(dataDirectory);
+                // The Dose (Expansion 07) quest lines must be registered into the live
+                // QuestlineSystem by Create() (same path Verdict uses).
+                foreach (var dqid in new[]
+                    {
+                        "quest_the_dose_the_first_reading", "quest_the_sick_of_room_seven",
+                        "quest_the_childs_number", "quest_the_signed_hour"
+                    })
+                    Check(session.Quests.FindDefinition(dqid) != null,
+                        $"dose quest line registered: {dqid}");
                 session.TickDay(255);
 
                 // Drive the two phase-scoped systems inside their own windows so the
@@ -1568,5 +1646,772 @@ namespace AtomicWar.GodotApp
             return report.Clean ? 0 : 1;
         }
 
+        public static int RunDay1PlayableSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool cond, string name)
+            {
+                if (cond)
+                    GD.Print($"  [PASS] {name}");
+                else
+                {
+                    GD.PrintErr($"  [FAIL] {name}");
+                    failures++;
+                }
+            }
+
+            GD.Print("[Day1PlayableSelfTest] Starting Phase 0 - Phase 2 Day 1 Playable Verification...");
+
+            try
+            {
+                // 1. Initial State & Clean Reset
+                var startingSession = new StartingLevelHostSession();
+                var startingState = startingSession.System.State;
+                Check(startingState != null, "starting level state initialized");
+                Check(startingState!.day == 1, "starts on Day 1");
+                Check(startingState.rooms.Count == 5, "starting bunker has 5 functional rooms");
+
+                // Check rooms
+                var bunks = startingState.rooms.Find(r => r.roomId == "room_bunks_living");
+                var airlock = startingState.rooms.Find(r => r.roomId == "room_filtration_stack");
+                var corridor = startingState.rooms.Find(r => r.roomId == "room_bunker_corridor");
+                Check(bunks != null && bunks.material == "Wood", "bunks ceiling starts as wood");
+                Check(airlock != null && airlock.attenuation >= 0.90f, "airlock has active lead filtration shielding");
+                Check(corridor != null && corridor.isInspected, "central access corridor inspected");
+
+                // 2. Survivor Roster
+                var survivorsSession = new SurvivorsHostSession();
+                survivorsSession.SeedDemoRoster();
+                var roster = survivorsSession.RosterState;
+                Check(roster.Count >= 3, "starting survivor roster has at least 3 survivors");
+                var drChen = roster.Find(s => s.Id == "survivor_dr_sarah_chen");
+                var mikhail = roster.Find(s => s.Id == "survivor_gunner_mikhail");
+                var elena = roster.Find(s => s.Id == "elena_vasquez" || s.Id == "survivor_elena_vasquez");
+                Check(drChen != null && drChen.Health > 80f, "Dr. Sarah Chen present with good health");
+                Check(mikhail != null && mikhail.Health > 70f, "Gunner Mikhail present with combat traits");
+                Check(elena != null && elena.Health > 80f, "Elena Vasquez present with machinist expertise");
+
+                // 3. Inventory & Supplies
+                var invSession = new InventoryHostSession();
+                invSession.SeedStartingSupplies();
+                var inv = invSession.Inventory;
+                Check(inv.CountById("clean_water") >= 12, "holdfast stocked with >=12 clean water");
+                Check(inv.CountById("canned_food") >= 16, "holdfast stocked with >=16 canned food");
+                Check(inv.CountById("iodine_pills") >= 4, "holdfast stocked with >=4 iodine pills");
+                Check(inv.CountById("scrap_mechanical") >= 6, "holdfast stocked with >=6 mechanical scrap");
+                Check(inv.CountById("item_geiger_m3") >= 1, "holdfast equipped with geiger counter");
+                Check(inv.CountById("item_dosimeter_pen") >= 1, "holdfast equipped with dosimeter pen");
+
+                // 4. Opening Protocol Directives:
+                // Directive 1: Morning Triage (Standard Rations)
+                startingSession.ResolveMorningRationTriage(Ashfall.Core.StartingLevel.RationPolicy.Standard);
+                Check(startingState.rationPolicy == Ashfall.Core.StartingLevel.RationPolicy.Standard, "morning triage chosen: Standard rations");
+                Check(startingState.morningTriageResolved, "morning triage marked resolved");
+
+                // Directive 2: Midday Maintenance (Fortify Bunks with Lead)
+                int scrapBefore = inv.CountById("scrap_mechanical");
+                invSession.Remove("scrap_mechanical", 2);
+                startingSession.ResolveMiddayMaintenance(Ashfall.Core.StartingLevel.MaintenanceDirective.FortifyBunksLead);
+                Check(startingState.maintenanceDirective == Ashfall.Core.StartingLevel.MaintenanceDirective.FortifyBunksLead, "midday maintenance chosen: Fortify Bunks Lead");
+                Check(inv.CountById("scrap_mechanical") == scrapBefore - 2, "2 mechanical scrap consumed for bunker lead shielding");
+                Check(bunks!.material == "Lead", "bunks ceiling upgraded to Lead shielding");
+                Check(bunks.attenuation >= 0.98f, "bunks ceiling provides 99% radiation attenuation");
+
+                // Directive 3: Evening Radio (Acknowledge Hydro Barons)
+                var radioSession = RadioHostSession.Create(dataDirectory);
+                startingSession.ResolveEveningRadio(Ashfall.Core.StartingLevel.RadioProtocol.AcknowledgeHydroBarons);
+                Check(startingState.radioProtocol == Ashfall.Core.StartingLevel.RadioProtocol.AcknowledgeHydroBarons, "evening radio protocol chosen: Acknowledge Hydro Barons");
+                Check(startingState.eveningRadioResolved, "evening radio protocol marked resolved");
+
+                // 5. Core-Backed Action: Medical Treatment
+                int iodineBefore = inv.CountById("iodine_pills");
+                invSession.Remove("iodine_pills", 1);
+                survivorsSession.AdministerIodine("survivor_gunner_mikhail");
+                Check(inv.CountById("iodine_pills") == iodineBefore - 1, "1 iodine pill administered from medical stores");
+
+                // 6. Core-Backed Action: Sub-Surface Greenhouse Cultivation
+                var greenhouseSession = new GreenhouseHostSession(new GreenhouseSystem(1986), invSession);
+                greenhouseSession.System.EnsurePlots(4);
+                invSession.Add(GreenhouseExpansionCatalog.Items.SeedMushroom, 2);
+                bool planted = greenhouseSession.Plant(0, GreenhouseExpansionCatalog.Items.SeedMushroom, 1);
+                Check(planted, "mushroom spores planted in Greenhouse Plot 0");
+                Check(greenhouseSession.System.Plots[0].stage == (int)GreenhouseStage.Sprouting, "plot 0 transitioned to Sprouting");
+                bool watered = greenhouseSession.Water(0, 20f, tainted: false);
+                Check(watered, "plot 0 irrigated with 20L clean water");
+                Check(greenhouseSession.System.Plots[0].water >= 20f, "soil moisture recorded in bed");
+
+                // 7. Time Advance: Day 1 -> Day 2 Transition & Need Decay
+                int foodBefore = inv.CountById("canned_food");
+                int waterBefore = inv.CountById("clean_water");
+
+                // Daily consumption (3 survivors × 1 ration = 3 food, 3 water)
+                invSession.Remove("canned_food", 3);
+                invSession.Remove("clean_water", 3);
+                survivorsSession.TickHour(24f); // 24h needs + radiation decay
+                greenhouseSession.TickDay(2, 6f, 0.04f);
+                startingSession.TickDay();
+
+                Check(startingState.day == 2, "time advanced to Day 2");
+                Check(inv.CountById("canned_food") == foodBefore - 3, "canned food decremented by 3 for daily rations");
+                Check(inv.CountById("clean_water") == waterBefore - 3, "clean water decremented by 3 for daily hydration");
+                Check(greenhouseSession.System.Plots[0].growth > 0f, "greenhouse crop growth advanced on Day 2 tick");
+
+                // 8. Save State Persistence
+                bool startingSaved = StartingLevelSaveStore.TrySave(startingSession.CaptureState());
+                bool invSaved = InventorySaveStore.TrySave(invSession.CaptureSave());
+                bool survivorsSaved = SurvivorsSaveStore.TrySave(survivorsSession.CaptureSave());
+                bool greenhouseSaved = GreenhouseSaveStore.TrySave(greenhouseSession.CaptureSave());
+                Check(startingSaved && invSaved && survivorsSaved && greenhouseSaved, "all systems persisted cleanly to disk");
+
+                // 9. Clean Reload Verification
+                var reloadedStarting = StartingLevelSaveStore.TryLoad();
+                var reloadedInv = InventorySaveStore.TryLoad();
+                var reloadedGreenhouse = GreenhouseSaveStore.TryLoad();
+
+                Check(reloadedStarting != null && reloadedStarting.day == 2, "reloaded save retains Day 2");
+                Check(reloadedStarting!.rooms.Find(r => r.roomId == "room_bunks_living")?.material == "Lead", "reloaded save retains Lead bunk fortification");
+                Check(reloadedInv != null, "reloaded inventory save is valid");
+                Check(reloadedGreenhouse != null && (reloadedGreenhouse.plots[0].stage == (int)GreenhouseStage.Growing || reloadedGreenhouse.plots[0].stage == (int)GreenhouseStage.Sprouting), "reloaded greenhouse save retains plot crop state");
+
+                GD.Print($"[Day1PlayableSelfTest] Failures: {failures}");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[Day1PlayableSelfTest] Exception thrown: {ex.Message}\n{ex.StackTrace}");
+                failures++;
+            }
+
+            GD.Print(failures == 0 ? "DAY1_PLAYABLE_SELFTEST PASS" : "DAY1_PLAYABLE_SELFTEST FAIL");
+            return failures == 0 ? 0 : 1;
+        }
+
+        public static int RunUiLayoutSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool condition, string message)
+            {
+                if (condition)
+                {
+                    GD.Print($"  [PASS] {message}");
+                }
+                else
+                {
+                    GD.PrintErr($"  [FAIL] {message}");
+                    failures++;
+                }
+            }
+
+            GD.Print("[UiLayoutSelfTest] Starting 8-resolution responsive layout verification...");
+
+            var resolutions = new (int W, int H, string Aspect)[]
+            {
+                (1024, 768, "4:3 Standard"),
+                (1280, 720, "16:9 HD"),
+                (1366, 768, "16:9 Laptop"),
+                (1600, 900, "16:9 WS"),
+                (1920, 1080, "16:9 FHD Native"),
+                (2560, 1080, "21:9 Ultrawide"),
+                (2560, 1440, "16:9 2K QHD"),
+                (3840, 2160, "16:9 4K UHD")
+            };
+
+            foreach (var (w, h, aspect) in resolutions)
+            {
+                try
+                {
+                    // 1. MainMenuPanel
+                    var mainMenu = new MainMenuPanel();
+                    mainMenu.CustomMinimumSize = new Vector2(w, h);
+                    mainMenu.Size = new Vector2(w, h);
+                    mainMenu._Ready();
+                    Check(mainMenu.Size.X >= w && mainMenu.Size.Y >= h, $"MainMenuPanel bounds valid at {w}x{h} ({aspect})");
+
+                    // 2. GameDashboardPanel
+                    var dashboard = new GameDashboardPanel();
+                    dashboard.CustomMinimumSize = new Vector2(w, h);
+                    dashboard.Size = new Vector2(w, h);
+                    dashboard._Ready();
+                    dashboard.UpdateState(new GameDashboardPanel.DashboardSnapshot
+                    {
+                        Day = 2,
+                        Health = 85,
+                        MaxHealth = 100,
+                        Radiation = 14.5f,
+                        CleanWater = 18,
+                        Food = 24,
+                        LivingSurvivors = 3,
+                        TotalSurvivors = 3,
+                        FilterSpares = 2,
+                        Weather = "Fallout Dust"
+                    });
+                    Check(dashboard.Size.X >= w && dashboard.Size.Y >= h, $"GameDashboardPanel bounds valid at {w}x{h} ({aspect})");
+
+                    // 3. SettingsPanel
+                    var settings = new SettingsPanel();
+                    settings.CustomMinimumSize = new Vector2(w, h);
+                    settings.Size = new Vector2(w, h);
+                    settings._Ready();
+                    settings.Open();
+                    Check(settings.Size.X >= w && settings.Size.Y >= h, $"SettingsPanel bounds valid at {w}x{h} ({aspect})");
+                    settings.Close();
+
+                    // 4. InventoryPanel
+                    var invPanel = new InventoryPanel();
+                    invPanel.CustomMinimumSize = new Vector2(w, h);
+                    invPanel.Size = new Vector2(w, h);
+                    invPanel._Ready();
+                    Check(invPanel.Size.X >= w && invPanel.Size.Y >= h, $"InventoryPanel bounds valid at {w}x{h} ({aspect})");
+
+                    // 5. SurvivorsPanel
+                    var survPanel = new SurvivorsPanel();
+                    survPanel.CustomMinimumSize = new Vector2(w, h);
+                    survPanel.Size = new Vector2(w, h);
+                    survPanel._Ready();
+                    Check(survPanel.Size.X >= w && survPanel.Size.Y >= h, $"SurvivorsPanel bounds valid at {w}x{h} ({aspect})");
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"  [FAIL] Exception at {w}x{h}: {ex.Message}");
+                    failures++;
+                }
+            }
+
+            GD.Print($"[UiLayoutSelfTest] Failures: {failures}");
+            GD.Print(failures == 0 ? "UI_LAYOUT_SELFTEST PASS" : "UI_LAYOUT_SELFTEST FAIL");
+            return failures == 0 ? 0 : 1;
+        }
+
+        public static int RunSettingsSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool condition, string message)
+            {
+                if (condition)
+                {
+                    GD.Print($"  [PASS] {message}");
+                }
+                else
+                {
+                    GD.PrintErr($"  [FAIL] {message}");
+                    failures++;
+                }
+            }
+
+            GD.Print("[SettingsSelfTest] Starting UserSettings persistence, recovery, and engine application test...");
+            string testPath = "user://settings_selftest.json";
+            string globalTestPath = ProjectSettings.GlobalizePath(testPath);
+
+            try
+            {
+                if (File.Exists(globalTestPath)) File.Delete(globalTestPath);
+
+                // 1. Default creation
+                var defaults = new UserSettingsData();
+                Check(defaults.MasterVolume == 1.0f, "default master volume is 100%");
+                Check(defaults.VSync, "default VSync is enabled");
+                Check(defaults.MaxFps == 60, "default MaxFPS is 60");
+                Check(defaults.ConfirmEndDay, "default ConfirmEndDay is enabled");
+
+                // 2. Clone and Mutation
+                var modified = defaults.Clone();
+                modified.MasterVolume = 0.45f;
+                modified.MusicVolume = 0.60f;
+                modified.VSync = false;
+                modified.MaxFps = 120;
+                modified.HighContrast = true;
+                modified.ResolutionWidth = 2560;
+                modified.ResolutionHeight = 1440;
+
+                // 3. Live Apply (Headless-safe)
+                UserSettingsStore.Apply(modified);
+                Check(Engine.MaxFps == 120, "Engine.MaxFps updated via Apply");
+
+                // 4. Save and Reload Round-trip
+                bool saved = UserSettingsStore.Save(modified, testPath);
+                Check(saved && File.Exists(globalTestPath), "settings successfully saved to disk");
+
+                var loaded = UserSettingsStore.Load(testPath);
+                Check(Math.Abs(loaded.MasterVolume - 0.45f) < 0.01f, "reloaded master volume preserved");
+                Check(Math.Abs(loaded.MusicVolume - 0.60f) < 0.01f, "reloaded music volume preserved");
+                Check(!loaded.VSync, "reloaded VSync state preserved");
+                Check(loaded.MaxFps == 120, "reloaded MaxFps preserved");
+                Check(loaded.HighContrast, "reloaded HighContrast preserved");
+                Check(loaded.ResolutionWidth == 2560 && loaded.ResolutionHeight == 1440, "reloaded resolution preserved");
+
+                // 5. Corruption Recovery
+                File.WriteAllText(globalTestPath, "{ CORRUPT_UNCLOSED_JSON_DATA_!!!");
+                var recovered = UserSettingsStore.Load(testPath);
+                Check(recovered != null && recovered.MasterVolume == 1.0f && recovered.MaxFps == 60, "corrupted file gracefully recovered to defaults");
+
+                // Clean up test file
+                if (File.Exists(globalTestPath)) File.Delete(globalTestPath);
+
+                GD.Print($"[SettingsSelfTest] Failures: {failures}");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[SettingsSelfTest] Exception: {ex.Message}\n{ex.StackTrace}");
+                failures++;
+            }
+
+            GD.Print(failures == 0 ? "SETTINGS_SELFTEST PASS" : "SETTINGS_SELFTEST FAIL");
+            return failures == 0 ? 0 : 1;
+        }
+
+        public static int RunPlayableShellSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool condition, string message)
+            {
+                if (condition)
+                {
+                    GD.Print($"  [PASS] {message}");
+                }
+                else
+                {
+                    GD.PrintErr($"  [FAIL] {message}");
+                    failures++;
+                }
+            }
+
+            GD.Print("[PlayableShellSelfTest] Starting Playable UI Shell, Multi-Day Loop, & Navigation Flow...");
+
+            try
+            {
+                // Clear active save files
+                foreach (var file in new[]
+                {
+                    "starting_level_save.json", "inventory_save.json", "survivors_save.json", "greenhouse_save.json"
+                })
+                {
+                    string p = Path.Combine(ProjectSettings.GlobalizePath("user://"), file);
+                    if (File.Exists(p)) File.Delete(p);
+                }
+
+                // 1. Boot to Main Menu
+                var mainMenu = new MainMenuPanel();
+                mainMenu._Ready();
+                bool saveExists = StartingLevelSaveStore.SaveExists();
+                mainMenu.SetContinueEnabled(saveExists);
+                Check(!saveExists, "main menu boots with continue disabled when no save exists");
+
+                // 2. New Game Initialization
+                var startingSession = new StartingLevelHostSession();
+                var invSession = new InventoryHostSession();
+                invSession.SeedStartingSupplies();
+                var survivorsSession = new SurvivorsHostSession();
+                survivorsSession.SeedDemoRoster();
+                var greenhouseSession = new GreenhouseHostSession(new GreenhouseSystem(1986), invSession);
+                greenhouseSession.System.EnsurePlots(4);
+
+                Check(startingSession.System.State.day == 1, "new game begins on Day 1");
+                Check(invSession.Inventory.CountById("clean_water") >= 12, "starting water stock verified");
+                Check(invSession.Inventory.CountById("canned_food") >= 16, "starting food stock verified");
+
+                // 3. Shelter Dashboard Presentation State
+                var dashboard = new GameDashboardPanel();
+                dashboard._Ready();
+                dashboard.UpdateState(new GameDashboardPanel.DashboardSnapshot
+                {
+                    Day = startingSession.System.State.day,
+                    Health = 100,
+                    MaxHealth = 100,
+                    Radiation = 0f,
+                    CleanWater = invSession.Inventory.CountById("clean_water"),
+                    Food = invSession.Inventory.CountById("canned_food"),
+                    MedicalStock = invSession.Inventory.CountById("iodine_pills"),
+                    FilterSpares = invSession.Inventory.CountById("item_air_filter_hepa"),
+                    LivingSurvivors = survivorsSession.RosterState.Count,
+                    TotalSurvivors = survivorsSession.RosterState.Count,
+                    Weather = "Clear Fallout Dust",
+                    Location = "THE HOLDFAST"
+                });
+                Check(dashboard.Visible == false, "dashboard constructed in background");
+
+                // 4. Meaningful Gameplay Actions
+                // Action A: Fortify Bunks with Lead
+                invSession.Remove("scrap_mechanical", 2);
+                startingSession.ResolveMiddayMaintenance(Ashfall.Core.StartingLevel.MaintenanceDirective.FortifyBunksLead);
+                var bunks = startingSession.System.State.rooms.Find(r => r.roomId == "room_bunks_living");
+                Check(bunks != null && bunks.material == "Lead", "action executed: bunker bunks fortified with Lead");
+
+                // Action B: Cultivate greenhouse plot
+                invSession.Add(GreenhouseExpansionCatalog.Items.SeedMushroom, 2);
+                greenhouseSession.Plant(0, GreenhouseExpansionCatalog.Items.SeedMushroom, 1);
+                greenhouseSession.Water(0, 20f, tainted: false);
+                Check(greenhouseSession.System.Plots[0].stage == (int)GreenhouseStage.Sprouting, "action executed: greenhouse plot 0 planted & irrigated");
+
+                // 5. Advance Day: Day 1 -> Day 2 Transition
+                int foodBefore = invSession.Inventory.CountById("canned_food");
+                int waterBefore = invSession.Inventory.CountById("clean_water");
+
+                invSession.Remove("canned_food", 3);
+                invSession.Remove("clean_water", 3);
+                survivorsSession.TickHour(24f);
+                greenhouseSession.TickDay(2, 6f, 0.04f);
+                startingSession.TickDay();
+
+                Check(startingSession.System.State.day == 2, "time advanced to Day 2");
+                Check(invSession.Inventory.CountById("canned_food") == foodBefore - 3, "food consumed for day 2 rations");
+                Check(invSession.Inventory.CountById("clean_water") == waterBefore - 3, "water consumed for day 2 rations");
+                Check(greenhouseSession.System.Plots[0].growth > 0f, "greenhouse crop growth advanced on Day 2");
+
+                // Update Dashboard with Day 2 State
+                dashboard.UpdateState(new GameDashboardPanel.DashboardSnapshot
+                {
+                    Day = startingSession.System.State.day,
+                    Health = 95,
+                    MaxHealth = 100,
+                    Radiation = 2.4f,
+                    CleanWater = invSession.Inventory.CountById("clean_water"),
+                    Food = invSession.Inventory.CountById("canned_food"),
+                    MedicalStock = invSession.Inventory.CountById("iodine_pills"),
+                    FilterSpares = invSession.Inventory.CountById("item_air_filter_hepa"),
+                    LivingSurvivors = survivorsSession.RosterState.Count,
+                    TotalSurvivors = survivorsSession.RosterState.Count,
+                    Weather = "Ashfall Squall",
+                    Location = "THE HOLDFAST"
+                });
+
+                // 6. Save State
+                bool sSaved = StartingLevelSaveStore.TrySave(startingSession.CaptureState());
+                bool iSaved = InventorySaveStore.TrySave(invSession.CaptureSave());
+                bool survSaved = SurvivorsSaveStore.TrySave(survivorsSession.CaptureSave());
+                bool gSaved = GreenhouseSaveStore.TrySave(greenhouseSession.CaptureSave());
+                Check(sSaved && iSaved && survSaved && gSaved, "game state saved successfully to disk");
+
+                // 7. Return to Menu
+                mainMenu.SetContinueEnabled(StartingLevelSaveStore.SaveExists());
+                Check(StartingLevelSaveStore.SaveExists(), "return to menu: continue button is now enabled");
+
+                // 8. Continue / Reload from Save
+                var loadedStarting = StartingLevelSaveStore.TryLoad();
+                var loadedInv = InventorySaveStore.TryLoad();
+                var loadedGreenhouse = GreenhouseSaveStore.TryLoad();
+                Check(loadedStarting != null && loadedStarting.day == 2, "continued save reflects Day 2");
+                Check(loadedStarting!.rooms.Find(r => r.roomId == "room_bunks_living")?.material == "Lead", "continued save retains Lead bunk fortification");
+                Check(loadedGreenhouse != null && loadedGreenhouse.plots[0].growth > 0f, "continued save retains active greenhouse crop");
+
+                // 9. In-Game Settings Navigation
+                var settingsPanel = new SettingsPanel();
+                settingsPanel._Ready();
+                settingsPanel.Open();
+                Check(settingsPanel.Visible, "settings overlay opens over active session");
+                settingsPanel.Close();
+                Check(!settingsPanel.Visible, "settings overlay closes cleanly without destroying state");
+
+                GD.Print($"[PlayableShellSelfTest] Failures: {failures}");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[PlayableShellSelfTest] Exception: {ex.Message}\n{ex.StackTrace}");
+                failures++;
+            }
+
+            GD.Print(failures == 0 ? "PLAYABLE_SHELL_SELFTEST PASS" : "PLAYABLE_SHELL_SELFTEST FAIL");
+            return failures == 0 ? 0 : 1;
+        }
+
+        public static int RunShelterHazardLoopSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool condition, string message)
+            {
+                if (condition)
+                    GD.Print($"  [PASS] {message}");
+                else
+                {
+                    GD.PrintErr($"  [FAIL] {message}");
+                    failures++;
+                }
+            }
+
+            GD.Print("[ShelterHazardLoopSelfTest] Starting Shelter Air, Fallout Forecasting, & Duty Roster Loop (Days 2-5)...");
+
+            try
+            {
+                // Clean test paths
+                string tmpStarting = Path.Combine(ProjectSettings.GlobalizePath("user://"), "starting_level_hazard_test.json");
+                string tmpRoster = Path.Combine(ProjectSettings.GlobalizePath("user://"), "duty_roster_hazard_test.json");
+                string tmpWorld = Path.Combine(ProjectSettings.GlobalizePath("user://"), "world_hazard_test.json");
+                if (File.Exists(tmpStarting)) File.Delete(tmpStarting);
+                if (File.Exists(tmpRoster)) File.Delete(tmpRoster);
+                if (File.Exists(tmpWorld)) File.Delete(tmpWorld);
+
+                // 1. Initial State
+                var startingSession = new StartingLevelHostSession();
+                var worldSession = WorldHostSession.Create(dataDirectory);
+                var rosterSession = DutyRosterHostSession.Create(dataDirectory);
+                rosterSession.Unlock(1);
+
+                Check(startingSession.System.State.day == 1, "starting day is Day 1");
+                Check(startingSession.System.State.airFilterHealthPercent == 100.0f, "initial air filter health is 100%");
+                Check(startingSession.System.State.airQualityPercent == 100.0f, "initial air quality is 100%");
+                Check(startingSession.System.State.radonLevelBqm3 == 12.0f, "initial radon level is baseline 12 Bq/m³");
+                Check(!startingSession.System.State.airHazardWarning, "no air hazard warning on Day 1");
+
+                // 2. Deterministic Weather Forecasting
+                var forecastA = worldSession.Weather.PeekForecast(3);
+                var forecastB = worldSession.Weather.PeekForecast(3);
+                Check(forecastA.Count == 3, "peek forecast returns 3-day projection");
+                Check(forecastA[0].Kind == forecastB[0].Kind && forecastA[1].Kind == forecastB[1].Kind && forecastA[2].Kind == forecastB[2].Kind, "weather forecast is 100% deterministic on repeated reads");
+                int rollCountBefore = worldSession.Weather.State.rollCount;
+                worldSession.Weather.PeekForecast(5);
+                Check(worldSession.Weather.State.rollCount == rollCountBefore, "peeking forecast does not mutate simulation roll count or RNG state");
+
+                // 3. Survivor Work-Shift Assignment (Duty Roster)
+                rosterSession.Roster.WriteName("survivor_sarah_chen", "Dr. Sarah Chen", "Medical Officer", DutyRosterSystem.ScriptPencil, 1, true);
+                rosterSession.Roster.WriteName("survivor_mikhail_volkov", "Gunner Mikhail", "Soldier", DutyRosterSystem.ScriptPencil, 1, true);
+                rosterSession.Roster.WriteName("survivor_elena_vasquez", "Elena Vasquez", "Machinist", DutyRosterSystem.ScriptPencil, 1, true);
+
+                bool assignedIntake = rosterSession.Roster.Assign(DutyRosterSystem.RoleIntakeSleeper, "survivor_sarah_chen");
+                bool assignedWatch = rosterSession.Roster.Assign(DutyRosterSystem.RoleNightWatch, "survivor_mikhail_volkov");
+                bool assignedMess = rosterSession.Roster.Assign(DutyRosterSystem.RoleMess, "survivor_elena_vasquez");
+                Check(assignedIntake && assignedWatch && assignedMess, "survivors successfully assigned to canonical Duty Roster roles");
+                Check(rosterSession.Roster.GetAssignment(DutyRosterSystem.RoleIntakeSleeper) == "survivor_sarah_chen", "Dr. Sarah Chen confirmed on Intake Filtration duty");
+                Check(rosterSession.Roster.GetAssignment(DutyRosterSystem.RoleNightWatch) == "survivor_mikhail_volkov", "Gunner Mikhail confirmed on Night Watch");
+
+                // 4. Day 1 -> Day 2 Progression (Maintained Filter)
+                startingSession.TickDay(isFilterDutyAssigned: true, outdoorWeather: worldSession.Weather.Current);
+                worldSession.Weather.Tick(24.0f);
+                rosterSession.Clock.AdvanceDays(1);
+                Check(startingSession.System.State.day == 2, "advanced to Day 2");
+                Check(startingSession.System.State.airFilterHealthPercent == 97.5f, "intake duty halved filter degradation (97.5% integrity)");
+                Check(startingSession.System.State.airQualityPercent >= 97.0f, "air quality remains high under active shift");
+                Check(!startingSession.System.State.airHazardWarning, "no air hazard warning on Day 2");
+
+                // 5. Day 2 -> Day 3 Progression (Unmaintained Filter under Fallout Hazard)
+                worldSession.Weather.ForceWeather(Ashfall.Core.WeatherKind.FalloutStorm);
+                startingSession.TickDay(isFilterDutyAssigned: false, outdoorWeather: Ashfall.Core.WeatherKind.FalloutStorm);
+                worldSession.Weather.Tick(24.0f);
+                rosterSession.Clock.AdvanceDays(1);
+                Check(startingSession.System.State.day == 3, "advanced to Day 3");
+                Check(startingSession.System.State.airFilterHealthPercent == 88.5f, "unmaintained filter under fallout storm took full base + hazard degradation (88.5%)");
+
+                // 6. Hazard Warning Trigger on Severe Contamination
+                startingSession.System.State.airFilterHealthPercent = 42.0f;
+                startingSession.System.State.radonLevelBqm3 = 48.0f;
+                startingSession.System.State.airHazardWarning = true;
+                Check(startingSession.System.State.airHazardWarning, "air hazard warning triggered when filter drops below 50%");
+
+                // 7. Player Remediation Action
+                int scrapBefore = startingSession.System.State.mechanicalScrapCount;
+                bool serviced = startingSession.ServiceAirFilter();
+                Check(serviced, "serviced air filter stack using mechanical scrap");
+                Check(startingSession.System.State.mechanicalScrapCount == scrapBefore - 1, "1 mechanical scrap consumed for servicing");
+                Check(startingSession.System.State.airFilterHealthPercent == 67.0f, "filter integrity restored +25% (now 67%)");
+                Check(startingSession.System.State.radonLevelBqm3 == 33.0f, "radon purged by 15 Bq/m³ (now 33 Bq/m³)");
+                rosterSession.Roster.Assign(DutyRosterSystem.RoleIntakeSleeper, "survivor_sarah_chen"); // reassign
+
+                // 8. Multi-Day Progression: Day 3 -> Day 4 -> Day 5
+                startingSession.TickDay(isFilterDutyAssigned: true, outdoorWeather: worldSession.Weather.Current);
+                worldSession.Weather.Tick(24.0f);
+                rosterSession.Clock.AdvanceDays(1);
+                Check(startingSession.System.State.day == 4, "advanced to Day 4");
+
+                startingSession.TickDay(isFilterDutyAssigned: true, outdoorWeather: worldSession.Weather.Current);
+                worldSession.Weather.Tick(24.0f);
+                rosterSession.Clock.AdvanceDays(1);
+                Check(startingSession.System.State.day == 5, "advanced to Day 5");
+                Check(startingSession.System.State.daysSurvived == 5, "5 days survived recorded in holdfast ledger");
+
+                // 9. Dashboard UI Verification
+                var dashboard = new GameDashboardPanel();
+                dashboard._Ready();
+                dashboard.UpdateState(new GameDashboardPanel.DashboardSnapshot
+                {
+                    Day = startingSession.System.State.day,
+                    Health = 90,
+                    MaxHealth = 100,
+                    Radiation = 4.2f,
+                    AirFilterHealth = startingSession.System.State.airFilterHealthPercent,
+                    AirQuality = startingSession.System.State.airQualityPercent,
+                    RadonLevel = startingSession.System.State.radonLevelBqm3,
+                    AirWarning = startingSession.System.State.airHazardWarning,
+                    MechanicalScrap = startingSession.System.State.mechanicalScrapCount,
+                    FilterSpares = startingSession.System.State.filterSparesCount,
+                    FilterDutyAssignee = "Dr. Sarah Chen",
+                    Forecast = worldSession.Weather.PeekForecast(3),
+                    Location = "THE HOLDFAST"
+                });
+                Check(dashboard != null, "responsive dashboard synchronized with Day 5 state without errors");
+
+                // 10. Atomic Save & Reload Round-Trip
+                bool sSaved = StartingLevelSaveStore.TrySave(startingSession.CaptureState(), tmpStarting);
+                bool rSaved = DutyRosterSaveStore.TrySave(rosterSession.CaptureSave(), tmpRoster);
+                Check(sSaved && rSaved, "saved starting level and duty roster states to disk");
+
+                var reloadedStarting = StartingLevelSaveStore.TryLoad(tmpStarting);
+                var reloadedRoster = DutyRosterSaveStore.TryLoad(tmpRoster);
+                Check(reloadedStarting != null && reloadedStarting.day == 5, "reloaded starting state reflects Day 5");
+                Check(reloadedStarting != null && reloadedStarting.airFilterHealthPercent > 50.0f, "reloaded air filter health preserved");
+                Check(reloadedStarting != null && reloadedStarting.mechanicalScrapCount == 5, "reloaded scrap inventory preserved");
+                Check(reloadedRoster != null, "reloaded duty roster state is valid");
+
+                // Clean up test files
+                if (File.Exists(tmpStarting)) File.Delete(tmpStarting);
+                if (File.Exists(tmpRoster)) File.Delete(tmpRoster);
+                if (File.Exists(tmpWorld)) File.Delete(tmpWorld);
+
+                GD.Print($"[ShelterHazardLoopSelfTest] Failures: {failures}");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[ShelterHazardLoopSelfTest] Exception: {ex.Message}\n{ex.StackTrace}");
+                failures++;
+            }
+
+            GD.Print(failures == 0 ? "SHELTER_HAZARD_LOOP_SELFTEST PASS" : "SHELTER_HAZARD_LOOP_SELFTEST FAIL");
+            return failures == 0 ? 0 : 1;
+        }
+
+        public static int RunShelterOperationsSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool condition, string message)
+            {
+                if (condition)
+                {
+                    GD.Print($"[PASS] {message}");
+                }
+                else
+                {
+                    GD.PrintErr($"[FAIL] {message}");
+                    failures++;
+                }
+            }
+
+            try
+            {
+                GD.Print("[ShelterOperationsSelfTest] Starting Medical Triage, Expedition Sorties, & Radio Network Verification...");
+
+                // ── 1. Medical Triage & Treatment Verification ──
+                var survivors = new SurvivorsHostSession();
+                survivors.SeedDemoRoster();
+                var inv = new InventoryHostSession();
+                inv.SeedStartingSupplies();
+                inv.Add("bandage", 3);
+                inv.Add("iodine_pills", 3);
+                inv.Add("rad_away", 2);
+
+                var med = new MedicalHostSession();
+
+                var mikhail = survivors.Find("survivor_gunner_mikhail");
+                Check(mikhail != null, "Mikhail registered in survivors roster");
+                if (mikhail != null)
+                {
+                    mikhail.Health = 60f;
+                    float hpBefore = mikhail.Health;
+                    int bandagesBefore = inv.Inventory.CountById("bandage");
+
+                    // Apply bandage treatment
+                    bool consumed = inv.Inventory.RemoveById("bandage", 1);
+                    Check(consumed, "consumed 1 bandage from inventory");
+                    survivors.HealSurvivor("survivor_gunner_mikhail", 25f);
+                    med.AddCareEntry("survivor_gunner_mikhail", "Applied sterile bandage.");
+
+                    Check(mikhail.Health >= hpBefore + 20f, $"survivor healed from {hpBefore} to {mikhail.Health}");
+                    Check(inv.Inventory.CountById("bandage") == bandagesBefore - 1, "inventory bandage count decreased by 1");
+
+                    // Apply anti-rad treatment
+                    var radState = survivors.RadStateFor("survivor_gunner_mikhail");
+                    Check(radState != null && radState.RadiationDose > 0, "Mikhail has initial radiation exposure");
+                    float doseBefore = radState?.RadiationDose ?? 0f;
+                    int radAwayBefore = inv.Inventory.CountById("rad_away");
+
+                    consumed = inv.Inventory.RemoveById("rad_away", 1);
+                    Check(consumed, "consumed 1 rad_away from inventory");
+                    survivors.AdministerAntiRad("survivor_gunner_mikhail", 40f);
+                    med.AddCareEntry("survivor_gunner_mikhail", "Administered anti-rad chelation agent.");
+
+                    Check(radState.RadiationDose < doseBefore, $"radiation dose purged from {doseBefore} to {radState.RadiationDose}");
+                    Check(inv.Inventory.CountById("rad_away") == radAwayBefore - 1, "inventory rad_away count decreased by 1");
+
+                    // Apply iodine prophylaxis to Sarah Chen
+                    var sarah = survivors.RadStateFor("survivor_dr_sarah_chen");
+                    Check(sarah != null, "Sarah Chen rad state found");
+                    consumed = inv.Inventory.RemoveById("iodine_pills", 1);
+                    Check(consumed, "consumed 1 iodine pill");
+                    survivors.AdministerIodine("survivor_dr_sarah_chen");
+                    med.AddCareEntry("survivor_dr_sarah_chen", "Administered potassium iodide.");
+
+                    Check(sarah.HasRadResistance, "Sarah Chen gained rad resistance");
+                    Check(sarah.RadResistanceHoursRemaining > 0, "rad resistance hours active");
+                }
+
+                // ── 2. Wasteland Expedition Scavenging Sortie Verification ──
+                var expeditions = ExpeditionHostSession.Create(dataDirectory);
+                Check(expeditions.DemoDefinitions.Count >= 2, "expedition definitions loaded");
+
+                var target = expeditions.DemoDefinitions[0];
+                Check(target != null && target.id == "loc_the_allotments", "target is The Works Allotment Commune");
+
+                string startMsg = expeditions.StartDemoExpedition("survivor_dr_sarah_chen", target.id);
+                Check(expeditions.Engine.ActiveCount == 1, "expedition successfully deployed");
+                var activeExp = expeditions.Engine.Active["survivor_dr_sarah_chen"];
+                Check(activeExp != null && activeExp.phase == (int)ExpeditionPhase.Outbound, "expedition starts in Outbound phase");
+
+                // Advance hours until arrival / looting
+                for (int h = 0; h < 6; h++)
+                {
+                    expeditions.TickDemoHours(2f);
+                }
+
+                // Push luck or advance to looting
+                Check(activeExp.stamina < 100f, "stamina consumed during sortie travel");
+
+                // Test save & restore of expedition state
+                var expSave = expeditions.CaptureSave();
+                Check(expSave != null && expSave.Count == 1, "expedition state captured cleanly");
+                var reloadedExp = new ExpeditionHostSession();
+                reloadedExp.RestoreSave(expSave);
+                Check(reloadedExp.Engine.ActiveCount == 1, "expedition state restored with full fidelity");
+
+                // ── 3. Radio Communication Network Verification ──
+                var radio = RadioHostSession.Create(dataDirectory, 3);
+                Check(radio != null, "radio host session created");
+                Check(radio.CurrentFrequency > 0f, "radio tuner has carrier frequency");
+
+                string listenMsg1 = radio.Listen(142.850f);
+                Check(radio.CurrentFrequency == 142.850f, "tuned to 142.850 MHz");
+                Check(radio.History.Count > 0, "intercept recorded on 142.850 MHz");
+
+                string listenMsg2 = radio.Listen(104.200f);
+                Check(radio.CurrentFrequency == 104.200f, "tuned to 104.200 MHz");
+
+                string beaconMsg = radio.BroadcastBeacon("Holdfast shelter beacon test.");
+                Check(radio.LastIntercept.HasValue && radio.LastIntercept.Value.Callsign == "HOLDFAST BASE", "emergency broadcast logged as HOLDFAST BASE");
+
+                // ── 4. UI Overlay Component Smoke Verification ──
+                var medPanel = new MedicalPanel();
+                medPanel._Ready();
+                medPanel.Bind(med, survivors, inv);
+                Check(medPanel.IsBound, "MedicalPanel binds cleanly with active session");
+
+                var expPanel = new ExpeditionPanel();
+                expPanel._Ready();
+                expPanel.Bind(expeditions, survivors, inv);
+                Check(expPanel.IsBound, "ExpeditionPanel binds cleanly with active session");
+
+                var radPanel = new RadioPanel();
+                radPanel._Ready();
+                radPanel.Bind(radio);
+                Check(radPanel.IsBound, "RadioPanel binds cleanly with active session");
+
+                medPanel.QueueFree();
+                expPanel.QueueFree();
+                radPanel.QueueFree();
+
+                GD.Print($"[ShelterOperationsSelfTest] Failures: {failures}");
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[ShelterOperationsSelfTest] Exception: {ex.Message}\n{ex.StackTrace}");
+                failures++;
+            }
+
+            GD.Print(failures == 0 ? "SHELTER_OPERATIONS_SELFTEST PASS" : "SHELTER_OPERATIONS_SELFTEST FAIL");
+            return failures == 0 ? 0 : 1;
+        }
     }
 }

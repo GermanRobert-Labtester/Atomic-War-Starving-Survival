@@ -59,6 +59,16 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 // into the same QuestlineSystem so they surface via GetPlayableQuestlines
                 // and persist through the existing YearOfAshSave envelope.
                 Ashfall.Core.Verdict.VerdictQuestCatalogLoader.LoadAndRegister(session.Quests, dataDir, fileIO, serializer);
+                // ASHFALL: THE DOSE (Expansion 07) — register the four register quest lines
+                // (first reading / sick room / child's number / signed hour) into the same
+                // QuestlineSystem so they surface via GetPlayableQuestlines with the other
+                // expansion quests and persist through YearOfAshSave.
+                var doseContent = Ashfall.Core.DoseContentCatalogLoader.Load(dataDir, fileIO, serializer);
+                foreach (var dq in doseContent.quests)
+                {
+                    if (dq == null || string.IsNullOrEmpty(dq.questlineId)) continue;
+                    session.Quests.RegisterQuestline(dq);
+                }
             }
 
             var existingSave = YearOfAshSaveStore.TryLoad();

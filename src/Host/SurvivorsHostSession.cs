@@ -66,11 +66,33 @@ namespace AtomicWar.GodotApp
                 });
             _radStates = new System.Collections.Generic.Dictionary<string, RadSurvivorWrapper>();
 
+            // Default Holdfast room ceiling shielding
+            Shelter.UpgradeCeiling("room_bunker_corridor", MaterialShieldingSystem.WallMaterial.Concrete);
+            Shelter.UpgradeCeiling("room_filtration_stack", MaterialShieldingSystem.WallMaterial.Lead);
+            Shelter.UpgradeCeiling("room_storage_bay", MaterialShieldingSystem.WallMaterial.Concrete);
+            Shelter.UpgradeCeiling("room_bunks_living", MaterialShieldingSystem.WallMaterial.Wood);
+            Shelter.UpgradeCeiling("room_radio_tuner", MaterialShieldingSystem.WallMaterial.Concrete);
+
             Needs.OnNeedChanged += (s, kind, v) => StateChanged?.Invoke();
             Needs.OnDied += s =>
             {
                 LastEvent = $"{s.Id} has died.";
                 StateChanged?.Invoke();
+            };
+
+            Radiation.OnStatusGained += (radState, status) =>
+            {
+                if (status == SurvivorStatus.AcuteRadiationSickness)
+                {
+                    LastEvent = $"RADIATION ALERT: {radState.Id} entered acute radiation sickness.";
+                    AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayRadiationAlert();
+                    StateChanged?.Invoke();
+                }
+                else if (status == SurvivorStatus.ChronicIllness)
+                {
+                    LastEvent = $"RADIATION ALERT: {radState.Id} developed chronic illness.";
+                    StateChanged?.Invoke();
+                }
             };
         }
 
@@ -80,9 +102,9 @@ namespace AtomicWar.GodotApp
         public void SeedDemoRoster()
         {
             if (RosterState.Count > 0) return;
-            AddSurvivor("survivor_dr_sarah_chen", "Dr. Sarah Chen (Trauma Surgeon)");
-            AddSurvivor("survivor_gunner_mikhail", "Gunner Mikhail (Heavy Artillery Loader)");
-            AddSurvivor("elena_vasquez", "Elena Vasquez (Aridoculture Engineer)");
+            AddSurvivor("survivor_dr_sarah_chen", "Dr. Sarah Chen (Trauma Surgeon)", health: 90f, hunger: 20f, thirst: 25f, warmth: 85f, morale: 70f, lifetimeDose: 14f);
+            AddSurvivor("survivor_gunner_mikhail", "Gunner Mikhail (Heavy Artillery Loader)", health: 80f, hunger: 35f, thirst: 30f, warmth: 75f, morale: 55f, lifetimeDose: 38f, acuteRad: true);
+            AddSurvivor("elena_vasquez", "Elena Vasquez (Aridoculture Engineer)", health: 95f, hunger: 15f, thirst: 20f, warmth: 90f, morale: 65f, lifetimeDose: 8f);
         }
 
         /// <summary>Load the survivors.json catalog into the roster system (the authority).</summary>
@@ -94,7 +116,16 @@ namespace AtomicWar.GodotApp
             Roster.RegisterRange(SurvivorCatalogLoader.Load(dataDir, fileIO, serializer));
         }
 
-        public void AddSurvivor(string id, string displayName)
+        public void AddSurvivor(
+            string id,
+            string displayName,
+            float health = 100f,
+            float hunger = 0f,
+            float thirst = 0f,
+            float warmth = 100f,
+            float morale = 50f,
+            float lifetimeDose = 0f,
+            bool acuteRad = false)
         {
             if (Find(id) != null) return;
             Roster.RegisterDefinition(new SurvivorDefinition
@@ -104,10 +135,24 @@ namespace AtomicWar.GodotApp
                 baseHealth = 100f
             });
             Roster.Join(id, 0);
-            var state = new SurvivorNeedsState { Id = id };
+            var state = new SurvivorNeedsState
+            {
+                Id = id,
+                Health = health,
+                Hunger = hunger,
+                Thirst = thirst,
+                Warmth = warmth,
+                Morale = morale
+            };
             RosterState.Add(state);
             Needs.Register(state);
-            var rad = new RadSurvivorWrapper { Id = id };
+            var rad = new RadSurvivorWrapper
+            {
+                Id = id,
+                RadiationDose = acuteRad ? 15f : 0f,
+                LifetimeRadiationExposure = lifetimeDose,
+                HasAcuteRadiationSickness = acuteRad
+            };
             _radStates[id] = rad;
             Radiation.Register(rad);
         }
@@ -119,7 +164,7 @@ namespace AtomicWar.GodotApp
             return null;
         }
 
-        private SurvivorRadState RadStateFor(string id)
+        public SurvivorRadState? RadStateFor(string id)
         {
             return _radStates.TryGetValue(id, out var r) ? r : null;
         }
@@ -170,6 +215,16 @@ namespace AtomicWar.GodotApp
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.AdministerAntiRad(rad, rads);
             LastEvent = $"{survivorId}: anti-rad cleared {rads:F0} mSv (dose now {rad.RadiationDose:F0}).";
+            StateChanged?.Invoke();
+            return LastEvent;
+        }
+
+        public string HealSurvivor(string survivorId, float amount = 25f)
+        {
+            var survivor = Find(survivorId);
+            if (survivor == null) return $"Unknown survivor: {survivorId}.";
+            Needs.Modify(survivor, NeedKind.Health, amount);
+            LastEvent = $"{survivorId}: treated with bandage (+{amount:F0} HP, health now {survivor.Health:F0}).";
             StateChanged?.Invoke();
             return LastEvent;
         }

@@ -103,6 +103,27 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void SaveState_RoundTrips_Losslessly()
+        {
+            var sys = FreshSystem();
+            sys.UnlockPreWarWheat();
+            sys.Plant(0, Mushroom, 1, out _);
+            sys.Water(0, 40f, tainted: true);
+
+            var captured = sys.CaptureState();
+            var opts = new System.Text.Json.JsonSerializerOptions { IncludeFields = true };
+            var json = System.Text.Json.JsonSerializer.Serialize(captured, opts);
+            var restored = System.Text.Json.JsonSerializer.Deserialize<GreenhouseState>(json, opts);
+
+            Assert.NotNull(restored);
+            Assert.True(restored.preWarWheatUnlocked);
+            Assert.Equal(2, restored.plots.Count);
+            Assert.Equal(Mushroom, restored.plots[0].seedItemId);
+            Assert.Equal(40f, restored.plots[0].water);
+            Assert.True(restored.plots[0].soilContamination > 0f);
+        }
+
+        [Fact]
         public void HeadlessDemo_PassesAllChecks()
         {
             var report = GreenhouseHeadlessDemo.Run();

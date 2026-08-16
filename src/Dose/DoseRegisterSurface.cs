@@ -23,6 +23,7 @@ namespace AtomicWar.GodotApp.Dose
         private Label _lblSick;
         private Label _lblCohort;
         private Label _lblVoluntary;
+        private Label _lblContent;
         private Button _btnCalibrate;
 
         public override void _Ready()
@@ -71,6 +72,8 @@ namespace AtomicWar.GodotApp.Dose
             tabs.AddChild(MakeTab("Cohort", _lblCohort));
             _lblVoluntary = new Label();
             tabs.AddChild(MakeTab("Voluntary", _lblVoluntary));
+            _lblContent = new Label();
+            tabs.AddChild(MakeTab("Content", _lblContent));
 
             rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
@@ -145,6 +148,7 @@ namespace AtomicWar.GodotApp.Dose
             _lblSick.Text = RenderSick();
             _lblCohort.Text = RenderCohort();
             _lblVoluntary.Text = RenderVoluntary();
+            _lblContent.Text = RenderContent();
             _btnCalibrate.Text = _session.Ledger.State.calibrationOverdue ? "Calibrate (Piet) — OVERDUE" : "Calibrate (Piet)";
 
             // Calibration button turns critical when overdue
@@ -194,6 +198,51 @@ namespace AtomicWar.GodotApp.Dose
             return sb.Length == 0
                 ? "The bed order is empty. A Red name stays until someone writes it."
                 : sb.ToString().TrimEnd();
+        }
+
+        /// <summary>Render the Expansion 07 content bundle — the three standing
+        /// rooms (standing places, not interiors) and the book/tool story items, so
+        /// the player sees what the four registers are written to serve.</summary>
+        private string RenderContent()
+        {
+            if (_session.Content == null) return "No dose content loaded.";
+            var sb = new StringBuilder();
+            if (_session.Content.locations != null && _session.Content.locations.Count > 0)
+            {
+                sb.Append("Rooms — standing places:\n");
+                for (int i = 0; i < _session.Content.locations.Count; i++)
+                {
+                    var l = _session.Content.locations[i];
+                    if (l == null || string.IsNullOrEmpty(l.displayName)) continue;
+                    sb.Append("  • ").Append(l.displayName)
+                      .Append(" (").Append(l.id).Append(")\n");
+                    if (!string.IsNullOrEmpty(l.description))
+                        sb.Append("    ").Append(l.description).Append('\n');
+                }
+            }
+            if (_session.Content.items != null && _session.Content.items.Count > 0)
+            {
+                sb.Append("\nStory / tool items:\n");
+                for (int i = 0; i < _session.Content.items.Count; i++)
+                {
+                    var it = _session.Content.items[i];
+                    if (it == null || string.IsNullOrEmpty(it.name)) continue;
+                    sb.Append("  • ").Append(it.name)
+                      .Append(" (").Append(it.id).Append(")\n");
+                }
+            }
+            if (_session.Content.quests != null && _session.Content.quests.Count > 0)
+            {
+                sb.Append("\nQuest lines:\n");
+                for (int i = 0; i < _session.Content.quests.Count; i++)
+                {
+                    var q = _session.Content.quests[i];
+                    if (q == null || string.IsNullOrEmpty(q.title)) continue;
+                    sb.Append("  • ").Append(q.title)
+                      .Append(" (").Append(q.questlineId).Append(")\n");
+                }
+            }
+            return sb.Length == 0 ? "No dose content loaded." : sb.ToString().TrimEnd();
         }
 
         private string RenderCohort()

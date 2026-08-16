@@ -8,28 +8,15 @@ namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Inventory panel with real data binding.
-    /// Shows storage and gear from InventoryHostSession.
+    /// Shows storage and gear from InventoryHostSession with item icons and tactile 9-slice framing.
     /// </summary>
     public partial class InventoryPanel : Control
     {
         public event Action? OnClose;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblStorageTitle;
-        private Label _lblGearTitle;
-        private VBoxContainer _storageGrid;
-        private VBoxContainer _gearGrid;
-
-        // Placeholder items (will be replaced with real data)
-        private readonly string[] _placeholderStorageItems = {
-            "Rations x5", "Water x3", "Medkit x1", "Bandages x2",
-            "Iodine Pills x10", "Water Filter", "Gas Mask", "Flashlight"
-        };
-
-        private readonly string[] _placeholderGearItems = {
-            "Leather Jacket", "Canvas Pants", "Boots", "Backpack",
-            "Dosimeter", "Geiger Counter"
-        };
+        private VBoxContainer _storageGrid = null!;
+        private VBoxContainer _gearGrid = null!;
+        private Label _weightLabel = null!;
 
         // Real data from host session
         private InventoryHostSession? _inventoryHost;
@@ -44,57 +31,76 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_storageGrid == null || _gearGrid == null) return;
 
-            // Clear existing items by removing children
             while (_storageGrid.GetChildCount() > 0)
-            {
                 _storageGrid.RemoveChild(_storageGrid.GetChild(0));
-            }
             while (_gearGrid.GetChildCount() > 0)
-            {
                 _gearGrid.RemoveChild(_gearGrid.GetChild(0));
-            }
 
             if (_inventoryHost != null)
             {
-                // Bind real inventory data (placeholder - actual implementation would use real inventory API)
                 var inventory = _inventoryHost.Inventory;
-                
-                // Storage items (using placeholder data structure)
-                for (int i = 0; i < _placeholderStorageItems.Length; i++)
+                _weightLabel.Text = $"CAPACITY // {inventory.Slots.Count} STACKS · {inventory.GetCurrentWeight():0.0}/{inventory.MaxWeight:0} KG";
+
+                if (inventory.Slots.Count == 0)
                 {
-                    var itemLabel = new Label { Text = $"{_placeholderStorageItems[i]} x{i+1}" };
-                    itemLabel.CustomMinimumSize = new Vector2(150, 40);
-                    itemLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                    _storageGrid.AddChild(itemLabel);
+                    _storageGrid.AddChild(AshfallUiHelpers.MakeMetadata("Nothing stored. The shelter shelves are bare."));
+                }
+                else
+                {
+                    for (int i = 0; i < inventory.Slots.Count; i++)
+                    {
+                        var slot = inventory.Slots[i];
+                        if (slot?.Item == null) continue;
+
+                        var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                        var icon = AshfallUiHelpers.MakeItemIcon(slot.Item.id, 26);
+                        row.AddChild(icon);
+
+                        var name = AshfallUiHelpers.MakeSmall(slot.Item.displayName);
+                        name.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                        row.AddChild(name);
+
+                        var count = AshfallUiHelpers.MakeMono($"×{slot.Amount}");
+                        count.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+                        row.AddChild(count);
+
+                        _storageGrid.AddChild(row);
+                    }
                 }
 
-                // Gear items (using placeholder data structure)
-                for (int i = 0; i < _placeholderGearItems.Length; i++)
-                {
-                    var itemLabel = new Label { Text = _placeholderGearItems[i] };
-                    itemLabel.CustomMinimumSize = new Vector2(150, 40);
-                    itemLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                    _gearGrid.AddChild(itemLabel);
-                }
+                var gearRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                var gearIcon = AshfallUiHelpers.MakeItemIcon("item_lead_plate", 24);
+                gearRow.AddChild(gearIcon);
+                var gearText = AshfallUiHelpers.MakeSmall(_inventoryHost.EquipLine());
+                gearText.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                gearRow.AddChild(gearText);
+                _gearGrid.AddChild(gearRow);
             }
             else
             {
-                // Fall back to placeholders
-                foreach (string item in _placeholderStorageItems)
+                _weightLabel.Text = "CAPACITY // 8 STACKS · 14.5/40.0 KG";
+                string[] sampleItems = {
+                    "item_resin_adhesive", "item_lead_plate", "item_potassium_iodide",
+                    "item_geiger_m3", "item_air_filter_hepa", "item_desal_membrane",
+                    "item_brine_salt", "item_dosimeter_pen"
+                };
+                foreach (string itemId in sampleItems)
                 {
-                    var itemLabel = new Label { Text = item };
-                    itemLabel.CustomMinimumSize = new Vector2(150, 40);
-                    itemLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                    _storageGrid.AddChild(itemLabel);
+                    var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                    var icon = AshfallUiHelpers.MakeItemIcon(itemId, 24);
+                    row.AddChild(icon);
+
+                    var name = AshfallUiHelpers.MakeSmall(itemId.Replace('_', ' ').ToUpperInvariant());
+                    name.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                    row.AddChild(name);
+
+                    var count = AshfallUiHelpers.MakeMono("×01");
+                    row.AddChild(count);
+
+                    _storageGrid.AddChild(row);
                 }
 
-                foreach (string item in _placeholderGearItems)
-                {
-                    var itemLabel = new Label { Text = item };
-                    itemLabel.CustomMinimumSize = new Vector2(150, 40);
-                    itemLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                    _gearGrid.AddChild(itemLabel);
-                }
+                _gearGrid.AddChild(AshfallUiHelpers.MakeSmall("EQUIPPED // Hazmat Suit [Worn 72%] · Quartz Dosimeter Pen · Gas Mask M3"));
             }
         }
 
@@ -103,74 +109,74 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            // Background overlay
-            var bg = new ColorRect
-            {
-                Color = new Color(0.05f, 0.05f, 0.05f, 0.92f)
-            };
+            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.88f) };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            // Content container
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+            var center = new CenterContainer();
+            center.SetAnchorsPreset(LayoutPreset.FullRect);
+            AddChild(center);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(600, 0);
-            container.AddChild(vbox);
+            var panel = AshfallUiHelpers.MakePanel(700, 560);
+            center.AddChild(panel);
 
-            // Title
-            var title = AshfallUiHelpers.MakeTitle("INVENTORY", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
+            var margins = AshfallUiHelpers.MakeMargins(Ashfall.Core.UI.Theme.SpacingMd);
+            panel.AddChild(margins);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            margins.AddChild(vbox);
 
-            // Storage section
-            _lblStorageTitle = AshfallUiHelpers.MakeSectionHeader("STORAGE");
-            vbox.AddChild(_lblStorageTitle);
+            var header = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            var title = AshfallUiHelpers.MakeTitle("SHELTER STORAGE & GEAR", Ashfall.Core.UI.Theme.FontSizeH2);
+            title.HorizontalAlignment = HorizontalAlignment.Left;
+            title.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            header.AddChild(title);
 
-            _storageGrid = new VBoxContainer();
-            _storageGrid.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _storageGrid.CustomMinimumSize = new Vector2(550, 0);
-            vbox.AddChild(_storageGrid);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Gear section
-            _lblGearTitle = AshfallUiHelpers.MakeSectionHeader("GEAR");
-            vbox.AddChild(_lblGearTitle);
-
-            _gearGrid = new VBoxContainer();
-            _gearGrid.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _gearGrid.CustomMinimumSize = new Vector2(550, 0);
-            vbox.AddChild(_gearGrid);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Close button
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
+            btnClose.CustomMinimumSize = new Vector2(110, 32);
+            header.AddChild(btnClose);
+            vbox.AddChild(header);
 
-            // Keyboard shortcut
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
+            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            _weightLabel = AshfallUiHelpers.MakeMono("CAPACITY // --");
+            _weightLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
+            vbox.AddChild(_weightLabel);
+
+            var scroll = new ScrollContainer
+            {
+                CustomMinimumSize = new Vector2(660, 410),
+                SizeFlagsVertical = SizeFlags.ExpandFill
+            };
+            vbox.AddChild(scroll);
+
+            var contentBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            contentBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            scroll.AddChild(contentBox);
+
+            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("EQUIPPED FIELD GEAR"));
+            _gearGrid = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            contentBox.AddChild(_gearGrid);
+
+            contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("STORAGE MANIFEST"));
+            _storageGrid = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            contentBox.AddChild(_storageGrid);
+
+            RefreshView();
         }
 
         public void Open()
         {
             Visible = true;
+            RefreshView();
             QueueRedraw();
         }
 
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-
             if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
             {
                 OnClose?.Invoke();

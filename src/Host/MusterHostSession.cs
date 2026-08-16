@@ -16,6 +16,12 @@ namespace AtomicWar.GodotApp
     {
         public MusterSystem Engine { get; }
         public CoalitionCampSystem Camp { get; }
+        public ColdCountSystem ColdCount { get; }
+        public ProvisionedSystem Provisioned { get; }
+        public LongWalkSystem LongWalk { get; }
+        public ScavengerGuildSystem ScavengerGuild { get; }
+        public IronRaidersSystem IronRaiders { get; }
+        public HydroBaronsSystem HydroBarons { get; }
         public List<CurrentDefinition> Roster { get; }
         public List<WitnessDefinition> Witnesses { get; }
         public List<EndingDefinition> Epilogues { get; }
@@ -31,12 +37,24 @@ namespace AtomicWar.GodotApp
         public MusterHostSession(
             MusterSystem engine = null,
             CoalitionCampSystem camp = null,
+            ColdCountSystem coldCount = null,
+            ProvisionedSystem provisioned = null,
+            LongWalkSystem longWalk = null,
+            ScavengerGuildSystem scavengerGuild = null,
+            IronRaidersSystem ironRaiders = null,
+            HydroBaronsSystem hydroBarons = null,
             List<CurrentDefinition> roster = null,
             List<WitnessDefinition> witnesses = null,
             List<EndingDefinition> epilogues = null)
         {
             Engine = engine ?? new MusterSystem();
             Camp = camp ?? new CoalitionCampSystem();
+            ColdCount = coldCount ?? new ColdCountSystem();
+            Provisioned = provisioned ?? new ProvisionedSystem();
+            LongWalk = longWalk ?? new LongWalkSystem();
+            ScavengerGuild = scavengerGuild ?? new ScavengerGuildSystem();
+            IronRaiders = ironRaiders ?? new IronRaidersSystem();
+            HydroBarons = hydroBarons ?? new HydroBaronsSystem();
             Roster = roster ?? new List<CurrentDefinition>();
             Witnesses = witnesses ?? new List<WitnessDefinition>();
             Epilogues = epilogues ?? new List<EndingDefinition>();
@@ -47,6 +65,12 @@ namespace AtomicWar.GodotApp
             };
             Engine.OnStateChanged += _ => StateChanged?.Invoke();
             Camp.OnStateChanged += _ => StateChanged?.Invoke();
+            ColdCount.OnStateChanged += _ => StateChanged?.Invoke();
+            Provisioned.OnStateChanged += _ => StateChanged?.Invoke();
+            LongWalk.OnStateChanged += _ => StateChanged?.Invoke();
+            ScavengerGuild.OnStateChanged += _ => StateChanged?.Invoke();
+            IronRaiders.OnStateChanged += _ => StateChanged?.Invoke();
+            HydroBarons.OnStateChanged += _ => StateChanged?.Invoke();
         }
 
         public static MusterHostSession Create(string dataDir)
@@ -151,7 +175,13 @@ namespace AtomicWar.GodotApp
         public MusterHostSave CaptureSave() => new MusterHostSave
         {
             Muster = Engine.CaptureState(),
-            Camp = Camp.CaptureState()
+            Camp = Camp.CaptureState(),
+            ColdCount = ColdCount.CaptureState(),
+            Provisioned = Provisioned.CaptureState(),
+            LongWalk = LongWalk.CaptureState(),
+            ScavengerGuild = ScavengerGuild.CaptureState(),
+            IronRaiders = IronRaiders.CaptureState(),
+            HydroBarons = HydroBarons.CaptureState()
         };
 
         public void RestoreSave(MusterHostSave save)
@@ -161,6 +191,18 @@ namespace AtomicWar.GodotApp
                 Engine.RestoreState(save.Muster);
             if (save.Camp != null)
                 Camp.RestoreState(save.Camp);
+            if (save.ColdCount != null)
+                ColdCount.RestoreState(save.ColdCount);
+            if (save.Provisioned != null)
+                Provisioned.RestoreState(save.Provisioned);
+            if (save.LongWalk != null)
+                LongWalk.RestoreState(save.LongWalk);
+            if (save.ScavengerGuild != null)
+                ScavengerGuild.RestoreState(save.ScavengerGuild);
+            if (save.IronRaiders != null)
+                IronRaiders.RestoreState(save.IronRaiders);
+            if (save.HydroBarons != null)
+                HydroBarons.RestoreState(save.HydroBarons);
         }
     }
 }

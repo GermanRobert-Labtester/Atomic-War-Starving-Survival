@@ -21,6 +21,8 @@ namespace AtomicWar.GodotApp
         private Label _lblReadout;
         private VBoxContainer _logList;
         private VBoxContainer _npcList;
+        private VBoxContainer _placeList;
+        private VBoxContainer _radioList;
 
         public override void _Ready()
         {
@@ -84,6 +86,24 @@ namespace AtomicWar.GodotApp
 
             _npcList = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingSm);
             rootVbox.AddChild(_npcList);
+
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            rootVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("PLACES & EVIDENCE"));
+
+            _placeList = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingXs);
+            rootVbox.AddChild(_placeList);
+
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            rootVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("TRANSMISSIONS"));
+
+            var radioScroll = new ScrollContainer
+            {
+                HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
+                CustomMinimumSize = new Vector2(0, 170)
+            };
+            rootVbox.AddChild(radioScroll);
+            _radioList = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingXs);
+            radioScroll.AddChild(_radioList);
         }
 
         public void Bind(VerdictHostSession verdict)
@@ -94,11 +114,25 @@ namespace AtomicWar.GodotApp
 
         public void RefreshView()
         {
-            if (_verdict == null || _logList == null) return;
+            if (_verdict == null || _logList == null || _radioList == null) return;
 
             RefreshPhaseStrip();
             RefreshLog();
             RefreshNpcs();
+            RefreshPlaces();
+            RefreshRadio();
+        }
+
+        /// <summary>Thin read-only accessor for tests: the number of broadcast rows
+        /// currently rendered in the TRANSMISSIONS section (broadcast labels carry a
+        /// "[D{day}]" marker; the summary header label is excluded).</summary>
+        public int RenderedRadioRowCount()
+        {
+            if (_radioList == null) return 0;
+            int n = 0;
+            foreach (Node child in _radioList.GetChildren())
+                if (child is Label lbl && lbl.Text != null && lbl.Text.Contains("[D")) n++;
+            return n;
         }
 
         private void RefreshPhaseStrip()
@@ -132,8 +166,7 @@ namespace AtomicWar.GodotApp
 
         private void RefreshLog()
         {
-            foreach (Node child in _logList.GetChildren())
-                child.QueueFree();
+            ClearChildren(_logList);
 
             var entries = _verdict.MachineLog.Entries;
             int shown = 0;
@@ -176,8 +209,7 @@ namespace AtomicWar.GodotApp
 
         private void RefreshNpcs()
         {
-            foreach (Node child in _npcList.GetChildren())
-                child.QueueFree();
+            ClearChildren(_npcList);
 
             var available = _verdict.AvailableNpcs();
             if (available.Count == 0)
@@ -235,6 +267,149 @@ namespace AtomicWar.GodotApp
                 {
                     _npcList.AddChild(row);
                 }
+            }
+        }
+
+        /// <summary>Render the reachable Verdict places and evidence/story items.
+        /// Thin presentation: lists what the machine's records point to (the four
+        /// standing sites and the fifteen evidence/quest objects) as read-only rows.</summary>
+        private void RefreshPlaces()
+        {
+            ClearChildren(_placeList);
+
+            bool any = false;
+            if (_verdict.Locations != null)
+            {
+                for (int i = 0; i < _verdict.Locations.Count; i++)
+                {
+                    var loc = _verdict.Locations[i];
+                    if (loc == null || string.IsNullOrEmpty(loc.displayName)) continue;
+                    any = true;
+                    var row = new Label
+                    {
+                        Text = $"▨ {loc.displayName} ({loc.id}) · danger {loc.dangerLevel}\n   {Truncate(loc.description, 180)}",
+                        AutowrapMode = TextServer.AutowrapMode.WordSmart
+                    };
+                    row.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeLabel);
+                    row.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Pale));
+                    _placeList.AddChild(row);
+                }
+            }
+            if (_verdict.Items != null)
+            {
+                for (int i = 0; i < _verdict.Items.Count; i++)
+                {
+                    var it = _verdict.Items[i];
+                    if (it == null || string.IsNullOrEmpty(it.id)) continue;
+                    any = true;
+                    string kind = string.IsNullOrEmpty(it.category) ? "story_item" : it.category;
+                    string icon = kind switch
+                    {
+                        "consumable" => "⊕",
+                        "quest_item" => "◆",
+                        _ => "◈"
+                    };
+                    var row = new Label
+                    {
+                        Text = $"{icon} {it.displayName} ({it.id}) · {kind}",
+                        AutowrapMode = TextServer.AutowrapMode.WordSmart
+                    };
+                    row.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeLabel);
+                    row.AddThemeColorOverride("font_color",
+                        it.id.StartsWith("evidence_") ? AshfallUiHelpers.ToColor(CoreTheme.Warm)
+                                                       : AshfallUiHelpers.ToColor(CoreTheme.Muted));
+                    _placeList.AddChild(row);
+                }
+            }
+            if (!any)
+            {
+                var empty = new Label
+                {
+                    Text = "The record names no places yet. Keep the machine reading.",
+                    AutowrapMode = TextServer.AutowrapMode.WordSmart
+                };
+                empty.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeLabel);
+                empty.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Dim));
+                _placeList.AddChild(empty);
+            }
+        }
+
+        /// <summary>Render the diegetic radio corpus (verdict_radio.json). Lists each
+        /// broadcast with its dayTrigger and kind, marking fired vs pending. Drivers
+        /// from the session's VerdictRadioSystem state. Thin presentation only.</summary>
+        private void RefreshRadio()
+        {
+            ClearChildren(_radioList);
+            if (_verdict.Radio == null)
+            {
+                _radioList.AddChild(AshfallUiHelpers.MakeSmall("The radio is silent.", true));
+                return;
+            }
+
+            var radio = _verdict.Radio;
+            var header = new Label
+            {
+                Text = $"{radio.FiredCount}/{radio.Corpus.Count} broadcasts received",
+                AutowrapMode = TextServer.AutowrapMode.WordSmart
+            };
+            header.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeSmall);
+            header.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Pale));
+            _radioList.AddChild(header);
+
+            bool any = false;
+            if (radio.Corpus != null)
+            {
+                for (int i = 0; i < radio.Corpus.Count; i++)
+                {
+                    var r = radio.Corpus[i];
+                    if (r == null || string.IsNullOrEmpty(r.id)) continue;
+                    any = true;
+                    bool isFired = radio.HasFired(r.id);
+                    string kindIcon = r.kind switch
+                    {
+                        "carrier" => "◌",
+                        "call" => "▸",
+                        "maintenance" => "⚙",
+                        "witness" => "✉",
+                        "readings" => "▥",
+                        _ => "·"
+                    };
+                    var row = new Label
+                    {
+                        Text = $"{kindIcon} {Truncate(r.message, 90)} \n   [D{r.dayTrigger}] {r.id} · {(isFired ? "RECEIVED" : "pending")}",
+                        AutowrapMode = TextServer.AutowrapMode.WordSmart
+                    };
+                    row.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeLabel);
+                    row.AddThemeColorOverride("font_color",
+                        isFired ? AshfallUiHelpers.ToColor(CoreTheme.Pale)
+                                : AshfallUiHelpers.ToColor(CoreTheme.Muted));
+                    _radioList.AddChild(row);
+                }
+            }
+            if (!any)
+            {
+                _radioList.AddChild(AshfallUiHelpers.MakeSmall("No broadcasts logged yet.", true));
+            }
+        }
+
+        private static string Truncate(string s, int max)
+        {
+            if (string.IsNullOrEmpty(s) || s.Length <= max) return s ?? string.Empty;
+            return s.Substring(0, max) + "…";
+        }
+
+        /// <summary>Immediately detach and queue-frees all children so a rebuild does
+        /// not accumulate stale rows (QueueFree alone is deferred to end-of-frame).</summary>
+        private static void ClearChildren(Node container)
+        {
+            if (container == null) return;
+            var children = container.GetChildren();
+            for (int i = 0; i < children.Count; i++)
+            {
+                var c = children[i];
+                if (c == null) continue;
+                container.RemoveChild(c);
+                c.QueueFree();
             }
         }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using Ashfall.Core;
+using Ashfall.Core.YearOfAsh;
 using Godot;
 
 namespace AtomicWar.GodotApp
@@ -20,6 +21,7 @@ namespace AtomicWar.GodotApp
         public CohortSystem Cohort { get; }
         public VoluntaryRegisterSystem Voluntary { get; }
         public DoseRegistersCatalog Registers { get; }
+        public DoseContentCatalog Content { get; }
 
         private readonly SeededRng _rng;
 
@@ -31,13 +33,15 @@ namespace AtomicWar.GodotApp
             SickListSystem sickList = null,
             CohortSystem cohort = null,
             VoluntaryRegisterSystem voluntary = null,
-            DoseRegistersCatalog registers = null)
+            DoseRegistersCatalog registers = null,
+            DoseContentCatalog content = null)
         {
             Ledger = ledger ?? new DoseLedgerSystem();
             SickList = sickList ?? new SickListSystem();
             Cohort = cohort ?? new CohortSystem();
             Voluntary = voluntary ?? new VoluntaryRegisterSystem();
             Registers = registers ?? new DoseRegistersCatalog();
+            Content = content ?? new DoseContentCatalog();
             _rng = new SeededRng(DemoSeed);
 
             // Persistence: any register mutation marks the save dirty.
@@ -51,13 +55,15 @@ namespace AtomicWar.GodotApp
         {
             CatalogLocator.UseInvariantCulture();
             var registers = new DoseRegistersCatalog();
+            var content = new DoseContentCatalog();
             if (!string.IsNullOrEmpty(dataDir))
             {
                 var fileIO = new FileSystemIO();
                 var serializer = new SystemTextJsonSerializer();
                 registers = DoseRegistersCatalogLoader.Load(dataDir, fileIO, serializer);
+                content = DoseContentCatalogLoader.Load(dataDir, fileIO, serializer);
             }
-            return new DoseLedgerHostSession(registers: registers);
+            return new DoseLedgerHostSession(registers: registers, content: content);
         }
 
         // ── Cross-host save ──────────────────────────────────────────
@@ -114,6 +120,30 @@ namespace AtomicWar.GodotApp
         }
 
         // ── Status lines ─────────────────────────────────────────────
+
+        /// <summary>Register the Dose quest lines into a QuestlineSystem (engine-agnostic
+        /// graph). The host owns the QuestlineSystem instance; this only ingests content.</summary>
+        public int RegisterContentQuests(QuestlineSystem questSystem)
+        {
+            if (questSystem == null || Content == null || Content.quests == null) return 0;
+            int count = 0;
+            foreach (var q in Content.quests)
+            {
+                if (q == null || string.IsNullOrEmpty(q.questlineId)) continue;
+                questSystem.RegisterQuestline(q);
+                count++;
+            }
+            return count;
+        }
+
+        /// <summary>One-line summary of what the Expansion 07 content bundle adds.</summary>
+        public string ContentStatusLine()
+        {
+            return
+                $"Dose content: {Content?.locations?.Count ?? 0} rooms, " +
+                $"{Content?.items?.Count ?? 0} items, " +
+                $"{Content?.quests?.Count ?? 0} quest lines";
+        }
 
         public string LedgerLine()
         {

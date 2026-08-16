@@ -29,6 +29,8 @@ namespace AtomicWar.GodotApp
             Weather.OnWeatherChanged += kind =>
             {
                 LastEvent = $"Weather: {kind}";
+                if (IsHazardWeather(kind))
+                    AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayWeatherAlert();
                 StateChanged?.Invoke();
             };
             Weather.OnStateChanged += _ => StateChanged?.Invoke();
@@ -121,5 +123,16 @@ namespace AtomicWar.GodotApp
 
         public SkyArmorSaveState CaptureSkyArmorSave() => SkyArmor.CaptureState();
         public void RestoreSkyArmorSave(SkyArmorSaveState state) => SkyArmor.RestoreState(state);
+
+        /// <summary>
+        /// Hazard weather kinds that warrant an audio alert on transition.
+        /// Matches the Core-rollable hazard set: FalloutStorm, BlackRain, Blizzard.
+        /// </summary>
+        internal static bool IsHazardWeather(WeatherKind kind)
+        {
+            return kind == WeatherKind.FalloutStorm
+                || kind == WeatherKind.BlackRain
+                || kind == WeatherKind.Blizzard;
+        }
     }
 }

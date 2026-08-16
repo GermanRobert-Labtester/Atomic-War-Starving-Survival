@@ -1,0 +1,230 @@
+[
+  {
+    "questlineId": "quest_the_dose_the_first_reading",
+    "title": "The First Reading",
+    "synopsis": "One survivor's first dosimeter read books an Amber band. Decide whether the shelter keeps a ledger at all — or closes the book before its first page.",
+    "factionTag": "none",
+    "minDay": 40,
+    "maxDay": 360,
+    "stages": [
+      {
+        "stageId": "stage_first_reading_open",
+        "title": "The Dial",
+        "narrativePrompt": "The dosimeter needle twitches past the hundred mark before collapsing back. Whatever took the reading, the number is real now — it needs a sheet to live on. Dr. Vel holds the red pencil and waits for you to say whether the bunker is the kind of place that writes this down.",
+        "isTerminal": false,
+        "choices": [
+          {
+            "choiceId": "choice_open_the_ledger",
+            "text": "Open the ledger. Write it down.",
+            "nextStageId": "stage_first_reading_booked",
+            "moraleDelta": -1,
+            "guiltDelta": 0,
+            "grantItemId": "item_dose_ledger",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "The book is opened. The name goes in with the number, in pencil so the drift can be corrected. Dr. Vel does not thank you. She starts ruling the next page."
+          },
+          {
+            "choiceId": "choice_close_the_book",
+            "text": "Close the book. This shelter does not keep that kind of paperwork.",
+            "nextStageId": "stage_first_reading_refused",
+            "moraleDelta": 1,
+            "guiltDelta": 2,
+            "outcomeNarrative": "The pencil goes down. No sheet is started, and the number is allowed to live only in the geiger counter's memory. For a season, the other three registers stay dark. The silence is recorded all the same."
+          }
+        ]
+      },
+      {
+        "stageId": "stage_first_reading_booked",
+        "title": "Booked",
+        "narrativePrompt": "The first entry is in. The corridor is quieter than it was, which is not the same as being calmer.",
+        "isTerminal": true,
+        "choices": []
+      },
+      {
+        "stageId": "stage_first_reading_refused",
+        "title": "Silence",
+        "narrativePrompt": "No ledger is started. Whatever the dial said, the shelter has willed itself to misremember it. The other registers wait out the season.",
+        "isTerminal": true,
+        "choices": []
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_the_sick_of_room_seven",
+    "title": "The Sick of Room Seven",
+    "synopsis": "A Red-band survivor is named. The room has two beds and one morphine routine. Choose who is named first, and what the named are told.",
+    "factionTag": "none",
+    "minDay": 90,
+    "maxDay": 360,
+    "stages": [
+      {
+        "stageId": "stage_sick_naming",
+        "title": "The Bed Order",
+        "narrativePrompt": "Room seven has two beds and one tray. Sister Omah lays the bed order on the table and waits. She will not shuffle it so one person's comfort costs another's care. Someone has to be named first, and whoever is named has to be told a thing.",
+        "isTerminal": false,
+        "choices": [
+          {
+            "choiceId": "choice_bed_honest",
+            "text": "Keep the bed honest. Name both, split the care.",
+            "nextStageId": "stage_sick_both_named",
+            "moraleDelta": -2,
+            "guiltDelta": 0,
+            "outcomeNarrative": "Both names go on the chart. The tray is split, the schedule kept. Neither is told a comfortable lie, and neither is told they are forgotten. The room stays honest."
+          },
+          {
+            "choiceId": "choice_bed_hide_one",
+            "text": "Hide one name. Spare one of them the knowing.",
+            "nextStageId": "stage_sick_one_hidden",
+            "moraleDelta": 1,
+            "guiltDelta": 3,
+            "outcomeNarrative": "One name stays off the chart. That one sleeps easier for a while, and wakes, one day, to a bed order that does not quite match the room. The pencil marks do not lie; they were just made to."
+          },
+          {
+            "choiceId": "choice_sick_voluntary_rotation",
+            "text": "Draw on the Voluntary Register for a high-dose rotation that buys care.",
+            "nextStageId": "stage_sick_rotated",
+            "moraleDelta": 0,
+            "guiltDelta": 1,
+            "grantItemId": "item_palliative_morphine",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "A volunteer signs the hour. The care is bought, and bought at a price the ledger will itemise later. The room has its tray; whoever signed for it has a larger number than they did at dawn."
+          }
+        ]
+      },
+      {
+        "stageId": "stage_sick_both_named",
+        "title": "Both Names",
+        "narrativePrompt": "The chart is full and honest. The room runs on halves and schedules.",
+        "isTerminal": true,
+        "choices": []
+      },
+      {
+        "stageId": "stage_sick_one_hidden",
+        "title": "The Quietest Bed",
+        "narrativePrompt": "One chart has two names; the room has three mouths. The omission is a kindness and a lie, kept together.",
+        "isTerminal": true,
+        "choices": []
+      },
+      {
+        "stageId": "stage_sick_rotated",
+        "title": "The Hour That Paid",
+        "narrativePrompt": "The tray is full and the chart is clean. Someone out in the corridor is carrying the number that paid for it.",
+        "isTerminal": true,
+        "choices": []
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_the_childs_number",
+    "title": "The Child's Number",
+    "synopsis": "A Cohort child is born. The parents ask the shelter to book a baseline. The numbers are a guess. Choose what to write.",
+    "factionTag": "none",
+    "minDay": 150,
+    "maxDay": 360,
+    "stages": [
+      {
+        "stageId": "stage_child_baseline_choose",
+        "title": "The Board",
+        "narrativePrompt": "The children's corridor has a chalkboard and a newborn. The midwife holds the chalk in pencil so it can be rewritten. The parents want a number written for their child — a baseline, a starting line. It is a guess no matter what you choose. Saria will not book a guess as a truth.",
+        "isTerminal": false,
+        "choices": [
+          {
+            "choiceId": "choice_book_low",
+            "text": "Book low. Protect the child's story; risk a shock later.",
+            "nextStageId": "stage_child_booked_low",
+            "moraleDelta": -1,
+            "guiltDelta": 1,
+            "grantItemId": "item_cohort_first_board",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "The kinder number goes up in pencil. The child grows up believing the world owed them a gentler start. The dial will keep its own count, and the two may disagree, one quiet day."
+          },
+          {
+            "choiceId": "choice_book_honest",
+            "text": "Book honest. A grim but maybe-true number.",
+            "nextStageId": "stage_child_booked_honest",
+            "moraleDelta": -2,
+            "guiltDelta": 0,
+            "outcomeNarrative": "The truer number as it stands is written down. It is corrected later, when the dial is willing to speak. No comfort was bought with it."
+          },
+          {
+            "choiceId": "choice_refuse_to_book",
+            "text": "Refuse to book. Let the child grow up uncounted.",
+            "nextStageId": "stage_child_refused",
+            "moraleDelta": 0,
+            "guiltDelta": 2,
+            "outcomeNarrative": "The board stays blank. No guess at all. The child is not given a number, and so is not given a cage of one — but is also not given the small mercy of a true one. The refusal, for this child, is final."
+          }
+        ]
+      },
+      {
+        "stageId": "stage_child_booked_low",
+        "title": "A Kinder Story",
+        "narrativePrompt": "The board shows a small hopeful number in pencil. It can be erased. The cost of erasing it later is the point.",
+        "isTerminal": true,
+        "choices": []
+      },
+      {
+        "stageId": "stage_child_booked_honest",
+        "title": "The Truer Number",
+        "narrativePrompt": "The board shows a grimmer figure in pencil. It stands there, subject to correction, and asks nothing of anyone.",
+        "isTerminal": true,
+        "choices": []
+      },
+      {
+        "stageId": "stage_child_refused",
+        "title": "Uncounted",
+        "narrativePrompt": "The board is blank and stays blank. The child grows into a person without a baseline. Only the midwife's chalk remembers there was a choice.",
+        "isTerminal": true,
+        "choices": []
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_the_signed_hour",
+    "title": "The Signed Hour",
+    "synopsis": "A volunteer has signed for high-dose work. They want to do it now, or wait. Sending them now books a worse dose; waiting risks the window closing.",
+    "factionTag": "none",
+    "minDay": 200,
+    "maxDay": 360,
+    "stages": [
+      {
+        "stageId": "stage_signed_choose_window",
+        "title": "The Window",
+        "narrativePrompt": "The signature is signed. The task is the vented reactor corridor, and the volunteer is ready now, in this weather, with the dial reading what it reads. Send them now and the number is theirs to keep. Wait and the window may close before the task is possible at all. Either way, their reason is written down.",
+        "isTerminal": false,
+        "choices": [
+          {
+            "choiceId": "choice_send_now",
+            "text": "Send them now. Book the worse dose.",
+            "nextStageId": "stage_signed_sent_now",
+            "moraleDelta": -1,
+            "guiltDelta": 2,
+            "outcomeNarrative": "They go now. The corridor takes its toll in numbers, and the reason they signed — whatever it was — is recorded beside the entry, unedited. The window does not wait, and neither, it turns out, did they."
+          },
+          {
+            "choiceId": "choice_wait_window",
+            "text": "Wait. Risk the window closing.",
+            "nextStageId": "stage_signed_waited",
+            "moraleDelta": 1,
+            "guiltDelta": 0,
+            "outcomeNarrative": "They wait. The weather turns and the window narrows, but no worse number is banked today. The signature holds; the task may yet be done, or may quietly stop being possible. The reason is still on the page."
+          }
+        ]
+      },
+      {
+        "stageId": "stage_signed_sent_now",
+        "title": "Booked and Gone",
+        "narrativePrompt": "The entry is closed with its dose incurred. The reason stays written, whatever the price.",
+        "isTerminal": true,
+        "choices": []
+      },
+      {
+        "stageId": "stage_signed_waited",
+        "title": "A Waiting Signature",
+        "narrativePrompt": "The entry stays open, its dose not yet incurred. The reason is on the page, and the window is a matter of weather now.",
+        "isTerminal": true,
+        "choices": []
+      }
+    ]
+  }
+]

@@ -1,97 +1,71 @@
 using System;
+using System.Collections.Generic;
 using Godot;
+using Ashfall.Core;
+using Ashfall.Core.Expeditions;
 using Ashfall.Core.UI;
-using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Expedition panel.
-    /// Shows expedition details, routes, outcomes, and expedition history.
+    /// Manages wasteland scavenging sorties, target selection, squad deployment,
+    /// push-your-luck looting, and salvage recovery.
     /// </summary>
     public partial class ExpeditionPanel : Control
     {
         public event Action? OnClose;
+        public event Action? OnExpeditionUpdated;
+        public event Action<List<ExpeditionLootEntry>>? OnLootDeposited;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblExpeditionTitle;
-        private VBoxContainer _expeditionDetails;
-        private Label _lblRouteTitle;
-        private VBoxContainer _routeInfo;
-        private Label _lblHistoryTitle;
-        private VBoxContainer _historyList;
+        private ExpeditionHostSession? _expeditionHost;
+        private SurvivorsHostSession? _survivorsHost;
+        private InventoryHostSession? _inventoryHost;
 
-        // Placeholder expedition data
-        private readonly string[] _placeholderExpeditionDetails = {
-            "Expedition: Scavenge Ruined City",
-            "Status: Active",
-            "Duration: 3 days",
-            "Team: 4 survivors",
-            "Expected return: Day 15"
-        };
+        private VBoxContainer _targetsContainer = null!;
+        private VBoxContainer _activeContainer = null!;
+        private Label _statusSummary = null!;
 
-        private readonly string[] _placeholderRouteInfo = {
-            "Route: Bunker → Ruined City",
-            "Distance: 12 km",
-            "Terrain: Wasteland, Urban ruins",
-            "Hazards: Fallout zones, Raiders",
-            "Estimated travel time: 6 hours"
-        };
+        private string _selectedTargetId = "loc_the_allotments";
+        private string _selectedSurvivorId = "survivor_gunner_mikhail";
+        private ExpeditionStance _selectedStance = ExpeditionStance.Stealth;
 
-        private readonly string[] _placeholderHistory = {
-            "[Day 8] Expedition completed: Found 15 food, 3 medicine",
-            "[Day 3] Expedition departed: Scavenge Ruined City",
-            "[Day 1] Expedition planned: Scavenge Ruined City"
-        };
+        public bool IsBound => _expeditionHost != null;
 
-        // Real data from host session
-        // private ExpeditionHostSession? _expeditionHost;
-
-        public void Bind(object expedition) // placeholder for ExpeditionHostSession
+        public void Bind(
+            ExpeditionHostSession expeditionHost,
+            SurvivorsHostSession? survivorsHost = null,
+            InventoryHostSession? inventoryHost = null)
         {
-            // _expeditionHost = (ExpeditionHostSession)expedition;
-            // RefreshView();
+            _expeditionHost = expeditionHost;
+            _survivorsHost = survivorsHost;
+            _inventoryHost = inventoryHost;
+
+            if (_expeditionHost != null)
+            {
+                _expeditionHost.Engine.OnExpeditionCompleted += OnExpeditionCompleted;
+                _expeditionHost.StateChanged += RefreshView;
+            }
+
+            RefreshView();
         }
 
-        public void RefreshView()
+        private void OnExpeditionCompleted(ExpeditionState state)
         {
-            if (_expeditionDetails == null || _routeInfo == null || _historyList == null) return;
-
-            // Clear existing lists
-            while (_expeditionDetails.GetChildCount() > 0)
-                _expeditionDetails.RemoveChild(_expeditionDetails.GetChild(0));
-            while (_routeInfo.GetChildCount() > 0)
-                _routeInfo.RemoveChild(_routeInfo.GetChild(0));
-            while (_historyList.GetChildCount() > 0)
-                _historyList.RemoveChild(_historyList.GetChild(0));
-
-            // Display placeholder expedition details
-            foreach (string detail in _placeholderExpeditionDetails)
+            if (state != null && state.loot != null && state.loot.Count > 0)
             {
-                var label = new Label { Text = detail };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _expeditionDetails.AddChild(label);
+                if (_inventoryHost != null)
+                {
+                    foreach (var item in state.loot)
+                    {
+                        if (string.IsNullOrEmpty(item.itemId) || item.quantity <= 0) continue;
+                        _inventoryHost.Add(item.itemId, item.quantity);
+                    }
+                }
+                OnLootDeposited?.Invoke(state.loot);
             }
-
-            // Display placeholder route info
-            foreach (string route in _placeholderRouteInfo)
-            {
-                var label = new Label { Text = route };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _routeInfo.AddChild(label);
-            }
-
-            // Display placeholder history
-            foreach (string history in _placeholderHistory)
-            {
-                var label = new Label { Text = history };
-                label.CustomMinimumSize = new Vector2(350, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
-                _historyList.AddChild(label);
-            }
+            OnExpeditionUpdated?.Invoke();
+            RefreshView();
         }
 
         public override void _Ready()
@@ -99,71 +73,271 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
+            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.95f) };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+            var scroll = new ScrollContainer();
+            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
+            scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
+            AddChild(scroll);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
+            var center = new CenterContainer();
+            center.SetAnchorsPreset(LayoutPreset.FullRect);
+            center.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            center.SizeFlagsVertical = SizeFlags.ExpandFill;
+            scroll.AddChild(center);
 
-            var title = AshfallUiHelpers.MakeTitle("EXPEDITION STATUS", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
+            var rootBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            rootBox.CustomMinimumSize = new Vector2(760, 0);
+            center.AddChild(rootBox);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            var header = AshfallUiHelpers.MakeTitle("WASTELAND EXPEDITIONS // SORTIE PLANNER", Ashfall.Core.UI.Theme.FontSizeH1);
+            header.HorizontalAlignment = HorizontalAlignment.Center;
+            rootBox.AddChild(header);
 
-            // Expedition details section
-            _lblExpeditionTitle = AshfallUiHelpers.MakeSectionHeader("EXPEDITION DETAILS");
-            vbox.AddChild(_lblExpeditionTitle);
+            _statusSummary = AshfallUiHelpers.MakeMetadata("Plan reconnaissance and scavenging sorties. Monitor radiation risk, distance, and survivor stamina.");
+            _statusSummary.HorizontalAlignment = HorizontalAlignment.Center;
+            _statusSummary.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            rootBox.AddChild(_statusSummary);
 
-            _expeditionDetails = new VBoxContainer();
-            _expeditionDetails.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _expeditionDetails.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_expeditionDetails);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            // ── Active Expeditions ──
+            var activeTitle = AshfallUiHelpers.MakeSectionHeader("ACTIVE SORTIES IN THE FIELD");
+            rootBox.AddChild(activeTitle);
 
-            // Route info section
-            _lblRouteTitle = AshfallUiHelpers.MakeSectionHeader("ROUTE INFORMATION");
-            vbox.AddChild(_lblRouteTitle);
+            _activeContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_activeContainer);
 
-            _routeInfo = new VBoxContainer();
-            _routeInfo.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _routeInfo.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_routeInfo);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            // ── Target Destinations ──
+            var targetsTitle = AshfallUiHelpers.MakeSectionHeader("KNOWN WASTELAND DESTINATIONS");
+            rootBox.AddChild(targetsTitle);
 
-            // History section
-            _lblHistoryTitle = AshfallUiHelpers.MakeSectionHeader("EXPEDITION HISTORY");
-            vbox.AddChild(_lblHistoryTitle);
+            _targetsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_targetsContainer);
 
-            _historyList = new VBoxContainer();
-            _historyList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _historyList.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_historyList);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            var btnRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingMd);
+            btnRow.Alignment = BoxContainer.AlignmentMode.Center;
 
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
+            var btnTick = AshfallUiHelpers.MakeButton("ADVANCE SORTIES (2 HOURS)", () =>
+            {
+                if (_expeditionHost != null)
+                {
+                    _expeditionHost.TickDemoHours(2f);
+                    OnExpeditionUpdated?.Invoke();
+                    RefreshView();
+                }
+            });
+            btnTick.CustomMinimumSize = new Vector2(220, 42);
+            btnRow.AddChild(btnTick);
 
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
+            var btnClose = AshfallUiHelpers.MakeButton("RETURN TO DASHBOARD [Esc]", () => OnClose?.Invoke(), true);
+            btnClose.CustomMinimumSize = new Vector2(220, 42);
+            btnRow.AddChild(btnClose);
+            rootBox.AddChild(btnRow);
+
+            var hint = AshfallUiHelpers.MakeSmall("Press [Esc] to return");
+            hint.HorizontalAlignment = HorizontalAlignment.Center;
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
+            rootBox.AddChild(hint);
+        }
+
+        private static string FormatSurvivorName(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return "[UNNAMED]";
+            return id switch
+            {
+                "survivor_dr_sarah_chen" or "survivor_sarah_chen" => "Dr. Sarah Chen",
+                "survivor_gunner_mikhail" or "survivor_mikhail_volkov" => "Gunner Mikhail",
+                "elena_vasquez" or "survivor_elena_vasquez" => "Elena Vasquez",
+                _ => id.Replace("survivor_", "").Replace("_", " ").ToUpperInvariant()
+            };
+        }
+
+        public void RefreshView()
+        {
+            if (_activeContainer == null || _targetsContainer == null || _expeditionHost == null) return;
+
+            // Clear Active Container
+            while (_activeContainer.GetChildCount() > 0)
+            {
+                var child = _activeContainer.GetChild(0);
+                _activeContainer.RemoveChild(child);
+                child.QueueFree();
+            }
+
+            // Clear Targets Container
+            while (_targetsContainer.GetChildCount() > 0)
+            {
+                var child = _targetsContainer.GetChild(0);
+                _targetsContainer.RemoveChild(child);
+                child.QueueFree();
+            }
+
+            // 1. Render Active Expeditions
+            if (_expeditionHost.Engine.ActiveCount == 0)
+            {
+                _activeContainer.AddChild(AshfallUiHelpers.MakeMetadata("No active scavenging sorties currently deployed."));
+            }
+            else
+            {
+                foreach (var kv in _expeditionHost.Engine.Active)
+                {
+                    var exp = kv.Value;
+                    if (exp == null) continue;
+
+                    var card = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+                    var topRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+
+                    var phaseName = ((ExpeditionPhase)exp.phase).ToString().ToUpperInvariant();
+                    var lblPhase = AshfallUiHelpers.MakeMono($"[{phaseName}] {exp.displayName}");
+                    lblPhase.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+                    lblPhase.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                    topRow.AddChild(lblPhase);
+
+                    var lblScout = AshfallUiHelpers.MakeSmall($"SCOUT: {FormatSurvivorName(exp.survivorId)}");
+                    topRow.AddChild(lblScout);
+
+                    var lblStamina = AshfallUiHelpers.MakeMono($"STAMINA {exp.stamina:0}%");
+                    lblStamina.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(exp.stamina < 30 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Hot));
+                    topRow.AddChild(lblStamina);
+                    card.AddChild(topRow);
+
+                    var midRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                    var progress = AshfallUiHelpers.MakeSmall($"Travel Progress: {exp.travelTicksCompleted}/{exp.distanceTicks} legs · Encounters: {exp.encounterCount} · Loot: {exp.loot.Count} items ({exp.currentWeightKg:F1}/{exp.maxLootCapacityKg:F0} kg)");
+                    midRow.AddChild(progress);
+                    card.AddChild(midRow);
+
+                    // Action Controls for Active Expedition
+                    var actionRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                    string scoutId = exp.survivorId;
+
+                    if (exp.phase == (int)ExpeditionPhase.Looting)
+                    {
+                        var btnPush = AshfallUiHelpers.MakeButton("PUSH LUCK (SCAVENGE DEEPER)", () =>
+                        {
+                            _expeditionHost.PushLuckDemo(scoutId);
+                            OnExpeditionUpdated?.Invoke();
+                            RefreshView();
+                        });
+                        btnPush.CustomMinimumSize = new Vector2(230, 30);
+                        actionRow.AddChild(btnPush);
+
+                        var btnRetreat = AshfallUiHelpers.MakeButton("ORDER INBOUND RETURN", () =>
+                        {
+                            _expeditionHost.RetreatDemo(scoutId);
+                            OnExpeditionUpdated?.Invoke();
+                            RefreshView();
+                        });
+                        btnRetreat.CustomMinimumSize = new Vector2(200, 30);
+                        actionRow.AddChild(btnRetreat);
+                    }
+                    else
+                    {
+                        var lblTransit = AshfallUiHelpers.MakeMetadata(exp.phase == (int)ExpeditionPhase.Outbound
+                            ? "In transit toward objective..."
+                            : "Returning to shelter with salvage...");
+                        actionRow.AddChild(lblTransit);
+                    }
+
+                    card.AddChild(actionRow);
+
+                    var panel = AshfallUiHelpers.MakePanel();
+                    panel.AddChild(card);
+                    _activeContainer.AddChild(panel);
+                }
+            }
+
+            // 2. Render Available Targets
+            var livingSurvivors = new List<string>();
+            if (_survivorsHost != null)
+            {
+                foreach (var s in _survivorsHost.RosterState)
+                {
+                    if (s != null && s.IsAliveState && !_expeditionHost.Engine.Active.ContainsKey(s.Id))
+                        livingSurvivors.Add(s.Id);
+                }
+            }
+            if (livingSurvivors.Count == 0 && _survivorsHost != null)
+            {
+                livingSurvivors.Add("survivor_gunner_mikhail");
+            }
+
+            foreach (var def in _expeditionHost.DemoDefinitions)
+            {
+                if (def == null) continue;
+
+                var card = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+                var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+
+                var title = AshfallUiHelpers.MakeSectionHeader(def.displayName);
+                title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                row.AddChild(title);
+
+                var danger = AshfallUiHelpers.MakeMono($"DANGER: LVL {def.dangerLevel} · DISTANCE: {def.distanceTicks} LEGS");
+                danger.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(def.dangerLevel >= 3 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm));
+                row.AddChild(danger);
+                card.AddChild(row);
+
+                var lootCategories = string.Join(", ", def.lootCategories);
+                var desc = AshfallUiHelpers.MakeBody($"Potential Salvage: {lootCategories} · Encounter Risk: {def.encounterChancePerTick:P0}/hr");
+                desc.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+                card.AddChild(desc);
+
+                // Dispatch Bar
+                var dispatchRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                string defId = def.id;
+
+                var btnDispatchStealth = AshfallUiHelpers.MakeButton("DISPATCH STEALTH SORTIE", () =>
+                {
+                    if (livingSurvivors.Count > 0)
+                    {
+                        _expeditionHost.Engine.Start(def, livingSurvivors[0], 1, ExpeditionStance.Stealth);
+                        OnExpeditionUpdated?.Invoke();
+                        RefreshView();
+                    }
+                });
+                btnDispatchStealth.Disabled = livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                btnDispatchStealth.CustomMinimumSize = new Vector2(200, 32);
+                dispatchRow.AddChild(btnDispatchStealth);
+
+                var btnDispatchSpeed = AshfallUiHelpers.MakeButton("DISPATCH SPEED SORTIE (1.5x)", () =>
+                {
+                    if (livingSurvivors.Count > 0)
+                    {
+                        _expeditionHost.Engine.Start(def, livingSurvivors[0], 1, ExpeditionStance.Speed);
+                        OnExpeditionUpdated?.Invoke();
+                        RefreshView();
+                    }
+                });
+                btnDispatchSpeed.Disabled = livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                btnDispatchSpeed.CustomMinimumSize = new Vector2(220, 32);
+                dispatchRow.AddChild(btnDispatchSpeed);
+
+                card.AddChild(dispatchRow);
+
+                var panel = AshfallUiHelpers.MakePanel();
+                panel.AddChild(card);
+                _targetsContainer.AddChild(panel);
+            }
         }
 
         public void Open()
         {
             Visible = true;
+            RefreshView();
             QueueRedraw();
+        }
+
+        public void Close()
+        {
+            Visible = false;
+            OnClose?.Invoke();
         }
 
         public override void _UnhandledInput(InputEvent @event)
@@ -172,7 +346,7 @@ namespace AtomicWar.GodotApp.UI
 
             if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
             {
-                OnClose?.Invoke();
+                Close();
                 GetViewport().SetInputAsHandled();
             }
         }

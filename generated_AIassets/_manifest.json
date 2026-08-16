@@ -1,0 +1,606 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-08-16T10:36:02.096263+00:00",
+  "assets": [
+    {
+      "id": "frame_9slice",
+      "provider": "figma_vector",
+      "prompt_hash": "cc32ae23bfd55308",
+      "seed": 42,
+      "path": "generated_AIassets/vector/frame_9slice.svg",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/frame_9slice.svg"
+    },
+    {
+      "id": "btn_default",
+      "provider": "figma_vector",
+      "prompt_hash": "94fc2cf363eee686",
+      "seed": 42,
+      "path": "generated_AIassets/vector/btn_default.svg",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/btn_default.svg"
+    },
+    {
+      "id": "btn_hover",
+      "provider": "figma_vector",
+      "prompt_hash": "56108ce974a39dc4",
+      "seed": 42,
+      "path": "generated_AIassets/vector/btn_hover.svg",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/btn_hover.svg"
+    },
+    {
+      "id": "btn_pressed",
+      "provider": "figma_vector",
+      "prompt_hash": "cf4eab20ecbb0690",
+      "seed": 42,
+      "path": "generated_AIassets/vector/btn_pressed.svg",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/btn_pressed.svg"
+    },
+    {
+      "id": "btn_disabled",
+      "provider": "figma_vector",
+      "prompt_hash": "f9e04207212efcff",
+      "seed": 42,
+      "path": "generated_AIassets/vector/btn_disabled.svg",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/btn_disabled.svg"
+    },
+    {
+      "id": "tab_strip",
+      "provider": "figma_vector",
+      "prompt_hash": "4b73ddd578c2b15b",
+      "seed": 42,
+      "path": "generated_AIassets/vector/tab_strip.svg",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/tab_strip.svg"
+    },
+    {
+      "id": "tooltip_box",
+      "provider": "figma_vector",
+      "prompt_hash": "7fe1c65b2d128afd",
+      "seed": 42,
+      "path": "generated_AIassets/vector/tooltip_box.svg",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/tooltip_box.svg"
+    },
+    {
+      "id": "scroll_track",
+      "provider": "figma_vector",
+      "prompt_hash": "2b7e4a96d3d3d680",
+      "seed": 42,
+      "path": "generated_AIassets/vector/scroll_track.svg",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/scroll_track.svg"
+    },
+    {
+      "id": "item_resin_adhesive",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "4e7f8272a2b93dd1",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_resin_adhesive.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/item_resin_adhesive.png"
+    },
+    {
+      "id": "item_lead_plate",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "f37c1e5e0f54a9a5",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_lead_plate.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/item_lead_plate.png"
+    },
+    {
+      "id": "item_potassium_iodide",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "e2056be873a3b149",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_potassium_iodide.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/item_potassium_iodide.png"
+    },
+    {
+      "id": "item_geiger_m3",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "08ce4c5bf9b5160d",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_geiger_m3.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/item_geiger_m3.png"
+    },
+    {
+      "id": "item_brine_salt",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "8b2310dd409f1bc2",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_brine_salt.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/item_brine_salt.png"
+    },
+    {
+      "id": "badge_hypothermia",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "75df9c5228f1b89c",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_hypothermia.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_hypothermia.png"
+    },
+    {
+      "id": "badge_rad_sickness",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "7a5360e218327cc7",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_rad_sickness.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_rad_sickness.png"
+    },
+    {
+      "id": "badge_radon_poisoning",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "d2f0ec99bd80d7fa",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_radon_poisoning.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_radon_poisoning.png"
+    },
+    {
+      "id": "badge_starvation",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "0f922a5d9cd9a59b",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_starvation.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_starvation.png"
+    },
+    {
+      "id": "badge_dehydration",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "34adae009fc8d764",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_dehydration.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_dehydration.png"
+    },
+    {
+      "id": "badge_exhaustion",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "3aebdb56623c6944",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_exhaustion.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_exhaustion.png"
+    },
+    {
+      "id": "badge_shellshock",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "bd1a33f7ff28d58b",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_shellshock.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_shellshock.png"
+    },
+    {
+      "id": "badge_respiratory_decay",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "7db56efa1216cdc1",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_respiratory_decay.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_respiratory_decay.png"
+    },
+    {
+      "id": "badge_brine_rot",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "ac63ef960848d2d6",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_brine_rot.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_brine_rot.png"
+    },
+    {
+      "id": "badge_frostbite",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "929be637bf159576",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_frostbite.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_frostbite.png"
+    },
+    {
+      "id": "badge_sepsis",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "b0cfc86fedc45c39",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_sepsis.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_sepsis.png"
+    },
+    {
+      "id": "badge_lead_toxicity",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "fb6576bca1096b2f",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_lead_toxicity.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_lead_toxicity.png"
+    },
+    {
+      "id": "badge_chemical_dependency",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "f22ab96a31fbfad5",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_chemical_dependency.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_chemical_dependency.png"
+    },
+    {
+      "id": "badge_guilt_insomnia",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "0444bc632facd311",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_guilt_insomnia.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_guilt_insomnia.png"
+    },
+    {
+      "id": "badge_osteophage_fever",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "74ff5fe5c2c0470b",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_osteophage_fever.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_osteophage_fever.png"
+    },
+    {
+      "id": "badge_trench_foot",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "c1d7dc531101fc79",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_trench_foot.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_trench_foot.png"
+    },
+    {
+      "id": "badge_corneal_burn",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "487f9d0113938b69",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_corneal_burn.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_corneal_burn.png"
+    },
+    {
+      "id": "badge_co2_narcosis",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "e22eb1b9b0241bde",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_co2_narcosis.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_co2_narcosis.png"
+    },
+    {
+      "id": "badge_iodine_depletion",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "69b87f8df147c82f",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_iodine_depletion.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_iodine_depletion.png"
+    },
+    {
+      "id": "badge_blood_price",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "16a7ba1afb4e518b",
+      "seed": 42,
+      "path": "generated_AIassets/badges/badge_blood_price.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/badge_blood_price.png"
+    },
+    {
+      "id": "seal_hydro_barons",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "ce98fb1dfcc5960c",
+      "seed": 42,
+      "path": "generated_AIassets/badges/seal_hydro_barons.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/seal_hydro_barons.png"
+    },
+    {
+      "id": "seal_iron_raiders",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "f2ff1af1f8da518b",
+      "seed": 42,
+      "path": "generated_AIassets/badges/seal_iron_raiders.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/seal_iron_raiders.png"
+    },
+    {
+      "id": "seal_cold_count",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "b80996e5d4ae9737",
+      "seed": 42,
+      "path": "generated_AIassets/badges/seal_cold_count.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/seal_cold_count.png"
+    },
+    {
+      "id": "seal_long_walk",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "e66652b9e416d1b5",
+      "seed": 42,
+      "path": "generated_AIassets/badges/seal_long_walk.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/ui/Icons/seal_long_walk.png"
+    },
+    {
+      "id": "bg_ice_road_hatch",
+      "provider": "canva_ai",
+      "prompt_hash": "6e0d9276364cbe15",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_ice_road_hatch.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/bg_ice_road_hatch.png"
+    },
+    {
+      "id": "bg_desal_unit4",
+      "provider": "canva_ai",
+      "prompt_hash": "c4d1f851da3b634c",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_desal_unit4.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/bg_desal_unit4.png"
+    },
+    {
+      "id": "bg_low_bg_lab",
+      "provider": "canva_ai",
+      "prompt_hash": "7886a2dea9fbbdd9",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_low_bg_lab.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/bg_low_bg_lab.png"
+    },
+    {
+      "id": "bg_second_winter_homestead",
+      "provider": "canva_ai",
+      "prompt_hash": "6671a55a2420473c",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_second_winter_homestead.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/bg_second_winter_homestead.png"
+    },
+    {
+      "id": "emblem_hydro_barons",
+      "provider": "canva_ai",
+      "prompt_hash": "01bc1240e61fe4dc",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/emblem_hydro_barons.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/emblem_hydro_barons.png"
+    },
+    {
+      "id": "emblem_iron_raiders",
+      "provider": "canva_ai",
+      "prompt_hash": "b9d4acd0abb0e092",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/emblem_iron_raiders.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/emblem_iron_raiders.png"
+    },
+    {
+      "id": "emblem_cold_count",
+      "provider": "canva_ai",
+      "prompt_hash": "14e1946a80731331",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/emblem_cold_count.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/emblem_cold_count.png"
+    },
+    {
+      "id": "emblem_long_walk",
+      "provider": "canva_ai",
+      "prompt_hash": "8331c297e551ad96",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/emblem_long_walk.png",
+      "status": "approved",
+      "approved_at": "2026-08-16T09:37:52.896090+00:00",
+      "import_target": "assets/art/emblem_long_walk.png"
+    },
+    {
+      "id": "item_dosimeter_pen",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "551f63410e900650",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_dosimeter_pen.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:30:10.216288+00:00",
+      "import_target": "assets/art/item_dosimeter_pen.jpg"
+    },
+    {
+      "id": "item_air_filter_hepa",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "1b9ffb14f51e2a6d",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_air_filter_hepa.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:30:32.905662+00:00",
+      "import_target": "assets/art/item_air_filter_hepa.jpg"
+    },
+    {
+      "id": "item_desal_membrane",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "c1b41fc5f4d16ccb",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_desal_membrane.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:30:54.640483+00:00",
+      "import_target": "assets/art/item_desal_membrane.jpg"
+    },
+    {
+      "id": "item_seed_mushroom",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "f1a3edb3449234ea",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_seed_mushroom.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:31:16.333565+00:00",
+      "import_target": "assets/art/item_seed_mushroom.jpg"
+    },
+    {
+      "id": "crop_mushroom",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "4ce1aff3b611270c",
+      "seed": 42,
+      "path": "generated_AIassets/items/crop_mushroom.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:31:39.336837+00:00",
+      "import_target": "assets/art/crop_mushroom.jpg"
+    },
+    {
+      "id": "item_seed_tuber",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "b11dbb54bedb077a",
+      "seed": 42,
+      "path": "generated_AIassets/items/item_seed_tuber.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:32:01.363399+00:00",
+      "import_target": "assets/art/item_seed_tuber.jpg"
+    },
+    {
+      "id": "crop_tuber",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "4fb5806c77d42c4e",
+      "seed": 42,
+      "path": "generated_AIassets/items/crop_tuber.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:32:24.354667+00:00",
+      "import_target": "assets/art/crop_tuber.jpg"
+    },
+    {
+      "id": "bg_bunker_corridor",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "0b9d779ac45917fc",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_bunker_corridor.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:32:48.046936+00:00",
+      "import_target": "assets/art/bg_bunker_corridor.jpg"
+    },
+    {
+      "id": "bg_filtration_stack",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "c6182fbdb278b5e5",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_filtration_stack.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:33:11.471071+00:00",
+      "import_target": "assets/art/bg_filtration_stack.jpg"
+    },
+    {
+      "id": "bg_bunks_living",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "ab837763ab1ba5fb",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_bunks_living.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:33:34.855231+00:00",
+      "import_target": "assets/art/bg_bunks_living.jpg"
+    },
+    {
+      "id": "bg_storage_locker",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "fb97e09fe85c061a",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_storage_locker.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:33:58.947765+00:00",
+      "import_target": "assets/art/bg_storage_locker.jpg"
+    },
+    {
+      "id": "bg_radio_corner",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "9d8c23bec7028cfb",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_radio_corner.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:34:53.232653+00:00",
+      "import_target": "assets/art/bg_radio_corner.jpg"
+    },
+    {
+      "id": "bg_greenhouse_bay",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "11e851dd0fba2146",
+      "seed": 42,
+      "path": "generated_AIassets/backgrounds/bg_greenhouse_bay.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:35:18.315467+00:00",
+      "import_target": "assets/art/bg_greenhouse_bay.jpg"
+    },
+    {
+      "id": "survivor_dr_sarah_chen",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "db06d87628e6ac76",
+      "seed": 42,
+      "path": "generated_AIassets/portraits/survivor_dr_sarah_chen.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:35:40.465435+00:00",
+      "import_target": "assets/art/survivor_dr_sarah_chen.jpg"
+    },
+    {
+      "id": "survivor_gunner_mikhail",
+      "provider": "mcp_composio_gemini",
+      "prompt_hash": "2f1a0205f766acbb",
+      "seed": 42,
+      "path": "generated_AIassets/portraits/survivor_gunner_mikhail.jpg",
+      "status": "approved",
+      "approved_at": "2026-08-16T10:36:02.096169+00:00",
+      "import_target": "assets/art/survivor_gunner_mikhail.jpg"
+    }
+  ]
+}
