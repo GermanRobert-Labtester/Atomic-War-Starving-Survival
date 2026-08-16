@@ -143,6 +143,10 @@ namespace AtomicWar.GodotApp
         private SurvivorsPanel _survivorsOverlay = null!;
         private CraftingPanel _craftingPanel = null!;
         private RadioPanel _radioPanel = null!;
+        private MedicalPanel _medicalPanel = null!;
+        private DutyRosterPanel _dutyRosterPanel = null!;
+        private EconomyOverlayPanel _economyOverlayPanel = null!;
+        private ExpeditionPanel _expeditionPanel = null!;
         private enum GameState { Menu, Playing, GameOver }
         private GameState _state = GameState.Menu;
 
@@ -451,6 +455,26 @@ namespace AtomicWar.GodotApp
             _radioPanel.OnClose += CloseRadioPanel;
             gameUiContainer.AddChild(_radioPanel);
 
+            // ── Medical panel (overlay) ──
+            _medicalPanel = new MedicalPanel();
+            _medicalPanel.OnClose += CloseMedicalPanel;
+            gameUiContainer.AddChild(_medicalPanel);
+
+            // ── Duty Roster panel (overlay) ──
+            _dutyRosterPanel = new DutyRosterPanel();
+            _dutyRosterPanel.OnClose += CloseDutyRosterPanel;
+            gameUiContainer.AddChild(_dutyRosterPanel);
+
+            // ── Economy panel (overlay) ──
+            _economyOverlayPanel = new EconomyOverlayPanel();
+            _economyOverlayPanel.OnClose += CloseEconomyPanel;
+            gameUiContainer.AddChild(_economyOverlayPanel);
+
+            // ── Expedition panel (overlay) ──
+            _expeditionPanel = new ExpeditionPanel();
+            _expeditionPanel.OnClose += CloseExpeditionPanel;
+            gameUiContainer.AddChild(_expeditionPanel);
+
             // ── Game content area ──
             var margin = new MarginContainer();
             margin.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -619,6 +643,10 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Settings: audio & gameplay", () => { _settingsPanel.Open(); });
             AddMenuButton("Crafting: open panel", () => { _craftingPanel.Open(); });
             AddMenuButton("Radio: open panel", () => { _radioPanel.Open(); });
+            AddMenuButton("Medical: open panel", () => { _medicalPanel.Open(); });
+            AddMenuButton("Duty Roster: open panel", () => { _dutyRosterPanel.Open(); });
+            AddMenuButton("Economy: open panel", () => { _economyOverlayPanel.Open(); });
+            AddMenuButton("Expeditions: open panel", () => { _expeditionPanel.Open(); });
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); GetTree().Quit(); });
 
             _statusLabel = new Label
@@ -3205,6 +3233,26 @@ namespace AtomicWar.GodotApp
         private void CloseRadioPanel()
         {
             _radioPanel.Visible = false;
+        }
+
+        private void CloseMedicalPanel()
+        {
+            _medicalPanel.Visible = false;
+        }
+
+        private void CloseDutyRosterPanel()
+        {
+            _dutyRosterPanel.Visible = false;
+        }
+
+        private void CloseEconomyPanel()
+        {
+            _economyPanel.Visible = false;
+        }
+
+        private void CloseExpeditionPanel()
+        {
+            _expeditionPanel.Visible = false;
         }
 
         private void ShowGameOver(string cause, string stats)
