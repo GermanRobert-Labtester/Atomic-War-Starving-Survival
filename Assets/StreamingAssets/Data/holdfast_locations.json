@@ -348,6 +348,42 @@
     "recast_always": false
   },
   {
+    "id": "loc_shelf_perimeter_breakwater",
+    "displayName": "The Perimeter Breakwater",
+    "inspect": "Concrete teeth, a chain gate, and a ledger nobody has signed since the Exchange.",
+    "description": "The outer breakwater of the old naval yard, a kilometre past Foghorn 8. The concrete teeth are intact where they point at the sound and cracked where the water has been working them from behind. A chain boom hangs between two bollards, and the padlock has rusted into the hasp like it was welded there. On the landward face a painted notice survives: `PERIMETER — AUTHORIZED PERSONNEL ONLY — DISTRICT 8 HARBOUR COMMISSION`. Below it, in fresher paint, someone has written `THE COMMISSION LEFT`. The ice inside the boom is whiter than the Shelf ice, and the water under it smells of coolant and old fuel. This is where the deep coast stops being a field and starts being a yard. Surveying it means walking the boom, logging the chain, and deciding whether the yard is worth reopening.",
+    "dangerLevel": 8.0,
+    "travelHours": 12.5,
+    "baseRadsPerHour": 42.0,
+    "region": "region_district8_deep_coast",
+    "overlay_on_unlock": true,
+    "recast_always": false
+  },
+  {
+    "id": "loc_shelf_service_channel",
+    "displayName": "The Flooded Service Channel",
+    "inspect": "A slip between two quays, roofed in concrete, full of black water that does not freeze the way ice should.",
+    "description": "The service channel that fed the berths: a covered slip between two concrete quays, wide enough for a tender and low enough to walk under. The tide came in and did not leave. The water is black and still, filmed with something that catches the light like a cooling surface, and the ice that forms along the walls is brittle and blue where the rest of the Shelf is white. A hand-cranked gantry hangs halfway along the slip, its trolley parked over the water with a pallet of coiled rope still strapped to it. Coolant drums stand in a rack against the far wall, some split, some sealed, all wearing the same faded stencil: `ALLOC-7 NAVAL`. Clearing the channel means cutting the ice around the gantry, winching the pallet clear, and checking the sluices that should have been closed five years ago. The water has opinions about being disturbed.",
+    "dangerLevel": 8.0,
+    "travelHours": 14.0,
+    "baseRadsPerHour": 50.0,
+    "region": "region_district8_deep_coast",
+    "overlay_on_unlock": true,
+    "recast_always": false
+  },
+  {
+    "id": "loc_shelf_deep_berth",
+    "displayName": "The Deep Berth",
+    "inspect": "The last berth on the yard's longest quay. A mooring winch, a crane rail, and a lock that still answers a key the Harbour Commission kept.",
+    "description": "The deep berth at the foot of the longest quay, built for icebreakers and kept for the tender that never came back in. The mooring bitts are greased and the winch housing is sealed; someone maintained this much, or maintained the appearance of it. A crane rail runs the full length of the quay and ends at a storm ladder that goes down to a ledge and then into water too deep to see the bottom. Bolted to the winch housing is a brass plate: `HARBOUR COMMISSION — BERTH 9 — ICEBREAKER MAINTENANCE`. The lock on the housing takes a square key. The Commission kept the keys. The Fleet, if it ever stands up, will know where the copy went. Repairing the berth — the winch, the hose reels, the mooring cable — is the difference between a place you can reach and a place you can work from. The Northern Sound Icebreaker Dock lies beyond the quay's seaward end, hull-down and still answering a schedule nobody reads anymore.",
+    "dangerLevel": 9.0,
+    "travelHours": 15.0,
+    "baseRadsPerHour": 46.0,
+    "region": "region_district8_deep_coast",
+    "overlay_on_unlock": true,
+    "recast_always": false
+  },
+  {
     "id": "loc_the_shallows_market",
     "displayName": "The Shallows (existing)",
     "inspect": "Nine boats. Nobody boards. Nomi will run north once per window, for a price.",

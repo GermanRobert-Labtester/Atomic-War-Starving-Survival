@@ -14,6 +14,8 @@ namespace Ashfall.Core
         public WaystationSystem Waystation { get; }
         public HoldfastQuestSystem Quests { get; }
         public HoldfastCatalog Catalog { get; }
+        /// <summary>District 8 deep-coast route (Exp 01 sibling layer, sealed until surveyed).</summary>
+        public District8DeepCoastSystem DeepCoast { get; }
 
         public HoldfastSession(
             IceRoadSystem ice,
@@ -21,7 +23,8 @@ namespace Ashfall.Core
             BrineWaterSystem brine,
             WaystationSystem waystation,
             HoldfastQuestSystem quests,
-            HoldfastCatalog catalog)
+            HoldfastCatalog catalog,
+            District8DeepCoastSystem deepCoast = null)
         {
             IceRoad = ice ?? new IceRoadSystem();
             Census = census ?? new CensusClaimSystem();
@@ -29,6 +32,7 @@ namespace Ashfall.Core
             Waystation = waystation ?? new WaystationSystem();
             Quests = quests ?? new HoldfastQuestSystem();
             Catalog = catalog ?? new HoldfastCatalog();
+            DeepCoast = deepCoast ?? new District8DeepCoastSystem(seedSalt: ice != null ? ice.State.seedSalt : 808);
             Wire();
         }
 
@@ -44,7 +48,8 @@ namespace Ashfall.Core
                 new BrineWaterSystem(),
                 new WaystationSystem(),
                 quests,
-                catalog);
+                catalog,
+                new District8DeepCoastSystem(seedSalt));
             if (expansionUnlocked)
                 session.IceRoad.Unlock(1);
             return session;
@@ -115,6 +120,7 @@ namespace Ashfall.Core
             Brine.TickDaily(day, weather, outdoorC, outfallShifted: false);
             Waystation.TickDaily(IceRoad.IsOpen);
             Quests.TickDaily(day, hasMapItem, hasFormulaLore, hasLettersLore);
+            DeepCoast.TickDaily(day, weather);
         }
 
         public string BriefingText(string questId) => Quests.GetBriefing(questId);

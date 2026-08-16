@@ -14,7 +14,13 @@ namespace Ashfall.Core
     [Serializable]
     public class HoldfastSave
     {
-        public const int CurrentSaveVersion = 4;
+        /// <summary>
+        /// v5 adds the District 8 deep-coast route (Exp 01 sibling layer):
+        /// reopening stage, route/dock condition, access decision, one-time
+        /// markers, and the active dock-operation reference. v1–v4 saves
+        /// migrate forward with a freshly sealed route.
+        /// </summary>
+        public const int CurrentSaveVersion = 5;
 
         public int saveVersion = CurrentSaveVersion;
         public int simDay;
@@ -22,6 +28,7 @@ namespace Ashfall.Core
         public CensusClaimSystemState census = new CensusClaimSystemState();
         public BrineWaterSystemState brineWater = new BrineWaterSystemState();
         public HoldfastQuestSystemState quests = new HoldfastQuestSystemState();
+        public District8DeepCoastState deepCoast = new District8DeepCoastState();
 
         /// <summary>
         /// Integrity hash over the other fields (SaveChecksum skips this slot by name).
@@ -80,12 +87,49 @@ namespace Ashfall.Core
     }
 
     /// <summary>
+    /// Frozen v4 envelope shape (Sprints 1–4, no deep-coast route). Do not add
+    /// fields here — it must match what v4 wrote byte-for-byte in field set.
+    /// </summary>
+    [Serializable]
+    public class HoldfastSaveV4
+    {
+        public int saveVersion = 4;
+        public int simDay;
+        public IceRoadSystemState iceRoad = new IceRoadSystemState();
+        public CensusClaimSystemState census = new CensusClaimSystemState();
+        public BrineWaterSystemState brineWater = new BrineWaterSystemState();
+        public HoldfastQuestSystemState quests = new HoldfastQuestSystemState();
+        public string Checksum = "";
+    }
+
+    /// <summary>
     /// Serialization bridge between the S1 systems and the cross-host save envelope.
     /// No engine references: hosts provide IJsonSerializer + IClock. Verification
     /// lives in Ashfall.Core.Tests/HoldfastSaveTests.cs (plain dotnet test).
     /// </summary>
     public static class HoldfastSaveCodec
     {
+        public static HoldfastSave Capture(
+            IceRoadSystem iceRoad,
+            CensusClaimSystem census,
+            BrineWaterSystem brine,
+            HoldfastQuestSystem quests,
+            District8DeepCoastSystem deepCoast,
+            IClock clock)
+        {
+            var save = new HoldfastSave
+            {
+                simDay = clock.Day,
+                iceRoad = iceRoad.CaptureState(),
+                census = census.CaptureState(),
+                brineWater = brine.CaptureState(),
+                quests = quests.CaptureState(),
+                deepCoast = deepCoast != null ? deepCoast.CaptureState() : new District8DeepCoastState()
+            };
+            save.Checksum = SaveChecksum.Compute(save);
+            return save;
+        }
+
         public static HoldfastSave Capture(
             IceRoadSystem iceRoad,
             CensusClaimSystem census,
@@ -157,21 +201,39 @@ namespace Ashfall.Core
                 if (v1 != null && v1.saveVersion == 1)
                 {
                     ValidateChecksum(v1.Checksum, v1, "v1");
-                    return BuildCurrent(v1.simDay, v1.iceRoad, v1.census, null, null);
+                    return BuildCurrent(v1.simDay, v1.iceRoad, v1.census, null, null, null);
                 }
 
                 var v2 = json.Deserialize<HoldfastSaveV2>(jsonText);
                 if (v2 != null && v2.saveVersion == 2)
                 {
                     ValidateChecksum(v2.Checksum, v2, "v2");
-                    return BuildCurrent(v2.simDay, v2.iceRoad, v2.census, v2.brineWater, null);
+                    return BuildCurrent(v2.simDay, v2.iceRoad, v2.census, v2.brineWater, null, null);
                 }
 
                 var v3 = json.Deserialize<HoldfastSaveV3>(jsonText);
                 if (v3 != null && v3.saveVersion == 3)
                 {
                     ValidateChecksum(v3.Checksum, v3, "v3");
-                    return BuildCurrent(v3.simDay, v3.iceRoad, v3.census, v3.brineWater, v3.quests);
+                    return BuildCurrent(v3.simDay, v3.iceRoad, v3.census, v3.brineWater, v3.quests, null);
+                }
+
+                var v4 = json.Deserialize<HoldfastSaveV4>(jsonText);
+                if (v4 != null && v4.saveVersion == 4)
+                {
+                    ValidateChecksum(v4.Checksum, v4, "v4");
+                    var current = new HoldfastSave
+                    {
+                        saveVersion = HoldfastSave.CurrentSaveVersion,
+                        simDay = v4.simDay,
+                        iceRoad = v4.iceRoad ?? new IceRoadSystemState(),
+                        census = v4.census ?? new CensusClaimSystemState(),
+                        brineWater = v4.brineWater ?? new BrineWaterSystemState(),
+                        quests = v4.quests ?? new HoldfastQuestSystemState(),
+                        deepCoast = new District8DeepCoastState()
+                    };
+                    current.Checksum = SaveChecksum.Compute(current);
+                    return current;
                 }
 
                 migrated = json.Deserialize<HoldfastSave>(jsonText);
@@ -210,7 +272,8 @@ namespace Ashfall.Core
             IceRoadSystemStateV1toV3 iceRoad,
             CensusClaimSystemState census,
             BrineWaterSystemState brine,
-            HoldfastQuestSystemState quests)
+            HoldfastQuestSystemState quests,
+            District8DeepCoastState deepCoast)
         {
             var save = new HoldfastSave
             {
@@ -219,7 +282,8 @@ namespace Ashfall.Core
                 iceRoad = (iceRoad ?? new IceRoadSystemStateV1toV3()).ToCurrent(),
                 census = census ?? new CensusClaimSystemState(),
                 brineWater = brine ?? new BrineWaterSystemState(),
-                quests = quests ?? new HoldfastQuestSystemState()
+                quests = quests ?? new HoldfastQuestSystemState(),
+                deepCoast = deepCoast ?? new District8DeepCoastState()
             };
             save.Checksum = SaveChecksum.Compute(save);
             return save;
@@ -231,6 +295,26 @@ namespace Ashfall.Core
             if (!string.Equals(stored, actual, StringComparison.Ordinal))
                 throw new InvalidOperationException(
                     "HoldfastSave: " + label + " checksum mismatch (corrupt or foreign save).");
+        }
+
+        /// <summary>Restores all systems and the sim clock. Idempotent.</summary>
+        public static void Restore(
+            HoldfastSave save,
+            IceRoadSystem iceRoad,
+            CensusClaimSystem census,
+            BrineWaterSystem brine,
+            HoldfastQuestSystem quests,
+            District8DeepCoastSystem deepCoast,
+            IClock clock)
+        {
+            if (save == null)
+                throw new ArgumentNullException(nameof(save));
+            iceRoad.RestoreState(save.iceRoad);
+            census.RestoreState(save.census);
+            brine?.RestoreState(save.brineWater);
+            quests?.RestoreState(save.quests);
+            deepCoast?.RestoreState(save.deepCoast);
+            clock.SetDay(save.simDay);
         }
 
         /// <summary>Restores all systems and the sim clock. Idempotent.</summary>

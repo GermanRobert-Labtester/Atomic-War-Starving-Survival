@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.UI;
+using AtomicWar.GodotApp.YearOfAsh;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -17,6 +18,10 @@ namespace AtomicWar.GodotApp.UI
         public event Action<string>? OnFactionDetailRequested;
         public event Action? OnMusterPanelRequested;
         public event Action? OnFoundryPanelRequested;
+        /// <summary>Player chose to pay the warlord tribute in full (amount = current ask).</summary>
+        public event Action<int>? OnWarlordTributePay;
+        /// <summary>Player refused the warlord tribute this week.</summary>
+        public event Action? OnWarlordTributeRefuse;
 
         private VBoxContainer _overviewContainer = null!;
         private VBoxContainer _factionsContainer = null!;
@@ -28,27 +33,41 @@ namespace AtomicWar.GodotApp.UI
         private HoldfastTradeSession? _trade;
         private MusterHostSession? _muster;
         private ExpansionHostSession? _expansions;
+        private YearOfAshHostSession? _yearOfAsh;
 
         public bool IsBound => _factions != null || _muster != null || _expansions != null;
 
         /// <summary>True after RefreshView when the Silent Foundry Guild card rendered.</summary>
         public bool HasGuildCard { get; private set; }
 
+        /// <summary>Last authored collector line shown in the warlord card (presentation-local).</summary>
+        private string _collectorNote = string.Empty;
+
         public void Bind(
             HoldfastFactionsCatalog? factions,
             HoldfastTradeSession? trade = null,
             MusterHostSession? muster = null,
-            ExpansionHostSession? expansions = null)
+            ExpansionHostSession? expansions = null,
+            YearOfAshHostSession? yearOfAsh = null)
         {
             _factions = factions;
             _trade = trade;
             _muster = muster;
             _expansions = expansions;
+            _yearOfAsh = yearOfAsh;
 
             if (_muster != null)
                 _muster.StateChanged += RefreshView;
             if (_expansions != null)
                 _expansions.StateChanged += RefreshView;
+            if (_yearOfAsh?.Warlord != null)
+            {
+                _yearOfAsh.Warlord.OnStateChanged += RefreshView;
+                _yearOfAsh.Warlord.OnTributeSettled += (paidFull, day) =>
+                    _collectorNote = _yearOfAsh.CollectorLine(paidFull ? "paid" : "short", day);
+                _yearOfAsh.Warlord.OnTributeDemanded += (_, _, day) =>
+                    _collectorNote = _yearOfAsh.CollectorLine("demand", day);
+            }
 
             RefreshView();
         }
@@ -229,6 +248,65 @@ namespace AtomicWar.GodotApp.UI
             relBox.AddChild(AshfallUiHelpers.MakeDataRow("Nobody's Crossing Accord", "Vouch access required for passage across the northern ice road gate.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
             relBox.AddChild(AshfallUiHelpers.MakeDataRow("Ledger Keepers Archive", "Knowledge reciprocity active. Relic blueprints grant credit value.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
             _relationsContainer.AddChild(relCard);
+
+            // ── 3b. Adaptive Warlord Doctrine (Year of Ash, proposed model) ──
+            if (_yearOfAsh?.Warlord != null)
+            {
+                var w = _yearOfAsh.Warlord;
+                var wl = w.Catalog.Warlord;
+                var wCard = AshfallUiHelpers.MakeCardFrame("WARLORD DOCTRINE — SECTOR 4", "ADAPTIVE STRATEGY (identity: " + wl.faction_id + ")");
+                var wBox = wCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+                string doctrine = w.Doctrine != null ? w.Doctrine.display_name : w.DoctrineId;
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Current Doctrine", doctrine, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Supply", w.Supply + " / " + w.SupplyNeed, AshfallUiHelpers.ToColor(w.Supply < w.SupplyNeed ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale)));
+
+                // Tribute ledger (player-visible, from Core state).
+                int ask = Math.Max(1, (int)(wl.tribute_base_amount * w.TributeMultiplier));
+                string tributeState = w.State.consecutiveShortWeeks > 0
+                    ? $"ask {ask}× {wl.tribute_currency_item} — {w.State.consecutiveShortWeeks} short week(s), collector is keeping notes"
+                    : $"ask {ask}× {wl.tribute_currency_item} — ledger current";
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Tribute", tributeState,
+                    AshfallUiHelpers.ToColor(w.State.consecutiveShortWeeks > 0 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm)));
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Paid to Date", w.State.totalWeeksPaid + " of " + w.State.totalWeeksAsked + " asks", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                wBox.AddChild(AshfallUiHelpers.MakeDataRow("Operations", w.TotalOperations + " · " + w.State.casualties + " casualties", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+
+                // Collector note (authored prose, deterministic by day).
+                if (!string.IsNullOrEmpty(_collectorNote))
+                    wBox.AddChild(AshfallUiHelpers.MakeSmall(_collectorNote, autowrap: true));
+
+                // Payment loop: pay the current ask in full, or refuse it.
+                if (_yearOfAsh != null)
+                {
+                    var payRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                    payRow.AddThemeConstantOverride("h_separation", (int)Ashfall.Core.UI.Theme.SpacingSm);
+                    var btnPay = AshfallUiHelpers.MakeButton($"PAY TRIBUTE ({ask}× {wl.tribute_currency_item})", () => OnWarlordTributePay?.Invoke(ask));
+                    btnPay.CustomMinimumSize = new Vector2(300, 34);
+                    payRow.AddChild(btnPay);
+                    var btnRefuse = AshfallUiHelpers.MakeButton("REFUSE THIS WEEK", () => OnWarlordTributeRefuse?.Invoke());
+                    btnRefuse.CustomMinimumSize = new Vector2(180, 34);
+                    payRow.AddChild(btnRefuse);
+                    wBox.AddChild(payRow);
+                }
+
+                if (w.State.territory != null)
+                {
+                    for (int i = 0; i < w.State.territory.Count; i++)
+                    {
+                        var rec = w.State.territory[i];
+                        if (rec == null) continue;
+                        string stateName = ((Ashfall.Core.Warlords.WarlordTerritoryState)rec.state).ToString();
+                        float danger = w.TravelDangerModifier(rec.locationId);
+                        wBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                            rec.locationId,
+                            stateName + (danger > 0f ? " · travel danger +" + (danger * 100f).ToString("F0") + "%" : ""),
+                            AshfallUiHelpers.ToColor(rec.state == (int)Ashfall.Core.Warlords.WarlordTerritoryState.Controlled
+                                ? Ashfall.Core.UI.Theme.Hot
+                                : (rec.state == (int)Ashfall.Core.Warlords.WarlordTerritoryState.Contested ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim))));
+                    }
+                }
+                _relationsContainer.AddChild(wCard);
+            }
 
             // ── 4. Diplomatic Events & Radio Intercepts ──
             var evCard = AshfallUiHelpers.MakeCardFrame("RECENT DIPLOMATIC COMMUNIQUES", "RADIO INTERCEPTS");

@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "warlord": {
+    "faction_id": "warlords_sector_4",
+    "leader_name": "The Tollman",
+    "home_location_id": "loc_toll_house",
+    "starting_doctrine_id": "warlord_doctrine_toll",
+    "tribute_currency_item": "canned_food",
+    "tribute_interval_days": 7,
+    "tribute_base_amount": 6,
+    "tribute_escalation_factor": 1.5,
+    "tribute_max_multiplier": 8.0,
+    "short_payment_threshold": 0.9,
+    "action_interval_days": 5,
+    "action_cooldown_days": 5,
+    "doctrine_cooldown_days": 10,
+    "report_delay_days": 3,
+    "doctrine_change_margin": 0.15
+  },
+  "territory": [
+    {
+      "location_id": "loc_toll_house",
+      "home": true,
+      "supply_value": 2,
+      "chokepoint": true,
+      "defense_value": 4,
+      "neighbors": [
+        "loc_weighbridge",
+        "loc_denial_cut_substation"
+      ]
+    },
+    {
+      "location_id": "loc_weighbridge",
+      "home": false,
+      "supply_value": 2,
+      "chokepoint": true,
+      "defense_value": 2,
+      "neighbors": [
+        "loc_toll_house",
+        "loc_denial_cut_substation",
+        "loc_continental_convoy_staging_area"
+      ]
+    },
+    {
+      "location_id": "loc_denial_cut_substation",
+      "home": false,
+      "supply_value": 3,
+      "chokepoint": true,
+      "defense_value": 3,
+      "neighbors": [
+        "loc_toll_house",
+        "loc_weighbridge",
+        "loc_grain_silo"
+      ]
+    },
+    {
+      "location_id": "loc_continental_convoy_staging_area",
+      "home": false,
+      "supply_value": 4,
+      "chokepoint": true,
+      "defense_value": 2,
+      "neighbors": [
+        "loc_weighbridge"
+      ]
+    },
+    {
+      "location_id": "loc_grain_silo",
+      "home": false,
+      "supply_value": 5,
+      "chokepoint": false,
+      "defense_value": 3,
+      "neighbors": [
+        "loc_denial_cut_substation"
+      ]
+    }
+  ],
+  "doctrines": [
+    {
+      "id": "warlord_doctrine_toll",
+      "display_name": "The Toll",
+      "description": "The boom is up and the price is known, same as last week, same as next week, higher if you make it higher. The Tollman collects on schedule, files the chits, and lets the road do the arguing. Tribute is not cruelty; it is bookkeeping with teeth. The collector calls once a week, and the collector knows your face.",
+      "risk_tolerance": 0.6,
+      "preferred_goal": "tribute",
+      "eligible_actions": [
+        "demand_tribute",
+        "raid",
+        "defend",
+        "contest"
+      ],
+      "action_weights": {
+        "demand_tribute": 4,
+        "raid": 3,
+        "defend": 2,
+        "contest": 1
+      },
+      "resource_priority": [
+        "canned_food",
+        "fuel"
+      ],
+      "target_rule": "nearest_undefended",
+      "journal_key": "jrnl_warlord_toll_doctrine",
+      "radio_key": "radio_warlord_toll_standing",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_annexation",
+          "signal": "success_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "supply_ratio",
+          "condition": "lt",
+          "threshold": 0.6
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_consolidation",
+      "display_name": "Holding the Line",
+      "description": "Fewer booms, more checkpoints, and every checkpoint answers to the same ledger. The Warlords keep what they hold, bleed the road slowly, and make a column pay in patience rather than blood. A road that stops asking questions is a road the Tollman can live with. The ambition is shelved; the lamp stays lit.",
+      "risk_tolerance": 0.3,
+      "preferred_goal": "stability",
+      "eligible_actions": [
+        "defend",
+        "demand_tribute",
+        "contest"
+      ],
+      "action_weights": {
+        "defend": 5,
+        "demand_tribute": 2,
+        "contest": 1
+      },
+      "resource_priority": [
+        "canned_food",
+        "fuel"
+      ],
+      "target_rule": "nearest_undefended",
+      "journal_key": "jrnl_warlord_consolidation_doctrine",
+      "radio_key": "radio_warlord_consolidation",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_toll",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 1.2
+        },
+        {
+          "to": "warlord_doctrine_toll",
+          "signal": "player_tribute_reliability",
+          "condition": "lt",
+          "threshold": 0.5
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "environment_hazard",
+          "condition": "gte",
+          "threshold": 0.7
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_annexation",
+      "display_name": "The Long Reach",
+      "description": "The road is not enough; the ground under it is. The Warlords push claims along the cut and the convoy apron while the taking is cheap, painting checkpoints ahead of the argument. They will call it a land grab. The Tollman calls it a longer price list, and the rates are posted before the ink dries.",
+      "risk_tolerance": 0.8,
+      "preferred_goal": "expansion",
+      "eligible_actions": [
+        "annex",
+        "contest",
+        "raid",
+        "demand_tribute"
+      ],
+      "action_weights": {
+        "annex": 4,
+        "contest": 3,
+        "raid": 2,
+        "demand_tribute": 1
+      },
+      "resource_priority": [
+        "fuel",
+        "canned_food"
+      ],
+      "target_rule": "highest_supply",
+      "journal_key": "jrnl_warlord_annexation_doctrine",
+      "radio_key": "radio_warlord_annexation",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "contested_count",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_consolidation",
+          "signal": "failure_streak",
+          "condition": "gte",
+          "threshold": 2
+        },
+        {
+          "to": "warlord_doctrine_withdrawal",
+          "signal": "environment_hazard",
+          "condition": "gte",
+          "threshold": 0.7
+        }
+      ]
+    },
+    {
+      "id": "warlord_doctrine_withdrawal",
+      "display_name": "Gone to Ground",
+      "description": "The lamps are out and the door is locked. Not surrender — arithmetic. The weather has a column of its own and it does not pay tolls, so the Warlords stop answering the road until the freeze lifts. The quiet is the bill, and the bill will come due in the spring, if there is a spring.",
+      "risk_tolerance": 0.15,
+      "preferred_goal": "preservation",
+      "eligible_actions": [
+        "withdraw",
+        "defend"
+      ],
+      "action_weights": {
+        "withdraw": 5,
+        "defend": 1
+      },
+      "resource_priority": [
+        "canned_food"
+      ],
+      "target_rule": "none",
+      "journal_key": "jrnl_warlord_withdrawal_doctrine",
+      "radio_key": "radio_warlord_withdrawal",
+      "transitions": [
+        {
+          "to": "warlord_doctrine_toll",
+          "signal": "environment_hazard",
+          "condition": "lt",
+          "threshold": 0.4
+        },
+        {
+          "to": "warlord_doctrine_toll",
+          "signal": "supply_ratio",
+          "condition": "gte",
+          "threshold": 0.9
+        }
+      ]
+    }
+  ],
+  "faction_alias_warnings": [
+    {
+      "canonical": "warlords_sector_4",
+      "aliases_not_merged": [
+        "raiders",
+        "iron_garrison",
+        "ash_militia"
+      ],
+      "notes": "faction_lore.json keeps warlords_sector_4, raiders, ash_militia as distinct records; iron_garrison is the pre-Day-238 name of faction_central_garrison. The warlord AI binds only to warlords_sector_4 and reports these as unresolved rather than merging them."
+    }
+  ],
+  "collector_voice": {
+    "demand": [
+      "The collector sets the chit on the table and does not let go of it. The number is the number.",
+      "A knock, a ledger, and the phrase the whole road knows: 'The Toll House sends its regards.'"
+    ],
+    "paid": [
+      "The collector weighs the cans, nods once, and crosses the line out of the book. 'Until next week.'",
+      "Food changes hands, the receipt is carboned twice, and the boom stays up for another week."
+    ],
+    "short": [
+      "The collector counts twice, then writes the shortfall in the remarks column, which is where the dead end up.",
+      "The cans are light. The collector says nothing, but the next chit will not be light."
+    ],
+    "refused": [
+      "The collector folds the chit, pockets the pencil, and leaves without a word. The quiet is a signature."
+    ]
+  },
+  "reference_ids": [
+    {
+      "id": "radio_warlord_toll_standing"
+    },
+    {
+      "id": "radio_warlord_consolidation"
+    },
+    {
+      "id": "radio_warlord_annexation"
+    },
+    {
+      "id": "radio_warlord_withdrawal"
+    },
+    {
+      "id": "journal_warlord_toll_doctrine"
+    },
+    {
+      "id": "journal_warlord_consolidation_doctrine"
+    },
+    {
+      "id": "journal_warlord_annexation_doctrine"
+    },
+    {
+      "id": "journal_warlord_withdrawal_doctrine"
+    }
+  ]
+}

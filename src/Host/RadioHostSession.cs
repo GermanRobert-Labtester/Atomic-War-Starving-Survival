@@ -129,6 +129,33 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
+        /// Player-visible warlord radio warning (doctrine shift / hostile action).
+        /// Adds a RaidWarning intercept under the canonical warlords_sector_4
+        /// identity so the radio history carries the consequence. Presentation
+        /// only — the warlord AI emits the intent through Core events; this is
+        /// the thin adapter that surfaces it.
+        /// </summary>
+        public string InterceptWarlordWarning(string message, int day)
+        {
+            if (string.IsNullOrWhiteSpace(message)) return "";
+            var warning = new RadioIntercept(
+                "warlords_sector_4",
+                "TOLL HOUSE RELAY",
+                94.2f,
+                RadioEventKind.RaidWarning,
+                message,
+                3,
+                day > 0 ? day : Day);
+            _history.Add(warning);
+            if (_history.Count > 32)
+                _history.RemoveAt(0);
+            LastEvent = "Warlord radio warning intercepted on 94.2 MHz.";
+            BroadcastIntercepted?.Invoke(warning, null);
+            StateChanged?.Invoke();
+            return LastEvent;
+        }
+
+        /// <summary>
         /// Resolve a voice-over clip name for this intercept.
         /// Returns null if no clip is mapped for this faction/event combination.
         /// </summary>

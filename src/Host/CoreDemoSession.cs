@@ -31,6 +31,8 @@ namespace AtomicWar.GodotApp
         public BrineWaterSystem Brine { get; }
         public HoldfastQuestSystem Quests { get; }
         public LocationLayoutSystem Layouts { get; }
+        /// <summary>District 8 deep-coast route (sealed until surveyed).</summary>
+        public District8DeepCoastSystem DeepCoast { get; }
         public WeatherKind Weather { get; private set; }
         public float OutdoorCelsius { get; private set; }
         public int QuestIndex { get; private set; }
@@ -51,7 +53,8 @@ namespace AtomicWar.GodotApp
             CensusClaimSystem census,
             BrineWaterSystem brine,
             HoldfastQuestSystem quests,
-            LocationLayoutSystem layouts)
+            LocationLayoutSystem layouts,
+            District8DeepCoastSystem deepCoast = null)
         {
             IceRoad = iceRoad;
             Clock = clock;
@@ -60,6 +63,7 @@ namespace AtomicWar.GodotApp
             Brine = brine;
             Quests = quests;
             Layouts = layouts;
+            DeepCoast = deepCoast ?? new District8DeepCoastSystem(iceRoad.State.seedSalt);
             Weather = WeatherKind.Blizzard;
             OutdoorCelsius = TempFor(Weather);
 
@@ -102,10 +106,10 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Cross-host save envelope. Shape and checksum owned by HoldfastSaveCodec.</summary>
         public HoldfastSave CaptureSave() =>
-            HoldfastSaveCodec.Capture(IceRoad, Census, Brine, Quests, Clock);
+            HoldfastSaveCodec.Capture(IceRoad, Census, Brine, Quests, DeepCoast, Clock);
 
         public void RestoreSave(HoldfastSave save) =>
-            HoldfastSaveCodec.Restore(save, IceRoad, Census, Brine, Quests, Clock);
+            HoldfastSaveCodec.Restore(save, IceRoad, Census, Brine, Quests, DeepCoast, Clock);
 
         public string TickDay()
         {
@@ -117,6 +121,7 @@ namespace AtomicWar.GodotApp
             Census.TickDaily(Clock.Day);
             Brine.TickDaily(Clock.Day, Weather, OutdoorCelsius, _outfallShifted);
             Quests.TickDaily(Clock.Day, false, false, false);
+            DeepCoast.TickDaily(Clock.Day, Weather);
             if (!string.IsNullOrEmpty(LastEvent))
                 return LastEvent;
             return IceRoad.IsOpen == wasOpen

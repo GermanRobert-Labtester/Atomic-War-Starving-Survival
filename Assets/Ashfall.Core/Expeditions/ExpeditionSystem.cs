@@ -117,6 +117,24 @@ namespace Ashfall.Core.Expeditions
             _staminaDrainMultiplier = multiplier;
         }
 
+        /// <summary>
+        /// Optional per-location encounter-chance multiplier (1.0 = authored
+        /// rate). Hosts wire faction/territory danger here (e.g. the warlord's
+        /// TravelDangerModifier for controlled/contested road) so hostile ground
+        /// raises the chance of meeting trouble on a real sortie. The roll is
+        /// still seeded and deterministic for a given multiplier.
+        /// </summary>
+        private Func<string, float> _encounterChanceMultiplier;
+
+        /// <summary>
+        /// Bind the per-location encounter-chance multiplier. Returns 1.0 when
+        /// unset or unknown. Multipliers clamp the resulting chance to [0,1].
+        /// </summary>
+        public void SetEncounterChanceMultiplier(Func<string, float> multiplier)
+        {
+            _encounterChanceMultiplier = multiplier;
+        }
+
         public IReadOnlyDictionary<string, ExpeditionState> Active => _active;
         public int ActiveCount => _active.Count;
 
@@ -298,6 +316,12 @@ namespace Ashfall.Core.Expeditions
         {
             if (rng == null) return;
             float chance = exp.encounterChancePerTick;
+            if (_encounterChanceMultiplier != null && !string.IsNullOrEmpty(exp.locationId))
+            {
+                float mult = _encounterChanceMultiplier(exp.locationId);
+                if (mult >= 0f) chance *= mult; // 0 ⇒ no encounters on this ground
+            }
+            chance = Math.Clamp(chance, 0f, 1f);
             if (exp.stance == nameof(ExpeditionStance.Stealth)) chance *= 0.5f;
             if (rng.NextDouble() < chance)
             {

@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.Narrative;
+using Ashfall.Core.Warlords;
 
 namespace Ashfall.Core
 {
@@ -135,6 +136,7 @@ namespace Ashfall.Core
             Holdfast.IceRoad.TickDaily(day, weather, outdoorTemp);
             Holdfast.Census.TickDaily(day);
             Holdfast.Brine.TickDaily(day, weather, outdoorTemp, false);
+            Holdfast.DeepCoast.TickDaily(day, weather);
 
             // 2. Tick Duty Roster morning occupancy
             if (homeOccupants != null && homeOccupants.Count > 0)
@@ -168,6 +170,8 @@ namespace Ashfall.Core
                 ("Crossing Arbitration", CrossingArbitrationHeadlessDemo.Run(log)),
                 ("Ledger Debt", LedgerDebtHeadlessDemo.Run(log)),
                 ("Glass Orchard (Exp 05)", GreenhouseHeadlessDemo.Run(log)),
+                ("Deep Coast (District 8)", DeepCoastHeadlessDemo.Run(dataDirectory, log)),
+                ("Warlord AI (Exp 05 sibling)", WarlordHeadlessDemo.Run(dataDirectory, log)),
                 ("Silent Foundry (Exp 10)", SilentFoundryHeadlessDemo.Run(dataDirectory, log))
             };
 

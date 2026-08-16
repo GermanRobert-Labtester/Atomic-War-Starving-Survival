@@ -5,6 +5,7 @@ using Ashfall.Core;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.Journal;
 
 namespace AtomicWar.GodotApp.UI
@@ -30,6 +31,8 @@ namespace AtomicWar.GodotApp.UI
         private ExpansionHostSession? _expansions;
         private WorldHostSession? _world;
         private JournalCatalogs? _catalogs;
+        private DeepCoastHostSession? _deepCoast;
+        private YearOfAshHostSession? _yearOfAsh;
 
         public bool IsBound => _core != null || _expeditions != null || _catalogs != null;
 
@@ -38,18 +41,26 @@ namespace AtomicWar.GodotApp.UI
             ExpeditionHostSession? expeditions = null,
             ExpansionHostSession? expansions = null,
             WorldHostSession? world = null,
-            JournalCatalogs? catalogs = null)
+            JournalCatalogs? catalogs = null,
+            DeepCoastHostSession? deepCoast = null,
+            YearOfAshHostSession? yearOfAsh = null)
         {
             _core = core;
             _expeditions = expeditions;
             _expansions = expansions;
             _world = world;
             _catalogs = catalogs;
+            _deepCoast = deepCoast;
+            _yearOfAsh = yearOfAsh;
 
             if (_expeditions != null)
                 _expeditions.StateChanged += RefreshView;
             if (_world != null)
                 _world.StateChanged += RefreshView;
+            if (_deepCoast != null)
+                _deepCoast.StateChanged += RefreshView;
+            if (_yearOfAsh != null)
+                _yearOfAsh.Warlord.OnStateChanged += RefreshView;
 
             RefreshView();
         }
@@ -155,6 +166,55 @@ namespace AtomicWar.GodotApp.UI
             routesBox.AddChild(AshfallUiHelpers.MakeDataRow("High-Risk Cut", "Holdfast [Sector 07] ↔ Denial Cut Substation [8 Ticks, Radiation Hazard]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
             routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Border Corridor", "District 8 ↔ Nobody's Crossing Gate [Vouch Access Required]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
             routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Waystation Line", "Holding Cells ↔ S2 Logistics Depot [Cold-Weather Transit]", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+
+            if (_deepCoast != null)
+            {
+                var dc = _deepCoast.DeepCoast;
+                string seasonal = _core != null && _core.IceRoad.IsOpen
+                    ? "Ice Road OPEN — route traversable"
+                    : "Ice Road CLOSED — Shelf & deep coast season-blocked";
+                routesBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                routesBox.AddChild(AshfallUiHelpers.MakeSectionHeader("DEEP COAST ROUTE (BEYOND THE SHELF)"));
+                routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Seasonal Gate", seasonal, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Reopening Stage", dc.Stage.ToString(), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                for (int i = 0; i < dc.Route.Count; i++)
+                {
+                    var node = dc.Route[i];
+                    if (node == null) continue;
+                    string state = dc.IsNodeAccessible(node.id) ? "REACHABLE" : (node.id == District8DeepCoastSystem.DockId ? "SEALED" : "LOCKED");
+                    routesBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                        node.displayName,
+                        $"{state} · {node.travelHours:F1}h · rad +{dc.RadsPerHour(node.id):F0} mSv/h",
+                        AshfallUiHelpers.ToColor(dc.IsNodeAccessible(node.id) ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim)));
+                }
+                if (dc.IsFleetLevyActive)
+                    routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Fleet Levy", "25% of dock salvage to the Fleet", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot)));
+            }
+
+            if (_yearOfAsh?.Warlord != null)
+            {
+                var w = _yearOfAsh.Warlord;
+                routesBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                routesBox.AddChild(AshfallUiHelpers.MakeSectionHeader("WARLORD TERRITORY (SECTOR 4)"));
+                routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Doctrine", w.Doctrine != null ? w.Doctrine.display_name : w.DoctrineId, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                if (w.State.territory != null)
+                {
+                    for (int i = 0; i < w.State.territory.Count; i++)
+                    {
+                        var rec = w.State.territory[i];
+                        if (rec == null) continue;
+                        string st = ((Ashfall.Core.Warlords.WarlordTerritoryState)rec.state).ToString();
+                        float danger = w.TravelDangerModifier(rec.locationId);
+                        routesBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                            rec.locationId,
+                            st + (danger > 0f ? " · danger +" + (danger * 100f).ToString("F0") + "%" : ""),
+                            AshfallUiHelpers.ToColor(rec.state == (int)Ashfall.Core.Warlords.WarlordTerritoryState.Controlled
+                                ? Ashfall.Core.UI.Theme.Hot
+                                : (rec.state == (int)Ashfall.Core.Warlords.WarlordTerritoryState.Contested ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim))));
+                    }
+                }
+                routesBox.AddChild(AshfallUiHelpers.MakeDataRow("Tribute Ask", "×" + w.TributeMultiplier.ToString("0.##") + " " + w.Catalog.Warlord.tribute_currency_item, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            }
 
             if (_expeditions?.Engine != null && _expeditions.Engine.ActiveCount > 0)
             {

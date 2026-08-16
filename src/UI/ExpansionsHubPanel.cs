@@ -28,6 +28,7 @@ namespace AtomicWar.GodotApp.UI
         private DutyRosterHostSession? _dutyRoster;
         private MusterHostSession? _muster;
         private MaritimeHostSession? _maritime;
+        private DeepCoastHostSession? _deepCoast;
         private WorldHostSession? _world;
         private MedicalHostSession? _medical;
         private VerdictHostSession? _verdict;
@@ -60,6 +61,7 @@ namespace AtomicWar.GodotApp.UI
             DutyRosterHostSession? dutyRoster,
             MusterHostSession? muster,
             MaritimeHostSession? maritime,
+            DeepCoastHostSession? deepCoast,
             WorldHostSession? world,
             MedicalHostSession? medical,
             VerdictHostSession? verdict,
@@ -70,6 +72,7 @@ namespace AtomicWar.GodotApp.UI
             _dutyRoster = dutyRoster;
             _muster = muster;
             _maritime = maritime;
+            _deepCoast = deepCoast;
             _world = world;
             _medical = medical;
             _verdict = verdict;
@@ -321,6 +324,26 @@ namespace AtomicWar.GodotApp.UI
                 },
                 "OPEN MARITIME SALVAGE OPERATIONS",
                 () => OnOpenExpansionRequested?.Invoke("maritime")
+            );
+
+            // ── 9b. District 8 Deep Coast (Exp 01 sibling layer) ──
+            string coastStage = _deepCoast != null ? _deepCoast.DeepCoast.Stage.ToString() : "Sealed";
+            string coastAccess = _deepCoast != null
+                ? (_deepCoast.IsFleetActive ? "FLEET STOOD UP" : "municipal / office")
+                : "sealed";
+            AddModuleCard(
+                "DISTRICT 8 — THE DEEP COAST",
+                "The coastal perimeter, the flooded service channel, and the deep berth at the Northern Sound Icebreaker Dock.",
+                "STAGE: " + coastStage,
+                CoreTheme.Warm,
+                new (string, string, (float r, float g, float b, float a))[]
+                {
+                    ("Reopening Stage", coastStage, CoreTheme.Warm),
+                    ("Access", coastAccess, CoreTheme.Pale),
+                    ("Dock Dive", _deepCoast != null && _deepCoast.DeepCoast.CanStartDockOperation ? "AVAILABLE" : "idle", CoreTheme.Hot)
+                },
+                "OPEN DEEP COAST OPERATIONS",
+                () => OnOpenExpansionRequested?.Invoke("deep_coast")
             );
 
             // ── 10. The Year of Ash (Exp 06/07 Timeline) ──

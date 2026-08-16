@@ -22,6 +22,15 @@ namespace AtomicWar.GodotApp
         /// <summary>Optional crossing gate — when set, crossing-node expeditions require vouch access.</summary>
         public VouchAccessSystem CrossingGate { get; set; }
 
+        /// <summary>
+        /// Optional extra dispatch gate (ice road seasonal + deep-coast route
+        /// stage). When set, any location it blocks cannot be dispatched.
+        /// </summary>
+        public Func<string, bool> ExtraBlocked { get; set; }
+
+        /// <summary>Passthrough to the Core per-location encounter-chance multiplier (faction/territory danger).</summary>
+        public void SetEncounterChanceMultiplier(Func<string, float> multiplier) => Engine.SetEncounterChanceMultiplier(multiplier);
+
         public string LastEvent { get; private set; } = string.Empty;
 
         public event Action StateChanged;
@@ -84,6 +93,8 @@ namespace AtomicWar.GodotApp
         {
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
                 return true;
+            if (ExtraBlocked != null && ExtraBlocked(locationId))
+                return true;
             return false;
         }
 
@@ -91,6 +102,8 @@ namespace AtomicWar.GodotApp
         {
             if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
                 return $"Crossing gate is closed — no vouch. Cannot dispatch to {locationId}.";
+            if (ExtraBlocked != null && ExtraBlocked(locationId))
+                return $"Route blocked: cannot dispatch to {locationId} right now (seasonal or sealed).";
             var def = ExpeditionDefinitionRegistry.Get(locationId);
             if (def == null) return $"Unknown expedition target: {locationId}";
             bool ok = Engine.Start(def, survivorId, 40, ExpeditionStance.Stealth);
