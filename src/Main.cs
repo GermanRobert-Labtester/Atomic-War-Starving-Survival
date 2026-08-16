@@ -165,9 +165,20 @@ namespace AtomicWar.GodotApp
         private DutyRosterDetailPanel _dutyRosterDetailPanel = null!;
         private EconomyDetailPanel _economyDetailPanel = null!;
         private CombatDetailPanel _combatDetailPanel = null!;
+        private FactionDetailPanel _factionDetailPanel = null!;
+        private MedicalDetailPanel _medicalDetailPanel = null!;
+        private ExpeditionDetailPanel _expeditionDetailPanel = null!;
+        private RadioDetailPanel _radioDetailPanel = null!;
+        private ShelterDetailPanel _shelterDetailPanel = null!;
         private SaveLoadPanel _saveLoadPanel = null!;
         private TutorialPanel _tutorialPanel = null!;
         private AfflictionsPanel _afflictionsPanel = null!;
+        private WeatherForecastPanel _weatherForecastPanel = null!;
+        private RadiationHistoryPanel _radiationHistoryPanel = null!;
+        private JournalDetailPanel _journalDetailPanel = null!;
+        private CombatHistoryPanel _combatHistoryPanel = null!;
+        private MapDetailPanel _mapDetailPanel = null!;
+        private EventDetailPanel _eventDetailPanel = null!;
         private enum GameState { Menu, Playing, GameOver }
         private GameState _state = GameState.Menu;
 
@@ -601,6 +612,36 @@ namespace AtomicWar.GodotApp
             _afflictionsPanel.OnClose += CloseAfflictionsPanel;
             gameUiContainer.AddChild(_afflictionsPanel);
 
+            // ── Weather Forecast panel (overlay) ──
+            _weatherForecastPanel = new WeatherForecastPanel();
+            _weatherForecastPanel.OnClose += CloseWeatherForecastPanel;
+            gameUiContainer.AddChild(_weatherForecastPanel);
+
+            // ── Radiation History panel (overlay) ──
+            _radiationHistoryPanel = new RadiationHistoryPanel();
+            _radiationHistoryPanel.OnClose += CloseRadiationHistoryPanel;
+            gameUiContainer.AddChild(_radiationHistoryPanel);
+
+            // ── Journal Detail panel (overlay) ──
+            _journalDetailPanel = new JournalDetailPanel();
+            _journalDetailPanel.OnClose += CloseJournalDetailPanel;
+            gameUiContainer.AddChild(_journalDetailPanel);
+
+            // ── Combat History panel (overlay) ──
+            _combatHistoryPanel = new CombatHistoryPanel();
+            _combatHistoryPanel.OnClose += CloseCombatHistoryPanel;
+            gameUiContainer.AddChild(_combatHistoryPanel);
+
+            // ── Map Detail panel (overlay) ──
+            _mapDetailPanel = new MapDetailPanel();
+            _mapDetailPanel.OnClose += CloseMapDetailPanel;
+            gameUiContainer.AddChild(_mapDetailPanel);
+
+            // ── Event Detail panel (overlay) ──
+            _eventDetailPanel = new EventDetailPanel();
+            _eventDetailPanel.OnClose += CloseEventDetailPanel;
+            gameUiContainer.AddChild(_eventDetailPanel);
+
             // ── Game content area ──
             var margin = new MarginContainer();
             margin.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -785,6 +826,12 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Save/Load: open panel", () => { _saveLoadPanel.Open(); });
             AddMenuButton("Tutorial: open panel", () => { _tutorialPanel.Open(); });
             AddMenuButton("Afflictions: open panel", () => { _afflictionsPanel.Open(); });
+            AddMenuButton("Weather Forecast: open panel", () => { _weatherForecastPanel.Open(); });
+            AddMenuButton("Radiation History: open panel", () => { _radiationHistoryPanel.Open(); });
+            AddMenuButton("Journal Detail: open panel", () => { _journalDetailPanel.Open(); });
+            AddMenuButton("Combat History: open panel", () => { _combatHistoryPanel.Open(); });
+            AddMenuButton("Map Detail: open panel", () => { _mapDetailPanel.Open(); });
+            AddMenuButton("Event Detail: open panel", () => { _eventDetailPanel.Open(); });
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); GetTree().Quit(); });
 
             _statusLabel = new Label
@@ -3496,6 +3543,36 @@ namespace AtomicWar.GodotApp
         private void CloseAfflictionsPanel()
         {
             _afflictionsPanel.Visible = false;
+        }
+
+        private void CloseWeatherForecastPanel()
+        {
+            _weatherForecastPanel.Visible = false;
+        }
+
+        private void CloseRadiationHistoryPanel()
+        {
+            _radiationHistoryPanel.Visible = false;
+        }
+
+        private void CloseJournalDetailPanel()
+        {
+            _journalDetailPanel.Visible = false;
+        }
+
+        private void CloseCombatHistoryPanel()
+        {
+            _combatHistoryPanel.Visible = false;
+        }
+
+        private void CloseMapDetailPanel()
+        {
+            _mapDetailPanel.Visible = false;
+        }
+
+        private void CloseEventDetailPanel()
+        {
+            _eventDetailPanel.Visible = false;
         }
 
         private void ShowGameOver(string cause, string stats)
