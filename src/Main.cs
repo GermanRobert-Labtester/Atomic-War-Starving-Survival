@@ -34,6 +34,7 @@ namespace AtomicWar.GodotApp
 
         // Year of Ash (Days 180-360)
         private YearOfAshHostSession _yearOfAsh = null!;
+        private bool _yearOfAshDirty;
         private DoorEncounterModal _doorModal = null!;
         private QuestlineModal _questlineModal = null!;
         private int _doorEncounterIndex = 0;
@@ -341,6 +342,7 @@ namespace AtomicWar.GodotApp
             FlushWorldIfDirty();
             FlushCraftingIfDirty();
             FlushCaravanIfDirty();
+            FlushYearOfAshIfDirty();
         }
 
         public override void _UnhandledKeyInput(InputEvent @event)
@@ -583,7 +585,7 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Utility AI: evaluate demo survivor", OnUtilityAiEvaluateClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -2193,9 +2195,25 @@ namespace AtomicWar.GodotApp
             if (_caravans == null) return;
             if (CaravanSaveStore.TrySave(_caravans.CaptureSave()))
             {
-                _caravansDirty = false;
+            _caravansDirty = false;
+            _yearOfAshDirty = false;
                 GD.Print("[Ashfall Godot] Caravan save written.");
             }
+        }
+
+        private void SaveYearOfAsh()
+        {
+            if (_yearOfAsh == null) return;
+            if (YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave()))
+            {
+                _yearOfAshDirty = false;
+                GD.Print("[Ashfall Godot] Year of Ash save written.");
+            }
+        }
+
+        private void FlushYearOfAshIfDirty()
+        {
+            if (_yearOfAshDirty) SaveYearOfAsh();
         }
 
         private void OnCaravanSpawnClicked()
@@ -3174,6 +3192,7 @@ namespace AtomicWar.GodotApp
             SaveWorld();
             SaveCrafting();
             SaveCaravans();
+            SaveYearOfAsh();
         }
 
         public override void _UnhandledInput(InputEvent @event)
@@ -3475,7 +3494,11 @@ namespace AtomicWar.GodotApp
             _yearOfAsh.Quests.OnQuestlineStarted += def =>
                 GD.Print($"[Ashfall Godot] Questline started: {def.questlineId}");
             _yearOfAsh.Quests.OnQuestlineResolved += (id, status) =>
+            {
+                _yearOfAshDirty = true;
                 GD.Print($"[Ashfall Godot] Questline {id} → {status}");
+            };
+            _yearOfAsh.Quests.OnQuestChoiceTaken += _ => _yearOfAshDirty = true;
 
             int playable = _yearOfAsh.Quests.GetPlayableQuestlines(_yearOfAsh.Timeline.CurrentDay).Count;
             int withheld = _yearOfAsh.Quests.WithheldQuestlineCount(_yearOfAsh.Timeline.CurrentDay);
