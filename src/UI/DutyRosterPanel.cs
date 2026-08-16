@@ -15,10 +15,20 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
         public event Action? OnAssignmentChanged;
+        public event Action? OnDetailsRequested;
+
+        public bool IsBound => _rosterHost != null && _survivorsHost != null;
+
+        /// <summary>True when the read-model status strip rendered text (UI test surface).</summary>
+        public bool StatusStripNonEmpty()
+        {
+            return _statusLabel != null && !string.IsNullOrEmpty(_statusLabel.Text) && _statusLabel.Text != "CHART: —";
+        }
 
         private DutyRosterHostSession? _rosterHost;
         private SurvivorsHostSession? _survivorsHost;
         private VBoxContainer _rolesContainer = null!;
+        private Label _statusLabel = null!;
 
         private readonly (string RoleId, string Title, string Description)[] _shiftRoles =
         {
@@ -94,6 +104,13 @@ namespace AtomicWar.GodotApp.UI
             subHeader.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             rootBox.AddChild(subHeader);
 
+            // Read-model strip: chart script, inspection, marks, visitors, Second
+            // Winter, and the Holdfast-linked consequences. Pure presentation.
+            _statusLabel = AshfallUiHelpers.MakeMono("CHART: —");
+            _statusLabel.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+            _statusLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+            rootBox.AddChild(_statusLabel);
+
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             _rolesContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
@@ -106,6 +123,11 @@ namespace AtomicWar.GodotApp.UI
             btnClose.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
             rootBox.AddChild(btnClose);
 
+            var btnDetails = AshfallUiHelpers.MakeButton("CHART DETAIL // READ MODEL", () => OnDetailsRequested?.Invoke(), true);
+            btnDetails.CustomMinimumSize = new Vector2(240, 34);
+            btnDetails.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
+            rootBox.AddChild(btnDetails);
+
             var hint = AshfallUiHelpers.MakeSmall("Press [Esc] to return");
             hint.HorizontalAlignment = HorizontalAlignment.Center;
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
@@ -115,6 +137,7 @@ namespace AtomicWar.GodotApp.UI
         public void RefreshView()
         {
             if (_rolesContainer == null || _rosterHost == null || _survivorsHost == null) return;
+            RefreshStatusStrip();
 
             while (_rolesContainer.GetChildCount() > 0)
             {
@@ -165,16 +188,30 @@ namespace AtomicWar.GodotApp.UI
 
                 var btnCycle = AshfallUiHelpers.MakeButton("CYCLE SHIFT", () =>
                 {
-                    if (aliveSurvivors.Count == 0) return;
-                    int currentIndex = aliveSurvivors.FindIndex(s => s.Id == currentIdCapture);
-                    int nextIndex = (currentIndex + 1) % (aliveSurvivors.Count + 1);
-                    if (nextIndex >= aliveSurvivors.Count)
+                    // Duplicate-role rule: a survivor already on another shift is
+                    // skipped; the cycle walks only the unassigned pool.
+                    var unassigned = new List<(string Id, string Name)>();
+                    for (int i = 0; i < aliveSurvivors.Count; i++)
+                    {
+                        if (string.IsNullOrEmpty(_rosterHost.Roster.GetRoleOf(aliveSurvivors[i].Id)))
+                            unassigned.Add(aliveSurvivors[i]);
+                    }
+                    if (unassigned.Count == 0)
                     {
                         _rosterHost.Roster.Assign(roleIdCapture, null!);
                     }
                     else
                     {
-                        _rosterHost.Roster.Assign(roleIdCapture, aliveSurvivors[nextIndex].Id);
+                        int currentIndex = unassigned.FindIndex(s => s.Id == currentIdCapture);
+                        int nextIndex = (currentIndex + 1) % (unassigned.Count + 1);
+                        if (nextIndex >= unassigned.Count)
+                        {
+                            _rosterHost.Roster.Assign(roleIdCapture, null!);
+                        }
+                        else
+                        {
+                            _rosterHost.Roster.Assign(roleIdCapture, unassigned[nextIndex].Id);
+                        }
                     }
                     OnAssignmentChanged?.Invoke();
                     RefreshView();
@@ -201,6 +238,35 @@ namespace AtomicWar.GodotApp.UI
                 panel.AddChild(roleCard);
                 _rolesContainer.AddChild(panel);
             }
+        }
+
+        /// <summary>Pure presentation of the Core read models — no rules computed here.</summary>
+        private void RefreshStatusStrip()
+        {
+            if (_statusLabel == null || _rosterHost == null) return;
+            var roster = _rosterHost.Roster;
+            var marks = _rosterHost.Marks;
+
+            string chart = roster.ChartScript.ToUpperInvariant();
+            string inspected = roster.State.wallInspected ? "inspected" : "unseen";
+            string ending = string.IsNullOrEmpty(roster.State.endingId) ? string.Empty : " · ending " + roster.State.endingId;
+            string overflow = roster.OverflowAccess ? "overflow OPEN" : "overflow sealed";
+            string blankRows = roster.BlankRowsAccess ? "blank rows open" : "BLANK ROWS WITHDRAWN";
+
+            var snap = _rosterHost.SnapshotForHoldfast();
+            string holdfast = $"north {snap.NorthRows.Count} · levy {snap.LevyNames.Count} · hadi {(string.IsNullOrEmpty(snap.HadiStatus) ? "—" : snap.HadiStatus)} · quest-mut {snap.QuestMutations.Count}";
+
+            string marksLine = "marks: none";
+            if (marks.Count > 0)
+            {
+                marksLine = "marks: " + marks.Count + " · " + marks.GetLaterProse(marks.State.marks[0].id);
+            }
+
+            _statusLabel.Text =
+                $"CHART: {chart} ({inspected}) · rows {roster.OccupiedRowCount}/14 · {overflow} · {blankRows}{ending}\n" +
+                $"visitors: {_rosterHost.Encounters.ActiveVisitorQueue.Count} queued (next {(_rosterHost.Encounters.PeekVisitor() ?? "none")}) · " +
+                $"second winter {(roster.IsSecondWinterActive ? "ACTIVE ×" + DutyRosterSystem.SecondWinterEncounterWeight.ToString("0.0") : "no")}\n" +
+                $"{marksLine} · {holdfast}";
         }
 
         public void Open()

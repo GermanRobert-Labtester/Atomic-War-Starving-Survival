@@ -18,6 +18,7 @@ namespace AtomicWar.GodotApp
         public DutyRosterSystem Roster { get; }
         public MoraleMarkSystem Marks { get; }
         public ShelterEncounterSystem Encounters { get; }
+        public DutyRosterQuestRuntime Quests { get; }
         public DutyRosterCatalog Catalog { get; }
         public SimClock Clock { get; }
         public string LastEvent { get; private set; } = string.Empty;
@@ -32,13 +33,20 @@ namespace AtomicWar.GodotApp
             MoraleMarkSystem marks,
             ShelterEncounterSystem encounters,
             DutyRosterCatalog catalog,
-            SimClock clock)
+            SimClock clock,
+            DutyRosterQuestRuntime quests = null,
+            Ashfall.Core.Journal.JournalSystem journal = null,
+            ILog log = null)
         {
+            _log = log ?? NullLog.Instance;
             Roster = roster;
             Marks = marks;
             Encounters = encounters;
             Catalog = catalog;
             Clock = clock;
+            Quests = quests ?? new DutyRosterQuestRuntime();
+            Quests.BindCatalog(catalog);
+            _journal = journal;
 
             Roster.OnRosterUpdated += () => LastEvent = "wall updated";
             Roster.OnNameWritten += id => LastEvent = "name written: " + id;
@@ -46,17 +54,48 @@ namespace AtomicWar.GodotApp
             Roster.OnRosterBurned += () => LastEvent = "CHART BURNED";
             Encounters.OnShelterEncounterStarted += rec =>
                 LastEvent = "encounter: " + rec.kind + " (" + (rec.visitorId ?? "none") + ")";
+            Quests.OnQuestStarted += p => LastEvent = "quest started: " + p.questId;
+            Quests.OnQuestCompleted += p =>
+            {
+                LastEvent = "quest complete: " + p.questId;
+                Quests.ApplyKnownEffects(Roster, Marks, p.completedDay, log);
+                BridgeQuestKnowledge(p);
+            };
+            Quests.OnQuestFailed += p =>
+            {
+                LastEvent = "quest failed: " + p.questId;
+                Quests.ApplyKnownEffects(Roster, Marks, p.failedDay, log);
+            };
 
             // Persistence: any system-level state change marks the save dirty.
             Roster.OnStateChanged += _ => StateChanged?.Invoke();
             Marks.OnStateChanged += _ => StateChanged?.Invoke();
             Encounters.OnStateChanged += _ => StateChanged?.Invoke();
+            Quests.OnStateChanged += _ => StateChanged?.Invoke();
+        }
+
+        private readonly Ashfall.Core.Journal.JournalSystem? _journal;
+        private readonly ILog _log;
+
+        /// <summary>Bridge the authored knowledge_key (or the quest id) into the real journal.</summary>
+        private void BridgeQuestKnowledge(DutyRosterQuestProgress p)
+        {
+            if (_journal == null || p == null) return;
+            var def = Catalog.GetQuest(p.questId);
+            if (def == null) return;
+            // The authored knowledge key is the canonical journal key; quests without
+            // one fall back to the quest id. Either way the briefing prose renders
+            // in the journal and KnowledgeBase dedupes on reload.
+            string key = string.IsNullOrEmpty(def.knowledge_key) ? p.questId : def.knowledge_key;
+            string text = def.briefing ?? key;
+            _journal.TryAddRawEntry(key, text, null, p.completedDay);
         }
 
         /// <summary>Raised when any roster/mark/encounter state changes (save dirty flag).</summary>
         public event Action StateChanged;
 
-        public static DutyRosterHostSession Create(string dataDirectory, ILog? log = null)
+        public static DutyRosterHostSession Create(string dataDirectory, ILog? log = null,
+            Ashfall.Core.Journal.JournalSystem journal = null)
         {
             CatalogLocator.UseInvariantCulture();
             log ??= new GodotLog();
@@ -70,7 +109,8 @@ namespace AtomicWar.GodotApp
             marks.BindCatalog(catalog);
             var encounters = new ShelterEncounterSystem(DefaultSeed);
             var clock = new SimClock(1);
-            return new DutyRosterHostSession(roster, marks, encounters, catalog, clock);
+            return new DutyRosterHostSession(roster, marks, encounters, catalog, clock,
+                quests: null, journal: journal, log: log);
         }
 
         public void Unlock(int day)
@@ -83,13 +123,65 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Cross-host save envelope. Shape and checksum owned by DutyRosterSaveCodec.</summary>
         public DutyRosterSave CaptureSave() =>
-            DutyRosterSaveCodec.Capture(Roster, Marks, Encounters, Clock);
+            DutyRosterSaveCodec.Capture(Roster, Marks, Encounters, Clock, Quests);
 
         public void RestoreSave(DutyRosterSave save) =>
-            DutyRosterSaveCodec.Restore(save, Roster, Marks, Encounters, Clock);
+            DutyRosterSaveCodec.Restore(save, Roster, Marks, Encounters, Clock, Quests);
+
+        /// <summary>Persist through the Godot save store (host path).</summary>
+        public bool SaveState()
+        {
+            return DutyRosterSaveStore.TrySave(CaptureSave());
+        }
+
+        // ── Quest runtime commands (thins; rules live in Core) ────────
+
+        public string StartRosterQuest(string questId)
+        {
+            return Quests.StartQuest(questId, Clock.Day) ? "quest started: " + questId : "cannot start: " + questId;
+        }
+
+        public string AdvanceRosterQuest(string questId)
+        {
+            return Quests.AdvanceStage(questId, Clock.Day) ? "quest advanced: " + questId : "cannot advance: " + questId;
+        }
+
+        public string ResolveRosterChoice(string questId, string choiceId)
+        {
+            return Quests.ResolveChoiceWithEffects(questId, choiceId, Roster, Marks, Clock.Day)
+                ? "choice resolved: " + choiceId
+                : "cannot resolve choice: " + choiceId;
+        }
+
+        /// <summary>Current stage prose for an active quest (authored text rendered to the player).</summary>
+        public string ActiveQuestProse(string questId)
+        {
+            var def = Catalog.GetQuest(questId);
+            var p = Quests.GetProgress(questId);
+            if (def == null || p == null || !p.started || p.completed || p.failed) return string.Empty;
+            if (def.stages == null || p.currentStage < 0 || p.currentStage >= def.stages.Length)
+                return string.Empty;
+            return def.stages[p.currentStage].text ?? string.Empty;
+        }
+
+        public string QuestsLine()
+        {
+            return $"Quests: {Quests.StartedCount} started · {Quests.CompletedCount} complete · " +
+                   $"{Quests.GetActiveQuests().Count} active · {Quests.GetAvailableQuests(Clock.Day).Count} available";
+        }
 
         /// <summary>Morning tick: pencil fills rows from the demo occupants.</summary>
         public string TickDay()
+        {
+            return TickDay(DemoOccupants());
+        }
+
+        /// <summary>
+        /// Morning tick with the host's real home-occupant snapshot. Kess fills
+        /// pencil rows; ink never auto-fills; the chart is a document other
+        /// systems read. Deterministic.
+        /// </summary>
+        public string TickDay(IReadOnlyList<DutyRosterOccupant> occupants)
         {
             LastEvent = string.Empty;
             int day = Clock.Day;
@@ -99,13 +191,33 @@ namespace AtomicWar.GodotApp
             if (!Roster.State.wallInspected)
                 Roster.NotifyWallInspected();
 
-            var occupants = DemoOccupants();
             Roster.TickMorning(Clock.Day, occupants);
 
             // Shelter encounters: one per night; morning bookkeeping resets the counter.
             Encounters.ResetNightCounter(Clock.Day);
 
             return string.IsNullOrEmpty(LastEvent) ? "morning row checked" : LastEvent;
+        }
+
+        /// <summary>
+        /// Holdfast → Duty consequences (plan Appendix A.1). Deterministic;
+        /// marks persist through the owning MoraleMarkSystem.
+        /// </summary>
+        public void SyncHoldfastToDuty(
+            CensusClaimSystem census,
+            IceRoadSystem iceRoad,
+            WaystationSystem waystation,
+            BrineWaterSystem brine,
+            int day)
+        {
+            DutyRosterHoldfastBridge.SyncFromHoldfast(Roster, Marks, Encounters,
+                census, iceRoad, waystation, brine, day);
+        }
+
+        /// <summary>Duty → Holdfast read model (plan Appendix A.2).</summary>
+        public DutyRosterHoldfastSnapshot SnapshotForHoldfast()
+        {
+            return DutyRosterHoldfastBridge.SnapshotForHoldfast(Roster, Quests, Marks);
         }
 
         /// <summary>Player action: inspect the wall. Returns the roster card prose.</summary>
@@ -151,9 +263,12 @@ namespace AtomicWar.GodotApp
         public string StartEncounter(string kind)
         {
             string id = "se_" + kind + "_" + Clock.Day;
-            return Encounters.StartEncounter(id, kind, Clock.Day)
-                ? "encounter started: " + kind
-                : "no encounter tonight";
+            // quest_roster_window opens the crisis window: more than one scene/night.
+            bool crisis = Quests.IsCrisisQuestActive();
+            bool ok = crisis
+                ? Encounters.StartEncounterCrisis(id, kind, Clock.Day)
+                : Encounters.StartEncounter(id, kind, Clock.Day);
+            return ok ? "encounter started: " + kind : "no encounter tonight";
         }
 
         /// <summary>Second Winter: shorten windows + raise encounter weight.</summary>
@@ -166,6 +281,33 @@ namespace AtomicWar.GodotApp
             Marks.SetMark("mark_second_winter", null, Clock.Day);
             LastEvent = "SECOND WINTER";
             return "second winter active: windows 8-12d, encounters x" + DutyRosterSystem.SecondWinterEncounterWeight;
+        }
+
+        // ── Overflow practice (bounded void, spec §2.4) ────────────────
+
+        public string GrantOverflowAccess()
+        {
+            return Roster.GrantOverflowAccess() ? "overflow access granted" : "overflow already open";
+        }
+
+        public string RegisterOverflowVisit(string nodeId)
+        {
+            return Roster.RegisterOverflowVisit(nodeId)
+                ? "overflow node visited: " + nodeId
+                : "overflow visit rejected (closed or unknown node)";
+        }
+
+        // ── Hatch-return bridge (owned magnitudes stay in ExpeditionSystem) ──
+
+        public string BridgeHatchReturn(string survivorId = null, bool crisis = false)
+        {
+            bool ok = Encounters.BridgeHatchReturn(Clock.Day, survivorId, null, crisis);
+            return ok ? "hatch return staged" : "no hatch scene tonight (one per night unless crisis)";
+        }
+
+        public string GrantBlankRowsAccess()
+        {
+            return Roster.GrantBlankRowsAccess() ? "blank rows access restored" : "access already open";
         }
 
         public string WallLine()

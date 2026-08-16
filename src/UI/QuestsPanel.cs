@@ -245,6 +245,72 @@ namespace AtomicWar.GodotApp.UI
                 compBox.AddChild(AshfallUiHelpers.MakeDataRow("Opening Census", "Initial 12-survivor roster logged into Holdfast ledger.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
             }
             _completedContainer.AddChild(compCard);
+
+            // ── Duty Roster quests (Exp 02) — real runtime read model ──
+            if (_dutyRoster != null)
+            {
+                var qRuntime = _dutyRoster.Quests;
+                var rosterCard = AshfallUiHelpers.MakeCardFrame(
+                    "DUTY ROSTER // ALLOCATION 12 CHART", qRuntime.StartedCount + " started · " + qRuntime.CompletedCount + " complete");
+                var rosterBox = rosterCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+                var active = qRuntime.GetActiveQuests();
+                if (active.Count > 0)
+                {
+                    for (int i = 0; i < active.Count; i++)
+                    {
+                        var q = active[i];
+                        if (q == null) continue;
+                        var p = qRuntime.GetProgress(q.id);
+                        string stage = p != null ? $"stage {p.currentStage + 1}/{q.StageCount}" : "";
+                        rosterBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                            $"▶ {q.display_name}", stage, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                        // Authored stage prose rendered to the player (house voice).
+                        string prose = _dutyRoster.ActiveQuestProse(q.id);
+                        if (!string.IsNullOrEmpty(prose))
+                        {
+                            var proseLbl = AshfallUiHelpers.MakeSmall(prose, autowrap: true);
+                            proseLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+                            rosterBox.AddChild(proseLbl);
+                        }
+                    }
+                }
+                else
+                {
+                    rosterBox.AddChild(AshfallUiHelpers.MakeSmall(
+                        "No roster quest in progress. The chart quest opens at the wall."));
+                }
+
+                var available = qRuntime.GetAvailableQuests(_dutyRoster.Clock.Day);
+                if (available.Count > 0)
+                {
+                    for (int i = 0; i < available.Count && i < 6; i++)
+                    {
+                        var q = available[i];
+                        if (q == null) continue;
+                        string prereq = string.IsNullOrEmpty(q.prereq_quest_id) ? "" : " · after " + q.prereq_quest_id;
+                        rosterBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                            $"◦ {q.display_name}", $"day {q.min_day}+{prereq}", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+                    }
+                    if (available.Count > 6)
+                        rosterBox.AddChild(AshfallUiHelpers.MakeSmall("+ " + (available.Count - 6) + " more available"));
+                }
+
+                var started = qRuntime.GetProgress(DutyRosterSystem.QuestTheChart);
+                var btnStart = AshfallUiHelpers.MakeButton(
+                    started != null && started.started && !started.completed ? "ADVANCE CHART QUEST" : "START THE CHART",
+                    () =>
+                    {
+                        if (started != null && started.started && !started.completed)
+                            _dutyRoster.AdvanceRosterQuest(DutyRosterSystem.QuestTheChart);
+                        else
+                            _dutyRoster.StartRosterQuest(DutyRosterSystem.QuestTheChart);
+                        RefreshView();
+                    });
+                rosterBox.AddChild(btnStart);
+
+                _availableContainer.AddChild(rosterCard);
+            }
         }
 
         public override void _Ready()

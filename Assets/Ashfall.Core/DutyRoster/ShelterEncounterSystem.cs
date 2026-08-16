@@ -225,6 +225,22 @@ namespace Ashfall.Core
             return true;
         }
 
+        /// <summary>
+        /// Hatch-return bridge (spec §5.2): a returning expedition crosses the
+        /// hatch as a staged shelter scene. This system only stages the scene —
+        /// the radiation, decontamination, and morale magnitudes of the hatch
+        /// dilemma are OWNED by ExpeditionSystem and are never read or changed
+        /// here. One hatch-return scene per night unless crisis.
+        /// </summary>
+        public bool BridgeHatchReturn(int day, string survivorId = null, string payload = null, bool crisis = false)
+        {
+            if (!_state.expansionUnlocked) return false;
+            string id = "se_hatch_return_" + day;
+            return crisis
+                ? StartEncounterCrisis(id, KindHatchReturn, day, survivorId, payload)
+                : StartEncounter(id, KindHatchReturn, day, survivorId, payload);
+        }
+
         public bool ResolveEncounter(string id, int day)
         {
             for (int i = 0; i < _state.history.Count; i++)

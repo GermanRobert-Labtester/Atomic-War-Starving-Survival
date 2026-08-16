@@ -60,6 +60,7 @@ namespace AtomicWar.GodotApp
         GreenhouseSelfTest,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
+        DutyRosterUiTest,
         ExpansionsSelfTest,
         YearOfAshSaveSelfTest,
         VerdictSelfTest,
@@ -137,6 +138,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.SilentFoundrySelfTest;
             if (Has(args, "--silent-foundry-uitest"))
                 return HostCliAction.SilentFoundryUiTest;
+            if (Has(args, "--duty-roster-uitest"))
+                return HostCliAction.DutyRosterUiTest;
             if (Has(args, "--core-selftest"))
                 return HostCliAction.CoreSelfTest;
             if (Has(args, "--ice-road-selftest"))

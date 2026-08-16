@@ -305,5 +305,25 @@
     "signature_quote": "Service shall be metered, and the meter shall be read.",
     "access_rule": "The Tempest is not alive and has no preferences. It serves, it meters, and it waits for a human to read the meter. Access is granted by maintenance, withdrawn by nobody — it simply keeps serving, and the meter keeps reading. The census is open, and the count has not been presented.",
     "badge_asset_id": "faction_badge_tempest"
+  },
+  {
+    "id": "faction_blank_rows",
+    "display_name": "The Blank Rows",
+    "alignment": "neutral",
+    "home_region": "alloc_12b",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "scrap_metal",
+      "coal",
+      "canned_food"
+    ],
+    "offers": [
+      "safe_house_access",
+      "unrecorded_labour"
+    ],
+    "signature_quote": "The chart has fourteen rows and the wall has a hundred names. The blank rows are the ones that remember the rest.",
+    "access_rule": "A Current, not a Power: people who the Schedule does not count. Their names are kept off the north copies, and the hatch at 11 goes dark if their living is written in ink.",
+    "badge_asset_id": ""
   }
 ]

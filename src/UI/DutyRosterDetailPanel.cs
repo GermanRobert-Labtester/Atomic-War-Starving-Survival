@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Ashfall.Core;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 
@@ -7,7 +8,9 @@ namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Duty Roster Detail panel.
-    /// Shows detailed duty assignments, shift schedules, and worker performance.
+    /// Presents the Core read model only: chart script, roster rows,
+    /// assignments, morale marks, encounters, Second Winter, Overflow, and the
+    /// Holdfast-linked snapshot. No rules are computed here.
     /// </summary>
     public partial class DutyRosterDetailPanel : Control
     {
@@ -21,45 +24,23 @@ namespace AtomicWar.GodotApp.UI
         private Label _lblPerformanceTitle;
         private VBoxContainer _performanceList;
 
-        // Placeholder duty roster data
-        private readonly string[] _placeholderAssignments = {
-            "Elena — Commander (Main Hallway) — Full shift active",
-            "Marcus — Medic (Medical Bay) — 8-hour shift, on duty",
-            "Yuki — Scout (Perimeter Watch) — Night shift, rotating",
-            "David — Engineer (Workshop) — Day shift, crafting items",
-            "Sofia — Trader (Supply Route) — Day shift, negotiating"
-        };
-
-        private readonly string[] _placeholderShifts = {
-            "Morning Shift (06:00-14:00) — 4 survivors assigned",
-            "Afternoon Shift (14:00-22:00) — 3 survivors assigned",
-            "Night Shift (22:00-06:00) — 2 survivors assigned",
-            "Rest Period — 6 survivors recovering",
-            "Emergency Rotation — 1 survivor on standby"
-        };
-
-        private readonly string[] _placeholderPerformance = {
-            "Elena — Leadership: 95/100 — Decisive, effective",
-            "Marcus — Medical: 88/100 — Skilled, reliable",
-            "Yuki — Scouting: 92/100 — Alert, efficient",
-            "David — Engineering: 85/100 — Creative, productive",
-            "Sofia — Trading: 78/100 — Negotiating, fair"
-        };
+        private DutyRosterHostSession? _rosterHost;
+        public bool IsBound => _rosterHost != null;
 
         // Real data from host session
         // private DutyRosterHostSession? _rosterHost;
 
-        public void Bind(object roster) // placeholder for DutyRosterHostSession
+        public void Bind(DutyRosterHostSession roster)
         {
-            // _rosterHost = (DutyRosterHostSession)roster;
-            // RefreshView();
+            _rosterHost = roster;
+            RefreshView();
         }
 
         public void RefreshView()
         {
             if (_assignmentsList == null || _shiftsList == null || _performanceList == null) return;
+            if (_rosterHost == null) return;
 
-            // Clear existing lists
             while (_assignmentsList.GetChildCount() > 0)
                 _assignmentsList.RemoveChild(_assignmentsList.GetChild(0));
             while (_shiftsList.GetChildCount() > 0)
@@ -67,34 +48,84 @@ namespace AtomicWar.GodotApp.UI
             while (_performanceList.GetChildCount() > 0)
                 _performanceList.RemoveChild(_performanceList.GetChild(0));
 
-            // Display placeholder assignments
-            foreach (string assignment in _placeholderAssignments)
+            var roster = _rosterHost.Roster;
+
+            // Chart + rows.
+            var chart = new Label
             {
-                var label = new Label { Text = assignment };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _assignmentsList.AddChild(label);
+                Text = $"CHART: {roster.ChartScript.ToUpperInvariant()} · rows {roster.OccupiedRowCount}/14 · " +
+                       $"{(roster.State.wallInspected ? "inspected" : "unseen")} · " +
+                       $"overflow {(roster.OverflowAccess ? "OPEN" : "sealed")} · " +
+                       $"blank rows {(roster.BlankRowsAccess ? "open" : "WITHDRAWN")}"
+            };
+            labelify(chart);
+            _assignmentsList.AddChild(chart);
+
+            for (int i = 0; i < roster.Rows.Count; i++)
+            {
+                var r = roster.Rows[i];
+                if (r == null) continue;
+                var lbl = new Label
+                {
+                    Text = $"{r.displayName} — {r.status} · script {r.script} · slept d{r.lastSleptDay}"
+                };
+                labelify(lbl);
+                _assignmentsList.AddChild(lbl);
             }
 
-            // Display placeholder shifts
-            foreach (string shift in _placeholderShifts)
+            // Assignments (ordinal role order).
+            for (int i = 0; i < DutyRosterSystem.AssignmentRoles.Length; i++)
             {
-                var label = new Label { Text = shift };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _shiftsList.AddChild(label);
+                string role = DutyRosterSystem.AssignmentRoles[i];
+                string who = roster.GetAssignment(role);
+                if (string.IsNullOrEmpty(who)) continue;
+                var lbl = new Label { Text = $"{role.Replace('_', ' ').ToUpperInvariant()}: {who}" };
+                labelify(lbl, warm: true);
+                _shiftsList.AddChild(lbl);
             }
 
-            // Display placeholder performance
-            foreach (string performance in _placeholderPerformance)
+            // Morale marks + later prose.
+            var marks = _rosterHost.Marks;
+            if (marks.Count > 0)
             {
-                var label = new Label { Text = performance };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                _performanceList.AddChild(label);
+                var m = marks.State.marks;
+                for (int i = 0; i < m.Count; i++)
+                {
+                    var rec = m[i];
+                    if (rec == null) continue;
+                    var lbl = new Label
+                    {
+                        Text = $"[{rec.id}] {marks.GetLaterProse(rec.id)}"
+                    };
+                    labelify(lbl);
+                    _performanceList.AddChild(lbl);
+                }
             }
+            else
+            {
+                var lbl = new Label { Text = "Marks: none yet. The wall is blank." };
+                labelify(lbl);
+                _performanceList.AddChild(lbl);
+            }
+
+            // Holdfast-linked snapshot + Second Winter + encounters.
+            var snap = _rosterHost.SnapshotForHoldfast();
+            var snapLabel = new Label
+            {
+                Text = $"NORTH COPY: {snap.NorthRows.Count} rows · levy {snap.LevyNames.Count} · hadi {(string.IsNullOrEmpty(snap.HadiStatus) ? "—" : snap.HadiStatus)} · " +
+                       $"mutation {snap.Mutation} · visitors {_rosterHost.Encounters.ActiveVisitorQueue.Count} · " +
+                       $"second winter {(roster.IsSecondWinterActive ? "ACTIVE" : "no")}"
+            };
+            labelify(snapLabel, warm: true);
+            _performanceList.AddChild(snapLabel);
+        }
+
+        private static void labelify(Label lbl, bool warm = false)
+        {
+            lbl.CustomMinimumSize = new Vector2(400, 28);
+            lbl.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            if (warm)
+                lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
         }
 
         public override void _Ready()

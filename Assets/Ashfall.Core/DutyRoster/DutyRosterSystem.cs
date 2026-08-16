@@ -73,6 +73,8 @@ namespace Ashfall.Core
         public int lastMorningDay = -1;
         public int daysLeftBlank;
         public int lastBurnDay = -1;
+        public bool overflowAccess;
+        public List<string> overflowVisited = new List<string>();
         public List<DutyRosterRow> rows = new List<DutyRosterRow>();
         public List<DutyRosterAssignmentEntry> assignments = new List<DutyRosterAssignmentEntry>();
         public List<string> hiddenFromNorth = new List<string>();
@@ -105,6 +107,10 @@ namespace Ashfall.Core
 
         public const string NpcKessAdler = "npc_kess_adler";
         public const string NpcAnselDuth = "npc_ansel_duth";
+        public const string NpcHadiMorrow = "npc_hadi_morrow";
+        public const string NpcTamsinRook = "npc_tamsin_rook";
+        public const string NpcLenQuill = "npc_len_quill";
+        public const string NpcNilaBrant = "npc_nila_brant";
 
         public const string ChoiceWritePencil = "roster_write_pencil";
         public const string ChoiceLeaveBlank = "roster_leave_blank";
@@ -136,6 +142,9 @@ namespace Ashfall.Core
         public const string MutationRosterStillBlank = "mutation_roster_still_blank";
         public const string MutationRationProtocol = "mutation_ration_protocol";
         public const string MutationRosterBurned = "mutation_roster_burned";
+        public const string MutationRosterInk = "mutation_roster_ink";
+        public const string MutationRosterBlank = "mutation_roster_blank";
+        public const string MutationFactionBlankRowsAccess = "faction_blank_rows_access";
         public const string FlagWaitInk = "flag_wait_ink";
 
         // Endings (spec §3 Endings — the game does not rank them)
@@ -161,6 +170,21 @@ namespace Ashfall.Core
         public static readonly string[] StackWingIds =
         {
             LocStackRosterWall, LocStackSleeping, LocStackMess, LocStackFiltration, LocStackAirlock, LocStackClinicAlcove
+        };
+
+        /// <summary>
+        /// The Overflow is a small authenticated void practice — four bounded
+        /// nodes, not a district. Allocation 11 and 13 are dark; the pump hatch
+        /// and the blank cellar are reachable through them (spec §2.4).
+        /// </summary>
+        public const string LocOverflowAlloc11 = "loc_overflow_alloc_11";
+        public const string LocOverflowAlloc13 = "loc_overflow_alloc_13";
+        public const string LocOverflowPumpHatch = "loc_overflow_pump_hatch";
+        public const string LocOverflowBlankCellar = "loc_overflow_blank_cellar";
+
+        public static readonly string[] OverflowNodeIds =
+        {
+            LocOverflowAlloc11, LocOverflowAlloc13, LocOverflowPumpHatch, LocOverflowBlankCellar
         };
 
         public static readonly string[] AssignmentRoles =
@@ -482,15 +506,55 @@ namespace Ashfall.Core
         public bool Assign(string role, string survivorId)
         {
             if (!IsKnownRole(role)) return false;
+
+            // Duplicate-role rule: one survivor holds at most one assignment.
+            if (string.IsNullOrEmpty(survivorId))
+            {
+                // Clearing: no duplicate concern.
+                return AssignInternal(role, null);
+            }
             DutyRosterRow row = GetRow(survivorId);
             if (row == null) return false;
             if (!CanAssign(row)) return false;
 
-            _assignmentByRole[role] = survivorId;
+            string currentRole = GetRoleOf(survivorId);
+            if (currentRole != null && currentRole != role)
+                return false; // already assigned elsewhere
+
+            return AssignInternal(role, survivorId);
+        }
+
+        private bool AssignInternal(string role, string survivorId)
+        {
+            if (!IsKnownRole(role)) return false;
+            if (!string.IsNullOrEmpty(survivorId))
+            {
+                DutyRosterRow row = GetRow(survivorId);
+                if (row == null) return false;
+                if (!CanAssign(row)) return false;
+            }
+
+            if (string.IsNullOrEmpty(survivorId))
+            {
+                _assignmentByRole.Remove(role);
+            }
+            else
+            {
+                _assignmentByRole[role] = survivorId;
+            }
             SyncAssignmentList();
             OnAssignmentChanged?.Invoke(role, survivorId);
             RaiseUpdated();
             return true;
+        }
+
+        /// <summary>The role a survivor currently holds, or null.</summary>
+        public string GetRoleOf(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return null;
+            foreach (var kv in _assignmentByRole)
+                if (kv.Value == survivorId) return kv.Key;
+            return null;
         }
 
         public string GetAssignment(string role)
@@ -585,6 +649,98 @@ namespace Ashfall.Core
             }
         }
 
+        /// <summary>Blank Rows access can be restored only by an authored practice (quest_roster_blank_access).</summary>
+        public bool GrantBlankRowsAccess()
+        {
+            if (_state.blankRowsAccess) return false;
+            _state.blankRowsAccess = true;
+            RaiseChanged();
+            return true;
+        }
+
+        /// <summary>Public withdrawal (authored practice / census listing).</summary>
+        public bool WithdrawBlankRowsAccessPublic()
+        {
+            if (!_state.blankRowsAccess) return false;
+            _state.blankRowsAccess = false;
+            RaiseChanged();
+            return true;
+        }
+
+        // ── Authored quest-mutation targets (typed; the quest runtime maps ids) ──
+
+        /// <summary>The chart is in use (quest_roster_the_chart completes).</summary>
+        public bool MarkRosterInUse()
+        {
+            if (_state.mutationRosterInUse) return false;
+            _state.mutationRosterInUse = true;
+            RaiseChanged();
+            return true;
+        }
+
+        /// <summary>The chart was left blank long enough (quest fail path).</summary>
+        public bool MarkRosterStillBlank()
+        {
+            if (_state.mutationRosterStillBlank) return false;
+            _state.mutationRosterStillBlank = true;
+            RaiseChanged();
+            return true;
+        }
+
+        public bool SetRationProtocol(bool active)
+        {
+            if (_state.mutationRationProtocol == active) return false;
+            _state.mutationRationProtocol = active;
+            RaiseChanged();
+            return true;
+        }
+
+        // ── Overflow practice (bounded void, spec §2.4) ────────────────
+
+        public bool OverflowAccess => _state.overflowAccess;
+        public IReadOnlyList<string> OverflowVisited => _state.overflowVisited;
+
+        public bool GrantOverflowAccess()
+        {
+            if (_state.overflowAccess) return false;
+            _state.overflowAccess = true;
+            RaiseChanged();
+            return true;
+        }
+
+        public bool WithdrawOverflowAccess()
+        {
+            if (!_state.overflowAccess) return false;
+            _state.overflowAccess = false;
+            RaiseChanged();
+            return true;
+        }
+
+        /// <summary>Register a visit to one of the four authenticated Overflow nodes.</summary>
+        public bool RegisterOverflowVisit(string nodeId)
+        {
+            if (!_state.overflowAccess) return false;
+            if (!IsOverflowNode(nodeId)) return false;
+            if (_state.overflowVisited.Contains(nodeId)) return false;
+            _state.overflowVisited.Add(nodeId);
+            RaiseChanged();
+            return true;
+        }
+
+        public bool HasVisitedOverflow(string nodeId)
+        {
+            return !string.IsNullOrEmpty(nodeId) && _state.overflowVisited != null
+                && _state.overflowVisited.Contains(nodeId);
+        }
+
+        public static bool IsOverflowNode(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return false;
+            for (int i = 0; i < OverflowNodeIds.Length; i++)
+                if (OverflowNodeIds[i] == nodeId) return true;
+            return false;
+        }
+
         public void NotifyListedOnCensusOr12C(string survivorId)
         {
             if (!string.IsNullOrEmpty(survivorId) && _blankRowsLiving.Contains(survivorId))
@@ -596,6 +752,33 @@ namespace Ashfall.Core
             var copy = new DutyRosterSystemState();
             CopyState(_state, copy);
             return copy;
+        }
+
+        /// <summary>Capture the bounded Overflow practice state (v2 envelope field).</summary>
+        public DutyRosterOverflowState CaptureOverflowState()
+        {
+            var copy = new DutyRosterOverflowState
+            {
+                access = _state.overflowAccess,
+                visitedNodes = _state.overflowVisited != null
+                    ? new List<string>(_state.overflowVisited)
+                    : new List<string>()
+            };
+            return copy;
+        }
+
+        /// <summary>Restore the Overflow practice state. Missing state defaults to closed/empty.</summary>
+        public void RestoreOverflowState(DutyRosterOverflowState saved)
+        {
+            if (saved == null) return;
+            _state.overflowAccess = saved.access;
+            _state.overflowVisited = saved.visitedNodes != null
+                ? new List<string>(saved.visitedNodes)
+                : new List<string>();
+            // Never bless an unauthenticated node into the visited ledger.
+            if (_state.overflowVisited != null)
+                _state.overflowVisited.RemoveAll(n => !IsOverflowNode(n));
+            RaiseChanged();
         }
 
         public void RestoreState(DutyRosterSystemState saved)
@@ -711,6 +894,7 @@ namespace Ashfall.Core
             if (_state.assignments == null) _state.assignments = new List<DutyRosterAssignmentEntry>();
             if (_state.hiddenFromNorth == null) _state.hiddenFromNorth = new List<string>();
             if (_state.blankRowsLivingNames == null) _state.blankRowsLivingNames = new List<string>();
+            if (_state.overflowVisited == null) _state.overflowVisited = new List<string>();
         }
 
         private void RebuildIndexes()
@@ -774,6 +958,10 @@ namespace Ashfall.Core
             to.lastMorningDay = from.lastMorningDay;
             to.daysLeftBlank = from.daysLeftBlank;
             to.lastBurnDay = from.lastBurnDay;
+            to.overflowAccess = from.overflowAccess;
+            to.overflowVisited = from.overflowVisited != null
+                ? new List<string>(from.overflowVisited)
+                : new List<string>();
             to.rows = new List<DutyRosterRow>();
             if (from.rows != null)
             {
