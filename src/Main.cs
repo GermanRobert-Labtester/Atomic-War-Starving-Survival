@@ -159,6 +159,12 @@ namespace AtomicWar.GodotApp
         private InventoryDetailPanel _inventoryDetailPanel = null!;
         private QuestDetailPanel _questDetailPanel = null!;
         private AchievementsPanel _achievementsPanel = null!;
+        private WeatherDetailPanel _weatherDetailPanel = null!;
+        private RadiationDetailPanel _radiationDetailPanel = null!;
+        private EventsLogPanel _eventsLogPanel = null!;
+        private DutyRosterDetailPanel _dutyRosterDetailPanel = null!;
+        private EconomyDetailPanel _economyDetailPanel = null!;
+        private CombatDetailPanel _combatDetailPanel = null!;
         private SaveLoadPanel _saveLoadPanel = null!;
         private TutorialPanel _tutorialPanel = null!;
         private AfflictionsPanel _afflictionsPanel = null!;
@@ -549,6 +555,36 @@ namespace AtomicWar.GodotApp
             _achievementsPanel = new AchievementsPanel();
             _achievementsPanel.OnClose += CloseAchievementsPanel;
             gameUiContainer.AddChild(_achievementsPanel);
+
+            // ── Weather Detail panel (overlay) ──
+            _weatherDetailPanel = new WeatherDetailPanel();
+            _weatherDetailPanel.OnClose += CloseWeatherDetailPanel;
+            gameUiContainer.AddChild(_weatherDetailPanel);
+
+            // ── Radiation Detail panel (overlay) ──
+            _radiationDetailPanel = new RadiationDetailPanel();
+            _radiationDetailPanel.OnClose += CloseRadiationDetailPanel;
+            gameUiContainer.AddChild(_radiationDetailPanel);
+
+            // ── Events Log panel (overlay) ──
+            _eventsLogPanel = new EventsLogPanel();
+            _eventsLogPanel.OnClose += CloseEventsLogPanel;
+            gameUiContainer.AddChild(_eventsLogPanel);
+
+            // ── Duty Roster Detail panel (overlay) ──
+            _dutyRosterDetailPanel = new DutyRosterDetailPanel();
+            _dutyRosterDetailPanel.OnClose += CloseDutyRosterDetailPanel;
+            gameUiContainer.AddChild(_dutyRosterDetailPanel);
+
+            // ── Economy Detail panel (overlay) ──
+            _economyDetailPanel = new EconomyDetailPanel();
+            _economyDetailPanel.OnClose += CloseEconomyDetailPanel;
+            gameUiContainer.AddChild(_economyDetailPanel);
+
+            // ── Combat Detail panel (overlay) ──
+            _combatDetailPanel = new CombatDetailPanel();
+            _combatDetailPanel.OnClose += CloseCombatDetailPanel;
+            gameUiContainer.AddChild(_combatDetailPanel);
 
             // ── Save/Load panel (overlay) ──
             _saveLoadPanel = new SaveLoadPanel();
@@ -3415,6 +3451,36 @@ namespace AtomicWar.GodotApp
         private void CloseAchievementsPanel()
         {
             _achievementsPanel.Visible = false;
+        }
+
+        private void CloseWeatherDetailPanel()
+        {
+            _weatherDetailPanel.Visible = false;
+        }
+
+        private void CloseRadiationDetailPanel()
+        {
+            _radiationDetailPanel.Visible = false;
+        }
+
+        private void CloseEventsLogPanel()
+        {
+            _eventsLogPanel.Visible = false;
+        }
+
+        private void CloseDutyRosterDetailPanel()
+        {
+            _dutyRosterDetailPanel.Visible = false;
+        }
+
+        private void CloseEconomyDetailPanel()
+        {
+            _economyDetailPanel.Visible = false;
+        }
+
+        private void CloseCombatDetailPanel()
+        {
+            _combatDetailPanel.Visible = false;
         }
 
         private void CloseSaveLoadPanel()
