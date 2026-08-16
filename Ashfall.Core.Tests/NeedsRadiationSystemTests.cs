@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.Survivors;
@@ -274,6 +275,62 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(restored);
             Assert.Equal(s.RadiationDose, restored.RadiationDose, 3);
             Assert.Equal(s.LifetimeRadiationExposure, restored.LifetimeRadiationExposure, 3);
+        }
+    }
+
+    /// <summary>
+    /// Registry gate for the equipped-gear → radiation bridge (AGENTS H2). The
+    /// Godot host session currently does NOT populate ExposureContext.WornGear,
+    /// so gear protection must still be *enforced at the Core contract*: when a
+    /// host supplies worn gear, dose must drop — otherwise a future host wiring
+    /// it will silently pass zero just like today.
+    /// </summary>
+    public class GearProtectionBridgeTests
+    {
+        private static SurvivorRadState Exposed2hWithGear(List<WornGear> worn)
+        {
+            var sys = new RadiationSystem(exposureContext: _ => new ExposureContext
+            {
+                ZoneRadLevel = 50f,
+                ShelterShielding = 0f,
+                WornGear = worn
+            });
+            var survivor = new SurvivorRadState { Id = "sv_gear", IsAlive = true };
+            sys.Register(survivor);
+            sys.Tick(2f);
+            return survivor;
+        }
+
+        [Fact]
+        public void EquippedGear_ReducesDose_BelowAcuteThreshold()
+        {
+            // No gear: zone 50 rad/hr x 2h → ~100 dose → acute sickness.
+            var bare = Exposed2hWithGear(new List<WornGear>());
+            Assert.True(bare.RadiationDose >= RadiationSystem.AcuteThreshold,
+                $"bare exposure should reach acute; dose={bare.RadiationDose}");
+            Assert.True(bare.HasAcuteRadiationSickness);
+
+            // Full prot hazmat: effective 40 protection → exposure 10/hr x2h = 20.
+            var geared = Exposed2hWithGear(new List<WornGear>
+            {
+                new WornGear { RadProtection = 40f, MaxDurability = 100f, CurrentDurability = 100f, DegradeRate = 0f }
+            });
+            Assert.True(geared.RadiationDose < RadiationSystem.AcuteThreshold,
+                $"gear should keep dose below acute; dose={geared.RadiationDose}");
+            Assert.False(geared.HasAcuteRadiationSickness);
+        }
+
+        [Fact]
+        public void DegradedGear_ProvidesProportionalProtection()
+        {
+            // 50% durability → effective protection = half of radProtection.
+            var geared = Exposed2hWithGear(new List<WornGear>
+            {
+                new WornGear { RadProtection = 40f, MaxDurability = 100f, CurrentDurability = 50f, DegradeRate = 0f }
+            });
+            // exposurePerHour = 50 - (40*0.5) = 30 → 2h = 60, below acute but higher than full gear.
+            Assert.True(geared.RadiationDose < RadiationSystem.AcuteThreshold);
+            Assert.True(geared.RadiationDose > 30f, $"degraded gear protects less; dose={geared.RadiationDose}");
         }
     }
 }
