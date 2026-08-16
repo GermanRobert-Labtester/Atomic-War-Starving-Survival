@@ -56,6 +56,8 @@ namespace AtomicWar.Journal
             _getSurvivors = getSurvivors;
         }
 
+        public JournalCatalogs Catalogs => _catalogs;
+
         /// <summary>Rows for one tab; Log returns an empty list (handled by the book).</summary>
         public IReadOnlyList<JournalCodexRow> BuildRows(JournalTab tab)
         {

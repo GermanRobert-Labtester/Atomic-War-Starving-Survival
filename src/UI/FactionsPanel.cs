@@ -1,100 +1,244 @@
 using System;
+using System.Collections.Generic;
 using Godot;
+using Ashfall.Core;
 using Ashfall.Core.UI;
-using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
-    /// ASHFALL — Factions panel.
-    /// Shows faction relationships, trade stances, diplomatic status, and faction events.
+    /// ASHFALL — Factions & Diplomacy panel.
+    /// Manages wasteland faction relations, trust metrics, trade privileges,
+    /// Scavenger Guild claims, Crossing arbitration, and diplomatic communiques.
     /// </summary>
     public partial class FactionsPanel : Control
     {
         public event Action? OnClose;
+        public event Action<string>? OnFactionDetailRequested;
+        public event Action? OnMusterPanelRequested;
+        public event Action? OnFoundryPanelRequested;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblFactionsTitle;
-        private VBoxContainer _factionsList;
-        private Label _lblRelationsTitle;
-        private VBoxContainer _relationsList;
-        private Label _lblEventsTitle;
-        private VBoxContainer _factionEvents;
+        private VBoxContainer _overviewContainer = null!;
+        private VBoxContainer _factionsContainer = null!;
+        private VBoxContainer _relationsContainer = null!;
+        private VBoxContainer _eventsContainer = null!;
+        private Label _statusSummary = null!;
 
-        // Placeholder faction data
-        private readonly string[] _placeholderFactions = {
-            "The Black Flotilla — Maritime traders, neutral stance",
-            "The Ashen Hand — Scavengers, hostile but tradeable",
-            "The Ledger Keepers — Archivists, neutral, value knowledge",
-            "The Iron Covenant — Military survivors, wary of outsiders",
-            "The Green Thread — Environmentalists, cautious allies"
-        };
+        private HoldfastFactionsCatalog? _factions;
+        private HoldfastTradeSession? _trade;
+        private MusterHostSession? _muster;
+        private ExpansionHostSession? _expansions;
 
-        private readonly string[] _placeholderRelations = {
-            "Black Flotilla: Trade relations (45/100) — Willing to barter",
-            "Ashen Hand: Hostile (15/100) — Avoid direct contact",
-            "Ledger Keepers: Neutral (60/100) — Exchange information",
-            "Iron Covenant: Wary (35/100) — Military presence noted",
-            "Green Thread: Cautious (50/100) — Shared environmental concerns"
-        };
+        public bool IsBound => _factions != null || _muster != null || _expansions != null;
 
-        private readonly string[] _placeholderEvents = {
-            "[Day 10] Black Flotilla offered trade route to Sector 12",
-            "[Day 8] Ashen Hand raid detected near perimeter",
-            "[Day 5] Ledger Keepers sent emissary with knowledge exchange proposal",
-            "[Day 3] Iron Covenant increased patrols in northern sectors",
-            "[Day 1] Green Thread requested mutual defense agreement"
-        };
+        /// <summary>True after RefreshView when the Silent Foundry Guild card rendered.</summary>
+        public bool HasGuildCard { get; private set; }
 
-        // Real data from host session
-        // private FactionsHostSession? _factionsHost;
-
-        public void Bind(object factions) // placeholder for FactionsHostSession
+        public void Bind(
+            HoldfastFactionsCatalog? factions,
+            HoldfastTradeSession? trade = null,
+            MusterHostSession? muster = null,
+            ExpansionHostSession? expansions = null)
         {
-            // _factionsHost = (FactionsHostSession)factions;
-            // RefreshView();
+            _factions = factions;
+            _trade = trade;
+            _muster = muster;
+            _expansions = expansions;
+
+            if (_muster != null)
+                _muster.StateChanged += RefreshView;
+            if (_expansions != null)
+                _expansions.StateChanged += RefreshView;
+
+            RefreshView();
         }
 
         public void RefreshView()
         {
-            if (_factionsList == null || _relationsList == null || _factionEvents == null) return;
+            if (_overviewContainer == null || _factionsContainer == null ||
+                _relationsContainer == null || _eventsContainer == null)
+                return;
 
-            // Clear existing lists
-            while (_factionsList.GetChildCount() > 0)
-                _factionsList.RemoveChild(_factionsList.GetChild(0));
-            while (_relationsList.GetChildCount() > 0)
-                _relationsList.RemoveChild(_relationsList.GetChild(0));
-            while (_factionEvents.GetChildCount() > 0)
-                _factionEvents.RemoveChild(_factionEvents.GetChild(0));
+            while (_overviewContainer.GetChildCount() > 0)
+                _overviewContainer.RemoveChild(_overviewContainer.GetChild(0));
+            while (_factionsContainer.GetChildCount() > 0)
+                _factionsContainer.RemoveChild(_factionsContainer.GetChild(0));
+            while (_relationsContainer.GetChildCount() > 0)
+                _relationsContainer.RemoveChild(_relationsContainer.GetChild(0));
+            while (_eventsContainer.GetChildCount() > 0)
+                _eventsContainer.RemoveChild(_eventsContainer.GetChild(0));
 
-            // Display placeholder factions
-            foreach (string faction in _placeholderFactions)
+            // ── 1. Diplomatic Summary ──
+            int totalFactions = _factions?.Count ?? 5;
+            float guildTrust = _muster?.ScavengerGuild?.Trust ?? 50.0f;
+            int guildClaims = _muster?.ScavengerGuild?.State?.claimedSiteIds?.Count ?? 0;
+            int blacklistedCount = _muster?.ScavengerGuild?.State?.blacklistedShelterIds?.Count ?? 0;
+
+            var ovCard = AshfallUiHelpers.MakeCardFrame("WASTELAND DIPLOMATIC & TRADE NETWORK", "REGISTRY STATUS");
+            var ovBox = ovCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Known Major Factions", $"{totalFactions} Sovereign Organizations", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Scavenger Guild Trust", $"{guildTrust:F1} / 100", AshfallUiHelpers.ToColor(guildTrust >= 50 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical)));
+            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Guild Claimed Sites", $"{guildClaims} Active Mining / Scrap Claims", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            ovBox.AddChild(AshfallUiHelpers.MakeDataRow("Sanctions & Blacklists", blacklistedCount > 0 ? $"{blacklistedCount} Active Hostile Enforcements" : "Zero Sanctions Imposed", AshfallUiHelpers.ToColor(blacklistedCount > 0 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale)));
+
+            if (_muster != null)
             {
-                var label = new Label { Text = faction };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _factionsList.AddChild(label);
+                var btnMuster = AshfallUiHelpers.MakeButton("OPEN SECTOR MUSTER // CURRENTS & ESCALATION", () =>
+                {
+                    OnMusterPanelRequested?.Invoke();
+                });
+                ovBox.AddChild(btnMuster);
             }
 
-            // Display placeholder relations
-            foreach (string relation in _placeholderRelations)
+            _overviewContainer.AddChild(ovCard);
+
+            // ── 2. Known Factions List ──
+            var factionEntries = new List<HoldfastFactionEntry>();
+            if (_factions != null && _factions.Count > 0)
             {
-                var label = new Label { Text = relation };
-                label.CustomMinimumSize = new Vector2(400, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
-                _relationsList.AddChild(label);
+                foreach (var f in _factions)
+                {
+                    if (f != null && !string.IsNullOrEmpty(f.Id))
+                        factionEntries.Add(f);
+                }
             }
 
-            // Display placeholder faction events
-            foreach (string factionEvent in _placeholderEvents)
+            // If empty, supply canonical core factions
+            if (factionEntries.Count == 0)
             {
-                var label = new Label { Text = factionEvent };
-                label.CustomMinimumSize = new Vector2(400, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _factionEvents.AddChild(label);
+                factionEntries.Add(new HoldfastFactionEntry(
+                    "faction_black_flotilla", "The Black Flotilla", "Maritime Traders / Neutral", "The Flooded Coast",
+                    true, 45f, new[] { "clean_water", "medicine", "electronics" }, new[] { "fuel", "fish_rations", "filter_spares" },
+                    "\"The sea did not burn. It only poisoned. We sail what remains.\"", "Open Water Barter Agreement"));
+
+                factionEntries.Add(new HoldfastFactionEntry(
+                    "faction_scavenger_guild", "The Scavenger Guild", "Industrial Scrappers / Pragmatic", "loc_scavenger_guildhall",
+                    true, guildTrust, new[] { "dosimeters", "scrap_metal", "tools" }, new[] { "mechanical_parts", "lead_sheeting" },
+                    "\"Every ruin has an owner. Violate the two-color ledger at your peril.\"", "Brannick Sten's Claim Accord"));
+
+                factionEntries.Add(new HoldfastFactionEntry(
+                    "faction_ledger_keepers", "The Ledger Keepers", "Archivists & Chroniclers / Neutral", "The High Vaults",
+                    true, 60f, new[] { "cassette_tapes", "books", "schematics" }, new[] { "purified_water", "anti_rad_pills" },
+                    "\"The war took the cities. We will not let it take the memory.\"", "Mutual Archival Exchange"));
+
+                factionEntries.Add(new HoldfastFactionEntry(
+                    "faction_iron_covenant", "The Iron Covenant", "Militant Enclave / Wary", "Sector 01 Outpost",
+                    true, 30f, new[] { "ammunition", "armor_plates", "fuel" }, new[] { "weapons", "reinforced_concrete" },
+                    "\"Order is forged under pressure. Civilians stay outside the gate.\"", "Armistice Checkpoint"));
+
+                factionEntries.Add(new HoldfastFactionEntry(
+                    "faction_green_thread", "The Green Thread", "Agrarian Collectivists / Cautious Allies", "The Allotments",
+                    true, 55f, new[] { "seeds", "potassium_iodide", "fertilizer" }, new[] { "fresh_produce", "herbal_poultices" },
+                    "\"The soil will breathe again if we shield the roots from fallout.\"", "Seed Sharing Protocol"));
             }
+
+            foreach (var f in factionEntries)
+            {
+                var card = AshfallUiHelpers.MakeCardFrame(f.DisplayName, f.Alignment.ToUpperInvariant());
+                var cardBox = card.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+                var headerRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                var emblem = AshfallUiHelpers.MakeFactionEmblem(f.Id, 44);
+                headerRow.AddChild(emblem);
+
+                var quoteBox = AshfallUiHelpers.MakeVBox(2);
+                quoteBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                var quoteLbl = AshfallUiHelpers.MakeSmall(f.SignatureQuote);
+                quoteLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+                quoteBox.AddChild(quoteLbl);
+
+                var regionLbl = AshfallUiHelpers.MakeLabel($"Base: {f.HomeRegion} · Stance: {f.AccessRule}", Ashfall.Core.UI.Theme.FontSizeLabel, Ashfall.Core.UI.Theme.Muted);
+                quoteBox.AddChild(regionLbl);
+                headerRow.AddChild(quoteBox);
+                cardBox.AddChild(headerRow);
+
+                cardBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+                // Trade profile
+                string wantsText = f.Wants != null && f.Wants.Length > 0 ? string.Join(", ", f.Wants) : "None registered";
+                string offersText = f.Offers != null && f.Offers.Length > 0 ? string.Join(", ", f.Offers) : "None registered";
+
+                cardBox.AddChild(AshfallUiHelpers.MakeDataRow("Demand (Wants)", wantsText.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                cardBox.AddChild(AshfallUiHelpers.MakeDataRow("Supply (Offers)", offersText.Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                cardBox.AddChild(AshfallUiHelpers.MakeDataRow("Standing / Trust", $"{f.Trust:F1} / 100", AshfallUiHelpers.ToColor(f.Trust >= 50 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim)));
+
+                var btnRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                string factionId = f.Id;
+                var btnInspect = AshfallUiHelpers.MakeButton($"DIPLOMATIC DOSSIER // [{f.DisplayName}]", () =>
+                {
+                    OnFactionDetailRequested?.Invoke(factionId);
+                });
+                btnInspect.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                btnRow.AddChild(btnInspect);
+                cardBox.AddChild(btnRow);
+
+                _factionsContainer.AddChild(card);
+            }
+
+            // ── 2b. Treaty Systems — The Silent Foundry Guild (Exp 10) ──
+            var foundrySys = _expansions?.SilentFoundry;
+            var foundryFaction = _expansions?.FoundryData?.Faction;
+            HasGuildCard = foundrySys != null && foundryFaction != null;
+            if (foundrySys != null && foundryFaction != null)
+            {
+                var guildCard = AshfallUiHelpers.MakeCardFrame(
+                    foundryFaction.display_name, "TREATY SYSTEMS // GUILD");
+                var guildBox = guildCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+                var guildHeader = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                var guildEmblem = AshfallUiHelpers.MakeFactionEmblem(foundryFaction.faction_id, 44);
+                guildHeader.AddChild(guildEmblem);
+                var guildIdentity = AshfallUiHelpers.MakeSmall(foundryFaction.identity, autowrap: true);
+                guildIdentity.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                guildIdentity.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+                guildHeader.AddChild(guildIdentity);
+                guildBox.AddChild(guildHeader);
+                guildBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+                float standing = foundrySys.GuildStanding;
+                guildBox.AddChild(AshfallUiHelpers.MakeDataRow("Guild Standing", $"{standing:F0} / 100", AshfallUiHelpers.ToColor(standing >= 0 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical)));
+                guildBox.AddChild(AshfallUiHelpers.MakeDataRow("Foundry", foundrySys.IsUnlocked ? $"OPEN · heat {foundrySys.HeatStage} · casts {foundrySys.TotalProductionCount}" : "SEALED — blueprint catalogued", AshfallUiHelpers.ToColor(foundrySys.IsUnlocked ? Ashfall.Core.UI.Theme.Pale : Ashfall.Core.UI.Theme.Dim)));
+
+                if (foundryFaction.internal_divisions != null && foundryFaction.internal_divisions.Length > 0)
+                    guildBox.AddChild(AshfallUiHelpers.MakeDataRow("Internal Divisions", string.Join(", ", foundryFaction.internal_divisions).Replace('_', ' '), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+
+                foreach (var rel in foundryFaction.relationships)
+                {
+                    if (rel == null || string.IsNullOrEmpty(rel.faction_id)) continue;
+                    guildBox.AddChild(AshfallUiHelpers.MakeDataRow(
+                        "↔ " + rel.faction_id.Replace('_', ' '),
+                        rel.stance.Replace('_', ' ') + " — " + rel.notes, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+                }
+
+                var btnFoundry = AshfallUiHelpers.MakeButton("OPEN THE FOUNDRY FLOOR", () =>
+                {
+                    // The host routes this through the standard panel-open path.
+                    OnFoundryPanelRequested?.Invoke();
+                });
+                guildBox.AddChild(btnFoundry);
+
+                _factionsContainer.AddChild(guildCard);
+            }
+
+            // ── 3. Strategic Standing & Legal Accords ──
+            var relCard = AshfallUiHelpers.MakeCardFrame("STRATEGIC TREATIES & LEDGER DEBT", "TREATY STATUS");
+            var relBox = relCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            relBox.AddChild(AshfallUiHelpers.MakeDataRow("Scavenger Guild Claim Ledger", "Two-color boundary system active. Stripping marked sites causes immediate blacklist.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            relBox.AddChild(AshfallUiHelpers.MakeDataRow("Nobody's Crossing Accord", "Vouch access required for passage across the northern ice road gate.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            relBox.AddChild(AshfallUiHelpers.MakeDataRow("Ledger Keepers Archive", "Knowledge reciprocity active. Relic blueprints grant credit value.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            _relationsContainer.AddChild(relCard);
+
+            // ── 4. Diplomatic Events & Radio Intercepts ──
+            var evCard = AshfallUiHelpers.MakeCardFrame("RECENT DIPLOMATIC COMMUNIQUES", "RADIO INTERCEPTS");
+            var evBox = evCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            evBox.AddChild(AshfallUiHelpers.MakeDataRow("[Day 04] Black Flotilla", "Coastal barge dispatch confirmed trade route into Sector 12.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            evBox.AddChild(AshfallUiHelpers.MakeDataRow("[Day 03] Scavenger Guild", "Brannick Sten renewed boundary markers near Denial Cut Substation.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            evBox.AddChild(AshfallUiHelpers.MakeDataRow("[Day 02] Ledger Keepers", "Emissary courier delivered technical index of surviving infrastructure.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            evBox.AddChild(AshfallUiHelpers.MakeDataRow("[Day 01] Green Thread", "Agrarian collective requested potassium iodide exchange for hydroponic seeds.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            _eventsContainer.AddChild(evCard);
         }
 
         public override void _Ready()
@@ -102,70 +246,79 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
+            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.95f) };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+            var scroll = new ScrollContainer();
+            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
+            scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
+            AddChild(scroll);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
+            var center = new CenterContainer();
+            center.SetAnchorsPreset(LayoutPreset.FullRect);
+            center.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            center.SizeFlagsVertical = SizeFlags.ExpandFill;
+            scroll.AddChild(center);
 
-            var title = AshfallUiHelpers.MakeTitle("FACTIONS & DIPLOMACY", Ashfall.Core.UI.Theme.FontSizeH1);
+            var rootBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            rootBox.CustomMinimumSize = new Vector2(760, 0);
+            center.AddChild(rootBox);
+
+            var title = AshfallUiHelpers.MakeTitle("FACTIONS & WASTELAND DIPLOMACY", Ashfall.Core.UI.Theme.FontSizeH1);
             title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
+            rootBox.AddChild(title);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _statusSummary = AshfallUiHelpers.MakeMetadata("Monitor geopolitical standings, faction trust, trade specialization, claim boundaries, and diplomatic treaties.");
+            _statusSummary.HorizontalAlignment = HorizontalAlignment.Center;
+            _statusSummary.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            rootBox.AddChild(_statusSummary);
 
-            // Factions section
-            _lblFactionsTitle = AshfallUiHelpers.MakeSectionHeader("KNOWN FACTIONS");
-            vbox.AddChild(_lblFactionsTitle);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _factionsList = new VBoxContainer();
-            _factionsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _factionsList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_factionsList);
+            _overviewContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_overviewContainer);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Relations section
-            _lblRelationsTitle = AshfallUiHelpers.MakeSectionHeader("RELATIONSHIPS");
-            vbox.AddChild(_lblRelationsTitle);
+            var factionsTitle = AshfallUiHelpers.MakeSectionHeader("KNOWN FACTION PROTOCOLS & ALLIANCES");
+            rootBox.AddChild(factionsTitle);
 
-            _relationsList = new VBoxContainer();
-            _relationsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _relationsList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_relationsList);
+            _factionsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_factionsContainer);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Faction events section
-            _lblEventsTitle = AshfallUiHelpers.MakeSectionHeader("FACTION EVENTS");
-            vbox.AddChild(_lblEventsTitle);
+            var relTitle = AshfallUiHelpers.MakeSectionHeader("TREATIES, STANDING & DEBT OBLIGATIONS");
+            rootBox.AddChild(relTitle);
 
-            _factionEvents = new VBoxContainer();
-            _factionEvents.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _factionEvents.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_factionEvents);
+            _relationsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_relationsContainer);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
+            var evTitle = AshfallUiHelpers.MakeSectionHeader("RECENT FACTION COMMUNIQUES & DISPATCHES");
+            rootBox.AddChild(evTitle);
 
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
+            _eventsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_eventsContainer);
+
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            var btnClose = AshfallUiHelpers.MakeButton("CLOSE DIPLOMACY [Esc]", () => OnClose?.Invoke());
+            btnClose.CustomMinimumSize = new Vector2(220, 42);
+            rootBox.AddChild(btnClose);
+
+            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close factions panel");
+            hint.HorizontalAlignment = HorizontalAlignment.Center;
             hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
+            rootBox.AddChild(hint);
         }
 
         public void Open()
         {
             Visible = true;
+            RefreshView();
             QueueRedraw();
         }
 

@@ -292,6 +292,14 @@ namespace AtomicWar.GodotApp.UI
                 // Dispatch Bar
                 var dispatchRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                 string defId = def.id;
+                bool blocked = _expeditionHost.IsLocationBlocked(defId);
+
+                if (blocked)
+                {
+                    var gateLabel = AshfallUiHelpers.MakeMono("[CROSSING GATE CLOSED — no vouch]");
+                    gateLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+                    dispatchRow.AddChild(gateLabel);
+                }
 
                 var btnDispatchStealth = AshfallUiHelpers.MakeButton("DISPATCH STEALTH SORTIE", () =>
                 {
@@ -302,7 +310,7 @@ namespace AtomicWar.GodotApp.UI
                         RefreshView();
                     }
                 });
-                btnDispatchStealth.Disabled = livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                btnDispatchStealth.Disabled = blocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
                 btnDispatchStealth.CustomMinimumSize = new Vector2(200, 32);
                 dispatchRow.AddChild(btnDispatchStealth);
 
@@ -315,7 +323,7 @@ namespace AtomicWar.GodotApp.UI
                         RefreshView();
                     }
                 });
-                btnDispatchSpeed.Disabled = livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
+                btnDispatchSpeed.Disabled = blocked || livingSurvivors.Count == 0 || _expeditionHost.Engine.Active.ContainsKey(livingSurvivors[0]);
                 btnDispatchSpeed.CustomMinimumSize = new Vector2(220, 32);
                 dispatchRow.AddChild(btnDispatchSpeed);
 

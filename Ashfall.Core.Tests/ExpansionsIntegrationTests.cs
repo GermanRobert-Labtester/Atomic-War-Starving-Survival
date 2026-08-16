@@ -91,5 +91,25 @@ namespace Ashfall.Core.Tests
             Assert.True(report.PassedCount > 40);
             Assert.Equal(0, report.FailedCount);
         }
+
+        [Fact]
+        public void MasterSession_FoundryWiredAndConsequencesTick()
+        {
+            // The orchestrator (ExpansionMasterSession.Load) wires the Foundry:
+            // static catalogs, blueprint cycle, treaty anchors, daily tick.
+            var session = ExpansionMasterSession.Load(DataDir());
+            var foundry = session.SilentFoundry;
+            Assert.NotNull(foundry);
+            Assert.True(foundry.Catalog.ProductCount >= 8, "foundry catalog bound by the orchestrator");
+            Assert.Equal(4, foundry.State.maintenanceCycleDays); // blueprint anchor
+
+            // Day-agnostic treaty assessment through the master daily tick.
+            foundry.Unlock(1);
+            for (int d = 1; d <= 280; d++)
+                session.TickDaily(Ashfall.Core.WeatherKind.Overcast, -12f);
+            Assert.True(foundry.IsConsequenceApplied("treaty_05_chemical_sulfur_and_acid_concession", 280),
+                "master daily tick reaches the day-280 treaty consequence");
+            Assert.True(foundry.GuildStanding < 0f, "standing consequence applied via the orchestrator");
+        }
     }
 }

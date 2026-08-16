@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using Ashfall.Core;
 using Ashfall.Core.UI;
 using Xunit;
 
@@ -10,6 +13,25 @@ namespace Ashfall.Core.Tests
         {
             var path = FactionIconCatalog.Resolve("faction_hydro_barons");
             Assert.Equal("Assets/UI/Icons/faction_icon_hydro_barons.png", path);
+        }
+
+        [Fact]
+        public void Resolve_GuildHasExplicitNonFallbackEmblem()
+        {
+            string p = FactionIconCatalog.Resolve(Ashfall.Core.Foundry.SilentFoundryIds.FactionId);
+            Assert.NotEqual(FactionIconCatalog.FallbackIconPath, p);
+            Assert.True(FactionIconCatalog.HasExplicitMapping(Ashfall.Core.Foundry.SilentFoundryIds.FactionId));
+            Assert.Equal("Assets/UI/Icons/faction_icon_silent_foundry.png", p);
+
+            // The authored faction registry declares the same icon path.
+            string dataDir = Directory.GetCurrentDirectory();
+            if (!CatalogLocator.TryFindDataDirectory(dataDir, out dataDir))
+                CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out dataDir);
+            var files = new FileSystemIO();
+            var json = new SystemTextJsonSerializer();
+            var faction = Ashfall.Core.Foundry.SilentFoundryCatalogLoader.LoadFaction(dataDir, files, json);
+            Assert.NotNull(faction);
+            Assert.Equal(p, faction.icon_path);
         }
 
         [Fact]
@@ -57,7 +79,7 @@ namespace Ashfall.Core.Tests
         public void CoveredFactionIds_IsReadOnlyAndSealed()
         {
             Assert.NotNull(FactionIconCatalog.CoveredFactionIds);
-            Assert.Equal(27, FactionIconCatalog.CoveredFactionIds.Count);
+            Assert.Equal(28, FactionIconCatalog.CoveredFactionIds.Count); // 27 systems + the Silent Foundry Guild
         }
     }
 }

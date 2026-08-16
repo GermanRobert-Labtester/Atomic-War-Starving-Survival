@@ -175,5 +175,35 @@ namespace Ashfall.Core.Tests
 
             Assert.Equal(before, after);
         }
+
+        [Fact]
+        public void OnQuestlineResolved_Fires_WhenApproachSelected()
+        {
+            var sys = NewSystem();
+            MusterRecord emitted = null;
+            sys.OnQuestlineResolved += r => emitted = r;
+
+            Assert.True(sys.SelectApproachFor("quest_the_rate_card_war", QuestApproach.A));
+            Assert.NotNull(emitted);
+            Assert.Equal("quest_the_rate_card_war", emitted.questlineId);
+            Assert.Equal("A", emitted.selectedApproach);
+            Assert.Equal("the_rate_card_revised", emitted.endingKey);
+            Assert.True(emitted.resolved);
+        }
+
+        [Fact]
+        public void OnQuestlineResolved_DoesNotReFire_OnRejectedApproach()
+        {
+            var sys = NewSystem();
+            int emitCount = 0;
+            sys.OnQuestlineResolved += _ => emitCount++;
+
+            Assert.True(sys.SelectApproachFor("quest_the_rate_card_war", QuestApproach.A));
+            Assert.Equal(1, emitCount);
+
+            // Subsequent selection on already resolved questline must fail and not re-emit
+            Assert.False(sys.SelectApproachFor("quest_the_rate_card_war", QuestApproach.B));
+            Assert.Equal(1, emitCount);
+        }
     }
 }

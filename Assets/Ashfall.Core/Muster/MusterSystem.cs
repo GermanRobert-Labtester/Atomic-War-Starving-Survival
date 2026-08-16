@@ -402,7 +402,7 @@ namespace Ashfall.Core.Muster
             return r;
         }
 
-        private MusterRecord FindRecord(string questlineId)
+        public MusterRecord FindRecord(string questlineId)
         {
             for (int i = 0; i < _state.records.Count; i++)
                 if (_state.records[i].questlineId == questlineId) return _state.records[i];

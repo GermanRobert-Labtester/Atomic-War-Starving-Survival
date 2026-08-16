@@ -19,6 +19,9 @@ namespace AtomicWar.GodotApp
         public List<ExpeditionDefinition> DemoDefinitions { get; }
         public DiveInstanceRunner DiveRunner { get; private set; }
 
+        /// <summary>Optional crossing gate — when set, crossing-node expeditions require vouch access.</summary>
+        public VouchAccessSystem CrossingGate { get; set; }
+
         public string LastEvent { get; private set; } = string.Empty;
 
         public event Action StateChanged;
@@ -76,8 +79,18 @@ namespace AtomicWar.GodotApp
 
         // ── Demo actions ─────────────────────────────────────────────
 
+        /// <summary>True when the player cannot dispatch to this location right now.</summary>
+        public bool IsLocationBlocked(string locationId)
+        {
+            if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
+                return true;
+            return false;
+        }
+
         public string StartDemoExpedition(string survivorId, string locationId)
         {
+            if (CrossingGate != null && CrossingSession.IsCrossingNode(locationId) && !CrossingGate.HasAccess)
+                return $"Crossing gate is closed — no vouch. Cannot dispatch to {locationId}.";
             var def = ExpeditionDefinitionRegistry.Get(locationId);
             if (def == null) return $"Unknown expedition target: {locationId}";
             bool ok = Engine.Start(def, survivorId, 40, ExpeditionStance.Stealth);

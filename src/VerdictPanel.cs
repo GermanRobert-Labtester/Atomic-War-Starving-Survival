@@ -16,6 +16,8 @@ namespace AtomicWar.GodotApp
     /// </summary>
     public partial class VerdictPanel : PanelContainer
     {
+        public event System.Action? OnClose;
+
         private VerdictHostSession _verdict;
         private Label _lblPhase;
         private Label _lblReadout;
@@ -24,9 +26,31 @@ namespace AtomicWar.GodotApp
         private VBoxContainer _placeList;
         private VBoxContainer _radioList;
 
+        public void Open()
+        {
+            Visible = true;
+            RefreshView();
+        }
+
+        public void Close()
+        {
+            Visible = false;
+            OnClose?.Invoke();
+        }
+
+        public override void _UnhandledInput(InputEvent @event)
+        {
+            if (!Visible) return;
+            if (@event is InputEventKey key && key.Pressed && !key.Echo && key.Keycode == Key.Escape)
+            {
+                Close();
+                GetViewport().SetInputAsHandled();
+            }
+        }
+
         public override void _Ready()
         {
-            SetAnchorsPreset(LayoutPreset.TopRight);
+            SetAnchorsPreset(LayoutPreset.FullRect);
             CustomMinimumSize = new Vector2(CoreTheme.PanelMaxWidth, 400);
 
             // Apply standard panel 9-slice
@@ -104,6 +128,11 @@ namespace AtomicWar.GodotApp
             rootVbox.AddChild(radioScroll);
             _radioList = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingXs);
             radioScroll.AddChild(_radioList);
+
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            var btnClose = AshfallUiHelpers.MakeButton("RETURN TO EXPANSION HUB [ESC]", Close);
+            btnClose.CustomMinimumSize = new Vector2(240, 36);
+            rootVbox.AddChild(btnClose);
         }
 
         public void Bind(VerdictHostSession verdict)

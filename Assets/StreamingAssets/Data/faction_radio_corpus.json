@@ -520,6 +520,40 @@
         "Bless you for this trade. The vegetable seeds will be planted in the communal garden tomorrow.",
         "Fair and kind transaction. Go with our prayers and may your journey be safe from the storm."
       ]
+    },
+    "current_10_the_silent_foundry_guild": {
+      "frequency_mhz": 104.7,
+      "callsign": "FOUNDRY FLOOR / CUPOLA SHIFT",
+      "intercept_chatter": [
+        "Cupola three holding at twelve hundred degrees. Charge the next batch of scrap before the coke bed slumps.",
+        "The mold sand is getting thin. If the railway order goes out, we sieve what's left and pray the cast doesn't skin.",
+        "Apprentice shift on the charging floor at oh-six hundred. Bring chalk for the tally board, not excuses.",
+        "Hearth brick spalled again behind tuyere two. That's the third this quarter — the firebrick allotment is gone.",
+        "Station 0 wants four acid pipes by the spring thaw. We have antimony for two and a half.",
+        "Coal gondola is late again. The railway runs on spikes, and spikes run on coal. Someone is going to have to choose.",
+        "Sulfur's coming back up the line in exchange for the pickaxe run. Tell the yard to stack them where the chemists can count.",
+        "The milk ration holds only if the shift stays under eight hours. Write it on the wall: eight hours, no exceptions.",
+        "If the kids stay on the floor past the bell, the schoolmistress will be up here with a ledger and a cold stare.",
+        "Tuyere pressure steady. Watch the water jacket — a dry jacket under this heat is a steam bomb waiting for a reason."
+      ],
+      "trade_reaction": [
+        "The guild will take your scrap, but weigh it yourself. The yard scale has been honest since the riot.",
+        "Spikes for the railway, wheels for the line, and nothing for the bunker unless the quota clears first.",
+        "Coal in, iron out. That's the whole deal. Don't ask about the sulfur — ask Station 0.",
+        "Trade the pipes after the quota's cast. We don't sell what we owe.",
+        "Your firebrick is worth its weight in ash. Bring it to the yard and name your price in coal.",
+        "Acid pipes are spoken for under the concession. Cast another heat and we'll talk."
+      ],
+      "parley_resolution": [
+        "The council read the labor accord aloud. Eight-hour shifts, milk ration, and the furnace stays lit. Sign here.",
+        "The corps agreed to run the coal gondola first if the spike quota lands by the deadline. Deadlock broken on the track.",
+        "Station 0 lowered the sulfur price by a fraction, and the foundry agreed to pour the valve bodies in the same heat. Both sides walked away.",
+        "The strike committee sat down with the charge hands. No lockout, no blacklist — a standing schedule instead."
+      ],
+      "raid_warning": [
+        "Unknown party scavenging the slag heap at night. Foundry patrol is on the way; do not approach the rail spur.",
+        "A truck with no running lights crossed the yard perimeter. Secure the tuyere shed and log the plates."
+      ]
     }
   }
 }

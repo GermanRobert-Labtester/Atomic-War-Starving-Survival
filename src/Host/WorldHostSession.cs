@@ -47,10 +47,11 @@ namespace AtomicWar.GodotApp
                 session.Profile = profile;
                 session.Weather.BindProfile(profile, DemoSeed);
             }
-            var save = WorldSaveStore.TryLoad();
-            if (save != null)
+            var env = WorldSaveStore.TryLoadEnvelope();
+            if (env != null)
             {
-                session.Weather.RestoreState(save);
+                if (env.State != null) session.Weather.RestoreState(env.State);
+                if (env.SkyArmor != null) session.SkyArmor.RestoreState(env.SkyArmor);
                 session.LastEvent = "World state restored from save.";
             }
             return session;

@@ -58,6 +58,14 @@ namespace Ashfall.Core.Shelter
             return MathfCompat.Clamp(baseMultiplier / (cell.thicknessMeters * conditionFactor), 0.005f, 1.0f);
         }
 
+        public void RepairCell(int gridX, float durabilityAmount)
+        {
+            if (_cells.TryGetValue(gridX, out var cell))
+            {
+                cell.currentDurability = Math.Min(100f, cell.currentDurability + Math.Max(0f, durabilityAmount));
+            }
+        }
+
         public bool EvaluateKineticImpact(int gridX, float impactEnergyMegaJoules, out float damageDealtToRoof)
         {
             damageDealtToRoof = 0f;

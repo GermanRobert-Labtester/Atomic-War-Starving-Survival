@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using AtomicWar.Journal;
 using Ashfall.Core;
 using Ashfall.Core.Economy;
+using Ashfall.Core.Foundry;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using Ashfall.Core.Radio;
+using Ashfall.Core.Survivors;
 using AtomicWar.GodotApp.Economy;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Muster;
@@ -131,6 +133,12 @@ namespace AtomicWar.GodotApp
         // ASHFALL: THE DUTY ROSTER (Exp 02) — chart, marks, encounters
         private DutyRosterHostSession _dutyRoster = null!;
         private ExpansionHostSession _expansions = null!;
+        // ASHFALL: THE SILENT FOUNDRY (Exp 10) — thin presentation wrapper over
+        // the Core system owned by the expansion hub.
+        private AtomicWar.GodotApp.SilentFoundryHostSession _silentFoundry = null!;
+        private SilentFoundryPanel _silentFoundryPanel = null!;
+        private AtomicWar.GodotApp.Economy.TradeScreenGodotPanel _tradePanel = null!;
+        private Ashfall.Core.Radio.FactionRadioEngine _tradeRadio = null!;
         // Holdfast S1 save coalescing (same pattern as the journal): any state
         // change in IceRoad or Census marks the save dirty; the diagnostics tick
         // flushes it. Quit and the explicit menu button flush immediately.
@@ -138,6 +146,13 @@ namespace AtomicWar.GodotApp
         // Duty Roster (Exp 02) and Expansion Hub save coalescing — same pattern.
         private bool _dutyRosterDirty;
         private bool _expansionHubDirty;
+        private bool _foundryDirty;
+
+        // Sleep / Advance confirmation fields
+        private const double AdvanceCountdownDefaultSeconds = 3.0;
+        private double _advanceTimerRemaining;
+        private bool _advanceConfirmed;
+        private bool _advanceCancelled;
 
         // ── Game flow state ───────────────────────────────────────────
         private MainMenuPanel _mainMenu = null!;
@@ -152,6 +167,7 @@ namespace AtomicWar.GodotApp
         private CraftingPanel _craftingPanel = null!;
         private RadioPanel _radioPanel = null!;
         private MedicalPanel _medicalPanel = null!;
+        private Phase0Panel _phase0Panel = null!;
         private DutyRosterPanel _dutyRosterPanel = null!;
         private EconomyOverlayPanel _economyOverlayPanel = null!;
         private ExpeditionPanel _expeditionPanel = null!;
@@ -159,6 +175,13 @@ namespace AtomicWar.GodotApp
         private QuestsPanel _questsPanel = null!;
         private JournalPanel _journalPanel = null!;
         private FactionsPanel _factionsPanel = null!;
+        private MusterPanel _musterPanel = null!;
+        private ExpansionsHubPanel _expansionsHubPanel = null!;
+        private StandingRecordPanel _standingRecordPanel = null!;
+        private MaritimePanel _maritimePanel = null!;
+        private CenturySeedPanel _centurySeedPanel = null!;
+        private EpiloguePanel _epiloguePanel = null!;
+        private CrossingQuestPanel _crossingQuestPanel = null!;
         private ResearchPanel _researchPanel = null!;
         private ShelterPanel _shelterPanel = null!;
         private StartingLevelHostSession _startingLevel = null!;
@@ -242,6 +265,12 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.GreenhouseSelfTest:
                     GetTree().Quit(HostCli.RunGreenhouseSelfTest());
                     return;
+                case HostCliAction.SilentFoundrySelfTest:
+                    GetTree().Quit(HostCli.RunSilentFoundrySelfTest(_dataDir));
+                    return;
+                case HostCliAction.SilentFoundryUiTest:
+                    RunSilentFoundryUiTestAndQuit();
+                    return;
                 case HostCliAction.IceRoadSelfTest:
                     GetTree().Quit(HostCli.RunIceRoadSelfTest(_dataDir));
                     return;
@@ -316,6 +345,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.SurvivorsUiTest:
                     RunSurvivorsUiTestAndQuit();
+                    return;
+                case HostCliAction.Phase0UiTest:
+                    RunPhase0UiTestAndQuit();
                     return;
                 case HostCliAction.BridgeSelfTest:
                     GetTree().Quit(Ashfall.Bridge.BridgeSelfTest.Run());
@@ -445,6 +477,22 @@ namespace AtomicWar.GodotApp
             FlushCaravanIfDirty();
             FlushYearOfAshIfDirty();
             FlushPhase0IfDirty();
+
+            // ── Sleep / End Day countdown timer (Phase 2 continuation)
+            if (_advanceTimerRemaining > 0 && !_advanceCancelled)
+            {
+                _advanceTimerRemaining -= delta;
+                if (_advanceTimerRemaining <= 0)
+                {
+                    _advanceTimerRemaining = 0;
+                    _statusLabel.Text = "Sleep accepted — advancing day …";
+                    CommitAdvance();
+                }
+                else if (_statusLabel != null)
+                {
+                    _statusLabel.Text = $"Sleep in progress … {_advanceTimerRemaining:F0}s remaining";
+                }
+            }
         }
 
         public override void _UnhandledKeyInput(InputEvent @event)
@@ -474,6 +522,8 @@ namespace AtomicWar.GodotApp
                 }
                 else if (key.Keycode == Key.Escape)
                 {
+                    // Cancel a pending sleep advance before closing the journal.
+                    CancelAdvanceConfirmation();
                     _journalBook.Close();
                     GetViewport().SetInputAsHandled();
                 }
@@ -484,6 +534,10 @@ namespace AtomicWar.GodotApp
         {
             if (what == NotificationWMCloseRequest)
             {
+                // Always cancel any in-progress sleep advance on teardown so stale
+                // countdowns don't tick after the window closes.
+                CancelAdvanceConfirmation();
+
                 SaveJournal();
                 SaveHoldfast();
                 SaveHoldfastRuntime();
@@ -576,6 +630,7 @@ namespace AtomicWar.GodotApp
             // ── Crafting panel (overlay) ──
             _craftingPanel = new CraftingPanel();
             _craftingPanel.OnClose += CloseCraftingPanel;
+            _craftingPanel.OnCraftStarted += () => { UpdateHud(); _craftingDirty = true; };
             AddChild(_craftingPanel);
 
             // ── Radio panel (overlay) ──
@@ -589,6 +644,11 @@ namespace AtomicWar.GodotApp
             _medicalPanel.OnClose += CloseMedicalPanel;
             _medicalPanel.OnTreatmentAdministered += UpdateHud;
             AddChild(_medicalPanel);
+
+            // ── Phase 0 panel (overlay) ──
+            _phase0Panel = new Phase0Panel();
+            _phase0Panel.OnClose += ClosePhase0Panel;
+            AddChild(_phase0Panel);
 
             // ── Duty Roster panel (overlay) ──
             _dutyRosterPanel = new DutyRosterPanel();
@@ -620,6 +680,8 @@ namespace AtomicWar.GodotApp
             // ── Quests panel (overlay) ──
             _questsPanel = new QuestsPanel();
             _questsPanel.OnClose += CloseQuestsPanel;
+            _questsPanel.OnQuestDetailRequested += OpenQuestDetailPanel;
+            _questsPanel.OnCrossingPanelRequested += OpenCrossingQuestPanel;
             AddChild(_questsPanel);
 
             // ── Journal panel (overlay) ──
@@ -630,7 +692,51 @@ namespace AtomicWar.GodotApp
             // ── Factions panel (overlay) ──
             _factionsPanel = new FactionsPanel();
             _factionsPanel.OnClose += CloseFactionsPanel;
+            _factionsPanel.OnFactionDetailRequested += OpenFactionDetailPanel;
+            _factionsPanel.OnMusterPanelRequested += () => OpenPlayerPanel("muster");
+            _factionsPanel.OnFoundryPanelRequested += () => OpenPlayerPanel("silent_foundry");
             AddChild(_factionsPanel);
+
+            // ── Muster panel (overlay) ──
+            _musterPanel = new MusterPanel();
+            _musterPanel.OnClose += CloseMusterPanel;
+            _musterPanel.OnApproachModalRequested += OpenMusterApproachModal;
+            AddChild(_musterPanel);
+
+            // ── Expansions Hub panel (overlay) ──
+            _expansionsHubPanel = new ExpansionsHubPanel();
+            _expansionsHubPanel.OnClose += CloseExpansionsHubPanel;
+            _expansionsHubPanel.OnOpenExpansionRequested += (expId) => OpenPlayerPanel(expId);
+            AddChild(_expansionsHubPanel);
+
+            // ── Standing Record panel (overlay) ──
+            _standingRecordPanel = new StandingRecordPanel();
+            _standingRecordPanel.OnClose += CloseStandingRecordPanel;
+            AddChild(_standingRecordPanel);
+
+            // ── Maritime panel (overlay) ──
+            _maritimePanel = new MaritimePanel();
+            _maritimePanel.OnClose += CloseMaritimePanel;
+            AddChild(_maritimePanel);
+
+            // ── Century Seed panel (overlay) ──
+            _centurySeedPanel = new CenturySeedPanel();
+            _centurySeedPanel.OnClose += CloseCenturySeedPanel;
+            AddChild(_centurySeedPanel);
+
+            // ── Epilogue panel (overlay) ──
+            _epiloguePanel = new EpiloguePanel();
+            _epiloguePanel.OnClose += CloseEpiloguePanel;
+            AddChild(_epiloguePanel);
+
+            // ── Verdict panel (overlay) ──
+            _verdictPanel = new VerdictPanel();
+            _verdictPanel.OnClose += CloseVerdictPanel;
+            AddChild(_verdictPanel);
+
+            // ── Holdfast Terminal (overlay) ──
+            _holdfastTerminal = new HoldfastTerminalPanel();
+            AddChild(_holdfastTerminal);
 
             // ── Research panel (overlay) ──
             _researchPanel = new ResearchPanel();
@@ -647,6 +753,16 @@ namespace AtomicWar.GodotApp
             _greenhousePanel.OnClose += CloseGreenhousePanel;
             AddChild(_greenhousePanel);
 
+            // ── Silent Foundry panel (overlay) ──
+            _silentFoundryPanel = new SilentFoundryPanel();
+            _silentFoundryPanel.OnClose += CloseSilentFoundryPanel;
+            AddChild(_silentFoundryPanel);
+
+            // ── Trade screen (overlay) — guild stance gates the stall ──
+            _tradePanel = new AtomicWar.GodotApp.Economy.TradeScreenGodotPanel();
+            _tradePanel.OnClose += CloseTradePanel;
+            AddChild(_tradePanel);
+
             // ── Combat panel (overlay) ──
             _combatPanel = new CombatPanel();
             _combatPanel.OnClose += CloseCombatPanel;
@@ -655,6 +771,7 @@ namespace AtomicWar.GodotApp
             // ── Map panel (overlay) ──
             _mapPanel = new MapPanel();
             _mapPanel.OnClose += CloseMapPanel;
+            _mapPanel.OnLocationDetailRequested += OpenMapDetailPanel;
             AddChild(_mapPanel);
 
             // ── Survivor Detail panel (overlay) ──
@@ -706,6 +823,16 @@ namespace AtomicWar.GodotApp
             _combatDetailPanel = new CombatDetailPanel();
             _combatDetailPanel.OnClose += CloseCombatDetailPanel;
             AddChild(_combatDetailPanel);
+
+            // ── Faction Detail panel (overlay) ──
+            _factionDetailPanel = new FactionDetailPanel();
+            _factionDetailPanel.OnClose += CloseFactionDetailPanel;
+            AddChild(_factionDetailPanel);
+
+            // ── Crossing Quest panel (overlay) ──
+            _crossingQuestPanel = new CrossingQuestPanel();
+            _crossingQuestPanel.OnClose += CloseCrossingQuestPanel;
+            AddChild(_crossingQuestPanel);
 
             // ── Save/Load panel (overlay) ──
             _saveLoadPanel = new SaveLoadPanel();
@@ -954,6 +1081,7 @@ namespace AtomicWar.GodotApp
                 OpenCraftingPanel,
                 OpenRadioPanel,
                 OpenMedicalPanel,
+                OpenPhase0Panel,
                 OpenDutyRosterPanel,
                 OpenExpeditionPanel,
                 OpenWeatherPanel,
@@ -1285,6 +1413,7 @@ namespace AtomicWar.GodotApp
             if (_expansions != null) return;
             _expansions = ExpansionHostSession.Create(_dataDir);
             _expansions.StateChanged += () => _expansionHubDirty = true;
+            _expansions.OnCrossingStageNarrative += OnCrossingStageNarrative;
 
             // Cross-host roundtrip for waystation, standing record, crossing vouch,
             // and greenhouse plots.
@@ -1299,6 +1428,29 @@ namespace AtomicWar.GodotApp
             _expansions.EnsureGreenhousePlots(3);
             RefreshExpansionsStatus();
             GD.Print("[Ashfall Godot] Expansion hub ready: waystation · standing record · crossing · greenhouse");
+        }
+
+        private void OnCrossingStageNarrative(Ashfall.Core.Crossing.CrossingStageNarrativeEvent evt)
+        {
+            if (evt == null) return;
+            string tag = evt.isCompletion ? "[CHARTER COMPLETE]" : $"[NC STAGE {evt.stageIndex + 1}]";
+            string line = $"{tag} {evt.questDisplayName}: {evt.stageText}";
+            GD.Print($"[Ashfall Godot] Crossing narrative: {line}");
+            if (_hostEventAdapter != null)
+            {
+                string eventId = $"event_crossing_{evt.questId}_{evt.stageIndex}_{(evt.isCompletion ? "complete" : "stage")}";
+                _hostEventAdapter.TriggerEvent(eventId, _simDay);
+            }
+            if (_journal != null)
+            {
+                _journal.TryAddRawEntry(
+                    $"crossing_{evt.questId}_{evt.stageIndex}_{(evt.isCompletion ? "complete" : "stage")}",
+                    line,
+                    null,
+                    _simDay);
+                _journalDirty = true;
+            }
+            _statusLabel?.SetDeferred(Label.PropertyName.Text, line);
         }
 
         private void RefreshExpansionsStatus()
@@ -1414,9 +1566,26 @@ namespace AtomicWar.GodotApp
             SetupExpansions();
             if (_expansions.Greenhouse.PlotCount > 0)
                 _expansions.TickGreenhouse(day);
+            _expansions.Ledger.TickDaily(day);
+            _expansions.TickCrossingQuests(day);
+
+            // The Silent Foundry (Exp 10) advances on the real day clock.
+            SetupSilentFoundry();
+            _silentFoundry.Engine.TickDaily(day);
+            _silentFoundryPanel?.RefreshView();
+            if (_foundryDirty) SaveExpansionHub();
 
             SetupGreenhouse();
             _greenhouse.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.04f);
+
+            // Phase 0 (psychological/medical effects) advances on the real day clock:
+            // refresh environment signals from the world/shelter hosts, then tick all
+            // ten systems for a full day.
+            SetupPhase0();
+            _phase0.CurrentDay = day;
+            _phase0.IsInFalloutStorm = _world != null && _world.Weather.Current == Ashfall.Core.WeatherKind.FalloutStorm;
+            _phase0.IsNightTime = day % 2 == 0; // night signal for trauma false-alarm rolls
+            _phase0.TickDay(day);
 
             SetupEventAdapter();
             bool hydroAudit = _muster?.HydroBarons?.AdminReform ?? false;
@@ -1696,7 +1865,7 @@ namespace AtomicWar.GodotApp
 
         private void FlushExpansionHubIfDirty()
         {
-            if (_expansionHubDirty) SaveExpansionHub();
+            if (_expansionHubDirty || _foundryDirty) SaveExpansionHub();
         }
 
         private void FlushVerdictIfDirty()
@@ -1786,20 +1955,112 @@ namespace AtomicWar.GodotApp
             if (_phase0 != null) return;
             _phase0 = new Phase0HostSession();
             _phase0.StateChanged += () => _phase0Dirty = true;
-            if (_survivors != null)
+
+            // ── Wire every Phase-0 effect to the REAL gameplay consumer ──
+            SetupSurvivors();
+            SetupJournal();
+            SetupCrafting();
+            SetupExpeditions();
+            SetupMedical();
+
+            _phase0.Consumers.ApplyMoraleDelta = (sv, delta) =>
             {
-                var ids = new System.Collections.Generic.List<string>();
+                var survivor = _survivors.Find(sv);
+                if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Morale, delta);
+            };
+            _phase0.Consumers.ApplyHealthDelta = (sv, delta) =>
+            {
+                var survivor = _survivors.Find(sv);
+                if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Health, delta);
+            };
+            _phase0.Consumers.ApplyFatigueDelta = (sv, delta) =>
+            {
+                var survivor = _survivors.Find(sv);
+                if (survivor != null) _survivors.Needs.Modify(survivor, NeedKind.Fatigue, delta);
+            };
+            // Work efficiency + chemical crafting penalty compose into the real
+            // CraftingSystem craft-time multiplier.
+            _phase0.Consumers.ApplyWorkEfficiencyMultiplier = (sv, mult) =>
+            {
+                if (_crafting == null) return;
+                _crafting.Engine.SetCrafterCraftTimeMultiplier(id =>
+                    id == sv ? MathfCompat.Max(0.1f, 1f / MathfCompat.Max(0.1f, mult)) : 1f);
+            };
+            _phase0.Consumers.ApplyCraftingPenaltyFactor = (sv, factor) =>
+            {
+                if (_crafting == null) return;
+                _crafting.Engine.SetCrafterCraftTimeMultiplier(id =>
+                    id == sv ? 1f + MathfCompat.Max(0f, factor) : 1f);
+            };
+            // Chemical combat penalty feeds the expedition encounter/failure risk by
+            // draining stamina faster (tremor). Also exposed via ApplyStaminaDrainMultiplier.
+            _phase0.Consumers.ApplyCombatPenaltyFactor = (sv, factor) =>
+            {
+                if (_expeditions == null) return;
+                _expeditions.Engine.SetStaminaDrainMultiplier(id =>
+                    id == sv ? 1f + MathfCompat.Max(0f, factor) : 1f);
+            };
+            // Respiratory severe cough raises expedition stamina drain.
+            _phase0.Consumers.ApplyStaminaDrainMultiplier = (sv, factor) =>
+            {
+                if (_expeditions == null) return;
+                _expeditions.Engine.SetStaminaDrainMultiplier(id =>
+                    id == sv ? 1f + MathfCompat.Max(0f, factor) : 1f);
+            };
+            // Shelter-wide morale deltas (final wish / moral branching) reach every
+            // alive survivor's morale via the authoritative NeedsSystem.
+            _phase0.Consumers.ApplyShelterMoraleDelta = delta =>
+            {
                 for (int i = 0; i < _survivors.RosterState.Count; i++)
                 {
                     var s = _survivors.RosterState[i];
-                    if (s != null && s.IsAliveState) ids.Add(s.Id);
+                    if (s != null && s.IsAliveState)
+                        _survivors.Needs.Modify(s, NeedKind.Morale, delta);
                 }
-                _phase0.RegisterSurvivors(ids);
-            }
-            else
+            };
+            _phase0.Consumers.FireNarrativeEvent = (narrativeId, sv) =>
             {
-                _phase0.SeedDemoRoster();
+                int day = _holdfastRuntime?.Day ?? _simDay;
+                _journal.TryAddRawEntry(
+                    $"{narrativeId}_{sv}_{day}",
+                    $"{sv}: {narrativeId.Replace('_', ' ')}.",
+                    author: null!,
+                    day: day);
+            };
+            _phase0.Consumers.GrantChronicIllness = (sv, afflictionId) =>
+            {
+                var rad = _survivors.RadStateFor(sv);
+                if (rad != null && !rad.HasChronicIllness)
+                {
+                    rad.HasChronicIllness = true;
+                    SaveSurvivors();
+                }
+            };
+            _phase0.Consumers.ResetRadiationDose = sv =>
+            {
+                var rad = _survivors.RadStateFor(sv);
+                if (rad != null) _survivors.Radiation.SetDose(rad, 0f);
+            };
+
+            // Environment signals from the real world/shelter hosts.
+            _phase0.CurrentDay = _holdfastRuntime?.Day ?? _simDay;
+            _phase0.GetFilterHealth = () =>
+            {
+                var filter = _expansions?.Waystation?.State != null
+                    ? _expansions.Waystation.State.filterHealth : 100f;
+                return filter;
+            };
+            // Host flags: updated each tick from the real world/shelter state.
+            _phase0.IsInFalloutStorm = _world != null && _world.Weather.Current == Ashfall.Core.WeatherKind.FalloutStorm;
+            _phase0.IsNightTime = _world != null && _world.Weather.Current == Ashfall.Core.WeatherKind.BlackRain;
+
+            var ids = new System.Collections.Generic.List<string>();
+            for (int i = 0; i < _survivors.RosterState.Count; i++)
+            {
+                var s = _survivors.RosterState[i];
+                if (s != null && s.IsAliveState) ids.Add(s.Id);
             }
+            _phase0.RegisterSurvivors(ids);
 
             var save = Phase0SaveStore.TryLoad();
             if (save != null)
@@ -2162,7 +2423,9 @@ namespace AtomicWar.GodotApp
         {
             SetupSurvivors();
             _survivors.TickHour(6f);
-            _statusLabel.Text = _survivors.LastEvent;
+            SetupPhase0();
+            _phase0.TickHour(6f);
+            _statusLabel.Text = _survivors.LastEvent + "\n" + _phase0.LastEvent;
             _codexViewer.Text = _survivors.StatusLine();
         }
 
@@ -2201,6 +2464,7 @@ namespace AtomicWar.GodotApp
             if (_muster != null) return;
             _muster = MusterHostSession.Create(_dataDir);
             _muster.StateChanged += () => SaveMuster();
+            _muster.OnQuestlineResolved += OnMusterQuestlineResolved;
 
             if (_currentsRoster == null)
             {
@@ -2337,19 +2601,114 @@ namespace AtomicWar.GodotApp
         }
 
         public void OpenSettingsPanel() => _settingsPanel?.Open();
-        public void OpenCraftingPanel() => _craftingPanel?.Open();
+        public void OpenCraftingPanel()
+        {
+            SetupCrafting();
+            SetupInventory();
+            _craftingPanel.Bind(_crafting, _inventory);
+            _craftingPanel.Open();
+        }
         public void OpenRadioPanel() => _radioPanel?.Open();
         public void OpenMedicalPanel() => _medicalPanel?.Open();
+
+        public void OpenPhase0Panel()
+        {
+            SetupSurvivors();
+            SetupPhase0();
+            _phase0Panel.Bind(_phase0, _survivors);
+            _phase0Panel.Open();
+        }
         public void OpenDutyRosterPanel() => _dutyRosterPanel?.Open();
         public void OpenExpeditionPanel() => _expeditionPanel?.Open();
         public void OpenWeatherPanel() => _weatherPanel?.Open();
-        public void OpenQuestsPanel() => _questsPanel?.Open();
+        public void OpenQuestsPanel()
+        {
+            SetupHoldfastRuntime();
+            SetupExpansions();
+            SetupDutyRoster();
+            _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay);
+            _questsPanel.Open();
+        }
         public void OpenJournalPanel() => _journalPanel?.Open();
-        public void OpenFactionsPanel() => _factionsPanel?.Open();
+        public void OpenFactionsPanel()
+        {
+            SetupHoldfastRuntime();
+            SetupMuster();
+            SetupExpansions();
+            _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions);
+            _factionsPanel.Open();
+        }
         public void OpenShelterPanel() => _shelterPanel?.Open();
         public void OpenCombatPanel() => _combatPanel?.Open();
-        public void OpenMapPanel() => _mapPanel?.Open();
+        public void OpenMapPanel()
+        {
+            SetupHoldfastRuntime();
+            SetupExpeditions();
+            SetupExpansions();
+            SetupWorld();
+            SetupJournal();
+            _mapPanel.Bind(_core, _expeditions, _expansions, _world, _journalCodex?.Catalogs);
+            _mapPanel.Open();
+        }
+        public void OpenMapDetailPanel(string locationId)
+        {
+            SetupHoldfastRuntime();
+            SetupExpeditions();
+            SetupJournal();
+            var holdfastLoc = _core?.Catalog?.GetLocation(locationId);
+            LocationDefinitionData? journalLoc = null;
+            if (_journalCodex?.Catalogs?.Locations != null)
+            {
+                foreach (var l in _journalCodex.Catalogs.Locations)
+                {
+                    if (l != null && l.id == locationId)
+                    {
+                        journalLoc = l;
+                        break;
+                    }
+                }
+            }
+            _mapDetailPanel.Bind(holdfastLoc, journalLoc);
+            _mapDetailPanel.Open();
+        }
+        public void OpenFactionDetailPanel(string factionId)
+        {
+            SetupHoldfastRuntime();
+            SetupMuster();
+            SetupExpansions();
+            var faction = _core?.Catalog?.Factions?.GetById(factionId);
+            if (faction != null)
+            {
+                _factionDetailPanel.Bind(faction, _holdfastRuntime?.Trade, _muster, _expansions);
+            }
+            _factionDetailPanel.Open();
+        }
+        public void OpenQuestDetailPanel(string questId)
+        {
+            SetupHoldfastRuntime();
+            SetupExpansions();
+            var holdfastDef = _core?.Quests?.GetDef(questId);
+            var holdfastProgress = _core?.Quests?.GetProgress(questId);
+            if (holdfastDef != null)
+            {
+                _questDetailPanel.Bind(holdfastDef, holdfastProgress);
+            }
+            else if (_expansions?.CrossingQuests != null)
+            {
+                var crossingDef = _expansions.CrossingQuests.GetDef(questId);
+                var crossingProgress = _expansions.CrossingQuests.GetProgress(questId);
+                if (crossingDef != null)
+                    _questDetailPanel.Bind(crossingDef, crossingProgress);
+            }
+            _questDetailPanel.Open();
+        }
         public void OpenSaveLoadPanel() => _saveLoadPanel?.Open();
+        public void OpenCrossingQuestPanel()
+        {
+            SetupExpansions();
+            _crossingQuestPanel.Bind(_expansions, _expansions.Vouch, _simDay);
+            _crossingQuestPanel.Open();
+        }
         public void OnExitGameClicked() { SaveAll(); GetTree().Quit(); }
 
         public void OnMusterEscalateClicked()
@@ -2438,6 +2797,26 @@ namespace AtomicWar.GodotApp
             _statusLabel.Text = $"Currents shown: {_muster.Roster.Count} (fifteenth: faction_hydro_barons).";
         }
 
+        private string _selectedApproachQuestlineId = "quest_the_rate_card_war";
+
+        private void OpenMusterApproachModal(string questlineId, IReadOnlyList<ApproachOption> approaches)
+        {
+            _selectedApproachQuestlineId = questlineId;
+            if (_approachModal == null)
+            {
+                _approachModal = new ApproachSelectionModal();
+                _approachModal.OnApproachChosen += OnMusterApproachChosen;
+                _approachModal.OnModalClosed += () =>
+                {
+                    _approachModal?.QueueFree();
+                    _approachModal = null;
+                };
+                AddChild(_approachModal);
+            }
+            _approachModal.ShowQuestline(questlineId, approaches);
+            _statusLabel.Text = $"{questlineId}: choose an approach.";
+        }
+
         private void OnMusterRateCardClicked()
         {
             SetupMuster();
@@ -2447,15 +2826,38 @@ namespace AtomicWar.GodotApp
                 _statusLabel.Text = "Rate Card War questline not registered.";
                 return;
             }
-            _approachModal.ShowQuestline(def.questlineId, def.approaches);
-            _statusLabel.Text = "Rate Card War: choose an approach.";
+            OpenMusterApproachModal(def.questlineId, def.approaches);
         }
 
         private void OnMusterApproachChosen(QuestApproach approach)
         {
             if (_muster == null) return;
-            _statusLabel.Text = _muster.SelectApproach("quest_the_rate_card_war", approach);
-            _currentsRoster.RefreshView();
+            string qId = string.IsNullOrEmpty(_selectedApproachQuestlineId) ? "quest_the_rate_card_war" : _selectedApproachQuestlineId;
+            _statusLabel.Text = _muster.SelectApproach(qId, approach);
+            _currentsRoster?.RefreshView();
+            _musterPanel?.RefreshView();
+        }
+
+        private void OnMusterQuestlineResolved(MusterRecord record)
+        {
+            if (record == null) return;
+            string line = $"[MUSTER RESOLVED] {record.questlineId} via {record.selectedApproach} → Ending: {record.endingKey}";
+            GD.Print($"[Ashfall Godot] {line}");
+            if (_hostEventAdapter != null)
+            {
+                string eventId = $"event_muster_{record.questlineId}_{record.selectedApproach}";
+                _hostEventAdapter.TriggerEvent(eventId, _simDay);
+            }
+            if (_journal != null)
+            {
+                _journal.TryAddRawEntry(
+                    $"muster_{record.questlineId}_{record.selectedApproach}",
+                    line,
+                    null,
+                    _simDay);
+                _journalDirty = true;
+            }
+            _statusLabel?.SetDeferred(Label.PropertyName.Text, line);
         }
 
         /// <summary>Auto-escalate the Muster from the Year-of-Ash clock.</summary>
@@ -2779,7 +3181,7 @@ namespace AtomicWar.GodotApp
         private void SaveWorld()
         {
             if (_world == null) return;
-            if (WorldSaveStore.TrySave(_world.CaptureSave()))
+            if (WorldSaveStore.TrySave(_world.CaptureSave(), _world.CaptureSkyArmorSave()))
             {
                 _worldDirty = false;
                 GD.Print("[Ashfall Godot] World save written.");
@@ -2934,6 +3336,259 @@ namespace AtomicWar.GodotApp
         private void CloseGreenhousePanel()
         {
             _greenhousePanel.Visible = false;
+        }
+
+        // ── THE SILENT FOUNDRY (Exp 10) ─────────────────────────────────
+
+        private void SetupSilentFoundry()
+        {
+            if (_silentFoundry != null) return;
+            SetupExpansions();
+            SetupInventory();
+            SetupJournal();
+            SetupEconomy();
+            _silentFoundry = AtomicWar.GodotApp.SilentFoundryHostSession.Create(
+                _dataDir, _expansions, _inventory, _journal, market: _economy.Market);
+            // Foundry state rides the expansion-hub save (already restored above);
+            // state-change events mark the hub save dirty so nothing is lost.
+            _silentFoundry.StateChanged += () =>
+            {
+                _foundryDirty = true;
+                _silentFoundryPanel?.RefreshView();
+                _factionsPanel?.RefreshView();
+                _economyPanel?.RefreshView();
+                if (_state == GameState.Playing) UpdateHud();
+            };
+            if (_silentFoundryPanel != null)
+                _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
+            // Live market strip: show the guild's real trade access at all times.
+            if (_economyPanel != null)
+                _economyPanel.BindStance(_silentFoundry.GuildStanceEngine, Ashfall.Core.Foundry.SilentFoundryIds.FactionId);
+            GD.Print("[Ashfall Godot] Silent Foundry host ready (exp_10_the_silent_foundry).");
+        }
+
+        private void CloseSilentFoundryPanel()
+        {
+            _silentFoundryPanel.Visible = false;
+        }
+
+        private void CloseTradePanel()
+        {
+            if (_silentFoundry != null)
+                _silentFoundry.StateChanged -= _tradePanel.RefreshView;
+            _tradePanel.Visible = false;
+        }
+
+        /// <summary>
+        /// Open the live trade screen bound to the Foundry Guild's real stance
+        /// engine (derived from the durable consequence ledger). The panel's
+        /// confirm gate follows TradeStance: below Trade the stall is blocked.
+        /// </summary>
+        private void OpenTradeScreen()
+        {
+            if (_tradePanel == null) return;
+            if (_tradeRadio == null)
+            {
+                string radioPath = Path.Combine(_dataDir, "faction_radio_corpus.json");
+                _tradeRadio = Ashfall.Core.Radio.FactionRadioEngine.LoadFromJson(
+                    System.IO.File.Exists(radioPath) ? System.IO.File.ReadAllText(radioPath) : "{}");
+            }
+            var tuning = new Ashfall.Core.Economy.HardcoreEconomyTuning();
+            tuning.Apply(new Ashfall.Core.Economy.HardcoreEconomyTuningBundle(
+                Array.Empty<Ashfall.Core.Economy.ScarcityEntry>(),
+                Array.Empty<Ashfall.Core.Economy.FactionTradePreference>(),
+                Array.Empty<Ashfall.Core.Economy.PriceShockRule>()));
+            _tradePanel.BindSession(_economy, _silentFoundry.GuildStanceEngine, tuning, _tradeRadio, new SeededRng(2026));
+            _tradePanel.SetActiveFaction(Ashfall.Core.Foundry.SilentFoundryIds.FactionId);
+            // Live refresh when a treaty consequence moves the guild's standing
+            // (subscribe once per open; CloseTradePanel removes it).
+            _silentFoundry.StateChanged -= _tradePanel.RefreshView;
+            _silentFoundry.StateChanged += _tradePanel.RefreshView;
+            _tradePanel.Open();
+            GD.Print($"[Ashfall Godot] Trade screen open — Foundry Guild stance {_silentFoundry.GuildStance} · trust {_silentFoundry.GuildTrust:F0}");
+        }
+
+        private void RunSilentFoundryUiTestAndQuit()
+        {
+            // Self-contained run: persisted user:// saves from earlier runs must
+            // not leak foundry/economy/journal state into the assertions.
+            foreach (var file in new[] { "expansion_hub_save.json", "economy_save.json", "journal_save.json" })
+            {
+                string p = Path.Combine(ProjectSettings.GlobalizePath("user://"), file);
+                if (System.IO.File.Exists(p)) System.IO.File.Delete(p);
+            }
+
+            BuildUserInterface();
+            SetupExpansions();
+            SetupSilentFoundry();
+
+            bool pass = true;
+            void Check(bool cond, string name)
+            {
+                if (cond) GD.Print($"  [PASS] {name}");
+                else { GD.PrintErr($"  [FAIL] {name}"); pass = false; }
+            }
+
+            Check(_silentFoundry != null, "host session created");
+            Check(_silentFoundryPanel != null, "panel constructed");
+            Check(_silentFoundry.Engine.IsUnlocked == false, "foundry sealed by default");
+            // Register foundry items into the shared inventory catalog.
+            SetupInventory();
+            Check(_inventory.Catalog.Get("item_foundry_plowshare") != null, "foundry items registered in inventory catalog");
+            Check(_inventory.Catalog.Get(SilentFoundryIds.ItemScrapMetal) != null, "charge materials registered");
+
+            // Self-contained run: a persisted user:// inventory from earlier runs
+            // must not crowd the shared container. Clear and reseed deterministically.
+            _inventory.Inventory.Clear();
+            _inventory.Inventory.MaxWeight = 500f;
+            _inventory.Add(SilentFoundryIds.ItemScrapMetal, 12);
+            _inventory.Add(SilentFoundryIds.ItemCoal, 12);
+            _inventory.Add(SilentFoundryIds.ItemCleanWater, 60);
+            _inventory.Add(SilentFoundryIds.ItemFlux, 3);
+            _inventory.Add("item_foundry_green_sand", 4);
+            _inventory.Add("item_foundry_firebrick", 6);
+
+            // Open the panel and drive a full heat end-to-end through the host session.
+            OpenPlayerPanel("silent_foundry");
+            Check(_silentFoundryPanel.Visible && _silentFoundryPanel.IsBound, "panel opens and binds");
+
+            _silentFoundry.Unlock(_simDay);
+            Check(_silentFoundry.Engine.IsUnlocked, "unlock via host session");
+            string start = _silentFoundry.StartHeat("foundry_prod_plowshare", 4, 0.6f, _simDay + 1);
+            Check(start.StartsWith("Heat started"), "heat starts: " + start);
+            int d = _simDay + 2;
+            for (int guard = 0; guard < 20 && _silentFoundry.Engine.HeatStage != FoundryHeatStage.Complete; guard++, d++)
+            {
+                _silentFoundry.Engine.TickDaily(d);
+                if (_silentFoundry.Engine.HeatStage == FoundryHeatStage.AtHeat)
+                    _silentFoundry.Tap(d);
+            }
+            Check(_silentFoundry.Engine.TotalProductionCount == 1, "heat completes through the host");
+            Check(_silentFoundry.Engine.IsJournalTriggered(SilentFoundryIds.JournalFirstHeat), "first-heat journal triggered");
+            Check(_journal != null && _journal.Knowledge.Has(SilentFoundryIds.JournalFirstHeat), "journal knowledge key recorded");
+            Check(_silentFoundryPanel.Visible, "panel still open after the heat");
+            _silentFoundryPanel.RefreshView();
+
+            // Treaty consequence host path: a missed quota must reach the real
+            // stance engine and market surface exactly once, through the host session.
+            // (Reset the durable ledger + market demand so repeated runs stay deterministic.)
+            _silentFoundry.Engine.RestoreConsequenceState(new SilentFoundryConsequenceState());
+            _silentFoundry.SyncGuildStanding();
+            _economy.Market.AdjustDemand("item_foundry_acid_pipe", -10f); // floor at the market clamp
+            float acidDemandBefore = _economy.Market.GetDemandMultiplier("item_foundry_acid_pipe");
+            Check(_silentFoundry.GuildTrust == 0f, "standing reset for the run");
+            _silentFoundry.Engine.AssessTreatyCompliance(280); // treaty_05 acid-pipe quota short
+            Check(_silentFoundry.GuildTrust < 0f, "host stance engine reflects the standing penalty");
+            Check(_silentFoundry.GuildStanceEngine.GetTrust(SilentFoundryIds.FactionId) < 0f, "guild trust moved on the existing stance engine");
+            Check(_silentFoundry.GuildStanceEngine.GetTrust("current_10_the_foundry_union") == 0f, "no leak to the foundry union");
+            Check(_economy.Market.GetDemandMultiplier("item_foundry_acid_pipe") > acidDemandBefore,
+                "market demand moved on the real MarketSystem");
+            Check(_silentFoundry.Engine.AppliedConsequences.Count == 1, "consequence applied once");
+            _silentFoundry.Engine.AssessTreatyCompliance(280); // idempotent re-assessment
+            Check(_silentFoundry.Engine.AppliedConsequences.Count == 1, "re-assessment does not stack");
+
+            // Live trade screen: opens bound to the guild stance engine; the stall
+            // stays open while trust sits above the rob floor.
+            OpenPlayerPanel("trade");
+            Check(_tradePanel.Visible && _tradePanel.HasStanceBadge && _tradePanel.HasTrustMeter,
+                "trade screen opens in the live loop with stance + trust rendered");
+            Check(_silentFoundry.GuildStance == TradeStance.Trade, "stall open above the rob floor");
+            // Drive the guild below the rob floor with repeated missed cycles; the
+            // stance must flip to a blocked band (Rob) that the screen's confirm
+            // gate rejects (willTrade = Trade | ShareIntel).
+            for (int i = 0; i < 10; i++)
+                _silentFoundry.Engine.AssessTreatyCompliance(280 + (i + 1) * 30); // missed acid-pipe cycles
+            Check(_silentFoundry.GuildStance == TradeStance.Rob || _silentFoundry.GuildStance == TradeStance.HostileRaid,
+                "stance blocks the stall after repeated missed cycles");
+            Check(_silentFoundry.GuildTrust <= -40f, "trust crossed the rob floor");
+            _tradePanel.RefreshView();
+            CloseTradePanel();
+            Check(!_tradePanel.Visible, "trade screen closes cleanly");
+
+            // Live-campaign reachability: the real TickSimDay loop reaches the
+            // day-280 treaty assessment (treaty_05 is inside the playable Year of
+            // Ash window, days 180-360). Late treaties (950/1500/3650) stay out
+            // of the live loop by the documented campaign limit.
+            _silentFoundry.Engine.RestoreConsequenceState(new SilentFoundryConsequenceState());
+            _silentFoundry.SyncGuildStanding();
+            Check(_silentFoundry.Engine.GetTreatyOutcome(SilentFoundryIds.TreatySulfur, 279) == FoundryTreatyOutcome.NotRatified,
+                "pre-ratification neutral in the live loop");
+            _simDay = 276;
+            TickSimDay(277);
+            TickSimDay(278);
+            TickSimDay(279);
+            TickSimDay(280);
+            Check(_silentFoundry.Engine.IsConsequenceApplied(SilentFoundryIds.TreatySulfur, 280),
+                "live TickSimDay reaches the day-280 treaty assessment");
+            Check(_silentFoundry.GuildTrust == -6f, "live loop applied the single missed-quota consequence");
+            Check(_silentFoundry.Engine.AppliedConsequences.Count == 1, "exactly one consequence from the live window");
+
+            // Late-treaty host path: the foundry's live tick line (TickDaily) is
+            // day-agnostic, so a late treaty fires through the FULL host pipeline
+            // (stance engine + real market) whenever the campaign supplies the day.
+            // The live campaign caps at ~360, so this proves the pipeline, not the
+            // campaign reachability, for days 950/1500/3650.
+            float coalDemandBefore = _economy.Market.GetDemandMultiplier("coal");
+            _silentFoundry.Engine.TickDaily(1500); // treaty_12 assessment day
+            Check(_silentFoundry.Engine.IsConsequenceApplied(SilentFoundryIds.TreatyRailway, 1500),
+                "late-treaty consequence reaches the ledger through the host tick");
+            Check(_economy.Market.GetDemandMultiplier("coal") > coalDemandBefore,
+                "late-treaty logistics modifier moves the real market");
+            Check(_silentFoundry.GuildStanceEngine.GetTrust(SilentFoundryIds.FactionId) < 0f,
+                "late-treaty standing reaches the stance engine");
+
+            // Journal author role is preserved from the authored template.
+            bool authorRolePreserved = false;
+            foreach (var e in _journal.Entries)
+                if (e != null && e.KnowledgeKey == SilentFoundryIds.JournalFirstHeat && e.AuthorName == "Foundryman")
+                    authorRolePreserved = true;
+            Check(authorRolePreserved, "journal entry preserves the authored author role");
+
+            // Factions panel renders the guild card (data-driven from the authored
+            // faction registry entry).
+            OpenPlayerPanel("factions");
+            Check(_factionsPanel.HasGuildCard, "factions panel renders the Silent Foundry Guild card");
+            _factionsPanel.RefreshView();
+            CloseFactionsPanel();
+
+            GD.Print(pass ? "SILENT_FOUNDRY_UITEST PASS" : "SILENT_FOUNDRY_UITEST FAIL");
+            GetTree().Quit(pass ? 0 : 1);
+        }
+
+        private void CloseMusterPanel()
+        {
+            if (_musterPanel != null)
+                _musterPanel.Visible = false;
+        }
+
+        private void CloseExpansionsHubPanel()
+        {
+            if (_expansionsHubPanel != null) _expansionsHubPanel.Visible = false;
+        }
+
+        private void CloseStandingRecordPanel()
+        {
+            if (_standingRecordPanel != null) _standingRecordPanel.Visible = false;
+        }
+
+        private void CloseMaritimePanel()
+        {
+            if (_maritimePanel != null) _maritimePanel.Visible = false;
+        }
+
+        private void CloseCenturySeedPanel()
+        {
+            if (_centurySeedPanel != null) _centurySeedPanel.Visible = false;
+        }
+
+        private void CloseEpiloguePanel()
+        {
+            if (_epiloguePanel != null) _epiloguePanel.Visible = false;
+        }
+
+        private void CloseVerdictPanel()
+        {
+            if (_verdictPanel != null) _verdictPanel.Visible = false;
         }
 
         private void OnCaravanSpawnClicked()
@@ -3663,6 +4318,59 @@ namespace AtomicWar.GodotApp
             GetTree().Quit(pass ? 0 : 1);
         }
 
+        /// <summary>Headless smoke: Phase-0 panel builds, binds, and renders all ten condition groups.</summary>
+        private void RunPhase0UiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupSurvivors();
+            SetupPhase0();
+
+            bool panel = _phase0Panel != null;
+            bool session = _phase0 != null;
+            if (!panel || !session)
+            {
+                GD.Print("[Phase0UiTest] panel=false session=false");
+                GD.Print("PHASE0_UITEST FAIL");
+                GetTree().Quit(1);
+                return;
+            }
+
+            // Drive all ten systems so every condition row renders.
+            SetupInventory();
+            SetupMedical();
+            _phase0.CurrentDay = 4;
+            _phase0.RecordGuilt("elena_vasquez", "choice_imposed_hardship", 0.8f);
+            _phase0.RegisterCombatSurvived("survivor_gunner_mikhail");
+            _phase0.RegisterCombatSurvived("survivor_gunner_mikhail");
+            _phase0.RecordMoralChoice("survivor_dr_sarah_chen", true);
+            _phase0.RecordMoralChoice("survivor_dr_sarah_chen", true);
+            _phase0.RecordMoralChoice("survivor_dr_sarah_chen", true);
+            _phase0.RecordMoralChoice("survivor_dr_sarah_chen", true);
+            _phase0.RecordMoralChoice("survivor_dr_sarah_chen", true);
+            _phase0.ConsumeSubstance("survivor_gunner_mikhail", "item_morphine", Ashfall.Core.Medical.ChemicalDependencyKind.Opioid);
+            _phase0.ConsumeSubstance("survivor_gunner_mikhail", "item_morphine", Ashfall.Core.Medical.ChemicalDependencyKind.Opioid);
+            _phase0.ConsumeSubstance("survivor_gunner_mikhail", "item_morphine", Ashfall.Core.Medical.ChemicalDependencyKind.Opioid);
+            _phase0.Dependency.BeginColdTurkey("survivor_gunner_mikhail", "item_morphine");
+            _phase0.IsInAshZone = true;
+            _phase0.TickHour(6f);
+            _phase0.IsInAshZone = false;
+
+            _phase0Panel.Bind(_phase0, _survivors);
+            _phase0Panel.Open();
+
+            bool bound = _phase0Panel.IsBound;
+            bool conditionsRendered = _phase0Panel.RenderedConditionCount > 0;
+            bool visible = _phase0Panel.Visible;
+
+            bool pass = bound && conditionsRendered && visible;
+            GD.Print($"[Phase0UiTest] panel={panel} session={session} bound={bound} " +
+                     $"conditions={_phase0Panel.RenderedConditionCount} visible={visible}");
+            GD.Print(pass ? "PHASE0_UITEST PASS" : "PHASE0_UITEST FAIL");
+            if (System.IO.File.Exists(Phase0SaveStore.SavePath))
+                System.IO.File.Delete(Phase0SaveStore.SavePath);
+            GetTree().Quit(pass ? 0 : 1);
+        }
+
         /// <summary>Headless smoke: muster roster widget + approach modal render, escalate, select.</summary>
         private void RunMusterUiTestAndQuit()
         {
@@ -3763,7 +4471,8 @@ namespace AtomicWar.GodotApp
                 && _survivorsOverlay.Visible;
             CloseAllOverlayPanels();
 
-            _medicalPanel.Bind(_medical, _survivors, _inventory);
+            _medicalPanel.Bind(_medical, _survivors, _inventory,
+                _phase0?.Respiratory);
             _medicalPanel.Open();
             bool medical = _medicalPanel.IsBound
                 && _medicalPanel.RenderedHealthCount >= _survivors.RosterState.Count
@@ -4012,6 +4721,10 @@ namespace AtomicWar.GodotApp
 
         private void ReturnToMenu()
         {
+            // Cancel any in-progress sleep advance so stale timers don't tick
+            // after returning to the menu.
+            CancelAdvanceConfirmation();
+
             _state = GameState.Menu;
             _gameUiContainer.Visible = false;
             _dashboard.Visible = false;
@@ -4067,17 +4780,26 @@ namespace AtomicWar.GodotApp
                     break;
                 case "crafting":
                     SetupCrafting();
+                    SetupInventory();
+                    _craftingPanel.Bind(_crafting, _inventory);
                     _craftingPanel.Open();
                     break;
                 case "medical":
                     SetupSurvivors();
                     SetupInventory();
                     SetupMedical();
-                    _medicalPanel.Bind(_medical, _survivors, _inventory);
+                    SetupPhase0();
+                    _medicalPanel.Bind(_medical, _survivors, _inventory,
+                        _phase0?.Respiratory);
                     _medicalPanel.Open();
+                    break;
+                case "phase0":
+                    OpenPhase0Panel();
                     break;
                 case "expeditions":
                     SetupExpeditions();
+                    SetupExpansions();
+                    _expeditions.CrossingGate = _expansions.Vouch;
                     SetupSurvivors();
                     SetupInventory();
                     _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
@@ -4094,6 +4816,12 @@ namespace AtomicWar.GodotApp
                     _radioPanel.Open();
                     break;
                 case "map":
+                    SetupHoldfastRuntime();
+                    SetupExpeditions();
+                    SetupExpansions();
+                    SetupWorld();
+                    SetupJournal();
+                    _mapPanel.Bind(_core, _expeditions, _expansions, _world, _journalCodex?.Catalogs);
                     _mapPanel.Open();
                     break;
                 case "shelter":
@@ -4104,9 +4832,17 @@ namespace AtomicWar.GodotApp
                     _shelterPanel.Open();
                     break;
                 case "factions":
+                    SetupHoldfastRuntime();
+                    SetupMuster();
+                    SetupExpansions();
+                    _factionsPanel.Bind(_core.Catalog.Factions, _holdfastRuntime?.Trade, _muster, _expansions);
                     _factionsPanel.Open();
                     break;
                 case "quests":
+                    SetupHoldfastRuntime();
+                    SetupExpansions();
+                    SetupDutyRoster();
+                    _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay);
                     _questsPanel.Open();
                     break;
                 case "journal":
@@ -4122,6 +4858,75 @@ namespace AtomicWar.GodotApp
                     SetupGreenhouse();
                     _greenhousePanel.Bind(_greenhouse);
                     _greenhousePanel.Open();
+                    break;
+                case "silent_foundry":
+                    SetupExpansions();
+                    SetupSilentFoundry();
+                    _silentFoundryPanel.Bind(_silentFoundry, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
+                    _silentFoundryPanel.Open();
+                    break;
+                case "trade":
+                    SetupEconomy();
+                    SetupSilentFoundry();
+                    OpenTradeScreen();
+                    break;
+                case "muster":
+                    SetupMuster();
+                    _musterPanel.Bind(_muster, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
+                    _musterPanel.Open();
+                    break;
+                case "expansions":
+                    SetupExpansions();
+                    SetupGreenhouse();
+                    SetupDutyRoster();
+                    SetupMuster();
+                    SetupMaritime();
+                    SetupWorld();
+                    SetupMedical();
+                    SetupVerdict();
+                    _expansionsHubPanel.Bind(_expansions, _greenhouse, _dutyRoster, _muster, _maritime, _world, _medical, _verdict, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
+                    _expansionsHubPanel.Open();
+                    break;
+                case "standing_record":
+                    SetupExpansions();
+                    _standingRecordPanel.Bind(_expansions?.Layouts);
+                    _standingRecordPanel.Open();
+                    break;
+                case "crossing_quests":
+                    SetupExpansions();
+                    _crossingQuestPanel.Bind(_expansions, _expansions?.Vouch, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay);
+                    _crossingQuestPanel.Open();
+                    break;
+                case "maritime":
+                    SetupMaritime();
+                    SetupSurvivors();
+                    _maritimePanel.Bind(_maritime, _survivors);
+                    _maritimePanel.Open();
+                    break;
+                case "century_seed":
+                    SetupExpansions();
+                    SetupSurvivors();
+                    _centurySeedPanel.Bind(_expansions?.Generational, _survivors);
+                    _centurySeedPanel.Open();
+                    break;
+                case "epilogue":
+                    SetupExpansions();
+                    SetupSurvivors();
+                    _epiloguePanel.Bind(_simDay, _survivors?.RosterState?.Count ?? 4, 0, true, true, true, true, true);
+                    _epiloguePanel.Open();
+                    break;
+                case "verdict":
+                    SetupVerdict();
+                    _verdictPanel.Bind(_verdict);
+                    _verdictPanel.Open();
+                    break;
+                case "holdfast":
+                    SetupHoldfastRuntime();
+                    if (_holdfastTerminal != null)
+                    {
+                        _holdfastTerminal.BindSession(_holdfastRuntime);
+                        _holdfastTerminal.OpenTerminal();
+                    }
                     break;
                 case "duty_roster":
                     SetupDutyRoster();
@@ -4143,14 +4948,18 @@ namespace AtomicWar.GodotApp
                 _settingsPanel, _inventoryOverlay, _survivorsOverlay, _craftingPanel,
                 _radioPanel, _medicalPanel, _dutyRosterPanel, _economyOverlayPanel,
                 _expeditionPanel, _weatherPanel, _questsPanel, _journalPanel,
-                _factionsPanel, _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
+                _factionsPanel, _musterPanel, _expansionsHubPanel, _standingRecordPanel,
+                _maritimePanel, _centurySeedPanel, _epiloguePanel, _verdictPanel,
+                _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
+                _silentFoundryPanel,
+                _tradePanel,
                 _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel,
                 _achievementsPanel, _weatherDetailPanel, _radiationDetailPanel,
                 _eventsLogPanel, _dutyRosterDetailPanel, _economyDetailPanel,
-                _combatDetailPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
+                _combatDetailPanel, _factionDetailPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
                 _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
                 _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
-                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal
+                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal, _holdfastTerminal
             };
 
             foreach (Control panel in panels)
@@ -4227,6 +5036,11 @@ namespace AtomicWar.GodotApp
             _medicalPanel.Visible = false;
         }
 
+        private void ClosePhase0Panel()
+        {
+            _phase0Panel.Visible = false;
+        }
+
         private void CloseDutyRosterPanel()
         {
             _dutyRosterPanel.Visible = false;
@@ -4295,6 +5109,16 @@ namespace AtomicWar.GodotApp
         private void CloseQuestDetailPanel()
         {
             _questDetailPanel.Visible = false;
+        }
+
+        private void CloseFactionDetailPanel()
+        {
+            _factionDetailPanel.Visible = false;
+        }
+
+        private void CloseCrossingQuestPanel()
+        {
+            _crossingQuestPanel.Visible = false;
         }
 
         private void CloseAchievementsPanel()
@@ -4394,6 +5218,9 @@ namespace AtomicWar.GodotApp
             _dashboard.Visible = false;
             _mainMenu.Visible = false;
             _gameOver.ShowGameOver(cause, stats);
+
+            _audio?.StopAmbience();
+            _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.GameOver);
 
             // Save final state
             SaveAll();
@@ -4529,6 +5356,7 @@ namespace AtomicWar.GodotApp
             SavePhase0();
             SaveStartingLevel();
             SaveGreenhouse();
+            _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
         }
 
         private bool AnyOverlayPanelOpen()
@@ -4540,10 +5368,12 @@ namespace AtomicWar.GodotApp
                 _radioPanel, _medicalPanel, _dutyRosterPanel, _economyOverlayPanel,
                 _expeditionPanel, _weatherPanel, _questsPanel, _journalPanel,
                 _factionsPanel, _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
+                _silentFoundryPanel,
+                _tradePanel,
                 _survivorDetailPanel, _inventoryDetailPanel, _questDetailPanel,
                 _achievementsPanel, _weatherDetailPanel, _radiationDetailPanel,
                 _eventsLogPanel, _dutyRosterDetailPanel, _economyDetailPanel,
-                _combatDetailPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
+                _combatDetailPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
                 _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
                 _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
                 _mapDetailPanel, _eventDetailPanel, _openingProtocolModal
@@ -4609,13 +5439,53 @@ namespace AtomicWar.GodotApp
 
         private void OnTickIceRoadClicked()
         {
+            if (_advanceTimerRemaining > 0) return; // already counting down
+
+            var settings = AtomicWar.GodotApp.Settings.UserSettingsStore.Current;
+            if (settings.ConfirmEndDay && !_advanceConfirmed)
+            {
+                _advanceTimerRemaining = AdvanceCountdownDefaultSeconds;
+                _advanceCancelled = false;
+                _statusLabel.Text = "Sleep in progress … press ESC or MENU to cancel";
+                return;
+            }
+
+            CommitAdvance();
+        }
+
+        /// <summary>Cancel a pending sleep advance. Called from _UnhandledKeyInput
+        /// when the player hits Escape, and from ReturnToMenu to prevent stale ticks.</summary>
+        private void CancelAdvanceConfirmation()
+        {
+            if (!_advanceTimerRemaining.Equals(0))
+            {
+                _advanceCancelled = true;
+                _advanceTimerRemaining = 0;
+                _advanceConfirmed = false;
+                if (_statusLabel != null)
+                    _statusLabel.Text = "Advance cancelled.";
+            }
+        }
+
+        /// <summary>Fully tick the simulation forward one day: advance every subsystem
+        /// exactly once, then auto-save per settings.</summary>
+        private void CommitAdvance()
+        {
             SetupIceRoad();
             string delta = _core.TickDay();
             _simDay = _core.Clock.Day;
             TickSimDay(_simDay);
-            _statusLabel.Text =
-                $"Day {_core.Clock.Day} tick ({_core.Weather}, {_core.OutdoorCelsius:0}°C): {delta}. " +
-                $"{_core.LocationCount} locations.";
+            _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.DayTransition);
+            _statusLabel.Text = $"Day {_core.Clock.Day} advanced ({delta})";
+            UpdateHud();
+
+            // Reset confirmation gate so the next click starts fresh.
+            _advanceConfirmed = false;
+            _advanceCancelled = false;
+            _advanceTimerRemaining = 0;
+
+            var settings = AtomicWar.GodotApp.Settings.UserSettingsStore.Current;
+            if (settings.AutoSaveOnDay) SaveAll();
         }
 
         private void OnCycleWeatherClicked()

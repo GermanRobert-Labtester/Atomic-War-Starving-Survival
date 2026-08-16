@@ -1,0 +1,26 @@
+{
+  "faction_id": "current_10_the_silent_foundry_guild",
+  "display_name": "The Silent Foundry Guild",
+  "short_name": "The Foundry",
+  "identity": "The guild of cupola tenders, pattern makers, and stokers who keep the valley's iron flowing. Their furnace floor is the backbone of winter: without their heat, the cold takes the valley in forty-eight hours. They are exact, proud, and internally divided — production against safety, master engineers against apprentices, treaty quotas against local autonomy.",
+  "icon_path": "Assets/UI/Icons/faction_icon_silent_foundry.png",
+  "internal_divisions": [
+    "production_versus_safety",
+    "master_engineers_versus_apprentices",
+    "treaty_obligations_versus_local_autonomy",
+    "immediate_repair_versus_long_term_education",
+    "output_quotas_versus_worker_health",
+    "alloy_secrecy_versus_public_instruction"
+  ],
+  "relationships": [
+    { "faction_id": "current_09_station_0_chemical_combine", "stance": "trade_partner", "notes": "Sulfur and acid for forged pickaxes and acid-resistant lead-antimony pipes (treaty_05)." },
+    { "faction_id": "current_05_deep_drift_miners_union", "stance": "trade_partner", "notes": "Coal and ore from the drifts; foundry shifts capped during liquid iron pours (treaty_10)." },
+    { "faction_id": "current_14_the_valley_general_council", "stance": "ally", "notes": "Labor and milk support, shift oversight, and the constitution's labor articles (treaty_10, treaty_16)." },
+    { "faction_id": "current_16_the_railway_restoration_corps", "stance": "trade_partner", "notes": "Narrow-gauge rail system; spike and wheel quotas, coal gondolas, right-of-way (treaty_12)." },
+    { "faction_id": "current_08_hydro_turbine_guild", "stance": "trade_partner", "notes": "Water-flow and turbine components; the foundry's water demand is metered against the hydro lines." },
+    { "faction_id": "current_06_the_standing_record_archivists", "stance": "neutral", "notes": "The Standing Record logs foundry output, incidents, and labor disputes." },
+    { "faction_id": "current_15_the_healers_cadre", "stance": "neutral", "notes": "Treats foundry injuries; the healers' burn ward knows the furnace floor by name." },
+    { "faction_id": "current_12_the_black_flotilla", "stance": "rival", "notes": "The Flotilla trades scavenged metal; the Foundry refuses to melt wreckage taken from contested wrecks." }
+  ],
+  "tags": ["foundry", "industry", "iron", "labor", "treaty", "guild"]
+}

@@ -1,0 +1,162 @@
+[
+  {
+    "id": "item_foundry_grey_iron_ingot",
+    "displayName": "Grey Iron Ingot",
+    "description": "A rough grey iron ingot from the cupola. The foundry's own heavy-alloy feedstock; also traded to the Railway Restoration Corps and the Valley General Council.",
+    "type": "Material",
+    "stackMax": 20,
+    "weight": 3.0,
+    "tradeValue": 18,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_plowshare",
+    "displayName": "Plowshare Set",
+    "description": "A cast iron plowshare and moldboard. Agricultural continuity: the Botanical Seed Trust and the Valley farms trade food for these.",
+    "type": "Tool",
+    "stackMax": 5,
+    "weight": 8.0,
+    "tradeValue": 45,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_t_beam",
+    "displayName": "Structural T-Beam",
+    "description": "A forty-kilo structural T-beam. The bone of the bunker's sky-layer armor frames and the station's load-bearing repairs.",
+    "type": "Material",
+    "stackMax": 8,
+    "weight": 40.0,
+    "tradeValue": 60,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_railway_spike",
+    "displayName": "Railway Spike",
+    "description": "Forged rail spikes, counted by the bundle. A treaty obligation to the Railway Restoration Corps — the narrow-gauge line dies without them.",
+    "type": "Material",
+    "stackMax": 100,
+    "weight": 0.5,
+    "tradeValue": 2,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_rail_wheel",
+    "displayName": "Rail-Car Wheel",
+    "description": "A cast rail-car wheel, chilled and machined at the rim. Heavy, hard, and owed in quotas to the railway charter.",
+    "type": "Material",
+    "stackMax": 10,
+    "weight": 75.0,
+    "tradeValue": 90,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_acid_pipe",
+    "description": "A lead-antimony acid-resistant pipe and valve body, cast for Station 0 Chemical Combine. The Acid Gorge treaty exchanges these for sulfur.",
+    "type": "Material",
+    "stackMax": 12,
+    "weight": 12.0,
+    "tradeValue": 70,
+    "durability": 100,
+    "displayName": "Acid-Resistant Pipe"
+  },
+  {
+    "id": "item_foundry_repair_plate",
+    "displayName": "Repair Plate",
+    "description": "A bolted repair plate for bunker bulkheads, blast doors, and the sky-layer armor grid. Shelter resilience in a flat rectangle of iron.",
+    "type": "Material",
+    "stackMax": 15,
+    "weight": 9.0,
+    "tradeValue": 35,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_bracket_fastener",
+    "displayName": "Bracket & Fastener Set",
+    "description": "Cast brackets and threaded fasteners. The quiet hardware that holds piping, shelving, and machinery to the walls.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.8,
+    "tradeValue": 4,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_valve_body",
+    "displayName": "Water Valve Body",
+    "description": "A cast valve body for the water system — brine, feedwater, and the acid lines. The hydro systems run on these.",
+    "type": "Material",
+    "stackMax": 10,
+    "weight": 15.0,
+    "tradeValue": 55,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_heavy_tool",
+    "displayName": "Heavy Foundry Tool",
+    "description": "A heavy wrench, drift, or sledging bar from the foundry floor. Improves repair and maintenance work across the shelter.",
+    "type": "Tool",
+    "stackMax": 6,
+    "weight": 6.0,
+    "tradeValue": 30,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_alloy_part",
+    "displayName": "Heavy-Alloy Part",
+    "description": "A precision heavy-alloy part — a bearing sleeve, a gear blank, a tuyere boss. The most expensive thing the foundry makes, and the one nobody has spare.",
+    "type": "Material",
+    "stackMax": 6,
+    "weight": 20.0,
+    "tradeValue": 120,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_defense_plate",
+    "displayName": "Blast-Door Armor Plate",
+    "description": "A thickened armor plate for the blast doors and hatch surrounds. Defensive only where the structure demands it; the foundry does not run a weapons line.",
+    "type": "Material",
+    "stackMax": 8,
+    "weight": 55.0,
+    "tradeValue": 80,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_green_sand",
+    "displayName": "Green Sand",
+    "description": "Clay-bonded casting sand, wetted and sieved. The mold bed is the foundry's second furnace: it decides whether a casting is clean or cracked.",
+    "type": "Material",
+    "stackMax": 30,
+    "weight": 2.5,
+    "tradeValue": 3,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_firebrick",
+    "displayName": "Refractory Firebrick",
+    "description": "High-alumina firebrick for the lining and hearth. Scarce, and the difference between a furnace that holds iron and a furnace that kills people.",
+    "type": "Material",
+    "stackMax": 20,
+    "weight": 4.0,
+    "tradeValue": 8,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_flux",
+    "displayName": "Limestone Flux",
+    "description": "Crushed limestone flux. It pulls sulfur and slag out of the melt — without it, the iron is brittle and the air is poison.",
+    "type": "Material",
+    "stackMax": 30,
+    "weight": 1.5,
+    "tradeValue": 3,
+    "durability": 100
+  },
+  {
+    "id": "item_foundry_alloy_additive",
+    "displayName": "Lead-Antimony Additive",
+    "description": "A bag of lead-antimony shot for the acid-resistant alloy. Station 0 bartered the antimony under the Acid Gorge treaty; the sulfur flows because these pipes hold.",
+    "type": "Material",
+    "stackMax": 15,
+    "weight": 1.0,
+    "tradeValue": 12,
+    "durability": 100
+  }
+]

@@ -50,6 +50,7 @@ namespace AtomicWar.GodotApp
         VerdictUiTest,
         InventoryUiTest,
         SurvivorsUiTest,
+        Phase0UiTest,
         BridgeSelfTest,
         DutyRosterSelfTest,
         StandingRecordSelfTest,
@@ -57,6 +58,8 @@ namespace AtomicWar.GodotApp
         ArbitrationSelfTest,
         LedgerDebtSelfTest,
         GreenhouseSelfTest,
+        SilentFoundrySelfTest,
+        SilentFoundryUiTest,
         ExpansionsSelfTest,
         YearOfAshSaveSelfTest,
         VerdictSelfTest,
@@ -130,6 +133,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.LedgerDebtSelfTest;
             if (Has(args, "--greenhouse-selftest") || Has(args, "--glass-orchard-selftest"))
                 return HostCliAction.GreenhouseSelfTest;
+            if (Has(args, "--silent-foundry-selftest"))
+                return HostCliAction.SilentFoundrySelfTest;
+            if (Has(args, "--silent-foundry-uitest"))
+                return HostCliAction.SilentFoundryUiTest;
             if (Has(args, "--core-selftest"))
                 return HostCliAction.CoreSelfTest;
             if (Has(args, "--ice-road-selftest"))
@@ -166,6 +173,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.InventoryUiTest;
             if (Has(args, "--survivors-uitest"))
                 return HostCliAction.SurvivorsUiTest;
+            if (Has(args, "--phase0-uitest"))
+                return HostCliAction.Phase0UiTest;
             if (Has(args, "--dose-uitest"))
                 return HostCliAction.DoseUiTest;
             if (Has(args, "--bridge-selftest"))
@@ -285,6 +294,13 @@ namespace AtomicWar.GodotApp
         public static int RunGreenhouseSelfTest()
         {
             var report = GreenhouseHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunSilentFoundrySelfTest(string dataDirectory)
+        {
+            var report = Ashfall.Core.SilentFoundryHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
             return report.ExitCode;
         }
@@ -1613,7 +1629,74 @@ namespace AtomicWar.GodotApp
                     "ash-zone exposure accumulates respiratory degradation");
                 session.IsInAshZone = false;
 
-                // ── 6. Save round-trip ──────────────────────────────────
+                // ── 6. Guilt insomnia ──────────────────────────────────
+                session.RecordGuilt("elena_vasquez", "choice_left_ally_behind", 0.9f);
+                Check(session.Guilt.GetInsomniaSeverity("elena_vasquez") >= Ashfall.Core.Survivors.GuiltInsomniaSystem.HighSeverityThreshold,
+                    "high-severity guilt raises insomnia severity");
+                Check(session.GetEffects("elena_vasquez").guiltInsomniaSeverity > 0f,
+                    "guilt insomnia severity reaches the derived host view");
+
+                // ── 7. Combat trauma: survival raises hypervigilance ───
+                session.RegisterCombatSurvived("survivor_gunner_mikhail");
+                session.RegisterCombatSurvived("survivor_gunner_mikhail");
+                float hyper = session.CombatTrauma.GetHypervigilanceLevel("survivor_gunner_mikhail");
+                Check(hyper > 0f && hyper == session.GetEffects("survivor_gunner_mikhail").hypervigilance,
+                    "combat survival raises hypervigilance in core and host view");
+
+                // ── 8. Moral branching: choice decides a branch ────────
+                session.RecordMoralChoice("survivor_dr_sarah_chen", true);
+                session.RecordMoralChoice("survivor_dr_sarah_chen", true);
+                session.RecordMoralChoice("survivor_dr_sarah_chen", true);
+                session.RecordMoralChoice("survivor_dr_sarah_chen", true);
+                session.RecordMoralChoice("survivor_dr_sarah_chen", true);
+                var moralState = session.Moral.CaptureState();
+                Check(moralState.Survivors.Exists(s => s.SurvivorId == "survivor_dr_sarah_chen"
+                        && s.BranchDirection != Ashfall.Core.Survivors.MoralBranchDirection.Neutral),
+                    "five moral choices decide a branch");
+
+                // ── 9. Radiation phase progression: exposure → phase ──
+                session.RadiationPhase.OnExposure("survivor_dr_sarah_chen", 120f);
+                var phase = session.RadiationPhase.GetPhase("survivor_dr_sarah_chen");
+                Check(phase != Ashfall.Core.Radiation.RadiationSicknessPhase.Healthy,
+                    "radiation exposure moves survivor out of Healthy phase");
+                Check(session.GetEffects("survivor_dr_sarah_chen").radiationPhase != "Healthy",
+                    "radiation phase reaches the derived host view");
+
+                // ── 10. Chemical dependency: substance → withdrawal penalty ──
+                session.ConsumeSubstance("survivor_gunner_mikhail", "item_morphine", Ashfall.Core.Medical.ChemicalDependencyKind.Opioid);
+                session.ConsumeSubstance("survivor_gunner_mikhail", "item_morphine", Ashfall.Core.Medical.ChemicalDependencyKind.Opioid);
+                session.ConsumeSubstance("survivor_gunner_mikhail", "item_morphine", Ashfall.Core.Medical.ChemicalDependencyKind.Opioid);
+                Check(session.Dependency.DependencyLevel("survivor_gunner_mikhail", "item_morphine") >= Ashfall.Core.Medical.ChemicalDependencySystem.DependencyThreshold,
+                    "repeated doses form a dependency");
+                bool detox = session.Dependency.BeginColdTurkey("survivor_gunner_mikhail", "item_morphine");
+                Check(detox, "cold-turkey withdrawal begins for a dependent survivor");
+                session.Dependency.TickHours("survivor_gunner_mikhail", 6f);
+                Check(session.GetEffects("survivor_gunner_mikhail").dependencyCombatPenalty > 0f,
+                    "withdrawal tremor penalty reaches the derived host view");
+
+                // ── 11. Real-consumer wiring ────────────────────────────
+                float moraleApplied = 0f;
+                float staminaMult = 0f;
+                float craftPenalty = 0f;
+                int narratives = 0;
+                session.Consumers.ApplyMoraleDelta = (sv, d) => moraleApplied += d;
+                session.Consumers.ApplyStaminaDrainMultiplier = (sv, m) => staminaMult += m;
+                session.Consumers.ApplyCraftingPenaltyFactor = (sv, f) => craftPenalty += f;
+                session.Consumers.FireNarrativeEvent = (id, sv) => narratives++;
+                session.Phantom.RegisterRule("former_soldier", "military", 0.40f, "d", "boost", "break");
+                session.Phantom.TriggerChanceOverride = 1.0f; // force a trigger
+                session.ScavengeItem("survivor_gunner_mikhail", "item_dog_tags");
+                Check(moraleApplied != 0f, "phantom memory morale delta reaches the real consumer");
+                session.Phantom.TriggerChanceOverride = -1f; // restore default
+                // Use a fresh survivor (elena already mastered trade in section 3).
+                session.TradeSpecialty.FireNarrativeEvent = (id, sv) => narratives++;
+                session.CraftItem("survivor_gunner_mikhail", "electrician", "battery_cell");
+                session.CraftItem("survivor_gunner_mikhail", "electrician", "wire_standard");
+                session.CraftItem("survivor_gunner_mikhail", "electrician", "circuit_board");
+                Check(narratives >= 1, "trade mastery narrative event reaches the real consumer");
+                Check(craftPenalty == 0f, "dependency crafting penalty idle until withdrawal tick");
+
+                // ── 12. Save round-trip ──────────────────────────────────
                 var save = session.CaptureSave();
                 Check(save != null && save.effects.Count >= 3, "phase-0 save captured effects");
                 var fresh = new Phase0HostSession();
@@ -1622,6 +1705,16 @@ namespace AtomicWar.GodotApp
                     "permanent shelter morale buff restored");
                 Check(fresh.TradeSpecialty.HasMasteredTrade("elena_vasquez"),
                     "trade mastery restored");
+                Check(fresh.Guilt.GetInsomniaSeverity("elena_vasquez") > 0f,
+                    "guilt insomnia restored");
+                Check(fresh.CombatTrauma.GetHypervigilanceLevel("survivor_gunner_mikhail") == hyper,
+                    "combat trauma restored");
+                // Dependency ledger is owned by MedicalHostSession (MedicalSaveStore);
+                // Phase0 restores the shared instance only, verified separately.
+                Check(session.Dependency.HasActiveWithdrawal("survivor_gunner_mikhail"),
+                    "chemical dependency withdrawal active on the shared authority");
+                Check(fresh.RadiationPhase.GetPhase("survivor_dr_sarah_chen") == phase,
+                    "radiation phase restored");
             }
             catch (Exception e)
             {
@@ -2402,7 +2495,220 @@ namespace AtomicWar.GodotApp
                 expPanel.QueueFree();
                 radPanel.QueueFree();
 
-                GD.Print($"[ShelterOperationsSelfTest] Failures: {failures}");
+                // ── 5. Crafting System Verification (14 assertions) ──
+                GD.Print("[ShelterOperationsSelfTest] §5 Crafting system...");
+                var craftInv = new Ashfall.Core.Inventory.Inventory();
+                var craftSession = new CraftingHostSession(craftInv);
+
+
+                // 5.1 Recipe catalog loads
+                Check(craftSession.Recipes.Count >= 5, "recipe catalog has ≥5 recipes");
+
+                // 5.2 recipe_bandage present
+                var bandageRecipe = craftSession.FindRecipe("recipe_bandage");
+                Check(bandageRecipe != null, "recipe_bandage is resolvable");
+
+                // 5.3 CanCraft false when ingredients missing
+                Check(!craftSession.Engine.CanCraft(bandageRecipe), "CanCraft false when ingredients absent");
+
+                // 5.4 Add ingredients → CanCraft true
+                var mechParts = CraftingHostSession.Catalog.Get("scrap_mechanical");
+                if (mechParts != null) craftInv.Add(mechParts, 5);
+                Check(craftSession.Engine.CanCraft(bandageRecipe), "CanCraft true after adding ingredients");
+
+
+                // 5.5 Start craft → queue grows
+                int craftBandageBefore = craftInv.CountById("bandage");
+                string craftStartMsg = craftSession.Start("recipe_bandage");
+                Check(craftSession.Engine.ActiveCraftCount == 1, "StartCraft queues one entry");
+
+
+                // 5.6 Ingredient consumed atomically
+                int mechAfter = craftInv.CountById("scrap_mechanical");
+                Check(mechAfter < 5, $"ingredient count decreased after start (was 5, now {mechAfter})");
+
+                // 5.7 Invalid recipe ID → Start returns error, queue unchanged
+                string badCraftMsg = craftSession.Start("recipe_does_not_exist");
+                Check(badCraftMsg != null && badCraftMsg.Length > 0, "invalid recipe ID returns non-empty error message");
+                Check(craftSession.Engine.ActiveCraftCount == 1, "invalid recipe does not grow queue");
+
+
+                // 5.8 Second valid craft → queue grows
+                if (mechParts != null) craftInv.Add(mechParts, 5);
+                craftSession.Start("recipe_bandage");
+                Check(craftSession.Engine.ActiveCraftCount == 2, "second craft queued (two bandage crafts)");
+
+
+                // 5.9 Tick past duration → OnCraftCompleted fires once per craft
+                int craftCompletions = 0;
+                craftSession.Engine.OnCraftCompleted += _ => craftCompletions++;
+                craftSession.CompleteAll(2f); // recipe_bandage takes 1h each
+                Check(craftSession.Engine.ActiveCraftCount == 0, "both crafts completed after full tick");
+                Check(craftCompletions == 2, $"OnCraftCompleted fired exactly twice (got {craftCompletions})");
+
+
+                // 5.10 Output in inventory
+                int craftBandageAfter = craftInv.CountById("bandage");
+                Check(craftBandageAfter >= craftBandageBefore + 2,
+                    $"bandage count in inventory after crafts (was {craftBandageBefore}, now {craftBandageAfter})");
+
+
+                // 5.11 Save → TryLoad
+                if (mechParts != null) craftInv.Add(mechParts, 5);
+                craftSession.Start("recipe_bandage"); // add a partial craft
+                var craftSave = craftSession.CaptureSave();
+                Check(craftSave != null, "CaptureState returns non-null");
+                Check(craftSave.ActiveCrafts != null && craftSave.ActiveCrafts.Length == 1,
+                    "partial craft captured in save");
+
+
+                // 5.12 Restore preserves HoursRemaining
+                var craftInv2 = new Ashfall.Core.Inventory.Inventory();
+                var craftSession2 = new CraftingHostSession(craftInv2);
+                craftSession2.RestoreSave(craftSave);
+                Check(craftSession2.Engine.ActiveCraftCount == 1, "restored crafting queue has 1 entry");
+                Check(craftSession2.Engine.ActiveCrafts[0].HoursRemaining > 0f,
+                    "restored craft has positive hours remaining");
+
+
+                // 5.13 Tick restored craft to completion
+                int restoredCraftCompletions = 0;
+                craftSession2.Engine.OnCraftCompleted += _ => restoredCraftCompletions++;
+                craftSession2.CompleteAll(5f);
+                Check(restoredCraftCompletions == 1,
+                    $"restored craft completes exactly once (got {restoredCraftCompletions})");
+
+                // 5.14 No duplication: tick again after completion
+                craftSession2.CompleteAll(5f);
+                Check(restoredCraftCompletions == 1,
+                    "second tick after completion does not re-fire OnCraftCompleted");
+
+
+                // ── 6. Respiratory Affliction Verification (10 assertions) ──
+                GD.Print("[ShelterOperationsSelfTest] §6 Respiratory affliction...");
+                var phase0resp = new Phase0HostSession();
+                phase0resp.IsInAshZone = true;
+
+                // 6.1 GetOrCreate returns non-null
+                var respState = phase0resp.Respiratory.GetOrCreate("survivor_gunner_mikhail");
+                Check(respState != null, "Respiratory.GetOrCreate returns non-null state");
+
+
+                // 6.2 Ash-zone exposure accumulates degradation
+                phase0resp.Respiratory.TickHours("survivor_gunner_mikhail", 24f);
+                float respDeg = phase0resp.Respiratory.RespiratoryDegradation("survivor_gunner_mikhail");
+                Check(respDeg > 0f, $"ash-zone TickHours accumulates degradation (got {respDeg:F2})");
+
+                // 6.3 Below SevereCoughThreshold → no stamina penalty
+                if (respDeg < Ashfall.Core.Medical.RespiratoryDegenerationSystem.SevereCoughThreshold)
+                    Check(phase0resp.Respiratory.GetStaminaMultiplier("survivor_gunner_mikhail") == 1f,
+                        "stamina multiplier is 1.0 below severe cough threshold");
+
+                // 6.4 Force to severe cough → stamina penalty
+                var forcedState = phase0resp.Respiratory.GetOrCreate("survivor_forced");
+                forcedState.respiratoryDegradation = Ashfall.Core.Medical.RespiratoryDegenerationSystem.SevereCoughThreshold + 1f;
+                float mult = phase0resp.Respiratory.GetStaminaMultiplier("survivor_forced");
+                Check(mult < 1f, $"stamina multiplier < 1 when severe cough active ({mult:F2})");
+
+
+                // 6.5 ApplyInhaler reduces degradation
+                float respDegBefore = respDeg;
+                bool inhalerOk = phase0resp.Respiratory.ApplyInhaler("survivor_gunner_mikhail");
+                Check(inhalerOk, "ApplyInhaler returns true on survivor with lung damage");
+                float respDegAfter = phase0resp.Respiratory.RespiratoryDegradation("survivor_gunner_mikhail");
+                Check(respDegAfter < respDegBefore, $"ApplyInhaler reduces degradation ({respDegBefore:F2} → {respDegAfter:F2})");
+
+                // 6.6 ApplyInhaler sets relief hours
+                float inhalerRelief = phase0resp.Respiratory.InhalerReliefHours("survivor_gunner_mikhail");
+                Check(inhalerRelief == Ashfall.Core.Medical.RespiratoryDegenerationSystem.InhalerReliefDurationHours,
+                    $"inhaler relief hours set to {Ashfall.Core.Medical.RespiratoryDegenerationSystem.InhalerReliefDurationHours} (got {inhalerRelief})");
+
+                // 6.7 Inhaler suppresses stamina penalty
+                forcedState.respiratoryDegradation = Ashfall.Core.Medical.RespiratoryDegenerationSystem.SevereCoughThreshold + 1f;
+                forcedState.inhalerReliefHours = 8f;
+                Check(phase0resp.Respiratory.GetStaminaMultiplier("survivor_forced") == 1f,
+                    "inhaler relief suppresses stamina penalty");
+
+
+                // 6.8 Save round-trip preserves degradation
+                var phase0respSave = phase0resp.CaptureSave();
+                var phase0respFresh = new Phase0HostSession();
+                phase0respFresh.RestoreSave(phase0respSave);
+                float restoredRespDeg = phase0respFresh.Respiratory.RespiratoryDegradation("survivor_gunner_mikhail");
+                Check(Math.Abs(restoredRespDeg - respDegAfter) < 0.01f,
+                    $"respiratory degradation preserved across save/restore ({respDegAfter:F2} → {restoredRespDeg:F2})");
+
+                // 6.9 ApplyInhaler on healthy survivor returns false
+                var phase0b = new Phase0HostSession();
+                phase0b.Respiratory.GetOrCreate("healthy_sv"); // degradation=0
+                bool noEffect = phase0b.Respiratory.ApplyInhaler("healthy_sv");
+                Check(!noEffect, "ApplyInhaler returns false on survivor with zero degradation");
+
+                // 6.10 ApplyHerbalTea reduces mild degradation
+                var phase0c = new Phase0HostSession();
+                phase0c.IsInAshZone = true;
+                phase0c.Respiratory.TickHours("sv_mild", 10f);
+                float mildBefore = phase0c.Respiratory.RespiratoryDegradation("sv_mild");
+                if (mildBefore > 0f)
+                {
+                    phase0c.Respiratory.ApplyHerbalTea("sv_mild");
+                    Check(phase0c.Respiratory.RespiratoryDegradation("sv_mild") < mildBefore,
+                        "ApplyHerbalTea reduces mild respiratory degradation");
+                }
+
+
+                // ── 7. Integration: craft → advance → affliction → treat → persist (3 assertions) ──
+                GD.Print("[ShelterOperationsSelfTest] §7 Integration loop...");
+                var intInv = new Ashfall.Core.Inventory.Inventory();
+                var intCrafting = new CraftingHostSession(intInv);
+                var intMechDef = CraftingHostSession.Catalog.Get("scrap_mechanical");
+                if (intMechDef != null)
+                {
+                    intInv.Add(intMechDef, 5);
+                    intCrafting.Start("recipe_bandage");
+                    intCrafting.CompleteAll(2f);
+                    Check(intInv.CountById("bandage") >= 1,
+                        "integration: crafted bandage is available in inventory");
+                }
+                else
+                {
+                    Check(false, "integration: scrap_mechanical not in seed catalog");
+                }
+
+                // Expose survivor in ash zone, treat with inhaler
+                var intPhase0 = new Phase0HostSession();
+                intPhase0.IsInAshZone = true;
+                intPhase0.Respiratory.TickHours("survivor_gunner_mikhail", 24f);
+                float intDegBefore = intPhase0.Respiratory.RespiratoryDegradation("survivor_gunner_mikhail");
+                if (intDegBefore > 0f)
+                {
+                    intPhase0.Respiratory.ApplyInhaler("survivor_gunner_mikhail");
+                    var intSave = intPhase0.CaptureSave();
+                    var intRestored = new Phase0HostSession();
+                    intRestored.RestoreSave(intSave);
+                    float intDegRestored = intRestored.Respiratory.RespiratoryDegradation("survivor_gunner_mikhail");
+                    Check(intDegRestored < intDegBefore,
+                        $"integration: inhaler treatment persists across save/restore ({intDegBefore:F2} → {intDegRestored:F2})");
+                }
+
+                // Crafting queue survives save/restore under ContinueGame pattern
+                var intInv2 = new Ashfall.Core.Inventory.Inventory();
+                var intCraft2 = new CraftingHostSession(intInv2);
+                var intMechDef2 = CraftingHostSession.Catalog.Get("scrap_mechanical");
+                if (intMechDef2 != null)
+                {
+                    intInv2.Add(intMechDef2, 3);
+                    intCraft2.Start("recipe_bandage");
+                    var craftSave2 = intCraft2.CaptureSave();
+                    var intInv3 = new Ashfall.Core.Inventory.Inventory();
+                    var intCraft3 = new CraftingHostSession(intInv3);
+                    intCraft3.RestoreSave(craftSave2);
+                    Check(intCraft3.Engine.ActiveCraftCount == 1,
+                        "integration: crafting queue preserved through ContinueGame restore path");
+                }
+
+
+                GD.Print($"[ShelterOperationsSelfTest] All assertions complete. Failures so far: {failures}");
             }
             catch (Exception ex)
             {

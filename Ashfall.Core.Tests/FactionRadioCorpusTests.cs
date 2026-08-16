@@ -24,17 +24,35 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void Corpus_LoadsAllTwelveFactions()
+        public void Corpus_GuildChannelResolvesNotFallback()
+        {
+            var engine = CreateLoadedEngine();
+            var rng = new SeededRng(1009);
+
+            var chatter = engine.GetFactionEvent("current_10_the_silent_foundry_guild", RadioEventKind.InterceptChatter, 200, rng);
+            Assert.Equal("current_10_the_silent_foundry_guild", chatter.FactionId);
+            Assert.Equal("FOUNDRY FLOOR / CUPOLA SHIFT", chatter.Callsign);
+            Assert.NotEqual(RadioEventKind.Silence, chatter.Kind);
+            Assert.True(chatter.SignalStrength >= 7);
+            Assert.False(string.IsNullOrWhiteSpace(chatter.Message));
+
+            var reaction = engine.GetFactionEvent("current_10_the_silent_foundry_guild", RadioEventKind.TradeReaction, 200, rng);
+            Assert.Equal("current_10_the_silent_foundry_guild", reaction.FactionId);
+        }
+
+        [Fact]
+        public void Corpus_LoadsAllThirteenFactions()
         {
             var engine = CreateLoadedEngine();
             var factions = engine.GetAllFactions();
 
-            Assert.Equal(12, factions.Count);
+            Assert.Equal(13, factions.Count);
             var expectedFactions = new[]
             {
                 "military_remnants", "cult_of_the_glow", "scavenger_camp", "upland_militia",
                 "hydro_barons", "rot_farmers", "wire_heads", "sump_dredgers",
-                "custodians", "doomsday_preppers", "echo_bats", "safe_haven_community"
+                "custodians", "doomsday_preppers", "echo_bats", "safe_haven_community",
+                "current_10_the_silent_foundry_guild"
             };
 
             foreach (var f in expectedFactions)

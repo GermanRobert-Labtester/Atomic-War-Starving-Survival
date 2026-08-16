@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using Ashfall.Core;
+using Ashfall.Core.Crossing;
 using Ashfall.Core.Endgame;
 using Ashfall.Core.Legacy;
 
@@ -26,8 +27,11 @@ namespace AtomicWar.GodotApp
         public GreenhouseSystem Greenhouse { get; }
         public CrossingArbitrationSystem Arbitration { get; }
         public LedgerDebtSystem Ledger { get; }
+        public CrossingQuestSystem CrossingQuests { get; }
         public GenerationalSuccessionEngine Generational { get; }
         public EpilogueMatrixRuntime Epilogue { get; }
+        public Ashfall.Core.Foundry.SilentFoundrySystem SilentFoundry { get; private set; }
+        public Ashfall.Core.Foundry.SilentFoundryCatalog FoundryData { get; private set; }
 
         public ExpansionHostSession(
             WaystationSystem waystation,
@@ -49,6 +53,7 @@ namespace AtomicWar.GodotApp
             Greenhouse = greenhouse ?? new GreenhouseSystem(DefaultSeed);
             Arbitration = new CrossingArbitrationSystem();
             Ledger = new LedgerDebtSystem();
+            CrossingQuests = new CrossingQuestSystem();
             Generational = new GenerationalSuccessionEngine();
             Epilogue = new EpilogueMatrixRuntime();
 
@@ -65,7 +70,10 @@ namespace AtomicWar.GodotApp
             Greenhouse.OnPlotDriedOut += _ => StateChanged?.Invoke();
             Greenhouse.OnCropFailed += _ => StateChanged?.Invoke();
             Arbitration.OnStateChanged += _ => StateChanged?.Invoke();
-            Ledger.OnStateChanged += _ => StateChanged?.Invoke();
+            CrossingQuests.OnStateChanged += _ => StateChanged?.Invoke();
+            // When the opening vouch quest completes, soften the gate automatically
+            CrossingQuests.OnOpeningQuestCompleted += () => Vouch.SoftenAccess();
+            CrossingQuests.OnStageNarrativeEmitted += evt => OnCrossingStageNarrative?.Invoke(evt);
             Generational.OnDwellerRetired += (_, _) => StateChanged?.Invoke();
             Generational.OnTraitInherited += (_, _, _) => StateChanged?.Invoke();
             Generational.OnChapterAdvanced += _ => StateChanged?.Invoke();
@@ -73,6 +81,7 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Raised when any hub-system state changes (save dirty flag).</summary>
         public event Action StateChanged;
+        public event Action<CrossingStageNarrativeEvent>? OnCrossingStageNarrative;
 
         public static ExpansionHostSession Create(string dataDirectory, ILog log = null)
         {
@@ -86,8 +95,9 @@ namespace AtomicWar.GodotApp
             var memory = new LocationMemorySystem(files, json, log);
             memory.Load(dataDirectory);
             var quests = new StandingRecordCatalogLoader(files, json, log).Load(dataDirectory);
+            var crossingQuests = CrossingQuestCatalogLoader.Load(dataDirectory, files, json);
 
-            return new ExpansionHostSession(
+            var session = new ExpansionHostSession(
                 new WaystationSystem(),
                 layouts,
                 memory,
@@ -95,6 +105,41 @@ namespace AtomicWar.GodotApp
                 quests,
                 new VouchAccessSystem(),
                 new GreenhouseSystem(DefaultSeed));
+            session.CrossingQuests.BindCatalog(crossingQuests);
+
+            // The Silent Foundry (Exp 10): static catalogs + blueprint + treaty anchors.
+            var foundryData = new Ashfall.Core.Foundry.SilentFoundryCatalog();
+            foundryData.Load(
+                Ashfall.Core.Foundry.SilentFoundryCatalogLoader.LoadProduction(dataDirectory, files, json),
+                Ashfall.Core.Foundry.SilentFoundryCatalogLoader.LoadFaction(dataDirectory, files, json));
+            var foundry = new Ashfall.Core.Foundry.SilentFoundrySystem(log: log);
+            int maintenanceCycle = 4;
+            var blueprints = new Ashfall.Core.Narrative.BunkerBlueprintCatalog();
+            string bpPath = files.Combine(dataDirectory, "narrative", "bunker_blueprints_codex.json");
+            if (files.FileExists(bpPath))
+            {
+                blueprints.Load(files.ReadAllText(bpPath), json);
+                var bp = blueprints.GetById(Ashfall.Core.Foundry.SilentFoundryIds.BlueprintRoomId);
+                if (bp != null && bp.maintenance_cycle_days > 0) maintenanceCycle = bp.maintenance_cycle_days;
+            }
+            var treaties = new Ashfall.Core.Narrative.RegionalTreatyCatalog();
+            string treatyPath = files.Combine(dataDirectory, "narrative", "regional_treaty_protocols.json");
+            if (files.FileExists(treatyPath))
+            {
+                treaties.Load(files.ReadAllText(treatyPath), json);
+                var ratification = new System.Collections.Generic.Dictionary<string, int>(StringComparer.Ordinal);
+                for (int i = 0; i < treaties.AllTreaties.Count; i++)
+                {
+                    var t = treaties.AllTreaties[i];
+                    if (t != null && t.ratified_day > 0) ratification[t.treaty_id] = t.ratified_day;
+                }
+                foundry.BindTreaties(ratification);
+            }
+            foundry.BindCatalog(foundryData, maintenanceCycle);
+            session.SilentFoundry = foundry;
+            session.FoundryData = foundryData;
+            foundry.OnStateChanged += _ => session.StateChanged?.Invoke();
+            return session;
         }
 
         // ---- Cross-host save ----
@@ -102,11 +147,11 @@ namespace AtomicWar.GodotApp
         /// <summary>Cross-host save envelope. Shape and checksum owned by ExpansionHubSaveCodec.</summary>
         public ExpansionHubSave CaptureSave(int simDay) =>
             ExpansionHubSaveCodec.Capture(simDay, Waystation, Layouts, Memory, SiteEncounters, Vouch, Greenhouse,
-                Arbitration, Ledger);
+                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry);
 
         public void RestoreSave(ExpansionHubSave save) =>
             ExpansionHubSaveCodec.Restore(save, Waystation, Layouts, Memory, SiteEncounters, Vouch, Greenhouse,
-                Arbitration, Ledger);
+                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry);
 
         // ---- Nobody's Charter: Crossing Arbitration (Exp 04) ----
 
@@ -246,6 +291,58 @@ namespace AtomicWar.GodotApp
                 $"vouch {(string.IsNullOrEmpty(Vouch.VouchedBy) ? "none" : Vouch.VouchedBy)} · " +
                 $"burned {Vouch.VouchBurned} · softened {Vouch.AccessSoftened} · " +
                 $"last resort {(Vouch.LastResortUsed ? "used" : "available")}";
+        }
+
+        // ---- Nobody's Charter: Crossing Quests (Exp 04) ----
+
+        public bool StartCrossingQuest(string questId, int currentDay)
+            => CrossingQuests.StartQuest(questId, currentDay);
+
+        /// <summary>
+        /// Idempotent daily tick for the Crossing quest auto-start.
+        /// Only starts eligible quests once per calendar day; safe to call repeatedly.
+        /// </summary>
+        public void TickCrossingQuests(int currentDay)
+            => CrossingQuests.TickDaily(currentDay, hasVouchAccess: Vouch.HasAccess);
+
+        public int AdvanceCrossingQuestStage(string questId)
+            => CrossingQuests.AdvanceStage(questId);
+
+        public bool MakeCrossingChoice(string questId, string choiceId)
+            => CrossingQuests.MakeChoice(questId, choiceId);
+
+        public List<CrossingQuestDef> GetAvailableCrossingQuests(int currentDay)
+            => CrossingQuests.GetAvailableQuests(currentDay);
+
+        public bool FailCrossingQuest(string questId)
+            => CrossingQuests.FailQuest(questId);
+
+        public bool IsCrossingQuestFailed(string questId)
+            => CrossingQuests.IsQuestFailed(questId);
+
+        public bool IsCrossingQuestCompleted(string questId)
+            => CrossingQuests.IsQuestCompleted(questId);
+
+        public string CrossingQuestLine()
+        {
+            var sb = new StringBuilder("Crossing quests:");
+            var catalog = CrossingQuests.Catalog;
+            int shown = 0;
+            for (int i = 0; i < catalog.Count && shown < 5; i++)
+            {
+                var def = catalog[i];
+                if (def == null) continue;
+                var progress = CrossingQuests.GetProgress(def.id);
+                string status = progress == null ? "available" :
+                    progress.completed ? "done" :
+                    progress.started ? $"stage {progress.currentStage}/{def.stages.Count}" : "ready";
+                sb.Append("\n  ").Append(def.id).Append(" [").Append(status).Append("]");
+                shown++;
+            }
+            if (catalog.Count > 5)
+                sb.Append("\n  +").Append(catalog.Count - 5).Append(" more");
+            sb.Append(" · flags ").Append(CrossingQuests.State.setFlags.Count);
+            return sb.ToString();
         }
 
         // ---- Greenhouse (Exp 05) ----

@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "collection_id": "foundry_treaty_consequence_policy",
+  "policies": [
+    {
+      "treaty_id": "treaty_05_chemical_sulfur_and_acid_concession",
+      "faction_id": "current_10_the_silent_foundry_guild",
+      "outcome": "met",
+      "standing_delta": 2.0,
+      "reason": "treaty_05 acid-pipe quota met: Station 0 exchange continues, acid and sulfur terms hold.",
+      "market_modifiers": [
+        {
+          "good_id": "item_foundry_acid_pipe",
+          "demand_delta": -0.4,
+          "reason": "Compliance restores the exchange lane; the foundry's pipe stock clears at normal terms again."
+        },
+        {
+          "good_id": "coal",
+          "demand_delta": -0.15,
+          "reason": "Sulfur supply resumes; the foundry's coal purchases return to prior terms."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_05_chemical_sulfur_and_acid_concession",
+      "faction_id": "current_10_the_silent_foundry_guild",
+      "outcome": "missed",
+      "standing_delta": -6.0,
+      "reason": "treaty_05 acid-pipe quota missed: Station 0 buys pipes elsewhere; the sulfur-for-iron exchange stalls.",
+      "market_modifiers": [
+        {
+          "good_id": "item_foundry_acid_pipe",
+          "demand_delta": 0.4,
+          "reason": "Station 0 sources acid-resistant pipe from other casters; foundry pipe sits unsold (lower effective price for the foundry)."
+        },
+        {
+          "good_id": "coal",
+          "demand_delta": 0.15,
+          "reason": "Sulfur supply stalls; the foundry must pay more for coal to keep the cupola lit through the exchange gap."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_10_the_foundry_labor_and_milk_treaty",
+      "faction_id": "current_10_the_silent_foundry_guild",
+      "outcome": "met",
+      "standing_delta": 2.0,
+      "reason": "treaty_10 labor accord upheld: shifts capped, workers fed, fuel allotment unchanged.",
+      "market_modifiers": [
+        {
+          "good_id": "fuel",
+          "demand_delta": -0.25,
+          "reason": "The council and the miners' union release the fuel allotment again after compliance."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_10_the_foundry_labor_and_milk_treaty",
+      "faction_id": "current_10_the_silent_foundry_guild",
+      "outcome": "violated",
+      "standing_delta": -8.0,
+      "reason": "treaty_10 labor accord violated (strike, overtime, or child labor on the charging floor): the council and the miners' union tighten the fuel allotment.",
+      "market_modifiers": [
+        {
+          "good_id": "fuel",
+          "demand_delta": 0.25,
+          "reason": "Lockouts and unannounced strikes reduce the foundry's fuel allotment; fuel demand rises as the shelter scrambles for replacement heat."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_12_the_trans_tessarat_railway_charter",
+      "faction_id": "current_10_the_silent_foundry_guild",
+      "outcome": "met",
+      "standing_delta": 3.0,
+      "reason": "treaty_12 rail quota met: spikes and wheels delivered, coal and ore gondolas run on schedule.",
+      "market_modifiers": [
+        {
+          "good_id": "coal",
+          "demand_delta": -0.2,
+          "reason": "Railway coal gondolas run to schedule again; coal terms ease back."
+        },
+        {
+          "good_id": "item_foundry_railway_spike",
+          "demand_delta": -0.3,
+          "reason": "The corps takes the foundry's spikes again; the surplus clears at normal terms."
+        }
+      ]
+    },
+    {
+      "treaty_id": "treaty_12_the_trans_tessarat_railway_charter",
+      "faction_id": "current_10_the_silent_foundry_guild",
+      "outcome": "missed",
+      "standing_delta": -6.0,
+      "reason": "treaty_12 rail quota missed: the railway's coal and ore logistics tighten; the corps renegotiates terms.",
+      "market_modifiers": [
+        {
+          "good_id": "coal",
+          "demand_delta": 0.2,
+          "reason": "Railway coal gondolas are reprioritized to the corps; coal for the shelter becomes scarcer and dearer."
+        },
+        {
+          "good_id": "item_foundry_railway_spike",
+          "demand_delta": 0.3,
+          "reason": "The corps buys spikes elsewhere to keep the line open; the foundry's own spike stock moves slowly."
+        }
+      ]
+    }
+  ]
+}

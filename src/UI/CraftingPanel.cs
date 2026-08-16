@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Ashfall.Core.Crafting;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 
@@ -8,132 +9,331 @@ namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Crafting panel.
-    /// Shows available recipes and crafting progress.
+    /// Displays real recipes from CraftingHostSession, shows ingredient availability,
+    /// lets the player start crafts and track the active queue.
+    /// Thin presentation layer — all craft logic lives in CraftingSystem.
     /// </summary>
     public partial class CraftingPanel : Control
     {
         public event Action? OnClose;
+        public event Action? OnCraftStarted;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblRecipesTitle;
-        private VBoxContainer _recipeList;
+        public bool IsBound => _craftingHost != null;
 
-        // Placeholder recipes
-        private readonly string[] _placeholderRecipes = {
-            "Bandage (2x Cloth + 1x Water)",
-            "Ration (1x Canned Food + 1x Water)",
-            "Medkit (3x Bandage + 1x Iodine)",
-            "Gas Mask Filter (2x Charcoal + 1x Cloth)",
-            "Water Purifier (1x Sand + 1x Cloth + 1x Metal)"
-        };
-
-        // Real data from host session
         private CraftingHostSession? _craftingHost;
+        private InventoryHostSession? _inventoryHost;
 
-        public void Bind(CraftingHostSession crafting)
+        private VBoxContainer _recipeList = null!;
+        private VBoxContainer _queueList = null!;
+        private Label _queueHeader = null!;
+        private Label _filterStatus = null!;
+
+        private string _activeFilter = "all";  // "all" | "craftable" | "queued"
+        private bool _craftSubmitting; // debounce
+
+        // ── Binding ────────────────────────────────────────────────────
+
+        public void Bind(CraftingHostSession crafting, InventoryHostSession? inventory = null)
         {
             _craftingHost = crafting;
+            _inventoryHost = inventory;
+
+            // Subscribe to crafting events so the panel stays fresh
+            _craftingHost.Engine.OnCraftStarted -= OnEngineCraftStarted;
+            _craftingHost.Engine.OnCraftCompleted -= OnEngineCraftCompleted;
+            _craftingHost.Engine.OnCraftStarted += OnEngineCraftStarted;
+            _craftingHost.Engine.OnCraftCompleted += OnEngineCraftCompleted;
+
             RefreshView();
         }
 
+        private void OnEngineCraftStarted(Recipe _)
+        {
+            _craftSubmitting = false;
+            RefreshView();
+            OnCraftStarted?.Invoke();
+        }
+
+        private void OnEngineCraftCompleted(Recipe _) => RefreshView();
+
+        // ── Refresh ────────────────────────────────────────────────────
+
         public void RefreshView()
         {
-            if (_recipeList == null) return;
+            if (_recipeList == null || _queueList == null) return;
 
-            // Clear existing recipes
-            while (_recipeList.GetChildCount() > 0)
+            // Clear
+            ClearChildren(_recipeList);
+            ClearChildren(_queueList);
+
+            if (_craftingHost == null)
             {
-                _recipeList.RemoveChild(_recipeList.GetChild(0));
+                _recipeList.AddChild(AshfallUiHelpers.MakeMetadata("No crafting session bound."));
+                return;
             }
 
-            if (_craftingHost != null)
+            // ── Recipe list ────────────────────────────────────────────
+            int shown = 0;
+            foreach (var recipe in _craftingHost.Recipes)
             {
-                // Bind real crafting data (placeholder - actual implementation would use real recipe API)
-                for (int i = 0; i < _placeholderRecipes.Length; i++)
+                if (recipe == null) continue;
+
+                bool canCraft = _craftingHost.Engine.CanCraft(recipe);
+
+                if (_activeFilter == "craftable" && !canCraft) continue;
+                if (_activeFilter == "queued") continue; // queued-only shown in queue section
+
+                _recipeList.AddChild(MakeRecipeCard(recipe, canCraft));
+                shown++;
+            }
+
+            if (shown == 0)
+                _recipeList.AddChild(AshfallUiHelpers.MakeMetadata(
+                    _activeFilter == "craftable" ? "No recipes currently craftable." : "No recipes available."));
+
+            // ── Active queue ───────────────────────────────────────────
+            bool hasActive = _craftingHost.Engine.ActiveCraftCount > 0;
+            _queueHeader.Text = hasActive
+                ? $"CRAFTING QUEUE  [{_craftingHost.Engine.ActiveCraftCount} active]"
+                : "CRAFTING QUEUE  [idle]";
+
+            if (hasActive)
+            {
+                foreach (var active in _craftingHost.Engine.ActiveCrafts)
                 {
-                    var recipeLabel = new Label { Text = _placeholderRecipes[i] };
-                    recipeLabel.CustomMinimumSize = new Vector2(400, 50);
-                    recipeLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                    recipeLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                    _recipeList.AddChild(recipeLabel);
+                    if (active?.Recipe == null) continue;
+                    _queueList.AddChild(MakeQueueRow(active));
                 }
             }
             else
             {
-                // Fall back to placeholders
-                foreach (string recipe in _placeholderRecipes)
-                {
-                    var recipeLabel = new Label { Text = recipe };
-                    recipeLabel.CustomMinimumSize = new Vector2(400, 50);
-                    recipeLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                    recipeLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                    _recipeList.AddChild(recipeLabel);
-                }
+                _queueList.AddChild(AshfallUiHelpers.MakeMetadata("No active crafts. Start a recipe above."));
             }
         }
+
+        private Control MakeRecipeCard(Recipe recipe, bool canCraft)
+        {
+            var card = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            card.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+
+            // Header row: name + duration
+            var headerRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            var nameLabel = AshfallUiHelpers.MakeSmall(recipe.recipeName.ToUpperInvariant());
+            nameLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            nameLabel.AddThemeColorOverride("font_color",
+                AshfallUiHelpers.ToColor(canCraft ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim));
+            headerRow.AddChild(nameLabel);
+
+            var duration = AshfallUiHelpers.MakeMono($"{recipe.craftingTimeHours:F0}h");
+            headerRow.AddChild(duration);
+            card.AddChild(headerRow);
+
+            // Output row
+            string outputText = recipe.result != null
+                ? $"→ {recipe.result.displayName} ×{recipe.resultAmount}"
+                : "→ [unknown output]";
+            if (!string.IsNullOrEmpty(recipe.requiredStationId))
+                outputText += $"  [station: {recipe.requiredStationId}]";
+            var outputLabel = AshfallUiHelpers.MakeMetadata(outputText);
+            card.AddChild(outputLabel);
+
+            // Ingredient rows
+            foreach (var ing in recipe.ingredients)
+            {
+                if (ing?.item == null) continue;
+                int held = CountItem(ing.item.id);
+                bool sufficient = held >= ing.amount;
+                var ingRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingXs);
+
+                var statusMark = AshfallUiHelpers.MakeMono(sufficient ? "[OK] " : "[!!] ");
+                statusMark.AddThemeColorOverride("font_color",
+                    AshfallUiHelpers.ToColor(sufficient ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Critical));
+                ingRow.AddChild(statusMark);
+
+                var ingLabel = AshfallUiHelpers.MakeSmall(
+                    $"{ing.item.displayName} ×{ing.amount}  (held: {held})");
+                ingLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                ingRow.AddChild(ingLabel);
+                card.AddChild(ingRow);
+            }
+
+            // Craft button
+            var actionRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            string recipeId = recipe.id;
+            var btnCraft = AshfallUiHelpers.MakeButton(
+                canCraft ? $"CRAFT {recipe.result?.displayName ?? "item"}" : "INGREDIENTS NEEDED",
+                () =>
+                {
+                    if (_craftSubmitting) return;
+                    _craftSubmitting = true;
+                    _craftingHost?.Start(recipeId);
+                });
+            btnCraft.Disabled = !canCraft || _craftSubmitting;
+            btnCraft.CustomMinimumSize = new Vector2(200, 30);
+            actionRow.AddChild(btnCraft);
+
+            if (!canCraft)
+            {
+                string reason = GetCraftBlockReason(recipe);
+                var reasonLabel = AshfallUiHelpers.MakeMetadata(reason);
+                reasonLabel.AddThemeColorOverride("font_color",
+                    AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+                actionRow.AddChild(reasonLabel);
+            }
+
+            card.AddChild(actionRow);
+
+            var panel = AshfallUiHelpers.MakePanel();
+            panel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            panel.AddChild(card);
+            return panel;
+        }
+
+        private Control MakeQueueRow(ActiveCraft active)
+        {
+            var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            row.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+
+            var name = AshfallUiHelpers.MakeSmall(active.Recipe.recipeName);
+            name.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            row.AddChild(name);
+
+            var time = AshfallUiHelpers.MakeMono($"{active.HoursRemaining:F1}h remaining");
+            time.AddThemeColorOverride("font_color",
+                AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+            row.AddChild(time);
+
+            return row;
+        }
+
+        private int CountItem(string id)
+        {
+            if (_inventoryHost == null) return 0;
+            return _inventoryHost.Inventory.CountById(id);
+        }
+
+        private string GetCraftBlockReason(Recipe recipe)
+        {
+            if (recipe.ingredients != null)
+            {
+                foreach (var ing in recipe.ingredients)
+                {
+                    if (ing?.item == null) continue;
+                    if (CountItem(ing.item.id) < ing.amount)
+                        return $"Need {ing.item.displayName} ×{ing.amount}";
+                }
+            }
+            if (!string.IsNullOrEmpty(recipe.requiredStationId))
+            {
+                var station = _craftingHost?.Engine.GetStation(recipe.requiredStationId);
+                if (station == null || !station.IsOperational)
+                    return $"Station '{recipe.requiredStationId}' unavailable";
+            }
+            return "Cannot craft";
+        }
+
+        private static void ClearChildren(Node parent)
+        {
+            while (parent.GetChildCount() > 0)
+            {
+                var child = parent.GetChild(0);
+                parent.RemoveChild(child);
+                child.QueueFree();
+            }
+        }
+
+        // ── Godot lifecycle ────────────────────────────────────────────
 
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            // Background overlay
-            var bg = new ColorRect
-            {
-                Color = new Color(0.05f, 0.05f, 0.05f, 0.92f)
-            };
+            var bg = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.90f) };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            // Content container
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+            var center = new CenterContainer();
+            center.SetAnchorsPreset(LayoutPreset.FullRect);
+            AddChild(center);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(500, 0);
-            container.AddChild(vbox);
+            var panel = AshfallUiHelpers.MakePanel(720, 600);
+            center.AddChild(panel);
 
-            // Title
-            var title = AshfallUiHelpers.MakeTitle("CRAFTING", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
+            var margins = AshfallUiHelpers.MakeMargins(Ashfall.Core.UI.Theme.SpacingMd);
+            panel.AddChild(margins);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            margins.AddChild(vbox);
 
-            // Recipes section
-            _lblRecipesTitle = AshfallUiHelpers.MakeSectionHeader("AVAILABLE RECIPES");
-            vbox.AddChild(_lblRecipesTitle);
-
-            _recipeList = new VBoxContainer();
-            _recipeList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _recipeList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_recipeList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Close button
+            // ── Title bar ─────────────────────────────────────────────
+            var titleRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            var title = AshfallUiHelpers.MakeTitle("CRAFTING // WORKBENCH", Ashfall.Core.UI.Theme.FontSizeH2);
+            title.HorizontalAlignment = HorizontalAlignment.Left;
+            title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            titleRow.AddChild(title);
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
+            btnClose.CustomMinimumSize = new Vector2(110, 32);
+            titleRow.AddChild(btnClose);
+            vbox.AddChild(titleRow);
 
-            // Keyboard shortcut
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
+            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── Filter tabs ────────────────────────────────────────────
+            var filterRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            _filterStatus = AshfallUiHelpers.MakeSmall("Filter:");
+            filterRow.AddChild(_filterStatus);
+
+            foreach (var (label, key) in new[] { ("ALL", "all"), ("CRAFTABLE NOW", "craftable") })
+            {
+                string filterKey = key;
+                var btn = AshfallUiHelpers.MakeButton(label, () =>
+                {
+                    _activeFilter = filterKey;
+                    RefreshView();
+                });
+                btn.CustomMinimumSize = new Vector2(120, 28);
+                filterRow.AddChild(btn);
+            }
+            vbox.AddChild(filterRow);
+
+            // ── Scrollable recipe list ─────────────────────────────────
+            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("AVAILABLE RECIPES"));
+            var recipeScroll = new ScrollContainer
+            {
+                CustomMinimumSize = new Vector2(680, 280),
+                SizeFlagsVertical = SizeFlags.ExpandFill
+            };
+            vbox.AddChild(recipeScroll);
+
+            _recipeList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            _recipeList.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            recipeScroll.AddChild(_recipeList);
+
+            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── Queue section ──────────────────────────────────────────
+            _queueHeader = AshfallUiHelpers.MakeSectionHeader("CRAFTING QUEUE  [idle]");
+            vbox.AddChild(_queueHeader);
+
+            _queueList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            _queueList.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            vbox.AddChild(_queueList);
+
+            RefreshView();
         }
 
         public void Open()
         {
             Visible = true;
+            _craftSubmitting = false;
+            RefreshView();
             QueueRedraw();
         }
 
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-
             if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
             {
                 OnClose?.Invoke();

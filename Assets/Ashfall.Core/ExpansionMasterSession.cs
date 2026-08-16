@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using Ashfall.Core.Foundry;
+using Ashfall.Core.Narrative;
 
 namespace Ashfall.Core
 {
@@ -11,6 +14,7 @@ namespace Ashfall.Core
     /// - Expansion 02: The Duty Roster (Allocation 12 Interior, Chart State, Morale Marks, Labour Shifts)
     /// - Expansion 03: The Standing Record (Ground Layouts, Room Hierarchies, Site Stencils)
     /// - Expansion 04: Nobody's Charter (The Crossing Viaduct, Vouch Access, The Scale Bloc)
+    /// plus the silent-foundry production hub (Expansion 10).
     /// </summary>
     public sealed class ExpansionMasterSession
     {
@@ -21,6 +25,8 @@ namespace Ashfall.Core
         public CrossingSession Crossing { get; }
         public SimClock Clock { get; }
         public ILog Log { get; }
+        public SilentFoundrySystem SilentFoundry { get; }
+        public SilentFoundryCatalog FoundryData { get; }
 
         public bool AllExpansionsActive =>
             Holdfast.IceRoad.IsUnlocked &&
@@ -35,7 +41,9 @@ namespace Ashfall.Core
             LocationLayoutSystem standingRecord,
             CrossingSession crossing,
             SimClock clock,
-            ILog log = null)
+            ILog log = null,
+            SilentFoundrySystem silentFoundry = null,
+            SilentFoundryCatalog foundryData = null)
         {
             Holdfast = holdfast ?? throw new ArgumentNullException(nameof(holdfast));
             DutyRoster = dutyRoster ?? throw new ArgumentNullException(nameof(dutyRoster));
@@ -44,6 +52,8 @@ namespace Ashfall.Core
             Crossing = crossing ?? throw new ArgumentNullException(nameof(crossing));
             Clock = clock ?? throw new ArgumentNullException(nameof(clock));
             Log = log ?? NullLog.Instance;
+            SilentFoundry = silentFoundry ?? new SilentFoundrySystem(log: log);
+            FoundryData = foundryData ?? new SilentFoundryCatalog();
         }
 
         public static ExpansionMasterSession Load(string dataDirectory, int seed = 808, ILog log = null)
@@ -72,7 +82,45 @@ namespace Ashfall.Core
             // Expansion 4: Nobody's Charter
             var crossing = CrossingSession.Load(dataDirectory, log);
 
-            return new ExpansionMasterSession(holdfast, dutySys, dutyData, layoutSys, crossing, clock, log);
+            // Expansion 10: The Silent Foundry — static catalogs + blueprint/treaty anchors.
+            var foundryData = new SilentFoundryCatalog();
+            foundryData.Load(
+                SilentFoundryCatalogLoader.LoadProduction(dataDirectory, files, json),
+                SilentFoundryCatalogLoader.LoadFaction(dataDirectory, files, json));
+            var foundry = new SilentFoundrySystem(log: log);
+            var consequencePolicy = new SilentFoundryConsequencePolicyCatalog();
+            consequencePolicy.Load(SilentFoundryConsequenceCatalogLoader.Load(dataDirectory, files, json));
+            foundry.BindConsequencePolicy(consequencePolicy);
+            int maintenanceCycle = 4;
+            var blueprints = new BunkerBlueprintCatalog();
+            string bpJson = files.FileExists(Path.Combine(dataDirectory, "narrative", "bunker_blueprints_codex.json"))
+                ? files.ReadAllText(Path.Combine(dataDirectory, "narrative", "bunker_blueprints_codex.json"))
+                : string.Empty;
+            if (!string.IsNullOrEmpty(bpJson))
+            {
+                blueprints.Load(bpJson, json);
+                var bp = blueprints.GetById(SilentFoundryIds.BlueprintRoomId);
+                if (bp != null && bp.maintenance_cycle_days > 0) maintenanceCycle = bp.maintenance_cycle_days;
+            }
+            var treaties = new RegionalTreatyCatalog();
+            string treatyJson = files.FileExists(Path.Combine(dataDirectory, "narrative", "regional_treaty_protocols.json"))
+                ? files.ReadAllText(Path.Combine(dataDirectory, "narrative", "regional_treaty_protocols.json"))
+                : string.Empty;
+            if (!string.IsNullOrEmpty(treatyJson))
+            {
+                treaties.Load(treatyJson, json);
+                var ratification = new Dictionary<string, int>(StringComparer.Ordinal);
+                for (int i = 0; i < treaties.AllTreaties.Count; i++)
+                {
+                    var t = treaties.AllTreaties[i];
+                    if (t != null && t.ratified_day > 0) ratification[t.treaty_id] = t.ratified_day;
+                }
+                foundry.BindTreaties(ratification);
+            }
+            foundry.BindCatalog(foundryData, maintenanceCycle);
+
+            return new ExpansionMasterSession(holdfast, dutySys, dutyData, layoutSys, crossing, clock, log,
+                foundry, foundryData);
         }
 
         /// <summary>
@@ -94,7 +142,10 @@ namespace Ashfall.Core
                 DutyRoster.TickMorning(day, homeOccupants);
             }
 
-            Log.Info($"[ExpansionMasterSession] Ticked day {day} across all 4 expansions.");
+            // 3. Tick The Silent Foundry (Exp 10)
+            SilentFoundry.TickDaily(day);
+
+            Log.Info($"[ExpansionMasterSession] Ticked day {day} across all 4 expansions + Silent Foundry.");
         }
 
         /// <summary>
@@ -116,7 +167,8 @@ namespace Ashfall.Core
                 ("Nobody's Charter (Exp 04)", CrossingHeadlessDemo.Run(dataDirectory, log)),
                 ("Crossing Arbitration", CrossingArbitrationHeadlessDemo.Run(log)),
                 ("Ledger Debt", LedgerDebtHeadlessDemo.Run(log)),
-                ("Glass Orchard (Exp 05)", GreenhouseHeadlessDemo.Run(log))
+                ("Glass Orchard (Exp 05)", GreenhouseHeadlessDemo.Run(log)),
+                ("Silent Foundry (Exp 10)", SilentFoundryHeadlessDemo.Run(dataDirectory, log))
             };
 
             for (int i = 0; i < reports.Count; i++)

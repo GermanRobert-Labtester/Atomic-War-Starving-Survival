@@ -85,6 +85,15 @@ namespace Ashfall.Core.Expeditions
 
         private readonly Dictionary<string, ExpeditionState> _active = new Dictionary<string, ExpeditionState>();
 
+        /// <summary>
+        /// Optional per-survivor stamina-drain multiplier hook (0..N). Set by the
+        /// host so Phase-0 effects (respiratory severe cough, phantom work refusal,
+        /// guilt insomnia fatigue) reach the real expedition stamina consumer.
+        /// Returns 1.0 when unset or unknown. The multiplier is applied to the
+        /// base per-hour drain in ApplyStaminaDrain.
+        /// </summary>
+        private Func<string, float> _staminaDrainMultiplier;
+
         public event Action<ExpeditionState> OnExpeditionStarted;
         public event Action<ExpeditionState> OnExpeditionTick;
         public event Action<ExpeditionState> OnPhaseChanged;
@@ -96,6 +105,16 @@ namespace Ashfall.Core.Expeditions
 
         public ExpeditionSystem()
         {
+        }
+
+        /// <summary>
+        /// Bind the per-survivor stamina-drain multiplier. Hosts wire Phase-0
+        /// respiratory/guilt/phantom effects here so they alter real expedition
+        /// stamina consumption rather than living in a display value.
+        /// </summary>
+        public void SetStaminaDrainMultiplier(Func<string, float> multiplier)
+        {
+            _staminaDrainMultiplier = multiplier;
         }
 
         public IReadOnlyDictionary<string, ExpeditionState> Active => _active;
@@ -315,6 +334,16 @@ namespace Ashfall.Core.Expeditions
                 ? Math.Clamp(exp.currentWeightKg / exp.maxLootCapacityKg, 0f, 1f)
                 : 0f;
             drain += loadRatio * EncumberPenaltyPerTickMax * hours;
+
+            // Phase-0 effect hook: respiratory severe cough, guilt insomnia
+            // fatigue, phantom work refusal etc. increase the drain for this
+            // survivor (multiplier defaults to 1.0 when unset/unknown).
+            if (_staminaDrainMultiplier != null && !string.IsNullOrEmpty(exp.survivorId))
+            {
+                float mult = _staminaDrainMultiplier(exp.survivorId);
+                if (mult > 0f) drain *= mult;
+            }
+
             exp.stamina = Math.Clamp(exp.stamina - drain, 0f, MaxStamina);
         }
 

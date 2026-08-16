@@ -96,6 +96,33 @@ namespace Ashfall.Core.Narrative
             return results;
         }
 
+        /// <summary>
+        /// Exact-faction lookup. The substring API above can collide across the
+        /// `current_` vocabulary (e.g. current_1 matches current_10..16), so
+        /// treaty wiring MUST use this exact match against the canonical faction
+        /// id, never a snippet.
+        /// </summary>
+        public List<RegionalTreatyEntry> GetByExactSignatoryFaction(string factionId)
+        {
+            var results = new List<RegionalTreatyEntry>();
+            if (string.IsNullOrEmpty(factionId)) return results;
+
+            for (int i = 0; i < _allTreaties.Count; i++)
+            {
+                var t = _allTreaties[i];
+                if (t.signatory_factions == null) continue;
+                for (int j = 0; j < t.signatory_factions.Length; j++)
+                {
+                    if (string.Equals(t.signatory_factions[j], factionId, StringComparison.Ordinal))
+                    {
+                        results.Add(t);
+                        break;
+                    }
+                }
+            }
+            return results;
+        }
+
         public List<RegionalTreatyEntry> GetByTag(string tag)
         {
             var results = new List<RegionalTreatyEntry>();

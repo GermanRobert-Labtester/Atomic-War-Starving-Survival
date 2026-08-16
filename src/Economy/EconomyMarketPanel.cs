@@ -19,6 +19,11 @@ namespace AtomicWar.GodotApp.Economy
         private Label _lblSummary;
         private bool _fallbackObserved;
 
+        // Optional guild-stance binding: when present, the summary strip shows
+        // the Foundry Guild's real trade access (derived from the durable ledger).
+        private Ashfall.Core.Economy.IFactionStanceProvider? _stanceProvider;
+        private string _stanceFactionId = string.Empty;
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.TopRight);
@@ -72,6 +77,18 @@ namespace AtomicWar.GodotApp.Economy
                 _session.StateChanged += RefreshView;
         }
 
+        /// <summary>
+        /// Bind the guild stance surface so the live market strip shows the
+        /// Foundry Guild's trade access (Trade / Rob / HostileRaid) and trust.
+        /// The provider is the existing FactionStanceEngine; no new authority.
+        /// </summary>
+        public void BindStance(Ashfall.Core.Economy.IFactionStanceProvider provider, string factionId)
+        {
+            _stanceProvider = provider;
+            _stanceFactionId = factionId ?? string.Empty;
+            RefreshView();
+        }
+
         public void UnbindSession()
         {
             if (_session == null) return;
@@ -95,6 +112,22 @@ namespace AtomicWar.GodotApp.Economy
             _lblSummary.Text =
                 $"Day {_session.Market.Day} · ledger {_session.Market.State.ledger.Count} lines · " +
                 $"supplies {( _session.Market.IsSuppliesShort() ? "SHORT" : "normal")}";
+
+            if (_stanceProvider != null && !string.IsNullOrEmpty(_stanceFactionId))
+            {
+                var stance = _stanceProvider.GetStance(_stanceFactionId);
+                float trust = _stanceProvider.GetEffectiveTrust(_stanceFactionId);
+                string access = stance switch
+                {
+                    Ashfall.Core.Economy.TradeStance.Trade => "open",
+                    Ashfall.Core.Economy.TradeStance.ShareIntel => "open (intel)",
+                    Ashfall.Core.Economy.TradeStance.Refuse => "REFUSED",
+                    Ashfall.Core.Economy.TradeStance.Rob => "BLOCKED — ROBBERY RISK",
+                    Ashfall.Core.Economy.TradeStance.HostileRaid => "BLOCKED — HOSTILE",
+                    _ => stance.ToString()
+                };
+                _lblSummary.Text += $" · FOUNDRY GUILD stall {access} · trust {trust:F0}";
+            }
 
             foreach (var good in _session.Catalog.All())
             {

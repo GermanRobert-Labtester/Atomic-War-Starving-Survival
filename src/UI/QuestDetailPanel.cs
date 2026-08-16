@@ -1,124 +1,204 @@
 using System;
+using System.Collections.Generic;
 using Godot;
+using Ashfall.Core;
+using Ashfall.Core.Crossing;
 using Ashfall.Core.UI;
-using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Quest Detail panel.
-    /// Shows detailed quest information, objectives, progress, and quest rewards.
+    /// Shows comprehensive mission dossier, narrative briefing, step-by-step stage objectives,
+    /// branching decisions, target location coordinates, and operational rewards.
     /// </summary>
     public partial class QuestDetailPanel : Control
     {
         public event Action? OnClose;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblQuestInfoTitle;
-        private VBoxContainer _questInfo;
-        private Label _lblObjectivesTitle;
-        private VBoxContainer _objectivesList;
-        private Label _lblProgressTitle;
-        private VBoxContainer _progressList;
-        private Label _lblRewardsTitle;
-        private VBoxContainer _rewardsList;
+        private VBoxContainer _infoContainer = null!;
+        private VBoxContainer _stagesContainer = null!;
+        private VBoxContainer _choicesContainer = null!;
+        private VBoxContainer _rewardsContainer = null!;
+        private Label _titleLabel = null!;
 
-        // Placeholder quest data
-        private readonly string[] _placeholderQuestInfo = {
-            "Quest: Find Clean Water Source",
-            "Type: Main Story Quest",
-            "Difficulty: Medium",
-            "Status: Active",
-            "Day Started: 12",
-            "Estimated Completion: Day 15"
-        };
-
-        private readonly string[] _placeholderObjectives = {
-            "Explore 3 sectors within 5km radius",
-            "Locate potential clean water source",
-            "Test water quality (requires water filter)",
-            "Return to bunker with clean water sample",
-            "Report findings to Elena (Leader)"
-        };
-
-        private readonly string[] _placeholderProgress = {
-            "Sectors explored: 2/3 (67%)",
-            "Water source located: Yes (Sector 8)",
-            "Water tested: No (pending water filter)",
-            "Sample collected: No (pending water test)",
-            "Report submitted: No (pending sample)"
-        };
-
-        private readonly string[] _placeholderRewards = {
-            "+20 Rations — Food supply bonus",
-            "+10 Morale — Community morale boost",
-            "+5 Knowledge — Water purification research",
-            "Unlock: Advanced Water Filter recipe",
-            "Unlock: Hydroponic irrigation system"
-        };
-
-        // Real data from host session
-        // private QuestHostSession? _questHost;
-        // private string _selectedQuestId;
-
-        public void Bind(object quest, string questId) // placeholder for QuestHostSession
+        public void Bind(
+            string questId,
+            string displayName,
+            string type,
+            string briefing,
+            int currentStage,
+            List<string> stages,
+            List<string>? choices = null,
+            string? targetLocation = null,
+            string? rewards = null,
+            bool isCompleted = false)
         {
-            // _questHost = (QuestHostSession)quest;
-            // _selectedQuestId = questId;
-            // RefreshView();
+            if (_titleLabel != null)
+                _titleLabel.Text = $"OPERATION DOSSIER // {displayName.ToUpperInvariant()}";
+
+            if (_infoContainer == null || _stagesContainer == null ||
+                _choicesContainer == null || _rewardsContainer == null)
+                return;
+
+            while (_infoContainer.GetChildCount() > 0)
+                _infoContainer.RemoveChild(_infoContainer.GetChild(0));
+            while (_stagesContainer.GetChildCount() > 0)
+                _stagesContainer.RemoveChild(_stagesContainer.GetChild(0));
+            while (_choicesContainer.GetChildCount() > 0)
+                _choicesContainer.RemoveChild(_choicesContainer.GetChild(0));
+            while (_rewardsContainer.GetChildCount() > 0)
+                _rewardsContainer.RemoveChild(_rewardsContainer.GetChild(0));
+
+            // ── 1. Quest Profile Card ──
+            var infoCard = AshfallUiHelpers.MakeCardFrame("MISSION OVERVIEW & DIRECTIVE", questId);
+            var infoBox = infoCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            infoBox.AddChild(AshfallUiHelpers.MakeDataRow("Classification", type, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            infoBox.AddChild(AshfallUiHelpers.MakeDataRow("Operational Status", isCompleted ? "COMPLETED & VERIFIED" : "ACTIVE DIRECTIVE", AshfallUiHelpers.ToColor(isCompleted ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Hot)));
+            infoBox.AddChild(AshfallUiHelpers.MakeDataRow("Target Sector", string.IsNullOrEmpty(targetLocation) ? "District 8 / Sector Grid" : targetLocation, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+
+            infoBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            string fullBriefing = string.IsNullOrEmpty(briefing) ? "Standard survival protocol directive. Complete the assigned tasks to secure shelter infrastructure and ensure cohort continuity." : briefing;
+            var bodyLbl = AshfallUiHelpers.MakeBody(fullBriefing);
+            infoBox.AddChild(bodyLbl);
+            _infoContainer.AddChild(infoCard);
+
+            // ── 2. Step-by-Step Stage Breakdown ──
+            var stageCard = AshfallUiHelpers.MakeCardFrame("OPERATIONAL STAGES & OBJECTIVES", $"PROGRESS: {Math.Min(currentStage + 1, stages.Count)} / {stages.Count}");
+            var stageBox = stageCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            for (int i = 0; i < stages.Count; i++)
+            {
+                bool done = isCompleted || i < currentStage;
+                bool active = !isCompleted && i == currentStage;
+
+                string prefix = done ? "[✓]" : (active ? "[►]" : "[ ]");
+                string stageText = $"{prefix} Stage {i + 1}: {stages[i]}";
+
+                var stageLbl = AshfallUiHelpers.MakeBody(stageText);
+                if (active)
+                {
+                    stageLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+                    stageLbl.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH3);
+                }
+                else if (done)
+                {
+                    stageLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+                }
+                else
+                {
+                    stageLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+                }
+                stageBox.AddChild(stageLbl);
+            }
+            _stagesContainer.AddChild(stageCard);
+
+            // ── 3. Branching Decisions & Choices ──
+            var choiceCard = AshfallUiHelpers.MakeCardFrame("CRITICAL DECISION GATES & BRANCHES", "TACTICAL CHOICE");
+            var choiceBox = choiceCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            if (choices != null && choices.Count > 0)
+            {
+                foreach (var choice in choices)
+                {
+                    choiceBox.AddChild(AshfallUiHelpers.MakeDataRow("Available Path", choice, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                }
+            }
+            else
+            {
+                choiceBox.AddChild(AshfallUiHelpers.MakeDataRow("Linear Protocol", "Standard sequential execution required. No divergent ideological branches.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            }
+            _choicesContainer.AddChild(choiceCard);
+
+            // ── 4. Rewards & Unlocks ──
+            var rewardCard = AshfallUiHelpers.MakeCardFrame("COMPLETION REWARDS & INTEL UNLOCKS", "YIELD");
+            var rewardBox = rewardCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            string rewText = string.IsNullOrEmpty(rewards) ? "+10 Morale, +20 Survival Supplies, +1 Codex Knowledge Node" : rewards;
+            rewardBox.AddChild(AshfallUiHelpers.MakeDataRow("Cohort Compensation", rewText, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            rewardBox.AddChild(AshfallUiHelpers.MakeDataRow("Strategic Impact", "Advances Holdfast survival timeline and strengthens shelter structural security.", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            _rewardsContainer.AddChild(rewardCard);
         }
 
-        public void RefreshView()
+        public void Bind(HoldfastQuestEntry? holdfastDef, HoldfastQuestProgress? progress = null)
         {
-            if (_questInfo == null || _objectivesList == null || _progressList == null || _rewardsList == null) return;
+            if (holdfastDef == null) return;
 
-            // Clear existing lists
-            while (_questInfo.GetChildCount() > 0)
-                _questInfo.RemoveChild(_questInfo.GetChild(0));
-            while (_objectivesList.GetChildCount() > 0)
-                _objectivesList.RemoveChild(_objectivesList.GetChild(0));
-            while (_progressList.GetChildCount() > 0)
-                _progressList.RemoveChild(_progressList.GetChild(0));
-            while (_rewardsList.GetChildCount() > 0)
-                _rewardsList.RemoveChild(_rewardsList.GetChild(0));
-
-            // Display placeholder quest info
-            foreach (string info in _placeholderQuestInfo)
+            var stages = new List<string>();
+            if (holdfastDef.stages != null && holdfastDef.stages.Length > 0)
             {
-                var label = new Label { Text = info };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _questInfo.AddChild(label);
+                foreach (var s in holdfastDef.stages)
+                    stages.Add(s?.text ?? "Operational step");
+            }
+            else
+            {
+                stages.Add("Perform preliminary survey");
+                stages.Add("Secure primary site objective");
+                stages.Add("Report findings to leadership");
             }
 
-            // Display placeholder objectives
-            foreach (string objective in _placeholderObjectives)
+            var choices = new List<string>();
+            if (holdfastDef.choices != null)
             {
-                var label = new Label { Text = objective };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _objectivesList.AddChild(label);
+                foreach (var c in holdfastDef.choices)
+                    choices.Add(c?.text ?? "Choice");
             }
 
-            // Display placeholder progress
-            foreach (string progress in _placeholderProgress)
+            int curStage = progress?.stage ?? 0;
+            bool isComp = progress?.completed ?? false;
+
+            Bind(
+                holdfastDef.id,
+                holdfastDef.display_name ?? holdfastDef.id,
+                "Main Story // Holdfast Protocol",
+                holdfastDef.briefing ?? "",
+                curStage,
+                stages,
+                choices,
+                holdfastDef.target_location_id,
+                "+20 Food Rations, +10 Water, +5 Morale",
+                isComp);
+        }
+
+        public void Bind(CrossingQuestDef? crossingDef, CrossingQuestProgress? progress = null)
+        {
+            if (crossingDef == null) return;
+
+            var stages = new List<string>();
+            if (crossingDef.stages != null && crossingDef.stages.Count > 0)
             {
-                var label = new Label { Text = progress };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _progressList.AddChild(label);
+                foreach (var s in crossingDef.stages)
+                    stages.Add(s?.text ?? "Crossing objective");
+            }
+            else
+            {
+                stages.Add("Negotiate transit rights");
+                stages.Add("Fulfill arbitration terms");
             }
 
-            // Display placeholder rewards
-            foreach (string reward in _placeholderRewards)
+            var choices = new List<string>();
+            if (crossingDef.choices != null)
             {
-                var label = new Label { Text = reward };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
-                _rewardsList.AddChild(label);
+                foreach (var c in crossingDef.choices)
+                    choices.Add(c?.text ?? "Choice");
             }
+
+            int curStage = progress?.currentStage ?? 0;
+            bool isComp = progress?.completed ?? false;
+
+            Bind(
+                crossingDef.id,
+                crossingDef.display_name,
+                "Nobody's Charter // Crossing Quest",
+                crossingDef.briefing,
+                curStage,
+                stages,
+                choices,
+                crossingDef.target_location_id,
+                "Vouch Access Authorization, Crossing Transit Rights",
+                isComp);
         }
 
         public override void _Ready()
@@ -126,76 +206,59 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
+            var bg = new ColorRect { Color = new Color(0.03f, 0.04f, 0.05f, 0.96f) };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+            var scroll = new ScrollContainer();
+            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
+            scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
+            AddChild(scroll);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
+            var center = new CenterContainer();
+            center.SetAnchorsPreset(LayoutPreset.FullRect);
+            center.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            center.SizeFlagsVertical = SizeFlags.ExpandFill;
+            scroll.AddChild(center);
 
-            var title = AshfallUiHelpers.MakeTitle("QUEST DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
+            var rootBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            rootBox.CustomMinimumSize = new Vector2(760, 0);
+            center.AddChild(rootBox);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _titleLabel = AshfallUiHelpers.MakeTitle("OPERATION DOSSIER & DIRECTIVE", Ashfall.Core.UI.Theme.FontSizeH1);
+            _titleLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            rootBox.AddChild(_titleLabel);
 
-            // Quest info section
-            _lblQuestInfoTitle = AshfallUiHelpers.MakeSectionHeader("QUEST INFORMATION");
-            vbox.AddChild(_lblQuestInfoTitle);
+            var sub = AshfallUiHelpers.MakeMetadata("Detailed mission briefing, step-by-step objectives, decision branches, and reward specifications.");
+            sub.HorizontalAlignment = HorizontalAlignment.Center;
+            sub.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            rootBox.AddChild(sub);
 
-            _questInfo = new VBoxContainer();
-            _questInfo.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _questInfo.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_questInfo);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _infoContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_infoContainer);
 
-            // Objectives section
-            _lblObjectivesTitle = AshfallUiHelpers.MakeSectionHeader("OBJECTIVES");
-            vbox.AddChild(_lblObjectivesTitle);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _objectivesList = new VBoxContainer();
-            _objectivesList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _objectivesList.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_objectivesList);
+            _stagesContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_stagesContainer);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Progress section
-            _lblProgressTitle = AshfallUiHelpers.MakeSectionHeader("PROGRESS");
-            vbox.AddChild(_lblProgressTitle);
+            _choicesContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_choicesContainer);
 
-            _progressList = new VBoxContainer();
-            _progressList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _progressList.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_progressList);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _rewardsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_rewardsContainer);
 
-            // Rewards section
-            _lblRewardsTitle = AshfallUiHelpers.MakeSectionHeader("REWARDS");
-            vbox.AddChild(_lblRewardsTitle);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _rewardsList = new VBoxContainer();
-            _rewardsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _rewardsList.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_rewardsList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
+            var btnClose = AshfallUiHelpers.MakeButton("RETURN TO QUESTS [Esc]", () => OnClose?.Invoke());
+            btnClose.CustomMinimumSize = new Vector2(220, 42);
+            rootBox.AddChild(btnClose);
         }
 
         public void Open()
@@ -207,7 +270,6 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-
             if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
             {
                 OnClose?.Invoke();

@@ -89,6 +89,7 @@ namespace AtomicWar.GodotApp.UI
             Action openCrafting,
             Action openRadio,
             Action openMedical,
+            Action openPhase0,
             Action openDutyRoster,
             Action openExpedition,
             Action openWeather,
@@ -208,6 +209,7 @@ namespace AtomicWar.GodotApp.UI
             addBtn("Crafting: open panel", openCrafting);
             addBtn("Radio: open panel", openRadio);
             addBtn("Medical: open panel", openMedical);
+            addBtn("Phase-0: conditions & treatment", openPhase0);
             addBtn("Duty Roster: open panel", openDutyRoster);
             addBtn("Expeditions: open panel", openExpedition);
             addBtn("Weather: open panel", openWeather);

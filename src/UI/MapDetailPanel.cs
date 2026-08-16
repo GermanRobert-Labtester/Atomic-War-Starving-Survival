@@ -1,114 +1,152 @@
 using System;
+using System.Collections.Generic;
 using Godot;
+using Ashfall.Core;
+using Ashfall.Core.Expeditions;
 using Ashfall.Core.UI;
-using AtomicWar.GodotApp.UI;
+using AtomicWar.Journal;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Map Detail panel.
-    /// Shows detailed world map with exploration progress, discovered locations, and navigation.
+    /// Shows detailed sector intelligence, radiation readings, transit requirements,
+    /// architectural sub-layouts, and site salvage potential for a chosen location.
     /// </summary>
     public partial class MapDetailPanel : Control
     {
         public event Action? OnClose;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblMapInfoTitle;
-        private VBoxContainer _mapInfo;
-        private Label _lblLocationsTitle;
-        private VBoxContainer _discoveredLocations;
-        private Label _lblRoutesTitle;
-        private VBoxContainer _discoveredRoutes;
-        private Label _lblExploredTitle;
-        private VBoxContainer _explorationProgress;
+        private VBoxContainer _infoContainer = null!;
+        private VBoxContainer _hazardsContainer = null!;
+        private VBoxContainer _layoutsContainer = null!;
+        private VBoxContainer _salvageContainer = null!;
+        private Label _titleLabel = null!;
 
-        private readonly string[] _placeholderMapInfo = {
-            "Current Location: Bunker (Sector 7)",
-            "Total Area Explored: 35%",
-            "Known Locations: 12/45",
-            "Discovered Routes: 4/15",
-            "Danger Zones: 3 active",
-            "Last Updated: Day 25"
-        };
-
-        private readonly string[] _placeholderLocations = {
-            "Bunker (Sector 7) — Home base, fully mapped",
-            "Ruined City (Sector 12) — Scavenged, partially mapped",
-            "Radio Tower (Sector 4) — Explored, hostile",
-            "Supply Depot (Sector 9) — Secured, stocked",
-            "Medical Center (Sector 15) — Explored, abandoned",
-            "Military Outpost (Sector 1) — Hostile, unexplored",
-            "Water Source (Sector 8) — Discovered, unexplored",
-            "Trading Post (Sector 11) — Discovered, neutral"
-        };
-
-        private readonly string[] _placeholderRoutes = {
-            "Bunker → Sector 7 (Home) — Safe, mapped",
-            "Bunker → Sector 12 (Ruined City) — Active route",
-            "Bunker → Sector 4 (Radio Tower) — Dangerous",
-            "Bunker → Sector 9 (Supply Depot) — Secured",
-            "Sector 7 → Sector 8 (Water Source) — New route",
-            "Sector 7 → Sector 11 (Trading Post) — Unexplored"
-        };
-
-        private readonly string[] _placeholderExploration = {
-            "Sector 7 — 100% explored",
-            "Sector 12 — 75% explored",
-            "Sector 4 — 60% explored",
-            "Sector 9 — 50% explored",
-            "Sector 15 — 40% explored",
-            "Sector 1 — 10% explored (dangerous)",
-            "Sector 8 — 20% explored (new)",
-            "Sector 11 — 5% explored (unexplored)"
-        };
-
-        public void Bind(object mapDetail)
+        public void Bind(
+            string locationId,
+            string displayName,
+            string region,
+            float dangerLevel,
+            float baseRadsPerHour,
+            float travelHours,
+            string description,
+            string inspectNotes = "",
+            List<string>? subLayouts = null,
+            List<string>? lootCategories = null)
         {
-            RefreshView();
+            if (_titleLabel != null)
+                _titleLabel.Text = $"SECTOR INTELLIGENCE // {displayName.ToUpperInvariant()}";
+
+            if (_infoContainer == null || _hazardsContainer == null ||
+                _layoutsContainer == null || _salvageContainer == null)
+                return;
+
+            while (_infoContainer.GetChildCount() > 0)
+                _infoContainer.RemoveChild(_infoContainer.GetChild(0));
+            while (_hazardsContainer.GetChildCount() > 0)
+                _hazardsContainer.RemoveChild(_hazardsContainer.GetChild(0));
+            while (_layoutsContainer.GetChildCount() > 0)
+                _layoutsContainer.RemoveChild(_layoutsContainer.GetChild(0));
+            while (_salvageContainer.GetChildCount() > 0)
+                _salvageContainer.RemoveChild(_salvageContainer.GetChild(0));
+
+            // ── 1. Sector Geography & Description ──
+            var infoCard = AshfallUiHelpers.MakeCardFrame("SECTOR OVERVIEW", locationId);
+            var infoBox = infoCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            infoBox.AddChild(AshfallUiHelpers.MakeDataRow("Region / Zone", string.IsNullOrEmpty(region) ? "District 8 Periphery" : region, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            infoBox.AddChild(AshfallUiHelpers.MakeDataRow("Travel Time (Foot Sortie)", $"{Math.Max(1f, travelHours):F1} Hours", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            infoBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            string fullDesc = string.IsNullOrEmpty(description) ? "Uncataloged wasteland sector. Scavengers advise caution due to structural instability and background ionizing radiation." : description;
+            var bodyLbl = AshfallUiHelpers.MakeBody(fullDesc);
+            infoBox.AddChild(bodyLbl);
+
+            if (!string.IsNullOrEmpty(inspectNotes))
+            {
+                infoBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                var noteHeader = AshfallUiHelpers.MakeSubsectionHeader("TACTICAL FIELD NOTES");
+                infoBox.AddChild(noteHeader);
+                var noteLbl = AshfallUiHelpers.MakeSmall(inspectNotes);
+                noteLbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+                infoBox.AddChild(noteLbl);
+            }
+            _infoContainer.AddChild(infoCard);
+
+            // ── 2. Hazard Profile ──
+            var hazardCard = AshfallUiHelpers.MakeCardFrame("ENVIRONMENTAL HAZARDS & THREAT RATING", "DOSIMETRY");
+            var hazardBox = hazardCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Threat Tier", $"Level {dangerLevel:F0} / 5", AshfallUiHelpers.ToColor(dangerLevel >= 4 ? Ashfall.Core.UI.Theme.Critical : (dangerLevel >= 2 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale))));
+            hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Ambient Radiation Rate", $"+{baseRadsPerHour:F1} mSv / hr", AshfallUiHelpers.ToColor(baseRadsPerHour > 10 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Warm)));
+            hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Required Protective Gear", baseRadsPerHour > 8 ? "Lead Shielding / Hazmat Suit + Gas Mask" : "Standard Dosimeter + Particulate Filter", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+            hazardBox.AddChild(AshfallUiHelpers.MakeDataRow("Transit Stance Advice", dangerLevel >= 3 ? "Stealth Stance Recommended" : "Standard March", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+            _hazardsContainer.AddChild(hazardCard);
+
+            // ── 3. Sub-Layouts & Architectural Grids ──
+            var layoutCard = AshfallUiHelpers.MakeCardFrame("MAPPED SUB-SECTORS & ACCESS POINTS", "BLUEPRINT");
+            var layoutBox = layoutCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            if (subLayouts != null && subLayouts.Count > 0)
+            {
+                foreach (var layout in subLayouts)
+                {
+                    layoutBox.AddChild(AshfallUiHelpers.MakeDataRow("Accessible Chamber", layout, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                }
+            }
+            else
+            {
+                layoutBox.AddChild(AshfallUiHelpers.MakeDataRow("Primary Concourse", "Surface Access Tunnel // Reinforced Hatch", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                layoutBox.AddChild(AshfallUiHelpers.MakeDataRow("Sub-Level 1", "Utility Corridors & Piping Vaults", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                layoutBox.AddChild(AshfallUiHelpers.MakeDataRow("Perimeter Node", "Collapsed Overpass & Debris Fields", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted)));
+            }
+            _layoutsContainer.AddChild(layoutCard);
+
+            // ── 4. Salvage Potential & Scavenging Yields ──
+            var salvageCard = AshfallUiHelpers.MakeCardFrame("SALVAGE RECOVERY POTENTIAL", "RESOURCES");
+            var salvageBox = salvageCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
+
+            if (lootCategories != null && lootCategories.Count > 0)
+            {
+                foreach (var cat in lootCategories)
+                {
+                    salvageBox.AddChild(AshfallUiHelpers.MakeDataRow("Potential Yield", cat.Replace('_', ' ').ToUpperInvariant(), AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                }
+            }
+            else
+            {
+                salvageBox.AddChild(AshfallUiHelpers.MakeDataRow("Primary Scavenge", "Structural Scrap Metal & Mechanical Parts", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                salvageBox.AddChild(AshfallUiHelpers.MakeDataRow("Secondary Scavenge", "Electrical Wiring & Electronic Components", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
+                salvageBox.AddChild(AshfallUiHelpers.MakeDataRow("Rare Recovery", "Sealed Medical Supplies & Anti-Rad Compounds", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot)));
+            }
+            _salvageContainer.AddChild(salvageCard);
         }
 
-        public void RefreshView()
+        public void Bind(HoldfastLocationEntry? holdfastLoc, LocationDefinitionData? journalLoc = null)
         {
-            if (_mapInfo == null || _discoveredLocations == null || _discoveredRoutes == null || _explorationProgress == null) return;
-
-            while (_mapInfo.GetChildCount() > 0) _mapInfo.RemoveChild(_mapInfo.GetChild(0));
-            while (_discoveredLocations.GetChildCount() > 0) _discoveredLocations.RemoveChild(_discoveredLocations.GetChild(0));
-            while (_discoveredRoutes.GetChildCount() > 0) _discoveredRoutes.RemoveChild(_discoveredRoutes.GetChild(0));
-            while (_explorationProgress.GetChildCount() > 0) _explorationProgress.RemoveChild(_explorationProgress.GetChild(0));
-
-            foreach (string info in _placeholderMapInfo)
+            if (holdfastLoc != null)
             {
-                var label = new Label { Text = info };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _mapInfo.AddChild(label);
+                Bind(
+                    holdfastLoc.id,
+                    HoldfastCatalogLoader.StripAuthorNotes(holdfastLoc.displayName ?? holdfastLoc.id),
+                    holdfastLoc.region ?? "District 8 / Sector 4",
+                    holdfastLoc.dangerLevel,
+                    holdfastLoc.baseRadsPerHour,
+                    holdfastLoc.travelHours,
+                    holdfastLoc.description ?? "",
+                    holdfastLoc.inspect ?? "");
             }
-
-            foreach (string location in _placeholderLocations)
+            else if (journalLoc != null)
             {
-                var label = new Label { Text = location };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _discoveredLocations.AddChild(label);
-            }
-
-            foreach (string route in _placeholderRoutes)
-            {
-                var label = new Label { Text = route };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _discoveredRoutes.AddChild(label);
-            }
-
-            foreach (string explored in _placeholderExploration)
-            {
-                var label = new Label { Text = explored };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                _explorationProgress.AddChild(label);
+                Bind(
+                    journalLoc.id ?? "loc_unknown",
+                    journalLoc.displayName ?? "Unknown Sector",
+                    "Wasteland Sector",
+                    journalLoc.dangerLevel,
+                    journalLoc.baseRadsPerHour,
+                    4.0f,
+                    journalLoc.description ?? "");
             }
         }
 
@@ -117,72 +155,59 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
+            var bg = new ColorRect { Color = new Color(0.03f, 0.04f, 0.05f, 0.96f) };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+            var scroll = new ScrollContainer();
+            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
+            scroll.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
+            AddChild(scroll);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
+            var center = new CenterContainer();
+            center.SetAnchorsPreset(LayoutPreset.FullRect);
+            center.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            center.SizeFlagsVertical = SizeFlags.ExpandFill;
+            scroll.AddChild(center);
 
-            var title = AshfallUiHelpers.MakeTitle("MAP DETAIL", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
+            var rootBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            rootBox.CustomMinimumSize = new Vector2(760, 0);
+            center.AddChild(rootBox);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _titleLabel = AshfallUiHelpers.MakeTitle("SECTOR INTELLIGENCE DOSSIER", Ashfall.Core.UI.Theme.FontSizeH1);
+            _titleLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            rootBox.AddChild(_titleLabel);
 
-            _lblMapInfoTitle = AshfallUiHelpers.MakeSectionHeader("MAP INFORMATION");
-            vbox.AddChild(_lblMapInfoTitle);
+            var sub = AshfallUiHelpers.MakeMetadata("Declassified cartographic data, environmental radiation scans, and structural blueprints.");
+            sub.HorizontalAlignment = HorizontalAlignment.Center;
+            sub.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            rootBox.AddChild(sub);
 
-            _mapInfo = new VBoxContainer();
-            _mapInfo.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _mapInfo.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_mapInfo);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _infoContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_infoContainer);
 
-            _lblLocationsTitle = AshfallUiHelpers.MakeSectionHeader("DISCOVERED LOCATIONS");
-            vbox.AddChild(_lblLocationsTitle);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _discoveredLocations = new VBoxContainer();
-            _discoveredLocations.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _discoveredLocations.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_discoveredLocations);
+            _hazardsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_hazardsContainer);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblRoutesTitle = AshfallUiHelpers.MakeSectionHeader("DISCOVERED ROUTES");
-            vbox.AddChild(_lblRoutesTitle);
+            _layoutsContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_layoutsContainer);
 
-            _discoveredRoutes = new VBoxContainer();
-            _discoveredRoutes.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _discoveredRoutes.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_discoveredRoutes);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _salvageContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            rootBox.AddChild(_salvageContainer);
 
-            _lblExploredTitle = AshfallUiHelpers.MakeSectionHeader("EXPLORATION PROGRESS");
-            vbox.AddChild(_lblExploredTitle);
+            rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _explorationProgress = new VBoxContainer();
-            _explorationProgress.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _explorationProgress.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_explorationProgress);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
+            var btnClose = AshfallUiHelpers.MakeButton("RETURN TO MAP [Esc]", () => OnClose?.Invoke());
+            btnClose.CustomMinimumSize = new Vector2(220, 42);
+            rootBox.AddChild(btnClose);
         }
 
         public void Open()

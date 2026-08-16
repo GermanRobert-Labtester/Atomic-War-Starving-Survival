@@ -32,7 +32,8 @@ namespace AtomicWar.GodotApp
         /// framing is keyed to this trait, never to the witness.</summary>
         public RiskBiasTrait AuthorBias { get; private set; } = RiskBiasTrait.Realist;
 
-        public event Action StateChanged;
+        public event Action? StateChanged;
+        public event Action<MusterRecord>? OnQuestlineResolved;
 
         public MusterHostSession(
             MusterSystem engine = null,
@@ -61,6 +62,7 @@ namespace AtomicWar.GodotApp
             Engine.OnQuestlineResolved += record =>
             {
                 LastEvent = $"Resolved {record.questlineId} via approach {record.selectedApproach} → {record.endingKey}";
+                OnQuestlineResolved?.Invoke(record);
                 StateChanged?.Invoke();
             };
             Engine.OnStateChanged += _ => StateChanged?.Invoke();

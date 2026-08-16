@@ -97,6 +97,22 @@ namespace AtomicWar.GodotApp.Economy
         public int ActiveAskCount => _factionAskCounts.Count;
         public int ActiveBioCount => _bioOfferCounts.Count;
 
+        /// <summary>Raised when the overlay requests dismissal (host wires Escape/close).</summary>
+        public event Action? OnClose;
+
+        public void Open()
+        {
+            Visible = true;
+            RefreshView();
+            QueueRedraw();
+        }
+
+        public void Close()
+        {
+            Visible = false;
+            OnClose?.Invoke();
+        }
+
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.FullRect);

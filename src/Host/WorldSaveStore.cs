@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp
@@ -23,12 +24,12 @@ namespace AtomicWar.GodotApp
 
         public static bool Exists => s_files.FileExists(SavePath);
 
-        public static bool TrySave(WorldWeatherState state)
+        public static bool TrySave(WorldWeatherState state, SkyArmorSaveState skyArmor = null)
         {
             try
             {
                 if (state == null) return false;
-                var envelope = new WorldHostSave { State = state };
+                var envelope = new WorldHostSave { State = state, SkyArmor = skyArmor };
                 envelope.Checksum = SaveChecksum.Compute(envelope);
                 string path = SavePath;
                 string dir = Path.GetDirectoryName(path);
@@ -44,7 +45,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static WorldWeatherState TryLoad()
+        public static WorldHostSave TryLoadEnvelope()
         {
             try
             {
@@ -65,11 +66,12 @@ namespace AtomicWar.GodotApp
                             return null;
                         }
                     }
-                    return envelope.State;
+                    return envelope;
                 }
 
                 // Legacy bare-state save (written before the checksum envelope).
-                return s_json.Deserialize<WorldWeatherState>(raw);
+                var legacy = s_json.Deserialize<WorldWeatherState>(raw);
+                return legacy != null ? new WorldHostSave { State = legacy } : null;
             }
             catch (Exception e)
             {
@@ -77,12 +79,18 @@ namespace AtomicWar.GodotApp
                 return null;
             }
         }
+
+        public static WorldWeatherState TryLoad()
+        {
+            return TryLoadEnvelope()?.State;
+        }
     }
 
-    /// <summary>World save envelope: engine state + integrity checksum.</summary>
+    /// <summary>World save envelope: engine state + sky armor + integrity checksum.</summary>
     public class WorldHostSave
     {
         public WorldWeatherState State;
+        public SkyArmorSaveState SkyArmor;
         public string Checksum = string.Empty;
     }
 }

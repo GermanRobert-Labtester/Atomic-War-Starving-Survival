@@ -397,8 +397,14 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "RADIO", "radio");
             AddNavButton(content, "MAP", "map");
             AddNavButton(content, "SHELTER", "shelter");
+            AddNavButton(content, "TRADE", "trade");
+            AddNavButton(content, "EXPANSIONS", "expansions");
             AddNavButton(content, "GREENHOUSE", "greenhouse");
             AddNavButton(content, "FACTIONS", "factions");
+            AddNavButton(content, "MUSTER", "muster");
+            AddNavButton(content, "VERDICT", "verdict");
+            AddNavButton(content, "MARITIME", "maritime");
+            AddNavButton(content, "DUTY ROSTER", "duty_roster");
             AddNavButton(content, "QUESTS", "quests");
 
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });

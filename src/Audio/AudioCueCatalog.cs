@@ -143,14 +143,14 @@ namespace AtomicWar.GodotApp.Audio
             Reg(UiInvalidAction, "res://assets/audio/ui/ui_warning.wav", AudioBusNames.Ui, vol: -6f, cooldown: 0.5f);
 
             // Radiation
-            Reg(RadAlertAcute, "res://assets/audio/sfx/radiation_alert.wav", AudioBusNames.Alerts, vol: -2f, cooldown: 5f);
-            Reg(RadAlertChronic, "res://assets/audio/sfx/radiation_alert.wav", AudioBusNames.Alerts, vol: -6f, cooldown: 10f);
+            Reg(RadAlertAcute, "res://assets/audio/sfx/sfx_radiation_alarm.mp3", AudioBusNames.Alerts, vol: -2f, cooldown: 5f);
+            Reg(RadAlertChronic, "res://assets/audio/sfx/sfx_radiation_alarm.mp3", AudioBusNames.Alerts, vol: -6f, cooldown: 10f);
             Reg(RadGeigerBurst, "res://assets/audio/sfx/sfx_geiger_burst.mp3", AudioBusNames.Sfx, cooldown: 2f);
             Reg(RadGeigerLoop, "res://assets/audio/sfx/geiger.wav", AudioBusNames.Sfx, loop: true, vol: -10f);
             Reg(RadContamination, "res://assets/audio/sfx/sfx_contamination_warning.mp3", AudioBusNames.Alerts, cooldown: 5f);
 
             // Weather
-            Reg(WeatherAlert, "res://assets/audio/sfx/weather_alert.wav", AudioBusNames.Alerts, vol: -2f, cooldown: 5f);
+            Reg(WeatherAlert, "res://assets/audio/sfx/sfx_alarm_klaxon.mp3", AudioBusNames.Alerts, vol: -2f, cooldown: 5f);
             Reg(WeatherFalloutStorm, "res://assets/audio/sfx/sfx_fallout_storm_approach.mp3", AudioBusNames.Sfx, cooldown: 10f);
             Reg(WeatherBlackRain, "res://assets/audio/sfx/sfx_contamination_warning.mp3", AudioBusNames.Alerts, cooldown: 10f);
             Reg(WeatherBlizzard, "res://assets/audio/sfx/sfx_wind_gust_harsh.mp3", AudioBusNames.Sfx, cooldown: 10f);

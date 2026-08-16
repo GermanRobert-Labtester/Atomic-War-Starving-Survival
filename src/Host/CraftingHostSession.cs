@@ -83,6 +83,12 @@ namespace AtomicWar.GodotApp
             Recipes.Add(Make("recipe_gas_mask_filter", "Filter Pack (gas mask)",
                 Catalog.Get("filter_pack"), 1,
                 new[] { ("scrap_electronic", 2), ("scrap_mechanical", 1) }, 3f));
+            Recipes.Add(Make("recipe_inhaler", "Improvised Inhaler",
+                Catalog.Get("inhaler"), 1,
+                new[] { ("scrap_chemical", 2), ("scrap_mechanical", 1) }, 3f));
+            Recipes.Add(Make("recipe_herbal_tea", "Herbal Tea (respiratory relief)",
+                Catalog.Get("herbal_tea"), 2,
+                new[] { ("scrap_mechanical", 1) }, 0.5f, stationId: ""));
         }
 
         /// <summary>Catalog shared with InventoryHostSession seed (same ids).</summary>
@@ -101,6 +107,8 @@ namespace AtomicWar.GodotApp
             c.Register(new ItemDefinition { id = "rad_away", displayName = "Rad-Away", type = ItemType.AntiRad, stackMax = 3, weight = 0.2f, radCleanse = 30f, tradeValue = 20f });
             c.Register(new ItemDefinition { id = "water_filter", displayName = "Water Filter", type = ItemType.Filter, stackMax = 4, weight = 0.5f, tradeValue = 25f });
             c.Register(new ItemDefinition { id = "filter_pack", displayName = "Filter Pack", type = ItemType.Filter, stackMax = 6, weight = 0.3f, tradeValue = 10f });
+            c.Register(new ItemDefinition { id = "inhaler", displayName = "Improvised Inhaler", type = ItemType.Medical, stackMax = 4, weight = 0.15f, tradeValue = 15f });
+            c.Register(new ItemDefinition { id = "herbal_tea", displayName = "Herbal Tea", type = ItemType.Medical, stackMax = 10, weight = 0.05f, tradeValue = 3f });
             return c;
         }
 

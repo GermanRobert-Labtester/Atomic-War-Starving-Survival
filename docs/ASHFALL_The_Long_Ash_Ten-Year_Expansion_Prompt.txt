@@ -1,0 +1,814 @@
+# ASHFALL: THE LONG ASH
+# Ten-Year Macro-Expansion Bible and Campaign Blueprint
+
+You are the lead creative director, narrative architect, systems designer, worldbuilder, economy designer, and migration-aware expansion planner for:
+
+**ASHFALL: Atomic War - Starving Survival**
+
+Design a massive, coherent, emotionally literate, mechanically integrated ten-year expansion campaign consisting of **exactly ten connected expansion packs: Year 1 through Year 10**.
+
+This is a design and planning task. Do not modify a repository, write production code, or claim that anything has been tested. If repository access exists, inspect it read-only to verify current reality. If repository access does not exist, clearly label assumptions as `PROPOSED`, `INFERRED`, or `UNCERTAIN`.
+
+The expansion must feel like an inevitable deepening of ASHFALL rather than a generic post-apocalyptic content dump.
+
+---
+
+## 1. Core Mission
+
+Transform ASHFALL from a shelter-survival game into a decade-spanning human and institutional survival chronicle.
+
+The campaign should evolve through several meanings of survival:
+
+1. Keeping people alive.
+2. Preserving shelter, water, food, heat, and medical capacity.
+3. Establishing trust and lawful access.
+4. Rebuilding routes, institutions, and knowledge.
+5. Deciding which factions, records, relationships, and traditions deserve continuation.
+6. Preparing a future that may no longer resemble the player’s original shelter.
+
+The ten-year structure must not be a simple technology tree or power escalation.
+
+Every year should introduce a new strategic pressure, but previously created systems must remain relevant. Progress should create new obligations, maintenance costs, dependencies, political exposure, moral compromises, and future uncertainty.
+
+The expansion should make the player repeatedly decide:
+
+- What deserves scarce capacity?
+- Who is counted and who disappears from the records?
+- Which truth becomes actionable?
+- Which institution survives?
+- Which relationship is damaged to protect others?
+- Which immediate resource is sacrificed for future resilience?
+- What evidence is preserved, hidden, traded, or destroyed?
+- What kind of community is being built accidentally through repeated compromises?
+
+---
+
+## 2. ASHFALL Identity Lock
+
+Preserve the following creative identity:
+
+- Cold, exhausted, restrained, materially specific, and human.
+- Survival through maintenance, administration, logistics, repair, care, and rationing.
+- Moral choices should involve competing defensible needs rather than obvious good and evil.
+- Records, ledgers, census work, radio fragments, manifests, rosters, evidence, technical logs, and institutional paperwork are gameplay mechanisms, not decorative lore.
+- Consequences should remain visible through damaged infrastructure, altered relationships, changed prices, missing people, new obligations, changed radio traffic, and future eligibility.
+- Violence may exist, but it must not be the primary source of spectacle or progression.
+- Strange ideas are welcome when grounded in material reality, psychology, logistics, institutional behavior, environmental systems, or unreliable information.
+- Use literary precision, subtext, concrete sensory detail, and morally unresolved situations.
+- Do not replace playable consequences with purple prose or lore encyclopedias.
+
+Do not introduce:
+
+- magic;
+- supernatural powers;
+- chosen-one mythology;
+- superheroes;
+- fantasy creatures;
+- glorified violence;
+- gore-first design;
+- generic cyberpunk;
+- generic zombie/apocalypse tropes;
+- direct real-country, real-war, or real-person canon;
+- copied names, characters, mechanics, text, art, interfaces, or code from another game.
+
+All new content is proposed canon until verified against the current repository.
+
+---
+
+## 3. Repository and Canon Context
+
+Treat current repository evidence as more authoritative than old plans or narrative documents.
+
+If you have repository access, inspect:
+
+- `AGENTS.md`;
+- current Git/worktree status;
+- `Assets/Ashfall.Core`;
+- `src`;
+- `Assets/StreamingAssets/Data`;
+- relevant Core tests;
+- existing expansion sessions and save stores;
+- `Assets/_Game` only as legacy behavioral reference;
+- current host/data validation and self-test commands.
+
+The intended architecture is:
+
+```text
+JSON catalogs and save envelopes
+        ↓
+Core loaders, validation, DTOs, and state
+        ↓
+Ashfall.Core simulation rules and events
+        ↓
+Godot host sessions and adapters
+        ↓
+Thin UI, audio, assets, records, radio, and presentation
+```
+
+Preserve these boundaries:
+
+- `Assets/Ashfall.Core` is the intended engine-agnostic simulation authority.
+- `src` is the active Godot host and presentation layer.
+- `Assets/StreamingAssets/Data` is the intended authored-content authority.
+- `Assets/_Game` is the Unity legacy implementation and migration reference.
+- Do not create Godot-only gameplay rules that duplicate Core logic.
+- Do not create new parallel JSON schemas without justification.
+- Do not launch Unity.
+- Preserve deterministic RNG, stable ordering, stable IDs, explicit state, save compatibility, and migration safety.
+
+Current authored or partially integrated expansion surfaces include:
+
+- The Holdfast;
+- The Duty Roster;
+- The Standing Record;
+- Nobody’s Charter / Crossing;
+- Glass Orchard / Greenhouse;
+- Year of Ash;
+- Muster;
+- Dose;
+- Verdict;
+- Black Flotilla.
+
+Do not erase, casually retcon, or duplicate these systems. Extend, connect, reinterpret, or deepen them where appropriate.
+
+Important existing anchors include:
+
+- Year of Ash: Deep Freeze, Faction Siege, and Great Thaw;
+- water treatment, aquifer contamination, and Hydro Baron politics;
+- shelter degradation, heat, air, fuel, filtration, and maintenance;
+- medicine, injury, illness, radiation, caregiving, and work efficiency;
+- records, census systems, standing, access, and evidence;
+- faction-war material;
+- maritime dives and Black Flotilla content;
+- Year of Ash locations, radio, journal, items, quests, and survivors;
+- Century Seed / generational succession concepts;
+- Verdict and the Epilogue Matrix;
+- late-game faction and regional outcomes.
+
+The repository contains many authored records whose runtime reachability is uncertain. Never treat the existence of a catalog entry as proof that it is already playable.
+
+---
+
+## 4. Timeline Interpretation
+
+Interpret the ten-year campaign as a long-term macro-campaign layered over ASHFALL’s existing day-based survival systems.
+
+Do not assume that ten years must equal 3,650 uninterrupted simulation days if the current save architecture cannot support that safely.
+
+Propose the best structure after examining the repository:
+
+- one continuous campaign;
+- chapter-based annual campaigns;
+- save-compatible expansion episodes;
+- or a hybrid system with annual transitions and persistent state carryover.
+
+Preserve the existing early-game and first-year material. Treat the existing Year of Ash phases as a foundational anchor rather than automatically replacing them.
+
+If the current repository places an existing expansion differently, preserve the implementation truth and clearly explain the mapping.
+
+The design must answer:
+
+- What is the relationship between days, seasons, phases, chapters, and years?
+- How can a player carry consequences between packs?
+- What happens if a player begins a later pack from an older save?
+- What happens if a player fails or skips a previous pack?
+- How are dead, retired, missing, aging, or replaced survivors represented?
+- How do faction, infrastructure, health, water, knowledge, and legitimacy states persist?
+- Which consequences remain numerical, and which become authored flags, records, relationships, or changed content pools?
+
+---
+
+## 5. Provisional Ten-Year Creative Spine
+
+Use this as a provocative starting point, not established canon. Rename, merge, reorder, or replace these concepts if a stronger structure emerges from repository evidence.
+
+| Year | Provisional expansion question | Primary ASHFALL anchors |
+|---|---|---|
+| Year 1 — The Year of Measures | Who counts when the shelter is full? | Year of Ash, Duty Roster, Dose, census, rosters, winter, siege, thaw |
+| Year 2 — The Year of Water That Remembers | Who owns clean water, and who is allowed to prove contamination? | Aquifer Contamination, Hydro Barons, filtration, Greenhouse, water treatment |
+| Year 3 — The Year of Passage | What makes a road, crossing, convoy, or border legitimate? | Holdfast, Crossing, Railway, Ice Road, trade, expeditions |
+| Year 4 — The Year of Names | Can a community remember itself without turning memory into control? | census, Standing Record, named survivors, missing people, relationships |
+| Year 5 — The Year of Hands | Can maintenance become a government? | Rebuilders, shelter systems, Greenhouse, labor, infrastructure, repair |
+| Year 6 — The Year of Static | Who controls the signal, and who benefits from confusion? | radio, Black Ops, faction war, evidence, misinformation, records |
+| Year 7 — The Year Beneath | What survives below the ice, water, ruins, and official maps? | Black Flotilla, maritime dives, contamination, sonar, logistics |
+| Year 8 — The Year of Bodies | How do bodies carry the history of every previous compromise? | Dose, medicine, illness, radiation, caregiving, chronic work loss |
+| Year 9 — The Year of Verdicts | Who has the right to declare a truth actionable? | Verdict, evidence ledgers, archives, standing, legitimacy, faction claims |
+| Year 10 — The Year of Keeping | What deserves to outlive the shelter? | Century Seed, succession, Epilogue Matrix, regional fate, inheritance |
+
+For every year, create a distinct systemic identity. Do not merely rename the same survival loop ten times.
+
+---
+
+## 6. Required Expansion Design Principles
+
+### A. Depth before quantity
+
+Do not generate arbitrary numbers of quests, weapons, factions, or locations.
+
+Create only as much content as needed to support meaningful choices, replayability, consequence, and progression. Justify the scale of every major content category.
+
+Each year should have:
+
+- a flagship narrative/systemic arc;
+- supporting events and encounters;
+- meaningful reuse of existing content;
+- at least one noncombat crisis;
+- at least one material resource crisis;
+- at least one information, record, or evidence crisis;
+- at least one relationship, institutional, or faction crisis;
+- a transition into the next year.
+
+### B. Cross-system integration
+
+Each expansion must connect several existing systems rather than exist as an isolated feature.
+
+Trace relevant interactions among:
+
+- water;
+- food;
+- fuel;
+- heat;
+- shelter;
+- radiation;
+- medicine;
+- injury and illness;
+- survivor needs;
+- work and labor;
+- inventory;
+- crafting;
+- trade;
+- faction standing;
+- travel;
+- expeditions;
+- locations;
+- radio;
+- journals;
+- records;
+- evidence;
+- relationships;
+- succession;
+- endgame evaluation.
+
+For every major feature, explain:
+
+- what it changes immediately;
+- what it makes more expensive;
+- what it makes possible;
+- who benefits;
+- who bears the cost;
+- what future content it unlocks;
+- what future content it makes harder;
+- how the player can see the consequence.
+
+### C. No disconnected lore
+
+Every major piece of lore must become at least one of:
+
+- a player decision;
+- a resource constraint;
+- a change in access;
+- an encounter condition;
+- a relationship shift;
+- a faction consequence;
+- a changed location state;
+- a journal/radio/evidence artifact;
+- a future ending or epilogue condition.
+
+### D. Consequence architecture
+
+For every major choice, define:
+
+- trigger;
+- eligibility;
+- information available to the player;
+- choice options;
+- immediate resource/state changes;
+- delayed consequences;
+- persistent consequences;
+- relationship effects;
+- faction effects;
+- evidence or record effects;
+- future eligibility;
+- failure and fallback state;
+- save requirements;
+- ending or epilogue implications.
+
+Avoid repetitive “be kind or be cruel” choices. Prefer decisions where every option protects one legitimate need while damaging another.
+
+### E. Information as a resource
+
+Information should be incomplete, costly, contested, and sometimes wrong.
+
+Design situations involving:
+
+- conflicting records;
+- false but useful paperwork;
+- missing census entries;
+- radio messages with uncertain provenance;
+- technical logs that contradict survivor testimony;
+- evidence that can be preserved only by sacrificing immediate supplies;
+- truths that would cause panic, retaliation, famine, or war if revealed;
+- lies that temporarily preserve institutional function.
+
+Do not solve every mystery with a final exposition dump. Some uncertainty should remain meaningful.
+
+---
+
+## 7. Detailed Requirements for Each Expansion Pack
+
+For each of the ten years, produce a full expansion dossier containing:
+
+### 1. Pack identity
+
+- final title;
+- subtitle;
+- central question;
+- emotional register;
+- design thesis;
+- what makes this year mechanically different;
+- what this year changes about the meaning of survival.
+
+### 2. Timeline and campaign placement
+
+- starting conditions;
+- entry requirements;
+- relationship to existing ASHFALL content;
+- approximate seasonal or phase structure;
+- transition from the previous year;
+- transition into the next year;
+- whether the pack is mandatory, optional, branch-dependent, or partially replayable.
+
+### 3. Existing content to reuse
+
+Identify relevant existing:
+
+- factions;
+- faction aliases;
+- characters;
+- survivor archetypes;
+- locations;
+- items;
+- recipes;
+- events;
+- radio;
+- journals;
+- records;
+- systems;
+- saves;
+- endgame flags.
+
+Separate `OBSERVED`, `INFERRED`, `PROPOSED`, and `UNCERTAIN` material.
+
+### 4. Core player loop
+
+Describe the complete loop:
+
+```text
+observe → allocate → maintain → investigate → decide → record → absorb consequences
+```
+
+Explain what the player does minute-to-minute, day-to-day, and across the entire year.
+
+### 5. Signature mechanic
+
+Define one primary mechanic or systemic expansion.
+
+It must:
+
+- extend an existing ASHFALL system where possible;
+- have clear state ownership;
+- create scarcity or opportunity cost;
+- produce visible consequences;
+- interact with several existing systems;
+- support more than one viable strategy;
+- avoid becoming a disconnected “v2” subsystem.
+
+### 6. Content architecture
+
+Define the required content ecosystem:
+
+- flagship questline;
+- supporting quest/event arcs;
+- major encounters;
+- locations and location-state changes;
+- factions and internal faction conflicts;
+- named characters and survivor roles;
+- new or repurposed items;
+- recipes, tools, or infrastructure;
+- radio fragments;
+- journal entries;
+- letters, manifests, ledgers, technical logs, or evidence artifacts;
+- environmental storytelling;
+- failure states;
+- alternate resolutions.
+
+Do not produce shallow lists. Explain how the content interacts.
+
+### 7. Flagship scenario
+
+Fully design at least one flagship scenario for the year.
+
+Include:
+
+- opening trigger;
+- location;
+- actors;
+- material problem;
+- conflicting information;
+- player preparation;
+- available choices;
+- resource costs;
+- immediate consequences;
+- delayed consequences;
+- faction/relationship effects;
+- future re-entry conditions;
+- failure state;
+- representative radio, record, or journal material;
+- how the scenario changes later years.
+
+### 8. Character pressure
+
+For every major character introduced or reused, define:
+
+- role and competence;
+- material vulnerability;
+- relationship network;
+- faction connection;
+- work or shelter contribution;
+- medical or psychological pressure;
+- personal objective;
+- what they know;
+- what they misunderstand;
+- what they may hide;
+- what happens if they leave, die, retire, defect, or are discredited;
+- possible long-term epilogue relevance.
+
+Characters must create systemic pressure, not merely deliver dialogue.
+
+### 9. Location design
+
+Every new or substantially expanded location must have:
+
+- material identity;
+- environmental condition;
+- travel cost;
+- danger and radiation profile;
+- resource identity;
+- controlling or contesting faction;
+- unique mechanical pressure;
+- encounter pool;
+- quest hooks;
+- radio/journal/evidence clues;
+- state changes after player intervention;
+- different future return conditions;
+- place-specific loot or materials;
+- implementation/data hooks.
+
+### 10. Economy and balance
+
+For every new resource, item, service, treatment, or infrastructure capability, define:
+
+- source;
+- sink;
+- production rate;
+- consumption rate;
+- opportunity cost;
+- labor cost;
+- travel cost;
+- price/trade implications;
+- faction access;
+- scarcity behavior;
+- failure consequences;
+- whether it changes early, middle, or late game balance.
+
+Do not solve scarcity by simply adding more loot.
+
+### 11. Persistent state
+
+List state that must persist beyond the pack:
+
+- numeric values;
+- flags;
+- faction standing;
+- relationship changes;
+- location states;
+- infrastructure conditions;
+- evidence ownership;
+- radio availability;
+- journal history;
+- survivor status;
+- medical or radiation history;
+- succession or endgame flags.
+
+Avoid meter bloat. Explain why each state variable is necessary.
+
+### 12. Implementation contract
+
+Even though this is a design task, map the pack to:
+
+- Core rules and DTOs;
+- JSON catalogs;
+- proposed `snake_case` IDs;
+- loaders and validation;
+- events;
+- tick/time integration;
+- RNG/determinism;
+- Godot host sessions;
+- UI/panels;
+- radio/journal/evidence presentation;
+- assets and audio;
+- save envelope version;
+- migration/default behavior;
+- checksum requirements;
+- tests;
+- data-integrity checks;
+- intentionally out-of-scope work.
+
+---
+
+## 8. Faction Design
+
+Do not solve faction complexity by inventing dozens of new factions.
+
+First inspect existing faction IDs and aliases. Determine whether apparently different names represent one faction, rival branches, historical names, or unresolved canon.
+
+Every significant faction should have:
+
+- systemic role;
+- resource leverage;
+- access rules;
+- trade or price implications;
+- internal disagreement;
+- noncombat power;
+- relationship to records and evidence;
+- relationship to infrastructure;
+- radio/journal presence;
+- possible cooperation;
+- possible coercion;
+- possible failure or fragmentation;
+- effect on future years;
+- effect on endings.
+
+Factions should be capable of being useful, harmful, necessary, compromised, or internally divided at the same time.
+
+---
+
+## 9. Long-Term Campaign State
+
+Design a persistent cross-year state architecture.
+
+Possible state domains include:
+
+- water security;
+- food and seed resilience;
+- heat and fuel independence;
+- shelter integrity;
+- radiation burden;
+- medical knowledge;
+- survivor health and succession;
+- institutional legitimacy;
+- record integrity;
+- community trust;
+- faction dependency;
+- regional connectivity;
+- infrastructure repair;
+- ecological damage;
+- knowledge preservation;
+- education and skill transfer;
+- willingness to accept outsiders;
+- capacity to care for the vulnerable;
+- willingness to tell the truth.
+
+Do not turn every domain into a simple visible meter.
+
+For each domain, explain whether it is represented as:
+
+- a number;
+- a threshold;
+- a set of flags;
+- a relationship graph;
+- a catalog mutation;
+- a changed encounter pool;
+- a location state;
+- a record/evidence state;
+- an ending variable.
+
+Create a dependency graph showing how decisions in one year alter later years.
+
+---
+
+## 10. Endings and Epilogue Design
+
+The tenth year must not end with a single final boss, magical solution, or binary “save/fail” screen.
+
+Design a layered ending and epilogue system based on accumulated consequences.
+
+Possible outcome dimensions include:
+
+- who remains alive;
+- who is remembered;
+- who controls water;
+- whether the shelter remains open;
+- whether the region reconnects;
+- whether records are trusted;
+- whether knowledge is preserved;
+- whether medicine becomes public or private;
+- whether factions consolidate or fragment;
+- whether succession succeeds;
+- whether the community leaves, disperses, or stays;
+- what damage was accepted to preserve continuity;
+- what truths were buried;
+- what obligations survive the player.
+
+Endings should be evaluations of the player’s decade of decisions, not a final button choice.
+
+Include:
+
+- ending families;
+- contradictory outcomes;
+- partial victories;
+- quiet failures;
+- unresolved legacies;
+- survivor epilogues;
+- faction epilogues;
+- location epilogues;
+- institutional epilogues;
+- records or radio material that reframes the ending.
+
+---
+
+## 11. Literary and Presentation Requirements
+
+Write with disciplined literary intelligence.
+
+Use:
+
+- precise physical detail;
+- bureaucratic language;
+- subtext;
+- silence;
+- damaged objects;
+- practical routines;
+- incomplete testimony;
+- conflicting accounts;
+- emotionally restrained dialogue;
+- consequences that arrive later;
+- recurring motifs of ash, water, paper, heat, names, doors, maintenance, and memory.
+
+For each year, include a small representative sample of:
+
+- one radio fragment;
+- one ledger, technical note, or record;
+- one journal entry;
+- one human scene or encounter premise.
+
+These are tonal samples, not substitutes for mechanics.
+
+Do not write thousands of lines of dialogue or a novel. Every prose sample must demonstrate how the player encounters information and how that information affects play.
+
+---
+
+## 12. Implementation-Aware Roadmap
+
+After designing the ten packs, create a staged roadmap that follows:
+
+```text
+repository audit
+→ expansion thesis
+→ dependency graph
+→ canonical ID and data audit
+→ campaign-state architecture
+→ Year 1 vertical slice
+→ verified integration checkpoint
+→ Year 2 vertical slice
+→ verified integration checkpoint
+→ ...
+→ Year 10 and final regression pass
+```
+
+For each implementation slice, specify:
+
+- objective;
+- files or systems to inspect;
+- Core authority;
+- data/catalog work;
+- host/UI work;
+- persistence work;
+- tests;
+- risks;
+- acceptance criteria;
+- what is explicitly deferred.
+
+The first vertical slice must be narrow enough to verify the complete pattern:
+
+- one meaningful location;
+- one faction or institutional conflict;
+- one persistent state change;
+- one resource trade-off;
+- one player-facing record/radio/journal artifact;
+- one Godot presentation path;
+- one save round trip;
+- deterministic behavior;
+- targeted tests.
+
+Do not instruct a coding agent to rewrite the entire repository in one pass.
+
+Prefer:
+
+```text
+EXTEND → INTEGRATE → PORT → REFACTOR → REPLACE
+```
+
+Only recommend replacement when current evidence proves that an existing authority is obsolete, contradictory, broken, or unsalvageable.
+
+---
+
+## 13. Canon and Uncertainty Rules
+
+Maintain an explicit canon ledger with these labels:
+
+- `OBSERVED`: directly supported by current source, data, tests, or configuration.
+- `INFERRED`: likely based on multiple signals but not proven.
+- `PROPOSED`: newly designed expansion content.
+- `UNCERTAIN`: unresolved runtime, chronology, identity, or integration question.
+- `CUT`: attractive idea deliberately rejected because it harms tone, scope, or coherence.
+
+Never silently canonize:
+
+- faction aliases;
+- unused catalog content;
+- old expansion plans;
+- historical test results;
+- unverified campaign reachability;
+- legacy Unity behavior;
+- assumed survivor relationships;
+- assumed ending access.
+
+---
+
+## 14. Required Final Deliverables
+
+Return the expansion bible in this order:
+
+1. Executive expansion thesis.
+2. Canon, timeline, and uncertainty ledger.
+3. Ten-year macro overview.
+4. Detailed Year 1 dossier.
+5. Detailed Year 2 dossier.
+6. Detailed Year 3 dossier.
+7. Detailed Year 4 dossier.
+8. Detailed Year 5 dossier.
+9. Detailed Year 6 dossier.
+10. Detailed Year 7 dossier.
+11. Detailed Year 8 dossier.
+12. Detailed Year 9 dossier.
+13. Detailed Year 10 dossier.
+14. Cross-year persistent-state architecture.
+15. Faction, character, location, and content reuse strategy.
+16. Economy and progression analysis.
+17. Ending and epilogue matrix.
+18. Implementation/data/save/testing roadmap.
+19. First vertical slice specification.
+20. Risks, contradictions, cuts, and unresolved decisions.
+21. Final explanation of why this is unmistakably ASHFALL.
+
+Use tables where they clarify relationships, but do not hide weak design behind tables.
+
+---
+
+## 15. Final Quality Gate
+
+Before completing the response, audit the expansion against these questions:
+
+- Could this expansion be pasted into another survival game unchanged?
+- Does every year have a distinct systemic identity?
+- Does every major choice involve competing legitimate needs?
+- Are scarcity, maintenance, logistics, records, and consequences central?
+- Are existing ASHFALL expansions reused meaningfully?
+- Are faction identities handled conservatively?
+- Are characters mechanically and narratively consequential?
+- Do locations have material and systemic identity?
+- Does information behave like a resource?
+- Are consequences visible and persistent?
+- Does the expansion avoid power-fantasy escalation?
+- Are new resources justified economically?
+- Are proposed canon and repository facts clearly separated?
+- Is the ten-year scope decomposed into reviewable vertical slices?
+- Could a future coding agent implement the design without inventing missing architecture?
+- Does Year 10 evaluate the entire decade rather than merely provide a final spectacle?
+- Are some ideas deliberately cut because they are shallow, generic, or impossible to integrate?
+
+Reject any section that consists primarily of:
+
+- filler quest names;
+- generic factions;
+- arbitrary item lists;
+- disconnected lore;
+- repeated morality choices;
+- spectacle without resource consequences;
+- unexplained technology;
+- unsupported canon claims;
+- implementation promises without evidence;
+- a giant rewrite plan with no checkpoints.
+
+The final result should feel like a ten-year record of people trying to keep one another alive while deciding, year by year, what kind of civilization is worth the cost of maintaining.

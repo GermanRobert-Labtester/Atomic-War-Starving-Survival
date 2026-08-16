@@ -183,6 +183,7 @@ namespace Ashfall.Core
         public static readonly string[] VocabularyKeys =
         {
             "tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
+            "stance", "short_name", "identity", "sink", "notes", "display_name",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
             "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile",
             "callsign", "entry_type", "record_type", "directive_code", "classification",
