@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core;
 using Ashfall.Core.Survivors;
 using Xunit;
 
@@ -17,7 +18,7 @@ namespace Ashfall.Core.Tests
             var sys = new SomaticFlashbackSystem
             {
                 GetAliveSurvivorIds = () => aliveSurvivors,
-                Rng = new Random(rngSeed),
+                Rng = new SeededRng(rngSeed),
                 IsCompanionInSameRoom = companionCheck
             };
             return sys;

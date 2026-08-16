@@ -46,6 +46,8 @@ namespace AtomicWar.GodotApp
         private VBoxContainer _yearOfAshPanel = null!;
         private VBoxContainer _rightColumn = null!;
         private PhantomMemoryHostSession _phantomMemory = null!;
+        private Phase0HostSession _phase0 = null!;
+        private bool _phase0Dirty;
         private DoseLedgerHostSession _doseLedger = null!;
         private bool _doseLedgerDirty;
         private DoseRegisterSurface _doseSurface = null!;
@@ -328,6 +330,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.StandaloneSystemsSelfTest:
                     GetTree().Quit(HostCli.RunStandaloneSystemsSelfTest());
                     return;
+                case HostCliAction.Phase0SelfTest:
+                    GetTree().Quit(HostCli.RunPhase0SelfTest());
+                    return;
             }
 
             BuildUserInterface();
@@ -385,6 +390,7 @@ namespace AtomicWar.GodotApp
             FlushCraftingIfDirty();
             FlushCaravanIfDirty();
             FlushYearOfAshIfDirty();
+            FlushPhase0IfDirty();
         }
 
         public override void _UnhandledKeyInput(InputEvent @event)
@@ -740,6 +746,10 @@ namespace AtomicWar.GodotApp
             // ── Phantom Memory (Antigravity #41) ─────────────────────────
             AddMenuButton("Phantom Memory: scavenge item", OnPhantomScavengeClicked);
             AddMenuButton("Phantom Memory: tick hour", OnPhantomTickClicked);
+            AddMenuButton("Phase-0: scavenge trigger", OnPhase0ScavengeClicked);
+            AddMenuButton("Phase-0: raise noise (flashbacks)", OnPhase0NoiseClicked);
+            AddMenuButton("Phase-0: craft specialty item", OnPhase0CraftClicked);
+            AddMenuButton("Phase-0: tick 6 hours", OnPhase0TickClicked);
             // ── THE DOSE (Exp 07) ───────────────────────────────────────
             AddMenuButton("Dose: seal dosimeters", OnDoseSealClicked);
             AddMenuButton("Dose: book a reading", OnDoseScribeClicked);
@@ -833,6 +843,7 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Map Detail: open panel", () => { _mapDetailPanel.Open(); });
             AddMenuButton("Event Detail: open panel", () => { _eventDetailPanel.Open(); });
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); SavePhase0(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -1596,6 +1607,79 @@ namespace AtomicWar.GodotApp
             if (_phantomMemory == null) return;
             if (PhantomMemorySaveStore.TrySave(_phantomMemory.CaptureSave()))
                 GD.Print("[Ashfall Godot] Phantom Memory save written.");
+        }
+
+        // -----------------------------------------------------------------
+        // Phase-0 effects (phantom work-efficiency/refusal, flashbacks,
+        // trade specialty, final-wish shelter buff, respiratory stamina)
+        // -----------------------------------------------------------------
+
+        private void SetupPhase0()
+        {
+            if (_phase0 != null) return;
+            _phase0 = new Phase0HostSession();
+            _phase0.StateChanged += () => _phase0Dirty = true;
+            if (_survivors != null)
+            {
+                var ids = new System.Collections.Generic.List<string>();
+                for (int i = 0; i < _survivors.RosterState.Count; i++)
+                {
+                    var s = _survivors.RosterState[i];
+                    if (s != null && s.IsAliveState) ids.Add(s.Id);
+                }
+                _phase0.RegisterSurvivors(ids);
+            }
+            else
+            {
+                _phase0.SeedDemoRoster();
+            }
+
+            var save = Phase0SaveStore.TryLoad();
+            if (save != null)
+            {
+                _phase0.RestoreSave(save);
+                _phase0Dirty = false; // restore just raised state-change events
+                GD.Print("[Ashfall Godot] Phase-0 effects restored.");
+            }
+        }
+
+        private void SavePhase0()
+        {
+            if (_phase0 == null) return;
+            if (Phase0SaveStore.TrySave(_phase0.CaptureSave()))
+            {
+                _phase0Dirty = false;
+                GD.Print("[Ashfall Godot] Phase-0 effects save written.");
+            }
+        }
+
+        private void FlushPhase0IfDirty()
+        {
+            if (_phase0Dirty) SavePhase0();
+        }
+
+        private void OnPhase0ScavengeClicked()
+        {
+            SetupPhase0();
+            _statusLabel.Text = _phase0.ScavengeItem("survivor_gunner_mikhail", "item_dog_tags");
+        }
+
+        private void OnPhase0NoiseClicked()
+        {
+            SetupPhase0();
+            _statusLabel.Text = _phase0.RaiseNoise("siren");
+        }
+
+        private void OnPhase0CraftClicked()
+        {
+            SetupPhase0();
+            _statusLabel.Text = _phase0.CraftItem("elena_vasquez", "machinist", "wrench_standard");
+        }
+
+        private void OnPhase0TickClicked()
+        {
+            SetupPhase0();
+            _statusLabel.Text = _phase0.TickHour(6f);
         }
 
         // ── THE DOSE (Exp 07) host wiring ───────────────────────────────
@@ -3297,6 +3381,7 @@ namespace AtomicWar.GodotApp
             _dutyRoster = null!;
             _expansions = null!;
             _phantomMemory = null!;
+            _phase0 = null!;
             _doseLedger = null!;
             _inventory = null!;
             _survivors = null!;
@@ -3338,6 +3423,7 @@ namespace AtomicWar.GodotApp
             _worldDirty = false;
             _craftingDirty = false;
             _caravansDirty = false;
+            _phase0Dirty = false;
 
             foreach (var file in new[]
             {
@@ -3652,6 +3738,7 @@ namespace AtomicWar.GodotApp
             SaveCrafting();
             SaveCaravans();
             SaveYearOfAsh();
+            SavePhase0();
         }
 
         public override void _UnhandledInput(InputEvent @event)

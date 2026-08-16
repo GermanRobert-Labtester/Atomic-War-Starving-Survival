@@ -175,6 +175,73 @@ namespace Ashfall.Core.Tests
             Assert.Equal("sv_beta", snapshot.records[1].survivorId);
         }
 
+        [Fact]
+        public void GetWorkEfficiencyMultiplier_BoostedWhileMotivated()
+        {
+            var engine = new PhantomMemoryEngine();
+            engine.TriggerChanceOverride = 1.0f;
+            engine.RegisterRule("nurse", "medical", 1.0f, "desc", "motivated", "breakdown");
+            var sv = new PhantomSurvivorSnapshot { survivorId = "sv_mot", backgroundId = "nurse", isAlive = true };
+
+            var outcome = engine.OnItemScavenged(sv, "medical_bandage", new Ashfall.Core.SeededRng(5));
+            Assert.Equal(TriggerOutcome.Motivation, outcome);
+
+            Assert.Equal(1f + PhantomMemoryEngine.MotivationWorkSpeedBonus,
+                engine.GetWorkEfficiencyMultiplier("sv_mot"), 4);
+
+            engine.TickHour("sv_mot", 9f);
+            Assert.Equal(1f, engine.GetWorkEfficiencyMultiplier("sv_mot"), 4);
+        }
+
+        [Fact]
+        public void GetWorkRefusalHours_SetOnBreakdownAndDecays()
+        {
+            var engine = new PhantomMemoryEngine();
+            engine.TriggerChanceOverride = 1.0f;
+            // motivationChance 0 → any trigger is a breakdown.
+            engine.RegisterRule("former_soldier", "military", 0f, "desc", "motivated", "breakdown");
+            var sv = new PhantomSurvivorSnapshot { survivorId = "sv_brk", backgroundId = "former_soldier", isAlive = true };
+
+            var outcome = engine.OnItemScavenged(sv, "item_dog_tags", new Ashfall.Core.SeededRng(7));
+            Assert.Equal(TriggerOutcome.Breakdown, outcome);
+
+            Assert.Equal(PhantomMemoryEngine.BreakdownWorkRefusalHours,
+                engine.GetWorkRefusalHours("sv_brk"), 4);
+
+            engine.TickHour("sv_brk", 2f);
+            Assert.Equal(PhantomMemoryEngine.BreakdownWorkRefusalHours - 2f,
+                engine.GetWorkRefusalHours("sv_brk"), 4);
+
+            engine.TickHour("sv_brk", 3f);
+            Assert.Equal(0f, engine.GetWorkRefusalHours("sv_brk"), 4);
+        }
+
+        [Fact]
+        public void GetWorkRefusalHours_UnknownSurvivor_Zero()
+        {
+            var engine = new PhantomMemoryEngine();
+            Assert.Equal(0f, engine.GetWorkRefusalHours("nobody"));
+            Assert.Equal(1f, engine.GetWorkEfficiencyMultiplier("nobody"), 4);
+        }
+
+        [Fact]
+        public void CaptureRestore_RoundTripsRefusalHours()
+        {
+            var engine = new PhantomMemoryEngine();
+            engine.TriggerChanceOverride = 1.0f;
+            engine.RegisterRule("former_soldier", "military", 0f, "desc", "motivated", "breakdown");
+            var sv = new PhantomSurvivorSnapshot { survivorId = "sv_brk", backgroundId = "former_soldier", isAlive = true };
+            engine.OnItemScavenged(sv, "item_dog_tags", new Ashfall.Core.SeededRng(7));
+            engine.TickHour("sv_brk", 2f);
+
+            var state = engine.CaptureState();
+            var fresh = new PhantomMemoryEngine();
+            fresh.RestoreState(state);
+
+            Assert.Equal(PhantomMemoryEngine.BreakdownWorkRefusalHours - 2f,
+                fresh.GetWorkRefusalHours("sv_brk"), 4);
+        }
+
         private sealed class SeededRng : ISeededRng
         {
             private readonly System.Random _rng;

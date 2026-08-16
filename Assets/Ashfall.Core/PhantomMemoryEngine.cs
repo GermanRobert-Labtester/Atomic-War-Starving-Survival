@@ -33,6 +33,7 @@ namespace Ashfall.Core
         public string survivorId;
         public int triggersExperienced;
         public float motivationBoostHoursRemaining;
+        public float breakdownRefusalHoursRemaining;
         public List<string> triggeredItemIds = new List<string>();
     }
 
@@ -151,6 +152,7 @@ namespace Ashfall.Core
                 else
                 {
                     record.motivationBoostHoursRemaining = 0f;
+                    record.breakdownRefusalHoursRemaining = BreakdownWorkRefusalHours;
                     OnPhantomTriggered?.Invoke(sv.survivorId, itemId, false);
                     OnPhantomBreakdown?.Invoke(sv.survivorId, itemId);
                     RaiseChanged();
@@ -160,17 +162,31 @@ namespace Ashfall.Core
             return TriggerOutcome.None;
         }
 
-        /// <summary>Decay motivation boost timers.</summary>
+        /// <summary>Decay motivation boost and breakdown refusal timers.</summary>
         public void TickHour(string survivorId, float gameHours)
         {
             if (!_records.TryGetValue(survivorId, out var record)) return;
-            if (record.motivationBoostHoursRemaining <= 0f) return;
-            record.motivationBoostHoursRemaining -= gameHours;
-            if (record.motivationBoostHoursRemaining <= 0f)
+
+            bool changed = false;
+            if (record.motivationBoostHoursRemaining > 0f)
             {
-                record.motivationBoostHoursRemaining = 0f;
-                RaiseChanged();
+                record.motivationBoostHoursRemaining -= gameHours;
+                if (record.motivationBoostHoursRemaining <= 0f)
+                {
+                    record.motivationBoostHoursRemaining = 0f;
+                    changed = true;
+                }
             }
+            if (record.breakdownRefusalHoursRemaining > 0f)
+            {
+                record.breakdownRefusalHoursRemaining -= gameHours;
+                if (record.breakdownRefusalHoursRemaining <= 0f)
+                {
+                    record.breakdownRefusalHoursRemaining = 0f;
+                    changed = true;
+                }
+            }
+            if (changed) RaiseChanged();
         }
 
         /// <summary>Resolve vignette text for a trigger outcome.</summary>
@@ -202,6 +218,27 @@ namespace Ashfall.Core
         public int GetTriggersExperienced(string survivorId) =>
             _records.TryGetValue(survivorId, out var r) ? r.triggersExperienced : 0;
 
+        /// <summary>
+        /// Effective work-efficiency multiplier from an active motivation boost
+        /// (1 + MotivationWorkSpeedBonus while the boost lasts, else 1.0).
+        /// </summary>
+        public float GetWorkEfficiencyMultiplier(string survivorId)
+        {
+            if (!_records.TryGetValue(survivorId, out var r)) return 1f;
+            return r.motivationBoostHoursRemaining > 0f
+                ? 1f + MotivationWorkSpeedBonus : 1f;
+        }
+
+        /// <summary>
+        /// Remaining hours of work refusal from the most recent breakdown
+        /// (BreakdownWorkRefusalHours, decaying; 0 when clear).
+        /// </summary>
+        public float GetWorkRefusalHours(string survivorId)
+        {
+            return _records.TryGetValue(survivorId, out var r)
+                ? r.breakdownRefusalHoursRemaining : 0f;
+        }
+
         // ── Save / Load ───────────────────────────────────────────────
 
         public PhantomMemoryEngineState CaptureState()
@@ -222,6 +259,7 @@ namespace Ashfall.Core
                     survivorId = r.survivorId,
                     triggersExperienced = r.triggersExperienced,
                     motivationBoostHoursRemaining = r.motivationBoostHoursRemaining,
+                    breakdownRefusalHoursRemaining = r.breakdownRefusalHoursRemaining,
                     triggeredItemIds = new List<string>(r.triggeredItemIds)
                 });
             }
@@ -244,6 +282,7 @@ namespace Ashfall.Core
                         survivorId = r.survivorId,
                         triggersExperienced = r.triggersExperienced,
                         motivationBoostHoursRemaining = r.motivationBoostHoursRemaining,
+                        breakdownRefusalHoursRemaining = r.breakdownRefusalHoursRemaining,
                         triggeredItemIds = r.triggeredItemIds != null
                             ? new List<string>(r.triggeredItemIds)
                             : new List<string>()

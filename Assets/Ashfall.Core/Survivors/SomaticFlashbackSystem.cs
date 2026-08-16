@@ -64,8 +64,8 @@ namespace Ashfall.Core.Survivors
         /// <summary>Host provides: returns list of alive survivor IDs.</summary>
         public Func<IReadOnlyList<string>> GetAliveSurvivorIds;
 
-        /// <summary>RNG source; host should inject a seeded Random for determinism.</summary>
-        public Random Rng;
+        /// <summary>RNG source; host should inject a seeded RNG for determinism.</summary>
+        public ISeededRng Rng;
 
         // ── Public API ─────────────────────────────────────────────────
 

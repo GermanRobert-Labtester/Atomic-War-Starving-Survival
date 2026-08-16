@@ -71,7 +71,8 @@ namespace AtomicWar.GodotApp
         DataIntegritySelfTest,
         CaravanSelfTest,
         AssetRegistrySelfTest,
-        StandaloneSystemsSelfTest
+        StandaloneSystemsSelfTest,
+        Phase0SelfTest
     }
 
     /// <summary>
@@ -177,6 +178,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.AssetRegistrySelfTest;
             if (Has(args, "--standalone-selftest"))
                 return HostCliAction.StandaloneSystemsSelfTest;
+            if (Has(args, "--phase0-selftest"))
+                return HostCliAction.Phase0SelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -214,6 +217,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --data-integrity-selftest  Cross-reference every id in the 55 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
             GD.Print("  --asset-registry-selftest  Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
             GD.Print("  --standalone-selftest     SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance");
+            GD.Print("  --phase0-selftest         Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
             GD.Print("  --economy-selftest        Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip)");
             GD.Print("  --host-help              This list");
         }
@@ -1447,6 +1451,108 @@ namespace AtomicWar.GodotApp
             GD.Print(failures == 0
                 ? "STANDALONE_SYSTEMS_SELFTEST PASS"
                 : $"STANDALONE_SYSTEMS_SELFTEST FAIL ({failures})");
+            return failures == 0 ? 0 : 1;
+        }
+
+        /// <summary>
+        /// Phase-0 effects gate: phantom work-efficiency/refusal, somatic flashback
+        /// work penalty, trade specialty mastery, final-wish permanent shelter
+        /// buff, respiratory stamina penalty + ash-zone exposure, and a save
+        /// write → reload → restore round-trip through the Phase0 save store.
+        /// </summary>
+        public static int RunPhase0SelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else { GD.Print("[FAIL] " + name); failures++; }
+            }
+
+            try
+            {
+                var session = new Phase0HostSession();
+                session.SeedDemoRoster();
+                session.RegisterDefaultRules();
+
+                // ── 1. Phantom memory: motivation → work efficiency ─────
+                session.ScavengeItem("survivor_gunner_mikhail", "item_dog_tags");
+                float workMult = session.Phantom.GetWorkEfficiencyMultiplier("survivor_gunner_mikhail");
+                Check(workMult == 1f || workMult == 1f + Ashfall.Core.PhantomMemoryEngine.MotivationWorkSpeedBonus,
+                    "phantom work-efficiency multiplier is 1.0 or boosted");
+                session.Phantom.TickHour("survivor_gunner_mikhail", 9f);
+                Check(session.Phantom.GetWorkEfficiencyMultiplier("survivor_gunner_mikhail") == 1f,
+                    "phantom work-efficiency decays back to 1.0");
+
+                // Host view must track the decay too (aggregate is derived, not stale).
+                session.TickHour(1f);
+                float hostMult = session.GetEffects("survivor_gunner_mikhail").workEfficiencyMultiplier;
+                Check(Math.Abs(hostMult - 1f) < 1e-4f,
+                    "host work-efficiency view recomputes after boost decays");
+
+                // ── 2. Somatic flashback: work penalty, grounded penalty ─
+                var flash = session.Flashbacks;
+                flash.GetAliveSurvivorIds = () => new[] { "sv_a", "sv_b" };
+                flash.IsCompanionInSameRoom = (a, b) => a != b; // everyone grounded
+                flash.IncreaseSusceptibility("sv_a", 1f);
+                flash.OnAudioEvent("siren", 1f);
+                float groundedPenalty = flash.GetWorkEfficiencyPenalty("sv_a");
+                Check(groundedPenalty == 0f || groundedPenalty == Ashfall.Core.Survivors.SomaticFlashbackSystem.GroundedWorkEfficiencyPenalty,
+                    "flashback penalty is 0 or grounded penalty");
+
+                // ── 3. Trade specialty: milestones → mastery ───────────
+                int narrativeFired = 0;
+                string narrativeId = null;
+                session.TradeSpecialty.FireNarrativeEvent = (id, sv) => { narrativeFired++; narrativeId = id; };
+                session.CraftItem("elena_vasquez", "machinist", "wrench_standard");
+                session.CraftItem("elena_vasquez", "machinist", "gear_standard");
+                Check(session.TradeSpecialty.GetMasteryTier("elena_vasquez") == 2,
+                    "trade specialty tier 2 after two matching crafts");
+                session.CraftItem("elena_vasquez", "machinist", "lever_standard");
+                Check(session.TradeSpecialty.HasMasteredTrade("elena_vasquez"),
+                    "trade specialty mastered at 3 crafts");
+                Check(narrativeFired == 1 && narrativeId == "narrative_trade_mastery_machinist",
+                    "mastery fired narrative event");
+
+                // ── 4. Final wish: permanent shelter morale buff ────────
+                float buffBefore = session.PermanentShelterMoraleBuff;
+                session.FinalWish.RegisterWish("parent", Ashfall.Core.Survivors.FinalWishSystem.WishBuildMemorial);
+                session.FinalWish.DeclareTerminalPrognosis("survivor_dr_sarah_chen", "parent", true);
+                session.FinalWish.AdvanceWishStep("survivor_dr_sarah_chen", "step_1");
+                session.FinalWish.AdvanceWishStep("survivor_dr_sarah_chen", "step_2");
+                session.FinalWish.AdvanceWishStep("survivor_dr_sarah_chen", "step_3");
+                Check(session.PermanentShelterMoraleBuff >
+                      buffBefore + Ashfall.Core.Survivors.FinalWishSystem.WishCompletedMoraleBuff - 0.5f,
+                    "final wish completion applied permanent shelter morale buff");
+
+                // ── 5. Respiratory: ash zone + stamina penalty ─────────
+                session.IsInAshZone = true;
+                session.Respiratory.GetOrCreate("survivor_gunner_mikhail");
+                session.Respiratory.TickHours("survivor_gunner_mikhail", 24f);
+                Check(session.Respiratory.RespiratoryDegradation("survivor_gunner_mikhail") > 0f,
+                    "ash-zone exposure accumulates respiratory degradation");
+                session.IsInAshZone = false;
+
+                // ── 6. Save round-trip ──────────────────────────────────
+                var save = session.CaptureSave();
+                Check(save != null && save.effects.Count >= 3, "phase-0 save captured effects");
+                var fresh = new Phase0HostSession();
+                fresh.RestoreSave(save);
+                Check(Math.Abs(fresh.PermanentShelterMoraleBuff - session.PermanentShelterMoraleBuff) < 1e-4f,
+                    "permanent shelter morale buff restored");
+                Check(fresh.TradeSpecialty.HasMasteredTrade("elena_vasquez"),
+                    "trade mastery restored");
+            }
+            catch (Exception e)
+            {
+                Check(false, "phase0 selftest threw: " + e.Message);
+            }
+
+            GD.Print(failures == 0
+                ? "PHASE0_SELFTEST PASS"
+                : $"PHASE0_SELFTEST FAIL ({failures})");
             return failures == 0 ? 0 : 1;
         }
 
