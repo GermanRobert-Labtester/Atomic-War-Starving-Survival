@@ -149,6 +149,10 @@ namespace AtomicWar.GodotApp
         private ExpeditionPanel _expeditionPanel = null!;
         private WeatherPanel _weatherPanel = null!;
         private QuestsPanel _questsPanel = null!;
+        private JournalPanel _journalPanel = null!;
+        private FactionsPanel _factionsPanel = null!;
+        private ResearchPanel _researchPanel = null!;
+        private ShelterPanel _shelterPanel = null!;
         private enum GameState { Menu, Playing, GameOver }
         private GameState _state = GameState.Menu;
 
@@ -487,6 +491,26 @@ namespace AtomicWar.GodotApp
             _questsPanel.OnClose += CloseQuestsPanel;
             gameUiContainer.AddChild(_questsPanel);
 
+            // ── Journal panel (overlay) ──
+            _journalPanel = new JournalPanel();
+            _journalPanel.OnClose += CloseJournalPanel;
+            gameUiContainer.AddChild(_journalPanel);
+
+            // ── Factions panel (overlay) ──
+            _factionsPanel = new FactionsPanel();
+            _factionsPanel.OnClose += CloseFactionsPanel;
+            gameUiContainer.AddChild(_factionsPanel);
+
+            // ── Research panel (overlay) ──
+            _researchPanel = new ResearchPanel();
+            _researchPanel.OnClose += CloseResearchPanel;
+            gameUiContainer.AddChild(_researchPanel);
+
+            // ── Shelter panel (overlay) ──
+            _shelterPanel = new ShelterPanel();
+            _shelterPanel.OnClose += CloseShelterPanel;
+            gameUiContainer.AddChild(_shelterPanel);
+
             // ── Game content area ──
             var margin = new MarginContainer();
             margin.SizeFlagsVertical = SizeFlags.ExpandFill;
@@ -661,6 +685,10 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Expeditions: open panel", () => { _expeditionPanel.Open(); });
             AddMenuButton("Weather: open panel", () => { _weatherPanel.Open(); });
             AddMenuButton("Quests: open panel", () => { _questsPanel.Open(); });
+            AddMenuButton("Journal: open panel", () => { _journalPanel.Open(); });
+            AddMenuButton("Factions: open panel", () => { _factionsPanel.Open(); });
+            AddMenuButton("Research: open panel", () => { _researchPanel.Open(); });
+            AddMenuButton("Shelter: open panel", () => { _shelterPanel.Open(); });
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveExpeditions(); SaveNarrative(); SaveMedical(); SaveWorld(); SaveCrafting(); SaveCaravans(); SaveYearOfAsh(); GetTree().Quit(); });
 
             _statusLabel = new Label
@@ -3277,6 +3305,26 @@ namespace AtomicWar.GodotApp
         private void CloseQuestsPanel()
         {
             _questsPanel.Visible = false;
+        }
+
+        private void CloseJournalPanel()
+        {
+            _journalPanel.Visible = false;
+        }
+
+        private void CloseFactionsPanel()
+        {
+            _factionsPanel.Visible = false;
+        }
+
+        private void CloseResearchPanel()
+        {
+            _researchPanel.Visible = false;
+        }
+
+        private void CloseShelterPanel()
+        {
+            _shelterPanel.Visible = false;
         }
 
         private void ShowGameOver(string cause, string stats)
