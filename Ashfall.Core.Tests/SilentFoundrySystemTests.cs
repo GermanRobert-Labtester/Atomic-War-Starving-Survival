@@ -851,7 +851,7 @@ namespace Ashfall.Core.Tests
             v1.Checksum = SaveChecksum.Compute(v1);
             string legacy = json.Serialize(v1);
             var migrated = ExpansionHubSaveCodec.Decode(legacy, json);
-            Assert.Equal(3, migrated.saveVersion);
+            Assert.Equal(ExpansionHubSave.CurrentSaveVersion, migrated.saveVersion);
             Assert.Equal(3, migrated.simDay);
             Assert.NotNull(migrated.foundry);
             Assert.False(migrated.foundry.unlocked);

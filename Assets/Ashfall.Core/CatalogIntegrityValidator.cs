@@ -75,7 +75,7 @@ namespace Ashfall.Core
         public static readonly string[] IdPrefixes =
         {
             "item_", "loc_", "location_", "quest_", "npc_", "survivor_", "faction_",
-            "event_", "recipe_", "relic_", "lore_", "room_", "stage_", "choice_",
+            "disease_", "event_", "recipe_", "relic_", "lore_", "room_", "stage_", "choice_",
             "mutation_", "flag_", "trait_", "anchor_", "season_", "kind_", "clinic_",
             "morph_", "drug_", "co_", "enc_", "narrative_", "dialogue_event_",
             "frequency_", "schedule_event_", "hidden_cache_", "archetype_",
@@ -168,7 +168,8 @@ namespace Ashfall.Core
             "requiredFlag", "requiredFlagId", "RequiredFlagId", "RequiredEventFlags",
             "ambushFlag", "cleanWaterRewardFlag", "trait_granted",
             "latentExpertTrait", "requiredTrait", "roomId", "itemId",
-            "downstream_quest_trigger", "gating_flag", "nextStageId"
+            "downstream_quest_trigger", "gating_flag", "nextStageId",
+            "countermeasure_item_id"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -184,6 +185,7 @@ namespace Ashfall.Core
         {
             "tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
             "stance", "short_name", "identity", "sink", "notes", "display_name",
+            "collection_id",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
             "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile",
             "callsign", "entry_type", "record_type", "directive_code", "classification",

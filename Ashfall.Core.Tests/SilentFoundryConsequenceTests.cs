@@ -573,7 +573,7 @@ namespace Ashfall.Core.Tests
             v2.Checksum = SaveChecksum.Compute(v2);
 
             var migrated = ExpansionHubSaveCodec.Decode(json.Serialize(v2), json);
-            Assert.Equal(3, migrated.saveVersion);
+            Assert.Equal(ExpansionHubSave.CurrentSaveVersion, migrated.saveVersion);
             Assert.True(migrated.foundry.unlocked, "v2 foundry state preserved");
             Assert.NotNull(migrated.consequences);
             Assert.Equal(0f, migrated.consequences.guildStanding);

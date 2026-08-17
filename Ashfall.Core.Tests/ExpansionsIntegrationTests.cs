@@ -84,6 +84,34 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void DiseaseExpansionHeadlessSmoke()
+        {
+            // The migrated Disease Expansion: catalog loads, quarantine stalls
+            // the vector, outbreaks declare/contain, protocols block vectors,
+            // outcomes resolve deterministically, save round-trips.
+            var report = DiseaseHeadlessDemo.Run(DataDir());
+            Assert.True(report.Passed, report.Summary);
+            Assert.Equal(0, report.FailedCount);
+        }
+
+        [Fact]
+        public void MasterSession_DiseaseWiredAndOutbreakTick()
+        {
+            // The orchestrator (ExpansionMasterSession.Load) wires the Disease
+            // engine + catalog; the master daily tick advances the ward.
+            var session = ExpansionMasterSession.Load(DataDir());
+            var disease = session.Disease;
+            Assert.NotNull(disease);
+            Assert.True(disease.Catalog.Count >= 4, "disease catalog bound by the orchestrator");
+            Assert.True(disease.Catalog.GetById("disease_cholera") != null);
+
+            // The daily tick progresses the ward deterministically.
+            for (int d = 1; d <= 30; d++)
+                session.TickDaily(Ashfall.Core.WeatherKind.Overcast, -12f);
+            Assert.True(disease.State.rngSeed != 0, "disease engine ticked through the orchestrator");
+        }
+
+        [Fact]
         public void MasterExpansionSuiteAllPass()
         {
             var report = ExpansionMasterSession.RunAllSelfTests(DataDir());

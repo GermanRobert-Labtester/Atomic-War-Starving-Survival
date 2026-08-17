@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "collection_id": "disease_catalog",
+  "diseases": [
+    {
+      "id": "disease_cholera",
+      "display_name": "Cholera",
+      "vector": "water",
+      "lethality": 0.30,
+      "incubation_days": 2,
+      "illness_days": 4,
+      "infectivity": 0.40,
+      "spread_interval_days": 2,
+      "spread_radius": 3,
+      "countermeasure_item_id": "clean_water",
+      "guidance": "Boil every litre that passes a lip. Purified stores block the water route entirely.",
+      "source_note": "Shared cisterns and ration lines were the old strain's best friend. It lives in what we drink, not in us."
+    },
+    {
+      "id": "disease_zoonotic_flu",
+      "display_name": "Zoonotic Flu",
+      "vector": "air",
+      "lethality": 0.18,
+      "incubation_days": 1,
+      "illness_days": 5,
+      "infectivity": 0.55,
+      "spread_interval_days": 1,
+      "spread_radius": 4,
+      "countermeasure_item_id": "gas_mask",
+      "guidance": "Seal the vents and keep masks on shift hands. Air moves faster than rumor does.",
+      "source_note": "Carried in from scavenged bedding and dead livestock. It jumps mouths before it jumps fences."
+    },
+    {
+      "id": "disease_blood_fever",
+      "display_name": "Blood Fever",
+      "vector": "blood",
+      "lethality": 0.45,
+      "incubation_days": 3,
+      "illness_days": 6,
+      "infectivity": 0.25,
+      "spread_interval_days": 3,
+      "spread_radius": 2,
+      "countermeasure_item_id": "antibiotics",
+      "guidance": "Sterilise every tool before it touches skin. One reused blade can seed a ward.",
+      "source_note": "Spread through unsterilised surgical tools and shared field dressings. The worst cases die with clean hands nearby."
+    },
+    {
+      "id": "disease_spore_blight",
+      "display_name": "Spore Blight",
+      "vector": "spore",
+      "lethality": 0.40,
+      "incubation_days": 2,
+      "illness_days": 7,
+      "infectivity": 0.30,
+      "spread_interval_days": 2,
+      "spread_radius": 3,
+      "countermeasure_item_id": "hazmat_suit",
+      "guidance": "Engage air filtration and keep sealed kit on anyone who peeled mold off the walls. Spores live longer than patience.",
+      "source_note": "A grey bloom that rode the dust down from the dead farms. It does not need a wound, only a breath."
+    }
+  ]
+}

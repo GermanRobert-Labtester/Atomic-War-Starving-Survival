@@ -139,6 +139,9 @@ namespace AtomicWar.GodotApp
         // the Core system owned by the expansion hub.
         private AtomicWar.GodotApp.SilentFoundryHostSession _silentFoundry = null!;
         private SilentFoundryPanel _silentFoundryPanel = null!;
+        // ASHFALL: DISEASE EXPANSION — thin presentation wrapper over the Core
+        // contagion engine owned by the expansion hub (rides the hub save).
+        private AtomicWar.GodotApp.DiseaseHostSession _disease = null!;
         private AtomicWar.GodotApp.Economy.TradeScreenGodotPanel _tradePanel = null!;
         private Ashfall.Core.Radio.FactionRadioEngine _tradeRadio = null!;
         // Holdfast S1 save coalescing (same pattern as the journal): any state
@@ -270,6 +273,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.SilentFoundrySelfTest:
                     GetTree().Quit(HostCli.RunSilentFoundrySelfTest(_dataDir));
+                    return;
+                case HostCliAction.DiseaseSelfTest:
+                    GetTree().Quit(HostCli.RunDiseaseSelfTest(_dataDir));
                     return;
                 case HostCliAction.SilentFoundryUiTest:
                     RunSilentFoundryUiTestAndQuit();
@@ -1522,7 +1528,21 @@ namespace AtomicWar.GodotApp
                 _expansions.GreenhouseLine() + "\n" +
                 _expansions.WaystationLine() + "\n" +
                 _expansions.ArbitrationLine() + "\n" +
-                _expansions.LedgerLine();
+                _expansions.LedgerLine() + "\n" +
+                DiseaseStatusLine();
+        }
+
+        private string DiseaseStatusLine()
+        {
+            if (_expansions?.Disease == null) return "DISEASE WARD: offline";
+            if (_disease == null) SetupDisease();
+            if (_disease == null) return "DISEASE WARD: offline";
+            var s = _disease.Engine.GetSnapshot();
+            return $"——— DISEASE WARD ———\n" +
+                $"infections {s.total_infected} · quarantined {s.total_quarantined} · " +
+                $"outbreaks {s.total_outbreaks} (prevented {s.total_outbreaks_prevented}) · " +
+                $"recovered {s.total_recovered} · deaths {s.total_deaths}" +
+                (s.total_contagious > 0 ? "  ★ " + s.total_contagious + " CONTAGIOUS UNISOLATED" : "");
         }
 
         private void OnRosterInspectWallClicked()
@@ -1667,6 +1687,13 @@ namespace AtomicWar.GodotApp
             _silentFoundry.Engine.TickDaily(day);
             _silentFoundryPanel?.RefreshView();
             if (_foundryDirty) SaveExpansionHub();
+
+            // The Disease Expansion advances on the real day clock: the exposure
+            // pool is the duty-roster home occupants (threats among the people
+            // actually in the shelter tonight). Outcome-only advance otherwise.
+            SetupDisease();
+            _disease.TickDaily(day);
+            if (_expansionHubDirty) SaveExpansionHub();
 
             SetupGreenhouse();
             _greenhouse.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.04f);
@@ -3557,6 +3584,38 @@ namespace AtomicWar.GodotApp
 
         // ── THE SILENT FOUNDRY (Exp 10) ─────────────────────────────────
 
+        private void SetupDisease()
+        {
+            if (_disease != null) return;
+            SetupExpansions();
+            var engine = _expansions.Disease;
+            if (engine == null)
+            {
+                GD.PrintErr("[Ashfall Godot] Disease Expansion missing from expansion hub; ward offline.");
+                return;
+            }
+            _disease = new AtomicWar.GodotApp.DiseaseHostSession(engine, _expansions.DiseaseData);
+            // The exposure pool is the people actually in the shelter tonight
+            // (duty-roster home occupants). Pure presentation wiring — the
+            // engine owns all rules.
+            _disease.BindPopulationProvider(() =>
+            {
+                var occupants = BuildHomeOccupantSnapshot();
+                var ids = new List<string>();
+                for (int i = 0; i < occupants.Count; i++)
+                {
+                    var o = occupants[i];
+                    if (o != null && !string.IsNullOrEmpty(o.survivorId))
+                        ids.Add(o.survivorId);
+                }
+                return ids;
+            });
+            // Ward state rides the expansion-hub save (restored above); any
+            // change marks the hub dirty so nothing is lost at day end.
+            _disease.StateChanged += () => { _expansionHubDirty = true; };
+            GD.Print("[Ashfall Godot] Disease Expansion ward ready (contagion · quarantine · outbreak).");
+        }
+
         private void SetupSilentFoundry()
         {
             if (_silentFoundry != null) return;
@@ -3785,14 +3844,14 @@ namespace AtomicWar.GodotApp
             // (Reset the durable ledger + market demand so repeated runs stay deterministic.)
             _silentFoundry.Engine.RestoreConsequenceState(new SilentFoundryConsequenceState());
             _silentFoundry.SyncGuildStanding();
-            _economy.Market.AdjustDemand("item_foundry_acid_pipe", -10f); // floor at the market clamp
-            float acidDemandBefore = _economy.Market.GetDemandMultiplier("item_foundry_acid_pipe");
+            _economy.Market.AdjustDemand("item_foundry_brine_pipe", -10f); // floor at the market clamp
+            float acidDemandBefore = _economy.Market.GetDemandMultiplier("item_foundry_brine_pipe");
             Check(_silentFoundry.GuildTrust == 0f, "standing reset for the run");
             _silentFoundry.Engine.AssessTreatyCompliance(280); // treaty_05 acid-pipe quota short
             Check(_silentFoundry.GuildTrust < 0f, "host stance engine reflects the standing penalty");
             Check(_silentFoundry.GuildStanceEngine.GetTrust(SilentFoundryIds.FactionId) < 0f, "guild trust moved on the existing stance engine");
             Check(_silentFoundry.GuildStanceEngine.GetTrust("current_10_the_foundry_union") == 0f, "no leak to the foundry union");
-            Check(_economy.Market.GetDemandMultiplier("item_foundry_acid_pipe") > acidDemandBefore,
+            Check(_economy.Market.GetDemandMultiplier("item_foundry_brine_pipe") > acidDemandBefore,
                 "market demand moved on the real MarketSystem");
             Check(_silentFoundry.Engine.AppliedConsequences.Count == 1, "consequence applied once");
             _silentFoundry.Engine.AssessTreatyCompliance(280); // idempotent re-assessment
@@ -3818,18 +3877,18 @@ namespace AtomicWar.GodotApp
 
             // Live-campaign reachability: the real TickSimDay loop reaches the
             // day-280 treaty assessment (treaty_05 is inside the playable Year of
-            // Ash window, days 180-360). Late treaties (950/1500/3650) stay out
+            // Ash window, days 180-360). Late treaties (950/330/3650) stay out
             // of the live loop by the documented campaign limit.
             _silentFoundry.Engine.RestoreConsequenceState(new SilentFoundryConsequenceState());
             _silentFoundry.SyncGuildStanding();
-            Check(_silentFoundry.Engine.GetTreatyOutcome(SilentFoundryIds.TreatySulfur, 279) == FoundryTreatyOutcome.NotRatified,
+            Check(_silentFoundry.Engine.GetTreatyOutcome(SilentFoundryIds.TreatyBrinePipe, 279) == FoundryTreatyOutcome.NotRatified,
                 "pre-ratification neutral in the live loop");
             _simDay = 276;
             TickSimDay(277);
             TickSimDay(278);
             TickSimDay(279);
             TickSimDay(280);
-            Check(_silentFoundry.Engine.IsConsequenceApplied(SilentFoundryIds.TreatySulfur, 280),
+            Check(_silentFoundry.Engine.IsConsequenceApplied(SilentFoundryIds.TreatyBrinePipe, 280),
                 "live TickSimDay reaches the day-280 treaty assessment");
             Check(_silentFoundry.GuildTrust == -6f, "live loop applied the single missed-quota consequence");
             Check(_silentFoundry.Engine.AppliedConsequences.Count == 1, "exactly one consequence from the live window");
@@ -3838,10 +3897,10 @@ namespace AtomicWar.GodotApp
             // day-agnostic, so a late treaty fires through the FULL host pipeline
             // (stance engine + real market) whenever the campaign supplies the day.
             // The live campaign caps at ~360, so this proves the pipeline, not the
-            // campaign reachability, for days 950/1500/3650.
+            // campaign reachability, for days 950/330/3650.
             float coalDemandBefore = _economy.Market.GetDemandMultiplier("coal");
-            _silentFoundry.Engine.TickDaily(1500); // treaty_12 assessment day
-            Check(_silentFoundry.Engine.IsConsequenceApplied(SilentFoundryIds.TreatyRailway, 1500),
+            _silentFoundry.Engine.TickDaily(330); // treaty_12 assessment day
+            Check(_silentFoundry.Engine.IsConsequenceApplied(SilentFoundryIds.TreatyRoadIron, 330),
                 "late-treaty consequence reaches the ledger through the host tick");
             Check(_economy.Market.GetDemandMultiplier("coal") > coalDemandBefore,
                 "late-treaty logistics modifier moves the real market");
@@ -3858,7 +3917,7 @@ namespace AtomicWar.GodotApp
             // Factions panel renders the guild card (data-driven from the authored
             // faction registry entry).
             OpenPlayerPanel("factions");
-            Check(_factionsPanel.HasGuildCard, "factions panel renders the Silent Foundry Guild card");
+            Check(_factionsPanel.HasGuildCard, "factions panel renders the Silent Foundry works card");
             _factionsPanel.RefreshView();
             CloseFactionsPanel();
 

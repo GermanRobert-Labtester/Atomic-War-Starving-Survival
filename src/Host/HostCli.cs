@@ -61,6 +61,7 @@ namespace AtomicWar.GodotApp
         GreenhouseSelfTest,
         SilentFoundrySelfTest,
         SilentFoundryUiTest,
+        DiseaseSelfTest,
         DutyRosterUiTest,
         ExpansionsSelfTest,
         YearOfAshSaveSelfTest,
@@ -142,6 +143,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.GreenhouseSelfTest;
             if (Has(args, "--silent-foundry-selftest"))
                 return HostCliAction.SilentFoundrySelfTest;
+            if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))
+                return HostCliAction.DiseaseSelfTest;
             if (Has(args, "--silent-foundry-uitest"))
                 return HostCliAction.SilentFoundryUiTest;
             if (Has(args, "--duty-roster-uitest"))
@@ -285,6 +288,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --warlord-host-selftest  Warlord host playthrough: YearOfAsh wiring, standing, v3 save/tamper");
             GD.Print("  --warlord-ui-selftest    Warlord tribute payment loop + collector voice + FactionsPanel card");
             GD.Print("  --phase0-selftest         Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
+            GD.Print("  --disease-selftest       Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip");
             GD.Print("  --economy-selftest        Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip)");
             GD.Print("  --host-help              This list");
         }
@@ -607,6 +611,13 @@ namespace AtomicWar.GodotApp
         public static int RunSilentFoundrySelfTest(string dataDirectory)
         {
             var report = Ashfall.Core.SilentFoundryHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunDiseaseSelfTest(string dataDirectory)
+        {
+            var report = Ashfall.Core.DiseaseHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
             return report.ExitCode;
         }

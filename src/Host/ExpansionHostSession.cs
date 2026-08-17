@@ -32,6 +32,8 @@ namespace AtomicWar.GodotApp
         public EpilogueMatrixRuntime Epilogue { get; }
         public Ashfall.Core.Foundry.SilentFoundrySystem SilentFoundry { get; private set; }
         public Ashfall.Core.Foundry.SilentFoundryCatalog FoundryData { get; private set; }
+        public Ashfall.Core.Disease.DiseaseSystem Disease { get; private set; }
+        public Ashfall.Core.Disease.DiseaseCatalog DiseaseData { get; private set; }
 
         public ExpansionHostSession(
             WaystationSystem waystation,
@@ -122,23 +124,26 @@ namespace AtomicWar.GodotApp
                 var bp = blueprints.GetById(Ashfall.Core.Foundry.SilentFoundryIds.BlueprintRoomId);
                 if (bp != null && bp.maintenance_cycle_days > 0) maintenanceCycle = bp.maintenance_cycle_days;
             }
-            var treaties = new Ashfall.Core.Narrative.RegionalTreatyCatalog();
-            string treatyPath = files.Combine(dataDirectory, "narrative", "regional_treaty_protocols.json");
-            if (files.FileExists(treatyPath))
-            {
-                treaties.Load(files.ReadAllText(treatyPath), json);
-                var ratification = new System.Collections.Generic.Dictionary<string, int>(StringComparer.Ordinal);
-                for (int i = 0; i < treaties.AllTreaties.Count; i++)
-                {
-                    var t = treaties.AllTreaties[i];
-                    if (t != null && t.ratified_day > 0) ratification[t.treaty_id] = t.ratified_day;
-                }
-                foundry.BindTreaties(ratification);
-            }
+            // District 8 accords (data authority: foundry_accords.json) drive the
+            // foundry's treaty clock — campaign-reachable days, Sector 4 canon.
+            var ratificationDays = Ashfall.Core.Foundry.SilentFoundryCatalogLoader.LoadAccordRatificationDays(
+                dataDirectory, files, json);
+            if (ratificationDays.Count > 0)
+                foundry.BindTreaties(ratificationDays);
             foundry.BindCatalog(foundryData, maintenanceCycle);
             session.SilentFoundry = foundry;
             session.FoundryData = foundryData;
             foundry.OnStateChanged += _ => session.StateChanged?.Invoke();
+
+            // Disease Expansion: static catalog + deterministic contagion engine.
+            // Bound on the catalog (registered above); always active — outbreaks
+            // threaten from day one. No unlock gate, no facility to build.
+            var diseaseData = Ashfall.Core.Disease.DiseaseCatalogLoader.Load(dataDirectory, files, json);
+            var disease = new Ashfall.Core.Disease.DiseaseSystem(log: log);
+            disease.BindCatalog(diseaseData);
+            session.Disease = disease;
+            session.DiseaseData = diseaseData;
+            disease.OnStateChanged += _ => session.StateChanged?.Invoke();
             return session;
         }
 
@@ -147,11 +152,11 @@ namespace AtomicWar.GodotApp
         /// <summary>Cross-host save envelope. Shape and checksum owned by ExpansionHubSaveCodec.</summary>
         public ExpansionHubSave CaptureSave(int simDay) =>
             ExpansionHubSaveCodec.Capture(simDay, Waystation, Layouts, Memory, SiteEncounters, Vouch, Greenhouse,
-                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry);
+                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry, Disease);
 
         public void RestoreSave(ExpansionHubSave save) =>
             ExpansionHubSaveCodec.Restore(save, Waystation, Layouts, Memory, SiteEncounters, Vouch, Greenhouse,
-                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry);
+                Arbitration, Ledger, CrossingQuests, Generational, SilentFoundry, Disease);
 
         // ---- Nobody's Charter: Crossing Arbitration (Exp 04) ----
 

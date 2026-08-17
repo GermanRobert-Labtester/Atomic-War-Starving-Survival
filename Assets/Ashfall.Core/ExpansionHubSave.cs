@@ -1,5 +1,6 @@
 using System;
 using Ashfall.Core.Crossing;
+using Ashfall.Core.Disease;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.Legacy;
 
@@ -9,7 +10,8 @@ namespace Ashfall.Core
     /// Cross-host save envelope for the Godot expansion hub: Waystation (Holdfast
     /// S2 vitals), Standing Record (Exp 03 layouts/memory/site encounters),
     /// Crossing gate (Exp 04 vouch), Greenhouse (Exp 05 plots), the
-    /// Silent Foundry (Exp 10 smelter bay), and its treaty consequence ledger.
+    /// Silent Foundry (Exp 10 smelter bay), its treaty consequence ledger, and
+    /// the Disease Expansion (contagion / quarantine / outbreak ward).
     /// Written through the IJsonSerializer port so a save written by one host
     /// loads in the other, same as HoldfastSave / YearOfAshSave / DutyRosterSave.
     /// </summary>
@@ -18,10 +20,11 @@ namespace Ashfall.Core
     {
         /// <summary>
         /// v2 added the Silent Foundry (Exp 10) state; v3 adds the durable
-        /// treaty-consequence ledger (standing + market/logistics modifiers).
-        /// v1 and v2 saves migrate forward with safe defaults.
+        /// treaty-consequence ledger (standing + market/logistics modifiers);
+        /// v4 adds the Disease Expansion state. Earlier saves migrate forward
+        /// with safe defaults.
         /// </summary>
-        public const int CurrentSaveVersion = 3;
+        public const int CurrentSaveVersion = 4;
 
         public int saveVersion = CurrentSaveVersion;
         public int simDay;
@@ -37,6 +40,7 @@ namespace Ashfall.Core
         public GenerationalSuccessionSaveState generational = new GenerationalSuccessionSaveState();
         public SilentFoundryState foundry = new SilentFoundryState();
         public SilentFoundryConsequenceState consequences = new SilentFoundryConsequenceState();
+        public DiseaseSystemState disease = new DiseaseSystemState();
 
         /// <summary>Integrity hash computed over all payload fields.</summary>
         public string Checksum = string.Empty;
@@ -81,6 +85,27 @@ namespace Ashfall.Core
         public string Checksum = string.Empty;
     }
 
+    /// <summary>Frozen v3 shape (foundry + consequence ledger present; disease expansion absent).</summary>
+    [Serializable]
+    public sealed class ExpansionHubSaveV3
+    {
+        public int saveVersion = 3;
+        public int simDay;
+        public WaystationSystemState waystation = new WaystationSystemState();
+        public LocationLayoutState layouts = new LocationLayoutState();
+        public LocationMemoryState memory = new LocationMemoryState();
+        public SiteEncounterState siteEncounters = new SiteEncounterState();
+        public VouchAccessSystemState vouch = new VouchAccessSystemState();
+        public GreenhouseState greenhouse = new GreenhouseState();
+        public CrossingArbitrationState arbitration = new CrossingArbitrationState();
+        public LedgerDebtSystemState ledger = new LedgerDebtSystemState();
+        public CrossingQuestSystemState crossingQuests = new CrossingQuestSystemState();
+        public GenerationalSuccessionSaveState generational = new GenerationalSuccessionSaveState();
+        public SilentFoundryState foundry = new SilentFoundryState();
+        public SilentFoundryConsequenceState consequences = new SilentFoundryConsequenceState();
+        public string Checksum = string.Empty;
+    }
+
     /// <summary>
     /// Serialization codec for the expansion-hub state. Same rules as the other
     /// save codecs: checksum recomputed on encode, hard-reject on decode for an
@@ -100,7 +125,8 @@ namespace Ashfall.Core
             LedgerDebtSystem ledger = null,
             CrossingQuestSystem crossingQuests = null,
             GenerationalSuccessionEngine generational = null,
-            SilentFoundrySystem silentFoundry = null)
+            SilentFoundrySystem silentFoundry = null,
+            DiseaseSystem disease = null)
         {
             var save = new ExpansionHubSave
             {
@@ -121,6 +147,7 @@ namespace Ashfall.Core
                 save.foundry = silentFoundry.CaptureState();
                 save.consequences = silentFoundry.CaptureConsequenceState();
             }
+            if (disease != null) save.disease = disease.CaptureState();
             save.Checksum = SaveChecksum.Compute(save);
             return save;
         }
@@ -163,7 +190,8 @@ namespace Ashfall.Core
                         crossingQuests = v1.crossingQuests ?? new CrossingQuestSystemState(),
                         generational = v1.generational ?? new GenerationalSuccessionSaveState(),
                         foundry = new SilentFoundryState(),
-                        consequences = new SilentFoundryConsequenceState()
+                        consequences = new SilentFoundryConsequenceState(),
+                        disease = new DiseaseSystemState()
                     };
                     migrated.Checksum = SaveChecksum.Compute(migrated);
                     return migrated;
@@ -190,7 +218,36 @@ namespace Ashfall.Core
                         crossingQuests = v2.crossingQuests ?? new CrossingQuestSystemState(),
                         generational = v2.generational ?? new GenerationalSuccessionSaveState(),
                         foundry = v2.foundry ?? new SilentFoundryState(),
-                        consequences = new SilentFoundryConsequenceState()
+                        consequences = new SilentFoundryConsequenceState(),
+                        disease = new DiseaseSystemState()
+                    };
+                    migrated.Checksum = SaveChecksum.Compute(migrated);
+                    return migrated;
+                }
+
+                // v3 saves carry the foundry AND its consequence ledger but predate
+                // the Disease Expansion (v4); the ward starts empty.
+                var v3 = json.Deserialize<ExpansionHubSaveV3>(jsonText);
+                if (v3 != null && v3.saveVersion == 3)
+                {
+                    ValidateChecksum(v3.Checksum, v3, "v3");
+                    var migrated = new ExpansionHubSave
+                    {
+                        saveVersion = ExpansionHubSave.CurrentSaveVersion,
+                        simDay = v3.simDay,
+                        waystation = v3.waystation ?? new WaystationSystemState(),
+                        layouts = v3.layouts ?? new LocationLayoutState(),
+                        memory = v3.memory ?? new LocationMemoryState(),
+                        siteEncounters = v3.siteEncounters ?? new SiteEncounterState(),
+                        vouch = v3.vouch ?? new VouchAccessSystemState(),
+                        greenhouse = v3.greenhouse ?? new GreenhouseState(),
+                        arbitration = v3.arbitration ?? new CrossingArbitrationState(),
+                        ledger = v3.ledger ?? new LedgerDebtSystemState(),
+                        crossingQuests = v3.crossingQuests ?? new CrossingQuestSystemState(),
+                        generational = v3.generational ?? new GenerationalSuccessionSaveState(),
+                        foundry = v3.foundry ?? new SilentFoundryState(),
+                        consequences = v3.consequences ?? new SilentFoundryConsequenceState(),
+                        disease = new DiseaseSystemState()
                     };
                     migrated.Checksum = SaveChecksum.Compute(migrated);
                     return migrated;
@@ -234,9 +291,11 @@ namespace Ashfall.Core
             ValidateChecksum(save.Checksum, save, "v" + save.saveVersion);
 
             // Defensive defaults for files that predate a field (older v3 builds
-            // without the consequence ledger, or hand-written fixtures).
+            // without the consequence ledger, hand-written fixtures, or v4 files
+            // written before the disease field existed).
             if (save.foundry == null) save.foundry = new SilentFoundryState();
             if (save.consequences == null) save.consequences = new SilentFoundryConsequenceState();
+            if (save.disease == null) save.disease = new DiseaseSystemState();
             return save;
         }
 
@@ -264,7 +323,8 @@ namespace Ashfall.Core
             LedgerDebtSystem ledger = null,
             CrossingQuestSystem crossingQuests = null,
             GenerationalSuccessionEngine generational = null,
-            SilentFoundrySystem silentFoundry = null)
+            SilentFoundrySystem silentFoundry = null,
+            DiseaseSystem disease = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));
@@ -287,6 +347,10 @@ namespace Ashfall.Core
             // the ledger is the idempotency authority.
             if (silentFoundry != null)
                 silentFoundry.RestoreConsequenceState(save.consequences);
+            // Disease Expansion: v1..v3 saves carry an empty ward; v4 restores it.
+            // Missing state never resurrects infections from a save without them.
+            if (disease != null && save.disease != null)
+                disease.RestoreState(save.disease);
         }
     }
 }
