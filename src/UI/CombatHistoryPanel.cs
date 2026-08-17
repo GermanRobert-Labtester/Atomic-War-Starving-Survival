@@ -1,92 +1,82 @@
 using System;
+using System.Collections.Generic;
 using Godot;
-using Ashfall.Core.UI;
-using AtomicWar.GodotApp.UI;
+using Ashfall.Core.Combat;
+using AtomicWar.GodotApp;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
-    /// ASHFALL — Combat History panel.
-    /// Shows detailed combat history, battle outcomes, and tactical analysis.
+    /// ASHFALL — Combat History panel (real integration).
+    /// Presents the full combat event log, aggregated battle outcomes (win/loss/
+    /// retreat), and tactical analysis from the live CombatHostSession snapshot.
     /// </summary>
     public partial class CombatHistoryPanel : Control
     {
         public event Action? OnClose;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblHistoryTitle;
-        private VBoxContainer _combatHistory;
-        private Label _lblOutcomesTitle;
-        private VBoxContainer _battleOutcomes;
-        private Label _lblTacticsTitle;
-        private VBoxContainer _tacticalAnalysis;
+        private CombatHostSession _combat = null!;
+        private bool _bound;
 
-        private readonly string[] _placeholderHistory = {
-            "[Day 7] Raid on Supply Caravan — Victory, 2 casualties",
-            "[Day 12] Ambush in Sector 4 — Retreat, 1 casualty",
-            "[Day 18] Bunker Defense — Victory, 0 casualties",
-            "[Day 22] Skirmish at Radio Tower — Inconclusive, 3 casualties",
-            "[Day 25] Supply Run to Sector 12 — Successful, 0 casualties"
-        };
+        private VBoxContainer _combatHistory = null!;
+        private VBoxContainer _battleOutcomes = null!;
+        private VBoxContainer _tacticalAnalysis = null!;
 
-        private readonly string[] _placeholderOutcomes = {
-            "Total Engagements: 5",
-            "Victories: 2 (40%)",
-            "Retreats: 1 (20%)",
-            "Inconclusive: 1 (20%)",
-            "Successful: 1 (20%)",
-            "Total Casualties: 6 (2 killed, 4 wounded)",
-            "Resources Gained: +35 rations, +5 medicine",
-            "Intel Gathered: 3 enemy positions mapped"
-        };
+        public bool IsBound => _bound;
 
-        private readonly string[] _placeholderTactics = {
-            "Ambush Tactics: Effective (Day 7, Day 12)",
-            "Defensive Positioning: Strong (Day 18)",
-            "Retreat Planning: Necessary (Day 12)",
-            "Communication: Hand signals + radios",
-            "Medical Response: Rapid (Marcus on standby)",
-            "Extraction Routes: Pre-planned for all expeditions",
-            "Lessons Learned: Improved perimeter defense"
-        };
-
-        public void Bind(object combatHistory)
+        public void Bind(CombatHostSession combat)
         {
+            _combat = combat;
+            _bound = true;
+            if (_combat != null) _combat.StateChanged += RefreshView;
             RefreshView();
         }
 
         public void RefreshView()
         {
-            if (_combatHistory == null || _battleOutcomes == null || _tacticalAnalysis == null) return;
+            if (_combat == null || _combatHistory == null) return;
+            var snap = _combat.Snapshot();
 
-            while (_combatHistory.GetChildCount() > 0) _combatHistory.RemoveChild(_combatHistory.GetChild(0));
-            while (_battleOutcomes.GetChildCount() > 0) _battleOutcomes.RemoveChild(_battleOutcomes.GetChild(0));
-            while (_tacticalAnalysis.GetChildCount() > 0) _tacticalAnalysis.RemoveChild(_tacticalAnalysis.GetChild(0));
+            // Battle log (real combat history).
+            foreach (var e in snap.Events)
+                AddLine(_combatHistory, $"[T{e.Turn}] {e.Detail}");
 
-            foreach (string history in _placeholderHistory)
+            // Aggregate outcomes.
+            int fireEvents = 0, jams = 0, downs = 0, deaths = 0, retreats = 0, winsOrLosses = 0;
+            foreach (var e in snap.Events)
             {
-                var label = new Label { Text = history };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _combatHistory.AddChild(label);
+                switch (e.Kind)
+                {
+                    case "fire": fireEvents++; break;
+                    case "weapon_jam": jams++; break;
+                    case "downed": downs++; break;
+                    case "death": deaths++; break;
+                    case "retreat": retreats++; break;
+                    case "victory": case "defeat": winsOrLosses++; break;
+                }
             }
+            AddLine(_battleOutcomes, "Shots fired: " + fireEvents);
+            AddLine(_battleOutcomes, "Weapon jams: " + jams);
+            AddLine(_battleOutcomes, "Combatants downed: " + downs);
+            AddLine(_battleOutcomes, "Eliminations: " + deaths);
+            AddLine(_battleOutcomes, "Retreats ordered: " + retreats);
+            AddLine(_battleOutcomes, "Resolutions (victory/defeat): " + winsOrLosses);
+            AddLine(_battleOutcomes, snap.Resolved ? "Final: " + snap.OutcomeText : "Encounter ongoing.");
 
-            foreach (string outcome in _placeholderOutcomes)
-            {
-                var label = new Label { Text = outcome };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _battleOutcomes.AddChild(label);
-            }
+            // Tactical analysis (stance trade-offs currently in force).
+            AddLine(_tacticalAnalysis, "Weapons monitored: " + snap.Weapons.Count);
+            foreach (var w in snap.Weapons)
+                AddLine(_tacticalAnalysis, $"{w.WeaponName} — cond {w.ConditionPct}%, jam {w.JamChancePct}%, ammo {w.AmmoRemaining}");
+            if (snap.Loot.Count > 0)
+                foreach (var l in snap.Loot)
+                    AddLine(_tacticalAnalysis, $"Loot captured: +{l.quantity} {l.itemId}");
+        }
 
-            foreach (string tactic in _placeholderTactics)
-            {
-                var label = new Label { Text = tactic };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _tacticalAnalysis.AddChild(label);
-            }
+        private static void AddLine(VBoxContainer box, string text)
+        {
+            var label = AshfallUiHelpers.MakeBody(text);
+            label.CustomMinimumSize = new Vector2(420, 26);
+            box.AddChild(label);
         }
 
         public override void _Ready()
@@ -98,63 +88,51 @@ namespace AtomicWar.GodotApp.UI
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+            var scroll = new ScrollContainer();
+            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
+            AddChild(scroll);
 
             var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
+            vbox.CustomMinimumSize = new Vector2(680, 0);
+            scroll.AddChild(vbox);
 
             var title = AshfallUiHelpers.MakeTitle("COMBAT HISTORY", Ashfall.Core.UI.Theme.FontSizeH1);
             title.HorizontalAlignment = HorizontalAlignment.Center;
             vbox.AddChild(title);
-
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblHistoryTitle = AshfallUiHelpers.MakeSectionHeader("BATTLE LOG");
-            vbox.AddChild(_lblHistoryTitle);
-
-            _combatHistory = new VBoxContainer();
-            _combatHistory.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _combatHistory.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_combatHistory);
-
+            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("BATTLE LOG"));
+            _combatHistory = MakeBox(); vbox.AddChild(_combatHistory);
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblOutcomesTitle = AshfallUiHelpers.MakeSectionHeader("BATTLE OUTCOMES");
-            vbox.AddChild(_lblOutcomesTitle);
-
-            _battleOutcomes = new VBoxContainer();
-            _battleOutcomes.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _battleOutcomes.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_battleOutcomes);
-
+            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("BATTLE OUTCOMES"));
+            _battleOutcomes = MakeBox(); vbox.AddChild(_battleOutcomes);
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblTacticsTitle = AshfallUiHelpers.MakeSectionHeader("TACTICAL ANALYSIS");
-            vbox.AddChild(_lblTacticsTitle);
-
-            _tacticalAnalysis = new VBoxContainer();
-            _tacticalAnalysis.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _tacticalAnalysis.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_tacticalAnalysis);
-
+            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("TACTICAL ANALYSIS"));
+            _tacticalAnalysis = MakeBox(); vbox.AddChild(_tacticalAnalysis);
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
+            vbox.AddChild(AshfallUiHelpers.MakeSmall("[Esc] to close"));
 
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
+            RefreshView();
+        }
+
+        private static VBoxContainer MakeBox()
+        {
+            var box = new VBoxContainer();
+            box.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            box.CustomMinimumSize = new Vector2(640, 0);
+            return box;
         }
 
         public void Open()
         {
             Visible = true;
+            RefreshView();
             QueueRedraw();
         }
 

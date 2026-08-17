@@ -1,97 +1,150 @@
 using System;
+using System.Collections.Generic;
 using Godot;
-using Ashfall.Core.UI;
-using AtomicWar.GodotApp.UI;
+using Ashfall.Core.Combat;
+using AtomicWar.GodotApp;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
-    /// ASHFALL — Combat panel.
-    /// Shows combat encounters, battle logs, casualties, and combat outcomes.
+    /// ASHFALL — Combat &amp; Encounters panel (real integration).
+    ///
+    /// Presents the live CombatHostSession: active encounter, phase, turn, stance,
+    /// combatants (lane / health / cover / armor / downed / pinned / last-stand),
+    /// weapon condition, jam state and ammunition, combat log and captured loot.
+    /// Exposes real player actions (fire, suppress, clear jam, repair, move lane,
+    /// deploy trap, decontaminate, bandage, retreat, last stand, end turn) — the
+    /// same commands the Core engine resolves. UI refreshes after every action.
     /// </summary>
     public partial class CombatPanel : Control
     {
         public event Action? OnClose;
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblEncountersTitle;
-        private VBoxContainer _encounterList;
-        private Label _lblBattleLogTitle;
-        private VBoxContainer _battleLog;
-        private Label _lblCasualtiesTitle;
-        private VBoxContainer _casualtyList;
+        private CombatHostSession _combat = null!;
+        private bool _bound;
 
-        // Placeholder combat data
-        private readonly string[] _placeholderEncounters = {
-            "Encounter 1: Raid on Supply Caravan (Day 7) — Victory, 2 casualties",
-            "Encounter 2: Ambush in Sector 4 (Day 12) — Retreat, 1 casualty",
-            "Encounter 3: Defense of Bunker (Day 18) — Victory, 0 casualties",
-            "Encounter 4: Skirmish at Radio Tower (Day 22) — Inconclusive, 3 casualties"
-        };
+        private Label _header = null!;
+        private Label _summary = null!;
+        private RichTextLabel _combatants = null!;
+        private RichTextLabel _weapons = null!;
+        private RichTextLabel _log = null!;
+        private Label _outcome = null!;
+        private OptionButton _targetSelect = null!;
+        private Label _lastActionResult = null!;
 
-        private readonly string[] _placeholderBattleLog = {
-            "[Day 7] Raid on Supply Caravan — Our forces repelled attackers. Lost 2 scouts.",
-            "[Day 12] Ambush in Sector 4 — Forced retreat. 1 medic wounded.",
-            "[Day 18] Bunker Defense — Repelled raiders. No casualties. Captured supplies.",
-            "[Day 22] Radio Tower Skirmish — Failed to secure tower. 2 injured, 1 captured."
-        };
+        public bool IsBound => _bound;
 
-        private readonly string[] _placeholderCasualties = {
-            "Yuki — Wounded (Day 12) — Leg injury, 3 days recovery",
-            "Marcus — Wounded (Day 22) — Minor burns, 1 day recovery",
-            "Unknown Survivor — Captured (Day 22) — Status unknown",
-            "2 Scouts — Killed (Day 7) — Buried at perimeter"
-        };
-
-        // Real data from host session
-        // private CombatHostSession? _combatHost;
-
-        public void Bind(object combat) // placeholder for CombatHostSession
+        /// <summary>Typed binding to the real combat host session.</summary>
+        public void Bind(CombatHostSession combat)
         {
-            // _combatHost = (CombatHostSession)combat;
-            // RefreshView();
+            _combat = combat;
+            _bound = true;
+            if (_combat != null)
+                _combat.StateChanged += RefreshView;
+            RefreshView();
         }
 
         public void RefreshView()
         {
-            if (_encounterList == null || _battleLog == null || _casualtyList == null) return;
+            if (_combat == null || _header == null) return;
 
-            // Clear existing lists
-            while (_encounterList.GetChildCount() > 0)
-                _encounterList.RemoveChild(_encounterList.GetChild(0));
-            while (_battleLog.GetChildCount() > 0)
-                _battleLog.RemoveChild(_battleLog.GetChild(0));
-            while (_casualtyList.GetChildCount() > 0)
-                _casualtyList.RemoveChild(_casualtyList.GetChild(0));
+            var snap = _combat.Snapshot();
 
-            // Display placeholder encounters
-            foreach (string encounter in _placeholderEncounters)
+            _header.Text = "COMBAT & ENCOUNTERS  ·  " + (string.IsNullOrEmpty(snap.LocationName) ? "NO ACTIVE" : snap.LocationName);
+            if (snap.IsActive)
             {
-                var label = new Label { Text = encounter };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _encounterList.AddChild(label);
+                _summary.Text = $"Phase: {snap.Phase}  ·  Turn: {snap.Turn}  ·  Day: {snap.Day}  ·  Stance: {snap.StanceId}";
+            }
+            else if (snap.Resolved)
+            {
+                _summary.Text = $"RESOLVED — {snap.OutcomeText}";
+            }
+            else
+            {
+                _summary.Text = "No active combat. Use START to engage a raider skirmish.";
             }
 
-            // Display placeholder battle log
-            foreach (string log in _placeholderBattleLog)
+            // Combatants
+            _combatants.Clear();
+            foreach (var c in snap.Combatants)
             {
-                var label = new Label { Text = log };
-                label.CustomMinimumSize = new Vector2(400, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                _battleLog.AddChild(label);
+                string mark = c.IsPlayer ? "▶" : "●";
+                string line = $"{mark}  {c.Name}  [{c.Lane}]  HP {c.Health}/{c.MaxHealth}  cover {c.CoverRating}%  armor {c.ArmorRating}%";
+                line += c.IsDowned ? "  ✖ DOWNED" : (c.IsPinned ? "  ⊘ PINNED" : "");
+                line += c.IsLastStand ? "  ☠ LAST STAND" : "";
+                line += $"  · {c.WeaponName} {c.WeaponConditionPct}%" + (c.WeaponJammed ? " [JAM]" : "");
+                _combatants.AppendText(line + "\n");
             }
 
-            // Display placeholder casualties
-            foreach (string casualty in _placeholderCasualties)
+            // Weapons (armory monitor — real condition/jam)
+            _weapons.Clear();
+            if (snap.Weapons.Count == 0)
             {
-                var label = new Label { Text = casualty };
-                label.CustomMinimumSize = new Vector2(400, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
-                _casualtyList.AddChild(label);
+                _weapons.AppendText("No firearms registered.\n");
             }
+            foreach (var w in snap.Weapons)
+            {
+                _weapons.AppendText(
+                    $"• {w.WeaponName} — cond {w.ConditionPct}% · jam {w.JamChancePct}% · " +
+                    (w.IsJammed ? "✖ JAMMED" : "✔ functional") +
+                    " · scrap repair " + w.ScrapRepairCost + " · ammo " + w.AmmoRemaining + "\n");
+            }
+
+            // Combat log
+            _log.Clear();
+            int start = Math.Max(0, snap.Events.Count - 40);
+            for (int i = start; i < snap.Events.Count; i++)
+                _log.AppendText($"[T{snap.Events[i].Turn}] {snap.Events[i].Detail}\n");
+
+            // Outcome + loot
+            _outcome.Text = snap.Resolved
+                ? "OUTCOME: " + snap.OutcomeText + (snap.Loot.Count > 0 ? "  ·  loot " + snap.Loot.Count + " lines" : "")
+                : "";
+
+            // Rebuild target selector from living enemies
+            RebuildTargetList(snap);
+        }
+
+        private void RebuildTargetList(CombatSnapshot snap)
+        {
+            _targetSelect.Clear();
+            int idx = 0;
+            foreach (var c in snap.Combatants)
+            {
+                if (c.IsPlayer || c.IsDowned) continue;
+                _targetSelect.AddItem(c.Name + "  [" + c.Lane + "]  HP " + c.Health, idx++);
+                _targetSelect.SetItemMetadata(idx - 1, c.Id);
+            }
+            if (idx == 0)
+                _targetSelect.AddItem("(no living targets)", 0);
+        }
+
+        private string SelectedTargetId()
+        {
+            int i = _targetSelect.Selected;
+            var meta = _targetSelect.GetItemMetadata(Math.Max(0, i));
+            return meta.AsString();
+        }
+
+        private void DoAction(Func<string> act)
+        {
+            if (_combat == null) return;
+            _lastActionResult.Text = act();
+            RefreshView();
+        }
+
+        private HBoxContainer Row()
+        {
+            var row = new HBoxContainer();
+            row.AddThemeConstantOverride("separation", 8);
+            return row;
+        }
+
+        private Button Btn(string text, Action onClick)
+        {
+            var b = AshfallUiHelpers.MakeButton(text, onClick);
+            b.CustomMinimumSize = new Vector2(150, 36);
+            return b;
         }
 
         public override void _Ready()
@@ -99,54 +152,84 @@ namespace AtomicWar.GodotApp.UI
             SetAnchorsPreset(LayoutPreset.FullRect);
             Visible = false;
 
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
+            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.94f) };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+            var scroll = new ScrollContainer();
+            scroll.SetAnchorsPreset(LayoutPreset.FullRect);
+            AddChild(scroll);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
+            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            vbox.CustomMinimumSize = new Vector2(860, 0);
+            vbox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            scroll.AddChild(vbox);
 
-            var title = AshfallUiHelpers.MakeTitle("COMBAT & ENCOUNTERS", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
+            _header = AshfallUiHelpers.MakeTitle("COMBAT & ENCOUNTERS", Ashfall.Core.UI.Theme.FontSizeH1);
+            _header.HorizontalAlignment = HorizontalAlignment.Center;
+            vbox.AddChild(_header);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Encounters section
-            _lblEncountersTitle = AshfallUiHelpers.MakeSectionHeader("ENCOUNTERS");
-            vbox.AddChild(_lblEncountersTitle);
-
-            _encounterList = new VBoxContainer();
-            _encounterList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _encounterList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_encounterList);
+            _summary = AshfallUiHelpers.MakeBody("");
+            _summary.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+            vbox.AddChild(_summary);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Battle log section
-            _lblBattleLogTitle = AshfallUiHelpers.MakeSectionHeader("BATTLE LOG");
-            vbox.AddChild(_lblBattleLogTitle);
+            // Target selection + start
+            var startRow = Row();
+            var startBtn = Btn("START RAID", () => DoAction(() => _combat.StartDemoCombat("loc_denial_cut", "The Denial Cut")));
+            startRow.AddChild(startBtn);
+            _targetSelect = new OptionButton();
+            _targetSelect.CustomMinimumSize = new Vector2(240, 36);
+            startRow.AddChild(_targetSelect);
+            vbox.AddChild(startRow);
 
-            _battleLog = new VBoxContainer();
-            _battleLog.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _battleLog.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_battleLog);
+            // Fire / suppression / tactical
+            var row1 = Row();
+            row1.AddChild(Btn("FIRE", () => DoAction(() => _combat.ActionFire(SelectedTargetId()))));
+            row1.AddChild(Btn("SUPPRESS", () => DoAction(_combat.ActionSuppress)));
+            row1.AddChild(Btn("DEPLOY TRAP", () => DoAction(_combat.ActionDeployTrap)));
+            vbox.AddChild(row1);
+
+            var row2 = Row();
+            row2.AddChild(Btn("CLEAR JAM", () => DoAction(() => _combat.ActionClearJam("survivor_yuki"))));
+            row2.AddChild(Btn("REPAIR", () => DoAction(() => _combat.ActionRepair("survivor_yuki"))));
+            row2.AddChild(Btn("DECON FLUSH", () => DoAction(_combat.ActionDecontaminate)));
+            row2.AddChild(Btn("LAST STAND", () => DoAction(() => _combat.ActionLastStand("survivor_yuki"))));
+            vbox.AddChild(row2);
+
+            var row3 = Row();
+            row3.AddChild(Btn("HOLD LINE", () => DoAction(() => _combat.ActionStance(TacticalCombatSystem.StanceId(TacticalStance.HoldPosition)))));
+            row3.AddChild(Btn("ADVANCE", () => DoAction(() => _combat.ActionStance(TacticalCombatSystem.StanceId(TacticalStance.Advance)))));
+            row3.AddChild(Btn("SUPPRESS STANCE", () => DoAction(() => _combat.ActionStance(TacticalCombatSystem.StanceId(TacticalStance.SuppressiveFire)))));
+            row3.AddChild(Btn("RETREAT", () => DoAction(_combat.ActionRetreat)));
+            row3.AddChild(Btn("END TURN", () => DoAction(_combat.ActionEndTurn)));
+            vbox.AddChild(row3);
+
+            _lastActionResult = AshfallUiHelpers.MakeBody("");
+            _lastActionResult.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            vbox.AddChild(_lastActionResult);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Casualties section
-            _lblCasualtiesTitle = AshfallUiHelpers.MakeSectionHeader("CASUALTIES & LOSSES");
-            vbox.AddChild(_lblCasualtiesTitle);
+            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("COMBATANTS"));
+            _combatants = new RichTextLabel { BbcodeEnabled = false, ScrollActive = true };
+            _combatants.CustomMinimumSize = new Vector2(820, 130);
+            vbox.AddChild(_combatants);
 
-            _casualtyList = new VBoxContainer();
-            _casualtyList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _casualtyList.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_casualtyList);
+            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("ARMORY / WEAPON MONITOR"));
+            _weapons = new RichTextLabel { BbcodeEnabled = false, ScrollActive = true };
+            _weapons.CustomMinimumSize = new Vector2(820, 90);
+            vbox.AddChild(_weapons);
+
+            vbox.AddChild(AshfallUiHelpers.MakeSectionHeader("COMBAT LOG"));
+            _log = new RichTextLabel { BbcodeEnabled = false, ScrollActive = true };
+            _log.CustomMinimumSize = new Vector2(820, 170);
+            vbox.AddChild(_log);
+
+            _outcome = AshfallUiHelpers.MakeBody("");
+            _outcome.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
+            vbox.AddChild(_outcome);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
@@ -154,22 +237,22 @@ namespace AtomicWar.GodotApp.UI
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
 
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close  ·  every action resolves through the deterministic Core engine");
             vbox.AddChild(hint);
+
+            RefreshView();
         }
 
         public void Open()
         {
             Visible = true;
+            RefreshView();
             QueueRedraw();
         }
 
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-
             if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
             {
                 OnClose?.Invoke();
