@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="80" viewBox="0 0 240 80">
+  <rect x="1" y="1" width="238" height="78" rx="2" fill="#0c0e10" stroke="#6ea3a8" stroke-width="1.5" />
+  <line x1="4" y1="24" x2="236" y2="24" stroke="#3a4046" stroke-width="1" />
+  <text x="12" y="18" fill="#6ea3a8" font-family="Share Tech Mono, monospace" font-size="12">DOSIMETER READING [CALIBRATED]</text>
+  <text x="12" y="44" fill="#f4c875" font-family="Barlow Condensed, sans-serif" font-size="14">Accumulated: 42.5 mSv</text>
+  <text x="12" y="64" fill="#938f84" font-family="Share Tech Mono, monospace" font-size="11">Dose rate: 0.18 mSv/h · Lead Shield Active</text>
+</svg>

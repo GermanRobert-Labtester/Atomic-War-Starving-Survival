@@ -170,23 +170,19 @@ Packages/packages-lock.json linguist-generated
 # Exceptions for .asset files such as lightning pre-baking
 LightingData.asset     binary
 
-# ── Git LFS is NOT in use on this repository ─────────────────────────────
-# The block above is the upstream Unity template, which marks many binary
-# types as `lfs` (= filter=lfs diff=lfs merge=lfs -text). This project never
-# adopted LFS: `git lfs ls-files` reports 0 objects, and the only tracked
-# files matching any `lfs` pattern are the six radio .wav clips (~130 KB
-# total), which are committed as ordinary binary blobs.
+# ── Git LFS IS in use on this repository ────────────────────────────────
+# Corrected [2026-08] — the prior note claimed LFS was never adopted; that
+# is stale. `git lfs ls-files` today lists thousands of objects (images,
+# fonts, Godot assets) and .git/lfs holds ~800 MB. `*.png/*.jpg/*.ttf` and
+# the Godot `assets/` tree are stored as LFS pointers.
 #
-# That mismatch was actively dangerous. Because the clean filter converts a
-# real .wav into a 130-byte pointer, every fresh clone reported all six as
-# modified, and any `git add -A` would have replaced the audio with pointers
-# whose LFS objects exist nowhere — silently destroying the assets for
-# everyone else.
+# The only deliberate exception is audio: *.wav/*.mp3/*.ogg/*.aif/*.aiff are
+# pinned back to plain binary below (small clips, avoids LFS round-trips for
+# ~few hundred KB of sound). Keep those pins unless audio grows and is
+# migrated with `git lfs migrate` to a remote with LFS enabled.
 #
-# Rather than stand up LFS infrastructure for 130 KB, the audio types that
-# actually occur here are pinned back to plain binary. Re-enable LFS by
-# deleting this block, but only together with `git lfs migrate` and a remote
-# that has LFS enabled.
+# core.ignorecase is false in this repo so the lowercase Godot assets/ tree
+# stays distinct from the uppercase Unity Assets/ tree.
 *.wav                   -filter -diff -merge -text
 *.mp3                   -filter -diff -merge -text
 *.ogg                   -filter -diff -merge -text
