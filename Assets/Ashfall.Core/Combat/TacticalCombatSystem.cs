@@ -187,7 +187,6 @@ namespace Ashfall.Core.Combat
 
         private void AssignPlayerWeapons()
         {
-            int wi = 0;
             for (int i = 0; i < _state.Combatants.Count; i++)
             {
                 var c = _state.Combatants[i];

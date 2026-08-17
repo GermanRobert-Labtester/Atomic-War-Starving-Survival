@@ -191,3 +191,6 @@ InitTestScene*.unity*
 /export_presets.cfg
 
 .env
+
+# Godot 4.4+ C# script UID companion files (auto-generated).
+*.uid

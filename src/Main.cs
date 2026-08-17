@@ -78,6 +78,10 @@ namespace AtomicWar.GodotApp
         private ExpeditionHostSession _expeditions = null!;
         private bool _expeditionDirty;
 
+        // ASHFALL: COMBAT EXPANSION (Expansion 06 — tactical combat authority)
+        private CombatHostSession _combat = null!;
+        private bool _combatDirty;
+
         // Narrative (encounters port), Medical (chemical dependency), World (weather), Crafting
         private NarrativeHostSession _narrative = null!;
         private bool _narrativeDirty;
@@ -2806,7 +2810,12 @@ namespace AtomicWar.GodotApp
             _yearOfAshDirty = true;
         }
         public void OpenShelterPanel() => _shelterPanel?.Open();
-        public void OpenCombatPanel() => _combatPanel?.Open();
+        public void OpenCombatPanel()
+        {
+            SetupCombat();
+            _combatPanel.Bind(_combat);
+            _combatPanel.Open();
+        }
         public void OpenMapPanel()
         {
             SetupHoldfastRuntime();
@@ -3307,6 +3316,64 @@ namespace AtomicWar.GodotApp
                 _expeditionDirty = false;
                 GD.Print("[Ashfall Godot] Expedition save written.");
             }
+        }
+
+        // ── COMBAT (Expansion 06) ───────────────────────────────────────────
+
+        private void SetupCombat()
+        {
+            if (_combat != null) return;
+            SetupInventory();
+            SetupSurvivors();
+            _combat = CombatHostSession.Create(_dataDir);
+            if (_combat != null)
+            {
+                _combat.Inventory = _inventory;
+                _combat.Survivors = _survivors;
+                _combat.WireRealState();
+                _combat.StateChanged += () => _combatDirty = true;
+                // Expedition encounters auto-populate a real combat encounter.
+                SetupExpeditionCombatHandoff(_combat);
+            }
+            GD.Print("[Ashfall Godot] Combat host ready: tactical combat expansion.");
+        }
+
+        private void SaveCombat()
+        {
+            if (_combat == null) return;
+            if (CombatSaveStore.TrySave(_combat.CaptureSave()))
+            {
+                _combatDirty = false;
+                GD.Print("[Ashfall Godot] Combat save written.");
+            }
+        }
+
+        private void FlushCombatIfDirty()
+        {
+            if (_combatDirty) SaveCombat();
+        }
+
+        /// <summary>
+        /// Wire expedition travel encounters to spawn real combat: when an
+        /// expedition triggers an encounter, populate a tactical combat at that
+        /// location (if none is already active). This is the raiding/ambush
+        /// hand-off from the travel loop into the Combat expansion.
+        /// </summary>
+        private void SetupExpeditionCombatHandoff(CombatHostSession combat)
+        {
+            if (combat == null) return;
+            SetupExpeditions();
+            if (_expeditions == null) return;
+            _expeditions.Engine.OnEncounterTriggered += state =>
+            {
+                if (_combat == null) return;
+                var cs = _combat.Engine.State;
+                bool idle = string.IsNullOrEmpty(cs.EncounterId) || cs.Resolved;
+                if (!idle) return;
+                _combat.StartDemoCombat(state.locationId, state.displayName);
+                _combatDirty = true;
+                GD.Print($"[Ashfall Godot] Expedition encounter at {state.locationId} spawned combat.");
+            };
         }
 
         private void OnExpeditionStartClicked(string locationId)
@@ -4993,6 +5060,8 @@ namespace AtomicWar.GodotApp
             _verdict = null!;
             _maritime = null!;
             _expeditions = null!;
+            _combat = null!;
+            _combatDirty = false;
             _narrative = null!;
             _medical = null!;
             _world = null!;
@@ -5739,6 +5808,7 @@ namespace AtomicWar.GodotApp
             SaveVerdict();
             SaveMaritime();
             SaveExpeditions();
+            SaveCombat();
             SaveNarrative();
             SaveMedical();
             SaveWorld();

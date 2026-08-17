@@ -192,6 +192,40 @@ namespace Ashfall.Core.Combat
 
             report.FinalState = sys.CaptureState();
             report.Snapshot = sys.BuildSnapshot();
+
+            // ── 8. Expedition → combat handoff (raiding / ambush seam) ──
+            var expSys = new Ashfall.Core.Expeditions.ExpeditionSystem();
+            var handoff = new TacticalCombatSystem(null, new CombatHostPorts());
+            int triggered = 0;
+            expSys.OnEncounterTriggered += st =>
+            {
+                triggered++;
+                var hPlayers = new List<CombatantState>
+                {
+                    new CombatantState { Id = "p1", Name = "Yuki", SurvivorId = "svy", IsPlayer = true, Health = 100, MaxHealth = 100 }
+                };
+                var hWeapons = new List<WeaponInstanceState>
+                {
+                    new WeaponInstanceState { InstanceId = "wh1", WeaponId = "weapon_assault_rifle", OwnerSurvivorId = "svy", ConditionPct = 1f, AmmoId = "ammo_556", AmmoRemaining = 60 }
+                };
+                handoff.BeginEncounter("enc_handoff_" + st.locationId, st.expeditionId, st.locationId,
+                    st.displayName, st.startedDay, DefaultSeed + 1, hPlayers, hWeapons, 1, 30);
+            };
+            var ambushDef = new Ashfall.Core.Expeditions.ExpeditionDefinition
+            {
+                id = "loc_ambush_ridge", displayName = "Ambush Ridge",
+                distanceTicks = 2, dangerLevel = 3, encounterChancePerTick = 1.0f,
+                baseStaminaDrainPerHour = 1f
+            };
+            Ashfall.Core.Expeditions.ExpeditionDefinitionRegistry.Register(ambushDef);
+            expSys.Start(ambushDef, "sv_handoff", 1, Ashfall.Core.Expeditions.ExpeditionStance.Stealth);
+            for (int t = 0; t < 12 && triggered == 0; t++)
+                expSys.TickHours(2f, new SeededRng(DefaultSeed + 2));
+            Check(triggered > 0, "expedition travel triggers an encounter");
+            Check(!string.IsNullOrEmpty(handoff.State.EncounterId)
+                && handoff.State.Phase == (int)CombatPhase.PlayerTurn,
+                "encounter handoff populates active combat");
+            Ashfall.Core.Expeditions.ExpeditionDefinitionRegistry.Clear();
             report.Passed = report.FailedCount == 0;
             var sb = new StringBuilder();
             sb.Append("CombatHeadlessDemo ");
