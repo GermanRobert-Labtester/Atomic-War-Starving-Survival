@@ -3305,6 +3305,7 @@ namespace AtomicWar.GodotApp
             if (_expeditions != null) return;
             _expeditions = ExpeditionHostSession.Create(_dataDir);
             _expeditions.StateChanged += () => _expeditionDirty = true;
+            _expeditions.OnEncounterSurfaced += OnExpeditionEncounterSurfaced;
             GD.Print("[Ashfall Godot] Expedition host ready: encounters · dive instance.");
         }
 
@@ -5059,6 +5060,8 @@ namespace AtomicWar.GodotApp
             _muster = null!;
             _verdict = null!;
             _maritime = null!;
+            if (_expeditions != null)
+                _expeditions.OnEncounterSurfaced -= OnExpeditionEncounterSurfaced;
             _expeditions = null!;
             _combat = null!;
             _combatDirty = false;
@@ -5515,6 +5518,14 @@ namespace AtomicWar.GodotApp
         private void CloseExpeditionPanel()
         {
             _expeditionPanel.Visible = false;
+        }
+
+        private void OnExpeditionEncounterSurfaced(ExpeditionState state)
+        {
+            if (_expeditionPanel != null && _expeditionPanel.Visible)
+                _expeditionPanel.ShowEncounterNotice(state);
+            else
+                Ashfall.Bridge.BridgeGap.Cosmetic("Main.ExpeditionEncounterSurfaced (panel closed)");
         }
 
         private void CloseWeatherPanel()

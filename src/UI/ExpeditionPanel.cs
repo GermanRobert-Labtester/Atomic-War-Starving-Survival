@@ -30,6 +30,18 @@ namespace AtomicWar.GodotApp.UI
         private string _selectedSurvivorId = "survivor_gunner_mikhail";
         private ExpeditionStance _selectedStance = ExpeditionStance.Stealth;
 
+        // ── Encounter surface (modal default / autoplay flag) ────────
+        private readonly Queue<ExpeditionState> _encounterQueue = new();
+        private Control? _encounterModal;
+        private Label? _encounterTitle;
+        private Label? _encounterBody;
+        private Control? _encounterBanner;
+        private Label? _encounterBannerLabel;
+        private bool _modalActive;
+        private float _bannerTimer;
+        private const float BannerDuration = 3f;
+        private ExpeditionState? _lastEncounter;
+
         public bool IsBound => _expeditionHost != null;
 
         public void Bind(
@@ -37,6 +49,12 @@ namespace AtomicWar.GodotApp.UI
             SurvivorsHostSession? survivorsHost = null,
             InventoryHostSession? inventoryHost = null)
         {
+            if (_expeditionHost != null)
+            {
+                _expeditionHost.Engine.OnExpeditionCompleted -= OnExpeditionCompleted;
+                _expeditionHost.StateChanged -= RefreshView;
+            }
+
             _expeditionHost = expeditionHost;
             _survivorsHost = survivorsHost;
             _inventoryHost = inventoryHost;
@@ -45,9 +63,9 @@ namespace AtomicWar.GodotApp.UI
             {
                 _expeditionHost.Engine.OnExpeditionCompleted += OnExpeditionCompleted;
                 _expeditionHost.StateChanged += RefreshView;
-            }
 
-            RefreshView();
+                RefreshView();
+            }
         }
 
         private void OnExpeditionCompleted(ExpeditionState state)
@@ -344,8 +362,181 @@ namespace AtomicWar.GodotApp.UI
 
         public void Close()
         {
+            _encounterQueue.Clear();
+            _modalActive = false;
+            _bannerTimer = 0f;
+            if (_encounterModal != null) _encounterModal.Visible = false;
+            if (_encounterBanner != null) _encounterBanner.Visible = false;
+            _lastEncounter = null;
             Visible = false;
             OnClose?.Invoke();
+        }
+
+        // ── Encounter surface ──────────────────────────────────────────
+
+        /// <summary>Entry point from Main when Core rolls an encounter.</summary>
+        public void ShowEncounterNotice(ExpeditionState state)
+        {
+            if (state == null) return;
+            if (!Visible)
+            {
+                Ashfall.Bridge.BridgeGap.Cosmetic("ExpeditionPanel.ShowEncounterNotice (panel closed)");
+                return;
+            }
+
+            if (ExpeditionHostSession.UseEncounterModal)
+            {
+                _encounterQueue.Enqueue(state);
+                if (!_modalActive) ShowNextModal();
+            }
+            else
+            {
+                ShowAutoplayBanner(state);
+            }
+        }
+
+        private void ShowNextModal()
+        {
+            if (_encounterQueue.Count == 0)
+            {
+                _modalActive = false;
+                if (_encounterModal != null) _encounterModal.Visible = false;
+                return;
+            }
+
+            _modalActive = true;
+            _lastEncounter = _encounterQueue.Dequeue();
+            BuildEncounterModal();
+            if (_encounterModal == null) return;
+
+            if (_encounterTitle != null) _encounterTitle.Text = "ENCOUNTER";
+            if (_encounterBody != null && _lastEncounter != null)
+            {
+                string phase = ((ExpeditionPhase)_lastEncounter.phase).ToString().ToUpperInvariant();
+                _encounterBody.Text = string.Join("\n",
+                    FormatSurvivorName(_lastEncounter.survivorId) + " at " + _lastEncounter.displayName,
+                    $"{phase} · encounter #{_lastEncounter.encounterCount}",
+                    "",
+                    "Something has gone wrong on this leg. Outcomes will resolve when the expedition returns.");
+            }
+
+            _encounterModal.Visible = true;
+        }
+
+        private void DismissEncounter()
+        {
+            if (_encounterModal != null) _encounterModal.Visible = false;
+            _modalActive = false;
+            if (_lastEncounter != null)
+            {
+                GD.Print($"[Expedition] Encounter acknowledged: {_lastEncounter.survivorId} at {_lastEncounter.displayName} (#{_lastEncounter.encounterCount}).");
+                _lastEncounter = null;
+            }
+            ShowNextModal();
+        }
+
+        private void DeferEncounter()
+        {
+            if (_encounterModal != null) _encounterModal.Visible = false;
+            _modalActive = false;
+            _lastEncounter = null;
+            ShowNextModal();
+        }
+
+        private void BuildEncounterModal()
+        {
+            if (_encounterModal != null) return;
+
+            _encounterModal = new Control();
+            _encounterModal.SetAnchorsPreset(LayoutPreset.FullRect);
+            _encounterModal.MouseFilter = Control.MouseFilterEnum.Stop;
+            _encounterModal.Visible = false;
+            AddChild(_encounterModal);
+
+            var backdrop = new ColorRect { Color = new Color(0.04f, 0.05f, 0.06f, 0.85f) };
+            backdrop.SetAnchorsPreset(LayoutPreset.FullRect);
+            _encounterModal.AddChild(backdrop);
+
+            var center = new CenterContainer();
+            center.SetAnchorsPreset(LayoutPreset.FullRect);
+            _encounterModal.AddChild(center);
+
+            var card = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            card.CustomMinimumSize = new Vector2(420, 0);
+            center.AddChild(card);
+
+            _encounterTitle = AshfallUiHelpers.MakeTitle("ENCOUNTER", Ashfall.Core.UI.Theme.FontSizeH2);
+            _encounterTitle.HorizontalAlignment = HorizontalAlignment.Center;
+            card.AddChild(_encounterTitle);
+
+            _encounterBody = AshfallUiHelpers.MakeBody("", true);
+            _encounterBody.HorizontalAlignment = HorizontalAlignment.Center;
+            card.AddChild(_encounterBody);
+
+            var btnRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            btnRow.Alignment = BoxContainer.AlignmentMode.Center;
+
+            var btnOk = AshfallUiHelpers.MakeButton("OK", DismissEncounter, false);
+            btnOk.CustomMinimumSize = new Vector2(140, 36);
+            btnRow.AddChild(btnOk);
+
+            var btnLater = AshfallUiHelpers.MakeButton("DECIDE LATER", DeferEncounter, false);
+            btnLater.CustomMinimumSize = new Vector2(160, 36);
+            btnRow.AddChild(btnLater);
+
+            card.AddChild(btnRow);
+        }
+
+        private void ShowAutoplayBanner(ExpeditionState state)
+        {
+            BuildAutoplayBanner();
+            if (_encounterBanner == null || _encounterBannerLabel == null) return;
+
+            string phase = ((ExpeditionPhase)state.phase).ToString().ToUpperInvariant();
+            _encounterBannerLabel.Text = $"[!] ENCOUNTER — {FormatSurvivorName(state.survivorId)} at {state.displayName} [{phase}] # {state.encounterCount}";
+            _encounterBanner.Visible = true;
+            _bannerTimer = BannerDuration;
+        }
+
+        private void BuildAutoplayBanner()
+        {
+            if (_encounterBanner != null) return;
+
+            _encounterBanner = new Control();
+            _encounterBanner.SetAnchorsPreset(LayoutPreset.TopWide);
+            _encounterBanner.CustomMinimumSize = new Vector2(0, 52);
+            _encounterBanner.Visible = false;
+            AddChild(_encounterBanner);
+
+            var bg = new ColorRect { Color = new Color(0.10f, 0.07f, 0.04f, 0.94f) };
+            bg.SetAnchorsPreset(LayoutPreset.FullRect);
+            _encounterBanner.AddChild(bg);
+
+            var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            row.SetAnchorsPreset(LayoutPreset.FullRect);
+            _encounterBanner.AddChild(row);
+
+            var icon = AshfallUiHelpers.MakeMono("[!]");
+            icon.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy));
+            row.AddChild(icon);
+
+            _encounterBannerLabel = AshfallUiHelpers.MakeMono("");
+            _encounterBannerLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+            _encounterBannerLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            row.AddChild(_encounterBannerLabel);
+        }
+
+        public override void _Process(double delta)
+        {
+            if (!Visible) return;
+            if (!ExpeditionHostSession.UseEncounterModal && _encounterBanner != null && _encounterBanner.Visible)
+            {
+                _bannerTimer -= (float)delta;
+                if (_bannerTimer <= 0f)
+                {
+                    _encounterBanner.Visible = false;
+                }
+            }
         }
 
         public override void _UnhandledInput(InputEvent @event)

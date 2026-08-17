@@ -35,6 +35,12 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
+        /// <summary>Fired when Core rolls an encounter. Host UI subscribes here to surface the notice.</summary>
+        public event Action<ExpeditionState>? OnEncounterSurfaced;
+
+        /// <summary>When true (default), the UI shows a modal encounter notice. When false, a transient autoplay banner.</summary>
+        public static bool UseEncounterModal { get; set; } = true;
+
         public ExpeditionHostSession(ExpeditionSystem engine = null)
         {
             Engine = engine ?? new ExpeditionSystem();
@@ -43,6 +49,12 @@ namespace AtomicWar.GodotApp
             Engine.OnExpeditionStarted += s => { LastEvent = $"Expedition started: {s.survivorId} -> {s.displayName}."; StateChanged?.Invoke(); };
             Engine.OnExpeditionCompleted += s => { LastEvent = $"Expedition completed: {s.survivorId} returned with {s.loot.Count} loot lines."; StateChanged?.Invoke(); };
             Engine.OnExpeditionFailed += (s, r) => { LastEvent = $"Expedition failed: {s.survivorId} — {r}"; StateChanged?.Invoke(); };
+            Engine.OnEncounterTriggered += s =>
+            {
+                LastEvent = $"Encounter triggered: {s.survivorId} at {s.displayName} (#{s.encounterCount}).";
+                StateChanged?.Invoke();
+                OnEncounterSurfaced?.Invoke(s);
+            };
             Engine.OnStateChanged += _ => StateChanged?.Invoke();
         }
 
