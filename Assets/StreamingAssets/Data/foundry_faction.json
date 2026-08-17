@@ -3,7 +3,7 @@
   "display_name": "The Silent Foundry",
   "short_name": "The Foundry",
   "identity": "The machine works of District 8: the cupola tenders, molders, and stokers who keep the coast in iron. The furnace is fired only when the ice road can carry the coal, it speaks in a schedule rather than a whistle, and without its castings the Cut loses its anchors, the membrane hall loses its pipes, and Block C gets patched with salvaged tin. They are exact, proud, and internally divided — production against safety, master molders against apprentices, accord quotas against the Cluster's own needs.",
-  "icon_path": "Assets/UI/Icons/faction_icon_silent_foundry.png",
+  "icon_path": "assets/ui/Icons/faction_icon_silent_foundry.png",
   "internal_divisions": [
     "production_versus_safety",
     "master_molders_versus_apprentices",

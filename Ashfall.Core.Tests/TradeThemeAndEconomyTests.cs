@@ -153,9 +153,9 @@ namespace Ashfall.Core.Tests
                 "Assets/UI/Icons/icon_shock_convoy.png",
                 "Assets/UI/Icons/icon_shock_war.png",
                 "Assets/UI/Icons/icon_shock_winter.png",
-                "Assets/UI/Icons/faction_icon_military_remnants.png",
-                "Assets/UI/Icons/faction_icon_scavenger_camp.png",
-                "Assets/UI/Icons/faction_icon_cult_of_the_glow.png"
+                "assets/ui/Icons/faction_icon_military_remnants.png",
+                "assets/ui/Icons/faction_icon_scavenger_camp.png",
+                "assets/ui/Icons/faction_icon_cult_of_the_glow.png"
             };
 
             foreach (var relPath in expectedAssets)

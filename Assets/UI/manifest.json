@@ -202,7 +202,7 @@
     {
       "id": "faction_icon_scavenger_camp",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_scavenger_camp.png",
+      "path": "assets/ui/Icons/faction_icon_scavenger_camp.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "scavenger camp faction emblem: crossed prybar and scrap knife over rusted gear, transparent background",
@@ -212,7 +212,7 @@
     {
       "id": "faction_icon_cult_of_the_glow",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_cult_of_the_glow.png",
+      "path": "assets/ui/Icons/faction_icon_cult_of_the_glow.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "cult of the glow faction emblem: radiant trinity trefoil symbol with irradiated halo, transparent background",
@@ -222,7 +222,7 @@
     {
       "id": "faction_icon_military_remnants",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_military_remnants.png",
+      "path": "assets/ui/Icons/faction_icon_military_remnants.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "military remnants faction emblem: shielded chevron with bayonet crest, transparent background",
@@ -232,7 +232,7 @@
     {
       "id": "faction_icon_upland_militia",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_upland_militia.png",
+      "path": "assets/ui/Icons/faction_icon_upland_militia.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "upland militia faction emblem: mountain peak silhouette with crossed hunting rifles, transparent background",
@@ -242,7 +242,7 @@
     {
       "id": "faction_icon_hydro_barons",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_hydro_barons.png",
+      "path": "assets/ui/Icons/faction_icon_hydro_barons.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "hydro barons faction emblem: pressurized valve wheel enclosing a water droplet, transparent background",
@@ -252,7 +252,7 @@
     {
       "id": "faction_icon_rot_farmers",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_rot_farmers.png",
+      "path": "assets/ui/Icons/faction_icon_rot_farmers.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "rot farmers faction emblem: bioluminescent mushroom cap over sickle blade, transparent background",
@@ -262,7 +262,7 @@
     {
       "id": "faction_icon_wire_heads",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_wire_heads.png",
+      "path": "assets/ui/Icons/faction_icon_wire_heads.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "wire heads faction emblem: vacuum tube and coiled copper antenna array, transparent background",
@@ -272,7 +272,7 @@
     {
       "id": "faction_icon_sump_dredgers",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_sump_dredgers.png",
+      "path": "assets/ui/Icons/faction_icon_sump_dredgers.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "sump dredgers faction emblem: dredge scoop shovel and industrial filter canister, transparent background",
@@ -282,7 +282,7 @@
     {
       "id": "faction_icon_custodians",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_custodians.png",
+      "path": "assets/ui/Icons/faction_icon_custodians.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "custodians faction emblem: concrete monolith archway enclosing an open book, transparent background",
@@ -292,7 +292,7 @@
     {
       "id": "faction_icon_doomsday_preppers",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_doomsday_preppers.png",
+      "path": "assets/ui/Icons/faction_icon_doomsday_preppers.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "doomsday preppers faction emblem: steel blast door lock wheel with padlock, transparent background",
@@ -302,7 +302,7 @@
     {
       "id": "faction_icon_echo_bats",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_echo_bats.png",
+      "path": "assets/ui/Icons/faction_icon_echo_bats.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "echo bats faction emblem: spread bat wings enclosing sonar radar pulse rings, transparent background",
@@ -312,7 +312,7 @@
     {
       "id": "faction_icon_safe_haven_community",
       "class": "FactionEmblem",
-      "path": "Assets/UI/Icons/faction_icon_safe_haven_community.png",
+      "path": "assets/ui/Icons/faction_icon_safe_haven_community.png",
       "dimensions": [64, 64],
       "format": "PNG-RGBA32",
       "prompt": "safe haven community faction emblem: wooden palisade fence with sheltering open hands, transparent background",

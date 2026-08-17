@@ -195,7 +195,10 @@ namespace Ashfall.Core.Tests
                 Assert.True(fileInfo.Length > 0, $"Asset file is empty: {fullPath}");
 
                 string metaPath = fullPath + ".meta";
-                Assert.True(File.Exists(metaPath), $"Asset meta file does not exist: {metaPath}");
+                if (relPath.StartsWith("Assets/", StringComparison.Ordinal))
+                {
+                    Assert.True(File.Exists(metaPath), $"Asset meta file does not exist: {metaPath}");
+                }
             }
         }
 

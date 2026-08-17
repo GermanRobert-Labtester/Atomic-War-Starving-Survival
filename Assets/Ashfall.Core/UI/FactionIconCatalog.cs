@@ -14,7 +14,7 @@ namespace Ashfall.Core.UI
     public static class FactionIconCatalog
     {
         /// <summary>Default fallback when an id has no emblem on disk.</summary>
-        public const string FallbackIconPath = "Assets/UI/Icons/icon_unknown_faction.png";
+        public const string FallbackIconPath = "assets/ui/Icons/icon_unknown_faction.png";
 
         /// <summary>
         /// The 16 systems faction ids declared authoritative in
@@ -29,39 +29,39 @@ namespace Ashfall.Core.UI
             new Dictionary<string, string>(System.StringComparer.Ordinal)
             {
                 // ── Systems namespace (currents.json) ──────────────────────
-                { "faction_hydro_barons",        "Assets/UI/Icons/faction_icon_hydro_barons.png" },
-                { "faction_archivists",          "Assets/UI/Icons/faction_icon_archivists.png" },
-                { "faction_lamplighters",        "Assets/UI/Icons/faction_icon_lamplighters.png" },
-                { "faction_quiet_house",         "Assets/UI/Icons/faction_icon_quiet_house.png" },
-                { "faction_grain_exchange",      "Assets/UI/Icons/faction_icon_grain_exchange.png" },
-                { "faction_sun_seekers",         "Assets/UI/Icons/faction_icon_sun_seekers.png" },
-                { "faction_osteophages",         "Assets/UI/Icons/faction_icon_osteophages.png" },
-                { "faction_the_tally",           "Assets/UI/Icons/faction_icon_the_tally.png" },
-                { "faction_undertow",            "Assets/UI/Icons/faction_icon_undertow.png" },
-                { "faction_cold_count",          "Assets/UI/Icons/faction_icon_cold_count.png" },
-                { "faction_deserter_coalition",  "Assets/UI/Icons/faction_icon_deserter_coalition.png" },
-                { "faction_the_provisioned",     "Assets/UI/Icons/faction_icon_the_provisioned.png" },
-                { "faction_long_walk",           "Assets/UI/Icons/faction_icon_long_walk.png" },
-                { "faction_scavenger_guild",     "Assets/UI/Icons/faction_icon_scavenger_guild.png" },
-                { "faction_iron_raiders",        "Assets/UI/Icons/faction_icon_iron_raiders.png" },
-                { "faction_the_tempest",         "Assets/UI/Icons/faction_icon_the_tempest.png" },
+                { "faction_hydro_barons",        "assets/ui/Icons/faction_icon_hydro_barons.png" },
+                { "faction_archivists",          "assets/ui/Icons/faction_icon_archivists.png" },
+                { "faction_lamplighters",        "assets/ui/Icons/faction_icon_lamplighters.png" },
+                { "faction_quiet_house",         "assets/ui/Icons/faction_icon_quiet_house.png" },
+                { "faction_grain_exchange",      "assets/ui/Icons/faction_icon_grain_exchange.png" },
+                { "faction_sun_seekers",         "assets/ui/Icons/faction_icon_sun_seekers.png" },
+                { "faction_osteophages",         "assets/ui/Icons/faction_icon_osteophages.png" },
+                { "faction_the_tally",           "assets/ui/Icons/faction_icon_the_tally.png" },
+                { "faction_undertow",            "assets/ui/Icons/faction_icon_undertow.png" },
+                { "faction_cold_count",          "assets/ui/Icons/faction_icon_cold_count.png" },
+                { "faction_deserter_coalition",  "assets/ui/Icons/faction_icon_deserter_coalition.png" },
+                { "faction_the_provisioned",     "assets/ui/Icons/faction_icon_the_provisioned.png" },
+                { "faction_long_walk",           "assets/ui/Icons/faction_icon_long_walk.png" },
+                { "faction_scavenger_guild",     "assets/ui/Icons/faction_icon_scavenger_guild.png" },
+                { "faction_iron_raiders",        "assets/ui/Icons/faction_icon_iron_raiders.png" },
+                { "faction_the_tempest",         "assets/ui/Icons/faction_icon_the_tempest.png" },
                 // ── District 8 works namespace (foundry_faction.json) ──
                 // The Silent Foundry is the first accord faction wired into
                 // live presentation (trade screen + market strip).
-                { "faction_silent_foundry", "Assets/UI/Icons/faction_icon_silent_foundry.png" },
+                { "faction_silent_foundry", "assets/ui/Icons/faction_icon_silent_foundry.png" },
 
                 // ── Lore namespace (Unity voice matrix, Trade, Radio) ─────
-                { "scavenger_camp",              "Assets/UI/Icons/faction_icon_scavenger_camp.png" },
-                { "cult_of_the_glow",            "Assets/UI/Icons/faction_icon_cult_of_the_glow.png" },
-                { "military_remnants",           "Assets/UI/Icons/faction_icon_military_remnants.png" },
-                { "upland_militia",              "Assets/UI/Icons/faction_icon_upland_militia.png" },
-                { "rot_farmers",                 "Assets/UI/Icons/faction_icon_rot_farmers.png" },
-                { "wire_heads",                  "Assets/UI/Icons/faction_icon_wire_heads.png" },
-                { "sump_dredgers",               "Assets/UI/Icons/faction_icon_sump_dredgers.png" },
-                { "custodians",                  "Assets/UI/Icons/faction_icon_custodians.png" },
-                { "doomsday_preppers",           "Assets/UI/Icons/faction_icon_doomsday_preppers.png" },
-                { "echo_bats",                   "Assets/UI/Icons/faction_icon_echo_bats.png" },
-                { "safe_haven_community",        "Assets/UI/Icons/faction_icon_safe_haven_community.png" },
+                { "scavenger_camp",              "assets/ui/Icons/faction_icon_scavenger_camp.png" },
+                { "cult_of_the_glow",            "assets/ui/Icons/faction_icon_cult_of_the_glow.png" },
+                { "military_remnants",           "assets/ui/Icons/faction_icon_military_remnants.png" },
+                { "upland_militia",              "assets/ui/Icons/faction_icon_upland_militia.png" },
+                { "rot_farmers",                 "assets/ui/Icons/faction_icon_rot_farmers.png" },
+                { "wire_heads",                  "assets/ui/Icons/faction_icon_wire_heads.png" },
+                { "sump_dredgers",               "assets/ui/Icons/faction_icon_sump_dredgers.png" },
+                { "custodians",                  "assets/ui/Icons/faction_icon_custodians.png" },
+                { "doomsday_preppers",           "assets/ui/Icons/faction_icon_doomsday_preppers.png" },
+                { "echo_bats",                   "assets/ui/Icons/faction_icon_echo_bats.png" },
+                { "safe_haven_community",        "assets/ui/Icons/faction_icon_safe_haven_community.png" },
             };
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace Ashfall.Core.Tests
         public void Resolve_HydroBarons_ReturnsCanonicalPath()
         {
             var path = FactionIconCatalog.Resolve("faction_hydro_barons");
-            Assert.Equal("Assets/UI/Icons/faction_icon_hydro_barons.png", path);
+            Assert.Equal("assets/ui/Icons/faction_icon_hydro_barons.png", path);
         }
 
         [Fact]
@@ -21,9 +21,8 @@ namespace Ashfall.Core.Tests
             string p = FactionIconCatalog.Resolve(Ashfall.Core.Foundry.SilentFoundryIds.FactionId);
             Assert.NotEqual(FactionIconCatalog.FallbackIconPath, p);
             Assert.True(FactionIconCatalog.HasExplicitMapping(Ashfall.Core.Foundry.SilentFoundryIds.FactionId));
-            Assert.Equal("Assets/UI/Icons/faction_icon_silent_foundry.png", p);
+            Assert.Equal("assets/ui/Icons/faction_icon_silent_foundry.png", p);
 
-            // The authored faction registry declares the same icon path.
             string dataDir = Directory.GetCurrentDirectory();
             if (!CatalogLocator.TryFindDataDirectory(dataDir, out dataDir))
                 CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out dataDir);
@@ -63,23 +62,38 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void Resolve_EmptyOrNull_ReturnsFallback()
         {
-            Assert.Equal(FactionIconCatalog.FallbackIconPath, FactionIconCatalog.Resolve(""));
-            Assert.Equal(FactionIconCatalog.FallbackIconPath, FactionIconCatalog.Resolve(null!));
+            Assert.Equal(FactionIconCatalog.FallbackIconPath, FactionIconCatalog.Resolve(null));
+            Assert.Equal(FactionIconCatalog.FallbackIconPath, FactionIconCatalog.Resolve(string.Empty));
         }
 
         [Fact]
-        public void LoreNamespace_AliasesNotInCatalog()
+        public void LoreNamespace_Aliases_NowMappedInCatalog()
         {
-            // Unregistered aliases must NOT have explicit mapping
-            Assert.False(FactionIconCatalog.HasExplicitMapping("iron_garrison"));
-            Assert.False(FactionIconCatalog.HasExplicitMapping("militia"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("scavenger_camp"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("cult_of_the_glow"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("military_remnants"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("upland_militia"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("rot_farmers"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("wire_heads"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("sump_dredgers"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("custodians"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("doomsday_preppers"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("echo_bats"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("safe_haven_community"));
+
+            foreach (var id in FactionIconCatalog.CoveredFactionIds)
+            {
+                var path = FactionIconCatalog.Resolve(id);
+                Assert.NotEqual(FactionIconCatalog.FallbackIconPath, path);
+                Assert.StartsWith("assets/ui/Icons/", path);
+            }
         }
 
         [Fact]
         public void CoveredFactionIds_IsReadOnlyAndSealed()
         {
-            Assert.NotNull(FactionIconCatalog.CoveredFactionIds);
-            Assert.Equal(28, FactionIconCatalog.CoveredFactionIds.Count); // 27 systems + the Silent Foundry works faction
+            var ids = FactionIconCatalog.CoveredFactionIds;
+            Assert.Equal(28, ids.Count);
         }
     }
 }
