@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Ashfall.Core.Combat;
 using Ashfall.Core.Disease;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.Narrative;
@@ -183,7 +184,8 @@ namespace Ashfall.Core
                 ("Deep Coast (District 8)", DeepCoastHeadlessDemo.Run(dataDirectory, log)),
                 ("Warlord AI (Exp 05 sibling)", WarlordHeadlessDemo.Run(dataDirectory, log)),
                 ("Silent Foundry (Exp 10)", SilentFoundryHeadlessDemo.Run(dataDirectory, log)),
-                ("Disease Expansion", DiseaseHeadlessDemo.Run(dataDirectory, log))
+                ("Disease Expansion", DiseaseHeadlessDemo.Run(dataDirectory, log)),
+                ("Combat Expansion", CombatHeadlessDemo.Run(log))
             };
 
             for (int i = 0; i < reports.Count; i++)

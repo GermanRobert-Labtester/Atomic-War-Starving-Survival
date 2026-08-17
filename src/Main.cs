@@ -277,6 +277,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.DiseaseSelfTest:
                     GetTree().Quit(HostCli.RunDiseaseSelfTest(_dataDir));
                     return;
+                case HostCliAction.CombatSelfTest:
+                    GetTree().Quit(HostCli.RunCombatSelfTest(_dataDir));
+                    return;
                 case HostCliAction.SilentFoundryUiTest:
                     RunSilentFoundryUiTestAndQuit();
                     return;

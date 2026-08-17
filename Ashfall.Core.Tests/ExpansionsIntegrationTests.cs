@@ -1,6 +1,7 @@
 using System.IO;
 using Xunit;
 using Ashfall.Core;
+using Ashfall.Core.Combat;
 
 namespace Ashfall.Core.Tests
 {
@@ -109,6 +110,17 @@ namespace Ashfall.Core.Tests
             for (int d = 1; d <= 30; d++)
                 session.TickDaily(Ashfall.Core.WeatherKind.Overcast, -12f);
             Assert.True(disease.State.rngSeed != 0, "disease engine ticked through the orchestrator");
+        }
+
+        [Fact]
+        public void CombatExpansionHeadlessSmoke()
+        {
+            // The migrated Combat Expansion: JSON catalog authorises the weapon/
+            // ammo/material tables; the vertical-slice demo proves ballistics,
+            // weapon condition/jam, determinism and save round-trip.
+            var report = CombatHeadlessDemo.Run();
+            Assert.True(report.Passed, report.Summary);
+            Assert.Equal(0, report.FailedCount);
         }
 
         [Fact]

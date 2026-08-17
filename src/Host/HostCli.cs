@@ -39,6 +39,7 @@ namespace AtomicWar.GodotApp
         HoldfastSaveSelfTest,
         HoldfastRuntimeUiTest,
         BrineSelfTest,
+        CombatSelfTest,
         MusterSelfTest,
         ClusterSelfTest,
         EndingsSelfTest,
@@ -145,6 +146,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.SilentFoundrySelfTest;
             if (Has(args, "--disease-selftest") || Has(args, "--disease-expansion-selftest"))
                 return HostCliAction.DiseaseSelfTest;
+            if (Has(args, "--combat-selftest"))
+                return HostCliAction.CombatSelfTest;
             if (Has(args, "--silent-foundry-uitest"))
                 return HostCliAction.SilentFoundryUiTest;
             if (Has(args, "--duty-roster-uitest"))
@@ -289,6 +292,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --warlord-ui-selftest    Warlord tribute payment loop + collector voice + FactionsPanel card");
             GD.Print("  --phase0-selftest         Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
             GD.Print("  --disease-selftest       Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip");
+            GD.Print("  --combat-selftest        Combat Expansion: catalog (JSON), ballistics, weapon condition, determinism, save round-trip");
             GD.Print("  --economy-selftest        Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip)");
             GD.Print("  --host-help              This list");
         }
@@ -618,6 +622,13 @@ namespace AtomicWar.GodotApp
         public static int RunDiseaseSelfTest(string dataDirectory)
         {
             var report = Ashfall.Core.DiseaseHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunCombatSelfTest(string dataDirectory)
+        {
+            var report = Ashfall.Core.Combat.CombatHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
             return report.ExitCode;
         }

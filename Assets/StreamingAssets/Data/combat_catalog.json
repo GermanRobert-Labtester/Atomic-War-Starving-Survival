@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "collection_id": "combat_catalog",
+  "weapons": [
+    {
+      "id": "weapon_pipe_rifle",
+      "display_name": "Pipe Rifle",
+      "accuracy": 0.46,
+      "damage": 12.0,
+      "range": 1.0,
+      "caliber": "ammo_357",
+      "burst": 1,
+      "is_jury_rigged": true,
+      "is_suppression_capable": false,
+      "degrade_per_shot": 0.022,
+      "jam_base": 0.055,
+      "scrap_repair_cost": 3,
+      "condition_threshold": 0.30
+    },
+    {
+      "id": "weapon_scrap_shotgun",
+      "display_name": "Scrap Shotgun",
+      "accuracy": 0.50,
+      "damage": 20.0,
+      "range": 1.0,
+      "caliber": "ammo_12g",
+      "burst": 1,
+      "is_jury_rigged": true,
+      "is_suppression_capable": false,
+      "degrade_per_shot": 0.026,
+      "jam_base": 0.050,
+      "scrap_repair_cost": 4,
+      "condition_threshold": 0.28
+    },
+    {
+      "id": "weapon_bolt_rifle",
+      "display_name": "Held-Bolt Rifle",
+      "accuracy": 0.68,
+      "damage": 18.0,
+      "range": 1.0,
+      "caliber": "ammo_308",
+      "burst": 1,
+      "is_jury_rigged": false,
+      "is_suppression_capable": false,
+      "degrade_per_shot": 0.012,
+      "jam_base": 0.025,
+      "scrap_repair_cost": 4,
+      "condition_threshold": 0.22
+    },
+    {
+      "id": "weapon_assault_rifle",
+      "display_name": "Assault Rifle",
+      "accuracy": 0.72,
+      "damage": 14.0,
+      "range": 1.15,
+      "caliber": "ammo_556",
+      "burst": 3,
+      "is_jury_rigged": false,
+      "is_suppression_capable": true,
+      "degrade_per_shot": 0.015,
+      "jam_base": 0.030,
+      "scrap_repair_cost": 5,
+      "condition_threshold": 0.25
+    },
+    {
+      "id": "weapon_lmg",
+      "display_name": "Light Machine Gun",
+      "accuracy": 0.60,
+      "damage": 11.0,
+      "range": 1.2,
+      "caliber": "ammo_762",
+      "burst": 5,
+      "is_jury_rigged": false,
+      "is_suppression_capable": true,
+      "degrade_per_shot": 0.020,
+      "jam_base": 0.040,
+      "scrap_repair_cost": 6,
+      "condition_threshold": 0.28
+    }
+  ],
+  "ammo": [
+    { "id": "ammo_357", "display_name": ".357", "damage_mod": 1.0, "range_mod": 1.0, "is_military_tier": false },
+    { "id": "ammo_12g", "display_name": "12ga", "damage_mod": 1.05, "range_mod": 0.9, "is_military_tier": false },
+    { "id": "ammo_308", "display_name": ".308", "damage_mod": 1.1, "range_mod": 1.2, "is_military_tier": false },
+    { "id": "ammo_556", "display_name": "5.56", "damage_mod": 1.0, "range_mod": 1.15, "is_military_tier": true },
+    { "id": "ammo_762", "display_name": "7.62", "damage_mod": 1.1, "range_mod": 1.25, "is_military_tier": true }
+  ],
+  "materials": [
+    { "id": "material_wood", "display_name": "Rotted Wood", "kind": "cover", "armor_reduction": 0.30, "ricochet_chance": 0.05, "ricochet_energy_retained": 0.5 },
+    { "id": "material_concrete", "display_name": "Concrete", "kind": "cover", "armor_reduction": 0.60, "ricochet_chance": 0.15, "ricochet_energy_retained": 0.6 },
+    { "id": "material_metal", "display_name": "Sheet Metal", "kind": "cover", "armor_reduction": 0.50, "ricochet_chance": 0.35, "ricochet_energy_retained": 0.7 },
+    { "id": "material_rebar", "display_name": "Rebar Barricade", "kind": "barrier", "armor_reduction": 0.65, "ricochet_chance": 0.20, "ricochet_energy_retained": 0.6 },
+    { "id": "armor_cloth", "display_name": "Padded Cloth", "kind": "armor", "armor_reduction": 0.25, "ricochet_chance": 0.0, "ricochet_energy_retained": 0.5 },
+    { "id": "armor_kevlar", "display_name": "Scavenged Kevlar", "kind": "armor", "armor_reduction": 0.50, "ricochet_chance": 0.10, "ricochet_energy_retained": 0.6 },
+    { "id": "armor_plate", "display_name": "Ceramic Plate", "kind": "armor", "armor_reduction": 0.65, "ricochet_chance": 0.15, "ricochet_energy_retained": 0.7 }
+  ]
+}
