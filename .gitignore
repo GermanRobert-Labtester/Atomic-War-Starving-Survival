@@ -189,3 +189,5 @@ InitTestScene*.unity*
 /tools/obj/
 # Godot export presets carry local absolute paths and signing config.
 /export_presets.cfg
+
+.env

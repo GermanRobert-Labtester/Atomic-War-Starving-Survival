@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="400" height="36" viewBox="0 0 400 36">
-  <rect x="0" y="0" width="400" height="36" fill="#090b0c" />
-  <path d="M 4 36 L 4 6 L 120 6 L 120 36" fill="#1e2328" stroke="#d3aa62" stroke-width="1.5" />
-  <text x="62" y="24" fill="#f4c875" font-family="Barlow Condensed, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">ACTIVE LEDGER</text>
-  <path d="M 124 36 L 124 10 L 240 10 L 240 36" fill="#121518" stroke="#4a4e52" stroke-width="1" />
-  <text x="182" y="26" fill="#938f84" font-family="Barlow Condensed, sans-serif" font-size="14" text-anchor="middle">CODEX LOG</text>
-  <line x1="0" y1="35" x2="400" y2="35" stroke="#d3aa62" stroke-width="1" />
-</svg>
