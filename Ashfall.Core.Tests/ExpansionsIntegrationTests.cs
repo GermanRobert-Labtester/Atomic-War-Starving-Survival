@@ -135,8 +135,8 @@ namespace Ashfall.Core.Tests
             foundry.Unlock(1);
             for (int d = 1; d <= 280; d++)
                 session.TickDaily(Ashfall.Core.WeatherKind.Overcast, -12f);
-            Assert.True(foundry.IsConsequenceApplied("treaty_05_chemical_sulfur_and_acid_concession", 280),
-                "master daily tick reaches the day-280 treaty consequence");
+            Assert.True(foundry.IsConsequenceApplied("treaty_brine_pipe_and_iodine_exchange", 280),
+                "master daily tick reaches the day-280 accord consequence");
             Assert.True(foundry.GuildStanding < 0f, "standing consequence applied via the orchestrator");
         }
     }

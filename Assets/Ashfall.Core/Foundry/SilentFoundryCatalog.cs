@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Ashfall.Core.Narrative;
 
 namespace Ashfall.Core.Foundry
 {
@@ -31,7 +32,7 @@ namespace Ashfall.Core.Foundry
 
         /// <summary>
         /// Sink category the product feeds: agricultural_tool | structural_beam |
-        /// railway_spike | rail_car_wheel | acid_resistant_pipe | repair_plate |
+        /// ice_anchor | winch_drum | brine_resistant_pipe | repair_plate |
         /// bracket_fastener | water_component | heavy_tool | heavy_alloy_part |
         /// defense_plate.
         /// </summary>
@@ -82,7 +83,7 @@ namespace Ashfall.Core.Foundry
 
     // ---------------------------------------------------------------------
     // Static faction registry entry — foundry_faction.json
-    // Registers the exact treaty faction id (current_10_the_silent_foundry_guild).
+    // Registers the District 8 works faction id (faction_silent_foundry).
     // ---------------------------------------------------------------------
 
     /// <summary>A named relationship to another faction; typed, not lore prose.</summary>
@@ -119,6 +120,42 @@ namespace Ashfall.Core.Foundry
     {
         public const string ProductionFileName = "foundry_production.json";
         public const string FactionFileName = "foundry_faction.json";
+        public const string AccordsFileName = "foundry_accords.json";
+
+        /// <summary>
+        /// District 8 accord ratification days (treaty id → ratified day) from
+        /// foundry_accords.json. Same schema as the narrative treaty corpus, but
+        /// authored for the live Sector 4 / District 8 campaign.
+        /// </summary>
+        public static Dictionary<string, int> LoadAccordRatificationDays(
+            string dataDirectory,
+            IFileIO files = null,
+            IJsonSerializer serializer = null)
+        {
+            var ratification = new Dictionary<string, int>(StringComparer.Ordinal);
+            files = files ?? new FileSystemIO();
+            serializer = serializer ?? new SystemTextJsonSerializer();
+            string path = Path.Combine(dataDirectory, AccordsFileName);
+            if (!files.FileExists(path)) return ratification;
+            string text = files.ReadAllText(path);
+            if (string.IsNullOrWhiteSpace(text)) return ratification;
+            try
+            {
+                var file = serializer.Deserialize<RegionalTreatiesFile>(text);
+                if (file?.treaties == null) return ratification;
+                for (int i = 0; i < file.treaties.Count; i++)
+                {
+                    var t = file.treaties[i];
+                    if (t != null && !string.IsNullOrEmpty(t.treaty_id) && t.ratified_day > 0)
+                        ratification[t.treaty_id] = t.ratified_day;
+                }
+            }
+            catch
+            {
+                return new Dictionary<string, int>(StringComparer.Ordinal);
+            }
+            return ratification;
+        }
 
         public static FoundryProductionFile LoadProduction(
             string dataDirectory,

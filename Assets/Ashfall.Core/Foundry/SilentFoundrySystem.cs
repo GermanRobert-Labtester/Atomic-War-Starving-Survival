@@ -10,16 +10,17 @@ namespace Ashfall.Core.Foundry
     public static class SilentFoundryIds
     {
         public const string ExpansionId = "exp_10_the_silent_foundry";
-        public const string FactionId = "current_10_the_silent_foundry_guild";
+        public const string FactionId = "faction_silent_foundry";
         public const string BlueprintRoomId = "room_bp_11_the_silent_foundry_smelter_bay";
 
         public const string JournalFirstHeat = "jrnl_foundry_first_heat";
         public const string JournalStrike = "jrnl_foundry_strike";
 
-        public const string TreatySulfur = "treaty_05_chemical_sulfur_and_acid_concession";
-        public const string TreatyLabor = "treaty_10_the_foundry_labor_and_milk_treaty";
-        public const string TreatyRailway = "treaty_12_the_trans_tessarat_railway_charter";
-        public const string TreatyConstitution = "treaty_16_the_constitution_of_the_valley_of_tessarat";
+        // District 8 accords (data authority: foundry_accords.json).
+        public const string TreatyBrinePipe = "treaty_brine_pipe_and_iodine_exchange";
+        public const string TreatyLabourSchedule = "treaty_cluster_labour_schedule";
+        public const string TreatyRoadIron = "treaty_road_iron_charter";
+        public const string TreatyClusterCharter = "treaty_the_cluster_charter";
 
         // Charge/consumable material ids (items.json / foundry_items.json).
         public const string ItemScrapMetal = "scrap_metal";
@@ -137,7 +138,7 @@ namespace Ashfall.Core.Foundry
     public sealed class FoundryTreatyCompliance
     {
         public string treatyId = string.Empty;
-        public string obligation = string.Empty;   // rail_quota | acid_pipe_quota | labor_shifts | constitution_eligibility
+        public string obligation = string.Empty;   // brine_pipe_quota | labor_shifts | road_iron_quota | charter_eligibility
         public int quotaTotal = 0;
         public int quotaFulfilled = 0;
         public int quotaDeadlineDay = 0;           // next assessment day
@@ -1185,10 +1186,10 @@ namespace Ashfall.Core.Foundry
                 }
             }
 
-            Ensure(SilentFoundryIds.TreatySulfur, "acid_pipe_quota");
-            Ensure(SilentFoundryIds.TreatyLabor, "labor_shifts");
-            Ensure(SilentFoundryIds.TreatyRailway, "rail_quota");
-            Ensure(SilentFoundryIds.TreatyConstitution, "constitution_eligibility");
+            Ensure(SilentFoundryIds.TreatyBrinePipe, "brine_pipe_quota");
+            Ensure(SilentFoundryIds.TreatyLabourSchedule, "labor_shifts");
+            Ensure(SilentFoundryIds.TreatyRoadIron, "road_iron_quota");
+            Ensure(SilentFoundryIds.TreatyClusterCharter, "charter_eligibility");
         }
 
         private void ApplyQuotaFulfilment(FoundryProductEntry product, int amount)
@@ -1248,8 +1249,9 @@ namespace Ashfall.Core.Foundry
                     c.lastAssessmentDay = day;
                 }
 
-                // Constitution eligibility: late-treaty marker, derived not asserted.
-                if (string.Equals(c.treatyId, SilentFoundryIds.TreatyConstitution, StringComparison.Ordinal))
+                // Cluster-charter eligibility: late-campaign marker, derived not asserted.
+                // (Serialized field name `constitutionEligible` kept for save compatibility.)
+                if (string.Equals(c.treatyId, SilentFoundryIds.TreatyClusterCharter, StringComparison.Ordinal))
                 {
                     c.constitutionEligible = _state.incidents.Count == 0 || day < ratificationDay;
                 }
@@ -1260,8 +1262,8 @@ namespace Ashfall.Core.Foundry
         {
             switch (c.obligation)
             {
-                case "rail_quota":
-                case "acid_pipe_quota":
+                case "road_iron_quota":
+                case "brine_pipe_quota":
                     if (c.quotaTotal > 0)
                     {
                         c.currentCycleMet = c.quotaFulfilled >= c.quotaTotal;
@@ -1286,9 +1288,10 @@ namespace Ashfall.Core.Foundry
                     break;
 
                 case "labor_shifts":
-                    // Treaty 10: shifts capped at 8h during liquid iron pours;
-                    // workers receive food/milk support; lockouts/strikes affect
-                    // fuel allotment. A strike or open overtime is a violation.
+                    // The labour schedule accord: shifts capped at 8h during
+                    // liquid pours; workers hold a water ration; lockouts and
+                    // strikes close the coal window. A strike or open overtime
+                    // is a violation.
                     // Fatigue alone is never a violation — only the policy-level
                     // labor semantics (strike / overtime / child labor) count.
                     bool violation = _state.laborDispute == FoundryLaborDispute.StrikeActive
@@ -1309,10 +1312,10 @@ namespace Ashfall.Core.Foundry
                     }
                     break;
 
-                case "constitution_eligibility":
-                    // Treaty 16 is a finale marker, not a quota. Eligibility is
-                    // derived; no economy or standing consequence is defined for
-                    // it by policy (regression-guarded in tests).
+                case "charter_eligibility":
+                    // The Cluster Charter is a finale marker, not a quota.
+                    // Eligibility is derived; no economy or standing consequence
+                    // is defined for it by policy (regression-guarded in tests).
                     break;
             }
         }

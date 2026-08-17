@@ -20,7 +20,7 @@ namespace AtomicWar.GodotApp.Economy
         private bool _fallbackObserved;
 
         // Optional guild-stance binding: when present, the summary strip shows
-        // the Foundry Guild's real trade access (derived from the durable ledger).
+        // the Silent Foundry's real trade access (derived from the durable ledger).
         private Ashfall.Core.Economy.IFactionStanceProvider? _stanceProvider;
         private string _stanceFactionId = string.Empty;
 
@@ -78,8 +78,8 @@ namespace AtomicWar.GodotApp.Economy
         }
 
         /// <summary>
-        /// Bind the guild stance surface so the live market strip shows the
-        /// Foundry Guild's trade access (Trade / Rob / HostileRaid) and trust.
+        /// Bind the foundry stance surface so the live market strip shows the
+        /// Silent Foundry's trade access (Trade / Rob / HostileRaid) and trust.
         /// The provider is the existing FactionStanceEngine; no new authority.
         /// </summary>
         public void BindStance(Ashfall.Core.Economy.IFactionStanceProvider provider, string factionId)

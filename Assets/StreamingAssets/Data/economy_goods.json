@@ -140,39 +140,39 @@
     "elasticity": 1.1,
     "stackSize": 10,
     "weightKg": 1.0,
-    "barterNote": "Cupola fuel and the railway's gondola cargo; scarce when logistics tighten."
+    "barterNote": "Cupola fuel and the ice road's payload; scarce when the window closes."
   },
   {
-    "id": "item_foundry_acid_pipe",
-    "displayName": "Acid-Resistant Pipe",
+    "id": "item_foundry_brine_pipe",
+    "displayName": "Brine-Resistant Pipe",
     "category": "materials",
     "basePrice": 70.0,
     "volatility": 0.1,
     "elasticity": 1.2,
     "stackSize": 5,
     "weightKg": 12.0,
-    "barterNote": "Lead-antimony pipe owed to Station 0 under the Acid Gorge treaty."
+    "barterNote": "Lead-antimony pipe owed to the membrane hall under the Brine Pipe Exchange."
   },
   {
-    "id": "item_foundry_railway_spike",
-    "displayName": "Railway Spike",
+    "id": "item_foundry_ice_anchor",
+    "displayName": "Ice Anchor Spike",
     "category": "materials",
     "basePrice": 2.0,
     "volatility": 0.1,
     "elasticity": 0.8,
     "stackSize": 50,
     "weightKg": 0.5,
-    "barterNote": "Counted by the bundle; the railway charter's quota good."
+    "barterNote": "Counted by the bundle; the road charter's quota good."
   },
   {
-    "id": "item_foundry_rail_wheel",
-    "displayName": "Rail-Car Wheel",
+    "id": "item_foundry_winch_drum",
+    "displayName": "Winch Drum",
     "category": "materials",
     "basePrice": 90.0,
     "volatility": 0.1,
     "elasticity": 1.0,
     "stackSize": 5,
     "weightKg": 75.0,
-    "barterNote": "Chilled-rim wheels for the narrow-gauge line."
+    "barterNote": "Chilled-flange drums for the barge windlass and Berth 9."
   }
 ]

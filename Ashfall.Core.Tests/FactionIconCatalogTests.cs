@@ -79,7 +79,7 @@ namespace Ashfall.Core.Tests
         public void CoveredFactionIds_IsReadOnlyAndSealed()
         {
             Assert.NotNull(FactionIconCatalog.CoveredFactionIds);
-            Assert.Equal(28, FactionIconCatalog.CoveredFactionIds.Count); // 27 systems + the Silent Foundry Guild
+            Assert.Equal(28, FactionIconCatalog.CoveredFactionIds.Count); // 27 systems + the Silent Foundry works faction
         }
     }
 }

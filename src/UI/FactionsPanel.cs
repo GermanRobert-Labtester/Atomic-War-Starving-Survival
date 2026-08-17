@@ -202,7 +202,7 @@ namespace AtomicWar.GodotApp.UI
             if (foundrySys != null && foundryFaction != null)
             {
                 var guildCard = AshfallUiHelpers.MakeCardFrame(
-                    foundryFaction.display_name, "TREATY SYSTEMS // GUILD");
+                    foundryFaction.display_name, "ACCORD SYSTEMS // THE WORKS");
                 var guildBox = guildCard.GetChild<MarginContainer>(0).GetChild<VBoxContainer>(0);
 
                 var guildHeader = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
@@ -216,7 +216,7 @@ namespace AtomicWar.GodotApp.UI
                 guildBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
                 float standing = foundrySys.GuildStanding;
-                guildBox.AddChild(AshfallUiHelpers.MakeDataRow("Guild Standing", $"{standing:F0} / 100", AshfallUiHelpers.ToColor(standing >= 0 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical)));
+                guildBox.AddChild(AshfallUiHelpers.MakeDataRow("Foundry Standing", $"{standing:F0} / 100", AshfallUiHelpers.ToColor(standing >= 0 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Critical)));
                 guildBox.AddChild(AshfallUiHelpers.MakeDataRow("Foundry", foundrySys.IsUnlocked ? $"OPEN · heat {foundrySys.HeatStage} · casts {foundrySys.TotalProductionCount}" : "SEALED — blueprint catalogued", AshfallUiHelpers.ToColor(foundrySys.IsUnlocked ? Ashfall.Core.UI.Theme.Pale : Ashfall.Core.UI.Theme.Dim)));
 
                 if (foundryFaction.internal_divisions != null && foundryFaction.internal_divisions.Length > 0)

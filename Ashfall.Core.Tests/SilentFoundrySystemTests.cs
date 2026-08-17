@@ -95,13 +95,8 @@ namespace Ashfall.Core.Tests
                 if (bp != null && bp.maintenance_cycle_days > 0) cycle = bp.maintenance_cycle_days;
                 Sys.BindCatalog(Catalog, cycle);
 
-                var treaties = new RegionalTreatyCatalog();
-                string treatyJson = files.ReadAllText(files.Combine(dataDir, "narrative", "regional_treaty_protocols.json"));
-                treaties.Load(treatyJson, json);
-                var ratification = new Dictionary<string, int>(StringComparer.Ordinal);
-                for (int i = 0; i < treaties.AllTreaties.Count; i++)
-                    if (treaties.AllTreaties[i] != null && treaties.AllTreaties[i].ratified_day > 0)
-                        ratification[treaties.AllTreaties[i].treaty_id] = treaties.AllTreaties[i].ratified_day;
+                // District 8 accords drive the treaty clock (foundry_accords.json).
+                var ratification = SilentFoundryCatalogLoader.LoadAccordRatificationDays(dataDir, files, json);
                 Sys.BindTreaties(ratification);
 
                 // Authored consequence policy.
@@ -135,7 +130,7 @@ namespace Ashfall.Core.Tests
         public void Identity_ExactIdsResolve()
         {
             Assert.Equal("exp_10_the_silent_foundry", SilentFoundryIds.ExpansionId);
-            Assert.Equal("current_10_the_silent_foundry_guild", SilentFoundryIds.FactionId);
+            Assert.Equal("faction_silent_foundry", SilentFoundryIds.FactionId);
             Assert.Equal("room_bp_11_the_silent_foundry_smelter_bay", SilentFoundryIds.BlueprintRoomId);
             Assert.Equal("jrnl_foundry_first_heat", SilentFoundryIds.JournalFirstHeat);
             Assert.Equal("jrnl_foundry_strike", SilentFoundryIds.JournalStrike);
@@ -160,12 +155,12 @@ namespace Ashfall.Core.Tests
             var catalog = new SilentFoundryCatalog();
             catalog.Load(production, faction);
             Assert.Equal(11, catalog.ProductCount);
-            Assert.NotNull(catalog.GetProduct("foundry_prod_railway_spike"));
-            Assert.NotNull(catalog.GetProduct("foundry_prod_acid_pipe"));
+            Assert.NotNull(catalog.GetProduct("foundry_prod_ice_anchor"));
+            Assert.NotNull(catalog.GetProduct("foundry_prod_brine_pipe"));
             Assert.Null(catalog.GetProduct("foundry_prod_missing"));
             Assert.Equal(3, catalog.GetQuotaProducts().Count); // spikes + wheels + acid pipes
-            Assert.Contains(catalog.GetQuotaProducts(), p => p.treaty_id == SilentFoundryIds.TreatyRailway);
-            Assert.Contains(catalog.GetQuotaProducts(), p => p.treaty_id == SilentFoundryIds.TreatySulfur);
+            Assert.Contains(catalog.GetQuotaProducts(), p => p.treaty_id == SilentFoundryIds.TreatyRoadIron);
+            Assert.Contains(catalog.GetQuotaProducts(), p => p.treaty_id == SilentFoundryIds.TreatyBrinePipe);
         }
 
         [Fact]
@@ -275,23 +270,27 @@ namespace Ashfall.Core.Tests
             var files = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
             var treaties = new RegionalTreatyCatalog();
-            treaties.Load(files.ReadAllText(files.Combine(dataDir, "narrative", "regional_treaty_protocols.json")), json);
+            treaties.Load(files.ReadAllText(files.Combine(dataDir, "foundry_accords.json")), json);
 
             var foundry = treaties.GetByExactSignatoryFaction(SilentFoundryIds.FactionId);
             Assert.Equal(4, foundry.Count);
-            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatySulfur);
-            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyLabor);
-            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyRailway);
-            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyConstitution);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyBrinePipe);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyLabourSchedule);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyRoadIron);
+            Assert.Contains(foundry, t => t.treaty_id == SilentFoundryIds.TreatyClusterCharter);
 
-            // The exact match must not leak the unrelated currents-pamphlet faction.
-            Assert.DoesNotContain(foundry, t => t.treaty_id == "treaty_06_the_standing_record_archivists_charter");
+            // The exact match must not leak the narrative treaty corpus (valley layer).
+            var narrative = new RegionalTreatyCatalog();
+            string narrativePath = files.Combine(dataDir, "narrative", "regional_treaty_protocols.json");
+            if (files.FileExists(narrativePath))
+                narrative.Load(files.ReadAllText(narrativePath), json);
+            Assert.Empty(narrative.GetByExactSignatoryFaction(SilentFoundryIds.FactionId));
 
-            // Ratification-day anchors (authored).
-            Assert.Equal(280, treaties.GetById(SilentFoundryIds.TreatySulfur).ratified_day);
-            Assert.Equal(950, treaties.GetById(SilentFoundryIds.TreatyLabor).ratified_day);
-            Assert.Equal(1500, treaties.GetById(SilentFoundryIds.TreatyRailway).ratified_day);
-            Assert.Equal(3650, treaties.GetById(SilentFoundryIds.TreatyConstitution).ratified_day);
+            // Ratification-day anchors (authored, campaign-reachable).
+            Assert.Equal(280, treaties.GetById(SilentFoundryIds.TreatyBrinePipe).ratified_day);
+            Assert.Equal(305, treaties.GetById(SilentFoundryIds.TreatyLabourSchedule).ratified_day);
+            Assert.Equal(330, treaties.GetById(SilentFoundryIds.TreatyRoadIron).ratified_day);
+            Assert.Equal(365, treaties.GetById(SilentFoundryIds.TreatyClusterCharter).ratified_day);
         }
 
         // -----------------------------------------------------------------
@@ -600,30 +599,35 @@ namespace Ashfall.Core.Tests
         {
             var h = new TestHarness(seed: 42);
             h.BindBlueprintAndTreaties();
-            h.Sys.Unlock(949);
-            // Fulfil the full railway quota before the day-1500 assessment.
+            h.Sys.Unlock(280);
+            // Fulfil the full road-iron quota before the day-330 assessment.
             h.Sys.State.activeProductId = string.Empty;
-            var spikes = h.Catalog.GetProduct("foundry_prod_railway_spike");
-            var wheels = h.Catalog.GetProduct("foundry_prod_rail_wheel");
-            int neededSpikes = spikes.quota_amount;   // 60 (3 heats of 20)
-            int neededWheels = wheels.quota_amount;   // 3
-            // 3 spike heats + 3 wheel heats, run sequentially (a furnace pours one heat at a time).
-            int day = 1450;
-            day = RunHeat(h, spikes, day, 3);
-            day = RunHeat(h, wheels, day, 3);
-            var rail = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyRailway);
+            var spikes = h.Catalog.GetProduct("foundry_prod_ice_anchor");
+            var wheels = h.Catalog.GetProduct("foundry_prod_winch_drum");
+            int neededSpikes = spikes.quota_amount;   // 60 (2 heats of 30)
+            int neededWheels = wheels.quota_amount;   // 3 (1 heat of 3)
+            // 2 anchor heats + 1 drum heat, run sequentially (a furnace pours one
+            // heat at a time). The heats tick inside days 281..309: the road
+            // charter is not ratified until day 330 (its cycle days are skipped)
+            // and the brine accord's next cycle day (310) falls outside, so no
+            // mid-run assessment resets the quota.
+            int day = 281;
+            day = RunHeat(h, spikes, day, 2);
+            day = RunHeat(h, wheels, day, 1);
+            var rail = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyRoadIron);
             Assert.True(rail.quotaFulfilled >= neededSpikes + neededWheels,
                 $"quota {rail.quotaFulfilled} >= {neededSpikes + neededWheels}");
 
-            // Assessment closes the cycle: the next window starts fresh.
-            h.Sys.AssessTreatyCompliance(1500);
+            // Assessments close the cycles: the labour schedule (day 305, compliant)
+            // and the road iron charter (day 330, quota met). Next window starts fresh.
+            h.Sys.AssessTreatyCompliance(305);
+            h.Sys.AssessTreatyCompliance(330);
             Assert.Equal(1, rail.metCount);
-            // The labor accord (treaty_10, day 950) also assesses during the heats.
-            Assert.Contains(h.QuotaMet, c => c.treatyId == SilentFoundryIds.TreatyRailway);
-            Assert.Contains(h.QuotaMet, c => c.treatyId == SilentFoundryIds.TreatyLabor);
+            Assert.Contains(h.QuotaMet, c => c.treatyId == SilentFoundryIds.TreatyRoadIron);
+            Assert.Contains(h.QuotaMet, c => c.treatyId == SilentFoundryIds.TreatyLabourSchedule);
             Assert.Empty(h.QuotaMissed);
             Assert.Equal(0, rail.quotaFulfilled);
-            Assert.Equal(1500, rail.lastAssessmentDay);
+            Assert.Equal(330, rail.lastAssessmentDay);
         }
 
         [Fact]
@@ -631,9 +635,9 @@ namespace Ashfall.Core.Tests
         {
             var h = new TestHarness();
             h.BindBlueprintAndTreaties();
-            h.Sys.Unlock(1490);
-            h.Sys.AssessTreatyCompliance(1500);
-            var rail = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyRailway);
+            h.Sys.Unlock(325);
+            h.Sys.AssessTreatyCompliance(330);
+            var rail = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyRoadIron);
             Assert.False(rail.currentCycleMet);
             Assert.Equal(1, rail.missedCount);
             Assert.True(h.Sys.GuildStanding < 0f, "rail miss carries a negative standing consequence");
@@ -645,14 +649,14 @@ namespace Ashfall.Core.Tests
         {
             var h = new TestHarness();
             h.BindBlueprintAndTreaties();
-            h.Sys.Unlock(900);
+            h.Sys.Unlock(300);
             h.Sys.SetOvertime(true);
-            h.Sys.AssessTreatyCompliance(950);
-            var labor = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyLabor);
+            h.Sys.AssessTreatyCompliance(305);
+            var labor = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyLabourSchedule);
             Assert.Equal(1, labor.missedCount);
 
             h.Sys.SetOvertime(false);
-            h.Sys.AssessTreatyCompliance(980);
+            h.Sys.AssessTreatyCompliance(335); // next labour cycle after 305
             Assert.Equal(1, labor.metCount);
         }
 
@@ -662,8 +666,8 @@ namespace Ashfall.Core.Tests
             var h = new TestHarness();
             h.BindBlueprintAndTreaties();
             h.Sys.Unlock(4);
-            h.Sys.AssessTreatyCompliance(279); // before treaty_05 (day 280)
-            var sulfur = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatySulfur);
+            h.Sys.AssessTreatyCompliance(279); // before the brine pipe accord (day 280)
+            var sulfur = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyBrinePipe);
             Assert.Equal(0, sulfur.missedCount);
             Assert.Equal(0, sulfur.lastAssessmentDay);
 

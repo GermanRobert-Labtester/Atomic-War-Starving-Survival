@@ -42,13 +42,9 @@ namespace Ashfall.Core.Tests
                 var files = new FileSystemIO();
                 var json = new SystemTextJsonSerializer();
 
-                var treaties = new RegionalTreatyCatalog();
-                treaties.Load(files.ReadAllText(files.Combine(dataDir, "narrative", "regional_treaty_protocols.json")), json);
-                for (int i = 0; i < treaties.AllTreaties.Count; i++)
-                {
-                    var t = treaties.AllTreaties[i];
-                    if (t != null && t.ratified_day > 0) Ratification[t.treaty_id] = t.ratified_day;
-                }
+                // District 8 accords (foundry_accords.json) drive the ratification clock.
+                foreach (var kv in SilentFoundryCatalogLoader.LoadAccordRatificationDays(dataDir, files, json))
+                    Ratification[kv.Key] = kv.Value;
 
                 var production = SilentFoundryCatalogLoader.LoadProduction(dataDir, files, json);
                 var faction = SilentFoundryCatalogLoader.LoadFaction(dataDir, files, json);
@@ -93,7 +89,7 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void Identity_ExactGuildFactionIsPreserved()
         {
-            Assert.Equal("current_10_the_silent_foundry_guild", SilentFoundryIds.FactionId);
+            Assert.Equal("faction_silent_foundry", SilentFoundryIds.FactionId);
             Assert.NotEqual("current_10_the_foundry_union", SilentFoundryIds.FactionId);
         }
 
@@ -105,19 +101,19 @@ namespace Ashfall.Core.Tests
             var h = new Harness();
             Assert.Equal(6, h.Policy.PolicyCount);
 
-            var railMissed = h.Policy.Find(SilentFoundryIds.TreatyRailway, FoundryTreatyOutcome.Missed);
+            var railMissed = h.Policy.Find(SilentFoundryIds.TreatyRoadIron, FoundryTreatyOutcome.Missed);
             Assert.NotNull(railMissed);
             Assert.Equal(SilentFoundryIds.FactionId, railMissed.faction_id);
             Assert.True(railMissed.standing_delta < 0f);
             Assert.NotEmpty(railMissed.market_modifiers);
 
-            var laborViolated = h.Policy.Find(SilentFoundryIds.TreatyLabor, FoundryTreatyOutcome.Violated);
+            var laborViolated = h.Policy.Find(SilentFoundryIds.TreatyLabourSchedule, FoundryTreatyOutcome.Violated);
             Assert.NotNull(laborViolated);
             Assert.Contains(laborViolated.market_modifiers, m => m.good_id == "fuel");
 
-            // treaty_16 has NO policy by design (finale marker, regression guard).
-            Assert.Null(h.Policy.Find(SilentFoundryIds.TreatyConstitution, FoundryTreatyOutcome.Met));
-            Assert.Null(h.Policy.Find(SilentFoundryIds.TreatyConstitution, FoundryTreatyOutcome.Missed));
+            // the cluster charter has NO policy by design (finale marker, regression guard).
+            Assert.Null(h.Policy.Find(SilentFoundryIds.TreatyClusterCharter, FoundryTreatyOutcome.Met));
+            Assert.Null(h.Policy.Find(SilentFoundryIds.TreatyClusterCharter, FoundryTreatyOutcome.Missed));
 
             // Every policy faction id is exactly the guild.
             foreach (var p in h.Policy.AllPolicies)
@@ -137,11 +133,11 @@ namespace Ashfall.Core.Tests
             }
             // The foundry goods the policy references exist as economy goods.
             Assert.NotNull(h.Goods.Find("coal"));
-            Assert.NotNull(h.Goods.Find("item_foundry_acid_pipe"));
-            Assert.NotNull(h.Goods.Find("item_foundry_railway_spike"));
+            Assert.NotNull(h.Goods.Find("item_foundry_brine_pipe"));
+            Assert.NotNull(h.Goods.Find("item_foundry_ice_anchor"));
         }
 
-        // ── 3. treaty_05 met/missed ─────────────────────────────────────
+        // ── 3. brine pipe accord met/missed ─────────────────────────────────────
 
         [Fact]
         public void Treaty05_MissedAppliesStandingAndMarketConsequences()
@@ -149,11 +145,11 @@ namespace Ashfall.Core.Tests
             var h = new Harness();
             h.Sys.AssessTreatyCompliance(280); // day 280: ratified, quota short
 
-            h.AssertOutcome(SilentFoundryIds.TreatySulfur, 280, FoundryTreatyOutcome.Missed);
+            h.AssertOutcome(SilentFoundryIds.TreatyBrinePipe, 280, FoundryTreatyOutcome.Missed);
             Assert.Equal(-6f, h.Sys.GuildStanding);
             Assert.Single(h.Applied);
-            Assert.Equal(SilentFoundryIds.TreatySulfur, h.Applied[0].treatyId);
-            Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "item_foundry_acid_pipe");
+            Assert.Equal(SilentFoundryIds.TreatyBrinePipe, h.Applied[0].treatyId);
+            Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "item_foundry_brine_pipe");
             Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "coal");
         }
 
@@ -162,7 +158,7 @@ namespace Ashfall.Core.Tests
         {
             var h = new Harness();
             // Fulfil the acid-pipe quota (4 pipes) before day 280.
-            var acid = h.Catalog.GetProduct("foundry_prod_acid_pipe");
+            var acid = h.Catalog.GetProduct("foundry_prod_brine_pipe");
             h.Sys.Unlock(240);
             h.Sys.PerformMaintenance(240);
             int day = 250;
@@ -181,48 +177,51 @@ namespace Ashfall.Core.Tests
             }
             h.Sys.AssessTreatyCompliance(280);
 
-            h.AssertOutcome(SilentFoundryIds.TreatySulfur, 280, FoundryTreatyOutcome.Met);
+            h.AssertOutcome(SilentFoundryIds.TreatyBrinePipe, 280, FoundryTreatyOutcome.Met);
             Assert.Equal(2f, h.Sys.GuildStanding);
             Assert.Single(h.Applied);
             // Met restores the exchange lane: relief modifiers lower demand back.
-            Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "item_foundry_acid_pipe" && m.demand_delta < 0f);
+            Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "item_foundry_brine_pipe" && m.demand_delta < 0f);
             Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "coal" && m.demand_delta < 0f);
         }
 
-        // ── 4. treaty_12 met/missed ─────────────────────────────────────
+        // ── 4. road iron charter met/missed ─────────────────────────────────────
 
         [Fact]
         public void Treaty12_MissedAppliesRailAndCoalLogisticsConsequences()
         {
             var h = new Harness();
-            h.Sys.AssessTreatyCompliance(1500);
+            h.Sys.AssessTreatyCompliance(330);
 
-            h.AssertOutcome(SilentFoundryIds.TreatyRailway, 1500, FoundryTreatyOutcome.Missed);
+            h.AssertOutcome(SilentFoundryIds.TreatyRoadIron, 330, FoundryTreatyOutcome.Missed);
             Assert.Equal(-6f, h.Sys.GuildStanding);
             Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "coal" && m.demand_delta > 0f);
-            Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "item_foundry_railway_spike" && m.demand_delta > 0f);
+            Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "item_foundry_ice_anchor" && m.demand_delta > 0f);
         }
 
         [Fact]
         public void Treaty12_MetCarriesNoMarketPenalty()
         {
             var h = new Harness();
-            var spikes = h.Catalog.GetProduct("foundry_prod_railway_spike");
-            var wheels = h.Catalog.GetProduct("foundry_prod_rail_wheel");
-            h.Sys.Unlock(1449);
-            int day = 1450;
-            day = RunHeats(h, spikes, day, 3);   // 60 spikes
-            day = RunHeats(h, wheels, day, 3);   // 3 wheels
-            h.Sys.AssessTreatyCompliance(1500);
+            var spikes = h.Catalog.GetProduct("foundry_prod_ice_anchor");
+            var wheels = h.Catalog.GetProduct("foundry_prod_winch_drum");
+            // Heats tick inside days 281..309: the road charter is not ratified
+            // until 330 (cycle days skipped) and the brine accord's next cycle
+            // day (310) falls outside, so the quota survives to the assessment.
+            h.Sys.Unlock(280);
+            int day = 281;
+            day = RunHeats(h, spikes, day, 2);   // 60 anchors
+            day = RunHeats(h, wheels, day, 1);   // 3 drums
+            h.Sys.AssessTreatyCompliance(330);
 
-            h.AssertOutcome(SilentFoundryIds.TreatyRailway, 1500, FoundryTreatyOutcome.Met);
-            var railMet = System.Array.Find(h.Applied.ToArray(), r => r.treatyId == SilentFoundryIds.TreatyRailway && r.outcome == FoundryTreatyOutcome.Met);
+            h.AssertOutcome(SilentFoundryIds.TreatyRoadIron, 330, FoundryTreatyOutcome.Met);
+            var railMet = System.Array.Find(h.Applied.ToArray(), r => r.treatyId == SilentFoundryIds.TreatyRoadIron && r.outcome == FoundryTreatyOutcome.Met);
             Assert.NotNull(railMet);
             Assert.Equal(3f, railMet.standingDelta);
             // Met relieves the logistics squeeze (coal + spikes demand eases), never adds one.
             Assert.All(railMet.modifiers, m => Assert.True(m.demand_delta < 0f, "met relief only lowers demand"));
             Assert.Contains(railMet.modifiers, m => m.good_id == "coal");
-            Assert.Contains(railMet.modifiers, m => m.good_id == "item_foundry_railway_spike");
+            Assert.Contains(railMet.modifiers, m => m.good_id == "item_foundry_ice_anchor");
 
             // Guild standing is the deterministic sum of all applied cycles
             // (intervening treaties assess on their own cycles — intended tension).
@@ -232,15 +231,15 @@ namespace Ashfall.Core.Tests
             Assert.True(h.Sys.GuildStanding >= 3f, "rail met contributes its bonus");
         }
 
-        // ── 5/6. treaty_10 compliant vs violation, fatigue alone ────────
+        // ── 5/6. labour schedule compliant vs violation, fatigue alone ────────
 
         [Fact]
         public void Treaty10_CompliantLaborPreservesAccess()
         {
             var h = new Harness();
-            h.Sys.AssessTreatyCompliance(950);
+            h.Sys.AssessTreatyCompliance(305);
 
-            h.AssertOutcome(SilentFoundryIds.TreatyLabor, 950, FoundryTreatyOutcome.Met);
+            h.AssertOutcome(SilentFoundryIds.TreatyLabourSchedule, 305, FoundryTreatyOutcome.Met);
             Assert.Equal(2f, h.Sys.GuildStanding);
             // Compliant labor releases the fuel allotment (relief), never penalizes.
             Assert.All(h.Applied[0].modifiers, m => Assert.True(m.demand_delta < 0f));
@@ -252,9 +251,9 @@ namespace Ashfall.Core.Tests
         {
             var h = new Harness();
             h.Sys.SetOvertime(true);
-            h.Sys.AssessTreatyCompliance(950);
+            h.Sys.AssessTreatyCompliance(305);
 
-            h.AssertOutcome(SilentFoundryIds.TreatyLabor, 950, FoundryTreatyOutcome.Violated);
+            h.AssertOutcome(SilentFoundryIds.TreatyLabourSchedule, 305, FoundryTreatyOutcome.Violated);
             Assert.Equal(-8f, h.Sys.GuildStanding);
             Assert.Contains(h.Applied[0].modifiers, m => m.good_id == "fuel" && m.demand_delta > 0f);
         }
@@ -268,9 +267,9 @@ namespace Ashfall.Core.Tests
             h.Sys.State.laborDispute = FoundryLaborDispute.None;
             h.Sys.State.overtimeFlag = false;
             h.Sys.State.childLaborUsed = false;
-            h.Sys.AssessTreatyCompliance(950);
+            h.Sys.AssessTreatyCompliance(305);
 
-            h.AssertOutcome(SilentFoundryIds.TreatyLabor, 950, FoundryTreatyOutcome.Met);
+            h.AssertOutcome(SilentFoundryIds.TreatyLabourSchedule, 305, FoundryTreatyOutcome.Met);
             Assert.True(h.Sys.GuildStanding > 0f);
         }
 
@@ -280,31 +279,31 @@ namespace Ashfall.Core.Tests
         public void Outcome_PreRatificationIsNeutral()
         {
             var h = new Harness();
-            h.Sys.AssessTreatyCompliance(279); // before treaty_05 (day 280)
+            h.Sys.AssessTreatyCompliance(279); // before the brine pipe accord (day 280)
 
-            h.AssertOutcome(SilentFoundryIds.TreatySulfur, 279, FoundryTreatyOutcome.NotRatified);
+            h.AssertOutcome(SilentFoundryIds.TreatyBrinePipe, 279, FoundryTreatyOutcome.NotRatified);
             Assert.Equal(0f, h.Sys.GuildStanding);
             Assert.Empty(h.Applied);
             Assert.Equal(0, h.Sys.State.treatyCompliance[0].lastAssessmentDay);
         }
 
-        // ── 8. treaty_16 regression ─────────────────────────────────────
+        // ── 8. cluster charter regression ─────────────────────────────────────
 
         [Fact]
         public void Treaty16_NoConsequenceIsEverApplied()
         {
             var h = new Harness();
             h.Sys.State.incidents.Add(new FoundryIncidentRecord { severity = FoundryIncidentSeverity.Severe, day = 10 });
-            h.Sys.AssessTreatyCompliance(3650);
+            h.Sys.AssessTreatyCompliance(365);
 
-            // treaty_16 itself never carries a consequence, regardless of the
+            // the charter itself never carries a consequence, regardless of the
             // other ratified treaties assessing on the same day.
-            Assert.DoesNotContain(h.Applied, r => r.treatyId == SilentFoundryIds.TreatyConstitution);
-            var c = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyConstitution);
+            Assert.DoesNotContain(h.Applied, r => r.treatyId == SilentFoundryIds.TreatyClusterCharter);
+            var c = h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyClusterCharter);
             Assert.False(c.constitutionEligible); // eligibility derivation unchanged
             h.Sys.State.incidents.Clear();
-            h.Sys.AssessTreatyCompliance(3650);
-            Assert.True(h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyConstitution).constitutionEligible);
+            h.Sys.AssessTreatyCompliance(365);
+            Assert.True(h.Sys.GetTreatyCompliance(SilentFoundryIds.TreatyClusterCharter).constitutionEligible);
         }
 
         // ── 9/10/11. Once-per-cycle, no stacking, reload-safe ───────────
@@ -313,20 +312,20 @@ namespace Ashfall.Core.Tests
         public void Standing_AppliedExactlyOncePerCycle()
         {
             var h = new Harness();
-            h.Sys.AssessTreatyCompliance(1500);
-            h.Sys.AssessTreatyCompliance(1500); // same day, same cycle
-            h.Sys.AssessTreatyCompliance(1500);
+            h.Sys.AssessTreatyCompliance(330);
+            h.Sys.AssessTreatyCompliance(330); // same day, same cycle
+            h.Sys.AssessTreatyCompliance(330);
 
             Assert.Single(h.Applied);
             Assert.Equal(-6f, h.Sys.GuildStanding);
-            Assert.True(h.Sys.IsConsequenceApplied(SilentFoundryIds.TreatyRailway, 1500));
+            Assert.True(h.Sys.IsConsequenceApplied(SilentFoundryIds.TreatyRoadIron, 330));
         }
 
         [Fact]
         public void Standing_NextCycleAppliesOnceMoreButDoesNotSnowballPastBounds()
         {
             var h = new Harness();
-            h.Sys.AssessTreatyCompliance(1500);   // -6
+            h.Sys.AssessTreatyCompliance(330);   // -6
             h.Sys.AssessTreatyCompliance(1530);   // -6 (next cycle)
             h.Sys.AssessTreatyCompliance(1560);   // -6
             Assert.Equal(3, h.Applied.Count);
@@ -334,7 +333,7 @@ namespace Ashfall.Core.Tests
 
             // Many cycles: standing clamps at the existing faction range bound.
             for (int i = 0; i < 30; i++)
-                h.Sys.AssessTreatyCompliance(1500 + (i + 3) * 30);
+                h.Sys.AssessTreatyCompliance(330 + (i + 3) * 30);
             Assert.True(h.Sys.GuildStanding >= -100f, "standing clamped to range minimum");
         }
 
@@ -342,8 +341,8 @@ namespace Ashfall.Core.Tests
         public void Standing_RestoreDoesNotReapplyOrStack()
         {
             var h = new Harness();
-            h.Sys.AssessTreatyCompliance(1500); // -6
-            h.Sys.AssessTreatyCompliance(950);  // treaty_10 assessment (compliant) → +2
+            h.Sys.AssessTreatyCompliance(330); // -6
+            h.Sys.AssessTreatyCompliance(305);  // labour schedule assessment (compliant) → +2
 
             var consequences = h.Sys.CaptureConsequenceState();
             var restored = new SilentFoundrySystem();
@@ -352,10 +351,10 @@ namespace Ashfall.Core.Tests
 
             Assert.Equal(h.Sys.GuildStanding, restored.GuildStanding);
             Assert.Equal(h.Sys.AppliedConsequences.Count, restored.AppliedConsequences.Count);
-            Assert.True(restored.IsConsequenceApplied(SilentFoundryIds.TreatyRailway, 1500));
+            Assert.True(restored.IsConsequenceApplied(SilentFoundryIds.TreatyRoadIron, 330));
 
             // Re-assessing the same cycles on the restored system does nothing new.
-            restored.AssessTreatyCompliance(1500);
+            restored.AssessTreatyCompliance(330);
             Assert.Equal(h.Sys.AppliedConsequences.Count, restored.AppliedConsequences.Count);
             Assert.Equal(h.Sys.GuildStanding, restored.GuildStanding);
         }
@@ -400,12 +399,12 @@ namespace Ashfall.Core.Tests
             var market = new MarketSystem();
             market.BindCatalog(h.Goods);
 
-            // treaty_05 miss applies +0.4 acid-pipe demand; the following met
+            // brine-pipe miss applies +0.4 acid-pipe demand; the following met
             // cycle applies −0.4 relief — the exchange lane returns to baseline.
-            market.AdjustDemand("item_foundry_acid_pipe", 0.4f);
-            Assert.Equal(1.4f, market.GetDemandMultiplier("item_foundry_acid_pipe"), 3);
-            market.AdjustDemand("item_foundry_acid_pipe", -0.4f);
-            Assert.Equal(1.0f, market.GetDemandMultiplier("item_foundry_acid_pipe"), 3);
+            market.AdjustDemand("item_foundry_brine_pipe", 0.4f);
+            Assert.Equal(1.4f, market.GetDemandMultiplier("item_foundry_brine_pipe"), 3);
+            market.AdjustDemand("item_foundry_brine_pipe", -0.4f);
+            Assert.Equal(1.0f, market.GetDemandMultiplier("item_foundry_brine_pipe"), 3);
 
             // The relief is bounded by the market floor when over-applied.
             market.AdjustDemand("fuel", -10f);
@@ -420,9 +419,9 @@ namespace Ashfall.Core.Tests
             // a miss→met cycle returns the market to baseline (no permanent drift).
             foreach (string treatyId in new[]
             {
-                SilentFoundryIds.TreatySulfur,
-                SilentFoundryIds.TreatyLabor,
-                SilentFoundryIds.TreatyRailway
+                SilentFoundryIds.TreatyBrinePipe,
+                SilentFoundryIds.TreatyLabourSchedule,
+                SilentFoundryIds.TreatyRoadIron
             })
             {
                 var met = h.Policy.Find(treatyId, FoundryTreatyOutcome.Met);
@@ -497,7 +496,7 @@ namespace Ashfall.Core.Tests
                 raidThreshold: -50f, robThreshold: -20f, minTrustToTrade: -40f, intelShareThreshold: 40f));
 
             h.Sys.OnConsequenceApplied += r => stance.ModifyTrust(SilentFoundryIds.FactionId, r.standingDelta);
-            h.Sys.AssessTreatyCompliance(1500); // -6 for the guild
+            h.Sys.AssessTreatyCompliance(330); // -6 for the guild
 
             Assert.Equal(-6f, stance.GetTrust(SilentFoundryIds.FactionId));
             Assert.Equal(0f, stance.GetTrust("current_10_the_foundry_union"));
@@ -511,10 +510,10 @@ namespace Ashfall.Core.Tests
         {
             var a = new Harness();
             var b = new Harness();
-            a.Sys.AssessTreatyCompliance(1500);
-            a.Sys.AssessTreatyCompliance(950);
-            b.Sys.AssessTreatyCompliance(1500);
-            b.Sys.AssessTreatyCompliance(950);
+            a.Sys.AssessTreatyCompliance(330);
+            a.Sys.AssessTreatyCompliance(305);
+            b.Sys.AssessTreatyCompliance(330);
+            b.Sys.AssessTreatyCompliance(305);
 
             Assert.Equal(a.Sys.GuildStanding, b.Sys.GuildStanding);
             Assert.Equal(a.Sys.AppliedConsequences.Count, b.Sys.AppliedConsequences.Count);
@@ -529,11 +528,11 @@ namespace Ashfall.Core.Tests
         public void Save_RoundTripsConsequenceLedgerThroughTheHubEnvelope()
         {
             var h = new Harness();
-            h.Sys.AssessTreatyCompliance(1500);
-            h.Sys.AssessTreatyCompliance(950);
+            h.Sys.AssessTreatyCompliance(330);
+            h.Sys.AssessTreatyCompliance(305);
 
             var json = new SystemTextJsonSerializer();
-            var envelope = new ExpansionHubSave { saveVersion = ExpansionHubSave.CurrentSaveVersion, simDay = 1500 };
+            var envelope = new ExpansionHubSave { saveVersion = ExpansionHubSave.CurrentSaveVersion, simDay = 330 };
             envelope.foundry = h.Sys.CaptureState();
             envelope.consequences = h.Sys.CaptureConsequenceState();
             envelope.Checksum = SaveChecksum.Compute(envelope);
@@ -547,7 +546,7 @@ namespace Ashfall.Core.Tests
             restored.BindConsequencePolicy(h.Policy);
             restored.RestoreConsequenceState(decoded.consequences);
             Assert.Equal(h.Sys.GuildStanding, restored.GuildStanding);
-            Assert.True(restored.IsConsequenceApplied(SilentFoundryIds.TreatyRailway, 1500));
+            Assert.True(restored.IsConsequenceApplied(SilentFoundryIds.TreatyRoadIron, 330));
         }
 
         [Fact]
@@ -557,7 +556,7 @@ namespace Ashfall.Core.Tests
             var v2 = new ExpansionHubSaveV2
             {
                 saveVersion = 2,
-                simDay = 1500,
+                simDay = 330,
                 waystation = new WaystationSystemState(),
                 layouts = new LocationLayoutState(),
                 memory = new LocationMemoryState(),
@@ -584,7 +583,7 @@ namespace Ashfall.Core.Tests
         public void Save_ChecksumStableAcrossSerializerRoundTrip()
         {
             var h = new Harness();
-            h.Sys.AssessTreatyCompliance(1500);
+            h.Sys.AssessTreatyCompliance(330);
             var state = h.Sys.CaptureConsequenceState();
 
             string json = new SystemTextJsonSerializer().Serialize(state);

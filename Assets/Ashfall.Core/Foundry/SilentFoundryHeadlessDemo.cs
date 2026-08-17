@@ -35,7 +35,7 @@ namespace Ashfall.Core
 
             // Identity resolution (exact ids, never aliased).
             Check(SilentFoundryIds.ExpansionId == "exp_10_the_silent_foundry", "expansion id exp_10_the_silent_foundry");
-            Check(SilentFoundryIds.FactionId == "current_10_the_silent_foundry_guild", "faction id current_10_the_silent_foundry_guild");
+            Check(SilentFoundryIds.FactionId == "faction_silent_foundry", "faction id faction_silent_foundry");
             Check(SilentFoundryIds.BlueprintRoomId == "room_bp_11_the_silent_foundry_smelter_bay", "blueprint id room_bp_11_the_silent_foundry_smelter_bay");
 
             // Static catalogs load from disk.
@@ -59,16 +59,17 @@ namespace Ashfall.Core
             Check(bp == null || bp.maintenance_cycle_days == 4, "blueprint maintenance_cycle_days == 4");
             Check(bp == null || bp.max_dweller_capacity == 8, "blueprint max_dweller_capacity == 8");
 
-            // Treaty anchors resolve (exact faction lookup).
-            string treatyJson = files.FileExists(Path.Combine(dataDirectory, "narrative", "regional_treaty_protocols.json"))
-                ? files.ReadAllText(Path.Combine(dataDirectory, "narrative", "regional_treaty_protocols.json"))
-                : string.Empty;
+            // Accord anchors resolve (District 8 accords — data authority: foundry_accords.json).
             var treaties = new RegionalTreatyCatalog();
-            if (!string.IsNullOrEmpty(treatyJson)) treaties.Load(treatyJson, json);
+            string accordsPath = string.IsNullOrEmpty(dataDirectory)
+                ? string.Empty
+                : Path.Combine(dataDirectory, SilentFoundryCatalogLoader.AccordsFileName);
+            if (!string.IsNullOrEmpty(accordsPath) && files.FileExists(accordsPath))
+                treaties.Load(files.ReadAllText(accordsPath), json);
             var foundryTreaties = treaties.GetByExactSignatoryFaction(SilentFoundryIds.FactionId);
-            Check(foundryTreaties.Count == 4, "guild is exact signatory of exactly 4 treaties");
-            Check(treaties.GetById(SilentFoundryIds.TreatySulfur)?.ratified_day == 280, "treaty_05 ratified day 280");
-            Check(treaties.GetById(SilentFoundryIds.TreatyRailway)?.ratified_day == 1500, "treaty_12 ratified day 1500");
+            Check(foundryTreaties.Count == 4, "the foundry is exact signatory of exactly 4 District 8 accords");
+            Check(treaties.GetById(SilentFoundryIds.TreatyBrinePipe)?.ratified_day == 280, "brine pipe accord ratified day 280");
+            Check(treaties.GetById(SilentFoundryIds.TreatyRoadIron)?.ratified_day == 330, "road iron charter ratified day 330");
 
             // Consequence policy loads and its good refs resolve in the economy catalog.
             var policy = new SilentFoundryConsequencePolicyCatalog();
@@ -134,7 +135,7 @@ namespace Ashfall.Core
             float standingBefore = sys.GuildStanding;
             sys.AssessTreatyCompliance(280); // treaty_05 acid-pipe quota short
             Check(sys.GuildStanding < standingBefore, "missed quota lowers guild standing");
-            Check(sys.IsConsequenceApplied(SilentFoundryIds.TreatySulfur, 280), "consequence applied once for the cycle");
+            Check(sys.IsConsequenceApplied(SilentFoundryIds.TreatyBrinePipe, 280), "consequence applied once for the cycle");
             sys.AssessTreatyCompliance(280); // idempotent re-assessment
             Check(sys.GuildStanding == standingBefore - 6f || sys.AppliedConsequences.Count >= 1, "consequence does not stack on re-assessment");
 

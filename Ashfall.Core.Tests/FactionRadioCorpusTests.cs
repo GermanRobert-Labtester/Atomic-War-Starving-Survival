@@ -29,15 +29,15 @@ namespace Ashfall.Core.Tests
             var engine = CreateLoadedEngine();
             var rng = new SeededRng(1009);
 
-            var chatter = engine.GetFactionEvent("current_10_the_silent_foundry_guild", RadioEventKind.InterceptChatter, 200, rng);
-            Assert.Equal("current_10_the_silent_foundry_guild", chatter.FactionId);
+            var chatter = engine.GetFactionEvent("faction_silent_foundry", RadioEventKind.InterceptChatter, 200, rng);
+            Assert.Equal("faction_silent_foundry", chatter.FactionId);
             Assert.Equal("FOUNDRY FLOOR / CUPOLA SHIFT", chatter.Callsign);
             Assert.NotEqual(RadioEventKind.Silence, chatter.Kind);
             Assert.True(chatter.SignalStrength >= 7);
             Assert.False(string.IsNullOrWhiteSpace(chatter.Message));
 
-            var reaction = engine.GetFactionEvent("current_10_the_silent_foundry_guild", RadioEventKind.TradeReaction, 200, rng);
-            Assert.Equal("current_10_the_silent_foundry_guild", reaction.FactionId);
+            var reaction = engine.GetFactionEvent("faction_silent_foundry", RadioEventKind.TradeReaction, 200, rng);
+            Assert.Equal("faction_silent_foundry", reaction.FactionId);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Ashfall.Core.Tests
                 "military_remnants", "cult_of_the_glow", "scavenger_camp", "upland_militia",
                 "hydro_barons", "rot_farmers", "wire_heads", "sump_dredgers",
                 "custodians", "doomsday_preppers", "echo_bats", "safe_haven_community",
-                "current_10_the_silent_foundry_guild"
+                "faction_silent_foundry"
             };
 
             foreach (var f in expectedFactions)

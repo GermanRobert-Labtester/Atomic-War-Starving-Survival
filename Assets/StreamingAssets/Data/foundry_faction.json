@@ -1,26 +1,26 @@
 {
-  "faction_id": "current_10_the_silent_foundry_guild",
-  "display_name": "The Silent Foundry Guild",
+  "faction_id": "faction_silent_foundry",
+  "display_name": "The Silent Foundry",
   "short_name": "The Foundry",
-  "identity": "The guild of cupola tenders, pattern makers, and stokers who keep the valley's iron flowing. Their furnace floor is the backbone of winter: without their heat, the cold takes the valley in forty-eight hours. They are exact, proud, and internally divided — production against safety, master engineers against apprentices, treaty quotas against local autonomy.",
+  "identity": "The machine works of District 8: the cupola tenders, molders, and stokers who keep the coast in iron. The furnace is fired only when the ice road can carry the coal, it speaks in a schedule rather than a whistle, and without its castings the Cut loses its anchors, the membrane hall loses its pipes, and Block C gets patched with salvaged tin. They are exact, proud, and internally divided — production against safety, master molders against apprentices, accord quotas against the Cluster's own needs.",
   "icon_path": "Assets/UI/Icons/faction_icon_silent_foundry.png",
   "internal_divisions": [
     "production_versus_safety",
-    "master_engineers_versus_apprentices",
-    "treaty_obligations_versus_local_autonomy",
+    "master_molders_versus_apprentices",
+    "accord_obligations_versus_cluster_needs",
     "immediate_repair_versus_long_term_education",
     "output_quotas_versus_worker_health",
     "alloy_secrecy_versus_public_instruction"
   ],
   "relationships": [
-    { "faction_id": "current_09_station_0_chemical_combine", "stance": "trade_partner", "notes": "Sulfur and acid for forged pickaxes and acid-resistant lead-antimony pipes (treaty_05)." },
-    { "faction_id": "current_05_deep_drift_miners_union", "stance": "trade_partner", "notes": "Coal and ore from the drifts; foundry shifts capped during liquid iron pours (treaty_10)." },
-    { "faction_id": "current_14_the_valley_general_council", "stance": "ally", "notes": "Labor and milk support, shift oversight, and the constitution's labor articles (treaty_10, treaty_16)." },
-    { "faction_id": "current_16_the_railway_restoration_corps", "stance": "trade_partner", "notes": "Narrow-gauge rail system; spike and wheel quotas, coal gondolas, right-of-way (treaty_12)." },
-    { "faction_id": "current_08_hydro_turbine_guild", "stance": "trade_partner", "notes": "Water-flow and turbine components; the foundry's water demand is metered against the hydro lines." },
-    { "faction_id": "current_06_the_standing_record_archivists", "stance": "neutral", "notes": "The Standing Record logs foundry output, incidents, and labor disputes." },
-    { "faction_id": "current_15_the_healers_cadre", "stance": "neutral", "notes": "Treats foundry injuries; the healers' burn ward knows the furnace floor by name." },
-    { "faction_id": "current_12_the_black_flotilla", "stance": "rival", "notes": "The Flotilla trades scavenged metal; the Foundry refuses to melt wreckage taken from contested wrecks." }
+    { "faction_id": "faction_the_office", "stance": "trade_partner", "notes": "Brine pipe and valve bodies for iodine and grade salt; the Office audits every heat against its schedule (the Brine Pipe Exchange)." },
+    { "faction_id": "faction_the_cutters", "stance": "trade_partner", "notes": "Coal and wreck scrap hauled south across the Cut at column rates; ice anchors and cleats owed in quotas (the Road Iron Charter, the Cluster Labour Schedule)." },
+    { "faction_id": "faction_the_fleet", "stance": "trade_partner", "notes": "Winch drums and runners for the barge and Berth 9; the Fleet's levy on deep-coast salvage keeps the yard honest." },
+    { "faction_id": "faction_archivists", "stance": "neutral", "notes": "The Archivists log heats, incidents, and accord cycles; a works is only as good as its record." },
+    { "faction_id": "faction_grain_exchange", "stance": "trade_partner", "notes": "Plowshares and heavy tools move through the exchange for seed and stores." },
+    { "faction_id": "faction_hydro_barons", "stance": "rival", "notes": "The Barons sell a place in the queue; the foundry casts valve bodies that outlast their contracts." },
+    { "faction_id": "faction_scavenger_guild", "stance": "conditional", "notes": "The foundry buys wreck scrap only with a clean claim mark — the crashed convoy and the dredger hulk have debts of their own." },
+    { "faction_id": "faction_iron_raiders", "stance": "rival", "notes": "No code, no contract, no questions. The foundry will not melt iron taken off a contested hull." }
   ],
-  "tags": ["foundry", "industry", "iron", "labor", "treaty", "guild"]
+  "tags": ["foundry", "industry", "iron", "labour", "accord", "works", "district8"]
 }

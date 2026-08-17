@@ -3,106 +3,106 @@
   "collection_id": "foundry_treaty_consequence_policy",
   "policies": [
     {
-      "treaty_id": "treaty_05_chemical_sulfur_and_acid_concession",
-      "faction_id": "current_10_the_silent_foundry_guild",
+      "treaty_id": "treaty_brine_pipe_and_iodine_exchange",
+      "faction_id": "faction_silent_foundry",
       "outcome": "met",
       "standing_delta": 2.0,
-      "reason": "treaty_05 acid-pipe quota met: Station 0 exchange continues, acid and sulfur terms hold.",
+      "reason": "Brine-pipe quota met: the membrane-hall exchange continues, and the iodine and grade-salt terms hold.",
       "market_modifiers": [
         {
-          "good_id": "item_foundry_acid_pipe",
+          "good_id": "item_foundry_brine_pipe",
           "demand_delta": -0.4,
           "reason": "Compliance restores the exchange lane; the foundry's pipe stock clears at normal terms again."
         },
         {
           "good_id": "coal",
           "demand_delta": -0.15,
-          "reason": "Sulfur supply resumes; the foundry's coal purchases return to prior terms."
+          "reason": "The ice-road coal window holds; the foundry's coal purchases return to prior terms."
         }
       ]
     },
     {
-      "treaty_id": "treaty_05_chemical_sulfur_and_acid_concession",
-      "faction_id": "current_10_the_silent_foundry_guild",
+      "treaty_id": "treaty_brine_pipe_and_iodine_exchange",
+      "faction_id": "faction_silent_foundry",
       "outcome": "missed",
       "standing_delta": -6.0,
-      "reason": "treaty_05 acid-pipe quota missed: Station 0 buys pipes elsewhere; the sulfur-for-iron exchange stalls.",
+      "reason": "Brine-pipe quota missed: the Office sources pipe from slower casters down the coast; the iodine exchange stalls.",
       "market_modifiers": [
         {
-          "good_id": "item_foundry_acid_pipe",
+          "good_id": "item_foundry_brine_pipe",
           "demand_delta": 0.4,
-          "reason": "Station 0 sources acid-resistant pipe from other casters; foundry pipe sits unsold (lower effective price for the foundry)."
+          "reason": "The Office takes brine pipe where it can find it; the foundry's own stock sits unsold at softer terms."
         },
         {
           "good_id": "coal",
           "demand_delta": 0.15,
-          "reason": "Sulfur supply stalls; the foundry must pay more for coal to keep the cupola lit through the exchange gap."
+          "reason": "The iodine store stops releasing antimony credit; the foundry must pay more for coal to keep the cupola lit through the gap."
         }
       ]
     },
     {
-      "treaty_id": "treaty_10_the_foundry_labor_and_milk_treaty",
-      "faction_id": "current_10_the_silent_foundry_guild",
+      "treaty_id": "treaty_cluster_labour_schedule",
+      "faction_id": "faction_silent_foundry",
       "outcome": "met",
       "standing_delta": 2.0,
-      "reason": "treaty_10 labor accord upheld: shifts capped, workers fed, fuel allotment unchanged.",
+      "reason": "Labour schedule upheld: shifts capped, the school bell answered, the boil order honoured.",
       "market_modifiers": [
         {
           "good_id": "fuel",
           "demand_delta": -0.25,
-          "reason": "The council and the miners' union release the fuel allotment again after compliance."
+          "reason": "The Office and the Cutters release the works' fuel allotment again after compliance."
         }
       ]
     },
     {
-      "treaty_id": "treaty_10_the_foundry_labor_and_milk_treaty",
-      "faction_id": "current_10_the_silent_foundry_guild",
+      "treaty_id": "treaty_cluster_labour_schedule",
+      "faction_id": "faction_silent_foundry",
       "outcome": "violated",
       "standing_delta": -8.0,
-      "reason": "treaty_10 labor accord violated (strike, overtime, or child labor on the charging floor): the council and the miners' union tighten the fuel allotment.",
+      "reason": "Labour schedule violated (strike, overtime, or children on the charging floor): the Office and the Cutters tighten the fuel allotment.",
       "market_modifiers": [
         {
           "good_id": "fuel",
           "demand_delta": 0.25,
-          "reason": "Lockouts and unannounced strikes reduce the foundry's fuel allotment; fuel demand rises as the shelter scrambles for replacement heat."
+          "reason": "Lockouts and unannounced strikes close the works' coal window; fuel demand rises as the Cluster scrambles for replacement heat."
         }
       ]
     },
     {
-      "treaty_id": "treaty_12_the_trans_tessarat_railway_charter",
-      "faction_id": "current_10_the_silent_foundry_guild",
+      "treaty_id": "treaty_road_iron_charter",
+      "faction_id": "faction_silent_foundry",
       "outcome": "met",
       "standing_delta": 3.0,
-      "reason": "treaty_12 rail quota met: spikes and wheels delivered, coal and ore gondolas run on schedule.",
+      "reason": "Road-iron quota met: anchors and drums delivered, coal and scrap columns run on the marked lane.",
       "market_modifiers": [
         {
           "good_id": "coal",
           "demand_delta": -0.2,
-          "reason": "Railway coal gondolas run to schedule again; coal terms ease back."
+          "reason": "The coal column runs to the marked lane again; coal terms ease back."
         },
         {
-          "good_id": "item_foundry_railway_spike",
+          "good_id": "item_foundry_ice_anchor",
           "demand_delta": -0.3,
-          "reason": "The corps takes the foundry's spikes again; the surplus clears at normal terms."
+          "reason": "The Cutters take the foundry's anchors again; the surplus clears at normal terms."
         }
       ]
     },
     {
-      "treaty_id": "treaty_12_the_trans_tessarat_railway_charter",
-      "faction_id": "current_10_the_silent_foundry_guild",
+      "treaty_id": "treaty_road_iron_charter",
+      "faction_id": "faction_silent_foundry",
       "outcome": "missed",
       "standing_delta": -6.0,
-      "reason": "treaty_12 rail quota missed: the railway's coal and ore logistics tighten; the corps renegotiates terms.",
+      "reason": "Road-iron quota missed: the foundry's lane on the next window closes and the accident book re-opens.",
       "market_modifiers": [
         {
           "good_id": "coal",
           "demand_delta": 0.2,
-          "reason": "Railway coal gondolas are reprioritized to the corps; coal for the shelter becomes scarcer and dearer."
+          "reason": "The coal column is reprioritized to the road's own needs; coal for the Cluster becomes scarcer and dearer."
         },
         {
-          "good_id": "item_foundry_railway_spike",
+          "good_id": "item_foundry_ice_anchor",
           "demand_delta": 0.3,
-          "reason": "The corps buys spikes elsewhere to keep the line open; the foundry's own spike stock moves slowly."
+          "reason": "The Cutters buy anchors where they can get them; the foundry's own stock moves slowly."
         }
       ]
     }

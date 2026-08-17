@@ -2,7 +2,7 @@
   {
     "id": "item_foundry_grey_iron_ingot",
     "displayName": "Grey Iron Ingot",
-    "description": "A rough grey iron ingot from the cupola. The foundry's own heavy-alloy feedstock; also traded to the Railway Restoration Corps and the Valley General Council.",
+    "description": "A rough grey iron ingot from the cupola. The foundry's own heavy feedstock; what the casting floor does not keep goes down the ice road, stamped for the Office's schedule.",
     "type": "Material",
     "stackMax": 20,
     "weight": 3.0,
@@ -12,7 +12,7 @@
   {
     "id": "item_foundry_plowshare",
     "displayName": "Plowshare Set",
-    "description": "A cast iron plowshare and moldboard. Agricultural continuity: the Botanical Seed Trust and the Valley farms trade food for these.",
+    "description": "A cast iron plowshare and moldboard. Agricultural continuity: the glasshouse allotments and the Verge rows trade seed and stores for these.",
     "type": "Tool",
     "stackMax": 5,
     "weight": 8.0,
@@ -22,7 +22,7 @@
   {
     "id": "item_foundry_t_beam",
     "displayName": "Structural T-Beam",
-    "description": "A forty-kilo structural T-beam. The bone of the bunker's sky-layer armor frames and the station's load-bearing repairs.",
+    "description": "A forty-kilo structural T-beam. The bone of the bunker's sky-layer armor frames and Block C's load-bearing repairs.",
     "type": "Material",
     "stackMax": 8,
     "weight": 40.0,
@@ -30,9 +30,9 @@
     "durability": 100
   },
   {
-    "id": "item_foundry_railway_spike",
-    "displayName": "Railway Spike",
-    "description": "Forged rail spikes, counted by the bundle. A treaty obligation to the Railway Restoration Corps — the narrow-gauge line dies without them.",
+    "id": "item_foundry_ice_anchor",
+    "displayName": "Ice Anchor Spike",
+    "description": "Forged ice anchors, counted by the bundle. Driven into the Cut to hold lane markers, mooring chains, and the boom. A charter obligation to the Cutters — the road dies without them.",
     "type": "Material",
     "stackMax": 100,
     "weight": 0.5,
@@ -40,9 +40,9 @@
     "durability": 100
   },
   {
-    "id": "item_foundry_rail_wheel",
-    "displayName": "Rail-Car Wheel",
-    "description": "A cast rail-car wheel, chilled and machined at the rim. Heavy, hard, and owed in quotas to the railway charter.",
+    "id": "item_foundry_winch_drum",
+    "displayName": "Winch Drum",
+    "description": "A cast winch drum, chilled and machined at the flange. Heavy, hard, and owed in quotas to the road charter — the barge and Berth 9 both wind on these.",
     "type": "Material",
     "stackMax": 10,
     "weight": 75.0,
@@ -50,14 +50,14 @@
     "durability": 100
   },
   {
-    "id": "item_foundry_acid_pipe",
-    "description": "A lead-antimony acid-resistant pipe and valve body, cast for Station 0 Chemical Combine. The Acid Gorge treaty exchanges these for sulfur.",
+    "id": "item_foundry_brine_pipe",
+    "description": "A lead-antimony brine-resistant pipe and valve body, cast for the saltworks membrane hall. The Brine Pipe Exchange trades these for iodine.",
     "type": "Material",
     "stackMax": 12,
     "weight": 12.0,
     "tradeValue": 70,
     "durability": 100,
-    "displayName": "Acid-Resistant Pipe"
+    "displayName": "Brine-Resistant Pipe"
   },
   {
     "id": "item_foundry_repair_plate",
@@ -82,7 +82,7 @@
   {
     "id": "item_foundry_valve_body",
     "displayName": "Water Valve Body",
-    "description": "A cast valve body for the water system — brine, feedwater, and the acid lines. The hydro systems run on these.",
+    "description": "A cast valve body for the water system — brine, feedwater, and the outfall lines. The saltworks runs on these.",
     "type": "Material",
     "stackMax": 10,
     "weight": 15.0,
@@ -152,7 +152,7 @@
   {
     "id": "item_foundry_alloy_additive",
     "displayName": "Lead-Antimony Additive",
-    "description": "A bag of lead-antimony shot for the acid-resistant alloy. Station 0 bartered the antimony under the Acid Gorge treaty; the sulfur flows because these pipes hold.",
+    "description": "A bag of lead-antimony shot for the brine-resistant alloy. The Office released the antimony from the naval yard's stores under the Brine Pipe Exchange; the iodine flows because these pipes hold.",
     "type": "Material",
     "stackMax": 15,
     "weight": 1.0,

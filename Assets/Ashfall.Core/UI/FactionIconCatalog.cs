@@ -45,10 +45,10 @@ namespace Ashfall.Core.UI
                 { "faction_scavenger_guild",     "Assets/UI/Icons/faction_icon_scavenger_guild.png" },
                 { "faction_iron_raiders",        "Assets/UI/Icons/faction_icon_iron_raiders.png" },
                 { "faction_the_tempest",         "Assets/UI/Icons/faction_icon_the_tempest.png" },
-                // ── Treaty systems namespace (regional_treaty_protocols.json) ──
-                // The Silent Foundry Guild is the first treaty faction wired into
+                // ── District 8 works namespace (foundry_faction.json) ──
+                // The Silent Foundry is the first accord faction wired into
                 // live presentation (trade screen + market strip).
-                { "current_10_the_silent_foundry_guild", "Assets/UI/Icons/faction_icon_silent_foundry.png" },
+                { "faction_silent_foundry", "Assets/UI/Icons/faction_icon_silent_foundry.png" },
 
                 // ── Lore namespace (Unity voice matrix, Trade, Radio) ─────
                 { "scavenger_camp",              "Assets/UI/Icons/faction_icon_scavenger_camp.png" },

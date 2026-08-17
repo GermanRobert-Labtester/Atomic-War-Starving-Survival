@@ -234,19 +234,10 @@ namespace AtomicWar.GodotApp
             }
 
             var engine = new SilentFoundrySystem(log: log);
-            var treaties = new RegionalTreatyCatalog();
-            string treatyPath = files.Combine(dataDir, "narrative", "regional_treaty_protocols.json");
-            if (files.FileExists(treatyPath))
-            {
-                treaties.Load(files.ReadAllText(treatyPath), json);
-                var ratification = new Dictionary<string, int>(StringComparer.Ordinal);
-                for (int i = 0; i < treaties.AllTreaties.Count; i++)
-                {
-                    var t = treaties.AllTreaties[i];
-                    if (t != null && t.ratified_day > 0) ratification[t.treaty_id] = t.ratified_day;
-                }
-                engine.BindTreaties(ratification);
-            }
+            // District 8 accords (foundry_accords.json) drive the treaty clock.
+            var ratificationDays = SilentFoundryCatalogLoader.LoadAccordRatificationDays(dataDir, files, json);
+            if (ratificationDays.Count > 0)
+                engine.BindTreaties(ratificationDays);
             engine.BindCatalog(catalog, maintenanceCycle);
             return (engine, catalog);
         }

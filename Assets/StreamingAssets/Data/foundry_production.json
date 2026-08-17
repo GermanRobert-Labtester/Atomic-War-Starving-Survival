@@ -9,8 +9,14 @@
       "result_item_id": "item_foundry_plowshare",
       "result_amount": 1,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 6 },
-        { "item_id": "item_foundry_flux", "amount": 1 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 6
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 1
+        }
       ],
       "labor_hours": 8,
       "cast_hours": 3,
@@ -21,8 +27,13 @@
       "treaty_id": "",
       "quota_amount": 0,
       "sink": "agriculture",
-      "notes": "The first successful heat pours plowshares and T-beams (jrnl_foundry_first_heat). Feeds the Botanical Seed Trust trade lane.",
-      "tags": ["foundry", "agriculture", "iron", "rebirth"]
+      "notes": "The first successful heat pours plowshares and T-beams (jrnl_foundry_first_heat). Feeds the glasshouse allotment trade lane.",
+      "tags": [
+        "foundry",
+        "agriculture",
+        "iron",
+        "rebirth"
+      ]
     },
     {
       "product_id": "foundry_prod_t_beam",
@@ -31,8 +42,14 @@
       "result_item_id": "item_foundry_t_beam",
       "result_amount": 1,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 10 },
-        { "item_id": "item_foundry_flux", "amount": 2 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 10
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
       ],
       "labor_hours": 12,
       "cast_hours": 4,
@@ -43,18 +60,29 @@
       "treaty_id": "",
       "quota_amount": 0,
       "sink": "shelter",
-      "notes": "Sky-layer armor frames and load-bearing repairs. The same beam family the first heat pours forty of.",
-      "tags": ["foundry", "shelter", "steel", "industry"]
+      "notes": "Sky-layer armor frames and Block C's load-bearing repairs. The same beam family the first heat pours forty of.",
+      "tags": [
+        "foundry",
+        "shelter",
+        "steel",
+        "industry"
+      ]
     },
     {
-      "product_id": "foundry_prod_railway_spike",
-      "display_name": "Railway Spikes (bundle)",
-      "category": "railway_spike",
-      "result_item_id": "item_foundry_railway_spike",
-      "result_amount": 20,
+      "product_id": "foundry_prod_ice_anchor",
+      "display_name": "Ice Anchors (bundle)",
+      "category": "ice_anchor",
+      "result_item_id": "item_foundry_ice_anchor",
+      "result_amount": 30,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 4 },
-        { "item_id": "item_foundry_flux", "amount": 1 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 4
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 1
+        }
       ],
       "labor_hours": 4,
       "cast_hours": 2,
@@ -62,21 +90,33 @@
       "water_litres": 30,
       "skill_target": 0.4,
       "quality_target": 65,
-      "treaty_id": "treaty_12_the_trans_tessarat_railway_charter",
+      "treaty_id": "treaty_road_iron_charter",
       "quota_amount": 60,
-      "sink": "railway",
-      "notes": "Counted by the bundle. The railway charter's spike quota is a treaty obligation, not a request.",
-      "tags": ["foundry", "railway", "quota", "treaty"]
+      "sink": "road",
+      "notes": "Counted by the bundle. The road charter's anchor quota is an obligation, not a request.",
+      "tags": [
+        "foundry",
+        "road",
+        "ice",
+        "quota",
+        "charter"
+      ]
     },
     {
-      "product_id": "foundry_prod_rail_wheel",
-      "display_name": "Rail-Car Wheel",
-      "category": "rail_car_wheel",
-      "result_item_id": "item_foundry_rail_wheel",
-      "result_amount": 1,
+      "product_id": "foundry_prod_winch_drum",
+      "display_name": "Winch Drum",
+      "category": "winch_drum",
+      "result_item_id": "item_foundry_winch_drum",
+      "result_amount": 3,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 14 },
-        { "item_id": "item_foundry_flux", "amount": 3 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 14
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 3
+        }
       ],
       "labor_hours": 16,
       "cast_hours": 6,
@@ -84,22 +124,37 @@
       "water_litres": 100,
       "skill_target": 0.6,
       "quality_target": 78,
-      "treaty_id": "treaty_12_the_trans_tessarat_railway_charter",
+      "treaty_id": "treaty_road_iron_charter",
       "quota_amount": 3,
-      "sink": "railway",
-      "notes": "Chilled rim, machined bore. A heavy, hard, expensive obligation.",
-      "tags": ["foundry", "railway", "quota", "treaty", "heavy"]
+      "sink": "road",
+      "notes": "Chilled flange, machined bore. A heavy, hard, expensive obligation \u2014 the barge and Berth 9 wind on these.",
+      "tags": [
+        "foundry",
+        "road",
+        "quota",
+        "charter",
+        "heavy"
+      ]
     },
     {
-      "product_id": "foundry_prod_acid_pipe",
-      "display_name": "Acid-Resistant Pipe",
-      "category": "acid_resistant_pipe",
-      "result_item_id": "item_foundry_acid_pipe",
+      "product_id": "foundry_prod_brine_pipe",
+      "display_name": "Brine-Resistant Pipe",
+      "category": "brine_resistant_pipe",
+      "result_item_id": "item_foundry_brine_pipe",
       "result_amount": 1,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 8 },
-        { "item_id": "item_foundry_alloy_additive", "amount": 2 },
-        { "item_id": "item_foundry_flux", "amount": 2 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 8
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 2
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
       ],
       "labor_hours": 10,
       "cast_hours": 4,
@@ -107,11 +162,17 @@
       "water_litres": 80,
       "skill_target": 0.55,
       "quality_target": 75,
-      "treaty_id": "treaty_05_chemical_sulfur_and_acid_concession",
+      "treaty_id": "treaty_brine_pipe_and_iodine_exchange",
       "quota_amount": 4,
-      "sink": "chemical",
-      "notes": "Lead-antimony pipes and valve bodies for Station 0. The sulfur for the acid comes back through this same treaty.",
-      "tags": ["foundry", "chemistry", "treaty", "sulfur", "acid"]
+      "sink": "saltworks",
+      "notes": "Lead-antimony pipes and valve bodies for the membrane hall. The iodine comes back through this same exchange.",
+      "tags": [
+        "foundry",
+        "saltworks",
+        "brine",
+        "iodine",
+        "exchange"
+      ]
     },
     {
       "product_id": "foundry_prod_repair_plate",
@@ -120,8 +181,14 @@
       "result_item_id": "item_foundry_repair_plate",
       "result_amount": 1,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 7 },
-        { "item_id": "item_foundry_flux", "amount": 2 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 7
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
       ],
       "labor_hours": 8,
       "cast_hours": 3,
@@ -133,7 +200,11 @@
       "quota_amount": 0,
       "sink": "shelter",
       "notes": "Bulkhead, blast-door, and sky-armor patch plates. The urgent shelter repair lane.",
-      "tags": ["foundry", "shelter", "repair"]
+      "tags": [
+        "foundry",
+        "shelter",
+        "repair"
+      ]
     },
     {
       "product_id": "foundry_prod_fastener_bracket",
@@ -142,8 +213,14 @@
       "result_item_id": "item_foundry_bracket_fastener",
       "result_amount": 30,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 5 },
-        { "item_id": "item_foundry_flux", "amount": 1 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 5
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 1
+        }
       ],
       "labor_hours": 3,
       "cast_hours": 2,
@@ -155,7 +232,11 @@
       "quota_amount": 0,
       "sink": "infrastructure",
       "notes": "Quiet hardware for piping, shelving, and machinery. Cheap, unglamorous, load-bearing.",
-      "tags": ["foundry", "infrastructure", "fasteners"]
+      "tags": [
+        "foundry",
+        "infrastructure",
+        "fasteners"
+      ]
     },
     {
       "product_id": "foundry_prod_valve_body",
@@ -164,8 +245,14 @@
       "result_item_id": "item_foundry_valve_body",
       "result_amount": 1,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 9 },
-        { "item_id": "item_foundry_flux", "amount": 2 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 9
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
       ],
       "labor_hours": 10,
       "cast_hours": 4,
@@ -176,8 +263,12 @@
       "treaty_id": "",
       "quota_amount": 0,
       "sink": "water",
-      "notes": "Brine, feedwater, and acid-line valves. Hydro systems and the water treaty run on these.",
-      "tags": ["foundry", "water", "hydro"]
+      "notes": "Brine, feedwater, and outfall-line valves. The saltworks and the shelter's water system run on these.",
+      "tags": [
+        "foundry",
+        "water",
+        "saltworks"
+      ]
     },
     {
       "product_id": "foundry_prod_heavy_tool",
@@ -186,8 +277,14 @@
       "result_item_id": "item_foundry_heavy_tool",
       "result_amount": 1,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 8 },
-        { "item_id": "item_foundry_flux", "amount": 2 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 8
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
       ],
       "labor_hours": 8,
       "cast_hours": 3,
@@ -199,7 +296,11 @@
       "quota_amount": 0,
       "sink": "shelter",
       "notes": "Wrenches, drifts, sledging bars. Improves maintenance work across the shelter.",
-      "tags": ["foundry", "tools", "maintenance"]
+      "tags": [
+        "foundry",
+        "tools",
+        "maintenance"
+      ]
     },
     {
       "product_id": "foundry_prod_alloy_part",
@@ -208,9 +309,18 @@
       "result_item_id": "item_foundry_alloy_part",
       "result_amount": 1,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 12 },
-        { "item_id": "item_foundry_alloy_additive", "amount": 3 },
-        { "item_id": "item_foundry_flux", "amount": 3 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 12
+        },
+        {
+          "item_id": "item_foundry_alloy_additive",
+          "amount": 3
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 3
+        }
       ],
       "labor_hours": 16,
       "cast_hours": 6,
@@ -222,7 +332,12 @@
       "quota_amount": 0,
       "sink": "infrastructure",
       "notes": "Bearing sleeves, gear blanks, tuyere bosses. The most expensive, most demanded thing the foundry makes.",
-      "tags": ["foundry", "alloy", "heavy", "scarce"]
+      "tags": [
+        "foundry",
+        "alloy",
+        "heavy",
+        "scarce"
+      ]
     },
     {
       "product_id": "foundry_prod_defense_plate",
@@ -231,8 +346,14 @@
       "result_item_id": "item_foundry_defense_plate",
       "result_amount": 1,
       "ingredients": [
-        { "item_id": "scrap_metal", "amount": 11 },
-        { "item_id": "item_foundry_flux", "amount": 2 }
+        {
+          "item_id": "scrap_metal",
+          "amount": 11
+        },
+        {
+          "item_id": "item_foundry_flux",
+          "amount": 2
+        }
       ],
       "labor_hours": 12,
       "cast_hours": 5,
@@ -244,7 +365,12 @@
       "quota_amount": 0,
       "sink": "defense",
       "notes": "Thickened plate for blast doors and hatch surrounds only. Not a weapons line.",
-      "tags": ["foundry", "defense", "shelter", "armor"]
+      "tags": [
+        "foundry",
+        "defense",
+        "shelter",
+        "armor"
+      ]
     }
   ]
 }

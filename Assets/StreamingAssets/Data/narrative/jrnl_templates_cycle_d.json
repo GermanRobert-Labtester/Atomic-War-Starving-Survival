@@ -7,7 +7,7 @@
       "expansion_id": "exp_10_the_silent_foundry",
       "author_role": "foundryman",
       "title": "First Cast Iron",
-      "body_template": "The cupola furnace reached 1,200 degrees at noon. When we tapped the spout, the molten stream was yellow-white and smelled of sulfur and wet slag. We poured eighteen plowshares and forty structural T-beams. For the first time in five years, the metal in our hands was not scrap cut from a wrecked truck; it was new iron, smelted from local river ore. The children stopped playing in the slag heap to watch the molds cool.",
+      "body_template": "The cupola furnace reached 1,200 degrees at noon. When we tapped the spout, the molten stream was yellow-white and smelled of sulfur and wet slag. We poured eighteen plowshares and forty structural T-beams. For the first time in five years, the metal in our hands was not salvage cut from the convoy wrecks with a torch; it was new iron, melted from that same scrap and poured to a schedule. The children stopped playing on the slag row to watch the molds cool.",
       "tags": ["foundry", "industry", "iron", "rebirth", "labor"],
       "stress_delta": -5.0,
       "hope_earned": 5.0
@@ -17,7 +17,7 @@
       "expansion_id": "exp_10_the_silent_foundry",
       "author_role": "schoolmistress",
       "title": "The Tools on the Floor",
-      "body_template": "Katya's class walked out of the charging floor at 08:00 and sat on the frozen rail spur. Fourteen children with soot on their faces refusing to lift the coal shovels. The council told them the winter would freeze the bunker without steam pressure. The children did not shout; they only pointed to the classroom chalkboards where the grammar lessons had been erased for production quotas. We have to decide if we are building a city or a grave.",
+      "body_template": "The Cluster school walked out of the charging floor at 08:00 and sat on the frozen quay. Fourteen children with soot on their faces refusing to lift the coal shovels. The Office said the winter would take the Cluster without the steam line. The children did not shout; they only pointed to the chalkboards where the arithmetic lesson had been erased for production quotas. We have to decide if we are building a works or a grave.",
       "tags": ["foundry", "strike", "children", "morals", "constitutional"],
       "stress_delta": 7.0,
       "hope_earned": 2.0

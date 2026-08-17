@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "collection_id": "foundry_district8_accords",
+  "treaties": [
+    {
+      "treaty_id": "treaty_brine_pipe_and_iodine_exchange",
+      "ratified_day": 280,
+      "treaty_title": "The Brine Pipe & Iodine Exchange",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_office"],
+      "demarcated_territory": "The smelter bay casting floor to the saltworks membrane hall",
+      "water_allocation_lpm": 40.0,
+      "power_quota_kw": 12.0,
+      "tariff_schedule": "Four brine-resistant pipes and two valve bodies per assessment cycle, paid in iodine from the iodine store and grade salt by the sack.",
+      "treaty_articles": "ARTICLE 1: The foundry casts lead-antimony pipe fit for brine service, and stands the first burst of any pipe it poured. ARTICLE 2: The Office releases iodine and grade salt on delivery, not on promise. ARTICLE 3: Neither party lights a second furnace on the same steam line while the exchange is in term.",
+      "penalties": "A missed cycle suspends the iodine allocation until the pipe debt is cast.",
+      "tags": ["foundry", "saltworks", "brine", "iodine", "exchange", "district8"]
+    },
+    {
+      "treaty_id": "treaty_cluster_labour_schedule",
+      "ratified_day": 305,
+      "treaty_title": "The Cluster Labour Schedule",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_office", "faction_the_cutters"],
+      "demarcated_territory": "The charging floor, the school bell, and the eight hours between them",
+      "water_allocation_lpm": 25.0,
+      "power_quota_kw": 8.0,
+      "tariff_schedule": "Half a litre of clean water per stoker per shift, drawn from the works' own allocation and boiled at the Cluster's expense.",
+      "treaty_articles": "ARTICLE 1: No shift exceeds eight hours while a pour is liquid. ARTICLE 2: Children hold lessons at the Cluster school; the floor takes them only as watchers, and only with the schoolmistress's leave. ARTICLE 3: The Cluster's boil order is honoured before the cupola's.",
+      "penalties": "Lockouts or unannounced strikes forfeit the works' coal window on the next ice.",
+      "tags": ["foundry", "labour", "cluster", "school", "schedule", "district8"]
+    },
+    {
+      "treaty_id": "treaty_road_iron_charter",
+      "ratified_day": 330,
+      "treaty_title": "The Road Iron Charter",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_cutters", "faction_the_fleet"],
+      "demarcated_territory": "The casting floor to the Cut, by whatever lane is marked",
+      "water_allocation_lpm": 15.0,
+      "power_quota_kw": 6.0,
+      "tariff_schedule": "Sixty ice anchors and three winch drums per assessment cycle; haulage of foundry coal and wreck scrap at column rates.",
+      "treaty_articles": "ARTICLE 1: The Cutters hold the road open; the foundry holds the road together — anchors, cleats, and the weigh-hut scale's iron. ARTICLE 2: The Fleet's barge and Berth 9 take their drums from the same quota, not beside it. ARTICLE 3: Iron that fails on the road is recast at the foundry's coal, not the road's.",
+      "penalties": "A missed cycle closes the foundry's lane on the next window and re-opens the accident book.",
+      "tags": ["foundry", "road", "ice", "anchors", "charter", "district8"]
+    },
+    {
+      "treaty_id": "treaty_the_cluster_charter",
+      "ratified_day": 365,
+      "treaty_title": "The Cluster Charter",
+      "signatory_factions": ["faction_silent_foundry", "faction_the_office", "faction_the_cutters", "faction_the_fleet"],
+      "demarcated_territory": "The smelter bay, its ledger, and the schedule it answers to",
+      "water_allocation_lpm": 0.0,
+      "power_quota_kw": 0.0,
+      "tariff_schedule": "None. The charter is not a trade; it is a signature.",
+      "treaty_articles": "ARTICLE 1: The foundry is entered on the Cluster's standing schedule as a works, not a wreck. ARTICLE 2: The signature is withheld so long as the incident book carries an open entry. ARTICLE 3: What the charter covers it also counts: heats, casts, failures, and the names on the shift board.",
+      "penalties": "None are provided. A charter that needed penalties would not be worth signing.",
+      "tags": ["foundry", "charter", "cluster", "schedule", "district8"]
+    }
+  ]
+}

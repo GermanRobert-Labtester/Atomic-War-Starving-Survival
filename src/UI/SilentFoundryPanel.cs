@@ -61,7 +61,7 @@ namespace AtomicWar.GodotApp.UI
 
             // ── Header ──
             var header = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-            var title = AshfallUiHelpers.MakeTitle("THE SILENT FOUNDRY // BLAST FURNACE & CASTING BAY", DesignTheme.FontSizeH2);
+            var title = AshfallUiHelpers.MakeTitle("THE SILENT FOUNDRY // CUPOLA & CASTING BAY", DesignTheme.FontSizeH2);
             title.HorizontalAlignment = HorizontalAlignment.Left;
             title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             header.AddChild(title);
@@ -120,7 +120,7 @@ namespace AtomicWar.GodotApp.UI
             _production = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             prodCard.AddChild(_production);
 
-            var treatyCard = AshfallUiHelpers.MakeCardFrame("TREATY OBLIGATIONS", "exact guild signatory of 4 protocols", 520, 0);
+            var treatyCard = AshfallUiHelpers.MakeCardFrame("ACCORD OBLIGATIONS", "signatory of 4 District 8 accords", 520, 0);
             right.AddChild(treatyCard);
             _treaties = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             treatyCard.AddChild(_treaties);
@@ -318,7 +318,7 @@ namespace AtomicWar.GodotApp.UI
             }
 
             _treaties.AddChild(AshfallUiHelpers.MakeSmall(
-                $"Guild standing: {sys.GuildStanding:F0}/100 · stance: {_host.GuildStance} · "
+                $"Foundry standing: {sys.GuildStanding:F0}/100 · stance: {_host.GuildStance} · "
                 + $"consequences applied: {sys.AppliedConsequences.Count}"));
 
             foreach (var c in comps)
@@ -326,10 +326,10 @@ namespace AtomicWar.GodotApp.UI
                 FoundryTreatyOutcome outcome = sys.GetTreatyOutcome(c.treatyId, _currentDay);
                 string status = c.obligation switch
                 {
-                    "rail_quota" => $"rail quota {c.quotaFulfilled}/{c.quotaTotal} (met {c.metCount}, missed {c.missedCount})",
-                    "acid_pipe_quota" => $"acid pipes {c.quotaFulfilled}/{c.quotaTotal} (met {c.metCount}, missed {c.missedCount})",
+                    "road_iron_quota" => $"road iron {c.quotaFulfilled}/{c.quotaTotal} (met {c.metCount}, missed {c.missedCount})",
+                    "brine_pipe_quota" => $"brine pipes {c.quotaFulfilled}/{c.quotaTotal} (met {c.metCount}, missed {c.missedCount})",
                     "labor_shifts" => $"shifts {(sys.State.overtimeFlag || sys.State.childLaborUsed || sys.State.laborDispute == FoundryLaborDispute.StrikeActive ? "VIOLATED" : "upheld")}",
-                    "constitution_eligibility" => $"finale eligibility: {(c.constitutionEligible ? "clear" : "at risk (incidents on record)")}",
+                    "charter_eligibility" => $"charter eligibility: {(c.constitutionEligible ? "clear" : "at risk (incidents on record)")}",
                     _ => c.obligation
                 };
                 var lbl = AshfallUiHelpers.MakeSmall(
