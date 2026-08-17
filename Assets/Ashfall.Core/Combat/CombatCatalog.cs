@@ -209,7 +209,14 @@ namespace Ashfall.Core.Combat
     public static class CombatCatalogLoader
     {
         public const string FileName = "combat_catalog.json";
+        public const int CurrentSchemaVersion = 1;
 
+        /// <summary>
+        /// Load + validate the combat catalog. Following Invariant #6 and the
+        /// save-migration convention: a future schema throws (never silently
+        /// guessed), while canonical-id and cross-reference violations throw so
+        /// a malformed catalog can never slip into the simulation.
+        /// </summary>
         public static bool Load(string dataDirectory, IFileIO files, IJsonSerializer json)
         {
             string path = files.Combine(dataDirectory, FileName);
@@ -217,6 +224,10 @@ namespace Ashfall.Core.Combat
 
             var root = json.Deserialize<CombatCatalogRoot>(files.ReadAllText(path));
             if (root == null) return false;
+
+            if (root.schema_version > CurrentSchemaVersion)
+                throw new System.IO.InvalidDataException(
+                    $"{FileName} schema {root.schema_version} is newer than supported {CurrentSchemaVersion}.");
 
             CombatCatalog.Clear();
 
@@ -280,7 +291,54 @@ namespace Ashfall.Core.Combat
                 }
             }
 
+            ValidateRegistered(root, CombatCatalog.WeaponIds, CombatCatalog.AmmoIds, CombatCatalog.MaterialIds);
             return true;
+        }
+
+        /// <summary>Enforce canonical snake_case id prefixes and ammo cross-references.</summary>
+        private static void ValidateRegistered(
+            CombatCatalogRoot root,
+            System.Collections.Generic.IReadOnlyCollection<string> weaponIds,
+            System.Collections.Generic.IReadOnlyCollection<string> ammoIds,
+            System.Collections.Generic.IReadOnlyCollection<string> materialIds)
+        {
+            var errors = new System.Collections.Generic.List<string>();
+            var ammoSet = new HashSet<string>(ammoIds, StringComparer.Ordinal);
+            var weaponSet = new HashSet<string>(weaponIds, StringComparer.Ordinal);
+            var materialSet = new HashSet<string>(materialIds, StringComparer.Ordinal);
+
+            if (root.weapons != null)
+            for (int i = 0; i < root.weapons.Count; i++)
+            {
+                var w = root.weapons[i];
+                if (w == null) continue;
+                if (string.IsNullOrEmpty(w.id) || !w.id.StartsWith("weapon_", StringComparison.Ordinal))
+                    errors.Add("weapon#" + i + " id must be canonical (weapon_*): " + (w.id ?? "<null>"));
+                else if (!string.IsNullOrEmpty(w.caliber) && !ammoSet.Contains(w.caliber))
+                    errors.Add("weapon " + w.id + " references unknown caliber " + w.caliber);
+            }
+            if (root.ammo != null)
+            for (int i = 0; i < root.ammo.Count; i++)
+            {
+                var a = root.ammo[i];
+                if (a == null) continue;
+                if (string.IsNullOrEmpty(a.id) || !a.id.StartsWith("ammo_", StringComparison.Ordinal))
+                    errors.Add("ammo#" + i + " id must be canonical (ammo_*): " + (a.id ?? "<null>"));
+            }
+            if (root.materials != null)
+            for (int i = 0; i < root.materials.Count; i++)
+            {
+                var m = root.materials[i];
+                if (m == null) continue;
+                bool canon = !string.IsNullOrEmpty(m.id)
+                    && (m.id.StartsWith("material_", StringComparison.Ordinal)
+                        || m.id.StartsWith("armor_", StringComparison.Ordinal));
+                if (!canon)
+                    errors.Add("material#" + i + " id must be canonical (material_*/armor_*): " + (m.id ?? "<null>"));
+            }
+
+            if (errors.Count > 0)
+                throw new FormatException("combat_catalog.json failed validation:\n" + string.Join("\n", errors));
         }
     }
 }
