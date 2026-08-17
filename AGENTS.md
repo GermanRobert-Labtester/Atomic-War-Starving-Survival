@@ -277,6 +277,36 @@ The `dotnet` and `godot` commands are the canonical path. **No Unity commands.**
 
 ---
 
+## REPOSITORY SETUP (first clone / every contributor)
+
+Run once on any fresh checkout **before** staging assets:
+
+```bash
+./setup-repo.sh   # idempotent: core.ignorecase=false + git lfs install
+```
+
+Why it matters — the repo deliberately keeps two case-distinct trees:
+
+| Path        | Tree                          |
+|-------------|-------------------------------|
+| `Assets/`   | Unity legacy (`Ashfall.Core`, `StreamingAssets/Data`, `_Game`) |
+| `assets/`   | Godot-native assets (`art/ audio/ ui/ sprites/ fonts/`) |
+
+Git's `core.ignorecase` defaults to **true** on macOS/Windows, which aliases
+`Assets/` and `assets/` and breaks `git add assets/` (it silently stages the
+uppercase tree instead). `setup-repo.sh` pins `core.ignorecase false`.
+
+Binary policy: images/fonts are **Git LFS** pointers (`git lfs ls-files`
+lists them); `*.wav/*.mp3/*.ogg` stay **plain binary** by `.gitattributes`.
+Never add large PNG/AI assets outside LFS.
+
+Verifying assets from a clean checkout (the one-time import is gitignored):
+
+```bash
+dotnet build Ashfall.csproj
+./scripts/ci/godot-asset-gate.sh   # import + asset-registry 48/48 + data-integrity + bridge + disease + expansions
+```
+
 ## GIT RULES
 
 - Commit after each accepted deliverable.
