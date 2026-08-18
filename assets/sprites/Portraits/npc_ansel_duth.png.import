@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv30yxy2e34kc"
-path="res://.godot/imported/ammo_.jpg-5a66dae289bf35d7f2c313adcec052fd.ctex"
+uid="uid://dfdui1mwfver3"
+path="res://.godot/imported/npc_ansel_duth.png-ef1bd7b3c7cbb882553af62f2e75d607.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/ammo_.jpg"
-dest_files=["res://.godot/imported/ammo_.jpg-5a66dae289bf35d7f2c313adcec052fd.ctex"]
+source_file="res://assets/sprites/Portraits/npc_ansel_duth.png"
+dest_files=["res://.godot/imported/npc_ansel_duth.png-ef1bd7b3c7cbb882553af62f2e75d607.ctex"]
 
 [params]
 

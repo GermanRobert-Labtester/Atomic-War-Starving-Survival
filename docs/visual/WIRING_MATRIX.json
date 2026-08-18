@@ -6574,9 +6574,9 @@
   "content_type": "(rec)",
   "content_id": "item_cassette_tape",
   "kind": "item",
-  "resolved_path": "MISSING",
-  "resolution_origin": null,
-  "stem_used": null
+  "resolved_path": "assets/art/item_cassette_tape.jpg",
+  "resolution_origin": "literal",
+  "stem_used": "item_cassette_tape"
  },
  {
   "catalog": "Assets/StreamingAssets/Data/items.json",

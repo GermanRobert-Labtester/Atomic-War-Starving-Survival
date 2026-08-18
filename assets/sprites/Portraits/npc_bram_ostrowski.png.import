@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cff6lndxmohte"
-path="res://.godot/imported/npc_cluster_teacher.png-ecf035a7cd0e3722000a9514ecaeb3f4.ctex"
+uid="uid://c53lb1xrs23xh"
+path="res://.godot/imported/npc_bram_ostrowski.png-b602ea29caca5ca4e59ed6073e7a8ac4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/_staging_generated/portraits/npc_cluster_teacher.png"
-dest_files=["res://.godot/imported/npc_cluster_teacher.png-ecf035a7cd0e3722000a9514ecaeb3f4.ctex"]
+source_file="res://assets/sprites/Portraits/npc_bram_ostrowski.png"
+dest_files=["res://.godot/imported/npc_bram_ostrowski.png-b602ea29caca5ca4e59ed6073e7a8ac4.ctex"]
 
 [params]
 

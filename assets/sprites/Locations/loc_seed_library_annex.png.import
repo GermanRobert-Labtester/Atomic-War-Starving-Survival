@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfdui1mwfver3"
-path="res://.godot/imported/npc_ansel_duth.png-1e4cee4eba1c2aee833a180c83e4444e.ctex"
+uid="uid://jip5vke6vygl"
+path="res://.godot/imported/loc_seed_library_annex.png-5e176ea19ae3723bafce6a57d5fea1dd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/_staging_generated/portraits/npc_ansel_duth.png"
-dest_files=["res://.godot/imported/npc_ansel_duth.png-1e4cee4eba1c2aee833a180c83e4444e.ctex"]
+source_file="res://assets/sprites/Locations/loc_seed_library_annex.png"
+dest_files=["res://.godot/imported/loc_seed_library_annex.png-5e176ea19ae3723bafce6a57d5fea1dd.ctex"]
 
 [params]
 

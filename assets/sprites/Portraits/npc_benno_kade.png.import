@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xkvuibqa33oq"
-path="res://.godot/imported/loc_apiary_rows.png-64620c8c9c5ed1ea739f1fd69153c2ca.ctex"
+uid="uid://dyjm6c6ug86y5"
+path="res://.godot/imported/npc_benno_kade.png-8c834746cee7036fdd3c9311fd74e11c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/_staging_generated/locations/loc_apiary_rows.png"
-dest_files=["res://.godot/imported/loc_apiary_rows.png-64620c8c9c5ed1ea739f1fd69153c2ca.ctex"]
+source_file="res://assets/sprites/Portraits/npc_benno_kade.png"
+dest_files=["res://.godot/imported/npc_benno_kade.png-8c834746cee7036fdd3c9311fd74e11c.ctex"]
 
 [params]
 

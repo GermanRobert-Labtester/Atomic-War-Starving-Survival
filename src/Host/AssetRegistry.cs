@@ -799,6 +799,116 @@ namespace AtomicWar.GodotApp
             };
         }
 
+        // ── Full-catalog coverage report ─────────────────────────────────
+        //
+        // The gating selftest above samples the top N referenced ids; this
+        // sweep walks EVERY definition id in every catalog file (core +
+        // expansions) so asset-generation batches can be tracked to zero.
+        // Report-only by design: it prints per-category coverage and the
+        // missing-id list, but never fails the run. The gate remains
+        // --asset-registry-selftest.
+        private static readonly (string category, string file, string idField)[] CoverageCatalogFiles =
+        {
+            ("item",     "items.json",                  "id"),
+            ("item",     "black_flotilla_items.json",   "id"),
+            ("item",     "chemical_dependency_items.json", "id"),
+            ("item",     "crossing_items.json",         "id"),
+            ("item",     "dose_items.json",             "id"),
+            ("item",     "foundry_items.json",          "id"),
+            ("item",     "greenhouse_items.json",       "id"),
+            ("item",     "holdfast_items.json",         "id"),
+            ("item",     "verdict_items.json",          "id"),
+            ("item",     "year_of_ash_items.json",      "id"),
+            ("portrait", "survivors.json",              "id"),
+            ("portrait", "year_of_ash_survivors.json",  "id"),
+            ("portrait", "characters.json",             "id"),
+            ("portrait", "verdict_npcs.json",           "id"),
+            ("location", "locations.json",              "id"),
+            ("location", "crossing_locations.json",     "id"),
+            ("location", "deep_lore_locations.json",    "id"),
+            ("location", "dose_locations.json",         "id"),
+            ("location", "duty_roster_locations.json",  "id"),
+            ("location", "holdfast_locations.json",     "id"),
+            ("location", "locations_expansion3.json",   "id"),
+            ("location", "verdict_locations.json",      "id"),
+            ("location", "year_of_ash_locations.json",  "id"),
+            ("faction",  "currents.json",               "id"),
+            ("faction",  "crossing_factions.json",      "id"),
+            ("faction",  "holdfast_factions.json",      "id"),
+            ("faction",  "standing_record_factions.json", "id"),
+            ("faction",  "foundry_faction.json",        "faction_id"),
+            ("faction",  "faction_lore.json",           "faction_id"),
+        };
+
+        private static bool IsCanonicalId(string id)
+        {
+            foreach (var c in id)
+            {
+                if (!(c >= 'a' && c <= 'z') && !(c >= '0' && c <= '9') && c != '_')
+                    return false;
+            }
+            return true;
+        }
+
+        public static void RunFullCoverage(string dataDir)
+        {
+            GD.Print("[AssetCoverageReport] Full catalog sweep — report-only, non-gating");
+            GD.Print($"[AssetCoverageReport] Data dir: {dataDir}");
+
+            var idsByCategory = new Dictionary<string, List<string>>();
+            foreach (var (category, file, idField) in CoverageCatalogFiles)
+            {
+                var path = Path.Combine(dataDir, file);
+                if (!File.Exists(path))
+                {
+                    GD.PrintErr($"[AssetCoverageReport] catalog file not found: {file}");
+                    continue;
+                }
+                if (!idsByCategory.TryGetValue(category, out var ids))
+                    idsByCategory[category] = ids = new List<string>();
+                foreach (var raw in ExtractIdsFromJson(path, idField))
+                {
+                    // The extractor scans raw text, so narrative strings can
+                    // yield pseudo-ids ('faction_x', "npc_y ..."). Only
+                    // canonical snake_case stems are real catalog ids.
+                    if (raw.Length == 0 || !IsCanonicalId(raw)) continue;
+                    if (!ids.Contains(raw))
+                        ids.Add(raw);
+                }
+            }
+
+            int totalIds = 0, totalMissing = 0;
+            foreach (var (category, ids) in idsByCategory)
+            {
+                var missing = new List<string>();
+                foreach (var id in ids)
+                {
+                    var r = category switch
+                    {
+                        "item"     => AssetRegistry.GetItem(id),
+                        "portrait" => AssetRegistry.GetPortrait(id),
+                        "location" => AssetRegistry.GetLocation(id),
+                        "faction"  => AssetRegistry.GetFaction(id),
+                        _          => default,
+                    };
+                    bool covered = r.Result == AssetLoadResult.Loaded;
+                    // Lore-namespace factions count as covered when an emblem
+                    // exists even without a full assets/art illustration.
+                    if (!covered && category == "faction")
+                        covered = Ashfall.Core.UI.FactionIconCatalog.HasExplicitMapping(id);
+                    if (!covered)
+                        missing.Add(id);
+                }
+                totalIds += ids.Count;
+                totalMissing += missing.Count;
+                GD.Print($"[AssetCoverageReport] {category,-9}: {ids.Count,4} ids, {ids.Count - missing.Count,4} resolved, {missing.Count,4} missing");
+                foreach (var id in missing)
+                    GD.Print($"[AssetCoverageReport]   MISSING {category}: {id}");
+            }
+
+            GD.Print($"ASSET_COVERAGE_REPORT: ids={totalIds} resolved={totalIds - totalMissing} missing={totalMissing} (report-only; gate remains --asset-registry-selftest)");
+        }
+
         /// <summary>
         /// Simple JSON ID extractor that doesn't require a full parser.
         /// Looks for "id": "value" patterns.

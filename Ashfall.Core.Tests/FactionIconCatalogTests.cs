@@ -93,7 +93,45 @@ namespace Ashfall.Core.Tests
         public void CoveredFactionIds_IsReadOnlyAndSealed()
         {
             var ids = FactionIconCatalog.CoveredFactionIds;
-            Assert.Equal(28, ids.Count);
+            // 28 original systems/lore mappings + 19 expansion & lore ids
+            // whose emblems were already on disk but unmapped (2026-08-18).
+            Assert.Equal(47, ids.Count);
+        }
+
+        [Fact]
+        public void EveryMappedEmblem_ExistsOnDisk()
+        {
+            // Walk up from the test working directory to the repo root —
+            // the first ancestor that contains the Godot assets tree.
+            var dir = new DirectoryInfo(Directory.GetCurrentDirectory());
+            while (dir != null && !Directory.Exists(Path.Combine(dir.FullName, "assets", "ui", "Icons")))
+                dir = dir.Parent;
+            Assert.NotNull(dir);
+
+            foreach (var id in FactionIconCatalog.CoveredFactionIds)
+            {
+                var path = FactionIconCatalog.Resolve(id);
+                Assert.True(
+                    File.Exists(Path.Combine(dir!.FullName, path)),
+                    $"mapped emblem for {id} does not exist on disk: {path}");
+            }
+        }
+
+        [Fact]
+        public void ExpansionDeclaredFactions_AreMapped()
+        {
+            // crossing_factions.json
+            Assert.True(FactionIconCatalog.HasExplicitMapping("faction_the_compact"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("faction_the_scale"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("faction_the_underwrite"));
+            // holdfast_factions.json
+            Assert.True(FactionIconCatalog.HasExplicitMapping("faction_the_cutters"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("faction_the_fleet"));
+            Assert.True(FactionIconCatalog.HasExplicitMapping("faction_the_office"));
+            // standing_record_factions.json
+            Assert.True(FactionIconCatalog.HasExplicitMapping("faction_the_overlay"));
+            // currents.json 17th systems id
+            Assert.True(FactionIconCatalog.HasExplicitMapping("faction_blank_rows"));
         }
     }
 }

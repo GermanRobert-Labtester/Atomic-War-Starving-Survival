@@ -17,13 +17,17 @@ namespace Ashfall.Core.UI
         public const string FallbackIconPath = "assets/ui/Icons/icon_unknown_faction.png";
 
         /// <summary>
-        /// The 16 systems faction ids declared authoritative in
-        /// `Assets/StreamingAssets/Data/currents.json`, mapped to
-        /// the canonical emblem file each id currently resolves to.
-        /// Aliases are explicit and documented; lore-namespace ids
-        /// (`scavenger_camp`, `iron_garrison`, `cult_of_the_glow`,
-        /// `militia`, `warlord`, etc.) are intentionally NOT in this
-        /// map — they are visual cousins, not same fictional entities.
+        /// Faction ids mapped to canonical emblem files, grouped by source:
+        /// the systems faction ids declared authoritative in
+        /// `Assets/StreamingAssets/Data/currents.json`, expansion-declared
+        /// factions (Crossing / Holdfast / Standing Record / Foundry), and
+        /// lore-namespace ids that have a real emblem file on disk.
+        /// Policy: an id earns a mapping when a canonical
+        /// `assets/ui/Icons/faction_icon_<stem>.png` exists for it; ids with
+        /// no emblem anywhere stay unmapped and fall back to
+        /// <see cref="FallbackIconPath"/> until art ships for them.
+        /// Aliases are explicit and documented; same-fictional-entity
+        /// duplicates share one emblem file.
         /// </summary>
         private static readonly Dictionary<string, string> _systemsIdsToIcon =
             new Dictionary<string, string>(System.StringComparer.Ordinal)
@@ -45,10 +49,28 @@ namespace Ashfall.Core.UI
                 { "faction_scavenger_guild",     "assets/ui/Icons/faction_icon_scavenger_guild.png" },
                 { "faction_iron_raiders",        "assets/ui/Icons/faction_icon_iron_raiders.png" },
                 { "faction_the_tempest",         "assets/ui/Icons/faction_icon_the_tempest.png" },
+                { "faction_blank_rows",          "assets/ui/Icons/faction_icon_blank_rows.png" },
                 // ── District 8 works namespace (foundry_faction.json) ──
                 // The Silent Foundry is the first accord faction wired into
                 // live presentation (trade screen + market strip).
                 { "faction_silent_foundry", "assets/ui/Icons/faction_icon_silent_foundry.png" },
+
+                // ── Expansion-declared factions (emblems already on disk) ──
+                // 2026-08-18: these ids are declared in the expansion faction
+                // catalogs and their emblem PNGs already exist under
+                // assets/ui/Icons/, but were absent from this map — the
+                // runtime showed the generic unknown emblem despite having
+                // art. Each path was verified file-by-file before mapping.
+                // crossing_factions.json:
+                { "faction_the_compact",         "assets/ui/Icons/faction_icon_the_compact.png" },
+                { "faction_the_scale",           "assets/ui/Icons/faction_icon_the_scale.png" },
+                { "faction_the_underwrite",      "assets/ui/Icons/faction_icon_the_underwrite.png" },
+                // holdfast_factions.json:
+                { "faction_the_cutters",         "assets/ui/Icons/faction_icon_the_cutters.png" },
+                { "faction_the_fleet",           "assets/ui/Icons/faction_icon_the_fleet.png" },
+                { "faction_the_office",          "assets/ui/Icons/faction_icon_the_office.png" },
+                // standing_record_factions.json:
+                { "faction_the_overlay",         "assets/ui/Icons/faction_icon_the_overlay.png" },
 
                 // ── Lore namespace (Unity voice matrix, Trade, Radio) ─────
                 { "scavenger_camp",              "assets/ui/Icons/faction_icon_scavenger_camp.png" },
@@ -62,6 +84,19 @@ namespace Ashfall.Core.UI
                 { "doomsday_preppers",           "assets/ui/Icons/faction_icon_doomsday_preppers.png" },
                 { "echo_bats",                   "assets/ui/Icons/faction_icon_echo_bats.png" },
                 { "safe_haven_community",        "assets/ui/Icons/faction_icon_safe_haven_community.png" },
+                // faction_lore.json ids whose emblems already exist on disk
+                // (same verified-on-disk rule as the expansion block above):
+                { "ash_militia",                 "assets/ui/Icons/faction_icon_ash_militia.png" },
+                { "faction_ash_militia",         "assets/ui/Icons/faction_icon_ash_militia.png" },
+                { "faction_ash_sign",            "assets/ui/Icons/faction_icon_ash_sign.png" },
+                { "faction_black_ops",           "assets/ui/Icons/faction_icon_black_ops.png" },
+                { "faction_central_garrison",    "assets/ui/Icons/faction_icon_central_garrison.png" },
+                { "faction_ordnance_foundry",    "assets/ui/Icons/faction_icon_ordnance_foundry.png" },
+                { "faction_penal_battalion",     "assets/ui/Icons/faction_icon_penal_battalion.png" },
+                { "faction_railway_guild",       "assets/ui/Icons/faction_icon_railway_guild.png" },
+                { "faction_rebuilders",          "assets/ui/Icons/faction_icon_rebuilders.png" },
+                { "faction_salt_freeholders",    "assets/ui/Icons/faction_icon_salt_freeholders.png" },
+                { "faction_supply_corps",        "assets/ui/Icons/faction_icon_supply_corps.png" },
             };
 
         /// <summary>

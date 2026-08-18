@@ -276,6 +276,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "ration_plaza_paint_stick",
+    "file_path": "assets/art/ration_plaza_paint_stick.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "42_locations",
     "file_path": "assets/art/42_locations.jpg",
     "width": 1024,
@@ -314,12 +320,6 @@
    {
     "stem": "food_ration",
     "file_path": "assets/art/food_ration.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "food_rations",
-    "file_path": "assets/art/food_rations.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -406,6 +406,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "iodine_tablets",
+    "file_path": "assets/art/iodine_tablets.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "charcoal_tablets",
     "file_path": "assets/art/charcoal_tablets.jpg",
     "width": 1024,
@@ -444,12 +450,6 @@
    {
     "stem": "water_purification_tablets_20_of_40",
     "file_path": "assets/art/water_purification_tablets_20_of_40.png",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "water_purification_tablets_40_of_40",
-    "file_path": "assets/art/water_purification_tablets_40_of_40.png",
     "width": 1024,
     "height": 1024
    }
@@ -492,6 +492,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "clean_water_jug",
+    "file_path": "assets/art/clean_water_jug.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "bottled_water_clean",
     "file_path": "assets/art/bottled_water_clean.jpg",
     "width": 1024,
@@ -530,12 +536,6 @@
    {
     "stem": "bunker_water_recycler_unit",
     "file_path": "assets/art/bunker_water_recycler_unit.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "dirty_water_flask",
-    "file_path": "assets/art/dirty_water_flask.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -578,6 +578,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "dried_rations",
+    "file_path": "assets/art/dried_rations.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "canned_rations",
     "file_path": "assets/art/canned_rations.jpg",
     "width": 1024,
@@ -598,6 +604,18 @@
    {
     "stem": "dried_jerky",
     "file_path": "assets/art/dried_jerky.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "dried_fruit",
+    "file_path": "assets/art/dried_fruit.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "military_rations",
+    "file_path": "assets/art/military_rations.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -639,6 +657,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "grain_exchange_scale_weight",
+    "file_path": "assets/art/grain_exchange_scale_weight.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "botany_wheat_grain_sheaf",
     "file_path": "assets/art/botany_wheat_grain_sheaf.jpg",
@@ -690,6 +714,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "military_rations",
+    "file_path": "assets/art/military_rations.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "canned_rations",
     "file_path": "assets/art/canned_rations.jpg",
     "width": 1024,
@@ -728,12 +758,6 @@
    {
     "stem": "military_bunker",
     "file_path": "assets/art/military_bunker.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "military_grade_flashlight",
-    "file_path": "assets/art/military_grade_flashlight.png",
     "width": 1024,
     "height": 1024
    }
@@ -776,6 +800,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "mira_chalk_ration_token",
+    "file_path": "assets/art/mira_chalk_ration_token.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "bunker_rationing",
     "file_path": "assets/art/bunker_rationing.jpg",
     "width": 1024,
@@ -814,12 +844,6 @@
    {
     "stem": "ui_icon_trade_currency_token",
     "file_path": "assets/art/ui_icon_trade_currency_token.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "bg_filtration_stack",
-    "file_path": "assets/art/bg_filtration_stack.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -862,6 +886,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "ration_plaza_paint_stick",
+    "file_path": "assets/art/ration_plaza_paint_stick.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "bunker_rationing",
     "file_path": "assets/art/bunker_rationing.jpg",
     "width": 1024,
@@ -902,12 +932,6 @@
     "file_path": "assets/art/weapon_dynamite_stick_bundle.jpg",
     "width": 1024,
     "height": 1024
-   },
-   {
-    "stem": "bg_filtration_stack",
-    "file_path": "assets/art/bg_filtration_stack.jpg",
-    "width": 1024,
-    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'ration_plaza_paint_stick', readable at icon scale (~64\u00d764).",
@@ -946,7 +970,14 @@
   "aspect_ratio": "1:1 consumable icon",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "spirits",
+    "file_path": "assets/art/spirits.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'spirits', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -997,6 +1028,18 @@
     "height": 1024
    },
    {
+    "stem": "water_purification_tablets",
+    "file_path": "assets/art/water_purification_tablets.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "water_purification_tablets_0_of_40",
+    "file_path": "assets/art/water_purification_tablets_0_of_40.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "water_purification_tablet",
     "file_path": "assets/art/water_purification_tablet.png",
     "width": 1024,
@@ -1017,18 +1060,6 @@
    {
     "stem": "bottled_water_irradiated",
     "file_path": "assets/art/bottled_water_irradiated.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "bunker_water_recycler_unit",
-    "file_path": "assets/art/bunker_water_recycler_unit.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "charcoal_tablets",
-    "file_path": "assets/art/charcoal_tablets.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -1071,6 +1102,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "water_sample_contaminated",
+    "file_path": "assets/art/water_sample_contaminated.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "basic_water_boiler",
     "file_path": "assets/art/basic_water_boiler.png",
     "width": 1024,
@@ -1109,12 +1146,6 @@
    {
     "stem": "contaminated_food",
     "file_path": "assets/art/contaminated_food.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "dirty_water_flask",
-    "file_path": "assets/art/dirty_water_flask.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -1315,6 +1346,12 @@
     "file_path": "assets/art/stranger_cache_outcome.jpg",
     "width": 1024,
     "height": 1024
+   },
+   {
+    "stem": "d9_cache_manifest_page",
+    "file_path": "assets/art/d9_cache_manifest_page.jpg",
+    "width": 1024,
+    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Location-Art 'convoy_echo7_cache', readable at icon scale (~64\u00d764).",
@@ -1357,6 +1394,12 @@
    {
     "stem": "vfx_spark_electrical",
     "file_path": "assets/art/vfx_spark_electrical.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "electrical_cable",
+    "file_path": "assets/art/electrical_cable.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -1713,6 +1756,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "ash_sign_shaken_liturgy_page",
+    "file_path": "assets/art/ash_sign_shaken_liturgy_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ash_sign_unburned_dosimeter",
+    "file_path": "assets/art/ash_sign_unburned_dosimeter.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "42_locations",
     "file_path": "assets/art/42_locations.jpg",
     "width": 1024,
@@ -1745,18 +1800,6 @@
    {
     "stem": "enc_faction_roadblock",
     "file_path": "assets/art/enc_faction_roadblock.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "env_fallout_ash_heap",
-    "file_path": "assets/art/env_fallout_ash_heap.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "fallout_storm_ash_swirl",
-    "file_path": "assets/art/fallout_storm_ash_swirl.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -2745,6 +2788,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "forward_roster_armband",
+    "file_path": "assets/art/forward_roster_armband.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "forward_roster_watch_scrap",
+    "file_path": "assets/art/forward_roster_watch_scrap.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "42_locations",
     "file_path": "assets/art/42_locations.jpg",
     "width": 1024,
@@ -2777,18 +2832,6 @@
    {
     "stem": "item_heirloom_locket",
     "file_path": "assets/art/item_heirloom_locket.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "item_locket",
-    "file_path": "assets/art/item_locket.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "item_suitcase_locked",
-    "file_path": "assets/art/item_suitcase_locked.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -4207,6 +4250,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "shrine_waystation_prayer_flag",
+    "file_path": "assets/art/shrine_waystation_prayer_flag.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "42_locations",
     "file_path": "assets/art/42_locations.jpg",
     "width": 1024,
@@ -4245,12 +4294,6 @@
    {
     "stem": "location_pin_icon",
     "file_path": "assets/art/location_pin_icon.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "lockpick",
-    "file_path": "assets/art/lockpick.png",
     "width": 1024,
     "height": 1024
    }
@@ -4465,6 +4508,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "terrace_pumphouse_valve_key",
+    "file_path": "assets/art/terrace_pumphouse_valve_key.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "42_locations",
     "file_path": "assets/art/42_locations.jpg",
     "width": 1024,
@@ -4503,12 +4552,6 @@
    {
     "stem": "location_pin_icon",
     "file_path": "assets/art/location_pin_icon.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "lockpick",
-    "file_path": "assets/art/lockpick.png",
     "width": 1024,
     "height": 1024
    }
@@ -4723,6 +4766,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "understory_transmitter_coil",
+    "file_path": "assets/art/understory_transmitter_coil.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "42_locations",
     "file_path": "assets/art/42_locations.jpg",
     "width": 1024,
@@ -4761,12 +4810,6 @@
    {
     "stem": "item_suitcase_locked",
     "file_path": "assets/art/item_suitcase_locked.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "location_pin_icon",
-    "file_path": "assets/art/location_pin_icon.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -5197,6 +5240,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "ash_sign_unburned_dosimeter",
+    "file_path": "assets/art/ash_sign_unburned_dosimeter.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ash_sign_shaken_liturgy_page",
+    "file_path": "assets/art/ash_sign_shaken_liturgy_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "anomaly_ash_fog_dense",
     "file_path": "assets/art/anomaly_ash_fog_dense.jpg",
     "width": 1024,
@@ -5229,18 +5284,6 @@
    {
     "stem": "env_fallout_ash_heap",
     "file_path": "assets/art/env_fallout_ash_heap.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "fallout_storm_ash_swirl",
-    "file_path": "assets/art/fallout_storm_ash_swirl.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "flare_signal",
-    "file_path": "assets/art/flare_signal.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -5283,6 +5326,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "copper_wiring",
+    "file_path": "assets/art/copper_wiring.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "crafting_copper_wire_spool",
     "file_path": "assets/art/crafting_copper_wire_spool.jpg",
     "width": 1024,
@@ -5297,6 +5346,12 @@
    {
     "stem": "copper_wire_10m_of_10m",
     "file_path": "assets/art/copper_wire_10m_of_10m.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "copper_tubing_1m",
+    "file_path": "assets/art/copper_tubing_1m.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -5338,6 +5393,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "steel_rebar",
+    "file_path": "assets/art/steel_rebar.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "crafting_steel_pipe_threaded",
     "file_path": "assets/art/crafting_steel_pipe_threaded.jpg",
@@ -5799,6 +5860,12 @@
     "file_path": "assets/art/ui_icon_oxygen_tank_level.jpg",
     "width": 1024,
     "height": 1024
+   },
+   {
+    "stem": "shovel_broken",
+    "file_path": "assets/art/shovel_broken.jpg",
+    "width": 1024,
+    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for NPC-Portrait 'npc_dr_irina_vel', readable at icon scale (~64\u00d764).",
@@ -5964,6 +6031,18 @@
    {
     "stem": "respirator_filter_box_5",
     "file_path": "assets/art/respirator_filter_box_5.png",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "respirator_cartridge",
+    "file_path": "assets/art/respirator_cartridge.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "mira_chalk_ration_token",
+    "file_path": "assets/art/mira_chalk_ration_token.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -6235,6 +6314,12 @@
    {
     "stem": "violent_paranoia",
     "file_path": "assets/art/violent_paranoia.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "camera_lens_cleaner",
+    "file_path": "assets/art/camera_lens_cleaner.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -6652,7 +6737,14 @@
   "aspect_ratio": "head/shoulder portrait",
   "alpha_requirement": "opaque",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "voss_authentication_chit",
+    "file_path": "assets/art/voss_authentication_chit.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for NPC-Portrait 'npc_saria_voss', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -7022,6 +7114,12 @@
     "file_path": "assets/art/aa_batteries_package_10.jpg",
     "width": 1024,
     "height": 1024
+   },
+   {
+    "stem": "aa_batteries",
+    "file_path": "assets/art/aa_batteries.jpg",
+    "width": 1024,
+    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'aa_batteries', readable at icon scale (~64\u00d764).",
@@ -7060,7 +7158,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "adaeze_meeting_minutes_stub",
+    "file_path": "assets/art/adaeze_meeting_minutes_stub.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'adaeze_meeting_minutes_stub', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -7099,6 +7204,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "antenna_coil",
+    "file_path": "assets/art/antenna_coil.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "antenna_cut",
     "file_path": "assets/art/antenna_cut.jpg",
     "width": 1024,
@@ -7119,6 +7230,12 @@
    {
     "stem": "rope_coil",
     "file_path": "assets/art/rope_coil.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "understory_transmitter_coil",
+    "file_path": "assets/art/understory_transmitter_coil.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -7161,6 +7278,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "ars_diagnosis_report",
+    "file_path": "assets/art/ars_diagnosis_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "binoculars_weathered",
     "file_path": "assets/art/binoculars_weathered.jpg",
     "width": 1024,
@@ -7175,6 +7298,30 @@
    {
     "stem": "item_gold_bars",
     "file_path": "assets/art/item_gold_bars.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "intake_valve_report",
+    "file_path": "assets/art/intake_valve_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "medical_inventory_report",
+    "file_path": "assets/art/medical_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "refugee_screening_report",
+    "file_path": "assets/art/refugee_screening_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "signal_source_report",
+    "file_path": "assets/art/signal_source_report.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -7217,6 +7364,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "ash_sign_shaken_liturgy_page",
+    "file_path": "assets/art/ash_sign_shaken_liturgy_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ash_sign_unburned_dosimeter",
+    "file_path": "assets/art/ash_sign_unburned_dosimeter.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "anomaly_ash_fog_dense",
     "file_path": "assets/art/anomaly_ash_fog_dense.jpg",
     "width": 1024,
@@ -7249,18 +7408,6 @@
    {
     "stem": "flare_signal",
     "file_path": "assets/art/flare_signal.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "flashlight",
-    "file_path": "assets/art/flashlight.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "flashlight_heavy",
-    "file_path": "assets/art/flashlight_heavy.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -7302,6 +7449,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "camera_lens_cleaner",
+    "file_path": "assets/art/camera_lens_cleaner.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "bunker_security_camera_monitor",
     "file_path": "assets/art/bunker_security_camera_monitor.jpg",
@@ -7351,7 +7504,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "childrens_books",
+    "file_path": "assets/art/childrens_books.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'childrens_books', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -7388,7 +7548,26 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "concrete_mix",
+    "file_path": "assets/art/concrete_mix.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "concrete_patch_mix",
+    "file_path": "assets/art/concrete_patch_mix.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "cement_mix",
+    "file_path": "assets/art/cement_mix.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'concrete_mix', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -7427,6 +7606,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "d9_cache_manifest_page",
+    "file_path": "assets/art/d9_cache_manifest_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "enc_deserter_cache",
     "file_path": "assets/art/enc_deserter_cache.jpg",
     "width": 1024,
@@ -7453,6 +7638,18 @@
    {
     "stem": "stranger_cache_outcome",
     "file_path": "assets/art/stranger_cache_outcome.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ash_sign_shaken_liturgy_page",
+    "file_path": "assets/art/ash_sign_shaken_liturgy_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "barrow_fennicks_ledger_page",
+    "file_path": "assets/art/barrow_fennicks_ledger_page.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -7495,6 +7692,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "d9_denial_list_annex",
+    "file_path": "assets/art/d9_denial_list_annex.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "armor_tactical_ballistic_plate",
     "file_path": "assets/art/armor_tactical_ballistic_plate.jpg",
     "width": 1024,
@@ -7503,6 +7706,18 @@
    {
     "stem": "gear_ballistic_goggles",
     "file_path": "assets/art/gear_ballistic_goggles.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ballistic_goggles",
+    "file_path": "assets/art/ballistic_goggles.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "d9_denial_marker_tape",
+    "file_path": "assets/art/d9_denial_marker_tape.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -7545,6 +7760,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "d9_denial_marker_tape",
+    "file_path": "assets/art/d9_denial_marker_tape.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "cassette_tape",
     "file_path": "assets/art/cassette_tape.jpg",
     "width": 1024,
@@ -7559,6 +7780,24 @@
    {
     "stem": "duct_tape_roll",
     "file_path": "assets/art/duct_tape_roll.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_cassette_tape",
+    "file_path": "assets/art/item_cassette_tape.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "insulation_tape",
+    "file_path": "assets/art/insulation_tape.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "d9_denial_list_annex",
+    "file_path": "assets/art/d9_denial_list_annex.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -7601,6 +7840,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "diesel_fuel",
+    "file_path": "assets/art/diesel_fuel.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "fuel",
     "file_path": "assets/art/fuel.jpg",
     "width": 1024,
@@ -7627,6 +7872,18 @@
    {
     "stem": "fuel_canister",
     "file_path": "assets/art/fuel_canister.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "fuel_1l",
+    "file_path": "assets/art/fuel_1l.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "fuel_05l",
+    "file_path": "assets/art/fuel_05l.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -7668,6 +7925,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "family_photo_pendant",
+    "file_path": "assets/art/family_photo_pendant.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "lore_faded_family_photograph",
     "file_path": "assets/art/lore_faded_family_photograph.jpg",
@@ -7747,7 +8010,20 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "forward_roster_armband",
+    "file_path": "assets/art/forward_roster_armband.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "forward_roster_watch_scrap",
+    "file_path": "assets/art/forward_roster_watch_scrap.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'forward_roster_armband', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -7786,6 +8062,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "forward_roster_watch_scrap",
+    "file_path": "assets/art/forward_roster_watch_scrap.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "forward_roster_armband",
+    "file_path": "assets/art/forward_roster_armband.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "armor_scrap_metal_chestpiece",
     "file_path": "assets/art/armor_scrap_metal_chestpiece.jpg",
     "width": 1024,
@@ -7818,18 +8106,6 @@
    {
     "stem": "item_scrap_metal",
     "file_path": "assets/art/item_scrap_metal.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "item_watch",
-    "file_path": "assets/art/item_watch.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "relic_pre_war_gold_watch",
-    "file_path": "assets/art/relic_pre_war_gold_watch.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -7870,7 +8146,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "growing_manual",
+    "file_path": "assets/art/growing_manual.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'growing_manual', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -7908,6 +8191,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "harven_decree_seal_stamp",
+    "file_path": "assets/art/harven_decree_seal_stamp.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "crafting_rubber_seal_gasket",
     "file_path": "assets/art/crafting_rubber_seal_gasket.jpg",
@@ -7971,6 +8260,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "intake_valve_report",
+    "file_path": "assets/art/intake_valve_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "item_geothermal_valve",
     "file_path": "assets/art/item_geothermal_valve.jpg",
     "width": 1024,
@@ -7981,95 +8276,39 @@
     "file_path": "assets/art/valve_handle.jpg",
     "width": 1024,
     "height": 1024
-   }
-  ],
-  "semantic_description": "A 2D painted icon for Inventory-Item 'intake_valve_report', readable at icon scale (~64\u00d764).",
-  "required_objects": [],
-  "forbidden_objects": [
-   "real-country flag",
-   "real brand mark",
-   "logo",
-   "watermark",
-   "rendered-text label",
-   "neon cyberpunk",
-   "anime-style eyes",
-   "fantasy ornament",
-   "glossy sci-fi glow",
-   "stock-photo backdrop"
-  ],
-  "generation_status": "PENDING",
-  "qa_status": "NOT_STARTED",
-  "wiring_status": "DOCUMENTED_MISSING",
-  "runtime_status": "NEVER_BOUND"
- },
- {
-  "content_id": "item_cassette_tape",
-  "canonical_name": "Item Cassette Tape",
-  "content_type": "item",
-  "visual_family": "Inventory-Item",
-  "subfamily": "Other",
-  "source_catalog": "items",
-  "runtime_priority": "P1",
-  "gameplay_importance": 3.0,
-  "target_filename": "item_cassette_tape.jpg",
-  "target_directory": "assets/art/",
-  "target_extension": ".jpg",
-  "target_width": 256,
-  "target_height": 256,
-  "aspect_ratio": "1:1 generic",
-  "alpha_requirement": "transparent",
-  "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [
+   },
    {
-    "stem": "cassette_tape",
-    "file_path": "assets/art/cassette_tape.jpg",
+    "stem": "ars_diagnosis_report",
+    "file_path": "assets/art/ars_diagnosis_report.jpg",
     "width": 1024,
     "height": 1024
    },
    {
-    "stem": "188_items",
-    "file_path": "assets/art/188_items.jpg",
+    "stem": "medical_inventory_report",
+    "file_path": "assets/art/medical_inventory_report.jpg",
     "width": 1024,
     "height": 1024
    },
    {
-    "stem": "biological_trade_item",
-    "file_path": "assets/art/biological_trade_item.jpg",
+    "stem": "refugee_screening_report",
+    "file_path": "assets/art/refugee_screening_report.jpg",
     "width": 1024,
     "height": 1024
    },
    {
-    "stem": "crowbar_item",
-    "file_path": "assets/art/crowbar_item.jpg",
+    "stem": "signal_source_report",
+    "file_path": "assets/art/signal_source_report.jpg",
     "width": 1024,
     "height": 1024
    },
    {
-    "stem": "duct_tape",
-    "file_path": "assets/art/duct_tape.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "duct_tape_roll",
-    "file_path": "assets/art/duct_tape_roll.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "item_1",
-    "file_path": "assets/art/item_1.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "item_acoustic_decoy",
-    "file_path": "assets/art/item_acoustic_decoy.jpg",
+    "stem": "structural_report",
+    "file_path": "assets/art/structural_report.jpg",
     "width": 1024,
     "height": 1024
    }
   ],
-  "semantic_description": "A 2D painted icon for Inventory-Item 'item_cassette_tape', readable at icon scale (~64\u00d764).",
+  "semantic_description": "A 2D painted icon for Inventory-Item 'intake_valve_report', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
    "real-country flag",
@@ -8105,7 +8344,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "ln74_cipher_fragment",
+    "file_path": "assets/art/ln74_cipher_fragment.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'ln74_cipher_fragment', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -8230,6 +8476,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "lubricant_oil",
+    "file_path": "assets/art/lubricant_oil.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "basic_water_boiler",
     "file_path": "assets/art/basic_water_boiler.png",
     "width": 1024,
@@ -8268,12 +8520,6 @@
    {
     "stem": "spoiled_food_scrap",
     "file_path": "assets/art/spoiled_food_scrap.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "spoiled_meat",
-    "file_path": "assets/art/spoiled_meat.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -8316,6 +8562,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "machine_oil",
+    "file_path": "assets/art/machine_oil.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "basic_water_boiler",
     "file_path": "assets/art/basic_water_boiler.png",
     "width": 1024,
@@ -8354,12 +8606,6 @@
    {
     "stem": "mod_suppressor_oil_filter",
     "file_path": "assets/art/mod_suppressor_oil_filter.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "rope_climbing_coil",
-    "file_path": "assets/art/rope_climbing_coil.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -8402,6 +8648,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "medical_inventory_report",
+    "file_path": "assets/art/medical_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "supply_inventory_report",
+    "file_path": "assets/art/supply_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "inventory_icon",
     "file_path": "assets/art/inventory_icon.jpg",
     "width": 1024,
@@ -8434,12 +8692,6 @@
    {
     "stem": "ui_event_false_inventory",
     "file_path": "assets/art/ui_event_false_inventory.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "ui_frame_inventory_grid",
-    "file_path": "assets/art/ui_frame_inventory_grid.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -8494,6 +8746,12 @@
     "height": 1024
    },
    {
+    "stem": "military_mre",
+    "file_path": "assets/art/military_mre.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "gear_military_canteen_pouch",
     "file_path": "assets/art/gear_military_canteen_pouch.jpg",
     "width": 1024,
@@ -8520,12 +8778,6 @@
    {
     "stem": "military_grade_flashlight",
     "file_path": "assets/art/military_grade_flashlight.png",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "military_grade_shovel",
-    "file_path": "assets/art/military_grade_shovel.png",
     "width": 1024,
     "height": 1024
    }
@@ -8568,6 +8820,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "military_supply_crate",
+    "file_path": "assets/art/military_supply_crate.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "loot_military_crate_locked",
     "file_path": "assets/art/loot_military_crate_locked.jpg",
     "width": 1024,
@@ -8608,12 +8866,6 @@
     "file_path": "assets/art/irradiated_crater.jpg",
     "width": 1024,
     "height": 1024
-   },
-   {
-    "stem": "lore_classified_military_document",
-    "file_path": "assets/art/lore_classified_military_document.jpg",
-    "width": 1024,
-    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'military_supply_crate', readable at icon scale (~64\u00d764).",
@@ -8652,7 +8904,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "photographic_film",
+    "file_path": "assets/art/photographic_film.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'photographic_film', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -8690,6 +8949,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "protective_childs_coat",
+    "file_path": "assets/art/protective_childs_coat.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "item_childs_drawing",
     "file_path": "assets/art/item_childs_drawing.jpg",
@@ -8753,6 +9018,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "radio_transcript_142_5",
+    "file_path": "assets/art/radio_transcript_142_5.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "lore_radio_broadcast_transcript",
     "file_path": "assets/art/lore_radio_broadcast_transcript.jpg",
     "width": 1024,
@@ -8793,12 +9064,6 @@
     "file_path": "assets/art/radio.jpg",
     "width": 1024,
     "height": 1024
-   },
-   {
-    "stem": "radio_headset",
-    "file_path": "assets/art/radio_headset.png",
-    "width": 1024,
-    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'radio_transcript_142_5', readable at icon scale (~64\u00d764).",
@@ -8837,7 +9102,50 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "refugee_screening_report",
+    "file_path": "assets/art/refugee_screening_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ars_diagnosis_report",
+    "file_path": "assets/art/ars_diagnosis_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "intake_valve_report",
+    "file_path": "assets/art/intake_valve_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "medical_inventory_report",
+    "file_path": "assets/art/medical_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "signal_source_report",
+    "file_path": "assets/art/signal_source_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "structural_report",
+    "file_path": "assets/art/structural_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "supply_inventory_report",
+    "file_path": "assets/art/supply_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'refugee_screening_report', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -8875,6 +9183,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "ruhl_archive_tag",
+    "file_path": "assets/art/ruhl_archive_tag.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "catchment_sabotaged",
     "file_path": "assets/art/catchment_sabotaged.jpg",
@@ -8916,12 +9230,6 @@
     "file_path": "assets/art/sabotaged_loot_outcome.jpg",
     "width": 1024,
     "height": 1024
-   },
-   {
-    "stem": "sensor_voltage_step_down_transformer",
-    "file_path": "assets/art/sensor_voltage_step_down_transformer.jpg",
-    "width": 1024,
-    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'ruhl_archive_tag', readable at icon scale (~64\u00d764).",
@@ -8961,6 +9269,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "seed_packets",
+    "file_path": "assets/art/seed_packets.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "botany_seed_packet_heirloom",
     "file_path": "assets/art/botany_seed_packet_heirloom.jpg",
@@ -9023,6 +9337,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "service_pistol",
+    "file_path": "assets/art/service_pistol.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "9mm_pistol",
     "file_path": "assets/art/9mm_pistol.jpg",
@@ -9102,7 +9422,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "shrine_waystation_prayer_flag",
+    "file_path": "assets/art/shrine_waystation_prayer_flag.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'shrine_waystation_prayer_flag', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -9141,6 +9468,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "signal_source_report",
+    "file_path": "assets/art/signal_source_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "flare_signal",
     "file_path": "assets/art/flare_signal.jpg",
     "width": 1024,
@@ -9155,6 +9488,30 @@
    {
     "stem": "signal_flare",
     "file_path": "assets/art/signal_flare.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ars_diagnosis_report",
+    "file_path": "assets/art/ars_diagnosis_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "intake_valve_report",
+    "file_path": "assets/art/intake_valve_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "medical_inventory_report",
+    "file_path": "assets/art/medical_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "refugee_screening_report",
+    "file_path": "assets/art/refugee_screening_report.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -9197,14 +9554,14 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
-    "stem": "item_car_keys",
-    "file_path": "assets/art/item_car_keys.jpg",
+    "stem": "spring_key",
+    "file_path": "assets/art/spring_key.jpg",
     "width": 1024,
     "height": 1024
    },
    {
-    "stem": "item_keycard_",
-    "file_path": "assets/art/item_keycard_.jpg",
+    "stem": "item_car_keys",
+    "file_path": "assets/art/item_car_keys.jpg",
     "width": 1024,
     "height": 1024
    },
@@ -9283,6 +9640,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "sr_stencil_pot",
+    "file_path": "assets/art/sr_stencil_pot.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "botany_potato_sprout_sack",
     "file_path": "assets/art/botany_potato_sprout_sack.jpg",
     "width": 1024,
@@ -9355,7 +9718,50 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "structural_report",
+    "file_path": "assets/art/structural_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ars_diagnosis_report",
+    "file_path": "assets/art/ars_diagnosis_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "intake_valve_report",
+    "file_path": "assets/art/intake_valve_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "medical_inventory_report",
+    "file_path": "assets/art/medical_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "refugee_screening_report",
+    "file_path": "assets/art/refugee_screening_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "signal_source_report",
+    "file_path": "assets/art/signal_source_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "supply_inventory_report",
+    "file_path": "assets/art/supply_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'structural_report', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -9394,6 +9800,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "supply_inventory_report",
+    "file_path": "assets/art/supply_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "medical_inventory_report",
+    "file_path": "assets/art/medical_inventory_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "inventory_icon",
     "file_path": "assets/art/inventory_icon.jpg",
     "width": 1024,
@@ -9408,6 +9826,24 @@
    {
     "stem": "ui_frame_inventory_grid",
     "file_path": "assets/art/ui_frame_inventory_grid.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ars_diagnosis_report",
+    "file_path": "assets/art/ars_diagnosis_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "intake_valve_report",
+    "file_path": "assets/art/intake_valve_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "refugee_screening_report",
+    "file_path": "assets/art/refugee_screening_report.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -9450,6 +9886,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "surgical_mask",
+    "file_path": "assets/art/surgical_mask.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "gas_mask",
     "file_path": "assets/art/gas_mask.jpg",
     "width": 1024,
@@ -9470,12 +9912,6 @@
    {
     "stem": "hazard_surgical_botch",
     "file_path": "assets/art/hazard_surgical_botch.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "hazard_surgicalbotch",
-    "file_path": "assets/art/hazard_surgicalbotch.jpg",
     "width": 1024,
     "height": 1024
    },
@@ -9536,6 +9972,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "terrace_pumphouse_valve_key",
+    "file_path": "assets/art/terrace_pumphouse_valve_key.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "item_car_keys",
     "file_path": "assets/art/item_car_keys.jpg",
     "width": 1024,
@@ -9544,12 +9986,6 @@
    {
     "stem": "item_geothermal_valve",
     "file_path": "assets/art/item_geothermal_valve.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "item_keycard_",
-    "file_path": "assets/art/item_keycard_.jpg",
     "width": 1024,
     "height": 1024
    },
@@ -9622,6 +10058,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "quality_tobacco_nicotine_pouch",
+    "file_path": "assets/art/quality_tobacco_nicotine_pouch.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "tobacco_pouch",
+    "file_path": "assets/art/tobacco_pouch.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "gear_military_canteen_pouch",
     "file_path": "assets/art/gear_military_canteen_pouch.jpg",
     "width": 1024,
@@ -9630,6 +10078,24 @@
    {
     "stem": "salt_preservative_pouch",
     "file_path": "assets/art/salt_preservative_pouch.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "basic_tobacco_leaf",
+    "file_path": "assets/art/basic_tobacco_leaf.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "quality_tobacco_leaf",
+    "file_path": "assets/art/quality_tobacco_leaf.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "nicotine_pouch",
+    "file_path": "assets/art/nicotine_pouch.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -9671,6 +10137,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "toma_switchback_lantern",
+    "file_path": "assets/art/toma_switchback_lantern.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "botany_hydroponic_tomato_plant",
     "file_path": "assets/art/botany_hydroponic_tomato_plant.jpg",
@@ -9732,7 +10204,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "torn_continuity_notice",
+    "file_path": "assets/art/torn_continuity_notice.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'torn_continuity_notice', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -9769,7 +10248,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "treatment_protocol",
+    "file_path": "assets/art/treatment_protocol.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'treatment_protocol', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -9806,7 +10292,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "typewriter_ribbon",
+    "file_path": "assets/art/typewriter_ribbon.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'typewriter_ribbon', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -9845,6 +10338,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "understory_transmitter_coil",
+    "file_path": "assets/art/understory_transmitter_coil.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "bunker_radio_transmitter_tower",
     "file_path": "assets/art/bunker_radio_transmitter_tower.jpg",
     "width": 1024,
@@ -9871,6 +10370,18 @@
    {
     "stem": "rope_coil",
     "file_path": "assets/art/rope_coil.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "understory_relay_log_page",
+    "file_path": "assets/art/understory_relay_log_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "antenna_coil",
+    "file_path": "assets/art/antenna_coil.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -9911,7 +10422,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "warlords_toll_receipt_hiked",
+    "file_path": "assets/art/warlords_toll_receipt_hiked.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'warlords_toll_receipt_hiked', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -12051,6 +12569,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "barrow_fennicks_ledger_page",
+    "file_path": "assets/art/barrow_fennicks_ledger_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "item_seed_ledger",
     "file_path": "assets/art/item_seed_ledger.jpg",
     "width": 1024,
@@ -12059,6 +12583,24 @@
    {
     "stem": "lore_burned_diary_page",
     "file_path": "assets/art/lore_burned_diary_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ash_sign_shaken_liturgy_page",
+    "file_path": "assets/art/ash_sign_shaken_liturgy_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "d9_cache_manifest_page",
+    "file_path": "assets/art/d9_cache_manifest_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "understory_relay_log_page",
+    "file_path": "assets/art/understory_relay_log_page.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -12617,8 +13159,20 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "music_box_comb",
+    "file_path": "assets/art/music_box_comb.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "relic_pristine_music_box",
     "file_path": "assets/art/relic_pristine_music_box.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "music_box_fur_elise",
+    "file_path": "assets/art/music_box_fur_elise.jpg",
     "width": 1024,
     "height": 1024
    },
@@ -12649,18 +13203,6 @@
    {
     "stem": "ammo_box_rifle",
     "file_path": "assets/art/ammo_box_rifle.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "ammo_box_rifle_hq",
-    "file_path": "assets/art/ammo_box_rifle_hq.png",
-    "width": 2048,
-    "height": 2048
-   },
-   {
-    "stem": "ammo_incendiary_rounds_box",
-    "file_path": "assets/art/ammo_incendiary_rounds_box.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -12703,8 +13245,20 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "music_box_fur_elise",
+    "file_path": "assets/art/music_box_fur_elise.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "relic_pristine_music_box",
     "file_path": "assets/art/relic_pristine_music_box.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "music_box_comb",
+    "file_path": "assets/art/music_box_comb.jpg",
     "width": 1024,
     "height": 1024
    },
@@ -12735,18 +13289,6 @@
    {
     "stem": "ammo_box_rifle",
     "file_path": "assets/art/ammo_box_rifle.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "ammo_box_rifle_hq",
-    "file_path": "assets/art/ammo_box_rifle_hq.png",
-    "width": 2048,
-    "height": 2048
-   },
-   {
-    "stem": "ammo_incendiary_rounds_box",
-    "file_path": "assets/art/ammo_incendiary_rounds_box.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -12789,6 +13331,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "understory_relay_log_page",
+    "file_path": "assets/art/understory_relay_log_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "biological_trade_item",
     "file_path": "assets/art/biological_trade_item.jpg",
     "width": 1024,
@@ -12827,12 +13375,6 @@
    {
     "stem": "lore_lab_research_log",
     "file_path": "assets/art/lore_lab_research_log.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "mod_holographic_sight_custom",
-    "file_path": "assets/art/mod_holographic_sight_custom.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -12874,6 +13416,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "voss_authentication_chit",
+    "file_path": "assets/art/voss_authentication_chit.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "beast_chitinous_beetle_armored",
     "file_path": "assets/art/beast_chitinous_beetle_armored.jpg",
@@ -13545,26 +14093,26 @@
     "height": 1024
    },
    {
+    "stem": "sawdust_block",
+    "file_path": "assets/art/sawdust_block.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "wood_block",
+    "file_path": "assets/art/wood_block.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "engine_block_intact",
+    "file_path": "assets/art/engine_block_intact.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "42_locations",
     "file_path": "assets/art/42_locations.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "botany_glowing_moss_cluster",
-    "file_path": "assets/art/botany_glowing_moss_cluster.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "bunker_decon_airlock_chamber",
-    "file_path": "assets/art/bunker_decon_airlock_chamber.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "item_heirloom_locket",
-    "file_path": "assets/art/item_heirloom_locket.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -15757,6 +16305,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "torn_continuity_notice",
+    "file_path": "assets/art/torn_continuity_notice.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "188_items",
     "file_path": "assets/art/188_items.jpg",
     "width": 1024,
@@ -15795,12 +16349,6 @@
    {
     "stem": "coffee_tin_powder",
     "file_path": "assets/art/coffee_tin_powder.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "crafting_aluminum_sheet_scrap",
-    "file_path": "assets/art/crafting_aluminum_sheet_scrap.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -16185,7 +16733,14 @@
   "aspect_ratio": "1:1 icon",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "bearing_set_industrial",
+    "file_path": "assets/art/bearing_set_industrial.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'industrial_bleach', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -16826,6 +17381,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "ash_sign_shaken_liturgy_page",
+    "file_path": "assets/art/ash_sign_shaken_liturgy_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ash_sign_unburned_dosimeter",
+    "file_path": "assets/art/ash_sign_unburned_dosimeter.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "42_locations",
     "file_path": "assets/art/42_locations.jpg",
     "width": 1024,
@@ -16858,18 +17425,6 @@
    {
     "stem": "enc_faction_roadblock",
     "file_path": "assets/art/enc_faction_roadblock.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "enc_flooded_crater",
-    "file_path": "assets/art/enc_flooded_crater.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "env_crater_impact_site",
-    "file_path": "assets/art/env_crater_impact_site.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -16912,6 +17467,18 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "ash_sign_shaken_liturgy_page",
+    "file_path": "assets/art/ash_sign_shaken_liturgy_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ash_sign_unburned_dosimeter",
+    "file_path": "assets/art/ash_sign_unburned_dosimeter.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "42_locations",
     "file_path": "assets/art/42_locations.jpg",
     "width": 1024,
@@ -16944,18 +17511,6 @@
    {
     "stem": "enc_faction_roadblock",
     "file_path": "assets/art/enc_faction_roadblock.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "env_fallout_ash_heap",
-    "file_path": "assets/art/env_fallout_ash_heap.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "fallout_storm_ash_swirl",
-    "file_path": "assets/art/fallout_storm_ash_swirl.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -23642,6 +24197,12 @@
     "file_path": "assets/art/crop_tuber.jpg",
     "width": 1024,
     "height": 1024
+   },
+   {
+    "stem": "grain_exchange_scale_weight",
+    "file_path": "assets/art/grain_exchange_scale_weight.jpg",
+    "width": 1024,
+    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'crop_grain', readable at icon scale (~64\u00d764).",
@@ -23702,6 +24263,12 @@
    {
     "stem": "crop_tuber",
     "file_path": "assets/art/crop_tuber.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "wheat_flour",
+    "file_path": "assets/art/wheat_flour.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -23794,12 +24361,6 @@
     "height": 1024
    },
    {
-    "stem": "item_keycard_",
-    "file_path": "assets/art/item_keycard_.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
     "stem": "item_keycard_blue",
     "file_path": "assets/art/item_keycard_blue.jpg",
     "width": 1024,
@@ -23832,6 +24393,12 @@
    {
     "stem": "item_keycards",
     "file_path": "assets/art/item_keycards.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "188_items",
+    "file_path": "assets/art/188_items.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -24826,12 +25393,6 @@
     "height": 1024
    },
    {
-    "stem": "item_keycard_",
-    "file_path": "assets/art/item_keycard_.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
     "stem": "item_keycard_blue",
     "file_path": "assets/art/item_keycard_blue.jpg",
     "width": 1024,
@@ -24864,6 +25425,12 @@
    {
     "stem": "item_keycards",
     "file_path": "assets/art/item_keycards.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "188_items",
+    "file_path": "assets/art/188_items.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -25256,12 +25823,6 @@
     "height": 1024
    },
    {
-    "stem": "item_keycard_",
-    "file_path": "assets/art/item_keycard_.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
     "stem": "item_keycard_blue",
     "file_path": "assets/art/item_keycard_blue.jpg",
     "width": 1024,
@@ -25294,6 +25855,12 @@
    {
     "stem": "item_keycards",
     "file_path": "assets/art/item_keycards.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "188_items",
+    "file_path": "assets/art/188_items.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -25784,6 +26351,12 @@
     "height": 1024
    },
    {
+    "stem": "item_cassette_tape",
+    "file_path": "assets/art/item_cassette_tape.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "188_items",
     "file_path": "assets/art/188_items.jpg",
     "width": 1024,
@@ -25804,12 +26377,6 @@
    {
     "stem": "cassette_tape",
     "file_path": "assets/art/cassette_tape.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "corpse_dispose_choice",
-    "file_path": "assets/art/corpse_dispose_choice.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -26202,12 +26769,6 @@
     "height": 1024
    },
    {
-    "stem": "item_exosuit_",
-    "file_path": "assets/art/item_exosuit_.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
     "stem": "item_suitcase_locked",
     "file_path": "assets/art/item_suitcase_locked.jpg",
     "width": 1024,
@@ -26240,6 +26801,12 @@
    {
     "stem": "crowbar_item",
     "file_path": "assets/art/crowbar_item.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "hazmat_suit",
+    "file_path": "assets/art/hazmat_suit.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -28192,6 +28759,12 @@
     "height": 1024
    },
    {
+    "stem": "filter_item",
+    "file_path": "assets/art/filter_item.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "188_items",
     "file_path": "assets/art/188_items.jpg",
     "width": 1024,
@@ -28212,12 +28785,6 @@
    {
     "stem": "bunker_decon_airlock_chamber",
     "file_path": "assets/art/bunker_decon_airlock_chamber.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "crowbar_item",
-    "file_path": "assets/art/crowbar_item.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -28610,6 +29177,12 @@
     "height": 1024
    },
    {
+    "stem": "brass_fittings",
+    "file_path": "assets/art/brass_fittings.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "188_items",
     "file_path": "assets/art/188_items.jpg",
     "width": 1024,
@@ -28642,12 +29215,6 @@
    {
     "stem": "item_ai_core_data",
     "file_path": "assets/art/item_ai_core_data.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "item_ammo_ap",
-    "file_path": "assets/art/item_ammo_ap.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -30072,12 +30639,6 @@
     "height": 1024
    },
    {
-    "stem": "item_exosuit_",
-    "file_path": "assets/art/item_exosuit_.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
     "stem": "item_suitcase_locked",
     "file_path": "assets/art/item_suitcase_locked.jpg",
     "width": 1024,
@@ -30110,6 +30671,12 @@
    {
     "stem": "crowbar_item",
     "file_path": "assets/art/crowbar_item.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "flashlight_heavy",
+    "file_path": "assets/art/flashlight_heavy.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -30766,6 +31333,18 @@
     "height": 128
    },
    {
+    "stem": "filter_item",
+    "file_path": "assets/art/filter_item.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "military_supply_crate",
+    "file_path": "assets/art/military_supply_crate.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "188_items",
     "file_path": "assets/art/188_items.jpg",
     "width": 1024,
@@ -30786,18 +31365,6 @@
    {
     "stem": "bunker_air_filter",
     "file_path": "assets/art/bunker_air_filter.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "crowbar_item",
-    "file_path": "assets/art/crowbar_item.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "dry_military_mre",
-    "file_path": "assets/art/dry_military_mre.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -31736,14 +32303,14 @@
     "height": 1024
    },
    {
-    "stem": "hazard_surgicalbotch",
-    "file_path": "assets/art/hazard_surgicalbotch.jpg",
+    "stem": "item_1",
+    "file_path": "assets/art/item_1.jpg",
     "width": 1024,
     "height": 1024
    },
    {
-    "stem": "item_1",
-    "file_path": "assets/art/item_1.jpg",
+    "stem": "item_acoustic_decoy",
+    "file_path": "assets/art/item_acoustic_decoy.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -32504,6 +33071,12 @@
     "file_path": "assets/art/location_pin_icon.jpg",
     "width": 1024,
     "height": 1024
+   },
+   {
+    "stem": "pistol_grand_power_p380_380acp",
+    "file_path": "assets/art/pistol_grand_power_p380_380acp.jpg",
+    "width": 1024,
+    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Location-Art 'location_grand_cinema', readable at icon scale (~64\u00d764).",
@@ -33014,12 +33587,6 @@
     "height": 1024
    },
    {
-    "stem": "ammo_",
-    "file_path": "assets/art/ammo_.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
     "stem": "ammo_12ga_ap",
     "file_path": "assets/art/ammo_12ga_ap.jpg",
     "width": 1024,
@@ -33040,6 +33607,12 @@
    {
     "stem": "ammo_16ga_buck",
     "file_path": "assets/art/ammo_16ga_buck.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ammo_16ga_slug",
+    "file_path": "assets/art/ammo_16ga_slug.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -33114,6 +33687,12 @@
    {
     "stem": "solar_panel",
     "file_path": "assets/art/solar_panel.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "medium_solar_panel",
+    "file_path": "assets/art/medium_solar_panel.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -33228,6 +33807,12 @@
     "file_path": "assets/art/saw.jpg",
     "width": 1024,
     "height": 1024
+   },
+   {
+    "stem": "sawdust_block",
+    "file_path": "assets/art/sawdust_block.jpg",
+    "width": 1024,
+    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'bone_saw', readable at icon scale (~64\u00d764).",
@@ -33267,6 +33852,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "brass_fittings",
+    "file_path": "assets/art/brass_fittings.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "relic_antique_brass_telescope",
     "file_path": "assets/art/relic_antique_brass_telescope.jpg",
@@ -33635,6 +34226,12 @@
     "file_path": "assets/art/ui_frame_dialogue_choice_box.jpg",
     "width": 1024,
     "height": 1024
+   },
+   {
+    "stem": "att_holographic_sight",
+    "file_path": "assets/art/att_holographic_sight.jpg",
+    "width": 1024,
+    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'evidence_eden_log', readable at icon scale (~64\u00d764).",
@@ -33677,6 +34274,18 @@
    {
     "stem": "refuse_debt",
     "file_path": "assets/art/refuse_debt.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "fuse",
+    "file_path": "assets/art/fuse.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "fuse_assortment",
+    "file_path": "assets/art/fuse_assortment.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -33770,6 +34379,24 @@
    {
     "stem": "duct_tape_roll",
     "file_path": "assets/art/duct_tape_roll.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_cassette_tape",
+    "file_path": "assets/art/item_cassette_tape.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "insulation_tape",
+    "file_path": "assets/art/insulation_tape.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "d9_denial_marker_tape",
+    "file_path": "assets/art/d9_denial_marker_tape.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -33982,6 +34609,18 @@
     "file_path": "assets/art/valve_handle.jpg",
     "width": 1024,
     "height": 1024
+   },
+   {
+    "stem": "intake_valve_report",
+    "file_path": "assets/art/intake_valve_report.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "terrace_pumphouse_valve_key",
+    "file_path": "assets/art/terrace_pumphouse_valve_key.jpg",
+    "width": 1024,
+    "height": 1024
    }
   ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'evidence_valve_s36', readable at icon scale (~64\u00d764).",
@@ -34159,12 +34798,6 @@
     "height": 1024
    },
    {
-    "stem": "item_keycard_",
-    "file_path": "assets/art/item_keycard_.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
     "stem": "item_keycard_blue",
     "file_path": "assets/art/item_keycard_blue.jpg",
     "width": 1024,
@@ -34197,6 +34830,12 @@
    {
     "stem": "item_keycards",
     "file_path": "assets/art/item_keycards.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_cassette_tape",
+    "file_path": "assets/art/item_cassette_tape.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -36739,6 +37378,12 @@
     "height": 1024
    },
    {
+    "stem": "barrow_fennicks_ledger_page",
+    "file_path": "assets/art/barrow_fennicks_ledger_page.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "188_items",
     "file_path": "assets/art/188_items.jpg",
     "width": 1024,
@@ -36771,12 +37416,6 @@
    {
     "stem": "item_1",
     "file_path": "assets/art/item_1.jpg",
-    "width": 1024,
-    "height": 1024
-   },
-   {
-    "stem": "item_acoustic_decoy",
-    "file_path": "assets/art/item_acoustic_decoy.jpg",
     "width": 1024,
     "height": 1024
    }
