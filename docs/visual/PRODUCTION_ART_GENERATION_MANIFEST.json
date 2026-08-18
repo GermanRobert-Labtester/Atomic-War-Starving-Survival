@@ -6434,7 +6434,14 @@
   "aspect_ratio": "head/shoulder portrait",
   "alpha_requirement": "opaque",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "crayon",
+    "file_path": "assets/art/crayon.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for NPC-Portrait 'npc_mattis_cray', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -16734,6 +16741,12 @@
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
+   {
+    "stem": "industrial_bleach",
+    "file_path": "assets/art/industrial_bleach.jpg",
+    "width": 1024,
+    "height": 1024
+   },
    {
     "stem": "bearing_set_industrial",
     "file_path": "assets/art/bearing_set_industrial.jpg",
@@ -33655,6 +33668,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "acoustic_foam_panel",
+    "file_path": "assets/art/acoustic_foam_panel.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "bunker_solar_panel_array",
     "file_path": "assets/art/bunker_solar_panel_array.jpg",
     "width": 1024,
@@ -33735,6 +33754,12 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "ammonia_tank",
+    "file_path": "assets/art/ammonia_tank.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "item_ammonia",
     "file_path": "assets/art/item_ammonia.jpg",
     "width": 1024,
@@ -33743,6 +33768,12 @@
    {
     "stem": "ui_icon_oxygen_tank_level",
     "file_path": "assets/art/ui_icon_oxygen_tank_level.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "halon_tank",
+    "file_path": "assets/art/halon_tank.jpg",
     "width": 1024,
     "height": 1024
    }
@@ -34073,7 +34104,14 @@
   "aspect_ratio": "1:1 generic",
   "alpha_requirement": "transparent",
   "art_direction_profile": "ashfall_2d_survival_gouache",
-  "reference_assets": [],
+  "reference_assets": [
+   {
+    "stem": "crayon",
+    "file_path": "assets/art/crayon.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
   "semantic_description": "A 2D painted icon for Inventory-Item 'crayon', readable at icon scale (~64\u00d764).",
   "required_objects": [],
   "forbidden_objects": [
@@ -34748,8 +34786,20 @@
   "art_direction_profile": "ashfall_2d_survival_gouache",
   "reference_assets": [
    {
+    "stem": "halon_tank",
+    "file_path": "assets/art/halon_tank.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
     "stem": "ui_icon_oxygen_tank_level",
     "file_path": "assets/art/ui_icon_oxygen_tank_level.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ammonia_tank",
+    "file_path": "assets/art/ammonia_tank.jpg",
     "width": 1024,
     "height": 1024
    }
