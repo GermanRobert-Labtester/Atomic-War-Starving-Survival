@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvqjvqjvqjvqjvqjvqjvqj"]
 
-[ext_resource type="Texture2D" uid="uid://bvqjvqjvqjvqjvqjvqjvqj" path="res://assets/art/item_wasteland_soap.jpg" id="1_4vqjvqj"]
+[ext_resource type="Texture2D" uid="uid://bvqjvqjvqjvqjvqjvqjvqj" path="res://assets/art/bunker_map_root.jpg" id="1_4vqjvqj"]
 
 [node name="WastelandMap" type="Node2D"]
 position = Vector2(0, 0)

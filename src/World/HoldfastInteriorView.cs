@@ -1,5 +1,7 @@
 using Godot;
+using System;
 using System.Collections.Generic;
+using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp.World
 {
@@ -8,29 +10,97 @@ namespace AtomicWar.GodotApp.World
         [Signal]
         public delegate void RoomSelectedEventHandler(string roomId);
 
-        public void Initialize()
+        private SurvivorsHostSession _survivors = null!;
+        private List<SurvivorActorView> _survivorActors = new List<SurvivorActorView>();
+
+        public HoldfastInteriorView()
         {
+            // Self-contained: create the container nodes so this view works both
+            // when instanced from HoldfastInterior.tscn and when created in code
+            // (e.g. embedded in the ShelterPanel viewport).
+            if (!HasNode("SurvivorActors"))
+                AddChild(new Node2D { Name = "SurvivorActors" });
+            if (!HasNode("RoomHotspots"))
+                AddChild(new Node2D { Name = "RoomHotspots" });
+        }
+
+        public void Initialize(SurvivorsHostSession survivors)
+        {
+            _survivors = survivors;
+
+            ClearExistingSurvivors();
             PopulateSurvivors();
             PopulateRoomHotspots();
+            UpdateSurvivorPositions();
+        }
+
+        public void UpdateSurvivorPositions()
+        {
+            if (_survivors == null)
+                return;
+
+            foreach (var actor in _survivorActors)
+            {
+                UpdateSurvivorActor(actor);
+            }
+        }
+
+        private void ClearExistingSurvivors()
+        {
+            var survivorActorsNode = GetNode<Node2D>("SurvivorActors");
+            foreach (var actor in _survivorActors)
+            {
+                if (actor != null && actor.IsInsideTree())
+                    survivorActorsNode.RemoveChild(actor);
+            }
+            _survivorActors.Clear();
         }
 
         private void PopulateSurvivors()
         {
-            var survivorData = new[]
-            {
-                new { Id = "survivor_dr_sarah_chen", DisplayName = "Dr. Sarah Chen", PositionX = 200, PositionY = 500 },
-                new { Id = "survivor_gunner_mikhail", DisplayName = "Gunner Mikhail", PositionX = 400, PositionY = 500 },
-                new { Id = "elena_vasquez", DisplayName = "Elena Vasquez", PositionX = 600, PositionY = 500 }
-            };
+            if (_survivors == null)
+                return;
 
-            foreach (var survivor in survivorData)
+            var survivorActorsNode = GetNode<Node2D>("SurvivorActors");
+
+            // Clear existing first
+            foreach (var actor in _survivorActors)
             {
-                var actor = new SurvivorActorView();
-                actor.SurvivorId = survivor.Id;
-                actor.Label.Text = survivor.DisplayName;
-                actor.Position = new Vector2(survivor.PositionX, survivor.PositionY);
-                GetNode<Node2D>("SurvivorActors").AddChild(actor);
+                if (actor != null && actor.IsInsideTree())
+                    survivorActorsNode.RemoveChild(actor);
             }
+            _survivorActors.Clear();
+
+            // Only show first 4 survivors to prevent overcrowding and "stacked pizza" effect
+            int maxSurvivors = Math.Min(_survivors.RosterState.Count, 4);
+            for (int i = 0; i < maxSurvivors; i++)
+            {
+                var survivorState = _survivors.RosterState[i];
+                if (survivorState == null || string.IsNullOrEmpty(survivorState.Id) || !survivorState.IsAliveState)
+                    continue;
+
+                var actor = new SurvivorActorView();
+                actor.SurvivorId = survivorState.Id;
+                actor.Label.Text = FormatSurvivorName(survivorState.Id);
+                actor.Position = GetStartingPositionForSurvivor(i);
+                survivorActorsNode.AddChild(actor);
+                _survivorActors.Add(actor);
+            }
+        }
+
+        private Vector2 GetStartingPositionForSurvivor(int index)
+        {
+            // Distribute survivors horizontally across the viewport with proper spacing
+            // Viewport is 760x420, so distribute from left to right with margin
+            int x = 100 + (index * 120);  // More compact spacing
+            int y = 320;  // Center vertically in the viewport
+            return new Vector2(x, y);
+        }
+
+        private string FormatSurvivorName(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return "Unknown";
+            return System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(id.Replace('_', ' '));
         }
 
         private void PopulateRoomHotspots()
@@ -53,9 +123,27 @@ namespace AtomicWar.GodotApp.World
             }
         }
 
+        private void UpdateSurvivorActor(SurvivorActorView actor)
+        {
+            if (_survivors == null || string.IsNullOrEmpty(actor.SurvivorId))
+                return;
+
+            var survivorState = _survivors.Find(actor.SurvivorId);
+            if (survivorState == null || !survivorState.IsAliveState)
+            {
+                actor.Visible = false;
+                return;
+            }
+
+            var rad = _survivors.RadStateFor(actor.SurvivorId);
+            actor.Visible = true;
+            actor.UpdateFromSurvivor(survivorState, rad);
+        }
+
         private void OnRoomClicked(string roomId)
         {
             EmitSignal(SignalName.RoomSelected, roomId);
+            GD.Print($"[HoldfastInterior] Room clicked: {roomId}");
         }
     }
 }

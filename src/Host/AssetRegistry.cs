@@ -638,10 +638,8 @@ namespace AtomicWar.GodotApp
                 ("blood_bag",             "item",    "item_blood_bag",              false),
                 ("encrypted_drive",       "item",    "item_encrypted_drive",        false),
                 ("faraday_pack",          "item",    "item_faraday_pack",           false),
-                // Phase 13 baseline: cigarette_pack_sealed was expected to be
-                // missing and tagged as such; Phase 14 re-classifies this row
-                // as `expectMissing: true` until a real asset ships.
-                ("cigarette_pack_sealed", "item",    "item_cigarette_pack_sealed",  true),
+                // Phase 14: the sealed cigarette pack asset has shipped.
+                ("cigarette_pack_sealed", "item",    "cigarette_pack_sealed",        false),
                 ("iodine_pills",          "item",    "iodine_pills",                false),
                 ("geiger_counter",        "item",    "geiger_counter",              false),
             };

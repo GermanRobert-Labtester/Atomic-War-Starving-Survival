@@ -18,6 +18,44 @@ If a task seems to require violating any of the above, stop and ask the user.
 
 ---
 
+## MCP CONNECTION REGISTRY — DO NOT REDISCOVER
+
+The project owner already maintains the following MCP connections. Treat this section as the canonical routing registry for every AI client/agent working on ASHFALL. **Do not waste task time rediscovering, reinstalling, or re-authenticating these MCPs before first use.**
+
+| Canonical MCP alias | Connection | Primary use in ASHFALL | Do not use for |
+|---|---|---|---|
+| `composio` | **Composio MCP** | Connected SaaS/tool actions, external workspace operations, integration workflows, and app-specific automation exposed through Composio | Core gameplay logic, local code/search when native repo tools are available, or storing credentials in the repo |
+| `google-stitch` | **Google Stitch MCP** | UI/UX ideation, screen/layout generation, interaction mockups, visual variants, and design handoff for Godot UI work | Authoritative gameplay/data decisions, direct edits to `Ashfall.Core`, or replacing the project design system without review |
+
+### MCP operating rules
+
+1. **Assume both connections are preconfigured and authorized by the project owner.** Start with the requested MCP action/tool call; do not begin by searching the web, shell, dotfiles, or repository for connection details.
+2. **Tool enumeration is allowed only when the current client requires it.** If an agent must call `list_tools`, `list_resources`, or equivalent to learn the exact exposed function names, do that once and proceed. That is capability discovery, not connection rediscovery.
+3. **Never request, print, persist, or commit MCP credentials/tokens.** Secrets belong to the user's MCP/client configuration, never `AGENTS.md`, source files, logs, prompts, or JSON catalogs.
+4. **Do not install duplicate MCP servers.** If `composio` or `google-stitch` is unavailable in a particular client, report the unavailable connection clearly. Only troubleshoot/reconnect after an actual failed invocation or explicit user request.
+5. **Prefer the MCP over manual browser work when its domain matches the task.** Example: use Google Stitch for UI mockup/design generation instead of manually reconstructing a design service; use Composio for a connected external app workflow instead of asking the user to copy data between services.
+6. **MCP output is not project authority.** Stitch designs are proposals until reconciled with the existing Godot theme, responsive layout rules, accessibility, and runtime state. Composio-returned external data must not silently override `Assets/StreamingAssets/Data/`.
+7. **Respect task mode.** A READ-ONLY/audit task stays read-only even if an MCP can write. Never use an MCP write action to bypass repository or user constraints.
+8. **Use the canonical aliases in plans and handoffs.** Refer to these connections as `composio` and `google-stitch` so downstream agents know which MCP is intended even if their client exposes a different internal tool prefix.
+
+### MCP routing shorthand
+
+- **UI concept / new screen / layout exploration** → `google-stitch` first, then implement approved output in Godot `src/UI/` / `.tscn` using existing theme/components.
+- **External app / connected service / automation workflow** → `composio` first.
+- **Repository code, tests, JSON authority, Godot scenes** → native repo/editor tools first; MCP only when it adds a specific external capability.
+- **Verification** → always the canonical `dotnet` + `godot --headless` pipeline below; MCP output never substitutes for tests.
+
+### Failure policy
+
+If an MCP invocation fails because the server/tool is missing, disconnected, or auth-expired:
+
+1. record the exact failure concisely;
+2. do not repeatedly probe alternate endpoints;
+3. continue with non-MCP work if possible;
+4. ask for reconnection only when that MCP capability is actually required to finish the task.
+
+---
+
 ## STACK
 
 | Layer            | Engine / Format             | Location                                  | Namespace           | Target          |
@@ -171,7 +209,7 @@ Rule: every public system raises C# events on state change (for UI + save). Use 
 4. **RANGES** — `minDay`/`maxDay` pairs must be ordered.
 5. **UNIQUENESS** — no duplicate definition ids within one file.
 
-Run with: `godot --headless --path . -- --data-integrity-selftest` (94 catalogs, 0 errors today).
+Run with: `godot --headless --path . -- --data-integrity-selftest` (must report 0 errors).
 
 **ID rules:**
 - snake_case ids everywhere. Never invent an id outside the master list.
@@ -247,7 +285,7 @@ Known issues:
 Report PASS/FAIL for each before claiming done.
 
 ```
-1. dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # Must compile (currently green: HoldfastTradeSessionTests, 1934/1934 pass)
+1. dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # Must compile cleanly
 2. dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj     # All tests pass
 3. dotnet build Ashfall.csproj                                  # Godot host: 0 errors, 0 warnings
 4. godot --headless --path . -- --data-integrity-selftest       # Catalog integrity: 0 errors
@@ -346,75 +384,17 @@ Any system introducing ≥2 new coupled variables must be implemented by one too
   tests unless the user explicitly asks for Unity to be run. Report PASS/FAIL before claiming done.
 - Keep changes small and reviewable. One system per task.
 
-ATOMIC-SURVIVAL DOMAIN (the needs/hazards this game is about):
-needs: hunger, thirst, fatigue, warmth, morale, RADIATION (accumulates), HEALTH
-hazards: fallout zones, fallout storms, nuclear-winter cold, irradiated water/food,
-         EMP/electronics failure, mutated flora/fauna, chronic illness (long-term rad)
-items: dosimeter, geiger counter, iodine pills, rad-away/anti-rad, gas mask,
-       hazmat suit (degrading), water filter, fuel, air filter (shelter), clean water
-shelter: bunker with radiation shielding level + air-filtration that degrades
+---
 
-WORKFLOW PER TASK:
-1) Restate goal in 2 lines. 2) List files you'll touch/create. 3) Implement.
-4) Verify (compile/test). 5) Summarize + give the exact next prompt to run.
+## AI CLIENT / CLOUD RUNNER RULE
 
-CROSS-TOOL QA RULE: any system that introduces >=2 new coupled variables MUST be
-implemented by one tool and reviewed/tested by a DIFFERENT tool (see Prompt #26).
-The reviewer may NOT see the implementer's reasoning — only the diff + the spec —
-so it reviews the CODE, not the story the implementer told itself.
+All AI clients and cloud runners — Cursor, Claude, Gemini, Codex, local agents, or others — follow the same project authority:
 
-## Cursor Cloud specific instructions
+- active engine: **Godot 4.7+ C#**;
+- verification: **`dotnet` + `godot --headless`**;
+- Core truth: **`Assets/Ashfall.Core/`**;
+- data truth: **`Assets/StreamingAssets/Data/`**;
+- legacy Unity tree: **read-only unless the user explicitly requests Unity work in that message**;
+- MCP routing: use the canonical `composio` / `google-stitch` registry above instead of rediscovering connections.
 
-This is a **Unity 6 LTS (`6000.5.5f1`)** project. There is no npm/pip/dotnet layer;
-Unity itself compiles the C#, resolves packages (`Packages/manifest.json`), and runs
-the tests. The startup update script installs the Unity Editor to
-`~/Unity/Hub/Editor/6000.5.5f1/Editor/Unity` (matches the path in `docs/CI.md`) plus
-the Linux runtime libs it needs. Refer to `README.md` ("Verify") and `docs/CI.md`
-for the canonical compile/test commands; only the non-obvious caveats are below.
-
-### A Unity license is REQUIRED and is not bundled
-
-Every Unity operation (compile, EditMode/PlayMode tests, player build, editor play)
-needs an activated license. Without one the editor prints
-`No valid Unity Editor license found. Please activate your license.` and exits 198.
-Provide these as **secrets** (see `docs/CI.md`; obtain via https://game.ci/docs/github/activation):
-- `UNITY_EMAIL`, `UNITY_PASSWORD`
-- `UNITY_LICENSE` (full `.ulf` contents, Personal) **or** `UNITY_SERIAL` (Plus/Pro)
-
-Activate once per VM before running anything, e.g. Personal (write the `.ulf`, then
-Unity picks it up), or serial-based:
-`Unity -batchmode -nographics -quit -serial "$UNITY_SERIAL" -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD" -logFile -`.
-Note: a `.alf`/`.ulf` produced by manual activation is tied to the machine that made
-it; cloud VMs are ephemeral, so prefer credential/serial activation or a `.ulf` that
-your Unity account can re-activate.
-
-### Running compile / tests / build (after activation)
-
-Use `xvfb-run` for anything that may touch graphics; batchmode+nographics is fine for
-compile and tests. Canonical commands live in `README.md`/`docs/CI.md`. Gotchas:
-- **Do NOT combine `-runTests` with `-quit`** — it kills the editor before results are
-  written and exits 0 with an empty result file (already called out in `README.md`).
-- EditMode and PlayMode are **separate** `-testPlatform` runs; run both.
-- First editor open on a fresh checkout populates `Library/` (long, one-time); it is
-  gitignored. A warm `Library/` speeds up subsequent runs.
-- `Gameplay.unity` is generated by `Tools/ASHFALL/Build Gameplay Scene`
-  (`buildMethod AtomicWar._Game.Editor.GameplaySceneBuilder.BuildGameplayScene`); data
-  catalogs by `AtomicWar._Game.Editor.CatalogGenerator.GenerateAll`. Don't hand-edit
-  generated assets — regenerate.
-
-### Runnable without a license
-
-- The CI "Data Validation Gate" (StreamingAssets JSON syntax + ProjectVersion pin) is
-  pure Python and needs no Unity/license — handy for a quick sanity check.
-- **Offline Roslyn compile (limited):** the editor ships a usable compiler at
-  `Editor/Data/DotNetSdk/sdk/*/Roslyn/bincore/csc.dll` + BCL under
-  `Editor/Data/UnityReferenceAssemblies/unity-4.8-api` + `UnityEngine` modules.
-  Leaf assemblies (e.g. `AtomicWar._Game.Utilities`, then `Survivors`) can be
-  compiled without activating a license. This does **not** replace `-runTests` or
-  a player build — packages are unresolved, and UnityEngine.Object "fake null"
-  blocks running ScriptableObject-based systems under plain mono. Use it only as
-  a syntax/API smoke check when no license is available.
-- Full EditMode/PlayMode suites, scene play, and Linux player builds are **out of
-  scope** until Unity license secrets are provided.
-- All AI-generated images, videos, audio, and 3D assets must be saved in `generated_AIassets/` at the game root.
-- Image generation: `gemini-3-pro-image-preview` (nano banana pro) at 1024×1024. Never `gemini-2.5-flash-image-preview`. Never request 2048×2048.
+Client-specific bootstrap instructions must never override the non-negotiable project rules in this file.

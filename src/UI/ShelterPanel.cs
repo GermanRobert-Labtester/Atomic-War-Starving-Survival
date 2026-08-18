@@ -5,6 +5,7 @@ using Ashfall.Core.Shelter;
 using Ashfall.Core.UI;
 using Ashfall.Core.World;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.World;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
@@ -34,6 +35,13 @@ namespace AtomicWar.GodotApp.UI
         private SurvivorsHostSession? _survivorsHost;
         private WorldHostSession? _worldHost;
         private InventoryHostSession? _inventoryHost;
+
+        // 2D shelter layout viewport — the visual anchor. Hosts a HoldfastInteriorView
+        // whose survivor actors reflect the authoritative roster, so opening the shelter
+        // shows rooms + occupants as part of the same simulation.
+        private SubViewportContainer? _interiorViewportContainer;
+        private SubViewport? _interiorViewport;
+        private HoldfastInteriorView? _interiorView;
 
         public bool IsBound => _survivorsHost != null && _worldHost != null;
         public int RenderedStructureCount => _structureList?.GetChildCount() ?? 0;
@@ -71,6 +79,13 @@ namespace AtomicWar.GodotApp.UI
                 _structureList.AddChild(AshfallUiHelpers.MakeMetadata("No structural state available."));
                 _upgradesList.AddChild(AshfallUiHelpers.MakeMetadata("No maintenance state available."));
                 return;
+            }
+
+            // Keep the 2D layout anchor in sync with the authoritative roster.
+            if (_interiorView != null && _survivorsHost != null)
+            {
+                _interiorView.Initialize(_survivorsHost);
+                _interiorView.UpdateSurvivorPositions();
             }
 
             var materialSave = _survivorsHost!.Shelter.CaptureState();
@@ -187,6 +202,41 @@ namespace AtomicWar.GodotApp.UI
             var contentBox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingMd);
             contentBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             scrollMargin.AddChild(contentBox);
+
+            // ── 2D shelter layout anchor ──
+            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("SHELTER LAYOUT"));
+
+            // Use a proper container with explicit sizing and anchoring
+            var viewportWrapper = new MarginContainer();
+            viewportWrapper.AddThemeConstantOverride("margin_left", DesignTheme.SpacingSm);
+            viewportWrapper.AddThemeConstantOverride("margin_top", DesignTheme.SpacingSm);
+            viewportWrapper.AddThemeConstantOverride("margin_right", DesignTheme.SpacingSm);
+            viewportWrapper.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingSm);
+            viewportWrapper.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            viewportWrapper.SizeFlagsVertical = SizeFlags.ShrinkEnd;
+            contentBox.AddChild(viewportWrapper);
+
+            _interiorViewportContainer = new SubViewportContainer
+            {
+                CustomMinimumSize = new Vector2(760, 420),
+                Stretch = true,
+                SizeFlagsHorizontal = SizeFlags.ExpandFill,
+                SizeFlagsVertical = SizeFlags.ShrinkEnd
+            };
+            viewportWrapper.AddChild(_interiorViewportContainer);
+
+            _interiorViewport = new SubViewport
+            {
+                Size = new Vector2I(760, 420),
+                RenderTargetUpdateMode = SubViewport.UpdateMode.Always,
+                Disable3D = true
+            };
+            _interiorViewportContainer.AddChild(_interiorViewport);
+
+            _interiorView = new HoldfastInteriorView();
+            _interiorViewport.AddChild(_interiorView);
+
+            contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("SHELTER OVERVIEW"));
             _statusList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);

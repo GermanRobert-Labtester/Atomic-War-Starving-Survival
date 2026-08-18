@@ -130,6 +130,12 @@ namespace AtomicWar.GodotApp
             if (_history.Count > 32)
                 _history.RemoveAt(0);
 
+            // The broadcast is the latest intercept: mirror Listen() so the
+            // receiver's LastIntercept reflects the beacon just sent. This keeps
+            // the shelter-operations gate green and makes the UI's "latest
+            // intercept" readout show the outgoing beacon, not stale dead air.
+            LastIntercept = beacon;
+
             LastEvent = $"Emergency beacon broadcast on {CurrentFrequency:0.00} MHz.";
             AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayVoiceOver("vo_kind_parley");
             BroadcastIntercepted?.Invoke(beacon, "vo_kind_parley");
