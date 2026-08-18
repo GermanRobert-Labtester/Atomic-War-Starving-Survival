@@ -5,13 +5,16 @@ using Ashfall.Core.Shelter;
 using Ashfall.Core.UI;
 using Ashfall.Core.World;
 using AtomicWar.GodotApp.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Shelter panel.
     /// Shows shelter status, radiation shielding, air filtration, structural integrity, and shelter upgrades
-    /// using tactile 9-slice framing and structured data cards.
+    /// using tactile 9-slice framing and structured data cards. Wraps content
+    /// in the ASHFALL Dashboard Shell so a sidebar + status rail carry the
+    /// navigation and headline metrics that the Stitch reference requires.
     /// </summary>
     public partial class ShelterPanel : Control
     {
@@ -21,6 +24,12 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _radiationData = null!;
         private VBoxContainer _structureList = null!;
         private VBoxContainer _upgradesList = null!;
+
+        // Dashboard shell + reusable chrome. Owned by this panel; bound to
+        // real Core state in RefreshView synchronously with the section lists.
+        private AshfallDashboardShell _shell = null!;
+        private AshfallStatusRail? _statusRail;
+        private AshfallSidebar? _sidebar;
 
         private SurvivorsHostSession? _survivorsHost;
         private WorldHostSession? _worldHost;
@@ -43,6 +52,8 @@ namespace AtomicWar.GodotApp.UI
         public void RefreshView()
         {
             if (_statusList == null || _radiationData == null || _structureList == null || _upgradesList == null) return;
+
+            RefreshStatusRail();
 
             while (_statusList.GetChildCount() > 0)
                 _statusList.RemoveChild(_statusList.GetChild(0));
@@ -137,62 +148,170 @@ namespace AtomicWar.GodotApp.UI
             center.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(center);
 
-            var panel = AshfallUiHelpers.MakePanel(700, 560);
-            center.AddChild(panel);
-
-            var margins = AshfallUiHelpers.MakeMargins(Ashfall.Core.UI.Theme.SpacingMd);
-            panel.AddChild(margins);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            margins.AddChild(vbox);
-
-            var header = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-            var title = AshfallUiHelpers.MakeTitle("SHELTER INTEGRITY & SHIELDING", Ashfall.Core.UI.Theme.FontSizeH2);
-            title.HorizontalAlignment = HorizontalAlignment.Left;
-            title.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-            header.AddChild(title);
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(110, 32);
-            header.AddChild(btnClose);
-            vbox.AddChild(header);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var scroll = new ScrollContainer
+            // Dashboard shell — sidebar provides nav between sub-sections;
+            // status rail holds the headline metrics that the Stitch reference
+            // puts in its SHELTER ENGINEERING header row.
+            _shell = new AshfallDashboardShell(
+                "SHELTER INTEGRITY & SHIELDING", 880, 600);
+            center.AddChild(_shell);
+            _sidebar = _shell.SetSidebar(new[]
             {
-                CustomMinimumSize = new Vector2(660, 440),
-                SizeFlagsVertical = SizeFlags.ExpandFill
-            };
-            vbox.AddChild(scroll);
+                new AshfallSidebar.Item { Id = "overview",  Label = "Overview",        Hint = "SHELTER STATE" },
+                new AshfallSidebar.Item { Id = "shielding", Label = "Shielding",        Hint = "EXPOSURE + BLEED" },
+                new AshfallSidebar.Item { Id = "structure", Label = "Structure",        Hint = "WALLS + SKY" },
+                new AshfallSidebar.Item { Id = "upgrades",  Label = "Maintenance",      Hint = "REPAIR QUEUE" },
+            }, "SHELTER OPS", "overview");
 
-            var contentBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            _statusRail = _shell.SetStatusRail();
+            _statusRail.AddCard("occupants", "OCCUPANTS",     "—", AshfallMetricCard.Criticality.Normal, 130);
+            _statusRail.AddCard("extRad",    "EXT RAD",       "+0 mSv/h", AshfallMetricCard.Criticality.Normal, 140);
+            _statusRail.AddCard("bleed",     "INTERIOR BLEED","0 mSv/h", AshfallMetricCard.Criticality.Normal, 140);
+            _statusRail.AddCard("shieldMin", "WEAKEST SHIELD","—", AshfallMetricCard.Criticality.Normal, 140);
+            _statusRail.AddCard("skyAvg",    "SKY BLEED",     "—", AshfallMetricCard.Criticality.Normal, 140);
+            _statusRail.AddCard("damaged",   "DAMAGED CELLS", "0", AshfallMetricCard.Criticality.Normal, 140);
+
+            _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());
+
+            // Content slot — scroll container with four named sub-sections.
+            var scrollRoot = new ScrollContainer();
+            scrollRoot.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            scrollRoot.SizeFlagsVertical = SizeFlags.ExpandFill;
+            var scrollMargin = new MarginContainer();
+            scrollMargin.AddThemeConstantOverride("margin_left", DesignTheme.SpacingMd);
+            scrollMargin.AddThemeConstantOverride("margin_top", DesignTheme.SpacingMd);
+            scrollMargin.AddThemeConstantOverride("margin_right", DesignTheme.SpacingMd);
+            scrollMargin.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingMd);
+            scrollRoot.AddChild(scrollMargin);
+            _shell.SetContent(scrollRoot);
+
+            var contentBox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingMd);
             contentBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            scroll.AddChild(contentBox);
+            scrollMargin.AddChild(contentBox);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("SHELTER OVERVIEW"));
-            _statusList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            _statusList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             contentBox.AddChild(_statusList);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("RADIATION SHIELDING"));
-            _radiationData = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            _radiationData = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             contentBox.AddChild(_radiationData);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("STRUCTURAL WALL & SKY ARMOR CELLS"));
-            _structureList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            _structureList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             contentBox.AddChild(_structureList);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("MAINTENANCE & UPGRADE QUEUE"));
-            _upgradesList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            _upgradesList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             contentBox.AddChild(_upgradesList);
 
+            if (_sidebar != null)
+            {
+                _sidebar.OnSelected += id =>
+                {
+                    if (id == "overview" && _statusList != null)
+                        ScrollToChild(scrollRoot, _statusList);
+                    else if (id == "shielding" && _radiationData != null)
+                        ScrollToChild(scrollRoot, _radiationData);
+                    else if (id == "structure" && _structureList != null)
+                        ScrollToChild(scrollRoot, _structureList);
+                    else if (id == "upgrades" && _upgradesList != null)
+                        ScrollToChild(scrollRoot, _upgradesList);
+                };
+            }
+
             RefreshView();
+        }
+
+        private static void ScrollToChild(ScrollContainer scroll, Control child)
+        {
+            if (scroll == null || child == null) return;
+            try
+            {
+                float targetOffset = 0f;
+                Node walker = child;
+                while (walker != null && walker != scroll)
+                {
+                    if (walker is Control w && walker != scroll)
+                        targetOffset += w.Position.Y;
+                    walker = walker.GetParent();
+                }
+                if (targetOffset > 0)
+                    scroll.ScrollVertical = (int)Math.Max(0, targetOffset - 8);
+            }
+            catch
+            {
+                // best-effort
+            }
+        }
+
+        /// <summary>
+        /// Populate the top status rail from Core shelter / world state. The
+        /// values map onto the headline metrics the Stitch SHELTER ENGINEERING
+        /// reference puts in its header row.
+        /// </summary>
+        private void RefreshStatusRail()
+        {
+            if (_statusRail == null) return;
+
+            if (!IsBound)
+            {
+                _statusRail.Set("occupants", "—",            AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("extRad",    "+0 mSv/h",      AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("bleed",     "0 mSv/h",       AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("shieldMin", "—",             AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("skyAvg",    "—",             AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("damaged",   "0",             AshfallMetricCard.Criticality.Normal);
+                return;
+            }
+
+            var materialSave = _survivorsHost!.Shelter.CaptureState();
+            var skySave = _worldHost!.SkyArmor.CaptureState();
+            int living = _survivorsHost.RosterState.Count(s => s != null && s.IsAliveState);
+            int cohort = _survivorsHost.RosterState.Count;
+            float weakestMaterial = _survivorsHost.Shelter.GetWeakestCeilingAttenuation();
+            float skyAverage = AverageSkyBleed(skySave);
+            float exteriorRad = _worldHost.Weather.OutdoorRadModifier;
+            float bleed = _survivorsHost.Shelter.GetRadiationBleed(exteriorRad);
+            int damaged = 0;
+            foreach (var c in skySave.cells ?? new System.Collections.Generic.List<CeilingCellArmor>())
+                if (c.currentDurability < 100f) damaged++;
+
+            AshfallMetricCard.Criticality extCrit =
+                exteriorRad < 25 ? AshfallMetricCard.Criticality.Normal
+                : exteriorRad < 50 ? AshfallMetricCard.Criticality.Caution
+                : exteriorRad < 100 ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Critical;
+
+            AshfallMetricCard.Criticality bleedCrit =
+                bleed < 5 ? AshfallMetricCard.Criticality.Normal
+                : bleed < 15 ? AshfallMetricCard.Criticality.Caution
+                : bleed < 30 ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Critical;
+
+            AshfallMetricCard.Criticality shieldCrit =
+                weakestMaterial >= 0.9f ? AshfallMetricCard.Criticality.Normal
+                : weakestMaterial >= 0.7f ? AshfallMetricCard.Criticality.Caution
+                : weakestMaterial >= 0.4f ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Critical;
+
+            AshfallMetricCard.Criticality damagedCrit =
+                damaged == 0 ? AshfallMetricCard.Criticality.Normal
+                : damaged <= 2 ? AshfallMetricCard.Criticality.Caution
+                : damaged <= 5 ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Critical;
+
+            _statusRail.Set("occupants", $"{living}/{cohort}", AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("extRad",    $"+{exteriorRad:0} mSv/h",   extCrit);
+            _statusRail.Set("bleed",     $"{bleed:0} mSv/h",            bleedCrit);
+            _statusRail.Set("shieldMin", $"{weakestMaterial:P0}",       shieldCrit);
+            _statusRail.Set("skyAvg",    $"{skyAverage:0.000}",          AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("damaged",   $"{damaged}",                   damagedCrit);
         }
 
         public void Open()

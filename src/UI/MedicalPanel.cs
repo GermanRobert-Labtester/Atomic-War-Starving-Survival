@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using Godot;
 using Ashfall.Core.Medical;
-using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -21,6 +21,12 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _healthStats = null!;
         private VBoxContainer _treatmentList = null!;
         private VBoxContainer _supplyList = null!;
+
+        // Dashboard shell + reusable chrome. Owned by this panel; bound to
+        // real Core state in RefreshView.
+        private AshfallDashboardShell _shell = null!;
+        private AshfallStatusRail? _statusRail;
+        private AshfallSidebar? _sidebar;
 
         private MedicalHostSession? _medicalHost;
         private SurvivorsHostSession? _survivorsHost;
@@ -79,6 +85,8 @@ namespace AtomicWar.GodotApp.UI
         public void RefreshView()
         {
             if (_healthStats == null || _treatmentList == null || _supplyList == null) return;
+
+            RefreshStatusRail();
 
             ClearChildren(_healthStats);
             ClearChildren(_treatmentList);
@@ -368,6 +376,98 @@ namespace AtomicWar.GodotApp.UI
             return count;
         }
 
+        /// <summary>
+        /// Populates the top status rail from Core state. Posts cohort, avg HP,
+        /// max dose, active treatment count, and vigil/resting breaks into the
+        /// five metric chips. Bound to no-host + no-survivors fallback values
+        /// so the rail is always inspectable.
+        /// </summary>
+        private void RefreshStatusRail()
+        {
+            if (_statusRail == null) return;
+
+            int cohort = 0, living = 0;
+            float hpTotal = 0f;
+            float hpMaxTotal = 1f;
+            float maxDose = 0f;
+            if (_survivorsHost != null)
+            {
+                foreach (var s in _survivorsHost.RosterState)
+                {
+                    if (s == null) continue;
+                    cohort++;
+                    if (s.IsAliveState)
+                    {
+                        living++;
+                        hpTotal += Math.Max(0, s.Health);
+                        hpMaxTotal += Math.Max(1, s.MaxHealthCap);
+                    }
+                    float dose = s.Health == 0 ? 0f : (s.Health > 0 ? 1f : 0f);
+                    // Per-survivor dose is read from the survivors' save slice.
+                }
+                if (_survivorsHost.CaptureSave()?.survivors != null)
+                {
+                    foreach (var slice in _survivorsHost.CaptureSave().survivors)
+                    {
+                        if (slice == null) continue;
+                        if (slice.radiationDose > maxDose) maxDose = slice.radiationDose;
+                    }
+                }
+            }
+
+            float avgHp = cohort > 0 && hpMaxTotal > 0 ? (hpTotal / hpMaxTotal) * 100f : 0f;
+            int activeTx = 0;
+            if (_medicalHost != null)
+            {
+                foreach (var entry in _medicalHost.Engine.Ledger)
+                    if (entry.Value != null) activeTx += entry.Value.Count;
+            }
+
+            AshfallMetricCard.Criticality cohortCrit =
+                cohort == 0 ? AshfallMetricCard.Criticality.Normal
+                : living == cohort ? AshfallMetricCard.Criticality.Normal
+                : living >= (cohort * 0.75f) ? AshfallMetricCard.Criticality.Caution
+                : AshfallMetricCard.Criticality.Warn;
+
+            AshfallMetricCard.Criticality hpCrit =
+                avgHp >= 75 ? AshfallMetricCard.Criticality.Normal
+                : avgHp >= 50 ? AshfallMetricCard.Criticality.Caution
+                : avgHp > 0 ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Critical;
+
+            AshfallMetricCard.Criticality doseCrit =
+                maxDose < 25 ? AshfallMetricCard.Criticality.Normal
+                : maxDose < 50 ? AshfallMetricCard.Criticality.Caution
+                : maxDose < 100 ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Critical;
+
+            _statusRail.Set("cohort",   $"{living}/{cohort}",  cohortCrit);
+            _statusRail.Set("avgHp",    $"{avgHp:0}%",          hpCrit);
+            _statusRail.Set("doseMax",  $"{maxDose:0} mSv",     doseCrit);
+            _statusRail.Set("activeTx", $"{activeTx}",          AshfallMetricCard.Criticality.Normal);
+
+            // Vigil: state from the medical engine (the underlying wording is
+            // kept verbatim so the host doesn't lose semantics).
+            string vigilState = "STANDBY";
+            AshfallMetricCard.Criticality vigilCrit = AshfallMetricCard.Criticality.Caution;
+            if (_medicalHost != null)
+            {
+                var line = _medicalHost.VigilStatusLine();
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    string upper = line.ToUpperInvariant();
+                    vigilState = upper.Length > 18 ? upper.Substring(0, 18) : upper;
+                    if (upper.Contains("CRITICAL") || upper.Contains("EMERGENCY"))
+                        vigilCrit = AshfallMetricCard.Criticality.Critical;
+                    else if (upper.Contains("WARN") || upper.Contains("DAMAGE"))
+                        vigilCrit = AshfallMetricCard.Criticality.Warn;
+                    else if (upper.Contains("CLEAR") || upper.Contains("HOLDING"))
+                        vigilCrit = AshfallMetricCard.Criticality.Normal;
+                }
+            }
+            _statusRail.Set("vigil", vigilState, vigilCrit);
+        }
+
         private static void ClearChildren(Node parent)
         {
             while (parent.GetChildCount() > 0)
@@ -391,57 +491,103 @@ namespace AtomicWar.GodotApp.UI
             center.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(center);
 
-            var panel = AshfallUiHelpers.MakePanel(720, 600);
-            center.AddChild(panel);
-
-            var margins = AshfallUiHelpers.MakeMargins(Ashfall.Core.UI.Theme.SpacingMd);
-            panel.AddChild(margins);
-
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            margins.AddChild(vbox);
-
-            var header = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-            var title = AshfallUiHelpers.MakeTitle(
-                "MEDICAL TRIAGE & DEPENDENCY", Ashfall.Core.UI.Theme.FontSizeH2);
-            title.HorizontalAlignment = HorizontalAlignment.Left;
-            title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            header.AddChild(title);
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(110, 32);
-            header.AddChild(btnClose);
-            vbox.AddChild(header);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var scroll = new ScrollContainer
+            // Dashboard shell — sidebar provides nav between sub-sections;
+            // status rail holds the medical vitals that the Stitch reference
+            // puts in its MEDICAL TRIAGE header row.
+            _shell = new AshfallDashboardShell(
+                "MEDICAL TRIAGE & DEPENDENCY", 880, 600);
+            center.AddChild(_shell);
+            _sidebar = _shell.SetSidebar(new[]
             {
-                CustomMinimumSize = new Vector2(680, 480),
-                SizeFlagsVertical = SizeFlags.ExpandFill
-            };
-            vbox.AddChild(scroll);
+                new AshfallSidebar.Item { Id = "health",     Label = "Health",          Hint = "DOSIMETRY + RESP" },
+                new AshfallSidebar.Item { Id = "treatments", Label = "Treatments",      Hint = "DETOX LEDGER" },
+                new AshfallSidebar.Item { Id = "supplies",   Label = "Supplies",        Hint = "MEDICAL STORES" },
+            }, "MEDICAL OPS", "health");
 
-            var contentBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
+            _statusRail = _shell.SetStatusRail();
+            _statusRail.AddCard("cohort",    "COHORT",        "—", AshfallMetricCard.Criticality.Normal, 130);
+            _statusRail.AddCard("avgHp",     "AVG HP",        "—%", AshfallMetricCard.Criticality.Normal, 110);
+            _statusRail.AddCard("doseMax",   "MAX DOSE",      "0 mSv", AshfallMetricCard.Criticality.Normal, 130);
+            _statusRail.AddCard("activeTx",  "ACTIVE TX",     "0", AshfallMetricCard.Criticality.Normal, 110);
+            _statusRail.AddCard("vigil",     "VIGIL",         "STANDBY", AshfallMetricCard.Criticality.Caution, 140);
+
+            _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());
+
+            // Content slot — scroll container with three named sub-sections.
+            var scrollRoot = new ScrollContainer();
+            scrollRoot.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            scrollRoot.SizeFlagsVertical = SizeFlags.ExpandFill;
+            var scrollMargin = new MarginContainer();
+            scrollMargin.AddThemeConstantOverride("margin_left", DesignTheme.SpacingMd);
+            scrollMargin.AddThemeConstantOverride("margin_top", DesignTheme.SpacingMd);
+            scrollMargin.AddThemeConstantOverride("margin_right", DesignTheme.SpacingMd);
+            scrollMargin.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingMd);
+            scrollRoot.AddChild(scrollMargin);
+            _shell.SetContent(new MarginContainer()); // placeholder; replaced below
+            _shell.SetContent(scrollRoot);
+
+            var contentBox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingMd);
             contentBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            scroll.AddChild(contentBox);
+            scrollMargin.AddChild(contentBox);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("SURVIVOR HEALTH, DOSIMETRY & RESPIRATORY"));
-            _healthStats = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            _healthStats = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             _healthStats.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             contentBox.AddChild(_healthStats);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("TREATMENT & DETOXIFICATION LEDGER"));
-            _treatmentList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            _treatmentList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             contentBox.AddChild(_treatmentList);
 
             contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("MEDICAL SUPPLIES ON HAND"));
-            _supplyList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+            _supplyList = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
             contentBox.AddChild(_supplyList);
 
+            if (_sidebar != null)
+            {
+                _sidebar.OnSelected += id =>
+                {
+                    // Anchor each sub-section into view via scroll-to-offset.
+                    if (id == "health" && _healthStats != null)
+                        ScrollToChild(scrollRoot, _healthStats);
+                    else if (id == "treatments" && _treatmentList != null)
+                        ScrollToChild(scrollRoot, _treatmentList);
+                    else if (id == "supplies" && _supplyList != null)
+                        ScrollToChild(scrollRoot, _supplyList);
+                };
+            }
+
             RefreshView();
+        }
+
+        private static void ScrollToChild(ScrollContainer scroll, Control child)
+        {
+            if (scroll == null || child == null) return;
+            // Best-effort: walk the control ancestors summing Position.Y until
+            // we hit the scroll container.
+            try
+            {
+                float targetOffset = 0f;
+                Node walker = child;
+                while (walker != null && walker != scroll)
+                {
+                    if (walker is Control w && walker != scroll)
+                        targetOffset += w.Position.Y;
+                    walker = walker.GetParent();
+                }
+                if (targetOffset > 0)
+                {
+                    scroll.ScrollVertical = (int)Math.Max(0, targetOffset - 8);
+                }
+            }
+            catch
+            {
+                // ignore — scroll happens best-effort
+            }
         }
 
         public void Open()

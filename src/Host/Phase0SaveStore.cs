@@ -56,14 +56,18 @@ namespace AtomicWar.GodotApp
                 var envelope = s_json.Deserialize<Phase0HostSave>(raw);
                 if (envelope != null && envelope.State != null)
                 {
-                    if (!string.IsNullOrEmpty(envelope.Checksum))
+                    // The checksummed envelope is the only Phase-0 format; an
+                    // empty checksum means a malformed new-format save.
+                    if (string.IsNullOrEmpty(envelope.Checksum))
                     {
-                        string actual = SaveChecksum.Compute(envelope);
-                        if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
-                        {
-                            GD.PrintErr("[Phase0] load failed: checksum mismatch (corrupt or foreign save).");
-                            return null;
-                        }
+                        GD.PrintErr("[Phase0] load failed: checksum field missing (corrupt save).");
+                        return null;
+                    }
+                    string actual = SaveChecksum.Compute(envelope);
+                    if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
+                    {
+                        GD.PrintErr("[Phase0] load failed: checksum mismatch (corrupt or foreign save).");
+                        return null;
                     }
                     return envelope.State;
                 }

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://5kffrh1b8v2l"
-path="res://.godot/imported/ammo_deprecated_46x30.jpg-d142b57e75b784bd506a599e04dc47e6.ctex"
+path="res://.godot/imported/ammo_deprecated_46x30.jpg-c4e02b1003bd25bc9b959052743d5545.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/ammo_deprecated_46x30.jpg"
-dest_files=["res://.godot/imported/ammo_deprecated_46x30.jpg-d142b57e75b784bd506a599e04dc47e6.ctex"]
+source_file="res://assets/_quarantine_legacy/ammo_deprecated_46x30.jpg"
+dest_files=["res://.godot/imported/ammo_deprecated_46x30.jpg-c4e02b1003bd25bc9b959052743d5545.ctex"]
 
 [params]
 

@@ -1,0 +1,95 @@
+{
+ "content_id": "survivor_family_adult",
+ "visual_family": "Survivor-Portrait",
+ "subfamily": "Other",
+ "model_hint": "auto",
+ "prompt_template": {
+  "WHAT": "Head-and-shoulders portrait of a single human survivor in worn cold-weather post-apocalyptic clothing.",
+  "STYLE": "2D painted survival-portrait, dry-gouache / charcoal. ASHFALL palette. Same scaling and brushwork as inventory items.",
+  "COMPOSITION": "Subject centred, ~60-70% of canvas. Slightly weathered face, slight off-camera gaze.",
+  "CAMERA": "Eye-level, heads-on. Three-quarter turn optional. Focal length equivalent ~85mm.",
+  "LIGHTING": "Soft single-source key light from upper-left ~30\u00b0, ~85% intensity. Cool rim light from upper-right. No dramatic chiaroscuro.",
+  "PALETTE": "charcoal #2A2A2C, concrete grey #5C5F62, faded blue-grey #708085, rust brown #6E4A2F, dirty bone #B5A88A. Accents limited to muted amber #A26E2C (1-2% of pixels) and subtle cyan-green #4F7461 only for contamination iconography.",
+  "MATERIALS": "Skin naturalistically weathered, no makeup, no glamorisation. Hair charcoal / dark brown / grey. Clothing: charcoal, faded blue-grey, rust brown leather / canvas.",
+  "BACKGROUND": "Soft blurred bunker or forward-station environment. Out-of-focus concrete grey walls, with subtle haze. Not studio backdrop.",
+  "RUNTIME_READABILITY": "Reads at 128\u00d7128 survivor roster card. Silhouette retains character at 64\u00d764.",
+  "NEGATIVE": "no real-world text, letters, or numerals; no logos or watermark; no AI signature glyphs; no anime-style eyes outside portrait family; no fantasy ornament or fleurons; no neon cyberpunk glow borders; no glossy 3D chromatic rendering; no crystalline particles; no stock-photo backdrop; no pristine factory-fresh finish on tools or weapons; no gratuitous gore; no real-country flags; no real brand marks. No rendered UI text \u2014 that is authored in Godot.",
+  "OUTPUT_FORMAT": "512x512 JPG / PNG opaque."
+ },
+ "meta": {
+  "source_catalog": "survivors",
+  "reference_assets": [
+   {
+    "stem": "all_96_named_survivors",
+    "file_path": "assets/art/all_96_named_survivors.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "crazed_survivor",
+    "file_path": "assets/art/crazed_survivor.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "crazed_survivor_hq",
+    "file_path": "assets/art/crazed_survivor_hq.png",
+    "width": 2048,
+    "height": 2048
+   },
+   {
+    "stem": "dying_survivor",
+    "file_path": "assets/art/dying_survivor.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "enc_frozen_family",
+    "file_path": "assets/art/enc_frozen_family.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "lore_faded_family_photograph",
+    "file_path": "assets/art/lore_faded_family_photograph.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "survivor_child",
+    "file_path": "assets/art/survivor_child.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "survivor_female_1",
+    "file_path": "assets/art/survivor_female_1.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
+  "canonical_filename": "survivor_family_adult.jpg",
+  "target_directory": "assets/art/",
+  "alpha_requirement": "opaque",
+  "dimensions": [
+   512,
+   512
+  ],
+  "aspect_ratio": "head/shoulder portrait",
+  "priority_band": "P1",
+  "gameplay_importance": 5.4
+ },
+ "semantic_description": "A 2D painted icon for Survivor-Portrait 'survivor_family_adult', readable at icon scale (~64\u00d764).",
+ "forbidden_objects": [
+  "real-country flag",
+  "real brand mark",
+  "logo",
+  "watermark",
+  "rendered-text label",
+  "neon cyberpunk",
+  "anime-style eyes",
+  "fantasy ornament",
+  "glossy sci-fi glow",
+  "stock-photo backdrop"
+ ]
+}

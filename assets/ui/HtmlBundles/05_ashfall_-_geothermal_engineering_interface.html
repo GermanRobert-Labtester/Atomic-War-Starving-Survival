@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GT-TERMINAL-01 | Ashfall Underground</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#404849",
+                    "inverse-surface": "#e5e2e1",
+                    "surface": "#131313",
+                    "surface-bright": "#393939",
+                    "tertiary": "#8cd2d8",
+                    "primary-fixed": "#bcebef",
+                    "on-primary-container": "#a2d0d4",
+                    "primary-container": "#2d5a5e",
+                    "surface-container-highest": "#353534",
+                    "on-tertiary-fixed-variant": "#004f54",
+                    "tertiary-fixed-dim": "#8cd2d8",
+                    "secondary-container": "#ee9800",
+                    "on-background": "#e5e2e1",
+                    "surface-dim": "#131313",
+                    "surface-container-high": "#2a2a2a",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-secondary": "#472a00",
+                    "primary-fixed-dim": "#a1cfd3",
+                    "secondary-fixed": "#ffddb8",
+                    "on-primary-fixed": "#002022",
+                    "surface-container-low": "#1c1b1b",
+                    "background": "#131313",
+                    "on-surface-variant": "#c0c8c9",
+                    "surface-container": "#201f1f",
+                    "tertiary-container": "#015d63",
+                    "inverse-primary": "#396569",
+                    "surface-tint": "#a1cfd3",
+                    "on-error": "#690005",
+                    "secondary": "#ffb95f",
+                    "on-tertiary-container": "#8dd3d9",
+                    "on-primary-fixed-variant": "#1f4d51",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "inverse-on-surface": "#313030",
+                    "tertiary-fixed": "#a8eef5",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-secondary-container": "#5b3800",
+                    "on-primary": "#00363a",
+                    "surface-variant": "#353534",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "outline": "#8a9293",
+                    "error": "#ffb4ab",
+                    "error-container": "#93000a",
+                    "on-tertiary": "#00363a",
+                    "primary": "#a1cfd3",
+                    "on-tertiary-fixed": "#002022",
+                    "on-surface": "#e5e2e1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "container-max": "1440px",
+                    "margin-desktop": "32px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "data-num": ["JetBrains Mono"],
+                    "headline-lg": ["Bebas Neue"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-lg": ["JetBrains Mono"],
+                    "display-lg": ["Bebas Neue"],
+                    "headline-sm": ["Bebas Neue"],
+                    "body-md": ["JetBrains Mono"],
+                    "headline-md": ["Bebas Neue"]
+            },
+            "fontSize": {
+                    "data-num": ["20px", { "lineHeight": "20px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                    "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }],
+                    "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "500" }],
+                    "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                    "headline-sm": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                    "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+                    "headline-md": ["32px", { "lineHeight": "32px", "fontWeight": "400" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* CRT Scanline Overlay */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 999;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        /* Subtle Flicker */
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            5% { opacity: 0.85; }
+            10% { opacity: 0.95; }
+            15% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+        body {
+            animation: flicker 0.15s infinite alternate;
+        }
+
+        /* Tactical Glows */
+        .glow-primary { box-shadow: 0 0 4px #a1cfd3; }
+        .glow-secondary { box-shadow: 0 0 4px #ffb95f; }
+        .glow-error { box-shadow: 0 0 4px #ffb4ab; }
+        
+        /* Terminal Blinking Cursor */
+        .cursor-blink::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        /* Rigid Data Block Styling */
+        .data-block {
+            border: 1px solid theme('colors.outline-variant');
+            background-color: theme('colors.surface-container');
+            position: relative;
+        }
+        .data-block-header {
+            border-bottom: 1px solid theme('colors.outline-variant');
+            background-color: theme('colors.surface-container-high');
+            padding: theme('spacing.unit') theme('spacing.gutter');
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen flex flex-col font-body-md overflow-hidden antialiased">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 border-b border-outline-variant bg-surface shrink-0 transition-colors duration-150 ease-in-out hover:bg-primary-container hover:text-on-primary-container z-50">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md text-primary uppercase tracking-widest cursor-blink">GT-TERMINAL-01</span>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<span class="font-data-num text-data-num text-on-surface-variant">SECTOR 7-B ASHFALL-UNDERGROUND</span>
+</div>
+<div class="flex gap-4 text-primary">
+<span class="material-symbols-outlined hover:text-secondary cursor-pointer transition-colors" data-icon="warning" data-weight="fill" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="material-symbols-outlined hover:text-secondary cursor-pointer transition-colors" data-icon="notifications_active" data-weight="fill" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+<span class="material-symbols-outlined hover:text-secondary cursor-pointer transition-colors" data-icon="settings_remote" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings_remote</span>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full border-r border-outline-variant bg-surface-container w-64 shrink-0 z-40">
+<div class="p-gutter border-b border-outline-variant">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">SECTOR 7-B</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">ASHFALL-UNDERGROUND</p>
+</div>
+<div class="flex flex-col flex-1 py-4">
+<a class="flex items-center gap-3 px-gutter py-3 bg-primary text-on-primary font-bold border-l-4 border-secondary active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_component" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings_input_component</span>
+<span class="font-label-caps text-label-caps">Turbine Schematic</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-label-caps text-label-caps">Grid Distribution</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="thermostat">thermostat</span>
+<span class="font-label-caps text-label-caps">Thermal Telemetry</span>
+</a>
+<a class="flex items-center gap-3 px-gutter py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-label-caps text-label-caps">System Logs</span>
+</a>
+</div>
+<div class="p-gutter border-t border-outline-variant mt-auto">
+<button class="w-full py-3 px-4 border border-outline-variant bg-error text-on-error font-label-caps text-label-caps uppercase tracking-wider glow-error hover:bg-error-container hover:text-error transition-colors active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="warning" data-weight="fill" style="font-variation-settings: 'FILL' 1;">warning</span>
+                    EMERGENCY SHUTDOWN
+                </button>
+</div>
+<div class="flex border-t border-outline-variant">
+<a class="flex-1 flex justify-center py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-all border-r border-outline-variant" href="#" title="Security">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</a>
+<a class="flex-1 flex justify-center py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-all" href="#" title="Encryption">
+<span class="material-symbols-outlined" data-icon="enhanced_encryption">enhanced_encryption</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto p-gutter bg-surface-dim relative z-0">
+<div class="max-w-container-max mx-auto grid grid-cols-1 xl:grid-cols-12 gap-gutter">
+<!-- Section 1: Geothermal Heat Exchanger & Steam Turbine Schematic -->
+<section class="xl:col-span-8 data-block border border-primary-container bg-opacity-10 bg-primary-container">
+<div class="data-block-header">
+<h3 class="font-headline-sm text-headline-sm text-primary">GEOTHERMAL HEAT EXCHANGER &amp; STEAM TURBINE</h3>
+<span class="font-data-num text-data-num text-on-surface-variant text-sm border px-2 py-1 border-outline-variant">SYS-ID: GEO-01</span>
+</div>
+<div class="p-gutter flex flex-col md:flex-row gap-gutter">
+<!-- Visual Schematic Area -->
+<div class="flex-1 min-h-[300px] border border-outline-variant bg-surface-container-lowest relative overflow-hidden flex items-center justify-center p-4">
+<div class="absolute inset-0 bg-cover bg-center w-full h-full opacity-30 mix-blend-screen" data-alt="A highly detailed, post-apocalyptic industrial blueprint schematic of a deep bedrock magma bore tap. The technical drawing is rendered in fine, glowing cyan lines against a deep, dark charcoal grid background. The aesthetic is brutalist, retro-futuristic CRT terminal style, featuring cross-sections of heavy pipes, thermal gradients, and structural engineering annotations. Lighting is entirely emissive from the cyan and amber data lines, establishing a resilient, high-stress survival monitoring mood." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBunJ8HaJNCuw0dVnKUMcyAUeD_4ZAIBU-UwDdHB7BeAXLfjvHZFWXHH75zqrldejuGZqutzlO2-eWKyebS30jMciuy24cKDfIWE2pjLfscH4v9Kt6yXh9PLDzc2BesC8R5eMjFinwFz_F_mV3MlOD6OitR71bETfW9BK-QvJGHSlR7T2gpV1EP4wXG8ex2lwW52nc-aXJXlXQxqUXwdS-ICW4aYJgImI5sgNzoxTdgx5inci1CzBwvXdj8LLWQqGSGpqV_pNxe5lTQ')"></div>
+<!-- Overlaid Telemetry Lines -->
+<div class="absolute w-full h-full p-4 flex flex-col justify-between pointer-events-none">
+<div class="flex justify-between items-start">
+<div class="border border-outline-variant bg-surface p-2 flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">BORE DEPTH</span>
+<span class="font-data-num text-data-num text-primary">12.4 KM</span>
+</div>
+<div class="border border-secondary bg-surface p-2 flex flex-col glow-secondary">
+<span class="font-label-caps text-label-caps text-secondary">STRUCTURAL INT</span>
+<span class="font-data-num text-data-num text-secondary">88.2%</span>
+</div>
+</div>
+<div class="w-full flex justify-center">
+<div class="w-1/2 h-32 border-x-2 border-primary-container relative">
+<div class="absolute bottom-0 w-full bg-error opacity-40 h-1/3 animate-pulse"></div>
+<div class="absolute bottom-1/3 w-full border-t border-error border-dashed"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Telemetry Readouts -->
+<div class="w-full md:w-64 flex flex-col gap-unit">
+<div class="border border-outline-variant bg-surface p-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">MAGMA TEMP</span>
+<div class="flex items-baseline gap-2">
+<span class="font-data-num text-[32px] font-bold text-error">620°C</span>
+<span class="bg-error text-on-error px-1 font-label-caps text-[10px]">CRIT</span>
+</div>
+</div>
+<div class="border border-outline-variant bg-surface p-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">STEAM PRESSURE</span>
+<div class="flex items-baseline gap-2">
+<span class="font-data-num text-[24px] text-primary">140 Bar</span>
+<span class="bg-primary text-on-primary px-1 font-label-caps text-[10px]">NOML</span>
+</div>
+</div>
+<div class="border border-outline-variant bg-surface p-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">TURBINE RPM</span>
+<div class="flex items-baseline gap-2">
+<span class="font-data-num text-[24px] text-secondary">3600</span>
+</div>
+<span class="text-secondary font-label-caps text-[10px] mt-1 block">GRID_LOCKED</span>
+</div>
+<div class="border border-outline-variant bg-surface p-3 flex-1 flex flex-col justify-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-2">SULFIDE INDEX</span>
+<div class="w-full h-4 bg-surface-container-lowest border border-outline-variant flex">
+<div class="h-full bg-secondary w-[32%] border-r border-surface"></div>
+<div class="h-full bg-transparent w-[68%]"></div>
+</div>
+<span class="font-data-num text-data-num text-secondary text-right mt-1">32%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Grid, Battery, Directives -->
+<div class="xl:col-span-4 flex flex-col gap-gutter">
+<!-- Section 2: Power Grid & Storage -->
+<section class="data-block">
+<div class="data-block-header">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">POWER GRID &amp; STORAGE</h3>
+</div>
+<div class="p-gutter flex flex-col gap-4">
+<div class="flex justify-between items-end border-b border-outline-variant pb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TOTAL OUTPUT</span>
+<span class="font-data-num text-[28px] text-primary glow-primary">14.8 MW</span>
+</div>
+<div class="flex justify-between items-end border-b border-outline-variant pb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">BUNKER DRAW</span>
+<span class="font-data-num text-data-num text-secondary">8.2 MW</span>
+</div>
+<div class="mt-2">
+<div class="flex justify-between mb-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">BATTERY BANK</span>
+<span class="font-data-num text-[16px] text-primary">480 kWh</span>
+</div>
+<!-- Segmented Progress Bar -->
+<div class="flex gap-[2px] h-6 border border-outline-variant p-[2px] bg-surface-container-lowest">
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-1 bg-primary"></div>
+<div class="flex-[0.4] bg-primary"></div>
+<div class="flex-[0.6] bg-transparent"></div>
+<div class="flex-1 bg-transparent"></div>
+</div>
+<span class="font-data-num text-data-num text-primary text-right block mt-1">84%</span>
+</div>
+<div class="border border-primary-container bg-surface p-2 flex justify-between items-center mt-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SURGE CAPACITOR</span>
+<span class="bg-primary text-on-primary px-2 py-1 font-label-caps">NOMINAL</span>
+</div>
+</div>
+</section>
+<!-- Section 3: Thermal Tap Telemetry -->
+<section class="data-block">
+<div class="data-block-header">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">THERMAL TAP TELEMETRY</h3>
+</div>
+<div class="p-4 grid grid-cols-2 gap-unit">
+<div class="border border-outline-variant p-2 flex flex-col bg-surface">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">COOLANT FLOW</span>
+<span class="font-data-num text-data-num text-primary">85 L/m</span>
+</div>
+<div class="border border-outline-variant p-2 flex flex-col bg-surface">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">BACKPRESSURE</span>
+<span class="font-data-num text-data-num text-secondary">42 Bar</span>
+</div>
+<div class="col-span-2 border border-outline-variant p-2 flex justify-between items-center bg-surface mt-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SEISMIC ALERT (TECTONIC)</span>
+<span class="text-primary font-label-caps border border-primary px-2 py-1">LOW RISK</span>
+</div>
+</div>
+</section>
+<!-- Directives -->
+<section class="data-block mt-auto">
+<div class="data-block-header bg-surface-container-highest border-t-2 border-t-primary">
+<h3 class="font-headline-sm text-headline-sm text-primary">DIRECTIVES</h3>
+</div>
+<div class="p-4 flex flex-col gap-2 bg-surface">
+<button class="w-full text-left py-2 px-3 border border-outline-variant bg-surface-container hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-colors font-label-caps text-label-caps text-primary flex justify-between items-center group">
+<span>INCREASE STEAM THROTTLE (100%)</span>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">keyboard_double_arrow_right</span>
+</button>
+<button class="w-full text-left py-2 px-3 border border-outline-variant bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container hover:border-secondary transition-colors font-label-caps text-label-caps text-secondary flex justify-between items-center group">
+<span>DIVERT POWER TO BATTERY</span>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">battery_charging_full</span>
+</button>
+<button class="w-full text-left py-2 px-3 border border-error bg-surface hover:bg-error hover:text-on-error transition-colors font-label-caps text-label-caps text-error flex justify-between items-center group glow-error mt-2">
+<span>EMERGENCY STEAM VENT</span>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">air</span>
+</button>
+</div>
+</section>
+</div>
+</div>
+<!-- Footer embedded in Canvas bottom -->
+<footer class="mt-gutter border-t border-outline-variant py-2 flex justify-between items-center text-on-surface-variant text-[10px] font-data-num">
+<span>CORE STABILITY: 98.4% | ENCRYPTION: AES-256 ACTIVE</span>
+<div class="flex gap-4">
+<a class="hover:text-primary transition-colors" href="#">Diagnostic Feed</a>
+<a class="hover:text-primary transition-colors" href="#">Bunker Protocol</a>
+<a class="hover:text-primary transition-colors" href="#">Admin Access</a>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

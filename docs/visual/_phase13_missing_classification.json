@@ -1,0 +1,312 @@
+{
+  "counts": {
+    "A.ACTUALLY_MISSING_ART": 582,
+    "F.REFERENCE_ONLY": 32
+  },
+  "samples": {
+    "A.ACTUALLY_MISSING_ART": [
+      {
+        "id": "paper_scrap",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "industrial_bleach",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "ammonia_tank",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "halon_tank",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "crayon",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "brass_fittings",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "acoustic_foam_panel",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "bone_saw",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "cardboard_box",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "cigarette_pack_sealed",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "fat_rendered",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "spoiled_blood_bag",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "spoiled_canned_food",
+        "catalog": "Assets/StreamingAssets/Data/black_flotilla_items.json",
+        "kind": "item"
+      },
+      {
+        "id": "npc_bram_ostrowski",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_sergeant_pell",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_doctor_ianov",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_wren",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_kestrel",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_nomi_fisk",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_ivor_lasko",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_the_cartwright_sisters",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_edor_vale",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_yara_holm",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_leva_quist",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_cael_ormund",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_halden_mire",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_cluster_teacher",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_osran_kell",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_mattis_cray",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      },
+      {
+        "id": "npc_wyn_sabler",
+        "catalog": "Assets/StreamingAssets/Data/characters.json",
+        "kind": "portrait"
+      }
+    ],
+    "F.REFERENCE_ONLY": [
+      {
+        "id": "craft_bandage",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "purify_water",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_anti_rad",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_water_filter",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_air_filter",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "cook_meat",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "boil_water",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_hazmat_patch",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_gas_mask",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "refuel_heater",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_dosimeter",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_medical_kit",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_geiger_counter",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_calibration_kit",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_battery",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_engine",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_frostbite_salve",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_improvised_snow_goggles",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_co2_scrubber",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "thaw_frozen_pipe",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_mycelium_bricks",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "purify_black_water",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_rebreather",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_fungicide_fogger",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_faraday_mesh",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_acoustic_decoy",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_mine_prod",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_sound_baffling",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "craft_epoxy_injector",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      },
+      {
+        "id": "brew_lethe_substitute",
+        "catalog": "Assets/StreamingAssets/Data/recipes.json",
+        "kind": "item"
+      }
+    ]
+  }
+}

@@ -1,0 +1,95 @@
+{
+ "content_id": "ration_plaza_paint_stick",
+ "visual_family": "Inventory-Item",
+ "subfamily": "Food-Water",
+ "model_hint": "auto",
+ "prompt_template": {
+  "WHAT": "A single photographed ration packet in centre frame, occupying ~60% of the canvas.",
+  "STYLE": "2D painted survival-management icon, dry-gouache / charcoal underlayer, ASHFALL palette, hand-painted texture brushwork, no outer dark outline, soft anti-aliased edges, low-rotation.",
+  "COMPOSITION": "Single subject, no scene. Negative space surrounding. Composition must remain legible when the icon is downscaled to 32\u00d732 and 64\u00d764.",
+  "CAMERA": "Eye-level, slight 3/4 turn. Never overhead. Never pointing at camera.",
+  "LIGHTING": "Diffuse overcast with a single soft key light from upper-left ~30\u00b0. Subtle ambient occlusion in recesses.",
+  "PALETTE": "charcoal #2A2A2C, concrete grey #5C5F62, faded blue-grey #708085, rust brown #6E4A2F, dirty bone #B5A88A. Accents limited to muted amber #A26E2C (1-2% of pixels) and subtle cyan-green #4F7461 only for contamination iconography.",
+  "MATERIALS": "Materials must read as: brushed metal, raw wood, dented tin, dirty plastic, oxidised copper, worn leather. No polish, no varnish, no chrome.",
+  "BACKGROUND": "Soft transparent-to-charcoal gradient. No setting, no horizon, no companion objects.",
+  "RUNTIME_READABILITY": "This asset renders at 64\u00d764 inside inventory slots. Subject must be recognisable in silhouette at 32\u00d732.",
+  "NEGATIVE": "no real-world text, letters, or numerals; no logos or watermark; no AI signature glyphs; no anime-style eyes outside portrait family; no fantasy ornament or fleurons; no neon cyberpunk glow borders; no glossy 3D chromatic rendering; no crystalline particles; no stock-photo backdrop; no pristine factory-fresh finish on tools or weapons; no gratuitous gore; no real-country flags; no real brand marks. No rendered UI text \u2014 that is authored in Godot.",
+  "OUTPUT_FORMAT": "256x256 PNG with alpha channel (RGBA). JPG fallback allowed only when alpha is not required."
+ },
+ "meta": {
+  "source_catalog": "items",
+  "reference_assets": [
+   {
+    "stem": "bunker_rationing",
+    "file_path": "assets/art/bunker_rationing.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "calibration_kit",
+    "file_path": "assets/art/calibration_kit.png",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "canned_rations",
+    "file_path": "assets/art/canned_rations.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "food_ration",
+    "file_path": "assets/art/food_ration.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "food_rations",
+    "file_path": "assets/art/food_rations.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "sensor_seismic_vibration_gauge",
+    "file_path": "assets/art/sensor_seismic_vibration_gauge.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "weapon_dynamite_stick_bundle",
+    "file_path": "assets/art/weapon_dynamite_stick_bundle.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "bg_filtration_stack",
+    "file_path": "assets/art/bg_filtration_stack.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
+  "canonical_filename": "item_ration_plaza_paint_stick.jpg",
+  "target_directory": "assets/art/",
+  "alpha_requirement": "transparent",
+  "dimensions": [
+   256,
+   256
+  ],
+  "aspect_ratio": "1:1 consumable icon",
+  "priority_band": "P1",
+  "gameplay_importance": 4.2
+ },
+ "semantic_description": "A 2D painted icon for Inventory-Item 'ration_plaza_paint_stick', readable at icon scale (~64\u00d764).",
+ "forbidden_objects": [
+  "real-country flag",
+  "real brand mark",
+  "logo",
+  "watermark",
+  "rendered-text label",
+  "neon cyberpunk",
+  "anime-style eyes",
+  "fantasy ornament",
+  "glossy sci-fi glow",
+  "stock-photo backdrop"
+ ]
+}

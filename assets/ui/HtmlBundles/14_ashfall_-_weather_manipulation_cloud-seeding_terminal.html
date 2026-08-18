@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WEATHER_CTRL_SYS_v4.2 - Sector 7 Terminal</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Fira+Sans:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-container": "#034800",
+                      "tertiary-fixed": "#e5e2e1",
+                      "surface-bright": "#383939",
+                      "inverse-on-surface": "#2f3131",
+                      "on-tertiary-container": "#3d3d3c",
+                      "primary-fixed-dim": "#4ce337",
+                      "inverse-primary": "#086e00",
+                      "on-tertiary-fixed-variant": "#474646",
+                      "on-error-container": "#ffdad6",
+                      "error-container": "#93000a",
+                      "primary": "#4ce337",
+                      "secondary": "#ffd393",
+                      "on-secondary-container": "#694600",
+                      "secondary-container": "#fdaf00",
+                      "primary-container": "#20c20e",
+                      "on-secondary": "#432c00",
+                      "tertiary-fixed-dim": "#c8c6c5",
+                      "surface": "#121414",
+                      "tertiary-container": "#a9a7a7",
+                      "surface-container-highest": "#343535",
+                      "inverse-surface": "#e3e2e2",
+                      "on-tertiary": "#313030",
+                      "on-background": "#e3e2e2",
+                      "surface-container-high": "#292a2a",
+                      "surface-container-lowest": "#0d0e0f",
+                      "surface-variant": "#343535",
+                      "on-surface-variant": "#bccbb2",
+                      "outline": "#86957f",
+                      "outline-variant": "#3d4a38",
+                      "secondary-fixed": "#ffddaf",
+                      "on-secondary-fixed": "#281800",
+                      "secondary-fixed-dim": "#ffba43",
+                      "background": "#121414",
+                      "on-tertiary-fixed": "#1c1b1b",
+                      "surface-tint": "#4ce337",
+                      "surface-container": "#1e2020",
+                      "tertiary": "#c8c6c5",
+                      "on-primary": "#023900",
+                      "on-surface": "#e3e2e2",
+                      "surface-dim": "#121414",
+                      "on-primary-fixed-variant": "#045300",
+                      "surface-container-low": "#1a1c1c",
+                      "on-primary-fixed": "#012200",
+                      "error": "#ffb4ab",
+                      "primary-fixed": "#78ff5e",
+                      "on-error": "#690005",
+                      "on-secondary-fixed-variant": "#614000"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "32px",
+                      "gutter": "16px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "container-max": "1280px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Fira Sans"
+                      ],
+                      "headline-sm": [
+                              "Bebas Neue"
+                      ],
+                      "data-lg": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md": [
+                              "Bebas Neue"
+                      ],
+                      "display-lg": [
+                              "Bebas Neue"
+                      ],
+                      "headline-lg": [
+                              "Bebas Neue"
+                      ],
+                      "data-md": [
+                              "JetBrains Mono"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "body-lg": [
+                              "Fira Sans"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-lg": [
+                              "20px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "80px",
+                              {
+                                      "lineHeight": "80px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "14px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "12px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        /* Modern Brutalism / Tactical HUD Custom Styles */
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+            overflow-x: hidden;
+        }
+
+        /* CRT Scanline Effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 0, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
+        }
+
+        /* Phosphor Glow Active State */
+        .glow-active {
+            box-shadow: 0 0 10px rgba(76, 227, 55, 0.2);
+        }
+        
+        .glow-warning {
+             box-shadow: 0 0 10px rgba(253, 175, 0, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface-container-highest');
+            border-left: 1px solid theme('colors.outline-variant');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.primary/30');
+            border: 1px solid theme('colors.primary');
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.primary');
+        }
+        
+        /* Grid Background Pattern */
+        .grid-bg {
+            background-image: 
+                linear-gradient(to right, theme('colors.outline-variant') 1px, transparent 1px),
+                linear-gradient(to bottom, theme('colors.outline-variant') 1px, transparent 1px);
+            background-size: 32px 32px;
+            background-position: center;
+        }
+
+        /* Tech borders */
+        .tech-border {
+            border: 1px solid theme('colors.outline-variant');
+            position: relative;
+        }
+        .tech-border::before, .tech-border::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 1px solid theme('colors.primary');
+        }
+        .tech-border::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+        .tech-border::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex">
+<!-- CRT Overlay -->
+<div class="scanlines"></div>
+<!-- SideNavBar (Shared Component JSON) -->
+<aside class="bg-surface dark:bg-surface w-64 left-0 top-0 border-r-2 border-outline-variant dark:border-outline-variant flat no shadows flex flex-col h-screen fixed z-40 hidden md:flex">
+<div class="p-4 border-b border-outline-variant mb-4">
+<div class="font-headline-md text-headline-md text-primary">SECTOR_7_TERMINAL</div>
+<div class="font-label-caps text-label-caps text-secondary">STATUS: OPERATIONAL</div>
+</div>
+<nav class="flex-1 px-2 space-y-2">
+<a class="flex items-center gap-3 p-3 font-label-caps text-label-caps bg-primary text-on-primary font-bold shadow-[0_0_10px_rgba(76,227,55,0.2)] hover:bg-surface-container-high transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">architecture</span>
+                Schematic
+            </a>
+<a class="flex items-center gap-3 p-3 font-label-caps text-label-caps text-outline hover:text-primary hover:bg-surface-container-high transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+                Telemetry
+            </a>
+<a class="flex items-center gap-3 p-3 font-label-caps text-label-caps text-outline hover:text-primary hover:bg-surface-container-high transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined">cloud_sync</span>
+                Cloud Radar
+            </a>
+<a class="flex items-center gap-3 p-3 font-label-caps text-label-caps text-outline hover:text-primary hover:bg-surface-container-high transition-all active:translate-x-1" href="#">
+<span class="material-symbols-outlined">terminal</span>
+                Logs
+            </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-64 relative min-h-screen pb-16">
+<!-- TopAppBar (Shared Component JSON) -->
+<header class="bg-surface dark:bg-surface w-full top-0 border-b-2 border-outline-variant dark:border-outline-variant flat no shadows flex justify-between items-center px-margin-desktop h-16 w-full z-50 sticky">
+<div class="font-headline-sm text-headline-sm text-primary dark:text-primary tracking-tighter">
+                WEATHER_CTRL_SYS_v4.2
+            </div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-primary/10 transition-colors active:scale-95 duration-75 p-2 rounded">
+<span class="material-symbols-outlined">signal_cellular_alt</span>
+</button>
+<button class="text-on-surface-variant hover:bg-primary/10 transition-colors active:scale-95 duration-75 p-2 rounded">
+<span class="material-symbols-outlined">battery_charging_full</span>
+</button>
+<button class="text-on-surface-variant hover:bg-primary/10 transition-colors active:scale-95 duration-75 p-2 rounded">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-4 md:p-gutter grid-bg">
+<div class="max-w-container-max mx-auto h-full flex flex-col gap-unit">
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-unit flex-1">
+<!-- LEFT COLUMN: ROCKET BATTERY SCHEMATIC -->
+<div class="md:col-span-8 flex flex-col gap-unit">
+<div class="tech-border bg-surface/80 backdrop-blur-sm p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start border-b-2 border-outline-variant pb-2 mb-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">BATTERY SCHEMATIC</h2>
+<p class="font-label-caps text-label-caps text-on-surface-variant">SILVER-IODIDE DELIVERY SYSTEM</p>
+</div>
+<div class="bg-secondary/20 border border-secondary px-2 py-1 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="font-label-caps text-label-caps text-secondary">LIVE SYS</span>
+</div>
+</div>
+<!-- 8-Pod Vertical Rocket Launcher Schematic -->
+<div class="flex-1 grid grid-cols-2 gap-4 items-center justify-center p-8">
+<!-- Pods 1-6 ARMED (Tactical Teal) -->
+<div class="border-2 border-primary bg-primary/10 p-4 text-center relative glow-active">
+<div class="absolute top-1 left-1 font-label-caps text-label-caps text-primary">POD_01</div>
+<span class="material-symbols-outlined text-primary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<div class="font-label-caps text-label-caps text-primary bg-primary/20 inline-block px-2 border border-primary">ARMED</div>
+</div>
+<div class="border-2 border-primary bg-primary/10 p-4 text-center relative glow-active">
+<div class="absolute top-1 left-1 font-label-caps text-label-caps text-primary">POD_02</div>
+<span class="material-symbols-outlined text-primary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<div class="font-label-caps text-label-caps text-primary bg-primary/20 inline-block px-2 border border-primary">ARMED</div>
+</div>
+<div class="border-2 border-primary bg-primary/10 p-4 text-center relative glow-active">
+<div class="absolute top-1 left-1 font-label-caps text-label-caps text-primary">POD_03</div>
+<span class="material-symbols-outlined text-primary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<div class="font-label-caps text-label-caps text-primary bg-primary/20 inline-block px-2 border border-primary">ARMED</div>
+</div>
+<div class="border-2 border-primary bg-primary/10 p-4 text-center relative glow-active">
+<div class="absolute top-1 left-1 font-label-caps text-label-caps text-primary">POD_04</div>
+<span class="material-symbols-outlined text-primary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<div class="font-label-caps text-label-caps text-primary bg-primary/20 inline-block px-2 border border-primary">ARMED</div>
+</div>
+<div class="border-2 border-primary bg-primary/10 p-4 text-center relative glow-active">
+<div class="absolute top-1 left-1 font-label-caps text-label-caps text-primary">POD_05</div>
+<span class="material-symbols-outlined text-primary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<div class="font-label-caps text-label-caps text-primary bg-primary/20 inline-block px-2 border border-primary">ARMED</div>
+</div>
+<div class="border-2 border-primary bg-primary/10 p-4 text-center relative glow-active">
+<div class="absolute top-1 left-1 font-label-caps text-label-caps text-primary">POD_06</div>
+<span class="material-symbols-outlined text-primary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<div class="font-label-caps text-label-caps text-primary bg-primary/20 inline-block px-2 border border-primary">ARMED</div>
+</div>
+<!-- Pods 7-8 EMPTY (Greyed out) -->
+<div class="border-2 border-outline-variant bg-surface-container p-4 text-center relative opacity-50">
+<div class="absolute top-1 left-1 font-label-caps text-label-caps text-outline">POD_07</div>
+<span class="material-symbols-outlined text-outline text-4xl mb-2">rocket</span>
+<div class="font-label-caps text-label-caps text-outline bg-surface-variant inline-block px-2 border border-outline-variant">EMPTY</div>
+</div>
+<div class="border-2 border-outline-variant bg-surface-container p-4 text-center relative opacity-50">
+<div class="absolute top-1 left-1 font-label-caps text-label-caps text-outline">POD_08</div>
+<span class="material-symbols-outlined text-outline text-4xl mb-2">rocket</span>
+<div class="font-label-caps text-label-caps text-outline bg-surface-variant inline-block px-2 border border-outline-variant">EMPTY</div>
+</div>
+</div>
+<!-- Primary Telemetry -->
+<div class="flex gap-4 border-t-2 border-outline-variant pt-4 mt-4">
+<div class="flex-1 border border-outline-variant p-2 flex justify-between items-center bg-surface-container">
+<span class="font-label-caps text-label-caps text-on-surface-variant">LAUNCH AZIMUTH:</span>
+<span class="font-data-lg text-data-lg text-primary">048°</span>
+</div>
+<div class="flex-1 border border-outline-variant p-2 flex justify-between items-center bg-surface-container">
+<span class="font-label-caps text-label-caps text-on-surface-variant">ELEVATION:</span>
+<span class="font-data-lg text-data-lg text-primary">62°</span>
+</div>
+</div>
+</div>
+<!-- BOTTOM PANEL: ROCKET FIRING TELEMETRY & ACTIONS -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-unit">
+<!-- Telemetry -->
+<div class="tech-border bg-surface/80 p-4">
+<h3 class="font-label-caps text-label-caps text-outline mb-2">FIRING TELEMETRY</h3>
+<ul class="space-y-2">
+<li class="flex justify-between border-b border-outline-variant border-dashed pb-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">BATTERY CHARGE:</span>
+<span class="font-data-md text-data-md text-primary">98% [ ||||||||| ]</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant border-dashed pb-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CALIBRATION:</span>
+<span class="font-data-md text-data-md text-primary bg-primary/20 px-1">LOCKED</span>
+</li>
+<li class="flex justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TRIGGER ALT:</span>
+<span class="font-data-md text-data-md text-primary">3400m</span>
+</li>
+</ul>
+</div>
+<!-- Directives (Buttons) -->
+<div class="tech-border bg-surface/80 p-4 flex flex-col justify-center gap-2">
+<button class="w-full border-2 border-primary bg-primary text-on-primary font-label-caps text-label-caps py-3 px-4 hover:bg-primary-fixed transition-colors text-center shadow-[0_0_10px_rgba(76,227,55,0.2)]">
+                                    [ LAUNCH SILVER-IODIDE SALVO ]
+                                </button>
+<div class="flex gap-2">
+<button class="flex-1 border-2 border-outline-variant text-outline font-label-caps text-label-caps py-2 px-2 hover:border-primary hover:text-primary transition-colors text-center bg-surface-container">
+                                        [ RE-CALIBRATE TO SECTOR 09 ]
+                                    </button>
+<button class="flex-1 border-2 border-outline-variant text-outline font-label-caps text-label-caps py-2 px-2 hover:border-primary hover:text-primary transition-colors text-center bg-surface-container">
+                                        [ RELOAD PODS FROM ARMORY ]
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: FALLOUT DISPERSAL FORECAST -->
+<div class="md:col-span-4 tech-border bg-surface/80 flex flex-col">
+<div class="p-4 border-b-2 border-outline-variant bg-error-container/20">
+<h2 class="font-headline-md text-headline-md text-error flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+                                DISPERSAL FORECAST
+                            </h2>
+<p class="font-label-caps text-label-caps text-on-error-container">INCOMING: RAD-STORM (NW)</p>
+</div>
+<!-- Radar / Map Area -->
+<div class="flex-1 relative bg-surface border-b-2 border-outline-variant overflow-hidden min-h-[300px]">
+<!-- Animated Map Placeholder -->
+<div class="absolute inset-0 bg-secondary-container/5 grid-bg opacity-50"></div>
+<!-- Radar sweep effect (CSS) -->
+<div class="absolute top-1/2 left-1/2 w-[200%] h-[200%] -ml-[100%] -mt-[100%] rounded-full border-2 border-secondary/20" style="background: conic-gradient(from 0deg, transparent 70%, theme('colors.secondary/30') 100%); animation: spin 4s linear infinite;"></div>
+<style>
+                                @keyframes spin { 100% { transform: rotate(360deg); } }
+                            </style>
+<!-- Threat blip -->
+<div class="absolute top-1/4 left-1/4 w-3 h-3 bg-secondary rounded-full animate-ping"></div>
+<div class="absolute top-1/4 left-1/4 w-3 h-3 bg-secondary rounded-full"></div>
+<div class="absolute top-[26%] left-[26%] font-label-caps text-label-caps text-secondary bg-surface/80 px-1 border border-secondary">RAD-STORM-VEX</div>
+<!-- Target Reticle -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border border-primary rounded-full flex items-center justify-center">
+<div class="w-1 h-full bg-primary/50 absolute"></div>
+<div class="w-full h-1 bg-primary/50 absolute"></div>
+<div class="w-2 h-2 bg-primary rounded-full relative z-10 glow-active"></div>
+</div>
+</div>
+<!-- Data Readouts -->
+<div class="p-4 space-y-4 bg-surface-container">
+<div class="border-l-2 border-outline pl-3">
+<div class="font-label-caps text-label-caps text-on-surface-variant">WIND SPEED:</div>
+<div class="font-data-lg text-data-lg text-on-surface">54 km/h</div>
+</div>
+<div class="border-l-2 border-secondary pl-3 bg-secondary-container/10 p-2 glow-warning">
+<div class="font-label-caps text-label-caps text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                                    RAD INDEX:
+                                </div>
+<div class="font-data-lg text-data-lg text-secondary font-bold">14 Sv/h</div>
+</div>
+<div class="border-l-2 border-outline pl-3">
+<div class="font-label-caps text-label-caps text-on-surface-variant">WASHOUT EFFICIENCY:</div>
+<div class="font-data-lg text-data-lg text-on-surface">76%</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 mt-1 flex gap-1">
+<div class="h-full bg-primary flex-1"></div>
+<div class="h-full bg-primary flex-1"></div>
+<div class="h-full bg-primary flex-1"></div>
+<div class="h-full bg-primary flex-1"></div>
+<div class="h-full bg-primary flex-1"></div>
+<div class="h-full bg-primary flex-1"></div>
+<div class="h-full bg-primary flex-1"></div>
+<div class="h-full bg-surface-variant flex-1 border border-outline-variant"></div>
+<div class="h-full bg-surface-variant flex-1 border border-outline-variant"></div>
+<div class="h-full bg-surface-variant flex-1 border border-outline-variant"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component JSON) -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full bottom-0 border-t-2 border-outline-variant dark:border-outline-variant flat no shadows fixed bottom-0 left-0 w-full px-margin-desktop py-2 flex justify-between items-center bg-surface-container-lowest z-40">
+<div class="font-data-md text-data-md text-on-tertiary-container hover:text-primary">
+                SYSTEM_STABILITY: 99.8% | ENCRYPTION: AES_256_ACTIVE
+            </div>
+<div class="font-label-caps text-label-caps text-secondary">
+                SEC-7
+            </div>
+</footer>
+</div>
+</body></html>

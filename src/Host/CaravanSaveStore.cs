@@ -54,14 +54,20 @@ namespace AtomicWar.GodotApp
                 var envelope = s_json.Deserialize<CaravanHostSave>(raw);
                 if (envelope != null && envelope.State != null)
                 {
-                    if (!string.IsNullOrEmpty(envelope.Checksum))
+                    // A non-empty checksum is required for any save in the new
+                    // envelope format. Empty/null previously slipped past as
+                    // "legacy" — a malformed save in the new format must be
+                    // rejected, not silently trusted.
+                    if (string.IsNullOrEmpty(envelope.Checksum))
                     {
-                        string actual = SaveChecksum.Compute(envelope);
-                        if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
-                        {
-                            GD.PrintErr("[Caravan] load failed: checksum mismatch (corrupt or foreign save).");
-                            return null;
-                        }
+                        GD.PrintErr("[Caravan] load failed: checksum field missing (corrupt save).");
+                        return null;
+                    }
+                    string actual = SaveChecksum.Compute(envelope);
+                    if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
+                    {
+                        GD.PrintErr("[Caravan] load failed: checksum mismatch (corrupt or foreign save).");
+                        return null;
                     }
                     return envelope.State;
                 }

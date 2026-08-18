@@ -1,122 +1,252 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Ashfall.Core;
-using Ashfall.Core.World;
 using Ashfall.Core.UI;
+using Ashfall.Core.World;
 using AtomicWar.GodotApp.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Weather panel.
-    /// Shows current weather conditions, forecasts, environmental hazards, and temperature telemetry.
+    /// Shows current weather and a 3-day forecast. Wrapped in the dashboard
+    /// shell with a forecast DataGrid and a status rail that carries the
+    /// day's live outdoor radiation + crew visibility.
     /// </summary>
     public partial class WeatherPanel : Control
     {
         public event Action? OnClose;
 
-        private VBoxContainer _currentWeather = null!;
-        private VBoxContainer _forecastList = null!;
-        private VBoxContainer _hazardList = null!;
+        public WeatherKind? BoundWeather => _worldHost?.Weather.Current;
+        public bool IsBound => _worldHost != null;
+        public int RenderedHazardCount => _advisoryList?.GetChildCount() ?? 0;
 
         private WorldHostSession? _worldHost;
 
-        public bool IsBound => _worldHost != null;
-        public WeatherKind? BoundWeather => _worldHost?.Weather.Current;
-        public int RenderedHazardCount => _hazardList?.GetChildCount() ?? 0;
+        private AshfallDashboardShell _shell = null!;
+        private AshfallStatusRail? _statusRail;
+        private AshfallDataGrid? _forecastGrid;
+        private VBoxContainer _advisoryList = null!;
+        private VBoxContainer _seasonList = null!;
 
         public void Bind(WorldHostSession weather)
         {
             _worldHost = weather;
+            if (_worldHost?.Weather != null)
+            {
+                _worldHost.Weather.OnWeatherChanged -= HandleWeatherChanged;
+                _worldHost.Weather.OnWeatherChanged += HandleWeatherChanged;
+            }
             RefreshView();
         }
 
+        private void HandleWeatherChanged(WeatherKind _) => RefreshView();
+
         public void RefreshView()
         {
-            if (_currentWeather == null || _forecastList == null || _hazardList == null) return;
+            RefreshStatusRail();
+            BuildForecastRows();
+            BuildAdvisory();
+            BuildSeasonRows();
+        }
 
-            while (_currentWeather.GetChildCount() > 0)
-                _currentWeather.RemoveChild(_currentWeather.GetChild(0));
-            while (_forecastList.GetChildCount() > 0)
-                _forecastList.RemoveChild(_forecastList.GetChild(0));
-            while (_hazardList.GetChildCount() > 0)
-                _hazardList.RemoveChild(_hazardList.GetChild(0));
-
+        private void RefreshStatusRail()
+        {
+            if (_statusRail == null) return;
             if (_worldHost == null)
             {
-                _currentWeather.AddChild(AshfallUiHelpers.MakeMetadata("No world session bound."));
-                _forecastList.AddChild(AshfallUiHelpers.MakeMetadata("No weather state available."));
-                _hazardList.AddChild(AshfallUiHelpers.MakeMetadata("No hazard readout available."));
+                _statusRail.Set("pattern", "—", AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("outdoor", "0", AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("temp_pen", "0°C", AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("vis", "0%", AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("hazmat_decay", "×1.0", AshfallMetricCard.Criticality.Normal);
                 return;
             }
-
-            var weather = _worldHost.Weather;
-            int day = Math.Max(1, (int)Math.Floor(weather.State.totalElapsedHours / 24f) + 1);
-            var season = weather.GetSeasonForDay(day);
-            float temperaturePenalty = WeatherSystem.TemperaturePenaltyForWeather(weather.Current);
-
-            _currentWeather.AddChild(AshfallUiHelpers.MakeDataRow(
-                "Current Weather Pattern",
-                $"{weather.Current}".ToUpperInvariant(),
-                new Color(0.9f, 0.9f, 0.9f)));
-            _currentWeather.AddChild(AshfallUiHelpers.MakeDataRow(
-                "Atmospheric Visibility",
-                $"{weather.VisibilityFactor:P0}",
-                AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            _currentWeather.AddChild(AshfallUiHelpers.MakeDataRow(
-                "Outdoor Radiation Modifier",
-                $"+{weather.OutdoorRadModifier:0} mSv/hr",
-                weather.OutdoorRadModifier > 0 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical) : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
-            _currentWeather.AddChild(AshfallUiHelpers.MakeDataRow(
-                "Temperature Penalty",
-                $"{temperaturePenalty:+0;-0;0}°C",
-                temperaturePenalty < 0 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm) : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            _currentWeather.AddChild(AshfallUiHelpers.MakeDataRow(
-                "Hazmat Gear Degradation",
-                $"×{weather.HazmatDegradeMultiplier:0.0} Burn Rate",
-                AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy)));
-
-            string profileName = _worldHost.Profile?.displayName ?? season.displayName;
-            _forecastList.AddChild(AshfallUiHelpers.MakeDataRow("Active Season Profile", profileName, AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
-            _forecastList.AddChild(AshfallUiHelpers.MakeDataRow("Next Weather Shift Check", $"In {weather.State.hoursUntilNextCheck:0.0} Hours", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
-            _forecastList.AddChild(AshfallUiHelpers.MakeDataRow("Recorded Cycle Rolls", $"{weather.State.rollCount} Rolls Complete", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim)));
-
-            int hazardCount = 0;
-            if (weather.IsScavengingBlocked(false))
+            var w = _worldHost.Weather;
+            float tempPen = WeatherSystem.TemperaturePenaltyForWeather(w.Current);
+            float outdoor = w.OutdoorRadModifier;
+            float vis = w.VisibilityFactor;
+            _statusRail.Set("pattern", w.Current.ToString().ToUpperInvariant(),
+                outdoor > 0 ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("outdoor", $"+{outdoor:0} mSv/h",
+                outdoor > 100 ? AshfallMetricCard.Criticality.Critical
+                : outdoor > 25 ? AshfallMetricCard.Criticality.Warn
+                : outdoor > 0 ? AshfallMetricCard.Criticality.Caution
+                : AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("temp_pen", $"{tempPen:+#;-#;0}°C",
+                tempPen <= -10 ? AshfallMetricCard.Criticality.Warn
+                : tempPen <= -5 ? AshfallMetricCard.Criticality.Caution
+                : AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("vis", $"{vis:P0}",
+                vis < 0.5 ? AshfallMetricCard.Criticality.Critical
+                : vis < 0.8 ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("hazmat_decay", $"×{w.HazmatDegradeMultiplier:0.0}",
+                w.HazmatDegradeMultiplier > 1.5 ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Normal);
+            if (_statusRail.GetCard("hazmat_decay") != null)
             {
-                var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                // Subtle: hazmat decay rides with outdoor rad sub-critically.
+                if (outdoor > 100 && w.HazmatDegradeMultiplier > 1.0)
+                    _statusRail.Set("hazmat_decay", $"×{w.HazmatDegradeMultiplier:0.0}", AshfallMetricCard.Criticality.Critical);
+            }
+        }
+
+        private void BuildForecastRows()
+        {
+            if (_forecastGrid == null) return;
+            if (_worldHost == null)
+            {
+                _forecastGrid.SetRows(BuildForecastFixture());
+                return;
+            }
+            var w = _worldHost.Weather;
+            int day = Math.Max(1, (int)Math.Floor(w.State.totalElapsedHours / 24f) + 1);
+            var forecast = w.PeekForecast(3);
+            var rows = new List<AshfallDataGrid.Row>();
+            foreach (var f in forecast)
+            {
+                var crit = f.OutdoorRad > 100 ? AshfallDataGrid.CellState.Critical
+                    : f.OutdoorRad > 25 ? AshfallDataGrid.CellState.Warning
+                    : f.OutdoorRad > 0 ? AshfallDataGrid.CellState.Caution
+                    : AshfallDataGrid.CellState.Positive;
+                rows.Add(new AshfallDataGrid.Row
+                {
+                    Cells = new List<AshfallDataGrid.Cell>
+                    {
+                        new($"D{f.Day:00}", AshfallDataGrid.CellState.Normal),
+                        new(f.Kind.ToString().ToUpperInvariant(), crit),
+                        new($"+{f.OutdoorRad:0} mSv/h", crit),
+                        new(f.Visibility < 0.5 ? "VIS LOW" : f.Visibility < 0.8 ? "VIS DIM" : "VIS OK",
+                            f.Visibility < 0.5 ? AshfallDataGrid.CellState.Warning
+                            : f.Visibility < 0.8 ? AshfallDataGrid.CellState.Caution
+                            : AshfallDataGrid.CellState.Positive),
+                        new(WeathersRiskLabel(f), AshfallDataGrid.CellState.Muted),
+                    }
+                });
+            }
+            if (rows.Count == 0)
+            {
+                rows.Add(new AshfallDataGrid.Row
+                {
+                    Cells = new List<AshfallDataGrid.Cell>
+                    {
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("no forecast available", AshfallDataGrid.CellState.Muted),
+                    }
+                });
+            }
+            _forecastGrid.SetRows(rows);
+        }
+
+        private static string WeathersRiskLabel(WeatherForecastEntry f)
+        {
+            if (f.OutdoorRad > 100) return "no overhang";
+            if (f.OutdoorRad > 25) return "short window";
+            if (f.OutdoorRad > 0) return "calm";
+            return "ideal";
+        }
+
+        private void BuildSeasonRows()
+        {
+            if (_seasonList == null) return;
+            while (_seasonList.GetChildCount() > 0)
+            {
+                var c = _seasonList.GetChild(0);
+                _seasonList.RemoveChild(c);
+                c.QueueFree();
+            }
+            if (_worldHost == null)
+            {
+                _seasonList.AddChild(AshfallUiHelpers.MakeMetadata("No season profile bound."));
+                return;
+            }
+            var w = _worldHost.Weather;
+            int day = Math.Max(1, (int)Math.Floor(w.State.totalElapsedHours / 24f) + 1);
+            var season = w.GetSeasonForDay(day);
+            string profileName = _worldHost.Profile?.displayName ?? season.displayName;
+            _seasonList.AddChild(AshfallUiHelpers.MakeDataRow("Active Season Profile", profileName, AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+            _seasonList.AddChild(AshfallUiHelpers.MakeDataRow("Next Weather Shift", $"In {w.State.hoursUntilNextCheck:0.0} Hours", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+            _seasonList.AddChild(AshfallUiHelpers.MakeDataRow("Recorded Rolls", $"{w.State.rollCount}", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+        }
+
+        private void BuildAdvisory()
+        {
+            if (_advisoryList == null) return;
+            while (_advisoryList.GetChildCount() > 0)
+            {
+                var c = _advisoryList.GetChild(0);
+                _advisoryList.RemoveChild(c);
+                c.QueueFree();
+            }
+            if (_worldHost == null)
+            {
+                _advisoryList.AddChild(AshfallUiHelpers.MakeMetadata("No advisories available."));
+                return;
+            }
+            var w = _worldHost.Weather;
+            int count = 0;
+            if (w.IsScavengingBlocked(false))
+            {
+                var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
                 var icon = AshfallUiHelpers.MakeBadgeIcon("badge_corneal_burn", 22);
                 row.AddChild(icon);
                 var lbl = AshfallUiHelpers.MakeWarning("Scavenging expedition blocked without full hazard gear.");
                 lbl.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
                 row.AddChild(lbl);
-                _hazardList.AddChild(row);
-                hazardCount++;
+                _advisoryList.AddChild(row);
+                count++;
             }
-            if (weather.OutdoorRadModifier > 0f)
+            if (w.OutdoorRadModifier > 0f)
             {
-                var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
                 var icon = AshfallUiHelpers.MakeBadgeIcon("badge_radon_poisoning", 22);
                 row.AddChild(icon);
-                var lbl = AshfallUiHelpers.MakeCritical($"Fallout radiation elevated: +{weather.OutdoorRadModifier:0} mSv/hr.");
+                var lbl = AshfallUiHelpers.MakeCritical($"Fallout radiation elevated: +{w.OutdoorRadModifier:0} mSv/hr.");
                 lbl.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
                 row.AddChild(lbl);
-                _hazardList.AddChild(row);
-                hazardCount++;
+                _advisoryList.AddChild(row);
+                count++;
             }
-            if (temperaturePenalty < 0f)
+            float tempPen = WeatherSystem.TemperaturePenaltyForWeather(w.Current);
+            if (tempPen < 0f)
             {
-                var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+                var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
                 var icon = AshfallUiHelpers.MakeBadgeIcon("badge_hypothermia", 22);
                 row.AddChild(icon);
-                var lbl = AshfallUiHelpers.MakeWarning($"Severe cold exposure risk: {temperaturePenalty:0}°C.");
+                var lbl = AshfallUiHelpers.MakeWarning($"Severe cold exposure risk: {tempPen:0}°C.");
                 lbl.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
                 row.AddChild(lbl);
-                _hazardList.AddChild(row);
-                hazardCount++;
+                _advisoryList.AddChild(row);
+                count++;
             }
-            if (hazardCount == 0)
-                _hazardList.AddChild(AshfallUiHelpers.MakeMetadata("No acute environmental hazards detected. Outdoor scavenging permitted."));
+            if (count == 0)
+                _advisoryList.AddChild(AshfallUiHelpers.MakeMetadata("No acute environmental hazards detected. Outdoor scavenging permitted."));
+        }
+
+        private static List<AshfallDataGrid.Row> BuildForecastFixture()
+        {
+            return new List<AshfallDataGrid.Row>
+            {
+                new AshfallDataGrid.Row
+                {
+                    Cells = new List<AshfallDataGrid.Cell>
+                    {
+                        new("D/D?", AshfallDataGrid.CellState.Muted),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("unbound", AshfallDataGrid.CellState.Muted),
+                    }
+                }
+            };
         }
 
         public override void _Ready()
@@ -128,60 +258,90 @@ namespace AtomicWar.GodotApp.UI
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            var center = new CenterContainer();
-            center.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(center);
+            _shell = new AshfallDashboardShell(
+                "WEATHER & FALLOUT FORECAST — RAD_NOW_LEDGER",
+                1100, 720);
 
-            var panel = AshfallUiHelpers.MakePanel(700, 560);
-            center.AddChild(panel);
+            var hostContainer = new MarginContainer();
+            hostContainer.AddThemeConstantOverride("margin_left", DesignTheme.HudEdge);
+            hostContainer.AddThemeConstantOverride("margin_top", DesignTheme.SpacingLg);
+            hostContainer.AddThemeConstantOverride("margin_right", DesignTheme.HudEdge);
+            hostContainer.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingMd);
+            hostContainer.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            hostContainer.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+            hostContainer.AddChild(_shell);
+            AddChild(hostContainer);
 
-            var margins = AshfallUiHelpers.MakeMargins(Ashfall.Core.UI.Theme.SpacingMd);
-            panel.AddChild(margins);
+            _statusRail = _shell.SetStatusRail();
+            _statusRail.AddCard("pattern",   "PATTERN",     "—",       AshfallMetricCard.Criticality.Normal, 130);
+            _statusRail.AddCard("outdoor",   "EXT RAD",     "0",        AshfallMetricCard.Criticality.Normal, 120);
+            _statusRail.AddCard("temp_pen",  "TEMP PEN",    "0°C",      AshfallMetricCard.Criticality.Normal, 110);
+            _statusRail.AddCard("vis",       "VISIBILITY",  "0%",       AshfallMetricCard.Criticality.Normal, 130);
+            _statusRail.AddCard("hazmat_decay", "HAZMAT",   "×1.0",     AshfallMetricCard.Criticality.Normal, 110);
+            _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            margins.AddChild(vbox);
-
-            var header = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-            var title = AshfallUiHelpers.MakeTitle("WEATHER & ENVIRONMENTAL TELEMETRY", Ashfall.Core.UI.Theme.FontSizeH2);
-            title.HorizontalAlignment = HorizontalAlignment.Left;
-            title.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-            header.AddChild(title);
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(110, 32);
-            header.AddChild(btnClose);
-            vbox.AddChild(header);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var scroll = new ScrollContainer
-            {
-                CustomMinimumSize = new Vector2(660, 440),
-                SizeFlagsVertical = SizeFlags.ExpandFill
-            };
-            vbox.AddChild(scroll);
-
-            var contentBox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            contentBox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            scroll.AddChild(contentBox);
-
-            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("ATMOSPHERIC CONDITIONS"));
-            _currentWeather = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
-            contentBox.AddChild(_currentWeather);
-
-            contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("SEASON CYCLE & FORECAST"));
-            _forecastList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
-            contentBox.AddChild(_forecastList);
-
-            contentBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            contentBox.AddChild(AshfallUiHelpers.MakeSectionHeader("ENVIRONMENTAL HAZARD ADVISORIES"));
-            _hazardList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
-            contentBox.AddChild(_hazardList);
-
+            BuildContent();
             RefreshView();
+        }
+
+        private void BuildContent()
+        {
+            var contentStack = new VBoxContainer();
+            contentStack.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
+            contentStack.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            contentStack.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+
+            contentStack.AddChild(AshfallUiHelpers.MakeSectionHeader("3-DAY FORECAST"));
+            var cols = new[]
+            {
+                new AshfallDataGrid.Column { Header = "Day",  MinWidth = 80,  Alignment = AshfallDataGrid.ColumnAlign.Left  },
+                new AshfallDataGrid.Column { Header = "Pattern", MinWidth = 180, Alignment = AshfallDataGrid.ColumnAlign.Left  },
+                new AshfallDataGrid.Column { Header = "Rad+", MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Right },
+                new AshfallDataGrid.Column { Header = "Visibility", MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Center },
+                new AshfallDataGrid.Column { Header = "Risk",  MinWidth = 130, Alignment = AshfallDataGrid.ColumnAlign.Left  },
+            };
+            _forecastGrid = new AshfallDataGrid(cols, showHeader: true, minWidth: 600, minHeight: 240);
+            _forecastGrid.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            _forecastGrid.SizeFlagsVertical = SizeFlags.ExpandFill;
+            contentStack.AddChild(_forecastGrid);
+
+            var split = new HBoxContainer();
+            split.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
+            split.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            split.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+
+            var seasonPanel = AshfallUiHelpers.MakePanel();
+            seasonPanel.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            seasonPanel.SizeFlagsStretchRatio = 1f;
+            var seasonMargin = AshfallUiHelpers.MakeMargins(DesignTheme.SpacingMd);
+            seasonPanel.AddChild(seasonMargin);
+            var seasonVbox = new VBoxContainer();
+            seasonVbox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            seasonMargin.AddChild(seasonVbox);
+            seasonVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("SEASON CYCLE"));
+            _seasonList = new VBoxContainer();
+            _seasonList.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+            _seasonList.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            seasonVbox.AddChild(_seasonList);
+            split.AddChild(seasonPanel);
+
+            var advisoryPanel = AshfallUiHelpers.MakePanel();
+            advisoryPanel.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            advisoryPanel.SizeFlagsStretchRatio = 1f;
+            var advMargin = AshfallUiHelpers.MakeMargins(DesignTheme.SpacingMd);
+            advisoryPanel.AddChild(advMargin);
+            var advVBox = new VBoxContainer();
+            advVBox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            advMargin.AddChild(advVBox);
+            advVBox.AddChild(AshfallUiHelpers.MakeSectionHeader("ENVIRONMENTAL ADVISORIES"));
+            _advisoryList = new VBoxContainer();
+            _advisoryList.AddThemeConstantOverride("separation", DesignTheme.SpacingXs);
+            _advisoryList.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            advVBox.AddChild(_advisoryList);
+            split.AddChild(advisoryPanel);
+
+            contentStack.AddChild(split);
+            _shell.SetContent(contentStack);
         }
 
         public void Open()

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Shelter Engineering Console</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error": "#690005",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "on-surface-variant": "#c5c6ca",
+                        "on-primary-fixed": "#171c20",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-fixed": "#bcebef",
+                        "on-tertiary-container": "#9c3f00",
+                        "primary-container": "#d1d5db",
+                        "on-primary-fixed-variant": "#43474c",
+                        "secondary-container": "#225054",
+                        "on-primary-container": "#585c61",
+                        "tertiary-container": "#ffc9b0",
+                        "error-container": "#93000a",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "surface-bright": "#393939",
+                        "on-tertiary-fixed": "#351000",
+                        "on-surface": "#e5e2e1",
+                        "primary-fixed": "#dfe3e9",
+                        "on-primary": "#2c3136",
+                        "on-tertiary": "#562000",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container-highest": "#353534",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-background": "#e5e2e1",
+                        "surface-container": "#201f1f",
+                        "background": "#131313",
+                        "primary": "#eef1f7",
+                        "inverse-on-surface": "#313030",
+                        "tertiary-fixed": "#ffdbcc",
+                        "outline-variant": "#44474a",
+                        "on-secondary-container": "#93c0c5",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#131313",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "surface-tint": "#c3c7cd",
+                        "inverse-primary": "#5a5f64",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary-fixed": "#002022",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary": "#00363a",
+                        "tertiary": "#ffede7",
+                        "surface-variant": "#353534",
+                        "secondary": "#a1cfd3",
+                        "outline": "#8f9194",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#1f4d51"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "stack-tight": "4px",
+                        "margin-base": "16px",
+                        "gutter": "8px",
+                        "container-padding": "12px",
+                        "stack-md": "12px"
+                    },
+                    fontFamily: {
+                        "data-lg": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "data-md": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "data-sm": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "data-lg": ["18px", { lineHeight: "24px", fontWeight: "700" }],
+                        "label-caps": ["10px", { lineHeight: "12px", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "24px", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "48px", letterSpacing: "0.05em", fontWeight: "400" }],
+                        "data-md": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+                        "headline-lg": ["32px", { lineHeight: "32px", letterSpacing: "0.02em", fontWeight: "400" }],
+                        "data-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* CRT Scanline Overlay */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 50;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+        
+        /* Tactical Glow FX */
+        .glow-text-primary { text-shadow: 0 0 4px rgba(238, 241, 247, 0.6); }
+        .glow-text-alert { text-shadow: 0 0 4px rgba(255, 180, 171, 0.8); }
+        .glow-text-steady { text-shadow: 0 0 4px rgba(161, 207, 211, 0.6); }
+        
+        /* Segmented Progress Block */
+        .progress-block {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            margin-right: 2px;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0e0e0e; border-left: 1px solid #44474a; }
+        ::-webkit-scrollbar-thumb { background: #353534; border: 1px solid #44474a; }
+        ::-webkit-scrollbar-thumb:hover { background: #8f9194; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-hidden selection:bg-secondary-container selection:text-secondary-fixed">
+<!-- JSON Component: SideNavBar -->
+<nav class="hidden md:flex flex-col gap-stack-md h-screen p-container-padding bg-surface-container-lowest border-r border-outline-variant w-64 flex-shrink-0 z-10">
+<!-- Header -->
+<div class="mb-6 flex flex-col gap-unit">
+<div class="flex items-center gap-gutter border border-outline p-unit bg-surface-container">
+<span class="material-symbols-outlined text-outline">account_box</span>
+<span class="font-data-sm text-data-sm text-outline uppercase tracking-wider">OPERATOR_01_SIG</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary glow-text-primary mt-2 uppercase tracking-wide">STATION_ALPHA</h2>
+<span class="font-data-sm text-data-sm text-outline-variant uppercase">SECTOR_7_SUB_01</span>
+</div>
+<!-- Main Nav -->
+<div class="flex flex-col gap-unit flex-grow">
+<!-- Active Nav Item based on prompt focus -->
+<a class="flex items-center gap-gutter bg-primary text-surface-dim font-bold p-unit transition-transform active:scale-95 group" href="#">
+<span class="material-symbols-outlined">bolt</span>
+<span class="font-data-md text-data-md uppercase tracking-wider">POWER_GRID</span>
+<span class="ml-auto opacity-0 group-hover:opacity-100">_</span>
+</a>
+<!-- Inactive Nav Items -->
+<a class="flex items-center gap-gutter text-outline-variant p-unit border border-transparent hover:border-primary hover:text-primary transition-colors active:scale-95 group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">architecture</span>
+<span class="font-data-md text-data-md uppercase tracking-wider">STRUCT_MONITOR</span>
+</a>
+<a class="flex items-center gap-gutter text-outline-variant p-unit border border-transparent hover:border-primary hover:text-primary transition-colors active:scale-95 group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">security</span>
+<span class="font-data-md text-data-md uppercase tracking-wider">DEFENSE_SYS</span>
+</a>
+<a class="flex items-center gap-gutter text-outline-variant p-unit border border-transparent hover:border-primary hover:text-primary transition-colors active:scale-95 group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">radar</span>
+<span class="font-data-md text-data-md uppercase tracking-wider">COMMS_RELAY</span>
+</a>
+</div>
+<!-- CTA -->
+<button class="w-full border border-error text-error bg-error-container/20 p-unit font-data-md text-data-md hover:bg-error hover:text-surface-dim transition-colors uppercase flex justify-between items-center group mb-4">
+<span>MANUAL_OVERRIDE</span>
+<span class="group-hover:animate-pulse">_</span>
+</button>
+<!-- Footer Nav -->
+<div class="flex flex-col gap-unit border-t border-outline-variant pt-4 mt-auto">
+<a class="flex items-center gap-gutter text-outline-variant p-unit border border-transparent hover:border-primary hover:text-primary transition-colors active:scale-95" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="font-data-md text-data-md uppercase tracking-wider">DIAGNOSTICS</span>
+</a>
+<a class="flex items-center gap-gutter text-outline-variant p-unit border border-transparent hover:border-primary hover:text-primary transition-colors active:scale-95" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-data-md text-data-md uppercase tracking-wider">LOGOUT</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-grow flex flex-col h-screen overflow-hidden bg-surface relative">
+<!-- JSON Component: TopAppBar -->
+<header class="bg-background text-primary flex justify-between items-center px-margin-base w-full h-16 border-b border-outline-variant shrink-0 z-10">
+<div class="flex items-center gap-gutter">
+<h1 class="font-headline-lg text-headline-lg text-primary uppercase tracking-widest glow-text-primary">ASHFALL_BUNKER_v4.2</h1>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="text-outline font-medium hover:bg-primary hover:text-surface-dim transition-colors duration-75 active:bg-primary-fixed-dim p-unit border border-transparent hover:border-primary rounded-none">
+<span class="material-symbols-outlined">power_settings_new</span>
+</button>
+<button class="text-outline font-medium hover:bg-primary hover:text-surface-dim transition-colors duration-75 active:bg-primary-fixed-dim p-unit border border-transparent hover:border-primary rounded-none">
+<span class="material-symbols-outlined">settings_input_component</span>
+</button>
+<button class="text-outline font-medium hover:bg-primary hover:text-surface-dim transition-colors duration-75 active:bg-primary-fixed-dim p-unit border border-transparent hover:border-primary rounded-none">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+</div>
+</header>
+<!-- Dashboard Canvas (3 Panels) -->
+<main class="flex-grow p-margin-base overflow-y-auto grid grid-cols-1 xl:grid-cols-3 gap-gutter relative z-0">
+<!-- LEFT PANEL: POWER GRID -->
+<section class="border border-outline-variant bg-surface-container-low flex flex-col h-full">
+<header class="bg-surface-container-highest border-b border-outline-variant p-container-padding flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-primary tracking-wide">POWER_GRID_SUBSTATION</h3>
+<span class="material-symbols-outlined text-secondary glow-text-steady text-sm">online_prediction</span>
+</header>
+<div class="p-container-padding flex flex-col gap-stack-md flex-grow">
+<!-- Generator Status -->
+<div class="border border-outline p-unit bg-surface-container-lowest">
+<div class="flex justify-between items-end mb-unit">
+<span class="font-label-caps text-label-caps text-outline uppercase">Generator Output</span>
+<span class="font-data-md text-data-md text-secondary glow-text-steady">NOMINAL</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-primary">1.4</span>
+<span class="font-data-sm text-data-sm text-outline-variant">L/day fuel consumed</span>
+</div>
+</div>
+<!-- Battery Storage -->
+<div class="border border-outline p-unit bg-surface-container-lowest">
+<div class="flex justify-between items-end mb-2">
+<span class="font-label-caps text-label-caps text-outline uppercase">Battery Storage</span>
+<span class="font-data-md text-data-md text-primary">84%</span>
+</div>
+<div class="flex gap-[2px] mb-2">
+<!-- Segmented Bar 84% -->
+<div class="h-4 w-full bg-secondary"></div>
+<div class="h-4 w-full bg-secondary"></div>
+<div class="h-4 w-full bg-secondary"></div>
+<div class="h-4 w-full bg-secondary"></div>
+<div class="h-4 w-full bg-secondary"></div>
+<div class="h-4 w-full bg-secondary"></div>
+<div class="h-4 w-full bg-secondary"></div>
+<div class="h-4 w-full bg-secondary"></div>
+<div class="h-4 w-full bg-surface-container-highest"></div>
+<div class="h-4 w-full bg-surface-container-highest"></div>
+</div>
+<div class="text-right">
+<span class="font-data-sm text-data-sm text-outline">320 / 380 kWh</span>
+</div>
+</div>
+<!-- Distribution Toggles -->
+<div class="flex-grow flex flex-col gap-unit mt-4">
+<span class="font-label-caps text-label-caps text-outline uppercase mb-1 border-b border-outline-variant pb-1">Distribution Array</span>
+<div class="flex justify-between items-center border border-outline p-unit hover:bg-surface-container transition-colors cursor-pointer">
+<span class="font-data-md text-data-md text-primary">MEDICAL WING</span>
+<span class="font-data-md text-data-md text-secondary glow-text-steady bg-secondary/10 px-2 border border-secondary">ON</span>
+</div>
+<div class="flex justify-between items-center border border-outline p-unit hover:bg-surface-container transition-colors cursor-pointer">
+<span class="font-data-md text-data-md text-primary">WATER RECLAMATION</span>
+<span class="font-data-md text-data-md text-secondary glow-text-steady bg-secondary/10 px-2 border border-secondary">ON</span>
+</div>
+<div class="flex justify-between items-center border border-outline p-unit hover:bg-surface-container transition-colors cursor-pointer">
+<span class="font-data-md text-data-md text-primary">RAD SCRUBBERS</span>
+<span class="font-data-md text-data-md text-secondary glow-text-steady bg-secondary/10 px-2 border border-secondary">ON</span>
+</div>
+<div class="flex justify-between items-center border border-outline p-unit hover:bg-surface-container transition-colors cursor-pointer">
+<span class="font-data-md text-data-md text-outline-variant">DEFENSE TURRETS</span>
+<span class="font-data-md text-data-md text-on-tertiary-container bg-tertiary-container/10 px-2 border border-on-tertiary-container">STBY</span>
+</div>
+<div class="flex justify-between items-center border border-outline p-unit hover:bg-surface-container transition-colors cursor-pointer opacity-60">
+<span class="font-data-md text-data-md text-outline-variant">COMMS RELAY</span>
+<span class="font-data-md text-data-md text-outline bg-surface-container-highest px-2 border border-outline-variant">OFF</span>
+</div>
+</div>
+</div>
+</section>
+<!-- CENTER PANEL: STRUCTURAL MONITOR -->
+<section class="border border-outline-variant bg-surface-container-low flex flex-col h-full relative">
+<header class="bg-surface-container-highest border-b border-outline-variant p-container-padding flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-primary tracking-wide">STRUCTURAL_MONITOR</h3>
+<span class="material-symbols-outlined text-outline">architecture</span>
+</header>
+<div class="p-container-padding flex flex-col gap-stack-md flex-grow">
+<!-- Cross Section Image Placeholder -->
+<div class="w-full h-48 border border-outline bg-surface-container-lowest relative overflow-hidden group">
+<div class="bg-cover bg-center w-full h-full opacity-70 group-hover:opacity-100 transition-opacity mix-blend-screen grayscale contrast-150" data-alt="A rugged, wireframe digital cross-section schematic of a deep underground survival bunker on a CRT monitor. The schematic shows multiple descending levels: Surface, Level 1 Living Quarters, Level 2 Medical Triage, and Level 3 Reactor Core. Rendered in monochromatic tactical teal against a deep black background, with high-tech scanlines, minimal grid lines, and glowing technical annotations indicating structural integrity and depth." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCFxm-xlFJK69i98n8UnOv5Kc_X6H60gtkFmq1MxTnjrVFQ9G3ynfJTfpRH-RP57mHak3mm2VV7HOyCak0fa3uWfMmqeRrxqyVjaC2sIaBs2EEZvPCSVKHxbNhNrj5WB8lwT3kEb2lFE8I13au7UGr8VMt79OATOMMZMznCTsw1D4k2tfNIV-80gh_VRk-YLtLItH5mVR3fXMph_e3Kp48rA3lLKJ_VgAmeLAgXCNlr5qLJWSLj14WDdP47HqbfBq9FGjEfhlbcWv3h')"></div>
+<!-- Overlay labels -->
+<div class="absolute top-2 left-2 flex flex-col gap-1 font-label-caps text-label-caps text-secondary glow-text-steady">
+<span>&gt; SURFACE [EXTERIOR]</span>
+<span class="pl-2">&gt; L1_LIVING</span>
+<span class="pl-4">&gt; L2_MED_TRIAGE</span>
+<span class="pl-6">&gt; L3_REACTOR_CORE</span>
+</div>
+</div>
+<!-- Telemetry Data Grid -->
+<div class="grid grid-cols-2 gap-gutter mt-2">
+<!-- Radiation -->
+<div class="border border-outline p-unit bg-surface-container-lowest col-span-2 flex justify-between items-center">
+<div>
+<span class="font-label-caps text-label-caps text-outline uppercase block mb-1">Ext. Radiation / Int. Filtering</span>
+<div class="flex items-baseline gap-2">
+<span class="font-data-lg text-data-lg text-error glow-text-alert">14.8 <span class="text-data-sm font-normal">Sv/h</span></span>
+<span class="text-outline-variant">&gt;</span>
+<span class="font-data-lg text-data-lg text-secondary glow-text-steady">0.02 <span class="text-data-sm font-normal">mSv/h</span></span>
+</div>
+</div>
+<span class="material-symbols-outlined text-error animate-pulse">warning</span>
+</div>
+<!-- Lead Armor -->
+<div class="border border-outline p-unit bg-surface-container-lowest">
+<span class="font-label-caps text-label-caps text-outline uppercase block mb-1">Lead Armor Integ</span>
+<span class="font-data-lg text-data-lg text-on-tertiary-container block">78%</span>
+<span class="font-data-sm text-data-sm text-error bg-error-container/20 px-1 border border-error-container mt-1 inline-block">2 SEC BREACHED</span>
+</div>
+<!-- Air Filter -->
+<div class="border border-outline p-unit bg-surface-container-lowest">
+<span class="font-label-caps text-label-caps text-outline uppercase block mb-1">Air Filter Est.</span>
+<span class="font-data-lg text-data-lg text-primary block">34 <span class="text-data-sm font-normal text-outline-variant">DAYS</span></span>
+<!-- Visual gauge -->
+<div class="w-full h-1 bg-surface-container-highest mt-2 flex">
+<div class="h-full bg-secondary w-1/3"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT PANEL: HATCH DEFENSE -->
+<section class="border border-outline-variant bg-surface-container-low flex flex-col h-full border-t-4 border-t-error">
+<header class="bg-surface-container-highest border-b border-outline-variant p-container-padding flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-primary tracking-wide">HATCH_DEFENSE</h3>
+<span class="material-symbols-outlined text-error animate-pulse">crisis_alert</span>
+</header>
+<div class="p-container-padding flex flex-col gap-stack-md flex-grow">
+<!-- Blast Door Status -->
+<div class="border border-error p-unit bg-error-container/10 flex justify-between items-center mb-2">
+<span class="font-label-caps text-label-caps text-error uppercase">Main Blast Door</span>
+<span class="font-data-md text-data-md text-error font-bold glow-text-alert blink-fast">ARMED &amp; SEALED</span>
+</div>
+<!-- Radar Placeholder -->
+<div class="w-full h-32 border border-outline bg-surface-container-lowest relative overflow-hidden flex items-center justify-center">
+<div class="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-screen" data-alt="A top-down circular tactical radar sweep interface on a CRT screen. The background is stark black with concentric green targeting rings and crosshairs. Three distinct, bright red blips (hostiles) are detected clustered near the top right quadrant. The visual style is retro-futuristic, high-contrast, brutalist, and evokes a high-tension military bunker defense system with visible scanlines and phosphor glow." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA6QUpzyaKsWkvQfnCmTvlMNjjpsWjGKbktNRR0AU-xktNF4oCBLMMoKsB3bvkmg-SW2wRnU85TAkQ8VDQsY01a2ub6BPCHBA1zagHaJtkr6cto78K3laOjP1poqYMjllQcqgJMuCusai9dKoJE5_KiK5-yPB4-uh4nluB6INh-sOxzXpwXw78aGLXGkDTolnYoMxMPcgrlMvqfj7VU_9CjkeV9NhcaTgL7fbdEvW5NNTeK3ImOqnzFh4BmMfuxrK-xDDanRbTJ8Emv')"></div>
+<div class="z-10 bg-background/80 border border-error p-1 backdrop-blur-sm">
+<span class="font-data-md text-data-md text-error glow-text-alert flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">radar</span>
+                                3 HOSTILES DETECTED
+                            </span>
+</div>
+</div>
+<!-- Ammo Status -->
+<div class="border border-outline p-unit bg-surface-container-lowest mt-2">
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-caps text-label-caps text-outline uppercase">Auto-Sentry Ammo</span>
+<span class="font-data-sm text-data-sm text-outline-variant">140/200</span>
+</div>
+<div class="flex gap-1">
+<!-- Representing ammo blocks -->
+<div class="h-6 flex-grow bg-primary opacity-80 border border-background"></div>
+<div class="h-6 flex-grow bg-primary opacity-80 border border-background"></div>
+<div class="h-6 flex-grow bg-primary opacity-80 border border-background"></div>
+<div class="h-6 flex-grow bg-primary opacity-80 border border-background"></div>
+<div class="h-6 flex-grow bg-surface-container-highest border border-background"></div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex-grow flex flex-col justify-end gap-unit mt-4">
+<span class="font-label-caps text-label-caps text-outline uppercase mb-1 border-b border-outline-variant pb-1">Tactical Actions</span>
+<button class="w-full border border-primary text-primary bg-transparent p-unit font-data-md text-data-md hover:bg-primary hover:text-surface-dim transition-colors uppercase text-left flex justify-between group">
+<span>[ SEAL BLAST DOORS ]</span>
+<span class="opacity-0 group-hover:opacity-100 font-bold">_</span>
+</button>
+<button class="w-full border border-on-tertiary-container text-on-tertiary-container bg-tertiary-container/5 p-unit font-data-md text-data-md hover:bg-on-tertiary-container hover:text-surface-dim transition-colors uppercase text-left flex justify-between group">
+<span>[ DEPLOY TEAR GAS ]</span>
+<span class="opacity-0 group-hover:opacity-100 font-bold">_</span>
+</button>
+<button class="w-full border border-error text-error bg-error-container/10 p-unit font-data-md text-data-md hover:bg-error hover:text-surface-dim transition-colors uppercase text-left flex justify-between group shadow-[inset_0_0_10px_rgba(255,180,171,0.2)]">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">warning</span>
+                                [ VENT RADIATION HAZARD ]
+                            </span>
+<span class="opacity-0 group-hover:opacity-100 font-bold">_</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Inline script for minor brutalist terminal effects -->
+<script>
+        // Simple blinking cursor effect for armed status
+        setInterval(() => {
+            const blinks = document.querySelectorAll('.blink-fast');
+            blinks.forEach(el => {
+                el.style.opacity = el.style.opacity === '0' ? '1' : '0';
+            });
+        }, 500);
+    </script>
+</body></html>

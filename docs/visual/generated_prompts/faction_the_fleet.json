@@ -1,0 +1,95 @@
+{
+ "content_id": "faction_the_fleet",
+ "visual_family": "Faction-Art",
+ "subfamily": "Other",
+ "model_hint": "auto",
+ "prompt_template": {
+  "WHAT": "A monochrome-style faction emblem. No characters, no setting. Pure iconography.",
+  "STYLE": "Single-colour emblem against a charcoal background. ASHFALL palette. Limited accent.",
+  "COMPOSITION": "Emblem symmetrically placed in a square canvas.",
+  "CAMERA": "N/A. Flat iconography.",
+  "LIGHTING": "N/A. Flat emblem.",
+  "PALETTE": "charcoal #2A2A2C, concrete grey #5C5F62, faded blue-grey #708085, rust brown #6E4A2F, dirty bone #B5A88A. Accents limited to muted amber #A26E2C (1-2% of pixels) and subtle cyan-green #4F7461 only for contamination iconography.",
+  "MATERIALS": "N/A. Flat.",
+  "BACKGROUND": "Charcoal or near-black background. No horizon.",
+  "RUNTIME_READABILITY": "Reads at 64\u00d764 roster chip. Silhouette retains meaning at 32\u00d732.",
+  "NEGATIVE": "no real-world text, letters, or numerals; no logos or watermark; no AI signature glyphs; no anime-style eyes outside portrait family; no fantasy ornament or fleurons; no neon cyberpunk glow borders; no glossy 3D chromatic rendering; no crystalline particles; no stock-photo backdrop; no pristine factory-fresh finish on tools or weapons; no gratuitous gore; no real-country flags; no real brand marks. No rendered UI text \u2014 that is authored in Godot.",
+  "OUTPUT_FORMAT": "512x512 JPG / PNG. Optional alpha."
+ },
+ "meta": {
+  "source_catalog": "holdfast_factions",
+  "reference_assets": [
+   {
+    "stem": "faction_cult_of_the_glow",
+    "file_path": "assets/art/faction_cult_of_the_glow.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "15_weather_kinds",
+    "file_path": "assets/art/15_weather_kinds.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "5_factions",
+    "file_path": "assets/art/5_factions.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "ammo_harpoon_tether_spear",
+    "file_path": "assets/art/ammo_harpoon_tether_spear.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "armor_reinforced_leather_vest",
+    "file_path": "assets/art/armor_reinforced_leather_vest.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "binoculars_weathered",
+    "file_path": "assets/art/binoculars_weathered.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "cultist_of_the_glow",
+    "file_path": "assets/art/cultist_of_the_glow.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "enc_faction_roadblock",
+    "file_path": "assets/art/enc_faction_roadblock.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
+  "canonical_filename": "faction_the_fleet.jpg",
+  "target_directory": "assets/art/",
+  "alpha_requirement": "opaque",
+  "dimensions": [
+   512,
+   512
+  ],
+  "aspect_ratio": "monochrome emblem",
+  "priority_band": "P2",
+  "gameplay_importance": 2.0
+ },
+ "semantic_description": "A 2D painted icon for Faction-Art 'faction_the_fleet', readable at icon scale (~64\u00d764).",
+ "forbidden_objects": [
+  "real-country flag",
+  "real brand mark",
+  "logo",
+  "watermark",
+  "rendered-text label",
+  "neon cyberpunk",
+  "anime-style eyes",
+  "fantasy ornament",
+  "glossy sci-fi glow",
+  "stock-photo backdrop"
+ ]
+}

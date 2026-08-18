@@ -52,14 +52,18 @@ namespace AtomicWar.GodotApp
 
                 var save = s_json.Deserialize<MaritimeHostSave>(raw);
                 if (save == null) return null;
-                if (!string.IsNullOrEmpty(save.Checksum))
+                // The checksummed envelope is the only Maritime format; an empty
+                // checksum means a malformed new-format save, not "legacy".
+                if (string.IsNullOrEmpty(save.Checksum))
                 {
-                    string actual = SaveChecksum.Compute(save);
-                    if (!string.Equals(save.Checksum, actual, StringComparison.Ordinal))
-                    {
-                        GD.PrintErr("[Maritime] load failed: checksum mismatch (corrupt or foreign save).");
-                        return null;
-                    }
+                    GD.PrintErr("[Maritime] load failed: checksum field missing (corrupt save).");
+                    return null;
+                }
+                string actual = SaveChecksum.Compute(save);
+                if (!string.Equals(save.Checksum, actual, StringComparison.Ordinal))
+                {
+                    GD.PrintErr("[Maritime] load failed: checksum mismatch (corrupt or foreign save).");
+                    return null;
                 }
                 return save;
             }

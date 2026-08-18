@@ -76,5 +76,15 @@ namespace Ashfall.Core.Narrative
         public int cumulativeMorale = 0;
         public int cumulativeGuilt = 0;
         public List<EncounterResolutionRecord> history = new List<EncounterResolutionRecord>();
+        public List<PendingSurfacedEncounter> pending = new List<PendingSurfacedEncounter>();
+    }
+
+    [System.Serializable]
+    public class PendingSurfacedEncounter
+    {
+        public string encounterId = string.Empty;
+        public string locationId = string.Empty;
+        public int legIndex = 0;
+        public int day = 0;
     }
 }

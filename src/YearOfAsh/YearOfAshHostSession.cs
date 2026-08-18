@@ -98,21 +98,16 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 var serializer = new SystemTextJsonSerializer();
                 DoorEncounterCatalogLoader.LoadAndRegister(session.Encounters, dataDir, fileIO, serializer);
                 YearOfAshCatalogLoader.LoadAndRegisterQuests(session.Quests, dataDir, fileIO, serializer);
-                // ASHFALL: THE VERDICT (Expansion 08) — register its runtime questlines
-                // into the same QuestlineSystem so they surface via GetPlayableQuestlines
-                // and persist through the existing YearOfAshSave envelope.
-                Ashfall.Core.Verdict.VerdictQuestCatalogLoader.LoadAndRegister(session.Quests, dataDir, fileIO, serializer);
-                // ASHFALL: THE DOSE (Expansion 07) — register the four register quest lines
-                // (first reading / sick room / child's number / signed hour) into the same
-                // QuestlineSystem so they surface via GetPlayableQuestlines with the other
-                // expansion quests and persist through YearOfAshSave.
-                var doseContent = Ashfall.Core.DoseContentCatalogLoader.Load(dataDir, fileIO, serializer);
-                foreach (var dq in doseContent.quests)
-                {
-                    if (dq == null || string.IsNullOrEmpty(dq.questlineId)) continue;
-                    session.Quests.RegisterQuestline(dq);
-                }
-
+                // ASHFALL: THE VERDICT (Expansion 08) questlines are NOT registered
+                // here — Verdict is the sole owner of its quest progress, registered
+                // and persisted via VerdictHostSession / VerdictSave (v3+). Older
+                // Year-of-Ash-carried quest_verdict_* records are adopted into the
+                // Verdict envelope on load (VerdictQuestMigration).
+                // ASHFALL: THE DOSE (Expansion 07) questlines are NOT registered
+                // here either — Dose owns its quest progress via
+                // DoseLedgerHostSession / DoseLedgerSave (v2+). Older
+                // Year-of-Ash-carried Dose quest records are adopted into the Dose
+                // envelope on load (DoseQuestMigration).
                 // Adaptive Warlord AI (proposed model): load + validate the doctrine
                 // catalog, then bind the warlord to the warlords_sector_4 identity.
                 var warlordCatalog = WarlordDoctrineCatalogLoader.Load(dataDir, fileIO, serializer);
@@ -271,6 +266,13 @@ namespace AtomicWar.GodotApp.YearOfAsh
             YearOfAshSaveCodec.Restore(
                 save, _timeline, _encounters, _factionWar,
                 _deepFreeze, _radon, _quests, _warlord);
+            // Verdict quest progress is owned by the Verdict envelope (v3+) and
+            // Dose quest progress by the Dose envelope (v2+). After the one-time
+            // adoption in their host sessions, strip any quest_verdict_* /
+            // Dose quest records a legacy save still carries so this envelope
+            // stops re-serializing them (one persisted owner per expansion).
+            Ashfall.Core.Verdict.VerdictQuestMigration.StripFromYearOfAsh(_quests.State);
+            Ashfall.Core.DoseQuestMigration.StripFromYearOfAsh(_quests.State);
         }
 
         private List<SurvivorOccupantSnapshot> CreateDefaultDemoRoster()

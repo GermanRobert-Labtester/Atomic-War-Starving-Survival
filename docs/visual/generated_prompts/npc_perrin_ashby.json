@@ -1,0 +1,46 @@
+{
+ "content_id": "npc_perrin_ashby",
+ "visual_family": "NPC-Portrait",
+ "subfamily": "Other",
+ "model_hint": "auto",
+ "prompt_template": {
+  "WHAT": "Head-and-shoulders portrait of a single named NPC. Same composition rules as Survivor Portrait but more interior-scene context allowed.",
+  "STYLE": "2D painted survival-portrait. ASHFALL palette. Continuity with Survivor-Portrait, but slightly broader expressive range permitted.",
+  "COMPOSITION": "Same as Survivor Portrait but background may carry a doorway or wall fragment.",
+  "CAMERA": "Eye-level, heads-on. Focal length equivalent ~85mm.",
+  "LIGHTING": "Same as Survivor Portrait, may carry a slightly warmer key light indicating warmth source (candle, low fire).",
+  "PALETTE": "charcoal #2A2A2C, concrete grey #5C5F62, faded blue-grey #708085, rust brown #6E4A2F, dirty bone #B5A88A. Accents limited to muted amber #A26E2C (1-2% of pixels) and subtle cyan-green #4F7461 only for contamination iconography.",
+  "MATERIALS": "Same as Survivor Portrait.",
+  "BACKGROUND": "Slight scene context (doorway, wall, frost-rimed doorway). Soft-bokeh beyond depth-of-field.",
+  "RUNTIME_READABILITY": "Reads at 128\u00d7128 NPC roster card. Silhouette retains character at 64\u00d764.",
+  "NEGATIVE": "no real-world text, letters, or numerals; no logos or watermark; no AI signature glyphs; no anime-style eyes outside portrait family; no fantasy ornament or fleurons; no neon cyberpunk glow borders; no glossy 3D chromatic rendering; no crystalline particles; no stock-photo backdrop; no pristine factory-fresh finish on tools or weapons; no gratuitous gore; no real-country flags; no real brand marks. No rendered UI text \u2014 that is authored in Godot.",
+  "OUTPUT_FORMAT": "512x512 JPG / PNG opaque."
+ },
+ "meta": {
+  "source_catalog": "characters",
+  "reference_assets": [],
+  "canonical_filename": "npc_perrin_ashby.jpg",
+  "target_directory": "assets/art/",
+  "alpha_requirement": "opaque",
+  "dimensions": [
+   512,
+   512
+  ],
+  "aspect_ratio": "head/shoulder portrait",
+  "priority_band": "P1",
+  "gameplay_importance": 3.5
+ },
+ "semantic_description": "A 2D painted icon for NPC-Portrait 'npc_perrin_ashby', readable at icon scale (~64\u00d764).",
+ "forbidden_objects": [
+  "real-country flag",
+  "real brand mark",
+  "logo",
+  "watermark",
+  "rendered-text label",
+  "neon cyberpunk",
+  "anime-style eyes",
+  "fantasy ornament",
+  "glossy sci-fi glow",
+  "stock-photo backdrop"
+ ]
+}

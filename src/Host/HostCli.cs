@@ -23,6 +23,7 @@ using AtomicWar.GodotApp.UI;
 using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace AtomicWar.GodotApp
 {
@@ -71,6 +72,7 @@ namespace AtomicWar.GodotApp
         ExpansionHubSaveSelfTest,
         DoseLedgerSelfTest,
         ExpeditionSelfTest,
+        ExpeditionEncounterBridgeSelfTest,
         MedicalSelfTest,
         NarrativeSelfTest,
         SurvivorsSelfTest,
@@ -96,7 +98,11 @@ namespace AtomicWar.GodotApp
         DeepCoastHostSelfTest,
         WarlordSelfTest,
         WarlordHostSelfTest,
-        WarlordUiSelfTest
+        WarlordUiSelfTest,
+        BlackFlotillaSelfTest,
+        RadioSelfTest,
+        ExpeditionPanelUiTest,
+        UiSnapshotSelfTest
     }
 
     /// <summary>
@@ -208,6 +214,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.DoseLedgerSelfTest;
             if (Has(args, "--expedition-selftest"))
                 return HostCliAction.ExpeditionSelfTest;
+            if (Has(args, "--expedition-encounter-bridge-selftest"))
+                return HostCliAction.ExpeditionEncounterBridgeSelfTest;
             if (Has(args, "--medical-selftest"))
                 return HostCliAction.MedicalSelfTest;
             if (Has(args, "--narrative-selftest"))
@@ -246,6 +254,14 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.WarlordHostSelfTest;
             if (Has(args, "--warlord-ui-selftest"))
                 return HostCliAction.WarlordUiSelfTest;
+            if (Has(args, "--black-flotilla-selftest") || Has(args, "--maritime-selftest") || Has(args, "--expansion-09-selftest"))
+                return HostCliAction.BlackFlotillaSelfTest;
+            if (Has(args, "--radio-selftest"))
+                return HostCliAction.RadioSelfTest;
+            if (Has(args, "--expedition-panel-uitest") || Has(args, "--expedition-panel-lifecycle"))
+                return HostCliAction.ExpeditionPanelUiTest;
+            if (Has(args, "--ui-snapshot-uitest") || Has(args, "--ui-snapshots"))
+                return HostCliAction.UiSnapshotSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -290,6 +306,9 @@ namespace AtomicWar.GodotApp
             GD.Print("  --warlord-selftest       Adaptive warlord AI: doctrines, territory, tribute, determinism, v3 save");
             GD.Print("  --warlord-host-selftest  Warlord host playthrough: YearOfAsh wiring, standing, v3 save/tamper");
             GD.Print("  --warlord-ui-selftest    Warlord tribute payment loop + collector voice + FactionsPanel card");
+            GD.Print("  --black-flotilla-selftest The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip");
+            GD.Print("  --radio-selftest         Radio persistence: history/frequency/played-dedup survive save/load; tamper rejected");
+            GD.Print("  --expedition-panel-uitest Expedition panel encounter-notice lifecycle: open→surface→close→reopen→surface (no double-subscribe, no stale handler)");
             GD.Print("  --phase0-selftest         Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
             GD.Print("  --disease-selftest       Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip");
             GD.Print("  --combat-selftest        Combat Expansion: catalog (JSON), ballistics, weapon condition, determinism, save round-trip");
@@ -313,14 +332,95 @@ namespace AtomicWar.GodotApp
 
         public static int RunExpansionsSelfTest(string dataDirectory)
         {
+            int failures = 0;
+            var covered = new HashSet<string>(StringComparer.Ordinal);
+
+            // Gate helper: run one delegate; mark its canonical id covered only on a
+            // clean exit. A throwing/skipped/missing delegate therefore fails the
+            // aggregate and its canonical id stays uncovered.
+            void Gate(string id, string label, Func<int> run)
+            {
+                GD.Print("\n── " + label + " ──");
+                int rc = 0;
+                try
+                {
+                    rc = run();
+                }
+                catch (Exception e)
+                {
+                    GD.Print("[FAIL] " + id + " delegate threw: " + e.Message);
+                    rc = 1;
+                }
+                if (rc == 0)
+                {
+                    covered.Add(id);
+                    GD.Print("GATE PASS: " + id + " (" + label + ")");
+                }
+                else
+                {
+                    failures++;
+                    GD.Print("GATE FAIL: " + id + " (" + label + ")");
+                }
+            }
+
+            // Core suite: Exp 01, 02, 03, 04, 05 (Glass Orchard + Deep Coast +
+            // Warlord AI), Exp 10 (Silent Foundry), plus Disease + Combat content.
             var report = ExpansionMasterSession.RunAllSelfTests(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
-            if (report.ExitCode != 0)
-                return report.ExitCode;
-            // Chain the Verdict (Exp 08) gate into the full expansion suite so a
-            // CI/expansions run also proves the machine log / reckoning / census /
-            // evidence / ending / save chain (item 10).
-            return RunVerdictSelfTest(dataDirectory);
+            if (report.ExitCode == 0)
+            {
+                foreach (string id in new[]
+                {
+                    "expansion_01_holdfast", "expansion_02_duty_roster",
+                    "expansion_03_standing_record", "expansion_04_nobodys_charter",
+                    "expansion_05_year_of_ash", "expansion_10_silent_foundry"
+                })
+                    covered.Add(id);
+                GD.Print("GATE PASS: expansion_01…05 + expansion_10 (Core suite)");
+            }
+            else
+            {
+                failures++;
+            }
+
+            // Exp 05 — The Year of Ash: timeline / events / deep-freeze / radon /
+            // warlord / questline envelope.
+            Gate("expansion_05_year_of_ash", "The Year of Ash (Exp 05) — save gate",
+                () => RunYearOfAshSaveSelfTest(dataDirectory));
+
+            // Exp 06 — The Muster.
+            Gate("expansion_06_muster", "The Muster (Exp 06)", RunMusterSelfTest);
+
+            // Exp 07 — The Dose / The Vigil.
+            Gate("expansion_07_the_dose", "The Dose / The Vigil (Exp 07)",
+                () => RunDoseLedgerSelfTest(dataDirectory));
+
+            // Exp 08 — The Verdict.
+            Gate("expansion_08_the_verdict", "The Verdict (Exp 08)",
+                () => RunVerdictSelfTest(dataDirectory));
+
+            // Exp 09 — The Black Flotilla / Maritime.
+            Gate("expansion_09_black_flotilla", "The Black Flotilla (Exp 09)",
+                () => RunBlackFlotillaSelfTest(dataDirectory));
+
+            // Completeness: every canonical expansion 01–10 must have a green gate
+            // in this aggregate. Any missing/skipped canonical id fails the run.
+            GD.Print("\n── Canonical completeness (01–10) ──");
+            foreach (var exp in ExpansionSuite.Canonical)
+            {
+                if (covered.Contains(exp.Id))
+                    GD.Print("[PASS] aggregate covers " + exp.Id + " (" + exp.Name + ")");
+                else
+                {
+                    GD.Print("[FAIL] aggregate missing canonical expansion " + exp.Id + " (" + exp.Name + ")");
+                    failures++;
+                }
+            }
+
+            GD.Print(failures == 0
+                ? "ALL EXPANSIONS GREEN (01–10)"
+                : "EXPANSIONS_AGGREGATE FAIL (" + failures + ")");
+            return failures == 0 ? 0 : 1;
         }
 
         /// <summary>
@@ -891,15 +991,18 @@ namespace AtomicWar.GodotApp
             try
             {
                 var session = YearOfAshHostSession.Create(dataDirectory);
-                // The Dose (Expansion 07) quest lines must be registered into the live
-                // QuestlineSystem by Create() (same path Verdict uses).
+                // Ownership contract: Dose (Expansion 07) and Verdict (Expansion 08)
+                // questlines are NOT registered here — each owns its quest runtime
+                // and persists it in its own envelope (DoseLedgerSave v2+ /
+                // VerdictSave v3+). YearOfAsh must not remain a second owner.
                 foreach (var dqid in new[]
                     {
                         "quest_the_dose_the_first_reading", "quest_the_sick_of_room_seven",
-                        "quest_the_childs_number", "quest_the_signed_hour"
+                        "quest_the_childs_number", "quest_the_signed_hour",
+                        "quest_verdict_the_warm_range"
                     })
-                    Check(session.Quests.FindDefinition(dqid) != null,
-                        $"dose quest line registered: {dqid}");
+                    Check(session.Quests.FindDefinition(dqid) == null,
+                        $"expansion questline not double-owned by YearOfAsh: {dqid}");
                 session.TickDay(255);
 
                 // Drive the two phase-scoped systems inside their own windows so the
@@ -1191,6 +1294,79 @@ namespace AtomicWar.GodotApp
             return report.ExitCode;
         }
 
+        /// <summary>Smoke-test ExpeditionEncounterBridge: bare-notice path + resolved path surface count.</summary>
+        public static int RunExpeditionEncounterBridgeSelfTest()
+        {
+            int errors = 0;
+            var log = new GodotLog();
+
+            // Bare-notice path: no eligible encounter in catalog.
+            var bareNarrative = new NarrativeEncounterSystem();
+            var bareBridge = new ExpeditionEncounterBridge(bareNarrative, new SeededRng(1));
+            int bareCount = 0;
+            bareBridge.OnSurfaced += dto =>
+            {
+                bareCount++;
+                if (dto.encounter_id != null || dto.resolved_at_lead != false || dto.choices.Count != 0)
+                {
+                    log.Error("[bridge-selftest] bare-notice DTO malformed.");
+                    errors++;
+                }
+            };
+            bareBridge.Surface(new ExpeditionState
+            {
+                survivorId = "sv",
+                locationId = "loc",
+                displayName = "Loc",
+                stance = "Stealth",
+                phase = (int)ExpeditionPhase.Outbound,
+                encounterCount = 1,
+                dangerLevel = 1
+            });
+            if (bareCount != 1) { log.Error("[bridge-selftest] expected 1 bare surfaced, got " + bareCount); errors++; }
+
+            // Resolved path: catalog has one eligible encounter.
+            var resolvedNarrative = new NarrativeEncounterSystem();
+            resolvedNarrative.RegisterEncounter(new EncounterDefinition
+            {
+                id = "enc_bridge_smoke",
+                title = "Bridge Smoke",
+                description = "Smoke on the horizon.",
+                category = "Discovery",
+                baseWeight = 1f,
+                minDangerLevel = 0f,
+                choices = new System.Collections.Generic.List<EncounterChoiceDefinition>
+                {
+                    new EncounterChoiceDefinition { choiceId = "investigate", text = "Investigate", moraleDelta = 1, guiltDelta = 0 }
+                }
+            });
+            var resolvedBridge = new ExpeditionEncounterBridge(resolvedNarrative, new SeededRng(42));
+            int resolvedCount = 0;
+            resolvedBridge.OnSurfaced += dto =>
+            {
+                resolvedCount++;
+                if (dto.encounter_id != "enc_bridge_smoke" || dto.choices.Count != 1)
+                {
+                    log.Error("[bridge-selftest] resolved DTO malformed.");
+                    errors++;
+                }
+            };
+            resolvedBridge.Surface(new ExpeditionState
+            {
+                survivorId = "sv",
+                locationId = "loc",
+                displayName = "Loc",
+                stance = "Stealth",
+                phase = (int)ExpeditionPhase.Outbound,
+                encounterCount = 1,
+                dangerLevel = 1
+            });
+            if (resolvedCount != 1) { log.Error("[bridge-selftest] expected 1 resolved surfaced, got " + resolvedCount); errors++; }
+
+            GD.Print($"[ExpeditionEncounterBridge] PASS surfaced={bareCount + resolvedCount} errors={errors}");
+            return errors == 0 ? 0 : 1;
+        }
+
         public static int RunMedicalSelfTest()
         {
             var report = MedicalHeadlessDemo.Run(new GodotLog());
@@ -1209,7 +1385,85 @@ namespace AtomicWar.GodotApp
         {
             var report = SurvivorsHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
-            return report.ExitCode;
+            bool pass = report.Passed;
+            try
+            {
+                // Host bridge gate (Loop 9 gap): equipped inventory gear must flow
+                // into ExposureContext.WornGear and cut Mikhail's outside-zone dose.
+                var invSession = new InventoryHostSession();
+                invSession.SeedStartingSupplies();
+                invSession.Equip("hazmat_suit");
+                invSession.Equip("gas_mask");
+
+                var gearedSession = new SurvivorsHostSession();
+                gearedSession.SeedDemoRoster();
+                gearedSession.Inventory = invSession;
+
+                var bareSession = new SurvivorsHostSession();
+                bareSession.SeedDemoRoster();
+
+                var mikhailGeared = gearedSession.RadStateFor("survivor_gunner_mikhail");
+                var mikhailBare = bareSession.RadStateFor("survivor_gunner_mikhail");
+                float gearedBefore = mikhailGeared?.RadiationDose ?? 0f;
+                float bareBefore = mikhailBare?.RadiationDose ?? 0f;
+                gearedSession.TickHour(2f);
+                bareSession.TickHour(2f);
+                float gearedDelta = (mikhailGeared?.RadiationDose ?? 0f) - gearedBefore;
+                float bareDelta = (mikhailBare?.RadiationDose ?? 0f) - bareBefore;
+
+                bool gearWorks = gearedDelta < bareDelta;
+                GD.Print(gearWorks
+                    ? $"[PASS] equipped gear cuts outside-zone dose (geared +{gearedDelta:F1} mSv vs bare +{bareDelta:F1} mSv)"
+                    : $"[FAIL] equipped gear did not cut dose (geared +{gearedDelta:F1} vs bare +{bareDelta:F1})");
+                pass &= gearWorks;
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] gear-bridge probe threw: " + e.Message);
+                pass = false;
+            }
+            try
+            {
+                // Save/load round-trip of the wired session: equipped gear must survive
+                // a full save → restore cycle and keep protecting (Loop 1 + Invariant 3).
+                var invSave = new InventoryHostSession();
+                invSave.SeedStartingSupplies();
+                invSave.Equip("hazmat_suit");
+                var geared = new SurvivorsHostSession();
+                geared.SeedDemoRoster();
+                geared.Inventory = invSave;
+
+                var survSave = geared.CaptureSave();
+                var invState = invSave.CaptureSave();
+
+                var restoredInv = new InventoryHostSession();
+                restoredInv.RestoreSave(invState);
+                var restored = new SurvivorsHostSession();
+                restored.RestoreSave(survSave);
+                restored.Inventory = restoredInv;
+
+                var mikhail = restored.RadStateFor("survivor_gunner_mikhail");
+                bool stateSurvived = mikhail != null && mikhail.RadiationDose == (survSave.survivors.Find(s => s.id == "survivor_gunner_mikhail")?.radiationDose ?? -1f);
+                GD.Print(stateSurvived
+                    ? "[PASS] survivors state survives restore (dose, roster)"
+                    : "[FAIL] survivors state lost on restore");
+                pass &= stateSurvived;
+
+                float before = mikhail?.RadiationDose ?? 0f;
+                restored.TickHour(2f);
+                float after = mikhail?.RadiationDose ?? 0f;
+                bool gearAfterRestore = (after - before) < 1f;
+                GD.Print(gearAfterRestore
+                    ? $"[PASS] gear protection survives save/load (dose +{after - before:F1} mSv over 2h)"
+                    : $"[FAIL] gear protection lost after save/load (dose +{after - before:F1} mSv)");
+                pass &= gearAfterRestore;
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] save/load round-trip probe threw: " + e.Message);
+                pass = false;
+            }
+            return pass ? 0 : 1;
         }
 
         public static int RunWorldSelfTest()
@@ -1448,6 +1702,16 @@ namespace AtomicWar.GodotApp
                 session.BookDemoChild();
                 session.SignDemoVolunteer();
 
+                // Quest ownership: Dose owns its quest runtime (registered into
+                // the session's QuestlineSystem by Create, persisted in the Dose
+                // envelope — not the Year of Ash envelope).
+                Check(session.Quests.FindDefinition("quest_the_dose_the_first_reading") != null,
+                    "first-reading questline registered in the Dose host");
+                Check(session.Quests.FindDefinition("quest_the_signed_hour") != null,
+                    "signed-hour questline registered in the Dose host");
+                Check(session.Quests.StartQuestline("quest_the_dose_the_first_reading", 200),
+                    "dose questline starts");
+
                 var save = session.CaptureSave(40);
                 Check(!string.IsNullOrEmpty(save.Checksum), "capture stamps checksum");
                 Check(save.saveVersion == DoseLedgerSave.CurrentSaveVersion, "saveVersion current");
@@ -1455,6 +1719,8 @@ namespace AtomicWar.GodotApp
                 Check(save.sickList.bands.Count == 1, "envelope carries the sick band");
                 Check(save.cohort.children.Count == 1, "envelope carries the cohort child");
                 Check(save.voluntaryRegister.entries.Count == 1, "envelope carries the volunteer");
+                Check(save.quests.active.Exists(a => a.questlineId == "quest_the_dose_the_first_reading"),
+                    "envelope carries dose quest progress");
 
                 Check(DoseLedgerSaveStore.TrySave(save, tmpPath), "save written via codec");
 
@@ -1470,6 +1736,8 @@ namespace AtomicWar.GodotApp
                     Check(fresh.Voluntary.Entries.Count == 1, "voluntary register restored");
                     Check(fresh.Ledger.GetCumulative("survivor_gunner_mikhail") > 0f,
                         "cumulative dose restored");
+                    Check(fresh.Quests.GetActiveRecord("quest_the_dose_the_first_reading") != null,
+                        "dose quest progress restored");
                 }
 
                 // Tamper: flip the sim day in the raw text. Checksum must refuse it.
@@ -1500,6 +1768,247 @@ namespace AtomicWar.GodotApp
             GD.Print(failures == 0
                 ? "DOSE_LEDGER_SELFTEST PASS"
                 : "DOSE_LEDGER_SELFTEST FAIL (" + failures + ")");
+            return failures == 0 ? 0 : 1;
+        }
+
+        /// <summary>
+        /// The Black Flotilla / Maritime (Expansion 09) headless gate. Drives the
+        /// live MaritimeHostSession surface: deep-lore catalog loading, dive-site
+        /// data presence, deterministic procedural scavenge, stealth-dive
+        /// room/air/noise/compromise progression, psychological contamination,
+        /// visit-state depletion, and a checksummed save round-trip. Pure
+        /// host + Core — no UI nodes.
+        /// </summary>
+        public static int RunBlackFlotillaSelfTest(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else
+                {
+                    GD.Print("[FAIL] " + name);
+                    failures++;
+                }
+            }
+
+            string tmpPath = Path.Combine(
+                Path.GetTempPath(), "ashfall_black_flotilla_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+
+            try
+            {
+                var io = new FileSystemIO();
+                var json = new SystemTextJsonSerializer();
+
+                // 1. Catalog / data loading: deep-lore locations + dive-site data file.
+                var locations = Ashfall.Core.Maritime.DeepLoreLocationCatalogLoader.Load(dataDirectory, io, json);
+                Check(locations.Count >= 10, "deep_lore_locations.json loads " + locations.Count + " locations");
+                var library = Ashfall.Core.Maritime.DeepLoreLocationCatalogLoader.FindById(locations, "location_municipal_library");
+                Check(library != null && library.lootTable.Count > 0, "deep-lore location carries a loot table");
+                string divePath = io.Combine(dataDirectory, "dive_sites.json");
+                Check(io.FileExists(divePath), "dive_sites.json present in the data authority");
+                var diveSites = Ashfall.Core.Maritime.DiveSiteCatalogLoader.Load(dataDirectory, io, json);
+                Check(diveSites != null && diveSites.dive_sites != null && diveSites.dive_sites.Count >= 4,
+                    "dive_sites.json defines 4+ sites");
+                if (diveSites != null && diveSites.dive_sites != null)
+                {
+                    bool sovereignFound = Ashfall.Core.Maritime.DiveSiteCatalogLoader.FindById(
+                        diveSites, "site_exp09_ss_sovereign") != null;
+                    Check(sovereignFound, "canonical wreck site site_exp09_ss_sovereign present");
+                }
+
+                // 2. Host wiring: the four engine-agnostic maritime systems are alive.
+                var session = MaritimeHostSession.Create(dataDirectory);
+                Check(session.Dive != null && session.Scavenge != null && session.Psychology != null,
+                    "maritime host wires dive + scavenge + psychological systems");
+                Check(session.LootNodes.Count >= 4, "host seeds loot nodes");
+
+                // 3. Deterministic procedural scavenge (same seed → identical rolls).
+                var table = new List<Ashfall.Core.Maritime.VariableLootNode>();
+                table.AddRange(session.LootNodes);
+                var s1 = new Ashfall.Core.Maritime.ProceduralScavengeSystem(new SeededRng(9909));
+                var s2 = new Ashfall.Core.Maritime.ProceduralScavengeSystem(new SeededRng(9909));
+                s1.SetCurrentDay(30);
+                s2.SetCurrentDay(30);
+                var r1 = s1.RollLootTable("loc_selftest_a", table, 2f, false);
+                var r2 = s2.RollLootTable("loc_selftest_a", table, 2f, false);
+                Check(r1.Count == r2.Count, "scavenge deterministic (same seed, same roll count)");
+                bool identical = r1.Count == r2.Count;
+                for (int i = 0; i < r1.Count && identical; i++)
+                    identical = r1[i].ItemId == r2[i].ItemId && r1[i].Quantity == r2[i].Quantity;
+                Check(identical, "scavenge deterministic (rolls identical)");
+
+                // 4. Dive-room progression + air / noise / compromised state.
+                Check(!session.Dive.IsActive, "dive starts idle");
+                session.StartDiveDemo("diver_selftest", "operator_selftest");
+                Check(session.Dive.IsActive, "dive launches");
+                Check(Math.Abs(session.Dive.AirSupplySeconds - 120f) < 0.001f, "dive starts at full air (120s)");
+                session.TickDiveDemo(60f);
+                Check(Math.Abs(session.Dive.AirSupplySeconds - 60f) < 0.001f, "air consumed on tick");
+                session.CrankDiveDemo();
+                Check(Math.Abs(session.Dive.AirSupplySeconds - 90f) < 0.001f, "compressor crank restores air");
+                bool advanced = session.Dive.AdvanceToNextRoom(50);
+                Check(advanced && session.Dive.CurrentRoomIndex == 1 && session.Dive.NoiseLevel == 50,
+                    "advance to companionway with noise 50");
+                session.Dive.AdvanceToNextRoom(40);
+                Check(session.Dive.NoiseLevel == 90 && session.Dive.IsCompromised,
+                    "noise >= 80 compromises the dive");
+                session.Dive.AdvanceToNextRoom(40);
+                Check(session.Dive.NoiseLevel == 100, "noise clamps at 100");
+                Check(!session.Dive.AdvanceToNextRoom(40), "cannot advance past the deep hold");
+
+                // 5. Contamination / psychological state.
+                session.ContaminateDemo("survivor_selftest", "location_sunshine_daycare");
+                Check(session.Psychology.HasContamination("survivor_selftest",
+                        Ashfall.Core.Maritime.PsychologicalContaminationSystem.Contam_ChildCotTrauma),
+                    "daycare visit applies child-cot trauma");
+                Check(session.Psychology.IsActionBlocked("survivor_selftest", "action_teach_child"),
+                    "contamination blocks a work action");
+
+                // 6. Depletion / visit state.
+                session.ScavengeDemo("location_municipal_library");
+                Check(session.Scavenge.GetVisitCount("location_municipal_library") >= 1,
+                    "scavenge visit state recorded (depletion tracking)");
+
+                // 7. Save capture/restore round-trip through the checksummed envelope.
+                var save = session.CaptureSave();
+                Check(save != null && save.Dive != null && save.Scavenge != null && save.Psychology != null,
+                    "maritime save captures all three engine states");
+                save.Checksum = SaveChecksum.Compute(save);
+                File.WriteAllText(tmpPath, json.Serialize(save));
+                var loaded = json.Deserialize<MaritimeHostSave>(File.ReadAllText(tmpPath));
+                Check(loaded != null && loaded.Checksum == SaveChecksum.Compute(loaded),
+                    "checksummed envelope round-trips");
+                if (loaded != null)
+                {
+                    var fresh = new MaritimeHostSession();
+                    fresh.RestoreSave(loaded);
+                    Check(fresh.Dive.IsActive == session.Dive.IsActive, "dive state restored");
+                    Check(Math.Abs(fresh.Dive.NoiseLevel - session.Dive.NoiseLevel) < 0.001f, "noise restored");
+                    Check(fresh.Scavenge.GetVisitCount("location_municipal_library") ==
+                          session.Scavenge.GetVisitCount("location_municipal_library"), "visit state restored");
+                    Check(fresh.Psychology.HasContamination("survivor_selftest",
+                            Ashfall.Core.Maritime.PsychologicalContaminationSystem.Contam_ChildCotTrauma),
+                        "contamination restored from save");
+                }
+            }
+            catch (Exception e)
+            {
+                Check(false, "black flotilla selftest threw: " + e.Message);
+            }
+            finally
+            {
+                try
+                {
+                    if (File.Exists(tmpPath)) File.Delete(tmpPath);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            GD.Print(failures == 0
+                ? "BLACK_FLOTILLA_SELFTEST PASS"
+                : "BLACK_FLOTILLA_SELFTEST FAIL (" + failures + ")");
+            return failures == 0 ? 0 : 1;
+        }
+
+        /// <summary>
+        /// Radio persistence gate: every authoritative mutable receiver value
+        /// (intercept history, played-broadcast dedup keys, tuned frequency, day)
+        /// survives a checksummed save/load round-trip through RadioSaveStore,
+        /// and tampering / missing saves are rejected or degrade to fresh state.
+        /// </summary>
+        public static int RunRadioSelfTest()
+        {
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else
+                {
+                    GD.Print("[FAIL] " + name);
+                    failures++;
+                }
+            }
+
+            string tmpPath = Path.Combine(
+                Path.GetTempPath(), "ashfall_radio_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+
+            try
+            {
+                var engine = new Ashfall.Core.Radio.FactionRadioEngine();
+                engine.RegisterChannel(new Ashfall.Core.Radio.FactionRadioChannel
+                {
+                    FactionId = "faction_holdfast",
+                    Callsign = "HOLDFAST BASE",
+                    FrequencyMhz = 97.5f,
+                    InterceptChatter = new List<string> { "vo_kind_parley at the hatch" }
+                });
+                engine.AddSilenceEvent("dead air");
+
+                var session = new RadioHostSession(engine, new SeededRng(2026), day: 10);
+                Check(Math.Abs(session.CurrentFrequency - 97.5f) < 0.001f,
+                    "receiver tunes to the first faction frequency");
+
+                session.Listen();
+                session.Listen();
+                session.SetDay(11);
+                session.Listen();
+                Check(session.History.Count == 3, "intercept history accumulates");
+                var lastIntercept = session.History[session.History.Count - 1];
+                Check(session.HasPlayed(lastIntercept), "played-dedup key recorded for a voiced broadcast");
+
+                // Capture → store → load → restore.
+                var save = session.CaptureSave();
+                Check(save != null && save.history.Count == 3, "capture snapshots history");
+                Check(RadioSaveStore.TrySave(save, tmpPath), "radio save written via store");
+
+                var loaded = RadioSaveStore.TryLoad(tmpPath);
+                Check(loaded != null, "radio save loads back");
+                var fresh = new RadioHostSession(engine, new SeededRng(1), day: 1);
+                fresh.RestoreSave(loaded);
+                Check(fresh.History.Count == session.History.Count, "intercept history survives reload");
+                Check(Math.Abs(fresh.CurrentFrequency - session.CurrentFrequency) < 0.001f,
+                    "tuned frequency survives reload");
+                Check(fresh.Day == session.Day, "sim day survives reload");
+                Check(fresh.HasPlayed(lastIntercept), "played-broadcast suppression survives reload");
+
+                // Tamper rejection.
+                string raw = System.IO.File.ReadAllText(tmpPath);
+                string tampered = raw.Replace("at the hatch", "at the gate");
+                Check(tampered != raw, "tamper actually changed the payload");
+                if (tampered != raw)
+                {
+                    System.IO.File.WriteAllText(tmpPath, tampered);
+                    Check(RadioSaveStore.TryLoad(tmpPath) == null, "tampered radio save rejected (checksum)");
+                }
+
+                // No-radio-save fallback → fresh receiver.
+                string missing = Path.Combine(
+                    Path.GetTempPath(), "ashfall_radio_selftest_missing_" + Guid.NewGuid().ToString("N") + ".json");
+                Check(RadioSaveStore.TryLoad(missing) == null, "no radio save falls back to fresh state");
+            }
+            catch (Exception e)
+            {
+                Check(false, "radio selftest threw: " + e.Message);
+            }
+            finally
+            {
+                try
+                {
+                    if (System.IO.File.Exists(tmpPath)) System.IO.File.Delete(tmpPath);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            GD.Print(failures == 0
+                ? "RADIO_SELFTEST PASS"
+                : "RADIO_SELFTEST FAIL (" + failures + ")");
             return failures == 0 ? 0 : 1;
         }
 
@@ -3059,6 +3568,20 @@ namespace AtomicWar.GodotApp
 
             GD.Print(failures == 0 ? "SHELTER_OPERATIONS_SELFTEST PASS" : "SHELTER_OPERATIONS_SELFTEST FAIL");
             return failures == 0 ? 0 : 1;
+        }
+
+        /// <summary>
+        /// Phase-2 visual-evidence harness (delegates to SnapshotHarness).
+        /// </summary>
+        public static int RunUiSnapshotSelfTest(string outputRoot = null)
+        {
+            string root = string.IsNullOrEmpty(outputRoot)
+                ? Path.Combine(Directory.GetCurrentDirectory(), "snapshots")
+                : outputRoot;
+            GD.Print($"[UiSnapshotSelfTest] output: {root}");
+            // Main must remain in the loop while captures run; the
+            // orchestrator instance lives in Main and calls Quit on completion.
+            return 0;
         }
     }
 }

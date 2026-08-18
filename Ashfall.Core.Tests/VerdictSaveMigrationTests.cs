@@ -20,10 +20,10 @@ namespace Ashfall.Core.Tests
         // ── Item 9: v1 → v2 save migration ────────────────────────────────────
 
         [Fact]
-        public void V1Save_WithoutNpcField_MigratesToV2_AndBackfillsNpcs()
+        public void V1Save_WithoutNpcField_MigratesToV3_AndBackfillsNpcs()
         {
-            // Hand-build a v1 JSON: no npcs field at all (the v1 shape).
-            var v1 = new VerdictSave
+            // A genuine v1 save: hashed over the v1 field set (no npcs/radio/quests).
+            var v1 = new VerdictSaveV1
             {
                 saveVersion = 1,
                 simDay = 241,
@@ -36,12 +36,14 @@ namespace Ashfall.Core.Tests
 
             string json = s_json.Serialize(v1);
             Assert.True(VerdictSaveCodec.TryDecode(json, s_json, out var loaded), "v1 save must decode");
-            Assert.Equal(2, loaded.saveVersion);             // migrated to current v2
+            Assert.Equal(3, loaded.saveVersion);             // migrated to current v3
             Assert.Equal(ReckoningPhase.Counted, loaded.reckoning.phase);
             Assert.True(loaded.reckoning.countPresented);
             Assert.Contains("evidence_fuse_linen", loaded.evidence.enrolled);
             Assert.NotNull(loaded.npcs);                     // backfilled empty state
             Assert.Empty(loaded.npcs.spokenNpcIds);
+            Assert.NotNull(loaded.quests);                   // quest section backfilled
+            Assert.Empty(loaded.quests.active);
 
             // Restore into a fresh session survives.
             var ml = new MachineLogSystem();
@@ -51,6 +53,52 @@ namespace Ashfall.Core.Tests
             VerdictSaveCodec.Restore(loaded, ml, rec, ev, npcs);
             Assert.Equal(ReckoningPhase.Counted, rec.Phase);
             Assert.True(ev.IsEnrolled("evidence_fuse_linen"));
+        }
+
+        [Fact]
+        public void V2Save_MigratesToV3_WithEmptyQuestSection()
+        {
+            // A genuine v2 save: npcs + radio present, no quest section, hashed
+            // over the v2 field set.
+            var v2 = new VerdictSaveV2
+            {
+                saveVersion = 2,
+                simDay = 250,
+                reckoning = new ReckoningState { phase = ReckoningPhase.Counted },
+                npcs = new VerdictNpcState()
+            };
+            v2.Checksum = SaveChecksum.Compute(v2);
+
+            string json = s_json.Serialize(v2);
+            Assert.True(VerdictSaveCodec.TryDecode(json, s_json, out var loaded), "v2 save must decode");
+            Assert.Equal(3, loaded.saveVersion);
+            Assert.NotNull(loaded.quests);
+            Assert.Empty(loaded.quests.active);
+            Assert.Equal(ReckoningPhase.Counted, loaded.reckoning.phase);
+        }
+
+        [Fact]
+        public void GenuineLegacyV2Save_ChecksumValidatedOverLegacyShape_NotRejectedAsTampered()
+        {
+            // Regression (H1): a true pre-v3 save carries no `quests` key and was
+            // hashed over the v2 field set. It must migrate, not be rejected as
+            // tampered by the current-shape checksum.
+            var v2 = new VerdictSaveV2
+            {
+                saveVersion = 2,
+                simDay = 300,
+                reckoning = new ReckoningState { phase = ReckoningPhase.Counted, countPresented = true, callResolved = true },
+                evidence = new EvidenceLedgerState { enrolled = new List<string> { "evidence_eden_log" } }
+            };
+            v2.Checksum = SaveChecksum.Compute(v2);
+            string json = s_json.Serialize(v2);
+            Assert.DoesNotContain("\"quests\"", json, StringComparison.Ordinal);
+
+            Assert.True(VerdictSaveCodec.TryDecode(json, s_json, out var loaded), "genuine v2 save must migrate");
+            Assert.Equal(3, loaded.saveVersion);
+            Assert.True(loaded.reckoning.countPresented);
+            Assert.Contains("evidence_eden_log", loaded.evidence.enrolled);
+            Assert.Empty(loaded.quests.active);
         }
 
         [Fact]
@@ -166,7 +214,7 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void VerdictEnding_MigratedSave_StillSelectsFromState()
         {
-            var v1 = new VerdictSave { saveVersion = 1 };
+            var v1 = new VerdictSaveV1 { saveVersion = 1 };
             v1.reckoning.phase = ReckoningPhase.Counted;
             v1.reckoning.callResolved = true;
             v1.Checksum = SaveChecksum.Compute(v1);

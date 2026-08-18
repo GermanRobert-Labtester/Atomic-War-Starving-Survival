@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL - Switchboard &amp; Intercom Matrix</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#394a4c",
+                        "surface-container-highest": "#333536",
+                        "surface": "#121415",
+                        "tertiary-container": "#465658",
+                        "secondary-fixed": "#ffdcc3",
+                        "background": "#121415",
+                        "secondary": "#ffb77d",
+                        "secondary-container": "#d97707",
+                        "surface-container-lowest": "#0c0e0f",
+                        "on-secondary": "#4d2600",
+                        "inverse-on-surface": "#2f3132",
+                        "surface-dim": "#121415",
+                        "inverse-surface": "#e2e2e3",
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "outline-variant": "#404849",
+                        "on-secondary-container": "#432100",
+                        "on-tertiary-container": "#b9cbcd",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#0e1e20",
+                        "surface-bright": "#38393a",
+                        "tertiary": "#b8cacc",
+                        "on-tertiary": "#233335",
+                        "on-primary": "#00363a",
+                        "on-primary-fixed": "#002022",
+                        "surface-variant": "#333536",
+                        "surface-container-low": "#1a1c1d",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#2f1500",
+                        "on-surface": "#e2e2e3",
+                        "on-primary-container": "#a2d0d4",
+                        "secondary-fixed-dim": "#ffb77d",
+                        "surface-container-high": "#282a2b",
+                        "tertiary-fixed-dim": "#b8cacc",
+                        "primary-container": "#2d5a5e",
+                        "inverse-primary": "#396569",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "tertiary-fixed": "#d4e6e8",
+                        "on-background": "#e2e2e3",
+                        "on-error": "#690005",
+                        "surface-container": "#1e2021",
+                        "primary": "#a1cfd3",
+                        "surface-tint": "#a1cfd3",
+                        "on-surface-variant": "#c0c8c9",
+                        "outline": "#8a9293",
+                        "error": "#ffb4ab",
+                        "primary-fixed": "#bcebef",
+                        "on-secondary-fixed-variant": "#6e3900"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "24px",
+                        "container-max": "1280px",
+                        "gutter": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["JetBrains Mono"],
+                        "headline-sm": ["Bebas Neue"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "code-sm": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "body-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "24px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "headline-md": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "code-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 9999;
+        }
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            50% { opacity: 1; }
+            100% { opacity: 0.95; }
+        }
+        .glow-primary {
+            filter: drop-shadow(0 0 4px rgba(161, 207, 211, 0.5));
+        }
+        .glow-amber {
+            filter: drop-shadow(0 0 4px rgba(217, 119, 7, 0.8));
+        }
+        .wire-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen overflow-hidden flex flex-col antialiased">
+<div class="scanlines"></div>
+<!-- TopAppBar -->
+<header class="bg-surface border-b border-outline-variant fixed top-0 w-full z-50 flex justify-between items-center px-margin h-16 crt-flicker">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md text-primary tracking-widest glow-primary">ASHFALL_SWITCHBOARD_V2.1</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="font-code-sm text-code-sm text-on-surface-variant">UPTIME: 142:08:12</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant bg-surface-container px-2 py-1 border border-outline-variant">SEC_LEVEL: BLACK</span>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="bg-surface-container border-r border-outline-variant fixed left-0 top-16 bottom-0 w-64 flex flex-col p-unit z-40 hidden md:flex">
+<div class="p-4 border-b border-outline-variant mb-4">
+<h2 class="font-headline-sm text-headline-sm text-secondary glow-amber">SECTOR_COMMS</h2>
+<p class="font-code-sm text-code-sm text-on-surface-variant mt-1">BUNKER_ID: 09-G</p>
+</div>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary text-on-primary font-bold border border-primary hover:bg-surface-container-highest transition-colors active:scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings_input_component</span>
+<span class="font-label-caps text-label-caps tracking-widest">INTERCOM</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest border border-transparent transition-colors active:scale-95" href="#">
+<span class="material-symbols-outlined">podcasts</span>
+<span class="font-label-caps text-label-caps tracking-widest">BROADCAST</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest border border-transparent transition-colors active:scale-95" href="#">
+<span class="material-symbols-outlined">radio</span>
+<span class="font-label-caps text-label-caps tracking-widest">RADIO</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest border border-transparent transition-colors active:scale-95" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-caps text-label-caps tracking-widest">LOGS</span>
+</a>
+</li>
+</ul>
+<div class="mt-auto p-2 border-t border-outline-variant">
+<button class="w-full py-2 bg-error-container text-on-error-container border border-error hover:bg-error hover:text-on-error transition-colors font-label-caps text-label-caps tracking-widest flex items-center justify-center gap-2 active:invert">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                EMERGENCY_OVERRIDE
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="fixed top-16 bottom-8 left-0 md:left-64 right-0 overflow-y-auto p-margin bg-background flex flex-col lg:flex-row gap-gutter">
+<!-- Column 1: Hardwired Bulkhead Intercom Matrix -->
+<section class="lg:w-1/4 flex flex-col gap-unit">
+<div class="bg-surface-container-low border border-outline-variant p-4 flex flex-col h-full">
+<div class="flex items-center gap-2 border-b border-outline-variant pb-2 mb-4">
+<span class="material-symbols-outlined text-primary text-[20px]">hub</span>
+<h3 class="font-headline-sm text-headline-sm text-primary tracking-wider">CIRCUIT MATRIX</h3>
+</div>
+<div class="space-y-4 flex-1">
+<!-- L01 -->
+<div class="flex justify-between items-center border-b border-outline-variant border-dashed pb-2">
+<div class="flex flex-col">
+<span class="font-code-sm text-code-sm text-on-surface">L01: COMMAND DECK</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">PORT_A_01</span>
+</div>
+<span class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-2 py-1 border border-primary glow-primary">[CONNECTED]</span>
+</div>
+<!-- L02 -->
+<div class="flex justify-between items-center border-b border-outline-variant border-dashed pb-2">
+<div class="flex flex-col">
+<span class="font-code-sm text-code-sm text-on-surface">L02: HYDROPONICS</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">PORT_A_02</span>
+</div>
+<span class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-2 py-1 border border-primary glow-primary">[CONNECTED]</span>
+</div>
+<!-- L03 -->
+<div class="flex justify-between items-center border-b border-outline-variant border-dashed pb-2">
+<div class="flex flex-col">
+<span class="font-code-sm text-code-sm text-on-surface">L03: ENGINEERING</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">PORT_B_01</span>
+</div>
+<span class="font-label-caps text-label-caps bg-secondary-container text-on-secondary-container px-2 py-1 border border-secondary glow-amber">[HIGH STATIC]</span>
+</div>
+<!-- L04 -->
+<div class="flex justify-between items-center border-b border-outline-variant border-dashed pb-2">
+<div class="flex flex-col">
+<span class="font-code-sm text-code-sm text-error">L04: QUARANTINE</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">PORT_B_02</span>
+</div>
+<span class="font-label-caps text-label-caps bg-error-container text-on-error-container px-2 py-1 border border-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                            [ISOLATED]
+                        </span>
+</div>
+<!-- L05 -->
+<div class="flex justify-between items-center border-b border-outline-variant border-dashed pb-2">
+<div class="flex flex-col">
+<span class="font-code-sm text-code-sm text-outline">L05: MINE YARD</span>
+<span class="font-label-caps text-label-caps text-outline">PORT_C_01</span>
+</div>
+<span class="font-label-caps text-label-caps bg-surface-container-highest text-outline px-2 py-1 border border-outline">[OFFLINE]</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Column 2: Copper Patch Cord Switchboard -->
+<section class="lg:w-2/4 flex flex-col gap-unit">
+<div class="bg-surface-container-low border border-outline-variant p-4 flex flex-col h-full relative">
+<div class="flex justify-between items-center border-b border-outline-variant pb-2 mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">settings_input_component</span>
+<h3 class="font-headline-sm text-headline-sm text-secondary tracking-wider glow-amber">PATCH_BAY_OPERATIONAL</h3>
+</div>
+<div class="flex gap-4">
+<span class="font-code-sm text-code-sm text-on-surface bg-surface-container px-2 py-1 border border-outline-variant">FREQ: 450 Hz</span>
+<span class="font-code-sm text-code-sm text-on-surface bg-surface-container px-2 py-1 border border-outline-variant">SNR: 28 dB</span>
+</div>
+</div>
+<div class="flex-1 relative bg-surface-container-highest border border-outline-variant p-8 flex flex-col justify-around rounded-sm overflow-hidden" id="patchbay-container">
+<!-- SVG Wire Overlay -->
+<svg class="wire-svg" preserveaspectratio="none">
+<!-- Connecting Port 1 (Top Left) to Port 10 (Bottom Mid-Right) -->
+<path class="glow-amber" d="M 120 80 C 200 250, 400 150, 480 320" fill="none" stroke="#d97707" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"></path>
+<path d="M 120 80 C 200 250, 400 150, 480 320" fill="none" stroke="#ffb77d" stroke-dasharray="4 4" stroke-width="2"></path>
+</svg>
+<!-- Top Row Ports -->
+<div class="grid grid-cols-6 gap-4 w-full z-10">
+<!-- Port 1 (Active) -->
+<div class="flex flex-col items-center gap-2">
+<span class="font-code-sm text-code-sm text-on-surface-variant">01</span>
+<div class="w-12 h-12 rounded-full border-2 border-secondary bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)] relative">
+<div class="w-6 h-6 rounded-full bg-secondary-container absolute"></div>
+</div>
+<span class="font-label-caps text-label-caps text-secondary">CMD_OUT</span>
+</div>
+<!-- Port 2 -->
+<div class="flex flex-col items-center gap-2">
+<span class="font-code-sm text-code-sm text-on-surface-variant">02</span>
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+</div>
+<!-- Port 3 -->
+<div class="flex flex-col items-center gap-2">
+<span class="font-code-sm text-code-sm text-on-surface-variant">03</span>
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+</div>
+<!-- Port 4 -->
+<div class="flex flex-col items-center gap-2">
+<span class="font-code-sm text-code-sm text-on-surface-variant">04</span>
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+</div>
+<!-- Port 5 -->
+<div class="flex flex-col items-center gap-2">
+<span class="font-code-sm text-code-sm text-on-surface-variant">05</span>
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+</div>
+<!-- Port 6 -->
+<div class="flex flex-col items-center gap-2">
+<span class="font-code-sm text-code-sm text-on-surface-variant">06</span>
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-outline-variant border-dashed border-b my-4 opacity-50"></div>
+<!-- Bottom Row Ports -->
+<div class="grid grid-cols-6 gap-4 w-full z-10">
+<!-- Port 7 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+<span class="font-code-sm text-code-sm text-on-surface-variant">07</span>
+</div>
+<!-- Port 8 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+<span class="font-code-sm text-code-sm text-on-surface-variant">08</span>
+</div>
+<!-- Port 9 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+<span class="font-code-sm text-code-sm text-on-surface-variant">09</span>
+</div>
+<!-- Port 10 (Active) -->
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-caps text-label-caps text-secondary">MED_IN</span>
+<div class="w-12 h-12 rounded-full border-2 border-secondary bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)] relative">
+<div class="w-6 h-6 rounded-full bg-secondary-container absolute"></div>
+</div>
+<span class="font-code-sm text-code-sm text-on-surface-variant">10</span>
+</div>
+<!-- Port 11 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+<span class="font-code-sm text-code-sm text-on-surface-variant">11</span>
+</div>
+<!-- Port 12 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container flex items-center justify-center shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
+<div class="w-4 h-4 rounded-full bg-background border border-outline-variant"></div>
+</div>
+<span class="font-code-sm text-code-sm text-on-surface-variant">12</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Column 3: Priority Broadcast & Klaxon -->
+<section class="lg:w-1/4 flex flex-col gap-unit">
+<div class="bg-surface-container-low border border-outline-variant p-4 flex flex-col h-full">
+<div class="flex items-center gap-2 border-b border-outline-variant pb-2 mb-4">
+<span class="material-symbols-outlined text-on-surface text-[20px]">podcasts</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface tracking-wider">BROADCAST_CTRL</h3>
+</div>
+<div class="bg-surface-container border border-outline-variant p-3 mb-4 flex flex-col items-center justify-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">SYS_STAT</span>
+<div class="font-headline-sm text-headline-sm text-error glow-amber flex items-center gap-2">
+<span class="material-symbols-outlined crt-flicker">warning</span>
+                        DEFCON 2 STANDBY
+                    </div>
+</div>
+<div class="bg-primary-container border border-primary p-3 mb-6 flex flex-col items-center justify-center">
+<span class="font-label-caps text-label-caps text-on-primary-container mb-1">MIC_FEED</span>
+<div class="font-code-sm text-code-sm text-on-primary-container glow-primary text-center">
+                        LIVE MIC FEED ACTIVE<br/>
+                        (LEVELS 1-3)
+                    </div>
+</div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-2">TACTICAL DIRECTIVES</h4>
+<div class="space-y-2 flex-1">
+<button class="w-full text-left p-2 border border-outline-variant bg-surface hover:bg-surface-container-highest transition-colors font-code-sm text-code-sm text-on-surface active:invert">
+                        &gt; [ BROADCAST GENERAL ASSEMBLY ]
+                    </button>
+<button class="w-full text-left p-2 border border-outline-variant bg-surface hover:bg-surface-container-highest transition-colors font-code-sm text-code-sm text-on-surface active:invert">
+                        &gt; [ PATCH ENG TO REACTOR ]
+                    </button>
+<button class="w-full text-left p-2 border border-error bg-error-container/20 hover:bg-error-container transition-colors font-code-sm text-code-sm text-error active:invert">
+                        &gt; [ LOCKDOWN L04 INTERCOM ]
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low border-t border-outline-variant fixed bottom-0 right-0 left-0 md:left-64 z-40 flex justify-between items-center px-gutter py-2">
+<span class="font-code-sm text-code-sm text-tertiary">ENCRYPTION_LAYER: AES-TERMINAL-X | STABILITY: 99.8% [BLOCKS: ████████░░]</span>
+<div class="flex gap-4">
+<a class="font-code-sm text-code-sm text-outline hover:text-primary transition-colors duration-150" href="#">SYS_REBOOT</a>
+<a class="font-code-sm text-code-sm text-outline hover:text-primary transition-colors duration-150" href="#">DL_DIAGNOSTICS</a>
+</div>
+</footer>
+</body></html>

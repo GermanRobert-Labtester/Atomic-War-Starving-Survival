@@ -176,3 +176,77 @@ host-wiring effort to avoid collision.
   Ashfall.dll via source include but are unreferenced from `src` (no runtime effect).
 - Cosmetic serializer-DTO nullable warnings (CS0649/CS8600/CS8618) — documented
   acceptable; NoWarn'd by the host project.
+
+---
+
+# 5x Loop Extension (2026-08-17)
+
+Follow-up sweep: the Loop 9 host-gear gap is now WIRED and verified, plus four more
+sweeps. All work is Core + Godot `src/` (canonical `dotnet` + `godot --headless` only).
+
+## Extension Loop 1 — Godot host equipped-gear radiation protection (Loop 9 gap closed)
+**Sweep.** `SurvivorsHostSession.BuildExposure` never populated `ExposureContext.WornGear`
+so equipped gear gave ZERO protection in the Godot build; the seed item catalog also
+forked the authority with wrong units (`gas_mask 0.35` / `hazmat_suit 0.55` vs `items.json`
+30 / 80).
+**Fix.**
+- `Radiation.WornGear.FromInventory(Inventory.WornGear)` — the single sanctioned
+  conversion point (Core, engine-agnostic).
+- `SurvivorsHostSession` gains an `Inventory` binding; `BuildExposure` assembles
+  `WornGear` from the shared inventory.
+- `Main.cs SetupSurvivors` binds `_survivors.Inventory = _inventory`.
+- `InventoryHostSession.SeedCatalog` aligned to the authority (weight/radProt/trade).
+**Harden.** `FromInventory_MapsAllFields` + `InventoryGearBridgeTests` (3 tests);
+host-level gear + save/load probes in `--survivors-selftest`.
+**Verify.** `--survivors-selftest`: geared +0.0 mSv vs bare +80.0 mSv over 2h; gear
+protection survives a full save→load→tick cycle.
+
+## Extension Loop 2 — Determinism hygiene (Invariant 4)
+**Sweep.** `RadioHostSession.MakeBroadcastKey` used `string.GetHashCode()` — randomized
+per process in .NET Core, making radio dedup keys unstable across runs. Two private
+stable-hash copies existed in Core.
+**Fix.** New shared `Ashfall.Core.StableHash` (djb2/x33, deterministic); radio key now
+stable; `DutyRosterSystem` duplicate consolidated onto it.
+**Harden.** `StableHashTests` (3 tests). Swept `Guid.NewGuid()` (selftest temp-file names
+only, not sim state), `DateTime.UtcNow` (host diagnostics / file names only), the
+`UnityEngine.Random` shim default (covered by BridgeSelfTest), and `OrdinalIgnoreCase`
+sets (deterministic comparer in .NET — reviewed-accepted, not a divergence source).
+
+## Extension Loop 3 — Data authority rule compliance (Invariant 6 / "no real countries")
+**Sweep.** `world_history.json:15` still named "China"; `radio.json` cited the "NATO
+phonetic alphabet"; 8 ammo entries in `items.json` carried "NATO" in names/descriptions.
+**Fix.** "China" → "the Meridian Compact"; "NATO phonetic alphabet" → "military phonetic
+alphabet"; NATO suffix stripped from ammo. All 94 top-level catalogs re-parse.
+**Harden.** `DataRuleComplianceTests` gates the data authority against real-world
+countries/alliances (build fails on any leak).
+
+## Extension Loop 4 — Save-store completeness + host round-trip
+**Sweep.** All 24 host save stores: 15 use checksummed envelopes directly; 5
+(DoseLedger/DutyRoster/ExpansionHub/Holdfast/Verdict) delegate to checksumming Core
+codecs. No uncovered store. No empty/null `CaptureState`/`RestoreState` in Core/src.
+Every stateful `SetupXxx` in `Main.cs` has save coverage (Disease→hub v4, DeepCoast→
+Holdfast, SilentFoundry→hub v2/v3).
+**Harden.** `--survivors-selftest` now proves the wired session round-trips state and
+that gear protection survives save/load.
+
+## Extension Loop 5 — Runaway-loop hunt + 5x stability sweep
+**Sweep.** All `while(true)`/`while` loops in Core+src verified bounded
+(AssetRegistry extractor advances pos; Inventory.Add stackMax≥1 enforced; Ballistics
+guard-bounded; CoroutineRunner pops). No mutation-while-iterating, no DEMOTE/ghost
+markers, no TODO/FIXME/HACK, Core still 0 engine coupling.
+**Verify (5x).** Full test suite 5/5 identical (1949 pass); data-integrity, bridge, and
+survivors selftests 5/5 identical — no flake, deterministic.
+
+## Extension final regression
+| Check | Result |
+|-------|--------|
+| dotnet build Ashfall.Core.Tests | ✅ 0 err |
+| dotnet test | ✅ 1949 pass |
+| dotnet build Ashfall.csproj | ✅ 0 err / 0 warn |
+| --data-integrity-selftest | ✅ 0 err / 0 warn (3588 auth / 680 reuse) |
+| --bridge-selftest | ✅ 41/41 |
+| --survivors/combat/day1/economy/phase0/expedition/medical/expansions selftests | ✅ all PASS |
+
+**Suite: 1941 → 1949 tests** (+8). Net new hardening: real gear-protection wiring,
+deterministic hashing, data-authority rule gate, host save/load round-trip probes,
+5x-run stability proof.

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cryo-Preservation and Seed Vault Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#44474a",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "on-error": "#690005",
+                        "on-surface-variant": "#c5c6ca",
+                        "outline": "#8f9194",
+                        "on-secondary-fixed": "#002022",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#2c3136",
+                        "surface-container": "#201f1f",
+                        "secondary-fixed": "#bcebef",
+                        "surface-container-highest": "#353534",
+                        "inverse-on-surface": "#313030",
+                        "surface-variant": "#353534",
+                        "surface-dim": "#131313",
+                        "background": "#131313",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-tertiary": "#562000",
+                        "on-primary-fixed-variant": "#43474c",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "on-tertiary-fixed": "#351000",
+                        "surface-container-low": "#1c1b1b",
+                        "primary": "#eef1f7",
+                        "on-primary-container": "#585c61",
+                        "on-secondary": "#00363a",
+                        "on-tertiary-container": "#9c3f00",
+                        "inverse-primary": "#5a5f64",
+                        "on-secondary-container": "#93c0c5",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-bright": "#393939",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-primary-fixed": "#171c20",
+                        "surface-container-lowest": "#0e0e0e",
+                        "primary-container": "#d1d5db",
+                        "surface": "#131313",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#ffc9b0",
+                        "tertiary": "#ffede7",
+                        "secondary-container": "#225054",
+                        "primary-fixed": "#dfe3e9",
+                        "surface-tint": "#c3c7cd",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary": "#a1cfd3",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "error-container": "#93000a",
+                        "on-surface": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-base": "16px",
+                        "container-padding": "12px",
+                        "unit": "4px",
+                        "stack-tight": "4px",
+                        "gutter": "8px",
+                        "stack-md": "12px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "data-lg": ["JetBrains Mono"],
+                        "display-lg": ["Bebas Neue"],
+                        "headline-md": ["Bebas Neue"],
+                        "data-sm": ["JetBrains Mono"],
+                        "data-md": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanline-overlay {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .glow-text { text-shadow: 0 0 4px currentColor; }
+        .glow-text-error { text-shadow: 0 0 8px theme('colors.error'); }
+        .glow-text-secondary { text-shadow: 0 0 4px theme('colors.secondary'); }
+        
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .animate-blink { animation: blink 1s step-end infinite; }
+        
+        @keyframes pulse-fast { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .animate-pulse-fast { animation: pulse-fast 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: theme('colors.surface-container-lowest'); border-left: 1px solid theme('colors.outline-variant'); }
+        ::-webkit-scrollbar-thumb { background: theme('colors.outline'); }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.primary'); }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-hidden min-h-screen flex selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Scanline Overlay -->
+<div class="scanline-overlay fixed inset-0 w-full h-full"></div>
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col bg-surface-container-low dark:bg-surface-container-low h-[calc(100vh-64px)] w-64 border-r border-outline-variant fixed left-0 top-16 z-40">
+<div class="p-4 border-b border-outline-variant bg-surface-dim">
+<h2 class="font-headline-md text-headline-md text-primary glow-text">STASIS SECTOR 07</h2>
+<p class="font-data-sm text-data-sm text-secondary glow-text-secondary mt-1">ASHFALL ASHEN UNIT</p>
+<div class="mt-4 w-12 h-12 border border-outline-variant p-1 bg-surface-container-highest">
+<img alt="Sector Commander Auth" class="w-full h-full object-cover grayscale opacity-80" data-alt="A rugged, weathered military avatar icon representing Sector Commander Auth. The image features a pixelated or low-resolution style suitable for a high-stakes survivalist CRT terminal. The color palette uses muted greys and stark blacks with high contrast. The mood is utilitarian, cold, and strictly functional, avoiding any decorative elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp5fR4Kumatv0dlGrv2DavGsrpAA2o_-n-GTenaiYkqHQTgqM4qeuF0Jp-BVP7bkOGCibQwcoLsrDZgbFQiF2tF6KNIFUsRH7fnqlG6u8LIJoVt9jHalLGSXfmdoFSzPfFoB1XI02BhDjc4M8LYApHi7yXoB_MsNFtDckLbtWiyAm4DkD7LlNzikhbVFBcDmTxw9GAK7MwG-8TXI4FCX_w8DtgqFX6Yf59ohmlSqVA-doXZvH3DoR14196ptW8TKLVwjv0OeOgK3RW"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto py-4 flex flex-col gap-unit">
+<a class="bg-secondary-container text-on-secondary-container border-l-4 border-secondary p-4 flex items-center gap-stack-md hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors group translate-x-1" href="#">
+<span class="material-symbols-outlined font-variation-settings: 'FILL' 1;">grid_view</span>
+<span class="font-label-caps text-label-caps">Pod Matrix</span>
+<span class="ml-auto opacity-0 group-hover:opacity-100 animate-blink">_</span>
+</a>
+<a class="text-on-surface-variant p-4 flex items-center gap-stack-md hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors group" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-caps text-label-caps">Telemetry</span>
+<span class="ml-auto opacity-0 group-hover:opacity-100 animate-blink">_</span>
+</a>
+<a class="text-on-surface-variant p-4 flex items-center gap-stack-md hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors group" href="#">
+<span class="material-symbols-outlined">emergency_home</span>
+<span class="font-label-caps text-label-caps">Protocols</span>
+<span class="ml-auto opacity-0 group-hover:opacity-100 animate-blink">_</span>
+</a>
+<a class="text-on-surface-variant p-4 flex items-center gap-stack-md hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors group" href="#">
+<span class="material-symbols-outlined">biotech</span>
+<span class="font-label-caps text-label-caps">Diagnostics</span>
+<span class="ml-auto opacity-0 group-hover:opacity-100 animate-blink">_</span>
+</a>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface-dim mt-auto">
+<button class="w-full border border-secondary text-secondary py-2 px-4 hover:bg-secondary hover:text-on-secondary transition-colors font-label-caps text-label-caps flex items-center justify-between group">
+                INITIATE THAW_
+                <span class="material-symbols-outlined text-sm">medical_services</span>
+</button>
+<a class="mt-4 text-on-surface-variant flex items-center gap-stack-md hover:text-error transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-sm">logout</span>
+                Log Out
+            </a>
+</div>
+</nav>
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center px-margin-base h-16 shadow-none bg-surface-container-lowest">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-secondary glow-text-secondary">ac_unit</span>
+<h1 class="font-display-lg text-display-lg text-secondary dark:text-secondary tracking-tighter glow-text-secondary m-0 leading-none">CRYO-STASIS TERMINAL v4.2</h1>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="hidden md:flex text-primary font-bold border-b-2 border-primary px-2 py-4 h-full items-center font-headline-lg text-headline-lg">
+                Pod Matrix
+             </div>
+<div class="hidden md:flex text-on-surface-variant font-medium px-2 py-4 h-full items-center font-data-md text-data-md hover:bg-secondary-container hover:text-on-secondary-container transition-colors cursor-pointer">
+                Telemetry
+             </div>
+<div class="hidden md:flex text-on-surface-variant font-medium px-2 py-4 h-full items-center font-data-md text-data-md hover:bg-secondary-container hover:text-on-secondary-container transition-colors cursor-pointer">
+                Protocols
+             </div>
+<div class="hidden md:flex text-on-surface-variant font-medium px-2 py-4 h-full items-center font-data-md text-data-md hover:bg-secondary-container hover:text-on-secondary-container transition-colors cursor-pointer">
+                Diagnostics
+             </div>
+<div class="w-px h-8 bg-outline-variant mx-2"></div>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 rounded-none border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors p-2 rounded-none border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined">power_settings_new</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 mt-16 md:ml-64 p-margin-base md:p-6 overflow-y-auto h-[calc(100vh-64px)] pb-24 md:pb-6 relative bg-surface">
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- Section Title -->
+<div class="flex items-end justify-between border-b border-outline-variant pb-2">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary glow-text uppercase tracking-wider">Cryogenic Pod Matrix</h2>
+<p class="font-data-sm text-data-sm text-on-surface-variant mt-1">STATUS: ONLINE | SECTOR: NOMINAL</p>
+</div>
+<div class="font-data-sm text-data-sm text-secondary bg-secondary-container px-2 py-1 border border-secondary flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary rounded-full shadow-[0_0_4px_currentColor]"></span>
+                    SYS.OP
+                </div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Pod Matrix (Span 8) -->
+<div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-gutter">
+<!-- Card 1 -->
+<div class="border border-outline-variant bg-surface-container flex flex-col relative group">
+<div class="h-1 bg-secondary w-full"></div>
+<div class="p-container-padding flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary truncate">ELDER VANCE SENIOR</h3>
+<div class="font-label-caps text-label-caps text-secondary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+                                        CRYO-STASIS STABLE
+                                    </div>
+</div>
+<span class="font-data-lg text-data-lg text-outline-variant">01</span>
+</div>
+<div class="mt-auto space-y-2 font-data-sm text-data-sm text-on-surface-variant">
+<div class="flex justify-between border-b border-outline-variant border-dotted pb-1">
+<span>HR</span>
+<span class="text-primary font-bold">2 BPM</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant border-dotted pb-1">
+<span>CORE TEMP</span>
+<span class="text-secondary glow-text-secondary">-196°C</span>
+</div>
+<div class="pt-2">
+<div class="h-2 w-full bg-surface-container-highest border border-outline-variant flex overflow-hidden">
+<div class="h-full bg-secondary w-full opacity-80" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="border border-outline-variant bg-surface-container flex flex-col relative group">
+<div class="h-1 bg-secondary w-full"></div>
+<div class="p-container-padding flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary truncate">WHEAT SEED BANK A-1</h3>
+<div class="font-label-caps text-label-caps text-primary-fixed mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">eco</span>
+                                        PRE-WAR HEIRLOOM
+                                    </div>
+</div>
+<span class="font-data-lg text-data-lg text-outline-variant">02</span>
+</div>
+<div class="mt-auto space-y-2 font-data-sm text-data-sm text-on-surface-variant">
+<div class="flex justify-between border-b border-outline-variant border-dotted pb-1">
+<span>VIABILITY</span>
+<span class="text-primary font-bold">94%</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant border-dotted pb-1">
+<span>TEMP</span>
+<span class="text-secondary">-196°C</span>
+</div>
+<div class="pt-2 flex gap-1">
+<div class="h-2 flex-1 bg-secondary opacity-90 border border-on-secondary-fixed"></div>
+<div class="h-2 flex-1 bg-secondary opacity-90 border border-on-secondary-fixed"></div>
+<div class="h-2 flex-1 bg-secondary opacity-90 border border-on-secondary-fixed"></div>
+<div class="h-2 flex-1 bg-secondary opacity-90 border border-on-secondary-fixed"></div>
+<div class="h-2 flex-1 bg-surface-container-highest border border-outline-variant"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="border border-outline-variant bg-surface-container flex flex-col relative group">
+<div class="h-1 bg-secondary w-full"></div>
+<div class="p-container-padding flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary truncate">TIMBER WOLF EMBRYOS</h3>
+<div class="font-label-caps text-label-caps text-primary-fixed mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">pets</span>
+                                        GENETIC BANK
+                                    </div>
+</div>
+<span class="font-data-lg text-data-lg text-outline-variant">03</span>
+</div>
+<div class="mt-auto space-y-2 font-data-sm text-data-sm text-on-surface-variant">
+<div class="flex justify-between border-b border-outline-variant border-dotted pb-1">
+<span>VIABILITY</span>
+<span class="text-primary font-bold">88%</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant border-dotted pb-1">
+<span>TEMP</span>
+<span class="text-secondary">-196°C</span>
+</div>
+<div class="pt-2 flex gap-1">
+<div class="h-2 flex-1 bg-secondary opacity-90 border border-on-secondary-fixed"></div>
+<div class="h-2 flex-1 bg-secondary opacity-90 border border-on-secondary-fixed"></div>
+<div class="h-2 flex-1 bg-secondary opacity-90 border border-on-secondary-fixed"></div>
+<div class="h-2 flex-1 bg-secondary opacity-40 border border-on-secondary-fixed"></div>
+<div class="h-2 flex-1 bg-surface-container-highest border border-outline-variant"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 - WARNING -->
+<div class="border border-error bg-[#2a1010] flex flex-col relative group overflow-hidden">
+<div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,180,171,0.05)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px]"></div>
+<div class="h-1 bg-error w-full animate-pulse-fast"></div>
+<div class="p-container-padding flex-1 flex flex-col relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-error glow-text-error truncate">POD 04</h3>
+<div class="font-label-caps text-label-caps text-error mt-1 flex items-center gap-1 animate-pulse-fast">
+<span class="material-symbols-outlined text-[12px]">warning</span>
+                                        THERMAL LEAK WARNING
+                                    </div>
+</div>
+<span class="font-data-lg text-data-lg text-error opacity-50">04</span>
+</div>
+<div class="mt-auto space-y-2 font-data-sm text-data-sm text-on-error-container">
+<div class="flex justify-between border-b border-error/30 border-dotted pb-1">
+<span>CORE TEMP</span>
+<span class="font-bold text-error glow-text-error">-140°C</span>
+</div>
+<div class="flex justify-between border-b border-error/30 border-dotted pb-1">
+<span>STRUCTURAL</span>
+<span class="opacity-70">COMPROMISED</span>
+</div>
+<div class="pt-2 flex gap-1">
+<div class="h-2 flex-1 bg-error opacity-90 border border-[#400]"></div>
+<div class="h-2 flex-1 bg-error opacity-90 border border-[#400]"></div>
+<div class="h-2 flex-1 bg-error opacity-40 border border-[#400]"></div>
+<div class="h-2 flex-1 bg-surface-container-highest border border-outline-variant"></div>
+<div class="h-2 flex-1 bg-surface-container-highest border border-outline-variant"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Panel (Span 4) -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<!-- Cooling Telemetry -->
+<div class="border border-outline-variant bg-surface-container p-container-padding">
+<h3 class="font-label-caps text-label-caps text-outline-variant mb-4 flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-[14px]">science</span>
+                            COOLING TELEMETRY
+                        </h3>
+<div class="space-y-4 font-data-sm text-data-sm text-on-surface">
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-on-surface-variant">NITROGEN TANK</span>
+<span class="text-primary font-bold">78% (1240L)</span>
+</div>
+<div class="w-full h-3 border border-outline-variant bg-surface-container-lowest p-[1px]">
+<div class="h-full bg-secondary w-[78%]"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="border border-outline-variant p-2 bg-surface-container-low">
+<div class="text-outline-variant text-[10px] mb-1">HEAD PRESSURE</div>
+<div class="font-data-md text-data-md text-primary">18 BAR</div>
+</div>
+<div class="border border-outline-variant p-2 bg-surface-container-low">
+<div class="text-outline-variant text-[10px] mb-1">BOIL-OFF RATE</div>
+<div class="font-data-md text-data-md text-error">1.2 L/DAY</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Resuscitation HUD -->
+<div class="border border-outline-variant bg-surface-container p-container-padding flex-1">
+<h3 class="font-label-caps text-label-caps text-outline-variant mb-4 flex items-center gap-2 border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-[14px]">monitor_heart</span>
+                            RESUSCITATION HUD
+                        </h3>
+<div class="space-y-3 font-data-sm text-data-sm">
+<div class="flex items-center gap-3 border border-outline-variant p-2 bg-surface-container-highest">
+<span class="w-3 h-3 bg-secondary rounded-sm glow-text-secondary border border-primary"></span>
+<div class="flex-1">
+<div class="text-[10px] text-on-surface-variant">NEURAL DEFROST DEFIBRILLATOR</div>
+<div class="text-primary font-bold">CHARGED</div>
+</div>
+</div>
+<div class="flex items-center gap-3 border border-outline-variant p-2 bg-surface-container-highest">
+<span class="w-3 h-3 bg-surface-tint rounded-sm border border-outline-variant opacity-50"></span>
+<div class="flex-1">
+<div class="text-[10px] text-on-surface-variant">RE-WARMING COILS</div>
+<div class="text-on-surface-variant">STANDBY</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Directives (Full Span) -->
+<div class="md:col-span-12 border border-outline-variant bg-surface-container p-container-padding mt-2">
+<h3 class="font-label-caps text-label-caps text-outline-variant mb-4 border-b border-outline-variant pb-2">DIRECTIVES INPUT: [ <span class="animate-blink text-primary">_</span> ]</h3>
+<div class="flex flex-wrap gap-4">
+<button class="border border-outline-variant bg-surface-container-low text-primary px-4 py-2 font-data-sm text-data-sm hover:bg-primary hover:text-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">medical_services</span>
+                            EXECUTE THAW PROTOCOL_
+                        </button>
+<button class="border border-outline-variant bg-surface-container-low text-on-surface px-4 py-2 font-data-sm text-data-sm hover:bg-surface-tint hover:text-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">air</span>
+                            VENT BOIL-OFF GAS_
+                        </button>
+<button class="border border-outline-variant bg-surface-container-low text-secondary px-4 py-2 font-data-sm text-data-sm hover:bg-secondary hover:text-on-secondary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">propane_tank</span>
+                            REFILL NITROGEN LOOP_
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center border-t border-outline-variant md:hidden bg-surface-container-highest dark:bg-surface-container-highest h-12 z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant h-full px-4 hover:bg-on-surface-variant hover:text-surface transition-colors w-full border-r border-outline-variant" href="#">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+<span class="font-label-caps text-label-caps mt-1">System Alert</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary text-on-secondary h-full px-4 w-full border-r border-outline-variant brightness-150 duration-100" href="#">
+<span class="material-symbols-outlined text-[20px] font-variation-settings: 'FILL' 1;">propane_tank</span>
+<span class="font-label-caps text-label-caps mt-1">Cryo-Reserve</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant h-full px-4 hover:bg-on-surface-variant hover:text-surface transition-colors w-full" href="#">
+<span class="material-symbols-outlined text-[20px]">medical_services</span>
+<span class="font-label-caps text-label-caps mt-1">Resuscitate</span>
+</a>
+</nav>
+</body></html>

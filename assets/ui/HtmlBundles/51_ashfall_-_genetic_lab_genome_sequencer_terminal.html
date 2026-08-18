@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Genome Sequencer Terminal v4.2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        /* Custom Scanline Effect */
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 40;
+        }
+        
+        /* CRT Flicker */
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            5% { opacity: 0.85; }
+            10% { opacity: 0.95; }
+            15% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+        .animate-flicker {
+            animation: flicker 4s infinite;
+        }
+
+        /* Blinking Cursor */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-block::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+            margin-left: 4px;
+            color: inherit;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#ffede7",
+                      "primary-fixed-dim": "#c3c7cd",
+                      "inverse-on-surface": "#313030",
+                      "on-surface": "#e5e2e1",
+                      "surface": "#131313",
+                      "on-primary-fixed": "#171c20",
+                      "on-primary": "#2c3136",
+                      "secondary": "#a1cfd3",
+                      "surface-variant": "#353535",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-error": "#690005",
+                      "outline": "#8f9194",
+                      "surface-dim": "#131313",
+                      "inverse-surface": "#e5e2e1",
+                      "surface-container-high": "#2a2a2a",
+                      "inverse-primary": "#5a5f64",
+                      "secondary-container": "#225054",
+                      "tertiary-container": "#ffc9b0",
+                      "surface-container-low": "#1c1b1b",
+                      "primary-container": "#d1d5db",
+                      "tertiary-fixed-dim": "#ffb693",
+                      "on-secondary": "#00363a",
+                      "error": "#ffb4ab",
+                      "on-surface-variant": "#c5c6ca",
+                      "on-background": "#e5e2e1",
+                      "background": "#131313",
+                      "primary": "#eef1f7",
+                      "on-secondary-container": "#93c0c5",
+                      "error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#7a3000",
+                      "on-primary-fixed-variant": "#43474c",
+                      "on-tertiary": "#562000",
+                      "surface-tint": "#c3c7cd",
+                      "surface-container": "#20201f",
+                      "secondary-fixed-dim": "#a1cfd3",
+                      "on-tertiary-fixed": "#351000",
+                      "on-tertiary-container": "#9c3f00",
+                      "on-secondary-fixed": "#002022",
+                      "tertiary-fixed": "#ffdbcc",
+                      "surface-bright": "#393939",
+                      "surface-container-highest": "#353535",
+                      "on-secondary-fixed-variant": "#1f4d51",
+                      "secondary-fixed": "#bcebef",
+                      "outline-variant": "#44474a",
+                      "on-primary-container": "#585c61",
+                      "primary-fixed": "#dfe3e9"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-md": "24px",
+                      "stack-lg": "48px",
+                      "margin-edge": "40px",
+                      "unit": "4px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-xl": [
+                              "Bebas Neue"
+                      ],
+                      "code-data": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Bebas Neue"
+                      ],
+                      "headline-lg": [
+                              "Bebas Neue"
+                      ],
+                      "subheading": [
+                              "Bebas Neue"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "code-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "subheading": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.15em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "26px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-secondary selection:text-on-secondary min-h-screen relative">
+<!-- Cinematic Background layer -->
+<div class="fixed inset-0 z-0 bg-[url('placeholder')] bg-cover bg-center opacity-20 pointer-events-none" data-alt="A desolate, snow-covered ruined city under a dark, heavy, cloudy sky. Crumbled skyscrapers and rusted, snow-buried cars line a frozen, shattered street, conveying a bleak, post-apocalyptic, cold survival mood. Low contrast, muted greys and cold blues." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-F3G1-V7e9qGALma9WJzsKLE1FIDt_e0gkzUUTKLuOMxCRP8uOZ6jo8YnBq1vrMGCeATV8b_RDzpj0mRrG4zA1-z5J4orql_ENmc-thEtw3v2hSuSkLipoMQlFENE4WWgG4T5Rf_PDuowsELS-dl7yGopc-R_ZHzQYOSI24W4ZYXRi7YlKnhVCEQYRhvSlPVhRhnOXo92gfwdmD6icdtx0p449jHTvvGu9XVvbufolf0d-hx4qSEBt4laNI5WYcOVZFx8s99ZnFiM')"></div>
+<!-- Static overlay -->
+<div class="fixed inset-0 z-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPHBhdGggZD0iTTAgMEw0IDRNMCA0TDQgMCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utb3BhY2l0eT0iMC4wNSIvPgo8L3N2Zz4=')] opacity-50 pointer-events-none"></div>
+<!-- CRT Scanlines -->
+<div class="fixed inset-0 scanlines"></div>
+<!-- MAIN APP SHELL -->
+<div class="relative z-10 flex flex-col min-h-screen">
+<!-- TopAppBar (From JSON) -->
+<header class="bg-surface text-primary font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg docked full-width top-0 border-b border-primary/30 flat no shadows flex justify-between items-center w-full px-margin-edge py-unit h-16">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-3xl">psychiatry</span>
+<span class="font-display-lg text-display-lg text-primary tracking-widest uppercase cursor-block">PSYCH-ARCHIVE TERMINAL v4.2</span>
+</div>
+<div class="flex items-center gap-6">
+<!-- Trailing Actions -->
+<button aria-label="monitor_heart" class="text-on-surface-variant hover:text-on-primary-container transition-none">
+<span class="material-symbols-outlined">monitor_heart</span>
+</button>
+<button aria-label="settings_input_component" class="text-on-surface-variant hover:text-on-primary-container transition-none">
+<span class="material-symbols-outlined">settings_input_component</span>
+</button>
+<button aria-label="terminal" class="text-on-surface-variant hover:text-on-primary-container transition-none">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<div class="hidden md:flex items-center gap-2 ml-4">
+<img alt="OPERATIVE K. VANCE" class="w-10 h-10 rounded-sm border border-outline/50 object-cover" data-alt="A gritty, low-resolution ID photo of a weary operative in survival gear, tactical helmet, cold blue lighting, muted colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2F59pFDt1-Y-Tymk-Qp8y3tqs2DO6Up8qkvED9JuFznQkeBDnLhlkFqOmFttW3cwwcBpCjQ9zAqjfipTvbvrqeomVQf0Z64XG6JyKCS16AdnOOOuaquEUYI6d80IOynB1o6Lr9J8yPsW4CbOEAV1d5q_jPBEOnKFsFmjxBR3xWwmAWwf_hw_YsePGcEKKgJDdpYUNTPAW6BTXKBJ_DOs1m9oOIs9km7up9qXnJnsHrq_gnNt1zG0qUMgMtwkPtLfqs7fB2V9xTtbe"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar (From JSON) - Hidden on Mobile -->
+<nav class="bg-surface-container-low text-primary font-label-sm text-label-sm uppercase docked full-height left-0 border-r border-primary/30 flat no shadows hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 pt-20 z-20">
+<div class="px-6 pb-6 mb-4 border-b border-outline/30 flex flex-col gap-2">
+<img alt="OPERATIVE K. VANCE" class="w-16 h-16 rounded-sm border border-outline/50 object-cover" data-alt="A gritty, low-resolution ID photo of a weary operative in survival gear, tactical helmet, cold blue lighting, muted colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLwqft1PX0RDA8SsaHCp8e-Y2tfa--nNLdSOTU9w1Wb4X98S6bs96d2mDEdWEY44tm4wphmHzQUQMn8mzBN99ZJlEwpTu8RGy4Mukx0dFhZWQfrVQqC-mjnNU-ctOJLGclD4luiWLycp28xFVWH_Sc62d-t6CySmCUFSeVivQ6alScZdgHJaw5PH4vWSGL_P8lCUjDthEKuK0Gqk_SxJ-ZLsu-atPjLhhGeAtp8Ze6IzujihM96js3PntOtuP1QFbfdACJQp3gbj6i"/>
+<div class="font-headline-lg text-headline-lg text-tertiary leading-none mt-2">K. VANCE</div>
+<div class="font-code-data text-code-data text-error uppercase tracking-widest">STATUS: UNSTABLE</div>
+<button class="mt-4 px-4 py-2 border border-primary text-primary hover:bg-surface-variant transition-none text-left flex items-center justify-between w-full group">
+                         INITIATE_STABILIZATION <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+</div>
+<div class="flex flex-col flex-1 py-4">
+<a class="px-6 py-4 text-outline hover:text-primary hover:bg-surface-variant transition-none flex items-center gap-4" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+                        MEMORY_TREE
+                    </a>
+<!-- Assuming this is a biological/genetic analysis screen, let's map it closely to relation matrix or create a new active intent if needed. The prompt asks for Genetic Lab. Let's make RELATION_MATRIX active as it's the closest to analyzing biological connections. -->
+<a class="px-6 py-4 bg-primary text-on-primary font-bold border-l-4 border-tertiary flex items-center gap-4 animate-flicker" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+                        RELATION_MATRIX
+                    </a>
+<a class="px-6 py-4 text-outline hover:text-primary hover:bg-surface-variant transition-none flex items-center gap-4" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+                        DIRECTIVES
+                    </a>
+<a class="px-6 py-4 text-outline hover:text-primary hover:bg-surface-variant transition-none flex items-center gap-4" href="#">
+<span class="material-symbols-outlined">psychology</span>
+                        TRAUMA_LOG
+                    </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-margin-edge md:pt-8 overflow-y-auto w-full relative h-[calc(100vh-4rem)]">
+<div class="max-w-6xl mx-auto flex flex-col gap-stack-lg">
+<!-- Header Section -->
+<div class="flex flex-col gap-stack-sm pb-4 border-b border-outline/30">
+<h1 class="font-headline-xl text-headline-xl text-primary tracking-widest uppercase">GENOME_SEQUENCER_PROX</h1>
+<p class="font-code-data text-code-data text-on-surface-variant max-w-2xl">
+                            INITIATING BIOSCAN... LAB_PROTOCOL: ASHFALL. MONITORING CELLULAR DEGRADATION AND MUTATION VECTORS.
+                        </p>
+</div>
+<!-- Bento Grid Layout for Data -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Panel 1: DNA Visualization (Spans 2 cols on lg) -->
+<div class="lg:col-span-2 bg-surface-container-low border-t border-t-primary/20 p-6 relative flex flex-col gap-stack-md shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/5 before:to-transparent before:pointer-events-none">
+<h2 class="font-subheading text-subheading text-secondary flex items-center gap-2 border-b border-outline/20 pb-2">
+<span class="material-symbols-outlined">biotech</span>
+                                DNA STRAND SEQUENCING
+                            </h2>
+<!-- Visualization Area -->
+<div class="h-64 bg-surface-dim border border-outline/30 relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+CjxwYXRoIGQ9Ik0wIDEwTDIwIDEwTTEwIDBMMTAgMjAiIHN0cm9rZT0iIzQ0NDc0YSIgc3Ryb2tlLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')]"></div>
+<!-- Mock DNA Animation Placeholder -->
+<div class="text-secondary opacity-70 animate-pulse text-center">
+<span class="material-symbols-outlined text-6xl">science</span>
+<p class="font-code-data text-code-data mt-2">[ ANIMATION_RENDER_PENDING ]</p>
+</div>
+<!-- Overlay Data -->
+<div class="absolute bottom-4 left-4 flex flex-col gap-1">
+<div class="font-code-data text-code-data text-error flex items-center gap-2 bg-surface-container/80 px-2 py-1 border border-error/30">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+                                        LOCUS 04: RAD-INDUCED ANOMALY DETECTED
+                                    </div>
+</div>
+</div>
+<!-- Telemetry -->
+<div class="grid grid-cols-2 gap-4 border-t border-outline/20 pt-4">
+<div>
+<div class="font-label-caps text-label-caps text-outline mb-1">D-STRAND BREAKAGE RATE</div>
+<div class="font-code-data text-code-data text-error text-xl">34.00%</div>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-outline mb-1">CHROMOSOMAL TELOMERE</div>
+<div class="font-code-data text-code-data text-tertiary text-xl">CRITICAL DECAY</div>
+</div>
+</div>
+</div>
+<!-- Panel 2: Genetic Therapy Control -->
+<div class="bg-surface-container-low border-t border-t-primary/20 p-6 relative flex flex-col gap-stack-md shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/5 before:to-transparent before:pointer-events-none">
+<h2 class="font-subheading text-subheading text-secondary flex items-center gap-2 border-b border-outline/20 pb-2">
+<span class="material-symbols-outlined">edit_square</span>
+                                CRISPR REPAIR MATRIX
+                            </h2>
+<div class="flex-1 flex flex-col justify-center gap-stack-md">
+<div class="space-y-2">
+<div class="flex justify-between font-label-caps text-label-caps text-on-surface">
+<span>VIRAL VECTOR EFFICIENCY</span>
+<span>78%</span>
+</div>
+<div class="w-full h-2 bg-surface-dim border border-outline/30 relative">
+<div class="absolute top-0 left-0 h-full bg-secondary w-[78%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-caps text-label-caps text-on-surface">
+<span>REPAIR SERUM SYNTHESIS</span>
+<span class="text-tertiary">42%</span>
+</div>
+<div class="w-full h-2 bg-surface-dim border border-outline/30 relative">
+<div class="absolute top-0 left-0 h-full bg-tertiary-fixed-dim w-[42%] animate-pulse"></div>
+</div>
+</div>
+<div class="mt-4 p-4 border border-outline/30 bg-surface-dim">
+<div class="font-label-caps text-label-caps text-outline mb-2">TARGET OPERATION</div>
+<div class="font-code-data text-code-data text-primary">G-C TO A-T TRANSVERSION</div>
+<div class="text-xs text-error mt-2">WARNING: HIGH RISK OF OFF-TARGET MUTATION</div>
+</div>
+</div>
+</div>
+<!-- Panel 3: Biological Specimen Cultures (Spans full width) -->
+<div class="lg:col-span-3 bg-surface-container-low border-t border-t-primary/20 p-6 relative flex flex-col gap-stack-md shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/5 before:to-transparent before:pointer-events-none">
+<h2 class="font-subheading text-subheading text-secondary flex items-center gap-2 border-b border-outline/20 pb-2">
+<span class="material-symbols-outlined">pest_control</span>
+                                IRRADIATED SPECIMEN CULTURES
+                            </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Specimen A -->
+<div class="border border-outline/30 p-4 hover:border-secondary transition-colors cursor-pointer group flex flex-col gap-2">
+<div class="flex items-center gap-3 border-b border-outline/20 pb-2">
+<span class="material-symbols-outlined text-secondary">grass</span>
+<span class="font-code-data text-code-data text-primary font-bold">SPECIMEN_A</span>
+</div>
+<div class="font-body-md text-on-surface-variant text-sm flex-1">Bioluminescent Moss Genome</div>
+<div class="mt-2 font-label-caps text-label-caps flex items-center gap-2 text-secondary">
+<span class="w-2 h-2 bg-secondary rounded-full"></span> STABLE
+                                    </div>
+</div>
+<!-- Specimen B -->
+<div class="border border-outline/30 p-4 hover:border-tertiary transition-colors cursor-pointer group flex flex-col gap-2 bg-error-container/10">
+<div class="flex items-center gap-3 border-b border-outline/20 pb-2">
+<span class="material-symbols-outlined text-tertiary">cruelty_free</span>
+<span class="font-code-data text-code-data text-primary font-bold">SPECIMEN_B</span>
+</div>
+<div class="font-body-md text-on-surface-variant text-sm flex-1">Resistant Blind Mole-Rat Spleen Cells</div>
+<div class="mt-2 font-label-caps text-label-caps flex items-center gap-2 text-tertiary">
+<span class="w-2 h-2 bg-tertiary rounded-full animate-pulse"></span> HIGH RAD BURDEN
+                                    </div>
+</div>
+<!-- Specimen C -->
+<div class="border border-outline/30 p-4 hover:border-primary transition-colors cursor-pointer group flex flex-col gap-2">
+<div class="flex items-center gap-3 border-b border-outline/20 pb-2">
+<span class="material-symbols-outlined text-primary">pets</span>
+<span class="font-code-data text-code-data text-primary font-bold">SPECIMEN_C</span>
+</div>
+<div class="font-body-md text-on-surface-variant text-sm flex-1">Mutated Wasteland Wolf Hemoglobin</div>
+<div class="mt-2 font-label-caps text-label-caps flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-sm animate-spin">sync</span> SEQUENCING...
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tactical Directives -->
+<div class="flex flex-col md:flex-row gap-4 mt-4 pb-20">
+<button class="flex-1 px-6 py-4 border border-primary text-primary font-code-data text-code-data hover:bg-secondary hover:text-on-secondary transition-none text-left flex justify-between items-center group">
+                            [ SYNTHESIZE CRISPR GENE PATCH ]
+                            <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">science</span>
+</button>
+<button class="flex-1 px-6 py-4 border border-primary text-primary font-code-data text-code-data hover:bg-secondary hover:text-on-secondary transition-none text-left flex justify-between items-center group">
+                            [ SEQUENCE IRRADIATED GENOME ]
+                            <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">memory</span>
+</button>
+<button class="flex-1 px-6 py-4 border border-error text-error font-code-data text-code-data hover:bg-error hover:text-on-error transition-none text-left flex justify-between items-center group">
+                            [ PURGE MUTATED TISSUE CULTURE ]
+                            <span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">delete_forever</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (From JSON) - Mobile Only -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 bg-surface bg-surface-container-highest text-primary font-label-sm text-label-sm font-headline-lg-mobile text-headline-lg-mobile docked full-width rounded-t-none border-t border-primary/50 flat no shadows">
+<a class="flex flex-col items-center justify-center text-outline px-2 py-1 w-full h-full hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined text-2xl">account_tree</span>
+<span class="text-[10px] mt-1 font-label-caps">MEM_TREE</span>
+</a>
+<!-- Active Tab based on JSON logic and Semantic Mapping -->
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary px-2 py-1 w-full h-full ring-1 ring-tertiary" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="text-[10px] mt-1 font-label-caps font-bold">RELATIONS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline px-2 py-1 w-full h-full hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined text-2xl">medical_services</span>
+<span class="text-[10px] mt-1 font-label-caps">DIRECTIVES</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline px-2 py-1 w-full h-full hover:bg-surface-variant" href="#">
+<span class="material-symbols-outlined text-2xl">analytics</span>
+<span class="text-[10px] mt-1 font-label-caps">STATUS</span>
+</a>
+</nav>
+</div>
+</body></html>

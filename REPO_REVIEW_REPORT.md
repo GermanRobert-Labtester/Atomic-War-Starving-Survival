@@ -192,14 +192,14 @@ JSON property names mix `camelCase` (`displayName`, `basePrice`, `minDay`) and `
 
 | # | Finding | Details |
 |---|---------|---------|
-| M1 | 124 compiler warnings in tests | CS8600 ×144, CS8602 ×12, CS8618 ×28 (nullable refs) |
+| ~~M1~~ | ~~124 compiler warnings in tests~~ — RESOLVED | was CS8600 ×144, CS8602 ×12, CS8618 ×28 (nullable refs); now 0 nullable warnings, 3 minor xUnit analyzer hints. See AGENTS.md §H9. |
 | M2 | 121 ScriptableObject definitions | Risk of dual data authority vs JSON |
 | M3 | Godot migration at ~4% | 10K LOC Godot vs 232K LOC Unity |
 | M4 | Port adapters incomplete in Unity | No `IFileIO`, `IJsonSerializer`, or `IClock` adapters |
 | M5 | Godot compiles all 1337 Unity files | Via shim — massive dead weight in Godot build |
-| M6 | 5 Godot save stores have no checksum | `ExpeditionSaveStore`, `MedicalSaveStore`, `NarrativeSaveStore`, `WorldSaveStore`, `JournalSaveStore` |
-| M7 | `JournalSaveStore` bypasses core serializer | Uses `System.Text.Json` directly |
-| M8 | `Main.cs` (Godot) is ~3000 lines | Monolithic entry point |
+| ~~M6~~ | ~~5 Godot save stores have no checksum~~ — RESOLVED | `ExpeditionSaveStore`, `MedicalSaveStore`, `NarrativeSaveStore`, `WorldSaveStore`, `JournalSaveStore` now ship checksummed envelopes and require a non-empty `Checksum` field in the new format. Integrity contract pinned by `Ashfall.Core.Tests/SaveStoreChecksumSweepTests.cs` (12 tests, 3 per store). See AGENTS.md §SAVE/LOAD. |
+| ~~M7~~ | ~~`JournalSaveStore` bypasses core serializer~~ — RESOLVED | Serializes via `SystemTextJsonSerializer` (core `IJsonSerializer` adapter, `Ashfall.Core/HostDefaults.cs`), the same path as every other host store; checksummed envelope + legacy fallback verified by `JournalSaveChecksumTests` in `SaveStoreChecksumSweepTests.cs` and the `--journal-selftest` headless run. See AGENTS.md §SAVE/LOAD. |
+| M8 | `Main.cs` (Godot) is 6546 lines in one file | Not a shapeless monolith: single `partial class Main` organized as per-subsystem triads — `SetupXxx` (construct + wire), `SaveXxx` (capture; `SaveAll` orchestrates all 24), `FlushXxxIfDirty` (deferred flush); 31/24/17 methods. Risks: triad drift (a Setup without a Save silently drops state) and single-file navigation. See AGENTS.md §H7 |
 | M9 | NeedsSystem & RadiationSystem lack save/load round-trip tests | Most fundamental survival systems untested for serialization |
 | M10 | JournalSystem has zero tests | 6 files, core narrative progression, no coverage |
 
@@ -237,7 +237,7 @@ JSON property names mix `camelCase` (`displayName`, `basePrice`, `minDay`) and `
 - Mechanically enforces "never invent an id" rule
 
 ### ✅ Test Suite (when it compiles)
-- ~1,491 tests across 143 files
+- **1,941 tests across 173 files** (was ~1,491 / 143 — gained 450+ methods and 30 files from the save-stores + pending-list + wire-contract work)
 - Exceptional save/load integrity testing (checksum, tamper rejection, multi-version migration, aliasing regression)
 - Determinism testing (same-seed-same-output)
 - Catalog tests as data integrity gates (not just "does it load")
@@ -300,13 +300,13 @@ JSON property names mix `camelCase` (`displayName`, `basePrice`, `minDay`) and `
 | Core C# files | 234 | Engine-agnostic, zero coupling |
 | Unity C# files | 1337 | 233K total lines |
 | Godot C# files | 84 | Including 10 Bridge shim files |
-| Test files | 143 | xUnit, ~1,491 test methods |
+| Test files | 173 | xUnit, 1,941 test methods |
 | JSON data files | 280 | ~3 MB total, 56 untracked |
 | Binary assets (tracked) | — | ~565 MB (PNG + AI + archive) |
 | ScriptableObject defs | 121 | Unity editor convenience |
 | Total git commits | 1002 | Active development |
 | Uncommitted changes | 56 files | +713 / -220 lines |
 | Largest Unity file | 4936 lines | `PersonalQuestSystem.cs` |
-| Largest Godot file | ~3000 lines | `Main.cs` |
+| Largest Godot file | 6546 lines | `Main.cs` — one file, structured as per-subsystem `Setup`/`Save`/`FlushIfDirty` triads (AGENTS.md §H7) |
 | TODO/FIXME/HACK | 0 | Entire codebase |
 | Bare `catch {}` blocks | 13 | Core only |

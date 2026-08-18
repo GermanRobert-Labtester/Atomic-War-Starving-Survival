@@ -1,14 +1,21 @@
 using System;
-using Ashfall.Core.Radio;
+using System.Collections.Generic;
 using Godot;
+using Ashfall.Core.Radio;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Radio panel.
-    /// Shows radio signals, broadcasts, and communication logs with 142.850 MHz broadcast styling.
+    /// Shows radio signals, broadcasts, and communication logs.
+    /// HYBRID target: dashboard shell wraps the existing tuner + sets a
+    /// 5-card status rail (current frequency / day / monitored channels /
+    /// strongest recent signal / last intercept day) plus a DataGrid of the
+    /// last 16 intercepts. Per the brief, no waveform / spectrogram is added —
+    /// there is no Core data source exposed.
     /// </summary>
     public partial class RadioPanel : Control
     {
@@ -23,78 +30,117 @@ namespace AtomicWar.GodotApp.UI
             (120.400f, "120.400 MHz · DISTRESS BEACON")
         };
 
-        private Label _lblSignalsTitle = null!;
-        private VBoxContainer _signalList = null!;
+        private AshfallDashboardShell _shell = null!;
+        private AshfallStatusRail? _statusRail;
+        private AshfallDataGrid? _interceptsGrid;
         private RadioHostSession? _radioHost;
 
         public bool IsBound => _radioHost != null;
-        public int RenderedSignalCount => _signalList?.GetChildCount() ?? 0;
+        public int RenderedSignalCount => _interceptsGrid?.RowCount ?? 0;
 
         public void Bind(RadioHostSession radio)
         {
             _radioHost = radio;
+            if (_radioHost != null)
+            {
+                _radioHost.StateChanged -= RefreshView;
+                _radioHost.StateChanged += RefreshView;
+            }
             RefreshView();
         }
 
         public void RefreshView()
         {
-            if (_signalList == null) return;
+            RefreshStatusRail();
+            BuildInterceptsGrid();
+        }
 
-            while (_signalList.GetChildCount() > 0)
-            {
-                var child = _signalList.GetChild(0);
-                _signalList.RemoveChild(child);
-                child.QueueFree();
-            }
-
+        private void RefreshStatusRail()
+        {
+            if (_statusRail == null) return;
             if (_radioHost == null)
             {
-                _signalList.AddChild(AshfallUiHelpers.MakeMetadata("No radio session bound. Tuner offline."));
+                _statusRail.Set("freq",     "—",     AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("day",      "—",     AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("channels", "0",     AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("history",  "0",     AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("highest",  "—",     AshfallMetricCard.Criticality.Normal);
                 return;
             }
-
-            if (_radioHost.History.Count == 0)
+            int hist = _radioHost.History?.Count ?? 0;
+            float strongest = 0f;
+            int lastDay = -1;
+            for (int i = 0; i < hist; i++)
             {
-                _signalList.AddChild(AshfallUiHelpers.MakeMetadata($"No transmissions recorded. Carrier frequency scanning on {_radioHost.CurrentFrequency:00.00} MHz."));
+                var sig = _radioHost.History[i];
+                if (sig.SignalStrength > strongest) strongest = sig.SignalStrength;
+                if (sig.Day > lastDay) lastDay = sig.Day;
             }
-            else
+            _statusRail.Set("freq",     $"{_radioHost.CurrentFrequency:00.00} MHz", AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("day",      $"D{_radioHost.Day:00}",                     AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("channels", $"{_radioHost.Engine.FactionCount}",        AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("history",  $"{hist}",                                   AshfallMetricCard.Criticality.Normal);
+            var strongestCrit = strongest >= 4 ? AshfallMetricCard.Criticality.Normal
+                : strongest >= 3 ? AshfallMetricCard.Criticality.Caution
+                : strongest >= 2 ? AshfallMetricCard.Criticality.Warn
+                : AshfallMetricCard.Criticality.Critical;
+            _statusRail.Set("highest",  hist == 0 ? "—" : $"SIG {strongest:0}/5",
+                hist == 0 ? AshfallMetricCard.Criticality.Normal : strongestCrit);
+        }
+
+        private void BuildInterceptsGrid()
+        {
+            if (_interceptsGrid == null) return;
+            var rows = new List<AshfallDataGrid.Row>();
+            if (_radioHost != null && _radioHost.History != null && _radioHost.History.Count > 0)
             {
                 int first = Math.Max(0, _radioHost.History.Count - 16);
                 for (int i = _radioHost.History.Count - 1; i >= first; i--)
                 {
-                    RadioIntercept signal = _radioHost.History[i];
-                    string source = string.IsNullOrWhiteSpace(signal.FactionId)
-                        ? signal.Callsign
-                        : $"{signal.Callsign} · {signal.FactionId}";
-
-                    var box = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
-                    var headerRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-
-                    var freq = AshfallUiHelpers.MakeMono($"[D{signal.Day:00} {signal.FrequencyMhz:00.00} MHz]");
-                    freq.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                    headerRow.AddChild(freq);
-
-                    var callsign = AshfallUiHelpers.MakeSmall(source);
-                    callsign.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-                    headerRow.AddChild(callsign);
-
-                    var sig = AshfallUiHelpers.MakeMono($"SIG {signal.SignalStrength}/5");
-                    sig.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
-                    headerRow.AddChild(sig);
-
-                    box.AddChild(headerRow);
-
-                    var msg = AshfallUiHelpers.MakeBody(signal.Message);
-                    msg.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(signal.Kind == RadioEventKind.Silence ? Ashfall.Core.UI.Theme.Dim : Ashfall.Core.UI.Theme.Pale));
-                    box.AddChild(msg);
-
-                    var panel = AshfallUiHelpers.MakePanel();
-                    panel.AddChild(box);
-                    _signalList.AddChild(panel);
+                    var sig = _radioHost.History[i];
+                    string source = string.IsNullOrWhiteSpace(sig.FactionId)
+                        ? sig.Callsign
+                        : $"{sig.Callsign} · {sig.FactionId}";
+                    var sigQuality = sig.SignalStrength >= 4 ? AshfallDataGrid.CellState.Positive
+                        : sig.SignalStrength >= 3 ? AshfallDataGrid.CellState.Normal
+                        : sig.SignalStrength >= 2 ? AshfallDataGrid.CellState.Caution
+                        : AshfallDataGrid.CellState.Warning;
+                    rows.Add(new AshfallDataGrid.Row
+                    {
+                        Cells = new List<AshfallDataGrid.Cell>
+                        {
+                            new($"D{sig.Day:00} · {sig.FrequencyMhz:00.00}", AshfallDataGrid.CellState.Normal),
+                            new(source, AshfallDataGrid.CellState.Normal),
+                            new($"SIG {sig.SignalStrength}/5", sigQuality),
+                            new(sig.Kind.ToString().ToUpperInvariant(),
+                                sig.Kind == RadioEventKind.Silence ? AshfallDataGrid.CellState.Muted : AshfallDataGrid.CellState.Normal),
+                            new(Truncate(sig.Message, 60), sig.Kind == RadioEventKind.Silence ? AshfallDataGrid.CellState.Muted : AshfallDataGrid.CellState.Normal),
+                        }
+                    });
                 }
             }
+            if (rows.Count == 0)
+            {
+                rows.Add(new AshfallDataGrid.Row
+                {
+                    Cells = new List<AshfallDataGrid.Cell>
+                    {
+                        new("—",      AshfallDataGrid.CellState.Muted),
+                        new("—",      AshfallDataGrid.CellState.Muted),
+                        new("—",      AshfallDataGrid.CellState.Muted),
+                        new("silent", AshfallDataGrid.CellState.Muted),
+                        new("Tuner offline", AshfallDataGrid.CellState.Muted),
+                    }
+                });
+            }
+            _interceptsGrid.SetRows(rows);
+        }
 
-            _lblSignalsTitle.Text = $"TUNER LOG · FREQ {_radioHost.CurrentFrequency:00.00} MHz · DAY {_radioHost.Day} · {_radioHost.Engine.FactionCount} MONITORED CHANNELS";
+        private static string Truncate(string s, int n)
+        {
+            if (string.IsNullOrEmpty(s)) return "—";
+            if (s.Length <= n) return s;
+            return s.Substring(0, n - 1) + "…";
         }
 
         public override void _Ready()
@@ -106,37 +152,48 @@ namespace AtomicWar.GodotApp.UI
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            var center = new CenterContainer();
-            center.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(center);
+            _shell = new AshfallDashboardShell(
+                "RADIO COMMUNICATIONS & INTERCEPTS",
+                1180, 720);
 
-            var panel = AshfallUiHelpers.MakePanel(760, 600);
-            center.AddChild(panel);
+            var hostContainer = new MarginContainer();
+            hostContainer.AddThemeConstantOverride("margin_left", DesignTheme.HudEdge);
+            hostContainer.AddThemeConstantOverride("margin_top", DesignTheme.SpacingLg);
+            hostContainer.AddThemeConstantOverride("margin_right", DesignTheme.HudEdge);
+            hostContainer.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingMd);
+            hostContainer.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            hostContainer.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+            hostContainer.AddChild(_shell);
+            AddChild(hostContainer);
 
-            var margins = AshfallUiHelpers.MakeMargins(Ashfall.Core.UI.Theme.SpacingMd);
-            panel.AddChild(margins);
+            _statusRail = _shell.SetStatusRail();
+            _statusRail.AddCard("freq",     "FREQUENCY", "—",      AshfallMetricCard.Criticality.Normal, 130);
+            _statusRail.AddCard("day",      "DAY",      "—",      AshfallMetricCard.Criticality.Normal, 80);
+            _statusRail.AddCard("channels", "CHANNELS", "0",      AshfallMetricCard.Criticality.Normal, 110);
+            _statusRail.AddCard("history",  "HISTORY",  "0",      AshfallMetricCard.Criticality.Normal, 110);
+            _statusRail.AddCard("highest",  "STRONGEST","—",      AshfallMetricCard.Criticality.Normal, 110);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingMd);
-            margins.AddChild(vbox);
+            BuildContent();
+            RefreshView();
+        }
 
-            var header = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-            var title = AshfallUiHelpers.MakeTitle("RADIO COMMUNICATIONS & INTERCEPTS", Ashfall.Core.UI.Theme.FontSizeH2);
-            title.HorizontalAlignment = HorizontalAlignment.Left;
-            title.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-            header.AddChild(title);
+        private void BuildContent()
+        {
+            _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => Close());
 
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => Close());
-            btnClose.CustomMinimumSize = new Vector2(110, 32);
-            header.AddChild(btnClose);
-            vbox.AddChild(header);
+            // ── Preset + action row pinned above the grid ──
+            var topRow = new HBoxContainer();
+            topRow.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            topRow.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            topRow.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            // Tuner pad on the left, presets quadrant-style.
+            var presetCol = new VBoxContainer();
+            presetCol.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            presetCol.SizeFlagsStretchRatio = 0.95f;
+            presetCol.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            presetCol.AddChild(AshfallUiHelpers.MakeSectionHeader("FREQUENCY TUNER"));
 
-            // Frequency Preset Buttons
-            var dialHeader = AshfallUiHelpers.MakeSectionHeader("FREQUENCY TUNER PRESETS");
-            vbox.AddChild(dialHeader);
-
-            var dialRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
             foreach (var (freq, label) in _presets)
             {
                 float targetFreq = freq;
@@ -148,13 +205,10 @@ namespace AtomicWar.GodotApp.UI
                         RefreshView();
                     }
                 });
-                btnFreq.CustomMinimumSize = new Vector2(170, 32);
-                btnFreq.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-                dialRow.AddChild(btnFreq);
+                btnFreq.CustomMinimumSize = new Vector2(0, 28);
+                btnFreq.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                presetCol.AddChild(btnFreq);
             }
-            vbox.AddChild(dialRow);
-
-            var actionRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
             var btnBeacon = AshfallUiHelpers.MakeButton("BROADCAST HOLDFAST EMERGENCY BEACON", () =>
             {
                 if (_radioHost != null)
@@ -163,29 +217,33 @@ namespace AtomicWar.GodotApp.UI
                     OnRadioBroadcastSent?.Invoke();
                     RefreshView();
                 }
-            }, true);
+            });
             btnBeacon.CustomMinimumSize = new Vector2(0, 36);
-            btnBeacon.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            actionRow.AddChild(btnBeacon);
-            vbox.AddChild(actionRow);
+            btnBeacon.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            presetCol.AddChild(btnBeacon);
+            topRow.AddChild(presetCol);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblSignalsTitle = AshfallUiHelpers.MakeSectionHeader("RECENT SIGNALS");
-            vbox.AddChild(_lblSignalsTitle);
-
-            var scroll = new ScrollContainer
+            // ── Right: intercepts DataGrid ──
+            var gridCol = new VBoxContainer();
+            gridCol.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+            gridCol.SizeFlagsStretchRatio = 1.45f;
+            gridCol.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            gridCol.AddChild(AshfallUiHelpers.MakeSectionHeader("RECENT INTERCEPTS (16 LATEST)"));
+            var cols = new[]
             {
-                CustomMinimumSize = new Vector2(720, 340),
-                SizeFlagsVertical = SizeFlags.ExpandFill
+                new AshfallDataGrid.Column { Header = "Day/Freq",  MinWidth = 130, Alignment = AshfallDataGrid.ColumnAlign.Left   },
+                new AshfallDataGrid.Column { Header = "Source",    MinWidth = 160, Alignment = AshfallDataGrid.ColumnAlign.Left   },
+                new AshfallDataGrid.Column { Header = "Sig",       MinWidth = 80,  Alignment = AshfallDataGrid.ColumnAlign.Center },
+                new AshfallDataGrid.Column { Header = "Kind",      MinWidth = 110, Alignment = AshfallDataGrid.ColumnAlign.Left   },
+                new AshfallDataGrid.Column { Header = "Message",   MinWidth = 240, Alignment = AshfallDataGrid.ColumnAlign.Left   },
             };
-            vbox.AddChild(scroll);
+            _interceptsGrid = new AshfallDataGrid(cols, showHeader: true, minWidth: 650, minHeight: 360);
+            _interceptsGrid.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            _interceptsGrid.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+            gridCol.AddChild(_interceptsGrid);
+            topRow.AddChild(gridCol);
 
-            _signalList = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
-            _signalList.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            scroll.AddChild(_signalList);
-
-            RefreshView();
+            _shell.SetContent(topRow);
         }
 
         public void Open()

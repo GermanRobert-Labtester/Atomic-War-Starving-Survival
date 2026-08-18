@@ -1,0 +1,69 @@
+{
+ "top_n_per_category": 50,
+ "totals": {
+  "items_in_catalog": 499,
+  "survivors_in_catalog": 102,
+  "locations_in_catalog": 105,
+  "characters_in_catalog": 36,
+  "manifest_actionable": 478
+ },
+ "top_in_manifest": {
+  "items": [],
+  "survivors": [],
+  "locations": [
+   "loc_grange_hall",
+   "loc_apiary_rows",
+   "loc_seed_library_annex"
+  ],
+  "characters": [
+   "npc_bram_ostrowski",
+   "npc_sergeant_pell",
+   "npc_doctor_ianov",
+   "npc_wren",
+   "npc_kestrel",
+   "npc_nomi_fisk",
+   "npc_ivor_lasko",
+   "npc_the_cartwright_sisters",
+   "npc_edor_vale",
+   "npc_yara_holm",
+   "npc_leva_quist",
+   "npc_cael_ormund",
+   "npc_halden_mire",
+   "npc_cluster_teacher",
+   "npc_osran_kell",
+   "npc_mattis_cray",
+   "npc_wyn_sabler",
+   "npc_dessa_vane",
+   "npc_perrin_ashby",
+   "npc_ivo_fenn",
+   "npc_kess_adler",
+   "npc_ansel_duth",
+   "npc_tamsin_rook",
+   "npc_len_quill",
+   "npc_hadi_morrow",
+   "npc_nila_brant",
+   "npc_maren_holt",
+   "npc_ira_vell",
+   "npc_benno_kade",
+   "npc_quil_esser",
+   "npc_osric_tann",
+   "npc_dara_mewn",
+   "npc_dr_irina_vel",
+   "npc_wyn_omah",
+   "npc_piet_abar",
+   "npc_saria_voss"
+  ]
+ },
+ "surfaced_count": 39,
+ "not_surfaced_count": 439,
+ "surfaced_by_band": {
+  "P1": 38,
+  "P2": 1
+ },
+ "not_surfaced_by_band": {
+  "P1": 125,
+  "P2": 198,
+  "P3": 110,
+  "P4": 6
+ }
+}

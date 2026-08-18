@@ -299,6 +299,7 @@ namespace Ashfall.Core
             Check(tamperRejected, "tampered v5 save rejected (checksum)");
 
             report.Summary = $"[DeepCoastHeadlessDemo] {report.PassedCount}/{report.PassedCount + report.FailedCount} PASSED";
+            report.Passed = report.FailedCount == 0;
             log.Info(report.Summary);
             return report;
         }

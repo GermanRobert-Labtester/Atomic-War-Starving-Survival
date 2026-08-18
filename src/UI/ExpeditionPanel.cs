@@ -24,6 +24,8 @@ namespace AtomicWar.GodotApp.UI
 
         private VBoxContainer _targetsContainer = null!;
         private VBoxContainer _activeContainer = null!;
+        private VBoxContainer _pendingContainer = null!;
+        private Label _pendingHeader = null!;
         private Label _statusSummary = null!;
 
         private string _selectedTargetId = "loc_the_allotments";
@@ -31,7 +33,7 @@ namespace AtomicWar.GodotApp.UI
         private ExpeditionStance _selectedStance = ExpeditionStance.Stealth;
 
         // ── Encounter surface (modal default / autoplay flag) ────────
-        private readonly Queue<ExpeditionState> _encounterQueue = new();
+        private readonly Queue<ExpeditionEncounterBridge.EncounterSurfaced> _encounterQueue = new();
         private Control? _encounterModal;
         private Label? _encounterTitle;
         private Label? _encounterBody;
@@ -40,7 +42,9 @@ namespace AtomicWar.GodotApp.UI
         private bool _modalActive;
         private float _bannerTimer;
         private const float BannerDuration = 3f;
-        private ExpeditionState? _lastEncounter;
+        private ExpeditionEncounterBridge.EncounterSurfaced? _lastSurfaced;
+        private VBoxContainer? _choicesContainer;
+        private bool _pendingBatchMode;
 
         public bool IsBound => _expeditionHost != null;
 
@@ -129,6 +133,15 @@ namespace AtomicWar.GodotApp.UI
             rootBox.AddChild(_activeContainer);
 
             rootBox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── Pending Surfaced Encounters ──
+            _pendingHeader = AshfallUiHelpers.MakeSectionHeader("PENDING SURFACED ENCOUNTERS");
+            _pendingHeader.Visible = false;
+            rootBox.AddChild(_pendingHeader);
+
+            _pendingContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            _pendingContainer.Visible = false;
+            rootBox.AddChild(_pendingContainer);
 
             // ── Target Destinations ──
             var targetsTitle = AshfallUiHelpers.MakeSectionHeader("KNOWN WASTELAND DESTINATIONS");
@@ -271,7 +284,10 @@ namespace AtomicWar.GodotApp.UI
                 }
             }
 
-            // 2. Render Available Targets
+            // 2. Render Pending Surfaced Encounters
+            RenderPendingList();
+
+            // 3. Render Available Targets
             var livingSurvivors = new List<string>();
             if (_survivorsHost != null)
             {
@@ -353,13 +369,136 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        // ── Pending surfaced encounters ────────────────────────────────
+
+        /// <summary>
+        /// Renders NarrativeEncounterState.pending as selectable rows so a stack
+        /// of surfaced encounters from one trip can be worked through without
+        /// modal-spam. Hidden when the queue is empty. Readable without colour:
+        /// [#N] prefix + uppercase label + panel border.
+        /// </summary>
+        private void RenderPendingList()
+        {
+            if (_pendingContainer == null || _expeditionHost == null) return;
+
+            while (_pendingContainer.GetChildCount() > 0)
+            {
+                var child = _pendingContainer.GetChild(0);
+                _pendingContainer.RemoveChild(child);
+                child.QueueFree();
+            }
+
+            var pending = _expeditionHost.Pending;
+            bool any = pending != null && pending.Count > 0;
+            _pendingContainer.Visible = any;
+            if (_pendingHeader != null) _pendingHeader.Visible = any;
+            if (!any) return;
+
+            for (int i = 0; i < pending!.Count; i++)
+            {
+                var p = pending[i];
+                if (p == null || string.IsNullOrEmpty(p.encounterId)) continue;
+
+                var def = _expeditionHost.FindEncounter(p.encounterId);
+                string label = def != null && !string.IsNullOrEmpty(def.title)
+                    ? def.title.ToUpperInvariant()
+                    : $"ENCOUNTER #{p.legIndex}";
+
+                var card = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingXs);
+                var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+
+                var lbl = AshfallUiHelpers.MakeMono($"[#{p.legIndex}] {label}");
+                lbl.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                row.AddChild(lbl);
+
+                var meta = AshfallUiHelpers.MakeSmall($"{p.locationId} · DAY {p.day}");
+                row.AddChild(meta);
+
+                string pendingId = p.encounterId;
+                string pendingLocation = p.locationId;
+                int pendingLeg = p.legIndex;
+                var btnResolve = AshfallUiHelpers.MakeButton("RESOLVE", () =>
+                {
+                    OpenPendingEncounter(pendingId, pendingLocation, pendingLeg);
+                });
+                btnResolve.CustomMinimumSize = new Vector2(120, 30);
+                row.AddChild(btnResolve);
+
+                card.AddChild(row);
+
+                var panel = AshfallUiHelpers.MakePanel();
+                panel.AddChild(card);
+                _pendingContainer.AddChild(panel);
+            }
+
+            var footer = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            var btnDismissAll = AshfallUiHelpers.MakeButton("DISMISS ALL", () =>
+            {
+                int count = _expeditionHost.Pending?.Count ?? 0;
+                _expeditionHost.ClearAllPending();
+                GD.Print($"[Expedition] Dismissed {count} pending encounter(s) without resolving.");
+                RefreshView();
+            }, true);
+            btnDismissAll.CustomMinimumSize = new Vector2(160, 30);
+            footer.AddChild(btnDismissAll);
+            _pendingContainer.AddChild(footer);
+        }
+
+        /// <summary>
+        /// Batch mode: queue exactly this pending encounter into the existing
+        /// modal and show it. Text is verbatim from the catalog; when the catalog
+        /// has no record we say so rather than inventing one.
+        /// </summary>
+        private void OpenPendingEncounter(string encounterId, string locationId, int legIndex)
+        {
+            if (_expeditionHost == null || string.IsNullOrEmpty(encounterId)) return;
+
+            var def = _expeditionHost.FindEncounter(encounterId);
+            var trigger = new ExpeditionState
+            {
+                survivorId = string.Empty,
+                locationId = locationId ?? string.Empty,
+                displayName = locationId ?? string.Empty,
+                phase = (int)ExpeditionPhase.Outbound,
+                encounterCount = legIndex
+            };
+
+            var dto = new ExpeditionEncounterBridge.EncounterSurfaced
+            {
+                encounter_id = encounterId,
+                trigger = trigger,
+                resolved_at_lead = null,
+                encounter_record_resolution_id = null
+            };
+
+            if (def == null)
+            {
+                dto.title = "Encounter #" + legIndex;
+                dto.description = "This encounter is pending, but the catalog holds no record of it.";
+                dto.category = string.Empty;
+                dto.choices = new List<Ashfall.Core.Narrative.EncounterChoiceDefinition>();
+                dto.resolved_at_lead = false;
+            }
+            else
+            {
+                dto.title = def.title;
+                dto.description = def.description;
+                dto.category = def.category;
+                dto.choices = def.choices ?? new List<Ashfall.Core.Narrative.EncounterChoiceDefinition>();
+            }
+
+            _encounterQueue.Clear();
+            _encounterQueue.Enqueue(dto);
+            _pendingBatchMode = true;
+            ShowNextModal();
+        }
+
         public void Open()
         {
             Visible = true;
             RefreshView();
             QueueRedraw();
         }
-
         public void Close()
         {
             _encounterQueue.Clear();
@@ -367,17 +506,32 @@ namespace AtomicWar.GodotApp.UI
             _bannerTimer = 0f;
             if (_encounterModal != null) _encounterModal.Visible = false;
             if (_encounterBanner != null) _encounterBanner.Visible = false;
-            _lastEncounter = null;
+            _lastSurfaced = null;
+            _pendingBatchMode = false;
             Visible = false;
             OnClose?.Invoke();
         }
 
         // ── Encounter surface ──────────────────────────────────────────
 
+        /// <summary>
+        /// Total encounter notices delivered to this panel (observability / UI
+        /// tests). Incremented exactly once per <see cref="ShowEncounterNotice"/>
+        /// call regardless of modal vs banner mode, so a double-subscribed host
+        /// handler shows up as a count above the surfaced-encounter total.
+        /// </summary>
+        public int TotalEncounterNotices { get; private set; }
+
+        /// <summary>True when the current resolvable encounter's choice buttons were
+        /// rendered into the modal card (observability / UI tests for the modal
+        /// card-index fix).</summary>
+        public bool ChoiceButtonsRendered => _choicesContainer != null;
+
         /// <summary>Entry point from Main when Core rolls an encounter.</summary>
-        public void ShowEncounterNotice(ExpeditionState state)
+        public void ShowEncounterNotice(ExpeditionEncounterBridge.EncounterSurfaced surfaced)
         {
-            if (state == null) return;
+            if (surfaced == null) return;
+            TotalEncounterNotices++;
             if (!Visible)
             {
                 Ashfall.Bridge.BridgeGap.Cosmetic("ExpeditionPanel.ShowEncounterNotice (panel closed)");
@@ -386,12 +540,12 @@ namespace AtomicWar.GodotApp.UI
 
             if (ExpeditionHostSession.UseEncounterModal)
             {
-                _encounterQueue.Enqueue(state);
+                _encounterQueue.Enqueue(surfaced);
                 if (!_modalActive) ShowNextModal();
             }
             else
             {
-                ShowAutoplayBanner(state);
+                ShowAutoplayBanner(surfaced);
             }
         }
 
@@ -405,42 +559,117 @@ namespace AtomicWar.GodotApp.UI
             }
 
             _modalActive = true;
-            _lastEncounter = _encounterQueue.Dequeue();
+            _lastSurfaced = _encounterQueue.Dequeue();
             BuildEncounterModal();
             if (_encounterModal == null) return;
 
-            if (_encounterTitle != null) _encounterTitle.Text = "ENCOUNTER";
-            if (_encounterBody != null && _lastEncounter != null)
+            if (_encounterTitle != null) _encounterTitle.Text = _lastSurfaced!.title;
+            if (_encounterBody != null && _lastSurfaced != null)
             {
-                string phase = ((ExpeditionPhase)_lastEncounter.phase).ToString().ToUpperInvariant();
-                _encounterBody.Text = string.Join("\n",
-                    FormatSurvivorName(_lastEncounter.survivorId) + " at " + _lastEncounter.displayName,
-                    $"{phase} · encounter #{_lastEncounter.encounterCount}",
-                    "",
-                    "Something has gone wrong on this leg. Outcomes will resolve when the expedition returns.");
+                if (_lastSurfaced!.resolved_at_lead == false)
+                {
+                    // Bare notice: honest text, no invented outcome.
+                    _encounterBody.Text = _lastSurfaced!.description;
+                }
+                else
+                {
+                    string phase = ((ExpeditionPhase)_lastSurfaced!.trigger.phase).ToString().ToUpperInvariant();
+                    _encounterBody.Text = string.Join("\n",
+                        FormatSurvivorName(_lastSurfaced!.trigger.survivorId) + " at " + _lastSurfaced!.trigger.displayName,
+                        $"{_lastSurfaced!.category} · {phase} · encounter #{_lastSurfaced!.trigger.encounterCount}",
+                        "",
+                        _lastSurfaced!.description);
+                }
             }
 
+            RenderChoiceButtons();
             _encounterModal.Visible = true;
         }
 
-        private void DismissEncounter()
+        private void RenderChoiceButtons()
         {
-            if (_encounterModal != null) _encounterModal.Visible = false;
-            _modalActive = false;
-            if (_lastEncounter != null)
+            if (_choicesContainer != null)
             {
-                GD.Print($"[Expedition] Encounter acknowledged: {_lastEncounter.survivorId} at {_lastEncounter.displayName} (#{_lastEncounter.encounterCount}).");
-                _lastEncounter = null;
+                _choicesContainer.QueueFree();
+                _choicesContainer = null;
             }
-            ShowNextModal();
+
+            if (_lastSurfaced == null || _lastSurfaced!.resolved_at_lead == false || _lastSurfaced!.choices == null || _lastSurfaced!.choices.Count == 0)
+            {
+                // Bare notice or no choices: OK / Decide Later only.
+                return;
+            }
+
+            if (_encounterModal == null) return;
+            // Modal layout: child 0 = backdrop (ColorRect, no children), child 1 =
+            // center (CenterContainer) whose child 0 is the card (VBoxContainer).
+            var card = _encounterModal.GetChild(1)?.GetChild(0); // center -> card
+            if (card is not VBoxContainer vbox) return;
+
+            _choicesContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            var choiceRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            choiceRow.Alignment = BoxContainer.AlignmentMode.Center;
+
+            foreach (var c in _lastSurfaced!.choices)
+            {
+                string choiceId = c.choiceId;
+                string choiceText = c.text;
+                var btn = AshfallUiHelpers.MakeButton(choiceText.ToUpperInvariant(), () =>
+                {
+                    if (_expeditionHost != null && _lastSurfaced != null)
+                    {
+                        // Location comes from this DTO's own trigger, which for a
+                        // backlog row is the pending entry's recorded location.
+                        bool ok = _expeditionHost.EncounterApplyChoice(
+                            _lastSurfaced!.encounter_id,
+                            choiceId,
+                            _expeditionHost.CurrentDay,
+                            _lastSurfaced!.trigger?.locationId);
+                        if (ok)
+                        {
+                            GD.Print($"[Expedition] Resolved {_lastSurfaced!.encounter_id} via {choiceId}.");
+                        }
+                    }
+                    DismissEncounter();
+                }, false);
+                btn.CustomMinimumSize = new Vector2(180, 34);
+                choiceRow.AddChild(btn);
+            }
+
+            _choicesContainer.AddChild(choiceRow);
+            vbox.AddChild(_choicesContainer);
         }
 
-        private void DeferEncounter()
+        /// <summary>Close the current modal and advance the queue. Acknowledged.</summary>
+        private void DismissEncounter() => CloseCurrentEncounter();
+
+        /// <summary>
+        /// Close the current modal without deciding. The encounter stays in the
+        /// host's pending list — only EncounterApplyChoice clears it — so it
+        /// reappears in the pending rows for later.
+        /// </summary>
+        private void DeferEncounter() => CloseCurrentEncounter();
+
+        private void CloseCurrentEncounter()
         {
             if (_encounterModal != null) _encounterModal.Visible = false;
             _modalActive = false;
-            _lastEncounter = null;
+            if (_choicesContainer != null)
+            {
+                _choicesContainer.QueueFree();
+                _choicesContainer = null;
+            }
+            _lastSurfaced = null;
             ShowNextModal();
+            FinishPendingBatchIfDone();
+        }
+
+        /// <summary>After a batch-mode modal closes, re-read pending so resolved rows disappear.</summary>
+        private void FinishPendingBatchIfDone()
+        {
+            if (!_pendingBatchMode || _modalActive) return;
+            _pendingBatchMode = false;
+            RenderPendingList();
         }
 
         private void BuildEncounterModal()
@@ -487,13 +716,15 @@ namespace AtomicWar.GodotApp.UI
             card.AddChild(btnRow);
         }
 
-        private void ShowAutoplayBanner(ExpeditionState state)
+        private void ShowAutoplayBanner(ExpeditionEncounterBridge.EncounterSurfaced surfaced)
         {
             BuildAutoplayBanner();
             if (_encounterBanner == null || _encounterBannerLabel == null) return;
 
-            string phase = ((ExpeditionPhase)state.phase).ToString().ToUpperInvariant();
-            _encounterBannerLabel.Text = $"[!] ENCOUNTER — {FormatSurvivorName(state.survivorId)} at {state.displayName} [{phase}] # {state.encounterCount}";
+            string phase = ((ExpeditionPhase)surfaced.trigger.phase).ToString().ToUpperInvariant();
+            _encounterBannerLabel.Text = surfaced.resolved_at_lead == false
+                ? $"[!] ENCOUNTER — {FormatSurvivorName(surfaced.trigger.survivorId)} at {surfaced.trigger.displayName} [{phase}] # {surfaced.trigger.encounterCount}"
+                : $"[!] {surfaced.title} — {FormatSurvivorName(surfaced.trigger.survivorId)} [{phase}] # {surfaced.trigger.encounterCount}";
             _encounterBanner.Visible = true;
             _bannerTimer = BannerDuration;
         }

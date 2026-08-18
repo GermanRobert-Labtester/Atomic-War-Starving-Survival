@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Narrative;
 
 namespace AtomicWar.GodotApp
 {
@@ -31,30 +32,68 @@ namespace AtomicWar.GodotApp
         /// <summary>Passthrough to the Core per-location encounter-chance multiplier (faction/territory danger).</summary>
         public void SetEncounterChanceMultiplier(Func<string, float> multiplier) => Engine.SetEncounterChanceMultiplier(multiplier);
 
+        /// <summary>Current sim day, supplied by Main so EncounterApplyChoice can pass day to Core.</summary>
+        public int CurrentDay { get; set; }
+
         public string LastEvent { get; private set; } = string.Empty;
 
         public event Action StateChanged;
 
-        /// <summary>Fired when Core rolls an encounter. Host UI subscribes here to surface the notice.</summary>
-        public event Action<ExpeditionState>? OnEncounterSurfaced;
+        /// <summary>Fired when Core rolls an encounter and the bridge surfaces a DTO. Host UI subscribes here.</summary>
+        public event Action<ExpeditionEncounterBridge.EncounterSurfaced>? OnEncounterSurfaced;
 
         /// <summary>When true (default), the UI shows a modal encounter notice. When false, a transient autoplay banner.</summary>
         public static bool UseEncounterModal { get; set; } = true;
 
-        public ExpeditionHostSession(ExpeditionSystem engine = null)
+        /// <summary>
+        /// Encounter surfacing bridge. Read-only so hosts can drive the surface
+        /// pipeline (UI tests surface a synthetic expedition state through it);
+        /// Core owns all encounter rules.
+        /// </summary>
+        public ExpeditionEncounterBridge Bridge => _bridge;
+
+        private readonly ExpeditionEncounterBridge _bridge;
+        private readonly ISeededRng _rng;
+        private readonly NarrativeEncounterSystem _narrative;
+
+        private static readonly IReadOnlyList<PendingSurfacedEncounter> NoPending =
+            new List<PendingSurfacedEncounter>(0);
+
+        /// <summary>
+        /// Surfaced-but-unresolved encounters from this trip, straight off
+        /// NarrativeEncounterState.pending (the save DTO). Read-only for UI.
+        /// </summary>
+        public IReadOnlyList<PendingSurfacedEncounter> Pending =>
+            _narrative?.State?.pending ?? NoPending;
+
+        /// <summary>Resolve a pending entry's catalog definition, or null when the catalog has no record.</summary>
+        public EncounterDefinition FindEncounter(string encounterId) => _narrative?.Find(encounterId);
+
+        /// <summary>Drop the pending queue without resolving. No invented outcomes.</summary>
+        public void ClearAllPending() => _narrative?.ClearAllPending();
+
+        public ExpeditionHostSession(ExpeditionSystem engine = null, NarrativeEncounterSystem narrative = null)
         {
             Engine = engine ?? new ExpeditionSystem();
+            _rng = new SeededRng(DemoSeed);
+            _narrative = narrative ?? new NarrativeEncounterSystem();
+            _bridge = new ExpeditionEncounterBridge(_narrative, _rng);
             DemoDefinitions = new List<ExpeditionDefinition>();
             RegisterDemoDefinitions();
             Engine.OnExpeditionStarted += s => { LastEvent = $"Expedition started: {s.survivorId} -> {s.displayName}."; StateChanged?.Invoke(); };
             Engine.OnExpeditionCompleted += s => { LastEvent = $"Expedition completed: {s.survivorId} returned with {s.loot.Count} loot lines."; StateChanged?.Invoke(); };
             Engine.OnExpeditionFailed += (s, r) => { LastEvent = $"Expedition failed: {s.survivorId} — {r}"; StateChanged?.Invoke(); };
-            Engine.OnEncounterTriggered += s =>
+            _bridge.OnSurfaced += dto =>
             {
-                LastEvent = $"Encounter triggered: {s.survivorId} at {s.displayName} (#{s.encounterCount}).";
+                LastEvent = $"Encounter triggered: {dto.trigger.survivorId} at {dto.trigger.displayName} (#{dto.trigger.encounterCount}) -> {dto.encounter_id ?? "bare-notice"}.";
+                // Bare notices have no catalog id and cannot be resolved, so they
+                // never enter the pending list — only resolvable encounters do.
+                if (!string.IsNullOrEmpty(dto.encounter_id))
+                    _narrative.EnqueuePending(dto.encounter_id, dto.trigger.locationId, dto.trigger.encounterCount, CurrentDay);
                 StateChanged?.Invoke();
-                OnEncounterSurfaced?.Invoke(s);
+                OnEncounterSurfaced?.Invoke(dto);
             };
+            Engine.OnEncounterTriggered += s => _bridge.Surface(s);
             Engine.OnStateChanged += _ => StateChanged?.Invoke();
         }
 
@@ -86,9 +125,9 @@ namespace AtomicWar.GodotApp
             DemoDefinitions.Add(cut);
         }
 
-        public static ExpeditionHostSession Create(string dataDir)
+        public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null)
         {
-            var session = new ExpeditionHostSession();
+            var session = new ExpeditionHostSession(null, narrative);
             var save = ExpeditionSaveStore.TryLoad();
             if (save != null)
             {
@@ -124,8 +163,46 @@ namespace AtomicWar.GodotApp
 
         public string TickDemoHours(float hours)
         {
-            Engine.TickHours(hours, new SeededRng(DemoSeed));
+            Engine.TickHours(hours, _rng);
             return $"Tick: {Engine.ActiveCount} active expedition(s).";
+        }
+
+        /// <summary>
+        /// Apply a player choice for a surfaced encounter through Core. The
+        /// location is taken from that encounter's own pending entry when one
+        /// exists, so resolving a backlog row records where that row actually
+        /// happened rather than wherever the newest encounter surfaced.
+        /// </summary>
+        public bool EncounterApplyChoice(string encounterId, string choiceId, int day)
+            => EncounterApplyChoice(encounterId, choiceId, day, null);
+
+        /// <summary>
+        /// Apply a player choice with an explicit locationId. Pass null to let the
+        /// pending queue supply it, falling back to the last surfaced encounter.
+        /// </summary>
+        public bool EncounterApplyChoice(string encounterId, string choiceId, int day, string locationId)
+        {
+            if (_bridge == null || string.IsNullOrEmpty(encounterId)) return false;
+
+            string effectiveLocation = locationId ?? PendingLocationFor(encounterId);
+            bool ok = _bridge.ResolveChoice(encounterId, choiceId, day, effectiveLocation);
+
+            // The player has acknowledged this one — shrink the pending list.
+            if (ok) _narrative.ClearPending(encounterId);
+            return ok;
+        }
+
+        /// <summary>The pending entry's recorded location for this encounter, or null when it is not pending.</summary>
+        private string PendingLocationFor(string encounterId)
+        {
+            var pending = _narrative?.State?.pending;
+            if (pending == null) return null;
+            for (int i = 0; i < pending.Count; i++)
+            {
+                if (pending[i] != null && pending[i].encounterId == encounterId)
+                    return pending[i].locationId;
+            }
+            return null;
         }
 
         public string PushLuckDemo(string survivorId)

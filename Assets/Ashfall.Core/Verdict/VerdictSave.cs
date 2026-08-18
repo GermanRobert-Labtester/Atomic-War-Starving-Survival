@@ -1,4 +1,5 @@
 using System;
+using Ashfall.Core.YearOfAsh;
 
 namespace Ashfall.Core.Verdict
 {
@@ -6,11 +7,23 @@ namespace Ashfall.Core.Verdict
     /// ASHFALL: THE VERDICT (Expansion 08) — cross-host save envelope.
     /// Mirrors DoseLedgerSave / HoldfastSave: checksum recomputed on encode,
     /// hard-reject on decode for tamper / checksumless / newer version.
+    ///
+    /// v3 adds the Verdict questline section. Verdict quest progress is owned
+    /// here — the Year of Ash envelope is no longer a second owner (its
+    /// registration was removed). v1/v2 saves migrate with an empty quest
+    /// section; a one-time adoption helper folds any quest_verdict_* progress
+    /// that a pre-v3 save carried inside the Year of Ash envelope into the
+    /// Verdict envelope (see <see cref="VerdictQuestMigration"/>).
+    ///
+    /// Migration validates the checksum over each version's FROZEN shape (see
+    /// <see cref="VerdictSaveV1"/> / <see cref="VerdictSaveV2"/>) because
+    /// <see cref="SaveChecksum"/> walks public fields — validating a legacy
+    /// payload against the current shape would always mismatch.
     /// </summary>
     [Serializable]
     public class VerdictSave
     {
-        public const int CurrentSaveVersion = 2;
+        public const int CurrentSaveVersion = 3;
         public const int MigrationFromVersion = 1;
 
         public int saveVersion = CurrentSaveVersion;
@@ -20,8 +33,45 @@ namespace Ashfall.Core.Verdict
         public EvidenceLedgerState evidence = new EvidenceLedgerState();
         public VerdictNpcState npcs = new VerdictNpcState();
         public VerdictRadioSystem.VerdictRadioState radio = new VerdictRadioSystem.VerdictRadioState();
+        public QuestlineSystemState quests = new QuestlineSystemState();
         public int censusLastWindowDay = -1;
 
+        public string Checksum = string.Empty;
+    }
+
+    /// <summary>
+    /// Frozen v1 envelope shape (no npcs, no radio, no quests). Kept so a v1
+    /// file on disk validates against the field set it was actually hashed with.
+    /// Do not add fields here.
+    /// </summary>
+    [Serializable]
+    public class VerdictSaveV1
+    {
+        public int saveVersion = 1;
+        public int simDay;
+        public MachineLogSystemState machineLog = new MachineLogSystemState();
+        public ReckoningState reckoning = new ReckoningState();
+        public EvidenceLedgerState evidence = new EvidenceLedgerState();
+        public int censusLastWindowDay = -1;
+        public string Checksum = string.Empty;
+    }
+
+    /// <summary>
+    /// Frozen v2 envelope shape (npcs + radio, no quests). Kept so a v2 file on
+    /// disk validates against the field set it was actually hashed with.
+    /// Do not add fields here.
+    /// </summary>
+    [Serializable]
+    public class VerdictSaveV2
+    {
+        public int saveVersion = 2;
+        public int simDay;
+        public MachineLogSystemState machineLog = new MachineLogSystemState();
+        public ReckoningState reckoning = new ReckoningState();
+        public EvidenceLedgerState evidence = new EvidenceLedgerState();
+        public VerdictNpcState npcs = new VerdictNpcState();
+        public VerdictRadioSystem.VerdictRadioState radio = new VerdictRadioSystem.VerdictRadioState();
+        public int censusLastWindowDay = -1;
         public string Checksum = string.Empty;
     }
 
@@ -34,7 +84,8 @@ namespace Ashfall.Core.Verdict
             EvidenceLedger evidence,
             int censusLastWindowDay,
             VerdictNpcSystem npcs = null,
-            VerdictRadioSystem radio = null)
+            VerdictRadioSystem radio = null,
+            QuestlineSystem quests = null)
         {
             var save = new VerdictSave
             {
@@ -44,6 +95,7 @@ namespace Ashfall.Core.Verdict
                 evidence = evidence.CaptureState(),
                 npcs = npcs != null ? npcs.CaptureState() : new VerdictNpcState(),
                 radio = radio != null ? radio.CaptureState() : new VerdictRadioSystem.VerdictRadioState(),
+                quests = quests != null ? quests.CaptureState() : new QuestlineSystemState(),
                 censusLastWindowDay = censusLastWindowDay
             };
             save.Checksum = SaveChecksum.Compute(save);
@@ -57,6 +109,12 @@ namespace Ashfall.Core.Verdict
             return json.Serialize(save);
         }
 
+        /// <summary>
+        /// Decodes and migrates a Verdict save. Legacy versions are parsed as
+        /// their FROZEN shapes so the checksum is verified over exactly the
+        /// fields that version wrote. Rejects: newer versions, too-old versions,
+        /// checksumless payloads, and tampered payloads.
+        /// </summary>
         public static bool TryDecode(string json, IJsonSerializer serializer, out VerdictSave save)
         {
             save = null;
@@ -67,34 +125,67 @@ namespace Ashfall.Core.Verdict
                 if (decoded == null) return false;
                 if (decoded.saveVersion > VerdictSave.CurrentSaveVersion) return false; // newer — reject
                 if (decoded.saveVersion < VerdictSave.MigrationFromVersion) return false; // too old — reject
-                if (string.IsNullOrEmpty(decoded.Checksum)) return false;               // tamper/legacy
+
+                if (decoded.saveVersion == 1) return MigrateV1(json, serializer, out save);
+                if (decoded.saveVersion == 2) return MigrateV2(json, serializer, out save);
+
+                // Current version: validate over the current shape.
+                if (string.IsNullOrEmpty(decoded.Checksum)) return false;   // tamper/legacy
                 string recomputed = SaveChecksum.Compute(decoded);
                 if (!string.Equals(recomputed, decoded.Checksum, StringComparison.Ordinal))
                     return false; // tampered
-
-                // Migration v1 → v2: v1 lacked NPC state; backfill empty so restores are safe.
-                if (decoded.saveVersion == 1)
-                {
-                    var migrated = new VerdictSave
-                    {
-                        saveVersion = VerdictSave.CurrentSaveVersion,
-                        simDay = decoded.simDay,
-                        machineLog = decoded.machineLog,
-                        reckoning = decoded.reckoning,
-                        evidence = decoded.evidence,
-                        npcs = decoded.npcs ?? new VerdictNpcState(),
-                        radio = decoded.radio ?? new VerdictRadioSystem.VerdictRadioState(),
-                        censusLastWindowDay = decoded.censusLastWindowDay
-                    };
-                    migrated.Checksum = SaveChecksum.Compute(migrated);
-                    save = migrated;
-                    return true;
-                }
-
                 save = decoded;
                 return true;
             }
             catch { return false; }
+        }
+
+        private static bool MigrateV1(string json, IJsonSerializer serializer, out VerdictSave save)
+        {
+            save = null;
+            var v1 = serializer.Deserialize<VerdictSaveV1>(json);
+            if (v1 == null) return false;
+            if (string.IsNullOrEmpty(v1.Checksum)) return false;
+            if (!string.Equals(SaveChecksum.Compute(v1), v1.Checksum, StringComparison.Ordinal)) return false;
+
+            var migrated = new VerdictSave
+            {
+                saveVersion = VerdictSave.CurrentSaveVersion,
+                simDay = v1.simDay,
+                machineLog = v1.machineLog,
+                reckoning = v1.reckoning,
+                evidence = v1.evidence,
+                // npcs / radio / quests stay at their field initialisers (fresh defaults).
+                censusLastWindowDay = v1.censusLastWindowDay
+            };
+            migrated.Checksum = SaveChecksum.Compute(migrated);
+            save = migrated;
+            return true;
+        }
+
+        private static bool MigrateV2(string json, IJsonSerializer serializer, out VerdictSave save)
+        {
+            save = null;
+            var v2 = serializer.Deserialize<VerdictSaveV2>(json);
+            if (v2 == null) return false;
+            if (string.IsNullOrEmpty(v2.Checksum)) return false;
+            if (!string.Equals(SaveChecksum.Compute(v2), v2.Checksum, StringComparison.Ordinal)) return false;
+
+            var migrated = new VerdictSave
+            {
+                saveVersion = VerdictSave.CurrentSaveVersion,
+                simDay = v2.simDay,
+                machineLog = v2.machineLog,
+                reckoning = v2.reckoning,
+                evidence = v2.evidence,
+                npcs = v2.npcs ?? new VerdictNpcState(),
+                radio = v2.radio ?? new VerdictRadioSystem.VerdictRadioState(),
+                // quests stays at its field initialiser (fresh default).
+                censusLastWindowDay = v2.censusLastWindowDay
+            };
+            migrated.Checksum = SaveChecksum.Compute(migrated);
+            save = migrated;
+            return true;
         }
 
         public static void Restore(
@@ -103,7 +194,8 @@ namespace Ashfall.Core.Verdict
             ReckoningSystem reckoning,
             EvidenceLedger evidence,
             VerdictNpcSystem npcs = null,
-            VerdictRadioSystem radio = null)
+            VerdictRadioSystem radio = null,
+            QuestlineSystem quests = null)
         {
             if (save == null) return;
             machineLog.RestoreState(save.machineLog);
@@ -113,6 +205,8 @@ namespace Ashfall.Core.Verdict
                 npcs.RestoreState(save.npcs ?? new VerdictNpcState());
             if (radio != null)
                 radio.RestoreState(save.radio ?? new VerdictRadioSystem.VerdictRadioState());
+            if (quests != null)
+                quests.RestoreState(save.quests ?? new QuestlineSystemState());
         }
     }
 }

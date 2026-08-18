@@ -1,0 +1,1284 @@
+{
+ "pages": [
+  {
+   "family": "Inventory-Item",
+   "page": 1,
+   "page_file": "snapshots/gallery_inventory_item_p01.png",
+   "tile_count": 36,
+   "tiles": [
+    {
+     "kind": "catalog",
+     "cid": "item_suitcase_locked",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "item_anchor_notes",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "pipe_wrench",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "sawdust_block",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "item_ash_ghillie",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "item_teddy_bear",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "item_car_keys",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "item_ice_pick",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "ammo_9x19",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "blood_bag",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "spoiled_meat",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "item_seed_mushroom",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "item_seed_tuber",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "crop_mushroom",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "crop_tuber",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "geiger_counter",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "anti_rad",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "hazmat_suit",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "water_filter",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "air_filter",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "irradiated_water",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "cloth",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "bandage",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "raw_meat",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "antibiotic_pills_bottle",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "antibiotics",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "antibiotics_bottle_20",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "antiseptic_1l_of_1l",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "armor_ghillie_suit_camo",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "armor_hazmat_hood_heavy",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "armor_insulated_snow_trousers",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "armor_kevlar_helmet_visor",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "armor_padded_winter_jacket",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "armor_reinforced_leather_vest",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "armor_scavenged_car_tire_pauldron",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "armor_scrap_metal_chestpiece",
+     "tile": "1",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    }
+   ]
+  },
+  {
+   "family": "Location-Art",
+   "page": 2,
+   "page_file": "snapshots/gallery_location_art_p02.png",
+   "tile_count": 36,
+   "tiles": [
+    {
+     "kind": "catalog",
+     "cid": "location_abandoned_desalination",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_frozen_river_barge",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_crashed_icebreaker_convoy",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_ministry_of_truth_bunker",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "abandoned_hospital",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "rural_gas_station",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "suburban_house",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "government_bunker",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "stranger_cache",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_geo_thermal_plant_ruins",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_arcology_sector_4",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_silent_observatory",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_subterranean_seed_vault",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_ash_dune_cemetery",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_abandoned_ski_resort",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_geothermal_borehole_site",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_flooded_subway_depot",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_sub_level_4_transit",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_municipal_sewage",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_collapsed_salt_mine",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_bio_remediation_lab",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_submerged_data_center",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_geothermal_vent_shaft",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "location_the_sump_cathedral",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "abandoned_hospital",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "abandoned_supermarket",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_air_filter",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_blast_door_hq",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_command_console_desk",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_commander_portrait",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_cot",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_decon_airlock_chamber",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_distillery_still",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_fractured",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_generator",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "bunker_greenhouse_uv_lamp",
+     "tile": "2",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    }
+   ]
+  },
+  {
+   "family": "Survivor-Portrait",
+   "page": 3,
+   "page_file": "snapshots/gallery_survivor_portrait_p03.png",
+   "tile_count": 36,
+   "tiles": [
+    {
+     "kind": "catalog",
+     "cid": "elena_vasquez",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "marcus_olejnik",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "suki_tanaka",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_surgeon",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_pharmacist",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_vet",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_therapist",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_undertaker",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_veteran",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_cop",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_bouncer",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_hunter",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_prisoner",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_plumber",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_electrician",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_architect",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_mechanic",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_chemist",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_botanist",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_courier",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_burglar",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_meteorologist",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_hazmat_tech",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "catalog",
+     "cid": "the_teacher",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "crazed_survivor",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "crazed_survivor_hq",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "deserter_at_hatch",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "deserter_scavenger",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "deserter_soldier_portrait",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "mysterious_stranger",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "mysterious_trader_portrait",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "raider_female",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "raider_heavy_guard",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "raider_male",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "raider_sniper_scout",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "survivor_child",
+     "tile": "3",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    }
+   ]
+  },
+  {
+   "family": "NPC-Portrait",
+   "page": 4,
+   "page_file": "snapshots/gallery_npc_portrait_p04.png",
+   "tile_count": 12,
+   "tiles": [
+    {
+     "kind": "anchor",
+     "cid": "elena_vasquez",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_badge_deserter_coalition",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_badge_doomsday_preppers",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_badge_free_traders",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_badge_iron_raiders",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_badge_outcast_nomads",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_badge_scavenger_guild",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_badge_scientific_remnant",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_badge_shelter_council",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_central_garrison",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_cult_of_the_glow",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "faction_dig_out_debt",
+     "tile": "4",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    }
+   ]
+  },
+  {
+   "family": "Faction-Art",
+   "page": 5,
+   "page_file": "snapshots/gallery_faction_art_p05.png",
+   "tile_count": 4,
+   "tiles": [
+    {
+     "kind": "anchor",
+     "cid": "emblem_iron_raiders",
+     "tile": "5",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "emblem_cold_count",
+     "tile": "5",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "emblem_hydro_barons",
+     "tile": "5",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    },
+    {
+     "kind": "anchor",
+     "cid": "emblem_long_walk",
+     "tile": "5",
+     "resolution": [
+      192,
+      192
+     ],
+     "fallback_status": "OK"
+    }
+   ]
+  }
+ ]
+}

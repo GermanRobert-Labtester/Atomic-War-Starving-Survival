@@ -10,12 +10,22 @@ using Ashfall.Core;
 namespace AtomicWar._Game.Core
 {
     /// <summary>
-    /// Phase 0 — Foundation wiring for the 40-system Massive Expansion.
-    /// Constructs and registers 8 new systems, wires them into the tick
-    /// loop and save/load via SystemRegistry + ISaveable.
+    /// LEGACY — Unity-host Phase-0 wiring, INACTIVE on the active Godot path.
     ///
-    /// All systems are plain C# leaf assemblies; host hooks inject the
-    /// cross-assembly dependencies (Inventory, Shelter, AI, etc.).
+    /// This partial registers ten Phase-0 systems (radiation phase progression,
+    /// phantom memory, guilt insomnia, combat trauma, somatic flashback, moral
+    /// branching, chemical dependency, trade specialty, final wish, respiratory
+    /// degeneration) into the Unity <c>GameBootstrap</c> host. It is invoked
+    /// only from <c>GameBootstrap.InitFoundation.cs</c> (Unity host) — never from
+    /// <c>src/</c> — so none of its callbacks run in the Godot build.
+    ///
+    /// The "Placeholder — wired in Phase 11" hooks below (work-efficiency /
+    /// work-refusal, somatic penalty, crafting/combat penalty, narrative-event
+    /// firing, permanent shelter buff, ash-zone probe, max-stamina penalty) are
+    /// Unity-side seams that were never completed. Their active equivalents live
+    /// in the engine-agnostic Core systems + <c>src/Host/Phase0HostSession.cs</c>
+    /// (verified by <c>--phase0-selftest</c>). Do not extend this Unity file —
+    /// migrate behavior into Core and wire it through <c>src/</c> instead.
     /// </summary>
     public partial class GameBootstrap
     {

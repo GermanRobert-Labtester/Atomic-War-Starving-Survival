@@ -118,20 +118,8 @@ namespace AtomicWar.GodotApp.Economy
             SetAnchorsPreset(LayoutPreset.FullRect);
             CustomMinimumSize = new Vector2(global::Ashfall.Core.UI.Theme.TradePanelMinWidth, global::Ashfall.Core.UI.Theme.TradePanelMaxHeight);
 
-            // Apply 9-slice panel background
-            var panelTex = LoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
-            if (panelTex != null)
-            {
-                var sb = new StyleBoxTexture
-                {
-                    Texture = panelTex,
-                    TextureMarginLeft = 16,
-                    TextureMarginTop = 16,
-                    TextureMarginRight = 16,
-                    TextureMarginBottom = 16
-                };
-                AddThemeStyleboxOverride("panel", sb);
-            }
+            // Apply 9-slice panel background via shared helper (frame_9slice first)
+            AddThemeStyleboxOverride("panel", MakePanelFrameStyleBox());
 
             BuildLayout();
         }
@@ -142,21 +130,9 @@ namespace AtomicWar.GodotApp.Economy
             mainVbox.AddThemeConstantOverride("separation", global::Ashfall.Core.UI.Theme.SpacingSm);
             AddChild(mainVbox);
 
-            // 1. Header Bar
+            // 1. Header Bar (9-slice via shared helper; falls back gracefully)
             var headerContainer = new PanelContainer();
-            var headerTex = LoadTexture("res://Assets/UI/Textures/header_bar_9slice.png");
-            if (headerTex != null)
-            {
-                var sbHeader = new StyleBoxTexture
-                {
-                    Texture = headerTex,
-                    TextureMarginLeft = 12,
-                    TextureMarginTop = 8,
-                    TextureMarginRight = 12,
-                    TextureMarginBottom = 8
-                };
-                headerContainer.AddThemeStyleboxOverride("panel", sbHeader);
-            }
+            headerContainer.AddThemeStyleboxOverride("panel", MakeHeaderFrameStyleBox());
 
             var headerHbox = new HBoxContainer();
             headerHbox.AddThemeConstantOverride("separation", global::Ashfall.Core.UI.Theme.SpacingMd);

@@ -110,6 +110,51 @@ namespace Ashfall.Core.Narrative
             return true;
         }
 
+        // ── Pending surfaced queue ─────────────────────────────────────
+        // The host enqueues on surface and clears after the player has
+        // acknowledged a choice. Resolve() deliberately does NOT auto-clear:
+        // the pending list must mirror what the player actually acknowledged,
+        // not what Core happened to record.
+
+        /// <summary>Append a surfaced-but-unresolved encounter to the pending queue.</summary>
+        public void EnqueuePending(string encounterId, string locationId, int legIndex, int day)
+        {
+            if (string.IsNullOrEmpty(encounterId)) return;
+            if (_state.pending == null) _state.pending = new List<PendingSurfacedEncounter>();
+            _state.pending.Add(new PendingSurfacedEncounter
+            {
+                encounterId = encounterId,
+                locationId = locationId ?? string.Empty,
+                legIndex = legIndex,
+                day = day
+            });
+            RaiseChanged();
+        }
+
+        /// <summary>Remove every pending entry for this encounter id. No-op when absent.</summary>
+        public void ClearPending(string encounterId)
+        {
+            if (_state.pending == null || string.IsNullOrEmpty(encounterId)) return;
+            bool removed = false;
+            for (int i = _state.pending.Count - 1; i >= 0; i--)
+            {
+                if (_state.pending[i] != null && _state.pending[i].encounterId == encounterId)
+                {
+                    _state.pending.RemoveAt(i);
+                    removed = true;
+                }
+            }
+            if (removed) RaiseChanged();
+        }
+
+        /// <summary>Drop the whole pending queue without resolving anything.</summary>
+        public void ClearAllPending()
+        {
+            if (_state.pending == null || _state.pending.Count == 0) return;
+            _state.pending.Clear();
+            RaiseChanged();
+        }
+
         private static EncounterChoiceDefinition FindChoice(EncounterDefinition def, string choiceId)
         {
             for (int i = 0; i < def.choices.Count; i++)
@@ -126,7 +171,8 @@ namespace Ashfall.Core.Narrative
                 systemId = _state.systemId,
                 totalResolved = _state.totalResolved,
                 cumulativeMorale = _state.cumulativeMorale,
-                cumulativeGuilt = _state.cumulativeGuilt
+                cumulativeGuilt = _state.cumulativeGuilt,
+                pending = new List<PendingSurfacedEncounter>()
             };
             var ordered = new List<EncounterResolutionRecord>(_state.history);
             ordered.Sort((a, b) =>
@@ -148,6 +194,11 @@ namespace Ashfall.Core.Narrative
                     moraleDelta = r.moraleDelta,
                     guiltDelta = r.guiltDelta
                 });
+            }
+            if (_state.pending != null)
+            {
+                for (int i = 0; i < _state.pending.Count; i++)
+                    copy.pending.Add(_state.pending[i]);
             }
             return copy;
         }
@@ -177,6 +228,9 @@ namespace Ashfall.Core.Narrative
                     });
                 }
             }
+            _state.pending = saved.pending != null
+                ? new List<PendingSurfacedEncounter>(saved.pending)
+                : new List<PendingSurfacedEncounter>();
             RaiseChanged();
         }
 

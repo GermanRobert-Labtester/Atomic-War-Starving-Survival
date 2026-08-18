@@ -155,13 +155,18 @@ namespace Ashfall.Core.Inventory
             return best;
         }
 
-        public bool HasWorkingGeiger() => FindBestWorkingDevice("geiger_counter") != null;
+        public bool HasWorkingGeiger()
+        {
+            return FindBestWorkingDevice("geiger_counter") != null
+                || FindBestWorkingDevice("item_geiger_m3") != null;
+        }
 
         public DeviceState GetBestGeigerState()
         {
-            var working = FindBestWorkingDevice("geiger_counter");
+            var working = FindBestWorkingDevice("geiger_counter")
+                ?? FindBestWorkingDevice("item_geiger_m3");
             if (working != null) return working.Device;
-            var any = FindSlot("geiger_counter");
+            var any = FindSlot("geiger_counter") ?? FindSlot("item_geiger_m3");
             return any?.Device;
         }
 

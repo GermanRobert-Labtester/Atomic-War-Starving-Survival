@@ -61,12 +61,12 @@ public partial class ResearchAtlasPanel : Control
 
         var scopes = new[]
         {
-            new AshfallSidebar.Item { Id = "all",       Label = "All Nodes",     Hint = "every faction",                  IconPath = "" },
-            new AshfallSidebar.Item { Id = "unlocked",  Label = "Survival", Hint = "trust momentum",                IconPath = "" },
-            new AshfallSidebar.Item { Id = "coalition", Label = "Engineering", Hint = "breakthrough items",          IconPath = "" },
-            new AshfallSidebar.Item { Id = "remaining",  Label = "Science", Hint = "radio + cipher",      IconPath = "" },
-            new AshfallSidebar.Item { Id = "loyalist",  Label = "Scavenging",    Hint = "expedition efficiency",          IconPath = "" },
-            new AshfallSidebar.Item { Id = "deserter",  Label = "Combat",   Hint = "close-quarters + cover fire",           IconPath = "" },
+            new AshfallSidebar.Item { Id = "all",       Label = "All Nodes",     Hint = "every faction",                  IconPath = "assets/ui/Icons/icon_placeholder.png" },
+            new AshfallSidebar.Item { Id = "unlocked",  Label = "Survival", Hint = "trust momentum",                IconPath = "assets/ui/Icons/icon_placeholder.png" },
+            new AshfallSidebar.Item { Id = "coalition", Label = "Engineering", Hint = "breakthrough items",          IconPath = "assets/ui/Icons/icon_placeholder.png" },
+            new AshfallSidebar.Item { Id = "remaining",  Label = "Science", Hint = "radio + cipher",      IconPath = "assets/ui/Icons/icon_placeholder.png" },
+            new AshfallSidebar.Item { Id = "loyalist",  Label = "Scavenging",    Hint = "expedition efficiency",          IconPath = "assets/ui/Icons/icon_placeholder.png" },
+            new AshfallSidebar.Item { Id = "deserter",  Label = "Combat",   Hint = "close-quarters + cover fire",           IconPath = "assets/ui/Icons/icon_placeholder.png" },
         };
         _sidebar = _shell.SetSidebar(scopes, "Discipline Filter", "all");
         _sidebar.OnSelected += HandleSidebar;

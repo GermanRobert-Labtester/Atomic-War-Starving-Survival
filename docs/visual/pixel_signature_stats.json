@@ -1,0 +1,52 @@
+{
+ "distribution": {
+  "image": 2284,
+  "near-white": 3,
+  "near-black": 1
+ },
+ "flagged_count": 4,
+ "flagged_first_50": [
+  [
+   "assets/ui/MainMenu/FadeRight_64x1.png",
+   "near-white",
+   255.0
+  ],
+  [
+   "assets/ui/MainMenu/Scanline_1x4.png",
+   "near-white",
+   255.0
+  ],
+  [
+   "assets/ui/MainMenu/Vignette_256.png",
+   "near-black",
+   3.5
+  ],
+  [
+   "assets/ui/Screens/24_ashfall_-_subterranean_fungal_cultivation_spore_nursery_term.png",
+   "near-white",
+   255.0
+  ]
+ ],
+ "extrema_distribution": {
+  "0-153": 458,
+  "0-255": 166,
+  "0-190": 98,
+  "19-255": 78,
+  "1-147": 68,
+  "0-129": 51,
+  "11-204": 42,
+  "1-171": 34,
+  "1-138": 33,
+  "0-161": 32,
+  "2-171": 19,
+  "19-167": 18,
+  "0-244": 17,
+  "0-254": 17,
+  "0-162": 17,
+  "0-143": 11,
+  "20-158": 11,
+  "0-237": 10,
+  "1-104": 10,
+  "0-251": 10
+ }
+}

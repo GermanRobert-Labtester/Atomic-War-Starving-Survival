@@ -209,6 +209,7 @@ namespace Ashfall.Core.Warlords
             Check(tamperRejected, "tampered v3 save rejected (checksum)");
 
             report.Summary = $"[WarlordHeadlessDemo] {report.PassedCount}/{report.PassedCount + report.FailedCount} PASSED";
+            report.Passed = report.FailedCount == 0;
             log.Info(report.Summary);
             return report;
         }

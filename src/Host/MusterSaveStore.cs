@@ -68,16 +68,20 @@ namespace AtomicWar.GodotApp
                 if (string.IsNullOrWhiteSpace(raw)) return null;
                 var save = s_json.Deserialize<MusterHostSave>(raw);
                 if (save == null) return null;
-                // Absent checksum = pre-integrity save or foreign file; tolerate
-                // it, but reject a present checksum that does not match.
-                if (!string.IsNullOrEmpty(save.Checksum))
+                // The checksummed envelope is the current Muster format; an empty
+                // checksum means a malformed new-format save, not "legacy". A
+                // pre-envelope bare-state file yields a null-shaped envelope and
+                // falls through to a fresh state (no partial restore).
+                if (string.IsNullOrEmpty(save.Checksum))
                 {
-                    string actual = SaveChecksum.Compute(save);
-                    if (!string.Equals(save.Checksum, actual, StringComparison.Ordinal))
-                    {
-                        GD.PrintErr("[Muster] load failed: checksum mismatch (corrupt or foreign save).");
-                        return null;
-                    }
+                    GD.PrintErr("[Muster] load failed: checksum field missing (corrupt save).");
+                    return null;
+                }
+                string actual = SaveChecksum.Compute(save);
+                if (!string.Equals(save.Checksum, actual, StringComparison.Ordinal))
+                {
+                    GD.PrintErr("[Muster] load failed: checksum mismatch (corrupt or foreign save).");
+                    return null;
                 }
                 return save;
             }

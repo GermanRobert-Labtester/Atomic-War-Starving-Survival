@@ -1,0 +1,95 @@
+{
+ "content_id": "item_leva_minutes_vol12",
+ "visual_family": "Inventory-Item",
+ "subfamily": "Other",
+ "model_hint": "auto",
+ "prompt_template": {
+  "WHAT": "A single photographed post-apocalyptic other item in centre frame, occupying ~60% of the canvas.",
+  "STYLE": "2D painted survival-management icon, dry-gouache / charcoal underlayer, ASHFALL palette, hand-painted texture brushwork, no outer dark outline, soft anti-aliased edges, low-rotation.",
+  "COMPOSITION": "Single subject, no scene. Negative space surrounding. Composition must remain legible when the icon is downscaled to 32\u00d732 and 64\u00d764.",
+  "CAMERA": "Eye-level, slight 3/4 turn. Never overhead. Never pointing at camera.",
+  "LIGHTING": "Diffuse overcast with a single soft key light from upper-left ~30\u00b0. Subtle ambient occlusion in recesses.",
+  "PALETTE": "charcoal #2A2A2C, concrete grey #5C5F62, faded blue-grey #708085, rust brown #6E4A2F, dirty bone #B5A88A. Accents limited to muted amber #A26E2C (1-2% of pixels) and subtle cyan-green #4F7461 only for contamination iconography.",
+  "MATERIALS": "Materials must read as: brushed metal, raw wood, dented tin, dirty plastic, oxidised copper, worn leather. No polish, no varnish, no chrome.",
+  "BACKGROUND": "Soft transparent-to-charcoal gradient. No setting, no horizon, no companion objects.",
+  "RUNTIME_READABILITY": "This asset renders at 64\u00d764 inside inventory slots. Subject must be recognisable in silhouette at 32\u00d732.",
+  "NEGATIVE": "no real-world text, letters, or numerals; no logos or watermark; no AI signature glyphs; no anime-style eyes outside portrait family; no fantasy ornament or fleurons; no neon cyberpunk glow borders; no glossy 3D chromatic rendering; no crystalline particles; no stock-photo backdrop; no pristine factory-fresh finish on tools or weapons; no gratuitous gore; no real-country flags; no real brand marks. No rendered UI text \u2014 that is authored in Godot.",
+  "OUTPUT_FORMAT": "256x256 PNG with alpha channel (RGBA). JPG fallback allowed only when alpha is not required."
+ },
+ "meta": {
+  "source_catalog": "holdfast_items",
+  "reference_assets": [
+   {
+    "stem": "188_items",
+    "file_path": "assets/art/188_items.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "biological_trade_item",
+    "file_path": "assets/art/biological_trade_item.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "crowbar_item",
+    "file_path": "assets/art/crowbar_item.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_1",
+    "file_path": "assets/art/item_1.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_acoustic_decoy",
+    "file_path": "assets/art/item_acoustic_decoy.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_ai_core_data",
+    "file_path": "assets/art/item_ai_core_data.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_ammo_ap",
+    "file_path": "assets/art/item_ammo_ap.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_ammo_hp",
+    "file_path": "assets/art/item_ammo_hp.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
+  "canonical_filename": "item_leva_minutes_vol12.jpg",
+  "target_directory": "assets/art/",
+  "alpha_requirement": "transparent",
+  "dimensions": [
+   256,
+   256
+  ],
+  "aspect_ratio": "1:1 generic",
+  "priority_band": "P2",
+  "gameplay_importance": 1.6
+ },
+ "semantic_description": "A 2D painted icon for Inventory-Item 'item_leva_minutes_vol12', readable at icon scale (~64\u00d764).",
+ "forbidden_objects": [
+  "real-country flag",
+  "real brand mark",
+  "logo",
+  "watermark",
+  "rendered-text label",
+  "neon cyberpunk",
+  "anime-style eyes",
+  "fantasy ornament",
+  "glossy sci-fi glow",
+  "stock-photo backdrop"
+ ]
+}

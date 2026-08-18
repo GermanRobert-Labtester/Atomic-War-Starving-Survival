@@ -52,14 +52,18 @@ namespace AtomicWar.GodotApp
                 if (string.IsNullOrWhiteSpace(raw)) return null;
                 var envelope = s_json.Deserialize<SurvivorsHostSave>(raw);
                 if (envelope == null || envelope.State == null) return null;
-                if (!string.IsNullOrEmpty(envelope.Checksum))
+                // The checksummed envelope is the current Survivors format; an
+                // empty checksum means a malformed new-format save, not "legacy".
+                if (string.IsNullOrEmpty(envelope.Checksum))
                 {
-                    string actual = SaveChecksum.Compute(envelope);
-                    if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
-                    {
-                        GD.PrintErr("[Survivors] load failed: checksum mismatch (corrupt or foreign save).");
-                        return null;
-                    }
+                    GD.PrintErr("[Survivors] load failed: checksum field missing (corrupt save).");
+                    return null;
+                }
+                string actual = SaveChecksum.Compute(envelope);
+                if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
+                {
+                    GD.PrintErr("[Survivors] load failed: checksum mismatch (corrupt or foreign save).");
+                    return null;
                 }
                 return envelope.State;
             }

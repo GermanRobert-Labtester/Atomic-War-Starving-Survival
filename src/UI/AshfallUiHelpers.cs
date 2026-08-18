@@ -253,19 +253,48 @@ namespace AtomicWar.GodotApp.UI
             return panel;
         }
 
-        /// <summary>
-        /// Creates the standard header bar with 9-slice background.
-        /// </summary>
-        public static PanelContainer MakeHeaderBar()
+        // ── Standard Panel StyleBox (used by 11 direct call sites) ─────
+        // Mirrors the MakePanel() fallback chain (frame_9slice.png →
+        // frame_9slice.svg → panel_bg_9slice.png → flat fallback) so
+        // callers that previously loaded "panel_bg_9slice.png" directly
+        // now receive the properly framed 9-slice source. TextureMargin
+        // values are unchanged from the legacy 16/16/16/16 contract.
+        public static StyleBox MakePanelFrameStyleBox()
         {
-            var header = new PanelContainer();
+            var tex = TryLoadTexture("res://assets/ui/Textures/frame_9slice.png")
+                   ?? TryLoadTexture("res://assets/ui/frame_9slice.svg")
+                   ?? TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png")
+                   ?? TryLoadTexture("res://assets/ui/Textures/panel_bg_9slice.png");
+            if (tex != null)
+            {
+                return new StyleBoxTexture
+                {
+                    Texture = tex,
+                    TextureMarginLeft = 16,
+                    TextureMarginTop = 16,
+                    TextureMarginRight = 16,
+                    TextureMarginBottom = 16
+                };
+            }
+            // Last-resort flat frame so the panel still has a border
+            var flat = new StyleBoxFlat
+            {
+                BgColor = ToColor(Theme.Ink),
+                BorderColor = ToColor(Theme.Line),
+            };
+            flat.SetBorderWidthAll(1);
+            return flat;
+        }
+
+        // Standard header bar texture (margin 12/8/12/8)
+        public static StyleBox MakeHeaderFrameStyleBox()
+        {
             var tex = TryLoadTexture("res://assets/ui/Textures/tab_strip.png")
                    ?? TryLoadTexture("res://assets/ui/tab_strip.svg")
                    ?? TryLoadTexture("res://assets/ui/Textures/frame_9slice.png");
-
             if (tex != null)
             {
-                var sb = new StyleBoxTexture
+                return new StyleBoxTexture
                 {
                     Texture = tex,
                     TextureMarginLeft = 12,
@@ -273,18 +302,23 @@ namespace AtomicWar.GodotApp.UI
                     TextureMarginRight = 12,
                     TextureMarginBottom = 8
                 };
-                header.AddThemeStyleboxOverride("panel", sb);
             }
-            else
+            var flat = new StyleBoxFlat
             {
-                var sb = new StyleBoxFlat
-                {
-                    BgColor = new Color(Theme.Ink.r, Theme.Ink.g, Theme.Ink.b, 0.95f),
-                    BorderColor = ToColor(Theme.Line),
-                };
-                sb.SetBorderWidthAll(1);
-                header.AddThemeStyleboxOverride("panel", sb);
-            }
+                BgColor = new Color(Theme.Ink.r, Theme.Ink.g, Theme.Ink.b, 0.95f),
+                BorderColor = ToColor(Theme.Line),
+            };
+            flat.SetBorderWidthAll(1);
+            return flat;
+        }
+
+        /// <summary>
+        /// Creates the standard header bar with 9-slice background.
+        /// </summary>
+        public static PanelContainer MakeHeaderBar()
+        {
+            var header = new PanelContainer();
+            header.AddThemeStyleboxOverride("panel", MakeHeaderFrameStyleBox());
             return header;
         }
 

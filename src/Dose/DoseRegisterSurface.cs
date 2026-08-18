@@ -31,20 +31,8 @@ namespace AtomicWar.GodotApp.Dose
             SetAnchorsPreset(LayoutPreset.TopRight);
             CustomMinimumSize = new Vector2(CoreTheme.PanelMaxWidth, 360);
 
-            // Apply standard panel 9-slice
-            var tex = AshfallUiHelpers.TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
-            if (tex != null)
-            {
-                var sb = new StyleBoxTexture
-                {
-                    Texture = tex,
-                    TextureMarginLeft = 16,
-                    TextureMarginTop = 16,
-                    TextureMarginRight = 16,
-                    TextureMarginBottom = 16
-                };
-                AddThemeStyleboxOverride("panel", sb);
-            }
+            // Apply standard panel 9-slice via shared helper (frame_9slice first)
+            AddThemeStyleboxOverride("panel", AshfallUiHelpers.MakePanelFrameStyleBox());
 
             var rootVbox = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingSm);
             AddChild(rootVbox);

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall - Wasteland Scavenger Loot Breakdown</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-primary": "#5a5f64",
+                        "surface": "#131313",
+                        "surface-container": "#201f1f",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "surface-tint": "#c3c7cd",
+                        "surface-variant": "#353534",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-error-container": "#ffdad6",
+                        "background": "#131313",
+                        "secondary-fixed": "#bcebef",
+                        "outline-variant": "#44474a",
+                        "on-secondary-fixed": "#002022",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#353534",
+                        "on-primary-fixed": "#171c20",
+                        "surface-dim": "#131313",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "on-tertiary-fixed": "#351000",
+                        "tertiary-container": "#ffc9b0",
+                        "tactical-teal": "#2D5A5E",
+                        "on-primary-container": "#585c61",
+                        "on-secondary-container": "#93c0c5",
+                        "on-background": "#e5e2e1",
+                        "ashen-grey": "#D1D5DB",
+                        "on-secondary": "#00363a",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-bright": "#393939",
+                        "primary-container": "#d1d5db",
+                        "inverse-on-surface": "#313030",
+                        "warning-amber": "#CC5500",
+                        "on-primary": "#2c3136",
+                        "secondary-container": "#225054",
+                        "on-surface-variant": "#c5c6ca",
+                        "tertiary": "#ffede7",
+                        "surface-container-high": "#2a2a2a",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-tertiary": "#562000",
+                        "secondary": "#a1cfd3",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-fixed-variant": "#43474c",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "outline": "#8f9194",
+                        "primary": "#eef1f7",
+                        "surface-container-low": "#1c1b1b",
+                        "primary-fixed": "#dfe3e9",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-tertiary-container": "#9c3f00"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "gutter": "8px",
+                        "margin-base": "16px",
+                        "unit": "4px",
+                        "container-padding": "12px",
+                        "stack-tight": "4px",
+                        "stack-md": "12px"
+                    },
+                    fontFamily: {
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "data-md": ["JetBrains Mono"],
+                        "data-sm": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "display-lg-mobile": ["Bebas Neue"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "data-lg": ["18px", { lineHeight: "24px", fontWeight: "700" }],
+                        "headline-lg": ["32px", { lineHeight: "32px", letterSpacing: "0.02em", fontWeight: "400" }],
+                        "data-md": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+                        "data-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "24px", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "48px", letterSpacing: "0.05em", fontWeight: "400" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "24px", letterSpacing: "0.02em", fontWeight: "400" }],
+                        "display-lg-mobile": ["32px", { lineHeight: "32px", letterSpacing: "0.05em", fontWeight: "400" }],
+                        "label-caps": ["10px", { lineHeight: "12px", letterSpacing: "0.05em", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 0, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+        }
+        
+        .crt-glow-primary {
+            text-shadow: 0 0 4px rgba(238, 241, 247, 0.5);
+        }
+        
+        .crt-glow-amber {
+            text-shadow: 0 0 4px rgba(204, 85, 0, 0.5);
+        }
+
+        .crt-glow-teal {
+            text-shadow: 0 0 4px rgba(45, 90, 94, 0.5);
+        }
+
+        .btn-industrial {
+            border: 1px solid var(--tw-colors-ashen-grey);
+            transition: all 0.2s ease;
+        }
+
+        .btn-industrial:hover {
+            background-color: var(--tw-colors-primary);
+            color: var(--tw-colors-surface);
+        }
+
+        .item-card {
+            border: 1px solid var(--tw-colors-ashen-grey);
+            background-color: var(--tw-colors-surface-container);
+        }
+        
+        .item-card.selected {
+            border: 2px double var(--tw-colors-primary);
+            background-color: var(--tw-colors-surface-container-high);
+        }
+
+        .progress-segment {
+            width: 4px;
+            height: 12px;
+            background-color: var(--tw-colors-ashen-grey);
+            margin-right: 2px;
+        }
+
+        .progress-segment.active-teal {
+            background-color: var(--tw-colors-tactical-teal);
+            box-shadow: 0 0 4px var(--tw-colors-tactical-teal);
+        }
+        
+        .progress-segment.active-amber {
+            background-color: var(--tw-colors-warning-amber);
+            box-shadow: 0 0 4px var(--tw-colors-warning-amber);
+        }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen overflow-x-hidden selection:bg-tactical-teal selection:text-white">
+<!-- Scanline Overlay -->
+<div class="scanlines"></div>
+<!-- Background Image -->
+<div class="fixed inset-0 z-[-1] opacity-20 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtftrS_cs9u8iWKPIUv3yrwRHgvLyOrJUxkuLDSKNr0ZP85zDlVzaqfXvrg4BZQ2yLemOO3jnWattiQr6xAcWSfz3pqlmEpFza6xt6r2DIUkZQK7C9Dnb0Yr4ciYW3oZpELaNcDiIYJl5S3_ptf62DYGECpTPbSUY5bq_ajttvK2qEzg_4-CdJylC_6uqz6_EFwZCJuFl4jZY1Fc_WcJFfUNjfHFCb6hr7wDGvTMAhK3KQWDtrvRtKmdu8'); background-size: cover; background-position: center; filter: grayscale(50%) contrast(120%);"></div>
+<!-- Top Navigation (Shared Component Shell) -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant flex justify-between items-center w-full px-container-padding h-12 sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md text-primary tracking-widest crt-glow-primary">BUNKER_OS_V4.2</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" data-icon="settings_input_antenna" style="font-variation-settings: 'FILL' 0;">settings_input_antenna</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" data-icon="battery_charging_full" style="font-variation-settings: 'FILL' 0;">battery_charging_full</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" data-icon="shield" style="font-variation-settings: 'FILL' 0;">shield</span>
+</div>
+</header>
+<div class="flex h-[calc(100vh-3rem)]">
+<!-- Side Navigation (Shared Component Shell) -->
+<nav class="hidden md:flex flex-col h-full w-64 bg-surface-container dark:bg-surface-container border-r border-outline-variant shrink-0 relative z-30">
+<div class="p-4 border-b border-outline-variant">
+<div class="font-headline-lg text-headline-lg text-primary mb-1">TERMINAL_09</div>
+<div class="font-label-caps text-label-caps text-secondary crt-glow-teal">SECTOR_ACCESS_GRANTED</div>
+<div class="text-xs text-outline mt-2 italic">Operator Profile</div>
+</div>
+<div class="flex-1 py-4 flex flex-col gap-1 overflow-y-auto scrollbar-hide">
+<a class="text-on-surface-variant px-4 py-3 flex items-center gap-3 hover:bg-surface-container-high hover:text-primary transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="eco" style="font-variation-settings: 'FILL' 0;">eco</span>
+                    Hydroponics
+                </a>
+<a class="text-on-surface-variant px-4 py-3 flex items-center gap-3 hover:bg-surface-container-high hover:text-primary transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings" style="font-variation-settings: 'FILL' 0;">settings</span>
+                    Engineering
+                </a>
+<a class="text-on-surface-variant px-4 py-3 flex items-center gap-3 hover:bg-surface-container-high hover:text-primary transition-all font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="medical_services" style="font-variation-settings: 'FILL' 0;">medical_services</span>
+                    Medical
+                </a>
+<a class="bg-secondary-container text-on-secondary-container border-l-4 border-secondary px-4 py-3 flex items-center gap-3 transition-all translate-x-1 font-label-caps text-label-caps crt-glow-teal" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="explore" style="font-variation-settings: 'FILL' 1;">explore</span>
+                    Expedition
+                </a>
+</div>
+<div class="border-t border-outline-variant p-4 flex flex-col gap-2">
+<a class="text-on-surface-variant py-2 flex items-center gap-3 hover:text-primary transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="analytics" style="font-variation-settings: 'FILL' 0;">analytics</span>
+                    Diagnostics
+                </a>
+<a class="text-on-surface-variant py-2 flex items-center gap-3 hover:text-primary transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="terminal" style="font-variation-settings: 'FILL' 0;">terminal</span>
+                    Logs
+                </a>
+<button class="mt-4 w-full border border-error text-error py-2 font-label-caps text-label-caps hover:bg-error hover:text-surface transition-colors">
+                    EMERGENCY_LOCKDOWN_
+                </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden relative z-20">
+<!-- Page Header -->
+<div class="p-margin-base border-b border-outline-variant bg-surface/80 backdrop-blur-sm shrink-0">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<h1 class="font-display-lg text-display-lg text-primary crt-glow-primary">LOOT_BREAKDOWN</h1>
+<p class="font-data-md text-data-md text-secondary mt-1">&gt;&gt; SALVAGE SORTING &amp; RADIOLOGICAL TRIAGE</p>
+</div>
+<div class="flex gap-4 font-data-sm text-data-sm text-outline">
+<span>SYS.TIME: 14:02:44</span>
+<span>NET.STAT: DEGRADED</span>
+</div>
+</div>
+</div>
+<!-- Content Grid Layout -->
+<div class="flex-1 overflow-y-auto p-margin-base grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Center: Cargo Crate Grid (8 Cols) -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<div class="flex justify-between items-center border border-ashen-grey bg-tactical-teal/10 p-2">
+<span class="font-data-md text-data-md text-primary pl-2">CARGO_CRATE_ALPHA // UNPACKING_VISUALIZER</span>
+<div class="flex gap-2">
+<button class="btn-industrial px-3 py-1 font-data-sm text-data-sm text-primary">SORT_BY_RAD_</button>
+<button class="btn-industrial px-3 py-1 font-data-sm text-data-sm text-primary">SORT_BY_VAL_</button>
+</div>
+</div>
+<!-- 3x4 Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-gutter flex-1 auto-rows-max">
+<!-- Item 1: Microchip -->
+<div class="item-card flex flex-col cursor-pointer hover:border-primary transition-colors">
+<div class="bg-tactical-teal px-2 py-1 flex justify-between items-center border-b border-ashen-grey">
+<span class="font-data-sm text-data-sm text-on-primary">PRISTINE</span>
+<span class="material-symbols-outlined text-sm text-on-primary" data-icon="memory">memory</span>
+</div>
+<div class="p-2 flex-1 flex flex-col justify-between">
+<div class="font-data-md text-data-md text-primary mb-2">Intact Military Microchip</div>
+<div class="space-y-1 font-data-sm text-data-sm">
+<div class="flex justify-between text-outline"><span>WT:</span> <span class="text-primary">0.1kg</span></div>
+<div class="flex justify-between text-outline"><span>RAD:</span> <span class="text-tactical-teal">0 Sv/h</span></div>
+</div>
+</div>
+</div>
+<!-- Item 2: Peaches (Contaminated, Selected) -->
+<div class="item-card selected flex flex-col cursor-pointer">
+<div class="bg-warning-amber px-2 py-1 flex justify-between items-center border-b border-ashen-grey">
+<span class="font-data-sm text-data-sm text-on-error">CONTAMINATED</span>
+<span class="material-symbols-outlined text-sm text-on-error" data-icon="restaurant">restaurant</span>
+</div>
+<div class="p-2 flex-1 flex flex-col justify-between">
+<div class="font-data-md text-data-md text-primary mb-2">Irradiated Canned Peaches</div>
+<div class="space-y-1 font-data-sm text-data-sm">
+<div class="flex justify-between text-outline"><span>WT:</span> <span class="text-primary">0.5kg</span></div>
+<div class="flex justify-between text-outline"><span>RAD:</span> <span class="text-warning-amber crt-glow-amber">1.8 Sv/h</span></div>
+</div>
+</div>
+</div>
+<!-- Item 3: Copper Wire -->
+<div class="item-card flex flex-col cursor-pointer hover:border-primary transition-colors">
+<div class="bg-surface-bright px-2 py-1 flex justify-between items-center border-b border-ashen-grey">
+<span class="font-data-sm text-data-sm text-outline">STANDARD</span>
+<span class="material-symbols-outlined text-sm text-outline" data-icon="cable">cable</span>
+</div>
+<div class="p-2 flex-1 flex flex-col justify-between">
+<div class="font-data-md text-data-md text-primary mb-2">Copper Wire Coil</div>
+<div class="space-y-1 font-data-sm text-data-sm">
+<div class="flex justify-between text-outline"><span>AMT:</span> <span class="text-primary">12m</span></div>
+<div class="flex justify-between text-outline"><span>WT:</span> <span class="text-primary">2.0kg</span></div>
+<div class="flex justify-between text-outline"><span>RAD:</span> <span class="text-primary">0.05 Sv/h</span></div>
+</div>
+</div>
+</div>
+<!-- Item 4: Tubes -->
+<div class="item-card flex flex-col cursor-pointer hover:border-primary transition-colors">
+<div class="bg-surface-bright px-2 py-1 flex justify-between items-center border-b border-ashen-grey">
+<span class="font-data-sm text-data-sm text-outline">FRAGILE</span>
+<span class="material-symbols-outlined text-sm text-outline" data-icon="science">science</span>
+</div>
+<div class="p-2 flex-1 flex flex-col justify-between">
+<div class="font-data-md text-data-md text-primary mb-2">Geiger Counter Vacuum Tubes</div>
+<div class="space-y-1 font-data-sm text-data-sm">
+<div class="flex justify-between text-outline"><span>QTY:</span> <span class="text-primary">x3</span></div>
+<div class="flex justify-between text-outline"><span>WT:</span> <span class="text-primary">0.2kg</span></div>
+<div class="flex justify-between text-outline"><span>RAD:</span> <span class="text-primary">0.01 Sv/h</span></div>
+</div>
+</div>
+</div>
+<!-- Item 5: Battery -->
+<div class="item-card flex flex-col cursor-pointer hover:border-primary transition-colors">
+<div class="bg-surface-bright px-2 py-1 flex justify-between items-center border-b border-ashen-grey">
+<span class="font-data-sm text-data-sm text-outline">HEAVY</span>
+<span class="material-symbols-outlined text-sm text-outline" data-icon="battery_full">battery_full</span>
+</div>
+<div class="p-2 flex-1 flex flex-col justify-between">
+<div class="font-data-md text-data-md text-primary mb-2">Leaded Battery Cell</div>
+<div class="space-y-1 font-data-sm text-data-sm">
+<div class="flex justify-between text-outline"><span>WT:</span> <span class="text-primary">4.0kg</span></div>
+<div class="flex justify-between text-outline"><span>RAD:</span> <span class="text-primary">0.1 Sv/h</span></div>
+</div>
+</div>
+</div>
+<!-- Placeholders -->
+<div class="item-card border-dashed flex items-center justify-center p-4 opacity-50">
+<span class="font-data-sm text-data-sm text-outline text-center">[EMPTY_SLOT]</span>
+</div>
+<div class="item-card border-dashed flex items-center justify-center p-4 opacity-50">
+<span class="font-data-sm text-data-sm text-outline text-center">[EMPTY_SLOT]</span>
+</div>
+<div class="item-card border-dashed flex items-center justify-center p-4 opacity-50">
+<span class="font-data-sm text-data-sm text-outline text-center">[EMPTY_SLOT]</span>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Triage & Summary (4 Cols) -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Salvage Triage Panel -->
+<div class="border border-ashen-grey bg-surface-container flex-1 flex flex-col">
+<div class="border-b border-ashen-grey bg-surface-bright p-2">
+<span class="font-data-md text-data-md text-primary">ACTIVE_ITEM_TRIAGE</span>
+</div>
+<div class="p-4 flex flex-col gap-6">
+<!-- Geiger Wand Meter -->
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-data-sm text-data-sm text-outline">RAD_SCANNER_WAND</span>
+<span class="font-data-md text-data-md text-warning-amber crt-glow-amber">1.8 Sv/h</span>
+</div>
+<div class="border border-ashen-grey p-1 flex">
+<div class="progress-segment active-teal"></div>
+<div class="progress-segment active-teal"></div>
+<div class="progress-segment active-teal"></div>
+<div class="progress-segment active-amber"></div>
+<div class="progress-segment active-amber"></div>
+<div class="progress-segment active-amber"></div>
+<div class="progress-segment"></div>
+<div class="progress-segment"></div>
+<div class="progress-segment"></div>
+<div class="progress-segment"></div>
+</div>
+<div class="font-data-sm text-data-sm text-warning-amber mt-1 text-right">CRITICAL_LEVEL</div>
+</div>
+<!-- Decontamination Controls -->
+<div class="border border-ashen-grey p-3 relative">
+<span class="absolute -top-2 left-2 bg-surface-container px-1 font-label-caps text-label-caps text-secondary">DECON_BASIN_CTRL</span>
+<div class="flex flex-col gap-3 mt-2">
+<div class="flex justify-between items-center font-data-sm text-data-sm">
+<span class="text-outline">Water Cost:</span>
+<span class="text-primary">2L / item</span>
+</div>
+<div class="flex justify-between items-center font-data-sm text-data-sm">
+<span class="text-outline">Current Supply:</span>
+<span class="text-primary">45L</span>
+</div>
+<button class="btn-industrial w-full py-2 font-data-md text-data-md text-primary mt-2">
+                                        INITIATE_SCRUB_CYLCE_
+                                    </button>
+</div>
+</div>
+<!-- Scrap vs Keep -->
+<div class="flex gap-2">
+<button class="flex-1 border border-ashen-grey bg-error-container/20 text-error py-3 font-data-md text-data-md hover:bg-error hover:text-surface transition-colors">
+                                    [ TAG_FOR_SCRAP ]
+                                </button>
+<button class="flex-1 border border-ashen-grey bg-tactical-teal/20 text-secondary py-3 font-data-md text-data-md hover:bg-tactical-teal hover:text-surface transition-colors">
+                                    [ TAG_TO_KEEP ]
+                                </button>
+</div>
+</div>
+</div>
+<!-- Total Haul Summary -->
+<div class="border border-ashen-grey bg-surface-container shrink-0 flex flex-col">
+<div class="border-b border-ashen-grey bg-surface-bright p-2">
+<span class="font-data-md text-data-md text-primary">EXPEDITION_HAUL_SUMMARY</span>
+</div>
+<div class="p-4 space-y-3 font-data-sm text-data-sm">
+<div class="flex justify-between border-b border-outline-variant pb-2">
+<span class="text-outline">Total Scrap Value:</span>
+<span class="text-primary font-bold">340 UNITS</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant pb-2">
+<span class="text-outline">Total Weight:</span>
+<span class="text-primary">84 / 100 kg</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Est. Bunker Supply Boost:</span>
+<span class="text-secondary crt-glow-teal">+14 DAYS</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Global Directives Footer -->
+<div class="p-margin-base border-t border-outline-variant bg-surface-container-highest shrink-0">
+<div class="flex flex-col md:flex-row gap-gutter justify-end">
+<button class="btn-industrial px-6 py-3 font-headline-md text-headline-md text-warning-amber hover:!bg-warning-amber hover:!text-surface flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="delete_sweep">delete_sweep</span>
+                        SCRAP UNREPAIRABLE JUNK_
+                    </button>
+<button class="btn-industrial px-6 py-3 font-headline-md text-headline-md text-secondary hover:!bg-secondary hover:!text-surface flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="water_drop">water_drop</span>
+                        WASH &amp; DECONTAMINATE ALL_
+                    </button>
+<button class="btn-industrial px-6 py-3 font-headline-md text-headline-md text-primary bg-tactical-teal/20 hover:!bg-tactical-teal hover:!text-surface flex items-center justify-center gap-2 border-tactical-teal">
+<span class="material-symbols-outlined" data-icon="move_to_inbox">move_to_inbox</span>
+                        TRANSFER TO MAIN VAULT_
+                    </button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

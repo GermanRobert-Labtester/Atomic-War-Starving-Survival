@@ -68,6 +68,25 @@ namespace Ashfall.Core.Radiation
         public float CurrentDurability;
         public float DegradeRate;
 
+        /// <summary>
+        /// Maps an Inventory-namespace worn-gear record onto the Radiation
+        /// behavioral record. The two WornGear types are deliberately
+        /// namespace-scoped (AGENTS H2, recorded decision not to consolidate);
+        /// this is the single sanctioned conversion point so hosts can bridge
+        /// equipped inventory into exposure without forking the mapping.
+        /// </summary>
+        public static WornGear FromInventory(Ashfall.Core.Inventory.WornGear gear)
+        {
+            if (gear == null) return null;
+            return new WornGear
+            {
+                RadProtection = gear.RadProtection,
+                MaxDurability = gear.MaxDurability,
+                CurrentDurability = gear.CurrentDurability,
+                DegradeRate = gear.DegradeRate
+            };
+        }
+
         public float DurabilityFraction()
         {
             return MaxDurability > 0f ? MathfCompat.Clamp01(CurrentDurability / MaxDurability) : 0f;

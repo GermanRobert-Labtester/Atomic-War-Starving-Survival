@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL - Expedition Return Terminal</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#002022",
+                        "on-surface-variant": "#c5c6ca",
+                        "surface-container": "#201f1f",
+                        "outline-variant": "#44474a",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-fixed": "#bcebef",
+                        "primary-fixed": "#dfe3e9",
+                        "on-tertiary-container": "#9c3f00",
+                        "on-tertiary": "#562000",
+                        "inverse-primary": "#5a5f64",
+                        "on-primary-fixed": "#171c20",
+                        "on-primary-fixed-variant": "#43474c",
+                        "surface-bright": "#393939",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#353534",
+                        "error": "#ffb4ab",
+                        "primary": "#eef1f7",
+                        "surface-dim": "#131313",
+                        "outline": "#8f9194",
+                        "error-container": "#93000a",
+                        "surface-tint": "#c3c7cd",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "tertiary-container": "#ffc9b0",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface": "#131313",
+                        "on-secondary": "#00363a",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "on-primary": "#2c3136",
+                        "tertiary": "#ffede7",
+                        "primary-container": "#d1d5db",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "inverse-surface": "#e5e2e1",
+                        "inverse-on-surface": "#313030",
+                        "on-error": "#690005",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "background": "#131313",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "secondary-container": "#225054",
+                        "secondary": "#a1cfd3",
+                        "on-primary-container": "#585c61",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed": "#351000",
+                        "on-secondary-container": "#93c0c5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "12px",
+                        "container-padding": "12px",
+                        "unit": "4px",
+                        "gutter": "8px",
+                        "margin-base": "16px",
+                        "stack-tight": "4px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "data-sm": ["JetBrains Mono"],
+                        "data-lg": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "display-lg": ["Bebas Neue"],
+                        "headline-lg": ["Bebas Neue"],
+                        "data-md": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Scanline Overlay */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.8;
+        }
+
+        /* Glitch Animation for critical elements */
+        @keyframes subtle-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .pulse-critical {
+            animation: subtle-pulse 2s infinite;
+        }
+        
+        /* Custom Scrollbar for Industrial Feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+            border-left: 1px solid #44474a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #44474a;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8f9194;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-data-md selection:bg-secondary-container selection:text-on-secondary-container h-screen overflow-hidden flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant flex justify-between items-center w-full px-container-padding h-12 fixed top-0 left-0 z-50 font-data-md text-data-md text-primary dark:text-primary">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md text-primary tracking-widest uppercase">BUNKER_OS_V4.2</span>
+</div>
+<div class="flex items-center gap-gutter">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors p-1 cursor-pointer" style="font-variation-settings: 'FILL' 0;">settings_input_antenna</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors p-1 cursor-pointer" style="font-variation-settings: 'FILL' 0;">battery_charging_full</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors p-1 cursor-pointer" style="font-variation-settings: 'FILL' 0;">shield</span>
+</div>
+</header>
+<div class="flex h-full pt-12">
+<!-- SideNavBar -->
+<nav class="bg-surface-container dark:bg-surface-container border-r border-outline-variant flex flex-col h-full w-64 shrink-0 font-label-caps text-label-caps text-secondary dark:text-secondary relative z-40 overflow-y-auto">
+<!-- Header -->
+<div class="p-container-padding border-b border-outline-variant flex flex-col gap-unit items-center text-center mt-4 mb-4">
+<div class="w-16 h-16 rounded-sm border border-outline-variant bg-surface-container-low mb-2 overflow-hidden flex items-center justify-center relative">
+<img alt="Operator Profile" class="w-full h-full object-cover opacity-80 mix-blend-screen" data-alt="A gritty, low-resolution monochromatic profile picture of a specialized operative wearing a tactical respirator mask and heavily weathered combat gear. The lighting is harsh and directional from below, creating deep shadows. The visual style mimics a damaged thermal or night vision feed displayed on an old CRT monitor, complete with static noise and scanlines. The mood is tense, secretive, and utterly utilitarian. Overall palette is strictly black, dark grey, and stark white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAigeesy9FAJM_c8CX3PlADwUvB2tzmAC4RD6AmqhTqJVa6HHTyNixj184S643N3EnFMhw3igtgocmQ7yTg83Eg1-5DImDHl-immvZp_jTEA3dWN_G8C-qt1oN4m4n_2W4QpEYiDlNSsLhwN6NfOqolPfMvmWXWpF3MQ3BQAU8BmO3hDBuRioJZD7SZp7HQ1r4XESOdyDsRwAg4QKNPhu0cYKTi1SDARXuj4ejukiZYHp-P3od17ehq_ax0vsVP2YrMGKmPcJ1a8mzw"/>
+<div class="absolute inset-0 border border-secondary/30"></div>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary uppercase">TERMINAL_09</div>
+<div class="text-secondary opacity-80 uppercase tracking-widest">SECTOR_ACCESS_GRANTED</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-unit px-2 py-4">
+<a class="text-on-surface-variant px-4 py-3 flex items-center gap-3 hover:bg-surface-container-high hover:text-primary transition-colors border-l-4 border-transparent uppercase" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">eco</span>
+                    Hydroponics
+                </a>
+<a class="text-on-surface-variant px-4 py-3 flex items-center gap-3 hover:bg-surface-container-high hover:text-primary transition-colors border-l-4 border-transparent uppercase" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+                    Engineering
+                </a>
+<a class="text-on-surface-variant px-4 py-3 flex items-center gap-3 hover:bg-surface-container-high hover:text-primary transition-colors border-l-4 border-transparent uppercase" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">medical_services</span>
+                    Medical
+                </a>
+<a class="bg-secondary-container text-on-secondary-container border-l-4 border-secondary px-4 py-3 flex items-center gap-3 uppercase font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">explore</span>
+                    Expedition
+                </a>
+</div>
+<!-- CTA -->
+<div class="px-container-padding py-4 border-t border-outline-variant">
+<button class="w-full border border-error text-error hover:bg-error hover:text-on-error py-2 font-data-md uppercase flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                    EMERGENCY_LOCKDOWN_
+                </button>
+</div>
+<!-- Footer Links -->
+<div class="flex flex-col gap-unit px-2 pb-4">
+<a class="text-on-surface-variant px-4 py-2 flex items-center gap-3 hover:bg-surface-container-high hover:text-primary transition-colors border-l-4 border-transparent uppercase text-[10px]" href="#">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 0;">analytics</span>
+                    Diagnostics
+                </a>
+<a class="text-on-surface-variant px-4 py-2 flex items-center gap-3 hover:bg-surface-container-high hover:text-primary transition-colors border-l-4 border-transparent uppercase text-[10px]" href="#">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 0;">terminal</span>
+                    Logs
+                </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-margin-base bg-background relative z-10">
+<header class="mb-6 border-b border-outline-variant pb-2 flex justify-between items-end">
+<div>
+<h1 class="font-display-lg text-display-lg text-primary uppercase leading-none mb-1">Expedition Return</h1>
+<p class="font-data-sm text-data-sm text-on-surface-variant uppercase">Protocol: Post-Action Decontamination &amp; Inventory Assessment</p>
+</div>
+<div class="text-right flex flex-col items-end">
+<div class="flex items-center gap-2 text-error pulse-critical">
+<span class="material-symbols-outlined text-[16px]">radio_button_checked</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider">Airlock Sealed</span>
+</div>
+<span class="font-data-sm text-data-sm text-on-surface-variant">T-MINUS: 14:02:59</span>
+</div>
+</header>
+<!-- Three Panel Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-gutter h-[calc(100%-80px)]">
+<!-- Left Panel: Decontamination -->
+<section class="bg-surface-container-low border border-outline-variant flex flex-col relative overflow-hidden">
+<div class="bg-surface-variant border-b border-outline-variant px-3 py-2 flex justify-between items-center z-10">
+<h2 class="font-headline-md text-headline-md text-primary uppercase">DECONTAMINATION_CHAMBER_04</h2>
+<span class="material-symbols-outlined text-secondary text-[18px]">wash</span>
+</div>
+<div class="p-4 flex-1 flex flex-col gap-4 overflow-y-auto z-10">
+<div class="text-on-surface-variant font-label-caps uppercase mb-2">Squad Status [Return from Sector 04]</div>
+<!-- Vance Status -->
+<div class="border border-outline-variant bg-surface p-3 relative group hover:border-secondary transition-colors">
+<div class="absolute top-0 right-0 p-1 border-l border-b border-outline-variant bg-surface-container-high group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+<span class="material-symbols-outlined text-[14px]">person</span>
+</div>
+<div class="font-data-lg text-data-lg text-primary uppercase mb-1">Operative Vance</div>
+<div class="flex justify-between items-center text-data-sm mt-2">
+<span class="text-on-surface-variant uppercase">Contamination:</span>
+<span class="text-tertiary-container font-bold pulse-critical">1.2 Sv/h</span>
+</div>
+<!-- Segmented Progress Bar -->
+<div class="mt-1 flex gap-[2px] h-2 w-full bg-surface-container-lowest border border-outline-variant/50 p-[1px]">
+<div class="bg-tertiary-container w-[80%] h-full"></div>
+<div class="bg-surface-bright w-[20%] h-full"></div>
+</div>
+<div class="flex justify-between items-center text-data-sm mt-3 border-t border-outline-variant/30 pt-2">
+<span class="text-on-surface-variant uppercase">Filter Integrity:</span>
+<span class="text-error font-bold">12%</span>
+</div>
+<div class="mt-1 flex gap-[1px] font-label-caps text-error opacity-70">
+                                [||||||....................]
+                            </div>
+</div>
+<!-- Miller Status -->
+<div class="border border-outline-variant bg-surface p-3 relative group hover:border-secondary transition-colors">
+<div class="absolute top-0 right-0 p-1 border-l border-b border-outline-variant bg-surface-container-high group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+<span class="material-symbols-outlined text-[14px]">person</span>
+</div>
+<div class="font-data-lg text-data-lg text-primary uppercase mb-1">Operative Miller</div>
+<div class="flex justify-between items-center text-data-sm mt-2">
+<span class="text-on-surface-variant uppercase">Contamination:</span>
+<span class="text-secondary font-bold">0.4 Sv/h</span>
+</div>
+<!-- Segmented Progress Bar -->
+<div class="mt-1 flex gap-[2px] h-2 w-full bg-surface-container-lowest border border-outline-variant/50 p-[1px]">
+<div class="bg-secondary w-[20%] h-full"></div>
+<div class="bg-surface-bright w-[80%] h-full"></div>
+</div>
+<div class="flex justify-between items-center text-data-sm mt-3 border-t border-outline-variant/30 pt-2">
+<span class="text-on-surface-variant uppercase">Physical Status:</span>
+<span class="text-primary font-bold">Light Shrapnel</span>
+</div>
+<div class="mt-1 flex gap-[1px] font-label-caps text-secondary opacity-70">
+                                [||||||||||||||||||........]
+                            </div>
+</div>
+</div>
+<div class="p-3 border-t border-outline-variant bg-surface-container z-10">
+<div class="flex justify-between text-label-caps text-on-surface-variant mb-2 px-1">
+<span>Cost: 4L H2O, 1 CHEM</span>
+<span>SYS_READY</span>
+</div>
+<button class="w-full border border-secondary text-secondary hover:bg-secondary hover:text-on-secondary py-3 font-data-md uppercase tracking-wider transition-all duration-150 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">science</span>
+                            INITIATE 3-STAGE CHEMICAL WASHDOWN_
+                        </button>
+</div>
+</section>
+<!-- Center Panel: Cargo Manifest -->
+<section class="bg-surface-container-low border border-outline-variant flex flex-col relative">
+<div class="bg-surface-variant border-b border-outline-variant px-3 py-2 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-primary uppercase">SCAVENGED_CARGO_MANIFEST</h2>
+<span class="material-symbols-outlined text-primary text-[18px]">inventory_2</span>
+</div>
+<div class="p-4 flex-1 overflow-y-auto">
+<div class="grid grid-cols-2 gap-2 auto-rows-max">
+<!-- Item Card -->
+<div class="border border-outline-variant bg-surface p-2 flex flex-col justify-between aspect-video relative group">
+<div class="absolute top-1 right-1 bg-tertiary-container text-on-tertiary-container px-1 rounded-sm text-[8px] font-label-caps font-bold">RAD</div>
+<div class="text-data-sm text-primary uppercase leading-tight mt-3">Irradiated Food Cans</div>
+<div class="flex justify-between items-end mt-2">
+<span class="text-on-surface-variant text-label-caps">QTY.</span>
+<span class="font-data-lg text-primary">x8</span>
+</div>
+</div>
+<!-- Item Card -->
+<div class="border border-outline-variant bg-surface p-2 flex flex-col justify-between aspect-video relative">
+<div class="text-data-sm text-primary uppercase leading-tight mt-1">Lead Shielding Plates</div>
+<div class="flex justify-between items-end mt-2">
+<span class="text-on-surface-variant text-label-caps">QTY.</span>
+<span class="font-data-lg text-primary">x3</span>
+</div>
+</div>
+<!-- Item Card -->
+<div class="border border-outline-variant bg-surface p-2 flex flex-col justify-between aspect-video relative col-span-2">
+<div class="absolute top-1 right-1 bg-tertiary-container text-on-tertiary-container px-1 rounded-sm text-[8px] font-label-caps font-bold">RAD</div>
+<div class="text-data-sm text-primary uppercase leading-tight mt-1">Geiger Replacement Tubes</div>
+<div class="flex justify-between items-end mt-2">
+<span class="text-on-surface-variant text-label-caps">QTY.</span>
+<span class="font-data-lg text-primary">x2</span>
+</div>
+</div>
+<!-- Item Card -->
+<div class="border border-outline-variant bg-surface p-2 flex flex-col justify-between aspect-video relative bg-secondary-container/10 border-secondary/30">
+<div class="text-data-sm text-secondary uppercase leading-tight mt-1">Military Medkit</div>
+<div class="flex justify-between items-end mt-2">
+<span class="text-on-surface-variant text-label-caps">QTY.</span>
+<span class="font-data-lg text-secondary">x1</span>
+</div>
+</div>
+<!-- Item Card -->
+<div class="border border-outline-variant bg-surface p-2 flex flex-col justify-between aspect-video relative border-primary/40">
+<div class="text-data-sm text-primary uppercase leading-tight mt-1 text-ellipsis overflow-hidden">Ancient Technical Schematics</div>
+<div class="flex justify-between items-end mt-2">
+<span class="text-on-surface-variant text-label-caps">QTY.</span>
+<span class="font-data-lg text-primary">x1</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-3 border-t border-outline-variant bg-surface-container flex flex-col gap-2">
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-2">
+<span class="font-data-sm text-on-surface-variant uppercase">Total Weight:</span>
+<span class="font-data-md text-primary">84 / 120 kg</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-data-sm text-on-surface-variant uppercase">Total Scrap Value:</span>
+<span class="font-data-md text-secondary">+340 CR</span>
+</div>
+</div>
+</section>
+<!-- Right Panel: After Action Report -->
+<section class="bg-surface-container-low border border-outline-variant flex flex-col relative overflow-hidden">
+<!-- Decorative Map Background -->
+<div class="absolute inset-0 bg-cover bg-center opacity-10 mix-blend-screen pointer-events-none z-0" data-alt="A highly stylized, top-down tactical wireframe map of a ruined urban sector displayed on a monochromatic terminal screen. The map consists entirely of thin, crisp vector lines in dark teal and muted grey over a pitch-black background. It features a grid overlay, topographic contour lines, and small geometric markers indicating hazardous zones and waypoints. The image is flat, technical, and brutalist, with a subtle grainy CRT texture and faint horizontal scanlines across the entire image." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBVO9DofQkOIYkgmyygR3-AczcqS9kWEdpwbNIXrmuL8bBRoRXglVMEL69l0guQcP4DJNwU7Fwtj5hL90-2qE2ozrQa54-yML2IWGvYzYJdYZWFjjpCpLAUGLUgIhz-W2Sp7K2zFv6iXFzngiZkiq2ghlvW_YOv0ckW6Buw1o5QahUzU8U3xkml5Av12BrgSES4aH3jWIKfdDgbQHL5B6Okw8-GuVAnG5z49eCxGvkI0hIVgyrFImQTUC5Ywk5-dgM6YK3FX4To_WOx')"></div>
+<div class="bg-surface-variant border-b border-outline-variant px-3 py-2 flex justify-between items-center z-10">
+<h2 class="font-headline-md text-headline-md text-primary uppercase">AFTER_ACTION_REPORT</h2>
+<span class="material-symbols-outlined text-primary text-[18px]">summarize</span>
+</div>
+<div class="p-4 flex-1 overflow-y-auto z-10 flex flex-col gap-4">
+<!-- Locations -->
+<div class="border border-outline-variant bg-surface/80 backdrop-blur-sm p-3">
+<h3 class="font-label-caps text-on-surface-variant uppercase mb-3 border-b border-outline-variant/50 pb-1">Routing &amp; Locations</h3>
+<ul class="flex flex-col gap-2">
+<li class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-data-sm text-primary uppercase">&gt; Sector 04 Substation</span>
+<span class="font-label-caps text-secondary bg-secondary/10 px-1 border border-secondary/30">100% Looted</span>
+</div>
+</li>
+<li class="flex flex-col gap-1 mt-2">
+<div class="flex justify-between items-start">
+<span class="font-data-sm text-primary uppercase">&gt; Collapsed Metro Tunnel</span>
+<span class="font-label-caps text-tertiary-container bg-tertiary-container/10 px-1 border border-tertiary-container/30 text-right max-w-[100px]">Hazards Encountered</span>
+</div>
+</li>
+</ul>
+</div>
+<!-- XP Gains -->
+<div class="border border-outline-variant bg-surface/80 backdrop-blur-sm p-3 flex-1">
+<h3 class="font-label-caps text-on-surface-variant uppercase mb-3 border-b border-outline-variant/50 pb-1">Personnel Development</h3>
+<div class="flex flex-col gap-4">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-data-sm text-primary uppercase">Vance</span>
+<span class="font-data-sm text-secondary">+240 XP</span>
+</div>
+<div class="text-[10px] font-label-caps text-on-surface-variant opacity-80 uppercase pl-2 border-l border-outline-variant">
+                                        Level 4 Scout Reached<br/>
+                                        +1 Skill Point Available
+                                    </div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-data-sm text-primary uppercase">Miller</span>
+<span class="font-data-sm text-secondary">+180 XP</span>
+</div>
+<div class="text-[10px] font-label-caps text-on-surface-variant opacity-80 uppercase pl-2 border-l border-outline-variant">
+                                        Trait Enhanced:<br/>
+                                        +10% Trauma Res
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-3 border-t border-outline-variant bg-surface-container z-10">
+<button class="w-full border border-primary text-primary hover:bg-primary hover:text-surface py-3 font-data-md uppercase tracking-wider transition-all duration-150 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+                            TRANSFER ALL SCRUBBED LOOT TO VAULT_
+                        </button>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

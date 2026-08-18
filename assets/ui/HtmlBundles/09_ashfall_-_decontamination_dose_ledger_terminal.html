@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TRIAGE STATION - ASHFALL OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#353534",
+                    "on-surface": "#e5e2e1",
+                    "surface-container": "#201f1f",
+                    "secondary-fixed-dim": "#ffb693",
+                    "on-tertiary-fixed-variant": "#00530e",
+                    "outline-variant": "#404849",
+                    "on-primary": "#00363a",
+                    "outline": "#8a9293",
+                    "on-secondary-fixed-variant": "#7a3000",
+                    "tertiary-fixed": "#72ff70",
+                    "secondary-fixed": "#ffdbcc",
+                    "on-secondary": "#562000",
+                    "tertiary": "#00e639",
+                    "surface-dim": "#131313",
+                    "surface-container-highest": "#353534",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#00e639",
+                    "inverse-surface": "#e5e2e1",
+                    "on-primary-fixed-variant": "#1f4d51",
+                    "on-error": "#690005",
+                    "surface-container-low": "#1c1b1b",
+                    "primary": "#a1cfd3",
+                    "secondary-container": "#ea6b1e",
+                    "surface": "#131313",
+                    "on-tertiary": "#003907",
+                    "error": "#ffb4ab",
+                    "primary-fixed-dim": "#a1cfd3",
+                    "surface-tint": "#a1cfd3",
+                    "on-primary-fixed": "#002022",
+                    "surface-container-lowest": "#0e0e0e",
+                    "inverse-on-surface": "#313030",
+                    "surface-container-high": "#2a2a2a",
+                    "background": "#131313",
+                    "tertiary-container": "#006112",
+                    "primary-container": "#2d5a5e",
+                    "on-surface-variant": "#c0c8c9",
+                    "inverse-primary": "#396569",
+                    "on-tertiary-container": "#00e639",
+                    "on-primary-container": "#a2d0d4",
+                    "primary-fixed": "#bcebef",
+                    "on-secondary-fixed": "#351000",
+                    "on-background": "#e5e2e1",
+                    "surface-bright": "#393939",
+                    "secondary": "#ffb693",
+                    "on-tertiary-fixed": "#002203",
+                    "on-secondary-container": "#4b1b00",
+                    "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin": "24px",
+                    "container-max": "1440px",
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "margin-base": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Bebas Neue"],
+                    "data-lg": ["JetBrains Mono"],
+                    "headline-lg": ["Bebas Neue"],
+                    "label-sm": ["JetBrains Mono"],
+                    "display-lg": ["Bebas Neue"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.1", "fontWeight": "400"}],
+                    "data-lg": ["18px", {"lineHeight": "1.4", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                    "display-lg": ["64px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #c0c8c9;
+            overflow-x: hidden;
+            text-transform: uppercase;
+        }
+        
+        /* CRT Scanline Overlay */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.6;
+        }
+
+        /* Utility classes for Ashfall OS */
+        .border-tactical { border: 1px solid #404849; }
+        .bg-strip { background-color: #2a2a2a; }
+        
+        /* Focus Glow */
+        .glow-active {
+            box-shadow: 0 0 10px 0px rgba(161, 207, 211, 0.4);
+            border-color: #a1cfd3;
+        }
+        
+        .glow-warning {
+            box-shadow: 0 0 15px 0px rgba(234, 107, 30, 0.6);
+            border-color: #ea6b1e;
+        }
+
+        /* Form Controls */
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: transparent;
+            width: 100%;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 12px;
+            background: #a1cfd3;
+            cursor: pointer;
+            border-radius: 0;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 2px;
+            cursor: pointer;
+            background: #404849;
+        }
+
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+        
+        /* Disable smooth transitions for brutalist feel */
+        .hover-invert:hover {
+            background-color: #c0c8c9 !important;
+            color: #131313 !important;
+            transition: none !important;
+        }
+        
+        .hover-invert-primary:hover {
+            background-color: #a1cfd3 !important;
+            color: #002022 !important;
+            transition: none !important;
+        }
+
+        .hover-invert-warning:hover {
+            background-color: #ea6b1e !important;
+            color: #351000 !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+<body class="font-body-md h-screen flex flex-col">
+<div class="scanlines"></div>
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background flex justify-between items-center w-full px-margin-base h-16 border-b border-outline-variant flex-shrink-0 z-50">
+<div class="font-display-lg text-display-lg text-primary dark:text-primary tracking-tighter">
+            ASHFALL_OS_v2.1
+        </div>
+<nav class="hidden md:flex gap-8">
+<span class="text-on-surface-variant font-data-sm flex flex-col justify-center">UPTIME: 428:12:04</span>
+<span class="text-primary font-bold border-b-2 border-primary pb-1 flex flex-col justify-center">SECTOR: B-09</span>
+<span class="text-on-surface-variant font-data-sm flex flex-col justify-center">ALERTS: 04</span>
+</nav>
+<div class="flex gap-4 items-center text-primary">
+<span class="material-symbols-outlined hover:bg-primary hover:text-on-primary transition-colors duration-75 cursor-pointer p-1" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="material-symbols-outlined hover:bg-primary hover:text-on-primary transition-colors duration-75 cursor-pointer p-1 glow-warning text-secondary-container" data-icon="emergency_home" style="font-variation-settings: 'FILL' 1;">emergency_home</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow grid grid-cols-1 md:grid-cols-12 gap-gutter p-gutter overflow-y-auto z-10 relative">
+<!-- Left Sidebar: Cumulative Dose Ledger -->
+<section class="md:col-span-3 border-tactical bg-surface-container flex flex-col h-full">
+<header class="bg-strip px-4 py-2 border-b border-tactical">
+<h2 class="font-headline-lg text-headline-lg text-on-surface m-0">DOSE_LEDGER</h2>
+</header>
+<div class="p-4 flex flex-col gap-6 flex-grow">
+<!-- Data Block -->
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-outline">SURVIVOR LIFETIME RADIATION BURDEN</span>
+<span class="font-data-lg text-data-lg text-error-container text-4xl mt-2 crt-flicker">4,210.05 <span class="text-lg">mSv</span></span>
+<div class="h-2 w-full bg-surface-container-high mt-2 relative">
+<div class="absolute top-0 left-0 h-full bg-error-container w-[85%]"></div>
+<div class="absolute top-0 left-[85%] h-full w-[2px] bg-error"></div>
+</div>
+</div>
+<!-- Step Chart -->
+<div class="border border-outline-variant bg-surface p-2 h-32 relative">
+<span class="absolute top-2 left-2 font-label-sm text-label-sm text-outline text-[10px]">T-MINUS 72H HISTORICAL</span>
+<svg class="w-full h-full stroke-primary fill-none mt-4" preserveaspectratio="none" viewbox="0 0 100 50">
+<path d="M0,45 L15,45 L15,38 L30,38 L30,42 L45,42 L45,25 L60,25 L60,30 L75,30 L75,10 L90,10 L90,5 L100,5" stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" vector-effect="non-scaling-stroke"></path>
+<!-- Grid lines -->
+<line stroke="#404849" stroke-dasharray="2,2" stroke-width="0.5" vector-effect="non-scaling-stroke" x1="0" x2="100" y1="12.5" y2="12.5"></line>
+<line stroke="#404849" stroke-dasharray="2,2" stroke-width="0.5" vector-effect="non-scaling-stroke" x1="0" x2="100" y1="25" y2="25"></line>
+<line stroke="#404849" stroke-dasharray="2,2" stroke-width="0.5" vector-effect="non-scaling-stroke" x1="0" x2="100" y1="37.5" y2="37.5"></line>
+</svg>
+</div>
+<!-- Gauges -->
+<div class="flex flex-col gap-4 mt-auto">
+<div class="border-tactical p-3 bg-surface-container-low">
+<div class="flex justify-between items-end mb-2">
+<span class="font-label-sm text-label-sm">BONE MARROW DEGRADATION</span>
+<span class="font-data-lg text-secondary-container">62%</span>
+</div>
+<div class="flex gap-1 h-3">
+<div class="flex-1 bg-secondary-container opacity-100"></div>
+<div class="flex-1 bg-secondary-container opacity-100"></div>
+<div class="flex-1 bg-secondary-container opacity-100"></div>
+<div class="flex-1 bg-secondary-container opacity-40"></div>
+<div class="flex-1 bg-outline-variant"></div>
+</div>
+</div>
+<div class="border-tactical p-3 bg-surface-container-low">
+<div class="flex justify-between items-end mb-2">
+<span class="font-label-sm text-label-sm">THYROID IODINE SATURATION</span>
+<span class="font-data-lg text-primary">88%</span>
+</div>
+<div class="w-full h-3 border border-tactical bg-surface p-[1px]">
+<div class="h-full bg-primary w-[88%]"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Center Panel: Chelation & Detox Treatment Bay -->
+<section class="md:col-span-6 border-tactical bg-surface-container-low flex flex-col relative h-full">
+<header class="bg-primary-container px-4 py-2 border-b border-primary">
+<h2 class="font-headline-lg text-headline-lg text-on-primary-container m-0">CHELATION_&amp;_DETOX_BAY</h2>
+</header>
+<div class="p-gutter grid grid-cols-2 gap-gutter flex-grow">
+<!-- PRUSSIAN BLUE IV -->
+<div class="border-tactical bg-surface-container p-4 col-span-2 md:col-span-1 flex flex-col">
+<div class="flex justify-between items-center mb-4 border-b border-tactical pb-2">
+<span class="font-body-md text-primary font-bold">PRUSSIAN_BLUE_IV</span>
+<span class="bg-primary-container text-on-primary-container px-2 py-1 font-label-sm text-[10px]">ACTIVE</span>
+</div>
+<div class="flex-grow flex flex-col justify-center gap-6">
+<div class="flex justify-between font-data-lg">
+<span class="text-outline">FLOW_RATE</span>
+<span class="text-primary crt-flicker">45.2 ml/hr</span>
+</div>
+<input class="w-full" max="100" min="0" type="range" value="45"/>
+<div class="flex justify-between font-label-sm text-outline-variant text-[10px]">
+<span>0.0</span>
+<span>MAX_100.0</span>
+</div>
+</div>
+</div>
+<!-- EDTA CHELATION -->
+<div class="border-tactical bg-surface-container p-4 col-span-2 md:col-span-1 flex flex-col">
+<div class="flex justify-between items-center mb-4 border-b border-tactical pb-2">
+<span class="font-body-md text-on-surface font-bold">EDTA_CHELATION</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 font-label-sm text-[10px] border border-tactical">STANDBY</span>
+</div>
+<div class="flex-grow flex flex-col justify-center gap-4">
+<div>
+<label class="font-label-sm text-outline mb-1 block">DOSAGE_REGULATOR (mg)</label>
+<div class="flex border-b border-tactical items-center focus-within:glow-active">
+<span class="font-data-lg text-on-surface mr-2">&gt;</span>
+<input class="bg-transparent border-none outline-none text-primary font-data-lg w-full p-0 py-1" readonly="" type="text" value="1500"/>
+<span class="animate-pulse bg-primary w-2 h-4 block"></span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-2">
+<button class="border-tactical bg-surface-container-high py-2 hover-invert text-center font-label-sm cursor-pointer">- 100</button>
+<button class="border-tactical bg-surface-container-high py-2 hover-invert text-center font-label-sm cursor-pointer">+ 100</button>
+</div>
+</div>
+</div>
+<!-- HYPERBARIC CHAMBER -->
+<div class="border border-outline bg-surface-container-highest p-4 col-span-2 relative overflow-hidden">
+<div class="absolute right-[-20px] top-[-20px] opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+</div>
+<div class="flex justify-between items-center mb-4 border-b border-outline pb-2 relative z-10">
+<span class="font-body-md text-on-surface font-bold">PB-SHIELDED HYPERBARIC CHAMBER</span>
+<span class="bg-tertiary-container text-on-tertiary-container px-2 py-1 font-label-sm text-[10px] glow-active border border-tertiary">SEALED</span>
+</div>
+<div class="grid grid-cols-2 gap-6 relative z-10 pt-2">
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-outline">ATMOSPHERIC PRESSURE</span>
+<div class="flex items-end gap-2">
+<span class="font-data-lg text-4xl text-on-surface">2.4</span>
+<span class="font-label-sm text-outline mb-1">ATA</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-outline">O2 SATURATION</span>
+<div class="flex items-end gap-2">
+<span class="font-data-lg text-4xl text-tertiary">99.8</span>
+<span class="font-label-sm text-outline mb-1">%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Directives Box embedded at bottom of center panel -->
+<div class="p-4 border-t border-tactical bg-surface-container-highest mt-auto grid grid-cols-1 gap-3">
+<button class="w-full bg-primary-container border border-primary text-on-primary-container font-headline-lg py-3 hover-invert-primary flex justify-center items-center gap-2 cursor-pointer">
+<span class="material-symbols-outlined">vaccines</span>
+                    [ADMINISTER PRUSSIAN BLUE]
+                </button>
+</div>
+</section>
+<!-- Right Sidebar: Decontamination Shower Telemetry -->
+<section class="md:col-span-3 border-tactical bg-surface-container flex flex-col h-full">
+<header class="bg-strip px-4 py-2 border-b border-tactical">
+<h2 class="font-headline-lg text-headline-lg text-on-surface m-0">DECON_TELEMETRY</h2>
+</header>
+<div class="p-4 flex flex-col gap-6 flex-grow">
+<!-- Circular Loader / Washdown Status -->
+<div class="border-tactical bg-surface p-4 flex flex-col items-center justify-center relative">
+<span class="font-label-sm text-outline absolute top-2 left-2 text-[10px]">CHEM_WASHDOWN</span>
+<div class="relative w-32 h-32 mt-4 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<!-- Background circle -->
+<circle cx="50" cy="50" fill="none" r="45" stroke="#2a2a2a" stroke-width="8"></circle>
+<!-- Progress circle -->
+<circle cx="50" cy="50" fill="none" r="45" stroke="#a1cfd3" stroke-dasharray="283" stroke-dashoffset="65" stroke-width="8"></circle>
+<!-- Inner dashed ring -->
+<circle cx="50" cy="50" fill="none" r="35" stroke="#404849" stroke-dasharray="4 4" stroke-width="1"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center">
+<span class="font-data-lg text-2xl text-primary">77%</span>
+<span class="font-label-sm text-[10px] text-primary crt-flicker">PURGING</span>
+</div>
+</div>
+</div>
+<!-- Wastewater Sump -->
+<div class="border border-secondary-container bg-surface-container-low p-3 glow-warning relative">
+<div class="flex justify-between items-end mb-3 border-b border-tactical pb-2">
+<span class="font-label-sm text-on-surface">WASTEWATER RAD_SUMP</span>
+<span class="material-symbols-outlined text-secondary-container text-sm">warning</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between font-data-lg">
+<span class="text-secondary-container">LEVEL_CRITICAL</span>
+<span class="text-secondary-container crt-flicker">78%</span>
+</div>
+<!-- Block meter -->
+<div class="flex gap-1 h-6">
+<div class="flex-1 bg-secondary-container"></div>
+<div class="flex-1 bg-secondary-container"></div>
+<div class="flex-1 bg-secondary-container"></div>
+<div class="flex-1 bg-secondary-container"></div>
+<div class="flex-1 bg-secondary-container"></div>
+<div class="flex-1 bg-secondary-container"></div>
+<div class="flex-1 bg-secondary-container"></div>
+<div class="flex-1 bg-surface-variant border border-tactical"></div>
+<div class="flex-1 bg-surface-variant border border-tactical"></div>
+<div class="flex-1 bg-surface-variant border border-tactical"></div>
+</div>
+</div>
+</div>
+<!-- Rad-Away Dispenser -->
+<div class="border-tactical p-3 mt-auto bg-surface-container-high">
+<div class="font-label-sm text-outline mb-2">RAD-AWAY INVENTORY</div>
+<div class="flex justify-between items-center bg-surface p-2 border border-tactical">
+<span class="font-data-lg text-on-surface">AUTO_DISPENSER</span>
+<div class="bg-background px-3 py-1 border border-outline-variant text-primary font-data-lg font-bold">
+                            014<span class="text-outline">/050</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Emergency Directives Banner spanning full width at bottom of grid -->
+<div class="md:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+<button class="bg-surface-container border border-secondary-container text-secondary-container font-headline-lg py-3 hover-invert-warning cursor-pointer transition-none flex justify-center items-center gap-2">
+<span class="material-symbols-outlined">shower</span>
+                [FLUSH DECONTAMINATION CHAMBER]
+            </button>
+<button class="bg-secondary-container border border-secondary-container text-on-secondary-container font-headline-lg py-3 hover-invert-warning cursor-pointer transition-none flex justify-center items-center gap-2 glow-warning">
+<span class="material-symbols-outlined">delete_forever</span>
+                [PURGE SUMP TO EXTERIOR]
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-margin-base h-8 bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant">
+<div class="font-label-caps text-label-caps text-error">
+            ENCRYPTION_STATUS: AES-256_ACTIVE
+        </div>
+<div class="flex gap-6 font-data-sm text-data-sm text-on-surface-variant dark:text-on-surface-variant">
+<span class="hover:underline hover:text-primary cursor-pointer">SYSTEM_STABILITY: 99.8%</span>
+<span class="hover:underline hover:text-primary cursor-pointer">TERMINAL_OVERRIDE</span>
+<span class="hover:underline hover:text-primary cursor-pointer">LOG_OUT_</span>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,95 @@
+{
+ "content_id": "loc_crossing_watchtower",
+ "visual_family": "Location-Art",
+ "subfamily": "Other",
+ "model_hint": "auto",
+ "prompt_template": {
+  "WHAT": "A location art plate of a post-apocalyptic interior / exterior. Gameplay-functional, NOT a concept-art poster.",
+  "STYLE": "2D painted survival environments, dry-gouache. ASHFALL palette. Architectural geometry first, decoration second.",
+  "COMPOSITION": "Architectural layout readable at a glance. ~15% margin at top + bottom for UI overlay. Negative space preserved.",
+  "CAMERA": "Eye-level human-equivalent (~130 cm). NEVER aerial/drone. NEVER extreme wide-angle.",
+  "LIGHTING": "Diffuse overcast by default. Strong directional only with documented reason. Soft shadow.",
+  "PALETTE": "charcoal #2A2A2C, concrete grey #5C5F62, faded blue-grey #708085, rust brown #6E4A2F, dirty bone #B5A88A. Accents limited to muted amber #A26E2C (1-2% of pixels) and subtle cyan-green #4F7461 only for contamination iconography.",
+  "MATERIALS": "Concrete grey walls, scrubby bent metal, rusted I-beams, frosted-pane windows, condensation drips. Functional decay.",
+  "BACKGROUND": "Limited depth \u2014 the location is legible in foreground / mid / background. No endless horizon.",
+  "RUNTIME_READABILITY": "16:9 crop usable for expedition panel. Reads at 512\u00d7256 in-game. Negative-space margins preserved.",
+  "NEGATIVE": "no real-world text, letters, or numerals; no logos or watermark; no AI signature glyphs; no anime-style eyes outside portrait family; no fantasy ornament or fleurons; no neon cyberpunk glow borders; no glossy 3D chromatic rendering; no crystalline particles; no stock-photo backdrop; no pristine factory-fresh finish on tools or weapons; no gratuitous gore; no real-country flags; no real brand marks. No rendered UI text \u2014 that is authored in Godot.",
+  "OUTPUT_FORMAT": "1024x1024 JPG opaque."
+ },
+ "meta": {
+  "source_catalog": "crossing_locations",
+  "reference_assets": [
+   {
+    "stem": "42_locations",
+    "file_path": "assets/art/42_locations.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "bunker_decon_airlock_chamber",
+    "file_path": "assets/art/bunker_decon_airlock_chamber.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "enc_faction_roadblock",
+    "file_path": "assets/art/enc_faction_roadblock.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_heirloom_locket",
+    "file_path": "assets/art/item_heirloom_locket.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_locket",
+    "file_path": "assets/art/item_locket.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "item_suitcase_locked",
+    "file_path": "assets/art/item_suitcase_locked.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "location_pin_icon",
+    "file_path": "assets/art/location_pin_icon.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "lockpick",
+    "file_path": "assets/art/lockpick.png",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
+  "canonical_filename": "loc_crossing_watchtower.jpg",
+  "target_directory": "assets/art/",
+  "alpha_requirement": "opaque",
+  "dimensions": [
+   1024,
+   1024
+  ],
+  "aspect_ratio": "16:9 location plate",
+  "priority_band": "P2",
+  "gameplay_importance": 1.75
+ },
+ "semantic_description": "A 2D painted icon for Location-Art 'loc_crossing_watchtower', readable at icon scale (~64\u00d764).",
+ "forbidden_objects": [
+  "real-country flag",
+  "real brand mark",
+  "logo",
+  "watermark",
+  "rendered-text label",
+  "neon cyberpunk",
+  "anime-style eyes",
+  "fantasy ornament",
+  "glossy sci-fi glow",
+  "stock-photo backdrop"
+ ]
+}

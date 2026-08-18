@@ -194,3 +194,8 @@ InitTestScene*.unity*
 
 # Godot 4.4+ C# script UID companion files (auto-generated).
 *.uid
+
+# Python
+__pycache__/
+*.pyc
+

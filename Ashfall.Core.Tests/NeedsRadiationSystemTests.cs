@@ -332,5 +332,116 @@ namespace Ashfall.Core.Tests
             Assert.True(geared.RadiationDose < RadiationSystem.AcuteThreshold);
             Assert.True(geared.RadiationDose > 30f, $"degraded gear protects less; dose={geared.RadiationDose}");
         }
+
+        [Fact]
+        public void FromInventory_MapsAllFields()
+        {
+            var source = new Ashfall.Core.Inventory.WornGear
+            {
+                RadProtection = 30f,
+                MaxDurability = 100f,
+                CurrentDurability = 40f,
+                DegradeRate = 2f
+            };
+            var mapped = WornGear.FromInventory(source);
+            Assert.NotNull(mapped);
+            Assert.Equal(30f, mapped.RadProtection, 3);
+            Assert.Equal(100f, mapped.MaxDurability, 3);
+            Assert.Equal(40f, mapped.CurrentDurability, 3);
+            Assert.Equal(2f, mapped.DegradeRate, 3);
+            Assert.Equal(0.4f, mapped.DurabilityFraction(), 3);
+            Assert.Equal(12f, mapped.EffectiveProtection(), 3);
+            Assert.Null(WornGear.FromInventory(null));
+        }
+    }
+
+    /// <summary>
+    /// Host bridge gate: equipped inventory gear (gas mask 30 / hazmat 80 per
+    /// items.json authority) must flow through the Inventory → Radiation WornGear
+    /// conversion and measurably reduce dose — the exact path the Godot host
+    /// SurvivorsHostSession now wires.
+    /// </summary>
+    public class InventoryGearBridgeTests
+    {
+        private static Ashfall.Core.Inventory.ItemDefinition GearDef(
+            string id, Ashfall.Core.Inventory.EquipSlot slot, float radProtection)
+        {
+            return new Ashfall.Core.Inventory.ItemDefinition
+            {
+                id = id,
+                displayName = id,
+                type = Ashfall.Core.Inventory.ItemType.Protective,
+                stackMax = 1,
+                weight = 1f,
+                radProtection = radProtection,
+                durability = 100f,
+                isEquipable = true,
+                equipSlot = slot
+            };
+        }
+
+        private static List<WornGear> EquippedGear(params Ashfall.Core.Inventory.ItemDefinition[] defs)
+        {
+            var inventory = new Ashfall.Core.Inventory.Inventory();
+            foreach (var def in defs)
+            {
+                Assert.True(inventory.Add(def, 1), $"could not add {def.id}");
+                Assert.True(inventory.Equip(def), $"could not equip {def.id}");
+            }
+            var buffer = new List<Ashfall.Core.Inventory.WornGear>();
+            inventory.FillWornGear(buffer);
+            var mapped = new List<WornGear>();
+            for (int i = 0; i < buffer.Count; i++)
+            {
+                var converted = WornGear.FromInventory(buffer[i]);
+                if (converted != null) mapped.Add(converted);
+            }
+            return mapped;
+        }
+
+        [Fact]
+        public void EquippedInventoryGear_SumsToAuthorityProtection()
+        {
+            var worn = EquippedGear(
+                GearDef("gas_mask", Ashfall.Core.Inventory.EquipSlot.Face, 30f),
+                GearDef("hazmat_suit", Ashfall.Core.Inventory.EquipSlot.Body, 80f));
+            Assert.Equal(2, worn.Count);
+            Assert.Equal(110f, RadiationSystem.ComputeGearProtection(worn), 3);
+        }
+
+        [Fact]
+        public void EquippedInventoryGear_ReducesExposureBelowAcute()
+        {
+            var worn = EquippedGear(GearDef("hazmat_suit", Ashfall.Core.Inventory.EquipSlot.Body, 80f));
+            var sys = new RadiationSystem(exposureContext: _ => new ExposureContext
+            {
+                ZoneRadLevel = 50f,
+                ShelterShielding = 0f,
+                WornGear = worn
+            });
+            var survivor = new SurvivorRadState { Id = "sv_geared", IsAlive = true };
+            sys.Register(survivor);
+            sys.Tick(2f);
+            // exposure = 50 - 80 = 0 mSv/hr
+            Assert.Equal(0f, survivor.LifetimeRadiationExposure, 3);
+            Assert.False(survivor.HasAcuteRadiationSickness);
+        }
+
+        [Fact]
+        public void NoEquippedGear_StillReachesAcute()
+        {
+            var sys = new RadiationSystem(exposureContext: _ => new ExposureContext
+            {
+                ZoneRadLevel = 50f,
+                ShelterShielding = 0f,
+                WornGear = new List<WornGear>()
+            });
+            var survivor = new SurvivorRadState { Id = "sv_bare", IsAlive = true };
+            sys.Register(survivor);
+            sys.Tick(2f);
+            Assert.True(survivor.RadiationDose >= RadiationSystem.AcuteThreshold,
+                $"bare survivor should reach acute; dose={survivor.RadiationDose}");
+            Assert.True(survivor.HasAcuteRadiationSickness);
+        }
     }
 }

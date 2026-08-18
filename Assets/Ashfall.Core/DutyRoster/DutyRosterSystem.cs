@@ -825,21 +825,9 @@ namespace Ashfall.Core
             }
 
             if (pool.Count == 0) return null;
-            int salt = _state.seedSalt + SeedUtilityOffset + day * 17 + StableHash(role);
+            int salt = _state.seedSalt + SeedUtilityOffset + day * 17 + StableHash.Of(role);
             int n = (int)(((long)salt & 0x7FFFFFFF));
             return pool[n % pool.Count];
-        }
-
-        private static int StableHash(string s)
-        {
-            if (string.IsNullOrEmpty(s)) return 0;
-            unchecked
-            {
-                int h = 5381;
-                for (int i = 0; i < s.Length; i++)
-                    h = ((h << 5) + h) ^ s[i];
-                return h;
-            }
         }
 
         private static bool IsKnownRole(string role)

@@ -10,7 +10,9 @@
 #   --data-integrity-selftest  → 0 errors across the JSON catalogs
 #   --bridge-selftest          → 0 semantic shim gaps
 #   --disease-selftest          → Disease Expansion 25/25
-#   --expansions-selftest      → ALL EXPANSIONS GREEN
+#   --expansions-selftest      → ALL EXPANSIONS GREEN (01–10, incl. Muster/Dose/Verdict/Black Flotilla)
+#   --black-flotilla-selftest  → Black Flotilla (Exp 09) vertical slice
+#   --radio-selftest           → radio persistence round-trip + tamper rejection
 #
 # Exit code 0 = all gates green; non-zero = something failed.
 set -euo pipefail
@@ -30,7 +32,7 @@ if ! godot --headless --path . --import >/tmp/godot-import.log 2>&1; then
     echo "godot --import reported a problem (see /tmp/godot-import.log) — continuing to gates." >&2
 fi
 
-for gate in --asset-registry-selftest --data-integrity-selftest --bridge-selftest --disease-selftest --expansions-selftest; do
+for gate in --asset-registry-selftest --data-integrity-selftest --bridge-selftest --disease-selftest --expansions-selftest --black-flotilla-selftest --radio-selftest; do
     echo; echo "── gate: $gate ──"
     if godot --headless --path . -- "$gate"; then
         echo "GATE PASS: $gate"

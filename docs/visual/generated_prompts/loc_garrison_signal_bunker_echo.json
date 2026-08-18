@@ -1,0 +1,95 @@
+{
+ "content_id": "loc_garrison_signal_bunker_echo",
+ "visual_family": "Location-Art",
+ "subfamily": "Other",
+ "model_hint": "auto",
+ "prompt_template": {
+  "WHAT": "A location art plate of a post-apocalyptic interior / exterior. Gameplay-functional, NOT a concept-art poster.",
+  "STYLE": "2D painted survival environments, dry-gouache. ASHFALL palette. Architectural geometry first, decoration second.",
+  "COMPOSITION": "Architectural layout readable at a glance. ~15% margin at top + bottom for UI overlay. Negative space preserved.",
+  "CAMERA": "Eye-level human-equivalent (~130 cm). NEVER aerial/drone. NEVER extreme wide-angle.",
+  "LIGHTING": "Diffuse overcast by default. Strong directional only with documented reason. Soft shadow.",
+  "PALETTE": "charcoal #2A2A2C, concrete grey #5C5F62, faded blue-grey #708085, rust brown #6E4A2F, dirty bone #B5A88A. Accents limited to muted amber #A26E2C (1-2% of pixels) and subtle cyan-green #4F7461 only for contamination iconography.",
+  "MATERIALS": "Concrete grey walls, scrubby bent metal, rusted I-beams, frosted-pane windows, condensation drips. Functional decay.",
+  "BACKGROUND": "Limited depth \u2014 the location is legible in foreground / mid / background. No endless horizon.",
+  "RUNTIME_READABILITY": "16:9 crop usable for expedition panel. Reads at 512\u00d7256 in-game. Negative-space margins preserved.",
+  "NEGATIVE": "no real-world text, letters, or numerals; no logos or watermark; no AI signature glyphs; no anime-style eyes outside portrait family; no fantasy ornament or fleurons; no neon cyberpunk glow borders; no glossy 3D chromatic rendering; no crystalline particles; no stock-photo backdrop; no pristine factory-fresh finish on tools or weapons; no gratuitous gore; no real-country flags; no real brand marks. No rendered UI text \u2014 that is authored in Godot.",
+  "OUTPUT_FORMAT": "1024x1024 JPG opaque."
+ },
+ "meta": {
+  "source_catalog": "year_of_ash_locations",
+  "reference_assets": [
+   {
+    "stem": "bunker_decon_airlock_chamber",
+    "file_path": "assets/art/bunker_decon_airlock_chamber.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "42_locations",
+    "file_path": "assets/art/42_locations.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "bunker_air_filter",
+    "file_path": "assets/art/bunker_air_filter.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "bunker_blast_door_hq",
+    "file_path": "assets/art/bunker_blast_door_hq.png",
+    "width": 2048,
+    "height": 2048
+   },
+   {
+    "stem": "bunker_command_console_desk",
+    "file_path": "assets/art/bunker_command_console_desk.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "bunker_commander_portrait",
+    "file_path": "assets/art/bunker_commander_portrait.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "bunker_cot",
+    "file_path": "assets/art/bunker_cot.jpg",
+    "width": 1024,
+    "height": 1024
+   },
+   {
+    "stem": "bunker_distillery_still",
+    "file_path": "assets/art/bunker_distillery_still.jpg",
+    "width": 1024,
+    "height": 1024
+   }
+  ],
+  "canonical_filename": "loc_garrison_signal_bunker_echo.jpg",
+  "target_directory": "assets/art/",
+  "alpha_requirement": "opaque",
+  "dimensions": [
+   1024,
+   1024
+  ],
+  "aspect_ratio": "16:9 location plate",
+  "priority_band": "P2",
+  "gameplay_importance": 1.75
+ },
+ "semantic_description": "A 2D painted icon for Location-Art 'loc_garrison_signal_bunker_echo', readable at icon scale (~64\u00d764).",
+ "forbidden_objects": [
+  "real-country flag",
+  "real brand mark",
+  "logo",
+  "watermark",
+  "rendered-text label",
+  "neon cyberpunk",
+  "anime-style eyes",
+  "fantasy ornament",
+  "glossy sci-fi glow",
+  "stock-photo backdrop"
+ ]
+}

@@ -1,0 +1,53 @@
+{
+ "total": 1208,
+ "resolved": 594,
+ "missing": 614,
+ "by_origin": {
+  "literal": 590,
+  "prefix-add": 3,
+  "semantic-alias": 1
+ },
+ "by_kind_total": {
+  "item": 715,
+  "portrait": 138,
+  "location": 247,
+  "faction": 108
+ },
+ "by_kind_missing": {
+  "item": 268,
+  "portrait": 38,
+  "location": 200,
+  "faction": 108
+ },
+ "missing_by_catalog": {
+  "black_flotilla_items": 13,
+  "characters": 36,
+  "crossing_factions": 3,
+  "crossing_items": 11,
+  "crossing_locations": 13,
+  "deep_lore_locations": 10,
+  "dose_items": 5,
+  "dose_locations": 3,
+  "economy_goods": 4,
+  "faction_war_communiques": 18,
+  "faction_war_dialogue": 18,
+  "faction_war_journal": 26,
+  "faction_war_location_overrides": 9,
+  "faction_war_radio": 33,
+  "foundry_items": 13,
+  "greenhouse_items": 10,
+  "holdfast_factions": 3,
+  "holdfast_items": 40,
+  "holdfast_locations": 34,
+  "items": 65,
+  "locations": 54,
+  "locations_expansion3": 19,
+  "recipes": 32,
+  "standing_record_factions": 1,
+  "survivors": 2,
+  "verdict_items": 15,
+  "verdict_locations": 4,
+  "year_of_ash_items": 57,
+  "year_of_ash_locations": 63
+ }
+}

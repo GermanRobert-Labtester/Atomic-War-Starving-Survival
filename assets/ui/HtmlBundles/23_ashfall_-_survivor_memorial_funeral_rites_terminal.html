@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ashfall Survivor Memorial Crematorium</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-tertiary": "#562000",
+                        "on-surface": "#e5e2e1",
+                        "secondary-container": "#225054",
+                        "on-surface-variant": "#c5c6ca",
+                        "tertiary-container": "#ffc9b0",
+                        "on-primary-container": "#585c61",
+                        "outline-variant": "#44474a",
+                        "on-tertiary-container": "#9c3f00",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "primary": "#eef1f7",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-low": "#1c1b1b",
+                        "primary-container": "#d1d5db",
+                        "inverse-surface": "#e5e2e1",
+                        "inverse-primary": "#5a5f64",
+                        "secondary": "#a1cfd3",
+                        "on-secondary-fixed": "#002022",
+                        "error": "#ffb4ab",
+                        "tertiary": "#ffede7",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "on-primary": "#2c3136",
+                        "surface-bright": "#393939",
+                        "surface-variant": "#353535",
+                        "surface-container-highest": "#353535",
+                        "on-primary-fixed-variant": "#43474c",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-dim": "#131313",
+                        "secondary-fixed": "#bcebef",
+                        "on-tertiary-fixed": "#351000",
+                        "on-background": "#e5e2e1",
+                        "surface-container": "#20201f",
+                        "outline": "#8f9194",
+                        "background": "#131313",
+                        "on-primary-fixed": "#171c20",
+                        "on-secondary-container": "#93c0c5",
+                        "on-secondary": "#00363a",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#131313",
+                        "surface-tint": "#c3c7cd",
+                        "primary-fixed": "#dfe3e9",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "surface-container-lowest": "#0e0e0e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "48px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "stack-sm": "8px",
+                        "margin-edge": "40px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "code-data": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Bebas Neue"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Bebas Neue"],
+                        "label-caps": ["JetBrains Mono"],
+                        "subheading": ["Bebas Neue"],
+                        "headline-lg-mobile": ["Bebas Neue"]
+                    },
+                    "fontSize": {
+                        "code-data": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-xl": ["72px", { "lineHeight": "72px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "26px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                        "subheading": ["24px", { "lineHeight": "28px", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* CRT Scanline Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        /* Worn Edge Top Border (simulated with box-shadow inset) */
+        .panel-worn {
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar for Terminals */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #44474a;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8f9194;
+        }
+        
+        .flicker {
+            animation: flicker 4s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.5; }
+        }
+        
+        .progress-ghost {
+            background-color: rgba(161, 207, 211, 0.1); /* Secondary color at 10% */
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen w-screen overflow-hidden flex flex-col relative">
+<!-- Background Image with Vignette -->
+<div class="absolute inset-0 bg-cover bg-center z-[-2] opacity-30" data-alt="A grim, desolate post-apocalyptic cityscape locked in an eternal winter. Ruined skyscrapers jut out of deep snowdrifts under a heavy, overcast, dark grey sky. The scene is lit by a flat, diffused light. The color palette is heavily desaturated, dominated by cold blues, stark whites, and charcoal greys, evoking a harsh, cold survival aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuavQjzoMpJsdsOCu2Ylxp2Zp4-qcIvs9Mk8XuB5QQ0npkGfACDiukCdrT-keEGkeGtORTwxU_h9u8K-DQSm2Re00fVSlq5QfG8zIqxkEW97Xw4S2zEHqemHHAa1tDbYXJHUmpMlJzsOEY6bmRHMM1dx0QVng-TZq98F07833wtCF_2nXKLUNbsNWvqiXts73KoNhR9k63VrgK7I9DpvPPjKddcYmP4JZ_OUXZoIIsVIx7DXUah_I7Jn4JLZqdP54Ca5riJFWUCn9J')"></div>
+<div class="absolute inset-0 bg-radial-gradient from-transparent to-background z-[-1]"></div>
+<!-- Top Navigation (Hidden on Mobile, Flex on MD) -->
+<nav class="hidden md:flex justify-between items-center w-full px-margin-edge h-16 bg-background border-b border-primary/30 z-50">
+<div class="font-headline-lg text-headline-lg text-primary tracking-widest">
+            ASHFALL TERMINAL
+        </div>
+<div class="flex space-x-gutter">
+<a class="text-primary border-b-2 border-primary pb-1 px-2 font-body-md text-body-md hover:text-tertiary-fixed transition-colors duration-75" href="#">MEMORIAL</a>
+<a class="text-on-surface-variant font-body-md text-body-md px-2 hover:text-tertiary-fixed transition-colors duration-75" href="#">CAMPAIGN</a>
+<a class="text-on-surface-variant font-body-md text-body-md px-2 hover:text-tertiary-fixed transition-colors duration-75" href="#">LOGS</a>
+</div>
+<div class="flex space-x-gutter">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:text-tertiary-fixed transition-colors duration-75" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:text-tertiary-fixed transition-colors duration-75" style="font-variation-settings: 'FILL' 1;">power_settings_new</span>
+</div>
+</nav>
+<!-- Main Content Layout -->
+<main class="flex-1 flex flex-col md:flex-row gap-gutter p-margin-edge overflow-hidden z-10">
+<!-- Left Column: Primary Telemetry -->
+<section class="flex-1 flex flex-col gap-gutter h-full">
+<!-- Active Rite Panel -->
+<div class="bg-surface-container-high/90 panel-worn p-stack-md rounded border border-outline-variant flex flex-col gap-stack-sm relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary to-transparent opacity-50"></div>
+<h2 class="font-subheading text-subheading text-secondary mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined">person_remove</span>
+                    ACTIVE RITE: ELENA VANCE
+                </h2>
+<div class="grid grid-cols-2 gap-4 border-t border-outline-variant/50 pt-4">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">AGE</span>
+<span class="font-code-data text-code-data text-on-surface">42 Cycles</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">RECORDED DAY</span>
+<span class="font-code-data text-code-data text-on-surface">Day 48 (Winter)</span>
+</div>
+<div class="col-span-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">CAUSE OF EXPIRY</span>
+<span class="font-code-data text-code-data text-error flicker">Acute Radiation Exposure [LVL-4]</span>
+</div>
+</div>
+</div>
+<!-- Chamber Telemetry Panel -->
+<div class="bg-surface-container/90 panel-worn p-stack-md rounded border border-outline-variant flex-1 flex flex-col gap-stack-md">
+<h2 class="font-subheading text-subheading text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">local_fire_department</span>
+                    CREMATORIUM CHAMBER TELEMETRY
+                </h2>
+<div class="flex-1 flex flex-col justify-center gap-stack-lg">
+<!-- Core Temp -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">FURNACE CHAMBER TEMP</span>
+<span class="font-headline-lg text-headline-lg text-secondary leading-none">920°C</span>
+</div>
+<div class="h-2 w-full progress-ghost relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-secondary w-3/4"></div>
+</div>
+<div class="mt-2 text-right">
+<span class="font-code-data text-code-data text-secondary-fixed animate-pulse">STATUS: Electric Coil Arc Active</span>
+</div>
+</div>
+<!-- Scrubber Efficiency -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">EXHAUST ASH FILTRATION SCRUBBER</span>
+<span class="font-code-data text-code-data text-primary">99.4% EFFICIENCY</span>
+</div>
+<div class="h-2 w-full progress-ghost relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-primary-container w-[99.4%]"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Secondary Data & Actions -->
+<section class="w-full md:w-[400px] flex flex-col gap-gutter h-full">
+<!-- Legacy Panel -->
+<div class="bg-surface-container-high/90 panel-worn p-stack-md rounded border border-outline-variant flex flex-col gap-stack-md">
+<h2 class="font-subheading text-subheading text-tertiary-fixed flex items-center gap-2">
+<span class="material-symbols-outlined">auto_stories</span>
+                    FINAL WISHES &amp; LEGACY
+                </h2>
+<div class="bg-surface-dim p-4 border border-outline-variant/50 relative">
+<span class="absolute -top-3 left-4 bg-surface-container-high px-2 font-label-caps text-label-caps text-on-surface-variant">FINAL DIRECTIVE</span>
+<p class="font-body-md text-body-md text-on-surface italic mt-2">"Ensure my daughter receives my father's compass."</p>
+<div class="mt-4 flex justify-between items-center border-t border-outline-variant/30 pt-2">
+<span class="font-code-data text-code-data text-secondary">STATUS: RESOLVED</span>
+<span class="font-code-data text-code-data text-secondary-fixed">+18 Resolve to Survivor Tyler Vance</span>
+</div>
+</div>
+<div class="bg-surface-dim p-4 border border-outline-variant/50 relative">
+<span class="absolute -top-3 left-4 bg-surface-container-high px-2 font-label-caps text-label-caps text-on-surface-variant">MEMORIAL PLAQUE INSCRIPTION</span>
+<p class="font-body-md text-body-md text-on-surface mt-2 tracking-wide text-center">"SHE HELD THE HATCH AGAINST THE WINTER."</p>
+</div>
+</div>
+<!-- Ash Garden Status -->
+<div class="bg-surface-container/90 panel-worn p-stack-md rounded border border-outline-variant flex flex-col gap-stack-sm">
+<h2 class="font-subheading text-subheading text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">account_balance</span>
+                    SHELTER MEMORIAL ASH GARDEN
+                </h2>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/50">
+<span class="font-code-data text-code-data text-on-surface-variant">URN COLUMBARIUM WALL CAP</span>
+<span class="font-code-data text-code-data text-primary">14 / 200</span>
+</div>
+<div class="flex gap-4 mt-2">
+<div class="flex-1 bg-surface-dim p-2 text-center border border-secondary/30">
+<span class="block font-label-caps text-label-caps text-secondary mb-1">MORALE MODIFIER</span>
+<span class="font-code-data text-code-data text-secondary">+10% SOLEMN DETERMINATION</span>
+</div>
+<div class="flex-1 bg-surface-dim p-2 text-center border border-error/30">
+<span class="block font-label-caps text-label-caps text-error mb-1">GRIEF BURDEN</span>
+<span class="font-code-data text-code-data text-error">-12% SORROW</span>
+</div>
+</div>
+</div>
+<!-- Tactical Directives -->
+<div class="mt-auto flex flex-col gap-3">
+<button class="w-full bg-secondary/10 border border-secondary text-secondary font-code-data text-code-data py-3 hover:bg-secondary hover:text-on-secondary transition-colors duration-150 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">cycle</span>
+                    COMPLETE CREMATION CYCLE
+                </button>
+<button class="w-full bg-transparent border border-outline-variant text-on-surface font-code-data text-code-data py-3 hover:border-secondary hover:text-secondary transition-colors duration-150 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">edit</span>
+                    INSCRIBE URN
+                </button>
+<button class="w-full bg-transparent border border-outline-variant text-on-surface font-code-data text-code-data py-3 hover:border-secondary hover:text-secondary transition-colors duration-150 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">nature</span>
+                    SCATTER ASHES IN SUB-HYDRO-GARDEN
+                </button>
+<button class="w-full bg-transparent border border-outline-variant text-on-surface font-code-data text-code-data py-3 hover:border-secondary hover:text-secondary transition-colors duration-150 flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined text-sm">mark_email_read</span>
+                    DELIVER INHERITANCE (RESOLVED)
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Nav (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter py-2 bg-surface-container-lowest border-t border-primary/20">
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-highest hover:text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">save_alt</span>
+<span class="font-label-caps text-label-caps mt-1">EXPORT DATA</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container p-2 border border-primary/50 shadow-[0_0_10px_rgba(209,213,219,0.2)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-caps text-label-caps mt-1">MEMORIAL</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-highest hover:text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_box</span>
+<span class="font-label-caps text-label-caps mt-1">NEW CAMPAIGN</span>
+</button>
+</nav>
+</body></html>

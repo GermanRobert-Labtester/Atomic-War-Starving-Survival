@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL TERMINAL - CIVILIZATION EVALUATION</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#225054",
+                        "inverse-on-surface": "#313030",
+                        "secondary-fixed": "#bcebef",
+                        "surface-container-high": "#2a2a2a",
+                        "on-secondary-fixed": "#002022",
+                        "primary": "#eef1f7",
+                        "surface-variant": "#353535",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "on-tertiary": "#562000",
+                        "on-background": "#e5e2e1",
+                        "primary-container": "#d1d5db",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-container": "#93c0c5",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "tertiary-fixed": "#ffdbcc",
+                        "secondary": "#a1cfd3",
+                        "primary-fixed": "#dfe3e9",
+                        "on-surface-variant": "#c5c6ca",
+                        "tertiary-container": "#ffc9b0",
+                        "on-primary-container": "#585c61",
+                        "on-error-container": "#ffdad6",
+                        "outline-variant": "#44474a",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "surface": "#131313",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "on-primary-fixed-variant": "#43474c",
+                        "tertiary": "#ffede7",
+                        "surface-container-low": "#1c1b1b",
+                        "error-container": "#93000a",
+                        "background": "#131313",
+                        "outline": "#8f9194",
+                        "surface-container-highest": "#353535",
+                        "surface-bright": "#393939",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-tint": "#c3c7cd",
+                        "on-tertiary-fixed": "#351000",
+                        "error": "#ffb4ab",
+                        "on-secondary": "#00363a",
+                        "surface-container": "#20201f",
+                        "on-primary-fixed": "#171c20",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e5e2e1",
+                        "inverse-primary": "#5a5f64",
+                        "surface-dim": "#131313",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "on-primary": "#2c3136",
+                        "on-tertiary-container": "#9c3f00",
+                        "tactical-teal": "#2d5a5e",
+                        "triumphant-amber": "#FFB300"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "48px",
+                        "unit": "4px",
+                        "stack-md": "24px",
+                        "stack-sm": "8px",
+                        "margin-edge": "40px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Bebas Neue"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "label-caps": ["JetBrains Mono"],
+                        "subheading": ["Bebas Neue"],
+                        "code-data": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Bebas Neue"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", {"lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "32px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700"}],
+                        "subheading": ["24px", {"lineHeight": "28px", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                        "code-data": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-xl": ["72px", {"lineHeight": "72px", "letterSpacing": "0.05em", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .vignette {
+            background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.8) 150%);
+            pointer-events: none;
+            z-index: 9;
+        }
+
+        .worn-edge-top {
+            mask-image: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 L10,2 L20,0 L30,3 L40,1 L50,4 L60,0 L70,2 L80,1 L90,3 L100,0 L100,100 L0,100 Z" fill="black"/></svg>');
+            mask-size: 100% 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .terminal-panel {
+            background-color: rgba(30, 30, 30, 0.85);
+            backdrop-filter: blur(4px);
+            border: 1px solid theme('colors.outline-variant');
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .flicker-on-hover:hover {
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .terminal-blink-cursor::after {
+            content: "█";
+            animation: blink 1s step-end infinite;
+            margin-left: 4px;
+            color: theme('colors.primary');
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .text-glow-amber {
+            text-shadow: 0 0 10px rgba(255, 179, 0, 0.5), 0 0 20px rgba(255, 179, 0, 0.3);
+        }
+
+        .bg-ghost-teal {
+            background-color: rgba(45, 90, 94, 0.1);
+        }
+
+        /* Material Symbols Fill adjustment */
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: theme('colors.surface-container');
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.outline-variant');
+            border-radius: 0;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline');
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between selection:bg-tactical-teal selection:text-white">
+<!-- Global Background & Effects -->
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-cover bg-center opacity-40" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtftrS_cs9u8iWKPIUv3yrwRHgvLyOrJUxkuLDSKNr0ZP85zDlVzaqfXvrg4BZQ2yLemOO3jnWattiQr6xAcWSfz3pqlmEpFza6xt6r2DIUkZQK7C9Dnb0Yr4ciYW3oZpELaNcDiIYJl5S3_ptf62DYGECpTPbSUY5bq_ajttvK2qEzg_4-CdJylC_6uqz6_EFwZCJuFl4jZY1Fc_WcJFfUNjfHFCb6hr7wDGvTMAhK3KQWDtrvRtKmdu8');"></div>
+<div class="absolute inset-0 bg-surface/60 mix-blend-multiply"></div>
+<div class="absolute inset-0 vignette"></div>
+<div class="absolute inset-0 scanlines"></div>
+</div>
+<!-- TopAppBar -->
+<nav class="bg-surface dark:bg-surface font-subheading text-subheading uppercase docked full-width top-0 border-b border-outline-variant/50 flat no shadows flex justify-between items-center w-full px-margin-edge py-stack-sm max-w-full z-50 relative shrink-0">
+<div class="flex items-center gap-stack-md">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary tracking-widest hidden md:block">ASHFALL TERMINAL</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary tracking-widest md:hidden">AT</span>
+<div class="h-6 w-px bg-outline-variant/50 hidden md:block"></div>
+<ul class="hidden md:flex gap-stack-md">
+<li class="text-on-surface-variant hover:text-secondary hover:bg-surface-variant/20 px-2 py-1 cursor-pointer transition-colors duration-200">INTEL</li>
+<li class="text-on-surface-variant hover:text-secondary hover:bg-surface-variant/20 px-2 py-1 cursor-pointer transition-colors duration-200">SQUAD</li>
+<li class="text-on-surface-variant hover:text-secondary hover:bg-surface-variant/20 px-2 py-1 cursor-pointer transition-colors duration-200">LOGS</li>
+<li class="text-tertiary-container border-b-2 border-on-tertiary-container pb-1 cursor-pointer">STATUS</li>
+</ul>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="hidden md:flex items-center px-3 py-1 bg-surface-variant/30 border border-outline-variant/50 rounded-sm">
+<span class="material-symbols-outlined text-outline text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none text-code-data font-code-data text-primary focus:ring-0 placeholder:text-outline p-0 w-48" placeholder="Search Database..." type="text"/>
+</div>
+<span class="text-triumphant-amber font-bold tracking-wider">CIVILIZATION GRADE: S-TIER</span>
+<button class="md:hidden text-primary hover:text-secondary">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="relative z-20 flex-grow w-full max-w-7xl mx-auto px-4 md:px-margin-edge py-stack-lg overflow-y-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-stack-md">
+<!-- Left Column: Primary Evaluation & Legacy -->
+<div class="lg:col-span-8 flex flex-col gap-stack-md">
+<!-- Hero Panel: Score and Grade Card -->
+<section class="terminal-panel worn-edge-top p-stack-md flex flex-col gap-stack-sm relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 pointer-events-none text-9xl font-headline-xl text-triumphant-amber select-none">S</div>
+<header class="flex justify-between items-start border-b border-outline-variant/50 pb-2 mb-4">
+<h1 class="font-headline-lg md:text-headline-lg text-headline-lg-mobile text-primary uppercase tracking-widest">CIVILIZATION EVALUATION: FINAL REPORT</h1>
+<span class="font-code-data text-code-data text-outline bg-surface-container-high px-2 py-1 border border-outline-variant">ID: 9482-A</span>
+</header>
+<div class="flex flex-col md:flex-row items-center md:items-start gap-stack-md mt-4">
+<div class="flex flex-col items-center justify-center bg-surface-container-low border border-triumphant-amber/30 p-8 min-w-[200px] shadow-[0_0_15px_rgba(255,179,0,0.1)]">
+<span class="font-subheading text-subheading text-outline uppercase mb-2">FINAL GRADE</span>
+<span class="font-headline-xl md:text-headline-xl text-headline-lg text-triumphant-amber text-glow-amber leading-none">S-TIER</span>
+</div>
+<div class="flex flex-col w-full gap-stack-sm">
+<div class="flex justify-between items-end border-b border-outline-variant/30 pb-2">
+<span class="font-subheading text-subheading text-primary">CUMULATIVE SCORE</span>
+<span class="font-code-data text-xl text-secondary font-bold">94,820 POINTS</span>
+</div>
+<ul class="flex flex-col gap-2 mt-2 font-code-data text-code-data text-on-surface-variant">
+<li class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+<span class="w-32 text-outline">Days Survived:</span>
+<span class="text-primary">365 Days</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+<span class="w-32 text-outline">Bunker Status:</span>
+<span class="text-primary">SELF-SUSTAINING FORTRESS</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full"></span>
+<span class="w-32 text-outline">Population:</span>
+<span class="text-primary">48 Survivors <span class="text-outline text-xs ml-2">(0 Starvations, 3 Casualties)</span></span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Legacy Epilogue Panel -->
+<section class="terminal-panel p-stack-md flex flex-col gap-stack-sm">
+<header class="border-b border-outline-variant/50 pb-2 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline" data-icon="public">public</span>
+<h2 class="font-subheading text-subheading text-primary uppercase">Legacy Epilogue: Faction World Standing</h2>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-sm">
+<!-- Faction 1 -->
+<div class="bg-surface-container-low border border-outline-variant p-4 flex flex-col gap-2 hover:bg-surface-container-high transition-colors">
+<h3 class="font-label-caps text-label-caps text-outline uppercase">The Iron Syndicate</h3>
+<div class="flex items-center gap-2 mt-auto pt-4 border-t border-outline-variant/30">
+<span class="material-symbols-outlined text-error text-sm" data-icon="warning">warning</span>
+<span class="font-code-data text-code-data text-error uppercase font-bold">SUBJUGATED</span>
+</div>
+</div>
+<!-- Faction 2 -->
+<div class="bg-surface-container-low border border-outline-variant p-4 flex flex-col gap-2 hover:bg-surface-container-high transition-colors">
+<h3 class="font-label-caps text-label-caps text-outline uppercase">The Meridian Compact</h3>
+<div class="flex items-center gap-2 mt-auto pt-4 border-t border-outline-variant/30">
+<span class="material-symbols-outlined text-tactical-teal text-sm" data-icon="handshake">handshake</span>
+<span class="font-code-data text-code-data text-tactical-teal uppercase font-bold">ALLIED TRADE PARTNER</span>
+</div>
+</div>
+<!-- Faction 3 -->
+<div class="bg-surface-container-low border border-outline-variant p-4 flex flex-col gap-2 hover:bg-surface-container-high transition-colors">
+<h3 class="font-label-caps text-label-caps text-outline uppercase">Wasteland Nomad Tribes</h3>
+<div class="flex items-center gap-2 mt-auto pt-4 border-t border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="group">group</span>
+<span class="font-code-data text-code-data text-secondary uppercase font-bold">INTEGRATED INTO COALITION</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Indices & Directives -->
+<div class="lg:col-span-4 flex flex-col gap-stack-md">
+<!-- Indices Panel -->
+<section class="terminal-panel p-stack-md flex flex-col gap-stack-sm h-full">
+<header class="border-b border-outline-variant/50 pb-2 mb-4">
+<h2 class="font-subheading text-subheading text-primary uppercase">Civilization Indices</h2>
+<p class="font-code-data text-xs text-outline mt-1">POST-APOCALYPTIC METRICS</p>
+</header>
+<div class="flex flex-col gap-stack-md">
+<!-- Index 1 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Biosphere Regeneration</span>
+<span class="font-code-data text-code-data text-primary">88%</span>
+</div>
+<div class="h-2 w-full bg-ghost-teal relative overflow-hidden border border-tactical-teal/30">
+<div class="absolute top-0 left-0 h-full bg-tactical-teal w-[88%] shadow-[0_0_8px_rgba(45,90,94,0.8)]"></div>
+</div>
+<p class="font-code-data text-[10px] text-outline mt-1 text-right">Clean Hydroponics, Low Surface Contamination</p>
+</div>
+<!-- Index 2 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Technological Preservation</span>
+<span class="font-code-data text-code-data text-primary">92%</span>
+</div>
+<div class="h-2 w-full bg-ghost-teal relative overflow-hidden border border-tactical-teal/30">
+<div class="absolute top-0 left-0 h-full bg-tactical-teal w-[92%] shadow-[0_0_8px_rgba(45,90,94,0.8)]"></div>
+</div>
+<p class="font-code-data text-[10px] text-outline mt-1 text-right">Fusion Reactor, Gene Lab, Radio Grid</p>
+</div>
+<!-- Index 3 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Moral and Governance</span>
+<span class="font-code-data text-code-data text-primary">84%</span>
+</div>
+<div class="h-2 w-full bg-ghost-teal relative overflow-hidden border border-tactical-teal/30">
+<div class="absolute top-0 left-0 h-full bg-tactical-teal w-[84%] shadow-[0_0_8px_rgba(45,90,94,0.8)]"></div>
+</div>
+<p class="font-code-data text-[10px] text-outline mt-1 text-right">Democratic Council, High Resolve</p>
+</div>
+</div>
+</section>
+<!-- Action Directives Panel -->
+<section class="terminal-panel p-stack-md flex flex-col gap-stack-sm mt-auto">
+<header class="border-b border-outline-variant/50 pb-2 mb-4">
+<h2 class="font-subheading text-subheading text-primary uppercase">Victory Directives</h2>
+</header>
+<div class="flex flex-col gap-3">
+<button class="w-full text-left font-code-data text-code-data text-on-surface-variant border border-outline-variant bg-transparent py-3 px-4 hover:bg-tactical-teal hover:text-white hover:border-tactical-teal transition-all flex items-center justify-between group">
+<span>[ REVIEW SURVIVOR HISTORY LEDGER ]</span>
+<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="w-full text-left font-code-data text-code-data text-on-surface-variant border border-outline-variant bg-transparent py-3 px-4 hover:bg-tactical-teal hover:text-white hover:border-tactical-teal transition-all flex items-center justify-between group">
+<span>[ EXPORT BUNKER CHRONICLE ARCHIVE ]</span>
+<span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity" data-icon="download">download</span>
+</button>
+<button class="w-full text-center font-subheading text-subheading text-surface bg-triumphant-amber py-4 px-4 mt-2 hover:bg-amber-400 border border-transparent hover:shadow-[0_0_15px_rgba(255,179,0,0.5)] transition-all uppercase tracking-wider relative overflow-hidden group">
+<span class="relative z-10">[ BEGIN NEW SURVIVAL ODYSSEY (NG+) ]</span>
+<div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity z-0"></div>
+</button>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest text-on-surface-variant dark:text-on-surface-variant font-code-data text-code-data docked full-width bottom-0 border-t border-outline-variant/30 flat no shadows fixed bottom-0 w-full flex justify-between items-center px-margin-edge py-2 z-50 terminal-blink-cursor">
+<div class="hidden md:block">SYSTEM STABILITY: 98.4% | CORE TEMP: 42C | ENCRYPTION: ACTIVE</div>
+<div class="md:hidden text-xs">SYS: 98.4% | TEMP: 42C</div>
+<ul class="flex gap-4 md:gap-6">
+<li class="text-outline hover:text-secondary cursor-pointer transition-colors text-xs md:text-sm">REBOOT</li>
+<li class="text-outline hover:text-secondary cursor-pointer transition-colors text-xs md:text-sm">DATA DUMP</li>
+<li class="text-outline hover:text-secondary cursor-pointer transition-colors text-xs md:text-sm">LOG OUT</li>
+</ul>
+</footer>
+</body></html>

@@ -5,6 +5,8 @@ using Ashfall.Core.Clock;
 using Ashfall.Core.Events;
 using Ashfall.Core.Flags;
 using Ashfall.Core.Verdict;
+using Ashfall.Core.YearOfAsh;
+using AtomicWar.GodotApp.YearOfAsh;
 using ClockSimClock = Ashfall.Core.Clock.SimClock;
 
 namespace AtomicWar.GodotApp
@@ -27,6 +29,7 @@ namespace AtomicWar.GodotApp
         public VerdictNpcSystem Npcs { get; }
         public VerdictCensusBroadcast Census { get; }
         public VerdictRadioSystem Radio { get; internal set; }
+        public QuestlineSystem Quests { get; }
         public IReadOnlyList<VerdictCatalogLoader.VerdictLocationEntry> Locations { get; }
         public IReadOnlyList<VerdictCatalogLoader.VerdictItemEntry> Items { get; }
         public IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> RadioEntries { get; }
@@ -68,12 +71,14 @@ namespace AtomicWar.GodotApp
             VerdictCensusBroadcast census = null,
             IReadOnlyList<VerdictCatalogLoader.VerdictLocationEntry> locations = null,
             IReadOnlyList<VerdictCatalogLoader.VerdictItemEntry> items = null,
-            IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> radio = null)
+            IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> radio = null,
+            QuestlineSystem quests = null)
         {
             MachineLog = machineLog ?? new MachineLogSystem();
             Reckoning = reckoning ?? new ReckoningSystem();
             Evidence = evidence ?? new EvidenceLedger();
             Npcs = npcs ?? new VerdictNpcSystem();
+            Quests = quests ?? new QuestlineSystem();
             Census = census;
             Locations = locations ?? new List<VerdictCatalogLoader.VerdictLocationEntry>();
             Items = items ?? new List<VerdictCatalogLoader.VerdictItemEntry>();
@@ -107,7 +112,9 @@ namespace AtomicWar.GodotApp
             var items = VerdictCatalogLoader.LoadItems(dataDir, s_files, s_json);
             var radioEntries = VerdictCatalogLoader.LoadRadio(dataDir, s_files, s_json);
             var censusBroadcast = new VerdictCensusBroadcast(clock, bus, flags, radioRng, census);
-            var session = new VerdictHostSession(census: censusBroadcast, locations: locations, items: items, radio: radioEntries);
+            var quests = new QuestlineSystem();
+            VerdictQuestCatalogLoader.LoadAndRegister(quests, dataDir, s_files, s_json);
+            var session = new VerdictHostSession(census: censusBroadcast, locations: locations, items: items, radio: radioEntries, quests: quests);
             session.Radio = new VerdictRadioSystem(bus, clock, radioEntries);
             VerdictNpcCatalogLoader.LoadAndRegister(session.Npcs, dataDir, s_files, s_json);
             session.CorruptionCorpus = VerdictCatalogLoader.LoadCorruptionCorpus(dataDir, s_files, s_json);
@@ -115,11 +122,24 @@ namespace AtomicWar.GodotApp
             var save = VerdictSaveStore.TryLoad();
             if (save != null)
             {
-                VerdictSaveCodec.Restore(save, session.MachineLog, session.Reckoning, session.Evidence, session.Npcs, session.Radio);
+                VerdictSaveCodec.Restore(save, session.MachineLog, session.Reckoning, session.Evidence, session.Npcs, session.Radio, session.Quests);
                 // Observability: remember which save version loaded and whether it migrated (C).
                 session.LoadedSaveVersion = save.saveVersion;
                 session.WasSaveMigrated = save.saveVersion != VerdictSave.CurrentSaveVersion;
                 session.LastEvent = "Verdict state restored from save.";
+            }
+
+            // One-time migration: pre-v3 Verdict saves persisted Verdict quest
+            // progress inside the Year of Ash envelope. Fold any quest_verdict_*
+            // records found there into the Verdict envelope (Verdict wins on
+            // conflict) so no progress is lost when the old save upgrades. This
+            // runs whether or not a Verdict save file exists yet.
+            var yearOfAshSave = YearOfAshSaveStore.TryLoad();
+            if (yearOfAshSave != null && yearOfAshSave.quests != null)
+            {
+                int adopted = VerdictQuestMigration.AdoptFromYearOfAsh(session.Quests.State, yearOfAshSave.quests);
+                if (adopted > 0)
+                    session.LastEvent = "Migrated " + adopted + " Verdict quest record(s) from the Year of Ash save.";
             }
             return session;
         }
@@ -191,12 +211,12 @@ namespace AtomicWar.GodotApp
         public VerdictSave CaptureSave()
         {
             return VerdictSaveCodec.Capture(
-                CurrentDaySafe(), MachineLog, Reckoning, Evidence, Census.LastWindowDay, Npcs, Radio);
+                CurrentDaySafe(), MachineLog, Reckoning, Evidence, Census.LastWindowDay, Npcs, Radio, Quests);
         }
 
         public void RestoreSave(VerdictSave save)
         {
-            VerdictSaveCodec.Restore(save, MachineLog, Reckoning, Evidence, Npcs, Radio);
+            VerdictSaveCodec.Restore(save, MachineLog, Reckoning, Evidence, Npcs, Radio, Quests);
             LastEvent = "Verdict state restored.";
         }
 

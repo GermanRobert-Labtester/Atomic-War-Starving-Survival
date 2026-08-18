@@ -2,12 +2,18 @@ using System;
 using Godot;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Journal panel.
     /// Shows day logs, personal notes, narrative progression, and story entries.
+    /// Wrapped in the ASHFALL Dashboard Shell so a sidebar lets the user jump
+    /// between Day Logs / Personal Notes / Story Progression sections. The
+    /// shell preserves the existing modal-style chrome (warm amber, dim
+    /// labels, 9-slice frame) — Stitch's sidebar / memorial layout is
+    /// deliberately treated as inspiration, not contract.
     /// </summary>
     public partial class JournalPanel : Control
     {
@@ -20,6 +26,9 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _notesList;
         private Label _lblStoryTitle;
         private VBoxContainer _storyEntries;
+
+        private AshfallDashboardShell _shell = null!;
+        private AshfallSidebar? _sidebar;
 
         // Placeholder journal data
         private readonly string[] _placeholderLogs = {
@@ -113,26 +122,48 @@ namespace AtomicWar.GodotApp.UI
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+            var center = new CenterContainer();
+            center.SetAnchorsPreset(LayoutPreset.FullRect);
+            AddChild(center);
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
+            // Dashboard shell — sidebar lets the user jump between Day Logs /
+            // Personal Notes / Story Progression. No status rail here — the
+            // journal is a narrative surface, not a metrics dashboard.
+            _shell = new AshfallDashboardShell(
+                "JOURNAL & NARRATIVE", 820, 600);
+            center.AddChild(_shell);
+            _sidebar = _shell.SetSidebar(new[]
+            {
+                new AshfallSidebar.Item { Id = "logs",    Label = "Day Logs",      Hint = "CHRONICLE" },
+                new AshfallSidebar.Item { Id = "notes",   Label = "Personal Notes",Hint = "COHORT NOTATIONS" },
+                new AshfallSidebar.Item { Id = "story",   Label = "Story",         Hint = "PROGRESSION" },
+            }, "CHAPTERS", "logs");
+            _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());
 
-            var title = AshfallUiHelpers.MakeTitle("JOURNAL & NARRATIVE", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
+            // Content slot — single scrollable VBox that hosts the three
+            // named sub-sections. Sidebar selection scrolls the matching
+            // sub-section into view.
+            var scrollRoot = new ScrollContainer();
+            scrollRoot.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            scrollRoot.SizeFlagsVertical = SizeFlags.ExpandFill;
+            var scrollMargin = new MarginContainer();
+            scrollMargin.AddThemeConstantOverride("margin_left", DesignTheme.SpacingLg);
+            scrollMargin.AddThemeConstantOverride("margin_top", DesignTheme.SpacingMd);
+            scrollMargin.AddThemeConstantOverride("margin_right", DesignTheme.SpacingLg);
+            scrollMargin.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingMd);
+            scrollRoot.AddChild(scrollMargin);
+            _shell.SetContent(scrollRoot);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            var vbox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingLg);
+            vbox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+            scrollMargin.AddChild(vbox);
 
             // Day logs section
             _lblLogsTitle = AshfallUiHelpers.MakeSectionHeader("DAY LOGS");
             vbox.AddChild(_lblLogsTitle);
 
             _logEntries = new VBoxContainer();
-            _logEntries.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _logEntries.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
             _logEntries.CustomMinimumSize = new Vector2(500, 0);
             vbox.AddChild(_logEntries);
 
@@ -143,7 +174,7 @@ namespace AtomicWar.GodotApp.UI
             vbox.AddChild(_lblNotesTitle);
 
             _notesList = new VBoxContainer();
-            _notesList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _notesList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
             _notesList.CustomMinimumSize = new Vector2(500, 0);
             vbox.AddChild(_notesList);
 
@@ -154,20 +185,49 @@ namespace AtomicWar.GodotApp.UI
             vbox.AddChild(_lblStoryTitle);
 
             _storyEntries = new VBoxContainer();
-            _storyEntries.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _storyEntries.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
             _storyEntries.CustomMinimumSize = new Vector2(500, 0);
             vbox.AddChild(_storyEntries);
 
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+            if (_sidebar != null)
+            {
+                _sidebar.OnSelected += id =>
+                {
+                    if (id == "logs" && _lblLogsTitle != null)
+                        ScrollToChild(scrollRoot, _lblLogsTitle);
+                    else if (id == "notes" && _lblNotesTitle != null)
+                        ScrollToChild(scrollRoot, _lblNotesTitle);
+                    else if (id == "story" && _lblStoryTitle != null)
+                        ScrollToChild(scrollRoot, _lblStoryTitle);
+                };
+            }
 
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
+            // Populate placeholder entries (SnapshotHarness doesn't bind a
+            // host session, so we render the in-file fixtures so the screen
+            // remains inspectable).
+            RefreshView();
+        }
 
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
+        private static void ScrollToChild(ScrollContainer scroll, Control child)
+        {
+            if (scroll == null || child == null) return;
+            try
+            {
+                float targetOffset = 0f;
+                Node walker = child;
+                while (walker != null && walker != scroll)
+                {
+                    if (walker is Control w && walker != scroll)
+                        targetOffset += w.Position.Y;
+                    walker = walker.GetParent();
+                }
+                if (targetOffset > 0)
+                    scroll.ScrollVertical = (int)Math.Max(0, targetOffset - 8);
+            }
+            catch
+            {
+                // best-effort
+            }
         }
 
         public void Open()

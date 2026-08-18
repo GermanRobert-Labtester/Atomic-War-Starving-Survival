@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL - Survival HUD</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-container": "#225054",
+                      "on-tertiary": "#562000",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-secondary-container": "#93c0c5",
+                      "on-primary-fixed": "#171c20",
+                      "error": "#ffb4ab",
+                      "tertiary": "#ffede7",
+                      "on-tertiary-container": "#9c3f00",
+                      "outline-variant": "#44474a",
+                      "secondary-fixed-dim": "#a1cfd3",
+                      "outline": "#8f9194",
+                      "on-primary": "#2c3136",
+                      "on-surface": "#e5e2e1",
+                      "on-surface-variant": "#c5c6ca",
+                      "on-tertiary-fixed": "#351000",
+                      "surface-variant": "#353535",
+                      "surface-container-highest": "#353535",
+                      "surface-container-high": "#2a2a2a",
+                      "surface-tint": "#c3c7cd",
+                      "primary": "#eef1f7",
+                      "inverse-surface": "#e5e2e1",
+                      "surface": "#131313",
+                      "primary-fixed": "#dfe3e9",
+                      "on-secondary": "#00363a",
+                      "on-primary-fixed-variant": "#43474c",
+                      "inverse-primary": "#5a5f64",
+                      "primary-container": "#d1d5db",
+                      "surface-dim": "#131313",
+                      "surface-bright": "#393939",
+                      "tertiary-container": "#ffc9b0",
+                      "primary-fixed-dim": "#c3c7cd",
+                      "inverse-on-surface": "#313030",
+                      "secondary-fixed": "#bcebef",
+                      "on-background": "#e5e2e1",
+                      "on-error-container": "#ffdad6",
+                      "tertiary-fixed": "#ffdbcc",
+                      "tertiary-fixed-dim": "#ffb693",
+                      "surface-container-low": "#1c1b1b",
+                      "surface-container": "#20201f",
+                      "on-secondary-fixed": "#002022",
+                      "on-tertiary-fixed-variant": "#7a3000",
+                      "background": "#131313",
+                      "secondary": "#a1cfd3",
+                      "on-error": "#690005",
+                      "error-container": "#93000a",
+                      "on-primary-container": "#585c61",
+                      "on-secondary-fixed-variant": "#1f4d51"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "24px",
+                      "gutter": "16px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-lg": "48px",
+                      "margin-edge": "40px"
+              },
+              "fontFamily": {
+                      "headline-xl": [
+                              "Bebas Neue"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "subheading": [
+                              "Bebas Neue"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Bebas Neue"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "code-data": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Bebas Neue"
+                      ]
+              },
+              "fontSize": {
+                      "headline-xl": [
+                              "72px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "subheading": [
+                              "24px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "26px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.15em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "code-data": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: theme('colors.surface-container-lowest');
+            color: theme('colors.on-surface');
+            overflow: hidden;
+        }
+
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            50% { opacity: 1; }
+            100% { opacity: 0.92; }
+        }
+
+        .worn-edge {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(180deg, rgba(42, 42, 42, 0.8) 0%, rgba(28, 27, 27, 0.9) 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .progress-bar-ghost {
+            background-color: rgba(161, 207, 211, 0.1); /* secondary with opacity */
+        }
+        
+        .progress-bar-fill {
+            background-color: theme('colors.secondary');
+        }
+
+        .progress-bar-fill-warning {
+            background-color: theme('colors.tertiary-container');
+            animation: pulse-warning 2s infinite;
+        }
+
+        @keyframes pulse-warning {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .bg-blur-ambient {
+            background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLtftrS_cs9u8iWKPIUv3yrwRHgvLyOrJUxkuLDSKNr0ZP85zDlVzaqfXvrg4BZQ2yLemOO3jnWattiQr6xAcWSfz3pqlmEpFza6xt6r2DIUkZQK7C9Dnb0Yr4ciYW3oZpELaNcDiIYJl5S3_ptf62DYGECpTPbSUY5bq_ajttvK2qEzg_4-CdJylC_6uqz6_EFwZCJuFl4jZY1Fc_WcJFfUNjfHFCb6hr7wDGvTMAhK3KQWDtrvRtKmdu8');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px) brightness(0.3);
+            transform: scale(1.05); /* prevent blur edges */
+        }
+
+        /* Material Symbols Weight config */
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="w-screen h-screen relative font-body-md antialiased selection:bg-secondary-container selection:text-secondary">
+<!-- Ambient Background -->
+<div class="absolute inset-0 bg-blur-ambient z-0"></div>
+<!-- Static / Scanlines Overlay -->
+<div class="absolute inset-0 scanlines crt-flicker z-10 opacity-70"></div>
+<!-- HUD Container -->
+<main class="relative z-20 w-full h-full p-margin-edge flex flex-col justify-between pointer-events-none">
+<!-- Top Section: Status & Environment -->
+<header class="flex justify-between items-start w-full">
+<!-- Left: Vital Status -->
+<div class="flex flex-col gap-stack-sm pointer-events-auto w-64">
+<!-- Health -->
+<div class="worn-edge p-3 rounded flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-outline">HLTH</span>
+<span class="font-code-data text-code-data text-primary">82%</span>
+</div>
+<div class="h-2 w-full progress-bar-ghost rounded-sm overflow-hidden">
+<div class="h-full progress-bar-fill w-[82%]"></div>
+</div>
+</div>
+<!-- Hunger -->
+<div class="worn-edge p-3 rounded flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-outline">HNGR</span>
+<span class="font-code-data text-code-data text-primary">65%</span>
+</div>
+<div class="h-2 w-full progress-bar-ghost rounded-sm overflow-hidden">
+<div class="h-full progress-bar-fill w-[65%]"></div>
+</div>
+</div>
+<!-- Thirst -->
+<div class="worn-edge p-3 rounded flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-tertiary-container animate-pulse">THST</span>
+<span class="font-code-data text-code-data text-tertiary-container">28%</span>
+</div>
+<div class="h-2 w-full progress-bar-ghost rounded-sm overflow-hidden">
+<div class="h-full progress-bar-fill-warning w-[28%]"></div>
+</div>
+</div>
+<!-- Warmth -->
+<div class="worn-edge p-3 rounded flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-outline">TEMP</span>
+<span class="font-code-data text-code-data text-primary">90%</span>
+</div>
+<div class="h-2 w-full progress-bar-ghost rounded-sm overflow-hidden">
+<div class="h-full progress-bar-fill w-[90%]"></div>
+</div>
+</div>
+</div>
+<!-- Top Center: Compass / Heading -->
+<div class="flex flex-col items-center pointer-events-auto">
+<div class="font-headline-lg text-headline-lg text-primary tracking-widest opacity-80">
+                    N <span class="text-outline">NE E SE S SW W NW</span>
+</div>
+<div class="w-0 h-0 border-l-[6px] border-r-[6px] border-b-[8px] border-transparent border-b-secondary mt-1"></div>
+</div>
+<!-- Right: Environment & Radiation -->
+<div class="flex flex-col gap-stack-sm items-end pointer-events-auto w-72">
+<!-- Environment Readout -->
+<div class="worn-edge p-4 rounded flex flex-col gap-2 w-full">
+<div class="flex items-center gap-2 border-b border-outline-variant/50 pb-2">
+<span class="material-symbols-outlined text-outline text-[20px]">thermostat</span>
+<span class="font-subheading text-subheading text-primary">EXT: -42°C</span>
+</div>
+<div class="flex justify-between font-code-data text-code-data text-outline mt-1">
+<span>WIND: 45 KM/H</span>
+<span>VIS: LOW</span>
+</div>
+</div>
+<!-- Radiation Dosimeter -->
+<div class="worn-edge p-4 rounded flex flex-col gap-2 w-full border border-tertiary-container/20">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary-container text-[20px]">warning</span>
+<span class="font-label-caps text-label-caps text-tertiary-container">RAD LVL</span>
+</div>
+<span class="font-code-data text-code-data text-tertiary-container">0.8 Sv/h</span>
+</div>
+<div class="flex w-full h-3 gap-[2px] mt-1">
+<!-- Segments for visual flair -->
+<div class="flex-1 bg-secondary opacity-40"></div>
+<div class="flex-1 bg-secondary opacity-40"></div>
+<div class="flex-1 bg-secondary opacity-40"></div>
+<div class="flex-1 bg-secondary opacity-40"></div>
+<div class="flex-1 bg-tertiary-container opacity-80 animate-pulse"></div>
+<div class="flex-1 bg-surface-variant"></div>
+<div class="flex-1 bg-surface-variant"></div>
+<div class="flex-1 bg-surface-variant"></div>
+</div>
+</div>
+<!-- Air Filtration Status -->
+<div class="worn-edge p-4 rounded flex flex-col gap-2 w-full">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[20px]">air</span>
+<span class="font-label-caps text-label-caps text-outline">INT AIR</span>
+</div>
+<span class="font-code-data text-code-data text-primary">98% O2</span>
+</div>
+<div class="flex justify-between items-center mt-1">
+<span class="font-label-caps text-label-caps text-outline text-[10px]">FILTER LIFE</span>
+<span class="font-code-data text-code-data text-secondary">42:15:00</span>
+</div>
+<div class="h-1 w-full progress-bar-ghost rounded-sm overflow-hidden mt-1">
+<div class="h-full progress-bar-fill w-[45%]"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Bottom Section: Quickbar & Interactions -->
+<footer class="flex flex-col items-center gap-stack-md w-full pointer-events-auto">
+<!-- Contextual Action Prompt -->
+<div class="flex items-center gap-2 bg-surface-container-low/80 px-4 py-2 rounded border border-outline-variant/30 backdrop-blur-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">pan_tool</span>
+<span class="font-label-caps text-label-caps text-primary">PRESS [E] TO ACCESS TERMINAL</span>
+<span class="inline-block w-2 h-4 bg-secondary blinking-cursor ml-1"></span>
+</div>
+<!-- Inventory Quickbar -->
+<div class="flex gap-unit worn-edge p-2 rounded backdrop-blur-sm">
+<!-- Slot 1 (Active) -->
+<div class="w-16 h-16 border-2 border-secondary bg-secondary-container/30 flex items-center justify-center relative group cursor-pointer hover:bg-secondary-container/50 transition-colors">
+<span class="absolute top-1 left-1 font-label-caps text-[10px] text-secondary">1</span>
+<span class="material-symbols-outlined text-[32px] text-primary" data-weight="fill">flashlight_on</span>
+</div>
+<!-- Slot 2 -->
+<div class="w-16 h-16 border border-outline-variant/50 bg-surface/50 flex items-center justify-center relative group cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="absolute top-1 left-1 font-label-caps text-[10px] text-outline">2</span>
+<span class="material-symbols-outlined text-[32px] text-outline">hardware</span>
+</div>
+<!-- Slot 3 -->
+<div class="w-16 h-16 border border-outline-variant/50 bg-surface/50 flex items-center justify-center relative group cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="absolute top-1 left-1 font-label-caps text-[10px] text-outline">3</span>
+<span class="material-symbols-outlined text-[32px] text-outline">medical_services</span>
+<span class="absolute bottom-1 right-1 font-code-data text-[10px] text-primary">x3</span>
+</div>
+<!-- Slot 4 -->
+<div class="w-16 h-16 border border-outline-variant/50 bg-surface/50 flex items-center justify-center relative group cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="absolute top-1 left-1 font-label-caps text-[10px] text-outline">4</span>
+<span class="material-symbols-outlined text-[32px] text-outline">science</span>
+</div>
+<!-- Slot 5 -->
+<div class="w-16 h-16 border border-outline-variant/50 bg-surface/50 flex items-center justify-center relative group cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="absolute top-1 left-1 font-label-caps text-[10px] text-outline">5</span>
+</div>
+<!-- Slot 6 -->
+<div class="w-16 h-16 border border-outline-variant/50 bg-surface/50 flex items-center justify-center relative group cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="absolute top-1 left-1 font-label-caps text-[10px] text-outline">6</span>
+</div>
+<!-- Slot 7 -->
+<div class="w-16 h-16 border border-outline-variant/50 bg-surface/50 flex items-center justify-center relative group cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="absolute top-1 left-1 font-label-caps text-[10px] text-outline">7</span>
+</div>
+<!-- Slot 8 -->
+<div class="w-16 h-16 border border-outline-variant/50 bg-surface/50 flex items-center justify-center relative group cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="absolute top-1 left-1 font-label-caps text-[10px] text-outline">8</span>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

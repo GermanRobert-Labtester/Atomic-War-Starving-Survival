@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "nodes": [
+    {
+      "id": "loc_holdfast",
+      "displayName": "Holdfast",
+      "danger": "none",
+      "faction": "player",
+      "lootTable": null,
+      "positionX": 500,
+      "positionY": 300
+    },
+    {
+      "id": "loc_cut_abandoned_depot",
+      "displayName": "Abandoned Depot",
+      "danger": "low",
+      "faction": null,
+      "lootTable": "salvage_common",
+      "positionX": 700,
+      "positionY": 200
+    },
+    {
+      "id": "loc_cut_radiation_zone_alpha",
+      "displayName": "Fallout Zone Alpha",
+      "danger": "high",
+      "faction": null,
+      "lootTable": "salvage_rare",
+      "positionX": 300,
+      "positionY": 400
+    },
+    {
+      "id": "loc_black_flotilla_outpost",
+      "displayName": "Black Flotilla Outpost",
+      "danger": "locked",
+      "faction": "black_flotilla",
+      "lootTable": null,
+      "positionX": 600,
+      "positionY": 500
+    }
+  ]
+}

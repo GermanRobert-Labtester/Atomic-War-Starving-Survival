@@ -1,0 +1,8 @@
+[
+ {
+  "content_id": "npc_cluster_teacher",
+  "decision": "DRY_RUN_PROMOTE",
+  "from": "assets/_staging_generated/portraits/npc_cluster_teacher.png",
+  "to": "assets/art/npc_cluster_teacher.jpg"
+ }
+]

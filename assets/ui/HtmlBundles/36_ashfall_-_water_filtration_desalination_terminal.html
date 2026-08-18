@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AQUAPURE-V3 TERMINAL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-bright": "#393939",
+                        "on-primary": "#00363a",
+                        "tertiary-fixed": "#72ff70",
+                        "surface-dim": "#131313",
+                        "on-secondary": "#562000",
+                        "secondary-fixed-dim": "#ffb693",
+                        "surface": "#131313",
+                        "secondary-fixed": "#ffdbcc",
+                        "on-tertiary-fixed": "#002203",
+                        "on-background": "#e5e2e1",
+                        "inverse-primary": "#396569",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#00e639",
+                        "on-tertiary-container": "#00e639",
+                        "on-secondary-fixed-variant": "#7a3000",
+                        "secondary": "#ffb693",
+                        "primary-fixed-dim": "#a1cfd3",
+                        "on-tertiary-fixed-variant": "#00530e",
+                        "error-container": "#93000a",
+                        "primary-container": "#2d5a5e",
+                        "on-secondary-container": "#4b1b00",
+                        "inverse-surface": "#e5e2e1",
+                        "primary": "#a1cfd3",
+                        "on-primary-fixed-variant": "#1f4d51",
+                        "on-primary-container": "#a2d0d4",
+                        "surface-tint": "#a1cfd3",
+                        "outline": "#8a9293",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "tertiary-fixed-dim": "#00e639",
+                        "surface-variant": "#353534",
+                        "on-surface": "#e5e2e1",
+                        "outline-variant": "#404849",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container": "#201f1f",
+                        "primary-fixed": "#bcebef",
+                        "tertiary-container": "#006112",
+                        "secondary-container": "#ea6b1e",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-fixed": "#351000",
+                        "on-primary-fixed": "#002022",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#c0c8c9",
+                        "inverse-on-surface": "#313030",
+                        "surface-container-highest": "#353534",
+                        "on-tertiary": "#003907"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "container-max": "1440px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin": "24px"
+                    },
+                    fontFamily: {
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"],
+                        "body-md": ["JetBrains Mono"],
+                        "display-lg": ["Bebas Neue"],
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "data-lg": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "label-sm": ["12px", { lineHeight: "1.0", fontWeight: "500" }],
+                        "headline-lg": ["32px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }],
+                        "body-md": ["14px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "display-lg": ["64px", { lineHeight: "1.0", letterSpacing: "0.05em", fontWeight: "400" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "1.1", fontWeight: "400" }],
+                        "data-lg": ["18px", { lineHeight: "1.4", letterSpacing: "-0.02em", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .glow-active {
+            box-shadow: 0 0 10px 1px rgba(161, 207, 211, 0.4);
+            border-color: #a1cfd3;
+        }
+        .glow-warning {
+            box-shadow: 0 0 10px 1px rgba(255, 182, 147, 0.4);
+            border-color: #ffb693;
+        }
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.98; }
+            50% { opacity: 1; }
+            100% { opacity: 0.99; }
+        }
+        
+        .staircase-chart {
+            background-image: 
+                linear-gradient(90deg, transparent 9px, rgba(209, 213, 219, 0.2) 9px, rgba(209, 213, 219, 0.2) 10px, transparent 10px),
+                linear-gradient(0deg, transparent 9px, rgba(209, 213, 219, 0.2) 9px, rgba(209, 213, 219, 0.2) 10px, transparent 10px);
+            background-size: 10px 10px;
+        }
+
+        .data-table-row {
+            border-bottom: 1px dashed rgba(209, 213, 219, 0.2);
+        }
+        
+        .header-strip {
+            background-color: #201f1f;
+            border-bottom: 1px solid rgba(45, 90, 94, 0.3);
+        }
+        
+        .module-border {
+            border: 1px solid rgba(45, 90, 94, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md overflow-hidden crt-flicker relative">
+<!-- Scanlines Overlay -->
+<div class="fixed inset-0 scanlines"></div>
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-widest uppercase md:font-headline-lg md:text-headline-lg">AQUAPURE-V3 TERMINAL</span>
+</div>
+<!-- Search Bar (Hidden as per JSON, but leaving placeholder for structure) -->
+<div class="hidden"></div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined hover:text-on-primary-container hover:bg-primary-container p-1 rounded transition-none active:scale-95 cursor-pointer" style="font-variation-settings: 'FILL' 0;">settings_input_component</span>
+<span class="material-symbols-outlined hover:text-on-primary-container hover:bg-primary-container p-1 rounded transition-none active:scale-95 cursor-pointer" style="font-variation-settings: 'FILL' 0;">emergency_home</span>
+<span class="material-symbols-outlined hover:text-on-primary-container hover:bg-primary-container p-1 rounded transition-none active:scale-95 cursor-pointer" style="font-variation-settings: 'FILL' 0;">notifications_active</span>
+</div>
+</nav>
+<!-- Main Layout Container -->
+<div class="flex h-screen pt-16">
+<!-- Side Navigation Bar -->
+<aside class="hidden md:flex flex-col z-40 fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-low border-r border-outline-variant">
+<!-- Header Profile Area -->
+<div class="p-6 border-b border-outline-variant flex flex-col items-center">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest mb-4 border border-primary flex items-center justify-center overflow-hidden" data-alt="A gritty, high-contrast portrait of a survivor in a tactical hazardous environment suit, face partially obscured by a respirator. The lighting is harsh overhead white with deep green shadows. Shot on gritty 35mm film stock, reflecting a dark, dystopian survival aesthetic.">
+<img alt="Unit ID 772-B" class="w-full h-full object-cover opacity-80 mix-blend-luminosity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ8tIwVfAik8mdrVYJ4CFZ4C3AUnIXVpyGfyE6uzGQpQLKhswBXA-EelMRQoeE_MgX4x21V_cwm6vOwmCzep2ub0C8WL2JjGRjLrmvojm2Z40Mz4kPI4m0xU95-zVZJVLWWbVXjHYR9s3kDLLOXALSOW-ExNmf_trOGXv9MjIeirhw4KbH41J1yp6BW6PylAa6inaYGQ08MJfGaLrwtLUkY3lbYumbZR1xNL-9HYw71NmNXOU-eFvJNu8YZufqGUK2fWMVw83Q5rA-"/>
+</div>
+<div class="text-center">
+<div class="font-headline-lg text-headline-lg text-primary uppercase">STATION 04</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase mt-1">SECTOR-7 BRINE-OPS</div>
+</div>
+<button class="mt-4 w-full bg-error-container text-on-error-container font-label-sm text-label-sm py-2 px-4 uppercase border border-error hover:bg-error hover:text-on-error transition-none active:scale-95 text-center flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+                    EMERGENCY FLUSH
+                </button>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex-1 overflow-y-auto py-4">
+<a class="flex items-center px-6 py-3 bg-primary text-on-primary font-bold border-l-4 border-tertiary transition-none active:bg-primary-fixed-dim group" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 1;">settings_input_hdmi</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">SCHEMATIC</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant opacity-70 hover:bg-surface-bright hover:opacity-100 transition-none active:bg-primary-fixed-dim group" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 0;">water_drop</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">RESERVES</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant opacity-70 hover:bg-surface-bright hover:opacity-100 transition-none active:bg-primary-fixed-dim group" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 0;">biotech</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">TELEMETRY</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant opacity-70 hover:bg-surface-bright hover:opacity-100 transition-none active:bg-primary-fixed-dim group" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 0;">inventory_2</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">INVENTORY</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant opacity-70 hover:bg-surface-bright hover:opacity-100 transition-none active:bg-primary-fixed-dim group" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 0;">precision_manufacturing</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">DIRECTIVES</span>
+</a>
+</div>
+<!-- Footer Tabs -->
+<div class="border-t border-outline-variant py-2">
+<a class="flex items-center px-6 py-3 text-on-surface-variant opacity-70 hover:bg-surface-bright hover:opacity-100 transition-none active:bg-primary-fixed-dim group" href="#">
+<span class="material-symbols-outlined mr-3 text-[18px]">terminal</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">DIAGNOSTICS</span>
+</a>
+<a class="flex items-center px-6 py-3 text-on-surface-variant opacity-70 hover:bg-surface-bright hover:opacity-100 transition-none active:bg-primary-fixed-dim group text-error hover:text-error-container" href="#">
+<span class="material-symbols-outlined mr-3 text-[18px]">power_settings_new</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">LOGOUT</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area (Canvas) -->
+<main class="flex-1 md:ml-64 p-4 md:p-gutter overflow-y-auto bg-surface-dim h-full">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-full">
+<!-- Left Panel: Reserves & Telemetry -->
+<div class="md:col-span-3 flex flex-col gap-4">
+<!-- Potable Reserve Tank Module -->
+<div class="bg-surface-container-low module-border flex flex-col h-1/2">
+<div class="header-strip px-3 py-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-wide">RESERVE TELEMETRY</span>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase">POTABLE RESERVE TANK</div>
+<div class="font-data-lg text-data-lg text-on-surface flex items-baseline gap-2">
+                                    184 <span class="text-body-md text-on-surface-variant font-normal">/ 300 L</span>
+</div>
+<!-- Visual Gauge -->
+<div class="w-full h-6 border border-outline-variant bg-surface-container-highest mt-3 relative overflow-hidden flex items-center justify-center">
+<div class="absolute left-0 top-0 h-full bg-primary-container opacity-80" style="width: 61%;"></div>
+<span class="relative z-10 font-label-sm text-label-sm text-on-primary-container mix-blend-difference">61% CAPACITY</span>
+</div>
+<div class="flex justify-between mt-2 font-label-sm text-label-sm text-on-surface-variant">
+<span>PURITY:</span>
+<span class="text-tertiary">99.8% OPTIMAL</span>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant border-dashed">
+<div class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase">SURVIVOR RATIONS</div>
+<div class="font-data-lg text-data-lg text-primary">2.0 L/DAY <span class="text-label-sm font-normal text-on-surface-variant uppercase">PER OPERATIVE</span></div>
+</div>
+</div>
+</div>
+<!-- Brine Waste Sump Module -->
+<div class="bg-surface-container-low module-border flex flex-col h-1/2 glow-warning">
+<div class="bg-secondary-container bg-opacity-20 border-b border-secondary-container px-3 py-1 flex justify-between items-center">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-secondary tracking-wide">BRINE WASTE SUMP</span>
+<span class="bg-secondary text-on-secondary px-2 py-0.5 font-label-sm text-label-sm uppercase tracking-wider rounded-sm animate-pulse">ALERT</span>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-between">
+<div>
+<div class="font-data-lg text-data-lg text-secondary flex items-end gap-2">
+                                    82 <span class="text-body-md font-normal">L</span>
+</div>
+<div class="mt-2 font-label-sm text-label-sm text-secondary tracking-widest uppercase">HIGHLY TOXIC CONCENTRATION</div>
+</div>
+<!-- Staircase Chart Placeholder -->
+<div class="h-24 staircase-chart border border-outline-variant mt-4 relative w-full overflow-hidden flex items-end p-1">
+<!-- Abstract lines representing data buildup -->
+<div class="w-1/6 h-[20%] border-t-2 border-r-2 border-secondary bg-secondary-container bg-opacity-20"></div>
+<div class="w-1/6 h-[40%] border-t-2 border-r-2 border-secondary bg-secondary-container bg-opacity-20"></div>
+<div class="w-1/6 h-[35%] border-t-2 border-r-2 border-secondary bg-secondary-container bg-opacity-20"></div>
+<div class="w-1/6 h-[60%] border-t-2 border-r-2 border-secondary bg-secondary-container bg-opacity-20"></div>
+<div class="w-1/6 h-[75%] border-t-2 border-r-2 border-secondary bg-secondary-container bg-opacity-20"></div>
+<div class="w-1/6 h-[90%] border-t-2 border-r-2 border-secondary bg-secondary-container bg-opacity-50 relative glow-warning">
+<div class="absolute -top-6 left-1/2 transform -translate-x-1/2 font-label-sm text-secondary">MAX</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Center Panel: Hydraulic Flow Circuit Schematic -->
+<div class="md:col-span-6 flex flex-col bg-surface-container-low module-border relative">
+<div class="header-strip px-4 py-2 flex justify-between items-center">
+<span class="font-headline-lg text-headline-lg text-primary tracking-widest">HYDRAULIC FLOW CIRCUIT</span>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-tertiary rounded-full animate-pulse"></div>
+<span class="font-label-sm text-label-sm text-tertiary">SYSTEM ACTIVE</span>
+</div>
+</div>
+<div class="flex-1 p-6 relative flex flex-col justify-between bg-surface-container-lowest staircase-chart border-t border-outline-variant">
+<!-- Top: Intake -->
+<div class="flex justify-center">
+<div class="bg-surface-container module-border p-3 w-64 text-center relative z-10 glow-warning">
+<div class="font-label-sm text-label-sm text-secondary mb-1">INTAKE SOURCE</div>
+<div class="font-body-md text-body-md text-on-surface uppercase font-bold tracking-wider">RADIOACTIVE GROUNDWATER</div>
+<div class="mt-2 bg-secondary-container bg-opacity-20 border border-secondary px-2 py-1 text-secondary font-label-sm flex justify-between">
+<span>CONTAM:</span>
+<span>12 Sv/L</span>
+</div>
+</div>
+</div>
+<!-- Connector Line -->
+<div class="flex justify-center">
+<div class="w-1 bg-secondary h-8 opacity-70 animate-pulse relative">
+<div class="absolute -left-1 top-1/2 w-3 h-3 border border-secondary bg-surface rounded-full"></div>
+</div>
+</div>
+<!-- Stage 1: Pre-Filter -->
+<div class="flex justify-center">
+<div class="bg-surface-container module-border p-3 w-64 relative z-10">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">STAGE 1</span>
+<span class="bg-secondary-container text-secondary px-1 text-[10px] uppercase">DEGRADED</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface uppercase tracking-wide">SAND/CHARCOAL PRE-FILTER</div>
+<div class="mt-3">
+<div class="flex justify-between font-label-sm text-[10px] text-on-surface-variant mb-1">
+<span>INTEGRITY</span>
+<span class="text-secondary">45%</span>
+</div>
+<div class="w-full h-1 bg-surface-bright">
+<div class="h-full bg-secondary" style="width: 45%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Connector Line -->
+<div class="flex justify-center">
+<div class="w-1 bg-primary h-8 opacity-50 relative"></div>
+</div>
+<!-- Stage 2: Reverse Osmosis -->
+<div class="flex justify-center">
+<div class="bg-surface-container module-border p-3 w-64 relative z-10 glow-active">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">STAGE 2</span>
+<span class="bg-primary-container text-on-primary-container px-1 text-[10px] uppercase">ACTIVE</span>
+</div>
+<div class="font-body-md text-body-md text-primary uppercase tracking-wide">REVERSE OSMOSIS MEMBRANE</div>
+<div class="mt-3 flex justify-between items-end">
+<div class="font-label-sm text-[10px] text-on-surface-variant uppercase animate-pulse">Desalinating...</div>
+<div class="text-right">
+<div class="font-label-sm text-[10px] text-on-surface-variant">EFFICIENCY</div>
+<div class="font-data-lg text-primary">88%</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Connector Line -->
+<div class="flex justify-center">
+<div class="w-1 bg-primary h-8 opacity-70 relative"></div>
+</div>
+<!-- Stage 3: UV Radiation -->
+<div class="flex justify-center">
+<div class="bg-surface-container module-border p-3 w-64 relative z-10">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">STAGE 3</span>
+<span class="bg-tertiary-container text-tertiary px-1 text-[10px] uppercase">ACTIVE</span>
+</div>
+<div class="font-body-md text-body-md text-on-surface uppercase tracking-wide">UV RADIATION STERILIZATION</div>
+<div class="mt-2 h-1 w-full bg-tertiary opacity-80" style="box-shadow: 0 0 8px 1px rgba(0, 230, 57, 0.6);"></div>
+</div>
+</div>
+<!-- Connector Line -->
+<div class="flex justify-center">
+<div class="w-1 bg-tertiary h-8 opacity-90 relative">
+<span class="material-symbols-outlined absolute -left-2 top-1/2 text-tertiary text-[20px] bg-surface-container-lowest" style="font-variation-settings: 'FILL' 1;">arrow_downward</span>
+</div>
+</div>
+<!-- Output: Clean Water -->
+<div class="flex justify-center">
+<div class="bg-surface-container module-border p-3 w-64 text-center relative z-10 border-tertiary" style="box-shadow: inset 0 0 10px rgba(0, 230, 57, 0.1);">
+<div class="font-label-sm text-label-sm text-tertiary mb-1">OUTPUT MANIFOLD</div>
+<div class="font-body-md text-body-md text-on-surface uppercase font-bold tracking-wider">CLEAN POTABLE WATER</div>
+<div class="mt-2 font-data-lg text-tertiary">
+                                    14.2 <span class="font-label-sm text-on-surface-variant">L/hr</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Panel: Maintenance & Directives -->
+<div class="md:col-span-3 flex flex-col gap-4">
+<!-- Maintenance Inventory -->
+<div class="bg-surface-container-low module-border flex flex-col h-1/2">
+<div class="header-strip px-3 py-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-wide">MAINTENANCE LOG</span>
+</div>
+<div class="p-4 flex-1 overflow-y-auto">
+<div class="font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase">SPARES INVENTORY</div>
+<div class="flex justify-between items-center py-2 data-table-row">
+<span class="font-body-md text-body-md text-on-surface uppercase">CHARCOAL FILTERS</span>
+<span class="font-data-lg text-on-surface bg-surface-bright px-2 rounded-sm border border-outline-variant">02</span>
+</div>
+<div class="flex justify-between items-center py-2 data-table-row">
+<span class="font-body-md text-body-md text-on-surface uppercase">RO MEMBRANES</span>
+<span class="font-data-lg text-secondary bg-secondary-container bg-opacity-20 px-2 rounded-sm border border-secondary">01</span>
+</div>
+<div class="mt-6 border-t border-outline-variant border-dashed pt-4">
+<div class="font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">build</span>
+                                    TOOL REQUIREMENTS
+                                </div>
+<div class="bg-surface-container p-2 border border-outline-variant flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">handyman</span>
+<span class="font-body-md text-body-md text-on-surface uppercase tracking-wide">MULTI-TOOL v2 REQUIRED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Directives Actions -->
+<div class="bg-surface-container-low module-border flex flex-col h-1/2">
+<div class="header-strip px-3 py-1">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-wide">SYSTEM DIRECTIVES</span>
+</div>
+<div class="p-4 flex-1 flex flex-col gap-3 justify-center">
+<button class="w-full bg-surface-container text-on-surface font-label-sm text-label-sm py-3 px-4 uppercase border border-primary-container hover:bg-primary-container hover:text-on-primary-container transition-none active:scale-95 flex justify-between items-center group">
+<span>BACKWASH SAND FILTERS</span>
+<span class="material-symbols-outlined group-hover:animate-spin">sync</span>
+</button>
+<button class="w-full bg-surface-container text-secondary font-label-sm text-label-sm py-3 px-4 uppercase border border-secondary-container hover:bg-secondary hover:text-on-secondary transition-none active:scale-95 flex justify-between items-center">
+<span>FLUSH BRINE REJECT VALVE</span>
+<span class="material-symbols-outlined">delete_sweep</span>
+</button>
+<button class="w-full bg-surface-container text-tertiary font-label-sm text-label-sm py-3 px-4 uppercase border border-tertiary-container hover:bg-tertiary hover:text-on-tertiary transition-none active:scale-95 flex justify-between items-center">
+<span>OVERDRIVE UV DISINFECTION</span>
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+</button>
+<!-- Input style demonstration -->
+<div class="mt-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant block mb-1">AUTHORIZATION CODE</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:border-primary focus:ring-0 focus:outline-none focus:bg-surface-container-highest transition-none text-on-surface font-data-lg px-2 py-1 placeholder-outline-variant" placeholder="_" type="text"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

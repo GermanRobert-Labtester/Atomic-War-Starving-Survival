@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Godot;
+using Ashfall.Core;
 using Ashfall.Core.StartingLevel;
 
 namespace AtomicWar.GodotApp
@@ -91,22 +92,20 @@ namespace AtomicWar.GodotApp
 
     /// <summary>
     /// Save store for the starting level state in Godot user:// directory.
+    /// Uses SystemTextJsonSerializer (Ashfall.Core.HostDefaults) so the serializer
+    /// is consistent with every other host save store.
     /// </summary>
     public static class StartingLevelSaveStore
     {
         private const string SaveFileName = "starting_level_save.json";
-        private static readonly System.Text.Json.JsonSerializerOptions JsonOpts = new System.Text.Json.JsonSerializerOptions
-        {
-            WriteIndented = true,
-            IncludeFields = true
-        };
+        private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static bool TrySave(StartingLevelSaveState state, string? pathOverride = null)
         {
             try
             {
                 string path = pathOverride ?? Path.Combine(ProjectSettings.GlobalizePath("user://"), SaveFileName);
-                string json = System.Text.Json.JsonSerializer.Serialize(state, JsonOpts);
+                string json = s_json.Serialize(state);
                 File.WriteAllText(path, json);
                 return true;
             }
@@ -130,7 +129,7 @@ namespace AtomicWar.GodotApp
                 string path = pathOverride ?? Path.Combine(ProjectSettings.GlobalizePath("user://"), SaveFileName);
                 if (!File.Exists(path)) return null;
                 string json = File.ReadAllText(path);
-                return System.Text.Json.JsonSerializer.Deserialize<StartingLevelSaveState>(json, JsonOpts);
+                return s_json.Deserialize<StartingLevelSaveState>(json);
             }
             catch (Exception ex)
             {

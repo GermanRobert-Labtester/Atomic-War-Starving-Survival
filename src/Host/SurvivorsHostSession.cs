@@ -45,6 +45,13 @@ namespace AtomicWar.GodotApp
         public System.Collections.Generic.List<SurvivorNeedsState> RosterState { get; } =
             new System.Collections.Generic.List<SurvivorNeedsState>();
 
+        /// <summary>
+        /// Optional equipped-gear source. When bound, BuildExposure assembles the
+        /// survivor's equipped inventory into ExposureContext.WornGear so a worn
+        /// gas mask / hazmat suit actually reduces ambient dose (AGENTS Loop 9 gap).
+        /// </summary>
+        public InventoryHostSession Inventory { get; set; }
+
         /// <summary>Demo geiger exposure context: one survivor outside, rest sheltered.</summary>
         private readonly System.Collections.Generic.Dictionary<string, RadSurvivorWrapper> _radStates;
 
@@ -182,8 +189,29 @@ namespace AtomicWar.GodotApp
             return new ExposureContext
             {
                 ZoneRadLevel = zone,
-                ShelterShielding = shielding
+                ShelterShielding = shielding,
+                WornGear = CollectWornGear()
             };
+        }
+
+        /// <summary>
+        /// Assemble the shared inventory's equipped protective gear into Radiation
+        /// WornGear records (via the Core conversion point), or an empty list when
+        /// no inventory is bound. RadiationSystem subtracts this from the zone rate.
+        /// </summary>
+        private System.Collections.Generic.List<WornGear> CollectWornGear()
+        {
+            var result = new System.Collections.Generic.List<WornGear>();
+            var inventory = Inventory?.Inventory;
+            if (inventory == null) return result;
+            var buffer = new System.Collections.Generic.List<Ashfall.Core.Inventory.WornGear>();
+            inventory.FillWornGear(buffer);
+            for (int i = 0; i < buffer.Count; i++)
+            {
+                var converted = WornGear.FromInventory(buffer[i]);
+                if (converted != null) result.Add(converted);
+            }
+            return result;
         }
 
         // ── Hourly tick ────────────────────────────────────────────────

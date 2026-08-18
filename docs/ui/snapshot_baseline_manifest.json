@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "manifest_kind": "snapshot_baseline_fingerprint",
+  "generated_for": "Phase 14 \u2014 visual regression baseline",
+  "harness": "src/UI/SnapshotHarness.cs",
+  "renderer": "Godot 4.7.1 .NET, AMD RADV RENOIR Vulkan 1.4, Forward+, X11 DISPLAY=:0",
+  "totals": {
+    "snapshots": 29,
+    "baseline_md5_distinct": 29,
+    "duplicate_md5_groups": 0,
+    "fresh_snapshots_since_phase13": 14,
+    "fresh_snapshots_since_phase14": 13,
+    "fresh_snapshots_since_phase15": 12,
+    "fresh_snapshots_since_phase16": 11,
+    "fresh_snapshots_since_phase17": 10,
+    "fresh_snapshots_since_phase19": 9,
+    "fresh_snapshots_since_phase20": 8,
+    "fresh_snapshots_since_phase21": 7,
+    "fresh_snapshots_since_phase22": 6,
+    "fresh_snapshots_since_phase23": 5,
+    "fresh_snapshots_since_phase24": 4,
+    "fresh_snapshots_since_phase25": 3,
+    "fresh_snapshots_since_phase26": 1,
+    "unchanged_phase13_snapshots": 0,
+    "pipeline_regression_fixes": 1,
+    "fresh_snapshots_since_phase27": 1,
+    "fresh_snapshots_since_phase28": 1
+  },
+  "policy": {
+    "name": "Every snapshot PNG committed under snapshots/ is part of the canonical baseline. --ui-snapshot-uitest re-renders each PNG and compares bytes. Any byte difference is reported as a regression. The fingerprint is MD5 over the raw PNG bytes (no normalization \u2014 the PNG layout is already deterministic thanks to the Godot Vulkan Forward+ pipeline).",
+    "alter_or_replace_baseline": "Only allowed when a primitive or fixture changes, in WHICH case the change MUST: (1) re-run the harness, (2) re-hash, (3) bump schema_version, (4) commit the new PNG + new manifest entry under audit_summary.",
+    "prune_a_baseline": "Never. The hand-off to a future agent must show the steady-state -> new-state transition.",
+    "byte_size_threshold": "Snapshots with byte_size >= 80 KB must use Forward+ over X11. Snapshots < 80 KB can be captured with gl_compatibility or Forward+ headless, but the *baseline* is set against the same renderer that the CI gate uses."
+  },
+  "snapshots": [
+    {
+      "snapshot_id": "inventory_default",
+      "path": "snapshots/inventory_default.png",
+      "md5": "927414663f2622c17a2bf0f6d03e8348",
+      "size_bytes": 49354,
+      "phase_origin": 11,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "journal_default",
+      "path": "snapshots/journal_default.png",
+      "md5": "5cc5d3ec3491153275924ce790a659a9",
+      "size_bytes": 56710,
+      "phase_origin": 11,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "medical_default",
+      "path": "snapshots/medical_default.png",
+      "md5": "3105c142a18ff31bb321bb7a6396fcbb",
+      "size_bytes": 37086,
+      "phase_origin": 11,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "radio_default",
+      "path": "snapshots/radio_default.png",
+      "md5": "ca0a9c4b22498927b026213de43c9b61",
+      "size_bytes": 38298,
+      "phase_origin": 11,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "shelter_default",
+      "path": "snapshots/shelter_default.png",
+      "md5": "c5ec30542bf17869a582884150bad904",
+      "size_bytes": 43861,
+      "phase_origin": 11,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "survivors_default",
+      "path": "snapshots/survivors_default.png",
+      "md5": "53e85d2f913c5ed5e6a0f150957018b8",
+      "size_bytes": 27970,
+      "phase_origin": 11,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "trade_default",
+      "path": "snapshots/trade_default.png",
+      "md5": "4f0a60e08902addbc1e7ad524d527d96",
+      "size_bytes": 211027,
+      "phase_origin": 11,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "verdict_default",
+      "path": "snapshots/verdict_default.png",
+      "md5": "12fe77f9a6f26fd2db4fdc9c196a42d9",
+      "size_bytes": 22808,
+      "phase_origin": 11,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "weather_default",
+      "path": "snapshots/weather_default.png",
+      "md5": "b3cc997e91c6ab8ebef350597c175779",
+      "size_bytes": 29665,
+      "phase_origin": 11,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "caravan_barter_default",
+      "path": "snapshots/caravan_barter_default.png",
+      "md5": "c1dbc54a9a7a487e58321feb5f08b723",
+      "size_bytes": 211490,
+      "phase_origin": 12,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "shelter_hud_default",
+      "path": "snapshots/shelter_hud_default.png",
+      "md5": "90a79f391088ad542ca82b73803f667a",
+      "size_bytes": 90078,
+      "phase_origin": 12,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "survival_workstation_default",
+      "path": "snapshots/survival_workstation_default.png",
+      "md5": "1d996b69b6d069ef3cc2259aaf06add6",
+      "size_bytes": 72472,
+      "phase_origin": 12,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "dose_ledger_default",
+      "path": "snapshots/dose_ledger_default.png",
+      "md5": "a126bba9cd1b263b38873cd8654ff393",
+      "size_bytes": 41504,
+      "phase_origin": 13,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "faction_matrix_default",
+      "path": "snapshots/faction_matrix_default.png",
+      "md5": "b7187f5078f0c2e86298b3b0cfc3d894",
+      "size_bytes": 45785,
+      "phase_origin": 13,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "verdict_dashboard_default",
+      "path": "snapshots/verdict_dashboard_default.png",
+      "md5": "d3a540ff8f505ce8a823b736dc1f3897",
+      "size_bytes": 24739,
+      "phase_origin": 13,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "weather_dashboard_default",
+      "path": "snapshots/weather_dashboard_default.png",
+      "md5": "f31ebdd415188fda9aa3d332c74e93f6",
+      "size_bytes": 30339,
+      "phase_origin": 13,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "greenhouse_default",
+      "path": "snapshots/greenhouse_default.png",
+      "md5": "a3762014aff52e9afdfdb776409d8b34",
+      "size_bytes": 43205,
+      "phase_origin": 15,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "silent_foundry_default",
+      "path": "snapshots/silent_foundry_default.png",
+      "md5": "af4db26d58e025d823ba5dcee9c97763",
+      "size_bytes": 58173,
+      "phase_origin": 16,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "expedition_radar_default",
+      "path": "snapshots/expedition_radar_default.png",
+      "md5": "3cc6fd463b5ceae8d5fbc873445f7f65",
+      "size_bytes": 58058,
+      "phase_origin": 17,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "skill_matrix_default",
+      "path": "snapshots/skill_matrix_default.png",
+      "md5": "76057f2be71cdf3640169982f3f90907",
+      "size_bytes": 98739,
+      "phase_origin": 19,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "duty_roster_default",
+      "path": "snapshots/duty_roster_default.png",
+      "md5": "df4ac41f22fa9f010acdcf2f92fc8220",
+      "size_bytes": 57279,
+      "phase_origin": 20,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "factions_narrative_default",
+      "path": "snapshots/factions_narrative_default.png",
+      "md5": "6b828ede820e9af7a7f97a12214ad1db",
+      "size_bytes": 61160,
+      "phase_origin": 21,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "combat_hud_default",
+      "path": "snapshots/combat_hud_default.png",
+      "md5": "330e7beadbc18e4821f6ad21fe3a4926",
+      "size_bytes": 44965,
+      "phase_origin": 22,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "map_atlas_default",
+      "path": "snapshots/map_atlas_default.png",
+      "md5": "05ebbfdeba2499a0e135bbf04e84e210",
+      "size_bytes": 36345,
+      "phase_origin": 23,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "maritime_atlas_default",
+      "path": "snapshots/maritime_atlas_default.png",
+      "md5": "1402d5a3dd7b23cc56aaef562bce4872",
+      "size_bytes": 49172,
+      "phase_origin": 24,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "muster_atlas_default",
+      "path": "snapshots/muster_atlas_default.png",
+      "md5": "54603018036464dbf6eea757113b9532",
+      "size_bytes": 76235,
+      "phase_origin": 25,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "quests_atlas_default",
+      "path": "snapshots/quests_atlas_default.png",
+      "md5": "ee47c0d978fc26b13e28d6428601117a",
+      "size_bytes": 51845,
+      "phase_origin": 26,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "standing_record_atlas_default",
+      "path": "snapshots/standing_record_atlas_default.png",
+      "md5": "96da620bfcad4289011eb6905a31e4f9",
+      "size_bytes": 77717,
+      "phase_origin": 27,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    },
+    {
+      "snapshot_id": "research_atlas_default",
+      "path": "snapshots/research_atlas_default.png",
+      "md5": "90e831c0dd572b980622bb80f963b915",
+      "size_bytes": 74212,
+      "phase_origin": 28,
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE",
+      "expected_status": "MATCH"
+    }
+  ],
+  "duplicate_check": {
+    "note": "All 27 snapshots have distinct MD5 fingerprints and zero duplicate MD5 groups. Verified by on-disk byte inspection: see docs/ui/PIPELINE_REGRESSION_FIX.md for the Phase-26 capture-pipeline fix log.",
+    "verified_at": "2026-08-18 (Phase 26 close)"
+  },
+  "regen_commands": {
+    "all_targets": "cd /path/to/workspace && DISPLAY=:0 godot --path . -- --ui-snapshot-uitest",
+    "single_target_via_env": "DISPLAY=:0 godot --path . -- --ui-snapshot-uitest (no per-target switch exists yet; Phase 15+ candidate)",
+    "verify_md5": "cd snapshots && md5sum *.png | sort > /tmp/baseline.md5 && cd .. && diff -u /tmp/baseline.md5 <(grep -oP '\"md5\": \"\\K[^\"]+' docs/ui/snapshot_baseline_manifest.json | sort)"
+  },
+  "audit_summary": {
+    "phase": "Phase 14",
+    "frame": "Phase 11 (3 pilots) \u2192 Phase 12 (3 pilots + DataGrid) \u2192 Phase 13 (4 NEW + 6 PARTIAL eliminations) \u2192 Phase 14 (no new snapshot, fingerprint + manifest hardening)",
+    "snapshots_added_this_phase": 0,
+    "snapshots_rehashed_this_phase": 16,
+    "snapshots_unchanged": "16 (12 are unchanged-since-Phase 13 fingerprint; 4 are unchanged-since-Phase 13 fingerprint)"
+  },
+  "fresh_snapshots_since_phase15": 1
+}

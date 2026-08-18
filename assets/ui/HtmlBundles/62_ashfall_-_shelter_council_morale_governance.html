@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL SHELTER COUNCIL TERMINAL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#393939",
+                        "on-primary-container": "#585c61",
+                        "primary": "#eef1f7",
+                        "tertiary": "#ffede7",
+                        "on-tertiary": "#562000",
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed-variant": "#43474c",
+                        "inverse-primary": "#5a5f64",
+                        "surface": "#131313",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-variant": "#353534",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "primary-container": "#d1d5db",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#353534",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-container": "#225054",
+                        "outline": "#8f9194",
+                        "on-secondary-container": "#93c0c5",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "surface-dim": "#131313",
+                        "error-container": "#93000a",
+                        "background": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "outline-variant": "#44474a",
+                        "surface-tint": "#c3c7cd",
+                        "on-tertiary-fixed": "#351000",
+                        "on-surface-variant": "#c5c6ca",
+                        "on-primary": "#2c3136",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-fixed": "#bcebef",
+                        "primary-fixed": "#dfe3e9",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary": "#a1cfd3",
+                        "on-secondary-fixed": "#002022",
+                        "surface-container": "#201f1f",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "tertiary-container": "#ffc9b0",
+                        "on-tertiary-container": "#9c3f00",
+                        "on-secondary": "#00363a",
+                        "on-primary-fixed": "#171c20",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#313030",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "12px",
+                        "unit": "4px",
+                        "stack-md": "12px",
+                        "margin-base": "16px",
+                        "gutter": "8px",
+                        "stack-tight": "4px"
+                    },
+                    "fontFamily": {
+                        "data-md": ["JetBrains Mono"],
+                        "headline-md": ["Bebas Neue"],
+                        "headline-lg": ["Bebas Neue"],
+                        "data-sm": ["JetBrains Mono"],
+                        "data-lg": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "display-lg": ["Bebas Neue"]
+                    },
+                    "fontSize": {
+                        "data-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "data-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "data-lg": ["18px", { "lineHeight": "24px", "fontWeight": "700" }],
+                        "label-caps": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.05em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+        }
+        .crt-flicker {
+            animation: flicker 0.15s infinite;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            100% { opacity: 1; }
+        }
+        .text-glow-primary {
+            text-shadow: 0 0 4px rgba(238, 241, 247, 0.4);
+        }
+        .text-glow-error {
+            text-shadow: 0 0 6px rgba(255, 180, 171, 0.6);
+        }
+        .border-brackets {
+            position: relative;
+        }
+        .border-brackets::before, .border-brackets::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 1px solid #8f9194;
+        }
+        .border-brackets::before {
+            top: -1px;
+            left: -1px;
+            border-right: none;
+            border-bottom: none;
+        }
+        .border-brackets::after {
+            bottom: -1px;
+            right: -1px;
+            border-left: none;
+            border-top: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen relative overflow-hidden font-data-md crt-flicker flex flex-col">
+<!-- Scanline Overlay -->
+<div class="fixed inset-0 scanlines pointer-events-none"></div>
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-base h-16 shrink-0 relative z-10">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg text-primary dark:text-primary tracking-tighter text-glow-primary">ASHFALL_OS_v2.1</span>
+</div>
+<nav class="hidden md:flex gap-6 items-center">
+<div class="text-on-surface-variant font-data-sm hover:bg-primary hover:text-on-primary transition-colors duration-75 px-2 py-1 cursor-default">UPTIME: 428:12:04</div>
+<div class="text-on-surface-variant font-data-sm hover:bg-primary hover:text-on-primary transition-colors duration-75 px-2 py-1 cursor-default">SECTOR: B-09</div>
+<div class="text-primary font-bold border-b border-primary pb-1 text-glow-primary cursor-default">ALERTS: 04</div>
+</nav>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary hover:bg-primary hover:text-on-primary transition-colors duration-75 p-1 cursor-pointer" data-weight="fill" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="material-symbols-outlined text-primary hover:bg-primary hover:text-on-primary transition-colors duration-75 p-1 cursor-pointer" data-weight="fill" style="font-variation-settings: 'FILL' 1;">emergency_home</span>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative z-10">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant flex flex-col h-full py-4 w-64 shrink-0 hidden md:flex">
+<div class="px-4 mb-6">
+<div class="font-headline-md text-headline-md text-secondary">TRIAGE_STATION</div>
+<div class="font-data-sm text-data-sm text-on-surface-variant mt-1">OPERATOR_ID_083</div>
+<div class="font-data-sm text-data-sm text-secondary-container mt-1">READY_STATE</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 text-primary bg-secondary-container font-bold border-l-4 border-primary px-4 py-3 hover:bg-surface-container-high hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">clinical_notes</span>
+<span class="font-label-caps text-label-caps">ROSTER</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 opacity-70 hover:bg-surface-container-high hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">monitor_heart</span>
+<span class="font-label-caps text-label-caps">MED_BAY</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 opacity-70 hover:bg-surface-container-high hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+<span class="font-label-caps text-label-caps">INVENTORY</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 opacity-70 hover:bg-surface-container-high hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">do_not_disturb_on</span>
+<span class="font-label-caps text-label-caps">QUARANTINE</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 opacity-70 hover:bg-surface-container-high hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings_input_component</span>
+<span class="font-label-caps text-label-caps">SYSTEM</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full border border-outline px-2 py-2 text-primary font-data-sm hover:bg-primary hover:text-surface transition-colors duration-75 text-left border-brackets flex justify-between items-center group">
+<span>TERMINAL_OVERRIDE_</span>
+<span class="opacity-0 group-hover:opacity-100 animate-pulse">_</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-margin-base flex flex-col gap-gutter">
+<!-- Top Bar (Morale & Ideological Friction) -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-stack-md">
+<div class="border border-outline-variant bg-surface-container p-container-padding flex flex-col gap-1 border-brackets">
+<div class="text-on-surface-variant font-label-caps text-label-caps">GLOBAL_MORALE</div>
+<div class="flex items-end gap-2">
+<span class="font-headline-lg text-headline-lg text-error text-glow-error">58%</span>
+<span class="font-data-sm text-data-sm text-error mb-1">[STATUS: ANXIOUS]</span>
+</div>
+<div class="w-full h-2 bg-surface-bright flex">
+<div class="h-full bg-error" style="width: 58%"></div>
+</div>
+</div>
+<div class="border border-outline-variant bg-surface-container p-container-padding flex flex-col gap-1 border-brackets">
+<div class="text-on-surface-variant font-label-caps text-label-caps">IDEOLOGICAL_TENSION</div>
+<div class="flex items-end gap-2">
+<span class="font-headline-lg text-headline-lg text-primary text-glow-primary">42%</span>
+<span class="font-data-sm text-data-sm text-primary-container mb-1">[COLL vs AUTO]</span>
+</div>
+<div class="w-full h-2 bg-surface-bright flex">
+<div class="h-full bg-primary-container" style="width: 42%"></div>
+</div>
+</div>
+<div class="border border-outline-variant bg-surface-container p-container-padding flex flex-col gap-1 border-brackets justify-center">
+<div class="text-on-surface-variant font-label-caps text-label-caps">RATION_CONFLICT_RISK</div>
+<div class="font-data-lg text-data-lg text-secondary">MODERATE</div>
+</div>
+<div class="border border-error bg-surface-container p-container-padding flex flex-col gap-1 border-brackets justify-center">
+<div class="text-error font-label-caps text-label-caps text-glow-error animate-pulse">DESPAIR_WATCH</div>
+<div class="font-data-lg text-data-lg text-error">1 SURVIVOR FLAG</div>
+</div>
+</section>
+<!-- Center Layout: Grid for Roster and Dilemma -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-gutter flex-1">
+<!-- Center-Left (Duty Roster Matrix) -->
+<section class="xl:col-span-2 border border-outline-variant bg-surface-container p-container-padding flex flex-col">
+<div class="font-headline-md text-headline-md text-primary mb-stack-md flex justify-between items-center border-b border-outline-variant pb-2">
+<span>DUTY_ROSTER_MATRIX</span>
+<span class="font-data-sm text-data-sm text-on-surface-variant">[3 SHIFTS ACTIVE]</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-data-sm">
+<thead>
+<tr class="text-on-surface-variant border-b border-surface-bright">
+<th class="py-2 pr-2 font-normal">SHIFT</th>
+<th class="py-2 px-2 font-normal">SCAVENGING</th>
+<th class="py-2 px-2 font-normal">HYDROPONICS</th>
+<th class="py-2 px-2 font-normal">SENTRY</th>
+<th class="py-2 px-2 font-normal">MEDICAL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-surface-bright/50 hover:bg-surface-bright/30 transition-colors">
+<td class="py-3 pr-2 text-primary">DAY</td>
+<td class="py-3 px-2">
+<div class="flex flex-col gap-1">
+<span>OP_12</span>
+<div class="flex items-center gap-1"><span class="text-[8px] text-error">FATIGUE</span><div class="w-8 h-1 bg-surface-bright"><div class="h-full bg-error w-[80%]"></div></div></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-secondary">radio_button_checked</span> <span class="text-[10px]">RAD: HIGH</span></div>
+</div>
+</td>
+<td class="py-3 px-2">
+<div class="flex flex-col gap-1">
+<span>OP_45</span>
+<div class="flex items-center gap-1"><span class="text-[8px] text-secondary">FATIGUE</span><div class="w-8 h-1 bg-surface-bright"><div class="h-full bg-secondary w-[30%]"></div></div></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-primary">radio_button_unchecked</span> <span class="text-[10px]">RAD: LOW</span></div>
+</div>
+</td>
+<td class="py-3 px-2">
+<div class="flex flex-col gap-1">
+<span>OP_09</span>
+<div class="flex items-center gap-1"><span class="text-[8px] text-primary">FATIGUE</span><div class="w-8 h-1 bg-surface-bright"><div class="h-full bg-primary w-[50%]"></div></div></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-secondary">radio_button_checked</span> <span class="text-[10px]">RAD: MED</span></div>
+</div>
+</td>
+<td class="py-3 px-2">
+<div class="flex flex-col gap-1">
+<span>OP_83</span>
+<div class="flex items-center gap-1"><span class="text-[8px] text-secondary">FATIGUE</span><div class="w-8 h-1 bg-surface-bright"><div class="h-full bg-secondary w-[20%]"></div></div></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-primary">radio_button_unchecked</span> <span class="text-[10px]">RAD: MIN</span></div>
+</div>
+</td>
+</tr>
+<tr class="border-b border-surface-bright/50 hover:bg-surface-bright/30 transition-colors">
+<td class="py-3 pr-2 text-primary">EVE</td>
+<td class="py-3 px-2 text-on-surface-variant italic">--UNASSIGNED--</td>
+<td class="py-3 px-2">
+<div class="flex flex-col gap-1">
+<span>OP_22</span>
+<div class="flex items-center gap-1"><span class="text-[8px] text-primary">FATIGUE</span><div class="w-8 h-1 bg-surface-bright"><div class="h-full bg-primary w-[60%]"></div></div></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-secondary">radio_button_checked</span> <span class="text-[10px]">RAD: MED</span></div>
+</div>
+</td>
+<td class="py-3 px-2">
+<div class="flex flex-col gap-1">
+<span>OP_11</span>
+<div class="flex items-center gap-1"><span class="text-[8px] text-error">FATIGUE</span><div class="w-8 h-1 bg-surface-bright"><div class="h-full bg-error w-[90%]"></div></div></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-error">radio_button_checked</span> <span class="text-[10px]">RAD: CRIT</span></div>
+</div>
+</td>
+<td class="py-3 px-2">
+<div class="flex flex-col gap-1">
+<span>OP_56</span>
+<div class="flex items-center gap-1"><span class="text-[8px] text-secondary">FATIGUE</span><div class="w-8 h-1 bg-surface-bright"><div class="h-full bg-secondary w-[40%]"></div></div></div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-primary">radio_button_unchecked</span> <span class="text-[10px]">RAD: LOW</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Center-Right (Council Dilemma Card) -->
+<section class="xl:col-span-1 border border-error bg-surface-container p-container-padding flex flex-col relative">
+<div class="absolute top-0 right-0 p-1 bg-error text-on-error font-label-caps text-[10px] animate-pulse">CRITICAL_DECISION_PENDING</div>
+<div class="font-headline-md text-headline-md text-error mb-4 mt-2 border-b border-error pb-2 text-glow-error">
+                        CONTAMINATED REFUGEE ENCLAVE AT HATCH
+                    </div>
+<p class="font-data-md text-data-md text-on-surface mb-4">
+                        4 starving outsiders with acute rad sickness pleading for shelter. 
+                        <br/><span class="text-error font-bold mt-2 block">Water reserves -15L if admitted.</span>
+</p>
+<div class="mb-6 flex justify-between items-center bg-surface-bright p-2 border border-outline-variant">
+<span class="font-data-sm text-on-surface-variant">VOTE_SPLIT:</span>
+<span class="font-data-md text-primary">PRAGMATISTS(3) <span class="text-on-surface-variant mx-1">|</span> HUMANITARIANS(2)</span>
+</div>
+<div class="flex flex-col gap-2 mt-auto">
+<button class="w-full border border-error bg-error/10 px-3 py-3 text-error font-data-md hover:bg-error hover:text-on-error transition-colors duration-150 text-left relative group">
+<span class="font-bold">EXECUTE QUARANTINE PROTOCOL_</span>
+<span class="block font-data-sm text-on-surface mt-1 group-hover:text-on-error">[COST: 6 IODINE, -10 MORALE]</span>
+</button>
+<button class="w-full border border-primary bg-primary/5 px-3 py-3 text-primary font-data-md hover:bg-primary hover:text-on-primary transition-colors duration-150 text-left relative group">
+<span class="font-bold">REFUSE ENTRY_</span>
+<span class="block font-data-sm text-on-surface mt-1 group-hover:text-on-primary">[COST: 0 RESOURCES, +25 IDEOLOGICAL TENSION]</span>
+</button>
+<button class="w-full border border-outline-variant px-3 py-2 text-on-surface-variant font-data-sm hover:bg-surface-bright transition-colors duration-150 text-left">
+                            EXILE COMPLAINANTS_
+                        </button>
+</div>
+</section>
+</div>
+<!-- Bottom Section (Trauma Bonds & Final Wishes) -->
+<section class="mt-auto pt-stack-md flex flex-col md:flex-row gap-gutter justify-between items-end border-t border-outline-variant/50">
+<div class="flex flex-col gap-2 w-full md:w-2/3">
+<div class="bg-surface-bright/20 border border-outline-variant p-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[16px]">mail</span>
+<span class="font-data-sm text-data-sm text-on-surface">MILLER'S FINAL WISH: Deliver locket to Echo Outpost <span class="text-secondary ml-2">[IN PROGRESS]</span></span>
+</div>
+<div class="bg-surface-bright/20 border border-outline-variant p-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">link</span>
+<span class="font-data-sm text-data-sm text-on-surface">ELENA &amp; LUCAS: Trauma Bonded <span class="text-primary ml-2">(+15% Scavenging efficiency when paired)</span></span>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant h-8 flex justify-between items-center px-margin-base shrink-0 relative z-10 w-full">
+<div class="font-label-caps text-label-caps text-error opacity-50">ENCRYPTION_STATUS: AES-256_ACTIVE</div>
+<div class="flex gap-4 font-data-sm text-data-sm text-on-surface-variant">
+<span>SYSTEM_STABILITY: 99.8%</span>
+<span class="text-on-surface">ASHFALL_COUNCIL_v1.09 // AUTHORIZATION_REQUIRED</span>
+<a class="hover:underline hover:text-primary" href="#">LOG_OUT_</a>
+</div>
+</footer>
+</body></html>

@@ -22,6 +22,7 @@ namespace AtomicWar.GodotApp
         public VoluntaryRegisterSystem Voluntary { get; }
         public DoseRegistersCatalog Registers { get; }
         public DoseContentCatalog Content { get; }
+        public QuestlineSystem Quests { get; }
 
         private readonly SeededRng _rng;
 
@@ -34,7 +35,8 @@ namespace AtomicWar.GodotApp
             CohortSystem cohort = null,
             VoluntaryRegisterSystem voluntary = null,
             DoseRegistersCatalog registers = null,
-            DoseContentCatalog content = null)
+            DoseContentCatalog content = null,
+            QuestlineSystem quests = null)
         {
             Ledger = ledger ?? new DoseLedgerSystem();
             SickList = sickList ?? new SickListSystem();
@@ -42,6 +44,7 @@ namespace AtomicWar.GodotApp
             Voluntary = voluntary ?? new VoluntaryRegisterSystem();
             Registers = registers ?? new DoseRegistersCatalog();
             Content = content ?? new DoseContentCatalog();
+            Quests = quests ?? new QuestlineSystem();
             _rng = new SeededRng(DemoSeed);
 
             // Persistence: any register mutation marks the save dirty.
@@ -49,6 +52,9 @@ namespace AtomicWar.GodotApp
             SickList.OnStateChanged += _ => StateChanged?.Invoke();
             Cohort.OnStateChanged += _ => StateChanged?.Invoke();
             Voluntary.OnStateChanged += _ => StateChanged?.Invoke();
+            Quests.OnQuestlineStarted += _ => StateChanged?.Invoke();
+            Quests.OnQuestChoiceTaken += _ => StateChanged?.Invoke();
+            Quests.OnQuestlineResolved += (_, _) => StateChanged?.Invoke();
         }
 
         public static DoseLedgerHostSession Create(string dataDir, ILog log = null)
@@ -56,23 +62,32 @@ namespace AtomicWar.GodotApp
             CatalogLocator.UseInvariantCulture();
             var registers = new DoseRegistersCatalog();
             var content = new DoseContentCatalog();
+            var quests = new QuestlineSystem();
             if (!string.IsNullOrEmpty(dataDir))
             {
                 var fileIO = new FileSystemIO();
                 var serializer = new SystemTextJsonSerializer();
                 registers = DoseRegistersCatalogLoader.Load(dataDir, fileIO, serializer);
                 content = DoseContentCatalogLoader.Load(dataDir, fileIO, serializer);
+                // Dose owns its quest runtime: register the four register quest
+                // lines into the session's QuestlineSystem (persisted in the Dose
+                // envelope, not the Year of Ash envelope).
+                foreach (var q in content.quests)
+                {
+                    if (q == null || string.IsNullOrEmpty(q.questlineId)) continue;
+                    quests.RegisterQuestline(q);
+                }
             }
-            return new DoseLedgerHostSession(registers: registers, content: content);
+            return new DoseLedgerHostSession(registers: registers, content: content, quests: quests);
         }
 
         // ── Cross-host save ──────────────────────────────────────────
 
         public DoseLedgerSave CaptureSave(int simDay) =>
-            DoseLedgerSaveCodec.Capture(simDay, Ledger, SickList, Cohort, Voluntary);
+            DoseLedgerSaveCodec.Capture(simDay, Ledger, SickList, Cohort, Voluntary, Quests);
 
         public void RestoreSave(DoseLedgerSave save) =>
-            DoseLedgerSaveCodec.Restore(save, Ledger, SickList, Cohort, Voluntary);
+            DoseLedgerSaveCodec.Restore(save, Ledger, SickList, Cohort, Voluntary, Quests);
 
         // ── Demo actions (drive the registers through real core APIs) ──
 

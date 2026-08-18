@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ASHFALL TERMINAL v4.2 - Roster Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=JetBrains+Mono:wght@400;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#353535",
+                        "primary-container": "#d1d5db",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "surface-tint": "#c3c7cd",
+                        "on-secondary-container": "#93c0c5",
+                        "surface-container-highest": "#353535",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-fixed-dim": "#ffb693",
+                        "on-tertiary-container": "#9c3f00",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-fixed": "#002022",
+                        "secondary-fixed": "#bcebef",
+                        "surface-dim": "#131313",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-tertiary-fixed": "#351000",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed": "#dfe3e9",
+                        "on-secondary-fixed-variant": "#1f4d51",
+                        "tertiary": "#ffede7",
+                        "primary": "#eef1f7",
+                        "secondary-container": "#225054",
+                        "secondary": "#a1cfd3",
+                        "on-surface-variant": "#c5c6ca",
+                        "primary-fixed-dim": "#c3c7cd",
+                        "on-primary-container": "#585c61",
+                        "on-secondary": "#00363a",
+                        "surface-container-low": "#1c1b1b",
+                        "error": "#ffb4ab",
+                        "surface": "#131313",
+                        "outline-variant": "#44474a",
+                        "secondary-fixed-dim": "#a1cfd3",
+                        "tertiary-container": "#ffc9b0",
+                        "on-primary-fixed": "#171c20",
+                        "surface-container": "#20201f",
+                        "on-primary": "#2c3136",
+                        "inverse-primary": "#5a5f64",
+                        "surface-bright": "#393939",
+                        "on-tertiary": "#562000",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#2a2a2a",
+                        "outline": "#8f9194",
+                        "background": "#131313",
+                        "on-background": "#e5e2e1",
+                        "on-error": "#690005",
+                        "on-primary-fixed-variant": "#43474c",
+                        "inverse-on-surface": "#313030",
+                        "error-container": "#93000a",
+                        "tactical-teal": "#2D5A5E",
+                        "warning-amber": "#CC5500"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "48px",
+                        "margin-edge": "40px",
+                        "unit": "4px",
+                        "stack-md": "24px",
+                        "stack-sm": "8px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-xl": ["Bebas Neue"],
+                        "body-md": ["Inter"],
+                        "subheading": ["Bebas Neue"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Bebas Neue"],
+                        "code-data": ["JetBrains Mono"],
+                        "headline-lg": ["Bebas Neue"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "700" }],
+                        "headline-xl": ["72px", { "lineHeight": "72px", "letterSpacing": "0.05em", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "subheading": ["24px", { "lineHeight": "28px", "letterSpacing": "0.1em", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "26px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "code-data": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .flicker-on-hover:hover {
+            animation: pulse-slow 2s infinite;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .scale-95-active:active {
+            transform: scale(0.95);
+        }
+        .worn-edge-top {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+        
+        /* Custom scrollbar for terminal feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+            border-left: 1px solid #44474a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #44474a;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1cfd3;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen relative overflow-hidden flex flex-col selection:bg-secondary selection:text-on-secondary">
+<!-- Global Static & Scanline Overlays -->
+<div class="absolute inset-0 scanlines z-50"></div>
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPHJlY3Qgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIwLjAyIi8+Cjwvc3ZnPg==')] opacity-30 z-40 pointer-events-none"></div>
+<!-- TopNavBar -->
+<header class="w-full top-0 bg-surface dark:bg-surface border-b border-outline-variant flex justify-between items-center px-margin-edge py-stack-sm z-30 shrink-0 hidden md:flex">
+<div class="flex items-center gap-gutter">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tighter">ASHFALL TERMINAL v4.2</h1>
+<div class="hidden lg:flex items-center gap-stack-sm text-outline font-code-data text-code-data ml-stack-md border-l border-outline-variant pl-stack-md">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>UPTIME: 341:12:44</span>
+<span class="mx-2">|</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">wifi_tethering</span>
+<span class="text-secondary">SECTOR 07: STABLE</span>
+</div>
+</div>
+<nav class="flex gap-stack-lg h-full hidden md:flex">
+<a class="font-subheading text-subheading text-on-surface-variant hover:text-secondary hover:bg-surface-container transition-colors flicker-on-hover flex items-center pt-1" href="#">STATIONS</a>
+<a class="font-subheading text-subheading text-on-surface-variant hover:text-secondary hover:bg-surface-container transition-colors flicker-on-hover flex items-center pt-1" href="#">OPERATIVES</a>
+<a class="font-subheading text-subheading text-on-surface-variant hover:text-secondary hover:bg-surface-container transition-colors flicker-on-hover flex items-center pt-1" href="#">LOGISTICS</a>
+<a class="font-subheading text-subheading text-on-surface-variant hover:text-secondary hover:bg-surface-container transition-colors flicker-on-hover flex items-center pt-1" href="#">COMMS</a>
+</nav>
+<div class="flex items-center gap-stack-sm text-secondary">
+<button class="p-2 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 hover:bg-surface-container transition-colors text-error">
+<span class="material-symbols-outlined">power_settings_new</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-margin-edge w-64 border-r border-outline-variant bg-surface-container-lowest z-20 shrink-0 hidden md:flex mt-[73px]">
+<div class="px-gutter mb-stack-lg">
+<div class="flex items-center gap-stack-sm mb-2">
+<div class="w-10 h-10 bg-surface-variant rounded flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-secondary">shield_person</span>
+</div>
+<div>
+<div class="font-label-caps text-label-caps text-secondary-fixed-dim">Commanding Officer</div>
+<div class="font-subheading text-subheading text-primary leading-none mt-1">SECTOR 07</div>
+</div>
+</div>
+<div class="font-code-data text-code-data text-error mt-stack-sm text-xs">BUNKER STATUS: CRITICAL</div>
+</div>
+<nav class="flex-1 flex flex-col gap-unit px-unit font-label-caps text-label-caps">
+<a class="flex items-center gap-stack-sm text-on-surface-variant p-stack-sm opacity-70 hover:bg-surface-variant hover:opacity-100 transition-all scale-95-active duration-75 rounded-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+                    DASHBOARD
+                </a>
+<a class="flex items-center gap-stack-sm bg-secondary-container text-on-secondary-container border-l-4 border-tertiary-container p-stack-sm transition-all scale-95-active duration-75" href="#">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+                    ROSTER
+                </a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant p-stack-sm opacity-70 hover:bg-surface-variant hover:opacity-100 transition-all scale-95-active duration-75 rounded-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">bed</span>
+                    QUARTERS
+                </a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant p-stack-sm opacity-70 hover:bg-surface-variant hover:opacity-100 transition-all scale-95-active duration-75 rounded-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">vital_signs</span>
+                    MEDICAL
+                </a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant p-stack-sm opacity-70 hover:bg-surface-variant hover:opacity-100 transition-all scale-95-active duration-75 rounded-sm text-error" href="#">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+                    ALERTS
+                </a>
+</nav>
+<div class="mt-auto px-gutter flex flex-col gap-stack-sm">
+<button class="w-full border border-secondary text-secondary py-2 font-label-caps text-label-caps hover:bg-secondary hover:text-surface-container-lowest transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+                    SYNC DATA
+                </button>
+<div class="h-px bg-outline-variant w-full my-stack-sm"></div>
+<a class="flex items-center gap-stack-sm text-on-surface-variant p-stack-sm opacity-70 hover:bg-surface-variant hover:opacity-100 transition-all rounded-sm font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+                    DIAGNOSTICS
+                </a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-0 md:ml-64 p-margin-edge overflow-y-auto h-[calc(100vh-73px)] mt-[73px] md:mt-0 relative z-10 bg-background">
+<div class="mb-stack-lg flex justify-between items-end border-b border-outline-variant pb-stack-sm">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tighter">ROSTER MANAGEMENT</h2>
+<p class="font-code-data text-code-data text-outline">CYCLE 44.2 // SURVIVOR ALLOCATION PROTOCOL</p>
+</div>
+<div class="font-code-data text-code-data text-right">
+<div class="text-secondary">ACTIVE PERSONNEL: 24/48</div>
+<div class="text-error">CRITICAL FATIGUE: 3</div>
+</div>
+</div>
+<!-- Three Column Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Fatigue Monitor -->
+<div class="lg:col-span-3 flex flex-col gap-stack-md">
+<div class="bg-surface-container-low border border-outline-variant p-stack-md worn-edge-top h-full flex flex-col">
+<h3 class="font-subheading text-subheading text-secondary mb-stack-sm flex items-center gap-2">
+<span class="material-symbols-outlined">monitor_heart</span>
+                            FATIGUE &amp; STRESS
+                        </h3>
+<div class="h-px bg-outline-variant w-full mb-stack-md"></div>
+<div class="flex flex-col gap-stack-sm flex-1">
+<!-- Operative Vance -->
+<div class="flex flex-col gap-1 border-b border-outline-variant pb-stack-sm border-opacity-50">
+<div class="flex justify-between font-label-caps text-label-caps">
+<span class="text-primary">OP. VANCE</span>
+<span class="text-secondary-fixed-dim">32%</span>
+</div>
+<div class="w-full h-4 bg-surface-variant relative border border-outline-variant">
+<div class="h-full bg-secondary w-[32%] opacity-80"></div>
+</div>
+<div class="text-[10px] font-code-data text-secondary uppercase tracking-widest text-right">RESTED</div>
+</div>
+<!-- Operative Elena -->
+<div class="flex flex-col gap-1 border-b border-outline-variant pb-stack-sm border-opacity-50">
+<div class="flex justify-between font-label-caps text-label-caps">
+<span class="text-primary">OP. ELENA</span>
+<span class="text-warning-amber">78%</span>
+</div>
+<div class="w-full h-4 bg-surface-variant relative border border-outline-variant animate-pulse-slow">
+<div class="h-full bg-warning-amber w-[78%] opacity-80"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] font-code-data text-error">MORALE: DROPPING</span>
+<span class="text-[10px] font-code-data text-warning-amber uppercase tracking-widest text-right">OVERWORKED</span>
+</div>
+</div>
+<!-- Operative Lucas -->
+<div class="flex flex-col gap-1 border-b border-outline-variant pb-stack-sm border-opacity-50">
+<div class="flex justify-between font-label-caps text-label-caps">
+<span class="text-primary">OP. LUCAS</span>
+<span class="text-secondary">45%</span>
+</div>
+<div class="w-full h-4 bg-surface-variant relative border border-outline-variant">
+<div class="h-full bg-tactical-teal w-[45%] opacity-80"></div>
+</div>
+<div class="text-[10px] font-code-data text-tactical-teal uppercase tracking-widest text-right">STABLE</div>
+</div>
+</div>
+<div class="mt-stack-md bg-surface-variant p-stack-sm border border-error border-opacity-30">
+<div class="font-label-caps text-label-caps text-error mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_down</span>
+                                SHIFT ROTATION PENALTY
+                            </div>
+<div class="font-code-data text-code-data text-outline text-xs">Current staffing levels are enforcing consecutive shifts. Base recovery reduced by 10%.</div>
+</div>
+</div>
+</div>
+<!-- Center Column: Duty Roster Matrix -->
+<div class="lg:col-span-6 flex flex-col gap-stack-md">
+<div class="bg-surface-container-low border border-outline-variant p-stack-md worn-edge-top h-full">
+<div class="flex justify-between items-center mb-stack-sm">
+<h3 class="font-subheading text-subheading text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">calendar_view_week</span>
+                                DUTY ROSTER MATRIX (24H)
+                            </h3>
+<div class="flex gap-2">
+<button class="px-2 py-1 border-b-2 border-warning-amber font-label-caps text-label-caps text-warning-amber">ALPHA (06-18)</button>
+<button class="px-2 py-1 border-b-2 border-transparent font-label-caps text-label-caps text-outline hover:text-primary transition-colors">BETA (18-06)</button>
+</div>
+</div>
+<div class="h-px bg-outline-variant w-full mb-stack-md"></div>
+<div class="flex flex-col gap-stack-sm">
+<!-- Reactor -->
+<div class="bg-surface p-stack-sm border border-outline-variant flex gap-stack-md items-center group hover:border-secondary transition-colors">
+<div class="w-12 h-12 bg-surface-variant flex items-center justify-center border border-outline-variant text-secondary">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div class="flex-1">
+<div class="font-label-caps text-label-caps text-primary">REACTOR ENGINEERING</div>
+<div class="font-code-data text-xs text-outline">PRIORITY: ALPHA-1</div>
+</div>
+<div class="flex gap-2">
+<div class="flex items-center gap-2 border border-tactical-teal px-3 py-1 bg-surface-variant">
+<div class="w-2 h-2 bg-secondary rounded-full"></div>
+<span class="font-code-data text-code-data text-primary">VANCE</span>
+</div>
+<div class="flex items-center gap-2 border border-outline-variant px-3 py-1 bg-surface opacity-50 border-dashed">
+<span class="material-symbols-outlined text-[16px] text-outline">add</span>
+<span class="font-code-data text-code-data text-outline">SLOT 2</span>
+</div>
+</div>
+</div>
+<!-- Hydroponics -->
+<div class="bg-surface p-stack-sm border border-outline-variant flex gap-stack-md items-center group hover:border-secondary transition-colors">
+<div class="w-12 h-12 bg-surface-variant flex items-center justify-center border border-outline-variant text-secondary">
+<span class="material-symbols-outlined">eco</span>
+</div>
+<div class="flex-1">
+<div class="font-label-caps text-label-caps text-primary">HYDROPONICS FARM</div>
+<div class="font-code-data text-xs text-outline">PRIORITY: BETA-3</div>
+</div>
+<div class="flex gap-2">
+<div class="flex items-center gap-2 border border-warning-amber px-3 py-1 bg-surface-variant">
+<div class="w-2 h-2 bg-warning-amber rounded-full animate-pulse-slow"></div>
+<span class="font-code-data text-code-data text-primary">ELENA</span>
+</div>
+</div>
+</div>
+<!-- Sentry -->
+<div class="bg-surface p-stack-sm border border-outline-variant flex gap-stack-md items-center group hover:border-secondary transition-colors">
+<div class="w-12 h-12 bg-surface-variant flex items-center justify-center border border-outline-variant text-secondary">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div class="flex-1">
+<div class="font-label-caps text-label-caps text-primary">SENTRY PERIMETER</div>
+<div class="font-code-data text-xs text-outline">PRIORITY: ALPHA-1</div>
+</div>
+<div class="flex gap-2">
+<div class="flex items-center gap-2 border border-tactical-teal px-3 py-1 bg-surface-variant">
+<div class="w-2 h-2 bg-secondary rounded-full"></div>
+<span class="font-code-data text-code-data text-primary">LUCAS</span>
+</div>
+<div class="flex items-center gap-2 border border-tactical-teal px-3 py-1 bg-surface-variant">
+<div class="w-2 h-2 bg-secondary rounded-full"></div>
+<span class="font-code-data text-code-data text-primary">MIRA</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Quarters Allocation -->
+<div class="lg:col-span-3 flex flex-col gap-stack-md">
+<div class="bg-surface-container-low border border-outline-variant p-stack-md worn-edge-top h-full flex flex-col">
+<h3 class="font-subheading text-subheading text-primary mb-stack-sm flex items-center gap-2">
+<span class="material-symbols-outlined">meeting_room</span>
+                            BUNKER QUARTERS
+                        </h3>
+<div class="h-px bg-outline-variant w-full mb-stack-md"></div>
+<div class="flex flex-col gap-stack-sm flex-1">
+<!-- Bunk Block A -->
+<div class="border border-outline-variant p-stack-sm bg-surface">
+<div class="flex justify-between items-center mb-2">
+<div class="font-label-caps text-label-caps text-primary">BLOCK A</div>
+<div class="font-code-data text-xs text-warning-amber">4/4 CAP</div>
+</div>
+<div class="w-full flex gap-1 h-8 mb-2">
+<div class="flex-1 bg-warning-amber opacity-80 border border-surface-variant"></div>
+<div class="flex-1 bg-warning-amber opacity-80 border border-surface-variant"></div>
+<div class="flex-1 bg-warning-amber opacity-80 border border-surface-variant"></div>
+<div class="flex-1 bg-warning-amber opacity-80 border border-surface-variant"></div>
+</div>
+<div class="text-[10px] font-code-data text-outline uppercase">STATUS: CRAMPED</div>
+</div>
+<!-- Bunk Block B -->
+<div class="border border-outline-variant p-stack-sm bg-surface">
+<div class="flex justify-between items-center mb-2">
+<div class="font-label-caps text-label-caps text-primary">BLOCK B</div>
+<div class="font-code-data text-xs text-secondary">2/4 CAP</div>
+</div>
+<div class="w-full flex gap-1 h-8 mb-2">
+<div class="flex-1 bg-tactical-teal opacity-80 border border-surface-variant"></div>
+<div class="flex-1 bg-tactical-teal opacity-80 border border-surface-variant"></div>
+<div class="flex-1 bg-surface-variant border border-outline-variant border-dashed"></div>
+<div class="flex-1 bg-surface-variant border border-outline-variant border-dashed"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-code-data">
+<span class="text-secondary uppercase">STATUS: QUIET WARD</span>
+<span class="text-tactical-teal">+5% RECOVERY</span>
+</div>
+</div>
+</div>
+<!-- Tactical Directives -->
+<div class="mt-stack-lg border-t border-outline-variant pt-stack-md flex flex-col gap-stack-sm">
+<div class="font-label-caps text-label-caps text-outline mb-2">TACTICAL DIRECTIVES</div>
+<button class="w-full border border-outline-variant bg-surface py-2 font-label-caps text-label-caps text-primary hover:bg-surface-variant transition-colors flex items-center justify-between px-3">
+<span>AUTO-BALANCE BY SKILL</span>
+<span class="material-symbols-outlined text-[16px]">tune</span>
+</button>
+<button class="w-full border border-secondary bg-surface py-2 font-label-caps text-label-caps text-secondary hover:bg-secondary hover:text-surface-container-lowest transition-colors flex items-center justify-between px-3">
+<span>ENFORCE 8HR SLEEP</span>
+<span class="material-symbols-outlined text-[16px]">nights_stay</span>
+</button>
+<button class="w-full border border-warning-amber bg-surface py-2 font-label-caps text-label-caps text-warning-amber hover:bg-warning-amber hover:text-surface-container-lowest transition-colors flex items-center justify-between px-3 mt-2 animate-pulse-slow">
+<span>CALL EMERGENCY SHIFT</span>
+<span class="material-symbols-outlined text-[16px]">notifications_active</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

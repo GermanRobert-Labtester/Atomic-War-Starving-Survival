@@ -60,16 +60,20 @@ namespace AtomicWar.GodotApp
                 if (string.IsNullOrWhiteSpace(raw)) return null;
                 var envelope = s_json.Deserialize<PhantomMemoryHostSave>(raw);
                 if (envelope == null || envelope.State == null) return null;
-                // Absent checksum = pre-integrity save or foreign file; tolerate
-                // it, but reject a present checksum that does not match.
-                if (!string.IsNullOrEmpty(envelope.Checksum))
+                // The checksummed envelope is the current Phantom Memory format;
+                // an empty checksum means a malformed new-format save, not
+                // "legacy" (a pre-envelope bare-state file yields State == null
+                // and is dropped above).
+                if (string.IsNullOrEmpty(envelope.Checksum))
                 {
-                    string actual = SaveChecksum.Compute(envelope);
-                    if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
-                    {
-                        GD.PrintErr("[PhantomMemory] load failed: checksum mismatch (corrupt or foreign save).");
-                        return null;
-                    }
+                    GD.PrintErr("[PhantomMemory] load failed: checksum field missing (corrupt save).");
+                    return null;
+                }
+                string actual = SaveChecksum.Compute(envelope);
+                if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
+                {
+                    GD.PrintErr("[PhantomMemory] load failed: checksum mismatch (corrupt or foreign save).");
+                    return null;
                 }
                 return envelope.State;
             }

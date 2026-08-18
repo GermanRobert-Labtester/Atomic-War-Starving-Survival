@@ -68,6 +68,15 @@ namespace AtomicWar.GodotApp
             string json = File.Exists(path) ? File.ReadAllText(path) : string.Empty;
             var session = new RadioHostSession(FactionRadioEngine.LoadFromJson(json), new SeededRng(DemoSeed), day);
             session.Listen();
+            // Persistence: a radio save (checksummed, user://) wins over fresh
+            // state — history, played-broadcast dedup keys, and tuned frequency
+            // all survive a reload. No save = fresh receiver (legacy fallback).
+            var save = RadioSaveStore.TryLoad();
+            if (save != null)
+            {
+                session.RestoreSave(save);
+                session.LastEvent = "Radio state restored from save.";
+            }
             return session;
         }
 
@@ -177,10 +186,84 @@ namespace AtomicWar.GodotApp
         /// <summary>
         /// Stable dedup key: day + frequency + message hash.
         /// Prevents replay on UI refresh/reopen while allowing same-frequency different-day broadcasts.
+        /// Uses the deterministic Core StableHash — string.GetHashCode() is randomized
+        /// per process and would make the key unstable across runs.
         /// </summary>
         private static string MakeBroadcastKey(RadioIntercept intercept)
         {
-            return $"{intercept.Day}:{intercept.FrequencyMhz:F2}:{(intercept.Message?.GetHashCode() ?? 0)}";
+            return $"{intercept.Day}:{intercept.FrequencyMhz:F2}:{StableHash.Of(intercept.Message)}";
+        }
+
+        /// <summary>True when this broadcast's dedup key was already played (voice-over already fired).</summary>
+        public bool HasPlayed(RadioIntercept intercept)
+        {
+            return _playedBroadcastKeys.Contains(MakeBroadcastKey(intercept));
+        }
+
+        // ── Persistence ─────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Snapshot every authoritative mutable value: ordered intercept history,
+        /// played-broadcast dedup keys (ordinal-sorted for a stable checksum), the
+        /// tuned frequency, and the sim day. The FactionRadioEngine corpus itself
+        /// is static data — never serialized.
+        /// </summary>
+        public RadioSaveState CaptureSave()
+        {
+            var state = new RadioSaveState
+            {
+                day = Day,
+                currentFrequency = CurrentFrequency,
+                history = new List<RadioInterceptEntry>(_history.Count)
+            };
+            for (int i = 0; i < _history.Count; i++)
+            {
+                var h = _history[i];
+                state.history.Add(new RadioInterceptEntry
+                {
+                    factionId = h.FactionId,
+                    callsign = h.Callsign,
+                    frequencyMhz = h.FrequencyMhz,
+                    kind = (int)h.Kind,
+                    message = h.Message,
+                    signalStrength = h.SignalStrength,
+                    day = h.Day
+                });
+            }
+            state.playedBroadcastKeys = new List<string>(_playedBroadcastKeys);
+            state.playedBroadcastKeys.Sort(StringComparer.Ordinal);
+            return state;
+        }
+
+        /// <summary>
+        /// Rebuild receiver state from a snapshot. Overwrites history, dedup keys,
+        /// frequency, and day; the engine corpus is unchanged.
+        /// </summary>
+        public void RestoreSave(RadioSaveState state)
+        {
+            _history.Clear();
+            _playedBroadcastKeys.Clear();
+            if (state == null) return;
+
+            Day = Math.Max(1, state.day);
+            CurrentFrequency = state.currentFrequency > 0f ? state.currentFrequency : FirstFrequency();
+
+            if (state.history != null)
+                for (int i = 0; i < state.history.Count; i++)
+                {
+                    var e = state.history[i];
+                    if (e == null) continue;
+                    _history.Add(new RadioIntercept(
+                        e.factionId, e.callsign, e.frequencyMhz,
+                        (RadioEventKind)e.kind, e.message, e.signalStrength, Math.Max(1, e.day)));
+                }
+
+            if (state.playedBroadcastKeys != null)
+                for (int i = 0; i < state.playedBroadcastKeys.Count; i++)
+                    if (!string.IsNullOrEmpty(state.playedBroadcastKeys[i]))
+                        _playedBroadcastKeys.Add(state.playedBroadcastKeys[i]);
+
+            LastEvent = "Radio state restored.";
         }
 
         public string StatusLine()

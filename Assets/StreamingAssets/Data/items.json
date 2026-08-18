@@ -3371,8 +3371,8 @@
   },
   {
     "id": "ammo_762x51_jhp_ap",
-    "displayName": "7.62×51mm NATO JHP+AP",
-    "description": "A 7.62x51 NATO cartridge, 0.02 kilos, a hollow point over a steel penetrator. Twenty to a pack at trade value 15. It is the round of the battle rifles, standard issue to half the guns still working. Armorers trust the headstamp, and the headstamp has been right for a long time.",
+    "displayName": "7.62×51mm JHP+AP",
+    "description": "A 7.62x51 cartridge, 0.02 kilos, a hollow point over a steel penetrator. Twenty to a pack at trade value 15. It is the round of the battle rifles, standard issue to half the guns still working. Armorers trust the headstamp, and the headstamp has been right for a long time.",
     "type": "Weapon",
     "stackMax": 20,
     "weight": 0.02,
@@ -3391,8 +3391,8 @@
   },
   {
     "id": "ammo_762x51_exi",
-    "displayName": "7.62×51mm NATO EXI",
-    "description": "A 7.62x51 NATO cartridge stamped EXI, 0.02 kilos, twenty to a pack, trade value 15. Standard dimensions, unusual load, sealed primer. It cycles through the same battle rifles as everything else and keeps the same price, because results are results.",
+    "displayName": "7.62×51mm EXI",
+    "description": "A 7.62x51 cartridge stamped EXI, 0.02 kilos, twenty to a pack, trade value 15. Standard dimensions, unusual load, sealed primer. It cycles through the same battle rifles as everything else and keeps the same price, because results are results.",
     "type": "Weapon",
     "stackMax": 20,
     "weight": 0.02,
@@ -3411,8 +3411,8 @@
   },
   {
     "id": "ammo_50bmg_jhp_ap",
-    "displayName": "12.7×99mm NATO JHP+AP",
-    "description": "A 12.7x99 NATO cartridge, 0.02 kilos, a hollow point over a penetrator. Twenty to a pack at trade value 15. Heavy machine gun ammunition; a full box is a statement about who you are and what you are willing to do at a gate. It has no quiet use.",
+    "displayName": "12.7×99mm JHP+AP",
+    "description": "A 12.7x99 cartridge, 0.02 kilos, a hollow point over a penetrator. Twenty to a pack at trade value 15. Heavy machine gun ammunition; a full box is a statement about who you are and what you are willing to do at a gate. It has no quiet use.",
     "type": "Weapon",
     "stackMax": 20,
     "weight": 0.02,
@@ -3431,8 +3431,8 @@
   },
   {
     "id": "ammo_50bmg_exi",
-    "displayName": "12.7×99mm NATO EXI",
-    "description": "A 12.7x99 NATO cartridge stamped EXI, 0.02 kilos, twenty to a pack, trade value 15. The round is as long as a forearm and as patient as the machine that fires it. It comes from the old heavy weapon stocks, where the seals held and the grease never dried out.",
+    "displayName": "12.7×99mm EXI",
+    "description": "A 12.7x99 cartridge stamped EXI, 0.02 kilos, twenty to a pack, trade value 15. The round is as long as a forearm and as patient as the machine that fires it. It comes from the old heavy weapon stocks, where the seals held and the grease never dried out.",
     "type": "Weapon",
     "stackMax": 20,
     "weight": 0.02,

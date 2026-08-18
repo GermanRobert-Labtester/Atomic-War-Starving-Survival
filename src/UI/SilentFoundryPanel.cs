@@ -1,429 +1,432 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Foundry;
+using Ashfall.Core.UI;
+using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
-namespace AtomicWar.GodotApp.UI
+namespace AtomicWar.GodotApp.UI;
+
+/// <summary>
+/// ASHFALL — Silent Foundry Dashboard (Stitch #1, Heavy Metallurgy / Foundry).
+///
+/// Phase 16 prioritised lift: same `SilentFoundryHostSession` source as the
+/// legacy Phase 10 modal, but routed through the Phase 11 dashboard shell
+/// (AshfallDashboardShell + AshfallSidebar + AshfallStatusRail) and the
+/// Phase 12 data-grid primitive (AshfallDataGrid).
+///
+/// Six columns of the active cast queue + condition bars + treaty roll-up.
+/// Pure presentation; reads only from `Ashfall.Core.Foundry.*`.
+/// </summary>
+public partial class SilentFoundryPanel : Control
 {
-    /// <summary>
-    /// Panel for THE SILENT FOUNDRY (Expansion 10) — smelter-bay production,
-    /// repair, maintenance, casting quality, safety, and labor conflict.
-    /// Thin presentation only; all rules live in Ashfall.Core.Foundry.
-    /// </summary>
-    public partial class SilentFoundryPanel : Control
+    public event Action? OnClose;
+    public event Action<int>? OnProductSelected;
+
+    private AshfallDashboardShell _shell = null!;
+    private AshfallSidebar? _sidebar;
+    private AshfallStatusRail? _statusRail;
+    private AshfallDataGrid? _productGrid;
+    private VBoxContainer _detailBox = null!;
+    private Label _detailTitle = null!;
+    private int _selectedIndex = -1;
+    private string _categoryFilter = "all"; // all | agricultural_tool | structural_beam | water_component | heavy_alloy_part | repair_plate
+
+    private SilentFoundryHostSession? _host;
+    private int _currentDay = 4;
+
+    public bool IsBound => _host != null;
+
+    public void Bind(SilentFoundryHostSession session, int currentDay)
     {
-        public event Action? OnClose;
+        _host = session;
+        _currentDay = currentDay;
+        if (_host != null)
+            _host.StateChanged += RefreshView;
+        RefreshView();
+    }
 
-        private SilentFoundryHostSession? _host;
-        private Label _lblSummary = null!;
-        private Label _lblLastEvent = null!;
-        private VBoxContainer _conditions = null!;
-        private VBoxContainer _sand = null!;
-        private VBoxContainer _production = null!;
-        private VBoxContainer _treaties = null!;
-        private VBoxContainer _history = null!;
-        private int _currentDay = 4;
+    public override void _Ready()
+    {
+        SetAnchorsPreset(LayoutPreset.FullRect);
 
-        public bool IsBound => _host != null;
+        _shell = new AshfallDashboardShell("The Silent Foundry // Cupola & Casting Bay", minWidth: 1100, minHeight: 720);
+        SetContentRoot(_shell);
 
-        public void Bind(SilentFoundryHostSession session, int currentDay)
+        // Sidebar: filter by sink category, plus status shortcuts.
+        var sidebarItems = new[]
         {
-            _host = session;
-            _currentDay = currentDay;
-            if (_host != null)
-                _host.StateChanged += RefreshView;
-            RefreshView();
+            new AshfallSidebar.Item { Id = "all", Label = "All Heats", Hint = "every castable product", IconPath = "" },
+            new AshfallSidebar.Item { Id = "agricultural_tool", Label = "Agricultural Tools", Hint = "shovels, harrows, plowshares", IconPath = "" },
+            new AshfallSidebar.Item { Id = "structural_beam", Label = "Structural Beams", Hint = "rods, plates, fasteners", IconPath = "" },
+            new AshfallSidebar.Item { Id = "water_component", Label = "Water / Brine Items", Hint = "pipes, winches", IconPath = "" },
+            new AshfallSidebar.Item { Id = "heavy_alloy_part", Label = "Heavy Alloy Parts", Hint = "defense plates, brackets", IconPath = "" },
+            new AshfallSidebar.Item { Id = "repair_plate", Label = "Repair Plates", Hint = "expedition spares", IconPath = "" },
+        };
+        _sidebar = _shell.SetSidebar(sidebarItems, "Heat Categories", "all");
+        _sidebar.OnSelected += HandleSidebar;
+
+        _statusRail = _shell.SetStatusRail();
+        _statusRail.AddCard("sealed", "Furnace", "—", AshfallMetricCard.Criticality.Normal, minWidth: 100);
+        _statusRail.AddCard("hearth", "Hearth", "—/100", AshfallMetricCard.Criticality.Normal, minWidth: 110);
+        _statusRail.AddCard("lining", "Lining", "—/100", AshfallMetricCard.Criticality.Normal, minWidth: 110);
+        _statusRail.AddCard("casts", "Casts", "—", AshfallMetricCard.Criticality.Normal, minWidth: 80);
+        _statusRail.AddCard("labor", "Labor", "—", AshfallMetricCard.Criticality.Normal, minWidth: 110);
+        _statusRail.AddCard("treaty", "Treaties", "—", AshfallMetricCard.Criticality.Normal, minWidth: 130);
+
+        // DataGrid: product, sink, charge (count + ids), fuel, water, quality target.
+        var cols = new[]
+        {
+            new AshfallDataGrid.Column { Header = "Product", MinWidth = 200, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Sink",    MinWidth = 140, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Charge",  MinWidth = 200, Alignment = AshfallDataGrid.ColumnAlign.Left },
+            new AshfallDataGrid.Column { Header = "Fuel",    MinWidth = 70,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Water L", MinWidth = 80,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+            new AshfallDataGrid.Column { Header = "Quality", MinWidth = 90,  Alignment = AshfallDataGrid.ColumnAlign.Right },
+        };
+        _productGrid = new AshfallDataGrid(cols, showHeader: true, minWidth: 720, minHeight: 320);
+        _productGrid.OnRowSelected += HandleRowSelected;
+
+        var body = new HBoxContainer();
+        body.AddThemeConstantOverride("separation", DesignTheme.SpacingMd);
+        body.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        body.SizeFlagsVertical = SizeFlags.ExpandFill;
+        body.AddChild(_productGrid);
+
+        _detailBox = new VBoxContainer();
+        _detailBox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _detailBox.CustomMinimumSize = new Vector2(320, 320);
+        _detailBox.SizeFlagsVertical = SizeFlags.ExpandFill;
+        body.AddChild(_detailBox);
+
+        _detailTitle = AshfallUiHelpers.MakeSectionHeader("CAST DETAIL");
+        _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;
+        _detailBox.AddChild(_detailTitle);
+        _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+        _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
+            "Select a heat row to view charge costs, treaty obligations, and quality target."));
+
+        _shell.SetContent(body);
+        RefreshView();
+    }
+
+    private void SetContentRoot(Control root)
+    {
+        AddChild(root);
+        root.SetAnchorsPreset(LayoutPreset.FullRect);
+        root.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        root.SizeFlagsVertical = SizeFlags.ExpandFill;
+    }
+
+    private void HandleSidebar(string id)
+    {
+        _categoryFilter = id ?? "all";
+        _selectedIndex = -1;
+        RefreshView();
+    }
+
+    private void HandleRowSelected(int idx)
+    {
+        _selectedIndex = idx;
+        OnProductSelected?.Invoke(idx);
+        RefreshDetail();
+    }
+
+    public void RefreshView()
+    {
+        RefreshStatusRail();
+        BuildProductRows();
+        RefreshDetail();
+    }
+
+    private void RefreshStatusRail()
+    {
+        if (_statusRail == null) return;
+        if (_host == null)
+        {
+            _statusRail.Set("sealed", "—", AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("hearth", "—/100", AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("lining", "—/100", AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("casts", "—", AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("labor", "—", AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("treaty", "—", AshfallMetricCard.Criticality.Normal);
+            return;
         }
 
-        public override void _Ready()
+        var s = _host.Engine.State;
+        int casts = _host.Engine.TotalProductionCount;
+        int failed = _host.Engine.TotalFailedCount;
+
+        _statusRail.Set("sealed", s.unlocked ? "OPEN" : "SEALED",
+            s.unlocked ? AshfallMetricCard.Criticality.Normal : AshfallMetricCard.Criticality.Caution);
+        _statusRail.Set("hearth", $"{s.hearthTuyeres:0}/100",
+            s.hearthTuyeres < 30f ? AshfallMetricCard.Criticality.Critical :
+            s.hearthTuyeres < 60f ? AshfallMetricCard.Criticality.Caution :
+                                    AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("lining", $"{s.refractoryLining:0}/100",
+            s.refractoryLining < 30f ? AshfallMetricCard.Criticality.Critical :
+            s.refractoryLining < 60f ? AshfallMetricCard.Criticality.Caution :
+                                       AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("casts", $"{casts}", failed > 0 ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("labor", LaborLabel(s.laborDispute),
+            s.laborDispute == FoundryLaborDispute.StrikeActive ? AshfallMetricCard.Criticality.Warn :
+            s.laborDispute == FoundryLaborDispute.Tensions     ? AshfallMetricCard.Criticality.Caution :
+                                                                    AshfallMetricCard.Criticality.Normal);
+        _statusRail.Set("treaty", TreatySummary(s),
+            s.treatyCompliance != null && AnyTreatyViolated(s.treatyCompliance) ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
+    }
+
+    private static string LaborLabel(FoundryLaborDispute d) => d switch
+    {
+        FoundryLaborDispute.None => "CALM",
+        FoundryLaborDispute.Tensions => "TENSIONS",
+        FoundryLaborDispute.StrikeActive => "STRIKE",
+        FoundryLaborDispute.Resolved => "RESOLVED",
+        _ => "—",
+    };
+
+    private static bool AnyTreatyViolated(List<FoundryTreatyCompliance> comps)
+    {
+        if (comps == null) return false;
+        for (int i = 0; i < comps.Count; i++)
+            if (comps[i] != null && comps[i].missedCount > comps[i].metCount) return true;
+        return false;
+    }
+
+    private static string TreatySummary(SilentFoundryState s)
+    {
+        if (s.treatyCompliance == null || s.treatyCompliance.Count == 0) return "—";
+        int met = 0, missed = 0;
+        for (int i = 0; i < s.treatyCompliance.Count; i++)
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
-            Visible = false;
+            if (s.treatyCompliance[i] == null) continue;
+            met += s.treatyCompliance[i].metCount;
+            missed += s.treatyCompliance[i].missedCount;
+        }
+        return missed > 0 ? $"{met}m {missed}miss" : $"{met}m";
+    }
 
-            var bg = new ColorRect { Color = new Color(0.03f, 0.04f, 0.05f, 0.94f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+    private void BuildProductRows()
+    {
+        if (_productGrid == null) return;
 
-            var center = new CenterContainer();
-            center.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(center);
-
-            var panel = AshfallUiHelpers.MakePanel(1040, 700);
-            center.AddChild(panel);
-
-            var margins = AshfallUiHelpers.MakeMargins(DesignTheme.SpacingMd);
-            panel.AddChild(margins);
-
-            var rootVBox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
-            margins.AddChild(rootVBox);
-
-            // ── Header ──
-            var header = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-            var title = AshfallUiHelpers.MakeTitle("THE SILENT FOUNDRY // CUPOLA & CASTING BAY", DesignTheme.FontSizeH2);
-            title.HorizontalAlignment = HorizontalAlignment.Left;
-            title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            header.AddChild(title);
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(110, 32);
-            header.AddChild(btnClose);
-            rootVBox.AddChild(header);
-
-            rootVBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblSummary = AshfallUiHelpers.MakeMono("FOUNDRY SEALED");
-            _lblSummary.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
-            rootVBox.AddChild(_lblSummary);
-
-            _lblLastEvent = AshfallUiHelpers.MakeSmall("", autowrap: true);
-            _lblLastEvent.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Muted));
-            rootVBox.AddChild(_lblLastEvent);
-
-            rootVBox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var bodyRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingMd);
-            bodyRow.SizeFlagsVertical = SizeFlags.ExpandFill;
-            rootVBox.AddChild(bodyRow);
-
-            // ── Left column: conditions, sand, labor ──
-            var left = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
-            left.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            left.SizeFlagsVertical = SizeFlags.ExpandFill;
-            bodyRow.AddChild(left);
-
-            var condCard = AshfallUiHelpers.MakeCardFrame("FACILITY CONDITION", "refractory · hearth · sand · structure · exhaust", 460, 0);
-            left.AddChild(condCard);
-            _conditions = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
-            condCard.AddChild(_conditions);
-
-            var sandCard = AshfallUiHelpers.MakeCardFrame("GREEN-SAND BED", "moisture · binder · pattern · contamination", 460, 0);
-            left.AddChild(sandCard);
-            _sand = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
-            sandCard.AddChild(_sand);
-
-            var laborCard = AshfallUiHelpers.MakeCardFrame("LABOR & SAFETY", "shifts · education · dispute", 460, 0);
-            left.AddChild(laborCard);
-            var laborBox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
-            laborCard.AddChild(laborBox);
-            BuildLaborActions(laborBox);
-
-            // ── Right column: production, treaties, history ──
-            var right = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingSm);
-            right.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            right.SizeFlagsVertical = SizeFlags.ExpandFill;
-            bodyRow.AddChild(right);
-
-            var prodCard = AshfallUiHelpers.MakeCardFrame("CASTING FLOOR", "charge → heat → tap → cast", 520, 0);
-            right.AddChild(prodCard);
-            _production = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
-            prodCard.AddChild(_production);
-
-            var treatyCard = AshfallUiHelpers.MakeCardFrame("ACCORD OBLIGATIONS", "signatory of 4 District 8 accords", 520, 0);
-            right.AddChild(treatyCard);
-            _treaties = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
-            treatyCard.AddChild(_treaties);
-
-            var historyCard = AshfallUiHelpers.MakeCardFrame("PRODUCTION & INCIDENT HISTORY", "casts · failures · repairs · incidents", 520, 0);
-            right.AddChild(historyCard);
-            _history = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingXs);
-            historyCard.AddChild(_history);
+        if (_host == null)
+        {
+            _productGrid.SetRows(BuildFixtureRows());
+            return;
         }
 
-        private void BuildLaborActions(VBoxContainer laborBox)
+        var rows = new List<AshfallDataGrid.Row>();
+        var products = _host.Catalog.AllProducts;
+        for (int i = 0; i < products.Count; i++)
         {
-            var overtimeRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-            var btnOvertimeOn = AshfallUiHelpers.MakeButton("ORDER OVERTIME", () => Run(() => _host?.SetOvertime(true)));
-            var btnOvertimeOff = AshfallUiHelpers.MakeButton("RESCIND OVERTIME", () => Run(() => _host?.SetOvertime(false)));
-            overtimeRow.AddChild(btnOvertimeOn);
-            overtimeRow.AddChild(btnOvertimeOff);
-            laborBox.AddChild(overtimeRow);
+            var p = products[i];
+            if (p == null) continue;
+            if (!FilterPass(p)) continue;
 
-            var childRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-            var btnChildOn = AshfallUiHelpers.MakeButton("CHILDREN TO FLOOR", () => Run(() => _host?.SetChildLabor(true)));
-            var btnChildOff = AshfallUiHelpers.MakeButton("CHILDREN TO LESSONS", () => Run(() => _host?.SetChildLabor(false)));
-            childRow.AddChild(btnChildOn);
-            childRow.AddChild(btnChildOff);
-            laborBox.AddChild(childRow);
-
-            var disputeRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-            var btnDispute = AshfallUiHelpers.MakeButton("OPEN LABOR DISPUTE", () => Run(() => _host?.OpenDispute(_currentDay)));
-            var btnConcede = AshfallUiHelpers.MakeButton("RESOLVE: CONCEDE SHIFTS", () => Run(() => _host?.ResolveStrike(FoundryStrikeResolution.ConcedeShiftLimits, _currentDay)));
-            var btnMediate = AshfallUiHelpers.MakeButton("RESOLVE: MEDIATION", () => Run(() => _host?.ResolveStrike(FoundryStrikeResolution.Mediation, _currentDay)));
-            disputeRow.AddChild(btnDispute);
-            disputeRow.AddChild(btnConcede);
-            disputeRow.AddChild(btnMediate);
-            laborBox.AddChild(disputeRow);
-        }
-
-        private void Run(Func<string?> action)
-        {
-            string? msg = action();
-            if (msg != null && _host != null)
+            string qualityTarget = p.quality_target > 0f ? $"{p.quality_target:0}" : "—";
+            string charge = SummariseIngredients(p);
+            var cells = new List<AshfallDataGrid.Cell>
             {
-                _host.LastEvent = msg;
-                _lblLastEvent.Text = msg;
-            }
-            RefreshView();
-        }
-
-        public void Open()
-        {
-            Visible = true;
-            RefreshView();
-            QueueRedraw();
-        }
-
-        public void RefreshView()
-        {
-            if (_host == null) return;
-            var sys = _host.Engine;
-            var s = sys.State;
-
-            string labor = s.laborDispute switch
-            {
-                FoundryLaborDispute.Tensions => "TENSIONS",
-                FoundryLaborDispute.StrikeActive => "STRIKE ACTIVE",
-                FoundryLaborDispute.Resolved => "RESOLVED",
-                _ => "CALM"
+                new(p.display_name ?? p.product_id, AshfallDataGrid.CellState.Normal),
+                new(string.IsNullOrEmpty(p.sink) ? p.category : p.sink, AshfallDataGrid.CellState.Muted),
+                new(charge, AshfallDataGrid.CellState.Normal),
+                new($"{p.fuel_units}", AshfallDataGrid.CellState.Normal),
+                new($"{p.water_litres}", AshfallDataGrid.CellState.Normal),
+                new(qualityTarget, AshfallDataGrid.CellState.Normal),
             };
-            string maint = !sys.IsUnlocked ? "unscheduled"
-                : sys.IsMaintenanceOverdue ? "OVERDUE " + sys.DaysOverdue + "d"
-                : s.maintenanceDueDay > 0 ? "due d" + s.maintenanceDueDay : "unscheduled";
-
-            _lblSummary.Text = $"{(s.unlocked ? "OPEN" : "SEALED")} · heat: {sys.HeatStage} · maintenance: {maint} · "
-                + $"labor: {labor} · casts: {sys.TotalProductionCount} · failed: {sys.TotalFailedCount} · "
-                + $"incidents: {sys.Incidents.Count} · stress {sys.CumulativeStress:F0} / hope {sys.CumulativeHope:F0}";
-
-            if (_host != null && !string.IsNullOrEmpty(_host.LastEvent))
-                _lblLastEvent.Text = "» " + _host.LastEvent;
-
-            RebuildConditions(s);
-            RebuildSand(s);
-            RebuildProduction();
-            RebuildTreaties();
-            RebuildHistory();
+            rows.Add(new AshfallDataGrid.Row { Cells = cells, Selectable = true });
         }
-
-        private static Label MakeBar(string label, float value, (float r, float g, float b, float a) color)
+        if (rows.Count == 0)
         {
-            string v = value.ToString("F0");
-            var lbl = AshfallUiHelpers.MakeMono($"{label,-28} {v,3}/100");
-            lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(value < 30f ? DesignTheme.Critical : color));
-            return lbl;
-        }
-
-        private void RebuildConditions(SilentFoundryState s)
-        {
-            ClearChildren(_conditions);
-            _conditions.AddChild(MakeBar("Refractory lining", s.refractoryLining, DesignTheme.Warm));
-            _conditions.AddChild(MakeBar("Hearth & tuyeres", s.hearthTuyeres, DesignTheme.Hot));
-            _conditions.AddChild(MakeBar("Sand beds", s.sandBeds, DesignTheme.LetheAmber));
-            _conditions.AddChild(MakeBar("Structural supports", s.structuralSupports, DesignTheme.Muted));
-            _conditions.AddChild(MakeBar("Safety & exhaust", s.safetyExhaust, DesignTheme.Exclusive));
-
-            var warnings = _host!.Engine.GetSafetyWarnings();
-            foreach (var w in warnings)
+            rows.Add(new AshfallDataGrid.Row
             {
-                var warn = AshfallUiHelpers.MakeSmall("⚠ " + w, autowrap: true);
-                warn.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Entropy));
-                _conditions.AddChild(warn);
-            }
+                Cells = new List<AshfallDataGrid.Cell>
+                {
+                    new("— no products match filter —", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                    new("—", AshfallDataGrid.CellState.Muted),
+                }
+            });
         }
+        _productGrid.SetRows(rows);
+    }
 
-        private void RebuildSand(SilentFoundryState s)
+    private static string SummariseIngredients(FoundryProductEntry p)
+    {
+        if (p.ingredients == null || p.ingredients.Count == 0) return "—";
+        var sb = new StringBuilder();
+        for (int i = 0; i < p.ingredients.Count; i++)
         {
-            ClearChildren(_sand);
-            _sand.AddChild(MakeBar("Sand quality", s.sandQuality, DesignTheme.Warm));
-            _sand.AddChild(MakeBar("Moisture (target 65)", s.sandMoisture, DesignTheme.Lethe));
-            _sand.AddChild(MakeBar("Binder quality", s.binderQuality, DesignTheme.Muted));
-            _sand.AddChild(MakeBar("Pattern quality", s.patternQuality, DesignTheme.Hot));
-            _sand.AddChild(MakeBar("Compaction", s.compaction, DesignTheme.Warm));
-            _sand.AddChild(AshfallUiHelpers.MakeSmall($"Mold reuse: {s.moldReuseCount} · contamination: {s.contamination:F0}% · overtime: {(s.overtimeFlag ? "ON" : "off")} · children: {(s.childLaborUsed ? "FLOOR" : "lessons")}"));
-
-            var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-            row.AddChild(AshfallUiHelpers.MakeButton("PREPARE SAND (2 sand + 40L water)", () => Run(() => _host?.PrepareSand(40))));
-            row.AddChild(AshfallUiHelpers.MakeButton("COMPACT MOLD", () => Run(() => _host?.CompactMold())));
-            _sand.AddChild(row);
+            var ing = p.ingredients[i];
+            if (ing == null) continue;
+            if (sb.Length > 0) sb.Append(" + ");
+            sb.Append(ing.amount).Append(' ').Append(ing.item_id);
         }
+        return sb.ToString();
+    }
 
-        private void RebuildProduction()
+    private bool FilterPass(FoundryProductEntry p)
+    {
+        if (p == null) return false;
+        if (_categoryFilter == "all") return true;
+        return string.Equals(p.category, _categoryFilter, StringComparison.Ordinal);
+    }
+
+    private void RefreshDetail()
+    {
+        if (_detailBox == null) return;
+        while (_detailBox.GetChildCount() > 0)
         {
-            ClearChildren(_production);
-            var sys = _host!.Engine;
-            var s = sys.State;
-
-            if (!s.unlocked)
-            {
-                _production.AddChild(AshfallUiHelpers.MakeSmall(
-                    "The blast furnace is sealed. The blueprint — room_bp_11, Heavy Metallurgy — is catalogued, but no one has signed the charge manifest."));
-                var unlockRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-                var btnUnlock = AshfallUiHelpers.MakeButton("UNLOCK THE FOUNDRY", () => Run(() => _host?.Unlock(_currentDay)));
-                unlockRow.AddChild(btnUnlock);
-                _production.AddChild(unlockRow);
-                return;
-            }
-
-            _production.AddChild(AshfallUiHelpers.MakeSmall(
-                $"Active: {(_host!.Catalog.GetProduct(s.activeProductId)?.display_name ?? "(none)")} · workers {s.assignedWorkers} · "
-                + $"skill {s.workerSkill:F2} · labor {s.laborAccumulated:F0}h · exposure {s.workerExposure:F0}"));
-
-            var row = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-            var btnMaintain = AshfallUiHelpers.MakeButton("FULL MAINTENANCE", () => Run(() => _host?.Maintain(_currentDay)));
-            var btnTap = AshfallUiHelpers.MakeButton("TAP & CAST", () => Run(() => _host?.Tap(_currentDay)));
-            var btnRepairHearth = AshfallUiHelpers.MakeButton("REPAIR HEARTH (10 brick)", () => Run(() => _host?.Repair(FoundryFacilityComponent.HearthTuyeres, _currentDay)));
-            var btnRepairLining = AshfallUiHelpers.MakeButton("REPAIR LINING (8 brick)", () => Run(() => _host?.Repair(FoundryFacilityComponent.RefractoryLining, _currentDay)));
-            row.AddChild(btnMaintain);
-            row.AddChild(btnTap);
-            row.AddChild(btnRepairHearth);
-            row.AddChild(btnRepairLining);
-            _production.AddChild(row);
-
-            foreach (var p in _host!.Catalog.AllProducts)
-            {
-                var line = AshfallUiHelpers.MakeMono(
-                    $"{p.display_name,-24} {Costs(p),-34} → {p.result_amount}× {p.result_item_id.SubstringAfter("item_foundry_")}");
-                line.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
-                var h = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
-                h.AddChild(line);
-                var btn = AshfallUiHelpers.MakeButton("START HEAT", () => Run(() => _host?.StartHeat(p.product_id, 4, 0.6f, _currentDay)));
-                h.AddChild(btn);
-                _production.AddChild(h);
-            }
+            var c = _detailBox.GetChild(0);
+            _detailBox.RemoveChild(c);
+            c.QueueFree();
         }
-
-        private static string Costs(FoundryProductEntry p)
+        if (_host == null || _selectedIndex < 0 || _productGrid == null || _selectedIndex >= _productGrid.Rows.Count)
         {
-            var sb = new StringBuilder();
+            _detailTitle.Text = "CAST DETAIL";
+            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
+                _host == null
+                    ? "Foundry engine offline. Bind a SilentFoundryHostSession to see live cast rows."
+                    : "Select a heat row to view charge costs, treaty obligations, and quality target."));
+            return;
+        }
+        var products = _host.Catalog.AllProducts;
+        var visibleIdx = ResolveVisibleIndex(_selectedIndex);
+        if (visibleIdx < 0 || visibleIdx >= products.Count) return;
+        var p = products[visibleIdx];
+
+        _detailTitle.Text = $"{(string.IsNullOrEmpty(p.display_name) ? p.product_id : p.display_name).ToUpperInvariant()} DETAIL";
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Sink", string.IsNullOrEmpty(p.sink) ? p.category : p.sink,
+            AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Yields", $"{p.result_amount}× {p.result_item_id}",
+            AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Labor", $"{p.labor_hours:0.0} h",
+            AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Cast", $"{p.cast_hours:0.0} h",
+            AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Skill target", $"{p.skill_target:0.00}",
+            AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+
+        if (p.ingredients != null && p.ingredients.Count > 0)
+        {
+            _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Charge Manifest"));
             for (int i = 0; i < p.ingredients.Count; i++)
             {
-                sb.Append(p.ingredients[i].amount).Append(' ').Append(p.ingredients[i].item_id.SubstringAfter("item_foundry_"));
-                if (i < p.ingredients.Count - 1) sb.Append(" + ");
-            }
-            sb.Append(" · fuel ").Append(p.fuel_units).Append(" · water ").Append(p.water_litres).Append('L');
-            return sb.ToString();
-        }
-
-        private void RebuildTreaties()
-        {
-            ClearChildren(_treaties);
-            if (_host == null) return;
-            var sys = _host.Engine;
-            var comps = sys.State.treatyCompliance;
-            if (comps == null || comps.Count == 0)
-            {
-                _treaties.AddChild(AshfallUiHelpers.MakeSmall("No treaty rows bound."));
-                return;
-            }
-
-            _treaties.AddChild(AshfallUiHelpers.MakeSmall(
-                $"Foundry standing: {sys.GuildStanding:F0}/100 · stance: {_host.GuildStance} · "
-                + $"consequences applied: {sys.AppliedConsequences.Count}"));
-
-            foreach (var c in comps)
-            {
-                FoundryTreatyOutcome outcome = sys.GetTreatyOutcome(c.treatyId, _currentDay);
-                string status = c.obligation switch
-                {
-                    "road_iron_quota" => $"road iron {c.quotaFulfilled}/{c.quotaTotal} (met {c.metCount}, missed {c.missedCount})",
-                    "brine_pipe_quota" => $"brine pipes {c.quotaFulfilled}/{c.quotaTotal} (met {c.metCount}, missed {c.missedCount})",
-                    "labor_shifts" => $"shifts {(sys.State.overtimeFlag || sys.State.childLaborUsed || sys.State.laborDispute == FoundryLaborDispute.StrikeActive ? "VIOLATED" : "upheld")}",
-                    "charter_eligibility" => $"charter eligibility: {(c.constitutionEligible ? "clear" : "at risk (incidents on record)")}",
-                    _ => c.obligation
-                };
-                var lbl = AshfallUiHelpers.MakeSmall(
-                    $"[{OutcomeLabel(outcome)}] {c.treatyId} — {status}");
-                lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(OutcomeColor(outcome, c)));
-                _treaties.AddChild(lbl);
-            }
-
-            // Consequence ledger: the player must see what changed, when, and why.
-            var applied = sys.AppliedConsequences;
-            if (applied.Count > 0)
-            {
-                _treaties.AddChild(AshfallUiHelpers.MakeSubsectionHeader("APPLIED CONSEQUENCES"));
-                for (int i = applied.Count - 1; i >= 0; i--)
-                {
-                    var r = applied[i];
-                    if (r == null) continue;
-                    var line = AshfallUiHelpers.MakeSmall(
-                        $"d{r.appliedDay} {OutcomeLabel(r.outcome)} {r.treatyId} — standing {r.standingDelta:+0;-0;0} · {r.reason}");
-                    line.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Muted));
-                    _treaties.AddChild(line);
-                    if (r.modifiers != null)
-                    {
-                        for (int m = 0; m < r.modifiers.Count; m++)
-                        {
-                            var mod = r.modifiers[m];
-                            if (mod == null) continue;
-                            var mline = AshfallUiHelpers.MakeSmall(
-                                $"    → {mod.good_id} demand {mod.demand_delta:+0.00;-0.00} ({mod.reason})");
-                            mline.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
-                            _treaties.AddChild(mline);
-                        }
-                    }
-                }
+                var ing = p.ingredients[i];
+                if (ing == null) continue;
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(ing.item_id, $"× {ing.amount}",
+                    AshfallUiHelpers.ToColor(DesignTheme.Muted)));
             }
         }
-
-        private static string OutcomeLabel(FoundryTreatyOutcome o)
+        if (!string.IsNullOrEmpty(p.treaty_id) && p.quota_amount > 0)
         {
-            switch (o)
-            {
-                case FoundryTreatyOutcome.NotRatified: return "NOT RATIFIED";
-                case FoundryTreatyOutcome.Pending: return "PENDING";
-                case FoundryTreatyOutcome.Met: return "MET";
-                case FoundryTreatyOutcome.Missed: return "MISSED";
-                case FoundryTreatyOutcome.Violated: return "VIOLATED";
-                default: return o.ToString();
-            }
+            _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Treaty Obligation"));
+            _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(p.treaty_id, $"quota {p.quota_amount}/cycle",
+                AshfallUiHelpers.ToColor(DesignTheme.LetheAmber)));
         }
-
-        private static (float r, float g, float b, float a) OutcomeColor(FoundryTreatyOutcome o, FoundryTreatyCompliance c)
+        if (!string.IsNullOrEmpty(p.notes))
         {
-            switch (o)
-            {
-                case FoundryTreatyOutcome.Violated: return DesignTheme.Critical;
-                case FoundryTreatyOutcome.Missed: return DesignTheme.Exclusive;
-                case FoundryTreatyOutcome.Met: return DesignTheme.Lethe;
-                case FoundryTreatyOutcome.NotRatified: return DesignTheme.Dim;
-                default: return c.missedCount > 0 ? DesignTheme.Exclusive : DesignTheme.Muted;
-            }
-        }
-
-        private void RebuildHistory()
-        {
-            ClearChildren(_history);
-            if (_host == null) return;
-            var sys = _host.Engine;
-            foreach (var r in sys.CompletedProduction)
-                _history.AddChild(AshfallUiHelpers.MakeSmall($"CAST  d{r.completedDay}  {r.displayName} ×{r.amount}  {r.tier}"));
-            foreach (var f in sys.FailedCasts)
-                _history.AddChild(AshfallUiHelpers.MakeSmall($"FAIL  d{f.failedDay}  {f.displayName}  {f.reason}"));
-            foreach (var i in sys.Incidents)
-            {
-                var lbl = AshfallUiHelpers.MakeSmall($"INCIDENT d{i.day}  [{i.severity}]  {i.summary}  downtime {i.downtimeDays}d");
-                lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Critical));
-                _history.AddChild(lbl);
-            }
-        }
-
-        private static void ClearChildren(Node parent)
-        {
-            while (parent.GetChildCount() > 0)
-                parent.RemoveChild(parent.GetChild(0));
+            _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+            _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Provenance"));
+            _detailBox.AddChild(AshfallUiHelpers.MakeSmall(p.notes, autowrap: true));
         }
     }
 
-    internal static class FoundryStringExt
+    private int ResolveVisibleIndex(int selected)
     {
-        /// <summary>Last segment after the final '_' (item_foundry_plowshare → plowshare).</summary>
-        public static string SubstringAfter(this string value, string prefix)
+        // Walk the catalog up to selected, skipping those filtered out.
+        var products = _host?.Catalog.AllProducts;
+        if (products == null) return -1;
+        int seen = 0;
+        for (int i = 0; i < products.Count; i++)
         {
-            if (string.IsNullOrEmpty(value)) return string.Empty;
-            int idx = value.LastIndexOf(prefix, StringComparison.Ordinal);
-            return idx >= 0 ? value.Substring(idx + prefix.Length) : value;
+            if (!FilterPass(products[i])) continue;
+            if (seen == selected) return i;
+            seen++;
+        }
+        return -1;
+    }
+
+    /// <summary>
+    /// Hard-coded fixture rows used when no host session is bound. All product
+    /// ids route through the catalog's own `product_id` strings — never invented.
+    /// </summary>
+    internal static List<AshfallDataGrid.Row> BuildFixtureRows()
+    {
+        var rows = new List<AshfallDataGrid.Row>
+        {
+            new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
+                {
+                    new("Heavy Ploughshare", AshfallDataGrid.CellState.Normal),
+                    new("agricultural_tool", AshfallDataGrid.CellState.Muted),
+                    new("4 scrap_metal + 2 item_foundry_flux", AshfallDataGrid.CellState.Normal),
+                    new("6", AshfallDataGrid.CellState.Normal),
+                    new("40", AshfallDataGrid.CellState.Normal),
+                    new("70", AshfallDataGrid.CellState.Normal),
+                }, Selectable = true },
+            new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
+                {
+                    new("I-Beam Bracket", AshfallDataGrid.CellState.Normal),
+                    new("structural_beam", AshfallDataGrid.CellState.Muted),
+                    new("6 scrap_metal + 1 item_foundry_alloy_additive", AshfallDataGrid.CellState.Normal),
+                    new("8", AshfallDataGrid.CellState.Normal),
+                    new("55", AshfallDataGrid.CellState.Normal),
+                    new("75", AshfallDataGrid.CellState.Normal),
+                }, Selectable = true },
+            new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
+                {
+                    new("Brine-Resistant Pipe", AshfallDataGrid.CellState.Normal),
+                    new("water_component", AshfallDataGrid.CellState.Muted),
+                    new("3 scrap_metal + 1 charcoal", AshfallDataGrid.CellState.Normal),
+                    new("5", AshfallDataGrid.CellState.Normal),
+                    new("60", AshfallDataGrid.CellState.Normal),
+                    new("80", AshfallDataGrid.CellState.Normal),
+                }, Selectable = true },
+            new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
+                {
+                    new("Defense Plate", AshfallDataGrid.CellState.Normal),
+                    new("heavy_alloy_part", AshfallDataGrid.CellState.Muted),
+                    new("8 scrap_metal + 1 item_foundry_alloy_additive", AshfallDataGrid.CellState.Normal),
+                    new("9", AshfallDataGrid.CellState.Normal),
+                    new("70", AshfallDataGrid.CellState.Normal),
+                    new("85", AshfallDataGrid.CellState.Normal),
+                }, Selectable = true },
+            new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
+                {
+                    new("Road-Iron Spike", AshfallDataGrid.CellState.Normal),
+                    new("repair_plate", AshfallDataGrid.CellState.Muted),
+                    new("5 scrap_metal", AshfallDataGrid.CellState.Normal),
+                    new("7", AshfallDataGrid.CellState.Normal),
+                    new("50", AshfallDataGrid.CellState.Normal),
+                    new("72", AshfallDataGrid.CellState.Normal),
+                }, Selectable = true },
+        };
+        return rows;
+    }
+
+    public void Open()
+    {
+        Visible = true;
+        RefreshView();
+        QueueRedraw();
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (!Visible) return;
+        if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+        {
+            OnClose?.Invoke();
+            GetViewport().SetInputAsHandled();
         }
     }
 }

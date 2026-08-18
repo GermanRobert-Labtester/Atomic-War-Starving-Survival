@@ -21,20 +21,8 @@ namespace AtomicWar.GodotApp.UtilityAI
             SetAnchorsPreset(LayoutPreset.TopRight);
             CustomMinimumSize = new Vector2(400, 260);
 
-            // Apply standard panel 9-slice
-            var tex = AtomicWar.GodotApp.UI.AshfallUiHelpers.TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
-            if (tex != null)
-            {
-                var sb = new StyleBoxTexture
-                {
-                    Texture = tex,
-                    TextureMarginLeft = 16,
-                    TextureMarginTop = 16,
-                    TextureMarginRight = 16,
-                    TextureMarginBottom = 16
-                };
-                AddThemeStyleboxOverride("panel", sb);
-            }
+            // Apply standard panel 9-slice via shared helper (frame_9slice first)
+            AddThemeStyleboxOverride("panel", AtomicWar.GodotApp.UI.AshfallUiHelpers.MakePanelFrameStyleBox());
 
             var rootVbox = new VBoxContainer();
             rootVbox.AddThemeConstantOverride("separation", 6);

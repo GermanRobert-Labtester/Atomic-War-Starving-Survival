@@ -111,7 +111,7 @@ Known data issues:
 - 56 narrative JSON files are **untracked in git** — missing on fresh clone (`Assets/StreamingAssets/Data/narrative/`)
 - Property naming mixes `camelCase` and `snake_case` — migrate to `snake_case`
 - Only 35 of ~280 JSON files have `schema_version` — add to all core data files
-- `world_history.json:15` references "China" — replace with a fictional name (rule: no real countries)
+- ~~`world_history.json:15` references "China"~~ — RESOLVED: replaced with a fictional nation ("the Meridian Compact"); all real-country/alliance terms swept from the data authority and gated by `Ashfall.Core.Tests/DataRuleComplianceTests.cs` (no real countries/wars/people).
 
 ---
 
@@ -140,8 +140,9 @@ DTOs are `[Serializable]` plain C# classes. Use `IJsonSerializer`, not `JsonUtil
 
 - `SaveChecksum` (`Assets/Ashfall.Core/SaveChecksum.cs`) — reflection-based integrity hash. Normalizes null/empty, float G9 formatting, culture-invariant, ordinal name order.
 - Versioned migration: codecs support V1→V2→V3. Throw on future, migrate on past. Examples: `HoldfastSaveCodec`, `YearOfAshSaveCodec`, `DoseLedgerSaveCodec`.
-- Known gaps (5 Godot save stores lack checksum): `ExpeditionSaveStore`, `MedicalSaveStore`, `NarrativeSaveStore`, `WorldSaveStore`, `JournalSaveStore`.
-- `JournalSaveStore` bypasses core `IJsonSerializer` — uses `System.Text.Json` directly.
+- Known gaps (5 Godot save stores lack checksum): `ExpeditionSaveStore`, `MedicalSaveStore`, `NarrativeSaveStore`, `WorldSaveStore`, `JournalSaveStore`. All five now ship checksummed envelopes and require a non-empty `Checksum` field in the new format. Pre-checksum bare-state saves still load via the legacy fallback path. Integrity contract pinned by `Ashfall.Core.Tests/SaveStoreChecksumSweepTests.cs` (12 tests, 3 per store: clean round-trip, mutated-state changes hash, null checksum rejected).
+- **Known issue — stricter load guard:** `NarrativeSaveStore.TryLoad` and its three sibling stores now reject a new-format envelope whose `Checksum` field is null or empty (`checksum field missing (corrupt save)`). The old guard `!string.IsNullOrEmpty(envelope.Checksum)` silently treated a missing checksum as "legacy", which is wrong: a malformed save in the new format is not legacy. The bare-state fallback only fires for genuinely pre-checksum saves.
+- ~~`JournalSaveStore` bypasses core `IJsonSerializer`~~ — RESOLVED: serializes via `SystemTextJsonSerializer` (core adapter, `HostDefaults.cs`), the same path as every other host store; contract pinned by `SaveStoreChecksumSweepTests`.
 - `LocationEvolutionSaveable`, `WildlifeSaveable`, `LandmarkSaveable` have empty `CaptureState/RestoreState` — silent data loss; fix when touched.
 
 ---
@@ -170,7 +171,7 @@ Rule: every public system raises C# events on state change (for UI + save). Use 
 4. **RANGES** — `minDay`/`maxDay` pairs must be ordered.
 5. **UNIQUENESS** — no duplicate definition ids within one file.
 
-Run with: `godot --headless --path . -- --data-integrity-selftest` (59 catalogs, 0 errors today).
+Run with: `godot --headless --path . -- --data-integrity-selftest` (94 catalogs, 0 errors today).
 
 **ID rules:**
 - snake_case ids everywhere. Never invent an id outside the master list.
@@ -194,7 +195,7 @@ Implementation pattern (five phases):
 Known issues:
 - `GameBootstrap.Phase0Expansion.cs` — six systems constructed/registered/ticked but key effects are stubs ("wired in Phase 11").
 - `GameBootstrap` is a 1225-line god object across 82 partial files.
-- 588 "DEMOTE ghost" markers across 124 Unity files — dead code that still compiles. Remove as systems migrate.
+- ~~588 "DEMOTE ghost" markers across 124 Unity files~~ — RESOLVED (0 markers remain in Core/src; the migration swept them out).
 
 ---
 
@@ -204,29 +205,29 @@ Known issues:
 
 | # | Issue                                                                              | Location                                                |
 |---|------------------------------------------------------------------------------------|---------------------------------------------------------|
-| C1 | `JsonUtility` in Unity SaveSystem blocks cross-host saves                          | `Assets/_Game/Core/SaveSystem.*.cs` (10+ call sites)    |
-| C2 | `System.Random` breaks determinism                                                | `FinalWishSystem.cs:66`, `CombatTraumaSystem.cs:53`, `WeatherSystem.cs:144` |
-| C3 | `Guid.NewGuid()` breaks determinism                                                | `ProceduralItemInstance.cs:36`                          |
-| C4 | 56 narrative JSON files untracked in git                                           | `Assets/StreamingAssets/Data/narrative/`                |
-| C5 | `HoldfastTradeSessionTests.cs` — 10 compile errors, stale API                      | `Ashfall.Core.Tests/`                                   |
-| C6 | 28 catalog loaders use `JsonUtility` — blocks Godot data loading                   | `Assets/_Game/Data/*CatalogLoader.cs`                   |
+| C1 | `JsonUtility` in Unity SaveSystem blocks cross-host saves                          | `Assets/_Game/Core/SaveSystem.*.cs` (6 call sites in SaveSystem.IO.cs). Wire-format contract is now pinned by `Assets/Ashfall.Core/SaveWireContract.cs` and `Ashfall.Core.Tests/SaveWireContractTests.cs` (7 tests assert Godot + Unity-shape serializers produce identical JSON trees and the same `SaveChecksum` hash for the same state); the adapter task is reduced from "design from scratch" to "implement `IJsonSerializer` over `JsonUtility` and pass the contract tests". Still missing in `Assets/_Game/Core/`. |
+| C2 | ~~`System.Random` breaks determinism~~ — RESOLVED                                 | migrated to `ISeededRng`; verified by `Ashfall.Core.Tests` |
+| C3 | ~~`Guid.NewGuid()` breaks determinism~~ — RESOLVED                                 | comment at `Assets/Ashfall.Core/Inventory/ProceduralItemInstance.cs:48` documents the fix |
+| C4 | ~~56 narrative JSON files untracked in git~~ — RESOLVED                            | 196/196 narrative JSON files now tracked |
+| C5 | ~~`HoldfastTradeSessionTests.cs` — 10 compile errors, stale API~~ — RESOLVED      | 3/3 tests pass against current API |
+| C6 | 28 catalog loaders use `JsonUtility` — blocks Godot data loading                   | 21 remaining in `Assets/_Game/Data/*CatalogLoader.cs` (down from 28) |
 
 ### High
 
 | #  | Issue                                                              | Location                                                         |
 |----|--------------------------------------------------------------------|------------------------------------------------------------------|
 | H1 | `HoldfastRuntimeSession` duplicates core survival mechanics        | `src/Host/HoldfastRuntimeSession.cs`                             |
-| H2 | Duplicate `WornGear` class                                         | `Inventory/Inventory.cs` + `Radiation/RadiationSystem.cs`        |
-| H3 | Duplicate `SimClock` (day vs tick-based)                           | `HostDefaults.cs` + `Clock/ISimClock.cs`                         |
-| H4 | 13 bare `catch { }` blocks swallow exceptions                      | `YearOfAshCatalogLoader.cs` (7), `VerdictCatalogLoader.cs` (3)   |
+| H2 | Duplicate `WornGear` class                                         | both in Core (`Inventory/Inventory.cs:22` + `Radiation/RadiationSystem.cs:64`); consolidate to one location. **Bridge exists:** `Radiation.WornGear.FromInventory(Inventory.WornGear)` is the single sanctioned conversion point, wired by the Godot host `SurvivorsHostSession` (equipped gas mask/hazmat now cuts dose; verified by `--survivors-selftest` gear probes + `InventoryGearBridgeTests`). |
+| H3 | `SimClock` duplicate                                              | not actually a duplicate: `Ashfall.Core/HostDefaults.cs:67` is `IClock` (day-based), `Ashfall.Core/Clock/ISimClock.cs:15` is `ISimClock` (tick-based); both still used |
+| H4 | 13 bare `catch { }` blocks swallow exceptions                      | `YearOfAshCatalogLoader.cs` (7), `VerdictCatalogLoader.cs` (3) — unchanged |
 | H5 | Utility AI forked — Unity uses defective version                   | `Assets/_Game/AI/UtilityAI.cs` vs `Assets/Ashfall.Core/UtilityAI/` |
 | H6 | Unity has no `IFileIO`, `IJsonSerializer`, `IClock` adapters       | `Assets/_Game/Core/`                                             |
-| H7 | `Main.cs` (Godot) is ~3000 lines — monolithic                      | `src/Main.cs`                                                    |
+| H7 | `Main.cs` (Godot) — one `partial class Main` in a single ~6.5k-line file, but internally regular: per-subsystem triads of `SetupXxx` (construct + wire system), `SaveXxx` (capture into save; `SaveAll` orchestrates all 24), `FlushXxxIfDirty` (deferred flush) — 31 Setup / 24 Save + `SaveAll` / 17 Flush methods across domains (Expeditions, Combat, Economy, Medical, Narrative, Holdfast, YearOfAsh, Maritime, Muster, …). Risks: triad drift (a Setup without a Save silently drops state) and single-file navigation; end state is one true partial file per domain | `src/Main.cs` |
 | H8 | `SettingsManager` uses `PlayerPrefs` (Unity-only)                  | `Assets/_Game/Settings/SettingsManager.cs`                       |
-| H9 | 124 compiler warnings in tests (nullable refs)                     | `Ashfall.Core.Tests/`                                            |
-| H10 | NeedsSystem & RadiationSystem lack save/load round-trip tests    | `Ashfall.Core.Tests/NeedsRadiationSystemTests.cs`                |
-| H11 | JournalSystem has zero tests                                       | `Assets/Ashfall.Core/Journal/` (6 files)                         |
-| H12 | 121 ScriptableObject definitions — risk of dual data authority    | `Assets/_Game/` (various)                                        |
+| H9 | ~~124 compiler warnings in tests~~ — RESOLVED                       | test suite builds with 0 errors, 3 minor analyzer warnings (xUnit2013/xUnit2020) — not nullable refs |
+| H10 | NeedsSystem & RadiationSystem save/load round-trip tests           | `NeedsRadiationSystemTests.cs` covers tick behaviour (58 tests); save/load round-trip coverage still missing |
+| H11 | JournalSystem coverage                                            | 6 Core files; `JournalSaveStore` has integrity tests; `JournalSystem` core behaviour still untested |
+| H12 | ScriptableObject definitions                                       | 44 in `Assets/_Game/` (down from 121 as Unity migrates to Godot); risk of dual authority reduces as engines diverge |
 
 ---
 
@@ -246,7 +247,7 @@ Known issues:
 Report PASS/FAIL for each before claiming done.
 
 ```
-1. dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # Must compile (currently broken: HoldfastTradeSessionTests)
+1. dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # Must compile (currently green: HoldfastTradeSessionTests, 1934/1934 pass)
 2. dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj     # All tests pass
 3. dotnet build Ashfall.csproj                                  # Godot host: 0 errors, 0 warnings
 4. godot --headless --path . -- --data-integrity-selftest       # Catalog integrity: 0 errors
@@ -339,7 +340,6 @@ Any system introducing ≥2 new coupled variables must be implemented by one too
 
 - No magic, no fantasy, no real countries/wars/people, no glorified violence.
 - Tone: cold, exhausted, human, restrained. Show, don't preach.
-<<<<<<< HEAD
 - After writing code, VERIFY: the `Ashfall.Core` test suite must run WITHOUT Unity (plain
   `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`), and Godot host checks via
   `dotnet build Ashfall.csproj` or `godot --headless`. NEVER run Unity batch compile or playmode
