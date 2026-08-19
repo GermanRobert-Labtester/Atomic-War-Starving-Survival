@@ -215,7 +215,77 @@ namespace UnityEngine
     /// </summary>
     public static class Random
     {
-        private static System.Random _rng = new System.Random();
+        private static SecureDeterministicRng _rng = new SecureDeterministicRng();
+
+        private class SecureDeterministicRng : IDisposable
+        {
+            private readonly System.Security.Cryptography.Aes _aes;
+            private readonly System.Security.Cryptography.ICryptoTransform _encryptor;
+            private readonly byte[] _counter = new byte[16];
+            private readonly byte[] _buffer = new byte[16];
+            private int _bufferIndex = 16;
+
+            public SecureDeterministicRng()
+            {
+                _aes = System.Security.Cryptography.Aes.Create();
+                _aes.Mode = System.Security.Cryptography.CipherMode.ECB;
+                _aes.Padding = System.Security.Cryptography.PaddingMode.None;
+                byte[] key = new byte[32];
+                System.Security.Cryptography.RandomNumberGenerator.Fill(key);
+                _aes.Key = key;
+                _encryptor = _aes.CreateEncryptor();
+            }
+
+            public SecureDeterministicRng(int seed)
+            {
+                _aes = System.Security.Cryptography.Aes.Create();
+                _aes.Mode = System.Security.Cryptography.CipherMode.ECB;
+                _aes.Padding = System.Security.Cryptography.PaddingMode.None;
+
+                using (var sha = System.Security.Cryptography.SHA256.Create())
+                {
+                    _aes.Key = sha.ComputeHash(BitConverter.GetBytes(seed));
+                }
+                _encryptor = _aes.CreateEncryptor();
+            }
+
+            private void FillBuffer()
+            {
+                _encryptor.TransformBlock(_counter, 0, 16, _buffer, 0);
+                _bufferIndex = 0;
+
+                for (int i = 0; i < 16; i++)
+                {
+                    if (++_counter[i] != 0) break;
+                }
+            }
+
+            public uint NextUInt()
+            {
+                if (_bufferIndex >= 16) FillBuffer();
+                uint val = BitConverter.ToUInt32(_buffer, _bufferIndex);
+                _bufferIndex += 4;
+                return val;
+            }
+
+            public int Next(int min, int max)
+            {
+                if (min >= max) return min;
+                long range = (long)max - min;
+                return (int)(min + (NextUInt() % range));
+            }
+
+            public double NextDouble()
+            {
+                return NextUInt() / 4294967296.0;
+            }
+
+            public void Dispose()
+            {
+                _encryptor?.Dispose();
+                _aes?.Dispose();
+            }
+        }
 
         /// <summary>The last seed passed to <see cref="InitState"/>, or null if never seeded.</summary>
         public static int? LastSeed { get; private set; }
@@ -224,7 +294,9 @@ namespace UnityEngine
         public static void InitState(int seed)
         {
             LastSeed = seed;
-            _rng = new System.Random(seed);
+            var oldRng = _rng;
+            _rng = new SecureDeterministicRng(seed);
+            oldRng?.Dispose();
         }
 
         /// <summary>
