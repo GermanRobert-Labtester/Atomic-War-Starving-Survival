@@ -30,4 +30,8 @@
     <!-- Ashfall Game Subsystems -->
     <Compile Include="Assets/_Game/**/*.cs" Exclude="Assets/_Game/bin/**;Assets/_Game/obj/**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Sentry" Version="6.9.0" />
+  </ItemGroup>
 </Project>
