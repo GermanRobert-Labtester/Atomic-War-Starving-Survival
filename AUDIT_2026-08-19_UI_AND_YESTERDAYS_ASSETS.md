@@ -388,3 +388,66 @@ structural follow-up below.
 > (a) **Structural fix in `DutyRosterPanel` + `SilentFoundryPanel`**: move `_detailTitle` to a sibling VBox outside `_detailBox` so the synchronous `EmptyChildren` helper is safe; migration-revert comments stay as historical breadcrumbs until that is closed.
 > (b) **Sidecar sweep chore**: bake a periodic orphan detection + auto-fix into `scripts/ci/asset-gate` so Vue/Stitch-managed artwork always lands with a sidecar (LFS or non-LFS, deterministic path hash).
 > (c) **Headless-test stability**: investigate the back-to-back resource leak across `--verdict-uitest`, `--dashboard-uitest`, `--player-panels-uitest`, `--holdfast-runtime-uitest` — each run alone passes; back-to-back fails. Probably a Godot lifecycle bug unrelated to Lane C.
+
+---
+
+## ADDENDUM 2 (2026-08-19, ~13:00 EEST) — Task 1/2/3 execution
+
+Three follow-ups from the earlier addendum landed on the
+`fix/verdict-panel-clear-children-migration-2026-08-19` branch:
+
+| Lane | Commit | Content |
+|------|--------|---------|
+| Task 1 | `f0f67468` | structural `_detailTitle` fix for DutyRosterPanel + SilentFoundryPanel |
+| Task 2 | `e1216799` | `scripts/ci/asset-orphan-sweep.sh` + gate integration |
+| Task 3 | `3b4e7f31` | verdict bind + VerdictPanel ClearChildren migration |
+
+### Task 3 — the headless-test "isolation" mystery actually was a bind bug
+
+The earlier assumption that back-to-back test runs produced inflated
+failures was wrong. The precise cause of `--verdict-uitest` failing 3/3
+runs (even isolated) was:
+
+1. `Main.BuildUserInterface()` builds the VerdictPanel and adds it to the
+   tree before `SetupVerdict()` runs, so `_verdictPanel` is non-null.
+2. The old `SetupVerdict()` guard `if (_verdictPanel == null &&
+   _rightColumn != null)` never executed its `Bind(_verdict)` for the
+   already-built panel. The panel's `RefreshView()` early-returned (session
+   never bound) so `RenderedRadioRowCount()` returned 0 instead of 13.
+3. Session-side asserts (`carrierOpenSoon=True`, `someFired=True`) passed,
+   panel-side asserts (`transmissions=False(0)`, `noLeak=False`) failed.
+
+Fix (see commit 3b4e7f31): bind unconditionally and refresh afterwards.
+
+Also in the same commit: `src/VerdictPanel.cs` was carrying its own private
+`ClearChildren(Node)` helper using deferred QueueFree — a pre-Lane-C idiom
+that the Lane C migration missed because it scoped to `src/UI/*.cs` +
+`src/World/*.cs`. The helper is gone; all 4 call sites now use
+`AshfallUiHelpers.EmptyChildren`.
+
+### Verification after Task 1+2+3
+
+```
+1. dotnet build Ashfall.Core.Tests   0 errors
+2. dotnet build Ashfall.csproj       0 errors / 0 warnings
+3. --asset-registry-selftest         48/48 PASS
+4. --data-integrity-selftest         0 errors / 0 warnings (3592 ids / 95 catalogs)
+5. --bridge-selftest                 41/41 PASS
+6. UI smoke battery                  15/15 PASS (all 15 headless UI tests green
+                                     for the first time, including the 4 suspects)
+```
+
+### Task 3 note on the back-to-back flake
+
+An additional 10/10 PASS re-run of `--player-panels-uitest` with
+proper full-output capture confirmed that the earlier "high fail rate"
+was a false positive caused by grepping the tail of a process-exit log
+where Godot reports warm-in-ObjectDB-at-quit warnings (the plain
+`--quit` path) that never actually fail the smoke test.
+
+### Suggested next prompt (post-Lane C)
+
+> Pick exactly one of:
+> (a) **Structural fix in `DutyRosterPanel` + `SilentFoundryPanel`**: move `_detailTitle` to a sibling VBox outside `_detailBox` so the synchronous `EmptyChildren` helper is safe; migration-revert comments stay as historical breadcrumbs until that is closed.
+> (b) **Sidecar sweep chore**: bake a periodic orphan detection + auto-fix into `scripts/ci/asset-gate` so Vue/Stitch-managed artwork always lands with a sidecar (LFS or non-LFS, deterministic path hash).
+> (c) **Headless-test stability**: investigate the back-to-back resource leak across `--verdict-uitest`, `--dashboard-uitest`, `--player-panels-uitest`, `--holdfast-runtime-uitest` — each run alone passes; back-to-back fails. Probably a Godot lifecycle bug unrelated to Lane C.

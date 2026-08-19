@@ -26,6 +26,23 @@ run() { echo; echo "── $* ──"; "$@"; }
 # Repo bootstrap (idempotent): core.ignorecase + LFS filters.
 if [[ -f ./setup-repo.sh ]]; then ./setup-repo.sh; fi
 
+# Orphan-sidecar pre-flight (Task 2 follow-up from 2026-08-19 audit addendum).
+# Block the gate when art/.jpg or sprites/.png files lack their .jpg.import /
+# .png.import siblings — without the sidecar, ResourceLoader.Load returns
+# null at runtime even though the file sits on disk. Lane A (d88bd8a3)
+# closed ten such orphans; this chore catches any that follow.
+if [[ -x ./scripts/ci/asset-orphan-sweep.sh ]]; then
+    if ! ./scripts/ci/asset-orphan-sweep.sh; then
+        echo "asset-orphan-sweep FAILED — assets/art or assets/sprites have" >&2
+        echo "files without their .import sidecar. Run:" >&2
+        echo "  godot --headless --no-window --path . --import" >&2
+        echo "then re-run ./scripts/ci/asset-orphan-sweep.sh to confirm." >&2
+        exit 1
+    fi
+else
+    echo "WARN: scripts/ci/asset-orphan-sweep.sh not executable; skipping" >&2
+fi
+
 # One-time / first-clone compile + import (idempotent; no-ops if already done).
 run dotnet build Ashfall.csproj || fail=1
 if ! godot --headless --path . --import >/tmp/godot-import.log 2>&1; then

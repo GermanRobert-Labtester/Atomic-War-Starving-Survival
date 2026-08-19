@@ -183,7 +183,7 @@ namespace AtomicWar.GodotApp
 
         private void RefreshLog()
         {
-            ClearChildren(_logList);
+            AshfallUiHelpers.EmptyChildren(_logList);
 
             var entries = _verdict.MachineLog.Entries;
             int shown = 0;
@@ -226,7 +226,7 @@ namespace AtomicWar.GodotApp
 
         private void RefreshNpcs()
         {
-            ClearChildren(_npcList);
+            AshfallUiHelpers.EmptyChildren(_npcList);
 
             var available = _verdict.AvailableNpcs();
             if (available.Count == 0)
@@ -292,7 +292,7 @@ namespace AtomicWar.GodotApp
         /// standing sites and the fifteen evidence/quest objects) as read-only rows.</summary>
         private void RefreshPlaces()
         {
-            ClearChildren(_placeList);
+            AshfallUiHelpers.EmptyChildren(_placeList);
 
             bool any = false;
             if (_verdict.Locations != null)
@@ -356,7 +356,7 @@ namespace AtomicWar.GodotApp
         /// from the session's VerdictRadioSystem state. Thin presentation only.</summary>
         private void RefreshRadio()
         {
-            ClearChildren(_radioList);
+            AshfallUiHelpers.EmptyChildren(_radioList);
             if (_verdict.Radio == null)
             {
                 _radioList.AddChild(AshfallUiHelpers.MakeSmall("The radio is silent.", true));
@@ -413,21 +413,6 @@ namespace AtomicWar.GodotApp
         {
             if (string.IsNullOrEmpty(s) || s.Length <= max) return s ?? string.Empty;
             return s.Substring(0, max) + "…";
-        }
-
-        /// <summary>Immediately detach and queue-frees all children so a rebuild does
-        /// not accumulate stale rows (QueueFree alone is deferred to end-of-frame).</summary>
-        private static void ClearChildren(Node container)
-        {
-            if (container == null) return;
-            var children = container.GetChildren();
-            for (int i = 0; i < children.Count; i++)
-            {
-                var c = children[i];
-                if (c == null) continue;
-                container.RemoveChild(c);
-                c.QueueFree();
-            }
         }
 
         [Signal]

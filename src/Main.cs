@@ -3101,8 +3101,8 @@ namespace AtomicWar.GodotApp
             {
                 _verdictPanel = new VerdictPanel();
                 _rightColumn.AddChild(_verdictPanel);
-                _verdictPanel.Bind(_verdict);
             }
+            _verdictPanel?.Bind(_verdict);
             _verdictPanel?.RefreshView();
 
             GD.Print("[Ashfall Godot] Verdict host ready.");
@@ -3873,7 +3873,7 @@ namespace AtomicWar.GodotApp
             CloseQuestsPanel();
 
             GD.Print(pass ? "DUTY_ROSTER_UITEST PASS" : "DUTY_ROSTER_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         private void RunSilentFoundryUiTestAndQuit()
@@ -4020,7 +4020,7 @@ namespace AtomicWar.GodotApp
             CloseFactionsPanel();
 
             GD.Print(pass ? "SILENT_FOUNDRY_UITEST PASS" : "SILENT_FOUNDRY_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         private void CloseMusterPanel()
@@ -4154,7 +4154,7 @@ namespace AtomicWar.GodotApp
             bool pass = panel && catalog && noLeak && selected;
             GD.Print($"[UtilityAiUiTest] panel={panel} catalog={catalog} noLeak={noLeak} selected={selected}");
             GD.Print(pass ? "UTILITY_AI_UITEST PASS" : "UTILITY_AI_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>
@@ -4339,7 +4339,7 @@ namespace AtomicWar.GodotApp
                      $"crt={radioHasCrt} live={radioHasLive} mil={radioHitMilitary} cult={radioHitCult} " +
                      $"silence={radioHitSilence} radioRes={radioResPass} logCount={radioPanel.LogCount})");
             GD.Print(pass ? "ECONOMY_UITEST PASS" : "ECONOMY_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         private int CountPanelRefreshes()
@@ -4629,7 +4629,7 @@ namespace AtomicWar.GodotApp
 
             if (File.Exists(basePath)) File.Delete(basePath);
             if (File.Exists(tradePath)) File.Delete(tradePath);
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>Headless smoke: dose register surface builds, actions run, tabs render.</summary>
@@ -4660,7 +4660,7 @@ namespace AtomicWar.GodotApp
             GD.Print($"[DoseUiTest] surface={surface} npcs={npcs} book={book} diagnose={diagnose} " +
                      $"palliative={palliative} cohort={cohort} volunteer={volunteer} rendered={rendered}");
             GD.Print(pass ? "DOSE_UITEST PASS" : "DOSE_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>Headless smoke: THE MACHINE'S REGISTER panel builds, binds to the
@@ -4704,7 +4704,7 @@ namespace AtomicWar.GodotApp
                      $"carrierOpenSoon={carrierOpenSoon} someFired={someFired} " +
                      $"transmissions={transmissions}({rows}) noLeak={noLeak}");
             GD.Print(pass ? "VERDICT_UITEST PASS" : "VERDICT_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>Headless smoke: inventory panel builds, add/equip/check flow, save roundtrip.</summary>
@@ -4757,7 +4757,7 @@ namespace AtomicWar.GodotApp
             GD.Print(pass ? "INVENTORY_UITEST PASS" : "INVENTORY_UITEST FAIL");
             if (System.IO.File.Exists(InventorySaveStore.SavePath))
                 System.IO.File.Delete(InventorySaveStore.SavePath);
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>
@@ -4816,7 +4816,7 @@ namespace AtomicWar.GodotApp
             Check(def != null || _expeditions.Pending.Count == 0, "pending queue consistent with surfaced encounters");
 
             GD.Print(pass ? "EXPEDITION_PANEL_UITEST PASS" : "EXPEDITION_PANEL_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>Headless smoke: survivors rosters build, needs tick, rad exposure, iodine/anti-rad, save roundtrip.</summary>
@@ -4853,7 +4853,7 @@ namespace AtomicWar.GodotApp
             GD.Print(pass ? "SURVIVORS_UITEST PASS" : "SURVIVORS_UITEST FAIL");
             if (System.IO.File.Exists(SurvivorsSaveStore.SavePath))
                 System.IO.File.Delete(SurvivorsSaveStore.SavePath);
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>Headless smoke: Phase-0 panel builds, binds, and renders all ten condition groups.</summary>
@@ -4869,7 +4869,7 @@ namespace AtomicWar.GodotApp
             {
                 GD.Print("[Phase0UiTest] panel=false session=false");
                 GD.Print("PHASE0_UITEST FAIL");
-                GetTree().Quit(1);
+                QuitUiTestAfterFrame(1);
                 return;
             }
 
@@ -4906,7 +4906,7 @@ namespace AtomicWar.GodotApp
             GD.Print(pass ? "PHASE0_UITEST PASS" : "PHASE0_UITEST FAIL");
             if (System.IO.File.Exists(Phase0SaveStore.SavePath))
                 System.IO.File.Delete(Phase0SaveStore.SavePath);
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>Headless smoke: muster roster widget + approach modal render, escalate, select.</summary>
@@ -4939,7 +4939,7 @@ namespace AtomicWar.GodotApp
             GD.Print(pass ? "MUSTER_UITEST PASS" : "MUSTER_UITEST FAIL");
             if (System.IO.File.Exists(MusterSaveStore.SavePath))
                 System.IO.File.Delete(MusterSaveStore.SavePath);
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>Headless smoke test: build the book, open it, cycle every tab.</summary>
@@ -4965,7 +4965,29 @@ namespace AtomicWar.GodotApp
 
             bool pass = opened && closed && logLen > 0 && summaryLen > 0 && tabsWithContent == JournalSystem.TabCount;
             GD.Print(pass ? "JOURNAL_UITEST PASS" : "JOURNAL_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
+        }
+
+        /// <summary>
+        /// UI smoke tests create and queue-free a large widget tree. Give Godot one
+        /// process frame to flush queued frees before shutting down, otherwise the
+        /// test can pass while reporting false-positive node/RID/resource leaks.
+        /// </summary>
+        private async void QuitUiTestAfterFrame(int exitCode)
+        {
+            var tree = GetTree();
+            await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+
+            // The UI smoke tests construct the shell directly under Main rather
+            // than loading a disposable child scene. Free those test-owned roots
+            // explicitly so Godot does not leave their controls in ObjectDB at
+            // process exit (normal gameplay never calls this path).
+            foreach (Node child in GetChildren())
+                child.QueueFree();
+
+            await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+            await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+            tree.Quit(exitCode);
         }
 
         /// <summary>Headless smoke test for the player-facing Godot shell.</summary>
@@ -4986,7 +5008,7 @@ namespace AtomicWar.GodotApp
             bool pass = shellBuilt && overlayParentedToRoot && inventoryOpened && liveSources;
             GD.Print($"[DashboardUiTest] shell={shellBuilt} rootOverlay={overlayParentedToRoot} inventory={inventoryOpened} liveSources={liveSources}");
             GD.Print(pass ? "DASHBOARD_UITEST PASS" : "DASHBOARD_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         /// <summary>
@@ -5045,7 +5067,7 @@ namespace AtomicWar.GodotApp
             GD.Print($"[PlayerPanelsUiTest] survivors={survivors} medical={medical} weather={weather} " +
                      $"radio={radio} shelter={shelter}");
             GD.Print(pass ? "PLAYER_PANELS_UITEST PASS" : "PLAYER_PANELS_UITEST FAIL");
-            GetTree().Quit(pass ? 0 : 1);
+            QuitUiTestAfterFrame(pass ? 0 : 1);
         }
 
         // -----------------------------------------------------------------
