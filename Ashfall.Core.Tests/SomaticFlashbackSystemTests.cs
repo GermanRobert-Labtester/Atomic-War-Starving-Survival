@@ -120,7 +120,7 @@ namespace Ashfall.Core.Tests
                 }
             }
             // If no seed triggered, that's still a valid test outcome but unlikely
-            Assert.True(false, "No seed triggered a grounded flashback in 200 tries");
+            Assert.Fail("No seed triggered a grounded flashback in 200 tries");
         }
 
         [Fact]
@@ -140,7 +140,7 @@ namespace Ashfall.Core.Tests
                     return;
                 }
             }
-            Assert.True(false, "No seed triggered an ungrounded flashback in 200 tries");
+            Assert.Fail("No seed triggered an ungrounded flashback in 200 tries");
         }
 
         [Fact]
@@ -331,7 +331,7 @@ namespace Ashfall.Core.Tests
                     return;
                 }
             }
-            Assert.True(false, "No seed triggered in 200 tries");
+            Assert.Fail("No seed triggered in 200 tries");
         }
 
         [Fact]

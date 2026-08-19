@@ -149,7 +149,7 @@ namespace Ashfall.Core.Tests
             var restored = new CensusClaimSystem();
             restored.RestoreState(saved);
             restored.RestoreState(saved);
-            Assert.Equal(1, restored.State.ledger.Count);
+            Assert.Single(restored.State.ledger);
             Assert.True(restored.LevyRefuse);
         }
 

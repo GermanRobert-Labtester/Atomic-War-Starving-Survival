@@ -5,25 +5,25 @@ using Xunit;
 
 namespace Ashfall.Core.Tests
 {
-        public class ExpeditionSystemTests : System.IDisposable
-        {
-            public void Dispose() => ExpeditionDefinitionRegistry.Clear();
+    public class ExpeditionSystemTests : System.IDisposable
+    {
+        public void Dispose() => ExpeditionDefinitionRegistry.Clear();
 
-            private static ExpeditionDefinition DemoDef(string id = "loc_demo_site", int distance = 4, int danger = 2)
+        private static ExpeditionDefinition DemoDef(string id = "loc_demo_site", int distance = 4, int danger = 2)
+        {
+            var def = new ExpeditionDefinition
             {
-                var def = new ExpeditionDefinition
-                {
-                    id = id,
-                    displayName = "Demo Site",
-                    distanceTicks = distance,
-                    dangerLevel = danger,
-                    encounterChancePerTick = 0.10f,
-                    baseStaminaDrainPerHour = 2.0f,
-                    lootCategories = new List<string> { "scrap_metal", "clean_water", "bandages" }
-                };
-                ExpeditionDefinitionRegistry.Register(def);
-                return def;
-            }
+                id = id,
+                displayName = "Demo Site",
+                distanceTicks = distance,
+                dangerLevel = danger,
+                encounterChancePerTick = 0.10f,
+                baseStaminaDrainPerHour = 2.0f,
+                lootCategories = new List<string> { "scrap_metal", "clean_water", "bandages" }
+            };
+            ExpeditionDefinitionRegistry.Register(def);
+            return def;
+        }
 
         private static SeededRng Rng(int seed) => new SeededRng(seed);
 

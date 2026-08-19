@@ -39,7 +39,7 @@ namespace Ashfall.Core.Tests
             Assert.True(encountersB.IsUnlocked);
             Assert.Single(marksB.State.marks);
             Assert.Equal("mark_bowl_cold", marksB.State.marks[0].id);
-            Assert.Equal(1, encountersB.ActiveVisitorQueue.Count);
+            Assert.Single(encountersB.ActiveVisitorQueue);
         }
 
         [Fact]

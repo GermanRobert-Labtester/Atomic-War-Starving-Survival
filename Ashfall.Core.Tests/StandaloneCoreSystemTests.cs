@@ -311,8 +311,11 @@ namespace Ashfall.Core.Tests
             var rt = new EpilogueMatrixRuntime();
             var ctx = new EpilogueEvaluationContext
             {
-                grandTreatySigned = true, tempestDecommissioned = true,
-                debtLedgersBurned = true, livingDwellerCount = 10, childrenSurvived = true
+                grandTreatySigned = true,
+                tempestDecommissioned = true,
+                debtLedgersBurned = true,
+                livingDwellerCount = 10,
+                childrenSurvived = true
             };
             Assert.Equal(RegionalFate.TrueReconciliation, rt.EvaluateRegionalFate(ctx));
         }
@@ -323,8 +326,10 @@ namespace Ashfall.Core.Tests
             var rt = new EpilogueMatrixRuntime();
             var ctx = new EpilogueEvaluationContext
             {
-                grandTreatySigned = true, tempestDecommissioned = false,
-                debtLedgersBurned = true, livingDwellerCount = 5
+                grandTreatySigned = true,
+                tempestDecommissioned = false,
+                debtLedgersBurned = true,
+                livingDwellerCount = 5
             };
             Assert.Equal(RegionalFate.CommonwealthFounded, rt.EvaluateRegionalFate(ctx));
         }
@@ -335,7 +340,9 @@ namespace Ashfall.Core.Tests
             var rt = new EpilogueMatrixRuntime();
             var ctx = new EpilogueEvaluationContext
             {
-                grandTreatySigned = true, debtLedgersBurned = false, livingDwellerCount = 5
+                grandTreatySigned = true,
+                debtLedgersBurned = false,
+                livingDwellerCount = 5
             };
             Assert.Equal(RegionalFate.GarrisonMartialLaw, rt.EvaluateRegionalFate(ctx));
         }
@@ -346,7 +353,9 @@ namespace Ashfall.Core.Tests
             var rt = new EpilogueMatrixRuntime();
             var ctx = new EpilogueEvaluationContext
             {
-                tempestDecommissioned = false, totalDeathsRecorded = 60, livingDwellerCount = 5
+                tempestDecommissioned = false,
+                totalDeathsRecorded = 60,
+                livingDwellerCount = 5
             };
             Assert.Equal(RegionalFate.TempestSterilization, rt.EvaluateRegionalFate(ctx));
         }
@@ -388,9 +397,13 @@ namespace Ashfall.Core.Tests
             var rt = new EpilogueMatrixRuntime();
             var ctx = new EpilogueEvaluationContext
             {
-                totalDaysSurvived = 365, livingDwellerCount = 10, totalDeathsRecorded = 5,
-                grandTreatySigned = true, tempestDecommissioned = true,
-                debtLedgersBurned = true, childrenSurvived = true
+                totalDaysSurvived = 365,
+                livingDwellerCount = 10,
+                totalDeathsRecorded = 5,
+                grandTreatySigned = true,
+                tempestDecommissioned = true,
+                debtLedgersBurned = true,
+                childrenSurvived = true
             };
             string narrative = rt.GenerateEpilogueNarrative(ctx);
             Assert.Contains("CHRONICLE OF TESSARAT", narrative);

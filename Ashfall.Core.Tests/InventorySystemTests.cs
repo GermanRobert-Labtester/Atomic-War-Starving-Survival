@@ -80,7 +80,7 @@ namespace Ashfall.Core.Tests
             inv.Add(food, 8); // 4 + 4
             Assert.True(inv.RemoveById("canned_food", 5));
             Assert.Equal(3, inv.Count(food));
-            Assert.Equal(1, inv.Slots.Count);
+            Assert.Single(inv.Slots);
         }
 
         [Fact]
@@ -237,7 +237,7 @@ namespace Ashfall.Core.Tests
             Assert.True(inv.Add(food, 3));
             Assert.True(inv.Add(mask, 1));
             Assert.True(inv.Equip(mask));
-            Assert.Equal(1, inv.Slots.Count);
+            Assert.Single(inv.Slots);
             Assert.Single(inv.Equipped);
 
             inv.Clear();
@@ -248,7 +248,7 @@ namespace Ashfall.Core.Tests
 
             // Reuse after clear.
             Assert.True(inv.Add(food, 2));
-            Assert.Equal(1, inv.Slots.Count);
+            Assert.Single(inv.Slots);
             Assert.Equal(2, inv.CountById("canned_food"));
         }
     }

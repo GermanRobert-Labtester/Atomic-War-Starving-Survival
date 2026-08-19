@@ -213,10 +213,19 @@ namespace Ashfall.Core.Tests
             var original = new SurvivorNeedsState
             {
                 Id = "sv_farmer",
-                Hunger = 77.5f, Thirst = 66.25f, Fatigue = 45f,
-                Warmth = 30f, Morale = 12f, Health = 55f, Hygiene = 4f,
-                WasHungerCritical = true, WasThirstCritical = false, WasWarmthCritical = true,
-                MaxHealthCap = 70f, IsAlive = true, IsDead = false
+                Hunger = 77.5f,
+                Thirst = 66.25f,
+                Fatigue = 45f,
+                Warmth = 30f,
+                Morale = 12f,
+                Health = 55f,
+                Hygiene = 4f,
+                WasHungerCritical = true,
+                WasThirstCritical = false,
+                WasWarmthCritical = true,
+                MaxHealthCap = 70f,
+                IsAlive = true,
+                IsDead = false
             };
 
             var restored = json.Deserialize<SurvivorNeedsState>(json.Serialize(original));
@@ -242,11 +251,15 @@ namespace Ashfall.Core.Tests
             var original = new SurvivorRadState
             {
                 Id = "sv_geiger",
-                RadiationDose = 92f, LifetimeRadiationExposure = 505f,
-                HasRadResistance = true, RadResistanceHoursRemaining = 3.5f,
+                RadiationDose = 92f,
+                LifetimeRadiationExposure = 505f,
+                HasRadResistance = true,
+                RadResistanceHoursRemaining = 3.5f,
                 IodineProtectionTimer = 1.25f,
-                HasAcuteRadiationSickness = true, HasChronicIllness = true,
-                HasAcuteRadiationSyndrome = false, IsAlive = true
+                HasAcuteRadiationSickness = true,
+                HasChronicIllness = true,
+                HasAcuteRadiationSyndrome = false,
+                IsAlive = true
             };
 
             var restored = json.Deserialize<SurvivorRadState>(json.Serialize(original));
