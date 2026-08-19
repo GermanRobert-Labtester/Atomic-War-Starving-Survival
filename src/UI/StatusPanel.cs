@@ -61,10 +61,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_dayInfo == null || _objectivesList == null || _statsData == null || _statusData == null) return;
 
-            while (_dayInfo.GetChildCount() > 0) _dayInfo.RemoveChild(_dayInfo.GetChild(0));
-            while (_objectivesList.GetChildCount() > 0) _objectivesList.RemoveChild(_objectivesList.GetChild(0));
-            while (_statsData.GetChildCount() > 0) _statsData.RemoveChild(_statsData.GetChild(0));
-            while (_statusData.GetChildCount() > 0) _statusData.RemoveChild(_statusData.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_dayInfo);
+            AshfallUiHelpers.EmptyChildren(_objectivesList);
+            AshfallUiHelpers.EmptyChildren(_statsData);
+            AshfallUiHelpers.EmptyChildren(_statusData);
 
             foreach (var item in _placeholderDayInfo)
             {

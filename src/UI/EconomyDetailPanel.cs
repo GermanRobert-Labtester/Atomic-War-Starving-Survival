@@ -73,14 +73,10 @@ namespace AtomicWar.GodotApp.UI
             if (_resourceFlows == null || _tradeHistory == null || _marketData == null || _debtData == null) return;
 
             // Clear existing lists
-            while (_resourceFlows.GetChildCount() > 0)
-                _resourceFlows.RemoveChild(_resourceFlows.GetChild(0));
-            while (_tradeHistory.GetChildCount() > 0)
-                _tradeHistory.RemoveChild(_tradeHistory.GetChild(0));
-            while (_marketData.GetChildCount() > 0)
-                _marketData.RemoveChild(_marketData.GetChild(0));
-            while (_debtData.GetChildCount() > 0)
-                _debtData.RemoveChild(_debtData.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_resourceFlows);
+            AshfallUiHelpers.EmptyChildren(_tradeHistory);
+            AshfallUiHelpers.EmptyChildren(_marketData);
+            AshfallUiHelpers.EmptyChildren(_debtData);
 
             // Display placeholder resource flows
             foreach (string data in _placeholderResources)

@@ -288,12 +288,7 @@ public partial class CombatHudOverlay : Control
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
-        while (_detailBox.GetChildCount() > 0)
-        {
-            var c = _detailBox.GetChild(0);
-            _detailBox.RemoveChild(c);
-            c.QueueFree();
-        }
+        AshfallUiHelpers.EmptyChildren(_detailBox);
         if (_host == null || _host.Engine == null)
         {
             _detailTitle = AshfallUiHelpers.MakeSectionHeader("EVENT LOG");

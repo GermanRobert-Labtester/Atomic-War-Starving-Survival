@@ -71,14 +71,10 @@ namespace AtomicWar.GodotApp.UI
                 _routesContainer == null || _explorationContainer == null)
                 return;
 
-            while (_overviewContainer.GetChildCount() > 0)
-                _overviewContainer.RemoveChild(_overviewContainer.GetChild(0));
-            while (_locationsContainer.GetChildCount() > 0)
-                _locationsContainer.RemoveChild(_locationsContainer.GetChild(0));
-            while (_routesContainer.GetChildCount() > 0)
-                _routesContainer.RemoveChild(_routesContainer.GetChild(0));
-            while (_explorationContainer.GetChildCount() > 0)
-                _explorationContainer.RemoveChild(_explorationContainer.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_overviewContainer);
+            AshfallUiHelpers.EmptyChildren(_locationsContainer);
+            AshfallUiHelpers.EmptyChildren(_routesContainer);
+            AshfallUiHelpers.EmptyChildren(_explorationContainer);
 
             // ── 1. Map Overview ──
             string weatherStr = _world != null

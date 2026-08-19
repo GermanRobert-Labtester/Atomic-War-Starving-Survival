@@ -41,12 +41,9 @@ namespace AtomicWar.GodotApp.UI
             if (_assignmentsList == null || _shiftsList == null || _performanceList == null) return;
             if (_rosterHost == null) return;
 
-            while (_assignmentsList.GetChildCount() > 0)
-                _assignmentsList.RemoveChild(_assignmentsList.GetChild(0));
-            while (_shiftsList.GetChildCount() > 0)
-                _shiftsList.RemoveChild(_shiftsList.GetChild(0));
-            while (_performanceList.GetChildCount() > 0)
-                _performanceList.RemoveChild(_performanceList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_assignmentsList);
+            AshfallUiHelpers.EmptyChildren(_shiftsList);
+            AshfallUiHelpers.EmptyChildren(_performanceList);
 
             var roster = _rosterHost.Roster;
 

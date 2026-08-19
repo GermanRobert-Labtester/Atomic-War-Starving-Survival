@@ -103,8 +103,8 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_conditionList == null || _commandList == null) return;
 
-            ClearChildren(_conditionList);
-            ClearChildren(_commandList);
+            AshfallUiHelpers.EmptyChildren(_conditionList);
+            AshfallUiHelpers.EmptyChildren(_commandList);
 
             if (_phase0 == null)
             {
@@ -236,13 +236,6 @@ namespace AtomicWar.GodotApp.UI
         {
             RefreshView();
             Visible = true;
-        }
-
-        private static void ClearChildren(Node parent)
-        {
-            if (parent == null) return;
-            while (parent.GetChildCount() > 0)
-                parent.GetChild(0).QueueFree();
         }
     }
 

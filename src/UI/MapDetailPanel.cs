@@ -42,14 +42,10 @@ namespace AtomicWar.GodotApp.UI
                 _layoutsContainer == null || _salvageContainer == null)
                 return;
 
-            while (_infoContainer.GetChildCount() > 0)
-                _infoContainer.RemoveChild(_infoContainer.GetChild(0));
-            while (_hazardsContainer.GetChildCount() > 0)
-                _hazardsContainer.RemoveChild(_hazardsContainer.GetChild(0));
-            while (_layoutsContainer.GetChildCount() > 0)
-                _layoutsContainer.RemoveChild(_layoutsContainer.GetChild(0));
-            while (_salvageContainer.GetChildCount() > 0)
-                _salvageContainer.RemoveChild(_salvageContainer.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_infoContainer);
+            AshfallUiHelpers.EmptyChildren(_hazardsContainer);
+            AshfallUiHelpers.EmptyChildren(_layoutsContainer);
+            AshfallUiHelpers.EmptyChildren(_salvageContainer);
 
             // ── 1. Sector Geography & Description ──
             var infoCard = AshfallUiHelpers.MakeCardFrame("SECTOR OVERVIEW", locationId);

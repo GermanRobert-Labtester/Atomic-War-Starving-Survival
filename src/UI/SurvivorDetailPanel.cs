@@ -73,14 +73,10 @@ namespace AtomicWar.GodotApp.UI
             if (_survivorInfo == null || _needsList == null || _traitsList == null || _statusList == null) return;
 
             // Clear existing lists
-            while (_survivorInfo.GetChildCount() > 0)
-                _survivorInfo.RemoveChild(_survivorInfo.GetChild(0));
-            while (_needsList.GetChildCount() > 0)
-                _needsList.RemoveChild(_needsList.GetChild(0));
-            while (_traitsList.GetChildCount() > 0)
-                _traitsList.RemoveChild(_traitsList.GetChild(0));
-            while (_statusList.GetChildCount() > 0)
-                _statusList.RemoveChild(_statusList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_survivorInfo);
+            AshfallUiHelpers.EmptyChildren(_needsList);
+            AshfallUiHelpers.EmptyChildren(_traitsList);
+            AshfallUiHelpers.EmptyChildren(_statusList);
 
             // Display placeholder survivor info
             foreach (string info in _placeholderSurvivorInfo)

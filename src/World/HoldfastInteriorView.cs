@@ -50,8 +50,12 @@ namespace AtomicWar.GodotApp.World
             var survivorActorsNode = GetNode<Node2D>("SurvivorActors");
             foreach (var actor in _survivorActors)
             {
-                if (actor != null && actor.IsInsideTree())
+                if (actor == null || !GodotObject.IsInstanceValid(actor))
+                    continue;
+
+                if (actor.GetParent() == survivorActorsNode)
                     survivorActorsNode.RemoveChild(actor);
+                actor.QueueFree();
             }
             _survivorActors.Clear();
         }
@@ -62,14 +66,6 @@ namespace AtomicWar.GodotApp.World
                 return;
 
             var survivorActorsNode = GetNode<Node2D>("SurvivorActors");
-
-            // Clear existing first
-            foreach (var actor in _survivorActors)
-            {
-                if (actor != null && actor.IsInsideTree())
-                    survivorActorsNode.RemoveChild(actor);
-            }
-            _survivorActors.Clear();
 
             // Only show first 4 survivors to prevent overcrowding and "stacked pizza" effect
             int maxSurvivors = Math.Min(_survivors.RosterState.Count, 4);
@@ -105,6 +101,13 @@ namespace AtomicWar.GodotApp.World
 
         private void PopulateRoomHotspots()
         {
+            var roomHotspotsNode = GetNode<Node2D>("RoomHotspots");
+            foreach (Node child in roomHotspotsNode.GetChildren())
+            {
+                roomHotspotsNode.RemoveChild(child);
+                child.QueueFree();
+            }
+
             var rooms = new[]
             {
                 new { Id = "room_bunker_corridor", DisplayName = "Central Access Corridor", PositionX = 300, PositionY = 300 },
@@ -119,7 +122,7 @@ namespace AtomicWar.GodotApp.World
                 hotspot.Label.Text = room.DisplayName;
                 hotspot.Position = new Vector2(room.PositionX, room.PositionY);
                 hotspot.Connect(RoomHotspotView.SignalName.Clicked, Callable.From<string>(OnRoomClicked));
-                GetNode<Node2D>("RoomHotspots").AddChild(hotspot);
+                roomHotspotsNode.AddChild(hotspot);
             }
         }
 

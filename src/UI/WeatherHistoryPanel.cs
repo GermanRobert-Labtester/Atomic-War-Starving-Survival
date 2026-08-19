@@ -55,9 +55,9 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_weatherHistory == null || _weatherPatterns == null || _weatherAnomalies == null) return;
 
-            while (_weatherHistory.GetChildCount() > 0) _weatherHistory.RemoveChild(_weatherHistory.GetChild(0));
-            while (_weatherPatterns.GetChildCount() > 0) _weatherPatterns.RemoveChild(_weatherPatterns.GetChild(0));
-            while (_weatherAnomalies.GetChildCount() > 0) _weatherAnomalies.RemoveChild(_weatherAnomalies.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_weatherHistory);
+            AshfallUiHelpers.EmptyChildren(_weatherPatterns);
+            AshfallUiHelpers.EmptyChildren(_weatherAnomalies);
 
             foreach (string history in _placeholderHistory)
             {

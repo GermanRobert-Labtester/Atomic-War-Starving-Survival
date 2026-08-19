@@ -56,12 +56,9 @@ namespace AtomicWar.GodotApp.UI
             if (_activeList == null || _chronicList == null || _treatmentList == null) return;
 
             // Clear existing lists
-            while (_activeList.GetChildCount() > 0)
-                _activeList.RemoveChild(_activeList.GetChild(0));
-            while (_chronicList.GetChildCount() > 0)
-                _chronicList.RemoveChild(_chronicList.GetChild(0));
-            while (_treatmentList.GetChildCount() > 0)
-                _treatmentList.RemoveChild(_treatmentList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_activeList);
+            AshfallUiHelpers.EmptyChildren(_chronicList);
+            AshfallUiHelpers.EmptyChildren(_treatmentList);
 
             // Display placeholder active afflictions
             foreach (string affliction in _placeholderActive)

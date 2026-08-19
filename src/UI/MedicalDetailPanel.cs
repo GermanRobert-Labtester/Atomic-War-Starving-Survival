@@ -67,10 +67,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_patientInfo == null || _treatmentPlan == null || _medicationSchedule == null || _medicalHistory == null) return;
 
-            while (_patientInfo.GetChildCount() > 0) _patientInfo.RemoveChild(_patientInfo.GetChild(0));
-            while (_treatmentPlan.GetChildCount() > 0) _treatmentPlan.RemoveChild(_treatmentPlan.GetChild(0));
-            while (_medicationSchedule.GetChildCount() > 0) _medicationSchedule.RemoveChild(_medicationSchedule.GetChild(0));
-            while (_medicalHistory.GetChildCount() > 0) _medicalHistory.RemoveChild(_medicalHistory.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_patientInfo);
+            AshfallUiHelpers.EmptyChildren(_treatmentPlan);
+            AshfallUiHelpers.EmptyChildren(_medicationSchedule);
+            AshfallUiHelpers.EmptyChildren(_medicalHistory);
 
             foreach (string info in _placeholderPatientInfo)
             {

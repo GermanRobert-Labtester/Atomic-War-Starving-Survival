@@ -56,9 +56,9 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_craftingHistory == null || _craftedRecipes == null || _craftingOutcomes == null) return;
 
-            while (_craftingHistory.GetChildCount() > 0) _craftingHistory.RemoveChild(_craftingHistory.GetChild(0));
-            while (_craftedRecipes.GetChildCount() > 0) _craftedRecipes.RemoveChild(_craftedRecipes.GetChild(0));
-            while (_craftingOutcomes.GetChildCount() > 0) _craftingOutcomes.RemoveChild(_craftingOutcomes.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_craftingHistory);
+            AshfallUiHelpers.EmptyChildren(_craftedRecipes);
+            AshfallUiHelpers.EmptyChildren(_craftingOutcomes);
 
             foreach (string history in _placeholderHistory)
             {

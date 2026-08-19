@@ -74,14 +74,10 @@ namespace AtomicWar.GodotApp.UI
             if (_currentData == null || _dosimeterData == null || _protectionData == null || _eventsList == null) return;
 
             // Clear existing lists
-            while (_currentData.GetChildCount() > 0)
-                _currentData.RemoveChild(_currentData.GetChild(0));
-            while (_dosimeterData.GetChildCount() > 0)
-                _dosimeterData.RemoveChild(_dosimeterData.GetChild(0));
-            while (_protectionData.GetChildCount() > 0)
-                _protectionData.RemoveChild(_protectionData.GetChild(0));
-            while (_eventsList.GetChildCount() > 0)
-                _eventsList.RemoveChild(_eventsList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_currentData);
+            AshfallUiHelpers.EmptyChildren(_dosimeterData);
+            AshfallUiHelpers.EmptyChildren(_protectionData);
+            AshfallUiHelpers.EmptyChildren(_eventsList);
 
             // Display placeholder current radiation
             foreach (string data in _placeholderCurrent)

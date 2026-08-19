@@ -268,12 +268,7 @@ public partial class GreenhousePanel : Control
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
-        while (_detailBox.GetChildCount() > 0)
-        {
-            var c = _detailBox.GetChild(0);
-            _detailBox.RemoveChild(c);
-            c.QueueFree();
-        }
+        AshfallUiHelpers.EmptyChildren(_detailBox);
         // Recreate the persistent header — the QueueFree loop above disposed it.
         _detailTitle = AshfallUiHelpers.MakeSectionHeader("BED DETAIL");
         _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;

@@ -36,14 +36,10 @@ namespace AtomicWar.GodotApp.UI
                 _tradeContainer == null || _eventsContainer == null)
                 return;
 
-            while (_infoContainer.GetChildCount() > 0)
-                _infoContainer.RemoveChild(_infoContainer.GetChild(0));
-            while (_diplomacyContainer.GetChildCount() > 0)
-                _diplomacyContainer.RemoveChild(_diplomacyContainer.GetChild(0));
-            while (_tradeContainer.GetChildCount() > 0)
-                _tradeContainer.RemoveChild(_tradeContainer.GetChild(0));
-            while (_eventsContainer.GetChildCount() > 0)
-                _eventsContainer.RemoveChild(_eventsContainer.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_infoContainer);
+            AshfallUiHelpers.EmptyChildren(_diplomacyContainer);
+            AshfallUiHelpers.EmptyChildren(_tradeContainer);
+            AshfallUiHelpers.EmptyChildren(_eventsContainer);
 
             // ── 1. Faction Profile Card ──
             var infoCard = AshfallUiHelpers.MakeCardFrame("FACTION PROFILE & DOCTRINE", faction.Id);

@@ -60,12 +60,9 @@ namespace AtomicWar.GodotApp.UI
             if (_knowledgeList == null || _researchList == null || _techList == null) return;
 
             // Clear existing lists
-            while (_knowledgeList.GetChildCount() > 0)
-                _knowledgeList.RemoveChild(_knowledgeList.GetChild(0));
-            while (_researchList.GetChildCount() > 0)
-                _researchList.RemoveChild(_researchList.GetChild(0));
-            while (_techList.GetChildCount() > 0)
-                _techList.RemoveChild(_techList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_knowledgeList);
+            AshfallUiHelpers.EmptyChildren(_researchList);
+            AshfallUiHelpers.EmptyChildren(_techList);
 
             // Display placeholder knowledge
             foreach (string knowledge in _placeholderKnowledge)

@@ -60,12 +60,9 @@ namespace AtomicWar.GodotApp.UI
             if (_recentList == null || _incidentsList == null || _narrativeList == null) return;
 
             // Clear existing lists
-            while (_recentList.GetChildCount() > 0)
-                _recentList.RemoveChild(_recentList.GetChild(0));
-            while (_incidentsList.GetChildCount() > 0)
-                _incidentsList.RemoveChild(_incidentsList.GetChild(0));
-            while (_narrativeList.GetChildCount() > 0)
-                _narrativeList.RemoveChild(_narrativeList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_recentList);
+            AshfallUiHelpers.EmptyChildren(_incidentsList);
+            AshfallUiHelpers.EmptyChildren(_narrativeList);
 
             // Display placeholder recent events
             foreach (string eventEntry in _placeholderRecent)

@@ -67,10 +67,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_tradeInfo == null || _tradeHistory == null || _marketPrices == null || _negotiationData == null) return;
 
-            while (_tradeInfo.GetChildCount() > 0) _tradeInfo.RemoveChild(_tradeInfo.GetChild(0));
-            while (_tradeHistory.GetChildCount() > 0) _tradeHistory.RemoveChild(_tradeHistory.GetChild(0));
-            while (_marketPrices.GetChildCount() > 0) _marketPrices.RemoveChild(_marketPrices.GetChild(0));
-            while (_negotiationData.GetChildCount() > 0) _negotiationData.RemoveChild(_negotiationData.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_tradeInfo);
+            AshfallUiHelpers.EmptyChildren(_tradeHistory);
+            AshfallUiHelpers.EmptyChildren(_marketPrices);
+            AshfallUiHelpers.EmptyChildren(_negotiationData);
 
             foreach (string info in _placeholderTradeInfo)
             {

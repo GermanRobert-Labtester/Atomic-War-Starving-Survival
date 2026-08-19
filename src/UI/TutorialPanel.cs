@@ -69,12 +69,9 @@ namespace AtomicWar.GodotApp.UI
             if (_controlsList == null || _basicsList == null || _tipsList == null) return;
 
             // Clear existing lists
-            while (_controlsList.GetChildCount() > 0)
-                _controlsList.RemoveChild(_controlsList.GetChild(0));
-            while (_basicsList.GetChildCount() > 0)
-                _basicsList.RemoveChild(_basicsList.GetChild(0));
-            while (_tipsList.GetChildCount() > 0)
-                _tipsList.RemoveChild(_tipsList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_controlsList);
+            AshfallUiHelpers.EmptyChildren(_basicsList);
+            AshfallUiHelpers.EmptyChildren(_tipsList);
 
             // Display placeholder controls
             foreach (string control in _placeholderControls)

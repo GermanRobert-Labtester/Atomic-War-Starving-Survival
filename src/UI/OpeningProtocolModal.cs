@@ -51,8 +51,7 @@ namespace AtomicWar.GodotApp.UI
                 : "PENDING // AWAITING SIGNAL PROTOCOL";
             _radioStatus.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(state.eveningRadioResolved ? DesignTheme.Pale : DesignTheme.Warm));
 
-            while (_logList.GetChildCount() > 0)
-                _logList.RemoveChild(_logList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_logList);
 
             int count = Math.Min(6, state.journalDirectives.Count);
             for (int i = state.journalDirectives.Count - count; i < state.journalDirectives.Count; i++)

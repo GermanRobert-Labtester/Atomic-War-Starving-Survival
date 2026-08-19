@@ -364,12 +364,7 @@ public partial class StandingRecordAtlasPanel : Control
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
-        while (_detailBox.GetChildCount() > 0)
-        {
-            var c = _detailBox.GetChild(0);
-            _detailBox.RemoveChild(c);
-            c.QueueFree();
-        }
+        AshfallUiHelpers.EmptyChildren(_detailBox);
         _detailTitle = AshfallUiHelpers.MakeSectionHeader("SITE DETAIL");
         _detailBox.AddChild(_detailTitle);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());

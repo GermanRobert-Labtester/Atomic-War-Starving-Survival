@@ -75,10 +75,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_forecastData == null || _temperatureTrend == null || _precipitationData == null || _windForecast == null) return;
 
-            while (_forecastData.GetChildCount() > 0) _forecastData.RemoveChild(_forecastData.GetChild(0));
-            while (_temperatureTrend.GetChildCount() > 0) _temperatureTrend.RemoveChild(_temperatureTrend.GetChild(0));
-            while (_precipitationData.GetChildCount() > 0) _precipitationData.RemoveChild(_precipitationData.GetChild(0));
-            while (_windForecast.GetChildCount() > 0) _windForecast.RemoveChild(_windForecast.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_forecastData);
+            AshfallUiHelpers.EmptyChildren(_temperatureTrend);
+            AshfallUiHelpers.EmptyChildren(_precipitationData);
+            AshfallUiHelpers.EmptyChildren(_windForecast);
 
             foreach (string forecast in _placeholderForecast)
             {

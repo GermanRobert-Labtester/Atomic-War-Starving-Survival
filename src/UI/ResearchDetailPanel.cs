@@ -68,10 +68,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_researchInfo == null || _discoveredKnowledge == null || _researchQueue == null || _researchOutcomes == null) return;
 
-            while (_researchInfo.GetChildCount() > 0) _researchInfo.RemoveChild(_researchInfo.GetChild(0));
-            while (_discoveredKnowledge.GetChildCount() > 0) _discoveredKnowledge.RemoveChild(_discoveredKnowledge.GetChild(0));
-            while (_researchQueue.GetChildCount() > 0) _researchQueue.RemoveChild(_researchQueue.GetChild(0));
-            while (_researchOutcomes.GetChildCount() > 0) _researchOutcomes.RemoveChild(_researchOutcomes.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_researchInfo);
+            AshfallUiHelpers.EmptyChildren(_discoveredKnowledge);
+            AshfallUiHelpers.EmptyChildren(_researchQueue);
+            AshfallUiHelpers.EmptyChildren(_researchOutcomes);
 
             foreach (string info in _placeholderResearchInfo)
             {

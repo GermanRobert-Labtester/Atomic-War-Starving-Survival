@@ -52,12 +52,9 @@ namespace AtomicWar.GodotApp.UI
             if (_slotsList == null || _infoList == null || _actionButtons == null) return;
 
             // Clear existing lists
-            while (_slotsList.GetChildCount() > 0)
-                _slotsList.RemoveChild(_slotsList.GetChild(0));
-            while (_infoList.GetChildCount() > 0)
-                _infoList.RemoveChild(_infoList.GetChild(0));
-            while (_actionButtons.GetChildCount() > 0)
-                _actionButtons.RemoveChild(_actionButtons.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_slotsList);
+            AshfallUiHelpers.EmptyChildren(_infoList);
+            AshfallUiHelpers.EmptyChildren(_actionButtons);
 
             // Display placeholder save slots
             foreach (string slot in _placeholderSlots)
