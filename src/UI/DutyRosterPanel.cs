@@ -38,6 +38,7 @@ public partial class DutyRosterPanel : Control
     private AshfallStatusRail? _statusRail;
     private AshfallDataGrid? _rosterGrid;
     private VBoxContainer _detailBox = null!;
+    private VBoxContainer _detailContent = null!;
     private Label _detailTitle = null!;
     private int _selectedIndex = -1;
     private string _scopeFilter = "all"; // all | night_watch | mess | hatch_opener | intake_sleeper | expedition | unassigned
@@ -117,7 +118,16 @@ public partial class DutyRosterPanel : Control
         _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;
         _detailBox.AddChild(_detailTitle);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-        _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
+
+        // _detailContent is the transient child container. RefreshDetail calls
+        // EmptyChildren(_detailContent) every pass; the persistent header above
+        // stays alive across rebuilds so RefreshDetail can keep mutating
+        // _detailTitle.Text without exposing dangling references.
+        _detailContent = new VBoxContainer();
+        _detailContent.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _detailContent.SizeFlagsVertical = SizeFlags.ExpandFill;
+        _detailBox.AddChild(_detailContent);
+        _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
             "Select a row to view role, survivor, occupation, and last-slept day."));
 
         _shell.SetContent(body);
@@ -348,30 +358,18 @@ public partial class DutyRosterPanel : Control
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
-        // Regression-note (Aug-2026 migration to AshfallUiHelpers.EmptyChildren):
-        // _detailTitle is a persistent owned Label that lives inside _detailBox,
-        // not a transient row rebuilt each pass. IdleFrame deferred-QueueFree
-        // masked the latent dangling-reference bug; the synchronous helper
-        // exposes it. Regression-reverted this single call site to its
-        // original QueueFree idiom pending the structural follow-up: move
-        // _detailTitle outside _detailBox so EmptyChildren is safe.
-        while (_detailBox.GetChildCount() > 0)
-        {
-            var c = _detailBox.GetChild(0);
-            _detailBox.RemoveChild(c);
-            c.QueueFree();
-        }
+        AshfallUiHelpers.EmptyChildren(_detailContent);
         if (_host == null)
         {
             _detailTitle.Text = "SHIFT DETAIL";
-            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
                 "Duty Roster engine offline. Bind a DutyRosterHostSession to see live shift assignments."));
             return;
         }
         if (_selectedIndex < 0)
         {
             _detailTitle.Text = "SHIFT DETAIL";
-            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
                 "Select a roster row to view role, survivor, occupation, and last-slept day."));
             return;
         }
@@ -379,26 +377,26 @@ public partial class DutyRosterPanel : Control
         if (string.IsNullOrEmpty(roleId) && string.IsNullOrEmpty(survivorId))
         {
             _detailTitle.Text = "SHIFT DETAIL";
-            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("Selected row is out of scope."));
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata("Selected row is out of scope."));
             return;
         }
 
         var row = FindRow(survivorId);
         _detailTitle.Text = string.IsNullOrEmpty(roleId) ? "[UNASSIGNED] DETAIL" : $"{RoleTitle(roleId)} DETAIL";
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Role", string.IsNullOrEmpty(roleId) ? "[UNASSIGNED]" : RoleTitle(roleId),
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Role", string.IsNullOrEmpty(roleId) ? "[UNASSIGNED]" : RoleTitle(roleId),
             AshfallUiHelpers.ToColor(DesignTheme.Warm)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Survivor", row?.displayName ?? FormatSurvivorName(survivorId),
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Survivor", row?.displayName ?? FormatSurvivorName(survivorId),
             AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Status", row?.status ?? "—",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Status", row?.status ?? "—",
             row == null ? AshfallUiHelpers.ToColor(DesignTheme.Dim) :
             StatusState(row.status) == AshfallDataGrid.CellState.Critical ? AshfallUiHelpers.ToColor(DesignTheme.Critical) :
             StatusState(row.status) == AshfallDataGrid.CellState.Warning  ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) :
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Occupation", row?.occupationObserved ?? "—",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Occupation", row?.occupationObserved ?? "—",
             AshfallUiHelpers.ToColor(DesignTheme.Muted)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Last Slept", (row?.lastSleptDay ?? -1) < 0 ? "—" : $"D{row.lastSleptDay}",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Last Slept", (row?.lastSleptDay ?? -1) < 0 ? "—" : $"D{row.lastSleptDay}",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Shift", string.IsNullOrEmpty(roleId) ? "—" : ResolveShiftText(roleId),
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Shift", string.IsNullOrEmpty(roleId) ? "—" : ResolveShiftText(roleId),
             AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
     }
 
