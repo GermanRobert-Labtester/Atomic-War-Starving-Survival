@@ -24,6 +24,21 @@ echo "[setup-repo] core.ignorecase=false  (dual Assets/ + assets/ trees stay dis
 git lfs install --local 2>/dev/null || git lfs install || echo "[setup-repo] WARN: git-lfs not installed — run \`git lfs install\`"; \
   which git-lfs >/dev/null 2>&1 || echo "[setup-repo] WARN: git-lfs binary not found on PATH; install from https://git-lfs.com"
 
+# 3. Install the shared pre-commit hook (idempotent, repo-versioned at
+#    scripts/ci/git-hooks/pre-commit). It blocks commits that add Godot
+#    artwork without its matching .import sidecar (silent runtime breakage),
+#    with a fast no-op path for non-asset commits and a --no-verify escape
+#    hatch. LFS hooks installed in step 2 are untouched.
+HOOK_SRC="scripts/ci/git-hooks/pre-commit"
+if [[ -f "$HOOK_SRC" ]]; then
+  mkdir -p .git/hooks
+  cp "$HOOK_SRC" .git/hooks/pre-commit
+  chmod +x .git/hooks/pre-commit
+  echo "[setup-repo] pre-commit hook installed from $HOOK_SRC"
+else
+  echo "[setup-repo] WARN: $HOOK_SRC missing — pre-commit orphan guard not installed"
+fi
+
 echo "[setup-repo] done. Verify binaries from a fresh checkout with:"
 echo "    dotnet build Ashfall.csproj"
 echo "    godot --headless --path . --import          # one-time texture import (.godot/ is gitignored)"

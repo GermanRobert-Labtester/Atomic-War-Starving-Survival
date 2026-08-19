@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# ASHFALL pre-commit hook — install via ./setup-repo.sh.
+#
+# Blocks commits that would land Godot artwork (jpg/png/svg/ttf/otf/wav/mp3/ogg)
+# without its matching `.import` sidecar in the ACTIVE Godot tree (assets/).
+# Without the sidecar, ResourceLoader.Load silently returns null at runtime
+# even though the file sits on disk (see AUDIT_2026-08-19_UI_AND_YESTERDAYS_ASSETS.md).
+#
+# Behaviour:
+#   * Fast path: when the commit adds NO files whose names begin with
+#     assets/art, assets/sprites, assets/ui, assets/audio or assets/fonts,
+#     the hook exits 0 immediately.
+#   * Otherwise it runs scripts/ci/asset-orphan-sweep.sh. Orphans abort the
+#     commit; the hook prints the exact fix command.
+#   * The sweep script itself is committed alongside this hook
+#     (scripts/ci/asset-orphan-sweep.sh) and must be executable.
+#
+# To intentionally commit despite orphans (e.g. a one-off snapshot before a
+# reimport):  git commit --no-verify
+set -euo pipefail
+
+# Only act when the commit touches Godot asset paths.
+staged_files=$(git diff --cached --name-only)
+if [ -z "$staged_files" ]; then
+    exit 0
+fi
+
+touches_assets=false
+for f in $staged_files; do
+    case "$f" in
+        assets/art/*|assets/sprites/*|assets/ui/*|assets/audio/*|assets/fonts/*)
+            touches_assets=true
+            break
+            ;;
+    esac
+done
+
+if [ "$touches_assets" = "false" ]; then
+    exit 0
+fi
+
+sweep="scripts/ci/asset-orphan-sweep.sh"
+if [ ! -x "$sweep" ]; then
+    echo "[pre-commit] WARN: $sweep not executable; skipping orphan guard." >&2
+    exit 0
+fi
+
+if "$sweep" >/dev/null 2>&1; then
+    exit 0
+fi
+
+cat >&2 <<'EOF'
+┌────────────────────────────────────────────────────────────────┐
+│ ASHFALL pre-commit: Godot asset orphans detected.                │
+│                                                                │
+│ At least one jpg/png/svg/etc under assets/ lacks its .import    │
+│ sidecar (or a sidecar lacks its source). Godot will NOT load    │
+│ such art at runtime even though the file is on disk.            │
+│                                                                │
+│ Fix:                                                           │
+│   godot --headless --no-window --path . --import                │
+│   ./scripts/ci/asset-orphan-sweep.sh   # must report total: 0   │
+│   git add the newly-generated .import sidecar(s) TOGETHER with  │
+│   the source file (both are LFS/commit-paired atomically).      │
+│                                                                │
+│ To override once (you know what you are doing):                 │
+│   git commit --no-verify                                        │
+└────────────────────────────────────────────────────────────────┘
+EOF
+"$sweep" --list >&2
+exit 1
