@@ -31,6 +31,7 @@ public partial class SilentFoundryPanel : Control
     private AshfallStatusRail? _statusRail;
     private AshfallDataGrid? _productGrid;
     private VBoxContainer _detailBox = null!;
+    private VBoxContainer _detailContent = null!;
     private Label _detailTitle = null!;
     private int _selectedIndex = -1;
     private string _categoryFilter = "all"; // all | agricultural_tool | structural_beam | water_component | heavy_alloy_part | repair_plate
@@ -106,7 +107,16 @@ public partial class SilentFoundryPanel : Control
         _detailTitle.HorizontalAlignment = HorizontalAlignment.Left;
         _detailBox.AddChild(_detailTitle);
         _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-        _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
+
+        // _detailContent is the transient child container. RefreshDetail calls
+        // EmptyChildren(_detailContent) every pass; the persistent header above
+        // stays alive across rebuilds so RefreshDetail can keep mutating
+        // _detailTitle.Text without exposing dangling references.
+        _detailContent = new VBoxContainer();
+        _detailContent.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _detailContent.SizeFlagsVertical = SizeFlags.ExpandFill;
+        _detailBox.AddChild(_detailContent);
+        _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
             "Select a heat row to view charge costs, treaty obligations, and quality target."));
 
         _shell.SetContent(body);
@@ -282,23 +292,13 @@ public partial class SilentFoundryPanel : Control
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
-        // Regression-note (Aug-2026 migration to AshfallUiHelpers.EmptyChildren):
-        // _detailTitle is a persistent owned Label that lives inside _detailBox,
-        // not a transient row rebuilt each pass. IdleFrame deferred-QueueFree
-        // masked the latent dangling-reference bug; the synchronous helper
-        // exposes it. Regression-reverted this single call site to its
-        // original QueueFree idiom pending the structural follow-up: move
-        // _detailTitle outside _detailBox so EmptyChildren is safe.
-        while (_detailBox.GetChildCount() > 0)
-        {
-            var c = _detailBox.GetChild(0);
-            _detailBox.RemoveChild(c);
-            c.QueueFree();
-        }
+        // _detailTitle lives in _detailBox; only the transient content in
+        // _detailContent is rebuilt on each refresh.
+        AshfallUiHelpers.EmptyChildren(_detailContent);
         if (_host == null || _selectedIndex < 0 || _productGrid == null || _selectedIndex >= _productGrid.Rows.Count)
         {
             _detailTitle.Text = "CAST DETAIL";
-            _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
+            _detailContent.AddChild(AshfallUiHelpers.MakeMetadata(
                 _host == null
                     ? "Foundry engine offline. Bind a SilentFoundryHostSession to see live cast rows."
                     : "Select a heat row to view charge costs, treaty obligations, and quality target."));
@@ -310,41 +310,41 @@ public partial class SilentFoundryPanel : Control
         var p = products[visibleIdx];
 
         _detailTitle.Text = $"{(string.IsNullOrEmpty(p.display_name) ? p.product_id : p.display_name).ToUpperInvariant()} DETAIL";
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Sink", string.IsNullOrEmpty(p.sink) ? p.category : p.sink,
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Sink", string.IsNullOrEmpty(p.sink) ? p.category : p.sink,
             AshfallUiHelpers.ToColor(DesignTheme.Pale)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Yields", $"{p.result_amount}× {p.result_item_id}",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Yields", $"{p.result_amount}× {p.result_item_id}",
             AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Labor", $"{p.labor_hours:0.0} h",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Labor", $"{p.labor_hours:0.0} h",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Cast", $"{p.cast_hours:0.0} h",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Cast", $"{p.cast_hours:0.0} h",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
-        _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Skill target", $"{p.skill_target:0.00}",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Skill target", $"{p.skill_target:0.00}",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
 
         if (p.ingredients != null && p.ingredients.Count > 0)
         {
-            _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-            _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Charge Manifest"));
+            _detailContent.AddChild(AshfallUiHelpers.MakeSeparator());
+            _detailContent.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Charge Manifest"));
             for (int i = 0; i < p.ingredients.Count; i++)
             {
                 var ing = p.ingredients[i];
                 if (ing == null) continue;
-                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(ing.item_id, $"× {ing.amount}",
+                _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(ing.item_id, $"× {ing.amount}",
                     AshfallUiHelpers.ToColor(DesignTheme.Muted)));
             }
         }
         if (!string.IsNullOrEmpty(p.treaty_id) && p.quota_amount > 0)
         {
-            _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-            _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Treaty Obligation"));
-            _detailBox.AddChild(AshfallUiHelpers.MakeDataRow(p.treaty_id, $"quota {p.quota_amount}/cycle",
+            _detailContent.AddChild(AshfallUiHelpers.MakeSeparator());
+            _detailContent.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Treaty Obligation"));
+            _detailContent.AddChild(AshfallUiHelpers.MakeDataRow(p.treaty_id, $"quota {p.quota_amount}/cycle",
                 AshfallUiHelpers.ToColor(DesignTheme.LetheAmber)));
         }
         if (!string.IsNullOrEmpty(p.notes))
         {
-            _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
-            _detailBox.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Provenance"));
-            _detailBox.AddChild(AshfallUiHelpers.MakeSmall(p.notes, autowrap: true));
+            _detailContent.AddChild(AshfallUiHelpers.MakeSeparator());
+            _detailContent.AddChild(AshfallUiHelpers.MakeSubsectionHeader("Provenance"));
+            _detailContent.AddChild(AshfallUiHelpers.MakeSmall(p.notes, autowrap: true));
         }
     }
 
