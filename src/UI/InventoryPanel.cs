@@ -73,12 +73,7 @@ namespace AtomicWar.GodotApp.UI
         private void RefreshStorageList()
         {
             if (_storageGrid == null) return;
-            while (_storageGrid.GetChildCount() > 0)
-            {
-                var c = _storageGrid.GetChild(0);
-                _storageGrid.RemoveChild(c);
-                c.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(_storageGrid);
             if (_inventoryHost == null || _inventoryHost.Inventory.Slots.Count == 0)
             {
                 _storageGrid.AddChild(AshfallUiHelpers.MakeMetadata("Nothing stored. The shelter shelves are bare."));
@@ -107,12 +102,7 @@ namespace AtomicWar.GodotApp.UI
         private void RefreshGearList()
         {
             if (_gearGrid == null) return;
-            while (_gearGrid.GetChildCount() > 0)
-            {
-                var c = _gearGrid.GetChild(0);
-                _gearGrid.RemoveChild(c);
-                c.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(_gearGrid);
             if (_inventoryHost == null)
             {
                 _gearGrid.AddChild(AshfallUiHelpers.MakeSmall("EQUIPPED // —"));
