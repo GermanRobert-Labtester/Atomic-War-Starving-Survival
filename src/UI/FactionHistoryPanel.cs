@@ -56,9 +56,9 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_factionHistory == null || _relationEvolution == null || _diplomaticEvents == null) return;
 
-            while (_factionHistory.GetChildCount() > 0) _factionHistory.RemoveChild(_factionHistory.GetChild(0));
-            while (_relationEvolution.GetChildCount() > 0) _relationEvolution.RemoveChild(_relationEvolution.GetChild(0));
-            while (_diplomaticEvents.GetChildCount() > 0) _diplomaticEvents.RemoveChild(_diplomaticEvents.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_factionHistory);
+            AshfallUiHelpers.EmptyChildren(_relationEvolution);
+            AshfallUiHelpers.EmptyChildren(_diplomaticEvents);
 
             foreach (string history in _placeholderHistory)
             {

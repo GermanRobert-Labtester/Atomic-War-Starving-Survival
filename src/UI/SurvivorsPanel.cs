@@ -99,12 +99,7 @@ namespace AtomicWar.GodotApp.UI
         private void RefreshRoster()
         {
             if (_survivorList == null) return;
-            while (_survivorList.GetChildCount() > 0)
-            {
-                var c = _survivorList.GetChild(0);
-                _survivorList.RemoveChild(c);
-                c.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(_survivorList);
             if (_survivorsHost == null)
             {
                 _survivorList.AddChild(AshfallUiHelpers.MakeMetadata("No survivor session bound."));
@@ -166,12 +161,7 @@ namespace AtomicWar.GodotApp.UI
         private void RefreshCohortStats()
         {
             if (_statsGroup == null) return;
-            while (_statsGroup.GetChildCount() > 0)
-            {
-                var c = _statsGroup.GetChild(0);
-                _statsGroup.RemoveChild(c);
-                c.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(_statsGroup);
             if (_survivorsHost == null) return;
 
             float avgHp = _survivorsHost.RosterState.Count == 0 ? 0f : _survivorsHost.RosterState.Average(s => s?.Health ?? 0f);

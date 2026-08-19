@@ -75,12 +75,9 @@ namespace AtomicWar.GodotApp.UI
             if (_logEntries == null || _notesList == null || _storyEntries == null) return;
 
             // Clear existing entries
-            while (_logEntries.GetChildCount() > 0)
-                _logEntries.RemoveChild(_logEntries.GetChild(0));
-            while (_notesList.GetChildCount() > 0)
-                _notesList.RemoveChild(_notesList.GetChild(0));
-            while (_storyEntries.GetChildCount() > 0)
-                _storyEntries.RemoveChild(_storyEntries.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_logEntries);
+            AshfallUiHelpers.EmptyChildren(_notesList);
+            AshfallUiHelpers.EmptyChildren(_storyEntries);
 
             // Display placeholder day logs
             foreach (string log in _placeholderLogs)

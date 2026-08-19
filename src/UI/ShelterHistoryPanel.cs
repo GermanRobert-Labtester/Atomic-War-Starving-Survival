@@ -56,9 +56,9 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_shelterHistory == null || _maintenanceRecords == null || _upgradeTimeline == null) return;
 
-            while (_shelterHistory.GetChildCount() > 0) _shelterHistory.RemoveChild(_shelterHistory.GetChild(0));
-            while (_maintenanceRecords.GetChildCount() > 0) _maintenanceRecords.RemoveChild(_maintenanceRecords.GetChild(0));
-            while (_upgradeTimeline.GetChildCount() > 0) _upgradeTimeline.RemoveChild(_upgradeTimeline.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_shelterHistory);
+            AshfallUiHelpers.EmptyChildren(_maintenanceRecords);
+            AshfallUiHelpers.EmptyChildren(_upgradeTimeline);
 
             foreach (string history in _placeholderHistory)
             {

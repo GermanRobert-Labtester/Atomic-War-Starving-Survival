@@ -59,9 +59,9 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_achievementInfo == null || _unlockedAchievements == null || _lockedAchievements == null) return;
 
-            while (_achievementInfo.GetChildCount() > 0) _achievementInfo.RemoveChild(_achievementInfo.GetChild(0));
-            while (_unlockedAchievements.GetChildCount() > 0) _unlockedAchievements.RemoveChild(_unlockedAchievements.GetChild(0));
-            while (_lockedAchievements.GetChildCount() > 0) _lockedAchievements.RemoveChild(_lockedAchievements.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_achievementInfo);
+            AshfallUiHelpers.EmptyChildren(_unlockedAchievements);
+            AshfallUiHelpers.EmptyChildren(_lockedAchievements);
 
             foreach (string info in _placeholderAchievementInfo)
             {

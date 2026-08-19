@@ -64,12 +64,9 @@ namespace AtomicWar.GodotApp.UI
             if (_itemInfo == null || _itemStats == null || _itemActions == null) return;
 
             // Clear existing lists
-            while (_itemInfo.GetChildCount() > 0)
-                _itemInfo.RemoveChild(_itemInfo.GetChild(0));
-            while (_itemStats.GetChildCount() > 0)
-                _itemStats.RemoveChild(_itemStats.GetChild(0));
-            while (_itemActions.GetChildCount() > 0)
-                _itemActions.RemoveChild(_itemActions.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_itemInfo);
+            AshfallUiHelpers.EmptyChildren(_itemStats);
+            AshfallUiHelpers.EmptyChildren(_itemActions);
 
             // Display placeholder item info
             foreach (string info in _placeholderItemInfo)

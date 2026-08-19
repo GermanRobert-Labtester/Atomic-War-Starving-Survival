@@ -68,10 +68,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_recipeInfo == null || _materialsList == null || _craftingProgress == null || _unlockedRecipes == null) return;
 
-            while (_recipeInfo.GetChildCount() > 0) _recipeInfo.RemoveChild(_recipeInfo.GetChild(0));
-            while (_materialsList.GetChildCount() > 0) _materialsList.RemoveChild(_materialsList.GetChild(0));
-            while (_craftingProgress.GetChildCount() > 0) _craftingProgress.RemoveChild(_craftingProgress.GetChild(0));
-            while (_unlockedRecipes.GetChildCount() > 0) _unlockedRecipes.RemoveChild(_unlockedRecipes.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_recipeInfo);
+            AshfallUiHelpers.EmptyChildren(_materialsList);
+            AshfallUiHelpers.EmptyChildren(_craftingProgress);
+            AshfallUiHelpers.EmptyChildren(_unlockedRecipes);
 
             foreach (string info in _placeholderRecipe)
             {

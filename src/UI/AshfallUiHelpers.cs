@@ -582,5 +582,38 @@ namespace AtomicWar.GodotApp.UI
                 sb.SetCornerRadiusAll(cornerRadius);
             return sb;
         }
+
+        // ── Tree Management ─────────────────────────────────────────────
+
+        /// <summary>
+        /// Detach and synchronously free every direct child of <paramref name="parent"/>.
+        /// Replaces the legacy `while (...) { RemoveChild(c); c.QueueFree(); }` idiom
+        /// that appears across 18+ panels. QueueFree() on a node already detached
+        /// from the SceneTree defers deletion to the next idle frame; that frame
+        /// may not arrive in time during headless smoke tests or during fast
+        /// panel rebinds, so freed children survive in ObjectDB after
+        /// `tree.Quit()` and get reported as leaks. Free() is synchronous and
+        /// safe on detached nodes.
+        /// Tolerates null and freed parents at the call site so callers can
+        /// drop their `if (parent == null) return` pattern. Matching the
+        /// behaviour introduced in ShelterPanel yesterday (see audit
+        /// AUDIT_2026-08-19_UI_AND_YESTERDAYS_ASSETS.md).
+        /// </summary>
+        public static void EmptyChildren(Node parent)
+        {
+            if (parent == null || !GodotObject.IsInstanceValid(parent))
+                return;
+
+            // Bound the loop defensively against free-during-iteration races;
+            // safety counter guards against pathological parents whose
+            // GetChild() invariant breaks under teardown.
+            int safety = parent.GetChildCount() + 8;
+            while (parent.GetChildCount() > 0 && safety-- > 0)
+            {
+                var child = parent.GetChild(0);
+                parent.RemoveChild(child);
+                child.Free();
+            }
+        }
     }
 }

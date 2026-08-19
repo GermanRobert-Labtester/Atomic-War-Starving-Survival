@@ -67,10 +67,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_expeditionInfo == null || _teamComposition == null || _routePlanning == null || _expeditionOutcomes == null) return;
 
-            while (_expeditionInfo.GetChildCount() > 0) _expeditionInfo.RemoveChild(_expeditionInfo.GetChild(0));
-            while (_teamComposition.GetChildCount() > 0) _teamComposition.RemoveChild(_teamComposition.GetChild(0));
-            while (_routePlanning.GetChildCount() > 0) _routePlanning.RemoveChild(_routePlanning.GetChild(0));
-            while (_expeditionOutcomes.GetChildCount() > 0) _expeditionOutcomes.RemoveChild(_expeditionOutcomes.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_expeditionInfo);
+            AshfallUiHelpers.EmptyChildren(_teamComposition);
+            AshfallUiHelpers.EmptyChildren(_routePlanning);
+            AshfallUiHelpers.EmptyChildren(_expeditionOutcomes);
 
             foreach (string info in _placeholderExpeditionInfo)
             {

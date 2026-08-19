@@ -234,12 +234,7 @@ namespace AtomicWar.GodotApp.UI
 
         private static void ClearChildren(Node parent)
         {
-            while (parent.GetChildCount() > 0)
-            {
-                var child = parent.GetChild(0);
-                parent.RemoveChild(child);
-                child.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(parent);
         }
 
         // ── Godot lifecycle ────────────────────────────────────────────

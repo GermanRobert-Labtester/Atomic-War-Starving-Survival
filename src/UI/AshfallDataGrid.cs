@@ -171,7 +171,14 @@ public partial class AshfallDataGrid : PanelContainer
 
         // Header row
         while (_headerBar.GetChildCount() > 0)
-            _headerBar.RemoveChild(_headerBar.GetChild(0));
+        {
+            var child = _headerBar.GetChild(0);
+            _headerBar.RemoveChild(child);
+            // Header controls are generated on every rebuild. They are removed
+            // before disposal, so QueueFree() can leave them orphaned during a
+            // rapid rebind or headless shutdown; dispose them synchronously.
+            child.Free();
+        }
         if (_showHeader && _columns.Count > 0)
         {
             _headerBar.Visible = true;
@@ -200,7 +207,8 @@ public partial class AshfallDataGrid : PanelContainer
         {
             var child = _body.GetChild(0);
             _body.RemoveChild(child);
-            child.QueueFree();
+            if (child != _emptyLabel)
+                child.Free();
         }
 
         if (_rows.Count == 0)

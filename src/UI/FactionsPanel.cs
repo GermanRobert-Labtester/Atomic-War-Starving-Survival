@@ -78,14 +78,10 @@ namespace AtomicWar.GodotApp.UI
                 _relationsContainer == null || _eventsContainer == null)
                 return;
 
-            while (_overviewContainer.GetChildCount() > 0)
-                _overviewContainer.RemoveChild(_overviewContainer.GetChild(0));
-            while (_factionsContainer.GetChildCount() > 0)
-                _factionsContainer.RemoveChild(_factionsContainer.GetChild(0));
-            while (_relationsContainer.GetChildCount() > 0)
-                _relationsContainer.RemoveChild(_relationsContainer.GetChild(0));
-            while (_eventsContainer.GetChildCount() > 0)
-                _eventsContainer.RemoveChild(_eventsContainer.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_overviewContainer);
+            AshfallUiHelpers.EmptyChildren(_factionsContainer);
+            AshfallUiHelpers.EmptyChildren(_relationsContainer);
+            AshfallUiHelpers.EmptyChildren(_eventsContainer);
 
             // ── 1. Diplomatic Summary ──
             int totalFactions = _factions?.Count ?? 5;

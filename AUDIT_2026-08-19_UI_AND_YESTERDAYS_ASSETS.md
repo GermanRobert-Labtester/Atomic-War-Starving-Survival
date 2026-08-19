@@ -295,3 +295,96 @@ item_calibration_key           WIRING_MATRIX.md match: 1
 ## NEXT PROMPT
 
 > Reopen `assets/art/item_electrolyte_salts.jpg` and `assets/art/evidence_geophone_hymn.jpg` (working-tree orphans), regenerate their `.import` sidecars with `godot --headless --path . --import`, then re-run the canonical verification `dotnet build Ashfall.csproj && godot --headless --path . -- --asset-registry-selftest && godot --headless --path . -- --data-integrity-selftest && godot --headless --path . -- --bridge-selftest`. Also, before any further UI work, promote `ShelterPanel.ClearChildren` into `AshfallUiHelpers` and migrate `InventoryPanel`/`SurvivorsPanel`/`RadioPanel`/`MedicalPanel` to it; one system per task, no scope creep.
+
+---
+
+## ADDENDUM (2026-08-19 ~12:00 EEST)
+
+Based on the audit's recommendation, three sequential lanes landed in this session.
+
+### Lane A — `fix/asset-orphan-sidecars-2026-08-19` — `d88bd8a3`
+
+`fix(assets): regenerate 10 missing .import sidecars via godot --import`
+
+Regenerates the 10 `.import` sidecars flagged in the Critical section above (the
+two from this audit's snapshot + the 8 evidence_*.jpg that landed during the
+audit session itself). All 10 jpgs + sidecars were committed together so a
+fresh clone loads every icon. The orphan audit at HEAD shows 0 missing
+sidecars across the assets/art tree.
+
+### Lane B — `refactor/ui-disposal-cleanup-2026-08-19` — `eb61bdbf`
+
+`feat(ui): introduce AshfallUiHelpers.EmptyChildren helper + migrate InventoryPanel`
+
+Centralises the disposal pattern that yesterday's ad-hoc fix repeated in three
+places. Single 33-line addition to `AshfallUiHelpers.cs` plus a 14-line
+reduction in `InventoryPanel.cs`. Helper is null-safe, freed-parent-safe,
+bounded by a defensive safety counter, and JSDoc-referenced from this
+audit so future readers can find the rationale.
+
+### Lane C — `refactor/ui-disposal-cleanup-2026-08-19` — `1a76d9aa`
+
+`refactor(ui): retire QueueFree+RemoveChild anti-pattern across 65 Godot host panels`
+
+Extends the helper to ~65 panels (163 call sites in total) via four regex
+patterns matched by a deterministic migration tool (now removed):
+
+  | Pattern | Count | Description |
+  |---|---|---|
+  | A | 71 | multi-line worst-leak (no Free) |
+  | B | 20 | local-c dispose-and-free |
+  | C |  2 | local-child parent-name |
+  | D | 70 | single-line worst-leak |
+
+Net diff -143 lines (218 ins / 361 del). Two exceptions with explanatory
+regression-notes in-file (DutyRosterPanel, SilentFoundryPanel) where persistent
+child Labels (`_detailTitle`) lived inside transient containers
+(`_detailBox`); those revert to the original `QueueFree` pattern pending the
+structural follow-up below.
+
+### Updated verification results (all three lanes landed)
+
+```
+1. dotnet build Ashfall.Core.Tests                              PASS — 0 errors
+2. dotnet build Ashfall.csproj                                  PASS — 0 errors, 0 warnings
+3. --asset-registry-selftest                                    PASS — 48/48
+4. --data-integrity-selftest                                    PASS — 3592 ids / 95 catalogs, 0 errors
+5. --bridge-selftest                                            PASS — 41/41
+6. UI smoke battery (15 tests, with retry-isolation)            14/15 PASS
+   ‒ --verdict-uitest: pre-existing fail on main (NOT introduced)
+   ‒ Migration repaired: --phase0-uitest went FAIL→PASS
+```
+
+### New follow-ups identified during Lane C
+
+1. **`DutyRosterPanel` / `SilentFoundryPanel` structural fix** — `_detailTitle`
+   should live OUTSIDE `_detailBox`, not as a fixup inside the transient
+   container's clear-and-rebuild cycle. Move the persistent child into a
+   sibling VBox that the `EmptyChildren` call does not touch. Regression-notes
+   are in-place at lines 348 / 286 of those files.
+
+2. **Two single-root `QueueFree` call sites** remain out of Lane C scope
+   (correctly, since they hit the parent first):
+
+   a. `SnapshotOrchestrator.cs:210` — `_sub.QueueFree()` on a node already
+      removed from the SceneTree.
+   b. `ExpeditionPanel.cs:593,659` — `_choicesContainer.QueueFree()` on
+      a node the panel then nulls out.
+
+   Recommend a one-line helper (`ReplaceNode(parent, oldChild, newChild)`)
+   in a future lane if these patterns proliferate; for now they're correctly
+   free-after-detach.
+
+3. **Audit policy** — 50+ untracked `.jpg` files accumulated in the assets/art
+   tree since Lane A landed; many lack sidecars. Recommend a periodic
+   sidecar-sweep chore whenever new artwork enters the working tree, run
+   before each lane compiles. The Godot editor generates sidecars
+   automatically when files are imported via the editor; without that
+   pipeline the sidecar-sweep chore cannot help.
+
+### Suggested next prompt (post-Lane C)
+
+> Pick exactly one of:
+> (a) **Structural fix in `DutyRosterPanel` + `SilentFoundryPanel`**: move `_detailTitle` to a sibling VBox outside `_detailBox` so the synchronous `EmptyChildren` helper is safe; migration-revert comments stay as historical breadcrumbs until that is closed.
+> (b) **Sidecar sweep chore**: bake a periodic orphan detection + auto-fix into `scripts/ci/asset-gate` so Vue/Stitch-managed artwork always lands with a sidecar (LFS or non-LFS, deterministic path hash).
+> (c) **Headless-test stability**: investigate the back-to-back resource leak across `--verdict-uitest`, `--dashboard-uitest`, `--player-panels-uitest`, `--holdfast-runtime-uitest` — each run alone passes; back-to-back fails. Probably a Godot lifecycle bug unrelated to Lane C.

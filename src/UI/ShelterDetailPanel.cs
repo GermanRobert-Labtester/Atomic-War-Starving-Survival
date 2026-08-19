@@ -68,10 +68,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_shelterInfo == null || _structureData == null || _shelterResources == null || _upgradeList == null) return;
 
-            while (_shelterInfo.GetChildCount() > 0) _shelterInfo.RemoveChild(_shelterInfo.GetChild(0));
-            while (_structureData.GetChildCount() > 0) _structureData.RemoveChild(_structureData.GetChild(0));
-            while (_shelterResources.GetChildCount() > 0) _shelterResources.RemoveChild(_shelterResources.GetChild(0));
-            while (_upgradeList.GetChildCount() > 0) _upgradeList.RemoveChild(_upgradeList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_shelterInfo);
+            AshfallUiHelpers.EmptyChildren(_structureData);
+            AshfallUiHelpers.EmptyChildren(_shelterResources);
+            AshfallUiHelpers.EmptyChildren(_upgradeList);
 
             foreach (string info in _placeholderShelterInfo)
             {

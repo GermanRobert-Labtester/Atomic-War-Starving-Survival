@@ -348,6 +348,13 @@ public partial class DutyRosterPanel : Control
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
+        // Regression-note (Aug-2026 migration to AshfallUiHelpers.EmptyChildren):
+        // _detailTitle is a persistent owned Label that lives inside _detailBox,
+        // not a transient row rebuilt each pass. IdleFrame deferred-QueueFree
+        // masked the latent dangling-reference bug; the synchronous helper
+        // exposes it. Regression-reverted this single call site to its
+        // original QueueFree idiom pending the structural follow-up: move
+        // _detailTitle outside _detailBox so EmptyChildren is safe.
         while (_detailBox.GetChildCount() > 0)
         {
             var c = _detailBox.GetChild(0);

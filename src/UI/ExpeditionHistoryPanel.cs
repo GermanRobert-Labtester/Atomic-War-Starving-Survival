@@ -57,9 +57,9 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_expeditionHistory == null || _expeditionOutcomes == null || _lessonsLearned == null) return;
 
-            while (_expeditionHistory.GetChildCount() > 0) _expeditionHistory.RemoveChild(_expeditionHistory.GetChild(0));
-            while (_expeditionOutcomes.GetChildCount() > 0) _expeditionOutcomes.RemoveChild(_expeditionOutcomes.GetChild(0));
-            while (_lessonsLearned.GetChildCount() > 0) _lessonsLearned.RemoveChild(_lessonsLearned.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_expeditionHistory);
+            AshfallUiHelpers.EmptyChildren(_expeditionOutcomes);
+            AshfallUiHelpers.EmptyChildren(_lessonsLearned);
 
             foreach (string history in _placeholderHistory)
             {

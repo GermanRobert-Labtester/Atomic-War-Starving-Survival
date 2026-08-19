@@ -41,14 +41,10 @@ namespace AtomicWar.GodotApp.UI
                 _choicesContainer == null || _rewardsContainer == null)
                 return;
 
-            while (_infoContainer.GetChildCount() > 0)
-                _infoContainer.RemoveChild(_infoContainer.GetChild(0));
-            while (_stagesContainer.GetChildCount() > 0)
-                _stagesContainer.RemoveChild(_stagesContainer.GetChild(0));
-            while (_choicesContainer.GetChildCount() > 0)
-                _choicesContainer.RemoveChild(_choicesContainer.GetChild(0));
-            while (_rewardsContainer.GetChildCount() > 0)
-                _rewardsContainer.RemoveChild(_rewardsContainer.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_infoContainer);
+            AshfallUiHelpers.EmptyChildren(_stagesContainer);
+            AshfallUiHelpers.EmptyChildren(_choicesContainer);
+            AshfallUiHelpers.EmptyChildren(_rewardsContainer);
 
             // ── 1. Quest Profile Card ──
             var infoCard = AshfallUiHelpers.MakeCardFrame("MISSION OVERVIEW & DIRECTIVE", questId);

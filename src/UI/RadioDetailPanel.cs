@@ -67,10 +67,10 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_signalInfo == null || _frequencyData == null || _transmissionsLog == null || _signalAnalysis == null) return;
 
-            while (_signalInfo.GetChildCount() > 0) _signalInfo.RemoveChild(_signalInfo.GetChild(0));
-            while (_frequencyData.GetChildCount() > 0) _frequencyData.RemoveChild(_frequencyData.GetChild(0));
-            while (_transmissionsLog.GetChildCount() > 0) _transmissionsLog.RemoveChild(_transmissionsLog.GetChild(0));
-            while (_signalAnalysis.GetChildCount() > 0) _signalAnalysis.RemoveChild(_signalAnalysis.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_signalInfo);
+            AshfallUiHelpers.EmptyChildren(_frequencyData);
+            AshfallUiHelpers.EmptyChildren(_transmissionsLog);
+            AshfallUiHelpers.EmptyChildren(_signalAnalysis);
 
             foreach (string info in _placeholderSignalInfo)
             {

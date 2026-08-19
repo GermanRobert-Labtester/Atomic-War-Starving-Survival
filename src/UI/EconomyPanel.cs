@@ -58,12 +58,9 @@ namespace AtomicWar.GodotApp.UI
             if (_resourceList == null || _tradeLog == null || _economyStats == null) return;
 
             // Clear existing lists
-            while (_resourceList.GetChildCount() > 0)
-                _resourceList.RemoveChild(_resourceList.GetChild(0));
-            while (_tradeLog.GetChildCount() > 0)
-                _tradeLog.RemoveChild(_tradeLog.GetChild(0));
-            while (_economyStats.GetChildCount() > 0)
-                _economyStats.RemoveChild(_economyStats.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_resourceList);
+            AshfallUiHelpers.EmptyChildren(_tradeLog);
+            AshfallUiHelpers.EmptyChildren(_economyStats);
 
             // Display placeholder resources
             foreach (string resource in _placeholderResources)

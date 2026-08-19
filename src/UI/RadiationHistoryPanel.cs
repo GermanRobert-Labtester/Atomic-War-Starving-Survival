@@ -59,9 +59,9 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_historyData == null || _cumulativeData == null || _radiationEvents == null) return;
 
-            while (_historyData.GetChildCount() > 0) _historyData.RemoveChild(_historyData.GetChild(0));
-            while (_cumulativeData.GetChildCount() > 0) _cumulativeData.RemoveChild(_cumulativeData.GetChild(0));
-            while (_radiationEvents.GetChildCount() > 0) _radiationEvents.RemoveChild(_radiationEvents.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_historyData);
+            AshfallUiHelpers.EmptyChildren(_cumulativeData);
+            AshfallUiHelpers.EmptyChildren(_radiationEvents);
 
             foreach (string history in _placeholderHistory)
             {

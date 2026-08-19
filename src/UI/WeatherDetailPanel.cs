@@ -71,14 +71,10 @@ namespace AtomicWar.GodotApp.UI
             if (_currentWeather == null || _forecastList == null || _windData == null || _trendData == null) return;
 
             // Clear existing lists
-            while (_currentWeather.GetChildCount() > 0)
-                _currentWeather.RemoveChild(_currentWeather.GetChild(0));
-            while (_forecastList.GetChildCount() > 0)
-                _forecastList.RemoveChild(_forecastList.GetChild(0));
-            while (_windData.GetChildCount() > 0)
-                _windData.RemoveChild(_windData.GetChild(0));
-            while (_trendData.GetChildCount() > 0)
-                _trendData.RemoveChild(_trendData.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_currentWeather);
+            AshfallUiHelpers.EmptyChildren(_forecastList);
+            AshfallUiHelpers.EmptyChildren(_windData);
+            AshfallUiHelpers.EmptyChildren(_trendData);
 
             // Display placeholder current weather
             foreach (string data in _placeholderCurrent)

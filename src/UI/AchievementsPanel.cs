@@ -66,12 +66,9 @@ namespace AtomicWar.GodotApp.UI
             if (_statsList == null || _achievementsList == null || _milestonesList == null) return;
 
             // Clear existing lists
-            while (_statsList.GetChildCount() > 0)
-                _statsList.RemoveChild(_statsList.GetChild(0));
-            while (_achievementsList.GetChildCount() > 0)
-                _achievementsList.RemoveChild(_achievementsList.GetChild(0));
-            while (_milestonesList.GetChildCount() > 0)
-                _milestonesList.RemoveChild(_milestonesList.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_statsList);
+            AshfallUiHelpers.EmptyChildren(_achievementsList);
+            AshfallUiHelpers.EmptyChildren(_milestonesList);
 
             // Display placeholder stats
             foreach (string stats in _placeholderStats)

@@ -157,12 +157,7 @@ namespace AtomicWar.GodotApp.UI
         private void BuildSeasonRows()
         {
             if (_seasonList == null) return;
-            while (_seasonList.GetChildCount() > 0)
-            {
-                var c = _seasonList.GetChild(0);
-                _seasonList.RemoveChild(c);
-                c.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(_seasonList);
             if (_worldHost == null)
             {
                 _seasonList.AddChild(AshfallUiHelpers.MakeMetadata("No season profile bound."));
@@ -180,12 +175,7 @@ namespace AtomicWar.GodotApp.UI
         private void BuildAdvisory()
         {
             if (_advisoryList == null) return;
-            while (_advisoryList.GetChildCount() > 0)
-            {
-                var c = _advisoryList.GetChild(0);
-                _advisoryList.RemoveChild(c);
-                c.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(_advisoryList);
             if (_worldHost == null)
             {
                 _advisoryList.AddChild(AshfallUiHelpers.MakeMetadata("No advisories available."));

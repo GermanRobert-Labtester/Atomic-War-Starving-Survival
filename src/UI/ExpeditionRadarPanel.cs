@@ -364,12 +364,7 @@ public partial class ExpeditionRadarPanel : Control
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
-        while (_detailBox.GetChildCount() > 0)
-        {
-            var c = _detailBox.GetChild(0);
-            _detailBox.RemoveChild(c);
-            c.QueueFree();
-        }
+        AshfallUiHelpers.EmptyChildren(_detailBox);
         if (_host == null)
         {
             _detailTitle.Text = "TARGET DETAIL";

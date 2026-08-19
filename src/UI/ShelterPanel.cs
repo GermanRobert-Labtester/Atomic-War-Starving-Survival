@@ -63,14 +63,10 @@ namespace AtomicWar.GodotApp.UI
 
             RefreshStatusRail();
 
-            while (_statusList.GetChildCount() > 0)
-                _statusList.RemoveChild(_statusList.GetChild(0));
-            while (_radiationData.GetChildCount() > 0)
-                _radiationData.RemoveChild(_radiationData.GetChild(0));
-            while (_structureList.GetChildCount() > 0)
-                _structureList.RemoveChild(_structureList.GetChild(0));
-            while (_upgradesList.GetChildCount() > 0)
-                _upgradesList.RemoveChild(_upgradesList.GetChild(0));
+            ClearChildren(_statusList);
+            ClearChildren(_radiationData);
+            ClearChildren(_structureList);
+            ClearChildren(_upgradesList);
 
             if (!IsBound)
             {
@@ -134,6 +130,20 @@ namespace AtomicWar.GodotApp.UI
             _upgradesList.AddChild(AshfallUiHelpers.MakeDataRow("Armor Cells Needing Repair", $"{damagedCells}", damagedCells > 0 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy) : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale)));
             _upgradesList.AddChild(AshfallUiHelpers.MakeDataRow("Mechanical Scrap on Hand", $"{Count("scrap_mechanical")} units", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
             _upgradesList.AddChild(AshfallUiHelpers.MakeDataRow("Electronic Scrap on Hand", $"{Count("scrap_electronic")} units", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe)));
+        }
+
+        private static void ClearChildren(Node parent)
+        {
+            while (parent.GetChildCount() > 0)
+            {
+                var child = parent.GetChild(0);
+                parent.RemoveChild(child);
+                // These rows are detached before disposal. QueueFree() only
+                // flushes reliably for nodes still inside the SceneTree, so
+                // free the removed row synchronously to avoid orphaned UI rows
+                // when the panel is rebound or the headless smoke test exits.
+                child.Free();
+            }
         }
 
         private int Count(string itemId)

@@ -56,9 +56,9 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_eventInfo == null || _eventHistory == null || _narrativeProgress == null) return;
 
-            while (_eventInfo.GetChildCount() > 0) _eventInfo.RemoveChild(_eventInfo.GetChild(0));
-            while (_eventHistory.GetChildCount() > 0) _eventHistory.RemoveChild(_eventHistory.GetChild(0));
-            while (_narrativeProgress.GetChildCount() > 0) _narrativeProgress.RemoveChild(_narrativeProgress.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_eventInfo);
+            AshfallUiHelpers.EmptyChildren(_eventHistory);
+            AshfallUiHelpers.EmptyChildren(_narrativeProgress);
 
             foreach (string info in _placeholderEventInfo)
             {

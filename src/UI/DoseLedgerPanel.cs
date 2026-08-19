@@ -182,12 +182,7 @@ public partial class DoseLedgerPanel : Control
     private void RefreshDetail()
     {
         if (_detailBox == null) return;
-        while (_detailBox.GetChildCount() > 0)
-        {
-            var c = _detailBox.GetChild(0);
-            _detailBox.RemoveChild(c);
-            c.QueueFree();
-        }
+        AshfallUiHelpers.EmptyChildren(_detailBox);
         if (_selectedIndex < 0 || _selectedIndex >= _visibleEntries.Count || _doseSession == null)
         {
             _detailTitle.Text = "DOSIMETRY DETAIL";

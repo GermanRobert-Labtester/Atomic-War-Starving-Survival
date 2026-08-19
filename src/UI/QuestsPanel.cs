@@ -56,14 +56,10 @@ namespace AtomicWar.GodotApp.UI
                 _availableContainer == null || _completedContainer == null)
                 return;
 
-            while (_overviewContainer.GetChildCount() > 0)
-                _overviewContainer.RemoveChild(_overviewContainer.GetChild(0));
-            while (_activeContainer.GetChildCount() > 0)
-                _activeContainer.RemoveChild(_activeContainer.GetChild(0));
-            while (_availableContainer.GetChildCount() > 0)
-                _availableContainer.RemoveChild(_availableContainer.GetChild(0));
-            while (_completedContainer.GetChildCount() > 0)
-                _completedContainer.RemoveChild(_completedContainer.GetChild(0));
+            AshfallUiHelpers.EmptyChildren(_overviewContainer);
+            AshfallUiHelpers.EmptyChildren(_activeContainer);
+            AshfallUiHelpers.EmptyChildren(_availableContainer);
+            AshfallUiHelpers.EmptyChildren(_completedContainer);
 
             int activeCount = 0;
             int completedCount = 0;
