@@ -2,7 +2,7 @@
 
 Exact duplicates (MD5): **182 groups**.
 
-Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
+Perceptual near-duplicates (8x8 average-hash, 2+ files): **86 groups**.
 
 ## Exact duplicates (binary-identical files saved under different names)
 
@@ -23,23 +23,16 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/heater.jpg`
 - `assets/art/item_1.jpg`
 - `assets/art/item_amphetamines.jpg`
-- `assets/art/item_black_water_vial.jpg`
 - `assets/art/item_cigarettes.jpg`
 - `assets/art/item_dog_tags.jpg`
 - `assets/art/item_foreign_book.jpg`
-- `assets/art/item_hand_crank_sled.jpg`
 - `assets/art/item_impure_iodine.jpg`
 - `assets/art/item_keycards.jpg`
-- `assets/art/item_master_override.jpg`
 - `assets/art/item_potassium_iodide.jpg`
 - `assets/art/item_scrap.jpg`
-- `assets/art/item_submerged_server.jpg`
-- `assets/art/item_tungsten_core.jpg`
-- `assets/art/item_welders_glass.jpg`
 - `assets/art/jerry_can_fuel.jpg`
 - `assets/art/med_neural_stimulant_pills.jpg`
 - `assets/art/mutagenic_extract.jpg`
-- `assets/art/opioid_painkillers.jpg`
 - `assets/art/perk_forager.jpg`
 - `assets/art/pet_traits.jpg`
 - `assets/art/radiation_haze_green.jpg`
@@ -53,105 +46,45 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/weapon_maint.jpg`
 - `assets/art/weapon_pipe_mortar_launcher.jpg`
 
-### `dup_10` — md5 `9986924418ecb171af95f36f1673dc3a` (22,331 bytes)
-- `assets/art/ammo_.jpg`
-- `assets/art/ammo_12ga_ap.jpg`
-- `assets/art/ammo_12ga_buck.jpg`
-- `assets/art/ammo_12ga_slug.jpg`
-- `assets/art/ammo_16ga_buck.jpg`
-- `assets/art/ammo_16ga_slug.jpg`
-- `assets/art/ammo_300blk.jpg`
-- `assets/art/ammo_300blk_ap.jpg`
-- `assets/art/ammo_300blk_api.jpg`
-- `assets/art/ammo_300blk_exi.jpg`
-- `assets/art/ammo_300blk_fmj.jpg`
-- `assets/art/ammo_338lapua.jpg`
-- `assets/art/ammo_338lapua_ap.jpg`
-- `assets/art/ammo_338lapua_api.jpg`
-- `assets/art/ammo_338lapua_bt.jpg`
-- `assets/art/ammo_338lapua_exi.jpg`
-- `assets/art/ammo_380acp_fmj.jpg`
-- `assets/art/ammo_380acp_jhp.jpg`
-- `assets/art/ammo_408cheytac.jpg`
-- `assets/art/ammo_408cheytac_ap.jpg`
-- `assets/art/ammo_408cheytac_api.jpg`
-- `assets/art/ammo_408cheytac_bt.jpg`
-- `assets/art/ammo_408cheytac_exi.jpg`
-- `assets/art/ammo_408cheytac_jhp_ap.jpg`
-- `assets/art/ammo_45acp_ap.jpg`
-- `assets/art/ammo_45acp_fmj.jpg`
-- `assets/art/ammo_45acp_jhp.jpg`
-- `assets/art/ammo_46x30_ap.jpg`
-- `assets/art/ammo_46x30_fmj.jpg`
-- `assets/art/ammo_50bmg.jpg`
-- `assets/art/ammo_50bmg_ap.jpg`
-- `assets/art/ammo_50bmg_api.jpg`
-- `assets/art/ammo_50bmg_bt.jpg`
-- `assets/art/ammo_50bmg_exi.jpg`
-- `assets/art/ammo_50bmg_jhp_ap.jpg`
-- `assets/art/ammo_545x39.jpg`
-- `assets/art/ammo_545x39_ap.jpg`
-- `assets/art/ammo_545x39_fmj.jpg`
-- `assets/art/ammo_556x45_ap.jpg`
-- `assets/art/ammo_556x45_fmj.jpg`
-- `assets/art/ammo_556x45_jhp.jpg`
-- `assets/art/ammo_556x45_m855a1.jpg`
-- `assets/art/ammo_57x28.jpg`
-- `assets/art/ammo_57x28_ap.jpg`
-- `assets/art/ammo_57x28_fmj.jpg`
-- `assets/art/ammo_762x25_fmj.jpg`
-- `assets/art/ammo_762x25_jhp.jpg`
-- `assets/art/ammo_762x39_ap.jpg`
-- `assets/art/ammo_762x39_fmj.jpg`
-- `assets/art/ammo_762x39_jhp.jpg`
-- `assets/art/ammo_762x51.jpg`
-- `assets/art/ammo_762x51_ap.jpg`
-- `assets/art/ammo_762x51_api.jpg`
-- `assets/art/ammo_762x51_exi.jpg`
-- `assets/art/ammo_762x51_fmj.jpg`
-- `assets/art/ammo_762x51_jhp_ap.jpg`
-- `assets/art/ammo_762x54r.jpg`
-- `assets/art/ammo_762x54r_ap.jpg`
-- `assets/art/ammo_762x54r_bt.jpg`
-- `assets/art/ammo_765x21_fmj.jpg`
-- `assets/art/ammo_765x21_jhp.jpg`
-- `assets/art/ammo_9mm.jpg`
-- `assets/art/ammo_9x19.jpg`
-- `assets/art/ammo_9x19_ap.jpg`
-- `assets/art/ammo_9x19_fmj.jpg`
-- `assets/art/ammo_9x19_jhp.jpg`
-- `assets/art/ammo_9x21_fmj.jpg`
-- `assets/art/ammo_9x21_jhp.jpg`
-- `assets/art/ammo_box.jpg`
-- `assets/art/ammo_deprecated_.jpg`
-- `assets/art/ammo_deprecated_12ga.jpg`
-- `assets/art/ammo_deprecated_16ga.jpg`
-- `assets/art/ammo_deprecated_300blk.jpg`
-- `assets/art/ammo_deprecated_338lapua.jpg`
-- `assets/art/ammo_deprecated_380acp.jpg`
-- `assets/art/ammo_deprecated_408cheytac.jpg`
-- `assets/art/ammo_deprecated_45acp.jpg`
-- `assets/art/ammo_deprecated_46x30.jpg`
-- `assets/art/ammo_deprecated_50bmg.jpg`
-- `assets/art/ammo_deprecated_545x39.jpg`
-- `assets/art/ammo_deprecated_556x45.jpg`
-- `assets/art/ammo_deprecated_57x28.jpg`
-- `assets/art/ammo_deprecated_762x25.jpg`
-- `assets/art/ammo_deprecated_762x39.jpg`
-- `assets/art/ammo_deprecated_762x51.jpg`
-- `assets/art/ammo_deprecated_762x54r.jpg`
-- `assets/art/ammo_deprecated_765x21.jpg`
-- `assets/art/ammo_deprecated_9x21.jpg`
-- `assets/art/ammo_deprecated_unknown.jpg`
-- `assets/art/ammo_expended.jpg`
-- `assets/art/ammo_pistol.jpg`
-- `assets/art/ammo_rifle.jpg`
-- `assets/art/ammo_shotgun.jpg`
-- `assets/art/ammo_surrendered.jpg`
-- `assets/art/item_ammo_ap.jpg`
-- `assets/art/item_ammo_hp.jpg`
-- `assets/art/item_ammo_standard.jpg`
-- `assets/art/item_ammo_types.jpg`
+### `dup_10` — md5 `dd58c99a719eb1043f47d1eb34f74a51` (25,628 bytes)
+- `assets/art/ammo_acid_tipped_arrow.jpg`
+- `assets/art/bottled_water_irradiated.jpg`
+- `assets/art/bunker_maintenance.jpg`
+- `assets/art/child.jpg`
+- `assets/art/cooked_meal.jpg`
+- `assets/art/debris_type.jpg`
+- `assets/art/doomsday_prepper.jpg`
+- `assets/art/entry.jpg`
+- `assets/art/faction_leader_1.jpg`
+- `assets/art/food_mutated_fungi.jpg`
+- `assets/art/intel_reliability.jpg`
+- `assets/art/item_ammotypes_combatloot.jpg`
+- `assets/art/item_category.jpg`
+- `assets/art/item_data.jpg`
+- `assets/art/item_faraday_pack.jpg`
+- `assets/art/item_gold_bars.jpg`
+- `assets/art/item_id.jpg`
+- `assets/art/item_keycard_red.jpg`
+- `assets/art/item_nanites.jpg`
+- `assets/art/item_rarity_unique.jpg`
+- `assets/art/item_rtg_battery.jpg`
+- `assets/art/item_snowshoes.jpg`
+- `assets/art/item_toys.jpg`
+- `assets/art/item_watch.jpg`
+- `assets/art/looted_pharmacy.jpg`
+- `assets/art/mushroom_cloud_distant.jpg`
+- `assets/art/perk_cold_bore.jpg`
+- `assets/art/perk_trap_setter.jpg`
+- `assets/art/relic_rare_stamp_collection.jpg`
+- `assets/art/risk_bias_trait.jpg`
+- `assets/art/sensor_laser_rangefinder.jpg`
+- `assets/art/shotgun.jpg`
+- `assets/art/status_effect_freezing.jpg`
+- `assets/art/subway.jpg`
+- `assets/art/sv_child.jpg`
+- `assets/art/toxic_mutated_flora.jpg`
+- `assets/art/violent_paranoia.jpg`
+- `assets/art/workbench_action_kind.jpg`
 
 ### `dup_100` — md5 `9cea51fc9add57b2dc7bb524142c5998` (72,365 bytes)
 - `assets/ui/FactionEmblems/faction_icon_black_ops.png`
@@ -258,10 +191,8 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/item_car_keys.jpg`
 - `assets/art/item_copper_wire.jpg`
 - `assets/art/item_exosuit.jpg`
-- `assets/art/item_geiger_tether.jpg`
 - `assets/art/item_i_beam.jpg`
 - `assets/art/item_keycard_blue.jpg`
-- `assets/art/item_lithium_salts.jpg`
 - `assets/art/item_mutant_gland.jpg`
 - `assets/art/item_photo_album.jpg`
 - `assets/art/item_rarity_common.jpg`
@@ -325,11 +256,43 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_the_tunnel_rats.png`
 - `assets/ui/Icons/faction_icon_the_tunnel_rats.png`
 
-### `dup_13` — md5 `cf1875b65ebae73f650dbffaaf4595f9` (25,530 bytes)
-- `assets/art/ammo_deprecated_cal_545x39_v2.jpg`
-- `assets/art/dirty_water_flask.jpg`
-- `assets/art/sedative_vial.jpg`
-- `assets/art/shelter_map_table.jpg`
+### `dup_13` — md5 `d3488c09e6d53d8310fd9b0191b4ebdf` (26,084 bytes)
+- `assets/art/ammo_emp_pulse_cartridge.jpg`
+- `assets/art/bunker_map_root.jpg`
+- `assets/art/child_died.jpg`
+- `assets/art/corpse.jpg`
+- `assets/art/derelict_factory.jpg`
+- `assets/art/faction_leader_2.jpg`
+- `assets/art/food_mutated_mushroom.jpg`
+- `assets/art/game_mode_kind.jpg`
+- `assets/art/intercept_kind.jpg`
+- `assets/art/item_childs_drawing.jpg`
+- `assets/art/item_decoy.jpg`
+- `assets/art/item_food.jpg`
+- `assets/art/item_guitar.jpg`
+- `assets/art/item_id_prefix.jpg`
+- `assets/art/item_keycard_unknown.jpg`
+- `assets/art/item_maggots.jpg`
+- `assets/art/item_night_vision.jpg`
+- `assets/art/item_poppy_latex.jpg`
+- `assets/art/item_trash_hazmat.jpg`
+- `assets/art/item_type.jpg`
+- `assets/art/item_water_tabs.jpg`
+- `assets/art/makeshift_settlement.jpg`
+- `assets/art/music_genre.jpg`
+- `assets/art/perk_desensitized.jpg`
+- `assets/art/perk_urban_pathfinder.jpg`
+- `assets/art/relic_encrypted_hard_drive.jpg`
+- `assets/art/roadblock_choice.jpg`
+- `assets/art/sensor_weather_barometer_station.jpg`
+- `assets/art/skirmish_player_action.jpg`
+- `assets/art/status_effect_hydrated.jpg`
+- `assets/art/suki_tanaka.jpg`
+- `assets/art/swamp.jpg`
+- `assets/art/tracked_footprints_ash.jpg`
+- `assets/art/wall_material.jpg`
+- `assets/art/weapon_lmg.jpg`
+- `assets/art/world_phase.jpg`
 
 ### `dup_130` — md5 `d496cf9754c449a10235dabf7adbbda1` (74,134 bytes)
 - `assets/ui/FactionEmblems/faction_icon_the_watchers.png`
@@ -371,49 +334,12 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_geothermal_stokers.png`
 - `assets/ui/Icons/faction_icon_geothermal_stokers.png`
 
-### `dup_14` — md5 `d3488c09e6d53d8310fd9b0191b4ebdf` (26,084 bytes)
-- `assets/art/ammo_emp_pulse_cartridge.jpg`
-- `assets/art/bunker_map_root.jpg`
-- `assets/art/child_died.jpg`
-- `assets/art/corpse.jpg`
-- `assets/art/derelict_factory.jpg`
-- `assets/art/dosimeter.jpg`
-- `assets/art/faction_leader_2.jpg`
-- `assets/art/food_mutated_mushroom.jpg`
-- `assets/art/game_mode_kind.jpg`
-- `assets/art/intercept_kind.jpg`
-- `assets/art/item_amnestic_syrup.jpg`
-- `assets/art/item_black_ice_sample.jpg`
-- `assets/art/item_childs_drawing.jpg`
-- `assets/art/item_decoy.jpg`
-- `assets/art/item_food.jpg`
-- `assets/art/item_guitar.jpg`
-- `assets/art/item_id_prefix.jpg`
-- `assets/art/item_keycard_unknown.jpg`
-- `assets/art/item_maggots.jpg`
-- `assets/art/item_night_vision.jpg`
-- `assets/art/item_poppy_latex.jpg`
-- `assets/art/item_scopolamine_root.jpg`
-- `assets/art/item_sound_baffling.jpg`
-- `assets/art/item_trash_hazmat.jpg`
-- `assets/art/item_type.jpg`
-- `assets/art/item_water_tabs.jpg`
-- `assets/art/makeshift_settlement.jpg`
-- `assets/art/music_genre.jpg`
-- `assets/art/perk_desensitized.jpg`
-- `assets/art/perk_urban_pathfinder.jpg`
-- `assets/art/relic_encrypted_hard_drive.jpg`
-- `assets/art/roadblock_choice.jpg`
-- `assets/art/scrap_wood.jpg`
-- `assets/art/sensor_weather_barometer_station.jpg`
-- `assets/art/skirmish_player_action.jpg`
-- `assets/art/status_effect_hydrated.jpg`
-- `assets/art/suki_tanaka.jpg`
-- `assets/art/swamp.jpg`
-- `assets/art/tracked_footprints_ash.jpg`
-- `assets/art/wall_material.jpg`
-- `assets/art/weapon_lmg.jpg`
-- `assets/art/world_phase.jpg`
+### `dup_14` — md5 `e565baab8af05296d9a7364b45a32ad9` (25,431 bytes)
+- `assets/art/antibiotic_pills_bottle.jpg`
+- `assets/art/geiger_counter_v3_digital.jpg`
+- `assets/art/purified_water_bottle.jpg`
+- `assets/art/revolver_scavenged_38.jpg`
+- `assets/art/shelter_wall_reinforced_wood.jpg`
 
 ### `dup_140` — md5 `7f74c828c75d9618968401190a56870b` (66,461 bytes)
 - `assets/ui/FactionEmblems/faction_icon_sub_vault_metallurgists.png`
@@ -455,12 +381,11 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_the_drifters.png`
 - `assets/ui/Icons/faction_icon_the_drifters.png`
 
-### `dup_15` — md5 `e565baab8af05296d9a7364b45a32ad9` (25,431 bytes)
-- `assets/art/antibiotic_pills_bottle.jpg`
-- `assets/art/geiger_counter_v3_digital.jpg`
-- `assets/art/purified_water_bottle.jpg`
-- `assets/art/revolver_scavenged_38.jpg`
-- `assets/art/shelter_wall_reinforced_wood.jpg`
+### `dup_15` — md5 `7eaa4fc9f906fb75f206a7b43b43e4e2` (22,754 bytes)
+- `assets/art/armor_ghillie_suit_camo.jpg`
+- `assets/art/mod_foregrip_textured.jpg`
+- `assets/art/trap_caltrop_spikes_bag.jpg`
+- `assets/art/vehicle_fuel_siphon_pump.jpg`
 
 ### `dup_150` — md5 `a317a80c32244bcb8fbe6c8043997438` (65,633 bytes)
 - `assets/ui/FactionEmblems/faction_icon_sand_sailors.png`
@@ -502,11 +427,11 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_coastal_ferrymen.png`
 - `assets/ui/Icons/faction_icon_coastal_ferrymen.png`
 
-### `dup_16` — md5 `7eaa4fc9f906fb75f206a7b43b43e4e2` (22,754 bytes)
-- `assets/art/armor_ghillie_suit_camo.jpg`
-- `assets/art/mod_foregrip_textured.jpg`
-- `assets/art/trap_caltrop_spikes_bag.jpg`
-- `assets/art/vehicle_fuel_siphon_pump.jpg`
+### `dup_16` — md5 `d3613476c78859e0f432ccb37b7de80d` (22,573 bytes)
+- `assets/art/armor_hazmat_hood_heavy.jpg`
+- `assets/art/mod_padded_cheek_rest_stock.jpg`
+- `assets/art/trap_poison_gas_canister_trap.jpg`
+- `assets/art/vehicle_exhaust_pipe_stack.jpg`
 
 ### `dup_160` — md5 `646d229fd66db2710b29728d0f8eb53b` (65,209 bytes)
 - `assets/ui/FactionEmblems/faction_icon_sunken_rig_squatters.png`
@@ -548,11 +473,11 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_blood_bankers.png`
 - `assets/ui/Icons/faction_icon_blood_bankers.png`
 
-### `dup_17` — md5 `d3613476c78859e0f432ccb37b7de80d` (22,573 bytes)
-- `assets/art/armor_hazmat_hood_heavy.jpg`
-- `assets/art/mod_padded_cheek_rest_stock.jpg`
-- `assets/art/trap_poison_gas_canister_trap.jpg`
-- `assets/art/vehicle_exhaust_pipe_stack.jpg`
+### `dup_17` — md5 `9d18a2c1e5d32ad492b6f6b6d97c3baa` (22,505 bytes)
+- `assets/art/armor_insulated_snow_trousers.jpg`
+- `assets/art/mod_thermal_scope_attach.jpg`
+- `assets/art/trap_net_launcher_rig.jpg`
+- `assets/art/vehicle_winch_cable_heavy.jpg`
 
 ### `dup_170` — md5 `0cb578fddbba98bd792a2a8b4f2cfdc7` (67,331 bytes)
 - `assets/ui/FactionEmblems/faction_icon_optometric_weavers.png`
@@ -594,11 +519,11 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_the_unbroken_covenant.png`
 - `assets/ui/Icons/faction_icon_the_unbroken_covenant.png`
 
-### `dup_18` — md5 `9d18a2c1e5d32ad492b6f6b6d97c3baa` (22,505 bytes)
-- `assets/art/armor_insulated_snow_trousers.jpg`
-- `assets/art/mod_thermal_scope_attach.jpg`
-- `assets/art/trap_net_launcher_rig.jpg`
-- `assets/art/vehicle_winch_cable_heavy.jpg`
+### `dup_18` — md5 `7e401aa87632afb5b9aa3af91ab564ff` (22,477 bytes)
+- `assets/art/armor_kevlar_helmet_visor.jpg`
+- `assets/art/mod_heavy_compensator_muzzle.jpg`
+- `assets/art/trap_alarm_bell_string.jpg`
+- `assets/art/vehicle_plow_blade_barricade.jpg`
 
 ### `dup_180` — md5 `e2747a264ca29162a7c56ce19958dc95` (64,976 bytes)
 - `assets/ui/FactionEmblems/faction_icon_revelation_order.png`
@@ -612,11 +537,11 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_the_dawn_harbingers.png`
 - `assets/ui/Icons/faction_icon_the_dawn_harbingers.png`
 
-### `dup_19` — md5 `7e401aa87632afb5b9aa3af91ab564ff` (22,477 bytes)
-- `assets/art/armor_kevlar_helmet_visor.jpg`
-- `assets/art/mod_heavy_compensator_muzzle.jpg`
-- `assets/art/trap_alarm_bell_string.jpg`
-- `assets/art/vehicle_plow_blade_barricade.jpg`
+### `dup_19` — md5 `a4164a59098dbed59ba737a7bf7983c5` (22,724 bytes)
+- `assets/art/armor_reinforced_leather_vest.jpg`
+- `assets/art/mod_holographic_sight_custom.jpg`
+- `assets/art/trap_spike_pit_wooden.jpg`
+- `assets/art/vehicle_v8_engine_block_scavenged.jpg`
 
 ### `dup_2` — md5 `c48f35f4063429b2b4265b83df6006c5` (25,783 bytes)
 - `assets/art/188_items.jpg`
@@ -625,20 +550,14 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/chronic_illness_kind.jpg`
 - `assets/art/event_notification_banner.jpg`
 - `assets/art/food_ration.jpg`
-- `assets/art/gas_mask.jpg`
 - `assets/art/horror_ping_kind.jpg`
-- `assets/art/item_acoustic_decoy.jpg`
 - `assets/art/item_anchor_notes.jpg`
 - `assets/art/item_blood_bag.jpg`
 - `assets/art/item_climbing_gear.jpg`
-- `assets/art/item_emp_grenade.jpg`
-- `assets/art/item_frostbite_salve.jpg`
-- `assets/art/item_hard_drive_platter.jpg`
 - `assets/art/item_juggernaut_armor.jpg`
 - `assets/art/item_landmine.jpg`
 - `assets/art/item_mil_gas_mask.jpg`
 - `assets/art/item_opium_raw.jpg`
-- `assets/art/item_pre_war_photo_album.jpg`
 - `assets/art/item_scrap_metal.jpg`
 - `assets/art/item_suitcase_locked.jpg`
 - `assets/art/item_undelivered_mail.jpg`
@@ -659,19 +578,13 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/warn_target.jpg`
 - `assets/art/weapon_rpg.jpg`
 
-### `dup_20` — md5 `a4164a59098dbed59ba737a7bf7983c5` (22,724 bytes)
-- `assets/art/armor_reinforced_leather_vest.jpg`
-- `assets/art/mod_holographic_sight_custom.jpg`
-- `assets/art/trap_spike_pit_wooden.jpg`
-- `assets/art/vehicle_v8_engine_block_scavenged.jpg`
-
-### `dup_21` — md5 `d144b430c96ffc1684b37bafb7babba2` (22,754 bytes)
+### `dup_20` — md5 `d144b430c96ffc1684b37bafb7babba2` (22,754 bytes)
 - `assets/art/armor_scavenged_car_tire_pauldron.jpg`
 - `assets/art/mod_laser_aiming_module.jpg`
 - `assets/art/trap_electric_fence_insulator.jpg`
 - `assets/art/vehicle_car_battery_heavy_duty.jpg`
 
-### `dup_22` — md5 `50b75410061c4278a62ecce97dee02a0` (22,460 bytes)
+### `dup_21` — md5 `50b75410061c4278a62ecce97dee02a0` (22,460 bytes)
 - `assets/art/armor_scrap_metal_chestpiece.jpg`
 - `assets/art/bunker_greenhouse_uv_lamp.jpg`
 - `assets/art/loot_military_crate_locked.jpg`
@@ -679,13 +592,13 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/trap_bear_trap_steel_jaws.jpg`
 - `assets/art/vehicle_armored_buggy_chassis.jpg`
 
-### `dup_23` — md5 `891e633cc4c8e1f504cd2658a8e4d2ca` (22,672 bytes)
+### `dup_22` — md5 `891e633cc4c8e1f504cd2658a8e4d2ca` (22,672 bytes)
 - `assets/art/armor_spiked_raider_bracer.jpg`
 - `assets/art/mod_quick_release_sling.jpg`
 - `assets/art/trap_floodlight_motion_triggered.jpg`
 - `assets/art/vehicle_headlight_cage_lamp.jpg`
 
-### `dup_24` — md5 `bc9446e69ee6d034c4c2b9a3a19d50f7` (22,341 bytes)
+### `dup_23` — md5 `bc9446e69ee6d034c4c2b9a3a19d50f7` (22,341 bytes)
 - `assets/art/armor_tactical_ballistic_plate.jpg`
 - `assets/art/bunker_water_recycler_unit.jpg`
 - `assets/art/loot_safe_locked_steel.jpg`
@@ -693,14 +606,14 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/trap_barbed_wire_spool.jpg`
 - `assets/art/vehicle_gasoline_jerry_can.jpg`
 
-### `dup_25` — md5 `42b8dc69005e1e67c9a54ec0850f49b6` (25,916 bytes)
+### `dup_24` — md5 `42b8dc69005e1e67c9a54ec0850f49b6` (25,916 bytes)
 - `assets/art/bandage_sterile_cloth.jpg`
 - `assets/art/hunting_rifle_scoped.jpg`
 - `assets/art/improvised_compass.jpg`
 - `assets/art/irradiated_canned_tuna.jpg`
 - `assets/art/shelter_wall_steel_plate.jpg`
 
-### `dup_26` — md5 `e2b030bf5e03d97f25b3265dfddc1188` (27,330 bytes)
+### `dup_25` — md5 `e2b030bf5e03d97f25b3265dfddc1188` (27,330 bytes)
 - `assets/art/beast_blind_cave_stalker.jpg`
 - `assets/art/beast_chitinous_beetle_armored.jpg`
 - `assets/art/beast_giant_fallout_rat.jpg`
@@ -712,21 +625,20 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/beast_swamp_leech_parasite.jpg`
 - `assets/art/beast_toxic_spider_swarm.jpg`
 
-### `dup_27` — md5 `1360891600a71988e128be2eaa3bf96b` (26,309 bytes)
+### `dup_26` — md5 `1360891600a71988e128be2eaa3bf96b` (26,309 bytes)
 - `assets/art/blood_transfusion_bag.jpg`
 - `assets/art/crossbow_wooden_craft.jpg`
 - `assets/art/dry_military_mre.jpg`
-- `assets/art/hand_crank_radio.jpg`
 - `assets/art/shelter_window_shutter.jpg`
 
-### `dup_28` — md5 `0bdefcfe8fc6ade7a56ddda985d2c39b` (26,057 bytes)
+### `dup_27` — md5 `0bdefcfe8fc6ade7a56ddda985d2c39b` (26,057 bytes)
 - `assets/art/boiled_clean_meat.jpg`
 - `assets/art/burn_salve_jar.jpg`
 - `assets/art/pipe_smg_automatic.jpg`
 - `assets/art/rope_climbing_coil.jpg`
 - `assets/art/shelter_storage_crate_large.jpg`
 
-### `dup_29` — md5 `209b22d6a1a0a4f63401925d211a9b2d` (25,748 bytes)
+### `dup_28` — md5 `209b22d6a1a0a4f63401925d211a9b2d` (25,748 bytes)
 - `assets/art/botany_compost_soil_bag.jpg`
 - `assets/art/botany_glowing_moss_cluster.jpg`
 - `assets/art/botany_hydroponic_tomato_plant.jpg`
@@ -738,6 +650,14 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/botany_seed_packet_heirloom.jpg`
 - `assets/art/botany_wheat_grain_sheaf.jpg`
 
+### `dup_29` — md5 `5bbe5aed35e6a3afeac658387720a156` (29,603 bytes)
+- `assets/art/building_collapse_dust.jpg`
+- `assets/art/equip_slot.jpg`
+- `assets/art/health_bar.jpg`
+- `assets/art/radiation_bar.jpg`
+- `assets/art/ui_event_low_power.jpg`
+- `assets/art/ui_icon_experience_level_star.jpg`
+
 ### `dup_3` — md5 `2162453835835a0771e63f8b20502dd9` (26,154 bytes)
 - `assets/art/42_locations.jpg`
 - `assets/art/ammo_hollow_point_9mm.jpg`
@@ -746,7 +666,6 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/bunker_tooltip_box.jpg`
 - `assets/art/canned_food_beans.jpg`
 - `assets/art/city.jpg`
-- `assets/art/cloth.jpg`
 - `assets/art/crop_lifecycle_stage.jpg`
 - `assets/art/elena_vasquez.jpg`
 - `assets/art/evt_debt_collector.jpg`
@@ -754,19 +673,14 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/hostage_ransom_demand.jpg`
 - `assets/art/irradiated_crater.jpg`
 - `assets/art/item_ai_core_data.jpg`
-- `assets/art/item_ash_ghillie.jpg`
 - `assets/art/item_boots.jpg`
 - `assets/art/item_encrypted_drive.jpg`
-- `assets/art/item_fungicide_fogger.jpg`
-- `assets/art/item_headphones_mil.jpg`
 - `assets/art/item_keepsake_pendant.jpg`
 - `assets/art/item_lead_apron.jpg`
-- `assets/art/item_mine_prod.jpg`
 - `assets/art/item_pack_mule.jpg`
 - `assets/art/item_presidential_seal.jpg`
 - `assets/art/item_seed_ledger.jpg`
 - `assets/art/item_surgical_tubing.jpg`
-- `assets/art/item_uv_lamp_ballast.jpg`
 - `assets/art/item_worldcatalog_loot.jpg`
 - `assets/art/meat.jpg`
 - `assets/art/muzzle_flash_rifle.jpg`
@@ -778,42 +692,33 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/spoiled_meat.jpg`
 - `assets/art/status_effect_sick.jpg`
 - `assets/art/trait_claustrophobic.jpg`
-- `assets/art/water_filter.jpg`
 - `assets/art/weapon_sawn_off_double_barrel.jpg`
 
-### `dup_30` — md5 `5bbe5aed35e6a3afeac658387720a156` (29,603 bytes)
-- `assets/art/building_collapse_dust.jpg`
-- `assets/art/equip_slot.jpg`
-- `assets/art/health_bar.jpg`
-- `assets/art/radiation_bar.jpg`
-- `assets/art/ui_event_low_power.jpg`
-- `assets/art/ui_icon_experience_level_star.jpg`
-
-### `dup_31` — md5 `0c735c3039a64ad9a0bea888f6b69da0` (22,558 bytes)
+### `dup_30` — md5 `0c735c3039a64ad9a0bea888f6b69da0` (22,558 bytes)
 - `assets/art/bunker_command_console_desk.jpg`
 - `assets/art/loot_toolbox_metal.jpg`
 
-### `dup_32` — md5 `77d0ce10d35d5677c158e07497978c9a` (22,410 bytes)
+### `dup_31` — md5 `77d0ce10d35d5677c158e07497978c9a` (22,410 bytes)
 - `assets/art/bunker_decon_airlock_chamber.jpg`
 - `assets/art/loot_car_trunk_rusted.jpg`
 
-### `dup_33` — md5 `1db9cd103df6f75165bb10b1fdaca2d8` (22,664 bytes)
+### `dup_32` — md5 `1db9cd103df6f75165bb10b1fdaca2d8` (22,664 bytes)
 - `assets/art/bunker_distillery_still.jpg`
 - `assets/art/loot_deserter_stash_cache.jpg`
 
-### `dup_34` — md5 `911abe248b4303a6ae98e0abfdb231ea` (22,695 bytes)
+### `dup_33` — md5 `911abe248b4303a6ae98e0abfdb231ea` (22,695 bytes)
 - `assets/art/bunker_radio_transmitter_tower.jpg`
 - `assets/art/loot_vending_machine_broken.jpg`
 
-### `dup_35` — md5 `7e9d0d009c59f9c2f273e5e73510e777` (22,696 bytes)
+### `dup_34` — md5 `7e9d0d009c59f9c2f273e5e73510e777` (22,696 bytes)
 - `assets/art/bunker_security_camera_monitor.jpg`
 - `assets/art/loot_duffel_bag_canvas.jpg`
 
-### `dup_36` — md5 `f4a5e16698c2df51a0bf2176c9a7299f` (22,423 bytes)
+### `dup_35` — md5 `f4a5e16698c2df51a0bf2176c9a7299f` (22,423 bytes)
 - `assets/art/bunker_solar_panel_array.jpg`
 - `assets/art/loot_footlocker_wooden.jpg`
 
-### `dup_37` — md5 `13f5466186fc511e929dcf282e65e827` (29,554 bytes)
+### `dup_36` — md5 `13f5466186fc511e929dcf282e65e827` (29,554 bytes)
 - `assets/art/character_icon.jpg`
 - `assets/art/location_pin_icon.jpg`
 - `assets/art/morale_bar.jpg`
@@ -821,17 +726,23 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/ui_event_ghost_radio.jpg`
 - `assets/art/ui_icon_shelter_integrity_shield.jpg`
 
-### `dup_38` — md5 `f11862a09a408457198ec4f304e706ae` (25,513 bytes)
+### `dup_37` — md5 `f11862a09a408457198ec4f304e706ae` (25,513 bytes)
 - `assets/art/charcoal_tablets.jpg`
 - `assets/art/pipe_grenade_explosive.jpg`
 - `assets/art/salt_preservative_pouch.jpg`
 - `assets/art/shelter_medical_bed.jpg`
 
-### `dup_39` — md5 `7ccb0de5485deb6ab236776cea41da2f` (25,677 bytes)
+### `dup_38` — md5 `7ccb0de5485deb6ab236776cea41da2f` (25,677 bytes)
 - `assets/art/crafting_aluminum_sheet_scrap.jpg`
 - `assets/art/gear_climbing_crampons.jpg`
 - `assets/art/med_anti_rad_foam_spray.jpg`
 - `assets/art/weapon_rpg_launcher_scavenged.jpg`
+
+### `dup_39` — md5 `953f3a9e74cb8409bfc30ca93d96808b` (25,900 bytes)
+- `assets/art/crafting_electronic_relay_switch.jpg`
+- `assets/art/gear_heavy_work_gloves.jpg`
+- `assets/art/med_rad_blocker_skin_cream.jpg`
+- `assets/art/weapon_sledgehammer_demolition.jpg`
 
 ### `dup_4` — md5 `cb5bd4b25b46aed40d7e5947564b1be8` (25,526 bytes)
 - `assets/art/5_factions.jpg`
@@ -851,16 +762,11 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/house_collapse.jpg`
 - `assets/art/item_ash_goat.jpg`
 - `assets/art/item_c4.jpg`
-- `assets/art/item_co2_scrubber_cartridge.jpg`
 - `assets/art/item_epipen.jpg`
-- `assets/art/item_galvanized_rebar.jpg`
 - `assets/art/item_heirloom.jpg`
 - `assets/art/item_kevlar_vest.jpg`
-- `assets/art/item_lead_visor.jpg`
-- `assets/art/item_mirror_shard.jpg`
 - `assets/art/item_password_note.jpg`
 - `assets/art/item_prussian_blue.jpg`
-- `assets/art/item_severed_hand_.jpg`
 - `assets/art/item_vacuum_tubes.jpg`
 - `assets/art/item_wrist_dosimeter.jpg`
 - `assets/art/kerosene_lamp.jpg`
@@ -875,66 +781,65 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/shelter_infirmary.jpg`
 - `assets/art/spy.jpg`
 - `assets/art/status_effect_well_fed.jpg`
-- `assets/art/tactical_scrap.jpg`
 - `assets/art/trauma_massacre.jpg`
 - `assets/art/water_purifier.jpg`
 - `assets/art/weapon_flamethrower_improvised.jpg`
 - `assets/art/weapon_shotgun_double.jpg`
 
-### `dup_40` — md5 `953f3a9e74cb8409bfc30ca93d96808b` (25,900 bytes)
-- `assets/art/crafting_electronic_relay_switch.jpg`
-- `assets/art/gear_heavy_work_gloves.jpg`
-- `assets/art/med_rad_blocker_skin_cream.jpg`
-- `assets/art/weapon_sledgehammer_demolition.jpg`
-
-### `dup_41` — md5 `0c43c89732192886be16b606ee222b94` (26,102 bytes)
+### `dup_40` — md5 `0c43c89732192886be16b606ee222b94` (26,102 bytes)
 - `assets/art/crafting_fertilizer_bag.jpg`
 - `assets/art/gear_leather_holster.jpg`
 - `assets/art/med_coagulant_capsules.jpg`
 - `assets/art/weapon_landmine_pressure_plate.jpg`
 
-### `dup_42` — md5 `c5f1801e5d68eaf42e782bd16aee1ba1` (26,045 bytes)
+### `dup_41` — md5 `c5f1801e5d68eaf42e782bd16aee1ba1` (26,045 bytes)
 - `assets/art/crafting_glass_lens_optic.jpg`
 - `assets/art/gear_ballistic_goggles.jpg`
 - `assets/art/med_detox_saline_drip.jpg`
 - `assets/art/weapon_claymore_mine_tactical.jpg`
 
-### `dup_43` — md5 `fff4130b5ab9b2094d9d9d5923f18c4d` (25,562 bytes)
+### `dup_42` — md5 `fff4130b5ab9b2094d9d9d5923f18c4d` (25,562 bytes)
 - `assets/art/crafting_gunpowder_horn.jpg`
 - `assets/art/gear_knee_pads_reinforced.jpg`
 - `assets/art/med_antidote_snake_venom.jpg`
 - `assets/art/weapon_dynamite_stick_bundle.jpg`
 
-### `dup_44` — md5 `b591abaeecdf045fe54fdbab072f2311` (29,349 bytes)
+### `dup_43` — md5 `b591abaeecdf045fe54fdbab072f2311` (29,349 bytes)
 - `assets/art/crafting_icon.jpg`
 - `assets/art/fatigue_bar.jpg`
 - `assets/art/ui_event_phantom_blip.jpg`
 - `assets/art/ui_icon_reputation_faction_up.jpg`
 
-### `dup_45` — md5 `218ba4227f0392ee63d8359745f7b79d` (26,159 bytes)
+### `dup_44` — md5 `218ba4227f0392ee63d8359745f7b79d` (26,159 bytes)
 - `assets/art/crafting_lead_plate_shielding.jpg`
 - `assets/art/gear_tactical_headlamp.jpg`
 - `assets/art/med_trauma_bandage_quikclot.jpg`
 - `assets/art/weapon_heavy_machine_gun.jpg`
 
-### `dup_46` — md5 `9215c9a8e50e9b024bceb6221920d73a` (25,998 bytes)
+### `dup_45` — md5 `9215c9a8e50e9b024bceb6221920d73a` (25,998 bytes)
 - `assets/art/crafting_steel_pipe_threaded.jpg`
 - `assets/art/gear_thermal_poncho.jpg`
 - `assets/art/med_skin_graft_bandage.jpg`
 - `assets/art/weapon_crossbow_repeating.jpg`
 
-### `dup_47` — md5 `8580bc91a794f5ba426b2dcb8793e0e3` (25,750 bytes)
+### `dup_46` — md5 `8580bc91a794f5ba426b2dcb8793e0e3` (25,750 bytes)
 - `assets/art/crafting_sulfur_powder_jar.jpg`
 - `assets/art/gear_military_canteen_pouch.jpg`
 - `assets/art/med_psych_stabilizer_inhaler.jpg`
 - `assets/art/weapon_throwing_axe_steel.jpg`
 
-### `dup_48` — md5 `dc52a69a5c745bfdbe63ef706da192d6` (25,744 bytes)
+### `dup_47` — md5 `dc52a69a5c745bfdbe63ef706da192d6` (25,744 bytes)
 - `assets/art/crossbow_bolt_bundle.jpg`
 - `assets/art/flint_and_steel.jpg`
 - `assets/art/morphine_syrette.jpg`
 - `assets/art/shelter_door_barricade.jpg`
 - `assets/art/wild_irradiated_berries.jpg`
+
+### `dup_48` — md5 `cf1875b65ebae73f650dbffaaf4595f9` (25,530 bytes)
+- `assets/_quarantine_legacy/ammo_deprecated_cal_545x39_v2.jpg`
+- `assets/art/dirty_water_flask.jpg`
+- `assets/art/sedative_vial.jpg`
+- `assets/art/shelter_map_table.jpg`
 
 ### `dup_49` — md5 `ef2195690488a1116519ce74bae582aa` (26,078 bytes)
 - `assets/art/disinfectant_alcohol.jpg`
@@ -948,7 +853,6 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/ash_desert.jpg`
 - `assets/art/blood_type.jpg`
 - `assets/art/cannibalism_trauma.jpg`
-- `assets/art/clean_water.jpg`
 - `assets/art/cultist_of_the_glow.jpg`
 - `assets/art/dialogue_choice_box.jpg`
 - `assets/art/endgame_choice.jpg`
@@ -957,20 +861,14 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/government_bunker.jpg`
 - `assets/art/hover_tooltip.jpg`
 - `assets/art/is_buried_alive_offered.jpg`
-- `assets/art/item_ashgoat.jpg`
 - `assets/art/item_caltrops.jpg`
-- `assets/art/item_cobalt_salt_canister.jpg`
-- `assets/art/item_epoxy_injector.jpg`
 - `assets/art/item_geiger_calibrator.jpg`
 - `assets/art/item_heirloom_locket.jpg`
-- `assets/art/item_keycard_.jpg`
 - `assets/art/item_liquid_stitches.jpg`
 - `assets/art/item_mutant_chicken.jpg`
 - `assets/art/item_patterns.jpg`
-- `assets/art/item_rebreather_scrubber.jpg`
 - `assets/art/item_severed_hand_cmd_x.jpg`
 - `assets/art/item_tear_gas.jpg`
-- `assets/art/item_vinyl_collection.jpg`
 - `assets/art/labor_camp_purchase.jpg`
 - `assets/art/mission_kind.jpg`
 - `assets/art/need_kind.jpg`
@@ -1059,7 +957,6 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/hazard_mimic_crate.jpg`
 - `assets/art/hazard_sinkhole_collapse.jpg`
 - `assets/art/hazard_surgical_botch.jpg`
-- `assets/art/hazard_surgicalbotch.jpg`
 - `assets/art/hazard_trench_foot.jpg`
 - `assets/art/hazard_weapon_burst.jpg`
 - `assets/art/hazard_zoonotic_flu.jpg`
@@ -1120,7 +1017,6 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 ### `dup_6` — md5 `3922e62edba736fbdf465dfa8f63d808` (25,755 bytes)
 - `assets/art/abandoned_supermarket.jpg`
 - `assets/art/ammo_tranquilizer_dart_vial.jpg`
-- `assets/art/bandage.jpg`
 - `assets/art/bones.jpg`
 - `assets/art/bunker_grid_container.jpg`
 - `assets/art/catchment_surface.jpg`
@@ -1135,17 +1031,12 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/hunting_rifle.jpg`
 - `assets/art/item_carrier_bird.jpg`
 - `assets/art/item_crude_anesthetic.jpg`
-- `assets/art/item_exosuit_.jpg`
-- `assets/art/item_geothermal_valve.jpg`
 - `assets/art/item_ice_pick.jpg`
 - `assets/art/item_keycard_green.jpg`
 - `assets/art/item_live_trap.jpg`
-- `assets/art/item_mutantchicken.jpg`
 - `assets/art/item_plastic_scrap.jpg`
 - `assets/art/item_rarity_rare.jpg`
 - `assets/art/item_ring.jpg`
-- `assets/art/item_shoring_timber.jpg`
-- `assets/art/item_tether_harness.jpg`
 - `assets/art/item_walkie_talkie.jpg`
 - `assets/art/lifeboat_resolved.jpg`
 - `assets/art/moral_chronicle_entry_kind.jpg`
@@ -1247,19 +1138,11 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/hatch_state.jpg`
 - `assets/art/hypothermia.jpg`
 - `assets/art/item_ammonia.jpg`
-- `assets/art/item_bio_plastic.jpg`
-- `assets/art/item_cryo_coolant.jpg`
-- `assets/art/item_faraday_mesh.jpg`
 - `assets/art/item_glowing_mushroom.jpg`
 - `assets/art/item_icon.jpg`
 - `assets/art/item_keycard_green_door.jpg`
 - `assets/art/item_locket.jpg`
-- `assets/art/item_mycelium_bricks.jpg`
-- `assets/art/item_pneumatic_hose.jpg`
 - `assets/art/item_rarity_uncommon.jpg`
-- `assets/art/item_ro_membrane.jpg`
-- `assets/art/item_snow_goggles_improvised.jpg`
-- `assets/art/item_thermal_paste.jpg`
 - `assets/art/item_wasteland_soap.jpg`
 - `assets/art/perk_close_quarters.jpg`
 - `assets/art/perk_tap_rack_bang.jpg`
@@ -1316,50 +1199,40 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_sump_dredgers.png`
 - `assets/ui/Icons/faction_icon_sump_dredgers.png`
 
-### `dup_8` — md5 `dd58c99a719eb1043f47d1eb34f74a51` (25,628 bytes)
-- `assets/art/air_filter.jpg`
-- `assets/art/ammo_acid_tipped_arrow.jpg`
-- `assets/art/bottled_water_irradiated.jpg`
-- `assets/art/bunker_maintenance.jpg`
-- `assets/art/child.jpg`
-- `assets/art/cooked_meal.jpg`
-- `assets/art/debris_type.jpg`
-- `assets/art/doomsday_prepper.jpg`
-- `assets/art/entry.jpg`
-- `assets/art/faction_leader_1.jpg`
-- `assets/art/food_mutated_fungi.jpg`
-- `assets/art/fuel.jpg`
-- `assets/art/intel_reliability.jpg`
-- `assets/art/item_ammotypes_combatloot.jpg`
-- `assets/art/item_bioluminescent_moss.jpg`
-- `assets/art/item_category.jpg`
-- `assets/art/item_data.jpg`
-- `assets/art/item_faraday_pack.jpg`
-- `assets/art/item_gold_bars.jpg`
-- `assets/art/item_id.jpg`
-- `assets/art/item_keycard_red.jpg`
-- `assets/art/item_logic_board.jpg`
-- `assets/art/item_nanites.jpg`
-- `assets/art/item_pneumatic_jack.jpg`
-- `assets/art/item_rarity_unique.jpg`
-- `assets/art/item_rtg_battery.jpg`
-- `assets/art/item_snowshoes.jpg`
-- `assets/art/item_toys.jpg`
-- `assets/art/item_watch.jpg`
-- `assets/art/looted_pharmacy.jpg`
-- `assets/art/mushroom_cloud_distant.jpg`
-- `assets/art/perk_cold_bore.jpg`
-- `assets/art/perk_trap_setter.jpg`
-- `assets/art/relic_rare_stamp_collection.jpg`
-- `assets/art/risk_bias_trait.jpg`
-- `assets/art/sensor_laser_rangefinder.jpg`
-- `assets/art/shotgun.jpg`
-- `assets/art/status_effect_freezing.jpg`
-- `assets/art/subway.jpg`
-- `assets/art/sv_child.jpg`
-- `assets/art/toxic_mutated_flora.jpg`
-- `assets/art/violent_paranoia.jpg`
-- `assets/art/workbench_action_kind.jpg`
+### `dup_8` — md5 `985e562401e204b549c05e728b37c8dd` (24,975 bytes)
+- `assets/art/all_96_named_survivors.jpg`
+- `assets/art/bunker_commander_portrait.jpg`
+- `assets/art/deserter.jpg`
+- `assets/art/deserter_at_hatch.jpg`
+- `assets/art/deserter_scavenger.jpg`
+- `assets/art/dying_survivor.jpg`
+- `assets/art/enc_apex_predator.jpg`
+- `assets/art/enc_deserters.jpg`
+- `assets/art/enc_deserters_stand.jpg`
+- `assets/art/enc_dog_pack.jpg`
+- `assets/art/enc_feral_dogs.jpg`
+- `assets/art/enc_hostile_fauna.jpg`
+- `assets/art/enc_mutated_flora.jpg`
+- `assets/art/enc_safe_haven_empty_cache.jpg`
+- `assets/art/enc_sleeping_ghoul.jpg`
+- `assets/art/mutant_crawler_ghoul.jpg`
+- `assets/art/mutant_stalker_beast.jpg`
+- `assets/art/raider_female.jpg`
+- `assets/art/raider_heavy_guard.jpg`
+- `assets/art/raider_male.jpg`
+- `assets/art/raider_sniper_scout.jpg`
+- `assets/art/survivor_child.jpg`
+- `assets/art/survivor_female_1.jpg`
+- `assets/art/survivor_female_2.jpg`
+- `assets/art/survivor_female_engineer.jpg`
+- `assets/art/survivor_female_scavenger.jpg`
+- `assets/art/survivor_male_1.jpg`
+- `assets/art/survivor_male_2.jpg`
+- `assets/art/survivor_male_medic.jpg`
+- `assets/art/survivor_male_scout.jpg`
+- `assets/art/survivor_state.jpg`
+- `assets/art/survivor_status.jpg`
+- `assets/art/wounded_survivor.jpg`
 
 ### `dup_80` — md5 `b2922e5cf66fabee5b361015df6bb97f` (79,781 bytes)
 - `assets/ui/FactionEmblems/faction_icon_sun_seekers.png`
@@ -1401,40 +1274,90 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_the_scale.png`
 - `assets/ui/Icons/faction_icon_the_scale.png`
 
-### `dup_9` — md5 `985e562401e204b549c05e728b37c8dd` (24,975 bytes)
-- `assets/art/all_96_named_survivors.jpg`
-- `assets/art/bunker_commander_portrait.jpg`
-- `assets/art/deserter.jpg`
-- `assets/art/deserter_at_hatch.jpg`
-- `assets/art/deserter_scavenger.jpg`
-- `assets/art/dying_survivor.jpg`
-- `assets/art/enc_apex_predator.jpg`
-- `assets/art/enc_deserters.jpg`
-- `assets/art/enc_deserters_stand.jpg`
-- `assets/art/enc_dog_pack.jpg`
-- `assets/art/enc_feral_dogs.jpg`
-- `assets/art/enc_hostile_fauna.jpg`
-- `assets/art/enc_mutated_flora.jpg`
-- `assets/art/enc_safe_haven_empty_cache.jpg`
-- `assets/art/enc_sleeping_ghoul.jpg`
-- `assets/art/mutant_crawler_ghoul.jpg`
-- `assets/art/mutant_stalker_beast.jpg`
-- `assets/art/raider_female.jpg`
-- `assets/art/raider_heavy_guard.jpg`
-- `assets/art/raider_male.jpg`
-- `assets/art/raider_sniper_scout.jpg`
-- `assets/art/survivor_child.jpg`
-- `assets/art/survivor_female_1.jpg`
-- `assets/art/survivor_female_2.jpg`
-- `assets/art/survivor_female_engineer.jpg`
-- `assets/art/survivor_female_scavenger.jpg`
-- `assets/art/survivor_male_1.jpg`
-- `assets/art/survivor_male_2.jpg`
-- `assets/art/survivor_male_medic.jpg`
-- `assets/art/survivor_male_scout.jpg`
-- `assets/art/survivor_state.jpg`
-- `assets/art/survivor_status.jpg`
-- `assets/art/wounded_survivor.jpg`
+### `dup_9` — md5 `9986924418ecb171af95f36f1673dc3a` (22,331 bytes)
+- `assets/_quarantine_legacy/ammo_deprecated_.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_12ga.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_16ga.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_300blk.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_338lapua.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_380acp.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_408cheytac.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_45acp.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_46x30.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_50bmg.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_545x39.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_556x45.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_57x28.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_762x25.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_762x39.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_762x51.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_762x54r.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_765x21.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_9x21.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_unknown.jpg`
+- `assets/art/ammo_12ga_ap.jpg`
+- `assets/art/ammo_12ga_buck.jpg`
+- `assets/art/ammo_12ga_slug.jpg`
+- `assets/art/ammo_16ga_buck.jpg`
+- `assets/art/ammo_16ga_slug.jpg`
+- `assets/art/ammo_300blk.jpg`
+- `assets/art/ammo_300blk_ap.jpg`
+- `assets/art/ammo_338lapua.jpg`
+- `assets/art/ammo_338lapua_ap.jpg`
+- `assets/art/ammo_338lapua_bt.jpg`
+- `assets/art/ammo_380acp_fmj.jpg`
+- `assets/art/ammo_380acp_jhp.jpg`
+- `assets/art/ammo_408cheytac.jpg`
+- `assets/art/ammo_408cheytac_ap.jpg`
+- `assets/art/ammo_408cheytac_bt.jpg`
+- `assets/art/ammo_45acp_ap.jpg`
+- `assets/art/ammo_45acp_fmj.jpg`
+- `assets/art/ammo_45acp_jhp.jpg`
+- `assets/art/ammo_46x30_ap.jpg`
+- `assets/art/ammo_46x30_fmj.jpg`
+- `assets/art/ammo_50bmg.jpg`
+- `assets/art/ammo_50bmg_ap.jpg`
+- `assets/art/ammo_50bmg_api.jpg`
+- `assets/art/ammo_50bmg_bt.jpg`
+- `assets/art/ammo_545x39.jpg`
+- `assets/art/ammo_545x39_fmj.jpg`
+- `assets/art/ammo_556x45_ap.jpg`
+- `assets/art/ammo_556x45_fmj.jpg`
+- `assets/art/ammo_556x45_jhp.jpg`
+- `assets/art/ammo_556x45_m855a1.jpg`
+- `assets/art/ammo_57x28.jpg`
+- `assets/art/ammo_57x28_ap.jpg`
+- `assets/art/ammo_762x25_fmj.jpg`
+- `assets/art/ammo_762x25_jhp.jpg`
+- `assets/art/ammo_762x39_ap.jpg`
+- `assets/art/ammo_762x39_fmj.jpg`
+- `assets/art/ammo_762x39_jhp.jpg`
+- `assets/art/ammo_762x51.jpg`
+- `assets/art/ammo_762x51_ap.jpg`
+- `assets/art/ammo_762x51_api.jpg`
+- `assets/art/ammo_762x51_fmj.jpg`
+- `assets/art/ammo_762x54r.jpg`
+- `assets/art/ammo_762x54r_ap.jpg`
+- `assets/art/ammo_762x54r_bt.jpg`
+- `assets/art/ammo_765x21_fmj.jpg`
+- `assets/art/ammo_765x21_jhp.jpg`
+- `assets/art/ammo_9mm.jpg`
+- `assets/art/ammo_9x19.jpg`
+- `assets/art/ammo_9x19_ap.jpg`
+- `assets/art/ammo_9x19_fmj.jpg`
+- `assets/art/ammo_9x19_jhp.jpg`
+- `assets/art/ammo_9x21_fmj.jpg`
+- `assets/art/ammo_9x21_jhp.jpg`
+- `assets/art/ammo_box.jpg`
+- `assets/art/ammo_expended.jpg`
+- `assets/art/ammo_pistol.jpg`
+- `assets/art/ammo_rifle.jpg`
+- `assets/art/ammo_shotgun.jpg`
+- `assets/art/ammo_surrendered.jpg`
+- `assets/art/item_ammo_ap.jpg`
+- `assets/art/item_ammo_hp.jpg`
+- `assets/art/item_ammo_standard.jpg`
+- `assets/art/item_ammo_types.jpg`
 
 ### `dup_90` — md5 `a1373fe15dcb1a14a9de668b997b306b` (88,029 bytes)
 - `assets/ui/FactionEmblems/faction_icon_the_cutters.png`
@@ -1479,6 +1402,7 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 ## Perceptual duplicates (visually similar — same composition, different files)
 
 ### `pdup_1` (aHash group)
+- `assets/_quarantine_legacy/ammo_deprecated_cal_545x39_v2.jpg`
 - `assets/art/15_weather_kinds.jpg`
 - `assets/art/188_items.jpg`
 - `assets/art/42_locations.jpg`
@@ -1486,11 +1410,9 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/9mm_pistol.jpg`
 - `assets/art/abandoned_supermarket.jpg`
 - `assets/art/affliction_phase.jpg`
-- `assets/art/air_filter.jpg`
 - `assets/art/ammo_acid_tipped_arrow.jpg`
 - `assets/art/ammo_armor_piercing_556.jpg`
 - `assets/art/ammo_depleted_uranium_dart.jpg`
-- `assets/art/ammo_deprecated_cal_545x39_v2.jpg`
 - `assets/art/ammo_emp_pulse_cartridge.jpg`
 - `assets/art/ammo_harpoon_tether_spear.jpg`
 - `assets/art/ammo_hollow_point_9mm.jpg`
@@ -1504,7 +1426,8 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/armor_ghillie_suit_camo.jpg`
 - `assets/art/armor_hazmat_hood_heavy.jpg`
 - `assets/art/armor_insulated_snow_trousers.jpg`
-- … 628 more
+- `assets/art/armor_kevlar_helmet_visor.jpg`
+- … 568 more
 
 ### `pdup_10` (aHash group)
 - `assets/art/combat_knife_serrated.jpg`
@@ -1548,6 +1471,7 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/canned_meat.jpg`
 - `assets/art/canned_vegetables.jpg`
 - `assets/art/sleeping_bag.jpg`
+- `assets/art/vegetable_soup.jpg`
 
 ### `pdup_16` (aHash group)
 - `assets/art/tech_battery_cell_heavy.jpg`
@@ -1629,42 +1553,32 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/emblem_long_walk.png`
 
 ### `pdup_24` (aHash group)
+- `assets/art/amber.jpg`
+- `assets/art/iodine_pills_bottle_10_of_10.jpg`
+
+### `pdup_25` (aHash group)
+- `assets/art/canned_soup.jpg`
+- `assets/art/crowbar_broken.jpg`
+
+### `pdup_26` (aHash group)
+- `assets/art/bandage_roll.jpg`
+- `assets/art/understory_relay_log_page.jpg`
+
+### `pdup_27` (aHash group)
 - `assets/art/inhaler.png`
 - `assets/art/rad_away.png`
 - `assets/art/scrap_electronic.png`
 - `assets/art/scrap_mechanical.png`
 
-### `pdup_25` (aHash group)
-- `assets/sprites/Items/accelerant_half.png`
-- `assets/sprites/Portraits/the_priest.png`
-
-### `pdup_26` (aHash group)
-- `assets/sprites/Items/advanced_heating_bed.png`
-- `assets/sprites/Items/air_filter.png`
-- `assets/sprites/Items/item_master_override.png`
-- `assets/sprites/Items/menthol_cigarette.png`
-- `assets/sprites/Portraits/the_misanthrope.png`
-
-### `pdup_27` (aHash group)
-- `assets/sprites/Items/advanced_herb_garden.png`
-- `assets/sprites/Items/geiger_counter.png`
-- `assets/sprites/Items/improvised_water_boiler.png`
-- `assets/sprites/Items/item_tungsten_core.png`
-- `assets/sprites/Items/nicotine_pouch.png`
-
 ### `pdup_28` (aHash group)
-- `assets/sprites/Items/ammo_338lapua_jhp_ap.png`
-- `assets/sprites/Items/ammo_deprecated_cal_45acp.png`
-- `assets/sprites/Portraits/the_deserter.png`
+- `assets/art/ammo_338lapua_jhp_ap.jpg`
+- `assets/art/smg_imi_micro_uzi_9x21.jpg`
+- `assets/art/smg_kriss_vector_45acp.jpg`
 
 ### `pdup_29` (aHash group)
-- `assets/sprites/Items/ammo_50bmg_jhp_ap.png`
-- `assets/sprites/Items/boiled_vegetable_soup.png`
-- `assets/sprites/Items/bricks.png`
-- `assets/sprites/Items/medkit.png`
-- `assets/sprites/Items/multitool.png`
-- `assets/sprites/Portraits/the_serial_killer.png`
-- `assets/sprites/Portraits/the_tailor.png`
+- `assets/art/dry_rice_1kg_of_1kg.jpg`
+- `assets/ui/FactionEmblems/faction_icon_sun_seekers.png`
+- `assets/ui/Icons/faction_icon_sun_seekers.png`
 
 ### `pdup_3` (aHash group)
 - `assets/art/all_96_named_survivors.jpg`
@@ -1695,17 +1609,54 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - … 8 more
 
 ### `pdup_30` (aHash group)
+- `assets/art/ars_diagnosis_report.jpg`
+- `assets/ui/FactionEmblems/faction_icon_lamplighters.png`
+- `assets/ui/Icons/faction_icon_lamplighters.png`
+
+### `pdup_31` (aHash group)
+- `assets/sprites/Items/accelerant_half.png`
+- `assets/sprites/Portraits/the_priest.png`
+
+### `pdup_32` (aHash group)
+- `assets/sprites/Items/advanced_heating_bed.png`
+- `assets/sprites/Items/air_filter.png`
+- `assets/sprites/Items/item_master_override.png`
+- `assets/sprites/Items/menthol_cigarette.png`
+- `assets/sprites/Portraits/the_misanthrope.png`
+
+### `pdup_33` (aHash group)
+- `assets/sprites/Items/advanced_herb_garden.png`
+- `assets/sprites/Items/geiger_counter.png`
+- `assets/sprites/Items/improvised_water_boiler.png`
+- `assets/sprites/Items/item_tungsten_core.png`
+- `assets/sprites/Items/nicotine_pouch.png`
+
+### `pdup_34` (aHash group)
+- `assets/sprites/Items/ammo_338lapua_jhp_ap.png`
+- `assets/sprites/Items/ammo_deprecated_cal_45acp.png`
+- `assets/sprites/Portraits/the_deserter.png`
+
+### `pdup_35` (aHash group)
+- `assets/sprites/Items/ammo_50bmg_jhp_ap.png`
+- `assets/sprites/Items/boiled_vegetable_soup.png`
+- `assets/sprites/Items/bricks.png`
+- `assets/sprites/Items/medkit.png`
+- `assets/sprites/Items/multitool.png`
+- `assets/sprites/Portraits/the_serial_killer.png`
+- `assets/sprites/Portraits/the_tailor.png`
+
+### `pdup_36` (aHash group)
 - `assets/sprites/Items/ammo_762x54r_exi.png`
 - `assets/sprites/Items/att_mil_long_range_scope.png`
 - `assets/sprites/Items/basic_rollup_cigarette.png`
 - `assets/sprites/Items/thermometer.png`
 - `assets/sprites/Portraits/the_news_anchor.png`
 
-### `pdup_31` (aHash group)
+### `pdup_37` (aHash group)
 - `assets/sprites/Items/ammo_762x54r_jhp_ap.png`
 - `assets/sprites/Items/wire_cutters_broken.png`
 
-### `pdup_32` (aHash group)
+### `pdup_38` (aHash group)
 - `assets/sprites/Items/ammo_deprecated_16ga.png`
 - `assets/sprites/Items/ammo_deprecated_cal_46x30.png`
 - `assets/sprites/Items/currency.png`
@@ -1713,7 +1664,7 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/sprites/Portraits/the_addict.png`
 - `assets/sprites/Portraits/the_undertaker.png`
 
-### `pdup_33` (aHash group)
+### `pdup_39` (aHash group)
 - `assets/sprites/Items/ammo_deprecated_380acp.png`
 - `assets/sprites/Items/coffee_robusta_bean.png`
 - `assets/sprites/Items/helmet_military.png`
@@ -1721,17 +1672,45 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/sprites/Items/item_frostbite_salve.png`
 - `assets/sprites/Items/item_ro_membrane.png`
 
-### `pdup_34` (aHash group)
+### `pdup_4` (aHash group)
+- `assets/_quarantine_legacy/ammo_deprecated_.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_12ga.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_16ga.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_300blk.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_338lapua.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_380acp.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_408cheytac.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_45acp.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_46x30.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_50bmg.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_545x39.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_556x45.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_57x28.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_762x25.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_762x39.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_762x51.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_762x54r.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_765x21.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_9x21.jpg`
+- `assets/_quarantine_legacy/ammo_deprecated_unknown.jpg`
+- `assets/art/ammo_12ga_ap.jpg`
+- `assets/art/ammo_12ga_buck.jpg`
+- `assets/art/ammo_12ga_slug.jpg`
+- `assets/art/ammo_16ga_buck.jpg`
+- `assets/art/ammo_16ga_slug.jpg`
+- … 544 more
+
+### `pdup_40` (aHash group)
 - `assets/sprites/Items/ammo_deprecated_9x21.png`
 - `assets/sprites/Items/sawdust_block.png`
 
-### `pdup_35` (aHash group)
+### `pdup_41` (aHash group)
 - `assets/sprites/Items/anti_rad.png`
 - `assets/sprites/Items/att_mil_suppressor.png`
 - `assets/sprites/Items/pdw_hk_mp7a2_46x30.png`
 - `assets/sprites/Items/sniper_mosin_nagant_m9031_762x54r.png`
 
-### `pdup_36` (aHash group)
+### `pdup_42` (aHash group)
 - `assets/sprites/Items/antibiotics.png`
 - `assets/sprites/Items/box_of_nails_10.png`
 - `assets/sprites/Items/cooked_meat.png`
@@ -1739,100 +1718,41 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/sprites/Items/quality_tobacco_leaf.png`
 - `assets/ui/Icons/icon_unknown_faction.png`
 
-### `pdup_37` (aHash group)
+### `pdup_43` (aHash group)
 - `assets/sprites/Items/att_mil_laserdot.png`
 - `assets/sprites/Items/water_bottle_empty.png`
 - `assets/sprites/Portraits/survivor_bunker_born.png`
 
-### `pdup_38` (aHash group)
+### `pdup_44` (aHash group)
 - `assets/sprites/Items/att_mil_tactical_grip.png`
 - `assets/sprites/Items/tactical_refinement_bench.png`
 - `assets/sprites/Portraits/the_firefighter.png`
 
-### `pdup_39` (aHash group)
+### `pdup_45` (aHash group)
 - `assets/sprites/Items/battery.png`
 - `assets/sprites/Items/tactical_weapons_bench.png`
 - `assets/sprites/Portraits/survivor_drone_op.png`
 
-### `pdup_4` (aHash group)
-- `assets/art/ammo_.jpg`
-- `assets/art/ammo_12ga_ap.jpg`
-- `assets/art/ammo_12ga_buck.jpg`
-- `assets/art/ammo_12ga_slug.jpg`
-- `assets/art/ammo_16ga_buck.jpg`
-- `assets/art/ammo_16ga_slug.jpg`
-- `assets/art/ammo_300blk.jpg`
-- `assets/art/ammo_300blk_ap.jpg`
-- `assets/art/ammo_300blk_api.jpg`
-- `assets/art/ammo_300blk_exi.jpg`
-- `assets/art/ammo_300blk_fmj.jpg`
-- `assets/art/ammo_338lapua.jpg`
-- `assets/art/ammo_338lapua_ap.jpg`
-- `assets/art/ammo_338lapua_api.jpg`
-- `assets/art/ammo_338lapua_bt.jpg`
-- `assets/art/ammo_338lapua_exi.jpg`
-- `assets/art/ammo_380acp_fmj.jpg`
-- `assets/art/ammo_380acp_jhp.jpg`
-- `assets/art/ammo_408cheytac.jpg`
-- `assets/art/ammo_408cheytac_ap.jpg`
-- `assets/art/ammo_408cheytac_api.jpg`
-- `assets/art/ammo_408cheytac_bt.jpg`
-- `assets/art/ammo_408cheytac_exi.jpg`
-- `assets/art/ammo_408cheytac_jhp_ap.jpg`
-- `assets/art/ammo_45acp_ap.jpg`
-- … 559 more
-
-### `pdup_40` (aHash group)
+### `pdup_46` (aHash group)
 - `assets/sprites/Items/box_of_tea_20.png`
 - `assets/sprites/Items/woolbed.png`
 
-### `pdup_41` (aHash group)
+### `pdup_47` (aHash group)
 - `assets/sprites/Items/bullet_casing.png`
 - `assets/sprites/Portraits/the_pyromaniac.png`
 
-### `pdup_42` (aHash group)
+### `pdup_48` (aHash group)
 - `assets/sprites/Items/copper_tubing_1m.png`
 - `assets/sprites/Items/scrap_wood.png`
 - `assets/sprites/Items/sulphur.png`
 - `assets/sprites/Locations/location_mirror_factory.png`
 
-### `pdup_43` (aHash group)
+### `pdup_49` (aHash group)
 - `assets/sprites/Items/dry_yeast_powder.png`
 - `assets/sprites/Items/item_pre_war_photo_album.png`
 - `assets/sprites/Portraits/aris_thorne.png`
 - `assets/sprites/Portraits/survivor_acoustic_tech.png`
 - `assets/sprites/Portraits/the_plumber.png`
-
-### `pdup_44` (aHash group)
-- `assets/sprites/Items/fertilizer.png`
-- `assets/sprites/Portraits/survivor_mycologist.png`
-- `assets/sprites/Portraits/the_chemist.png`
-- `assets/sprites/Portraits/the_historian.png`
-
-### `pdup_45` (aHash group)
-- `assets/sprites/Items/flare_red.png`
-- `assets/sprites/Items/rifle_sig_mcx_rattler_300blk.png`
-- `assets/sprites/Locations/location_arcology_sector_4.png`
-- `assets/sprites/Weather/weather_ice_storm.png`
-
-### `pdup_46` (aHash group)
-- `assets/sprites/Items/generator_parts.png`
-- `assets/sprites/Items/grenade_military.png`
-- `assets/sprites/Items/improvised_gunbench.png`
-
-### `pdup_47` (aHash group)
-- `assets/sprites/Items/herbal_farm_max_tier.png`
-- `assets/sprites/Items/rope_2m_of_2m.png`
-- `assets/sprites/Items/simple_tool_workshop.png`
-
-### `pdup_48` (aHash group)
-- `assets/sprites/Items/item_cryo_coolant.png`
-- `assets/sprites/Portraits/the_botanist.png`
-
-### `pdup_49` (aHash group)
-- `assets/sprites/Items/military_grade_sandstone.png`
-- `assets/sprites/Items/oat_flour.png`
-- `assets/sprites/Portraits/the_watchmaker.png`
 
 ### `pdup_5` (aHash group)
 - `assets/art/anomaly_ball_lightning_orb.jpg`
@@ -1841,23 +1761,59 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/art/anomaly_subterranean_gas_vent.jpg`
 
 ### `pdup_50` (aHash group)
+- `assets/sprites/Items/fertilizer.png`
+- `assets/sprites/Portraits/survivor_mycologist.png`
+- `assets/sprites/Portraits/the_chemist.png`
+- `assets/sprites/Portraits/the_historian.png`
+
+### `pdup_51` (aHash group)
+- `assets/sprites/Items/flare_red.png`
+- `assets/sprites/Items/rifle_sig_mcx_rattler_300blk.png`
+- `assets/sprites/Locations/location_arcology_sector_4.png`
+- `assets/sprites/Weather/weather_ice_storm.png`
+
+### `pdup_52` (aHash group)
+- `assets/sprites/Items/generator_parts.png`
+- `assets/sprites/Items/grenade_military.png`
+- `assets/sprites/Items/improvised_gunbench.png`
+
+### `pdup_53` (aHash group)
+- `assets/sprites/Items/herbal_farm_max_tier.png`
+- `assets/sprites/Items/rope_2m_of_2m.png`
+- `assets/sprites/Items/simple_tool_workshop.png`
+
+### `pdup_54` (aHash group)
+- `assets/sprites/Items/item_cryo_coolant.png`
+- `assets/sprites/Portraits/the_botanist.png`
+
+### `pdup_55` (aHash group)
+- `assets/sprites/Items/military_grade_sandstone.png`
+- `assets/sprites/Items/oat_flour.png`
+- `assets/sprites/Portraits/the_watchmaker.png`
+
+### `pdup_56` (aHash group)
 - `assets/sprites/Items/small_solar_panel.png`
 - `assets/sprites/Portraits/the_empath.png`
 - `assets/sprites/Portraits/the_widow.png`
 
-### `pdup_51` (aHash group)
+### `pdup_57` (aHash group)
 - `assets/sprites/Items/workbench_intermediate.png`
 - `assets/sprites/Portraits/survivor_machinist.png`
 
-### `pdup_52` (aHash group)
+### `pdup_58` (aHash group)
 - `assets/sprites/Portraits/the_psychopath.png`
 - `assets/sprites/Weather/weather_emp_storm.png`
 
-### `pdup_53` (aHash group)
+### `pdup_59` (aHash group)
 - `assets/ui/Icons/seal_cold_count.png`
 - `assets/ui/Icons/seal_long_walk.png`
 
-### `pdup_54` (aHash group)
+### `pdup_6` (aHash group)
+- `assets/art/anomaly_corrosive_acid_rain.jpg`
+- `assets/art/anomaly_fallout_snow_drift.jpg`
+- `assets/art/anomaly_spatial_rift_shimmer.jpg`
+
+### `pdup_60` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_archivists.png`
 - `assets/ui/FactionEmblems/faction_icon_arctic_harbor_masters.png`
 - `assets/ui/FactionEmblems/faction_icon_ashen_crows.png`
@@ -1885,11 +1841,11 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_the_syndicate.png`
 - … 35 more
 
-### `pdup_55` (aHash group)
+### `pdup_61` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_echo_bats.png`
 - `assets/ui/Icons/faction_icon_echo_bats.png`
 
-### `pdup_56` (aHash group)
+### `pdup_62` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_black_flotilla.png`
 - `assets/ui/FactionEmblems/faction_icon_grain_exchange.png`
 - `assets/ui/FactionEmblems/faction_icon_myco_remediators.png`
@@ -1907,11 +1863,7 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/Icons/faction_icon_the_tunnel_rats.png`
 - `assets/ui/Icons/faction_icon_the_unbroken_covenant.png`
 
-### `pdup_57` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_lamplighters.png`
-- `assets/ui/Icons/faction_icon_lamplighters.png`
-
-### `pdup_58` (aHash group)
+### `pdup_63` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_ash_militia.png`
 - `assets/ui/FactionEmblems/faction_icon_blood_bankers.png`
 - `assets/ui/FactionEmblems/faction_icon_bunker_alpha_sentinels.png`
@@ -1939,20 +1891,15 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/FactionEmblems/faction_icon_the_brewers_guild.png`
 - … 51 more
 
-### `pdup_59` (aHash group)
+### `pdup_64` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_osteophages.png`
 - `assets/ui/Icons/faction_icon_osteophages.png`
 
-### `pdup_6` (aHash group)
-- `assets/art/anomaly_corrosive_acid_rain.jpg`
-- `assets/art/anomaly_fallout_snow_drift.jpg`
-- `assets/art/anomaly_spatial_rift_shimmer.jpg`
-
-### `pdup_60` (aHash group)
+### `pdup_65` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_rot_farmers.png`
 - `assets/ui/Icons/faction_icon_rot_farmers.png`
 
-### `pdup_61` (aHash group)
+### `pdup_66` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_apothecary_circle.png`
 - `assets/ui/FactionEmblems/faction_icon_ash_sign.png`
 - `assets/ui/FactionEmblems/faction_icon_atmospheric_scrubbers.png`
@@ -1978,37 +1925,17 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/ui/Icons/faction_icon_sump_dredgers.png`
 - `assets/ui/Icons/faction_icon_warlord.png`
 
-### `pdup_62` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_sun_seekers.png`
-- `assets/ui/Icons/faction_icon_sun_seekers.png`
-
-### `pdup_63` (aHash group)
+### `pdup_67` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_the_tempest.png`
 - `assets/ui/Icons/faction_icon_the_tempest.png`
 
-### `pdup_64` (aHash group)
+### `pdup_68` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_wire_heads.png`
 - `assets/ui/Icons/faction_icon_wire_heads.png`
 
-### `pdup_65` (aHash group)
+### `pdup_69` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_the_underwrite.png`
 - `assets/ui/Icons/faction_icon_the_underwrite.png`
-
-### `pdup_66` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_the_scale.png`
-- `assets/ui/Icons/faction_icon_the_scale.png`
-
-### `pdup_67` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_the_cutters.png`
-- `assets/ui/Icons/faction_icon_the_cutters.png`
-
-### `pdup_68` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_the_fleet.png`
-- `assets/ui/Icons/faction_icon_the_fleet.png`
-
-### `pdup_69` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_the_overlay.png`
-- `assets/ui/Icons/faction_icon_the_overlay.png`
 
 ### `pdup_7` (aHash group)
 - `assets/art/beast_blind_cave_stalker.jpg`
@@ -2039,46 +1966,46 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - … 62 more
 
 ### `pdup_70` (aHash group)
+- `assets/ui/FactionEmblems/faction_icon_the_scale.png`
+- `assets/ui/Icons/faction_icon_the_scale.png`
+
+### `pdup_71` (aHash group)
+- `assets/ui/FactionEmblems/faction_icon_the_cutters.png`
+- `assets/ui/Icons/faction_icon_the_cutters.png`
+
+### `pdup_72` (aHash group)
+- `assets/ui/FactionEmblems/faction_icon_the_fleet.png`
+- `assets/ui/Icons/faction_icon_the_fleet.png`
+
+### `pdup_73` (aHash group)
+- `assets/ui/FactionEmblems/faction_icon_the_overlay.png`
+- `assets/ui/Icons/faction_icon_the_overlay.png`
+
+### `pdup_74` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_blank_rows.png`
 - `assets/ui/Icons/faction_icon_blank_rows.png`
 
-### `pdup_71` (aHash group)
+### `pdup_75` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_deserter_asylum.png`
 - `assets/ui/Icons/faction_icon_deserter_asylum.png`
 
-### `pdup_72` (aHash group)
+### `pdup_76` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_choke.png`
 - `assets/ui/Icons/faction_icon_choke.png`
 
-### `pdup_73` (aHash group)
+### `pdup_77` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_iron_covenant.png`
 - `assets/ui/Icons/faction_icon_iron_covenant.png`
 
-### `pdup_74` (aHash group)
+### `pdup_78` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_penal_battalion.png`
 - `assets/ui/Icons/faction_icon_penal_battalion.png`
 
-### `pdup_75` (aHash group)
+### `pdup_79` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_frozen_sound_whalers.png`
 - `assets/ui/FactionEmblems/faction_icon_the_botanists.png`
 - `assets/ui/Icons/faction_icon_frozen_sound_whalers.png`
 - `assets/ui/Icons/faction_icon_the_botanists.png`
-
-### `pdup_76` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_airlock_wardens.png`
-- `assets/ui/Icons/faction_icon_airlock_wardens.png`
-
-### `pdup_77` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_hydro_core_custodians.png`
-- `assets/ui/Icons/faction_icon_hydro_core_custodians.png`
-
-### `pdup_78` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_glass_walkers.png`
-- `assets/ui/Icons/faction_icon_glass_walkers.png`
-
-### `pdup_79` (aHash group)
-- `assets/ui/FactionEmblems/faction_icon_sand_sailors.png`
-- `assets/ui/Icons/faction_icon_sand_sailors.png`
 
 ### `pdup_8` (aHash group)
 - `assets/art/bunker_workbench.jpg`
@@ -2086,19 +2013,36 @@ Perceptual near-duplicates (8x8 average-hash, 2+ files): **82 groups**.
 - `assets/sprites/Portraits/the_exec.png`
 
 ### `pdup_80` (aHash group)
+- `assets/ui/FactionEmblems/faction_icon_airlock_wardens.png`
+- `assets/ui/Icons/faction_icon_airlock_wardens.png`
+
+### `pdup_81` (aHash group)
+- `assets/ui/FactionEmblems/faction_icon_hydro_core_custodians.png`
+- `assets/ui/Icons/faction_icon_hydro_core_custodians.png`
+
+### `pdup_82` (aHash group)
+- `assets/ui/FactionEmblems/faction_icon_glass_walkers.png`
+- `assets/ui/Icons/faction_icon_glass_walkers.png`
+
+### `pdup_83` (aHash group)
+- `assets/ui/FactionEmblems/faction_icon_sand_sailors.png`
+- `assets/ui/Icons/faction_icon_sand_sailors.png`
+
+### `pdup_84` (aHash group)
 - `assets/ui/FactionEmblems/faction_icon_rust_scorpions.png`
 - `assets/ui/Icons/faction_icon_rust_scorpions.png`
 
-### `pdup_81` (aHash group)
+### `pdup_85` (aHash group)
 - `assets/ui/Textures/btn_default.png`
 - `assets/ui/Textures/btn_disabled.png`
 - `assets/ui/Textures/btn_hover.png`
 - `assets/ui/Textures/btn_pressed.png`
 
-### `pdup_82` (aHash group)
+### `pdup_86` (aHash group)
 - `assets/ui/Textures/holdfast_terminal_frame.png`
 - `assets/ui/Textures/radio_frame_9slice.png`
 
 ### `pdup_9` (aHash group)
 - `assets/art/canned_rations.jpg`
+- `assets/art/jam_preserves.jpg`
 - `assets/art/water_filter_prop.jpg`

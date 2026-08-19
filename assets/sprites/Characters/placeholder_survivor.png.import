@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://buhpm6oipuaaa"
-valid=false
+uid="uid://c5sb84wwx1qsm"
+path="res://.godot/imported/placeholder_survivor.png-b3111cfe6bcc536e96257c81eef4b682.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/sprites/Characters/placeholder_survivor.png"
+dest_files=["res://.godot/imported/placeholder_survivor.png-b3111cfe6bcc536e96257c81eef4b682.ctex"]
 
 [params]
 

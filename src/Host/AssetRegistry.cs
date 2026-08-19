@@ -93,10 +93,10 @@ namespace AtomicWar.GodotApp
         };
 
         // ── ID Aliases ──────────────────────────────────────────────────
-        // Catalog IDs may not match the on-disk filename (e.g. catalog key
-        // "mechanical_components" must resolve to existing file
-        // "scrap_mechanical.png"). Aliases are consulted before the standard
-        // path-resolution chain so a single asset can satisfy multiple IDs.
+        // Catalog IDs may not match the on-disk filename. Aliases are kept as
+        // semantic fallback candidates after the literal stem, so a single
+        // asset can satisfy multiple IDs when no direct file exists. Direct
+        // catalog stems intentionally win when both forms are present.
         // Adding a fallback entry here is cheaper than renaming source art.
         // The alias value is the file stem (without extension) under assets/art/.
         private static readonly Dictionary<string, string> ItemIdAliases = new(StringComparer.Ordinal)
@@ -633,11 +633,13 @@ namespace AtomicWar.GodotApp
 
             var normalizationProbes = new (string id, string category, string expectFileStem, bool expectMissing)[]
             {
-                ("mechanical_components", "item",    "scrap_mechanical",            false),
-                ("mechanical_parts",      "item",    "scrap_mechanical",            false),
+                // Direct stems exist for both material IDs, so literal
+                // resolution correctly wins over the dormant semantic alias.
+                ("mechanical_components", "item",    "mechanical_components",       false),
+                ("mechanical_parts",      "item",    "mechanical_parts",            false),
                 ("blood_bag",             "item",    "item_blood_bag",              false),
-                ("encrypted_drive",       "item",    "item_encrypted_drive",        false),
-                ("faraday_pack",          "item",    "item_faraday_pack",           false),
+                ("encrypted_drive",       "item",    "encrypted_drive",             false),
+                ("faraday_pack",          "item",    "faraday_pack",                false),
                 // Phase 14: the sealed cigarette pack asset has shipped.
                 ("cigarette_pack_sealed", "item",    "cigarette_pack_sealed",        false),
                 ("iodine_pills",          "item",    "iodine_pills",                false),

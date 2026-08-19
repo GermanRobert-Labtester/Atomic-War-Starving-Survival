@@ -1,251 +1,313 @@
-# ASHFALL — Fallback Visual Assets (Postfix)
+# ASHFALL — Fallback Visual Assets Audit
 
-After the AssetRegistry prefix-add normalization landed, **614** catalog-driven visual entries remain unresolved.
+Generated for content catalog entries that either (a) require the registry's `ItemIdAliases` map (`mechanical_*` → `scrap_mechanical*`) or (b) are entirely missing from the asset registry.
 
-These are NOT the runtime fallback texture (the production fallback texture was never triggered — verified by `--asset-registry-selftest`). They are catalog entries whose visual asset genuinely does not exist on disk.
+Total fallback / missing rows: **301**.
 
-## Breakdown by source catalog
+## Production-safe (alias-resolved)
 
-| Source catalog | Missing count |
-|---|---|
-| `items` | 65 |
-| `year_of_ash_locations` | 63 |
-| `year_of_ash_items` | 57 |
-| `locations` | 54 |
-| `holdfast_items` | 40 |
-| `characters` | 36 |
-| `holdfast_locations` | 34 |
-| `faction_war_radio` | 33 |
-| `recipes` | 32 |
-| `faction_war_journal` | 26 |
-| `locations_expansion3` | 19 |
-| `faction_war_communiques` | 18 |
-| `faction_war_dialogue` | 18 |
-| `verdict_items` | 15 |
-| `black_flotilla_items` | 13 |
-| `crossing_locations` | 13 |
-| `foundry_items` | 13 |
-| `crossing_items` | 11 |
-| `deep_lore_locations` | 10 |
-| `greenhouse_items` | 10 |
-| `faction_war_location_overrides` | 9 |
-| `dose_items` | 5 |
-| `economy_goods` | 4 |
-| `verdict_locations` | 4 |
-| `crossing_factions` | 3 |
-| `dose_locations` | 3 |
-| `holdfast_factions` | 3 |
-| `survivors` | 2 |
-| `standing_record_factions` | 1 |
+A content ID like `mechanical_components` and `mechanical_parts` is ALIASED → `scrap_mechanical`. The `ItemIdAliases` map keeps this working — investigate whether the alias target's art is acceptable as production art for `mechanical_*` items.
 
-## Breakdown by classification
-
-| Classification | Count |
-|---|---|
-| `A.ACTUALLY_MISSING_ART` | 582 |
-| `F.REFERENCE_ONLY` | 32 |
-
-## Per-row detail (first 200)
-
-| Content ID | Catalog | Kind | Classification |
+| Content ID | Catalog | Resolved path | Why |
 |---|---|---|---|
-| `paper_scrap` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `industrial_bleach` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `ammonia_tank` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `halon_tank` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `crayon` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `brass_fittings` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `acoustic_foam_panel` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `bone_saw` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `cardboard_box` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `cigarette_pack_sealed` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `fat_rendered` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `spoiled_blood_bag` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `spoiled_canned_food` | `black_flotilla_items` | item | A.ACTUALLY_MISSING_ART |
-| `npc_bram_ostrowski` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_sergeant_pell` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_doctor_ianov` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_wren` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_kestrel` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_nomi_fisk` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_ivor_lasko` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_the_cartwright_sisters` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_edor_vale` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_yara_holm` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_leva_quist` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_cael_ormund` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_halden_mire` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_cluster_teacher` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_osran_kell` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_mattis_cray` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_wyn_sabler` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_dessa_vane` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_perrin_ashby` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_ivo_fenn` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_kess_adler` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_ansel_duth` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_tamsin_rook` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_len_quill` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_hadi_morrow` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_nila_brant` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_maren_holt` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_ira_vell` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_benno_kade` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_quil_esser` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_osric_tann` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_dara_mewn` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_dr_irina_vel` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_wyn_omah` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_piet_abar` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `npc_saria_voss` | `characters` | portrait | A.ACTUALLY_MISSING_ART |
-| `faction_the_scale` | `crossing_factions` | item | A.ACTUALLY_MISSING_ART |
-| `faction_the_underwrite` | `crossing_factions` | item | A.ACTUALLY_MISSING_ART |
-| `faction_the_compact` | `crossing_factions` | item | A.ACTUALLY_MISSING_ART |
-| `item_vouch_token_crossing` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_calibration_weight` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_crossing_traded_grain` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_crossing_traded_salt` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_crossing_pledge_slip` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_charter_three_pages` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_debt_contract_copy` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_marker_rubbing` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_duty_log_fragment` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_trade_manifest_blank` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_wyn_receipt_paid` | `crossing_items` | item | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_viaduct_gate` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_scalehouse` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_stallrow` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_watchtower` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_weighbridge` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_underwrite_hall` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_records_room` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_the_lockup` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_granary_pledge` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_nightfire` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_petition_tent` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_founders_marker` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_crossing_the_annex` | `crossing_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_municipal_library` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_sunshine_daycare` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_regional_blood_bank` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_grand_cinema` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_upland_logging_camp` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_stadium_evacuation_center` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_automated_abattoir` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_central_postal_hub` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_municipal_water_reservoir` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `location_television_studio` | `deep_lore_locations` | location | A.ACTUALLY_MISSING_ART |
-| `item_dose_ledger` | `dose_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_calibration_key` | `dose_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_dosimeter_tag` | `dose_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_palliative_morphine` | `dose_items` | item | A.ACTUALLY_MISSING_ART |
-| `item_cohort_first_board` | `dose_items` | item | A.ACTUALLY_MISSING_ART |
-| `loc_the_dose_room` | `dose_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_the_calibration_bench` | `dose_locations` | location | A.ACTUALLY_MISSING_ART |
-| `loc_the_childrens_baseline_board` | `dose_locations` | location | A.ACTUALLY_MISSING_ART |
-| `9mm_ammo` | `economy_goods` | item | A.ACTUALLY_MISSING_ART |
-| `item_foundry_brine_pipe` | `economy_goods` | item | A.ACTUALLY_MISSING_ART |
-| `item_foundry_ice_anchor` | `economy_goods` | item | A.ACTUALLY_MISSING_ART |
-| `item_foundry_winch_drum` | `economy_goods` | item | A.ACTUALLY_MISSING_ART |
-| `comm_d497_garrison_clean_strike` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d497_rebuilders_clean_strike` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d498_ash_sign_clean_strike` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d519_garrison_almshouse` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d520_rebuilders_almshouse` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d521_ash_sign_almshouse` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d537_garrison_exchange_checkpoint` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d538_rebuilders_exchange_checkpoint` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d549_garrison_ration_plaza` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d550_rebuilders_ration_plaza` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d552_ash_sign_ration_plaza` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d573_forward_roster_checkpoint` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d581_garrison_shrine_strike` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d582_rebuilders_shrine_strike` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d583_ash_sign_shrine_strike` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d591_ash_sign_ceasefire_pause` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d593_forward_roster_ceasefire_toll` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `comm_d607_garrison_forward_roster_recognition` | `faction_war_communiques` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d482_checkpoint_quartermasters` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d483_exchange_lean_pool` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d488_understory_relay_move` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d490_switchback_pilgrims` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d493_weighbridge_toll_grumble` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d497_scavengers_clean_crater` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d505_conscription_office_clerks` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d512_weighbridge_reroute` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d526_exchange_roster_kid` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d538_checkpoint_awkward_small_talk` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d552_deserter_hunters` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d549_children_after_the_plaza` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d580_shrine_keepers_doubt` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d568_toll_syndicate_cynicism` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d571_forward_roster_checkpoint` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d573_forward_roster_identity` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d584_d9_cell_debate` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `dlg_d591_switchback_waystation_doubt` | `faction_war_dialogue` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d482_mira_queue_count` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d486_fennick_ledger_entry` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d490_fossey_bean_row` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d502_denner_the_list` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d509_denner_gone_to_ground` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d518_mira_the_almshouse` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d528_adaeze_the_coats` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d536_fennick_the_new_checkpoint` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d543_mira_the_star` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d546_mira_after` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d555_adaeze_the_split` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d560_selwyn_the_frequency` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d567_fennick_the_pumphouse` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d572_forward_roster_recruit` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d575_sella_the_toll_math` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d580_toma_the_broken_pattern` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d584_d9_cell_leader` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d592_vashti_the_scale_holds` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d595_mira_the_quiet` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d598_denner_the_pause` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d601_toma_after_the_theory` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_d606_mira_the_quiet_peace` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_warlord_toll_doctrine` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_warlord_consolidation_doctrine` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_warlord_annexation_doctrine` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `journal_warlord_withdrawal_doctrine` | `faction_war_journal` | faction | A.ACTUALLY_MISSING_ART |
-| `loc_override_almshouse_pre_strike` | `faction_war_location_overrides` | faction | A.ACTUALLY_MISSING_ART |
-| `loc_override_almshouse_post_strike` | `faction_war_location_overrides` | faction | A.ACTUALLY_MISSING_ART |
-| `loc_override_ration_plaza_pre_strike` | `faction_war_location_overrides` | faction | A.ACTUALLY_MISSING_ART |
-| `loc_override_ration_plaza_post_strike` | `faction_war_location_overrides` | faction | A.ACTUALLY_MISSING_ART |
-| `loc_override_ash_sign_shrine_pre_strike` | `faction_war_location_overrides` | faction | A.ACTUALLY_MISSING_ART |
-| `loc_override_ash_sign_shrine_post_strike` | `faction_war_location_overrides` | faction | A.ACTUALLY_MISSING_ART |
-| `loc_override_span44_ambient_crater` | `faction_war_location_overrides` | faction | A.ACTUALLY_MISSING_ART |
-| `loc_override_forward_roster_camp_ambient` | `faction_war_location_overrides` | faction | A.ACTUALLY_MISSING_ART |
-| `loc_override_understory_transmitter_ambient` | `faction_war_location_overrides` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d480_span44_automated_loop` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d481_garrison_continuity_bulletin` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d484_exchange_roster_wire_rebuttal` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d487_unsigned_supply_figures` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d488_garrison_grain_rebuttal` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d490_ash_sign_shrine_transmission` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d493_toll_syndicate_rate_notice` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d496_understory_clean_strike` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d504_garrison_conscription_notice` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d507_exchange_roster_wire_conscription` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d510_understory_span44_standoff` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d516_ash_sign_warning` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d518_garrison_almshouse_bulletin` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d522_ash_sign_reading_shift` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d525_exchange_roster_wire_prices` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d534_garrison_exchange_order` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d542_understory_something_coming` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d546_garrison_plaza_communique` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d547_rebuilders_plaza_communique` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d559_lima_november_burst` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d566_toll_syndicate_quiet_line` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d571_forward_roster_checkpoint_notice` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d579_ash_sign_shrine_anomaly` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d585_understory_spur_road_notice` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d589_garrison_ceasefire_notice` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d590_rebuilders_ceasefire_notice` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d596_forward_roster_holding_position` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d600_understory_closing` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_d606_forward_roster_recognition_notice` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_warlord_toll_standing` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
-| `radio_warlord_consolidation` | `faction_war_radio` | faction | A.ACTUALLY_MISSING_ART |
+| `blood_bag` | `Assets/StreamingAssets/Data/black_flotilla_items.json` | `assets/art/item_blood_bag.jpg` | alias-resolved |
+| `npc_sergeant_pell` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_doctor_ianov` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_wren` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_kestrel` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_nomi_fisk` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_ivor_lasko` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_the_cartwright_sisters` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_edor_vale` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_yara_holm` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_leva_quist` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_halden_mire` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_osran_kell` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_mattis_cray` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_wyn_sabler` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_dessa_vane` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_perrin_ashby` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_ivo_fenn` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_kess_adler` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_tamsin_rook` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_len_quill` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_hadi_morrow` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_nila_brant` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_maren_holt` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_ira_vell` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_quil_esser` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_osric_tann` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_dara_mewn` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_dr_irina_vel` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_wyn_omah` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_piet_abar` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `npc_saria_voss` | `Assets/StreamingAssets/Data/characters.json` | `MISSING` | MISSING |
+| `faction_the_scale` | `Assets/StreamingAssets/Data/crossing_factions.json` | `MISSING` | MISSING |
+| `faction_the_underwrite` | `Assets/StreamingAssets/Data/crossing_factions.json` | `MISSING` | MISSING |
+| `faction_the_compact` | `Assets/StreamingAssets/Data/crossing_factions.json` | `MISSING` | MISSING |
+| `loc_crossing_viaduct_gate` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_scalehouse` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_stallrow` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_watchtower` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_weighbridge` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_underwrite_hall` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_records_room` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_the_lockup` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_granary_pledge` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_nightfire` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_petition_tent` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_founders_marker` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `loc_crossing_the_annex` | `Assets/StreamingAssets/Data/crossing_locations.json` | `MISSING` | MISSING |
+| `location_municipal_library` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `location_sunshine_daycare` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `location_regional_blood_bank` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `location_grand_cinema` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `location_upland_logging_camp` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `location_stadium_evacuation_center` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `location_automated_abattoir` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `location_central_postal_hub` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `location_municipal_water_reservoir` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `location_television_studio` | `Assets/StreamingAssets/Data/deep_lore_locations.json` | `MISSING` | MISSING |
+| `loc_the_dose_room` | `Assets/StreamingAssets/Data/dose_locations.json` | `MISSING` | MISSING |
+| `loc_the_calibration_bench` | `Assets/StreamingAssets/Data/dose_locations.json` | `MISSING` | MISSING |
+| `loc_the_childrens_baseline_board` | `Assets/StreamingAssets/Data/dose_locations.json` | `MISSING` | MISSING |
+| `9mm_ammo` | `Assets/StreamingAssets/Data/economy_goods.json` | `MISSING` | MISSING |
+| `faction_the_office` | `Assets/StreamingAssets/Data/holdfast_factions.json` | `MISSING` | MISSING |
+| `faction_the_cutters` | `Assets/StreamingAssets/Data/holdfast_factions.json` | `MISSING` | MISSING |
+| `faction_the_fleet` | `Assets/StreamingAssets/Data/holdfast_factions.json` | `MISSING` | MISSING |
+| `loc_ice_road_gate` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cut_kilometre_19` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cut_weigh_hut` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cut_dredger_hulk` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cut_brine_pool` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cut_waystation_a` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cut_accident_12` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cut_south_beacon` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_salt_membrane_hall` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_salt_intake_caisson` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_salt_iodine_store` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_salt_outfall` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_salt_grade_hut` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_salt_cooling_canal` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_salt_scrap_membranes` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cluster_gatehouse` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cluster_quad` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cluster_block_c` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cluster_clinic` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cluster_school` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cluster_office` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_cluster_steam_substation` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_shelf_hearth4` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_shelf_roadstead_crane` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_shelf_pressure_ridge` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_shelf_foghorn` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_shelf_perimeter_breakwater` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_shelf_service_channel` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_shelf_deep_berth` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_the_shallows_market` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_weighbridge` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_toll_house` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_the_allotments` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_low_background_lab` | `Assets/StreamingAssets/Data/holdfast_locations.json` | `MISSING` | MISSING |
+| `loc_veterinary_surgery` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_school_gymnasium` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_cider_press` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_terrace_pumphouse` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_ration_queue_plaza` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_conscription_office` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_municipal_archive` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_dentists_row` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_transit_authority_hq` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_printworks` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_department_store` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_public_swimming_baths` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_st_brigids_almshouse` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_motel_verity` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_bridge_seven` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_recovery_yard` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_ordnance_shoulder` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_bus_reversal_loop` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_diesel_tank_farm` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_radio_relay_mast` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_ash_sign_shrine` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_pilgrim_switchbacks` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_snowline_station` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_ice_core_store` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_avalanche_gallery` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_summit_relay` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_the_vessels_cell` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_lock_gate_four` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_pump_station_nine` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_alloc_12b` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_records_annex` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_drowned_cinema` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_cold_store_atlantic` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_bathymetric_boat` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `checkpoint_kilo_armory` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `hospital_pharmacy` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `family_bunker_backyard_shed` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `old_library_cache` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `convoy_echo7_cache` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `raider_ambush_site` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `collapsed_building` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `raider_trap_location` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `electrical_substation` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `ruined_garage` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `concert_hall_ruins` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_grain_silo` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_garrison_checkpoint_gamma` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_railway_span_44_alpha` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_forward_roster_camp` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_shrine_switchback_waystation` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_understory_transmitter` | `Assets/StreamingAssets/Data/locations.json` | `MISSING` | MISSING |
+| `loc_civil_defense_bunker` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_water_treatment_plant` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_highway_checkpoint` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_substation_yard` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_regional_hospital` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_suburban_district` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_train_yard` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_comm_array` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_ash_woodland` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_urban_pharmacy` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_missile_silo` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_fuel_depot` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_metro_tunnel` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_agricultural_coop` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_basement_vault` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_police_precinct` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_botanical_nursery` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_evacuation_bus_depot` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `loc_coal_mine` | `Assets/StreamingAssets/Data/locations_expansion3.json` | `MISSING` | MISSING |
+| `faction_the_overlay` | `Assets/StreamingAssets/Data/standing_record_factions.json` | `MISSING` | MISSING |
+| `survivor_family_child` | `Assets/StreamingAssets/Data/survivors.json` | `MISSING` | MISSING |
+| `loc_geophone_pit_1` | `Assets/StreamingAssets/Data/verdict_locations.json` | `MISSING` | MISSING |
+| `loc_twelve_gauge_array` | `Assets/StreamingAssets/Data/verdict_locations.json` | `MISSING` | MISSING |
+| `loc_network_fuse_bunker` | `Assets/StreamingAssets/Data/verdict_locations.json` | `MISSING` | MISSING |
+| `loc_archive_tape_silo` | `Assets/StreamingAssets/Data/verdict_locations.json` | `MISSING` | MISSING |
+| `npc_eden_vale` | `Assets/StreamingAssets/Data/verdict_npcs.json` | `MISSING` | MISSING |
+| `npc_ferris_voss` | `Assets/StreamingAssets/Data/verdict_npcs.json` | `MISSING` | MISSING |
+| `npc_iran_bell` | `Assets/StreamingAssets/Data/verdict_npcs.json` | `MISSING` | MISSING |
+| `npc_selya_saltmarsh` | `Assets/StreamingAssets/Data/verdict_npcs.json` | `MISSING` | MISSING |
+| `npc_maro_veen` | `Assets/StreamingAssets/Data/verdict_npcs.json` | `MISSING` | MISSING |
+| `npc_whisper_cipher` | `Assets/StreamingAssets/Data/verdict_npcs.json` | `MISSING` | MISSING |
+| `item_corrosion_inhibitor_drum` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_icebreaker_rendezvous_flare_rocket` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_artillery_fuze_wrench` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_brass_stamping_die` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_ammonium_nitrate_sack` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_railroad_hydraulic_spike_puller` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_telegraph_sounder_relay` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_periscope_optics_prism` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_cyanide_antidote_kit` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_mercury_barometer_station` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_tungsten_carbide_drill_bit` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_paraffin_wax_neutron_shield` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_zinc_bromide_shielding_window` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_potassium_permanganate_crystals` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_hydro_baron_queue_chit` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_prewar_diagnostic_scanner` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_deserter_coalition_forged_papers` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_scavenger_guild_claim_marker` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_long_walk_route_ledger` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_cold_count_provenance_seal` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_unsigned_debt_ledger_page` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_amnesty_petition_dossier` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `item_garrison_manifest_forgery_kit` | `Assets/StreamingAssets/Data/year_of_ash_items.json` | `MISSING` | MISSING |
+| `loc_denial_cut_substation` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_brine_pumping_sluice` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_continental_radio_beacon` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_geothermal_well_alpha` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_black_thaw_drainage_basin` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_maritime_icebreaker_dock` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_rhizome_research_vault` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_ash_sign_cathedral_crater` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_sector_4_rail_switchyard` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_hydro_baron_aqueduct_manifold` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_granite_pass_weather_observatory` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_d9_cache_bunker_delta` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_flooded_quarry_cistern` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_sub_level_maintenance_shaft_9` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_garrison_motor_pool` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_rebuilder_brickworks_kiln` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_continental_convoy_staging_area` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_salt_cavern_medical_depot` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_collapsed_valley_viaduct` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_hydro_baron_desal_plant_4` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_mountain_tunnel_refuge` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_radioisotope_power_station` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_frozen_river_ferry_crossing` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_garrison_signal_bunker_echo` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_d9_culvert_junction_bravo` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_allotment_glasshouse_complex` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_aurora_borealis_grounding_shoal` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_granite_arsenal_foundry` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_railway_guild_roundhouse` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_penal_pioneer_trench_sector` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_deep_salt_hospital_sanctuary` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_supply_corps_highway_redoubt` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_shelled_grain_elevator_ruin` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_vitrified_train_derailment_cut` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_flooded_hydro_pump_cavern` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_poison_gas_culvert_marsh` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_garrison_artillery_emplacement_bravo` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_ash_sign_pyre_cliff` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_railway_telegraph_repeater_hut` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_collapsed_peat_kiln_bunker` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_ammonium_nitrate_fertilizer_shed` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_breached_civil_defense_cache_9` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_hydro_baron_ledger_office` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_d9_underground_telecom_vault` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_penal_quarry_crusher_plant` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_salt_miners_barter_hall` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_arctic_ice_channel_buoy_12` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_shelled_church_belltower_lookout` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_vitrified_crater_spring_pool` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_garrison_court_martial_cellar` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_ash_militia_deadfall_barrier` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_sub_level_sewer_interceptor_6` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_abandoned_half_track_convoy_wreck` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_salt_cavern_explosives_magazine` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_coastal_fog_signal_station` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_high_granite_mortar_pit_charlie` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_the_final_dawn_outlook` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_muster_treeline_camp` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_second_winter_homestead` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_scavenger_guildhall` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_iron_raiders_den` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_the_tally_hall` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `loc_amnesty_petition_hall` | `Assets/StreamingAssets/Data/year_of_ash_locations.json` | `MISSING` | MISSING |
+| `survivor_ottilie_frayne` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_anneke_ruhl` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_corporal_felix_vane` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_sister_martha` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_tomas_lind` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_valeria_koss` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_naomi_strand` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_pavel_volkov` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_zoya_reid` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_captain_alder` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_lydia_hart` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_dr_erik_dahl` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_igor_morozov` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_clara_sloan` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_vera_sokolov` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_marcus_vane` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_first_officer_lindqvist` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_colonel_brand` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_ansel_duth` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_hadi_morrow` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_kess_adler` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_len_quill` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_markov_arsenal_assayer` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_talia_upland_commander` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_provost_kroll` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_hierophant_malachi` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_sapper_vance` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_elena_vasquez_rail` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_gregor_salt_miner` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_marina_supply_driver` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_yuri_foundry_caster` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_nadia_militia_scout` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_boris_penal_medic` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
+| `survivor_anton_salt_trader` | `Assets/StreamingAssets/Data/year_of_ash_survivors.json` | `MISSING` | MISSING |
