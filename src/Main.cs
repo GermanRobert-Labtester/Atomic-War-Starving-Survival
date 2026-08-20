@@ -1,5 +1,9 @@
-using Godot;
-using System;
+// TODO(phase12): Main.cs is a 6,640-line partial-class monolith with 74 Setup/Save/Flush triads.
+// Risk: triad drift (Setup without Save) is mitigated by I1/I2 fixes, but the file remains
+// hard to navigate. Consider splitting into per-domain partials (EconomyHostSession, JournalHostSession,
+// SurvivorsHostSession, etc.) and move the 74 triad methods into those files. Keep this file
+// as the single entry point that wires systems and owns the Godot scene tree.
+
 using System.Globalization;
 using System.IO;
 using System.Linq;
