@@ -4,12 +4,15 @@
 // SurvivorsHostSession, etc.) and move the 74 triad methods into those files. Keep this file
 // as the single entry point that wires systems and owns the Godot scene tree.
 
+using Godot;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using AtomicWar.Journal;
 using Ashfall.Core;
+using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Foundry;
@@ -27,6 +30,8 @@ using AtomicWar.GodotApp.UtilityAI;
 using AtomicWar.GodotApp.Radio;
 using AtomicWar.GodotApp.Audio;
 using AtomicWar.GodotApp.UI;
+
+
 
 namespace AtomicWar.GodotApp
 {
@@ -56,6 +61,13 @@ namespace AtomicWar.GodotApp
         private PhantomMemoryHostSession _phantomMemory = null!;
         private Phase0HostSession _phase0 = null!;
         private bool _phase0Dirty;
+
+        // Phase 0 — Campaign Day Coordinator (single authority for day-advance)
+        private CampaignDayCoordinator _campaignDay = null!;
+        private DailyBriefingState _dailyBriefing = null!;
+        private DailyBriefingModal _dailyBriefingModal = null!;
+        private bool _briefingPending;
+        private bool _dailyBriefingDirty;
         private DoseLedgerHostSession _doseLedger = null!;
         private bool _doseLedgerDirty;
         private DoseRegisterSurface _doseSurface = null!;
@@ -201,6 +213,9 @@ namespace AtomicWar.GodotApp
         private StartingLevelHostSession _startingLevel = null!;
         private bool _startingLevelDirty;
         private OpeningProtocolModal _openingProtocolModal = null!;
+        private PowerGridHostSession _powerGrid = null!;
+        private PowerGridPanel _powerGridPanel = null!;
+        private bool _powerGridDirty;
         private GreenhouseHostSession _greenhouse = null!;
         private GreenhousePanel _greenhousePanel = null!;
         private bool _greenhouseDirty;
@@ -1720,6 +1735,8 @@ namespace AtomicWar.GodotApp
 
             SetupGreenhouse();
             _greenhouse.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.04f);
+
+            TickPowerGrid(day);
 
             // Phase 0 (psychological/medical effects) advances on the real day clock:
             // refresh environment signals from the world/shelter hosts, then tick all
@@ -3638,6 +3655,118 @@ namespace AtomicWar.GodotApp
                 _startingLevelDirty = false;
                 GD.Print("[Ashfall Godot] Starting level save written.");
             }
+        }
+
+        // ── POWER GRID (item 13) ────────────────────────────────────────────
+
+        private void SetupPowerGrid()
+        {
+            if (_powerGrid != null) return;
+            var rng = new Ashfall.Core.SeededRng(unchecked(_simDay * 31 + 7));
+            _powerGrid = PowerGridHostSession.CreateDefault(rng);
+            _powerGrid.TryLoad();
+            _powerGrid.OnStateChanged += () => _powerGridDirty = true;
+        }
+
+        private void SavePowerGrid()
+        {
+            if (_powerGrid == null) return;
+            if (_powerGrid.TrySave()) _powerGridDirty = false;
+        }
+
+        private void TickPowerGrid(int day)
+        {
+            SetupPowerGrid();
+            _powerGrid.TickDay(day);
+            if (_powerGridDirty) SavePowerGrid();
+        }
+
+        private void OpenPowerGrid()
+        {
+            SetupPowerGrid();
+            if (_powerGridPanel == null)
+            {
+                _powerGridPanel = new PowerGridPanel();
+                _powerGridPanel.OnRoomToggled += id => _powerGrid.ToggleBreaker(id);
+                _powerGridPanel.OnPriorityChanged += (id, p) => _powerGrid.SetPriority(id, p);
+                _powerGridPanel.OnFuelAdded += u => _powerGrid.AddFuel(u);
+                AddChild(_powerGridPanel);
+            }
+            _powerGridPanel.Bind(_powerGrid);
+            _powerGridPanel.Open();
+        }
+
+        // ── PHASE 0 / CAMPAIGN DAY COORDINATOR ───────────────────────────
+
+        private const string DailyBriefingSaveKey = "daily_briefing_v1";
+
+        private void SetupCampaignDay()
+        {
+            if (_campaignDay != null) return;
+            _campaignDay = new CampaignDayCoordinator();
+            _dailyBriefing = new DailyBriefingState();
+            LoadDailyBriefing();
+        }
+
+        private void SetupDailyBriefingModal()
+        {
+            if (_dailyBriefingModal != null) return;
+            _dailyBriefingModal = new DailyBriefingModal();
+            _dailyBriefingModal.OnAcknowledged += OnBriefingAcknowledged;
+            AddChild(_dailyBriefingModal);
+            _dailyBriefingModal.Hide();
+        }
+
+        private void LoadDailyBriefing()
+        {
+            try
+            {
+                var loaded = DailyBriefingSaveStore.TryLoad();
+                if (loaded != null) _dailyBriefing.RestoreState(loaded);
+            }
+            catch (Exception e)
+            {
+                GD.PushWarning("[Ashfall Godot] DailyBriefing load failed: " + e.Message);
+                _dailyBriefing = new DailyBriefingState();
+            }
+        }
+
+        private void SaveDailyBriefing()
+        {
+            if (_dailyBriefing == null) return;
+            try
+            {
+                var save = _dailyBriefing.CaptureState();
+                if (DailyBriefingSaveStore.TrySave(save)) _dailyBriefingDirty = false;
+            }
+            catch (Exception e)
+            {
+                GD.PushWarning("[Ashfall Godot] DailyBriefing save failed: " + e.Message);
+            }
+        }
+
+        private void OnBriefingAcknowledged(int day)
+        {
+            _briefingPending = false;
+            if (_dailyBriefing == null) return;
+            _dailyBriefing.Consume(day);
+            _dailyBriefingDirty = true;
+            if (_dailyBriefingDirty) SaveDailyBriefing();
+            UpdateHud();
+        }
+
+        /// <summary>
+        /// Flushes dirty save stores that were marked during the in-flight day
+        /// advance. Invoked by the campaign-day coordinator before the briefing
+        /// modal opens so a crash mid-modal does not lose the day's mutations.
+        /// </summary>
+        internal void FlushDirtyStoresForDayAdvance()
+        {
+            if (_dailyBriefingDirty) SaveDailyBriefing();
+            // The remaining save stores flush through their standard paths
+            // when SaveAll runs at the tail of CommitAdvance. Anything that
+            // cannot tolerate a deferred flush should set its own dirty flag
+            // and call its Save*() here.
         }
 
         private void CloseOpeningProtocolModal()
@@ -5942,6 +6071,8 @@ namespace AtomicWar.GodotApp
             SaveStartingLevel();
             SaveGreenhouse();
             SaveRadio();
+            SaveDailyBriefing();
+            SavePowerGrid();
             _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
         }
 
@@ -5962,7 +6093,8 @@ namespace AtomicWar.GodotApp
                 _combatDetailPanel, _crossingQuestPanel, _saveLoadPanel, _tutorialPanel, _afflictionsPanel,
                 _statusPanel, _survivalDetailPanel, _weatherForecastPanel,
                 _radiationHistoryPanel, _journalDetailPanel, _combatHistoryPanel,
-                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal
+                _mapDetailPanel, _eventDetailPanel, _openingProtocolModal,
+                _dailyBriefingModal
             };
 
             foreach (Control panel in panels)
@@ -5970,6 +6102,8 @@ namespace AtomicWar.GodotApp
                 if (panel != null && panel.Visible)
                     return true;
             }
+            if (_briefingPending && _dailyBriefingModal != null && _dailyBriefingModal.IsOpen)
+                return true;
             return false;
         }
 
@@ -6058,20 +6192,68 @@ namespace AtomicWar.GodotApp
         private void CommitAdvance()
         {
             SetupIceRoad();
-            string delta = _core.TickDay();
-            _simDay = _core.Clock.Day;
-            TickSimDay(_simDay);
-            _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.DayTransition);
-            _statusLabel.Text = $"Day {_core.Clock.Day} advanced ({delta})";
-            UpdateHud();
+            SetupCampaignDay();
 
-            // Reset confirmation gate so the next click starts fresh.
-            _advanceConfirmed = false;
-            _advanceCancelled = false;
-            _advanceTimerRemaining = 0;
+            int targetDay = _core.Clock.Day + 1;
 
-            var settings = AtomicWar.GodotApp.Settings.UserSettingsStore.Current;
-            if (settings.AutoSaveOnDay) SaveAll();
+            // Re-entrance guard: if a previous CommitAdvance is still in flight,
+            // or if the player hammered the button for an already-completed day,
+            // refuse the second call. This is the only place that owns the gate.
+            if (!_campaignDay.TryBegin(targetDay))
+            {
+                _statusLabel.Text = $"Day {targetDay} re-entrant guard tripped (skipped duplicate).";
+                return;
+            }
+
+            try
+            {
+                string delta = _core.TickDay();
+                _simDay = _core.Clock.Day;
+                TickSimDay(_simDay);
+
+                // Notify the coordinator (it tracks the last-advanced day and
+                // lets the host build a typed report from owner results).
+                _campaignDay.Advance(targetDay, new CampaignDayPersistenceAdapter(this));
+
+                _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.DayTransition);
+                _statusLabel.Text = $"Day {_core.Clock.Day} advanced ({delta})";
+                UpdateHud();
+
+                ShowBriefingForDay(_simDay);
+
+                var settings = AtomicWar.GodotApp.Settings.UserSettingsStore.Current;
+                if (settings.AutoSaveOnDay) SaveAll();
+            }
+            finally
+            {
+                _advanceConfirmed = false;
+                _advanceCancelled = false;
+                _advanceTimerRemaining = 0;
+                // Release the coordinator's gate so the next click can advance.
+                _campaignDay.EndAdvance();
+            }
+        }
+
+        /// <summary>
+        /// Builds the typed <see cref="DailyBriefingInputs"/> snapshot and shows
+        /// the briefing modal. Blocks further simulation until acknowledged.
+        /// </summary>
+        private void ShowBriefingForDay(int day)
+        {
+            SetupDailyBriefingModal();
+            var inputs = new DailyBriefingInputs
+            {
+                Day = day,
+                GeneratedUtc = DateTime.UtcNow.ToString("o"),
+                BuildSeed = day
+            };
+            var report = DailyBriefingReportBuilder.Build(inputs);
+            if (report.IsEmpty) return;
+            _dailyBriefing.Enqueue(report);
+            _dailyBriefingDirty = true;
+            SaveDailyBriefing();
+            _briefingPending = true;
+            _dailyBriefingModal.Show(report);
         }
 
         private void OnCycleWeatherClicked()

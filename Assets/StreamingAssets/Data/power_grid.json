@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "generation_watts_default": 800,
+  "battery_capacity_wh_default": 4000,
+  "fuel_units_default": 100,
+  "rooms": [
+    {
+      "id": "room_air_filtration",
+      "display_name": "Air Filtration",
+      "draw_watts": 180,
+      "default_priority": "critical",
+      "failure_effect_id": "fx_filtration_off"
+    },
+    {
+      "id": "room_clinic",
+      "display_name": "Clinic",
+      "draw_watts": 120,
+      "default_priority": "critical",
+      "failure_effect_id": "fx_clinic_off"
+    },
+    {
+      "id": "room_water_pump",
+      "display_name": "Water Pump",
+      "draw_watts": 100,
+      "default_priority": "critical",
+      "failure_effect_id": "fx_water_pressure_drop"
+    },
+    {
+      "id": "room_greenhouse",
+      "display_name": "Greenhouse",
+      "draw_watts": 160,
+      "default_priority": "standard",
+      "failure_effect_id": "fx_grow_lights_off"
+    },
+    {
+      "id": "room_foundry",
+      "display_name": "Silent Foundry",
+      "draw_watts": 220,
+      "default_priority": "low",
+      "failure_effect_id": "fx_foundry_standstill"
+    },
+    {
+      "id": "room_lighting_main",
+      "display_name": "Main Lighting",
+      "draw_watts": 80,
+      "default_priority": "low",
+      "failure_effect_id": "fx_lighting_dim"
+    }
+  ]
+}
