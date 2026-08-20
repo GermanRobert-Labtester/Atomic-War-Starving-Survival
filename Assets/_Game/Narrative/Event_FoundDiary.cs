@@ -42,12 +42,17 @@ namespace AtomicWar._Game.Narrative
         /// </summary>
         public void DiscoverDiary(string finderId, string ownerOfDiaryId, bool hasConfession)
         {
-            _state.finderId = finderId;
-            _state.ownerOfDiaryId = ownerOfDiaryId;
-            _state.containsConfession = hasConfession;
-            _state.resolved = false;
+            var state = _state;
+            state.finderId = finderId;
+            state.ownerOfDiaryId = ownerOfDiaryId;
+            state.containsConfession = hasConfession;
+            state.resolved = false;
 
-            OnDiaryFound?.Invoke(finderId, ownerOfDiaryId);
+            var handler = OnDiaryFound;
+            if (handler != null)
+            {
+                handler(finderId, ownerOfDiaryId);
+            }
         }
 
         /// <summary>
@@ -56,13 +61,18 @@ namespace AtomicWar._Game.Narrative
         /// </summary>
         public void StartBlackmail(string blackmailerId, string targetId)
         {
-            if (!_state.containsConfession) return;
+            var state = _state;
+            if (!state.containsConfession) return;
 
-            _state.blackmailerId = blackmailerId;
-            _state.targetId = targetId;
-            _state.blackmailActive = true;
+            state.blackmailerId = blackmailerId;
+            state.targetId = targetId;
+            state.blackmailActive = true;
 
-            OnBlackmailStarted?.Invoke(blackmailerId, targetId);
+            var handler = OnBlackmailStarted;
+            if (handler != null)
+            {
+                handler(blackmailerId, targetId);
+            }
         }
 
         /// <summary>
@@ -71,19 +81,24 @@ namespace AtomicWar._Game.Narrative
         /// </summary>
         public void ResolveBlackmail(string targetId, bool playerIntervened)
         {
-            if (!_state.blackmailActive) return;
+            var state = _state;
+            if (!state.blackmailActive) return;
 
             // If player did not intervene, the blackmailer consumed extra rations
             // (the caller is responsible for deducting rations from the supply system)
             if (!playerIntervened)
             {
-                GameLog.Log($"[FoundDiary] Blackmail unresolved by player. Extra rations consumed by {_state.blackmailerId}.");
+                GameLog.Log($"[FoundDiary] Blackmail unresolved by player. Extra rations consumed by {state.blackmailerId}.");
             }
 
-            _state.blackmailActive = false;
-            _state.resolved = true;
+            state.blackmailActive = false;
+            state.resolved = true;
 
-            OnBlackmailResolved?.Invoke(targetId);
+            var handler = OnBlackmailResolved;
+            if (handler != null)
+            {
+                handler(targetId);
+            }
         }
 
         public FoundDiaryState CaptureState()
@@ -94,13 +109,14 @@ namespace AtomicWar._Game.Narrative
         public void RestoreState(FoundDiaryState state)
         {
             if (state == null) return;
-            _state.containsConfession = state.containsConfession;
-            _state.blackmailActive = state.blackmailActive;
-            _state.finderId = state.finderId;
-            _state.ownerOfDiaryId = state.ownerOfDiaryId;
-            _state.blackmailerId = state.blackmailerId;
-            _state.targetId = state.targetId;
-            _state.resolved = state.resolved;
+            var s = _state;
+            s.containsConfession = state.containsConfession;
+            s.blackmailActive = state.blackmailActive;
+            s.finderId = state.finderId;
+            s.ownerOfDiaryId = state.ownerOfDiaryId;
+            s.blackmailerId = state.blackmailerId;
+            s.targetId = state.targetId;
+            s.resolved = state.resolved;
         }
     }
 }

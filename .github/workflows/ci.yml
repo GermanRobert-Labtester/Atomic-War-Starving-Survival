@@ -67,6 +67,7 @@ jobs:
   #                   on any unassigned reference, so the build step below failing
   #                   IS the check.
   regenerate:
+    if: ${{ env.UNITY_LICENSE != '' }}
     name: Generated Assets Are Current
     needs: validate
     runs-on: ubuntu-latest
@@ -112,6 +113,7 @@ jobs:
           echo "OK: generated data assets are current."
 
   test:
+    if: ${{ env.UNITY_LICENSE != '' }}
     name: EditMode Tests
     needs: validate
     runs-on: ubuntu-latest
@@ -144,6 +146,7 @@ jobs:
           path: test-results
 
   test-playmode:
+    if: ${{ env.UNITY_LICENSE != '' }}
     name: PlayMode Tests
     needs: validate
     runs-on: ubuntu-latest
@@ -176,6 +179,7 @@ jobs:
           path: test-results-playmode
 
   build-linux:
+    if: ${{ env.UNITY_LICENSE != '' }}
     name: Build Linux64
     needs: [test, test-playmode]
     runs-on: ubuntu-latest
