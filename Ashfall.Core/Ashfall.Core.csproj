@@ -9,17 +9,16 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <!--
-    The core SOURCE lives at ../Assets/Ashfall.Core/ because Unity only compiles C#
-    under Assets/. Keeping one copy there and globbing it from here means Unity (via
-    AtomicWar.Ashfall.Core.asmdef), Godot (via Ashfall.csproj) and these xunit tests
-    all compile the exact same files. Do not copy core sources back into this folder.
+    The core SOURCE lives at ../Assets/Ashfall.Core/ and is compiled by the
+    Godot host (via Ashfall.csproj) and these xunit tests from the same files.
+    Do not copy core sources back into this folder.
   -->
   <PropertyGroup>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="../Assets/Ashfall.Core/**/*.cs" />
+    <Compile Include="../Assets/Ashfall.Core/**/*.cs" Exclude="../Assets/Ashfall.Core/AtomicWar.Ashfall.Core.asmdef" />
   </ItemGroup>
 
   <ItemGroup>
