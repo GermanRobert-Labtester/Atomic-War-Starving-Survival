@@ -68,6 +68,18 @@ namespace AtomicWar.GodotApp
         private DailyBriefingModal _dailyBriefingModal = null!;
         private bool _briefingPending;
         private bool _dailyBriefingDirty;
+
+        // Phase 1.7 — Medical Ward (item 11)
+        private Ashfall.Core.Medical.MedicalWardSystem _medicalWard = null!;
+        private bool _medicalWardDirty;
+        // Phase 1.9 — Memorial (item 15)
+        private Ashfall.Core.Memorial.MemorialSystem _memorial = null!;
+        private bool _memorialDirty;
+        // Phase 2.10 — Travel Map (item 4)
+        private Ashfall.Core.World.WastelandMapSystem _wastelandMap = null!;
+        // Phase 2.11 — Encounter Choice Resolver (item 5)
+        private Ashfall.Core.Expeditions.EncounterChoiceResolver _encounterChoice = null!;
+        private bool _encounterChoiceDirty;
         private DoseLedgerHostSession _doseLedger = null!;
         private bool _doseLedgerDirty;
         private DoseRegisterSurface _doseSurface = null!;
@@ -3726,6 +3738,144 @@ namespace AtomicWar.GodotApp
             _powerGridPanel.Open();
         }
 
+        // ── MEDICAL WARD (item 11) ─────────────────────────────────────
+
+        private void SetupMedicalWard()
+        {
+            if (_medicalWard != null) return;
+            var beds = new List<Ashfall.Core.Medical.MedicalBed>
+            {
+                new Ashfall.Core.Medical.MedicalBed("bed_general_a", "General A", Ashfall.Core.Medical.MedicalBedCategory.General),
+                new Ashfall.Core.Medical.MedicalBed("bed_general_b", "General B", Ashfall.Core.Medical.MedicalBedCategory.General),
+                new Ashfall.Core.Medical.MedicalBed("bed_surgical", "Surgical", Ashfall.Core.Medical.MedicalBedCategory.Surgical),
+                new Ashfall.Core.Medical.MedicalBed("bed_isolation", "Isolation", Ashfall.Core.Medical.MedicalBedCategory.Isolation, isolation: true),
+                new Ashfall.Core.Medical.MedicalBed("bed_chelation", "Chelation", Ashfall.Core.Medical.MedicalBedCategory.Chelation)
+            };
+            var procs = new List<Ashfall.Core.Medical.MedicalProcedureDef>
+            {
+                new Ashfall.Core.Medical.MedicalProcedureDef("proc_bandage", "Bandage", "MedicalSystem"),
+                new Ashfall.Core.Medical.MedicalProcedureDef("proc_chelation", "Chelation", "DoseLedgerSystem"),
+                new Ashfall.Core.Medical.MedicalProcedureDef("proc_surgery", "Surgery", "MedicalSystem")
+            };
+            _medicalWard = new Ashfall.Core.Medical.MedicalWardSystem(
+                new Ashfall.Core.Medical.MedicalWardState(), beds, procs);
+            _medicalWard.OnWardChanged += _ => _medicalWardDirty = true;
+            LoadMedicalWard();
+        }
+
+        private void SaveMedicalWard()
+        {
+            if (_medicalWard == null) return;
+            try
+            {
+                var save = new Ashfall.Core.Medical.MedicalWardSave
+                {
+                    simDay = _simDay,
+                    Beds = new List<Ashfall.Core.Medical.MedicalBedSave>(),
+                    Procedures = _medicalWard.Procedures.ToList(),
+                    State = _medicalWard.CaptureState()
+                };
+                if (MedicalWardSaveStore.TrySave(save))
+                    _medicalWardDirty = false;
+            }
+            catch (Exception e)
+            {
+                GD.PushWarning("[Ashfall Godot] MedicalWard save failed: " + e.Message);
+            }
+        }
+
+        private void LoadMedicalWard()
+        {
+            try
+            {
+                var loaded = MedicalWardSaveStore.TryLoad();
+                if (loaded != null) _medicalWard.RestoreState(loaded.State);
+            }
+            catch (Exception e)
+            {
+                GD.PushWarning("[Ashfall Godot] MedicalWard load failed: " + e.Message);
+            }
+        }
+
+        // ── MEMORIAL (item 15) ──────────────────────────────────────────
+
+        private void SetupMemorial()
+        {
+            if (_memorial != null) return;
+            _memorial = new Ashfall.Core.Memorial.MemorialSystem(
+                new Ashfall.Core.Memorial.MemorialState());
+            _memorial.OnMemorialized += _ => _memorialDirty = true;
+            LoadMemorial();
+        }
+
+        private void LoadMemorial()
+        {
+            try
+            {
+                var loaded = MemorialSaveStore.TryLoad();
+                if (loaded != null) _memorial.RestoreState(loaded.State);
+            }
+            catch (Exception e)
+            {
+                GD.PushWarning("[Ashfall Godot] Memorial load failed: " + e.Message);
+            }
+        }
+
+        private void SaveMemorial()
+        {
+            if (_memorial == null) return;
+            try
+            {
+                var save = new Ashfall.Core.Memorial.MemorialSave
+                {
+                    simDay = _simDay,
+                    State = _memorial.CaptureState()
+                };
+                if (MemorialSaveStore.TrySave(save))
+                    _memorialDirty = false;
+            }
+            catch (Exception e)
+            {
+                GD.PushWarning("[Ashfall Godot] Memorial save failed: " + e.Message);
+            }
+        }
+
+        // ── TRAVEL MAP (item 4) ─────────────────────────────────────────
+
+        private void SetupWastelandMap()
+        {
+            if (_wastelandMap != null) return;
+            var nodes = new List<Ashfall.Core.World.MapNode>
+            {
+                new Ashfall.Core.World.MapNode { Id = "loc_holdfast", DisplayName = "Holdfast",
+                    PositionX = 500, PositionY = 300, StartingUnlocked = true },
+                new Ashfall.Core.World.MapNode { Id = "loc_cut_abandoned_depot", DisplayName = "Abandoned Depot",
+                    PositionX = 700, PositionY = 200, Discoverable = true },
+                new Ashfall.Core.World.MapNode { Id = "loc_cut_merchant_caravanserai", DisplayName = "Merchant Caravanserai",
+                    PositionX = 400, PositionY = 200, Discoverable = true, StartingUnlocked = true },
+                new Ashfall.Core.World.MapNode { Id = "loc_black_flotilla_outpost", DisplayName = "Black Flotilla Outpost",
+                    PositionX = 600, PositionY = 500, Discoverable = true }
+            };
+            var routes = new List<Ashfall.Core.World.MapRoute>
+            {
+                new Ashfall.Core.World.MapRoute { From = "loc_holdfast", To = "loc_cut_abandoned_depot", DistanceKm = 12 },
+                new Ashfall.Core.World.MapRoute { From = "loc_holdfast", To = "loc_cut_merchant_caravanserai", DistanceKm = 8 },
+                new Ashfall.Core.World.MapRoute { From = "loc_cut_merchant_caravanserai", To = "loc_black_flotilla_outpost", DistanceKm = 22 }
+            };
+            _wastelandMap = new Ashfall.Core.World.WastelandMapSystem(
+                new Ashfall.Core.World.WastelandMapState(), nodes, routes);
+        }
+
+        // ── ENCOUNTER CHOICE (item 5) ──────────────────────────────────
+
+        private void SetupEncounterChoice()
+        {
+            if (_encounterChoice != null) return;
+            _encounterChoice = new Ashfall.Core.Expeditions.EncounterChoiceResolver(
+                new Ashfall.Core.Expeditions.EncounterChoiceState());
+            _encounterChoice.OnResolved += _ => _encounterChoiceDirty = true;
+        }
+
         // ── PHASE 0 / CAMPAIGN DAY COORDINATOR ───────────────────────────
 
         private const string DailyBriefingSaveKey = "daily_briefing_v1";
@@ -6103,6 +6253,8 @@ namespace AtomicWar.GodotApp
             SaveRadio();
             SaveDailyBriefing();
             SavePowerGrid();
+            SaveMedicalWard();
+            SaveMemorial();
             _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
         }
 
