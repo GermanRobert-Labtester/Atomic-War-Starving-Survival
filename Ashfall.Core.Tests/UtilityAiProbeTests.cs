@@ -251,7 +251,7 @@ namespace Ashfall.Core.Tests
             sys.SelectAction(ctx, new List<UtilityActionDef> { def }, new SeededRng(1));
             Assert.Equal(0.5f, def.baseScore);
             Assert.Equal(0.4f, ctx.CraftingSkill);
-            Assert.Equal(0, ctx.Traits.Count);
+            Assert.Empty(ctx.Traits);
         }
     }
 }

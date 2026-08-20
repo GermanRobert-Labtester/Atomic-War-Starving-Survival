@@ -402,9 +402,9 @@ namespace Ashfall.Core.Tests
             sys1.TickHours("sv1", 200f);
             sys1.ApplyInhaler("sv1");
 
-            float origDeg    = sys1.RespiratoryDegradation("sv1");
+            float origDeg = sys1.RespiratoryDegradation("sv1");
             float origRelief = sys1.InhalerReliefHours("sv1");
-            bool  origPerm   = sys1.HasPermanentLungDamage("sv1");
+            bool origPerm = sys1.HasPermanentLungDamage("sv1");
 
             var save = sys1.CaptureState();
 
@@ -447,7 +447,9 @@ namespace Ashfall.Core.Tests
         {
             var sys1 = new RespiratoryDegenerationSystem
             {
-                GetFilterHealth = () => 100f, IsInFalloutStorm = () => false, IsInAshZone = () => false
+                GetFilterHealth = () => 100f,
+                IsInFalloutStorm = () => false,
+                IsInAshZone = () => false
             };
             var state = sys1.GetOrCreate("sv1");
             state.respiratoryDegradation = RespiratoryDegenerationSystem.SevereCoughThreshold + 10f;
@@ -457,7 +459,9 @@ namespace Ashfall.Core.Tests
 
             var sys2 = new RespiratoryDegenerationSystem
             {
-                GetFilterHealth = () => 100f, IsInFalloutStorm = () => false, IsInAshZone = () => false
+                GetFilterHealth = () => 100f,
+                IsInFalloutStorm = () => false,
+                IsInAshZone = () => false
             };
             sys2.RestoreState(save);
 

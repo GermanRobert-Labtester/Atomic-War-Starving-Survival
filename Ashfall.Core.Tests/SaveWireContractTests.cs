@@ -133,9 +133,9 @@ namespace Ashfall.Core.Tests
                     AssertTreesEqual(expList[i], actList[i], $"{path}[{i}]");
                 return;
             }
-// Numeric equivalence: handle (int,long,double) cross-type equality and float drift.
-// Float→double expansion can introduce a few ULPs of imprecision (0.6f → 0.60000002384...).
-// Exclude string and bool: both implement IConvertible but must compare as text/value.
+            // Numeric equivalence: handle (int,long,double) cross-type equality and float drift.
+            // Float→double expansion can introduce a few ULPs of imprecision (0.6f → 0.60000002384...).
+            // Exclude string and bool: both implement IConvertible but must compare as text/value.
             if (expected is not string && expected is not bool && actual is not string && actual is not bool
                 && expected is IConvertible && actual is IConvertible)
             {

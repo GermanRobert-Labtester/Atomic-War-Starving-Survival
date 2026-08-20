@@ -37,7 +37,7 @@ namespace Ashfall.Core.Tests
             sys.OnSubstanceConsumed(null, "vodka", ChemicalDependencyKind.Alcohol);
             sys.OnSubstanceConsumed("", "vodka", ChemicalDependencyKind.Alcohol);
             sys.OnSubstanceConsumed("sv_mae", "", ChemicalDependencyKind.Alcohol);
-            Assert.Equal(0, sys.DependenciesFor("sv_mae").Count);
+            Assert.Empty(sys.DependenciesFor("sv_mae"));
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace Ashfall.Core.Tests
             sys.OnDetoxCompleted += (sv, item) => completed++;
             sys.TickHours("sv_wren", 24f * 10f); // 10 clean days: 0.15 - 0.5 <= 0
             Assert.Equal(1, completed);
-            Assert.Equal(0, sys.DependenciesFor("sv_wren").Count);
+            Assert.Empty(sys.DependenciesFor("sv_wren"));
         }
 
         [Fact]
