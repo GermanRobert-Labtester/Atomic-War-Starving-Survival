@@ -8,10 +8,10 @@
     <LangVersion>latest</LangVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <!--
-      Unity legacy code is compiled here via the shim and is not nullable-analyzed
-      by Unity itself; tuple nullability drift (CS8619/CS8620) and serializer-/
-      inspector-populated fields (CS0649/CS0169) are expected noise. CS8605/CS8629
-      are NOT suppressed: they flag real unboxing/.Value crash risks.
+      Host DTOs are populated by JSON and are not nullable-analyzed at runtime;
+      tuple nullability drift (CS8619/CS8620) and serializer-populated fields
+      (CS0649/CS0169) are expected noise. CS8605/CS8629 are NOT suppressed:
+      they flag real unboxing/.Value crash risks.
     -->
     <NoWarn>$(NoWarn);CS0108;CS0114;CS0414;CS0067;CS8600;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8619;CS8620;CS0649;CS0169</NoWarn>
   </PropertyGroup>
