@@ -3256,6 +3256,12 @@ namespace AtomicWar.GodotApp
                 settingsPanel.Close();
                 Check(!settingsPanel.Visible, "settings overlay closes cleanly without destroying state");
 
+                // Dispose transient UI nodes so the headless self-test does not
+                // leak Canvas/CanvasItem RIDs at exit.
+                mainMenu.QueueFree();
+                dashboard.QueueFree();
+                settingsPanel.QueueFree();
+
                 GD.Print($"[PlayableShellSelfTest] Failures: {failures}");
             }
             catch (Exception ex)

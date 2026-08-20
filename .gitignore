@@ -203,3 +203,6 @@ __pycache__/
 # AI-tool workspaces and generation staging (not part of the repo tree)
 .mistral/
 generated_AIassets/
+
+# Real Godot/.NET solution (explicit allow over rule above).
+!/Ashfall.slnx
