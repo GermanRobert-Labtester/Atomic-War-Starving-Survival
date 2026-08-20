@@ -45,6 +45,21 @@ namespace AtomicWar.GodotApp.Audio
         [JsonPropertyName("alert_volume")]
         public float AlertVolume { get; set; } = 100f;
 
+        [JsonPropertyName("generator_volume")]
+        public float GeneratorVolume { get; set; } = 70f;
+
+        [JsonPropertyName("ventilation_volume")]
+        public float VentilationVolume { get; set; } = 60f;
+
+        [JsonPropertyName("radio_volume")]
+        public float RadioVolume { get; set; } = 80f;
+
+        [JsonPropertyName("medical_volume")]
+        public float MedicalVolume { get; set; } = 70f;
+
+        [JsonPropertyName("surface_volume")]
+        public float SurfaceVolume { get; set; } = 50f;
+
         [JsonPropertyName("master_mute")]
         public bool MasterMute { get; set; }
 
@@ -59,6 +74,27 @@ namespace AtomicWar.GodotApp.Audio
 
         [JsonPropertyName("alert_mute")]
         public bool AlertMute { get; set; }
+
+        [JsonPropertyName("ambience_mute")]
+        public bool AmbienceMute { get; set; }
+
+        [JsonPropertyName("ui_mute")]
+        public bool UiMute { get; set; }
+
+        [JsonPropertyName("generator_mute")]
+        public bool GeneratorMute { get; set; }
+
+        [JsonPropertyName("ventilation_mute")]
+        public bool VentilationMute { get; set; }
+
+        [JsonPropertyName("radio_mute")]
+        public bool RadioMute { get; set; }
+
+        [JsonPropertyName("medical_mute")]
+        public bool MedicalMute { get; set; }
+
+        [JsonPropertyName("surface_mute")]
+        public bool SurfaceMute { get; set; }
 
         // ── Non-persisted ───────────────────────────────────────
 
@@ -133,11 +169,23 @@ namespace AtomicWar.GodotApp.Audio
             UiVolume = defaults.UiVolume;
             VoiceVolume = defaults.VoiceVolume;
             AlertVolume = defaults.AlertVolume;
+            GeneratorVolume = defaults.GeneratorVolume;
+            VentilationVolume = defaults.VentilationVolume;
+            RadioVolume = defaults.RadioVolume;
+            MedicalVolume = defaults.MedicalVolume;
+            SurfaceVolume = defaults.SurfaceVolume;
             MasterMute = false;
             MusicMute = false;
+            AmbienceMute = false;
             SfxMute = false;
+            UiMute = false;
             VoiceMute = false;
             AlertMute = false;
+            GeneratorMute = false;
+            VentilationMute = false;
+            RadioMute = false;
+            MedicalMute = false;
+            SurfaceMute = false;
             OnSettingsChanged?.Invoke();
         }
 

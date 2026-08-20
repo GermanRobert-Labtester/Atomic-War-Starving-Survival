@@ -15,6 +15,11 @@ namespace AtomicWar.GodotApp.Audio
         public const string Ui = "UI";
         public const string Voice = "Voice";
         public const string Alerts = "Alerts";
+        public const string Generator = "Generator";
+        public const string Ventilation = "Ventilation";
+        public const string Radio = "Radio";
+        public const string Medical = "Medical";
+        public const string Surface = "Surface";
     }
 
     /// <summary>
