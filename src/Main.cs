@@ -468,7 +468,7 @@ namespace AtomicWar.GodotApp
                     GetTree().Quit(HostCli.RunBlackFlotillaSelfTest(_dataDir));
                     return;
                 case HostCliAction.RadioSelfTest:
-                    GetTree().Quit(HostCli.RunRadioSelfTest());
+                    GetTree().Quit(FactionRadioSelfTest.Run());
                     return;
                 case HostCliAction.UiSnapshotSelfTest:
                     GetTree().Quit(HostCli.RunUiSnapshotSelfTest());
