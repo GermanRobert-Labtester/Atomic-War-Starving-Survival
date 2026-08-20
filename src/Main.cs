@@ -356,9 +356,6 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.UtilityAiUiTest:
                     RunUtilityAiUiTestAndQuit();
                     return;
-                case HostCliAction.RngWiringSelfTest:
-                    GetTree().Quit(RngWiringSelfTest.Run(_dataDir));
-                    return;
                 case HostCliAction.InventoryUiTest:
                     RunInventoryUiTestAndQuit();
                     return;

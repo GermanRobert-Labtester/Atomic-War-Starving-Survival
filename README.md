@@ -1,112 +1,110 @@
-# ASHFALL (working title) — 2D Atomic-War Survival
+# ASHFALL: Atomic War – Starving Survival
 
-Original 2D survival-management game set after a nuclear exchange.
-Unity 6 LTS · 2D · URP · C#. Data-driven (ScriptableObjects + JSON).
-Thin MonoBehaviours; logic in plain C# systems; event bus; Utility AI (no LLM at runtime).
+2D post-nuclear survival-management game. Godot 4.7 .NET (C#) is the only
+runtime/editor target.
 
-This document maps the project folders to their responsibilities.
+Engine-agnostic simulation lives in `Assets/Ashfall.Core/`; the Godot host and
+presentation live in `src/`; authored data lives in
+`Assets/StreamingAssets/Data/` (the sole data authority); Godot-native art,
+audio, fonts, and UI resources live in `assets/`.
 
-## Stack & conventions
+A legacy-engine (Unity) tree is still present as a migration artifact and is
+being removed — see "Legacy migration surface" below. It is never the source
+of truth for architecture decisions.
 
-- **Namespace scheme:** root `AtomicWar`; the gameplay code under `Assets/_Game/`
-  uses `AtomicWar._Game.<Folder>` (e.g. `AtomicWar._Game.Radiation`). Namespaces
-  mirror folders.
-- **Ids:** snake_case everywhere (`item_clean_water`, `recipe_iodine`).
-- **State changes:** every public system raises C# events on the EventBus (for UI + save).
-- **Save/load safe:** system state is serializable primitives only.
-- **Tone:** cold, exhausted, human, restrained. No magic/fantasy, no real
-  countries/wars/people, no glorified violence.
+## Stack
+
+- **Engine:** Godot 4.7.1 .NET (Mono). Compatibility renderer, `canvas_items`
+  stretch, 1920×1080 default viewport.
+- **Host:** `Ashfall.csproj` (net8.0) compiles `src/**/*.cs` +
+  `Assets/Ashfall.Core/**/*.cs` into the Godot assembly (`AtomicWar`).
+- **Core:** engine-agnostic `Ashfall.Core` (plumbed into host and tests from a
+  single source tree; do not copy files).
+- **Tests:** xUnit via `Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`.
+
+## Namespace scheme
+
+- Gameplay systems: `Ashfall.Core.<Domain>` (e.g. `Ashfall.Core.Inventory`,
+  `Ashfall.Core.Economy`). No `Godot`, no `GodotSharp`, no `UnityEngine`.
+- Godot host: `AtomicWar.GodotApp.*` — `UI` panels, `Host` sessions, `Journal`,
+  `World`, `YearOfAsh` widgets.
+- Ids: `snake_case` everywhere (`item_clean_water`, `recipe_iodine`).
+- State changes: events via `IEventBus`; state captured and restored through
+  `CaptureState`/`RestoreState`; no `System.Random`/`Guid.NewGuid()` in
+  simulation — `ISeededRng` only.
 
 ## Folder map
 
-### `Assets/_Game/` — gameplay code
+### `Assets/Ashfall.Core/` — engine-agnostic core
 
-| Folder | Namespace | Responsibility |
-| --- | --- | --- |
-| `Core/` | `AtomicWar._Game.Core` | Session lifecycle (`GameState`), the publish/subscribe `EventBus`, the `TimeSystem` clock (hours/days + tick events), and the `SaveSystem` (JSON slot persistence). |
-| `Survivors/` | `AtomicWar._Game.Survivors` | The `Survivor` runtime model, its `Needs` (hunger, thirst, fatigue, warmth, morale, health), and the `NeedsSystem` that decays/restores them and raises threshold events. |
-| `Radiation/` | `AtomicWar._Game.Radiation` | `RadiationSystem` (dose accumulation, iodine/anti-rad, chronic illness), `Contamination` (zones/items/survivors), and the personal `Dosimeter` reading. |
-| `Environment/` | `AtomicWar._Game.Environment` | `FalloutMap` (spatial dose field), `WeatherSystem` (incl. fallout storms), and `TemperatureSystem` (nuclear-winter cold → Warmth need). |
-| `Inventory/` | `AtomicWar._Game.Inventory` | `ItemType` enum, `ItemDefinition` ScriptableObject, and the runtime `Inventory` container (stacks). |
-| `Crafting/` | `AtomicWar._Game.Crafting` | `Recipe` ScriptableObject, `CraftingSystem` (validation, timers, consume/produce), and `CraftingStation` (gating + wear). |
-| `Shelter/` | `AtomicWar._Game.Shelter` | The bunker aggregate `Shelter` plus its `Shielding` (rad attenuation) and `AirFiltration` (degrading filters) sub-systems. |
-| `AI/` | `AtomicWar._Game.AI` | Utility AI: `UtilityAI` engine, `ActionScorer` (0..1 scoring), and `SurvivorAction` ScriptableObject candidates. |
-| `Events/` | `AtomicWar._Game.Events` | `GameEvent` ScriptableObject (scripted/narrative events) and `EventRunner` (weighted/scheduled selection + cooldowns). |
-| `Data/` | `AtomicWar._Game.Data` | ScriptableObject **catalogs** that hold collections and are the runtime source of truth, imported from the JSON below (items, recipes, survivors, locations, events, radio). |
-| `Editor/` | `AtomicWar._Game.Editor` | Editor-only importers/validators (`Tools/ASHFALL/...` menu) that turn JSON into ScriptableObject catalogs and check snake_case ids. |
-| `UI/` | `AtomicWar._Game.UI` | Thin MonoBehaviours over UI Toolkit: `HUD` (root binder), the widgets it binds (`NeedsBar`, `DosimeterHUD`, `EventModalUI`, `DiegeticHudController`, …), and `MainMenu/`. No game logic. |
+Every system (Disease, Dose Ledger, Duty Roster, Economy/Market, Crafting,
+Expeditions, Muster, Narrative catalogs, Radiation, Research, Survivors,
+UtilityAI, Verdict, Year of Ash, Weather, …) plus the shared ports
+(`IJsonSerializer`, `IFileIO`, `ISeededRng`, `ILog`), checksummed save
+envelope contracts (`SaveChecksum`, `SaveEnvelopeDetection`), and the
+`CatalogIntegrityValidator`. Depends on nothing outside this tree.
 
 ### `Assets/StreamingAssets/Data/` — authored JSON data
 
-One file per catalog, imported by `Assets/_Game/Editor/`:
+One JSON file per catalog (plus the large `narrative/` corpus). `snake_case`
+ids, every file carries `schema_version`; loaded via `res://…` by host
+sessions and validated by the data-integrity selftest (cross-reference,
+range, uniqueness).
 
-| File | Feeds |
-| --- | --- |
-| `items.json` | `Data/ItemCatalogSO` → `Inventory/ItemDefinition` |
-| `recipes.json` | `Data/RecipeCatalogSO` → `Crafting/Recipe` |
-| `survivors.json` | `Data/SurvivorCatalogSO` → `SurvivorArchetypeSO` |
-| `locations.json` | `Data/LocationCatalogSO` → `LocationDefinitionSO` |
-| `events.json` | `Data/GameEventCatalogSO` → `Events/GameEvent` |
-| `radio.json` | `Data/RadioCatalogSO` → `RadioBroadcastSO` |
+### `src/` — Godot host
 
-`echoes.json` also lives here. It has no importer and no catalog yet, and no
-`GameBootstrap` field references it.
+Thin presentation/wiring only. `src/Host/` typed sessions per catalog/subsystem
+(Capture/Restore + per-store save codecs); `src/UI/` panels; `src/Main.cs`
+(`AtomicWar.GodotApp.Main`) builds all screens from the ASCII feel of Godot UI.
+The root `Main.tscn` bootstraps the host.
 
-**Data flow:** JSON (authored) → Editor importer → per-entry ScriptableObject →
-`Tools/ASHFALL/Generate Catalogs` → catalog asset (runtime source of truth) → systems.
+### `assets/`, `scenes/`, `Ashfall.Core.Tests/`, `scripts/ci/`, `tools/`
 
-### `Assets/Tests/` — automated tests
+- `assets/` — Godot-native art/audio/fonts/sprites/ui (images/fonts are Git
+  LFS; runtime audio plain binary). Every importable file has a `.import`
+  sidecar (pre-commit hook enforces this).
+- `scenes/` — hand-written scenes (`Main.tscn` + world shells).
+- `Ashfall.Core.Tests/` — xUnit tests targeting net9.0 (host is net8.0).
+- `scripts/ci/` — gates: `godot-asset-gate.sh` (selftest battery),
+  `asset-orphan-sweep.sh`, `git-hooks/pre-commit`.
+- `tools/` — asset pipeline + dev utilities (`ui-preview`, manifest tools,
+  generation scripts).
 
-| Folder | Assembly | Runs where |
-| --- | --- | --- |
-| `EditMode/` | `AtomicWar.Tests.EditMode` | Editor only — pure-C# system tests (no scene). |
-| `PlayMode/` | `AtomicWar.Tests.PlayMode` | In play mode — integration tests over frames. |
+## Persistence
 
-Both are Unity test assemblies (`.asmdef` referencing the Test Runner, gated by
-`UNITY_INCLUDE_TESTS`). Almost all of them construct systems directly in C# and
-never load a scene, which is why the suite stayed green while the shipped player
-booted into an empty scene. `PlayMode/GameplaySceneSmokeTests.cs` is the fixture
-that loads the real scene and catches that class of failure.
-
-> **Note on test location:** Unity only compiles and runs scripts under
-> `Assets/` (or `Packages/`). A project-root `Tests/` folder would be silently
-> ignored and never executed by `-runTests`, so the tests live at
-> `Assets/Tests/` to remain runnable.
+Checksummed save envelopes with explicit version migration; malformed current
+envelopes are rejected; writes go through the shared atomic writer; per-store
+SHA-256 records (`SaveLoadHostSession`, `SaveChecksum`).
 
 ## Current state
 
-**The simulation runs from the main menu.**
+The simulation systems are implemented against the Core and the host is a
+working shell: navigation between all panels, the multi-day gameplay loop,
+save/continue, and settings overlay pass `--playable-shell-selftest`, and the
+catalog battery (`--data-integrity-selftest` etc.) stays green. Remaining
+presentation polish is tracked in the panel-level snapshots the selftests
+generate.
 
-- `Assets/Scenes/StartScreen.unity` is the boot scene; NEW EXPEDITION loads
-  `Assets/Scenes/Gameplay.unity`, where `GameBootstrap` initializes every
-  system, the clock advances, and needs decay.
-- Both scenes are generated or authored through `Tools/ASHFALL/` editor
-  commands. `Gameplay.unity` is built by
-  `Tools/ASHFALL/Build Gameplay Scene` and must be regenerated rather than
-  hand-edited — a hand edit survives only until the next rebuild. CI cannot
-  diff the scene to prove this (Unity renumbers every local fileID on each
-  save, so two builds of identical input differ by ~480 lines); instead the
-  builder refuses to save a scene with an unassigned reference, and CI fails
-  when that throws. Generated **data** assets *are* byte-compared.
-- Data assets come from `Assets/StreamingAssets/Data/*.json` via
-  `Tools/ASHFALL/Import All Data`, then
-  `Tools/ASHFALL/Generate Catalogs`.
-- UI is UI Toolkit (UXML/USS + `PanelSettings`). The main menu is complete;
-  the in-game HUD wires 4 of its 21 widgets — the rest are tracked in
-  `GameplaySceneBuilder.HudExpectedUnwired` and land incrementally.
-- There is no localization; all user-facing strings are inline literals.
+## Legacy migration surface (deprecated)
+
+`Assets/_Game/`, `Assets/UI/…`, `Assets/Resources/`, `Assets/Samples/` and
+the `.meta`/`.asmdef` sidecars alongside them are migration artifacts from
+the prior engine host, kept under version control only until the dependency
+map is exhausted. Prefer `Assets/Ashfall.Core/` and `src/` for new work.
+Do not add new code or assets here, and follow the "Godot is authoritative"
+rule. The shim under `src/Bridge/` (a `UnityEngine` compatibility namespace)
+exists to hold the compiled Unity tree in compatibility only and is in
+scope for removal with `Assets/_Game/`.
 
 ## Verify
 
 ```bash
-# Compile (opens the project, compiles all assemblies, quits)
-unity -batchmode -quit -nographics -projectPath . -logFile -
-
-# Run the tests. Note: no -quit. Combining -quit with -runTests kills the
-# editor before the run finishes, and it exits 0 with an empty result file.
-unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode \
-  -testResults "$(pwd)/em.xml" -logFile -
-unity -batchmode -nographics -projectPath . -runTests -testPlatform PlayMode \
-  -testResults "$(pwd)/pm.xml" -logFile -
+dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
+dotnet build Ashfall.csproj
+godot --headless --path . -- --data-integrity-selftest
+godot --headless --path . -- --asset-registry-selftest
+godot --headless --path . -- --playable-shell-selftest
+godot --headless --path . -- --ui-layout-selftest
+./scripts/ci/godot-asset-gate.sh
 ```
-# Atomic-War-Starving-Survival
