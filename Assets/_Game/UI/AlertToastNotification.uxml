@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
-    <Style src="project://database/Assets/_Game/UI/UIBatch20_B.uss" />
-    <ui:VisualElement name="alert-toast-root" class="alert-toast-container hidden" picking-mode="Ignore">
-        <ui:VisualElement name="toast_stack_container" style="width: 100%;">
-            <!-- Dynamic toasts stacked here (up to 3) -->
-        </ui:VisualElement>
-    </ui:VisualElement>
-</ui:UXML>

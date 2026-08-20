@@ -368,9 +368,6 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.Phase0UiTest:
                     RunPhase0UiTestAndQuit();
                     return;
-                case HostCliAction.BridgeSelfTest:
-                    GetTree().Quit(Ashfall.Bridge.BridgeSelfTest.Run());
-                    return;
                 case HostCliAction.YearOfAshSaveSelfTest:
                     GetTree().Quit(HostCli.RunYearOfAshSaveSelfTest(_dataDir));
                     return;
@@ -482,11 +479,6 @@ namespace AtomicWar.GodotApp
 
         public override void _Process(double delta)
         {
-            // Drive the UnityEngine shim's lifecycle: magic-method dispatch, coroutines, and the
-            // clock behind Time.deltaTime. Without this pump, any Unity behaviour that does get
-            // instantiated would register and then never receive Awake/Start/Update.
-            Ashfall.Bridge.BridgeRuntime.Tick((float)delta);
-
             // The diagnostics strip used to rebuild its string every frame AND call
             // Engine.GetVersionInfo(), which allocates a Godot Dictionary — 60 allocations
             // a second for a version that never changes. Cache the version, refresh ~4x/sec.
@@ -598,8 +590,7 @@ namespace AtomicWar.GodotApp
                 SaveInventory();
                 SaveSurvivors();
                 SaveEconomy();
-                // Give any live Unity behaviours their OnDisable/OnDestroy before the tree goes.
-                Ashfall.Bridge.BridgeRuntime.Shutdown();
+
                 GetTree().Quit();
             }
         }
