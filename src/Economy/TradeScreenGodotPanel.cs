@@ -382,7 +382,7 @@ namespace AtomicWar.GodotApp.Economy
                 {
                     CustomMinimumSize = new Vector2(20, 20),
                     StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
-                    Texture = LoadTexture($"res://Assets/UI/Icons/{iconFile}")
+                    Texture = LoadTexture($"res://assets/ui/Icons/{iconFile}")
                 };
                 row.AddChild(iconRect);
 
@@ -913,11 +913,11 @@ namespace AtomicWar.GodotApp.Economy
         {
             switch (kind)
             {
-                case PriceShockKind.PlumePassing: return "res://Assets/UI/Icons/icon_shock_plume.png";
-                case PriceShockKind.ConvoyAmbush: return "res://Assets/UI/Icons/icon_shock_convoy.png";
-                case PriceShockKind.FactionWar: return "res://Assets/UI/Icons/icon_shock_war.png";
-                case PriceShockKind.WinterDeepens: return "res://Assets/UI/Icons/icon_shock_winter.png";
-                default: return "res://Assets/UI/Icons/icon_shock_plume.png";
+                case PriceShockKind.PlumePassing: return "res://assets/ui/Icons/icon_shock_plume.png";
+                case PriceShockKind.ConvoyAmbush: return "res://assets/ui/Icons/icon_shock_convoy.png";
+                case PriceShockKind.FactionWar: return "res://assets/ui/Icons/icon_shock_war.png";
+                case PriceShockKind.WinterDeepens: return "res://assets/ui/Icons/icon_shock_winter.png";
+                default: return "res://assets/ui/Icons/icon_shock_plume.png";
             }
         }
 

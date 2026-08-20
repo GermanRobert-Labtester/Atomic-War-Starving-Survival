@@ -61,7 +61,7 @@ namespace AtomicWar.GodotApp.Radio
             CustomMinimumSize = new Vector2(720, 480);
 
             // Apply 9-slice steel radio frame
-            var frameTex = LoadTexture("res://Assets/UI/Textures/radio_frame_9slice.png");
+            var frameTex = LoadTexture("res://assets/ui/Textures/radio_frame_9slice.png");
             if (frameTex != null)
             {
                 var sb = new StyleBoxTexture
@@ -152,7 +152,7 @@ namespace AtomicWar.GodotApp.Radio
             {
                 CustomMinimumSize = new Vector2(64, 32),
                 StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
-                Texture = LoadTexture("res://Assets/UI/Icons/meter_signal_strength.png")
+                Texture = LoadTexture("res://assets/ui/Icons/meter_signal_strength.png")
             };
             smeterHbox.AddChild(_textureSmeter);
 
@@ -224,7 +224,7 @@ namespace AtomicWar.GodotApp.Radio
             // Static overlay on CRT
             _crtOverlay = new TextureRect
             {
-                Texture = LoadTexture("res://Assets/UI/Textures/signal_static_overlay.png"),
+                Texture = LoadTexture("res://assets/ui/Textures/signal_static_overlay.png"),
                 StretchMode = TextureRect.StretchModeEnum.Tile,
                 MouseFilter = MouseFilterEnum.Ignore
             };

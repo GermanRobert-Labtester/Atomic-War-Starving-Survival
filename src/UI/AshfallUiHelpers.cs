@@ -226,7 +226,7 @@ namespace AtomicWar.GodotApp.UI
 
             var tex = TryLoadTexture("res://assets/ui/Textures/frame_9slice.png")
                    ?? TryLoadTexture("res://assets/ui/frame_9slice.svg")
-                   ?? TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
+                   ?? TryLoadTexture("res://assets/ui/Textures/panel_bg_9slice.png");
 
             if (tex != null)
             {
@@ -263,7 +263,7 @@ namespace AtomicWar.GodotApp.UI
         {
             var tex = TryLoadTexture("res://assets/ui/Textures/frame_9slice.png")
                    ?? TryLoadTexture("res://assets/ui/frame_9slice.svg")
-                   ?? TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png")
+                   ?? TryLoadTexture("res://assets/ui/Textures/panel_bg_9slice.png")
                    ?? TryLoadTexture("res://assets/ui/Textures/panel_bg_9slice.png");
             if (tex != null)
             {
