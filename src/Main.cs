@@ -99,7 +99,7 @@ namespace AtomicWar.GodotApp
 
         // Inventory (ported from Unity _Game/Inventory)
         private InventoryHostSession _inventory = null!;
-        private AtomicWar.GodotApp.Inventory.InventoryPanel _inventoryPanel = null!;
+        private AtomicWar.GodotApp.UI.InventoryPanel _inventoryPanel = null!;
 
         // Survivors (needs + radiation, ported from Unity Survivors/Radiation)
         private SurvivorsHostSession _survivors = null!;
@@ -2356,7 +2356,7 @@ namespace AtomicWar.GodotApp
 
             if (_inventoryPanel == null && _rightColumn != null)
             {
-                _inventoryPanel = new AtomicWar.GodotApp.Inventory.InventoryPanel();
+                _inventoryPanel = new AtomicWar.GodotApp.UI.InventoryPanel();
                 _rightColumn.AddChild(_inventoryPanel);
             }
             if (_inventoryPanel != null)
