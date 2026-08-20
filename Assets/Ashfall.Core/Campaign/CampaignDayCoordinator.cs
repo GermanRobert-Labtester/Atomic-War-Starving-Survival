@@ -58,10 +58,18 @@ namespace Ashfall.Core.Campaign
 
         /// <summary>
         /// Register a daily tick owner. <paramref name="ownerId"/> must be unique,
-        /// stable, and snake_case. The coordinator orders owners by ownerId so
-        /// the same owners always tick in the same order regardless of host.
+        /// stable, and snake_case. <paramref name="phase"/> controls tick order:
+        /// lower phases tick before higher phases. Within the same phase, owners
+        /// tick in alphabetical order by ownerId for deterministic reproducibility.
+        ///
+        /// Standard phases (from Batch 2 plan):
+        /// 1 — Weather, orbital, brine, power
+        /// 2 — Ventilation, foundry, water, greenhouse, excavation, trapping, production
+        /// 3 — Needs, medical, disease, ration conflict, caregiving, social, generational
+        /// 4 — Research, expedition/vehicle, maritime, caravans, treaties, faction
+        /// 5 — Death/memorial, audio context, journal, daily briefing
         /// </summary>
-        public void Register(string ownerId, IDayAdvanceOwner owner)
+        public void Register(string ownerId, IDayAdvanceOwner owner, int phase = 3)
         {
             if (string.IsNullOrEmpty(ownerId))
                 throw new ArgumentException("ownerId must be non-empty", nameof(ownerId));
@@ -73,10 +81,14 @@ namespace Ashfall.Core.Campaign
             if (_advancing)
                 throw new InvalidOperationException(
                     $"CampaignDayCoordinator: cannot register '{ownerId}' while a day advance is in flight.");
-            _owners.Add(new RegisteredOwner(ownerId, owner));
+            _owners.Add(new RegisteredOwner(ownerId, owner, phase));
             _byId.Add(ownerId, _owners[_owners.Count - 1]);
-            // Keep owners sorted by id so Advance ticks in deterministic order.
-            _owners.Sort(static (a, b) => string.CompareOrdinal(a.OwnerId, b.OwnerId));
+            // Keep owners sorted by phase then by id so Advance ticks in deterministic order.
+            _owners.Sort(static (a, b) =>
+            {
+                int pc = a.Phase.CompareTo(b.Phase);
+                return pc != 0 ? pc : string.CompareOrdinal(a.OwnerId, b.OwnerId);
+            });
             // Rebuild byId after the sort to keep references consistent.
             _byId.Clear();
             for (int i = 0; i < _owners.Count; i++)
@@ -174,10 +186,12 @@ namespace Ashfall.Core.Campaign
         {
             public readonly string OwnerId;
             public readonly IDayAdvanceOwner Owner;
-            public RegisteredOwner(string ownerId, IDayAdvanceOwner owner)
+            public readonly int Phase;
+            public RegisteredOwner(string ownerId, IDayAdvanceOwner owner, int phase)
             {
                 OwnerId = ownerId;
                 Owner = owner;
+                Phase = phase;
             }
         }
     }
