@@ -5636,8 +5636,7 @@ namespace AtomicWar.GodotApp
         {
             if (_expeditionPanel != null && _expeditionPanel.Visible)
                 _expeditionPanel.ShowEncounterNotice(surfaced);
-            else
-                Ashfall.Bridge.BridgeGap.Cosmetic("Main.ExpeditionEncounterSurfaced (panel closed)");
+            // else: panel closed/headless — encounter surfaced without a diegetic surface.
         }
 
         private void CloseWeatherPanel()

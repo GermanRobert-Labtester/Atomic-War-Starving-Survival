@@ -534,8 +534,7 @@ namespace AtomicWar.GodotApp.UI
             TotalEncounterNotices++;
             if (!Visible)
             {
-                Ashfall.Bridge.BridgeGap.Cosmetic("ExpeditionPanel.ShowEncounterNotice (panel closed)");
-                return;
+                return; // headless/closed panel: diegetic notice surfaced but not shown
             }
 
             if (ExpeditionHostSession.UseEncounterModal)

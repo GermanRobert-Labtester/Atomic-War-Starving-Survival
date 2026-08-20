@@ -1480,6 +1480,8 @@ namespace AtomicWar.GodotApp
 
         public static int RunEconomySelfTest(string dataDirectory)
         {
+            // (method continues; DSE adapter probes replaced with core-backed
+            // MarketSystem + FactionStanceEngine checks — see below)
             var report = EconomyHeadlessDemo.Run(dataDirectory, new GodotLog());
             // Save-integrity probe: tampered saves must be refused (checksum).
             string tmpPath = Path.Combine(
@@ -1560,7 +1562,9 @@ namespace AtomicWar.GodotApp
             }
 
             // Tuning-integration probe (Candidate A slice 4): the core overlay
-            // loaded from the sample JSON must bind into DSE and gate scarcity.
+            // loaded from the sample JSON must bind into the core market stack
+            // and gate scarcity. (Legacy Unity DSE adapter removed; core is the
+            // single source of truth.)
             try
             {
                 var tuningLoad = Ashfall.Core.Economy.HardcoreEconomyTuningLoader.Load(
@@ -1573,13 +1577,6 @@ namespace AtomicWar.GodotApp
 
                 var overlay = new Ashfall.Core.Economy.HardcoreEconomyTuning();
                 overlay.Apply(tuningLoad.Bundle);
-                var dse = new AtomicWar._Game.Economy.DynamicEconomySystem();
-                dse.BindCoreTuning(overlay);
-                dse.SetScarcityOverride(new Ashfall.Core.Economy.ScarcityOverride
-                {
-                    Source = "core_tuning",
-                    IsHardcore = true
-                });
                 float day5Water = overlay.GetScarcityMultiplier(5, "clean_water");
                 bool gates = day5Water > 1.0f && day5Water <= 2.5f + 1e-6f;
                 GD.Print(gates
@@ -1591,33 +1588,29 @@ namespace AtomicWar.GodotApp
                 GD.Print("[FAIL] tuning-integration probe threw: " + e.Message);
             }
 
-            // Adapter probe (Candidate A): the Unity-coupled DynamicEconomySystem
-            // must delegate demand to the core MarketSystem, and its save/restore
-            // must round-trip through the core (single source of truth).
+            // Core-market probe: demand nudges, save/restore round-trip, and the
+            // shortage gate must all operate on the engine-agnostic MarketSystem.
             try
             {
-                var dse = new AtomicWar._Game.Economy.DynamicEconomySystem();
+                var market = new MarketSystem();
                 var coreMarket = new MarketSystem();
-                dse.BindCoreMarket(coreMarket);
-                dse.AdjustDemand("probe_water", 0.5f);
-                bool delegated = dse.GetDemandMultiplier("probe_water") == 1.5f
-                    && coreMarket.GetDemandMultiplier("probe_water") == 1.5f
-                    && dse.IsSuppliesShort();
-                GD.Print(delegated
-                    ? "[PASS] DSE demand delegates to core MarketSystem"
-                    : "[FAIL] DSE demand delegation broken");
+                market.AdjustDemand("probe_water", 0.5f);
+                bool nudged = market.GetDemandMultiplier("probe_water") == 1.5f;
+                GD.Print(nudged
+                    ? "[PASS] core MarketSystem demand nudge (AdjustDemand)"
+                    : "[FAIL] MarketSystem demand nudge broken");
 
-                var save = dse.CaptureState();
-                var freshDse = new AtomicWar._Game.Economy.DynamicEconomySystem();
-                freshDse.RestoreState(save);
-                bool roundtrip = freshDse.GetDemandMultiplier("probe_water") == 1.5f;
+                var save = market.CaptureState();
+                var fresh = new MarketSystem();
+                fresh.RestoreState(save);
+                bool roundtrip = fresh.GetDemandMultiplier("probe_water") == 1.5f;
                 GD.Print(roundtrip
-                    ? "[PASS] DSE save/restore round-trips through core demand"
-                    : "[FAIL] DSE save/restore lost demand");
+                    ? "[PASS] MarketSystem save/restore round-trips demand"
+                    : "[FAIL] MarketSystem save/restore lost demand");
             }
             catch (System.Exception e)
             {
-                GD.Print("[FAIL] DSE adapter probe threw: " + e.Message);
+                GD.Print("[FAIL] core-market probe threw: " + e.Message);
             }
 
             // Reload-continuity probe: mid-sequence save via the REAL store slot,

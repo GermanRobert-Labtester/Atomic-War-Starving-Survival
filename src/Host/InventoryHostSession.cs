@@ -8,8 +8,8 @@ using InventoryContainer = Ashfall.Core.Inventory.Inventory;
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Thin Godot-host session for the Inventory (ported from Unity's
-    /// AtomicWar._Game.Inventory). Wraps an Inventory container + ItemCatalog,
+    /// Thin Godot-host session for the Inventory (ported from the legacy
+    /// engine host). Engine-agnostic inventory surface. Wraps an Inventory container + ItemCatalog,
     /// loads item definitions (catalog or seed), and persists to user:// via
     /// InventorySaveStore. No gameplay rules — hosts only present.
     /// </summary>
