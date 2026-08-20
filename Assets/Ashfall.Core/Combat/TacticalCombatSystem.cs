@@ -593,6 +593,44 @@ namespace Ashfall.Core.Combat
             return res;
         }
 
+        /// <summary>Item 6: explicit Reload action. Refills ammo for the survivor's
+        /// weapon if the inventory adapter can supply the magazine.</summary>
+        public CombatActionResult PlayerReload(string survivorIdOrCombatantId)
+        {
+            var res = new CombatActionResult();
+            var c = FindPlayerCombatant(survivorIdOrCombatantId);
+            if (c == null) { res.Message = "Unknown survivor."; return res; }
+            var weapon = WeaponOf(c);
+            if (weapon == null) { res.Message = "No weapon to reload."; return res; }
+            string ammoId = weapon.AmmoId;
+            if (string.IsNullOrEmpty(ammoId))
+            {
+                res.Message = weapon.WeaponId + " has no ammo type assigned.";
+                return res;
+            }
+            int maxLoad = weapon.MagazineCapacity > 0 ? weapon.MagazineCapacity : 30;
+            int needed = Math.Max(0, maxLoad - weapon.AmmoRemaining);
+            if (needed == 0)
+            {
+                res.Message = weapon.WeaponId + " is already fully loaded.";
+                return res;
+            }
+            int granted = _ports?.ConsumeAmmo != null ? _ports.ConsumeAmmo(ammoId, needed) : 0;
+            if (granted <= 0)
+            {
+                res.Message = "No " + ammoId + " available to reload.";
+                return res;
+            }
+            weapon.AmmoRemaining += granted;
+            AddEvent("reload", c.Id,
+                weapon.WeaponId + " reloaded +" + granted + " " + ammoId + " (" +
+                weapon.AmmoRemaining + "/" + maxLoad + ").");
+            res.Success = true;
+            res.Message = weapon.WeaponId + " +" + granted + " " + ammoId + ".";
+            Notify();
+            return res;
+        }
+
         public CombatActionResult PlayerFieldRepair(string survivorIdOrCombatantId, ISeededRng rng)
         {
             var res = new CombatActionResult();

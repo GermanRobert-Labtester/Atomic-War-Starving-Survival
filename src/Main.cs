@@ -822,6 +822,7 @@ namespace AtomicWar.GodotApp
             // ── Greenhouse panel (overlay) ──
             _greenhousePanel = new GreenhousePanel();
             _greenhousePanel.OnClose += CloseGreenhousePanel;
+            _greenhousePanel.OnActionRequested += HandleGreenhouseAction;
             AddChild(_greenhousePanel);
 
             // ── Silent Foundry panel (overlay) ──
@@ -1849,6 +1850,35 @@ namespace AtomicWar.GodotApp
             _expansions.WaterGreenhouse(0, 60f);
             _statusLabel.Text = "Plot 0 planted (seed_tuber) and watered on day " + day + ". The glass holds its heat.";
             RefreshExpansionsStatus();
+        }
+
+        /// <summary>Item 10: routes greenhouse panel action buttons through GreenhouseHostSession.</summary>
+        private void HandleGreenhouseAction(string action, int plotIndex)
+        {
+            if (_greenhouse == null || plotIndex < 0) return;
+            SetupInventory();
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            switch (action)
+            {
+                case "plant":
+                    _greenhouse.Plant(plotIndex, "item_seed_tuber", day);
+                    break;
+                case "water":
+                    _greenhouse.Water(plotIndex, 50f, tainted: false);
+                    break;
+                case "treat":
+                    _greenhouse.TreatBlight(plotIndex);
+                    break;
+                case "clear":
+                    _greenhouse.Clear(plotIndex);
+                    break;
+                case "harvest":
+                    _greenhouse.Harvest(plotIndex);
+                    break;
+            }
+            if (_greenhouseDirty) SaveGreenhouse();
+            _statusLabel.Text = _greenhouse.LastEvent;
+            _greenhousePanel?.RefreshView();
         }
 
         private void OnGreenhouseTickClicked()

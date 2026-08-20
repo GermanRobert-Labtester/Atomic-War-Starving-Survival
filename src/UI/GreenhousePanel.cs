@@ -324,7 +324,40 @@ public partial class GreenhousePanel : Control
             _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
             _detailBox.AddChild(AshfallUiHelpers.MakeSmall(_host.LastEvent));
         }
+
+        // ── Item 10 actions: plant / water / treat / clear / harvest ──
+        _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+        _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("ACTIONS"));
+        var actionRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+        var plantBtn = AshfallUiHelpers.MakeButton("PLANT",
+            () => OnActionRequested?.Invoke("plant", _selectedIndex));
+        plantBtn.CustomMinimumSize = new Vector2(90, 30);
+        actionRow.AddChild(plantBtn);
+
+        var waterBtn = AshfallUiHelpers.MakeButton("WATER",
+            () => OnActionRequested?.Invoke("water", _selectedIndex));
+        waterBtn.CustomMinimumSize = new Vector2(90, 30);
+        actionRow.AddChild(waterBtn);
+
+        var treatBtn = AshfallUiHelpers.MakeButton("TREAT",
+            () => OnActionRequested?.Invoke("treat", _selectedIndex));
+        treatBtn.CustomMinimumSize = new Vector2(90, 30);
+        actionRow.AddChild(treatBtn);
+
+        var clearBtn = AshfallUiHelpers.MakeButton("CLEAR",
+            () => OnActionRequested?.Invoke("clear", _selectedIndex));
+        clearBtn.CustomMinimumSize = new Vector2(90, 30);
+        actionRow.AddChild(clearBtn);
+
+        var harvestBtn = AshfallUiHelpers.MakeButton("HARVEST",
+            () => OnActionRequested?.Invoke("harvest", _selectedIndex));
+        harvestBtn.CustomMinimumSize = new Vector2(90, 30);
+        actionRow.AddChild(harvestBtn);
+        _detailBox.AddChild(actionRow);
     }
+
+    /// <summary>Raised when the player presses an action button. Host wires to GreenhouseHostSession.</summary>
+    public event Action<string, int>? OnActionRequested;
 
     private static (AshfallDataGrid.CellState, string) StageBadge(GreenhouseStage stage) => stage switch
     {
