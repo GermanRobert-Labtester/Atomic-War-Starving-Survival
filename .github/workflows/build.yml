@@ -19,6 +19,7 @@ env:
 
 jobs:
   build-windows:
+    if: env.UNITY_LICENSE != ''
     name: Build Windows
     runs-on: ubuntu-latest
     steps:
@@ -46,6 +47,7 @@ jobs:
           path: builds/StandaloneWindows64
 
   build-webgl:
+    if: env.UNITY_LICENSE != ''
     name: Build WebGL
     runs-on: ubuntu-latest
     steps:
