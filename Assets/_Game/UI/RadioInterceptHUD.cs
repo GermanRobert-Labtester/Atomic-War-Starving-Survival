@@ -148,27 +148,22 @@ namespace AtomicWar._Game.UI
 
         public int BandCount => _bands.Count;
 
-        public FactionRadioVoHook VoHook
-        {
-            get
-            {
-                if (_voHook == null)
-                    _voHook = GetComponent<FactionRadioVoHook>()
-                              ?? GetComponentInChildren<FactionRadioVoHook>()
-                              ?? gameObject.AddComponent<FactionRadioVoHook>();
-                if (_voLibrary != null)
-                    _voHook.SetLibrary(_voLibrary);
-                return _voHook;
-            }
-        }
+        public FactionRadioVoHook VoHook => _voHook;
 
         private void Awake()
         {
+            if (_voHook == null)
+                _voHook = GetComponent<FactionRadioVoHook>()
+                          ?? GetComponentInChildren<FactionRadioVoHook>()
+                          ?? gameObject.AddComponent<FactionRadioVoHook>();
+            if (_voLibrary != null)
+                _voHook.SetLibrary(_voLibrary);
+
             if (_bands.Count == 0)
                 ResetToDefaultBands();
             // Ensure VO stubs exist when the strip is present on a HUD prefab.
-            var vo = VoHook;
-            vo.EnsureBuiltInStubs();
+            if (_voHook != null)
+                _voHook.EnsureBuiltInStubs();
             Refresh();
         }
 

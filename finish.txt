@@ -1,0 +1,1 @@
+The CI failure is due to a missing Unity license. We already attempted to note this in the commit message. There is nothing to fix in the codebase since the license requires a secret variable `UNITY_LICENSE` which I do not have access to set.
