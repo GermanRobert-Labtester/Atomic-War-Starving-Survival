@@ -383,6 +383,12 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ExpeditionSelfTest:
                     GetTree().Quit(HostCli.RunExpeditionSelfTest());
                     return;
+                case HostCliAction.BridgeSelfTest:
+                    GetTree().Quit(HostCli.RunBridgeSelfTest());
+                    return;
+                case HostCliAction.ExpeditionEncounterBridgeSelfTest:
+                    GetTree().Quit(HostCli.RunExpeditionEncounterBridgeSelfTest());
+                    return;
                 case HostCliAction.MedicalSelfTest:
                     GetTree().Quit(HostCli.RunMedicalSelfTest());
                     return;

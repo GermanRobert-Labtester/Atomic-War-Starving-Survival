@@ -295,7 +295,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --journal-selftest       Journal domain + save roundtrip");
             GD.Print("  --journal-uitest         Build ledger UI, cycle tabs, quit");
             GD.Print("  --player-panels-uitest  Bind and render Survivors, Medical, Weather, Radio, Shelter panels");
-            GD.Print("  --bridge-selftest        UnityEngine shim failure policy (semantic throws, cosmetic quiet)");
+            GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
+            GD.Print("  --expedition-encounter-bridge-selftest  ExpeditionEncounterBridge bare-notice + resolved surface smoke test");
             GD.Print("  --year-of-ash-save-selftest Year of Ash save write → reload → restore → checksum/tamper checks");
             GD.Print("  --verdict-selftest         The Verdict (Exp 08): machine log, reckoning phases, evidence, census, save");
             GD.Print("  --verdict-uitest          Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free");

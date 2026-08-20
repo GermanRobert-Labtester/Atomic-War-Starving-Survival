@@ -358,6 +358,15 @@ namespace AtomicWar.GodotApp
             return report.ExitCode;
         }
 
+        /// <summary>The UnityEngine.* compatibility shim (src/Bridge/) has been fully removed.
+        /// This selftest is retained as a stable CLI verb so CI/documentation references do not
+        /// break; it reports the removal and exits 0 instead of silently hanging in the app loop.</summary>
+        public static int RunBridgeSelfTest()
+        {
+            GD.Print("[BridgeSelfTest] UnityEngine.* shim removed — src/Bridge/ is empty. Migration to Godot is complete; nothing to shim.");
+            return 0;
+        }
+
         /// <summary>Smoke-test ExpeditionEncounterBridge: bare-notice path + resolved path surface count.</summary>
         public static int RunExpeditionEncounterBridgeSelfTest()
         {

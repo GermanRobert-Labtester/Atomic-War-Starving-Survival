@@ -65,7 +65,7 @@ If an MCP invocation fails because the server/tool is missing, disconnected, or 
 | **Unity host** (inactive — migrating out) | Unity 6 LTS, 2D, URP | `Assets/_Game/` (read-only legacy)         | `AtomicWar._Game.*` | Unity 6 (do not run) |
 | **Tests**        | xUnit                       | `Ashfall.Core.Tests/`                     | `Ashfall.Core.Tests`| `net9.0`        |
 | **Data authority**| JSON                       | `Assets/StreamingAssets/Data/`            | —                   | —               |
-| **Godot Bridge** (shim, shrinking) | `UnityEngine.*` compat | `src/Bridge/`                              | `UnityEngine.*`     | `net8.0`        |
+| **Godot Bridge** (shim) | **REMOVED** — migration complete | `src/Bridge/` (deleted) | — | — |
 | **Godot assets** (imported/migrated) | Godot native (`assets/`) | `assets/art/`, `assets/audio/`, `assets/fonts/`, `assets/sprites/`, `assets/ui/` | — | — |
 
 Godot project: `project.godot` at root, `gl_compatibility` renderer, 1920×1080, 60 FPS, `BarlowCondensed` + `ShareTechMono` fonts.
@@ -153,15 +153,11 @@ Known data issues:
 
 ---
 
-## BRIDGE SHIM RULES (Godot)
+## BRIDGE SHIM — REMOVED
 
-`src/Bridge/` (10 files, 2686 lines, 165+ shimmed types) lets legacy `Assets/_Game/` code compile under Godot by providing a `UnityEngine.*` compatibility layer. The shim is a **migration aid, not the end state**. Goal: shrink it to zero.
+The `UnityEngine.*` compatibility shim (`src/Bridge/`) and the legacy `Assets/_Game/` host have been **fully deleted**. Migration to Godot is complete; there is nothing left to shim. `--bridge-selftest` is retained as a stable CI verb: it prints the removal notice and exits 0 rather than booting into the app loop. Do not reintroduce a `UnityEngine.*` shim layer.
 
-- `BridgeGap.Semantic()` — throws on logic-affecting gaps. Never silence. These prevent silent bugs.
-- `BridgeGap.Cosmetic()` — logs visual-only gaps. Expected in headless mode.
-- `BridgeSelfTest` — run with `godot --headless --path . -- --bridge-selftest`.
-- Do not add new shim types without classifying gaps (Semantic / Cosmetic / no-op).
-- Every new `Assets/_Game/` file that needs the shim is a migration smell — move the logic into Core instead.
+`--expedition-encounter-bridge-selftest` is unrelated to the old shim: it smoke-tests the live `ExpeditionEncounterBridge` domain class (bare-notice + resolved surface paths).
 
 ---
 
@@ -289,7 +285,7 @@ Report PASS/FAIL for each before claiming done.
 2. dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj     # All tests pass
 3. dotnet build Ashfall.csproj                                  # Godot host: 0 errors, 0 warnings
 4. godot --headless --path . -- --data-integrity-selftest       # Catalog integrity: 0 errors
-5. godot --headless --path . -- --bridge-selftest               # Shim honesty
+5. godot --headless --path . -- --bridge-selftest               # Exits 0 (shim removed; kept as stable CI verb)
 ```
 
 The `dotnet` and `godot` commands are the canonical path. **No Unity commands.**

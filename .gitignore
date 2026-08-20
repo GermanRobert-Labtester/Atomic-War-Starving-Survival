@@ -206,3 +206,13 @@ generated_AIassets/
 
 # Real Godot/.NET solution (explicit allow over rule above).
 !/Ashfall.slnx
+
+# Legacy Unity asset archive — kept locally, never re-committed (see AGENTS.md).
+# 140 MB gzipped tarball; flagged for removal from git history.
+/unity-assets-archive-*.tar.gz
+/unity-assets-archive-*.tar.gz.sha256
+
+# Stale Unity test-run reports at repo root (superseded by dotnet test + headless gates).
+/test-results-*.xml
+/batch20-playmode-results.xml
+/art-wiring-results.xml
