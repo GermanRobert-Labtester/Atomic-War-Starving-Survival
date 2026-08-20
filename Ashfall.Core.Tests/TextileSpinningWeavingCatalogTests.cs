@@ -74,8 +74,8 @@ namespace Ashfall.Core.Tests
         public void DraftingLogs_QueryByFibre_CaseInsensitive()
         {
             var catalog = Load();
-            var lower   = catalog.GetDraftingLogsByFibre("hemp_tow");
-            var upper   = catalog.GetDraftingLogsByFibre("HEMP_TOW");
+            var lower = catalog.GetDraftingLogsByFibre("hemp_tow");
+            var upper = catalog.GetDraftingLogsByFibre("HEMP_TOW");
             Assert.Equal(new System.Collections.Generic.List<string>(
                              System.Linq.Enumerable.Select(lower, e => e.Id)),
                          new System.Collections.Generic.List<string>(
@@ -141,8 +141,8 @@ namespace Ashfall.Core.Tests
         public void WarpTallies_QueryByFrame_CaseInsensitive()
         {
             var catalog = Load();
-            var lower   = catalog.GetWarpTalliesByFrame("bl_cord_frame_01");
-            var upper   = catalog.GetWarpTalliesByFrame("BL_CORD_FRAME_01");
+            var lower = catalog.GetWarpTalliesByFrame("bl_cord_frame_01");
+            var upper = catalog.GetWarpTalliesByFrame("BL_CORD_FRAME_01");
             Assert.Equal(System.Linq.Enumerable.Count(lower),
                          System.Linq.Enumerable.Count(upper));
         }
@@ -293,10 +293,10 @@ namespace Ashfall.Core.Tests
             var seen = new System.Collections.Generic.HashSet<string>();
             void Check(string id) => Assert.True(seen.Add(id), $"Duplicate id: {id}");
 
-            foreach (var e in catalog.DraftingLogs)  Check(e.Id);
-            foreach (var e in catalog.WarpTallies)   Check(e.Id);
+            foreach (var e in catalog.DraftingLogs) Check(e.Id);
+            foreach (var e in catalog.WarpTallies) Check(e.Id);
             foreach (var e in catalog.HeddleReports) Check(e.Id);
-            foreach (var e in catalog.NapAssays)     Check(e.Id);
+            foreach (var e in catalog.NapAssays) Check(e.Id);
         }
 
         [Fact]
@@ -306,10 +306,10 @@ namespace Ashfall.Core.Tests
             void Check(string id, string text) =>
                 Assert.True(text.Length >= 20, $"{id}: log_text too short");
 
-            foreach (var e in catalog.DraftingLogs)  Check(e.Id, e.LogText);
-            foreach (var e in catalog.WarpTallies)   Check(e.Id, e.LogText);
+            foreach (var e in catalog.DraftingLogs) Check(e.Id, e.LogText);
+            foreach (var e in catalog.WarpTallies) Check(e.Id, e.LogText);
             foreach (var e in catalog.HeddleReports) Check(e.Id, e.LogText);
-            foreach (var e in catalog.NapAssays)     Check(e.Id, e.LogText);
+            foreach (var e in catalog.NapAssays) Check(e.Id, e.LogText);
         }
     }
 }

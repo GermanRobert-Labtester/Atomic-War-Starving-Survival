@@ -1,4 +1,4 @@
-# ASHFALL primary CI gate — Unity 6000.5.5f1 (AUDIT-001 / AUDIT-006)
+content = """# ASHFALL primary CI gate — Unity 6000.5.5f1 (AUDIT-001 / AUDIT-006)
 # Pins editor version explicitly so package resolution matches ProjectVersion.txt.
 name: ASHFALL CI
 
@@ -50,7 +50,7 @@ jobs:
 
           if errors:
               print("JSON validation FAILED:")
-              print("\n".join(errors))
+              print("\\n".join(errors))
               sys.exit(1)
 
           print(f"OK: validated {len(files)} JSON file(s) under {root}")
@@ -61,3 +61,7 @@ jobs:
         run: |
           grep -q '^m_EditorVersion: 6000\.5\.5f1$' ProjectSettings/ProjectVersion.txt
           echo "ProjectVersion pin OK: 6000.5.5f1"
+
+"""
+with open(".github/workflows/ci.yml", "w") as f:
+    f.write(content)

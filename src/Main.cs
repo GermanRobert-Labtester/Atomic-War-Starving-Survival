@@ -254,6 +254,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.ExpansionsSelfTest:
                     GetTree().Quit(HostCli.RunExpansionsSelfTest(_dataDir));
                     return;
+                case HostCliAction.HoldfastTradeSaveSelfTest:
+                    GetTree().Quit(HoldfastTradeSaveStoreSelfTest.Run());
+                    return;
                 case HostCliAction.HoldfastSelfTest:
                     GetTree().Quit(HostCli.RunHoldfastSelfTest(_dataDir));
                     return;
@@ -465,7 +468,7 @@ namespace AtomicWar.GodotApp
                     GetTree().Quit(HostCli.RunBlackFlotillaSelfTest(_dataDir));
                     return;
                 case HostCliAction.RadioSelfTest:
-                    GetTree().Quit(HostCli.RunRadioSelfTest());
+                    GetTree().Quit(FactionRadioSelfTest.Run());
                     return;
                 case HostCliAction.UiSnapshotSelfTest:
                     GetTree().Quit(HostCli.RunUiSnapshotSelfTest());

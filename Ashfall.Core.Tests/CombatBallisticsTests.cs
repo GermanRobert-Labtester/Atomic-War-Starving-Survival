@@ -45,7 +45,13 @@ namespace Ashfall.Core.Tests
 
         private static CombatantState Hostile(string id, float armor = 0f, float cover = 0f) => new CombatantState
         {
-            Id = id, Name = "Raider", IsPlayer = false, Health = 50, MaxHealth = 50, ArmorRating = armor, CoverRating = cover
+            Id = id,
+            Name = "Raider",
+            IsPlayer = false,
+            Health = 50,
+            MaxHealth = 50,
+            ArmorRating = armor,
+            CoverRating = cover
         };
 
         [Fact]

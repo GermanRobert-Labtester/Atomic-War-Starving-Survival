@@ -130,8 +130,12 @@ namespace Ashfall.Core.Tests
             {
                 result.Goods.Add(new GoodDefinition
                 {
-                    id = id, displayName = id, category = "misc",
-                    basePrice = price, volatility = vol, elasticity = el
+                    id = id,
+                    displayName = id,
+                    category = "misc",
+                    basePrice = price,
+                    volatility = vol,
+                    elasticity = el
                 });
             }
             return GoodsCatalogLoader.ToCatalog(result);

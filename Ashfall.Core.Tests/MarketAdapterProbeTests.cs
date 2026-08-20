@@ -17,8 +17,12 @@ namespace Ashfall.Core.Tests
             var result = new GoodsCatalogLoadResult();
             result.Goods.Add(new GoodDefinition
             {
-                id = "probe_water", displayName = "Water", category = "water",
-                basePrice = 8f, volatility = 0.1f, elasticity = 1f
+                id = "probe_water",
+                displayName = "Water",
+                category = "water",
+                basePrice = 8f,
+                volatility = 0.1f,
+                elasticity = 1f
             });
             return GoodsCatalogLoader.ToCatalog(result);
         }

@@ -226,7 +226,7 @@ namespace Ashfall.Core.Tests
             var restored = new CrossingArbitrationSystem();
             restored.RestoreState(saved);
             restored.RestoreState(saved);
-            Assert.Equal(1, restored.State.rulings.Count);
+            Assert.Single(restored.State.rulings);
 
             var nullRestored = new CrossingArbitrationSystem();
             nullRestored.RestoreState(null);

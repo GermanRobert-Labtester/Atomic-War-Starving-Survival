@@ -134,38 +134,38 @@ namespace Ashfall.Core.Tests
     }
 }
 
-    public class GreenhouseRngProbeTests
+public class GreenhouseRngProbeTests
+{
+    [Fact]
+    public void Probe_SameSeedSameSequence_TwoInstances()
     {
-        [Fact]
-        public void Probe_SameSeedSameSequence_TwoInstances()
+        var a = new GreenhouseSystem(seed: 42);
+        var b = new GreenhouseSystem(seed: 42);
+        for (int day = 1; day <= 20; day++)
         {
-            var a = new GreenhouseSystem(seed: 42);
-            var b = new GreenhouseSystem(seed: 42);
-            for (int day = 1; day <= 20; day++)
-            {
-                a.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
-                b.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
-                Assert.Equal(a.State.blightRollCount, b.State.blightRollCount);
-            }
-        }
-
-        [Fact]
-        public void Probe_RestoreContinuesBlightStream()
-        {
-            // Uninterrupted run vs save-mid-way + restore: identical outcomes.
-            var uninterrupted = new GreenhouseSystem(seed: 9);
-            for (int day = 1; day <= 30; day++)
-                uninterrupted.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
-
-            var sliced = new GreenhouseSystem(seed: 9);
-            for (int day = 1; day <= 15; day++)
-                sliced.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
-            var restored = new GreenhouseSystem(seed: 9);
-            restored.RestoreState(sliced.CaptureState());
-            for (int day = 16; day <= 30; day++)
-                restored.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
-
-            Assert.Equal(uninterrupted.State.blightRollCount, restored.State.blightRollCount);
-            Assert.Equal(uninterrupted.State.totalHarvests, restored.State.totalHarvests);
+            a.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
+            b.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
+            Assert.Equal(a.State.blightRollCount, b.State.blightRollCount);
         }
     }
+
+    [Fact]
+    public void Probe_RestoreContinuesBlightStream()
+    {
+        // Uninterrupted run vs save-mid-way + restore: identical outcomes.
+        var uninterrupted = new GreenhouseSystem(seed: 9);
+        for (int day = 1; day <= 30; day++)
+            uninterrupted.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
+
+        var sliced = new GreenhouseSystem(seed: 9);
+        for (int day = 1; day <= 15; day++)
+            sliced.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
+        var restored = new GreenhouseSystem(seed: 9);
+        restored.RestoreState(sliced.CaptureState());
+        for (int day = 16; day <= 30; day++)
+            restored.TickDay(day, growLightHours: 6f, ashContaminationRate: 0.5f);
+
+        Assert.Equal(uninterrupted.State.blightRollCount, restored.State.blightRollCount);
+        Assert.Equal(uninterrupted.State.totalHarvests, restored.State.totalHarvests);
+    }
+}

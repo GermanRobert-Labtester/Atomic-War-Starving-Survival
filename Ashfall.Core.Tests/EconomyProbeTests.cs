@@ -182,8 +182,12 @@ namespace Ashfall.Core.Tests
             var one = new GoodsCatalogLoadResult();
             one.Goods.Add(new GoodDefinition
             {
-                id = "only", displayName = "Only", category = "misc",
-                basePrice = 1f, volatility = 1f, elasticity = 2f
+                id = "only",
+                displayName = "Only",
+                category = "misc",
+                basePrice = 1f,
+                volatility = 1f,
+                elasticity = 2f
             });
             sys.BindCatalog(GoodsCatalogLoader.ToCatalog(one));
             for (int day = 1; day <= 500; day++)
@@ -255,8 +259,12 @@ namespace Ashfall.Core.Tests
             var result = new GoodsCatalogLoadResult();
             result.Goods.Add(new GoodDefinition
             {
-                id = "wild", displayName = "Wild", category = "misc",
-                basePrice = 10f, volatility = 1f, elasticity = 50f
+                id = "wild",
+                displayName = "Wild",
+                category = "misc",
+                basePrice = 10f,
+                volatility = 1f,
+                elasticity = 50f
             });
             var sys = new MarketSystem();
             sys.BindCatalog(GoodsCatalogLoader.ToCatalog(result));

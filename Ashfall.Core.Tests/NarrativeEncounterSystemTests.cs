@@ -12,8 +12,11 @@ namespace Ashfall.Core.Tests
             var sys = new NarrativeEncounterSystem();
             sys.RegisterEncounter(new EncounterDefinition
             {
-                id = "enc_a", title = "A", category = "Discovery",
-                baseWeight = 1f, minDangerLevel = 0f,
+                id = "enc_a",
+                title = "A",
+                category = "Discovery",
+                baseWeight = 1f,
+                minDangerLevel = 0f,
                 choices = new System.Collections.Generic.List<EncounterChoiceDefinition>
                 {
                     new EncounterChoiceDefinition { choiceId = "c", text = "Go", moraleDelta = 1, guiltDelta = 0 }
@@ -21,8 +24,11 @@ namespace Ashfall.Core.Tests
             });
             sys.RegisterEncounter(new EncounterDefinition
             {
-                id = "enc_b", title = "B", category = "Hazard",
-                baseWeight = 3f, minDangerLevel = 2f,
+                id = "enc_b",
+                title = "B",
+                category = "Hazard",
+                baseWeight = 3f,
+                minDangerLevel = 2f,
                 choices = new System.Collections.Generic.List<EncounterChoiceDefinition>
                 {
                     new EncounterChoiceDefinition { choiceId = "c", text = "Go", moraleDelta = 2, guiltDelta = 1 }
@@ -30,8 +36,11 @@ namespace Ashfall.Core.Tests
             });
             sys.RegisterEncounter(new EncounterDefinition
             {
-                id = "enc_c", title = "C", category = "Social",
-                baseWeight = 1f, minDangerLevel = 0f,
+                id = "enc_c",
+                title = "C",
+                category = "Social",
+                baseWeight = 1f,
+                minDangerLevel = 0f,
                 requiredLocationId = "loc_specific",
                 choices = new System.Collections.Generic.List<EncounterChoiceDefinition>
                 {
@@ -217,13 +226,17 @@ namespace Ashfall.Core.Tests
             Assert.Contains(defs, d => d.id == "enc_dead_letter_office");
             Assert.Contains(defs, d => d.id == "enc_weather_station");
             Assert.Contains(defs, d => d.id == "enc_pianist");
-            foreach (var d in defs)
+            for (int i = 0; i < defs.Count; i++)
             {
+                var d = defs[i];
                 Assert.False(string.IsNullOrEmpty(d.title));
                 Assert.False(string.IsNullOrEmpty(d.description));
                 Assert.True(d.choices.Count >= 3);
-                foreach (var c in d.choices)
+                for (int j = 0; j < d.choices.Count; j++)
+                {
+                    var c = d.choices[j];
                     Assert.False(string.IsNullOrEmpty(c.choiceId));
+                }
             }
         }
 

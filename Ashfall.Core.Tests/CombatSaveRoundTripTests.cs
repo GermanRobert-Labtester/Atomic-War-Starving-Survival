@@ -85,7 +85,7 @@ namespace Ashfall.Core.Tests
             Assert.Equal(TacticalCombatSystem.StanceId(TacticalStance.HoldPosition), migrated.PlayerStance);
             Assert.True(migrated.Combatants[0].Lane <= 2, "out-of-range lane clamped");
             Assert.NotNull(migrated.Events);
-            Assert.Equal(1, migrated.Combatants.Count);
+            Assert.Single(migrated.Combatants);
         }
 
         [Fact]

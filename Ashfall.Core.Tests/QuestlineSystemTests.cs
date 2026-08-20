@@ -21,21 +21,21 @@ namespace Ashfall.Core.Tests
         {
             var def = new QuestlineDefinition
             {
-                questlineId  = id,
-                title        = "Simple Quest",
-                synopsis     = "A two-stage test questline.",
+                questlineId = id,
+                title = "Simple Quest",
+                synopsis = "A two-stage test questline.",
                 firstStageId = "stage_a",
-                minDay       = minDay,
-                maxDay       = maxDay
+                minDay = minDay,
+                maxDay = maxDay
             };
 
             def.stages.Add(new QuestStage
             {
-                stageId        = "stage_a",
-                title          = "Stage A",
+                stageId = "stage_a",
+                title = "Stage A",
                 narrativePrompt = "You face a choice.",
-                unlockOnDay    = 100,
-                choices        = new System.Collections.Generic.List<QuestChoice>
+                unlockOnDay = 100,
+                choices = new System.Collections.Generic.List<QuestChoice>
                 {
                     new QuestChoice
                     {
@@ -62,13 +62,13 @@ namespace Ashfall.Core.Tests
 
             def.stages.Add(new QuestStage
             {
-                stageId         = "stage_b",
-                title           = "Stage B — Resolution",
+                stageId = "stage_b",
+                title = "Stage B — Resolution",
                 narrativePrompt = "The consequence arrives.",
-                unlockOnDay     = 110,
-                isTerminal      = true,
+                unlockOnDay = 110,
+                isTerminal = true,
                 terminalOutcome = QuestlineStatus.Completed,
-                choices         = new System.Collections.Generic.List<QuestChoice>()
+                choices = new System.Collections.Generic.List<QuestChoice>()
             });
 
             return def;
@@ -78,18 +78,18 @@ namespace Ashfall.Core.Tests
         {
             var def = new QuestlineDefinition
             {
-                questlineId  = id,
-                title        = "Fail Quest",
+                questlineId = id,
+                title = "Fail Quest",
                 firstStageId = "stage_only",
-                minDay       = 100,
-                maxDay       = 300
+                minDay = 100,
+                maxDay = 300
             };
             def.stages.Add(new QuestStage
             {
-                stageId         = "stage_only",
+                stageId = "stage_only",
                 narrativePrompt = "Last chance.",
-                isTerminal      = false,
-                choices         = new System.Collections.Generic.List<QuestChoice>
+                isTerminal = false,
+                choices = new System.Collections.Generic.List<QuestChoice>
                 {
                     new QuestChoice
                     {
@@ -104,10 +104,10 @@ namespace Ashfall.Core.Tests
             });
             def.stages.Add(new QuestStage
             {
-                stageId         = "stage_fail_terminal",
-                isTerminal      = true,
+                stageId = "stage_fail_terminal",
+                isTerminal = true,
                 terminalOutcome = QuestlineStatus.Failed,
-                choices         = new System.Collections.Generic.List<QuestChoice>()
+                choices = new System.Collections.Generic.List<QuestChoice>()
             });
             return def;
         }
@@ -465,11 +465,11 @@ namespace Ashfall.Core.Tests
             var snap2 = sys.CaptureState();
 
             // snap1 must not reflect changes made after capture
-            Assert.Equal(1, snap1.completedQuestlineIds.Count);
-            Assert.Equal(0, snap1.failedQuestlineIds.Count);
+            Assert.Single(snap1.completedQuestlineIds);
+            Assert.Empty(snap1.failedQuestlineIds);
 
-            Assert.Equal(1, snap2.completedQuestlineIds.Count);
-            Assert.Equal(1, snap2.failedQuestlineIds.Count);
+            Assert.Single(snap2.completedQuestlineIds);
+            Assert.Single(snap2.failedQuestlineIds);
         }
 
         [Fact]

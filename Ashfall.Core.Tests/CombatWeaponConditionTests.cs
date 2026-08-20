@@ -10,14 +10,22 @@ namespace Ashfall.Core.Tests
 
         private static WeaponInstanceState Rifle(string ammo = "ammo_556") => new WeaponInstanceState
         {
-            InstanceId = "w1", WeaponId = "weapon_assault_rifle", OwnerSurvivorId = "sv1",
-            ConditionPct = 1f, AmmoId = ammo, AmmoRemaining = 60
+            InstanceId = "w1",
+            WeaponId = "weapon_assault_rifle",
+            OwnerSurvivorId = "sv1",
+            ConditionPct = 1f,
+            AmmoId = ammo,
+            AmmoRemaining = 60
         };
 
         private static WeaponInstanceState Pipe(string ammo = "ammo_357") => new WeaponInstanceState
         {
-            InstanceId = "w2", WeaponId = "weapon_pipe_rifle", OwnerSurvivorId = "sv1",
-            ConditionPct = 1f, AmmoId = ammo, AmmoRemaining = 40
+            InstanceId = "w2",
+            WeaponId = "weapon_pipe_rifle",
+            OwnerSurvivorId = "sv1",
+            ConditionPct = 1f,
+            AmmoId = ammo,
+            AmmoRemaining = 40
         };
 
         [Fact]

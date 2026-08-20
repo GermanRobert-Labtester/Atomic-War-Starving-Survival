@@ -87,7 +87,7 @@ namespace Ashfall.Core.Tests
             var log = new MachineLogSystem();
             Assert.True(log.Post("fac_a", 160, "operating", "body", "ev_a"));
             Assert.False(log.Post("fac_a", 160, "operating", "body2", "ev_b"));
-            Assert.Equal(1, log.Entries.Count);
+            Assert.Single(log.Entries);
         }
 
         [Fact]
@@ -154,7 +154,7 @@ namespace Ashfall.Core.Tests
 
             var restored = new MachineLogSystem();
             restored.RestoreState(snap);
-            Assert.Equal(1, restored.Entries.Count);
+            Assert.Single(restored.Entries);
             Assert.True(restored.Entries[0].read);
             Assert.Equal(160, restored.State.lastTapeSpinDay);
         }
@@ -452,7 +452,7 @@ namespace Ashfall.Core.Tests
             var reck2 = new ReckoningSystem();
             var evidence2 = new EvidenceLedger();
             VerdictSaveCodec.Restore(decoded, log2, reck2, evidence2);
-            Assert.Equal(1, log2.Entries.Count);
+            Assert.Single(log2.Entries);
             Assert.Equal(ReckoningPhase.Knowing, reck2.Phase);
             Assert.Equal(1, evidence2.Count);
         }
