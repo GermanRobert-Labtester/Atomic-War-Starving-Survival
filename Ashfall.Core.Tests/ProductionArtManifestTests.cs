@@ -346,7 +346,7 @@ namespace Ashfall.Core.Tests
             }
             var onDiskStems = new HashSet<string>(
                 Directory.EnumerateFiles(artDir)
-                    .Select(Path.GetFileNameWithoutExtension),
+                    .Select(f => Path.GetFileNameWithoutExtension(f) ?? string.Empty),
                 StringComparer.OrdinalIgnoreCase);
             foreach (var row in rows)
             {

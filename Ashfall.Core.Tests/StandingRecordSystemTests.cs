@@ -258,7 +258,7 @@ namespace Ashfall.Core.Tests
 
         private sealed class StandingCharProbe
         {
-            public string id;
+            public string id = string.Empty;
         }
     }
 }

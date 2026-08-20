@@ -188,11 +188,9 @@ namespace Ashfall.Core.Tests
             w.Observe("loc_weighbridge", WarlordTerritoryState.None, 210);
             w.Observe("loc_denial_cut_substation", WarlordTerritoryState.None, 210);
             var rng = new SeededRng(707);
-            bool annexObserved = false;
             w.OnActionExecuted += r =>
             {
-                if (r.Action == WarlordStrategicAction.Annex && r.Success)
-                    annexObserved = true;
+                // Annex side-effect tracked via event wiring; kept for future assertion
             };
             for (int day = 210; day <= 500; day++)
                 w.TickDaily(day, rng, Calm());

@@ -505,7 +505,7 @@ namespace Ashfall.Core.Tests
 
         private sealed class DutyRosterCharacterProbe
         {
-            public string id;
+            public string id = string.Empty;
         }
 
         [Fact]
