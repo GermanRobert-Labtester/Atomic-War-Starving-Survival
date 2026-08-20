@@ -1,5 +1,5 @@
-# ASHFALL primary CI gate — Unity 6000.5.5f1 (AUDIT-001 / AUDIT-006)
-# Pins editor version explicitly so package resolution matches ProjectVersion.txt.
+# ASHFALL primary CI gate — Godot 4.7.1 .NET/C#
+# Godot is the only active engine. CI must not invoke Unity tooling.
 name: ASHFALL CI
 
 on:
@@ -10,18 +10,22 @@ on:
 
 permissions:
   contents: read
-  checks: write
+
+concurrency:
+  group: ashfall-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
-  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-  UNITY_VERSION: 6000.5.5f1
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_NOLOGO: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  GODOT_VERSION: 4.7.1
 
 jobs:
   validate:
-    name: Data Validation Gate
+    name: Repository / Data Validation
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -34,14 +38,17 @@ jobs:
           import pathlib
           import sys
 
-          root = pathlib.Path("Assets/StreamingAssets")
-          errors = []
-
-          if not root.exists():
-              print(f"WARN: {root} missing — skipping JSON syntax scan")
-              sys.exit(0)
+          root = pathlib.Path("Assets/StreamingAssets/Data")
+          if not root.is_dir():
+              print(f"ERROR: authoritative data directory is missing: {root}")
+              sys.exit(1)
 
           files = sorted(root.rglob("*.json"))
+          if not files:
+              print(f"ERROR: no JSON catalogs found under {root}")
+              sys.exit(1)
+
+          errors = []
           for path in files:
               try:
                   json.loads(path.read_text(encoding="utf-8"))
@@ -56,204 +63,100 @@ jobs:
           print(f"OK: validated {len(files)} JSON file(s) under {root}")
           PY
 
-      - name: Assert ProjectVersion is 6000.5.5f1
+      - name: Assert Godot project version pins
         shell: bash
         run: |
-          grep -q '^m_EditorVersion: 6000\.5\.5f1$' ProjectSettings/ProjectVersion.txt
-          echo "ProjectVersion pin OK: 6000.5.5f1"
+          grep -Fq 'config/features=PackedStringArray("4.7", "C#", "Compatibility")' project.godot
+          grep -Fq '<Project Sdk="Godot.NET.Sdk/4.7.1">' Ashfall.csproj
+          echo "Godot project pins OK: project.godot 4.7 / Godot.NET.Sdk 4.7.1"
 
-  # Job-level `if` does not support the `env`/`secrets` contexts. Resolve the
-  # secret once in a step, expose only a boolean output, and let downstream jobs
-  # condition on the supported `needs` context. Fork PRs without secrets therefore
-  # keep the validation gate while cleanly skipping licensed Unity work.
-  unity-license:
-    name: Unity License Availability
+  core-tests:
+    name: Ashfall.Core Tests
     needs: validate
     runs-on: ubuntu-latest
-    outputs:
-      available: ${{ steps.detect.outputs.available }}
-    steps:
-      - name: Detect Unity license
-        id: detect
-        shell: bash
-        run: |
-          if [[ -n "${UNITY_LICENSE:-}" ]]; then
-            echo "available=true" >> "$GITHUB_OUTPUT"
-            echo "Unity license secret is configured."
-          else
-            echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "Unity license secret is not configured; licensed Unity jobs will be skipped."
-          fi
-
-  # The generators are the source of truth for Assets/_Game/Data/Generated and
-  # Gameplay.unity. Without this gate they quietly become decoration: someone
-  # hand-edits a catalog or the scene, the next regeneration silently reverts it,
-  # and nothing ever says so.
-  #
-  # The two halves are gated differently, because only one of them is byte-stable:
-  #
-  #   Data assets    -> compared byte-for-byte. Re-running GenerateAll over an
-  #                     unchanged project should produce an identical tree.
-  #   Gameplay.unity -> NOT compared. Unity assigns fresh local fileIDs when it
-  #                     saves a scene built from scratch. BuildGameplayScene is
-  #                     itself the gate because it throws on unassigned references.
-  regenerate:
-    if: ${{ needs.unity-license.outputs.available == 'true' }}
-    name: Generated Assets Are Current
-    needs: [validate, unity-license]
-    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Setup .NET 8 and 9
+        uses: actions/setup-dotnet@v4
         with:
-          lfs: true
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
-      - name: Restore Unity Library cache
-        uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-regen-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-regen-${{ env.UNITY_VERSION }}-
+      - name: Restore Core tests
+        run: dotnet restore Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
 
-      # targetPlatform is required by unity-builder even when buildMethod performs
-      # editor automation rather than a player build.
-      - name: Regenerate catalogs
-        uses: game-ci/unity-builder@v4
-        with:
-          projectPath: .
-          unityVersion: ${{ env.UNITY_VERSION }}
-          targetPlatform: StandaloneLinux64
-          buildMethod: AtomicWar._Game.Editor.CatalogGenerator.GenerateAll
-          allowDirtyBuild: true
+      - name: Build Core tests
+        run: dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --configuration Release --no-restore
 
-      - name: Regenerate gameplay scene
-        uses: game-ci/unity-builder@v4
-        with:
-          projectPath: .
-          unityVersion: ${{ env.UNITY_VERSION }}
-          targetPlatform: StandaloneLinux64
-          buildMethod: AtomicWar._Game.Editor.GameplaySceneBuilder.BuildGameplayScene
-          allowDirtyBuild: true
+      - name: Run Core tests
+        run: >-
+          dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
+          --configuration Release
+          --no-build
+          --logger "trx;LogFileName=ashfall-core-tests.trx"
+          --results-directory TestResults
 
-      - name: Fail if regenerated data differs from committed
-        shell: bash
-        run: |
-          # Scene excluded on purpose — see the comment on this job.
-          if ! git diff --quiet -- Assets/_Game/Data/Generated; then
-            echo "Regenerated data assets differ from what is committed."
-            echo "Re-run Tools/ASHFALL/Generate Catalogs, then commit the result."
-            git diff --stat -- Assets/_Game/Data/Generated
-            exit 1
-          fi
-          echo "OK: generated data assets are current."
-
-  test:
-    if: ${{ needs.unity-license.outputs.available == 'true' }}
-    name: EditMode Tests
-    needs: [validate, unity-license]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Restore Unity Library cache
-        uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-edit-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-edit-${{ env.UNITY_VERSION }}-
-
-      - name: Run EditMode tests
-        uses: game-ci/unity-test-runner@v4
-        id: tests
-        with:
-          projectPath: .
-          unityVersion: ${{ env.UNITY_VERSION }}
-          testMode: EditMode
-          artifactsPath: test-results
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: EditMode Test Results
-
-      - name: Upload EditMode test results
+      - name: Upload Core test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results-editmode
-          path: ${{ steps.tests.outputs.artifactsPath }}
+          name: ashfall-core-test-results
+          path: TestResults
           if-no-files-found: warn
 
-  test-playmode:
-    if: ${{ needs.unity-license.outputs.available == 'true' }}
-    name: PlayMode Tests
-    needs: [validate, unity-license]
+  godot-gates:
+    name: Godot Headless Gates
+    needs: [validate, core-tests]
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     steps:
-      - name: Checkout Repository
+      - name: Checkout Repository with Git LFS
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      - name: Restore Unity Library cache
-        uses: actions/cache@v4
+      - name: Setup .NET 8 and 9
+        uses: actions/setup-dotnet@v4
         with:
-          path: Library
-          key: Library-play-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-play-${{ env.UNITY_VERSION }}-
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
-      - name: Run PlayMode tests
-        uses: game-ci/unity-test-runner@v4
-        id: tests
+      - name: Setup Godot .NET
+        uses: chickensoft-games/setup-godot@v2
         with:
-          projectPath: .
-          unityVersion: ${{ env.UNITY_VERSION }}
-          testMode: PlayMode
-          artifactsPath: test-results-playmode
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: PlayMode Test Results
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: true
+          include-templates: false
 
-      - name: Upload PlayMode test results
+      - name: Verify toolchain
+        shell: bash
+        run: |
+          dotnet --version
+          godot --version
+          godot --version | grep -q '^4\.7\.1'
+
+      - name: Prepare repository scripts
+        shell: bash
+        run: |
+          chmod +x setup-repo.sh
+          chmod +x scripts/ci/godot-asset-gate.sh
+          if [[ -f scripts/ci/asset-orphan-sweep.sh ]]; then
+            chmod +x scripts/ci/asset-orphan-sweep.sh
+          fi
+
+      - name: Run canonical Godot asset and gameplay gates
+        shell: bash
+        run: ./scripts/ci/godot-asset-gate.sh
+
+      - name: Upload Godot import log on failure
         uses: actions/upload-artifact@v4
-        if: always()
+        if: failure()
         with:
-          name: test-results-playmode
-          path: ${{ steps.tests.outputs.artifactsPath }}
-          if-no-files-found: warn
-
-  build-linux:
-    if: ${{ needs.unity-license.outputs.available == 'true' && needs.test.result == 'success' && needs.test-playmode.result == 'success' }}
-    name: Build Linux64
-    needs: [unity-license, test, test-playmode]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Restore Unity Library cache
-        uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-linux-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-linux-${{ env.UNITY_VERSION }}-
-
-      - name: Build Linux64 player
-        uses: game-ci/unity-builder@v4
-        with:
-          projectPath: .
-          targetPlatform: StandaloneLinux64
-          buildsPath: builds
-          unityVersion: ${{ env.UNITY_VERSION }}
-
-      - name: Upload Linux64 build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-Linux64
-          path: builds/StandaloneLinux64
-          if-no-files-found: error
+          name: godot-import-log
+          path: /tmp/godot-import.log
+          if-no-files-found: ignore
