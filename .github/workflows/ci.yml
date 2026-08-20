@@ -1,5 +1,5 @@
 # ASHFALL primary CI gate — Unity 6000.5.5f1 (AUDIT-001 / AUDIT-006)
-# Pins editor version explicitly so package resolve matches ProjectVersion.txt.
+# Pins editor version explicitly so package resolution matches ProjectVersion.txt.
 name: ASHFALL CI
 
 on:
@@ -7,6 +7,10 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+
+permissions:
+  contents: read
+  checks: write
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -23,30 +27,63 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate StreamingAssets JSON syntax
+        shell: bash
         run: |
           python3 - <<'PY'
-          import json, pathlib, sys
+          import json
+          import pathlib
+          import sys
+
           root = pathlib.Path("Assets/StreamingAssets")
           errors = []
+
           if not root.exists():
               print(f"WARN: {root} missing — skipping JSON syntax scan")
               sys.exit(0)
-          for p in sorted(root.rglob("*.json")):
+
+          files = sorted(root.rglob("*.json"))
+          for path in files:
               try:
-                  json.loads(p.read_text(encoding="utf-8"))
-              except Exception as e:
-                  errors.append(f"{p}: {e}")
+                  json.loads(path.read_text(encoding="utf-8"))
+              except Exception as exc:
+                  errors.append(f"{path}: {exc}")
+
           if errors:
               print("JSON validation FAILED:")
               print("\n".join(errors))
               sys.exit(1)
-          print(f"OK: validated {sum(1 for _ in root.rglob('*.json'))} JSON file(s) under {root}")
+
+          print(f"OK: validated {len(files)} JSON file(s) under {root}")
           PY
 
       - name: Assert ProjectVersion is 6000.5.5f1
+        shell: bash
         run: |
-          grep -q 'm_EditorVersion: 6000.5.5f1' ProjectSettings/ProjectVersion.txt
+          grep -q '^m_EditorVersion: 6000\.5\.5f1$' ProjectSettings/ProjectVersion.txt
           echo "ProjectVersion pin OK: 6000.5.5f1"
+
+  # Job-level `if` does not support the `env`/`secrets` contexts. Resolve the
+  # secret once in a step, expose only a boolean output, and let downstream jobs
+  # condition on the supported `needs` context. Fork PRs without secrets therefore
+  # keep the validation gate while cleanly skipping licensed Unity work.
+  unity-license:
+    name: Unity License Availability
+    needs: validate
+    runs-on: ubuntu-latest
+    outputs:
+      available: ${{ steps.detect.outputs.available }}
+    steps:
+      - name: Detect Unity license
+        id: detect
+        shell: bash
+        run: |
+          if [[ -n "${UNITY_LICENSE:-}" ]]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+            echo "Unity license secret is configured."
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "Unity license secret is not configured; licensed Unity jobs will be skipped."
+          fi
 
   # The generators are the source of truth for Assets/_Game/Data/Generated and
   # Gameplay.unity. Without this gate they quietly become decoration: someone
@@ -55,55 +92,54 @@ jobs:
   #
   # The two halves are gated differently, because only one of them is byte-stable:
   #
-  #   Data assets  -> compared byte-for-byte. Re-running GenerateAll over an
-  #                   unchanged project produces an identical tree (verified: a
-  #                   full EditMode run, which calls GenerateAll in SetUp, leaves
-  #                   the working tree clean).
-  #   Gameplay.unity -> NOT compared. Unity assigns fresh local fileIDs every time
-  #                   it saves a scene built from scratch, so two consecutive
-  #                   builds of identical input differ by ~480 lines (measured).
-  #                   A byte-diff here would fail on every single run. The real
-  #                   gate is that BuildGameplayScene throws SceneBuildException
-  #                   on any unassigned reference, so the build step below failing
-  #                   IS the check.
+  #   Data assets    -> compared byte-for-byte. Re-running GenerateAll over an
+  #                     unchanged project should produce an identical tree.
+  #   Gameplay.unity -> NOT compared. Unity assigns fresh local fileIDs when it
+  #                     saves a scene built from scratch. BuildGameplayScene is
+  #                     itself the gate because it throws on unassigned references.
   regenerate:
-    if: ${{ env.UNITY_LICENSE != '' }}
+    if: ${{ needs.unity-license.outputs.available == 'true' }}
     name: Generated Assets Are Current
-    needs: validate
+    needs: [validate, unity-license]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           lfs: true
 
-      - uses: actions/cache@v4
+      - name: Restore Unity Library cache
+        uses: actions/cache@v4
         with:
           path: Library
           key: Library-regen-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
           restore-keys: |
             Library-regen-${{ env.UNITY_VERSION }}-
 
-      # targetPlatform is required by unity-builder even when buildMethod does
-      # no building; Linux is the one target installed on this image.
-      - uses: game-ci/unity-builder@v4
+      # targetPlatform is required by unity-builder even when buildMethod performs
+      # editor automation rather than a player build.
+      - name: Regenerate catalogs
+        uses: game-ci/unity-builder@v4
         with:
           projectPath: .
-          unityVersion: 6000.5.5f1
+          unityVersion: ${{ env.UNITY_VERSION }}
           targetPlatform: StandaloneLinux64
           buildMethod: AtomicWar._Game.Editor.CatalogGenerator.GenerateAll
           allowDirtyBuild: true
 
-      - uses: game-ci/unity-builder@v4
+      - name: Regenerate gameplay scene
+        uses: game-ci/unity-builder@v4
         with:
           projectPath: .
-          unityVersion: 6000.5.5f1
+          unityVersion: ${{ env.UNITY_VERSION }}
           targetPlatform: StandaloneLinux64
           buildMethod: AtomicWar._Game.Editor.GameplaySceneBuilder.BuildGameplayScene
           allowDirtyBuild: true
 
       - name: Fail if regenerated data differs from committed
+        shell: bash
         run: |
-          # Scene excluded on purpose -- see the comment on this job.
+          # Scene excluded on purpose — see the comment on this job.
           if ! git diff --quiet -- Assets/_Game/Data/Generated; then
             echo "Regenerated data assets differ from what is committed."
             echo "Re-run Tools/ASHFALL/Generate Catalogs, then commit the result."
@@ -113,96 +149,111 @@ jobs:
           echo "OK: generated data assets are current."
 
   test:
-    if: ${{ env.UNITY_LICENSE != '' }}
+    if: ${{ needs.unity-license.outputs.available == 'true' }}
     name: EditMode Tests
-    needs: validate
+    needs: [validate, unity-license]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           lfs: true
 
-      - uses: actions/cache@v4
+      - name: Restore Unity Library cache
+        uses: actions/cache@v4
         with:
           path: Library
-          key: Library-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
+          key: Library-edit-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
           restore-keys: |
-            Library-${{ env.UNITY_VERSION }}-
+            Library-edit-${{ env.UNITY_VERSION }}-
 
-      - uses: game-ci/unity-test-runner@v4
+      - name: Run EditMode tests
+        uses: game-ci/unity-test-runner@v4
         id: tests
         with:
           projectPath: .
-          unityVersion: 6000.5.5f1
+          unityVersion: ${{ env.UNITY_VERSION }}
           testMode: EditMode
           artifactsPath: test-results
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: EditMode Test Results
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload EditMode test results
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results-editmode
-          path: test-results
+          path: ${{ steps.tests.outputs.artifactsPath }}
+          if-no-files-found: warn
 
   test-playmode:
-    if: ${{ env.UNITY_LICENSE != '' }}
+    if: ${{ needs.unity-license.outputs.available == 'true' }}
     name: PlayMode Tests
-    needs: validate
+    needs: [validate, unity-license]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           lfs: true
 
-      - uses: actions/cache@v4
+      - name: Restore Unity Library cache
+        uses: actions/cache@v4
         with:
           path: Library
           key: Library-play-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
           restore-keys: |
             Library-play-${{ env.UNITY_VERSION }}-
 
-      - uses: game-ci/unity-test-runner@v4
+      - name: Run PlayMode tests
+        uses: game-ci/unity-test-runner@v4
         id: tests
         with:
           projectPath: .
-          unityVersion: 6000.5.5f1
+          unityVersion: ${{ env.UNITY_VERSION }}
           testMode: PlayMode
           artifactsPath: test-results-playmode
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: PlayMode Test Results
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload PlayMode test results
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results-playmode
-          path: test-results-playmode
+          path: ${{ steps.tests.outputs.artifactsPath }}
+          if-no-files-found: warn
 
   build-linux:
-    if: ${{ env.UNITY_LICENSE != '' }}
+    if: ${{ needs.unity-license.outputs.available == 'true' && needs.test.result == 'success' && needs.test-playmode.result == 'success' }}
     name: Build Linux64
-    needs: [test, test-playmode]
+    needs: [unity-license, test, test-playmode]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           lfs: true
 
-      - uses: actions/cache@v4
+      - name: Restore Unity Library cache
+        uses: actions/cache@v4
         with:
           path: Library
-          key: Library-Linux-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          key: Library-linux-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
           restore-keys: |
-            Library-Linux-${{ env.UNITY_VERSION }}-
+            Library-linux-${{ env.UNITY_VERSION }}-
 
-      - uses: game-ci/unity-builder@v4
+      - name: Build Linux64 player
+        uses: game-ci/unity-builder@v4
         with:
           projectPath: .
-          buildTarget: StandaloneLinux64
+          targetPlatform: StandaloneLinux64
           buildsPath: builds
-          unityVersion: 6000.5.5f1
+          unityVersion: ${{ env.UNITY_VERSION }}
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload Linux64 build
+        uses: actions/upload-artifact@v4
         with:
           name: build-Linux64
           path: builds/StandaloneLinux64
+          if-no-files-found: error
