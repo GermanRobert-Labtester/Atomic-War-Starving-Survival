@@ -43,6 +43,15 @@ namespace Ashfall.Core
             _catalog[def.id] = def;
         }
 
+        public void UnlockManual(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return;
+            if (!State.unlockedIds.Contains(id)) State.unlockedIds.Add(id);
+            if (_catalog.TryGetValue(id, out var def)) def.isUnlocked = true;
+        }
+
+        public bool IsManualUnlocked(string id) => !string.IsNullOrEmpty(id) && State.unlockedIds.Contains(id);
+
         /// <summary>
         /// Build the default 15-node research catalog. Called after the
         /// engine is constructed and before the first Tick.

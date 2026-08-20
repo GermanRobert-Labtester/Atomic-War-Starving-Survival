@@ -293,15 +293,16 @@ namespace Ashfall.Core.Inventory
         public bool AddById(string itemId, int amount)
         {
             if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
-            var def = new ItemDefinition { id = itemId };
-            return Add(def, amount);
+            var def = new ItemDefinition { id = itemId, stackMax = 99 };
+            bool result = Add(def, amount);
+            return result;
         }
 
         /// <summary>Check if items can be added by ID.</summary>
         public bool CanAddById(string itemId, int amount)
         {
             if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
-            var def = new ItemDefinition { id = itemId };
+            var def = new ItemDefinition { id = itemId, stackMax = 99 };
             return CanAdd(def, amount);
         }
 
