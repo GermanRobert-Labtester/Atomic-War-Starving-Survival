@@ -1,5 +1,14 @@
 # Godot Migration Status
 
+> **HISTORICAL SNAPSHOT — 2026-08-14.** Direction and guidance in this file
+> remain valid, but the headline numbers below are from Loop 7 and are no
+> longer maintained. As of 2026-08-20: 2,000/2,000 core tests pass, the
+> engine-agnostic core is 284 files, the host is ~200 files, and all 7
+> verification gates (build, tests, data-integrity, asset-registry,
+> playable-shell, ui-layout, asset-gate) are green. Unity residue removal
+> is tracked on the remediation lanes; re-measure per the commands at the
+> bottom after that work lands, or regenerate from a fresh snapshot.
+
 **Direction:** Unity 6 → Godot 4.7 (.NET/C#). Unity stays usable and supported throughout.
 **Strategy:** Strangler — shrink the Unity-coupled surface by moving logic into engine-agnostic
 plain C#, then add a thin Godot host. No big-bang rewrite.
