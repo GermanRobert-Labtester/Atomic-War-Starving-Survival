@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Crossing;
 using Ashfall.Core.Endgame;

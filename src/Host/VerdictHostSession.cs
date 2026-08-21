@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Clock;
 using Ashfall.Core.Events;

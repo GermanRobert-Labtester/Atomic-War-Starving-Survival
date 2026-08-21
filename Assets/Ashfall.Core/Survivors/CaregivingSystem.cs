@@ -1,6 +1,7 @@
 #pragma warning disable CS0067 // Public API event surface; subscribers arrive with feature wiring
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Survivors
 {

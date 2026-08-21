@@ -20,7 +20,7 @@
       CS8602/CS8603  — NOT suppressed: real null-dereference detection active
       CS8605/CS8629  — NOT suppressed: real unboxing/.Value crash detection active
     -->
-    <NoWarn>$(NoWarn);CS8619;CS8765;CS8618;CS0414;CS0169</NoWarn>
+    <NoWarn>$(NoWarn);CS8619;CS8765;CS0414;CS0169</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

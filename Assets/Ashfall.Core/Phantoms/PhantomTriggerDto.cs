@@ -10,6 +10,7 @@
 // fields (the same convention as the other catalog save DTOs in Core).
 
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Phantoms
 {

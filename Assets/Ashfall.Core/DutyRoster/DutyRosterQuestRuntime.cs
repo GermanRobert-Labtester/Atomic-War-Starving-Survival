@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using static Ashfall.Core.DutyRosterHoldfastBridge;
 
 namespace Ashfall.Core

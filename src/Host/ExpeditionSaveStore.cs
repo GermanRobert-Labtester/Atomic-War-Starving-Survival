@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;

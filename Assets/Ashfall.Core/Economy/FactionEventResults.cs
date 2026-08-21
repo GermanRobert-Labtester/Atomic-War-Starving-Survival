@@ -1,3 +1,4 @@
+#pragma warning disable CS8618
 namespace Ashfall.Core.Economy
 {
     /// <summary>Result of a faction raid attempt.</summary>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;

@@ -1,5 +1,6 @@
 using Godot;
 
+#pragma warning disable CS8618
 namespace AtomicWar.GodotApp.World
 {
     public partial class RoomHotspotView : Node2D

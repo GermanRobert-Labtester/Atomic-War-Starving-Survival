@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using static AtomicWar.GodotApp.UI.AshfallUiHelpers;
 using Ashfall.Core;

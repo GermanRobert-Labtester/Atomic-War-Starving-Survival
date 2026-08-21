@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using Godot;
 using AtomicWar.GodotApp.UI;
 using Ashfall.Core.UI;

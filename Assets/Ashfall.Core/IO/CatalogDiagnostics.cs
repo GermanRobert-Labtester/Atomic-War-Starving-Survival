@@ -16,6 +16,7 @@
 // anywhere in catalog loaders.
 
 using System;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.IO
 {

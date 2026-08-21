@@ -1,5 +1,6 @@
 using System.Text;
 
+#pragma warning disable CS8618
 namespace Ashfall.Core
 {
     /// <summary>Headless-report extension for the Census slice.</summary>
