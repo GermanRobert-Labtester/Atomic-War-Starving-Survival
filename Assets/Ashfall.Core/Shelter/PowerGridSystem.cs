@@ -233,7 +233,13 @@ namespace Ashfall.Core.Shelter
 
         private float ComputeTotalDraw()
         {
-            // Compute brownout as a local without recursion through TotalDrawWatts/IsBrownout.
+            // Phase 6: this now returns the *intent* draw — the sum of all rooms'
+            // logical DrawWatts that are eligible (closed breaker, not tripped,
+            // not disabled). The brownout suppression number lives on the new
+            // EffectiveTotalDrawWatts property. Splitting intent from effect
+            // stops IsBrownout from flipping false the same tick brownout fires:
+            // a 0-returning TotalDrawWatts made NetWatts positive, which made
+            // the battery charge UP during brownout (opposite of intent).
             float draw = 0f;
             for (int i = 0; i < _rooms.Count; i++)
             {
@@ -244,12 +250,19 @@ namespace Ashfall.Core.Shelter
                 if (pri == PowerGridRoomPriority.Disabled) continue;
                 draw += r.DrawWatts;
             }
-            // Brownout is decided once we know total draw vs generation.
-            bool brownout = draw > GenerationWatts && _state.BatteryReserveWh <= 0f;
-            if (!brownout) return draw;
-            // Brownout ⇒ every room drops to 0 effective draw this tick.
-            return 0f;
+            return draw;
         }
+
+        /// <summary>
+        /// Number that actually drains the battery during a brownout. When the
+        /// grid is in brownout state, every room drops to 0 effective draw,
+        /// which means the unmet-deficit (and thus the brownout-hours
+        /// calculation) collapses to whatever the *previous-tick* steady-state
+        /// looked like. Returns 0 during brownout to preserve the legacy
+        /// TickDay brownout-hours math that downstream code relies on.
+        /// </summary>
+        public float EffectiveTotalDrawWatts =>
+            IsBrownout ? 0f : TotalDrawWatts;
 
         private List<string> RoomPoweredStates()
         {

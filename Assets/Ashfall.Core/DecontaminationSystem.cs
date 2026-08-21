@@ -48,6 +48,18 @@ namespace Ashfall.Core
     public sealed class DecontaminationSystem
     {
         public const string SystemId = "decontamination";
+
+        // BUG-11 tunables: amount of surface contamination cleared per cycle,
+        // and the symmetric transfer-from-surface-to-shelter-air delta when a
+        // case is bypassed (positive shelter contamination) or completed
+        // (negative shelter contamination). Previously magic 0.1 / 0.05 / 0.8
+        // literals; now named so design intent is explicit and designers can
+        // tune without touching the math.
+        public const float SafeReleaseSurfaceDelta = -0.8f;
+        public const float SafeReleaseShelterDelta = -0.05f;
+        public const float BypassSurfaceDelta = -0.1f;
+        public const float BypassShelterDelta = 0.1f;
+
         private DecontaminationState _state = new DecontaminationState();
         private readonly ISeededRng _rng;
         private readonly ILog _log;
@@ -155,13 +167,13 @@ namespace Ashfall.Core
 
             if (safeRelease)
             {
-                c.surfaceContamination = Math.Max(0, c.surfaceContamination - 0.8f);
+                c.surfaceContamination = Math.Max(0, c.surfaceContamination + SafeReleaseSurfaceDelta);
                 c.status = DeconStatus.Complete;
                 c.completeDay = _currentDay;
                 c.outcome = "decontaminated";
 
-                // Reduce shelter air contamination slightly
-                _state.shelterContaminationLevel = Math.Max(0, _state.shelterContaminationLevel - 0.05f);
+                // Reduce shelter air contamination slightly (air returns to baseline).
+                _state.shelterContaminationLevel = Math.Max(0, _state.shelterContaminationLevel + SafeReleaseShelterDelta);
                 if (_state.shelterContaminationLevel == 0)
                     _state.shelterContaminated = false;
             }
@@ -170,10 +182,13 @@ namespace Ashfall.Core
                 c.status = DeconStatus.Bypassed;
                 c.bypassed = true;
                 c.outcome = "bypassed";
-                c.surfaceContamination = Math.Max(0, c.surfaceContamination - 0.1f);
+                c.surfaceContamination = Math.Max(0, c.surfaceContamination + BypassSurfaceDelta);
 
-                // Shelter contamination consequence
-                _state.shelterContaminationLevel = Math.Min(1f, _state.shelterContaminationLevel + 0.1f);
+                // Shelter contamination consequence: surface contamination NOT
+                // cleaned away is transferred to shelter air. Net shelter-level
+                // change is BypassShelterDelta + BypassSurfaceDelta (currently
+                // symmetric — see class-level constants for design notes).
+                _state.shelterContaminationLevel = Math.Min(1f, _state.shelterContaminationLevel + BypassShelterDelta);
                 _state.shelterContaminated = true;
 
                 var incident = new DeconIncident

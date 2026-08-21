@@ -214,5 +214,87 @@ namespace Ashfall.Core.Tests.Shelter
             Assert.Equal(sa.BatteryEndWh, sb.BatteryEndWh, 3);
             Assert.Equal(sa.BrownoutHours, sb.BrownoutHours, 3);
         }
+
+        // ── Phase 6 regression tests ──
+        // ComputeTotalDraw used to return 0 during active brownout (the
+        // suppression number). That collided with intent: TotalDrawWatts is
+        // a derived property that calls ComputeTotalDraw, so IsBrownout
+        // flipped false the same tick it should be true, and NetWatts became
+        // positive again (battery charging during a brownout). Fix splits
+        // intent from suppression.
+
+        [Fact]
+        public void IsBrownout_HoldsTrueAcrossSameTick_WhenDemandExceedsGeneration()
+        {
+            // Phase 6 regression: IsBrownout readings must be stable for a
+            // given state across repeated reads in the same tick — no recursion
+            // flicker. Pre-fix, ComputeTotalDraw returned 0 during brownout,
+            // so TotalDrawWatts → 0 and IsBrownout read false even while a
+            // brownout was active.
+            var state = new PowerGridState
+            {
+                GenerationWatts = 100,
+                BatteryCapacityWh = 0,
+                BatteryReserveWh = 0
+            };
+            var rooms = new[]
+            {
+                new PowerGridRoom("r1", "Room 1", 50f, PowerGridRoomPriority.Standard),
+                new PowerGridRoom("r2", "Room 2", 50f, PowerGridRoomPriority.Standard),
+                new PowerGridRoom("r3", "Room 3", 50f, PowerGridRoomPriority.Standard)
+            };
+            var g = new PowerGridSystem(state, rooms, new SeededRng(42));
+            Assert.True(g.IsBrownout, "intent demand > generation ==> IsBrownout true");
+            Assert.True(g.IsBrownout, "repeated query must remain true");
+            Assert.Equal(150f, g.TotalDrawWatts);
+        }
+
+        [Fact]
+        public void TotalDrawWatts_PreservesIntent_WhenBrownoutActive()
+        {
+            // TotalDrawWatts is a derived property that calls ComputeTotalDraw.
+            // Pre-fix, ComputeTotalDraw returned 0 during brownout, so
+            // TotalDrawWatts reported 0 (intent hidden). Post-fix returns
+            // intent unconditionally.
+            var state = new PowerGridState
+            {
+                GenerationWatts = 100,
+                BatteryCapacityWh = 0,
+                BatteryReserveWh = 0
+            };
+            var rooms = new[]
+            {
+                new PowerGridRoom("r1", "Room 1", 80f, PowerGridRoomPriority.Standard),
+                new PowerGridRoom("r2", "Room 2", 60f, PowerGridRoomPriority.Standard)
+            };
+            var g = new PowerGridSystem(state, rooms, new SeededRng(42));
+            Assert.Equal(140f, g.TotalDrawWatts);
+            Assert.True(g.IsBrownout);
+        }
+
+        [Fact]
+        public void TickDay_DuringBrownout_BatteryDrainsRatherThanCharges()
+        {
+            // Pre-fix, ComputeTotalDraw returning 0 made NetWatts = gen - 0 =
+            // positive, causing the battery to charge up during the brownout
+            // (which contradicts the game meaning of "brownout"). Post-fix,
+            // intent-based NetWatts stays negative and the battery drains.
+            var state = new PowerGridState
+            {
+                GenerationWatts = 100,
+                BatteryCapacityWh = 4000,
+                BatteryReserveWh = 0
+            };
+            var rooms = new[]
+            {
+                new PowerGridRoom("r1", "Room 1", 80f, PowerGridRoomPriority.Standard),
+                new PowerGridRoom("r2", "Room 2", 60f, PowerGridRoomPriority.Standard)
+            };
+            var g = new PowerGridSystem(state, rooms, new SeededRng(42));
+            var summary = g.TickDay(1, new SeededRng(42));
+            Assert.True(summary.IsBrownout);
+            Assert.Equal(0f, summary.BatteryEndWh, 3);
+            Assert.True(summary.BrownoutHours >= 1f);
+        }
     }
 }

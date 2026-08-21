@@ -59,10 +59,14 @@ namespace Ashfall.Core
 
         public ActionResult StartPair(string mentorId, string apprenticeId, string targetSkillId, float targetXp = 100f)
         {
-            // Check duty roster availability
-            if (_roster.GetAssignment(mentorId) != null)
+            // BUG-14: previously called `_roster.GetAssignment(mentorId)` —
+            // GetAssignment takes a *role*, not a survivorId. Returned null for
+            // every survivorId, so the busy-check never fired — mentors and
+            // apprentices on duty shifts could start a pair. Use GetRoleOf
+            // (survivorId-based) instead. Same fix for the apprentice guard.
+            if (_roster.GetRoleOf(mentorId) != null)
                 return ActionResult.Blocked("mentor_busy", "apprentice.mentor_busy");
-            if (_roster.GetAssignment(apprenticeId) != null)
+            if (_roster.GetRoleOf(apprenticeId) != null)
                 return ActionResult.Blocked("apprentice_busy", "apprentice.apprentice_busy");
 
             // Check eligibility

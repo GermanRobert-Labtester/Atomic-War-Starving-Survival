@@ -67,6 +67,18 @@ namespace Ashfall.Core
     public sealed class ShelterThermalSystem
     {
         public const string SystemId = "shelter_thermal";
+
+        // BUG-04 thermal tunables. Previously inline magic literals (0.1, 1.5,
+        // 10, etc.). Now named so designers can tune without touching math.
+        // These are FIRST-PASS placeholders, not physics-grade constants:
+        // `PriorityRoomShare` and `HeatGainBaseRate` should be derived from
+        // room.volumeM3 * specific heat * delta-t for production tuning.
+        public const float KwPerFuelUnit = 10f;
+        public const float PriorityRoomShare = 1.5f;
+        public const float HeatLossBaseRate = 0.1f;
+        public const float HeatGainBaseRate = 0.1f;
+        public const float InsulationDivisionEpsilon = 0.1f;
+
         private ShelterThermalState _state = new ShelterThermalState();
         private readonly ISeededRng _rng;
         private readonly ILog _log;
@@ -174,7 +186,7 @@ namespace Ashfall.Core
             }
 
             // Distribute heat to rooms
-            float totalHeatKw = _state.boilerActive ? _state.boilerFuelLevel * 10f : 0f;
+            float totalHeatKw = _state.boilerActive ? _state.boilerFuelLevel * KwPerFuelUnit : 0f;
             _state.totalHeatOutputKw = totalHeatKw;
 
             foreach (var room in _state.rooms)
@@ -182,16 +194,16 @@ namespace Ashfall.Core
                 float heatGain = 0f;
                 if (_state.boilerActive && room.hasRadiator && room.radiatorValveOpen > 0 && !room.isFrozen)
                 {
-                    float roomShare = room.isPriorityRoom ? 1.5f : 1f;
+                    float roomShare = room.isPriorityRoom ? PriorityRoomShare : 1f;
                     heatGain = totalHeatKw * room.radiatorValveOpen * roomShare / Math.Max(1, _state.rooms.Count);
                 }
 
                 // Heat loss to environment (exponential decay toward outdoor temp)
                 float outdoorTemp = _deepFreeze.IndoorTempCelsius;
-                float heatLoss = (room.currentTempC - outdoorTemp) * 0.1f / (room.insulationFactor + 0.1f);
+                float heatLoss = (room.currentTempC - outdoorTemp) * HeatLossBaseRate / (room.insulationFactor + InsulationDivisionEpsilon);
                 heatLoss *= deepFreezeFactor;
 
-                room.currentTempC += heatGain * 0.1f - heatLoss;
+                room.currentTempC += heatGain * HeatGainBaseRate - heatLoss;
                 room.currentTempC = Math.Clamp(room.currentTempC, outdoorTemp - 5f, _state.boilerTargetTempC + 10f);
 
                 // Freeze detection
@@ -229,13 +241,14 @@ namespace Ashfall.Core
                 }
             }
 
-            // Feed warmth to NeedsSystem (lightweight port — direct call is the sanctioned path)
-            foreach (var room in _state.rooms)
-            {
-                float warmthDelta = room.currentTempC > 15f ? (room.currentTempC - 15f) * 0.1f : 0f;
-                // NeedsSystem warmth is applied via event; here we just set the room temperature
-                // The host session reads this and applies to survivor warmth
-            }
+            // BUG-03: previously a dormant loop computed a per-room warmth
+            // delta and discarded it (heat-loss side-effect was settled by the
+            // room-loop above). Removed: the surviving observable surface is
+            // the per-room currentTempC. Survivor-warmth propagation into
+            // NeedsSystem is the host's responsibility (see BUG-03 in the
+            // audit report for the design-intent question). The Thermal API
+            // `GetRoomWarmthModifier(roomId)` is the canonical read interface
+            // for any future host wiring.
 
             OnThermalChanged?.Invoke();
         }

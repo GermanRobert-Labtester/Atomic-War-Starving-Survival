@@ -107,16 +107,30 @@ namespace Ashfall.Core
             if (_state.activeJobs.Exists(j => j.recipeId == recipeId && !j.isComplete && !j.isCancelled))
                 return ActionResult.Blocked("job_active", "kitchen.job_active");
 
-            // Reserve inputs atomically
+            // CR3-02: was a single-pass loop that called _inventory.RemoveById
+            // before checking the next iteration's CountById. If a later req
+            // failed, prior decrement(s) were not rolled back. Make this
+            // atomic: pre-check ALL required counts first; only consume
+            // when every required count is satisfiable.
+            if (inputRequirements != null)
+            {
+                foreach (var req in inputRequirements)
+                {
+                    if (_inventory.CountById(req.Key) < req.Value)
+                        return ActionResult.Blocked("insufficient_ingredients", "kitchen.insufficient_ingredients");
+                }
+            }
+
             var reservedIds = new List<string>();
             var reservedCounts = new List<int>();
-            foreach (var req in inputRequirements)
+            if (inputRequirements != null)
             {
-                if (_inventory.CountById(req.Key) < req.Value)
-                    return ActionResult.Blocked("insufficient_ingredients", "kitchen.insufficient_ingredients");
-                _inventory.RemoveById(req.Key, req.Value);
-                reservedIds.Add(req.Key);
-                reservedCounts.Add(req.Value);
+                foreach (var req in inputRequirements)
+                {
+                    _inventory.RemoveById(req.Key, req.Value);
+                    reservedIds.Add(req.Key);
+                    reservedCounts.Add(req.Value);
+                }
             }
 
             var job = new PrepJob
@@ -185,6 +199,13 @@ namespace Ashfall.Core
 
             // Update spoilage
             UpdateSpoilage();
+
+            // CR3-05: evict terminally-finished jobs from the underlying list.
+            // GetActiveJobs already filters on read, but without this RemoveAll
+            // the list serialises every completed job into every save and grows
+            // without bound across long campaigns. Mirrors ArchiveDeskSystem
+            // and MentalHealthCrisisSystem patterns.
+            _state.activeJobs.RemoveAll(j => j.isComplete || j.isCancelled);
 
             OnKitchenChanged?.Invoke();
         }

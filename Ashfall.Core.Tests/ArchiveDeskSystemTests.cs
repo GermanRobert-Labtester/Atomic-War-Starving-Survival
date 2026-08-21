@@ -113,6 +113,31 @@ namespace Ashfall.Core.Tests
             Assert.Single(a2.State.queue);
         }
 
+        [Fact] public void CancelJob_AfterCompletion_IsBlocked()
+        {
+            // BUG-13 latent guard pin: CancelJob is currently guarded against
+            // already-completed/cancelled jobs (returns Blocked "no_job").
+            // Without this regression test, a future refactor could loosen
+            // the guard and silently allow cancellation after completion —
+            // which would re-refund ink that was already spent and could
+            // re-write evidence state the system already declared unlocked.
+            var a = Create(out var inv, out _, out _, out _);
+            a.LoadInkCatalog(new System.Collections.Generic.List<InkMaterialDefinition>
+            {
+                new InkMaterialDefinition { ink_id = "iron_gall", requiredItemId = "iron_gall_ink", requiredAmount = 1, legibilityScore = 0.8f }
+            });
+            inv.AddById("iron_gall_ink", 2);
+            a.QueueTranscription("evidence_1", "archivist_1", "iron_gall");
+            a.TickDay(1); // job completes; ink spent; evidence unlocked.
+            Assert.True(a.IsEvidenceUnlocked("evidence_1"));
+            int inkAfterComplete = inv.CountById("iron_gall_ink");
+            // Late cancel — must be blocked, must NOT refund ink.
+            var lateCancel = a.CancelJob(a.State.queue[0].jobId);
+            Assert.Equal(ActionResult.StatusKind.Blocked, lateCancel.Status);
+            Assert.Equal(inkAfterComplete, inv.CountById("iron_gall_ink"));
+            Assert.True(a.IsEvidenceUnlocked("evidence_1"));
+        }
+
         private static ArchiveDeskSystem Create(out Inventory.Inventory inv, out KnowledgeBase knowledge, out JournalSystem journal, out DutyRosterSystem roster)
         {
             inv = new Inventory.Inventory();
