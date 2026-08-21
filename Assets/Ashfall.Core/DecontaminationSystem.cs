@@ -84,6 +84,23 @@ namespace Ashfall.Core
             if (_state.queue.Exists(c => c.caseId == caseId))
                 return ActionResult.Blocked("already_queued", "decon.already_queued");
 
+            // CR3-06: caseId changes every day, so the caseId predicate alone
+            // lets a survivor re-enqueue every new day forever, even with an
+            // unresolved case on the queue or as the active case. Lock by
+            // (survivorId + not-yet-resolved) — matches MentalHealthCrisisSystem's
+            // survivor+status pattern. Keeps the caseId check as defense-in-depth.
+            if (_state.queue.Exists(c => c.survivorId == survivorId
+                                     && c.status != DeconStatus.Complete
+                                     && c.status != DeconStatus.Bypassed
+                                     && c.status != DeconStatus.Failed)
+                return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
+            if (_state.activeCase != null
+                && _state.activeCase.survivorId == survivorId
+                && _state.activeCase.status != DeconStatus.Complete
+                && _state.activeCase.status != DeconStatus.Bypassed
+                && _state.activeCase.status != DeconStatus.Failed)
+                return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
+
             var deconCase = new DeconCase
             {
                 caseId = caseId, survivorId = survivorId, gearId = gearId,
