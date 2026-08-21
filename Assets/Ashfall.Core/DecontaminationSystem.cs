@@ -92,7 +92,7 @@ namespace Ashfall.Core
             if (_state.queue.Exists(c => c.survivorId == survivorId
                                      && c.status != DeconStatus.Complete
                                      && c.status != DeconStatus.Bypassed
-                                     && c.status != DeconStatus.Failed)
+                                     && c.status != DeconStatus.Failed))
                 return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
             if (_state.activeCase != null
                 && _state.activeCase.survivorId == survivorId

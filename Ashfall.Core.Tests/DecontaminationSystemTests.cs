@@ -78,6 +78,24 @@ namespace Ashfall.Core.Tests
             Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
         }
 
+        [Fact] public void Enqueue_SurvivorAlreadyOnQueue_Blocks()
+        {
+            // CR3-06 regression: caseId is day-scoped (`decon_{day}_{survivorId}`),
+            // so the caseId predicate alone lets a survivor re-enqueue every new
+            // day forever. The fix adds a survivor+status lock that matches
+            // MentalHealthCrisisSystem's pattern. Enqueue once on day 1, enqueue
+            // the same survivor on day 2 → must Block, not Success.
+            var d = Create(out _, out _, out _, out _);
+            d.TickDay(1);
+            var first = d.Enqueue("survivor_1", "gear_a", 0.5f);
+            Assert.Equal(ActionResult.StatusKind.Success, first.Status);
+            d.TickDay(2);
+            var second = d.Enqueue("survivor_1", "gear_a", 0.5f);
+            Assert.Equal(ActionResult.StatusKind.Blocked, second.Status);
+            Assert.Equal("survivor_busy", second.FailureCode);
+            Assert.Single(d.State.queue);
+        }
+
         [Fact] public void TickDay_ReducesShelterContamination()
         {
             var d = Create(out _, out _, out _, out _);

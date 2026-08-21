@@ -44,6 +44,32 @@ namespace Ashfall.Core.Tests
             Assert.Equal(3, k.State.activeJobs[0].portionsProduced);
         }
 
+        [Fact] public void TickDay_JobCompletes_RemovesJobFromActiveList()
+        {
+            // CR3-05 regression: previously, completed (or cancelled) jobs accumulated
+            // forever in State.activeJobs even though GetActiveJobs filtered them
+            // out of the API surface. The list still serialised to every save,
+            // bloating memory in long campaigns. The fix evicts terminally-finished
+            // jobs from the underlying list at the end of TickDay.
+            var k = Create(out var inv, out _);
+            inv.AddById("meat", 5);
+            k.StartPrepJob("stew", "cook_1", new Dictionary<string, int> { { "meat", 2 } });
+            k.TickDay(1);
+            // Job is now complete — the underlying list must be empty post-cleanup.
+            Assert.Empty(k.State.activeJobs);
+        }
+
+        [Fact] public void TickDay_CancelledJob_IsRemovedFromActiveList()
+        {
+            // CR3-05 regression (variant): cancellation also clears the slot.
+            var k = Create(out var inv, out _);
+            inv.AddById("meat", 5);
+            k.StartPrepJob("stew", "cook_1", new Dictionary<string, int> { { "meat", 2 } });
+            k.CancelJob(k.State.activeJobs[0].jobId);
+            k.TickDay(1); // cleanup window
+            Assert.Empty(k.State.activeJobs);
+        }
+
         [Fact] public void CancelJob_RefundsIngredients()
         {
             var k = Create(out var inv, out _);
