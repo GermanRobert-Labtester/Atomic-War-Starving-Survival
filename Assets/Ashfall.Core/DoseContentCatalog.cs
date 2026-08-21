@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Ashfall.Core.YearOfAsh;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core
 {
     /// <summary>One Dose location row (dose_locations.json).</summary>
@@ -110,7 +111,10 @@ namespace Ashfall.Core
                     var rows = json.Deserialize<List<DoseItemDef>>(fileIO.ReadAllText(itemPath));
                     if (rows != null) catalog.items.AddRange(rows);
                 }
-                catch { }
+                catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
             }
 
             // Quests (authored to the live DAG DTO)
@@ -129,13 +133,16 @@ namespace Ashfall.Core
                         }
                     }
                 }
-                catch { }
+                catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
             }
 
             return catalog;
         }
 
-        public static QuestlineDefinition ToQuestlineDefinition(DoseQuestDef rq)
+        public static QuestlineDefinition? ToQuestlineDefinition(DoseQuestDef rq)
         {
             if (rq == null || string.IsNullOrEmpty(rq.questlineId)) return null;
             var def = new QuestlineDefinition

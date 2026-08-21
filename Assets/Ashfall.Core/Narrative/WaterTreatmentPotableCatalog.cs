@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public SlowSandSchmutzdeckeEntry GetSand(string id)
+        public SlowSandSchmutzdeckeEntry? GetSand(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SlowSandSchmutzdeckeEntry e ? e : null;
         }
 
-        public OzoneContactTowerEntry GetOzone(string id)
+        public OzoneContactTowerEntry? GetOzone(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is OzoneContactTowerEntry e ? e : null;
         }
 
-        public CalciumHypochloriteTitrationEntry GetChlorine(string id)
+        public CalciumHypochloriteTitrationEntry? GetChlorine(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CalciumHypochloriteTitrationEntry e ? e : null;
         }
 
-        public ActivatedCarbonAdsorptionEntry GetCarbon(string id)
+        public ActivatedCarbonAdsorptionEntry? GetCarbon(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ActivatedCarbonAdsorptionEntry e ? e : null;

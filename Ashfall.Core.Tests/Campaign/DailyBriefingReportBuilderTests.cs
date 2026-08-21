@@ -19,7 +19,7 @@ namespace Ashfall.Core.Tests.Campaign
         public void Build_EmptyInputs_ProducesNoSections()
         {
             var r = DailyBriefingReportBuilder.Build(new DailyBriefingInputs { Day = 1 });
-            Assert.Equal(0, r.Sections.Count);
+            Assert.Empty(r.Sections);
             Assert.True(r.IsEmpty);
             Assert.Equal(0, r.TotalEntries);
         }

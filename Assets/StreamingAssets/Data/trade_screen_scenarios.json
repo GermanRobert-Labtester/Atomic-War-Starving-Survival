@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "$schema": "./schema/trade_screen_scenarios.schema.json",
   "version": 1,
   "description": "Negotiation Table mock scenarios for the skin track and convergence probes. Data-defined, never hardcoded: fair_deal, offer_short, empty_table. The empty table must feel deliberate, not broken.",
@@ -18,18 +19,43 @@
       "world_phase": "CivilWar",
       "world_day": 14,
       "price_shocks": [
-        { "kind": "PlumePassing", "multiplier": 2.5, "note": "rad plume over the crossing" }
+        {
+          "kind": "PlumePassing",
+          "multiplier": 2.5,
+          "note": "rad plume over the crossing"
+        }
       ],
       "scarcity": [
-        { "item_id": "clean_water", "display_name": "Clean Water", "multiplier": 2.0 }
+        {
+          "item_id": "clean_water",
+          "display_name": "Clean Water",
+          "multiplier": 2.0
+        }
       ],
       "player_offers": [
-        { "item_id": "canned_food", "display_name": "Canned Food", "quantity": 3, "unit_price": 18 },
-        { "item_id": "duct_tape", "display_name": "Duct Tape", "quantity": 1, "unit_price": 15 }
+        {
+          "item_id": "canned_food",
+          "display_name": "Canned Food",
+          "quantity": 3,
+          "unit_price": 18
+        },
+        {
+          "item_id": "duct_tape",
+          "display_name": "Duct Tape",
+          "quantity": 1,
+          "unit_price": 15
+        }
       ],
-      "biological_offers": { "PintOfBlood": 1 },
+      "biological_offers": {
+        "PintOfBlood": 1
+      },
       "faction_demands": [
-        { "item_id": "clean_water", "display_name": "Clean Water", "quantity": 2, "unit_price": 22 }
+        {
+          "item_id": "clean_water",
+          "display_name": "Clean Water",
+          "quantity": 2,
+          "unit_price": 22
+        }
       ],
       "expected_fairness": "fair",
       "confirm_succeeds": true,
@@ -50,17 +76,35 @@
       "world_phase": "CivilWar",
       "world_day": 27,
       "price_shocks": [
-        { "kind": "ConvoyAmbush", "multiplier": 1.8, "note": "fuel convoy burned on the ridge road" }
+        {
+          "kind": "ConvoyAmbush",
+          "multiplier": 1.8,
+          "note": "fuel convoy burned on the ridge road"
+        }
       ],
       "scarcity": [
-        { "item_id": "fuel", "display_name": "Fuel", "multiplier": 1.8 }
+        {
+          "item_id": "fuel",
+          "display_name": "Fuel",
+          "multiplier": 1.8
+        }
       ],
       "player_offers": [
-        { "item_id": "canned_food", "display_name": "Canned Food", "quantity": 1, "unit_price": 18 }
+        {
+          "item_id": "canned_food",
+          "display_name": "Canned Food",
+          "quantity": 1,
+          "unit_price": 18
+        }
       ],
       "biological_offers": {},
       "faction_demands": [
-        { "item_id": "fuel", "display_name": "Fuel", "quantity": 2, "unit_price": 40 }
+        {
+          "item_id": "fuel",
+          "display_name": "Fuel",
+          "quantity": 2,
+          "unit_price": 40
+        }
       ],
       "expected_fairness": "short",
       "confirm_succeeds": false,

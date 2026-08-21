@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public AmmoHoistJamEntry GetHoistJam(string id)
+        public AmmoHoistJamEntry? GetHoistJam(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is AmmoHoistJamEntry e ? e : null;
         }
 
-        public MunitionsLeachingEntry GetMunitionsLeaching(string id)
+        public MunitionsLeachingEntry? GetMunitionsLeaching(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MunitionsLeachingEntry e ? e : null;
         }
 
-        public SonarArrayFaultEntry GetSonarFault(string id)
+        public SonarArrayFaultEntry? GetSonarFault(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SonarArrayFaultEntry e ? e : null;
         }
 
-        public VaultSealBreachEntry GetVaultBreach(string id)
+        public VaultSealBreachEntry? GetVaultBreach(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is VaultSealBreachEntry e ? e : null;

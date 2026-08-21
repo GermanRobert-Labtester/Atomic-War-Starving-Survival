@@ -31,7 +31,7 @@ namespace AtomicWar.GodotApp
                 var envelope = new Phase0HostSave { State = state };
                 envelope.Checksum = SaveChecksum.Compute(envelope);
                 string path = SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
@@ -44,7 +44,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static Phase0EffectsSaveState TryLoad()
+        public static Phase0EffectsSaveState? TryLoad()
         {
             try
             {

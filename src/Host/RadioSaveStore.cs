@@ -30,7 +30,7 @@ namespace AtomicWar.GodotApp
             {
                 if (state == null) return false;
                 string path = pathOverride ?? SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 System.IO.File.WriteAllText(path, RadioSaveCodec.Encode(state, s_json));
@@ -43,7 +43,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static RadioSaveState TryLoad(string pathOverride = null)
+        public static RadioSaveState? TryLoad(string pathOverride = null)
         {
             try
             {

@@ -68,7 +68,7 @@ namespace Ashfall.Core
         public IReadOnlyList<DebtContract> ClosedContracts => _state.closedContracts;
         public bool LedgerTampered => _state.ledgerTampered;
 
-        public DebtContract GetContract(string debtorId)
+        public DebtContract? GetContract(string debtorId)
         {
             if (string.IsNullOrEmpty(debtorId)) return null;
             for (int i = 0; i < _state.contracts.Count; i++)

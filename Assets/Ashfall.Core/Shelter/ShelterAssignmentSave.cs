@@ -51,7 +51,7 @@ namespace Ashfall.Core.Shelter
             if (string.IsNullOrWhiteSpace(jsonText))
                 throw new InvalidOperationException("ShelterAssignmentSave: empty save payload.");
             ShelterAssignmentSave save;
-            try { save = json.Deserialize<ShelterAssignmentSave>(jsonText); }
+            try { save = json.Deserialize<ShelterAssignmentSave>(jsonText!); }
             catch (Exception e)
             {
                 throw new InvalidOperationException(

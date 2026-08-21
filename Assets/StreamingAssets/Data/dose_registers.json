@@ -1,29 +1,96 @@
 {
+  "schema_version": 1,
   "bands": [
-    { "id": "band_green", "label": "Green", "threshold_msv": 0, "disposition": "No measurable burden. Walk the corridor." },
-    { "id": "band_amber", "label": "Amber", "threshold_msv": 100, "disposition": "The ledger shows a number worth watching." },
-    { "id": "band_red", "label": "Red", "threshold_msv": 300, "disposition": "Named on the sick list. Care is a choice, not a cure." },
-    { "id": "band_black", "label": "Black", "threshold_msv": 600, "disposition": "The band the registrar will not soften. Still on the roster." }
+    {
+      "id": "band_green",
+      "label": "Green",
+      "threshold_msv": 0,
+      "disposition": "No measurable burden. Walk the corridor."
+    },
+    {
+      "id": "band_amber",
+      "label": "Amber",
+      "threshold_msv": 100,
+      "disposition": "The ledger shows a number worth watching."
+    },
+    {
+      "id": "band_red",
+      "label": "Red",
+      "threshold_msv": 300,
+      "disposition": "Named on the sick list. Care is a choice, not a cure."
+    },
+    {
+      "id": "band_black",
+      "label": "Black",
+      "threshold_msv": 600,
+      "disposition": "The band the registrar will not soften. Still on the roster."
+    }
   ],
   "plans": [
-    { "id": "plan_morphine_tray", "label": "Morphine tray", "cost": "morphine", "note": "Mercy with a schedule. The tray is refilled on the same day every week." },
-    { "id": "plan_comfort_rounds", "label": "Comfort rounds", "cost": "time", "note": "Someone sits the night. The sick room has a chair for it now." },
-    { "id": "plan_nothing", "label": "Nothing", "cost": "none", "note": "A refusal is a choice the ledger records as silence." }
+    {
+      "id": "plan_morphine_tray",
+      "label": "Morphine tray",
+      "cost": "morphine",
+      "note": "Mercy with a schedule. The tray is refilled on the same day every week."
+    },
+    {
+      "id": "plan_comfort_rounds",
+      "label": "Comfort rounds",
+      "cost": "time",
+      "note": "Someone sits the night. The sick room has a chair for it now."
+    },
+    {
+      "id": "plan_nothing",
+      "label": "Nothing",
+      "cost": "none",
+      "note": "A refusal is a choice the ledger records as silence."
+    }
   ],
   "guesses": [
-    { "id": "guess_low", "label": "Low", "pencil": true, "note": "A kinder story, written in pencil." },
-    { "id": "guess_honest", "label": "Honest", "pencil": true, "note": "The truer number as it stands, subject to correction." },
-    { "id": "guess_refused", "label": "Refused", "pencil": true, "note": "No guess at all. The board stays blank until the dial speaks." }
+    {
+      "id": "guess_low",
+      "label": "Low",
+      "pencil": true,
+      "note": "A kinder story, written in pencil."
+    },
+    {
+      "id": "guess_honest",
+      "label": "Honest",
+      "pencil": true,
+      "note": "The truer number as it stands, subject to correction."
+    },
+    {
+      "id": "guess_refused",
+      "label": "Refused",
+      "pencil": true,
+      "note": "No guess at all. The board stays blank until the dial speaks."
+    }
   ],
   "calibration": {
     "key": "dosimeter",
     "drift_note": "Every figure has a drift. The drift is normal. Piet will not lie about it to make a reading land softer."
   },
   "registers": [
-    { "id": "register_ledger", "label": "Ledger", "action": "Book a reading" },
-    { "id": "register_sick", "label": "Sick", "action": "Name to the sick list" },
-    { "id": "register_cohort", "label": "Cohort", "action": "Book a baseline" },
-    { "id": "register_voluntary", "label": "Voluntary", "action": "Sign an hour" }
+    {
+      "id": "register_ledger",
+      "label": "Ledger",
+      "action": "Book a reading"
+    },
+    {
+      "id": "register_sick",
+      "label": "Sick",
+      "action": "Name to the sick list"
+    },
+    {
+      "id": "register_cohort",
+      "label": "Cohort",
+      "action": "Book a baseline"
+    },
+    {
+      "id": "register_voluntary",
+      "label": "Voluntary",
+      "action": "Sign an hour"
+    }
   ],
   "npcs": [
     {

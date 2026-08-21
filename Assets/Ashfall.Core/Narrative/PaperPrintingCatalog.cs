@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public RagPulpBeaterEntry GetPulp(string id)
+        public RagPulpBeaterEntry? GetPulp(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RagPulpBeaterEntry e ? e : null;
         }
 
-        public IronGallInkAssayEntry GetInk(string id)
+        public IronGallInkAssayEntry? GetInk(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is IronGallInkAssayEntry e ? e : null;
         }
 
-        public TypographicLeadWearEntry GetType(string id)
+        public TypographicLeadWearEntry? GetType(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TypographicLeadWearEntry e ? e : null;
         }
 
-        public StencilPropagandaSmearEntry GetStencil(string id)
+        public StencilPropagandaSmearEntry? GetStencil(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is StencilPropagandaSmearEntry e ? e : null;

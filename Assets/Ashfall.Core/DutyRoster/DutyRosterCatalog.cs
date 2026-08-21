@@ -75,7 +75,7 @@ namespace Ashfall.Core
         public List<DutyRosterMarkEntry> Marks { get; } = new List<DutyRosterMarkEntry>();
         public List<DutyRosterSeasonEntry> Seasons { get; } = new List<DutyRosterSeasonEntry>();
 
-        public DutyRosterLocationEntry GetLocation(string id)
+        public DutyRosterLocationEntry? GetLocation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Locations.Count; i++)
@@ -84,7 +84,7 @@ namespace Ashfall.Core
             return null;
         }
 
-        public DutyRosterQuestEntry GetQuest(string id)
+        public DutyRosterQuestEntry? GetQuest(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Quests.Count; i++)
@@ -93,7 +93,7 @@ namespace Ashfall.Core
             return null;
         }
 
-        public DutyRosterMarkEntry GetMark(string id)
+        public DutyRosterMarkEntry? GetMark(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Marks.Count; i++)
@@ -102,7 +102,7 @@ namespace Ashfall.Core
             return null;
         }
 
-        public DutyRosterSeasonEntry GetSeason(string id)
+        public DutyRosterSeasonEntry? GetSeason(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Seasons.Count; i++)

@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public BlastGateAuditEntry GetGateAudit(string id)
+        public BlastGateAuditEntry? GetGateAudit(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BlastGateAuditEntry e ? e : null;
         }
 
-        public SumpSiltReportEntry GetSiltReport(string id)
+        public SumpSiltReportEntry? GetSiltReport(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SumpSiltReportEntry e ? e : null;
         }
 
-        public LeadWallDegradationEntry GetLeadWall(string id)
+        public LeadWallDegradationEntry? GetLeadWall(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LeadWallDegradationEntry e ? e : null;
         }
 
-        public IntakeFilterClogEntry GetFilterClog(string id)
+        public IntakeFilterClogEntry? GetFilterClog(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is IntakeFilterClogEntry e ? e : null;

@@ -63,6 +63,23 @@ namespace Ashfall.Core.Tests
             Assert.False(s.IsNodeAvailable("sump_a"));
         }
 
+        [Fact] public void TickDay_NaturalDrainComplete_ResetsEquipmentDisabled()
+        {
+            // Bug-08 regression: when an un-flooded node finishes draining to 0cm
+            // via the natural-drain branch, equipmentDisabled must clear — the
+            // node is no longer waterlogged. Previously the latch stayed true,
+            // forcing the player to call DrainNode manually.
+            var s = Create(out _, out _, out _);
+            s.AddNode("sump_a", "Lower Level");
+            var node = s.State.nodes[0];
+            node.isFlooded = false;
+            node.equipmentDisabled = true;
+            node.waterLevelCm = 2f; // forces the drain branch on the very next tick
+            s.TickDay(1);
+            Assert.Equal(0f, node.waterLevelCm);
+            Assert.False(node.equipmentDisabled);
+        }
+
         [Fact] public void CaptureRestoreState_PreservesNodes()
         {
             var s = Create(out _, out _, out _);

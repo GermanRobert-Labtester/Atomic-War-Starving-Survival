@@ -177,7 +177,7 @@ namespace Ashfall.Core
         {
             if (!_state.expansionUnlocked) return false;
             if (string.IsNullOrEmpty(parentLocationId)) return false;
-            LocationLayoutDef def = GetLayout(parentLocationId);
+            LocationLayoutDef def = GetLayout(parentLocationId)!;
             if (def == null) return false;
 
             _state.currentParentId = parentLocationId;
@@ -257,7 +257,7 @@ namespace Ashfall.Core
         {
             string parentId = _state.currentParentId;
             if (string.IsNullOrEmpty(parentId) || string.IsNullOrEmpty(roomId)) return false;
-            LocationLayoutDef def = GetLayout(parentId);
+            LocationLayoutDef def = GetLayout(parentId)!;
             if (def == null || def.GetRoom(roomId) == null) return false;
             ParentRuntime rt = EnsureRuntime(parentId);
             if (!rt.Entered.Contains(roomId)) return false;
@@ -272,7 +272,7 @@ namespace Ashfall.Core
         {
             LocationLayoutDef def = GetLayout(parentLocationId);
             if (def == null) return null;
-            LocationLayoutRoomDef room = def.GetRoom(roomId);
+            LocationLayoutRoomDef room = def.GetRoom(roomId)!;
             if (room == null) return null;
             return string.IsNullOrEmpty(room.inspectKey) ? null : room.inspectKey;
         }

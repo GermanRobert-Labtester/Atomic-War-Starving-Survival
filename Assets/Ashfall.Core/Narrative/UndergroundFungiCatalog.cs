@@ -54,7 +54,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public UndergroundFungiEntry GetById(string speciesId)
+        public UndergroundFungiEntry? GetById(string speciesId)
         {
             if (string.IsNullOrEmpty(speciesId)) return null;
             _byId.TryGetValue(speciesId, out var entry);

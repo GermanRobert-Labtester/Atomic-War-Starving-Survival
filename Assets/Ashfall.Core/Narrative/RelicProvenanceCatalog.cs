@@ -50,7 +50,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public RelicDossierEntry GetById(string relicId)
+        public RelicDossierEntry? GetById(string relicId)
         {
             if (string.IsNullOrEmpty(relicId)) return null;
             _byId.TryGetValue(relicId, out var entry);

@@ -75,7 +75,7 @@ namespace Ashfall.Core
                     _catalog[v.vehicle_id] = v;
         }
 
-        public VehicleDefinition GetDefinition(string id)
+        public VehicleDefinition? GetDefinition(string id)
         {
             _catalog.TryGetValue(id, out var def);
             return def;
@@ -105,7 +105,7 @@ namespace Ashfall.Core
                 new Dictionary<string, double> { { "fuel", def.max_fuel * 0.5f } });
         }
 
-        public VehicleInstance GetVehicle(string vehicleId)
+        public VehicleInstance? GetVehicle(string vehicleId)
         {
             _state.ownedVehicles.TryGetValue(vehicleId, out var v);
             return v;

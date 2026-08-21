@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public NumbersStationCipherEntry GetCipher(string id)
+        public NumbersStationCipherEntry? GetCipher(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is NumbersStationCipherEntry e ? e : null;
         }
 
-        public SeismicFaultAlarmEntry GetSeismic(string id)
+        public SeismicFaultAlarmEntry? GetSeismic(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SeismicFaultAlarmEntry e ? e : null;
         }
 
-        public EmpSnifferLogEntry GetEmp(string id)
+        public EmpSnifferLogEntry? GetEmp(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is EmpSnifferLogEntry e ? e : null;
         }
 
-        public BunkerWiretapEntry GetWiretap(string id)
+        public BunkerWiretapEntry? GetWiretap(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BunkerWiretapEntry e ? e : null;

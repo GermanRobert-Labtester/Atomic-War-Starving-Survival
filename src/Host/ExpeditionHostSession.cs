@@ -67,7 +67,7 @@ namespace AtomicWar.GodotApp
             _narrative?.State?.pending ?? NoPending;
 
         /// <summary>Resolve a pending entry's catalog definition, or null when the catalog has no record.</summary>
-        public EncounterDefinition FindEncounter(string encounterId) => _narrative?.Find(encounterId);
+        public EncounterDefinition? FindEncounter(string encounterId) => _narrative?.Find(encounterId);
 
         /// <summary>Drop the pending queue without resolving. No invented outcomes.</summary>
         public void ClearAllPending() => _narrative?.ClearAllPending();
@@ -184,8 +184,8 @@ namespace AtomicWar.GodotApp
         {
             if (_bridge == null || string.IsNullOrEmpty(encounterId)) return false;
 
-            string effectiveLocation = locationId ?? PendingLocationFor(encounterId);
-            bool ok = _bridge.ResolveChoice(encounterId, choiceId, day, effectiveLocation);
+            string effectiveLocation = locationId ?? PendingLocationFor(encounterId)!;
+            bool ok = _bridge.ResolveChoice(encounterId, choiceId, day, effectiveLocation!);
 
             // The player has acknowledged this one — shrink the pending list.
             if (ok) _narrative.ClearPending(encounterId);
@@ -193,7 +193,7 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>The pending entry's recorded location for this encounter, or null when it is not pending.</summary>
-        private string PendingLocationFor(string encounterId)
+        private string? PendingLocationFor(string encounterId)
         {
             var pending = _narrative?.State?.pending;
             if (pending == null) return null;

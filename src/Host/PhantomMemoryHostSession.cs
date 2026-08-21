@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Phantoms;
 
 namespace AtomicWar.GodotApp
 {
@@ -169,22 +170,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        // ── JSON DTOs ────────────────────────────────────────────────
-
-        private class PhantomTriggerJsonEntry
-        {
-            public string background_id;
-            public List<PhantomTriggerRuleJson> triggers;
-        }
-
-        private class PhantomTriggerRuleJson
-        {
-            public string item_category;
-            public float motivation_chance;
-            public string description;
-            public string motivation_text;
-            public string breakdown_text;
-        }
+        // ── JSON DTOs: shared with Phase0HostSession (see Assets/Ashfall.Core/Phantoms/PhantomTriggerDto.cs) ─
 
         /// <summary>A11: ISeededRng adapter now delegates to the core SeededRng
         /// (deterministic xorshift64) — no System.Random in decision paths.</summary>

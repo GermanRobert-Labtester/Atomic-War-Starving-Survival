@@ -282,7 +282,7 @@ public partial class DutyRosterPanel : Control
                 {
                     new("[UNASSIGNED]", AshfallDataGrid.CellState.Muted),
                     new(r.displayName ?? FormatSurvivorName(r.survivorId), AshfallDataGrid.CellState.Normal),
-                    new(r.status ?? "—", StatusState(r.status)),
+                    new(r.status ?? "—", StatusState(r.status ?? "—")),
                     new(r.occupationObserved ?? "Resident", AshfallDataGrid.CellState.Muted),
                     new(r.lastSleptDay < 0 ? "—" : $"D{r.lastSleptDay}", AshfallDataGrid.CellState.Normal),
                     new("—", AshfallDataGrid.CellState.Muted),
@@ -394,7 +394,7 @@ public partial class DutyRosterPanel : Control
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
         _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Occupation", row?.occupationObserved ?? "—",
             AshfallUiHelpers.ToColor(DesignTheme.Muted)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Last Slept", (row?.lastSleptDay ?? -1) < 0 ? "—" : $"D{row.lastSleptDay}",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Last Slept", (row?.lastSleptDay ?? -1) < 0 ? "—" : $"D{row!.lastSleptDay}",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
         _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Shift", string.IsNullOrEmpty(roleId) ? "—" : ResolveShiftText(roleId),
             AshfallUiHelpers.ToColor(DesignTheme.Lethe)));

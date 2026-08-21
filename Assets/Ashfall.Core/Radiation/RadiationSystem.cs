@@ -75,7 +75,7 @@ namespace Ashfall.Core.Radiation
         /// this is the single sanctioned conversion point so hosts can bridge
         /// equipped inventory into exposure without forking the mapping.
         /// </summary>
-        public static WornGear FromInventory(Ashfall.Core.Inventory.WornGear gear)
+        public static WornGear? FromInventory(Ashfall.Core.Inventory.WornGear gear)
         {
             if (gear == null) return null;
             return new WornGear
@@ -197,7 +197,7 @@ namespace Ashfall.Core.Radiation
                 float zone = context != null ? context.ZoneRadLevel : 0f;
                 var worn = context != null ? context.WornGear : null;
 
-                float gearProtection = ComputeGearProtection(worn);
+                float gearProtection = ComputeGearProtection(worn!);
                 float exposurePerHour;
                 if (context != null && context.ShelterRadQuery != null)
                 {
@@ -213,7 +213,7 @@ namespace Ashfall.Core.Radiation
                 if (survivor.HasRadResistance)
                     exposurePerHour *= RadResistanceFactor;
 
-                DegradeWornGear(worn, gameHours);
+                DegradeWornGear(worn!, gameHours);
                 Expose(survivor, exposurePerHour, gameHours);
 
                 var dosimeter = GetDosimeter(survivor.Id);

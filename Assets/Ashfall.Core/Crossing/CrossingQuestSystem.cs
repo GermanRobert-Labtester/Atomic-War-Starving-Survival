@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Crossing
 {
     // ── Data model (matches crossing_quests.json) ───────────────
@@ -370,10 +371,11 @@ namespace Ashfall.Core.Crossing
                 var quests = serializer.Deserialize<List<CrossingQuestDef>>(json);
                 return quests ?? new List<CrossingQuestDef>();
             }
-            catch
-            {
-                return new List<CrossingQuestDef>();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new List<CrossingQuestDef>();
+                                }
         }
     }
 }

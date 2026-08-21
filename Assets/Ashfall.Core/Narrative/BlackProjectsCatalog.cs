@@ -222,25 +222,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public OrbitalKineticEntry GetOrbital(string id)
+        public OrbitalKineticEntry? GetOrbital(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is OrbitalKineticEntry e ? e : null;
         }
 
-        public DroneCarrierBlackboxEntry GetDrone(string id)
+        public DroneCarrierBlackboxEntry? GetDrone(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is DroneCarrierBlackboxEntry e ? e : null;
         }
 
-        public CobaltDirectiveEntry GetCobalt(string id)
+        public CobaltDirectiveEntry? GetCobalt(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CobaltDirectiveEntry e ? e : null;
         }
 
-        public ArchitectVaultAuditEntry GetVault(string id)
+        public ArchitectVaultAuditEntry? GetVault(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ArchitectVaultAuditEntry e ? e : null;

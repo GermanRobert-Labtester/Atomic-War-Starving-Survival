@@ -74,7 +74,7 @@ namespace Ashfall.Core.Economy
                     }
                     else
                     {
-                        scarcity.Add(new ScarcityEntry(tier, s.Multiplier, s.DayRangeLabel, s.AffectedItemIds, s.Rationale));
+                        scarcity.Add(new ScarcityEntry(tier, s!.Multiplier, s!.DayRangeLabel, s!.AffectedItemIds!, s!.Rationale!));
                     }
                 }
             }
@@ -104,7 +104,7 @@ namespace Ashfall.Core.Economy
                     }
                     else
                     {
-                        factions.Add(new FactionTradePreference(f.FactionId, f.BuysAtPremium, f.Refuses, f.TradeCurrency));
+                        factions.Add(new FactionTradePreference(f!.FactionId, f!.BuysAtPremium!, f!.Refuses!, f!.TradeCurrency!));
                     }
                 }
             }
@@ -130,7 +130,7 @@ namespace Ashfall.Core.Economy
                     }
                     else
                     {
-                        shocks.Add(new PriceShockRule(kind, p.Multiplier, p.DurationDays, p.AffectedItemIds, p.Trigger));
+                        shocks.Add(new PriceShockRule(kind, p!.Multiplier, p!.DurationDays, p!.AffectedItemIds!, p!.Trigger!));
                     }
                 }
             }

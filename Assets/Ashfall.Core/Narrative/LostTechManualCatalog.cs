@@ -52,7 +52,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public LostTechManualEntry GetById(string manualId)
+        public LostTechManualEntry? GetById(string manualId)
         {
             if (string.IsNullOrEmpty(manualId)) return null;
             _byId.TryGetValue(manualId, out var entry);

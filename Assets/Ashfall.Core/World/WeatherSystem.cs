@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.World
 {
     /// <summary>One seasonal weather window (the JSON is the authority).</summary>
@@ -88,7 +89,7 @@ namespace Ashfall.Core.World
         {
             if (_profile == null || _profile.seasons == null || _profile.seasons.Count == 0)
                 return DefaultWindow;
-            SeasonWindowDef current = null;
+            SeasonWindowDef? current = null;
             for (int i = 0; i < _profile.seasons.Count; i++)
             {
                 if (_profile.seasons[i] != null && _profile.seasons[i].startDay <= day)
@@ -363,7 +364,7 @@ namespace Ashfall.Core.World
     {
         public const string FileName = "weather_seasons.json";
 
-        public static SeasonProfileDef Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
+        public static SeasonProfileDef? Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
         {
             if (fileIO == null || json == null || string.IsNullOrEmpty(dataDir))
                 return null;
@@ -383,10 +384,11 @@ namespace Ashfall.Core.World
                     parsed.seasons = new List<SeasonWindowDef>();
                 return parsed;
             }
-            catch
-            {
-                return null;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return null;
+                                }
         }
     }
 }

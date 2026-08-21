@@ -56,6 +56,7 @@ namespace Ashfall.Core
 
             var sheetDef = session.Quests.GetDef(HoldfastQuestSystem.Sheet);
             Check(sheetDef != null && !string.IsNullOrEmpty(sheetDef.target_location_id), "sheet has a target location");
+            if (sheetDef == null) return report;
             bool advanced = session.NotifyArrival(sheetDef.target_location_id);
             Check(advanced, "B1: arrival advances the sheet");
             Check(!string.IsNullOrEmpty(session.StageText(HoldfastQuestSystem.Sheet)), "stage text after advance");

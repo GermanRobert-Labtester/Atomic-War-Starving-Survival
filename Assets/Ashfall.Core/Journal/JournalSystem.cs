@@ -147,7 +147,7 @@ namespace Ashfall.Core.Journal
         /// <summary>
         /// Record a discovery if new. Returns the entry, or null if already known / invalid.
         /// </summary>
-        public JournalEntry TryDiscover(
+        public JournalEntry? TryDiscover(
             string knowledgeKey,
             ISurvivorAuthor author,
             int day,
@@ -156,16 +156,16 @@ namespace Ashfall.Core.Journal
             if (string.IsNullOrEmpty(knowledgeKey)) return null;
             if (!_knowledge.Discover(knowledgeKey)) return null;
 
-            var bias = author != null ? author.RiskBias : RiskBiasTrait.Realist;
+            var bias = author != null ? author!.RiskBias : RiskBiasTrait.Realist;
             string text = JournalVoice.ComposeFullText(knowledgeKey, bias, day);
-            return InsertEntry(knowledgeKey, text, author, day, hour);
+            return InsertEntry(knowledgeKey, text, author!, day, hour);
         }
 
         /// <summary>
         /// Record a freeform narrative entry once per knowledge key (Prompt #19
         /// ghost-station diary fragments). Deduped via <see cref="KnowledgeBase"/>.
         /// </summary>
-        public JournalEntry TryAddRawEntry(
+        public JournalEntry? TryAddRawEntry(
             string knowledgeKey,
             string text,
             ISurvivorAuthor author,
@@ -200,7 +200,7 @@ namespace Ashfall.Core.Journal
             entry.Hour = hour;
 
             _entries.Insert(0, entry);
-            JournalEntry evicted = null;
+            JournalEntry? evicted = null;
             if (_entries.Count > MaxEntries)
             {
                 evicted = _entries[_entries.Count - 1];

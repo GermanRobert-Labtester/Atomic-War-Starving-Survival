@@ -140,7 +140,7 @@ namespace Ashfall.Core.Medical
             return null;
         }
 
-        private MedicalBed FindBed(string bedId)
+        private MedicalBed? FindBed(string bedId)
         {
             for (int i = 0; i < _beds.Count; i++)
                 if (_beds[i].BedId == bedId) return _beds[i];

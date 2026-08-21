@@ -99,7 +99,7 @@ namespace AtomicWar.GodotApp
                 Check(loaded != null, "save loads back");
                 if (loaded != null)
                 {
-                    fresh.RestoreSave(loaded);
+                    fresh.RestoreSave(loaded!);
                     Check(fresh.Timeline.CurrentDay == 255, "timeline day restored");
                     Check(fresh.Timeline.CurrentPhase == YearOfAshPhase.Phase5_FactionSiege, "phase restored");
                     Check(fresh.Encounters.State.totalEncountersResolved
@@ -197,7 +197,7 @@ namespace AtomicWar.GodotApp
                 Check(loaded != null, "save loads back");
                 if (loaded != null)
                 {
-                    fresh.RestoreSave(loaded);
+                    fresh.RestoreSave(loaded!);
                     Check(fresh.Clock.Day == session.Clock.Day, "sim day restored");
                     Check(fresh.WallLine() == session.WallLine(), "wall line identical after roundtrip");
                     Check(fresh.EncountersLine() == session.EncountersLine(),
@@ -644,7 +644,7 @@ namespace AtomicWar.GodotApp
                     : "[FAIL] hardcore tuning JSON failed to load");
 
                 var overlay = new Ashfall.Core.Economy.HardcoreEconomyTuning();
-                overlay.Apply(tuningLoad.Bundle);
+                overlay.Apply(tuningLoad!.Bundle!);
                 float day5Water = overlay.GetScarcityMultiplier(5, "clean_water");
                 bool gates = day5Water > 1.0f && day5Water <= 2.5f + 1e-6f;
                 GD.Print(gates
@@ -907,7 +907,7 @@ namespace AtomicWar.GodotApp
                 Check(identical, "scavenge deterministic (rolls identical)");
 
                 // 4. Dive-room progression + air / noise / compromised state.
-                Check(!session.Dive.IsActive, "dive starts idle");
+                Check(!session.Dive!.IsActive, "dive starts idle");
                 session.StartDiveDemo("diver_selftest", "operator_selftest");
                 Check(session.Dive.IsActive, "dive launches");
                 Check(Math.Abs(session.Dive.AirSupplySeconds - 120f) < 0.001f, "dive starts at full air (120s)");
@@ -927,7 +927,7 @@ namespace AtomicWar.GodotApp
 
                 // 5. Contamination / psychological state.
                 session.ContaminateDemo("survivor_selftest", "location_sunshine_daycare");
-                Check(session.Psychology.HasContamination("survivor_selftest",
+                Check(session.Psychology!.HasContamination("survivor_selftest",
                         Ashfall.Core.Maritime.PsychologicalContaminationSystem.Contam_ChildCotTrauma),
                     "daycare visit applies child-cot trauma");
                 Check(session.Psychology.IsActionBlocked("survivor_selftest", "action_teach_child"),
@@ -935,14 +935,14 @@ namespace AtomicWar.GodotApp
 
                 // 6. Depletion / visit state.
                 session.ScavengeDemo("location_municipal_library");
-                Check(session.Scavenge.GetVisitCount("location_municipal_library") >= 1,
+                Check(session.Scavenge!.GetVisitCount("location_municipal_library") >= 1,
                     "scavenge visit state recorded (depletion tracking)");
 
                 // 7. Save capture/restore round-trip through the checksummed envelope.
                 var save = session.CaptureSave();
                 Check(save != null && save.Dive != null && save.Scavenge != null && save.Psychology != null,
                     "maritime save captures all three engine states");
-                save.Checksum = SaveChecksum.Compute(save);
+                save!.Checksum = SaveChecksum.Compute(save);
                 File.WriteAllText(tmpPath, json.Serialize(save));
                 var loaded = json.Deserialize<MaritimeHostSave>(File.ReadAllText(tmpPath));
                 Check(loaded != null && loaded.Checksum == SaveChecksum.Compute(loaded),
@@ -1030,12 +1030,12 @@ namespace AtomicWar.GodotApp
                 // Capture → store → load → restore.
                 var save = session.CaptureSave();
                 Check(save != null && save.history.Count == 3, "capture snapshots history");
-                Check(RadioSaveStore.TrySave(save, tmpPath), "radio save written via store");
+                Check(RadioSaveStore.TrySave(save!, tmpPath), "radio save written via store");
 
                 var loaded = RadioSaveStore.TryLoad(tmpPath);
                 Check(loaded != null, "radio save loads back");
                 var fresh = new RadioHostSession(engine, new SeededRng(1), day: 1);
-                fresh.RestoreSave(loaded);
+                fresh.RestoreSave(loaded!);
                 Check(fresh.History.Count == session.History.Count, "intercept history survives reload");
                 Check(Math.Abs(fresh.CurrentFrequency - session.CurrentFrequency) < 0.001f,
                     "tuned frequency survives reload");
@@ -1194,7 +1194,7 @@ namespace AtomicWar.GodotApp
                 // Stripped checksum: deleting the field must not bypass validation.
                 var codecJson = new SystemTextJsonSerializer();
                 var stripped = codecJson.Deserialize<HoldfastSave>(raw);
-                stripped.Checksum = "";
+                stripped!.Checksum = "";
                 File.WriteAllText(tmpPath, codecJson.Serialize(stripped));
                 Check(HoldfastSaveStore.TryLoad(tmpPath) == null, "checksumless save rejected");
             }
@@ -1260,7 +1260,7 @@ namespace AtomicWar.GodotApp
                 Check(skySave != null && skySave.cells != null && skySave.cells.Count == 2,
                     "sky armor capture has 2 cells");
                 var sky2 = new SkyLayerArmorSystem();
-                sky2.RestoreState(skySave);
+                sky2.RestoreState(skySave!);
                 Check(Math.Abs(sky2.GetAttenuationFactor(0) - sky.GetAttenuationFactor(0)) < 1e-5f,
                     "sky armor attenuation restored after roundtrip");
 
@@ -1288,7 +1288,7 @@ namespace AtomicWar.GodotApp
                 Check(vigilSave != null && vigilSave.isActive, "vigil save captured active state");
 
                 var vigil3 = new Ashfall.Core.Medical.VigilStateMachine();
-                vigil3.RestoreState(vigilSave);
+                vigil3.RestoreState(vigilSave!);
                 Check(vigil3.DwellerId == "dweller_save", "vigil dweller restored");
                 Check(Math.Abs(vigil3.ElapsedSeconds - vigil2.ElapsedSeconds) < 1e-3f,
                     "vigil elapsed restored");
@@ -1304,14 +1304,14 @@ namespace AtomicWar.GodotApp
                 // Advance enough to retire the elder (age 65 = 5 years = ~1825 days)
                 gen.AdvanceTime(1825);
                 var elderRec = gen.GetRecord("gen_elder");
-                Check(elderRec.isRetired, "elder retired after reaching age 65");
+                Check(elderRec!.isRetired, "elder retired after reaching age 65");
                 Check(gen.CurrentChapterIndex >= 1, "chapter index advanced or held");
 
                 // Mentorship
                 bool mentorOk = gen.FormMentorship("gen_elder", "gen_youth", "trait_farming");
                 Check(mentorOk, "mentorship formed");
                 var youthRec = gen.GetRecord("gen_youth");
-                Check(youthRec.inheritedTraitIds.Contains("trait_farming"),
+                Check(youthRec!.inheritedTraitIds.Contains("trait_farming"),
                     "youth inherited trait from mentor");
 
                 // Save round-trip
@@ -1319,7 +1319,7 @@ namespace AtomicWar.GodotApp
                 Check(genSave != null && genSave.generationRecords.Count >= 2,
                     "generational save captured records");
                 var gen2 = new GenerationalSuccessionEngine();
-                gen2.RestoreState(genSave);
+                gen2.RestoreState(genSave!);
                 Check(gen2.GetRecord("gen_elder")?.isRetired == true,
                     "elder retirement restored");
                 Check(gen2.GetRecord("gen_youth")?.inheritedTraitIds.Contains("trait_farming") == true,
@@ -1501,7 +1501,7 @@ namespace AtomicWar.GodotApp
 
                 // ── 3. Trade specialty: milestones → mastery ───────────
                 int narrativeFired = 0;
-                string narrativeId = null;
+                string narrativeId = null!;
                 session.TradeSpecialty.FireNarrativeEvent = (id, sv) => { narrativeFired++; narrativeId = id; };
                 session.CraftItem("elena_vasquez", "machinist", "wrench_standard");
                 session.CraftItem("elena_vasquez", "machinist", "gear_standard");
@@ -1603,7 +1603,7 @@ namespace AtomicWar.GodotApp
                 var save = session.CaptureSave();
                 Check(save != null && save.effects.Count >= 3, "phase-0 save captured effects");
                 var fresh = new Phase0HostSession();
-                fresh.RestoreSave(save);
+                fresh.RestoreSave(save!);
                 Check(Math.Abs(fresh.PermanentShelterMoraleBuff - session.PermanentShelterMoraleBuff) < 1e-4f,
                     "permanent shelter morale buff restored");
                 Check(fresh.TradeSpecialty.HasMasteredTrade("elena_vasquez"),
@@ -1866,8 +1866,8 @@ namespace AtomicWar.GodotApp
                 {
                     id = "recipe_bandage_test",
                     recipeName = "Bandage (test)",
-                    ingredients = new List<Ingredient> { new Ingredient { item = scrapMechanicalDef, amount = 1 } },
-                    result = bandageDef,
+                    ingredients = new List<Ingredient> { new Ingredient { item = scrapMechanicalDef!, amount = 1 } },
+                    result = bandageDef!,
                     resultAmount = 1,
                     craftingTimeHours = 2f
                 };
@@ -1941,8 +1941,8 @@ namespace AtomicWar.GodotApp
                     "§21 step 17: reload produced non-null stores");
 
                 if (reloadInv != null) freshInv.RestoreSave(reloadInv);
-                if (reloadCrafting != null) freshCrafting.RestoreState(reloadCrafting);
-                freshDuty.RestoreState(dutyPreState);
+                if (reloadCrafting != null) freshCrafting.RestoreState(reloadCrafting!);
+                freshDuty.RestoreState(dutyPreState!);
 
                 // ── §21 step 18: post-advance fingerprint comparison ──
                 Check(freshInv.Inventory.CountById("clean_water") == waterPost,
@@ -2547,7 +2547,7 @@ namespace AtomicWar.GodotApp
                     survivors.AdministerAntiRad("survivor_gunner_mikhail", 40f);
                     med.AddCareEntry("survivor_gunner_mikhail", "Administered anti-rad chelation agent.");
 
-                    Check(radState.RadiationDose < doseBefore, $"radiation dose purged from {doseBefore} to {radState.RadiationDose}");
+                    Check(radState!.RadiationDose < doseBefore, $"radiation dose purged from {doseBefore} to {radState.RadiationDose}");
                     Check(inv.Inventory.CountById("rad_away") == radAwayBefore - 1, "inventory rad_away count decreased by 1");
 
                     // Apply iodine prophylaxis to Sarah Chen
@@ -2558,7 +2558,7 @@ namespace AtomicWar.GodotApp
                     survivors.AdministerIodine("survivor_dr_sarah_chen");
                     med.AddCareEntry("survivor_dr_sarah_chen", "Administered potassium iodide.");
 
-                    Check(sarah.HasRadResistance, "Sarah Chen gained rad resistance");
+                    Check(sarah!.HasRadResistance, "Sarah Chen gained rad resistance");
                     Check(sarah.RadResistanceHoursRemaining > 0, "rad resistance hours active");
                 }
 
@@ -2569,7 +2569,7 @@ namespace AtomicWar.GodotApp
                 var target = expeditions.DemoDefinitions[0];
                 Check(target != null && target.id == "loc_the_allotments", "target is The Works Allotment Commune");
 
-                string startMsg = expeditions.StartDemoExpedition("survivor_dr_sarah_chen", target.id);
+                string startMsg = expeditions.StartDemoExpedition("survivor_dr_sarah_chen", target!.id);
                 Check(expeditions.Engine.ActiveCount == 1, "expedition successfully deployed");
                 var activeExp = expeditions.Engine.Active["survivor_dr_sarah_chen"];
                 Check(activeExp != null && activeExp.phase == (int)ExpeditionPhase.Outbound, "expedition starts in Outbound phase");
@@ -2581,19 +2581,19 @@ namespace AtomicWar.GodotApp
                 }
 
                 // Push luck or advance to looting
-                Check(activeExp.stamina < 100f, "stamina consumed during sortie travel");
+                Check(activeExp!.stamina < 100f, "stamina consumed during sortie travel");
 
                 // Test save & restore of expedition state
                 var expSave = expeditions.CaptureSave();
                 Check(expSave != null && expSave.Count == 1, "expedition state captured cleanly");
                 var reloadedExp = new ExpeditionHostSession();
-                reloadedExp.RestoreSave(expSave);
+                reloadedExp.RestoreSave(expSave!);
                 Check(reloadedExp.Engine.ActiveCount == 1, "expedition state restored with full fidelity");
 
                 // ── 3. Radio Communication Network Verification ──
                 var radio = RadioHostSession.Create(dataDirectory, 3);
                 Check(radio != null, "radio host session created");
-                Check(radio.CurrentFrequency > 0f, "radio tuner has carrier frequency");
+                Check(radio!.CurrentFrequency > 0f, "radio tuner has carrier frequency");
 
                 string listenMsg1 = radio.Listen(142.850f);
                 Check(radio.CurrentFrequency == 142.850f, "tuned to 142.850 MHz");
@@ -2639,12 +2639,12 @@ namespace AtomicWar.GodotApp
                 Check(bandageRecipe != null, "recipe_bandage is resolvable");
 
                 // 5.3 CanCraft false when ingredients missing
-                Check(!craftSession.Engine.CanCraft(bandageRecipe), "CanCraft false when ingredients absent");
+                Check(!craftSession.Engine.CanCraft(bandageRecipe!), "CanCraft false when ingredients absent");
 
                 // 5.4 Add ingredients → CanCraft true
-                var mechParts = CraftingHostSession.Catalog.Get("scrap_mechanical");
+                var mechParts = CraftingHostSession.Catalog.Get("scrap_mechanical")!;
                 if (mechParts != null) craftInv.Add(mechParts, 5);
-                Check(craftSession.Engine.CanCraft(bandageRecipe), "CanCraft true after adding ingredients");
+                Check(craftSession.Engine.CanCraft(bandageRecipe!), "CanCraft true after adding ingredients");
 
 
                 // 5.5 Start craft → queue grows
@@ -2688,7 +2688,7 @@ namespace AtomicWar.GodotApp
                 craftSession.Start("recipe_bandage"); // add a partial craft
                 var craftSave = craftSession.CaptureSave();
                 Check(craftSave != null, "CaptureState returns non-null");
-                Check(craftSave.ActiveCrafts != null && craftSave.ActiveCrafts.Length == 1,
+                Check(craftSave!.ActiveCrafts != null && craftSave.ActiveCrafts.Length == 1,
                     "partial craft captured in save");
 
 
@@ -2736,7 +2736,7 @@ namespace AtomicWar.GodotApp
 
                 // 6.4 Force to severe cough → stamina penalty
                 var forcedState = phase0resp.Respiratory.GetOrCreate("survivor_forced");
-                forcedState.respiratoryDegradation = Ashfall.Core.Medical.RespiratoryDegenerationSystem.SevereCoughThreshold + 1f;
+                forcedState!.respiratoryDegradation = Ashfall.Core.Medical.RespiratoryDegenerationSystem.SevereCoughThreshold + 1f;
                 float mult = phase0resp.Respiratory.GetStaminaMultiplier("survivor_forced");
                 Check(mult < 1f, $"stamina multiplier < 1 when severe cough active ({mult:F2})");
 

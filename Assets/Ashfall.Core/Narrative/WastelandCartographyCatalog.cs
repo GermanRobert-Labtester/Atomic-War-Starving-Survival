@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public RadiationTopoSheetEntry GetTopoSheet(string id)
+        public RadiationTopoSheetEntry? GetTopoSheet(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RadiationTopoSheetEntry e ? e : null;
         }
 
-        public ScavengerRouteNoteEntry GetRouteNote(string id)
+        public ScavengerRouteNoteEntry? GetRouteNote(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ScavengerRouteNoteEntry e ? e : null;
         }
 
-        public CanyonMudflowReportEntry GetMudflow(string id)
+        public CanyonMudflowReportEntry? GetMudflow(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CanyonMudflowReportEntry e ? e : null;
         }
 
-        public CraterLakeLimnologyEntry GetLimnology(string id)
+        public CraterLakeLimnologyEntry? GetLimnology(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CraterLakeLimnologyEntry e ? e : null;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Godot;
 using Ashfall.Core;
 
 namespace AtomicWar.GodotApp
@@ -38,7 +39,7 @@ namespace AtomicWar.GodotApp
         public int ActiveResearchDays => Engine.State.activeResearchDays;
         public IReadOnlyDictionary<string, ResearchKnowledgeDef> Catalog => Engine.Catalog;
 
-        public ResearchKnowledgeDef GetActiveResearch() => Engine.GetActiveResearch();
+        public ResearchKnowledgeDef? GetActiveResearch() => Engine.GetActiveResearch();
 
         public void Unlock(int day)
         {
@@ -98,7 +99,7 @@ namespace AtomicWar.GodotApp
         private void RaiseStateChanged()
         {
             try { StateChanged?.Invoke(); }
-            catch { }
+            catch (Exception ex) { GD.PrintErr($"[Research] StateChanged event failed: {ex.Message}"); }
         }
     }
 

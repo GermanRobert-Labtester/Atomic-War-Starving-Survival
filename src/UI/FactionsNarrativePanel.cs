@@ -9,6 +9,7 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using Ashfall.Core.IO;
 namespace AtomicWar.GodotApp.UI;
 
 /// <summary>
@@ -84,8 +85,9 @@ public partial class FactionsNarrativePanel : Control
                 _factions.Add((id, display, lore, ideology, neighbors));
             }
         }
-        catch
+        catch (Exception ex_CATDIAG)
         {
+            CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
             // ignored — fixture data will be used at row render time
         }
     }

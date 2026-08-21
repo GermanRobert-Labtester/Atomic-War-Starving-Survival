@@ -39,7 +39,7 @@ namespace AtomicWar.GodotApp
             try
             {
                 if (state == null) return false;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 var envelope = new EconomySaveEnvelope
@@ -57,9 +57,9 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static MarketState TryLoad() => TryLoad(SavePath);
+        public static MarketState? TryLoad() => TryLoad(SavePath);
 
-        public static MarketState TryLoad(string path)
+        public static MarketState? TryLoad(string path)
         {
             try
             {

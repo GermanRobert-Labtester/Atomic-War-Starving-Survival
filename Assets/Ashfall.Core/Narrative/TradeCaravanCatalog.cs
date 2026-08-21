@@ -52,7 +52,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public TradeCaravanRouteEntry GetById(string routeId)
+        public TradeCaravanRouteEntry? GetById(string routeId)
         {
             if (string.IsNullOrEmpty(routeId)) return null;
             _byId.TryGetValue(routeId, out var entry);

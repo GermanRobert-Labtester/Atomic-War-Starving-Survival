@@ -54,7 +54,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public VinylRecordEntry GetById(string recordId)
+        public VinylRecordEntry? GetById(string recordId)
         {
             if (string.IsNullOrEmpty(recordId)) return null;
             _byId.TryGetValue(recordId, out var entry);

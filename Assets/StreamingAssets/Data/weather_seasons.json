@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "id": "default_winter",
   "displayName": "The Long Winter",
   "weatherCheckIntervalHours": 6.0,

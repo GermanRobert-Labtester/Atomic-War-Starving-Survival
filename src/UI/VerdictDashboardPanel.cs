@@ -4,6 +4,7 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using Ashfall.Core.IO;
 namespace AtomicWar.GodotApp.UI;
 
 /// <summary>
@@ -22,7 +23,6 @@ namespace AtomicWar.GodotApp.UI;
 public partial class VerdictDashboardPanel : Control
 {
     public event Action? OnClose;
-    public event Action<string>? OnFactionDetailRequested;
 
     private AshfallDashboardShell _shell = null!;
     private AshfallStatusRail? _statusRail;
@@ -114,7 +114,7 @@ public partial class VerdictDashboardPanel : Control
             int places = _session.Locations?.Count ?? 0;
             int transmits = _session.RadioEntries?.Count ?? 0;
 
-            var phaseInt = (int)_session.Reckoning.Phase;
+            var phaseInt = (int)(_session.Reckoning?.Phase ?? 0);
             var phaseCrit = phaseInt >= 3 ? AshfallMetricCard.Criticality.Critical
                 : phaseInt >= 2 ? AshfallMetricCard.Criticality.Warn
                 : AshfallMetricCard.Criticality.Normal;
@@ -127,8 +127,9 @@ public partial class VerdictDashboardPanel : Control
             _statusRail.Set("places",   $"{places}",   AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("transmits",$"{transmits}",AshfallMetricCard.Criticality.Normal);
         }
-        catch
+        catch (Exception ex_CATDIAG)
         {
+            CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
             // bound session with quirky state should not break the dashboard
             _statusRail.Set("phase", "—", AshfallMetricCard.Criticality.Normal);
         }

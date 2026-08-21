@@ -68,7 +68,7 @@ namespace Ashfall.Core.Radio
     {
         RadioIntercept GetBroadcastAtFrequency(float frequencyMhz, int day, ISeededRng rng);
         RadioIntercept GetFactionEvent(string factionId, RadioEventKind kind, int day, ISeededRng rng);
-        string TryFindFactionAtFrequency(float frequencyMhz, float toleranceMhz = 1.5f);
+        string? TryFindFactionAtFrequency(float frequencyMhz, float toleranceMhz = 1.5f);
         float GetFactionFrequency(string factionId);
         string GetFactionCallsign(string factionId);
         IReadOnlyList<string> GetAllFactions();

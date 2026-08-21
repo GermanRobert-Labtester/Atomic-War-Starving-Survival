@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "faction_id": "faction_silent_foundry",
   "display_name": "The Silent Foundry",
   "short_name": "The Foundry",
@@ -13,14 +14,54 @@
     "alloy_secrecy_versus_public_instruction"
   ],
   "relationships": [
-    { "faction_id": "faction_the_office", "stance": "trade_partner", "notes": "Brine pipe and valve bodies for iodine and grade salt; the Office audits every heat against its schedule (the Brine Pipe Exchange)." },
-    { "faction_id": "faction_the_cutters", "stance": "trade_partner", "notes": "Coal and wreck scrap hauled south across the Cut at column rates; ice anchors and cleats owed in quotas (the Road Iron Charter, the Cluster Labour Schedule)." },
-    { "faction_id": "faction_the_fleet", "stance": "trade_partner", "notes": "Winch drums and runners for the barge and Berth 9; the Fleet's levy on deep-coast salvage keeps the yard honest." },
-    { "faction_id": "faction_archivists", "stance": "neutral", "notes": "The Archivists log heats, incidents, and accord cycles; a works is only as good as its record." },
-    { "faction_id": "faction_grain_exchange", "stance": "trade_partner", "notes": "Plowshares and heavy tools move through the exchange for seed and stores." },
-    { "faction_id": "faction_hydro_barons", "stance": "rival", "notes": "The Barons sell a place in the queue; the foundry casts valve bodies that outlast their contracts." },
-    { "faction_id": "faction_scavenger_guild", "stance": "conditional", "notes": "The foundry buys wreck scrap only with a clean claim mark — the crashed convoy and the dredger hulk have debts of their own." },
-    { "faction_id": "faction_iron_raiders", "stance": "rival", "notes": "No code, no contract, no questions. The foundry will not melt iron taken off a contested hull." }
+    {
+      "faction_id": "faction_the_office",
+      "stance": "trade_partner",
+      "notes": "Brine pipe and valve bodies for iodine and grade salt; the Office audits every heat against its schedule (the Brine Pipe Exchange)."
+    },
+    {
+      "faction_id": "faction_the_cutters",
+      "stance": "trade_partner",
+      "notes": "Coal and wreck scrap hauled south across the Cut at column rates; ice anchors and cleats owed in quotas (the Road Iron Charter, the Cluster Labour Schedule)."
+    },
+    {
+      "faction_id": "faction_the_fleet",
+      "stance": "trade_partner",
+      "notes": "Winch drums and runners for the barge and Berth 9; the Fleet's levy on deep-coast salvage keeps the yard honest."
+    },
+    {
+      "faction_id": "faction_archivists",
+      "stance": "neutral",
+      "notes": "The Archivists log heats, incidents, and accord cycles; a works is only as good as its record."
+    },
+    {
+      "faction_id": "faction_grain_exchange",
+      "stance": "trade_partner",
+      "notes": "Plowshares and heavy tools move through the exchange for seed and stores."
+    },
+    {
+      "faction_id": "faction_hydro_barons",
+      "stance": "rival",
+      "notes": "The Barons sell a place in the queue; the foundry casts valve bodies that outlast their contracts."
+    },
+    {
+      "faction_id": "faction_scavenger_guild",
+      "stance": "conditional",
+      "notes": "The foundry buys wreck scrap only with a clean claim mark — the crashed convoy and the dredger hulk have debts of their own."
+    },
+    {
+      "faction_id": "faction_iron_raiders",
+      "stance": "rival",
+      "notes": "No code, no contract, no questions. The foundry will not melt iron taken off a contested hull."
+    }
   ],
-  "tags": ["foundry", "industry", "iron", "labour", "accord", "works", "district8"]
+  "tags": [
+    "foundry",
+    "industry",
+    "iron",
+    "labour",
+    "accord",
+    "works",
+    "district8"
+  ]
 }

@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CryoSeedAmpouleEntry GetCryo(string id)
+        public CryoSeedAmpouleEntry? GetCryo(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CryoSeedAmpouleEntry e ? e : null;
         }
 
-        public RagdollGerminationEntry GetRagdoll(string id)
+        public RagdollGerminationEntry? GetRagdoll(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RagdollGerminationEntry e ? e : null;
         }
 
-        public SilicaGelSeedDesiccationEntry GetSilica(string id)
+        public SilicaGelSeedDesiccationEntry? GetSilica(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SilicaGelSeedDesiccationEntry e ? e : null;
         }
 
-        public HeirloomSeedViabilityEntry GetHeirloom(string id)
+        public HeirloomSeedViabilityEntry? GetHeirloom(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is HeirloomSeedViabilityEntry e ? e : null;

@@ -51,7 +51,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public DeadHandDirectiveEntry GetById(string directiveId)
+        public DeadHandDirectiveEntry? GetById(string directiveId)
         {
             if (string.IsNullOrEmpty(directiveId)) return null;
             _byId.TryGetValue(directiveId, out var entry);

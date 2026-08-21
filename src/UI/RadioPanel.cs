@@ -72,7 +72,7 @@ namespace AtomicWar.GodotApp.UI
             int lastDay = -1;
             for (int i = 0; i < hist; i++)
             {
-                var sig = _radioHost.History[i];
+                var sig = _radioHost.History![i];
                 if (sig.SignalStrength > strongest) strongest = sig.SignalStrength;
                 if (sig.Day > lastDay) lastDay = sig.Day;
             }

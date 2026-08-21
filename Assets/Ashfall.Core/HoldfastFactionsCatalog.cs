@@ -68,7 +68,7 @@ namespace Ashfall.Core
             _order.Add(entry);
         }
 
-        public HoldfastFactionEntry GetById(string id)
+        public HoldfastFactionEntry? GetById(string id)
             => string.IsNullOrEmpty(id) ? null : (_byId.TryGetValue(id, out var e) ? e : null);
 
         public bool Contains(string id) => GetById(id) != null;

@@ -927,7 +927,7 @@ namespace AtomicWar.GodotApp.Economy
             return global::Ashfall.Core.Economy.TradeWorthLabels.Format(value);
         }
 
-        private static Texture2D LoadTexture(string path)
+        private static Texture2D? LoadTexture(string path)
         {
             return TryLoadTexture(path);
         }

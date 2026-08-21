@@ -76,7 +76,7 @@ namespace Ashfall.Core.Survivors
             return sum / _allocations.Count;
         }
 
-        public RationConflictSurvivorState GetState(string survivorId)
+        public RationConflictSurvivorState? GetState(string survivorId)
         {
             return _bySurvivor.TryGetValue(survivorId, out var s) ? s : null;
         }
@@ -92,7 +92,7 @@ namespace Ashfall.Core.Survivors
             float deficit = average - myAlloc;
             if (deficit + 0.001f >= FairnessDeviationThreshold)
             {
-                string mostOverId = null;
+                string mostOverId = null!;
                 float maxAlloc = 0f;
                 foreach (var kv in _allocations)
                 {

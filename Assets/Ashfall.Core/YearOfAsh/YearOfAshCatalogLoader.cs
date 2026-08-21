@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.YearOfAsh
 {
     [Serializable]
@@ -149,16 +150,20 @@ namespace Ashfall.Core.YearOfAsh
                 if (container != null && container.items != null && container.items.Count > 0)
                     return container.items;
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
 
             try
             {
                 return json.Deserialize<List<YearOfAshItemEntry>>(raw) ?? new List<YearOfAshItemEntry>();
             }
-            catch
-            {
-                return new List<YearOfAshItemEntry>();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new List<YearOfAshItemEntry>();
+                                }
         }
 
         public static List<YearOfAshEventEntry> LoadEvents(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -180,16 +185,20 @@ namespace Ashfall.Core.YearOfAsh
                 if (container != null && container.events != null && container.events.Count > 0)
                     return container.events;
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
 
             try
             {
                 return json.Deserialize<List<YearOfAshEventEntry>>(raw) ?? new List<YearOfAshEventEntry>();
             }
-            catch
-            {
-                return new List<YearOfAshEventEntry>();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new List<YearOfAshEventEntry>();
+                                }
         }
 
         public static List<QuestlineDefinition> LoadQuests(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -252,7 +261,10 @@ namespace Ashfall.Core.YearOfAsh
                     return result;
                 }
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
 
             try
             {
@@ -260,16 +272,20 @@ namespace Ashfall.Core.YearOfAsh
                 if (container != null && container.quests != null && container.quests.Count > 0)
                     return container.quests;
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
 
             try
             {
                 return json.Deserialize<List<QuestlineDefinition>>(raw) ?? new List<QuestlineDefinition>();
             }
-            catch
-            {
-                return new List<QuestlineDefinition>();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new List<QuestlineDefinition>();
+                                }
         }
 
         public static List<YearOfAshLocationEntry> LoadLocations(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -291,16 +307,20 @@ namespace Ashfall.Core.YearOfAsh
                 if (container != null && container.locations != null && container.locations.Count > 0)
                     return container.locations;
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
 
             try
             {
                 return json.Deserialize<List<YearOfAshLocationEntry>>(raw) ?? new List<YearOfAshLocationEntry>();
             }
-            catch
-            {
-                return new List<YearOfAshLocationEntry>();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new List<YearOfAshLocationEntry>();
+                                }
         }
 
         public static List<YearOfAshRadioEntry> LoadRadioBroadcasts(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -322,16 +342,20 @@ namespace Ashfall.Core.YearOfAsh
                 if (container != null && container.broadcasts != null && container.broadcasts.Count > 0)
                     return container.broadcasts;
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
 
             try
             {
                 return json.Deserialize<List<YearOfAshRadioEntry>>(raw) ?? new List<YearOfAshRadioEntry>();
             }
-            catch
-            {
-                return new List<YearOfAshRadioEntry>();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new List<YearOfAshRadioEntry>();
+                                }
         }
 
         public static List<YearOfAshSurvivorEntry> LoadSurvivors(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -353,16 +377,20 @@ namespace Ashfall.Core.YearOfAsh
                 if (container != null && container.survivors != null && container.survivors.Count > 0)
                     return container.survivors;
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
 
             try
             {
                 return json.Deserialize<List<YearOfAshSurvivorEntry>>(raw) ?? new List<YearOfAshSurvivorEntry>();
             }
-            catch
-            {
-                return new List<YearOfAshSurvivorEntry>();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new List<YearOfAshSurvivorEntry>();
+                                }
         }
 
         public static int LoadAndRegisterQuests(QuestlineSystem system, string dataDir, IFileIO fileIO, IJsonSerializer json)

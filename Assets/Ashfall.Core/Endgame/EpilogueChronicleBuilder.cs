@@ -23,7 +23,7 @@ namespace Ashfall.Core.Endgame
                 EndingKey = input.EndingKey ?? "unknown",
                 GeneratedDay = input.Day,
                 BuildSeed = input.BuildSeed,
-                Title = TitleFor(input.EndingKey),
+                Title = TitleFor(input.EndingKey ?? "unknown"),
                 Metrics = new List<EpilogueMetric>(input.Metrics ?? new List<EpilogueMetric>()),
                 Slides = new List<EpilogueSlide>(input.Slides ?? new List<EpilogueSlide>()),
                 FateCards = new List<SurvivorFateCard>(input.FateCards ?? new List<SurvivorFateCard>())

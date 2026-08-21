@@ -68,7 +68,7 @@ namespace AtomicWar.GodotApp
             {
                 _session.StateChanged += RefreshView;
                 _selectedFactionId = _session.Trade.SelectedFactionId;
-                _dispatch = new HoldfastDispatchLog(HoldfastFlavorCatalog.Load(session.World.Catalog.Items.Items.Count > 0 ? "Assets/StreamingAssets/Data" : null));
+                _dispatch = new HoldfastDispatchLog(HoldfastFlavorCatalog.Load(session.World.Catalog.Items.Items.Count > 0 ? "Assets/StreamingAssets/Data" : "")!);
                 _dispatch.OnSessionOpened("holdfast");
             }
             RefreshView();
@@ -124,7 +124,7 @@ namespace AtomicWar.GodotApp
             RefreshTradeDetails();
         }
 
-        public HoldfastTradeResult PressBuy()
+        public HoldfastTradeResult? PressBuy()
         {
             if (_session == null)
                 return null;
@@ -148,7 +148,7 @@ namespace AtomicWar.GodotApp
             return result;
         }
 
-        public HoldfastTradeResult PressSell()
+        public HoldfastTradeResult? PressSell()
         {
             if (_session == null)
                 return null;

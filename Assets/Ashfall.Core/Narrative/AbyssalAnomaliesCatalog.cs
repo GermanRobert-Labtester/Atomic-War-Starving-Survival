@@ -219,25 +219,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public HydrophoneAcousticEntry GetHydrophone(string id)
+        public HydrophoneAcousticEntry? GetHydrophone(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is HydrophoneAcousticEntry e ? e : null;
         }
 
-        public GeothermalBoreholeEntry GetBorehole(string id)
+        public GeothermalBoreholeEntry? GetBorehole(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GeothermalBoreholeEntry e ? e : null;
         }
 
-        public CryopodFailureEntry GetCryopod(string id)
+        public CryopodFailureEntry? GetCryopod(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CryopodFailureEntry e ? e : null;
         }
 
-        public SaltMineInscriptionEntry GetSaltMine(string id)
+        public SaltMineInscriptionEntry? GetSaltMine(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SaltMineInscriptionEntry e ? e : null;

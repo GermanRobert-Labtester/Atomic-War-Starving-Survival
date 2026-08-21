@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public TimberCreosoteTreatmentEntry GetTreatment(string id)
+        public TimberCreosoteTreatmentEntry? GetTreatment(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TimberCreosoteTreatmentEntry e ? e : null;
         }
 
-        public SquareSetShoringEntry GetShoring(string id)
+        public SquareSetShoringEntry? GetShoring(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SquareSetShoringEntry e ? e : null;
         }
 
-        public TimberDryRotFruitingEntry GetRot(string id)
+        public TimberDryRotFruitingEntry? GetRot(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TimberDryRotFruitingEntry e ? e : null;
         }
 
-        public MortiseTenonFailureEntry GetMortise(string id)
+        public MortiseTenonFailureEntry? GetMortise(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MortiseTenonFailureEntry e ? e : null;

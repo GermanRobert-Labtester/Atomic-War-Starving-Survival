@@ -168,7 +168,7 @@ namespace Ashfall.Core
             // "now" strata first (they are the current lived layer), then "after".
             // No "pre" fallback: a recast exists only once a mutation re-wrote
             // the place. The unmutated baseline is GetStratumText(site, "pre").
-            LocationMemoryStratum match = null;
+            LocationMemoryStratum? match = null;
             for (int i = 0; i < list.Count; i++)
             {
                 LocationMemoryStratum s = list[i];
@@ -306,7 +306,7 @@ namespace Ashfall.Core
             for (int f = 0; f < flagsList.Count; f++)
             {
                 string siteId = flagsList[f].siteId;
-                string active = GetActiveRecast(siteId);
+                string active = GetActiveRecast(siteId)!;
                 if (string.IsNullOrEmpty(active)) continue;
                 if (_state.recastHistory.Contains(siteId)) continue;
                 _state.recastHistory.Add(siteId);

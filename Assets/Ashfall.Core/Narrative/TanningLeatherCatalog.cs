@@ -207,25 +207,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public OakBarkTanningPitEntry GetBark(string id)
+        public OakBarkTanningPitEntry? GetBark(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is OakBarkTanningPitEntry e ? e : null;
         }
 
-        public MineralTanLiquorEntry GetMineral(string id)
+        public MineralTanLiquorEntry? GetMineral(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MineralTanLiquorEntry e ? e : null;
         }
 
-        public RawhideBatingFailureEntry GetBating(string id)
+        public RawhideBatingFailureEntry? GetBating(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RawhideBatingFailureEntry e ? e : null;
         }
 
-        public LeatherHarnessCurryingEntry GetCurrying(string id)
+        public LeatherHarnessCurryingEntry? GetCurrying(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LeatherHarnessCurryingEntry e ? e : null;

@@ -78,7 +78,7 @@ namespace Ashfall.Core
             _catalog = catalog ?? new DutyRosterCatalog();
         }
 
-        public DutyRosterQuestProgress GetProgress(string questId)
+        public DutyRosterQuestProgress? GetProgress(string questId)
         {
             if (string.IsNullOrEmpty(questId)) return null;
             return _byId.TryGetValue(questId, out var p) ? p : null;

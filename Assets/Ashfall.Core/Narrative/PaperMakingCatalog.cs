@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public HollanderBeaterPulpingEntry GetBeater(string id)
+        public HollanderBeaterPulpingEntry? GetBeater(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is HollanderBeaterPulpingEntry e ? e : null;
         }
 
-        public DeckleMouldWatermarkEntry GetMould(string id)
+        public DeckleMouldWatermarkEntry? GetMould(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is DeckleMouldWatermarkEntry e ? e : null;
         }
 
-        public ScrewPressFeltEntry GetPress(string id)
+        public ScrewPressFeltEntry? GetPress(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ScrewPressFeltEntry e ? e : null;
         }
 
-        public TubSizingGelatinEntry GetSizing(string id)
+        public TubSizingGelatinEntry? GetSizing(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TubSizingGelatinEntry e ? e : null;

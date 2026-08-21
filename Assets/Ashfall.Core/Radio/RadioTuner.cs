@@ -51,7 +51,7 @@ namespace Ashfall.Core.Radio
         {
             if (broadcasts == null) return SignalLockResult.NoSignal;
             const float toleranceKHz = 5.0f;
-            RadioBroadcast best = null;
+            RadioBroadcast? best = null;
             float bestStrength = 0f;
             foreach (var b in broadcasts)
             {

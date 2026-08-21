@@ -110,7 +110,7 @@ namespace Ashfall.Core.Maritime
             if (!_bySurvivor.TryGetValue(survivorId, out var list)) return false;
             for (int i = 0; i < list.Count; i++)
             {
-                string[] blocked = GetBlockedActions(list[i].Type);
+                string[] blocked = GetBlockedActions(list[i].Type)!;
                 if (blocked != null)
                     for (int j = 0; j < blocked.Length; j++)
                         if (blocked[j] == actionId) return true;
@@ -118,7 +118,7 @@ namespace Ashfall.Core.Maritime
             return false;
         }
 
-        private static string[] GetBlockedActions(string type)
+        private static string[]? GetBlockedActions(string type)
         {
             switch (type)
             {
@@ -129,7 +129,7 @@ namespace Ashfall.Core.Maritime
             }
         }
 
-        public IReadOnlyList<ContaminationEntry> GetContaminations(string survivorId)
+        public IReadOnlyList<ContaminationEntry>? GetContaminations(string survivorId)
             => _bySurvivor.TryGetValue(survivorId, out var list) ? list : null;
 
         public void Tick(float gameDays, string survivorId, float currentMorale, string currentAssignment)

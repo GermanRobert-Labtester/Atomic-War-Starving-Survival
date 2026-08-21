@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CharcoalMoundPyrolysisEntry GetMound(string id)
+        public CharcoalMoundPyrolysisEntry? GetMound(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CharcoalMoundPyrolysisEntry e ? e : null;
         }
 
-        public RetortWoodVinegarEntry GetRetort(string id)
+        public RetortWoodVinegarEntry? GetRetort(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RetortWoodVinegarEntry e ? e : null;
         }
 
-        public BiocharCationExchangeEntry GetBiochar(string id)
+        public BiocharCationExchangeEntry? GetBiochar(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BiocharCationExchangeEntry e ? e : null;
         }
 
-        public ForgeCharcoalAshEntry GetForge(string id)
+        public ForgeCharcoalAshEntry? GetForge(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ForgeCharcoalAshEntry e ? e : null;

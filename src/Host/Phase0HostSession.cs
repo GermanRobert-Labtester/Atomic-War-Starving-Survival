@@ -5,6 +5,7 @@ using Ashfall.Core;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Radiation;
+using Ashfall.Core.Phantoms;
 
 namespace AtomicWar.GodotApp
 {
@@ -676,11 +677,11 @@ namespace AtomicWar.GodotApp
                         _aliveSurvivorIds.Add(s.survivorId);
                 }
             }
-            RadiationPhase.RestoreState(save.radiationPhase);
+            RadiationPhase.RestoreState(save!.radiationPhase!);
 
-            Phantom.RestoreState(save.phantom);
-            Guilt.RestoreState(save.guilt);
-            CombatTrauma.RestoreState(save.combatTrauma);
+            Phantom.RestoreState(save!.phantom!);
+            Guilt.RestoreState(save!.guilt!);
+            CombatTrauma.RestoreState(save!.combatTrauma!);
             Flashbacks.RestoreState(save.flashbacks);
             Moral.RestoreState(save.moral);
             TradeSpecialty.RestoreState(save.tradeSpecialty);
@@ -815,21 +816,6 @@ namespace AtomicWar.GodotApp
             public double NextDouble() => _rng.NextDouble();
         }
 
-        // ── JSON DTOs (phantom_triggers.json) ─────────────────────────
-
-        private sealed class PhantomTriggerJsonEntry
-        {
-            public string background_id;
-            public List<PhantomTriggerRuleJson> triggers;
-        }
-
-        private sealed class PhantomTriggerRuleJson
-        {
-            public string item_category;
-            public float motivation_chance;
-            public string description;
-            public string motivation_text;
-            public string breakdown_text;
-        }
+        // JSON DTOs consolidated to Assets/Ashfall.Core/Phantoms/PhantomTriggerDto.cs
     }
 }

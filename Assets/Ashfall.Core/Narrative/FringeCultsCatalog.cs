@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CobaltLiturgyEntry GetCobaltLiturgy(string id)
+        public CobaltLiturgyEntry? GetCobaltLiturgy(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CobaltLiturgyEntry e ? e : null;
         }
 
-        public IronSynodCanonEntry GetIronSynodCanon(string id)
+        public IronSynodCanonEntry? GetIronSynodCanon(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is IronSynodCanonEntry e ? e : null;
         }
 
-        public GeophoneHymnalEntry GetGeophoneHymnal(string id)
+        public GeophoneHymnalEntry? GetGeophoneHymnal(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GeophoneHymnalEntry e ? e : null;
         }
 
-        public WastelandEpitaphEntry GetWastelandEpitaph(string id)
+        public WastelandEpitaphEntry? GetWastelandEpitaph(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is WastelandEpitaphEntry e ? e : null;

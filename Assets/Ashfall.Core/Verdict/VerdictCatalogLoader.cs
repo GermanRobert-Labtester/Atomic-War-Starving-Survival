@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Verdict
 {
     /// <summary>
@@ -48,7 +50,11 @@ namespace Ashfall.Core.Verdict
                     result.Add(e);
                 }
             }
-            catch { return result; }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
 
@@ -102,7 +108,11 @@ namespace Ashfall.Core.Verdict
                     result.Add(e);
                 }
             }
-            catch { return result; }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
 
@@ -138,7 +148,11 @@ namespace Ashfall.Core.Verdict
                     result.Add(e);
                 }
             }
-            catch { return result; }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
 
@@ -163,7 +177,10 @@ namespace Ashfall.Core.Verdict
                 if (parsed?.corruption_corpus != null)
                     result.AddRange(parsed.corruption_corpus);
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
             return result;
         }
 

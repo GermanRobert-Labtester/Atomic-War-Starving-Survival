@@ -27,7 +27,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 var serializer = new SystemTextJsonSerializer();
                 string json = YearOfAshSaveCodec.Encode(save, serializer);
                 string path = pathOverride ?? SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
                 File.WriteAllText(path, json);
@@ -40,7 +40,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             }
         }
 
-        public static YearOfAshSave TryLoad(string pathOverride = null)
+        public static YearOfAshSave? TryLoad(string pathOverride = null)
         {
             string path = pathOverride ?? SavePath;
             if (!File.Exists(path)) return null;

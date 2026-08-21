@@ -75,7 +75,7 @@ namespace Ashfall.Core
             system.Infect("demo_survivor_b", DiseaseIds.Cholera, day: 10);
             system.Infect("demo_survivor_c", DiseaseIds.Cholera, day: 10);
             Check(system.GetDiseaseState(DiseaseIds.Cholera) != null
-                  && system.GetDiseaseState(DiseaseIds.Cholera).outbreak_active,
+                  && system.GetDiseaseState(DiseaseIds.Cholera)!.outbreak_active,
                 "three active infections declare an outbreak");
             Check(system.GetSnapshot().total_outbreaks == 1, "outbreaks_total == 1");
 
@@ -122,7 +122,7 @@ namespace Ashfall.Core
             string encoded = json.Serialize(stateA);
             var stateB = json.Deserialize<DiseaseSystemState>(encoded);
             var restored = new DiseaseSystem(log: log);
-            restored.RestoreState(stateB);
+            restored.RestoreState(stateB!);
             restored.BindCatalog(catalog ?? new DiseaseCatalog());
             Check(restored.CaptureState().diseases.Count == system.CaptureState().diseases.Count,
                 "save round-trip preserves every disease entry");

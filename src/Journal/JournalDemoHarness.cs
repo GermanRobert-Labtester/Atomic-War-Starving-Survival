@@ -42,10 +42,10 @@ namespace AtomicWar.Journal
             var crew = authors.Count > 0 ? authors.Values.ToList() : new List<DemoSurvivor>();
 
             int day = 1;
-            journal.TryDiscover(KnowledgeKeys.HighCo2, At(crew, 0), day++);
-            journal.TryDiscover(KnowledgeKeys.HasSeenRadiation, At(crew, 1), day++);
-            journal.TryDiscover(KnowledgeKeys.HasExperiencedStorm, At(crew, 2), day++);
-            journal.TryDiscover(KnowledgeKeys.FilterFailing, At(crew, 3), day++);
+            journal.TryDiscover(KnowledgeKeys.HighCo2, At(crew, 0)!, day++);
+            journal.TryDiscover(KnowledgeKeys.HasSeenRadiation, At(crew, 1)!, day++);
+            journal.TryDiscover(KnowledgeKeys.HasExperiencedStorm, At(crew, 2)!, day++);
+            journal.TryDiscover(KnowledgeKeys.FilterFailing, At(crew, 3)!, day++);
 
             if (catalogs != null)
             {

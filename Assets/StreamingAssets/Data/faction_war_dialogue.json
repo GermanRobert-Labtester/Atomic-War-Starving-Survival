@@ -1,130 +1,131 @@
 {
- "snippets": [
-  {
-   "id": "dlg_d482_checkpoint_quartermasters",
-   "locationId": "loc_garrison_checkpoint_gamma",
-   "minDay": 482,
-   "speakerTag": "Two Garrison quartermasters, reconciling manifests",
-   "body": "\"Exchange numbers don't match ours again.\" \"They never match. That's what a second ledger's for — so both sides can be right at the same time.\" \"Harven doesn't see it that way.\" \"Harven doesn't do inventory. Harven does decrees. Different skill."
-  },
-  {
-   "id": "dlg_d483_exchange_lean_pool",
-   "locationId": "loc_grain_silo",
-   "minDay": 483,
-   "speakerTag": "Two traders under the leaning silo",
-   "body": "\"Still hasn't picked a direction.\" \"Three years. I've got money down it falls east.\" \"Everyone's got money down east, that's why it hasn't fallen east yet — this whole silo's just waiting to make somebody wrong on purpose.\" \"That's not how buildings work.\" \"You explain that to the silo.\""
-  },
-  {
-   "id": "dlg_d488_understory_relay_move",
-   "locationId": "loc_understory_transmitter",
-   "minDay": 488,
-   "speakerTag": "Two Understory relay hands, striking the mast for the move",
-   "body": "\"You're moving it again.\" \"Moving it is the whole point. A relay that sits still is just a target with a schedule.\" \"Nobody's shot at it yet.\" \"Nobody's found it yet. Those aren't the same sentence.\" \"Seems like a lot of effort for three broadcasts a week that mostly repeat themselves.\" \"Nobody's buying the message. They're buying proof somebody's still keeping a log that isn't the Garrison's and isn't the Exchange's. That's worth a coil of wire and a bad night's sleep.\""
-  },
-  {
-   "id": "dlg_d490_switchback_pilgrims",
-   "locationId": "loc_ash_sign_shrine",
-   "minDay": 490,
-   "speakerTag": "Two pilgrims on the switchback trail",
-   "body": "\"Numbers were steady last time I read them.\" \"Steady's not the same as good.\" \"Steady's the only thing I've got faith is supposed to mean anymore. Good went out with the first winter.\" \"Keep climbing. You'll feel better at the top.\" \"I always feel the same at the top. That's rather the point of climbing, isn't it."
-  },
-  {
-   "id": "dlg_d493_weighbridge_toll_grumble",
-   "locationId": "loc_weighbridge",
-   "minDay": 493,
-   "speakerTag": "Two travelers waiting at the toll booth",
-   "body": "\"Rate's up again.\" \"Rate's always up. Man's never once lowered it in three years, not even the season the road washed out and half his customers couldn't reach the booth.\" \"Why do we still cross here, then?\" \"Because the other route takes a season and he knows it. That's not a toll, that's a tax, we just call it a toll so it feels like we agreed to it."
-  },
-  {
-   "id": "dlg_d497_scavengers_clean_crater",
-   "locationId": "loc_railway_span_44_alpha",
-   "minDay": 497,
-   "speakerTag": "Two scavengers picking through the crater",
-   "body": "\"Rads are low right at the lip. Lower than the field around it.\" \"Wrong way round. Should be hot at the point of impact, not scoured clean.\" \"Maybe it wasn't meant to hurt anybody.\" \"Everything out here's meant to hurt somebody. That's just the ones it's not aimed at talking."
-  },
-  {
-   "id": "dlg_d505_conscription_office_clerks",
-   "locationId": "loc_conscription_office",
-   "minDay": 505,
-   "speakerTag": "Two clerks covering the empty counter",
-   "body": "\"Anyone taking his shift proper, or is it just us trading it back and forth?\" \"Just us. Nobody wants the counter he used to run. Feels like taking his coat off a body that isn't cold yet.\" \"He'll turn up on a list somewhere. They always do.\" \"Some of them don't. I've stopped assuming.\""
-  },
-  {
-   "id": "dlg_d512_weighbridge_reroute",
-   "locationId": "loc_weighbridge",
-   "minDay": 512,
-   "speakerTag": "Two Weighbridge booth staff, watching an empty road",
-   "body": "\"Half of what used to cross here goes around now.\" \"Around costs three extra days and people still take it.\" \"Why?\" \"Because the long way doesn't run through a Garrison checkpoint asking where you're bound and why. We ask too, but we only ask it once, and then we let you through.\" \"That's not much of a difference.\" \"It's apparently the whole difference. We're not the toll anymore, we're the alternative to one. Never thought I'd call that a selling point.\""
-  },
-  {
-   "id": "dlg_d526_exchange_roster_kid",
-   "locationId": "loc_grain_silo",
-   "minDay": 526,
-   "speakerTag": "A young roster member and an older trader",
-   "body": "\"Feels wrong, doesn't it. The coats.\" \"Feels like three years of not needing them, ending on a Tuesday for no better reason than everyone else already stopped believing we didn't.\" \"Adaeze hates it.\" \"Adaeze hating it is the only reason I still trust it. The day she stops hating it, that's the day to worry.\""
-  },
-  {
-   "id": "dlg_d538_checkpoint_awkward_small_talk",
-   "locationId": "loc_grain_silo",
-   "minDay": 538,
-   "speakerTag": "A Garrison inspector and an Exchange trader, at the new post",
-   "body": "\"Weather's turning.\" \"It's ash. It doesn't turn, it just falls slightly differently.\" \"Trying to make conversation.\" \"I know. I appreciate it, actually. Doesn't make the clipboard less of a clipboard.\" \"No. It doesn't. Sorry about that, for what it's worth.\" \"It's worth a little. Not nothing.\""
-  },
-  {
-   "id": "dlg_d552_deserter_hunters",
-   "locationId": "loc_garrison_checkpoint_gamma",
-   "minDay": 552,
-   "speakerTag": "Two Garrison patrolmen off duty",
-   "body": "\"Fourth one this month I've had to write up as absconded rather than chase.\" \"Why write up instead of chase?\" \"Because chasing means finding, and finding means deciding what happens next, and I've decided what happens next often enough for one war. Absconded's cleaner. For everyone, including him, probably.\""
-  },
-  {
-   "id": "dlg_d549_children_after_the_plaza",
-   "locationId": "loc_ration_queue_plaza",
-   "minDay": 549,
-   "speakerTag": "Two children playing near the plaza's edge",
-   "body": "\"My mum says don't go past the rope they put up.\" \"Mira gave her token away right before. To the radio lady.\" \"Was it lucky?\" \"Mira says stars are only lucky if you don't need them to be. I don't think that's how luck works.\" \"I don't think Mira thinks it's how luck works either. I think that's just what she says now."
-  },
-  {
-   "id": "dlg_d580_shrine_keepers_doubt",
-   "locationId": "loc_ash_sign_shrine",
-   "minDay": 580,
-   "speakerTag": "Two shrine-keepers, after the anomaly",
-   "body": "\"Toma says we stop teaching the sparing.\" \"Stop teaching it, or admit we never understood it?\" \"Does it matter, at this point?\" \"It matters to the pilgrims still climbing up here expecting an answer. It mattered to us three days ago too, before we didn't have one anymore.\""
-  },
-  {
-   "id": "dlg_d568_toll_syndicate_cynicism",
-   "locationId": "loc_weighbridge",
-   "minDay": 568,
-   "speakerTag": "Two Weighbridge booth staff",
-   "body": "\"Fennick's water deal holding?\" \"Held long enough for him to collect. Whether it holds for the slope's actual growing season is somebody else's arithmetic.\" \"Doesn't bother you?\" \"Everything that crosses this bridge is somebody's arithmetic going wrong for somebody else. We just collect the toll on the crossing, not the consequences.\""
-  },
-  {
-   "id": "dlg_d571_forward_roster_checkpoint",
-   "locationId": "loc_forward_roster_camp",
-   "minDay": 571,
-   "speakerTag": "Two Forward Roster checkpoint watch",
-   "body": "\"First column paid without a word.\" \"Word'll come. Give it a week, someone'll ask us who put us in charge of the road.\" \"What do we tell them?\" \"Nobody. That's the whole answer. Nobody put us here. We just got here first and didn't leave.\""
-  },
-  {
-   "id": "dlg_d573_forward_roster_identity",
-   "locationId": "loc_forward_roster_camp",
-   "minDay": 573,
-   "speakerTag": "Sella Krenn and a Forward Roster veteran, off the toll line",
-   "body": "\"Someone in that column called us bandits.\" \"Bandits don't log the count.\" \"We log the count.\" \"Every crate, every head, in a hand that reads like a receipt. That's not a bandit, that's a customs post that opened early.\" \"Doesn't feel like a customs post.\" \"Nothing with a rifle slung ever feels like what it's doing on paper. Doesn't stop the paper being right.\""
-  },
-  {
-   "id": "dlg_d584_d9_cell_debate",
-   "locationId": "loc_d9_cache_bunker_delta",
-   "minDay": 584,
-   "speakerTag": "Two D/9 cell operators, over the manifest",
-   "body": "\"Order says deny what can't be held.\" \"Order was written before there was a checkpoint out there worth counting. Doctrine doesn't update itself.\" \"So we update it.\" \"So somebody above my clearance updates it. Until then I log the dissent and hold the line I was given, same as always.\" \"That's not an answer.\" \"It's the only one the manifest has room for.\""
-  },
-  {
-   "id": "dlg_d591_switchback_waystation_doubt",
-   "locationId": "loc_shrine_switchback_waystation",
-   "minDay": 591,
-   "speakerTag": "Two pilgrims resting at the switchback waystation",
-   "body": "\"They still haven't repainted the board at the cairn.\" \"What would they even write? The old line wasn't wrong for three years, and then one morning it was.\" \"Toma won't say 'spared' anymore. I asked her straight and she just showed me the crater.\" \"Can't blame her. Hard to keep teaching a word once you've stood in the hole it used to mean.\" \"You think somebody was choosing what falls.\" \"I think somebody was, for years, and now they're not, or they can't anymore. That's the part that keeps me climbing — I'd rather not have an answer than have the wrong one and build a shrine on it again.\""
-  }
- ]
+  "schema_version": 1,
+  "snippets": [
+    {
+      "id": "dlg_d482_checkpoint_quartermasters",
+      "locationId": "loc_garrison_checkpoint_gamma",
+      "minDay": 482,
+      "speakerTag": "Two Garrison quartermasters, reconciling manifests",
+      "body": "\"Exchange numbers don't match ours again.\" \"They never match. That's what a second ledger's for — so both sides can be right at the same time.\" \"Harven doesn't see it that way.\" \"Harven doesn't do inventory. Harven does decrees. Different skill."
+    },
+    {
+      "id": "dlg_d483_exchange_lean_pool",
+      "locationId": "loc_grain_silo",
+      "minDay": 483,
+      "speakerTag": "Two traders under the leaning silo",
+      "body": "\"Still hasn't picked a direction.\" \"Three years. I've got money down it falls east.\" \"Everyone's got money down east, that's why it hasn't fallen east yet — this whole silo's just waiting to make somebody wrong on purpose.\" \"That's not how buildings work.\" \"You explain that to the silo.\""
+    },
+    {
+      "id": "dlg_d488_understory_relay_move",
+      "locationId": "loc_understory_transmitter",
+      "minDay": 488,
+      "speakerTag": "Two Understory relay hands, striking the mast for the move",
+      "body": "\"You're moving it again.\" \"Moving it is the whole point. A relay that sits still is just a target with a schedule.\" \"Nobody's shot at it yet.\" \"Nobody's found it yet. Those aren't the same sentence.\" \"Seems like a lot of effort for three broadcasts a week that mostly repeat themselves.\" \"Nobody's buying the message. They're buying proof somebody's still keeping a log that isn't the Garrison's and isn't the Exchange's. That's worth a coil of wire and a bad night's sleep.\""
+    },
+    {
+      "id": "dlg_d490_switchback_pilgrims",
+      "locationId": "loc_ash_sign_shrine",
+      "minDay": 490,
+      "speakerTag": "Two pilgrims on the switchback trail",
+      "body": "\"Numbers were steady last time I read them.\" \"Steady's not the same as good.\" \"Steady's the only thing I've got faith is supposed to mean anymore. Good went out with the first winter.\" \"Keep climbing. You'll feel better at the top.\" \"I always feel the same at the top. That's rather the point of climbing, isn't it."
+    },
+    {
+      "id": "dlg_d493_weighbridge_toll_grumble",
+      "locationId": "loc_weighbridge",
+      "minDay": 493,
+      "speakerTag": "Two travelers waiting at the toll booth",
+      "body": "\"Rate's up again.\" \"Rate's always up. Man's never once lowered it in three years, not even the season the road washed out and half his customers couldn't reach the booth.\" \"Why do we still cross here, then?\" \"Because the other route takes a season and he knows it. That's not a toll, that's a tax, we just call it a toll so it feels like we agreed to it."
+    },
+    {
+      "id": "dlg_d497_scavengers_clean_crater",
+      "locationId": "loc_railway_span_44_alpha",
+      "minDay": 497,
+      "speakerTag": "Two scavengers picking through the crater",
+      "body": "\"Rads are low right at the lip. Lower than the field around it.\" \"Wrong way round. Should be hot at the point of impact, not scoured clean.\" \"Maybe it wasn't meant to hurt anybody.\" \"Everything out here's meant to hurt somebody. That's just the ones it's not aimed at talking."
+    },
+    {
+      "id": "dlg_d505_conscription_office_clerks",
+      "locationId": "loc_conscription_office",
+      "minDay": 505,
+      "speakerTag": "Two clerks covering the empty counter",
+      "body": "\"Anyone taking his shift proper, or is it just us trading it back and forth?\" \"Just us. Nobody wants the counter he used to run. Feels like taking his coat off a body that isn't cold yet.\" \"He'll turn up on a list somewhere. They always do.\" \"Some of them don't. I've stopped assuming.\""
+    },
+    {
+      "id": "dlg_d512_weighbridge_reroute",
+      "locationId": "loc_weighbridge",
+      "minDay": 512,
+      "speakerTag": "Two Weighbridge booth staff, watching an empty road",
+      "body": "\"Half of what used to cross here goes around now.\" \"Around costs three extra days and people still take it.\" \"Why?\" \"Because the long way doesn't run through a Garrison checkpoint asking where you're bound and why. We ask too, but we only ask it once, and then we let you through.\" \"That's not much of a difference.\" \"It's apparently the whole difference. We're not the toll anymore, we're the alternative to one. Never thought I'd call that a selling point.\""
+    },
+    {
+      "id": "dlg_d526_exchange_roster_kid",
+      "locationId": "loc_grain_silo",
+      "minDay": 526,
+      "speakerTag": "A young roster member and an older trader",
+      "body": "\"Feels wrong, doesn't it. The coats.\" \"Feels like three years of not needing them, ending on a Tuesday for no better reason than everyone else already stopped believing we didn't.\" \"Adaeze hates it.\" \"Adaeze hating it is the only reason I still trust it. The day she stops hating it, that's the day to worry.\""
+    },
+    {
+      "id": "dlg_d538_checkpoint_awkward_small_talk",
+      "locationId": "loc_grain_silo",
+      "minDay": 538,
+      "speakerTag": "A Garrison inspector and an Exchange trader, at the new post",
+      "body": "\"Weather's turning.\" \"It's ash. It doesn't turn, it just falls slightly differently.\" \"Trying to make conversation.\" \"I know. I appreciate it, actually. Doesn't make the clipboard less of a clipboard.\" \"No. It doesn't. Sorry about that, for what it's worth.\" \"It's worth a little. Not nothing.\""
+    },
+    {
+      "id": "dlg_d552_deserter_hunters",
+      "locationId": "loc_garrison_checkpoint_gamma",
+      "minDay": 552,
+      "speakerTag": "Two Garrison patrolmen off duty",
+      "body": "\"Fourth one this month I've had to write up as absconded rather than chase.\" \"Why write up instead of chase?\" \"Because chasing means finding, and finding means deciding what happens next, and I've decided what happens next often enough for one war. Absconded's cleaner. For everyone, including him, probably.\""
+    },
+    {
+      "id": "dlg_d549_children_after_the_plaza",
+      "locationId": "loc_ration_queue_plaza",
+      "minDay": 549,
+      "speakerTag": "Two children playing near the plaza's edge",
+      "body": "\"My mum says don't go past the rope they put up.\" \"Mira gave her token away right before. To the radio lady.\" \"Was it lucky?\" \"Mira says stars are only lucky if you don't need them to be. I don't think that's how luck works.\" \"I don't think Mira thinks it's how luck works either. I think that's just what she says now."
+    },
+    {
+      "id": "dlg_d580_shrine_keepers_doubt",
+      "locationId": "loc_ash_sign_shrine",
+      "minDay": 580,
+      "speakerTag": "Two shrine-keepers, after the anomaly",
+      "body": "\"Toma says we stop teaching the sparing.\" \"Stop teaching it, or admit we never understood it?\" \"Does it matter, at this point?\" \"It matters to the pilgrims still climbing up here expecting an answer. It mattered to us three days ago too, before we didn't have one anymore.\""
+    },
+    {
+      "id": "dlg_d568_toll_syndicate_cynicism",
+      "locationId": "loc_weighbridge",
+      "minDay": 568,
+      "speakerTag": "Two Weighbridge booth staff",
+      "body": "\"Fennick's water deal holding?\" \"Held long enough for him to collect. Whether it holds for the slope's actual growing season is somebody else's arithmetic.\" \"Doesn't bother you?\" \"Everything that crosses this bridge is somebody's arithmetic going wrong for somebody else. We just collect the toll on the crossing, not the consequences.\""
+    },
+    {
+      "id": "dlg_d571_forward_roster_checkpoint",
+      "locationId": "loc_forward_roster_camp",
+      "minDay": 571,
+      "speakerTag": "Two Forward Roster checkpoint watch",
+      "body": "\"First column paid without a word.\" \"Word'll come. Give it a week, someone'll ask us who put us in charge of the road.\" \"What do we tell them?\" \"Nobody. That's the whole answer. Nobody put us here. We just got here first and didn't leave.\""
+    },
+    {
+      "id": "dlg_d573_forward_roster_identity",
+      "locationId": "loc_forward_roster_camp",
+      "minDay": 573,
+      "speakerTag": "Sella Krenn and a Forward Roster veteran, off the toll line",
+      "body": "\"Someone in that column called us bandits.\" \"Bandits don't log the count.\" \"We log the count.\" \"Every crate, every head, in a hand that reads like a receipt. That's not a bandit, that's a customs post that opened early.\" \"Doesn't feel like a customs post.\" \"Nothing with a rifle slung ever feels like what it's doing on paper. Doesn't stop the paper being right.\""
+    },
+    {
+      "id": "dlg_d584_d9_cell_debate",
+      "locationId": "loc_d9_cache_bunker_delta",
+      "minDay": 584,
+      "speakerTag": "Two D/9 cell operators, over the manifest",
+      "body": "\"Order says deny what can't be held.\" \"Order was written before there was a checkpoint out there worth counting. Doctrine doesn't update itself.\" \"So we update it.\" \"So somebody above my clearance updates it. Until then I log the dissent and hold the line I was given, same as always.\" \"That's not an answer.\" \"It's the only one the manifest has room for.\""
+    },
+    {
+      "id": "dlg_d591_switchback_waystation_doubt",
+      "locationId": "loc_shrine_switchback_waystation",
+      "minDay": 591,
+      "speakerTag": "Two pilgrims resting at the switchback waystation",
+      "body": "\"They still haven't repainted the board at the cairn.\" \"What would they even write? The old line wasn't wrong for three years, and then one morning it was.\" \"Toma won't say 'spared' anymore. I asked her straight and she just showed me the crater.\" \"Can't blame her. Hard to keep teaching a word once you've stood in the hole it used to mean.\" \"You think somebody was choosing what falls.\" \"I think somebody was, for years, and now they're not, or they can't anymore. That's the part that keeps me climbing — I'd rather not have an answer than have the wrong one and build a shrine on it again.\""
+    }
+  ]
 }

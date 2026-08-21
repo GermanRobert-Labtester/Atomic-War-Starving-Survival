@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public PneumaticCarrierCapsuleEntry GetCarrier(string id)
+        public PneumaticCarrierCapsuleEntry? GetCarrier(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PneumaticCarrierCapsuleEntry e ? e : null;
         }
 
-        public PneumaticTubeDiverterEntry GetDiverter(string id)
+        public PneumaticTubeDiverterEntry? GetDiverter(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PneumaticTubeDiverterEntry e ? e : null;
         }
 
-        public RootesBlowerVacuumEntry GetBlower(string id)
+        public RootesBlowerVacuumEntry? GetBlower(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RootesBlowerVacuumEntry e ? e : null;
         }
 
-        public PneumaticCylinderLeatherEntry GetCylinder(string id)
+        public PneumaticCylinderLeatherEntry? GetCylinder(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PneumaticCylinderLeatherEntry e ? e : null;

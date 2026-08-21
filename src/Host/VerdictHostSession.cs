@@ -228,7 +228,7 @@ namespace AtomicWar.GodotApp
                    $"call: {(Reckoning.State.callResolved ? "RESOLVED" : "OPEN")}";
         }
 
-        public VerdictCatalogLoader.VerdictLocationEntry FindLocation(string id)
+        public VerdictCatalogLoader.VerdictLocationEntry? FindLocation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             foreach (var loc in Locations)

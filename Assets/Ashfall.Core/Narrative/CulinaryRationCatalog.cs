@@ -51,7 +51,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public CulinaryRecipeEntry GetById(string recipeId)
+        public CulinaryRecipeEntry? GetById(string recipeId)
         {
             if (string.IsNullOrEmpty(recipeId)) return null;
             _byId.TryGetValue(recipeId, out var entry);

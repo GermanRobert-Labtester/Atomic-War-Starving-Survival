@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Maritime
 {
     /// <summary>
@@ -51,11 +52,15 @@ namespace Ashfall.Core.Maritime
                     result.Add(loc);
                 }
             }
-            catch { return result; }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
 
-        public static DeepLoreLocationEntry FindById(
+        public static DeepLoreLocationEntry? FindById(
             List<DeepLoreLocationEntry> locations, string id)
         {
             if (locations == null || string.IsNullOrEmpty(id)) return null;

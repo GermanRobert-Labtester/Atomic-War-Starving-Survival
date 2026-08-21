@@ -56,12 +56,12 @@ namespace Ashfall.Core.Survivors
             restored.RestoreState(sys.CaptureState());
             string after = SaveChecksum.Compute(restored.CaptureState());
             Check(before == after, "save/load checksum stable");
-            Check(!restored.Find("sv_mae").isAlive && restored.Find("sv_iora").isAlive,
+            Check(!restored.Find("sv_mae")!.isAlive && restored.Find("sv_iora")!.isAlive,
                 "death state survives the round trip");
 
             var snapshot = sys.CaptureState();
             snapshot.entries[0].deathReason = "injected";
-            Check(sys.Find("sv_mae").deathReason == "Died of thirst.",
+            Check(sys.Find("sv_mae")!.deathReason == "Died of thirst.",
                 "capture returns snapshot, not live state");
 
             report.Passed = report.FailedCount == 0;

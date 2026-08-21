@@ -623,7 +623,7 @@ namespace AtomicWar.GodotApp.UI
                             _lastSurfaced!.encounter_id,
                             choiceId,
                             _expeditionHost.CurrentDay,
-                            _lastSurfaced!.trigger?.locationId);
+                            _lastSurfaced!.trigger?.locationId ?? string.Empty);
                         if (ok)
                         {
                             GD.Print($"[Expedition] Resolved {_lastSurfaced!.encounter_id} via {choiceId}.");

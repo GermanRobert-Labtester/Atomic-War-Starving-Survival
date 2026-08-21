@@ -111,7 +111,7 @@ namespace Ashfall.Core
             _recipes[recipe.recipe_id] = recipe;
         }
 
-        public PharmaRecipe GetRecipe(string id)
+        public PharmaRecipe? GetRecipe(string id)
         {
             _recipes.TryGetValue(id, out var r);
             return r;

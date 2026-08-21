@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Verdict
 {
     /// <summary>One Verdict NPC — a figure with flag-gated availability and phase reactions.</summary>
@@ -50,7 +51,7 @@ namespace Ashfall.Core.Verdict
             if (!_catalog.Exists(e => e.id == entry.id)) _catalog.Add(entry);
         }
 
-        public VerdictNpcEntry Find(string id)
+        public VerdictNpcEntry? Find(string id)
         {
             foreach (var e in _catalog)
                 if (e.id == id) return e;
@@ -134,7 +135,11 @@ namespace Ashfall.Core.Verdict
                 }
                 return count;
             }
-            catch { return 0; }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return 0;
+                                }
         }
     }
 }

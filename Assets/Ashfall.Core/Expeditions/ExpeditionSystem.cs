@@ -474,7 +474,7 @@ namespace Ashfall.Core.Expeditions
             s_defs[def.id] = def;
         }
 
-        public static ExpeditionDefinition Get(string id)
+        public static ExpeditionDefinition? Get(string id)
         {
             return !string.IsNullOrEmpty(id) && s_defs.TryGetValue(id, out var def) ? def : null;
         }

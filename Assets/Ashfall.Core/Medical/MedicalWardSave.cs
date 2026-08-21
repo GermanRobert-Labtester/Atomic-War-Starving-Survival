@@ -51,7 +51,7 @@ namespace Ashfall.Core.Medical
             if (string.IsNullOrWhiteSpace(jsonText))
                 throw new InvalidOperationException("MedicalWardSave: empty save payload.");
             MedicalWardSave save;
-            try { save = json.Deserialize<MedicalWardSave>(jsonText); }
+            try { save = json.Deserialize<MedicalWardSave>(jsonText!); }
             catch (Exception e)
             {
                 throw new InvalidOperationException(

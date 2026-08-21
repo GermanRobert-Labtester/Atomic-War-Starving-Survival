@@ -4,6 +4,7 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using Ashfall.Core.IO;
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -221,8 +222,9 @@ namespace AtomicWar.GodotApp.UI
                 if (targetOffset > 0)
                     scroll.ScrollVertical = (int)Math.Max(0, targetOffset - 8);
             }
-            catch
+            catch (Exception ex_CATDIAG)
             {
+                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
                 // best-effort
             }
         }

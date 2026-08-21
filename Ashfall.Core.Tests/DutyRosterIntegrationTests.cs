@@ -71,9 +71,10 @@ namespace Ashfall.Core.Tests
             string dataDir = FindDataDir();
             var files = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
-            var currents = json.Deserialize<List<CurrentsProbe>>(files.ReadAllText(files.Combine(dataDir, "currents.json")));
-            Assert.NotNull(currents);
-            Assert.Contains(currents, c => c.id == "faction_blank_rows");
+            var root = json.Deserialize<CurrentsCatalogProbe>(files.ReadAllText(files.Combine(dataDir, "currents.json")));
+            Assert.NotNull(root);
+            Assert.NotNull(root.entries);
+            Assert.Contains(root.entries, c => c.id == "faction_blank_rows");
             // The Current must NOT exist in faction_lore.json (no seventh Power).
             var lore = json.Deserialize<List<FactionLoreProbe>>(files.ReadAllText(files.Combine(dataDir, "faction_lore.json")));
             Assert.DoesNotContain(lore, f => f.faction_id == "faction_blank_rows");
@@ -883,6 +884,7 @@ namespace Ashfall.Core.Tests
         }
 
         public sealed class CurrentsProbe { public string id = string.Empty; }
+        public sealed class CurrentsCatalogProbe { public int schema_version; public List<CurrentsProbe> entries = new List<CurrentsProbe>(); }
         public sealed class FactionLoreProbe { public string faction_id = string.Empty; }
 
         private static int CountWithStatus(DutyRosterSystem roster, string status)

@@ -60,9 +60,9 @@ namespace Ashfall.Core
             Crossing = crossing ?? throw new ArgumentNullException(nameof(crossing));
             Clock = clock ?? throw new ArgumentNullException(nameof(clock));
             Log = log ?? NullLog.Instance;
-            SilentFoundry = silentFoundry ?? new SilentFoundrySystem(log: log);
+            SilentFoundry = silentFoundry ?? new SilentFoundrySystem(log: log!);
             FoundryData = foundryData ?? new SilentFoundryCatalog();
-            Disease = disease ?? new DiseaseSystem(log: log);
+            Disease = disease ?? new DiseaseSystem(log: log!);
             DiseaseData = diseaseData ?? new DiseaseCatalog();
         }
 
@@ -95,8 +95,8 @@ namespace Ashfall.Core
             // Expansion 10: The Silent Foundry — static catalogs + blueprint/treaty anchors.
             var foundryData = new SilentFoundryCatalog();
             foundryData.Load(
-                SilentFoundryCatalogLoader.LoadProduction(dataDirectory, files, json),
-                SilentFoundryCatalogLoader.LoadFaction(dataDirectory, files, json));
+                SilentFoundryCatalogLoader.LoadProduction(dataDirectory, files, json)!,
+                SilentFoundryCatalogLoader.LoadFaction(dataDirectory, files, json)!);
             var foundry = new SilentFoundrySystem(log: log);
             var consequencePolicy = new SilentFoundryConsequencePolicyCatalog();
             consequencePolicy.Load(SilentFoundryConsequenceCatalogLoader.Load(dataDirectory, files, json));

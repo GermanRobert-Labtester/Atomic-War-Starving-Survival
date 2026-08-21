@@ -53,7 +53,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public WastelandCreatureEntry GetById(string creatureId)
+        public WastelandCreatureEntry? GetById(string creatureId)
         {
             if (string.IsNullOrEmpty(creatureId)) return null;
             _byId.TryGetValue(creatureId, out var entry);

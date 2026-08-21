@@ -126,7 +126,7 @@ namespace Ashfall.Core.Narrative
             return LoadFromJson(json);
         }
 
-        public ContrabandEntry GetById(string id)
+        public ContrabandEntry? GetById(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             _entriesById.TryGetValue(id, out var entry);

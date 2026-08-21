@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS0649
 
 namespace Ashfall.Core.Economy
 {
@@ -84,6 +85,7 @@ namespace Ashfall.Core.Economy
     public static class GoodsCatalogLoader
     {
         public const string FileName = "economy_goods.json";
+        public const int CurrentSchemaVersion = 1;
 
         public static GoodsCatalogLoadResult Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
         {
@@ -108,29 +110,42 @@ namespace Ashfall.Core.Economy
                 return result;
             }
 
-            // Strict pass: RawGoodDefinition uses nullable fields so an ABSENT
-            // required field is distinguishable from a defaulted one (the
-            // GoodDefinition initializers would otherwise mask absence).
-            RawGoodDefinition[] rawParsed;
+            // Schema-envelope: parse root object with schema_version + goods array.
+            GoodsCatalogRoot root;
             try
             {
-                rawParsed = json.Deserialize<RawGoodDefinition[]>(raw);
+                root = json.Deserialize<GoodsCatalogRoot>(raw);
             }
             catch (Exception e)
             {
                 result.Errors.Add("catalog malformed JSON: " + e.Message);
                 return result;
             }
-            if (rawParsed == null)
+            if (root == null)
             {
                 result.Errors.Add("catalog parsed to null");
                 return result;
             }
+            if (root.schema_version > CurrentSchemaVersion)
+            {
+                result.Errors.Add($"catalog schema {root.schema_version} is newer than supported {CurrentSchemaVersion}");
+                return result;
+            }
+
+            // Strict pass: RawGoodDefinition uses nullable fields so an ABSENT
+            // required field is distinguishable from a defaulted one (the
+            // GoodDefinition initializers would otherwise mask absence).
+            var rawEntries = root.goods;
+            if (rawEntries == null)
+            {
+                result.Errors.Add("catalog goods array is null");
+                return result;
+            }
 
             var seen = new HashSet<string>(StringComparer.Ordinal);
-            for (int i = 0; i < rawParsed.Length; i++)
+            for (int i = 0; i < rawEntries.Count; i++)
             {
-                var rawDef = rawParsed[i];
+                var rawDef = rawEntries[i];
                 if (rawDef == null)
                 {
                     result.Errors.Add($"entry [{i}] is null");
@@ -219,6 +234,13 @@ namespace Ashfall.Core.Economy
                 });
             }
             return result;
+        }
+
+        /// <summary>Schema-envelope root for economy_goods.json.</summary>
+        private class GoodsCatalogRoot
+        {
+            public int schema_version = 1;
+            public List<RawGoodDefinition> goods = new List<RawGoodDefinition>();
         }
 
         /// <summary>Strict DTO: null fields mean ABSENT, not defaulted.</summary>

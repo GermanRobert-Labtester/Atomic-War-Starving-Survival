@@ -76,7 +76,8 @@ namespace Ashfall.Core.Maritime
                     IsDegraded = degraded,
                     IsContaminated = contaminated,
                     DegradedItemId = degraded && !string.IsNullOrEmpty(node.DegradedItemId)
-                        ? node.DegradedItemId : null
+                        ? node.DegradedItemId
+                        : null!
                 });
 
                 OnLootRolled?.Invoke(locationId, node.ItemId, qty);

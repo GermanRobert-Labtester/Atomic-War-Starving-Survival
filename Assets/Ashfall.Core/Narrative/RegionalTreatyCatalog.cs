@@ -53,7 +53,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public RegionalTreatyEntry GetById(string treatyId)
+        public RegionalTreatyEntry? GetById(string treatyId)
         {
             if (string.IsNullOrEmpty(treatyId)) return null;
             _byId.TryGetValue(treatyId, out var entry);

@@ -266,7 +266,7 @@ namespace Ashfall.Core
             ExpansionHubSave save;
             try
             {
-                save = json.Deserialize<ExpansionHubSave>(jsonText);
+                save = json.Deserialize<ExpansionHubSave>(jsonText!);
             }
             catch (Exception e)
             {

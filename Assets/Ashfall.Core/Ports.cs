@@ -7,7 +7,7 @@ namespace Ashfall.Core
     public interface IJsonSerializer
     {
         string Serialize<T>(T value);
-        T Deserialize<T>(string json);
+        T? Deserialize<T>(string json) where T : class;
     }
 
     /// <summary>

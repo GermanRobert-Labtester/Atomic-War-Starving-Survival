@@ -164,6 +164,12 @@ namespace Ashfall.Core
                 string.Empty);
         }
 
+        /// <summary>True if the action completed cleanly (full success).</summary>
+        public bool IsSuccess => Status == StatusKind.Success;
+
+        /// <summary>True if the action failed, was blocked, or was cancelled.</summary>
+        public bool IsFailure => Status == StatusKind.Failed || Status == StatusKind.Blocked || Status == StatusKind.Cancelled;
+
         /// <summary>True if the action succeeded or partially succeeded.</summary>
         public bool IsSuccessOrPartial => Status == StatusKind.Success || Status == StatusKind.Partial;
 

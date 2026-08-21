@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public GeothermalSteamWellEntry GetWell(string id)
+        public GeothermalSteamWellEntry? GetWell(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GeothermalSteamWellEntry e ? e : null;
         }
 
-        public TurbineBladeErosionEntry GetTurbine(string id)
+        public TurbineBladeErosionEntry? GetTurbine(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TurbineBladeErosionEntry e ? e : null;
         }
 
-        public BoilerFeedwaterDeaeratorEntry GetBoiler(string id)
+        public BoilerFeedwaterDeaeratorEntry? GetBoiler(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BoilerFeedwaterDeaeratorEntry e ? e : null;
         }
 
-        public SteamTrapWaterHammerEntry GetTrap(string id)
+        public SteamTrapWaterHammerEntry? GetTrap(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SteamTrapWaterHammerEntry e ? e : null;

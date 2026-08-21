@@ -138,7 +138,7 @@ namespace Ashfall.Core
 
             private static Dictionary<string, CropDef> _bySeed;
 
-            public static CropDef Get(string seedItemId)
+            public static CropDef? Get(string seedItemId)
             {
                 if (string.IsNullOrEmpty(seedItemId)) return null;
                 if (_bySeed == null)

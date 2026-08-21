@@ -1,0 +1,82 @@
+using System;
+using System.Collections.Generic;
+using Godot;
+using Ashfall.Core;
+using Ashfall.Core.Shelter;
+
+namespace AtomicWar.GodotApp
+{
+    /// <summary>
+    /// Host session for ShelterScheduleSystem.
+    /// Manages shelter work shifts, sleep assignments, curfews, lighting demand, and emergency overrides.
+    /// </summary>
+    public sealed class ShelterScheduleHostSession
+    {
+        public ShelterScheduleSystem System { get; }
+        public string LastEvent { get; private set; } = string.Empty;
+
+        public event Action? StateChanged;
+
+        public ShelterScheduleHostSession(ShelterScheduleSystem system)
+        {
+            if (system == null)
+            {
+                var state = new PowerGridState { GenerationWatts = 800, FuelUnits = 100, BatteryCapacityWh = 4000, BatteryReserveWh = 2000 };
+                var rooms = new List<PowerGridRoom> { new PowerGridRoom("room_main", "Main Vault", 100f) };
+                var grid = new PowerGridSystem(state, rooms, new SeededRng(1986));
+                system = new ShelterScheduleSystem(grid, new GodotLog());
+            }
+            System = system;
+
+            System.OnPhaseChanged += phase =>
+            {
+                LastEvent = $"[Schedule] Phase changed to {phase}";
+                StateChanged?.Invoke();
+            };
+
+            System.OnScheduleChanged += () =>
+            {
+                StateChanged?.Invoke();
+            };
+        }
+
+        public ActionResult SetCurfew(bool active)
+        {
+            var res = System.SetCurfew(active);
+            if (res.IsSuccess)
+            {
+                LastEvent = $"Shelter curfew set to: {(active ? "ACTIVE" : "INACTIVE")}";
+                StateChanged?.Invoke();
+            }
+            return res;
+        }
+
+        public ActionResult SetEmergencyOverride(bool active)
+        {
+            var res = System.SetEmergencyOverride(active);
+            if (res.IsSuccess)
+            {
+                LastEvent = $"Emergency schedule override set to: {(active ? "ACTIVE" : "OFF")}";
+                StateChanged?.Invoke();
+            }
+            return res;
+        }
+
+        public ActionResult AssignBed(string survivorId, string bedId)
+        {
+            var res = System.AssignBed(survivorId, bedId);
+            if (res.IsSuccess)
+            {
+                LastEvent = $"Assigned dweller {survivorId} to bunk {bedId}";
+                StateChanged?.Invoke();
+            }
+            return res;
+        }
+
+        public void TickDay(int day)
+        {
+            System.TickDay(day);
+            StateChanged?.Invoke();
+        }
+    }
+}

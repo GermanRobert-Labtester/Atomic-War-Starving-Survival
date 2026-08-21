@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CupolaSlagLeachingEntry GetSlag(string id)
+        public CupolaSlagLeachingEntry? GetSlag(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CupolaSlagLeachingEntry e ? e : null;
         }
 
-        public CarbideToolWearEntry GetTool(string id)
+        public CarbideToolWearEntry? GetTool(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CarbideToolWearEntry e ? e : null;
         }
 
-        public GearQuenchingFaultEntry GetGear(string id)
+        public GearQuenchingFaultEntry? GetGear(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GearQuenchingFaultEntry e ? e : null;
         }
 
-        public BulletAlloyAssayEntry GetBullet(string id)
+        public BulletAlloyAssayEntry? GetBullet(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BulletAlloyAssayEntry e ? e : null;

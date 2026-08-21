@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public PotFurnaceGlassMeltEntry GetMelt(string id)
+        public PotFurnaceGlassMeltEntry? GetMelt(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PotFurnaceGlassMeltEntry e ? e : null;
         }
 
-        public LiebigCondenserFractureEntry GetCondenser(string id)
+        public LiebigCondenserFractureEntry? GetCondenser(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LiebigCondenserFractureEntry e ? e : null;
         }
 
-        public GroundGlassJointGreaseEntry GetGrease(string id)
+        public GroundGlassJointGreaseEntry? GetGrease(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GroundGlassJointGreaseEntry e ? e : null;
         }
 
-        public AnnealingLehrBirefringenceEntry GetAnneal(string id)
+        public AnnealingLehrBirefringenceEntry? GetAnneal(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is AnnealingLehrBirefringenceEntry e ? e : null;

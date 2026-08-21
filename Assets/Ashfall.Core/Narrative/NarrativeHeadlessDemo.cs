@@ -58,7 +58,8 @@ namespace Ashfall.Core.Narrative
             var picked = sys.SelectEncounter("Stealth", 1f, null, new SeededRng(5));
             Check(picked != null && picked.id == "enc_dead_letter_office",
                 "danger 1 excludes the pianist (min 3); dead letter offered");
-            Check(sys.SelectEncounter("Stealth", 1f, null, new SeededRng(5)).id == picked.id,
+            if (picked == null) return report;
+            Check(sys.SelectEncounter("Stealth", 1f, null, new SeededRng(5))!.id == picked.id,
                 "same seed picks the same encounter (determinism)");
 
             Check(sys.Resolve("enc_dead_letter_office", "burn_van", "loc_ring_road", 40),

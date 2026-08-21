@@ -32,7 +32,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static MedicalWardSave TryLoad()
+        public static MedicalWardSave? TryLoad()
         {
             try
             {

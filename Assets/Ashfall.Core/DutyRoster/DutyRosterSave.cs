@@ -163,7 +163,7 @@ namespace Ashfall.Core
             DutyRosterSave save;
             try
             {
-                save = json.Deserialize<DutyRosterSave>(jsonText);
+                save = json.Deserialize<DutyRosterSave>(jsonText!);
             }
             catch (Exception e)
             {

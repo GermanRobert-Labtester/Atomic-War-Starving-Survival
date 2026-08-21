@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core
 {
     /// <summary>One dose-band vocabulary row (dose_registers.json).</summary>
@@ -80,10 +82,11 @@ namespace Ashfall.Core
                     if (parsed.npcs != null) catalog.npcs = parsed.npcs;
                 }
             }
-            catch
-            {
-                return catalog;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return catalog;
+                                }
             return catalog;
         }
 

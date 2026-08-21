@@ -61,7 +61,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public WireConfessionEntry GetById(string confessionId)
+        public WireConfessionEntry? GetById(string confessionId)
         {
             if (string.IsNullOrEmpty(confessionId)) return null;
             _byConfessionId.TryGetValue(confessionId, out var entry);

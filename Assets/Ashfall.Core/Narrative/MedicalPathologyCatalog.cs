@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public RadiationAutopsyEntry GetAutopsy(string id)
+        public RadiationAutopsyEntry? GetAutopsy(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RadiationAutopsyEntry e ? e : null;
         }
 
-        public HerbalPharmacologyEntry GetPharma(string id)
+        public HerbalPharmacologyEntry? GetPharma(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is HerbalPharmacologyEntry e ? e : null;
         }
 
-        public SurgicalLogEntry GetSurgery(string id)
+        public SurgicalLogEntry? GetSurgery(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SurgicalLogEntry e ? e : null;
         }
 
-        public SensoryLossEntry GetSensory(string id)
+        public SensoryLossEntry? GetSensory(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SensoryLossEntry e ? e : null;

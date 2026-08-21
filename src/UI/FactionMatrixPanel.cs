@@ -8,6 +8,7 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using Ashfall.Core.IO;
 namespace AtomicWar.GodotApp.UI;
 
 /// <summary>
@@ -84,8 +85,9 @@ public partial class FactionMatrixPanel : Control
                 _factions.Add((id, display, lore, ideology));
             }
         }
-        catch
+        catch (Exception ex_CATDIAG)
         {
+            CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
             // ignored — fixture data will be used at row render time
         }
     }
@@ -175,7 +177,7 @@ public partial class FactionMatrixPanel : Control
             var prop = t.GetProperty("IsFactionActive");
             if (prop?.GetValue(_stanceProvider) is bool b) return b;
         }
-        catch { }
+        catch (Exception ex) { GD.PrintErr($"[FactionMatrix] IsFactionActive probe failed: {ex.Message}"); }
         return true;
     }
 

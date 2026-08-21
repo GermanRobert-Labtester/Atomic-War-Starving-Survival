@@ -14,7 +14,6 @@ namespace AtomicWar.GodotApp.UI
     public partial class SettingsPanel : Control
     {
         public event Action? OnClose;
-        public event Action<string, bool>? OnSettingChanged;
 
         private UserSettingsData _working = new();
         private UserSettingsData _initial = new();

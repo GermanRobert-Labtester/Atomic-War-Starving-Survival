@@ -54,7 +54,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public DwellerMedicalCaseEntry GetById(string caseId)
+        public DwellerMedicalCaseEntry? GetById(string caseId)
         {
             if (string.IsNullOrEmpty(caseId)) return null;
             _byId.TryGetValue(caseId, out var entry);

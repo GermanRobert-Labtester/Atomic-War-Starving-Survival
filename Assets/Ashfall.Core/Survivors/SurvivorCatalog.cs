@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Survivors
 {
     /// <summary>One survivor definition from survivors.json (the authority).</summary>
@@ -77,7 +78,7 @@ namespace Ashfall.Core.Survivors
             foreach (var def in defs) RegisterDefinition(def);
         }
 
-        public SurvivorDefinition FindDefinition(string definitionId)
+        public SurvivorDefinition? FindDefinition(string definitionId)
         {
             for (int i = 0; i < _catalog.Count; i++)
                 if (_catalog[i].id == definitionId) return _catalog[i];
@@ -118,7 +119,7 @@ namespace Ashfall.Core.Survivors
             return true;
         }
 
-        public SurvivorRosterEntry Find(string survivorId)
+        public SurvivorRosterEntry? Find(string survivorId)
         {
             return _byId.TryGetValue(survivorId, out var e) ? e : null;
         }
@@ -230,10 +231,11 @@ namespace Ashfall.Core.Survivors
                     result.Add(def);
                 }
             }
-            catch
-            {
-                return result;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
     }

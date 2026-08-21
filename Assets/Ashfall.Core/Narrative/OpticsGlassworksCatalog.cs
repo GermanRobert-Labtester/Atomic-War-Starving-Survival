@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public PeriscopePrismDelaminationEntry GetPrism(string id)
+        public PeriscopePrismDelaminationEntry? GetPrism(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PeriscopePrismDelaminationEntry e ? e : null;
         }
 
-        public SightGlassThermalShockEntry GetSightGlass(string id)
+        public SightGlassThermalShockEntry? GetSightGlass(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SightGlassThermalShockEntry e ? e : null;
         }
 
-        public OpticalCoatingRadBrowningEntry GetRadBrowning(string id)
+        public OpticalCoatingRadBrowningEntry? GetRadBrowning(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is OpticalCoatingRadBrowningEntry e ? e : null;
         }
 
-        public ScintillatorAgingEntry GetScintillator(string id)
+        public ScintillatorAgingEntry? GetScintillator(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ScintillatorAgingEntry e ? e : null;

@@ -74,7 +74,7 @@ namespace Ashfall.Core.Medical
         // ── Queries ───────────────────────────────────────────────────
 
         /// <summary>Get or create the per-survivor record.</summary>
-        public RespiratorySurvivorState GetOrCreate(string survivorId)
+        public RespiratorySurvivorState? GetOrCreate(string survivorId)
         {
             if (string.IsNullOrEmpty(survivorId)) return null;
             if (!_survivors.TryGetValue(survivorId, out var state))
@@ -127,6 +127,7 @@ namespace Ashfall.Core.Medical
             if (string.IsNullOrEmpty(survivorId) || gameHours <= 0f) return;
 
             var s = GetOrCreate(survivorId);
+            if (s == null) return;
             if (s.hasPermanentLungDamage && s.respiratoryDegradation >= IrreversibleThreshold)
                 return; // past the point of no return, no further accumulation needed
 

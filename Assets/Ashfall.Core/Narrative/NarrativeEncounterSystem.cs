@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Narrative
 {
     /// <summary>
@@ -46,7 +47,7 @@ namespace Ashfall.Core.Narrative
             foreach (var def in defs) RegisterEncounter(def);
         }
 
-        public EncounterDefinition Find(string encounterId)
+        public EncounterDefinition? Find(string encounterId)
         {
             for (int i = 0; i < _catalog.Count; i++)
                 if (_catalog[i].id == encounterId) return _catalog[i];
@@ -57,7 +58,7 @@ namespace Ashfall.Core.Narrative
 
         /// <summary>Pick an eligible encounter by weight, or null when none
         /// qualify for this stance/danger/location.</summary>
-        public EncounterDefinition SelectEncounter(
+        public EncounterDefinition? SelectEncounter(
             string stance, float dangerLevel, string locationId, ISeededRng rng)
         {
             if (rng == null) return null;
@@ -155,7 +156,7 @@ namespace Ashfall.Core.Narrative
             RaiseChanged();
         }
 
-        private static EncounterChoiceDefinition FindChoice(EncounterDefinition def, string choiceId)
+        private static EncounterChoiceDefinition? FindChoice(EncounterDefinition def, string choiceId)
         {
             for (int i = 0; i < def.choices.Count; i++)
                 if (def.choices[i].choiceId == choiceId) return def.choices[i];
@@ -267,10 +268,11 @@ namespace Ashfall.Core.Narrative
                     result.Add(parsed[i]);
                 }
             }
-            catch
-            {
-                return result;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
     }

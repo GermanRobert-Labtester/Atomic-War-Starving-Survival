@@ -25,6 +25,29 @@ namespace Ashfall.Core.Tests
             Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
         }
 
+        [Fact] public void BeginTreatment_CaregiverOnDuty_Blocks()
+        {
+            // Bug-09 regression: a survivor currently holding a duty role must
+            // not be assignable as a crisis caregiver — doing so pulls a critical
+            // shift worker away.
+            var m = Create(out var roster, out _, out _, out _, out _);
+            roster.Unlock(0); // unlock expansion so WriteName works
+            // Register the candidate caregiver as a real roster resident, then
+            // put them on a duty shift.
+            string roleKey = DutyRosterSystem.AssignmentRoles[0];
+            roster.WriteName("caregiver_busy", displayName: "Caregiver Busy",
+                occupationObserved: "medic", script: DutyRosterSystem.ScriptPencil,
+                day: 1, sleptHere: true);
+            Assert.True(roster.Assign(roleKey, "caregiver_busy"));
+            Assert.Equal(roleKey, roster.GetRoleOf("caregiver_busy"));
+            m.TriggerCrisis("survivor_1", 70f, CrisisProfile.AcuteStress);
+            var caseId = m.State.activeCases[0].caseId;
+            var r = m.BeginTreatment(caseId, "caregiver_busy", "counseling");
+            Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
+            // Crisis must remain Active, not InTreatment.
+            Assert.Equal(CrisisStatus.Active, m.State.activeCases[0].status);
+        }
+
         [Fact] public void BeginTreatment_UpdatesStatus()
         {
             var m = Create(out _, out _, out _, out _, out _);
@@ -45,6 +68,27 @@ namespace Ashfall.Core.Tests
             for (int i = 0; i < 10; i++) m.TickDay(i + 1);
             Assert.Empty(m.State.activeCases);
             Assert.Contains("survivor_1", m.State.resolvedCases.Select(c => c.survivorId));
+        }
+
+        [Fact] public void ChronicUnhandledSurvivor_PastThreshold_TransitionsToChronic()
+        {
+            // Bug-05 regression: a crisis left untreated past the chronic threshold
+            // must transition to CrisisStatus.Chronic and be archived into
+            // resolvedCases (preserving state history instead of silently dropping it).
+            var m = Create(out _, out _, out _, out _, out _);
+            m.TriggerCrisis("survivor_1", 70f, CrisisProfile.AcuteStress);
+            // 20 simulated days without entering treatment (LeaveActive quarantine holds).
+            for (int d = 0; d < 20; d++) m.TickDay(d + 1);
+            var resolved = m.State.resolvedCases;
+            Assert.Single(resolved);
+            Assert.Equal(CrisisStatus.Chronic, resolved[0].status);
+            Assert.Equal("survivor_1", resolved[0].survivorId);
+            // No longer in activeCases.
+            Assert.Empty(m.State.activeCases);
+            // Ward occupancy is freed.
+            Assert.Equal(0, m.State.currentOccupancy);
+            // Survivor is no longer 'in crisis' (matches existing IsInCrisis semantics).
+            Assert.False(m.IsInCrisis("survivor_1"));
         }
 
         [Fact] public void IsInCrisis_ReturnsTrue()

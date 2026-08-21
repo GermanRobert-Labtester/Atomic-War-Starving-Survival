@@ -223,7 +223,7 @@ namespace Ashfall.Core.Shelter
             _state.RestoreInto(state, _rooms);
         }
 
-        private PowerGridRoom FindRoom(string roomId)
+        private PowerGridRoom? FindRoom(string roomId)
         {
             for (int i = 0; i < _rooms.Count; i++)
                 if (_rooms[i].RoomId == roomId) return _rooms[i];

@@ -7,6 +7,12 @@ namespace AtomicWar.GodotApp
     /// <summary>
     /// Godot's playable Holdfast boundary. The world session owns existing
     /// Holdfast systems; the Core trade session owns mutable inventory/value/stock.
+    ///
+    /// ARCHITECTURAL DEBT: This class duplicates survival mechanics (Health/Hunger/Thirst/Radiation)
+    /// that already live in Ashfall.Core.Survivors.NeedsSystem. The constants MaxHealth, MaxHunger,
+    /// MaxThirst, StarvationThreshold, DehydrationThreshold, and RadDamageThreshold, plus the
+    /// AdvanceOneDay() method, must be migrated into NeedsSystem. Do not add new survival logic here.
+    /// Tracked by: AGENTS.md issue H1.
     /// </summary>
     public sealed class HoldfastRuntimeSession
     {
@@ -188,6 +194,7 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public bool ConsumeFood(string itemId, int amount = 1)
         {
+            if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
             int held = Trade.GetHeld(itemId);
             if (held < amount) return false;
 
@@ -203,6 +210,7 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public bool ConsumeWater(string itemId, int amount = 1)
         {
+            if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
             int held = Trade.GetHeld(itemId);
             if (held < amount) return false;
 
@@ -217,6 +225,7 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public void ExposeRadiation(float msv)
         {
+            if (msv <= 0f) return;
             Radiation += msv;
             StateChanged?.Invoke();
         }
@@ -226,6 +235,7 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public bool UseAntiRad(string itemId, float reduction = 20f)
         {
+            if (string.IsNullOrEmpty(itemId) || reduction <= 0f) return false;
             int held = Trade.GetHeld(itemId);
             if (held < 1) return false;
 
@@ -240,6 +250,7 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public void Heal(int amount)
         {
+            if (amount <= 0) return;
             Health = Math.Min(MaxHealth, Health + amount);
             StateChanged?.Invoke();
         }
@@ -284,7 +295,7 @@ namespace AtomicWar.GodotApp
             return $"Visited {displayName}.{radNote}{questNote}";
         }
 
-        private HoldfastLocationEntry FindLocation(string id)
+        private HoldfastLocationEntry? FindLocation(string id)
         {
             var locs = World.Catalog?.Locations;
             if (locs == null) return null;

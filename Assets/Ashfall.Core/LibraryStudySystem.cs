@@ -77,14 +77,32 @@ namespace Ashfall.Core
             if (manuals == null) return;
             _catalog.Clear();
             foreach (var m in manuals)
-                if (!string.IsNullOrEmpty(m.manual_id))
-                    _catalog[m.manual_id] = m;
+            {
+                if (string.IsNullOrEmpty(m.manual_id)) continue;
+                // Bug-10: skillXpGrants is documented as (skillId, xpAmount) pairs;
+                // an odd-length list would IndexOutOfRange on TickDay when the loop
+                // reads grants[i+1]. Reject malformed manuals at load time so the
+                // bad data never reaches the tick path.
+                if (m.skillXpGrants != null && m.skillXpGrants.Count % 2 != 0)
+                    throw new System.IO.InvalidDataException(
+                        $"manual '{m.manual_id}' has {m.skillXpGrants.Count} skillXpGrants entries — expected pairs (skillId, xpAmount)");
+                _catalog[m.manual_id] = m;
+            }
         }
 
         public ActionResult StartStudy(string manualId, string readerId)
         {
             if (!_catalog.TryGetValue(manualId, out var manual))
                 return ActionResult.Failed("unknown_manual", "library.unknown_manual");
+
+            // Bug-15b: a manual with studyHoursRequired <= 0 would complete
+            // instantly on TickDay (8h >= 0 is trivially satisfied), granting
+            // all XP / research / knowledge unlocks in zero time. Reject such
+            // manuals at the start path so they never reach the tick loop.
+            // Validated at StartStudy, not LoadCatalog, so existing catalogs
+            // (with manually-curated 0-hour entries) still load.
+            if (manual.studyHoursRequired <= 0)
+                return ActionResult.Blocked("invalid_hours", "library.invalid_hours");
 
             if (_state.completedManualIds.Contains(manualId))
                 return ActionResult.Blocked("already_completed", "library.already_completed");

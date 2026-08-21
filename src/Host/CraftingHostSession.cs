@@ -69,25 +69,25 @@ namespace AtomicWar.GodotApp
 
             // Seed 5 canonical recipes. Ids follow the master snake_case list.
             Recipes.Add(Make("recipe_water_filter", "Water Filter (charcoal)",
-                Catalog.Get("water_filter"), 1,
+                Catalog.Get("water_filter")!, 1,
                 new[] { ("scrap_mechanical", 2), ("scrap_electronic", 1) }, 4f));
             Recipes.Add(Make("recipe_bandage", "Bandage (clean cloth)",
-                Catalog.Get("bandage"), 2,
+                Catalog.Get("bandage")!, 2,
                 new[] { ("scrap_mechanical", 1) }, 1f));
             Recipes.Add(Make("recipe_iodine_kit", "Iodine Kit",
-                Catalog.Get("iodine_pills"), 1,
+                Catalog.Get("iodine_pills")!, 1,
                 new[] { ("scrap_chemical", 1), ("scrap_mechanical", 1) }, 2f));
             Recipes.Add(Make("recipe_rad_away", "Rad-Away (chelators)",
-                Catalog.Get("rad_away"), 1,
+                Catalog.Get("rad_away")!, 1,
                 new[] { ("scrap_chemical", 2), ("scrap_electronic", 1) }, 6f));
             Recipes.Add(Make("recipe_gas_mask_filter", "Filter Pack (gas mask)",
-                Catalog.Get("filter_pack"), 1,
+                Catalog.Get("filter_pack")!, 1,
                 new[] { ("scrap_electronic", 2), ("scrap_mechanical", 1) }, 3f));
             Recipes.Add(Make("recipe_inhaler", "Improvised Inhaler",
-                Catalog.Get("inhaler"), 1,
+                Catalog.Get("inhaler")!, 1,
                 new[] { ("scrap_chemical", 2), ("scrap_mechanical", 1) }, 3f));
             Recipes.Add(Make("recipe_herbal_tea", "Herbal Tea (respiratory relief)",
-                Catalog.Get("herbal_tea"), 2,
+                Catalog.Get("herbal_tea")!, 2,
                 new[] { ("scrap_mechanical", 1) }, 0.5f, stationId: ""));
         }
 
@@ -112,7 +112,7 @@ namespace AtomicWar.GodotApp
             return c;
         }
 
-        public Recipe FindRecipe(string id)
+        public Recipe? FindRecipe(string id)
         {
             for (int i = 0; i < Recipes.Count; i++)
                 if (Recipes[i] != null && Recipes[i].id == id) return Recipes[i];

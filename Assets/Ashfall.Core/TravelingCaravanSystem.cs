@@ -85,7 +85,7 @@ namespace Ashfall.Core
             OnCaravanArrivedAtNode?.Invoke(caravan, caravan.currentNodeId);
         }
 
-        public CaravanEntry GetCaravanAtNode(string nodeId)
+        public CaravanEntry? GetCaravanAtNode(string nodeId)
         {
             return _state.activeCaravans.Find(c => c.currentNodeId == nodeId && !c.isRobbed);
         }

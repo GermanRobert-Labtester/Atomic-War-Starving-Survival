@@ -68,7 +68,7 @@ namespace Ashfall.Core
             _catalog = catalog ?? Array.Empty<HoldfastQuestEntry>();
         }
 
-        public HoldfastQuestEntry GetDef(string questId)
+        public HoldfastQuestEntry? GetDef(string questId)
         {
             if (_catalog == null || string.IsNullOrEmpty(questId)) return null;
             for (int i = 0; i < _catalog.Count; i++)
@@ -101,7 +101,7 @@ namespace Ashfall.Core
             return def != null ? (def.display_name ?? questId) : questId ?? "";
         }
 
-        public HoldfastQuestProgress GetProgress(string questId)
+        public HoldfastQuestProgress? GetProgress(string questId)
         {
             for (int i = 0; i < _state.quests.Count; i++)
                 if (_state.quests[i] != null && _state.quests[i].questId == questId)

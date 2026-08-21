@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public ArmoredRoachHiveEntry GetRoach(string id)
+        public ArmoredRoachHiveEntry? GetRoach(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ArmoredRoachHiveEntry e ? e : null;
         }
 
-        public BlindMoleratStudyEntry GetMolerat(string id)
+        public BlindMoleratStudyEntry? GetMolerat(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BlindMoleratStudyEntry e ? e : null;
         }
 
-        public CarrionVultureSightingEntry GetVulture(string id)
+        public CarrionVultureSightingEntry? GetVulture(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CarrionVultureSightingEntry e ? e : null;
         }
 
-        public SiloMosquitoVectorEntry GetMosquito(string id)
+        public SiloMosquitoVectorEntry? GetMosquito(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SiloMosquitoVectorEntry e ? e : null;

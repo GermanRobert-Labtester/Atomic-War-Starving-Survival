@@ -45,8 +45,8 @@ namespace Ashfall.Core
             Check(faction != null && faction.faction_id == SilentFoundryIds.FactionId, "foundry_faction.json registers the exact guild id");
 
             var catalog = new SilentFoundryCatalog();
-            catalog.Load(production, faction);
-            Check(catalog.ProductCount == production.products.Count, "catalog product count matches file");
+            catalog.Load(production!, faction!);
+            Check(catalog.ProductCount == production!.products.Count, "catalog product count matches file");
 
             // Blueprint anchor resolves (static, unmutated).
             string bpJson = files.FileExists(Path.Combine(dataDirectory, "narrative", "bunker_blueprints_codex.json"))

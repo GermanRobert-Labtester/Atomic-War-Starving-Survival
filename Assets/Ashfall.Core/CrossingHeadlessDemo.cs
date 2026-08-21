@@ -87,7 +87,7 @@ namespace Ashfall.Core
             var json = new SystemTextJsonSerializer();
             string blob = json.Serialize(session.Vouch.CaptureState());
             var restored = new VouchAccessSystem();
-            restored.RestoreState(json.Deserialize<VouchAccessSystemState>(blob));
+            restored.RestoreState(json.Deserialize<VouchAccessSystemState>(blob)!);
             Check(restored.HasAccess && restored.VouchedBy == CrossingIds.NpcMattis, "vouch save roundtrip");
 
             report.Passed = report.FailedCount == 0;

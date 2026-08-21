@@ -77,7 +77,7 @@ namespace Ashfall.Core
             return true;
         }
 
-        public VolunteerEntry GetEntry(string survivorId, string task = null)
+        public VolunteerEntry? GetEntry(string survivorId, string task = null)
         {
             if (string.IsNullOrEmpty(task))
             {

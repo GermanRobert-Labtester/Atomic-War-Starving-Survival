@@ -79,7 +79,7 @@ namespace Ashfall.Core
             return true;
         }
 
-        public CohortChild GetChild(string childId) =>
+        public CohortChild? GetChild(string childId) =>
             _children.TryGetValue(childId, out var c) ? c : null;
 
         public CohortSystemState CaptureState()

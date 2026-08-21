@@ -3,6 +3,7 @@ using Godot;
 using Ashfall.Core.UI;
 using Theme = Ashfall.Core.UI.Theme;
 
+using Ashfall.Core.IO;
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -509,8 +510,9 @@ namespace AtomicWar.GodotApp.UI
                     if (res != null) return res;
                 }
             }
-            catch
+            catch (Exception ex_CATDIAG)
             {
+                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
                 // Fall back below
             }
 
@@ -526,8 +528,9 @@ namespace AtomicWar.GodotApp.UI
                         if (res != null) return res;
                     }
                 }
-                catch
+                catch (Exception ex_CATDIAG)
                 {
+                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
                     // Fall back below
                 }
             }
@@ -541,8 +544,9 @@ namespace AtomicWar.GodotApp.UI
                     var img = Godot.Image.LoadFromFile(osPath);
                     if (img != null) return ImageTexture.CreateFromImage(img);
                 }
-                catch
+                catch (Exception ex_CATDIAG)
                 {
+                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
                     // Fall through
                 }
             }
@@ -557,8 +561,9 @@ namespace AtomicWar.GodotApp.UI
                         var img = Godot.Image.LoadFromFile(altOsPath);
                         if (img != null) return ImageTexture.CreateFromImage(img);
                     }
-                    catch
+                    catch (Exception ex_CATDIAG)
                     {
+                        CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
                         // Fall through
                     }
                 }

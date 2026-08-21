@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS0649
 using Ashfall.Core;
 
 namespace Ashfall.Core.Combat

@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public LimeKilnCalcinationEntry GetKiln(string id)
+        public LimeKilnCalcinationEntry? GetKiln(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LimeKilnCalcinationEntry e ? e : null;
         }
 
-        public PozzolanMortarRecipeEntry GetMortar(string id)
+        public PozzolanMortarRecipeEntry? GetMortar(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PozzolanMortarRecipeEntry e ? e : null;
         }
 
-        public RefractoryFirebrickSpallEntry GetRefractory(string id)
+        public RefractoryFirebrickSpallEntry? GetRefractory(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RefractoryFirebrickSpallEntry e ? e : null;
         }
 
-        public MudbrickWeatheringEntry GetAdobe(string id)
+        public MudbrickWeatheringEntry? GetAdobe(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MudbrickWeatheringEntry e ? e : null;

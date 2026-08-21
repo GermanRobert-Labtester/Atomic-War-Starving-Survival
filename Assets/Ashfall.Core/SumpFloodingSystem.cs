@@ -234,6 +234,12 @@ namespace Ashfall.Core
                     node.waterLevelCm = Math.Max(0, node.waterLevelCm - 2f);
                     if (node.waterLevelCm == 0)
                     {
+                        // Bug-08: when the node finishes draining, lift the
+                        // equipmentDisabled latch. Otherwise the node stays
+                        // unusable even when dry, forcing the player to call
+                        // DrainNode manually.
+                        node.equipmentDisabled = false;
+
                         var incident = new FloodIncident
                         {
                             day = day, nodeId = node.nodeId,

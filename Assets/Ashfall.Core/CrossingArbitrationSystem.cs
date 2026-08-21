@@ -115,7 +115,7 @@ namespace Ashfall.Core
 
         // ── Queries ────────────────────────────────────────────────────
 
-        public BackerDef GetBacker(string id)
+        public BackerDef? GetBacker(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < _state.backerPool.Count; i++)
@@ -126,12 +126,12 @@ namespace Ashfall.Core
             return null;
         }
 
-        public StandingRuling GetRuling(string topic)
+        public StandingRuling? GetRuling(string topic)
         {
             if (string.IsNullOrEmpty(topic)) return null;
             // Latest match wins: an overturned ruling can be re-Stood, so a
             // topic may carry history. The active ruling is the most recent.
-            StandingRuling result = null;
+            StandingRuling? result = null;
             for (int i = 0; i < _state.rulings.Count; i++)
             {
                 var r = _state.rulings[i];

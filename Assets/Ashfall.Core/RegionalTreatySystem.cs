@@ -72,7 +72,7 @@ namespace Ashfall.Core
                     _catalog[t.treaty_id] = t;
         }
 
-        public TreatyDefinition GetDefinition(string id)
+        public TreatyDefinition? GetDefinition(string id)
         {
             _catalog.TryGetValue(id, out var def);
             return def;

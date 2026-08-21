@@ -17,7 +17,7 @@ namespace Ashfall.Core.UtilityAI
     /// </summary>
     public class ResponseCurve
     {
-        private readonly CurvePoint[] _points;
+        private readonly CurvePoint[]? _points;
 
         public ResponseCurve(CurvePoint[] points)
         {

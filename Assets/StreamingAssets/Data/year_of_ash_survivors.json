@@ -1,692 +1,693 @@
 {
- "survivors": [
-  {
-   "id": "survivor_ottilie_frayne",
-   "name": "Ottilie Frayne",
-   "age": 46,
-   "occupation": "Agronomist & Works Chair",
-   "factionAffinity": "faction_rebuilders",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 18,
-   "rurScore": 88,
-   "healthPercent": 85.0,
-   "radiationDoseMsv": 42.0,
-   "traits": [
-    "greenhouse_master",
-    "cold_resilient",
-    "indefatigable_ledger"
-   ],
-   "backstory": "Former municipal greenhouse superintendent. Founded The Works to preserve seed genetic diversity across the long winter.",
-   "confession": "Burned thirty boxes of civilian mail before the Exchange to keep the seed germinators warm in the sub-zero basement."
-  },
-  {
-   "id": "survivor_anneke_ruhl",
-   "name": "Anneke Ruhl",
-   "age": 34,
-   "occupation": "Sluice Engineer",
-   "factionAffinity": "faction_hydro_barons",
-   "moralAlignment": "ruthless_pragmatist",
-   "guiltScore": 45,
-   "rurScore": 76,
-   "healthPercent": 72.0,
-   "radiationDoseMsv": 65.0,
-   "traits": [
-    "pipe_fitter",
-    "brass_machinist",
-    "cautious_auditor"
-   ],
-   "backstory": "Hydraulic technician who installed the brass flow meters on the northern aqueduct. Knows the bypass valves by memory.",
-   "confession": "Falsified the water meter readings for a family in District 8, causing the Hydro-Barons to cut off their line during the winter freeze."
-  },
-  {
-   "id": "survivor_corporal_felix_vane",
-   "name": "Corporal Felix Vane",
-   "age": 28,
-   "occupation": "Sentry & Garrison Deserter",
-   "factionAffinity": "faction_central_garrison",
-   "moralAlignment": "conflicted_soldier",
-   "guiltScore": 58,
-   "rurScore": 82,
-   "healthPercent": 68.0,
-   "radiationDoseMsv": 88.0,
-   "traits": [
-    "marksman_rifle",
-    "frostbite_stage_1",
-    "trench_veteran"
-   ],
-   "backstory": "Machine-gunner at Checkpoint Gamma who deserted after refusing to fire on starving civilians begging for rye flour.",
-   "confession": "Left his squad's heavy machine gun and four thousand rounds of ammunition in an unbolted snowdrift cache."
-  },
-  {
-   "id": "survivor_sister_martha",
-   "name": "Sister Martha",
-   "age": 52,
-   "occupation": "Apostate Cult Penitent",
-   "factionAffinity": "faction_ash_sign",
-   "moralAlignment": "mystic_humanist",
-   "guiltScore": 62,
-   "rurScore": 64,
-   "healthPercent": 60.0,
-   "radiationDoseMsv": 145.0,
-   "traits": [
-    "trauma_counselor",
-    "rad_tolerant",
-    "insomniac"
-   ],
-   "backstory": "Former choir director who followed the Cult of the Ash Sign into the crater before fleeing the mass suicide pyres.",
-   "confession": "Convinced three young novitiates that the blast ash would cleanse their sins, watching them walk into the crater zone."
-  },
-  {
-   "id": "survivor_dr_sarah_chen",
-   "name": "Dr. Sarah Chen",
-   "age": 58,
-   "occupation": "Trauma Surgeon",
-   "factionAffinity": "faction_unaligned",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 30,
-   "rurScore": 95,
-   "healthPercent": 78.0,
-   "radiationDoseMsv": 35.0,
-   "traits": [
-    "master_surgeon",
-    "pharmacist",
-    "morphine_dependent",
-    "trait_medic",
-    "trait_altruistic"
-   ],
-   "backstory": "Chief of surgery at the Sector 4 General Hospital. Survived in the basement operating theater on canned glucose and iodine.",
-   "confession": "Rationed the last five ampoules of morphine to herself to stop the hand tremors while performing frostbite amputations."
-  },
-  {
-   "id": "survivor_tomas_lind",
-   "name": "Tomas Lind",
-   "age": 39,
-   "occupation": "Cryo Seed Vault Custodian",
-   "factionAffinity": "faction_rebuilders",
-   "moralAlignment": "fanatical_preservationist",
-   "guiltScore": 22,
-   "rurScore": 91,
-   "healthPercent": 88.0,
-   "radiationDoseMsv": 28.0,
-   "traits": [
-    "botanist",
-    "refrigeration_tech",
-    "obsessive_logger"
-   ],
-   "backstory": "Agronomy researcher who carried two vacuum dewars of rye rhizomes forty miles on a hand-drawn sled in -30°C.",
-   "confession": "Stole thirty liters of liquid nitrogen from a hospital blood bank to keep his crop cuttings frozen."
-  },
-  {
-   "id": "survivor_valeria_koss",
-   "name": "Valeria Koss",
-   "age": 44,
-   "occupation": "Logistics Auditor",
-   "factionAffinity": "faction_central_garrison",
-   "moralAlignment": "ruthless_pragmatist",
-   "guiltScore": 50,
-   "rurScore": 84,
-   "healthPercent": 82.0,
-   "radiationDoseMsv": 40.0,
-   "traits": [
-    "strict_rationer",
-    "cipher_analyst",
-    "cold_demeanor"
-   ],
-   "backstory": "Civilian bureaucrat who calculated calorie allotments for the Garrison. Can optimize shelter food stores to within 10 grams.",
-   "confession": "Drafted Schedule 14 knowing that reducing civilian bread rations to 150 grams would result in eighty winter deaths."
-  },
-  {
-   "id": "survivor_gunner_mikhail",
-   "name": "Gunner Mikhail",
-   "age": 31,
-   "occupation": "Heavy Artillery Loader",
-   "factionAffinity": "faction_central_garrison",
-   "moralAlignment": "traumatized_veteran",
-   "guiltScore": 70,
-   "rurScore": 70,
-   "healthPercent": 75.0,
-   "radiationDoseMsv": 92.0,
-   "traits": [
-    "heavy_loader",
-    "hearing_impaired",
-    "explosives_handler",
-    "trait_veteran",
-    "trait_pragmatist"
-   ],
-   "backstory": "Artillery conscript who fired 152mm howitzer batteries into Sector 4 settlements during the winter siege.",
-   "confession": "Knowingly zeroed battery shells onto a crowded civilian rail station because his battery commander threatened him with a pistol."
-  },
-  {
-   "id": "survivor_naomi_strand",
-   "name": "Naomi Strand",
-   "age": 25,
-   "occupation": "High-Tension Scavenger",
-   "factionAffinity": "faction_unaligned",
-   "moralAlignment": "individualist_survivor",
-   "guiltScore": 15,
-   "rurScore": 79,
-   "healthPercent": 90.0,
-   "radiationDoseMsv": 55.0,
-   "traits": [
-    "agile_climber",
-    "scrap_appraiser",
-    "claustrophobic"
-   ],
-   "backstory": "Scavenger who strips copper telegraph lines and periscope prisms from high granite telephone towers.",
-   "confession": "Cut the guy wire on an antenna mast that a competing scavenger was climbing to claim the copper wire below."
-  },
-  {
-   "id": "survivor_pavel_volkov",
-   "name": "Pavel Volkov",
-   "age": 50,
-   "occupation": "Boilermaker & Geothermal Tech",
-   "factionAffinity": "faction_rebuilders",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 25,
-   "rurScore": 86,
-   "healthPercent": 70.0,
-   "radiationDoseMsv": 75.0,
-   "traits": [
-    "master_welder",
-    "pipe_fitter",
-    "chronic_smoker"
-   ],
-   "backstory": "Senior technician at Geothermal Well Alpha. Keeps high-pressure steam bypass loops from blowing their headers.",
-   "confession": "Vented superheated steam into a flooded maintenance shaft where three looters were trapped to save the main manifold."
-  },
-  {
-   "id": "survivor_zoya_reid",
-   "name": "Zoya Reid",
-   "age": 37,
-   "occupation": "Radiochemist",
-   "factionAffinity": "faction_unaligned",
-   "moralAlignment": "clinical_analyst",
-   "guiltScore": 20,
-   "rurScore": 92,
-   "healthPercent": 84.0,
-   "radiationDoseMsv": 30.0,
-   "traits": [
-    "radon_specialist",
-    "spectrometry_tech",
-    "chelation_expert"
-   ],
-   "backstory": "Researcher from the Low-Background Salt Lab. Formulates Prussian blue binders and monitors radon gas fissures.",
-   "confession": "Concealed the fact that the surface well water had high Cesium-137 levels for two weeks to prevent mass panic."
-  },
-  {
-   "id": "survivor_captain_alder",
-   "name": "Captain Alder",
-   "age": 55,
-   "occupation": "Logistics Convoy Commander",
-   "factionAffinity": "faction_central_garrison",
-   "moralAlignment": "stern_commander",
-   "guiltScore": 40,
-   "rurScore": 89,
-   "healthPercent": 80.0,
-   "radiationDoseMsv": 50.0,
-   "traits": [
-    "armored_driver",
-    "navigator_ice",
-    "disciplined_leader"
-   ],
-   "backstory": "Commander of the Highway 12 relief convoys. Drove heavy halftracks through three black blizzards without losing a vehicle.",
-   "confession": "Ordered an overloaded supply trailer with eight frostbitten refugees unhitched in a blizzard when the drive axle cracked."
-  },
-  {
-   "id": "survivor_lydia_hart",
-   "name": "Lydia Hart",
-   "age": 33,
-   "occupation": "Precision Toolmaker & Machinist",
-   "factionAffinity": "faction_rebuilders",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 12,
-   "rurScore": 87,
-   "healthPercent": 92.0,
-   "radiationDoseMsv": 22.0,
-   "traits": [
-    "lathe_operator",
-    "optics_grinder",
-    "resourceful"
-   ],
-   "backstory": "Machinist at The Works who turns brass valve seats and grinds replacement quartz prisms for bunker periscopes.",
-   "confession": "Sabotaged a Garrison lathe by introducing emery powder into the headstock gears before evacuating her shop."
-  },
-  {
-   "id": "survivor_dr_erik_dahl",
-   "name": "Dr. Erik Dahl",
-   "age": 62,
-   "occupation": "Nuclear Physicist",
-   "factionAffinity": "faction_unaligned",
-   "moralAlignment": "rational_humanist",
-   "guiltScore": 35,
-   "rurScore": 98,
-   "healthPercent": 65.0,
-   "radiationDoseMsv": 48.0,
-   "traits": [
-    "isotope_expert",
-    "mass_spectrometer_op",
-    "frail_health"
-   ],
-   "backstory": "Principal investigator at the Low-Background Salt Laboratory. Possesses the mathematical proof of the war's automated cause.",
-   "confession": "Refused to share his lab's emergency battery banks with a nearby refugee cave, keeping his mass spectrometer powered."
-  },
-  {
-   "id": "survivor_igor_morozov",
-   "name": "Igor Morozov",
-   "age": 41,
-   "occupation": "Perimeter Marksman",
-   "factionAffinity": "faction_central_garrison",
-   "moralAlignment": "ruthless_pragmatist",
-   "guiltScore": 65,
-   "rurScore": 74,
-   "healthPercent": 76.0,
-   "radiationDoseMsv": 70.0,
-   "traits": [
-    "scout_sniper",
-    "periscope_spotter",
-    "paranoid"
-   ],
-   "backstory": "Garrison sniper who held the railway cut for two months against raiders. Suffers from extreme hypervigilance.",
-   "confession": "Shot two teenage girls foraging for coal along the railway embankment thinking they were cultist suicide scouts."
-  },
-  {
-   "id": "survivor_clara_sloan",
-   "name": "Clara Sloan",
-   "age": 29,
-   "occupation": "Hydroponics Botanist",
-   "factionAffinity": "faction_rebuilders",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 10,
-   "rurScore": 85,
-   "healthPercent": 94.0,
-   "radiationDoseMsv": 18.0,
-   "traits": [
-    "nutrient_balancer",
-    "mold_preventer",
-    "optimistic"
-   ],
-   "backstory": "Assistant to Ottilie Frayne. Developed a nutrient solution using wood ash and bone meal that boosted greenhouse yields by 40%.",
-   "confession": "Secretly fed half her daily bread ration to experimental rye seedlings in the dark storage room."
-  },
-  {
-   "id": "survivor_vera_sokolov",
-   "name": "Vera Sokolov",
-   "age": 36,
-   "occupation": "Railway Telegrapher",
-   "factionAffinity": "faction_unaligned",
-   "moralAlignment": "neutral_recorder",
-   "guiltScore": 28,
-   "rurScore": 83,
-   "healthPercent": 86.0,
-   "radiationDoseMsv": 38.0,
-   "traits": [
-    "teletype_operator",
-    "morse_expert",
-    "wire_splicer"
-   ],
-   "backstory": "Telegraph operator at Sector 4 Junction. Copied every military dispatch and evacuation manifest transmitted across the lines.",
-   "confession": "Intercepted a priority evacuation train clearance for a hospital unit and failed to forward it, keeping the siding clear for a fuel train."
-  },
-  {
-   "id": "survivor_marcus_vane",
-   "name": "Marcus Vane",
-   "age": 23,
-   "occupation": "Radio Electronics Tech",
-   "factionAffinity": "faction_unaligned",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 14,
-   "rurScore": 81,
-   "healthPercent": 89.0,
-   "radiationDoseMsv": 32.0,
-   "traits": [
-    "crystal_tuner",
-    "soldering_tech",
-    "antenna_rigger"
-   ],
-   "backstory": "Amateur radio operator who built the 142.850 MHz long-wave receiver array from salvaged vacuum tubes and wire.",
-   "confession": "Stole a silver solder spool from the Garrison signal bunker while under shelter arrest."
-  },
-  {
-   "id": "survivor_first_officer_lindqvist",
-   "name": "1st Officer Lindqvist",
-   "age": 48,
-   "occupation": "Arctic Navigator (Aurora Borealis)",
-   "factionAffinity": "faction_unaligned",
-   "moralAlignment": "duty_bound_mariner",
-   "guiltScore": 32,
-   "rurScore": 94,
-   "healthPercent": 88.0,
-   "radiationDoseMsv": 25.0,
-   "traits": [
-    "ice_pilot",
-    "manifest_assayer",
-    "radar_operator"
-   ],
-   "backstory": "Senior navigation officer sent ashore by the Aurora Borealis to verify shelter manifests and evaluate lead ice conditions.",
-   "confession": "Denied boarding to forty uncertified dock refugees to preserve the icebreaker's fuel reserves for the return voyage."
-  },
-  {
-   "id": "survivor_colonel_brand",
-   "name": "Colonel Brand",
-   "age": 60,
-   "occupation": "STD-9 Commander (Protocol Null)",
-   "factionAffinity": "faction_black_ops",
-   "moralAlignment": "uncompromising_legalist",
-   "guiltScore": 75,
-   "rurScore": 80,
-   "healthPercent": 62.0,
-   "radiationDoseMsv": 60.0,
-   "traits": [
-    "demolitions_master",
-    "cipher_officer",
-    "stoic"
-   ],
-   "backstory": "Commander of Detachment 9. Held the railway cut under standing orders from a dead government for 240 days.",
-   "confession": "Wired the viaduct charges with dead-man switches knowing that his own death would sever the valley's last transport link."
-  },
-  {
-   "id": "survivor_ansel_duth",
-   "name": "Ansel Duth",
-   "age": 42,
-   "occupation": "Toll Road Assayer",
-   "factionAffinity": "warlords_sector_4",
-   "moralAlignment": "ruthless_pragmatist",
-   "guiltScore": 52,
-   "rurScore": 77,
-   "healthPercent": 83.0,
-   "radiationDoseMsv": 45.0,
-   "traits": [
-    "ledger_keeper",
-    "currency_assayer",
-    "negotiator"
-   ],
-   "backstory": "Chief clerk at the Kilometre 19 toll gates. Appraised salt cakes, ammunition, and fuel scrip for the Warlords.",
-   "confession": "Shaved 5% of all silver and brass coin off the toll tax ledgers to buy himself a secure place in an upland cellar."
-  },
-  {
-   "id": "survivor_hadi_morrow",
-   "name": "Hadi Morrow",
-   "age": 35,
-   "occupation": "Peat Cutter & Heavy Laborer",
-   "factionAffinity": "faction_rebuilders",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 16,
-   "rurScore": 85,
-   "healthPercent": 96.0,
-   "radiationDoseMsv": 40.0,
-   "traits": [
-    "iron_constitution",
-    "trench_digger",
-    "loyal_companion"
-   ],
-   "backstory": "Peat bog laborer who dug three hundred tons of fuel brick out of the frozen bogs to keep the Allotment boilers fired.",
-   "confession": "Buried his frostbitten brother in the bog without a church burial to avoid stopping work on the fuel trenches."
-  },
-  {
-   "id": "survivor_kess_adler",
-   "name": "Kess Adler",
-   "age": 27,
-   "occupation": "Radiation Zone Trapper",
-   "factionAffinity": "faction_unaligned",
-   "moralAlignment": "individualist_survivor",
-   "guiltScore": 24,
-   "rurScore": 78,
-   "healthPercent": 74.0,
-   "radiationDoseMsv": 110.0,
-   "traits": [
-    "fallout_tracker",
-    "snare_builder",
-    "rad_burn_scars"
-   ],
-   "backstory": "Trapper who hunts mutated snow hares and foxes in the crater buffer zones to trade pelts and meat.",
-   "confession": "Sold irradiated hare meat to an upland refugee camp without telling them the animals were taken near Ground Zero."
-  },
-  {
-   "id": "survivor_len_quill",
-   "name": "Len Quill",
-   "age": 51,
-   "occupation": "Municipal Archivist",
-   "factionAffinity": "faction_unaligned",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 18,
-   "rurScore": 88,
-   "healthPercent": 79.0,
-   "radiationDoseMsv": 24.0,
-   "traits": [
-    "historian",
-    "bookbinder",
-    "document_forger"
-   ],
-   "backstory": "Archivist who preserved Sector 4's civil land deeds, census rolls, and engineering blueprints in sealed zinc boxes.",
-   "confession": "Erased twenty criminal records from the municipal ledger in exchange for three cans of condensed milk."
-  },
-  {
-   "id": "survivor_markov_arsenal_assayer",
-   "name": "Chief Assayer Markov",
-   "age": 54,
-   "occupation": "Munitions Metallurgist",
-   "factionAffinity": "faction_ordnance_foundry",
-   "moralAlignment": "ruthless_pragmatist",
-   "guiltScore": 48,
-   "rurScore": 90,
-   "healthPercent": 81.0,
-   "radiationDoseMsv": 36.0,
-   "traits": [
-    "brass_caster",
-    "powder_mixer",
-    "meticulous"
-   ],
-   "backstory": "Head of the High Granite Arsenal foundry. Kept the shell drop hammers stamping brass through sixty days of artillery sieges.",
-   "confession": "Added 20% sand to the ammonium nitrate batches supplied to local militias to conserve high explosive reserves for the garrison."
-  },
-  {
-   "id": "survivor_talia_upland_commander",
-   "name": "Commander Talia",
-   "age": 40,
-   "occupation": "Ash Militia Leader",
-   "factionAffinity": "faction_ash_militia",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 38,
-   "rurScore": 92,
-   "healthPercent": 87.0,
-   "radiationDoseMsv": 44.0,
-   "traits": [
-    "guerrilla_tactician",
-    "defensive_architect",
-    "uncompromising"
-   ],
-   "backstory": "Elected commander of the Central Upland Defense League. Fortified the eastern terraces against Garrison motorized sweeps.",
-   "confession": "Ordered the destruction of the lower mountain bridge, cutting off fifty farm families on the lower road to save the main redoubt."
-  },
-  {
-   "id": "survivor_provost_kroll",
-   "name": "Major Kroll",
-   "age": 49,
-   "occupation": "3rd Corps Provost Marshal",
-   "factionAffinity": "faction_central_garrison",
-   "moralAlignment": "iron_disciplinarian",
-   "guiltScore": 82,
-   "rurScore": 85,
-   "healthPercent": 78.0,
-   "radiationDoseMsv": 52.0,
-   "traits": [
-    "military_lawyer",
-    "intimidator",
-    "tactical_planner"
-   ],
-   "backstory": "Enforcer of Martial Allocation Schedule 14. Commanded the punitive executions at Kilometre 12 to stop military collapse.",
-   "confession": "Carries the signed execution orders for his own younger brother, who deserted from the 2nd Sentry Company."
-  },
-  {
-   "id": "survivor_hierophant_malachi",
-   "name": "Hierophant Malachi",
-   "age": 57,
-   "occupation": "Ash Sign High Priest",
-   "factionAffinity": "faction_ash_sign",
-   "moralAlignment": "fatalistic_prophet",
-   "guiltScore": 90,
-   "rurScore": 60,
-   "healthPercent": 50.0,
-   "radiationDoseMsv": 280.0,
-   "traits": [
-    "charismatic_speaker",
-    "rad_burn_ascetic",
-    "pain_immune"
-   ],
-   "backstory": "Sole surviving high priest of the Vitrified Crater. Preached the liturgy of the Black Thaw to hundreds of doomed penitents.",
-   "confession": "Survives by taking private chelation injections while forbidding his followers from taking medical treatment."
-  },
-  {
-   "id": "survivor_sapper_vance",
-   "name": "Sapper Vance",
-   "age": 30,
-   "occupation": "8th Penal Pioneer",
-   "factionAffinity": "faction_penal_battalion",
-   "moralAlignment": "cynical_survivor",
-   "guiltScore": 55,
-   "rurScore": 84,
-   "healthPercent": 69.0,
-   "radiationDoseMsv": 120.0,
-   "traits": [
-    "mine_clearer",
-    "tunnel_digger",
-    "trench_foot"
-   ],
-   "backstory": "Convict pioneer who cleared radioactive unexploded ordnance with hand tools in the crater buffer zone.",
-   "confession": "Rigged an unexploded 152mm shell into a booby trap behind his provost guards when his work gang mutinied."
-  },
-  {
-   "id": "survivor_elena_vasquez_rail",
-   "name": "Elena Vasquez",
-   "age": 38,
-   "occupation": "Rail Union Switchwoman",
-   "factionAffinity": "faction_railway_guild",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 22,
-   "rurScore": 88,
-   "healthPercent": 91.0,
-   "radiationDoseMsv": 30.0,
-   "traits": [
-    "track_mechanic",
-    "handcar_pilot",
-    "signal_code_expert"
-   ],
-   "backstory": "Leader of the railway union scouts. Maintains the armored handcars that smuggle grain past Garrison checkpoints.",
-   "confession": "Switched a Garrison supply train onto a broken trestle bridge, drowning four conscript brakemen in the river."
-  },
-  {
-   "id": "survivor_gregor_salt_miner",
-   "name": "Gregor the Salt Miner",
-   "age": 45,
-   "occupation": "Deep Salt Blaster",
-   "factionAffinity": "faction_salt_freeholders",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 19,
-   "rurScore": 86,
-   "healthPercent": 84.0,
-   "radiationDoseMsv": 15.0,
-   "traits": [
-    "dynamite_blaster",
-    "rock_bolter",
-    "underground_navigator"
-   ],
-   "backstory": "Lead miner in the 400m salt caverns. Excavated the hospital rooms and blasted protective rock seals during the siege.",
-   "confession": "Sealed three looters inside an unventilated drift when they attempted to steal the community's salt medicine reserves."
-  },
-  {
-   "id": "survivor_marina_supply_driver",
-   "name": "Marina Drake",
-   "age": 32,
-   "occupation": "Logistics Half-Track Driver",
-   "factionAffinity": "faction_supply_corps",
-   "moralAlignment": "duty_bound_mariner",
-   "guiltScore": 26,
-   "rurScore": 89,
-   "healthPercent": 88.0,
-   "radiationDoseMsv": 42.0,
-   "traits": [
-    "diesel_mechanic",
-    "convoy_gunner",
-    "tireless"
-   ],
-   "backstory": "Veteran convoy driver who hauled twenty tons of medical supplies and seed grain along Highway 12 through sniper fire.",
-   "confession": "Ran down an armed barricade manned by teenage militia fighters without slowing down to deliver emergency antibiotics."
-  },
-  {
-   "id": "survivor_yuri_foundry_caster",
-   "name": "Yuri Belov",
-   "age": 47,
-   "occupation": "Foundry Furnace Master",
-   "factionAffinity": "faction_ordnance_foundry",
-   "moralAlignment": "ruthless_pragmatist",
-   "guiltScore": 34,
-   "rurScore": 87,
-   "healthPercent": 77.0,
-   "radiationDoseMsv": 50.0,
-   "traits": [
-    "furnace_tender",
-    "crucible_caster",
-    "heat_hardened"
-   ],
-   "backstory": "Master furnace operator who kept the bronze crucibles fired on charcoal during the height of the Deep Freeze.",
-   "confession": "Burned thirty thousand wooden library archives from the municipal records building to maintain foundry furnace temperatures."
-  },
-  {
-   "id": "survivor_nadia_militia_scout",
-   "name": "Nadia Brant",
-   "age": 22,
-   "occupation": "Mountain Sentry & Runner",
-   "factionAffinity": "faction_ash_militia",
-   "moralAlignment": "communal_humanist",
-   "guiltScore": 14,
-   "rurScore": 82,
-   "healthPercent": 95.0,
-   "radiationDoseMsv": 35.0,
-   "traits": [
-    "fleet_footed",
-    "crampon_climber",
-    "silent_stalker"
-   ],
-   "backstory": "Upland runner who carried messages between terraced farmsteads in the dead of winter, evading Garrison patrols on skis.",
-   "confession": "Left an injured Garrison courier to freeze in a snowbank rather than carry him to the nearest farm shelter."
-  },
-  {
-   "id": "survivor_boris_penal_medic",
-   "name": "Boris Kogan",
-   "age": 53,
-   "occupation": "Penal Battalion Orderly",
-   "factionAffinity": "faction_penal_battalion",
-   "moralAlignment": "exhausted_healer",
-   "guiltScore": 60,
-   "rurScore": 80,
-   "healthPercent": 66.0,
-   "radiationDoseMsv": 135.0,
-   "traits": [
-    "triage_orderly",
-    "rad_sickness_expert",
-    "stoic"
-   ],
-   "backstory": "Field medic sentenced to the penal battalion for anti-war agitation. Treated four hundred cases of acute radiation sickness in sump mud.",
-   "confession": "Administered lethal potassium overdoses to twelve dying conscripts whose screaming was attracting mortar fire to their trench."
-  },
-  {
-   "id": "survivor_anton_salt_trader",
-   "name": "Anton Vane",
-   "age": 36,
-   "occupation": "Cavern Barter Broker",
-   "factionAffinity": "faction_salt_freeholders",
-   "moralAlignment": "opportunistic_merchant",
-   "guiltScore": 42,
-   "rurScore": 83,
-   "healthPercent": 85.0,
-   "radiationDoseMsv": 20.0,
-   "traits": [
-    "scale_appraiser",
-    "gold_assayer",
-    "persuasive"
-   ],
-   "backstory": "Broker in the 400m salt exchange. Managed transactions between the Works, the Garrison, and the Hydro-Barons without taking sides.",
-   "confession": "Took a 10% cut in grain from starving refugees in exchange for safe sleeping space in the salt cavern infirmary."
-  }
- ]
+  "schema_version": 1,
+  "survivors": [
+    {
+      "id": "survivor_ottilie_frayne",
+      "name": "Ottilie Frayne",
+      "age": 46,
+      "occupation": "Agronomist & Works Chair",
+      "factionAffinity": "faction_rebuilders",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 18,
+      "rurScore": 88,
+      "healthPercent": 85.0,
+      "radiationDoseMsv": 42.0,
+      "traits": [
+        "greenhouse_master",
+        "cold_resilient",
+        "indefatigable_ledger"
+      ],
+      "backstory": "Former municipal greenhouse superintendent. Founded The Works to preserve seed genetic diversity across the long winter.",
+      "confession": "Burned thirty boxes of civilian mail before the Exchange to keep the seed germinators warm in the sub-zero basement."
+    },
+    {
+      "id": "survivor_anneke_ruhl",
+      "name": "Anneke Ruhl",
+      "age": 34,
+      "occupation": "Sluice Engineer",
+      "factionAffinity": "faction_hydro_barons",
+      "moralAlignment": "ruthless_pragmatist",
+      "guiltScore": 45,
+      "rurScore": 76,
+      "healthPercent": 72.0,
+      "radiationDoseMsv": 65.0,
+      "traits": [
+        "pipe_fitter",
+        "brass_machinist",
+        "cautious_auditor"
+      ],
+      "backstory": "Hydraulic technician who installed the brass flow meters on the northern aqueduct. Knows the bypass valves by memory.",
+      "confession": "Falsified the water meter readings for a family in District 8, causing the Hydro-Barons to cut off their line during the winter freeze."
+    },
+    {
+      "id": "survivor_corporal_felix_vane",
+      "name": "Corporal Felix Vane",
+      "age": 28,
+      "occupation": "Sentry & Garrison Deserter",
+      "factionAffinity": "faction_central_garrison",
+      "moralAlignment": "conflicted_soldier",
+      "guiltScore": 58,
+      "rurScore": 82,
+      "healthPercent": 68.0,
+      "radiationDoseMsv": 88.0,
+      "traits": [
+        "marksman_rifle",
+        "frostbite_stage_1",
+        "trench_veteran"
+      ],
+      "backstory": "Machine-gunner at Checkpoint Gamma who deserted after refusing to fire on starving civilians begging for rye flour.",
+      "confession": "Left his squad's heavy machine gun and four thousand rounds of ammunition in an unbolted snowdrift cache."
+    },
+    {
+      "id": "survivor_sister_martha",
+      "name": "Sister Martha",
+      "age": 52,
+      "occupation": "Apostate Cult Penitent",
+      "factionAffinity": "faction_ash_sign",
+      "moralAlignment": "mystic_humanist",
+      "guiltScore": 62,
+      "rurScore": 64,
+      "healthPercent": 60.0,
+      "radiationDoseMsv": 145.0,
+      "traits": [
+        "trauma_counselor",
+        "rad_tolerant",
+        "insomniac"
+      ],
+      "backstory": "Former choir director who followed the Cult of the Ash Sign into the crater before fleeing the mass suicide pyres.",
+      "confession": "Convinced three young novitiates that the blast ash would cleanse their sins, watching them walk into the crater zone."
+    },
+    {
+      "id": "survivor_dr_sarah_chen",
+      "name": "Dr. Sarah Chen",
+      "age": 58,
+      "occupation": "Trauma Surgeon",
+      "factionAffinity": "faction_unaligned",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 30,
+      "rurScore": 95,
+      "healthPercent": 78.0,
+      "radiationDoseMsv": 35.0,
+      "traits": [
+        "master_surgeon",
+        "pharmacist",
+        "morphine_dependent",
+        "trait_medic",
+        "trait_altruistic"
+      ],
+      "backstory": "Chief of surgery at the Sector 4 General Hospital. Survived in the basement operating theater on canned glucose and iodine.",
+      "confession": "Rationed the last five ampoules of morphine to herself to stop the hand tremors while performing frostbite amputations."
+    },
+    {
+      "id": "survivor_tomas_lind",
+      "name": "Tomas Lind",
+      "age": 39,
+      "occupation": "Cryo Seed Vault Custodian",
+      "factionAffinity": "faction_rebuilders",
+      "moralAlignment": "fanatical_preservationist",
+      "guiltScore": 22,
+      "rurScore": 91,
+      "healthPercent": 88.0,
+      "radiationDoseMsv": 28.0,
+      "traits": [
+        "botanist",
+        "refrigeration_tech",
+        "obsessive_logger"
+      ],
+      "backstory": "Agronomy researcher who carried two vacuum dewars of rye rhizomes forty miles on a hand-drawn sled in -30°C.",
+      "confession": "Stole thirty liters of liquid nitrogen from a hospital blood bank to keep his crop cuttings frozen."
+    },
+    {
+      "id": "survivor_valeria_koss",
+      "name": "Valeria Koss",
+      "age": 44,
+      "occupation": "Logistics Auditor",
+      "factionAffinity": "faction_central_garrison",
+      "moralAlignment": "ruthless_pragmatist",
+      "guiltScore": 50,
+      "rurScore": 84,
+      "healthPercent": 82.0,
+      "radiationDoseMsv": 40.0,
+      "traits": [
+        "strict_rationer",
+        "cipher_analyst",
+        "cold_demeanor"
+      ],
+      "backstory": "Civilian bureaucrat who calculated calorie allotments for the Garrison. Can optimize shelter food stores to within 10 grams.",
+      "confession": "Drafted Schedule 14 knowing that reducing civilian bread rations to 150 grams would result in eighty winter deaths."
+    },
+    {
+      "id": "survivor_gunner_mikhail",
+      "name": "Gunner Mikhail",
+      "age": 31,
+      "occupation": "Heavy Artillery Loader",
+      "factionAffinity": "faction_central_garrison",
+      "moralAlignment": "traumatized_veteran",
+      "guiltScore": 70,
+      "rurScore": 70,
+      "healthPercent": 75.0,
+      "radiationDoseMsv": 92.0,
+      "traits": [
+        "heavy_loader",
+        "hearing_impaired",
+        "explosives_handler",
+        "trait_veteran",
+        "trait_pragmatist"
+      ],
+      "backstory": "Artillery conscript who fired 152mm howitzer batteries into Sector 4 settlements during the winter siege.",
+      "confession": "Knowingly zeroed battery shells onto a crowded civilian rail station because his battery commander threatened him with a pistol."
+    },
+    {
+      "id": "survivor_naomi_strand",
+      "name": "Naomi Strand",
+      "age": 25,
+      "occupation": "High-Tension Scavenger",
+      "factionAffinity": "faction_unaligned",
+      "moralAlignment": "individualist_survivor",
+      "guiltScore": 15,
+      "rurScore": 79,
+      "healthPercent": 90.0,
+      "radiationDoseMsv": 55.0,
+      "traits": [
+        "agile_climber",
+        "scrap_appraiser",
+        "claustrophobic"
+      ],
+      "backstory": "Scavenger who strips copper telegraph lines and periscope prisms from high granite telephone towers.",
+      "confession": "Cut the guy wire on an antenna mast that a competing scavenger was climbing to claim the copper wire below."
+    },
+    {
+      "id": "survivor_pavel_volkov",
+      "name": "Pavel Volkov",
+      "age": 50,
+      "occupation": "Boilermaker & Geothermal Tech",
+      "factionAffinity": "faction_rebuilders",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 25,
+      "rurScore": 86,
+      "healthPercent": 70.0,
+      "radiationDoseMsv": 75.0,
+      "traits": [
+        "master_welder",
+        "pipe_fitter",
+        "chronic_smoker"
+      ],
+      "backstory": "Senior technician at Geothermal Well Alpha. Keeps high-pressure steam bypass loops from blowing their headers.",
+      "confession": "Vented superheated steam into a flooded maintenance shaft where three looters were trapped to save the main manifold."
+    },
+    {
+      "id": "survivor_zoya_reid",
+      "name": "Zoya Reid",
+      "age": 37,
+      "occupation": "Radiochemist",
+      "factionAffinity": "faction_unaligned",
+      "moralAlignment": "clinical_analyst",
+      "guiltScore": 20,
+      "rurScore": 92,
+      "healthPercent": 84.0,
+      "radiationDoseMsv": 30.0,
+      "traits": [
+        "radon_specialist",
+        "spectrometry_tech",
+        "chelation_expert"
+      ],
+      "backstory": "Researcher from the Low-Background Salt Lab. Formulates Prussian blue binders and monitors radon gas fissures.",
+      "confession": "Concealed the fact that the surface well water had high Cesium-137 levels for two weeks to prevent mass panic."
+    },
+    {
+      "id": "survivor_captain_alder",
+      "name": "Captain Alder",
+      "age": 55,
+      "occupation": "Logistics Convoy Commander",
+      "factionAffinity": "faction_central_garrison",
+      "moralAlignment": "stern_commander",
+      "guiltScore": 40,
+      "rurScore": 89,
+      "healthPercent": 80.0,
+      "radiationDoseMsv": 50.0,
+      "traits": [
+        "armored_driver",
+        "navigator_ice",
+        "disciplined_leader"
+      ],
+      "backstory": "Commander of the Highway 12 relief convoys. Drove heavy halftracks through three black blizzards without losing a vehicle.",
+      "confession": "Ordered an overloaded supply trailer with eight frostbitten refugees unhitched in a blizzard when the drive axle cracked."
+    },
+    {
+      "id": "survivor_lydia_hart",
+      "name": "Lydia Hart",
+      "age": 33,
+      "occupation": "Precision Toolmaker & Machinist",
+      "factionAffinity": "faction_rebuilders",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 12,
+      "rurScore": 87,
+      "healthPercent": 92.0,
+      "radiationDoseMsv": 22.0,
+      "traits": [
+        "lathe_operator",
+        "optics_grinder",
+        "resourceful"
+      ],
+      "backstory": "Machinist at The Works who turns brass valve seats and grinds replacement quartz prisms for bunker periscopes.",
+      "confession": "Sabotaged a Garrison lathe by introducing emery powder into the headstock gears before evacuating her shop."
+    },
+    {
+      "id": "survivor_dr_erik_dahl",
+      "name": "Dr. Erik Dahl",
+      "age": 62,
+      "occupation": "Nuclear Physicist",
+      "factionAffinity": "faction_unaligned",
+      "moralAlignment": "rational_humanist",
+      "guiltScore": 35,
+      "rurScore": 98,
+      "healthPercent": 65.0,
+      "radiationDoseMsv": 48.0,
+      "traits": [
+        "isotope_expert",
+        "mass_spectrometer_op",
+        "frail_health"
+      ],
+      "backstory": "Principal investigator at the Low-Background Salt Laboratory. Possesses the mathematical proof of the war's automated cause.",
+      "confession": "Refused to share his lab's emergency battery banks with a nearby refugee cave, keeping his mass spectrometer powered."
+    },
+    {
+      "id": "survivor_igor_morozov",
+      "name": "Igor Morozov",
+      "age": 41,
+      "occupation": "Perimeter Marksman",
+      "factionAffinity": "faction_central_garrison",
+      "moralAlignment": "ruthless_pragmatist",
+      "guiltScore": 65,
+      "rurScore": 74,
+      "healthPercent": 76.0,
+      "radiationDoseMsv": 70.0,
+      "traits": [
+        "scout_sniper",
+        "periscope_spotter",
+        "paranoid"
+      ],
+      "backstory": "Garrison sniper who held the railway cut for two months against raiders. Suffers from extreme hypervigilance.",
+      "confession": "Shot two teenage girls foraging for coal along the railway embankment thinking they were cultist suicide scouts."
+    },
+    {
+      "id": "survivor_clara_sloan",
+      "name": "Clara Sloan",
+      "age": 29,
+      "occupation": "Hydroponics Botanist",
+      "factionAffinity": "faction_rebuilders",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 10,
+      "rurScore": 85,
+      "healthPercent": 94.0,
+      "radiationDoseMsv": 18.0,
+      "traits": [
+        "nutrient_balancer",
+        "mold_preventer",
+        "optimistic"
+      ],
+      "backstory": "Assistant to Ottilie Frayne. Developed a nutrient solution using wood ash and bone meal that boosted greenhouse yields by 40%.",
+      "confession": "Secretly fed half her daily bread ration to experimental rye seedlings in the dark storage room."
+    },
+    {
+      "id": "survivor_vera_sokolov",
+      "name": "Vera Sokolov",
+      "age": 36,
+      "occupation": "Railway Telegrapher",
+      "factionAffinity": "faction_unaligned",
+      "moralAlignment": "neutral_recorder",
+      "guiltScore": 28,
+      "rurScore": 83,
+      "healthPercent": 86.0,
+      "radiationDoseMsv": 38.0,
+      "traits": [
+        "teletype_operator",
+        "morse_expert",
+        "wire_splicer"
+      ],
+      "backstory": "Telegraph operator at Sector 4 Junction. Copied every military dispatch and evacuation manifest transmitted across the lines.",
+      "confession": "Intercepted a priority evacuation train clearance for a hospital unit and failed to forward it, keeping the siding clear for a fuel train."
+    },
+    {
+      "id": "survivor_marcus_vane",
+      "name": "Marcus Vane",
+      "age": 23,
+      "occupation": "Radio Electronics Tech",
+      "factionAffinity": "faction_unaligned",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 14,
+      "rurScore": 81,
+      "healthPercent": 89.0,
+      "radiationDoseMsv": 32.0,
+      "traits": [
+        "crystal_tuner",
+        "soldering_tech",
+        "antenna_rigger"
+      ],
+      "backstory": "Amateur radio operator who built the 142.850 MHz long-wave receiver array from salvaged vacuum tubes and wire.",
+      "confession": "Stole a silver solder spool from the Garrison signal bunker while under shelter arrest."
+    },
+    {
+      "id": "survivor_first_officer_lindqvist",
+      "name": "1st Officer Lindqvist",
+      "age": 48,
+      "occupation": "Arctic Navigator (Aurora Borealis)",
+      "factionAffinity": "faction_unaligned",
+      "moralAlignment": "duty_bound_mariner",
+      "guiltScore": 32,
+      "rurScore": 94,
+      "healthPercent": 88.0,
+      "radiationDoseMsv": 25.0,
+      "traits": [
+        "ice_pilot",
+        "manifest_assayer",
+        "radar_operator"
+      ],
+      "backstory": "Senior navigation officer sent ashore by the Aurora Borealis to verify shelter manifests and evaluate lead ice conditions.",
+      "confession": "Denied boarding to forty uncertified dock refugees to preserve the icebreaker's fuel reserves for the return voyage."
+    },
+    {
+      "id": "survivor_colonel_brand",
+      "name": "Colonel Brand",
+      "age": 60,
+      "occupation": "STD-9 Commander (Protocol Null)",
+      "factionAffinity": "faction_black_ops",
+      "moralAlignment": "uncompromising_legalist",
+      "guiltScore": 75,
+      "rurScore": 80,
+      "healthPercent": 62.0,
+      "radiationDoseMsv": 60.0,
+      "traits": [
+        "demolitions_master",
+        "cipher_officer",
+        "stoic"
+      ],
+      "backstory": "Commander of Detachment 9. Held the railway cut under standing orders from a dead government for 240 days.",
+      "confession": "Wired the viaduct charges with dead-man switches knowing that his own death would sever the valley's last transport link."
+    },
+    {
+      "id": "survivor_ansel_duth",
+      "name": "Ansel Duth",
+      "age": 42,
+      "occupation": "Toll Road Assayer",
+      "factionAffinity": "warlords_sector_4",
+      "moralAlignment": "ruthless_pragmatist",
+      "guiltScore": 52,
+      "rurScore": 77,
+      "healthPercent": 83.0,
+      "radiationDoseMsv": 45.0,
+      "traits": [
+        "ledger_keeper",
+        "currency_assayer",
+        "negotiator"
+      ],
+      "backstory": "Chief clerk at the Kilometre 19 toll gates. Appraised salt cakes, ammunition, and fuel scrip for the Warlords.",
+      "confession": "Shaved 5% of all silver and brass coin off the toll tax ledgers to buy himself a secure place in an upland cellar."
+    },
+    {
+      "id": "survivor_hadi_morrow",
+      "name": "Hadi Morrow",
+      "age": 35,
+      "occupation": "Peat Cutter & Heavy Laborer",
+      "factionAffinity": "faction_rebuilders",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 16,
+      "rurScore": 85,
+      "healthPercent": 96.0,
+      "radiationDoseMsv": 40.0,
+      "traits": [
+        "iron_constitution",
+        "trench_digger",
+        "loyal_companion"
+      ],
+      "backstory": "Peat bog laborer who dug three hundred tons of fuel brick out of the frozen bogs to keep the Allotment boilers fired.",
+      "confession": "Buried his frostbitten brother in the bog without a church burial to avoid stopping work on the fuel trenches."
+    },
+    {
+      "id": "survivor_kess_adler",
+      "name": "Kess Adler",
+      "age": 27,
+      "occupation": "Radiation Zone Trapper",
+      "factionAffinity": "faction_unaligned",
+      "moralAlignment": "individualist_survivor",
+      "guiltScore": 24,
+      "rurScore": 78,
+      "healthPercent": 74.0,
+      "radiationDoseMsv": 110.0,
+      "traits": [
+        "fallout_tracker",
+        "snare_builder",
+        "rad_burn_scars"
+      ],
+      "backstory": "Trapper who hunts mutated snow hares and foxes in the crater buffer zones to trade pelts and meat.",
+      "confession": "Sold irradiated hare meat to an upland refugee camp without telling them the animals were taken near Ground Zero."
+    },
+    {
+      "id": "survivor_len_quill",
+      "name": "Len Quill",
+      "age": 51,
+      "occupation": "Municipal Archivist",
+      "factionAffinity": "faction_unaligned",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 18,
+      "rurScore": 88,
+      "healthPercent": 79.0,
+      "radiationDoseMsv": 24.0,
+      "traits": [
+        "historian",
+        "bookbinder",
+        "document_forger"
+      ],
+      "backstory": "Archivist who preserved Sector 4's civil land deeds, census rolls, and engineering blueprints in sealed zinc boxes.",
+      "confession": "Erased twenty criminal records from the municipal ledger in exchange for three cans of condensed milk."
+    },
+    {
+      "id": "survivor_markov_arsenal_assayer",
+      "name": "Chief Assayer Markov",
+      "age": 54,
+      "occupation": "Munitions Metallurgist",
+      "factionAffinity": "faction_ordnance_foundry",
+      "moralAlignment": "ruthless_pragmatist",
+      "guiltScore": 48,
+      "rurScore": 90,
+      "healthPercent": 81.0,
+      "radiationDoseMsv": 36.0,
+      "traits": [
+        "brass_caster",
+        "powder_mixer",
+        "meticulous"
+      ],
+      "backstory": "Head of the High Granite Arsenal foundry. Kept the shell drop hammers stamping brass through sixty days of artillery sieges.",
+      "confession": "Added 20% sand to the ammonium nitrate batches supplied to local militias to conserve high explosive reserves for the garrison."
+    },
+    {
+      "id": "survivor_talia_upland_commander",
+      "name": "Commander Talia",
+      "age": 40,
+      "occupation": "Ash Militia Leader",
+      "factionAffinity": "faction_ash_militia",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 38,
+      "rurScore": 92,
+      "healthPercent": 87.0,
+      "radiationDoseMsv": 44.0,
+      "traits": [
+        "guerrilla_tactician",
+        "defensive_architect",
+        "uncompromising"
+      ],
+      "backstory": "Elected commander of the Central Upland Defense League. Fortified the eastern terraces against Garrison motorized sweeps.",
+      "confession": "Ordered the destruction of the lower mountain bridge, cutting off fifty farm families on the lower road to save the main redoubt."
+    },
+    {
+      "id": "survivor_provost_kroll",
+      "name": "Major Kroll",
+      "age": 49,
+      "occupation": "3rd Corps Provost Marshal",
+      "factionAffinity": "faction_central_garrison",
+      "moralAlignment": "iron_disciplinarian",
+      "guiltScore": 82,
+      "rurScore": 85,
+      "healthPercent": 78.0,
+      "radiationDoseMsv": 52.0,
+      "traits": [
+        "military_lawyer",
+        "intimidator",
+        "tactical_planner"
+      ],
+      "backstory": "Enforcer of Martial Allocation Schedule 14. Commanded the punitive executions at Kilometre 12 to stop military collapse.",
+      "confession": "Carries the signed execution orders for his own younger brother, who deserted from the 2nd Sentry Company."
+    },
+    {
+      "id": "survivor_hierophant_malachi",
+      "name": "Hierophant Malachi",
+      "age": 57,
+      "occupation": "Ash Sign High Priest",
+      "factionAffinity": "faction_ash_sign",
+      "moralAlignment": "fatalistic_prophet",
+      "guiltScore": 90,
+      "rurScore": 60,
+      "healthPercent": 50.0,
+      "radiationDoseMsv": 280.0,
+      "traits": [
+        "charismatic_speaker",
+        "rad_burn_ascetic",
+        "pain_immune"
+      ],
+      "backstory": "Sole surviving high priest of the Vitrified Crater. Preached the liturgy of the Black Thaw to hundreds of doomed penitents.",
+      "confession": "Survives by taking private chelation injections while forbidding his followers from taking medical treatment."
+    },
+    {
+      "id": "survivor_sapper_vance",
+      "name": "Sapper Vance",
+      "age": 30,
+      "occupation": "8th Penal Pioneer",
+      "factionAffinity": "faction_penal_battalion",
+      "moralAlignment": "cynical_survivor",
+      "guiltScore": 55,
+      "rurScore": 84,
+      "healthPercent": 69.0,
+      "radiationDoseMsv": 120.0,
+      "traits": [
+        "mine_clearer",
+        "tunnel_digger",
+        "trench_foot"
+      ],
+      "backstory": "Convict pioneer who cleared radioactive unexploded ordnance with hand tools in the crater buffer zone.",
+      "confession": "Rigged an unexploded 152mm shell into a booby trap behind his provost guards when his work gang mutinied."
+    },
+    {
+      "id": "survivor_elena_vasquez_rail",
+      "name": "Elena Vasquez",
+      "age": 38,
+      "occupation": "Rail Union Switchwoman",
+      "factionAffinity": "faction_railway_guild",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 22,
+      "rurScore": 88,
+      "healthPercent": 91.0,
+      "radiationDoseMsv": 30.0,
+      "traits": [
+        "track_mechanic",
+        "handcar_pilot",
+        "signal_code_expert"
+      ],
+      "backstory": "Leader of the railway union scouts. Maintains the armored handcars that smuggle grain past Garrison checkpoints.",
+      "confession": "Switched a Garrison supply train onto a broken trestle bridge, drowning four conscript brakemen in the river."
+    },
+    {
+      "id": "survivor_gregor_salt_miner",
+      "name": "Gregor the Salt Miner",
+      "age": 45,
+      "occupation": "Deep Salt Blaster",
+      "factionAffinity": "faction_salt_freeholders",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 19,
+      "rurScore": 86,
+      "healthPercent": 84.0,
+      "radiationDoseMsv": 15.0,
+      "traits": [
+        "dynamite_blaster",
+        "rock_bolter",
+        "underground_navigator"
+      ],
+      "backstory": "Lead miner in the 400m salt caverns. Excavated the hospital rooms and blasted protective rock seals during the siege.",
+      "confession": "Sealed three looters inside an unventilated drift when they attempted to steal the community's salt medicine reserves."
+    },
+    {
+      "id": "survivor_marina_supply_driver",
+      "name": "Marina Drake",
+      "age": 32,
+      "occupation": "Logistics Half-Track Driver",
+      "factionAffinity": "faction_supply_corps",
+      "moralAlignment": "duty_bound_mariner",
+      "guiltScore": 26,
+      "rurScore": 89,
+      "healthPercent": 88.0,
+      "radiationDoseMsv": 42.0,
+      "traits": [
+        "diesel_mechanic",
+        "convoy_gunner",
+        "tireless"
+      ],
+      "backstory": "Veteran convoy driver who hauled twenty tons of medical supplies and seed grain along Highway 12 through sniper fire.",
+      "confession": "Ran down an armed barricade manned by teenage militia fighters without slowing down to deliver emergency antibiotics."
+    },
+    {
+      "id": "survivor_yuri_foundry_caster",
+      "name": "Yuri Belov",
+      "age": 47,
+      "occupation": "Foundry Furnace Master",
+      "factionAffinity": "faction_ordnance_foundry",
+      "moralAlignment": "ruthless_pragmatist",
+      "guiltScore": 34,
+      "rurScore": 87,
+      "healthPercent": 77.0,
+      "radiationDoseMsv": 50.0,
+      "traits": [
+        "furnace_tender",
+        "crucible_caster",
+        "heat_hardened"
+      ],
+      "backstory": "Master furnace operator who kept the bronze crucibles fired on charcoal during the height of the Deep Freeze.",
+      "confession": "Burned thirty thousand wooden library archives from the municipal records building to maintain foundry furnace temperatures."
+    },
+    {
+      "id": "survivor_nadia_militia_scout",
+      "name": "Nadia Brant",
+      "age": 22,
+      "occupation": "Mountain Sentry & Runner",
+      "factionAffinity": "faction_ash_militia",
+      "moralAlignment": "communal_humanist",
+      "guiltScore": 14,
+      "rurScore": 82,
+      "healthPercent": 95.0,
+      "radiationDoseMsv": 35.0,
+      "traits": [
+        "fleet_footed",
+        "crampon_climber",
+        "silent_stalker"
+      ],
+      "backstory": "Upland runner who carried messages between terraced farmsteads in the dead of winter, evading Garrison patrols on skis.",
+      "confession": "Left an injured Garrison courier to freeze in a snowbank rather than carry him to the nearest farm shelter."
+    },
+    {
+      "id": "survivor_boris_penal_medic",
+      "name": "Boris Kogan",
+      "age": 53,
+      "occupation": "Penal Battalion Orderly",
+      "factionAffinity": "faction_penal_battalion",
+      "moralAlignment": "exhausted_healer",
+      "guiltScore": 60,
+      "rurScore": 80,
+      "healthPercent": 66.0,
+      "radiationDoseMsv": 135.0,
+      "traits": [
+        "triage_orderly",
+        "rad_sickness_expert",
+        "stoic"
+      ],
+      "backstory": "Field medic sentenced to the penal battalion for anti-war agitation. Treated four hundred cases of acute radiation sickness in sump mud.",
+      "confession": "Administered lethal potassium overdoses to twelve dying conscripts whose screaming was attracting mortar fire to their trench."
+    },
+    {
+      "id": "survivor_anton_salt_trader",
+      "name": "Anton Vane",
+      "age": 36,
+      "occupation": "Cavern Barter Broker",
+      "factionAffinity": "faction_salt_freeholders",
+      "moralAlignment": "opportunistic_merchant",
+      "guiltScore": 42,
+      "rurScore": 83,
+      "healthPercent": 85.0,
+      "radiationDoseMsv": 20.0,
+      "traits": [
+        "scale_appraiser",
+        "gold_assayer",
+        "persuasive"
+      ],
+      "backstory": "Broker in the 400m salt exchange. Managed transactions between the Works, the Garrison, and the Hydro-Barons without taking sides.",
+      "confession": "Took a 10% cut in grain from starving refugees in exchange for safe sleeping space in the salt cavern infirmary."
+    }
+  ]
 }

@@ -121,7 +121,7 @@ namespace Ashfall.Core
             if (sv == null || !sv.isAlive || string.IsNullOrEmpty(sv.backgroundId) || string.IsNullOrEmpty(itemId))
                 return TriggerOutcome.None;
 
-            string category = GetCategoryFromId(itemId);
+            string category = GetCategoryFromId(itemId)!;
             if (string.IsNullOrEmpty(category)) return TriggerOutcome.None;
 
             if (!_rulesByBackground.TryGetValue(sv.backgroundId, out var rules))
@@ -307,7 +307,7 @@ namespace Ashfall.Core
 
         // ── Category inference (mirrors Unity original) ───────────────
 
-        private static string GetCategoryFromId(string itemId)
+        private static string? GetCategoryFromId(string itemId)
         {
             if (string.IsNullOrEmpty(itemId)) return null;
             if (itemId.StartsWith("toy") || itemId.StartsWith("child")) return "childhood";

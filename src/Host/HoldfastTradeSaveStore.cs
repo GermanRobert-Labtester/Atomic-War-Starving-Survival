@@ -56,7 +56,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static HoldfastTradeSaveState TryLoad(string pathOverride = null)
+        public static HoldfastTradeSaveState? TryLoad(string pathOverride = null)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace AtomicWar.GodotApp
                 {
                     try
                     {
-                        string backupText = s_files.ReadAllText(BackupPath);
+                        string backupText = s_files.ReadAllText(backupPath);
                         var backupEnvelope = s_json.Deserialize<HoldfastTradeSaveEnvelope>(backupText);
                         if (backupEnvelope != null && backupEnvelope.State != null
                             && !string.IsNullOrEmpty(backupEnvelope.Checksum)

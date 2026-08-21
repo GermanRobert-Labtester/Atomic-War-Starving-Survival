@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "quests": [
     {
       "id": "quest_garrison_blood_debt",

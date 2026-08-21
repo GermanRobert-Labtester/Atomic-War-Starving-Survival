@@ -54,7 +54,7 @@ namespace Ashfall.Core.Shelter
             if (string.IsNullOrWhiteSpace(jsonText))
                 throw new InvalidOperationException("PowerGridSave: empty save payload.");
             PowerGridSave save;
-            try { save = json.Deserialize<PowerGridSave>(jsonText); }
+            try { save = json.Deserialize<PowerGridSave>(jsonText!); }
             catch (Exception e)
             {
                 throw new InvalidOperationException(

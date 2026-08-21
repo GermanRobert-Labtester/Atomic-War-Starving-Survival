@@ -78,7 +78,7 @@ namespace Ashfall.Core.YearOfAsh
 
         public List<QuestStage> stages = new List<QuestStage>();
 
-        public QuestStage FindStage(string id)
+        public QuestStage? FindStage(string id)
         {
             foreach (var s in stages)
                 if (s.stageId == id) return s;
@@ -167,7 +167,7 @@ namespace Ashfall.Core.YearOfAsh
                 _catalog.Add(def);
         }
 
-        public QuestlineDefinition FindDefinition(string questlineId)
+        public QuestlineDefinition? FindDefinition(string questlineId)
         {
             foreach (var q in _catalog)
                 if (q.questlineId == questlineId) return q;
@@ -260,7 +260,7 @@ namespace Ashfall.Core.YearOfAsh
         /// Player picks a choice in the current stage of an active questline.
         /// Returns null if questline not found or choice invalid.
         /// </summary>
-        public QuestChoiceResult TakeChoice(string questlineId, string choiceId, int day)
+        public QuestChoiceResult? TakeChoice(string questlineId, string choiceId, int day)
         {
             var record = _state.active.Find(a => a.questlineId == questlineId);
             if (record == null || record.status != QuestlineStatus.Active) return null;
@@ -271,7 +271,7 @@ namespace Ashfall.Core.YearOfAsh
             var stage = def.FindStage(record.currentStageId);
             if (stage == null) return null;
 
-            QuestChoice choice = null;
+            QuestChoice? choice = null;
             foreach (var c in stage.choices)
                 if (c.choiceId == choiceId) { choice = c; break; }
             if (choice == null) return null;
@@ -327,7 +327,7 @@ namespace Ashfall.Core.YearOfAsh
             return result;
         }
 
-        public ActiveQuestlineRecord GetActiveRecord(string questlineId)
+        public ActiveQuestlineRecord? GetActiveRecord(string questlineId)
         {
             return _state.active.Find(a => a.questlineId == questlineId);
         }

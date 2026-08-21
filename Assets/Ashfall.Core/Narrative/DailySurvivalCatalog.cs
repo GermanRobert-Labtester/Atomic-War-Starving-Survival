@@ -213,25 +213,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public PsychologicalJournalEntry GetJournal(string id)
+        public PsychologicalJournalEntry? GetJournal(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PsychologicalJournalEntry e ? e : null;
         }
 
-        public MutatedBotanicalEntry GetBotanical(string id)
+        public MutatedBotanicalEntry? GetBotanical(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MutatedBotanicalEntry e ? e : null;
         }
 
-        public ChildrenFolkloreEntry GetFolklore(string id)
+        public ChildrenFolkloreEntry? GetFolklore(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ChildrenFolkloreEntry e ? e : null;
         }
 
-        public RationFraudEntry GetFraud(string id)
+        public RationFraudEntry? GetFraud(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RationFraudEntry e ? e : null;

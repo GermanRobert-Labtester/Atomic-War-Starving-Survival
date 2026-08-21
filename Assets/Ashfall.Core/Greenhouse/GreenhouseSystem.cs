@@ -316,7 +316,7 @@ namespace Ashfall.Core
             }
         }
 
-        private GreenhousePlotState PlotAt(int plotIndex)
+        private GreenhousePlotState? PlotAt(int plotIndex)
         {
             if (plotIndex < 0 || plotIndex >= _state.plots.Count) return null;
             return _state.plots[plotIndex];

@@ -164,7 +164,7 @@ namespace Ashfall.Core
 
                 // The name is part of the hash, so two fields swapping values is detected.
                 sb.Append(field.Name).Append('=');
-                WriteValue(sb, field.GetValue(value), field.FieldType, depth + 1, false);
+                WriteValue(sb, field.GetValue(value)!, field.FieldType, depth + 1, false);
                 sb.Append(',');
             }
 

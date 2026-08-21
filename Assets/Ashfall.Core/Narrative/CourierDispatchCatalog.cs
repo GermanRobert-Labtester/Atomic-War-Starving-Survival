@@ -51,7 +51,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public CourierDispatchEntry GetById(string dispatchId)
+        public CourierDispatchEntry? GetById(string dispatchId)
         {
             if (string.IsNullOrEmpty(dispatchId)) return null;
             _byId.TryGetValue(dispatchId, out var entry);

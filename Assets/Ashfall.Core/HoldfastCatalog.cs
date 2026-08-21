@@ -54,10 +54,10 @@ namespace Ashfall.Core
         public HoldfastItemsCatalog Items { get; set; } = HoldfastItemsCatalog.Empty();
         public HoldfastFactionsCatalog Factions { get; set; } = HoldfastFactionsCatalog.Empty();
 
-        public HoldfastItemDefinition GetItem(string id) => Items != null ? Items.GetById(id) : null;
-        public HoldfastFactionEntry GetFaction(string id) => Factions != null ? Factions.GetById(id) : null;
+        public HoldfastItemDefinition? GetItem(string id) => Items != null ? Items.GetById(id) : null;
+        public HoldfastFactionEntry? GetFaction(string id) => Factions != null ? Factions.GetById(id) : null;
 
-        public HoldfastLocationEntry GetLocation(string id)
+        public HoldfastLocationEntry? GetLocation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Locations.Count; i++)
@@ -66,7 +66,7 @@ namespace Ashfall.Core
             return null;
         }
 
-        public HoldfastQuestEntry GetQuest(string id)
+        public HoldfastQuestEntry? GetQuest(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Quests.Count; i++)

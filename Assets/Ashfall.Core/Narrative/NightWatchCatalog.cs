@@ -54,7 +54,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public NightWatchEntry GetById(string logId)
+        public NightWatchEntry? GetById(string logId)
         {
             if (string.IsNullOrEmpty(logId)) return null;
             _byId.TryGetValue(logId, out var entry);

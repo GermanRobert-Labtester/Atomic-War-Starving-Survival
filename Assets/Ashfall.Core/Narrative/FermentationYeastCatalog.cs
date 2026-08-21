@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public SourdoughMotherAcidityEntry GetSourdough(string id)
+        public SourdoughMotherAcidityEntry? GetSourdough(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SourdoughMotherAcidityEntry e ? e : null;
         }
 
-        public BrewersYeastKrausenEntry GetBrewing(string id)
+        public BrewersYeastKrausenEntry? GetBrewing(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BrewersYeastKrausenEntry e ? e : null;
         }
 
-        public SilageLacticPitEntry GetSilage(string id)
+        public SilageLacticPitEntry? GetSilage(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SilageLacticPitEntry e ? e : null;
         }
 
-        public FermentationCrockAirlockEntry GetCrock(string id)
+        public FermentationCrockAirlockEntry? GetCrock(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is FermentationCrockAirlockEntry e ? e : null;

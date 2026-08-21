@@ -37,7 +37,7 @@ namespace Ashfall.Core.Inventory
             float condition = 1f, float contamination = 0f)
         {
             InstanceId = MakeInstanceId(itemId ?? string.Empty);
-            ItemId = itemId;
+            ItemId = itemId!;
             Quantity = quantity;
             ConditionPct = MathfCompat.Clamp01(condition);
             ContaminationPct = MathfCompat.Clamp01(contamination);
@@ -115,7 +115,7 @@ namespace Ashfall.Core.Inventory
                 _byId[def.id] = def;
         }
 
-        public ItemDefinition Get(string itemId)
+        public ItemDefinition? Get(string itemId)
         {
             if (string.IsNullOrEmpty(itemId)) return null;
             return _byId.TryGetValue(itemId, out var def) ? def : null;

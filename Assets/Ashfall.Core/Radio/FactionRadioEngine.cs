@@ -47,9 +47,9 @@ namespace Ashfall.Core.Radio
             return _channels.TryGetValue(factionId, out var ch) ? ch.Callsign : "UNKNOWN TRANSMITTER";
         }
 
-        public string TryFindFactionAtFrequency(float frequencyMhz, float toleranceMhz = 1.5f)
+        public string? TryFindFactionAtFrequency(float frequencyMhz, float toleranceMhz = 1.5f)
         {
-            string bestFaction = null;
+            string bestFaction = null!;
             float minDiff = float.MaxValue;
 
             foreach (var (fId, ch) in _channels)
@@ -166,7 +166,7 @@ namespace Ashfall.Core.Radio
             {
                 foreach (var item in silenceProp.EnumerateArray())
                 {
-                    engine.AddSilenceEvent(item.GetString());
+                    engine.AddSilenceEvent(item.GetString()!);
                 }
             }
 

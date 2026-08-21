@@ -114,7 +114,7 @@ namespace Ashfall.Core
             _log.Info($"[Vinyl] daily effect: +{record.morale_daily_bonus} morale, -{record.flashback_suppression:P0} flashback");
         }
 
-        public VinylRecordDefinition GetRecord(string id)
+        public VinylRecordDefinition? GetRecord(string id)
         {
             _catalog.TryGetValue(id, out var r);
             return r;

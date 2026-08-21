@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Godot;
 using Ashfall.Core;
 
 namespace AtomicWar.GodotApp
@@ -130,7 +131,7 @@ namespace AtomicWar.GodotApp
         private void RaiseStateChanged()
         {
             try { StateChanged?.Invoke(); }
-            catch { /* host event badness — log only */ }
+            catch (Exception ex) { GD.PrintErr($"[StandingRecord] StateChanged event failed: {ex.Message}"); }
         }
     }
 

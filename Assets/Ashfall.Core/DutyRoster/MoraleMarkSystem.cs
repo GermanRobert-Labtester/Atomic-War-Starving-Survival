@@ -60,7 +60,7 @@ namespace Ashfall.Core
         public void SetMark(string id, string payload = null, int day = 0)
         {
             if (string.IsNullOrEmpty(id)) return;
-            if (!_byId.TryGetValue(id, out MoraleMarkRecord rec) || rec == null)
+            if (!_byId.TryGetValue(id, out var rec) || rec == null)
             {
                 rec = new MoraleMarkRecord { id = id };
                 _byId[id] = rec;
@@ -81,7 +81,7 @@ namespace Ashfall.Core
         public string GetPayload(string id)
         {
             if (string.IsNullOrEmpty(id)) return string.Empty;
-            return _byId.TryGetValue(id, out MoraleMarkRecord rec) && rec != null
+            return _byId.TryGetValue(id, out var rec) && rec != null
                 ? (rec.payload ?? string.Empty)
                 : string.Empty;
         }
@@ -90,7 +90,7 @@ namespace Ashfall.Core
         public string GetLaterProse(string id)
         {
             if (string.IsNullOrEmpty(id)) return string.Empty;
-            if (_laterProse.TryGetValue(id, out string later) && !string.IsNullOrEmpty(later))
+            if (_laterProse.TryGetValue(id, out var later) && !string.IsNullOrEmpty(later))
                 return later;
             return GetPayload(id);
         }

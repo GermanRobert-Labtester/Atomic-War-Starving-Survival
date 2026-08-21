@@ -46,6 +46,32 @@ namespace Ashfall.Core.Tests
             Assert.Equal(3, c.State.contractors[0].missedPayments);
         }
 
+        [Fact] public void TickDay_OnExpiryDay_DoesNotAccrueMissedPayment()
+        {
+            // Bug-06 regression: on the exact expiry day, missedPayments must
+            // not increment even when the player cannot pay — the contractor
+            // is leaving anyway and should not suffer a loyalty penalty on
+            // their last day.
+            var c = Create(out var inv, out _, out _);
+            inv.AddById("scrap_metal", 100);
+            // Step the system forward to stripe 9 (no contractors yet — payments do nothing).
+            for (int d = 0; d <= 9; d++) c.TickDay(d);
+            // Hire on day 9 with termDays = 3 → expiryDay = 12.
+            c.GenerateOffer("drifter_1", "guard",
+                new System.Collections.Generic.List<string>(),
+                initialFee: 20, dailyPay: 5, termDays: 3);
+            c.AcceptOffer(c.State.activeOffers[0].offerId);
+            Assert.Equal(9, c.State.contractors[0].startDay);
+            Assert.Equal(12, c.State.contractors[0].expiryDay);
+            // Drain funds so payment on the expiry day would fail.
+            inv.RemoveById("scrap_metal", inv.CountById("scrap_metal"));
+            // Tick the exact expiry day — should expire, not accrue a missed payment.
+            c.TickDay(12);
+            var contractor = c.State.contractors[0];
+            Assert.Equal(ContractStatus.Expired, contractor.status);
+            Assert.Equal(0, contractor.missedPayments);
+        }
+
         [Fact] public void Dismiss_RemovesContractor()
         {
             var c = Create(out var inv, out _, out _);

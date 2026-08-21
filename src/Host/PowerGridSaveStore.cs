@@ -40,7 +40,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static PowerGridSave TryLoad()
+        public static PowerGridSave? TryLoad()
         {
             try
             {

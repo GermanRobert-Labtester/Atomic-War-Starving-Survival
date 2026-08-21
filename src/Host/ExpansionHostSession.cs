@@ -112,8 +112,8 @@ namespace AtomicWar.GodotApp
             // The Silent Foundry (Exp 10): static catalogs + blueprint + treaty anchors.
             var foundryData = new Ashfall.Core.Foundry.SilentFoundryCatalog();
             foundryData.Load(
-                Ashfall.Core.Foundry.SilentFoundryCatalogLoader.LoadProduction(dataDirectory, files, json),
-                Ashfall.Core.Foundry.SilentFoundryCatalogLoader.LoadFaction(dataDirectory, files, json));
+                Ashfall.Core.Foundry.SilentFoundryCatalogLoader.LoadProduction(dataDirectory, files, json)!,
+                Ashfall.Core.Foundry.SilentFoundryCatalogLoader.LoadFaction(dataDirectory, files, json)!);
             var foundry = new Ashfall.Core.Foundry.SilentFoundrySystem(log: log);
             int maintenanceCycle = 4;
             var blueprints = new Ashfall.Core.Narrative.BunkerBlueprintCatalog();
@@ -244,7 +244,7 @@ namespace AtomicWar.GodotApp
             var room = def.GetRoom(roomId);
             if (room == null) return "no room " + roomId;
             string dark = Layouts.IsRoomDark(parentId, roomId) ? " [dark]" : "";
-            string recast = Memory.GetActiveRecast(parentId);
+            string recast = Memory.GetActiveRecast(parentId)!;
             var sb = new StringBuilder(room.displayName).Append(dark).Append("\n");
             sb.Append(room.inspect).Append('\n');
             if (!string.IsNullOrEmpty(recast) && !Layouts.IsRoomDark(parentId, roomId))

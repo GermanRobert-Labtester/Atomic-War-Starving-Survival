@@ -236,7 +236,7 @@ namespace Ashfall.Core
                     return current;
                 }
 
-                migrated = json.Deserialize<HoldfastSave>(jsonText);
+                migrated = json.Deserialize<HoldfastSave>(jsonText!);
             }
             catch (InvalidOperationException)
             {

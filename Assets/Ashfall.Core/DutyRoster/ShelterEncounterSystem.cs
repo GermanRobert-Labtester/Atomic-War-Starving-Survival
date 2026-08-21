@@ -148,7 +148,7 @@ namespace Ashfall.Core
             return true;
         }
 
-        public string PeekVisitor()
+        public string? PeekVisitor()
         {
             return _visitorQueue.Count > 0 ? _visitorQueue[0] : null;
         }
@@ -264,7 +264,7 @@ namespace Ashfall.Core
             return !string.IsNullOrEmpty(id) && _resolved.Contains(id);
         }
 
-        public ShelterEncounterRecord GetActive(string id)
+        public ShelterEncounterRecord? GetActive(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < _state.history.Count; i++)

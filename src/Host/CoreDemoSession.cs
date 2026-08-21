@@ -205,7 +205,7 @@ namespace AtomicWar.GodotApp
                 string mark = Quests.IsCompleted(id)
                     ? "done"
                     : Quests.IsStarted(id)
-                        ? "stage " + Quests.GetProgress(id).stage
+                        ? "stage " + Quests.GetProgress(id)!.stage
                         : "—";
                 parts.Add(id.Replace("quest_holdfast_the_", "") + ":" + mark);
             }

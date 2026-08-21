@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public LangstrothHiveFoundationEntry GetFoundation(string id)
+        public LangstrothHiveFoundationEntry? GetFoundation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LangstrothHiveFoundationEntry e ? e : null;
         }
 
-        public ApicultureRedLightEntry GetRedLight(string id)
+        public ApicultureRedLightEntry? GetRedLight(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ApicultureRedLightEntry e ? e : null;
         }
 
-        public HoneyExtractorBalanceEntry GetExtractor(string id)
+        public HoneyExtractorBalanceEntry? GetExtractor(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is HoneyExtractorBalanceEntry e ? e : null;
         }
 
-        public BeeswaxRenderingDippingEntry GetWax(string id)
+        public BeeswaxRenderingDippingEntry? GetWax(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BeeswaxRenderingDippingEntry e ? e : null;

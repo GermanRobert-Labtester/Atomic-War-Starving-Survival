@@ -56,7 +56,7 @@ namespace Ashfall.Core.Combat
         }
 
         /// <summary>The perks tracker for a survivor (lazily created, save-safe).</summary>
-        public CombatPerks PerksFor(string survivorId, int seed)
+        public CombatPerks? PerksFor(string survivorId, int seed)
         {
             if (string.IsNullOrEmpty(survivorId)) return null;
             if (!_perksBySurvivor.TryGetValue(survivorId, out var p))
@@ -223,7 +223,7 @@ namespace Ashfall.Core.Combat
             return TryParseStance(_state.PlayerStance, out var s) ? s : TacticalStance.HoldPosition;
         }
 
-        private CombatantState FindPlayerCombatant(string survivorIdOrCombatantId)
+        private CombatantState? FindPlayerCombatant(string survivorIdOrCombatantId)
         {
             for (int i = 0; i < _state.Combatants.Count; i++)
             {
@@ -235,7 +235,7 @@ namespace Ashfall.Core.Combat
             return null;
         }
 
-        private CombatantState FindCombatant(string id)
+        private CombatantState? FindCombatant(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < _state.Combatants.Count; i++)
@@ -269,7 +269,7 @@ namespace Ashfall.Core.Combat
             return list;
         }
 
-        private CombatantState PickActiveShooter()
+        private CombatantState? PickActiveShooter()
         {
             var players = LivingPlayers();
             if (players.Count == 0) return null;
@@ -281,7 +281,7 @@ namespace Ashfall.Core.Combat
             return null;
         }
 
-        private WeaponInstanceState WeaponOf(CombatantState c)
+        private WeaponInstanceState? WeaponOf(CombatantState c)
         {
             if (c == null || string.IsNullOrEmpty(c.WeaponInstanceId)) return null;
             for (int i = 0; i < _state.Weapons.Count; i++)
@@ -438,7 +438,7 @@ namespace Ashfall.Core.Combat
             // ── Ballistics ──
             var ammo = CombatCatalog.GetAmmo(weapon.AmmoId);
             var coverMaterial = CombatCatalog.GetMaterial("material_concrete"); // default rubble cover
-            var armorMaterial = CombatCatalog.GetMaterial(GetArmorMaterialId(shooter));
+            var armorMaterial = CombatCatalog.GetMaterial(GetArmorMaterialId(shooter)!);
             var barrier = FindPlayerLaneBarrier(target.Lane); // enemy behind a player barrier? use enemy barrier
 
             var ctx = new BallisticContext
@@ -462,8 +462,8 @@ namespace Ashfall.Core.Combat
                 IsFirstShotCritBonus = false,
                 ExtraCritChance = 0f,
                 IntendedTarget = target,
-                CoverMaterial = coverMaterial,
-                ArmorMaterial = armorMaterial,
+                CoverMaterial = coverMaterial!,
+                ArmorMaterial = armorMaterial!,
                 BarrierMaterial = null,
                 RicochetTargets = LivingEnemies()
             };
@@ -498,7 +498,7 @@ namespace Ashfall.Core.Combat
             return res;
         }
 
-        private string GetArmorMaterialId(CombatantState c)
+        private string? GetArmorMaterialId(CombatantState c)
         {
             if (c.ArmorRating >= 0.6f) return "armor_plate";
             if (c.ArmorRating >= 0.4f) return "armor_kevlar";
@@ -512,7 +512,7 @@ namespace Ashfall.Core.Combat
             return p != null ? p.GetCloseQuartersDamageMultiplier(shooter.SurvivorId, false) : 1f;
         }
 
-        private BarrierState FindPlayerLaneBarrier(int lane)
+        private BarrierState? FindPlayerLaneBarrier(int lane)
         {
             for (int i = 0; i < _state.Barriers.Count; i++)
                 if (_state.Barriers[i].IsPlayer && _state.Barriers[i].Lane == lane) return _state.Barriers[i];
@@ -527,7 +527,8 @@ namespace Ashfall.Core.Combat
             var shooter = PickActiveShooter();
             if (shooter == null) { res.Message = "No standing armed survivor."; return res; }
             var weapon = WeaponOf(shooter);
-            var def = weapon != null ? CombatCatalog.GetWeapon(weapon.WeaponId) : null;
+            if (weapon == null) { res.Message = shooter.Name + " has no weapon."; return res; }
+            var def = CombatCatalog.GetWeapon(weapon.WeaponId);
             if (def == null || !def.isSuppressionCapable)
             {
                 res.Message = "Weapon cannot lay suppressive fire (needs a rifle or LMG).";

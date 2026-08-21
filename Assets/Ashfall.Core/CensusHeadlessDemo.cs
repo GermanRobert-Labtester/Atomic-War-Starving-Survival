@@ -105,7 +105,7 @@ namespace Ashfall.Core
             var json = new SystemTextJsonSerializer();
             var blob = json.Serialize(refusing.CaptureState());
             var restored = new CensusClaimSystem();
-            restored.RestoreState(json.Deserialize<CensusClaimSystemState>(blob));
+            restored.RestoreState(json.Deserialize<CensusClaimSystemState>(blob)!);
             Check(restored.LevyRefuse, "roundtrip refuse flag");
             Check(restored.Order12CActive, "roundtrip 12-C");
             Check(restored.State.ledger.Count == refusing.State.ledger.Count, "roundtrip ledger size");

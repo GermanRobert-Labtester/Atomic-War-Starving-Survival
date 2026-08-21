@@ -81,6 +81,32 @@ namespace Ashfall.Core.Tests
             Assert.False(t.IsRoomAvailable("room_a"));
         }
 
+        [Fact] public void AddRoom_FloorAtIndoorTemp()
+        {
+            // Bug-12 regression: a fresh room added to a cold bunker must not
+            // inherit a stale or default boilerCurrentTempC from the field
+            // default (20°C) — that value has no physical meaning if the boiler
+            // was never actually run. Rooms should start at the indoor
+            // baseline (the deep-freeze target), then equilibrate via heat
+            // exchange with existing rooms and the boiler.
+            var df = new YearOfAshDeepFreezeSystem(new YearOfAshDeepFreezeState
+            {
+                indoorTemperatureCelsius = 5f
+            });
+            var t = new ShelterThermalSystem(new SeededRng(42),
+                new NeedsSystem(), new StartingLevelSystem(), df);
+            // Sanity: field default boilerCurrentTempC is 20°C even though the
+            // shelter has never been warmed by anything.
+            Assert.Equal(20f, t.State.boilerCurrentTempC);
+            Assert.Equal(5f, df.IndoorTempCelsius);
+            t.AddRoom("room_a", "Cold Bunker", 80f);
+            float roomTemp = t.State.rooms[0].currentTempC;
+            // The room must start close to the indoor baseline (5C), not the
+            // 20C boiler field default.
+            Assert.True(roomTemp <= df.IndoorTempCelsius + 1f,
+                $"room {roomTemp}C starts too warm (indoor baseline {df.IndoorTempCelsius}C)");
+        }
+
         [Fact] public void CaptureRestoreState_PreservesRooms()
         {
             var t = Create(out _, out _, out _);

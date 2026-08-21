@@ -101,7 +101,13 @@ namespace Ashfall.Core
             {
                 roomId = roomId, displayName = displayName,
                 volumeM3 = volumeM3, insulationFactor = Math.Clamp(insulationFactor, 0.1f, 2f),
-                hasRadiator = hasRadiator, currentTempC = _state.boilerCurrentTempC
+                hasRadiator = hasRadiator,
+                // Bug-12: a fresh room starts at the indoor baseline (ambient
+                // shelter temperature) rather than inheriting a stale or
+                // field-default boilerCurrentTempC value. The boiler contributes
+                // heat gain via TickDay; this floor only avoids seeding a false
+                // 20°C default when the bunker has never been warmed.
+                currentTempC = _deepFreeze.IndoorTempCelsius
             });
             OnThermalChanged?.Invoke();
             return ActionResult.Success("thermal.room_added");

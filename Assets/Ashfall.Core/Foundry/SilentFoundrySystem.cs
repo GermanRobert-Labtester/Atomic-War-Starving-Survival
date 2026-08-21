@@ -455,7 +455,7 @@ namespace Ashfall.Core.Foundry
         public bool IsJournalTriggered(string templateId) =>
             _state.triggeredJournals != null && _state.triggeredJournals.Contains(templateId);
 
-        public FoundryTreatyCompliance GetTreatyCompliance(string treatyId)
+        public FoundryTreatyCompliance? GetTreatyCompliance(string treatyId)
         {
             if (_state.treatyCompliance == null) return null;
             for (int i = 0; i < _state.treatyCompliance.Count; i++)
@@ -499,7 +499,7 @@ namespace Ashfall.Core.Foundry
             if (c == null || c.lastAssessmentDay == 0) return FoundryTreatyOutcome.Pending;
 
             // The most recent applied consequence for this treaty is the outcome.
-            FoundryConsequenceRecord latest = null;
+            FoundryConsequenceRecord? latest = null;
             for (int i = 0; i < _consequenceState.applied.Count; i++)
             {
                 var r = _consequenceState.applied[i];

@@ -243,7 +243,7 @@ namespace Ashfall.Core.Survivors
         // ── Queries ────────────────────────────────────────────────────
 
         /// <summary>Get the patient ID for a caregiver, or null if not caregiving.</summary>
-        public string GetPatientForCaregiver(string caregiverId)
+        public string? GetPatientForCaregiver(string caregiverId)
         {
             if (string.IsNullOrEmpty(caregiverId)) return null;
             return _caregiverToPatient.TryGetValue(caregiverId, out var patientId)
@@ -251,7 +251,7 @@ namespace Ashfall.Core.Survivors
         }
 
         /// <summary>Get the caregiver ID for a patient, or null if no caregiver assigned.</summary>
-        public string GetCaregiverForPatient(string patientId)
+        public string? GetCaregiverForPatient(string patientId)
         {
             if (string.IsNullOrEmpty(patientId)) return null;
             return _patientToCaregiver.TryGetValue(patientId, out var caregiverId)

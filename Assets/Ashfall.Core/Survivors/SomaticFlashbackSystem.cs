@@ -151,7 +151,7 @@ namespace Ashfall.Core.Survivors
                 if ((Rng?.NextDouble() ?? 0.5) >= chance) continue;
 
                 // Check if grounded by a companion
-                string groundedBy = FindGroundingCompanion(svId, survivorIds);
+                string groundedBy = FindGroundingCompanion(svId, survivorIds)!;
                 float duration = MinFlashbackDurationHours +
                     (float)((Rng?.NextDouble() ?? 0.5) *
                     (MaxFlashbackDurationHours - MinFlashbackDurationHours));
@@ -265,7 +265,7 @@ namespace Ashfall.Core.Survivors
 
         // ── Private helpers ────────────────────────────────────────────
 
-        private string FindGroundingCompanion(string survivorId, IReadOnlyList<string> survivorIds)
+        private string? FindGroundingCompanion(string survivorId, IReadOnlyList<string> survivorIds)
         {
             if (IsCompanionInSameRoom == null) return null;
             for (int i = 0; i < survivorIds.Count; i++)

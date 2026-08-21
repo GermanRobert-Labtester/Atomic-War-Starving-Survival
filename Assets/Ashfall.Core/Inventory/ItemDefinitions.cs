@@ -205,7 +205,7 @@ namespace Ashfall.Core.Inventory
             return Enum.TryParse<EquipSlot>(raw.Trim(), true, out _);
         }
 
-        public static string CanonicalNameForAlias(string raw)
+        public static string? CanonicalNameForAlias(string raw)
         {
             if (string.IsNullOrWhiteSpace(raw)) return null;
             string key = raw.Trim();

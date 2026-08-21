@@ -20,13 +20,21 @@ namespace Ashfall.Core
 
         public void WriteAllText(string path, string contents)
         {
-            string dir = Path.GetDirectoryName(path);
+            string? dir = Path.GetDirectoryName(path);
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
             File.WriteAllText(path, contents ?? string.Empty, Encoding.UTF8);
         }
 
         public string Combine(params string[] parts) => Path.Combine(parts);
+
+        /// <summary>
+        /// BCL implementation of JSON catalog enumeration.
+        /// </summary>
+        public string[] EnumerateJsonFiles(string dataDirectory, SearchOption searchOption)
+        {
+            return Directory.GetFiles(dataDirectory, "*.json", searchOption);
+        }
     }
 
     public sealed class SystemTextJsonSerializer : IJsonSerializer
@@ -41,7 +49,7 @@ namespace Ashfall.Core
         public string Serialize<T>(T value) =>
             JsonSerializer.Serialize(value, Options);
 
-        public T Deserialize<T>(string json)
+        public T? Deserialize<T>(string json) where T : class
         {
             if (string.IsNullOrWhiteSpace(json))
                 return default;

@@ -194,7 +194,7 @@ namespace Ashfall.Core.Warlords
                 "migrated warlord has no territory list (system applies catalog defaults)");
 
             // Future-version rejection + tamper.
-            var future = json.Deserialize<YearOfAsh.YearOfAshSave>(encoded);
+            var future = json.Deserialize<YearOfAsh.YearOfAshSave>(encoded) ?? new YearOfAsh.YearOfAshSave();
             future.saveVersion = YearOfAsh.YearOfAshSave.CurrentSaveVersion + 1;
             future.Checksum = SaveChecksum.Compute(future);
             bool futureRejected = false;

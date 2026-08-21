@@ -375,7 +375,7 @@ namespace Ashfall.Core.Tests
 
             sys2.TickDaily(10); // same day after restore — must not restart
             Assert.Equal(0, startCount);
-            Assert.Equal(1, sys2.State.quests.Count);
+            Assert.Single(sys2.State.quests);
         }
 
         [Fact]

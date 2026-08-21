@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public WoodAshLyeHydrometerEntry GetLye(string id)
+        public WoodAshLyeHydrometerEntry? GetLye(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is WoodAshLyeHydrometerEntry e ? e : null;
         }
 
-        public TallowSaponificationKettleEntry GetTallow(string id)
+        public TallowSaponificationKettleEntry? GetTallow(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TallowSaponificationKettleEntry e ? e : null;
         }
 
-        public ColdProcessSoapCuringEntry GetCuring(string id)
+        public ColdProcessSoapCuringEntry? GetCuring(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ColdProcessSoapCuringEntry e ? e : null;
         }
 
-        public SweetWaterGlycerinEntry GetGlycerin(string id)
+        public SweetWaterGlycerinEntry? GetGlycerin(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SweetWaterGlycerinEntry e ? e : null;

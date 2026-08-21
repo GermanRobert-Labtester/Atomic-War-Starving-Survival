@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public DraglineRuinEntry GetDragline(string id)
+        public DraglineRuinEntry? GetDragline(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is DraglineRuinEntry e ? e : null;
         }
 
-        public SubstationFireEntry GetSubstation(string id)
+        public SubstationFireEntry? GetSubstation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SubstationFireEntry e ? e : null;
         }
 
-        public ArmoredLocomotiveEntry GetLocomotive(string id)
+        public ArmoredLocomotiveEntry? GetLocomotive(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ArmoredLocomotiveEntry e ? e : null;
         }
 
-        public PipelineSabotageEntry GetPipeline(string id)
+        public PipelineSabotageEntry? GetPipeline(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PipelineSabotageEntry e ? e : null;

@@ -68,7 +68,7 @@ namespace Ashfall.Core.Expeditions
             if (OxygenRemaining <= 0 || CurrentRoom == DiveRoom.the_hold) return false;
 
             CurrentRoom++;
-            _bus.Publish($"dive.room.{CurrentRoom}", _site?.site_id);
+            _bus.Publish($"dive.room.{CurrentRoom}", _site?.site_id!);
 
             // The Keeper is always one bulkhead ahead: observation props fire here,
             // feeding q_keeper_of_logs without ever rendering a figure.
@@ -109,7 +109,7 @@ namespace Ashfall.Core.Expeditions
         {
             OxygenRemaining--;
             if (OxygenRemaining == 30) _bus.Publish("dive.oxygen.low", OxygenRemaining);
-            if (OxygenRemaining <= 0) _bus.Publish("dive.abort.forced", _site?.site_id);
+            if (OxygenRemaining <= 0) _bus.Publish("dive.abort.forced", _site?.site_id!);
         }
     }
 }

@@ -24,15 +24,27 @@ namespace AtomicWar.GodotApp
 
         public static bool Exists => s_files.FileExists(SavePath);
 
-        public static bool TrySave(WorldWeatherState state, SkyArmorSaveState skyArmor = null)
+        public static bool TrySave(
+            WorldWeatherState state,
+            SkyArmorSaveState skyArmor = null,
+            LocationEvolutionSaveState locationEvolution = null,
+            WildlifeSaveState wildlife = null,
+            LandmarkSaveState landmark = null)
         {
             try
             {
                 if (state == null) return false;
-                var envelope = new WorldHostSave { State = state, SkyArmor = skyArmor };
+                var envelope = new WorldHostSave
+                {
+                    State = state,
+                    SkyArmor = skyArmor,
+                    LocationEvolution = locationEvolution,
+                    Wildlife = wildlife,
+                    Landmark = landmark
+                };
                 envelope.Checksum = SaveChecksum.Compute(envelope);
                 string path = SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
@@ -45,7 +57,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static WorldHostSave TryLoadEnvelope()
+        public static WorldHostSave? TryLoadEnvelope()
         {
             try
             {
@@ -86,7 +98,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static WorldWeatherState TryLoad()
+        public static WorldWeatherState? TryLoad()
         {
             return TryLoadEnvelope()?.State;
         }
@@ -97,6 +109,9 @@ namespace AtomicWar.GodotApp
     {
         public WorldWeatherState State;
         public SkyArmorSaveState SkyArmor;
+        public LocationEvolutionSaveState LocationEvolution;
+        public WildlifeSaveState Wildlife;
+        public LandmarkSaveState Landmark;
         public string Checksum = string.Empty;
     }
 }

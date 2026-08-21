@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CryoGermplasmViabilityEntry GetGermplasm(string id)
+        public CryoGermplasmViabilityEntry? GetGermplasm(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CryoGermplasmViabilityEntry e ? e : null;
         }
 
-        public LiquidNitrogenCompressorEntry GetCompressor(string id)
+        public LiquidNitrogenCompressorEntry? GetCompressor(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LiquidNitrogenCompressorEntry e ? e : null;
         }
 
-        public PermafrostMethaneEruptionEntry GetPermafrost(string id)
+        public PermafrostMethaneEruptionEntry? GetPermafrost(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PermafrostMethaneEruptionEntry e ? e : null;
         }
 
-        public CropGenomeDegradationEntry GetGenome(string id)
+        public CropGenomeDegradationEntry? GetGenome(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CropGenomeDegradationEntry e ? e : null;

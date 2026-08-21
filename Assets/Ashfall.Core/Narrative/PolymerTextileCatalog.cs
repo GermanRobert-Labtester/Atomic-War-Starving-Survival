@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public NeopreneGasketDegradationEntry GetGasket(string id)
+        public NeopreneGasketDegradationEntry? GetGasket(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is NeopreneGasketDegradationEntry e ? e : null;
         }
 
-        public AramidFiberRotEntry GetAramid(string id)
+        public AramidFiberRotEntry? GetAramid(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is AramidFiberRotEntry e ? e : null;
         }
 
-        public TireRetreadCompoundEntry GetTire(string id)
+        public TireRetreadCompoundEntry? GetTire(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TireRetreadCompoundEntry e ? e : null;
         }
 
-        public CelluloidFilmDecompositionEntry GetFilm(string id)
+        public CelluloidFilmDecompositionEntry? GetFilm(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CelluloidFilmDecompositionEntry e ? e : null;

@@ -204,7 +204,7 @@ namespace Ashfall.Core
         }
 
         /// <summary>Read-only: get the current active research def, or null if idle.</summary>
-        public ResearchKnowledgeDef GetActiveResearch()
+        public ResearchKnowledgeDef? GetActiveResearch()
         {
             if (string.IsNullOrEmpty(State.activeResearchId)) return null;
             _catalog.TryGetValue(State.activeResearchId, out var def);
@@ -212,7 +212,7 @@ namespace Ashfall.Core
         }
 
         /// <summary>Read-only: get any registered knowledge node.</summary>
-        public ResearchKnowledgeDef GetKnowledge(string id)
+        public ResearchKnowledgeDef? GetKnowledge(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             _catalog.TryGetValue(id, out var def);

@@ -443,5 +443,71 @@ namespace Ashfall.Core.Tests
                 $"bare survivor should reach acute; dose={survivor.RadiationDose}");
             Assert.True(survivor.HasAcuteRadiationSickness);
         }
+
+        [Fact]
+        public void SaveLoad_NeedsState_RoundTrip_PreservesAllFields()
+        {
+            var serializer = new SystemTextJsonSerializer();
+            var original = new SurvivorNeedsState
+            {
+                Id = "survivor_roundtrip_test",
+                Hunger = 42.5f,
+                Thirst = 33.1f,
+                Fatigue = 60.0f,
+                Warmth = 85.2f,
+                Morale = 70.4f,
+                Health = 92.0f,
+                Hygiene = 55.5f,
+                IsAlive = true,
+                IsDead = false
+            };
+
+            string json = serializer.Serialize(original);
+            Assert.False(string.IsNullOrEmpty(json));
+
+            var restored = serializer.Deserialize<SurvivorNeedsState>(json);
+            Assert.NotNull(restored);
+            Assert.Equal(original.Id, restored!.Id);
+            Assert.Equal(original.Hunger, restored.Hunger, 2);
+            Assert.Equal(original.Thirst, restored.Thirst, 2);
+            Assert.Equal(original.Fatigue, restored.Fatigue, 2);
+            Assert.Equal(original.Warmth, restored.Warmth, 2);
+            Assert.Equal(original.Morale, restored.Morale, 2);
+            Assert.Equal(original.Health, restored.Health, 2);
+            Assert.Equal(original.Hygiene, restored.Hygiene, 2);
+            Assert.Equal(original.IsAlive, restored.IsAlive);
+            Assert.Equal(original.IsDead, restored.IsDead);
+        }
+
+        [Fact]
+        public void SaveLoad_RadState_RoundTrip_PreservesAllFields()
+        {
+            var serializer = new SystemTextJsonSerializer();
+            var original = new SurvivorRadState
+            {
+                Id = "rad_roundtrip_test",
+                RadiationDose = 25.5f,
+                LifetimeRadiationExposure = 120.0f,
+                HasRadResistance = true,
+                RadResistanceHoursRemaining = 18.5f,
+                HasAcuteRadiationSickness = false,
+                HasChronicIllness = true,
+                IsAlive = true
+            };
+
+            string json = serializer.Serialize(original);
+            Assert.False(string.IsNullOrEmpty(json));
+
+            var restored = serializer.Deserialize<SurvivorRadState>(json);
+            Assert.NotNull(restored);
+            Assert.Equal(original.Id, restored!.Id);
+            Assert.Equal(original.RadiationDose, restored.RadiationDose, 2);
+            Assert.Equal(original.LifetimeRadiationExposure, restored.LifetimeRadiationExposure, 2);
+            Assert.Equal(original.HasRadResistance, restored.HasRadResistance);
+            Assert.Equal(original.RadResistanceHoursRemaining, restored.RadResistanceHoursRemaining, 2);
+            Assert.Equal(original.HasAcuteRadiationSickness, restored.HasAcuteRadiationSickness);
+            Assert.Equal(original.HasChronicIllness, restored.HasChronicIllness);
+            Assert.Equal(original.IsAlive, restored.IsAlive);
+        }
     }
 }

@@ -121,7 +121,7 @@ namespace Ashfall.Core
         }
 
         /// <summary>Get a relic definition by ID.</summary>
-        public RelicDefinition GetRelic(string relicId)
+        public RelicDefinition? GetRelic(string relicId)
         {
             if (string.IsNullOrEmpty(relicId)) return null;
             _relicCatalog.TryGetValue(relicId, out var def);

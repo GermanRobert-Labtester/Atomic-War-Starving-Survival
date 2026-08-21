@@ -69,7 +69,7 @@ namespace AtomicWar.GodotApp.World
             }
         }
 
-        public void SetPosition(Vector2 worldPosition)
+        public new void SetPosition(Vector2 worldPosition)
         {
             Position = worldPosition + PositionOffset;
         }

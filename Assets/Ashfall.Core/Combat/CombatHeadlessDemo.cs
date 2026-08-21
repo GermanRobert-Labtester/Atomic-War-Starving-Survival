@@ -152,6 +152,7 @@ namespace Ashfall.Core.Combat
             // ── 5. Save → restore deep-copy ✓
             var save = sys.CaptureState();
             Check(save != null && save.Combatants.Count == players.Count + EnemyCount, "capture deep-copies full roster");
+            if (save == null) return report;
             Check(save.Weapons.Count == 2, "capture retains both weapons");
             Check(save.Events.Count > 0, "capture retains combat history");
 
@@ -187,6 +188,7 @@ namespace Ashfall.Core.Combat
             legacy.Phase = 99; // out-of-range phase
             var migrated = TacticalCombatSystem.Migrate(legacy);
             Check(migrated != null && migrated.SaveVersion == CombatState.CurrentSaveVersion, "migration bumps save version");
+            if (migrated == null) return report;
             Check(migrated.Phase >= (int)CombatPhase.Setup && migrated.Phase <= (int)CombatPhase.Retreated, "migration clamps out-of-range phase");
             Check(migrated.Combatants.Count == 1, "migration preserves legacy combatants null-safely");
 
@@ -260,7 +262,7 @@ namespace Ashfall.Core.Combat
             int guard = 0;
             while (!sys.State.Resolved && guard++ < 40)
             {
-                var res = sys.PlayerFire(TargetOf(sys), rng);
+                var res = sys.PlayerFire(TargetOf(sys)!, rng);
                 if (!sys.State.Resolved)
                     sys.EndTurn(rng);
             }
@@ -271,7 +273,7 @@ namespace Ashfall.Core.Combat
             return details;
         }
 
-        private static string TargetOf(TacticalCombatSystem sys)
+        private static string? TargetOf(TacticalCombatSystem sys)
         {
             var enemies = sys.State.Combatants.FindAll(c => !c.IsPlayer && !c.HasFled);
             if (enemies.Count == 0) return null;

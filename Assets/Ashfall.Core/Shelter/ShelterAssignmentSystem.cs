@@ -41,7 +41,7 @@ namespace Ashfall.Core.Shelter
 
         public IReadOnlyList<ShelterAssignment> GetAssignments() => _state.Assignments;
 
-        public ShelterAssignment GetAssignmentForSurvivor(string survivorId)
+        public ShelterAssignment? GetAssignmentForSurvivor(string survivorId)
         {
             if (string.IsNullOrEmpty(survivorId)) return null;
             for (int i = 0; i < _state.Assignments.Count; i++)
@@ -140,7 +140,7 @@ namespace Ashfall.Core.Shelter
             _state.RestoreInto(state, _rooms);
         }
 
-        private ShelterRoom FindRoom(string roomId)
+        private ShelterRoom? FindRoom(string roomId)
         {
             for (int i = 0; i < _rooms.Count; i++)
                 if (_rooms[i].RoomId == roomId) return _rooms[i];

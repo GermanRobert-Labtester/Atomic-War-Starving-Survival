@@ -42,7 +42,7 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>Reads and validates through the codec. Returns null when absent or corrupt.</summary>
-        public static ExpansionHubSave TryLoad(string pathOverride = null)
+        public static ExpansionHubSave? TryLoad(string pathOverride = null)
         {
             try
             {

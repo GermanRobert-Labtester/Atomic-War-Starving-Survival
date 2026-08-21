@@ -28,7 +28,7 @@ namespace AtomicWar.GodotApp
             {
                 if (save == null) return false;
                 string path = pathOverride ?? SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 string encoded = VerdictSaveCodec.Encode(save, s_json);
@@ -42,7 +42,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static VerdictSave TryLoad(string pathOverride = null)
+        public static VerdictSave? TryLoad(string pathOverride = null)
         {
             try
             {

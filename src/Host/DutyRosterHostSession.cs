@@ -58,13 +58,13 @@ namespace AtomicWar.GodotApp
             Quests.OnQuestCompleted += p =>
             {
                 LastEvent = "quest complete: " + p.questId;
-                Quests.ApplyKnownEffects(Roster, Marks, p.completedDay, log);
+                Quests.ApplyKnownEffects(Roster, Marks, p.completedDay, log!);
                 BridgeQuestKnowledge(p);
             };
             Quests.OnQuestFailed += p =>
             {
                 LastEvent = "quest failed: " + p.questId;
-                Quests.ApplyKnownEffects(Roster, Marks, p.failedDay, log);
+                Quests.ApplyKnownEffects(Roster, Marks, p.failedDay, log!);
             };
 
             // Persistence: any system-level state change marks the save dirty.

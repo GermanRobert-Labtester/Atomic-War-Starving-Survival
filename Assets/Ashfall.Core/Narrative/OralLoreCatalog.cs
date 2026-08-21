@@ -50,7 +50,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public OralLoreEntry GetById(string loreId)
+        public OralLoreEntry? GetById(string loreId)
         {
             if (string.IsNullOrEmpty(loreId)) return null;
             _byLoreId.TryGetValue(loreId, out var song);

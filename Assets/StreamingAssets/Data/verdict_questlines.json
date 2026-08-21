@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "quests": [
     {
       "questlineId": "quest_verdict_the_warm_range",

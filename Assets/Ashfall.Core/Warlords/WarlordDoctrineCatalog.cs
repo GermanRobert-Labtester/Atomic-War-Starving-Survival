@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Warlords
 {
     /// <summary>
@@ -95,7 +96,7 @@ namespace Ashfall.Core.Warlords
             return lines[n % lines.Count];
         }
 
-        public WarlordDoctrineDef GetDoctrine(string id)
+        public WarlordDoctrineDef? GetDoctrine(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Doctrines.Count; i++)
@@ -104,7 +105,7 @@ namespace Ashfall.Core.Warlords
             return null;
         }
 
-        public WarlordTerritoryNodeDef GetNode(string locationId)
+        public WarlordTerritoryNodeDef? GetNode(string locationId)
         {
             if (string.IsNullOrEmpty(locationId)) return null;
             for (int i = 0; i < Territory.Count; i++)
@@ -339,8 +340,9 @@ namespace Ashfall.Core.Warlords
                         if (list[i] != null && !string.IsNullOrEmpty(list[i].id))
                             ids.Add(list[i].id);
                 }
-                catch
+                catch (Exception ex_CATDIAG)
                 {
+                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
                     // Not every catalog is a flat id list; skip it.
                 }
             }
@@ -360,7 +362,10 @@ namespace Ashfall.Core.Warlords
                     if (list[i] != null && !string.IsNullOrEmpty(list[i].faction_id))
                         ids.Add(list[i].faction_id);
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
             return ids;
         }
     }

@@ -52,7 +52,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public BunkerCourtCaseEntry GetById(string caseId)
+        public BunkerCourtCaseEntry? GetById(string caseId)
         {
             if (string.IsNullOrEmpty(caseId)) return null;
             _byId.TryGetValue(caseId, out var entry);

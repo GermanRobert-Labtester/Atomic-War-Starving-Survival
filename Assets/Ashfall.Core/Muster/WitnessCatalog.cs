@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+#pragma warning disable CS0649
 
 namespace Ashfall.Core.Muster
 {
@@ -23,6 +24,7 @@ namespace Ashfall.Core.Muster
     public static class WitnessCatalogLoader
     {
         public const string FileName = "muster_witnesses.json";
+        public const int CurrentSchemaVersion = 1;
 
         public static List<WitnessDefinition> LoadWitnesses(
             string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -41,11 +43,15 @@ namespace Ashfall.Core.Muster
 
             try
             {
-                var parsed = json.Deserialize<WitnessEntry[]>(raw);
-                if (parsed == null) return result;
-                for (int i = 0; i < parsed.Length; i++)
+                var root = json.Deserialize<WitnessCatalogRoot>(raw);
+                if (root == null) return result;
+                if (root.schema_version > CurrentSchemaVersion)
+                    return result;
+                var entries = root.witnesses;
+                if (entries == null) return result;
+                for (int i = 0; i < entries.Count; i++)
                 {
-                    var e = parsed[i];
+                    var e = entries[i];
                     if (e == null || string.IsNullOrEmpty(e.id)) continue;
                     result.Add(new WitnessDefinition
                     {
@@ -63,6 +69,13 @@ namespace Ashfall.Core.Muster
                 return result;
             }
             return result;
+        }
+
+        /// <summary>Schema-envelope root for muster_witnesses.json.</summary>
+        private class WitnessCatalogRoot
+        {
+            public int schema_version = 1;
+            public List<WitnessEntry> witnesses = new List<WitnessEntry>();
         }
 
         private class WitnessEntry

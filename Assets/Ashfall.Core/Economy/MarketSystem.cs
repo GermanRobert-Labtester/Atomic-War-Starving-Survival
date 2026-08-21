@@ -100,7 +100,7 @@ namespace Ashfall.Core.Economy
             _catalog = catalog;
         }
 
-        public GoodDefinition FindGood(string itemId) =>
+        public GoodDefinition? FindGood(string itemId) =>
             _catalog != null ? _catalog.Find(itemId) : null;
 
         // ── Daily tick ────────────────────────────────────────────────

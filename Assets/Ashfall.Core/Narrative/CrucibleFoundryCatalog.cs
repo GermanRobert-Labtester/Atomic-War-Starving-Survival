@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CrucibleClayPotSlagEntry GetCrucible(string id)
+        public CrucibleClayPotSlagEntry? GetCrucible(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CrucibleClayPotSlagEntry e ? e : null;
         }
 
-        public CupolaMeltingRatioEntry GetCupola(string id)
+        public CupolaMeltingRatioEntry? GetCupola(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CupolaMeltingRatioEntry e ? e : null;
         }
 
-        public PatternMakerShrinkageEntry GetPattern(string id)
+        public PatternMakerShrinkageEntry? GetPattern(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PatternMakerShrinkageEntry e ? e : null;
         }
 
-        public GreenSandBentoniteEntry GetSand(string id)
+        public GreenSandBentoniteEntry? GetSand(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GreenSandBentoniteEntry e ? e : null;

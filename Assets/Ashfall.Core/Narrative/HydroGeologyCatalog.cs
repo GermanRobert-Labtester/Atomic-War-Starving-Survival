@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public WellContaminationEntry GetWellContamination(string id)
+        public WellContaminationEntry? GetWellContamination(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is WellContaminationEntry e ? e : null;
         }
 
-        public CaveBiotaEntry GetCaveBiota(string id)
+        public CaveBiotaEntry? GetCaveBiota(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CaveBiotaEntry e ? e : null;
         }
 
-        public SteamVentDiagnosticEntry GetSteamVent(string id)
+        public SteamVentDiagnosticEntry? GetSteamVent(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SteamVentDiagnosticEntry e ? e : null;
         }
 
-        public StalactiteMineralAssayEntry GetMineralAssay(string id)
+        public StalactiteMineralAssayEntry? GetMineralAssay(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is StalactiteMineralAssayEntry e ? e : null;

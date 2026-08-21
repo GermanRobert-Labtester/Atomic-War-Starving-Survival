@@ -1,586 +1,587 @@
 {
- "entries": [
-  {
-   "id": "quest_a_good_death"
-  },
-  {
-   "id": "quest_a_real_leader"
-  },
-  {
-   "id": "quest_a_voice_in_the_dark"
-  },
-  {
-   "id": "quest_acoustic_bait"
-  },
-  {
-   "id": "quest_ashen_communion"
-  },
-  {
-   "id": "quest_assassination_deserter"
-  },
-  {
-   "id": "quest_black_vein"
-  },
-  {
-   "id": "quest_breaking_chains"
-  },
-  {
-   "id": "quest_broken_chronometer"
-  },
-  {
-   "id": "quest_burnt_harvest"
-  },
-  {
-   "id": "quest_checkpoint_kilo_truth"
-  },
-  {
-   "id": "quest_child_soldier_rifle"
-  },
-  {
-   "id": "quest_cold_turkey"
-  },
-  {
-   "id": "quest_court_martial"
-  },
-  {
-   "id": "quest_crisis_of_faith"
-  },
-  {
-   "id": "quest_crossing_companion_mattis"
-  },
-  {
-   "id": "quest_crossing_first_weigh"
-  },
-  {
-   "id": "quest_crossing_scale_integrity"
-  },
-  {
-   "id": "quest_crossing_the_forfeit"
-  },
-  {
-   "id": "quest_crossing_the_marker"
-  },
-  {
-   "id": "quest_crossing_the_petition"
-  },
-  {
-   "id": "quest_crossing_the_standing"
-  },
-  {
-   "id": "quest_crossing_the_terms"
-  },
-  {
-   "id": "quest_crossing_the_vote_that_isnt"
-  },
-  {
-   "id": "quest_crossing_the_vouch"
-  },
-  {
-   "id": "quest_crossing_three_dry_pages"
-  },
-  {
-   "id": "quest_crossing_who_holds_the_ledger"
-  },
-  {
-   "id": "quest_cult_glow_communion"
-  },
-  {
-   "id": "quest_cult_purity"
-  },
-  {
-   "id": "quest_dead_air"
-  },
-  {
-   "id": "quest_deep_well"
-  },
-  {
-   "id": "quest_dropping_the_rifle"
-  },
-  {
-   "id": "quest_earning_keep"
-  },
-  {
-   "id": "quest_elena_triage"
-  },
-  {
-   "id": "quest_embracing_the_glow"
-  },
-  {
-   "id": "quest_first_blood"
-  },
-  {
-   "id": "quest_garrison_census"
-  },
-  {
-   "id": "quest_garrison_last_order"
-  },
-  {
-   "id": "quest_ghosts_of_day_1"
-  },
-  {
-   "id": "quest_glow_communion"
-  },
-  {
-   "id": "quest_grain_war"
-  },
-  {
-   "id": "quest_ground_zero"
-  },
-  {
-   "id": "quest_growing_up_fast"
-  },
-  {
-   "id": "quest_hell_is_other_people"
-  },
-  {
-   "id": "quest_holdfast_authentication"
-  },
-  {
-   "id": "quest_holdfast_the_clerk"
-  },
-  {
-   "id": "quest_holdfast_the_clerk_started"
-  },
-  {
-   "id": "quest_holdfast_the_drawer"
-  },
-  {
-   "id": "quest_holdfast_the_hatch"
-  },
-  {
-   "id": "quest_holdfast_the_levy"
-  },
-  {
-   "id": "quest_holdfast_the_membrane"
-  },
-  {
-   "id": "quest_holdfast_the_plant"
-  },
-  {
-   "id": "quest_holdfast_the_second_list"
-  },
-  {
-   "id": "quest_holdfast_the_sheet"
-  },
-  {
-   "id": "quest_holdfast_the_window"
-  },
-  {
-   "id": "quest_holding_the_line"
-  },
-  {
-   "id": "quest_in_the_black"
-  },
-  {
-   "id": "quest_inventory_audit"
-  },
-  {
-   "id": "quest_iron_ledger"
-  },
-  {
-   "id": "quest_loss_of_faith"
-  },
-  {
-   "id": "quest_mans_best_friend"
-  },
-  {
-   "id": "quest_mechanic_highway_heart"
-  },
-  {
-   "id": "quest_militia_grain_war"
-  },
-  {
-   "id": "quest_militia_smugglers_route"
-  },
-  {
-   "id": "quest_museum_archive"
-  },
-  {
-   "id": "quest_player_one"
-  },
-  {
-   "id": "quest_putting_down_roots"
-  },
-  {
-   "id": "quest_rebuilders_thirst"
-  },
-  {
-   "id": "quest_record_fallback"
-  },
-  {
-   "id": "quest_record_friendly_obstacle"
-  },
-  {
-   "id": "quest_record_grease_pencil"
-  },
-  {
-   "id": "quest_record_hands"
-  },
-  {
-   "id": "quest_record_mass_or_lot"
-  },
-  {
-   "id": "quest_record_the_book"
-  },
-  {
-   "id": "quest_record_the_failure"
-  },
-  {
-   "id": "quest_record_the_plate"
-  },
-  {
-   "id": "quest_record_which_gazetteer"
-  },
-  {
-   "id": "quest_record_wrong_stacks"
-  },
-  {
-   "id": "quest_redemption_arc"
-  },
-  {
-   "id": "quest_registry"
-  },
-  {
-   "id": "quest_rep_meal_row"
-  },
-  {
-   "id": "quest_rep_night_slate"
-  },
-  {
-   "id": "quest_roster_12b_kit"
-  },
-  {
-   "id": "quest_roster_ansel_truth"
-  },
-  {
-   "id": "quest_roster_blank_access"
-  },
-  {
-   "id": "quest_roster_boot_crate"
-  },
-  {
-   "id": "quest_roster_brigid"
-  },
-  {
-   "id": "quest_roster_caretaker"
-  },
-  {
-   "id": "quest_roster_chair"
-  },
-  {
-   "id": "quest_roster_fourteenth"
-  },
-  {
-   "id": "quest_roster_frayne_minutes"
-  },
-  {
-   "id": "quest_roster_grange_vote"
-  },
-  {
-   "id": "quest_roster_hadi_shift"
-  },
-  {
-   "id": "quest_roster_ink"
-  },
-  {
-   "id": "quest_roster_ivy_oil"
-  },
-  {
-   "id": "quest_roster_kess_pencil"
-  },
-  {
-   "id": "quest_roster_len_tag"
-  },
-  {
-   "id": "quest_roster_missing_strip"
-  },
-  {
-   "id": "quest_roster_nila_eleven"
-  },
-  {
-   "id": "quest_roster_pell_numbers"
-  },
-  {
-   "id": "quest_roster_quiet"
-  },
-  {
-   "id": "quest_roster_sole"
-  },
-  {
-   "id": "quest_roster_tamsin_watch"
-  },
-  {
-   "id": "quest_roster_the_chart"
-  },
-  {
-   "id": "quest_roster_the_column"
-  },
-  {
-   "id": "quest_roster_the_tin"
-  },
-  {
-   "id": "quest_roster_who_eats"
-  },
-  {
-   "id": "quest_roster_window"
-  },
-  {
-   "id": "quest_separation_anxiety"
-  },
-  {
-   "id": "quest_shattered_glass"
-  },
-  {
-   "id": "quest_st_maren_last_shift"
-  },
-  {
-   "id": "quest_target"
-  },
-  {
-   "id": "quest_tears_in_rain"
-  },
-  {
-   "id": "quest_the_abandoned_school"
-  },
-  {
-   "id": "quest_the_anesthetic"
-  },
-  {
-   "id": "quest_the_archive"
-  },
-  {
-   "id": "quest_the_awakening"
-  },
-  {
-   "id": "quest_the_backdraft"
-  },
-  {
-   "id": "quest_the_bank_heist"
-  },
-  {
-   "id": "quest_the_big_score"
-  },
-  {
-   "id": "quest_the_blueprints"
-  },
-  {
-   "id": "quest_the_botched_job"
-  },
-  {
-   "id": "quest_the_boy_who_cried_wolf"
-  },
-  {
-   "id": "quest_the_broken_mind"
-  },
-  {
-   "id": "quest_the_broken_promise"
-  },
-  {
-   "id": "quest_the_bunker_breached"
-  },
-  {
-   "id": "quest_the_canary"
-  },
-  {
-   "id": "quest_the_city_mains"
-  },
-  {
-   "id": "quest_the_cleansing"
-  },
-  {
-   "id": "quest_the_clearcut"
-  },
-  {
-   "id": "quest_the_dead_stars"
-  },
-  {
-   "id": "quest_the_empty_bottles"
-  },
-  {
-   "id": "quest_the_empty_crib"
-  },
-  {
-   "id": "quest_the_escape"
-  },
-  {
-   "id": "quest_the_final_broadcast"
-  },
-  {
-   "id": "quest_the_final_harvest"
-  },
-  {
-   "id": "quest_the_final_payload"
-  },
-  {
-   "id": "quest_the_first_save"
-  },
-  {
-   "id": "quest_the_gladiator"
-  },
-  {
-   "id": "quest_the_golden_parachute"
-  },
-  {
-   "id": "quest_the_hard_reboot"
-  },
-  {
-   "id": "quest_the_holdout"
-  },
-  {
-   "id": "quest_the_independent"
-  },
-  {
-   "id": "quest_the_inferno"
-  },
-  {
-   "id": "quest_the_iron_gate"
-  },
-  {
-   "id": "quest_the_iron_worm"
-  },
-  {
-   "id": "quest_the_kevlar_loom"
-  },
-  {
-   "id": "quest_the_lab_ruin"
-  },
-  {
-   "id": "quest_the_last_contract"
-  },
-  {
-   "id": "quest_the_last_ride"
-  },
-  {
-   "id": "quest_the_last_seed"
-  },
-  {
-   "id": "quest_the_last_stash"
-  },
-  {
-   "id": "quest_the_locket"
-  },
-  {
-   "id": "quest_the_long_haul"
-  },
-  {
-   "id": "quest_the_long_night"
-  },
-  {
-   "id": "quest_the_lost_route"
-  },
-  {
-   "id": "quest_the_marathon"
-  },
-  {
-   "id": "quest_the_mask_slips"
-  },
-  {
-   "id": "quest_the_mass_grave"
-  },
-  {
-   "id": "quest_the_masterpiece"
-  },
-  {
-   "id": "quest_the_masters_fate"
-  },
-  {
-   "id": "quest_the_mess"
-  },
-  {
-   "id": "quest_the_motorpool"
-  },
-  {
-   "id": "quest_the_old_woods"
-  },
-  {
-   "id": "quest_the_pack"
-  },
-  {
-   "id": "quest_the_perfect_equation"
-  },
-  {
-   "id": "quest_the_perfect_fake"
-  },
-  {
-   "id": "quest_the_precinct"
-  },
-  {
-   "id": "quest_the_prosthetic"
-  },
-  {
-   "id": "quest_the_rabid_pack"
-  },
-  {
-   "id": "quest_the_radar_station"
-  },
-  {
-   "id": "quest_the_rally"
-  },
-  {
-   "id": "quest_the_real_illness"
-  },
-  {
-   "id": "quest_the_real_world"
-  },
-  {
-   "id": "quest_the_seed_vault"
-  },
-  {
-   "id": "quest_the_shaking_hand"
-  },
-  {
-   "id": "quest_the_sponge"
-  },
-  {
-   "id": "quest_the_stash"
-  },
-  {
-   "id": "quest_the_strain"
-  },
-  {
-   "id": "quest_the_substation_ghost"
-  },
-  {
-   "id": "quest_the_transit_pass"
-  },
-  {
-   "id": "quest_the_turing_test"
-  },
-  {
-   "id": "quest_the_ultimate_price"
-  },
-  {
-   "id": "quest_the_ultimate_test"
-  },
-  {
-   "id": "quest_the_value_of_breath"
-  },
-  {
-   "id": "quest_the_wardens_key"
-  },
-  {
-   "id": "quest_the_weight_of_gold"
-  },
-  {
-   "id": "quest_the_white_elk"
-  },
-  {
-   "id": "quest_tower_seven_broadcast"
-  },
-  {
-   "id": "quest_trial_by_fire"
-  },
-  {
-   "id": "quest_tribute_break"
-  },
-  {
-   "id": "quest_truth_of_day_30"
-  },
-  {
-   "id": "quest_vindicated"
-  },
-  {
-   "id": "quest_worthless_paper"
-  }
- ]
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "quest_a_good_death"
+    },
+    {
+      "id": "quest_a_real_leader"
+    },
+    {
+      "id": "quest_a_voice_in_the_dark"
+    },
+    {
+      "id": "quest_acoustic_bait"
+    },
+    {
+      "id": "quest_ashen_communion"
+    },
+    {
+      "id": "quest_assassination_deserter"
+    },
+    {
+      "id": "quest_black_vein"
+    },
+    {
+      "id": "quest_breaking_chains"
+    },
+    {
+      "id": "quest_broken_chronometer"
+    },
+    {
+      "id": "quest_burnt_harvest"
+    },
+    {
+      "id": "quest_checkpoint_kilo_truth"
+    },
+    {
+      "id": "quest_child_soldier_rifle"
+    },
+    {
+      "id": "quest_cold_turkey"
+    },
+    {
+      "id": "quest_court_martial"
+    },
+    {
+      "id": "quest_crisis_of_faith"
+    },
+    {
+      "id": "quest_crossing_companion_mattis"
+    },
+    {
+      "id": "quest_crossing_first_weigh"
+    },
+    {
+      "id": "quest_crossing_scale_integrity"
+    },
+    {
+      "id": "quest_crossing_the_forfeit"
+    },
+    {
+      "id": "quest_crossing_the_marker"
+    },
+    {
+      "id": "quest_crossing_the_petition"
+    },
+    {
+      "id": "quest_crossing_the_standing"
+    },
+    {
+      "id": "quest_crossing_the_terms"
+    },
+    {
+      "id": "quest_crossing_the_vote_that_isnt"
+    },
+    {
+      "id": "quest_crossing_the_vouch"
+    },
+    {
+      "id": "quest_crossing_three_dry_pages"
+    },
+    {
+      "id": "quest_crossing_who_holds_the_ledger"
+    },
+    {
+      "id": "quest_cult_glow_communion"
+    },
+    {
+      "id": "quest_cult_purity"
+    },
+    {
+      "id": "quest_dead_air"
+    },
+    {
+      "id": "quest_deep_well"
+    },
+    {
+      "id": "quest_dropping_the_rifle"
+    },
+    {
+      "id": "quest_earning_keep"
+    },
+    {
+      "id": "quest_elena_triage"
+    },
+    {
+      "id": "quest_embracing_the_glow"
+    },
+    {
+      "id": "quest_first_blood"
+    },
+    {
+      "id": "quest_garrison_census"
+    },
+    {
+      "id": "quest_garrison_last_order"
+    },
+    {
+      "id": "quest_ghosts_of_day_1"
+    },
+    {
+      "id": "quest_glow_communion"
+    },
+    {
+      "id": "quest_grain_war"
+    },
+    {
+      "id": "quest_ground_zero"
+    },
+    {
+      "id": "quest_growing_up_fast"
+    },
+    {
+      "id": "quest_hell_is_other_people"
+    },
+    {
+      "id": "quest_holdfast_authentication"
+    },
+    {
+      "id": "quest_holdfast_the_clerk"
+    },
+    {
+      "id": "quest_holdfast_the_clerk_started"
+    },
+    {
+      "id": "quest_holdfast_the_drawer"
+    },
+    {
+      "id": "quest_holdfast_the_hatch"
+    },
+    {
+      "id": "quest_holdfast_the_levy"
+    },
+    {
+      "id": "quest_holdfast_the_membrane"
+    },
+    {
+      "id": "quest_holdfast_the_plant"
+    },
+    {
+      "id": "quest_holdfast_the_second_list"
+    },
+    {
+      "id": "quest_holdfast_the_sheet"
+    },
+    {
+      "id": "quest_holdfast_the_window"
+    },
+    {
+      "id": "quest_holding_the_line"
+    },
+    {
+      "id": "quest_in_the_black"
+    },
+    {
+      "id": "quest_inventory_audit"
+    },
+    {
+      "id": "quest_iron_ledger"
+    },
+    {
+      "id": "quest_loss_of_faith"
+    },
+    {
+      "id": "quest_mans_best_friend"
+    },
+    {
+      "id": "quest_mechanic_highway_heart"
+    },
+    {
+      "id": "quest_militia_grain_war"
+    },
+    {
+      "id": "quest_militia_smugglers_route"
+    },
+    {
+      "id": "quest_museum_archive"
+    },
+    {
+      "id": "quest_player_one"
+    },
+    {
+      "id": "quest_putting_down_roots"
+    },
+    {
+      "id": "quest_rebuilders_thirst"
+    },
+    {
+      "id": "quest_record_fallback"
+    },
+    {
+      "id": "quest_record_friendly_obstacle"
+    },
+    {
+      "id": "quest_record_grease_pencil"
+    },
+    {
+      "id": "quest_record_hands"
+    },
+    {
+      "id": "quest_record_mass_or_lot"
+    },
+    {
+      "id": "quest_record_the_book"
+    },
+    {
+      "id": "quest_record_the_failure"
+    },
+    {
+      "id": "quest_record_the_plate"
+    },
+    {
+      "id": "quest_record_which_gazetteer"
+    },
+    {
+      "id": "quest_record_wrong_stacks"
+    },
+    {
+      "id": "quest_redemption_arc"
+    },
+    {
+      "id": "quest_registry"
+    },
+    {
+      "id": "quest_rep_meal_row"
+    },
+    {
+      "id": "quest_rep_night_slate"
+    },
+    {
+      "id": "quest_roster_12b_kit"
+    },
+    {
+      "id": "quest_roster_ansel_truth"
+    },
+    {
+      "id": "quest_roster_blank_access"
+    },
+    {
+      "id": "quest_roster_boot_crate"
+    },
+    {
+      "id": "quest_roster_brigid"
+    },
+    {
+      "id": "quest_roster_caretaker"
+    },
+    {
+      "id": "quest_roster_chair"
+    },
+    {
+      "id": "quest_roster_fourteenth"
+    },
+    {
+      "id": "quest_roster_frayne_minutes"
+    },
+    {
+      "id": "quest_roster_grange_vote"
+    },
+    {
+      "id": "quest_roster_hadi_shift"
+    },
+    {
+      "id": "quest_roster_ink"
+    },
+    {
+      "id": "quest_roster_ivy_oil"
+    },
+    {
+      "id": "quest_roster_kess_pencil"
+    },
+    {
+      "id": "quest_roster_len_tag"
+    },
+    {
+      "id": "quest_roster_missing_strip"
+    },
+    {
+      "id": "quest_roster_nila_eleven"
+    },
+    {
+      "id": "quest_roster_pell_numbers"
+    },
+    {
+      "id": "quest_roster_quiet"
+    },
+    {
+      "id": "quest_roster_sole"
+    },
+    {
+      "id": "quest_roster_tamsin_watch"
+    },
+    {
+      "id": "quest_roster_the_chart"
+    },
+    {
+      "id": "quest_roster_the_column"
+    },
+    {
+      "id": "quest_roster_the_tin"
+    },
+    {
+      "id": "quest_roster_who_eats"
+    },
+    {
+      "id": "quest_roster_window"
+    },
+    {
+      "id": "quest_separation_anxiety"
+    },
+    {
+      "id": "quest_shattered_glass"
+    },
+    {
+      "id": "quest_st_maren_last_shift"
+    },
+    {
+      "id": "quest_target"
+    },
+    {
+      "id": "quest_tears_in_rain"
+    },
+    {
+      "id": "quest_the_abandoned_school"
+    },
+    {
+      "id": "quest_the_anesthetic"
+    },
+    {
+      "id": "quest_the_archive"
+    },
+    {
+      "id": "quest_the_awakening"
+    },
+    {
+      "id": "quest_the_backdraft"
+    },
+    {
+      "id": "quest_the_bank_heist"
+    },
+    {
+      "id": "quest_the_big_score"
+    },
+    {
+      "id": "quest_the_blueprints"
+    },
+    {
+      "id": "quest_the_botched_job"
+    },
+    {
+      "id": "quest_the_boy_who_cried_wolf"
+    },
+    {
+      "id": "quest_the_broken_mind"
+    },
+    {
+      "id": "quest_the_broken_promise"
+    },
+    {
+      "id": "quest_the_bunker_breached"
+    },
+    {
+      "id": "quest_the_canary"
+    },
+    {
+      "id": "quest_the_city_mains"
+    },
+    {
+      "id": "quest_the_cleansing"
+    },
+    {
+      "id": "quest_the_clearcut"
+    },
+    {
+      "id": "quest_the_dead_stars"
+    },
+    {
+      "id": "quest_the_empty_bottles"
+    },
+    {
+      "id": "quest_the_empty_crib"
+    },
+    {
+      "id": "quest_the_escape"
+    },
+    {
+      "id": "quest_the_final_broadcast"
+    },
+    {
+      "id": "quest_the_final_harvest"
+    },
+    {
+      "id": "quest_the_final_payload"
+    },
+    {
+      "id": "quest_the_first_save"
+    },
+    {
+      "id": "quest_the_gladiator"
+    },
+    {
+      "id": "quest_the_golden_parachute"
+    },
+    {
+      "id": "quest_the_hard_reboot"
+    },
+    {
+      "id": "quest_the_holdout"
+    },
+    {
+      "id": "quest_the_independent"
+    },
+    {
+      "id": "quest_the_inferno"
+    },
+    {
+      "id": "quest_the_iron_gate"
+    },
+    {
+      "id": "quest_the_iron_worm"
+    },
+    {
+      "id": "quest_the_kevlar_loom"
+    },
+    {
+      "id": "quest_the_lab_ruin"
+    },
+    {
+      "id": "quest_the_last_contract"
+    },
+    {
+      "id": "quest_the_last_ride"
+    },
+    {
+      "id": "quest_the_last_seed"
+    },
+    {
+      "id": "quest_the_last_stash"
+    },
+    {
+      "id": "quest_the_locket"
+    },
+    {
+      "id": "quest_the_long_haul"
+    },
+    {
+      "id": "quest_the_long_night"
+    },
+    {
+      "id": "quest_the_lost_route"
+    },
+    {
+      "id": "quest_the_marathon"
+    },
+    {
+      "id": "quest_the_mask_slips"
+    },
+    {
+      "id": "quest_the_mass_grave"
+    },
+    {
+      "id": "quest_the_masterpiece"
+    },
+    {
+      "id": "quest_the_masters_fate"
+    },
+    {
+      "id": "quest_the_mess"
+    },
+    {
+      "id": "quest_the_motorpool"
+    },
+    {
+      "id": "quest_the_old_woods"
+    },
+    {
+      "id": "quest_the_pack"
+    },
+    {
+      "id": "quest_the_perfect_equation"
+    },
+    {
+      "id": "quest_the_perfect_fake"
+    },
+    {
+      "id": "quest_the_precinct"
+    },
+    {
+      "id": "quest_the_prosthetic"
+    },
+    {
+      "id": "quest_the_rabid_pack"
+    },
+    {
+      "id": "quest_the_radar_station"
+    },
+    {
+      "id": "quest_the_rally"
+    },
+    {
+      "id": "quest_the_real_illness"
+    },
+    {
+      "id": "quest_the_real_world"
+    },
+    {
+      "id": "quest_the_seed_vault"
+    },
+    {
+      "id": "quest_the_shaking_hand"
+    },
+    {
+      "id": "quest_the_sponge"
+    },
+    {
+      "id": "quest_the_stash"
+    },
+    {
+      "id": "quest_the_strain"
+    },
+    {
+      "id": "quest_the_substation_ghost"
+    },
+    {
+      "id": "quest_the_transit_pass"
+    },
+    {
+      "id": "quest_the_turing_test"
+    },
+    {
+      "id": "quest_the_ultimate_price"
+    },
+    {
+      "id": "quest_the_ultimate_test"
+    },
+    {
+      "id": "quest_the_value_of_breath"
+    },
+    {
+      "id": "quest_the_wardens_key"
+    },
+    {
+      "id": "quest_the_weight_of_gold"
+    },
+    {
+      "id": "quest_the_white_elk"
+    },
+    {
+      "id": "quest_tower_seven_broadcast"
+    },
+    {
+      "id": "quest_trial_by_fire"
+    },
+    {
+      "id": "quest_tribute_break"
+    },
+    {
+      "id": "quest_truth_of_day_30"
+    },
+    {
+      "id": "quest_vindicated"
+    },
+    {
+      "id": "quest_worthless_paper"
+    }
+  ]
 }

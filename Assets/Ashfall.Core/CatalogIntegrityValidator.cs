@@ -370,6 +370,9 @@ namespace Ashfall.Core
         }
 
         public static CatalogIntegrityReport Validate(string dataDirectory, IFileIO files)
+            => Validate(dataDirectory, files, SearchOption.TopDirectoryOnly);
+
+        public static CatalogIntegrityReport Validate(string dataDirectory, IFileIO files, SearchOption searchOption)
         {
             var report = new CatalogIntegrityReport();
             if (string.IsNullOrEmpty(dataDirectory) || !files.DirectoryExists(dataDirectory))
@@ -381,7 +384,7 @@ namespace Ashfall.Core
             string[] jsonFiles;
             try
             {
-                jsonFiles = Directory.GetFiles(dataDirectory, "*.json");
+                jsonFiles = CatalogFileSystem.EnumerateJsonFiles(files, dataDirectory, searchOption);
             }
             catch (Exception e)
             {
@@ -452,7 +455,7 @@ namespace Ashfall.Core
 
                         if (value.ValueKind == JsonValueKind.String)
                         {
-                            string text = value.GetString();
+                            string? text = value.GetString();
                             if (string.IsNullOrEmpty(text) || IsVocabularyKey(property.Name)) continue;
                             RegisterOrReference(property.Name, text, childPath, ctx);
                             continue;
@@ -471,7 +474,7 @@ namespace Ashfall.Core
                                 foreach (JsonElement item in value.EnumerateArray())
                                 {
                                     if (item.ValueKind == JsonValueKind.String && !string.IsNullOrEmpty(item.GetString()))
-                                        Register(property.Name, item.GetString(), childPath + "[]", ctx);
+                                        Register(property.Name, item.GetString()!, childPath + "[]", ctx);
                                 }
                             }
 
@@ -482,7 +485,7 @@ namespace Ashfall.Core
                                     if (item.ValueKind == JsonValueKind.String && !string.IsNullOrEmpty(item.GetString()))
                                         ctx.PendingRefs.Add(new Ref
                                         {
-                                            Value = item.GetString(),
+                                            Value = item.GetString()!,
                                             Path = childPath + "[]",
                                             Strict = true
                                         });
@@ -511,7 +514,7 @@ namespace Ashfall.Core
                     break;
 
                 case JsonValueKind.String:
-                    string s = element.GetString();
+                    string? s = element.GetString();
                     if (!string.IsNullOrEmpty(s))
                         ctx.PendingRefs.Add(new Ref { Value = s, Path = path, Strict = false });
                     break;
@@ -538,7 +541,7 @@ namespace Ashfall.Core
 
         private static void Register(string key, string value, string path, Ctx ctx)
         {
-            if (ctx.Registry.TryGetValue(value, out List<string> existing))
+            if (ctx.Registry.TryGetValue(value, out List<string>? existing))
             {
                 // The id already has an author. Distinguish a GENUINE within-file
                 // entity-id conflict from legitimate id reuse:
@@ -597,7 +600,7 @@ namespace Ashfall.Core
         {
             // Memoised per parent object: the min/max pair is checked when both
             // siblings have been seen.
-            if (!ctx.RangeMemo.TryGetValue(parentPath, out RangeMemoEntry memo))
+            if (!ctx.RangeMemo.TryGetValue(parentPath, out RangeMemoEntry? memo))
             {
                 memo = new RangeMemoEntry();
                 ctx.RangeMemo[parentPath] = memo;

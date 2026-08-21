@@ -178,7 +178,7 @@ namespace Ashfall.Core.Tests
                 "mutating the live system must not leak into the captured envelope");
         }
 
-        private static T CloneViaJson<T>(T state)
+        private static T CloneViaJson<T>(T state) where T : class
         {
             string blob = Json.Serialize(state);
             return Json.Deserialize<T>(blob);

@@ -276,6 +276,6 @@ namespace AtomicWar.GodotApp
         public void RestoreSave(CombatState state) => Engine.RestoreState(state);
 
         public bool TryPersist() => CombatSaveStore.TrySave(Engine.CaptureState());
-        public CombatState TryRestorePersisted() => CombatSaveStore.TryLoad();
+        public CombatState? TryRestorePersisted() => CombatSaveStore.TryLoad();
     }
 }

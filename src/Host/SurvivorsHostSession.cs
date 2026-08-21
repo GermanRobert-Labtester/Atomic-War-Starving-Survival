@@ -164,7 +164,7 @@ namespace AtomicWar.GodotApp
             Radiation.Register(rad);
         }
 
-        public SurvivorNeedsState Find(string id)
+        public SurvivorNeedsState? Find(string id)
         {
             for (int i = 0; i < RosterState.Count; i++)
                 if (RosterState[i] != null && RosterState[i].Id == id) return RosterState[i];

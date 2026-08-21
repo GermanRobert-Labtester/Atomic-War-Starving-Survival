@@ -131,7 +131,7 @@ namespace Ashfall.Core.Expeditions
         {
             if (string.IsNullOrEmpty(encounterId)) return false;
 
-            string effectiveLocation = locationId ?? _lastSurfaced?.trigger?.locationId;
+            string effectiveLocation = locationId ?? _lastSurfaced?.trigger?.locationId!;
             if (effectiveLocation == null) return false;
 
             bool ok = _narrative.Resolve(encounterId, choiceId, effectiveLocation, day);

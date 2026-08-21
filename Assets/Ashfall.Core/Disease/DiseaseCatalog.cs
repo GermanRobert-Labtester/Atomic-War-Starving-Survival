@@ -121,7 +121,7 @@ namespace Ashfall.Core.Disease
             Diseases.Add(disease);
         }
 
-        public DiseaseDefinition GetById(string id)
+        public DiseaseDefinition? GetById(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Diseases.Count; i++)
@@ -155,7 +155,7 @@ namespace Ashfall.Core.Disease
             DiseaseCollectionFile file;
             try
             {
-                file = json.Deserialize<DiseaseCollectionFile>(files.ReadAllText(path));
+                file = json.Deserialize<DiseaseCollectionFile>(files.ReadAllText(path)!);
             }
             catch (Exception e)
             {

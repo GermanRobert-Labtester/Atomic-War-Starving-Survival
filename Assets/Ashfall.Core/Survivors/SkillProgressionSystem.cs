@@ -470,7 +470,7 @@ public sealed class SkillProgressionSystem
 
     private void ForceGrantBestSkill(SkillActor actor, SkillProgressionState state, string disciplineId)
     {
-        SkillDef best = null;
+        SkillDef? best = null;
         for (int i = 0; i < _catalog.Count; i++)
         {
             var p = _catalog[i];

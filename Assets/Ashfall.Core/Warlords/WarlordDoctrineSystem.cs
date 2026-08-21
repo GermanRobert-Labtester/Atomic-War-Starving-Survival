@@ -100,7 +100,7 @@ namespace Ashfall.Core.Warlords
         public int seedSalt;
         public int lastTickDay = -1;
 
-        public WarlordTerritoryRecord Territory(string locationId)
+        public WarlordTerritoryRecord? Territory(string locationId)
         {
             if (territory == null) return null;
             for (int i = 0; i < territory.Count; i++)
@@ -170,7 +170,7 @@ namespace Ashfall.Core.Warlords
 
         public WarlordDoctrineState State => _state;
         public string DoctrineId => _state.doctrineId;
-        public WarlordDoctrineDef Doctrine => _catalog.GetDoctrine(_state.doctrineId);
+        public WarlordDoctrineDef? Doctrine => _catalog.GetDoctrine(_state.doctrineId);
         public int Supply => _state.supply;
         public int SupplyNeed => _state.supplyNeed;
         public float TributeMultiplier => _state.tributeMultiplier;
@@ -435,7 +435,7 @@ namespace Ashfall.Core.Warlords
             // Doctrine change resets streaks: the road starts over.
             _state.successStreak = 0;
             _state.failureStreak = 0;
-            EmitNarrative(_catalog.GetDoctrine(doctrineId));
+            EmitNarrative(_catalog.GetDoctrine(doctrineId)!);
             OnDoctrineChanged?.Invoke(from, doctrineId, reason, day);
             RaiseChanged();
         }
@@ -453,7 +453,7 @@ namespace Ashfall.Core.Warlords
             return false;
         }
 
-        private WarlordActionResult SelectAndResolveAction(int day, ISeededRng rng, WarlordContext context)
+        private WarlordActionResult? SelectAndResolveAction(int day, ISeededRng rng, WarlordContext context)
         {
             var def = Doctrine;
             if (def == null || def.eligible_actions == null || def.eligible_actions.Count == 0) return null;
@@ -520,7 +520,7 @@ namespace Ashfall.Core.Warlords
             return 1;
         }
 
-        private WarlordActionResult ResolveAction(string actionName, int day, ISeededRng rng, WarlordContext context)
+        private WarlordActionResult? ResolveAction(string actionName, int day, ISeededRng rng, WarlordContext context)
         {
             switch (actionName)
             {
@@ -726,7 +726,7 @@ namespace Ashfall.Core.Warlords
 
         // ── Target selection (deterministic ordering) ──────────────────
 
-        private WarlordTerritoryNodeDef PickTarget(bool adjacentOnly, bool requireControlled, ISeededRng rng)
+        private WarlordTerritoryNodeDef? PickTarget(bool adjacentOnly, bool requireControlled, ISeededRng rng)
         {
             var candidates = new List<WarlordTerritoryNodeDef>();
             for (int i = 0; i < _catalog.Territory.Count; i++)
@@ -749,7 +749,7 @@ namespace Ashfall.Core.Warlords
             return candidates[0];
         }
 
-        private WarlordTerritoryNodeDef PickAnnexTarget(ISeededRng rng)
+        private WarlordTerritoryNodeDef? PickAnnexTarget(ISeededRng rng)
         {
             var candidates = new List<WarlordTerritoryNodeDef>();
             for (int i = 0; i < _catalog.Territory.Count; i++)

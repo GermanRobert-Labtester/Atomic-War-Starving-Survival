@@ -178,7 +178,7 @@ namespace Ashfall.Core.Combat
             if (e.HumanKills >= HumanKillsForDesensitized) Grant(survivorId, DesensitizedId);
         }
 
-        public CombatPerkEntry GetEntry(string survivorId)
+        public CombatPerkEntry? GetEntry(string survivorId)
         {
             return !string.IsNullOrEmpty(survivorId) && _bySurvivor.TryGetValue(survivorId, out var e)
                 ? CloneEntry(e) : null;

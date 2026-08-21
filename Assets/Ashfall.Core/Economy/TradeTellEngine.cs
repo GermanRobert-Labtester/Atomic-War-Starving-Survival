@@ -166,10 +166,10 @@ namespace Ashfall.Core.Economy
             {
                 foreach (var b in bandsProp.EnumerateArray())
                 {
-                    string id = b.TryGetProperty("id", out var idEl) ? idEl.GetString() : null;
-                    float min = b.TryGetProperty("min", out var minEl) ? (float)minEl.GetDouble() : -100f;
+                    string? id = b.TryGetProperty("id", out var idEl) ? idEl.GetString() : null;
+                    float min = b.TryGetProperty("min", out var minEl) ? (float)minEl.GetDouble()! : -100f;
                     float max = b.TryGetProperty("max", out var maxEl) ? (float)maxEl.GetDouble() : 100f;
-                    engine.RegisterBand(id, min, max);
+                    engine.RegisterBand(id!, min, max);
                 }
             }
 

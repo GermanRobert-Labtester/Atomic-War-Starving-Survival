@@ -37,7 +37,7 @@ namespace Ashfall.Core.Campaign
             return false;
         }
 
-        public DailyBriefingReport Consume(int day)
+        public DailyBriefingReport? Consume(int day)
         {
             for (int i = 0; i < Pending.Count; i++)
             {
@@ -104,7 +104,7 @@ namespace Ashfall.Core.Campaign
             if (string.IsNullOrWhiteSpace(jsonText))
                 throw new InvalidOperationException("DailyBriefingSave: empty save payload.");
             DailyBriefingSave save;
-            try { save = json.Deserialize<DailyBriefingSave>(jsonText); }
+            try { save = json.Deserialize<DailyBriefingSave>(jsonText!); }
             catch (Exception e)
             {
                 throw new InvalidOperationException(

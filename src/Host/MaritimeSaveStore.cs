@@ -28,7 +28,7 @@ namespace AtomicWar.GodotApp
                 if (save == null) return false;
                 save.Checksum = SaveChecksum.Compute(save);
                 string path = SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 System.IO.File.WriteAllText(path, s_json.Serialize(save));
@@ -41,7 +41,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static MaritimeHostSave TryLoad()
+        public static MaritimeHostSave? TryLoad()
         {
             try
             {

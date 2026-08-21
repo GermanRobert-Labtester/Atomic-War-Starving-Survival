@@ -53,7 +53,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public DwellerHeirloomEntry GetById(string heirloomId)
+        public DwellerHeirloomEntry? GetById(string heirloomId)
         {
             if (string.IsNullOrEmpty(heirloomId)) return null;
             _byId.TryGetValue(heirloomId, out var entry);

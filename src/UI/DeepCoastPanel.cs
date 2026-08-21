@@ -288,7 +288,7 @@ namespace AtomicWar.GodotApp.UI
 
         private void Decide(string decisionId)
         {
-            var result = _deepCoast.Decide(decisionId, Day());
+            var result = _deepCoast!.Decide(decisionId, Day());
             _statusLabel.Text = result;
             RefreshView();
         }

@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public DeadbeatEscapementWearEntry GetEscapement(string id)
+        public DeadbeatEscapementWearEntry? GetEscapement(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is DeadbeatEscapementWearEntry e ? e : null;
         }
 
-        public InvarPendulumThermalEntry GetPendulum(string id)
+        public InvarPendulumThermalEntry? GetPendulum(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is InvarPendulumThermalEntry e ? e : null;
         }
 
-        public MainspringFatigueRuptureEntry GetSpring(string id)
+        public MainspringFatigueRuptureEntry? GetSpring(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MainspringFatigueRuptureEntry e ? e : null;
         }
 
-        public ClepsydraWaterClockEntry GetWater(string id)
+        public ClepsydraWaterClockEntry? GetWater(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ClepsydraWaterClockEntry e ? e : null;

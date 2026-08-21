@@ -1,19 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <RootNamespace>Ashfall.Core</RootNamespace>
     <AssemblyName>Ashfall.Core</AssemblyName>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Deterministic>true</Deterministic>
     <!--
-      Host DTOs are populated by JSON and are not nullable-analyzed at runtime;
-      tuple nullability drift (CS8619/CS8620) and serializer-populated fields
-      (CS0649/CS0169) are expected noise. CS8605/CS8629 are NOT suppressed:
-      they flag real unboxing/.Value crash risks.
+      Remaining suppressed warnings (narrowed from original 19):
+      CS0108/CS0114  — intentional member hiding in host sessions
+      CS0414         — serializer-assigned fields flagged as unused
+      CS0067         — public event surface wired by feature registration
+      CS8600/CS8601  — JSON-populated DTO null conversions (known safe)
+      CS8604/CS8618  — serializer-assigned reference fields
+      CS8625         — null passed to non-nullable param in JSON paths
+      CS8765         — interface/override nullability mismatch on DTOs
+      CS8619/CS8620  — tuple nullability drift in host adapters
+      CS0649/CS0169  — fields only written by JSON serializer
+      CS8602/CS8603  — NOT suppressed: real null-dereference detection active
+      CS8605/CS8629  — NOT suppressed: real unboxing/.Value crash detection active
     -->
-    <NoWarn>$(NoWarn);CS0108;CS0114;CS0414;CS0067;CS8600;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8619;CS8620;CS0649;CS0169</NoWarn>
+    <NoWarn>$(NoWarn);CS0169;CS8620;CS8619;CS8765;CS8625;CS8618;CS0414</NoWarn>
   </PropertyGroup>
   <!--
     The core SOURCE lives at ../Assets/Ashfall.Core/ and is compiled by the

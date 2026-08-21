@@ -70,15 +70,15 @@ namespace Ashfall.Core.UtilityAI
 
             // Determinism: same seed, same pick, across fresh instances.
             ctx.Traits.Clear();
-            string pickA = new UtilityAiSystem().SelectAction(ctx, defs, new SeededRng(5)).id;
-            string pickB = new UtilityAiSystem().SelectAction(ctx, defs, new SeededRng(5)).id;
+            string pickA = new UtilityAiSystem().SelectAction(ctx, defs, new SeededRng(5))!.id;
+            string pickB = new UtilityAiSystem().SelectAction(ctx, defs, new SeededRng(5))!.id;
             Check(pickA == pickB, "same seed, same pick (determinism)");
 
             // All-vetoed returns null (audit A9 regression).
             var strictCtx = new AIActionContext { SurvivorId = "sv_vetoed", Traits = { UtilityTags.TraitCoward } };
             var loudOnly = new List<UtilityActionDef>
             {
-                defs.Find(d => d.id == "action_weigh_goods")
+                defs.Find(d => d.id == "action_weigh_goods")!
             };
             Check(sys.SelectAction(strictCtx, loudOnly, new SeededRng(1)) == null,
                 "all-vetoed selection returns null (A9)");

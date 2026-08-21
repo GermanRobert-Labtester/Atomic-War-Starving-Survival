@@ -119,7 +119,7 @@ namespace AtomicWar.GodotApp.UI
             int shown = 0;
             for (int i = 0; i < (_phase0.Effects?.Count ?? 0); i++)
             {
-                var fx = _phase0.Effects[i];
+                var fx = _phase0.Effects![i];
                 if (fx == null || string.IsNullOrEmpty(fx.survivorId)) continue;
                 bool alive = roster == null || roster.Exists(s => s != null && s.Id == fx.survivorId && s.IsAliveState);
                 if (!alive) continue;
@@ -186,7 +186,7 @@ namespace AtomicWar.GodotApp.UI
         {
             _commandList.AddChild(AshfallUiHelpers.MakeSectionHeader("TREATMENTS & RECORD"));
 
-            foreach (var fx in _phase0.Effects)
+            foreach (var fx in _phase0!.Effects)
             {
                 if (fx == null || string.IsNullOrEmpty(fx.survivorId)) continue;
                 string id = fx.survivorId;
@@ -241,7 +241,7 @@ namespace AtomicWar.GodotApp.UI
 
     internal static class Phase0PanelLabelExtensions
     {
-        public static Label WithColor(this Label label, Color color)
+        public static Label? WithColor(this Label label, Color color)
         {
             if (label != null) label.AddThemeColorOverride("font_color", color);
             return label;

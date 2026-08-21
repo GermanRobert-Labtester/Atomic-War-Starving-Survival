@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+#pragma warning disable CS0649
 
 namespace Ashfall.Core.Muster
 {
@@ -18,6 +19,7 @@ namespace Ashfall.Core.Muster
     public static class EpilogueMatrixLoader
     {
         public const string FileName = "muster_epilogues.json";
+        public const int CurrentSchemaVersion = 1;
 
         public static List<EndingDefinition> LoadEpilogues(
             string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -36,11 +38,15 @@ namespace Ashfall.Core.Muster
 
             try
             {
-                var parsed = json.Deserialize<EndingEntry[]>(raw);
-                if (parsed == null) return result;
-                for (int i = 0; i < parsed.Length; i++)
+                var root = json.Deserialize<EpilogueCatalogRoot>(raw);
+                if (root == null) return result;
+                if (root.schema_version > CurrentSchemaVersion)
+                    return result;
+                var entries = root.epilogues;
+                if (entries == null) return result;
+                for (int i = 0; i < entries.Count; i++)
                 {
-                    var e = parsed[i];
+                    var e = entries[i];
                     if (e == null || string.IsNullOrEmpty(e.ending_key)) continue;
                     result.Add(new EndingDefinition
                     {
@@ -55,6 +61,13 @@ namespace Ashfall.Core.Muster
                 return result;
             }
             return result;
+        }
+
+        /// <summary>Schema-envelope root for muster_epilogues.json.</summary>
+        private class EpilogueCatalogRoot
+        {
+            public int schema_version = 1;
+            public List<EndingEntry> epilogues = new List<EndingEntry>();
         }
 
         private class EndingEntry

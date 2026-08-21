@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public BurrMillstoneDressingEntry GetMillstone(string id)
+        public BurrMillstoneDressingEntry? GetMillstone(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BurrMillstoneDressingEntry e ? e : null;
         }
 
-        public BoltingSilkMeshEntry GetSilk(string id)
+        public BoltingSilkMeshEntry? GetSilk(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BoltingSilkMeshEntry e ? e : null;
         }
 
-        public GrainSiloWeevilEntry GetSilo(string id)
+        public GrainSiloWeevilEntry? GetSilo(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GrainSiloWeevilEntry e ? e : null;
         }
 
-        public MillDampenerTemperingEntry GetTemper(string id)
+        public MillDampenerTemperingEntry? GetTemper(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MillDampenerTemperingEntry e ? e : null;

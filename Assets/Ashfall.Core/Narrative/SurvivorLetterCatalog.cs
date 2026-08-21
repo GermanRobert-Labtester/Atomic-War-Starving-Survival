@@ -52,7 +52,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public SurvivorLetterEntry GetById(string letterId)
+        public SurvivorLetterEntry? GetById(string letterId)
         {
             if (string.IsNullOrEmpty(letterId)) return null;
             _byId.TryGetValue(letterId, out var entry);

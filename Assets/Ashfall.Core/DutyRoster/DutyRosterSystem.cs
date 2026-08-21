@@ -284,7 +284,7 @@ namespace Ashfall.Core
             if (!sleptHere && script == ScriptPencil)
                 return false;
 
-            DutyRosterRow existing = GetRow(survivorId);
+            DutyRosterRow existing = GetRow(survivorId)!;
             if (existing == null && OccupiedRowCount >= ManifestCap)
                 return false;
 
@@ -312,7 +312,7 @@ namespace Ashfall.Core
         public bool EraseName(string survivorId)
         {
             if (string.IsNullOrEmpty(survivorId)) return false;
-            DutyRosterRow row = GetRow(survivorId);
+            DutyRosterRow row = GetRow(survivorId)!;
             if (row == null) return false;
 
             _state.rows.Remove(row);
@@ -356,7 +356,7 @@ namespace Ashfall.Core
                         DutyRosterOccupant occ = occupants[i];
                         if (occ == null || string.IsNullOrEmpty(occ.survivorId) || !occ.sleptHere)
                             continue;
-                        DutyRosterRow row = GetRow(occ.survivorId);
+                        DutyRosterRow row = GetRow(occ.survivorId)!;
                         if (row == null)
                             WriteName(occ.survivorId, occ.displayName, occ.occupationObserved, ScriptPencil, day, true);
                         else
@@ -517,7 +517,7 @@ namespace Ashfall.Core
             if (row == null) return false;
             if (!CanAssign(row)) return false;
 
-            string currentRole = GetRoleOf(survivorId);
+            string currentRole = GetRoleOf(survivorId)!;
             if (currentRole != null && currentRole != role)
                 return false; // already assigned elsewhere
 
@@ -585,7 +585,7 @@ namespace Ashfall.Core
             {
                 string role = AssignmentRoles[r];
                 if (_assignmentByRole.ContainsKey(role)) continue;
-                string pick = PickEligible(eligible, used, day, role);
+                string pick = PickEligible(eligible, used, day, role)!;
                 if (pick == null) continue;
                 if (Assign(role, pick))
                 {

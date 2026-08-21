@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public AmmoniaChillerLeakEntry GetChiller(string id)
+        public AmmoniaChillerLeakEntry? GetChiller(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is AmmoniaChillerLeakEntry e ? e : null;
         }
 
-        public BrinePicklingBarrelEntry GetPickling(string id)
+        public BrinePicklingBarrelEntry? GetPickling(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BrinePicklingBarrelEntry e ? e : null;
         }
 
-        public RootCellarHumidityRotEntry GetCellar(string id)
+        public RootCellarHumidityRotEntry? GetCellar(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RootCellarHumidityRotEntry e ? e : null;
         }
 
-        public SmokedMeatCreosoteEntry GetSmoke(string id)
+        public SmokedMeatCreosoteEntry? GetSmoke(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SmokedMeatCreosoteEntry e ? e : null;

@@ -42,7 +42,7 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>Reads and validates through the codec. Returns null when absent or corrupt.</summary>
-        public static DutyRosterSave TryLoad(string pathOverride = null)
+        public static DutyRosterSave? TryLoad(string pathOverride = null)
         {
             try
             {

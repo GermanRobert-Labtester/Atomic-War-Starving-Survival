@@ -1,6 +1,7 @@
 using System;
 using Ashfall.Core.YearOfAsh;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Verdict
 {
     /// <summary>
@@ -137,7 +138,11 @@ namespace Ashfall.Core.Verdict
                 save = decoded;
                 return true;
             }
-            catch { return false; }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return false;
+                                }
         }
 
         private static bool MigrateV1(string json, IJsonSerializer serializer, out VerdictSave save)

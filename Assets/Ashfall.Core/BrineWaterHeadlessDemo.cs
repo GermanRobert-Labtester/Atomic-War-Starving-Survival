@@ -108,7 +108,7 @@ namespace Ashfall.Core
             var json = new SystemTextJsonSerializer();
             var blob = json.Serialize(brine.CaptureState());
             var restored = new BrineWaterSystem();
-            restored.RestoreState(json.Deserialize<BrineWaterSystemState>(blob));
+            restored.RestoreState(json.Deserialize<BrineWaterSystemState>(blob)!);
             Check(restored.SteamTripped == brine.SteamTripped, "roundtrip trip flag");
             Check(restored.State.hoursSinceTrip == brine.State.hoursSinceTrip, "roundtrip 48h clock");
             Check(restored.State.membraneSaved == brine.State.membraneSaved, "roundtrip membrane saved");

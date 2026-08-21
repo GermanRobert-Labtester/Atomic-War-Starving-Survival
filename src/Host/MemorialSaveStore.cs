@@ -33,7 +33,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static MemorialSave TryLoad()
+        public static MemorialSave? TryLoad()
         {
             try
             {

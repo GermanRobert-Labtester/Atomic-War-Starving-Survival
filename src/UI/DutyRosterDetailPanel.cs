@@ -74,7 +74,7 @@ namespace AtomicWar.GodotApp.UI
             for (int i = 0; i < DutyRosterSystem.AssignmentRoles.Length; i++)
             {
                 string role = DutyRosterSystem.AssignmentRoles[i];
-                string who = roster.GetAssignment(role);
+                string who = roster.GetAssignment(role)!;
                 if (string.IsNullOrEmpty(who)) continue;
                 var lbl = new Label { Text = $"{role.Replace('_', ' ').ToUpperInvariant()}: {who}" };
                 labelify(lbl, warm: true);

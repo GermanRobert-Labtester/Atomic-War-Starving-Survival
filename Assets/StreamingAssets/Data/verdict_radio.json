@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "broadcasts": [
     {
       "id": "radio_verdict_meter_reads_1142",

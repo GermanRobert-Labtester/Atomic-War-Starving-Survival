@@ -43,7 +43,7 @@ namespace AtomicWar.GodotApp
             {
                 if (save == null) return false;
                 string path = SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 // Recompute so a mutated envelope cannot persist a stale hash.
@@ -58,7 +58,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static MusterHostSave TryLoad()
+        public static MusterHostSave? TryLoad()
         {
             try
             {

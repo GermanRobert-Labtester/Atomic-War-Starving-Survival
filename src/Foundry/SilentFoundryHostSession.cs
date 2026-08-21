@@ -220,8 +220,8 @@ namespace AtomicWar.GodotApp
         {
             var catalog = new SilentFoundryCatalog();
             catalog.Load(
-                SilentFoundryCatalogLoader.LoadProduction(dataDir, files, json),
-                SilentFoundryCatalogLoader.LoadFaction(dataDir, files, json));
+                SilentFoundryCatalogLoader.LoadProduction(dataDir, files, json)!,
+                SilentFoundryCatalogLoader.LoadFaction(dataDir, files, json)!);
 
             int maintenanceCycle = 4;
             var blueprints = new BunkerBlueprintCatalog();
@@ -282,9 +282,9 @@ namespace AtomicWar.GodotApp
                     if (!Enum.TryParse(d.type, ignoreCase: true, out ItemType type)) type = ItemType.Material;
                     catalog.Register(new ItemDefinition
                     {
-                        id = d.id,
-                        displayName = d.displayName,
-                        description = d.description,
+                        id = d.id!,
+                        displayName = d.displayName ?? string.Empty,
+                        description = d.description ?? string.Empty,
                         type = type,
                         stackMax = d.stackMax > 0 ? d.stackMax : 1,
                         weight = d.weight,
@@ -342,7 +342,7 @@ namespace AtomicWar.GodotApp
 
             // The template id doubles as the knowledge key: KnowledgeBase dedupes,
             // so reloading a save can never inject a duplicate entry.
-            _journal.TryAddRawEntry(trigger.TemplateId, body, author, trigger.Day);
+            _journal.TryAddRawEntry(trigger.TemplateId, body!, author!, trigger.Day);
         }
 
         /// <summary>Minimal author surface so the journal preserves the authored role.</summary>

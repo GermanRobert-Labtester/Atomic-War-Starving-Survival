@@ -39,7 +39,7 @@ namespace Ashfall.Core
     {
         public List<StandingRecordQuestEntry> Quests { get; } = new List<StandingRecordQuestEntry>();
 
-        public StandingRecordQuestEntry GetQuest(string id)
+        public StandingRecordQuestEntry? GetQuest(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Quests.Count; i++)

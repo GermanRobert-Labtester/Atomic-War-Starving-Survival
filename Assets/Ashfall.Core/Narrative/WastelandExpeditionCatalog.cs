@@ -59,7 +59,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public WastelandExpeditionEntry GetById(string expeditionId)
+        public WastelandExpeditionEntry? GetById(string expeditionId)
         {
             if (string.IsNullOrEmpty(expeditionId)) return null;
             _byId.TryGetValue(expeditionId, out var entry);

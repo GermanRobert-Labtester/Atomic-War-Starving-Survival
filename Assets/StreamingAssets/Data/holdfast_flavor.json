@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "factions": {
     "faction_the_office": {
       "register": "bureaucratic",

@@ -52,7 +52,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public BunkerGlitchEntry GetById(string glitchId)
+        public BunkerGlitchEntry? GetById(string glitchId)
         {
             if (string.IsNullOrEmpty(glitchId)) return null;
             _byId.TryGetValue(glitchId, out var entry);

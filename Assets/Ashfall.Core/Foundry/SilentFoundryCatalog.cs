@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Ashfall.Core.Narrative;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Foundry
 {
     // ---------------------------------------------------------------------
@@ -150,10 +151,11 @@ namespace Ashfall.Core.Foundry
                         ratification[t.treaty_id] = t.ratified_day;
                 }
             }
-            catch
-            {
-                return new Dictionary<string, int>(StringComparer.Ordinal);
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new Dictionary<string, int>(StringComparer.Ordinal);
+                                }
             return ratification;
         }
 
@@ -172,13 +174,14 @@ namespace Ashfall.Core.Foundry
             {
                 return serializer.Deserialize<FoundryProductionFile>(text) ?? new FoundryProductionFile();
             }
-            catch
-            {
-                return new FoundryProductionFile();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new FoundryProductionFile();
+                                }
         }
 
-        public static FoundryFactionEntry LoadFaction(
+        public static FoundryFactionEntry? LoadFaction(
             string dataDirectory,
             IFileIO files = null,
             IJsonSerializer serializer = null)
@@ -193,10 +196,11 @@ namespace Ashfall.Core.Foundry
             {
                 return serializer.Deserialize<FoundryFactionEntry>(text);
             }
-            catch
-            {
-                return null;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return null;
+                                }
         }
     }
 
@@ -234,7 +238,7 @@ namespace Ashfall.Core.Foundry
             }
         }
 
-        public FoundryProductEntry GetProduct(string productId)
+        public FoundryProductEntry? GetProduct(string productId)
         {
             if (string.IsNullOrEmpty(productId)) return null;
             return _byProductId.TryGetValue(productId, out var entry) ? entry : null;

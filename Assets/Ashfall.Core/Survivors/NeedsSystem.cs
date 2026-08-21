@@ -97,7 +97,7 @@ namespace Ashfall.Core.Survivors
             _survivors.Remove(survivor);
         }
 
-        public SurvivorNeedsState Get(string id)
+        public SurvivorNeedsState? Get(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < _survivors.Count; i++)

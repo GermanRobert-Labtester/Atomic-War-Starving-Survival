@@ -381,7 +381,7 @@ namespace AtomicWar.GodotApp.Radio
             return ToColor(token);
         }
 
-        private static Texture2D LoadTexture(string path)
+        private static Texture2D? LoadTexture(string path)
         {
             return TryLoadTexture(path);
         }

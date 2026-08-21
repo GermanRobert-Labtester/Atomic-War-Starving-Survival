@@ -44,7 +44,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static DailyBriefingSave TryLoad()
+        public static DailyBriefingSave? TryLoad()
         {
             try
             {

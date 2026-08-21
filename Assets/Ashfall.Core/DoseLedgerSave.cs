@@ -96,7 +96,7 @@ namespace Ashfall.Core
                 throw new InvalidOperationException("DoseLedgerSave: empty save payload.");
 
             DoseLedgerSave save;
-            try { save = json.Deserialize<DoseLedgerSave>(jsonText); }
+            try { save = json.Deserialize<DoseLedgerSave>(jsonText!); }
             catch (Exception e)
             {
                 throw new InvalidOperationException("DoseLedgerSave: malformed save payload: " + e.Message, e);

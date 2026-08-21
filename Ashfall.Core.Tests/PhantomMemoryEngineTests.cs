@@ -150,7 +150,7 @@ namespace Ashfall.Core.Tests
             // The envelope mutation must not leak into the live engine, and the
             // later live trigger must not leak into the earlier envelope.
             var fresh = engine.CaptureState();
-            Assert.Equal(1, fresh.records.Count);
+            Assert.Single(fresh.records);
             Assert.DoesNotContain(fresh.records[0].triggeredItemIds, id => id == "injected");
             Assert.Contains(fresh.records[0].triggeredItemIds, id => id == "military_patch");
             Assert.DoesNotContain(snapshot.records[0].triggeredItemIds, id => id == "military_patch");

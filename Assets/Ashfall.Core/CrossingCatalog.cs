@@ -116,14 +116,14 @@ namespace Ashfall.Core
         public List<CrossingEncounterEntry> Encounters { get; } = new List<CrossingEncounterEntry>();
         public List<CrossingCrisisEntry> Crises { get; } = new List<CrossingCrisisEntry>();
 
-        public CrossingFactionEntry GetFaction(string id) => Find(Factions, id, f => f.id);
-        public CrossingLocationEntry GetLocation(string id) => Find(Locations, id, e => e.id);
-        public CrossingQuestEntry GetQuest(string id) => Find(Quests, id, q => q.id);
-        public CrossingItemEntry GetItem(string id) => Find(Items, id, item => item.id);
-        public CrossingEncounterEntry GetEncounter(string id) => Find(Encounters, id, enc => enc.id);
-        public CrossingCrisisEntry GetCrisis(string id) => Find(Crises, id, c => c.id);
+        public CrossingFactionEntry? GetFaction(string id) => Find(Factions, id, f => f.id);
+        public CrossingLocationEntry? GetLocation(string id) => Find(Locations, id, e => e.id);
+        public CrossingQuestEntry? GetQuest(string id) => Find(Quests, id, q => q.id);
+        public CrossingItemEntry? GetItem(string id) => Find(Items, id, item => item.id);
+        public CrossingEncounterEntry? GetEncounter(string id) => Find(Encounters, id, enc => enc.id);
+        public CrossingCrisisEntry? GetCrisis(string id) => Find(Crises, id, c => c.id);
 
-        private static T Find<T>(List<T> list, string id, Func<T, string> getId) where T : class
+        private static T? Find<T>(List<T> list, string id, Func<T, string> getId) where T : class
         {
             if (string.IsNullOrEmpty(id) || list == null) return null;
             for (int i = 0; i < list.Count; i++)

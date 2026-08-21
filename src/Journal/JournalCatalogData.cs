@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS0649
 using System.IO;
 using System.Text.Json;
 

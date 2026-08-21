@@ -124,7 +124,7 @@ namespace Ashfall.Core
         /// Read-only passthrough: return the active "now"-text stratum for
         /// a site id, or null if no `'after'` stratum is selected.
         /// </summary>
-        public string GetActiveRecast(string siteId)
+        public string? GetActiveRecast(string siteId)
         {
             if (Memory == null) return null;
             return Memory.GetActiveRecast(siteId);

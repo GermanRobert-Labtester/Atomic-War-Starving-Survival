@@ -10,6 +10,10 @@ namespace Ashfall.Core.Tests
     {
         private static GoodsCatalogLoadResult LoadRaw(string json)
         {
+            // Auto-wrap flat arrays in schema envelope.
+            string trimmed = json.TrimStart();
+            if (trimmed.Length > 0 && trimmed[0] == '[')
+                json = @"{""schema_version"": 1, ""goods"": " + json + "}";
             return GoodsCatalogLoader.Load(
                 "/tmp", new FakeFileIO(json), new SystemTextJsonSerializer());
         }

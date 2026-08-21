@@ -141,7 +141,7 @@ namespace Ashfall.Core.Campaign
         /// or null when a guard rejects the call (already advancing, or stale
         /// day). The host should treat a null return as "no-op".
         /// </summary>
-        public DayAdvancedEventArgs Advance(int day, IDayAdvancePersistence persistence = null)
+        public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence persistence = null)
         {
             if (!TryBegin(day)) return null;
 

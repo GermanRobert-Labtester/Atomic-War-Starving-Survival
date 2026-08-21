@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public HempFiberHacklingEntry GetHemp(string id)
+        public HempFiberHacklingEntry? GetHemp(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is HempFiberHacklingEntry e ? e : null;
         }
 
-        public WireRopeStrandingEntry GetWire(string id)
+        public WireRopeStrandingEntry? GetWire(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is WireRopeStrandingEntry e ? e : null;
         }
 
-        public ManilaHawserBreakageEntry GetHawser(string id)
+        public ManilaHawserBreakageEntry? GetHawser(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ManilaHawserBreakageEntry e ? e : null;
         }
 
-        public RopeTransmissionSplicingEntry GetSplice(string id)
+        public RopeTransmissionSplicingEntry? GetSplice(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RopeTransmissionSplicingEntry e ? e : null;

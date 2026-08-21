@@ -83,7 +83,7 @@ namespace Ashfall.Core
             // Save / Load roundtrip
             string blob = json.Serialize(roster.CaptureState());
             var restored = new DutyRosterSystem();
-            restored.RestoreState(json.Deserialize<DutyRosterSystemState>(blob));
+            restored.RestoreState(json.Deserialize<DutyRosterSystemState>(blob)!);
             Check(restored.State.rows.Count == 3, "save roundtrip preserved 3 rows");
             Check(restored.GetRow("sv_elena") != null, "Elena found after restore");
 
@@ -110,7 +110,7 @@ namespace Ashfall.Core
                 "night slate resolved");
             string encBlob = json.Serialize(encounters.CaptureState());
             var encRestored = new ShelterEncounterSystem();
-            encRestored.RestoreState(json.Deserialize<ShelterEncounterSystemState>(encBlob));
+            encRestored.RestoreState(json.Deserialize<ShelterEncounterSystemState>(encBlob)!);
             Check(encRestored.IsResolved("se_night_slate"), "encounter save roundtrip preserved resolution");
             Check(encRestored.PeekVisitor() == ShelterEncounterSystem.VisitorEdor, "visitor queue survived save roundtrip");
 

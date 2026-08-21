@@ -30,7 +30,7 @@ namespace Ashfall.Core.Verdict
         /// Returns the currently-resolved verdict ending key (from ReckoningState),
         /// or the enforced fallback if state is contradictory. Null if none resolved.
         /// </summary>
-        public static string ResolvedEnding(ReckoningState state)
+        public static string? ResolvedEnding(ReckoningState state)
         {
             if (state == null) return null;
             if (state.countPresented) return EndingKeyCounted;
@@ -44,9 +44,9 @@ namespace Ashfall.Core.Verdict
         /// choice and epilogue matrix). Prefers the player's explicit selection;
         /// falls back by evidence sufficiency. Idempotent and deterministic.
         /// </summary>
-        public static string DecideEnding(ReckoningState state, int enrolledEvidence, int day)
+        public static string? DecideEnding(ReckoningState state, int enrolledEvidence, int day)
         {
-            string resolved = ResolvedEnding(state);
+            string resolved = ResolvedEnding(state)!;
             if (!string.IsNullOrEmpty(resolved)) return resolved;
 
             if (state == null || state.phase < ReckoningPhase.Counted)

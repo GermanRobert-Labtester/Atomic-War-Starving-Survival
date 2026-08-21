@@ -1,10 +1,100 @@
 {
   "skills": [
     {
-      "name": "ashfall-agents",
-      "path": "ashfall-agents/SKILL.md",
-      "description": "Generate or update the project AGENTS.md with comprehensive architecture, conventions, and known issues.",
-      "whenToUse": "When AGENTS.md needs to be refreshed, when a new developer joins, or when the project architecture has evolved significantly."
+      "name": "ashfall-analyze",
+      "path": "ashfall-analyze/SKILL.md",
+      "description": "Evidence-first, read-only forensic analysis of a specific ASHFALL feature, subsystem, bug, or design area.",
+      "whenToUse": "When executing ashfall-analyze tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-plan",
+      "path": "ashfall-plan/SKILL.md",
+      "description": "Builds evidence-grounded, dependency-ordered ASHFALL integration plans from forensic findings.",
+      "whenToUse": "When executing ashfall-plan tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-implement",
+      "path": "ashfall-implement/SKILL.md",
+      "description": "Executes an approved ASHFALL integration plan conservatively, phase by phase, with tests.",
+      "whenToUse": "When executing ashfall-implement tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-prioritize",
+      "path": "ashfall-prioritize/SKILL.md",
+      "description": "Evidence-grounded ASHFALL next-steps strategist that ranks development actions.",
+      "whenToUse": "When executing ashfall-prioritize tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-expand",
+      "path": "ashfall-expand/SKILL.md",
+      "description": "High-quality canon-aware creative writer and systemic game expansion designer.",
+      "whenToUse": "When executing ashfall-expand tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-write",
+      "path": "ashfall-write/SKILL.md",
+      "description": "High-quality ASHFALL diegetic writing specialist for item descriptions, notes, journals, radio transmissions, and logs.",
+      "whenToUse": "When executing ashfall-write tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-design",
+      "path": "ashfall-design/SKILL.md",
+      "description": "End-to-end ASHFALL visual production orchestrator for 2D art, UI design, and Godot wiring.",
+      "whenToUse": "When executing ashfall-design tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-foundry",
+      "path": "ashfall-foundry/SKILL.md",
+      "description": "Linux-first ASHFALL visual-production skill for procedural textures, materials, shaders, and VFX.",
+      "whenToUse": "When executing ashfall-foundry tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-tune",
+      "path": "ashfall-tune/SKILL.md",
+      "description": "Deep forensic ASHFALL performance-engineering and code-debloating skill.",
+      "whenToUse": "When executing ashfall-tune tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-audit",
+      "path": "ashfall-audit/SKILL.md",
+      "description": "Performs ten distinct evidence-driven debugging passes over ASHFALL code and runtime wiring.",
+      "whenToUse": "When executing ashfall-audit tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-repair",
+      "path": "ashfall-repair/SKILL.md",
+      "description": "Validates bug findings, determines root cause, designs minimal repair plans, and integrates fixes.",
+      "whenToUse": "When executing ashfall-repair tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-harden",
+      "path": "ashfall-harden/SKILL.md",
+      "description": "Aggressively probes ASHFALL architecture for fragility, hidden coupling, and debt.",
+      "whenToUse": "When executing ashfall-harden tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-integrate",
+      "path": "ashfall-integrate/SKILL.md",
+      "description": "Converts an architecture-hardening audit into a verified, phased hardening plan.",
+      "whenToUse": "When executing ashfall-integrate tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-scan",
+      "path": "ashfall-scan/SKILL.md",
+      "description": "Deep forensic audit for unimplemented gaps, silent failures, and unwired code.",
+      "whenToUse": "When executing ashfall-scan tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-seal",
+      "path": "ashfall-seal/SKILL.md",
+      "description": "Seals unimplemented gaps, connects Core/data/Godot/save paths, and verifies end-to-end functionality.",
+      "whenToUse": "When executing ashfall-seal tasks for ASHFALL."
+    },
+    {
+      "name": "ashfall-optimize",
+      "path": "ashfall-optimize/SKILL.md",
+      "description": "ASHFALL prompt compiler for coding agents and creative expansion LLMs.",
+      "whenToUse": "When executing ashfall-optimize tasks for ASHFALL."
     }
   ]
 }

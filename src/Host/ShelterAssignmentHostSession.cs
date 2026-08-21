@@ -99,7 +99,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static ShelterAssignmentSave TryLoad()
+        public static ShelterAssignmentSave? TryLoad()
         {
             try
             {

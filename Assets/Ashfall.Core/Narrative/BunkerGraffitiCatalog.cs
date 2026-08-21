@@ -51,7 +51,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public BunkerGraffitiEntry GetById(string postingId)
+        public BunkerGraffitiEntry? GetById(string postingId)
         {
             if (string.IsNullOrEmpty(postingId)) return null;
             _byId.TryGetValue(postingId, out var entry);

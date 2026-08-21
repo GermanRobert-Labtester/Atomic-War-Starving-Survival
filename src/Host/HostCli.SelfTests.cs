@@ -185,7 +185,7 @@ namespace AtomicWar.GodotApp
                 var warlord = session.Warlord;
                 Check(warlord != null && warlord.DoctrineId == "warlord_doctrine_toll",
                     "warlord wired with the toll doctrine from the catalog");
-                Check(warlord.TerritoryState("loc_toll_house") == WarlordTerritoryState.Controlled,
+                Check(warlord!.TerritoryState("loc_toll_house") == WarlordTerritoryState.Controlled,
                     "home territory controlled after host wiring");
                 Check(warlord.Catalog.Territory.Count >= 5, "territory graph loaded");
 

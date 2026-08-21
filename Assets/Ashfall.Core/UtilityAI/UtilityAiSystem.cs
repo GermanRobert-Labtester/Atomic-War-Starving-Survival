@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.UtilityAI
 {
     /// <summary>
@@ -17,7 +18,7 @@ namespace Ashfall.Core.UtilityAI
 
         public event Action<string, string, float> OnActionSelected; // survivorId, actionId, score
 
-        public UtilityActionDef SelectAction(
+        public UtilityActionDef? SelectAction(
             AIActionContext context,
             IReadOnlyList<UtilityActionDef> candidates,
             ISeededRng rng,
@@ -26,7 +27,7 @@ namespace Ashfall.Core.UtilityAI
             if (context == null || candidates == null || candidates.Count == 0) return null;
             scorer = scorer ?? new UtilityActionScorer();
 
-            UtilityActionDef best = null;
+            UtilityActionDef? best = null;
             float bestScore = -1f;
 
             for (int i = 0; i < candidates.Count; i++)
@@ -109,10 +110,11 @@ namespace Ashfall.Core.UtilityAI
                     result.Add(def);
                 }
             }
-            catch
-            {
-                return result;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
     }

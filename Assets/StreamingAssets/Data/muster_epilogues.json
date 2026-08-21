@@ -1,62 +1,65 @@
-[
-  {
-    "ending_key": "the_open_muster",
-    "title": "The Open Muster",
-    "prose": "The coalition held the substation and the ground around it, and when Day 320 came the Garrison chose not to press it. The rally point is a town now, of a kind. Nobody calls it anything official. The radio operators just say 'the Muster' and everyone knows which muster."
-  },
-  {
-    "ending_key": "the_amnesty",
-    "title": "The Amnesty",
-    "prose": "The petition carried on paper, which in the end mattered more than anything fired. The coalition is absorbed into a demobilized-conscript status, the only path in this document that ends their fugitive status entirely. The ledger closes, and stays closed, by agreement nobody tries to amend."
-  },
-  {
-    "ending_key": "the_corridor",
-    "title": "The Corridor",
-    "prose": "There was no siege, because there was no camp. Small groups, quiet routes, a corridor instead of a rally: nobody won a fight that never happened. Whatever was being rallied to, it left Sector 4 a little emptier and a little less armed, and the people who made that choice sleep wherever the corridor lets them."
-  },
-  {
-    "ending_key": "the_blood_price",
-    "title": "The Blood Price",
-    "prose": "The location was reported, the standing restored, the resupply collected. The rallied members — Vask among them — are gone. No other faction in the sector finds out how, specifically, unless the journal says so. Some journals say so, in a hand that does not flinch."
-  },
-  {
-    "ending_key": "the_rate_card_revised",
-    "title": "The Rate Card, Revised",
-    "prose": "By undercut, audit, or contract, the rate card is finally a published price. Water stops being a weapon anyone can wield unilaterally. Odalen keeps her job in two of the three versions of how this was done, and the queue, where it still exists, is fairer and slower and no longer negotiable."
-  },
-  {
-    "ending_key": "the_administrator",
-    "title": "The Administrator",
-    "prose": "Unit 4 has a new administrator, unaccountable to anyone who used to run the queue. The rate card did not get fairer; it got renamed. The thirsty season passed, and the shelter that took the plant by force drank as the plant drank — first, and without asking."
-  },
-  {
-    "ending_key": "the_measured_truth_contested",
-    "title": "The Measured Truth, Contested",
-    "prose": "The broadcast fired with a caveat on it, and Garrison heard exactly how credible a caveated finding is. The measurement stands; the consequences are softer, weaker, and still coming. Somewhere a researcher who refused to falsify anything waits for a question that never quite gets asked."
-  },
-  {
-    "ending_key": "the_measured_truth",
-    "title": "The Measured Truth",
-    "prose": "The provenance run completed before Day 300, and the broadcast carried no caveat. Whatever the truth is, it now has a date, a lab, and four names attached to it. The war's cause is published. It is not agreed upon. It is published."
-  },
-  {
-    "ending_key": "unwritten",
-    "title": "Unwritten",
-    "prose": "The succession was never investigated, and the Muster never triggered. The bulletin signed Harven stays on the board at Checkpoint Gamma; the rally never forms; the ledger nobody signed stays unopened in its cache. None of it is written down anywhere, which is the only reason it can still be changed."
-  },
-  {
-    "ending_key": "ending_verdict_the_sector_recounts",
-    "title": "The Sector Recounts",
-    "prose": "The count is read aloud at the Grain Exchange weighbridge by a trader who does not look up from the scale. It takes three minutes. The last line is the count, presented, in the machine's hand, followed by the two words the sector will argue about forever: accepted as read."
-  },
-  {
-    "ending_key": "ending_verdict_the_count_is_held",
-    "title": "The Count Is Held",
-    "prose": "Nobody presents the count. The carrier tone continues on the dead band. The radio screen reads, forever after, CENSUS WINDOW: OPEN. The last image is the tone: one second on, one second off, on a band nobody is listening to, keeping a count nobody asked it to keep, keeping it anyway."
-  },
-  {
-    "ending_key": "ending_verdict_the_offer_is_a_lease",
-    "title": "The Offer Is a Lease",
-    "prose": "The count converts into a lease: quarterly maintenance, a reading per season, a census every 1,827 days, enforceable by the machine's own registers. The last image: a quarterly invoice, printed on a machine that stopped printing anything else in Year One, delivered to a door that opens, because the door is counted."
-  }
-]
+{
+  "schema_version": 1,
+  "epilogues": [
+    {
+      "ending_key": "the_open_muster",
+      "title": "The Open Muster",
+      "prose": "The coalition held the substation and the ground around it, and when Day 320 came the Garrison chose not to press it. The rally point is a town now, of a kind. Nobody calls it anything official. The radio operators just say 'the Muster' and everyone knows which muster."
+    },
+    {
+      "ending_key": "the_amnesty",
+      "title": "The Amnesty",
+      "prose": "The petition carried on paper, which in the end mattered more than anything fired. The coalition is absorbed into a demobilized-conscript status, the only path in this document that ends their fugitive status entirely. The ledger closes, and stays closed, by agreement nobody tries to amend."
+    },
+    {
+      "ending_key": "the_corridor",
+      "title": "The Corridor",
+      "prose": "There was no siege, because there was no camp. Small groups, quiet routes, a corridor instead of a rally: nobody won a fight that never happened. Whatever was being rallied to, it left Sector 4 a little emptier and a little less armed, and the people who made that choice sleep wherever the corridor lets them."
+    },
+    {
+      "ending_key": "the_blood_price",
+      "title": "The Blood Price",
+      "prose": "The location was reported, the standing restored, the resupply collected. The rallied members — Vask among them — are gone. No other faction in the sector finds out how, specifically, unless the journal says so. Some journals say so, in a hand that does not flinch."
+    },
+    {
+      "ending_key": "the_rate_card_revised",
+      "title": "The Rate Card, Revised",
+      "prose": "By undercut, audit, or contract, the rate card is finally a published price. Water stops being a weapon anyone can wield unilaterally. Odalen keeps her job in two of the three versions of how this was done, and the queue, where it still exists, is fairer and slower and no longer negotiable."
+    },
+    {
+      "ending_key": "the_administrator",
+      "title": "The Administrator",
+      "prose": "Unit 4 has a new administrator, unaccountable to anyone who used to run the queue. The rate card did not get fairer; it got renamed. The thirsty season passed, and the shelter that took the plant by force drank as the plant drank — first, and without asking."
+    },
+    {
+      "ending_key": "the_measured_truth_contested",
+      "title": "The Measured Truth, Contested",
+      "prose": "The broadcast fired with a caveat on it, and Garrison heard exactly how credible a caveated finding is. The measurement stands; the consequences are softer, weaker, and still coming. Somewhere a researcher who refused to falsify anything waits for a question that never quite gets asked."
+    },
+    {
+      "ending_key": "the_measured_truth",
+      "title": "The Measured Truth",
+      "prose": "The provenance run completed before Day 300, and the broadcast carried no caveat. Whatever the truth is, it now has a date, a lab, and four names attached to it. The war's cause is published. It is not agreed upon. It is published."
+    },
+    {
+      "ending_key": "unwritten",
+      "title": "Unwritten",
+      "prose": "The succession was never investigated, and the Muster never triggered. The bulletin signed Harven stays on the board at Checkpoint Gamma; the rally never forms; the ledger nobody signed stays unopened in its cache. None of it is written down anywhere, which is the only reason it can still be changed."
+    },
+    {
+      "ending_key": "ending_verdict_the_sector_recounts",
+      "title": "The Sector Recounts",
+      "prose": "The count is read aloud at the Grain Exchange weighbridge by a trader who does not look up from the scale. It takes three minutes. The last line is the count, presented, in the machine's hand, followed by the two words the sector will argue about forever: accepted as read."
+    },
+    {
+      "ending_key": "ending_verdict_the_count_is_held",
+      "title": "The Count Is Held",
+      "prose": "Nobody presents the count. The carrier tone continues on the dead band. The radio screen reads, forever after, CENSUS WINDOW: OPEN. The last image is the tone: one second on, one second off, on a band nobody is listening to, keeping a count nobody asked it to keep, keeping it anyway."
+    },
+    {
+      "ending_key": "ending_verdict_the_offer_is_a_lease",
+      "title": "The Offer Is a Lease",
+      "prose": "The count converts into a lease: quarterly maintenance, a reading per season, a census every 1,827 days, enforceable by the machine's own registers. The last image: a quarterly invoice, printed on a machine that stopped printing anything else in Year One, delivered to a door that opens, because the door is counted."
+    }
+  ]
+}

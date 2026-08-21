@@ -107,7 +107,7 @@ namespace Ashfall.Core.Tests.Campaign
             var result = c.Advance(11, captured);
             Assert.NotNull(result);
             Assert.Equal(11, captured.Day);
-            Assert.Equal(1, captured.Reports.Count);
+            Assert.Single(captured.Reports);
             Assert.Equal("alpha", captured.Reports[0].OwnerId);
         }
 

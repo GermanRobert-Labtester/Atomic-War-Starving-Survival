@@ -161,6 +161,16 @@ namespace Ashfall.Core
             {
                 if (c.status != ContractStatus.Active) continue;
 
+                // Expiry check FIRST — a contractor whose contract is ending today
+                // must not be charged for a missed daily wage on their last day.
+                if (day >= c.expiryDay && c.status == ContractStatus.Active)
+                {
+                    c.status = ContractStatus.Expired;
+                    _log.Info($"[Contractor] {c.contractorId} contract expired");
+                    OnContractorStatusChanged?.Invoke(c);
+                    continue;
+                }
+
                 // Daily hazard pay
                 var activeOffer = _state.activeOffers.Find(o => o.candidateId == c.contractorId && o.status == ContractStatus.Active);
                 if (activeOffer != null)
@@ -181,14 +191,6 @@ namespace Ashfall.Core
                             OnContractorStatusChanged?.Invoke(c);
                         }
                     }
-                }
-
-                // Expiry check
-                if (day >= c.expiryDay && c.status == ContractStatus.Active)
-                {
-                    c.status = ContractStatus.Expired;
-                    _log.Info($"[Contractor] {c.contractorId} contract expired");
-                    OnContractorStatusChanged?.Invoke(c);
                 }
             }
 
