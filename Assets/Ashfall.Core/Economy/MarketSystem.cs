@@ -82,7 +82,7 @@ namespace Ashfall.Core.Economy
         public event Action OnEconomyChanged;                     // any price-relevant change
         public event Action<MarketState> OnStateChanged;
 
-        public MarketSystem(MarketState state = null)
+        public MarketSystem(MarketState state = null!)
         {
             _state = state ?? new MarketState();
             if (_state.demand == null) _state.demand = new List<DemandEntry>();

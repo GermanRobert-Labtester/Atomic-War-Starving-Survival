@@ -76,7 +76,7 @@ namespace Ashfall.Core.UtilityAI
         public float weight = 1.0f;
         public bool isOverrideAction = false;
         public string[] tags = Array.Empty<string>();
-        public CurvePoint[] curvePoints = null; // null/empty = identity
+        public CurvePoint[] curvePoints = null!; // null/empty = identity
         public float baseScore = 0f;            // EvaluateRaw baseline
         public float fatigueGate = 0f;          // 0 = off; raw = 0 when fatigue exceeds
         public float skillBonusFactor = 0f;     // + skill * factor (clamped)

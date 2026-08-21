@@ -43,7 +43,7 @@ namespace Ashfall.Core
         public event Action OnForecastUpdated;
         public event Action OnStationStateChanged;
 
-        public WeatherStationSystem(WeatherSystem weatherSystem, ISeededRng rng, ILog log = null)
+        public WeatherStationSystem(WeatherSystem weatherSystem, ISeededRng rng, ILog log = null!)
         {
             _weatherSystem = weatherSystem ?? throw new ArgumentNullException(nameof(weatherSystem));
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));

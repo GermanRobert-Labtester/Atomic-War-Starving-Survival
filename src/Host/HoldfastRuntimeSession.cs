@@ -82,7 +82,7 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
-        public bool TrySave(string basePathOverride = null, string tradePathOverride = null)
+        public bool TrySave(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool baseSaved = HoldfastSaveStore.TrySave(World.CaptureSave(), basePathOverride);
             bool tradeSaved = HoldfastTradeSaveStore.TrySave(Trade.CaptureState(), tradePathOverride);
@@ -93,7 +93,7 @@ namespace AtomicWar.GodotApp
             return saved;
         }
 
-        public bool TryReload(string basePathOverride = null, string tradePathOverride = null)
+        public bool TryReload(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool restoredAny = false;
             var baseSave = HoldfastSaveStore.TryLoad(basePathOverride);
@@ -343,7 +343,7 @@ namespace AtomicWar.GodotApp
             return "The bunker fell silent. The ledger closes here.";
         }
 
-        public bool ArchiveAndFreshStart(string basePathOverride = null, string tradePathOverride = null)
+        public bool ArchiveAndFreshStart(string basePathOverride = null!, string tradePathOverride = null!)
         {
             try
             {

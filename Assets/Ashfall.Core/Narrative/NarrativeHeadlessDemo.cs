@@ -8,7 +8,7 @@ namespace Ashfall.Core.Narrative
     /// </summary>
     public static class NarrativeHeadlessDemo
     {
-        public static HeadlessReport Run(ILog log = null)
+        public static HeadlessReport Run(ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -55,18 +55,18 @@ namespace Ashfall.Core.Narrative
             Check(sys.Catalog.Count == 2, "catalog registers two encounters");
             Check(sys.Find("enc_missing") == null, "unknown id not found");
 
-            var picked = sys.SelectEncounter("Stealth", 1f, null, new SeededRng(5));
+            var picked = sys.SelectEncounter("Stealth", 1f, null!, new SeededRng(5));
             Check(picked != null && picked.id == "enc_dead_letter_office",
                 "danger 1 excludes the pianist (min 3); dead letter offered");
             if (picked == null) return report;
-            Check(sys.SelectEncounter("Stealth", 1f, null, new SeededRng(5))!.id == picked.id,
+            Check(sys.SelectEncounter("Stealth", 1f, null!, new SeededRng(5))!.id == picked.id,
                 "same seed picks the same encounter (determinism)");
 
             Check(sys.Resolve("enc_dead_letter_office", "burn_van", "loc_ring_road", 40),
                 "resolve burn_van");
             Check(sys.State.cumulativeMorale == 0 && sys.State.cumulativeGuilt == 4,
                 "choice magnitudes recorded");
-            Check(!sys.Resolve("enc_dead_letter_office", "missing_choice", null, 40),
+            Check(!sys.Resolve("enc_dead_letter_office", "missing_choice", null!, 40),
                 "unknown choice refused");
             Check(sys.TotalResolved == 1, "resolution history counts one");
 

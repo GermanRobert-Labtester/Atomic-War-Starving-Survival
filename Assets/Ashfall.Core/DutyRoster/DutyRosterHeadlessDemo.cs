@@ -10,7 +10,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class DutyRosterHeadlessDemo
     {
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string dataDirectory = null!, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

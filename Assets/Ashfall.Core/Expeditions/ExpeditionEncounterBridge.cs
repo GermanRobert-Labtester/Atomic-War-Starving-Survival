@@ -80,7 +80,7 @@ namespace Ashfall.Core.Expeditions
             {
                 trigger = state,
                 resolved_at_lead = null,
-                encounter_record_resolution_id = null
+                encounter_record_resolution_id = null!
             };
 
             var def = _narrative.SelectEncounter(
@@ -91,7 +91,7 @@ namespace Ashfall.Core.Expeditions
 
             if (def == null)
             {
-                dto.encounter_id = null;
+                dto.encounter_id = null!;
                 dto.title = "Encounter";
                 dto.description = "Something is happening on this leg. No record of it survives.";
                 dto.category = string.Empty;
@@ -116,7 +116,7 @@ namespace Ashfall.Core.Expeditions
         /// when nothing has been surfaced yet.
         /// </summary>
         public bool ResolveChoice(string encounterId, string choiceId, int day)
-            => ResolveChoice(encounterId, choiceId, day, null);
+            => ResolveChoice(encounterId, choiceId, day, null!);
 
         /// <summary>
         /// Resolve an encounter against an explicit locationId. Use this when the

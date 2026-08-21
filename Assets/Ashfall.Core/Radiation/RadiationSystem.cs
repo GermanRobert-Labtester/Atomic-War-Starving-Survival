@@ -159,11 +159,11 @@ namespace Ashfall.Core.Radiation
         public event Action<SurvivorRadState, SurvivorStatus> OnStatusLost;
 
         public RadiationSystem(
-            Func<SurvivorRadState, ExposureContext> exposureContext = null,
-            Action<SurvivorRadState, string, float> applyNeed = null,
-            Action<SurvivorRadState, float> onExposed = null,
-            Func<SurvivorRadState, float> hazmatDegradeMultiplier = null,
-            Func<SurvivorRadState, bool> radiotrophic = null,
+            Func<SurvivorRadState, ExposureContext> exposureContext = null!,
+            Action<SurvivorRadState, string, float> applyNeed = null!,
+            Action<SurvivorRadState, float> onExposed = null!,
+            Func<SurvivorRadState, float> hazmatDegradeMultiplier = null!,
+            Func<SurvivorRadState, bool> radiotrophic = null!,
             int seed = 1401)
         {
             _exposureContext = exposureContext;
@@ -352,7 +352,7 @@ namespace Ashfall.Core.Radiation
         private void DegradeWornGear(List<WornGear> worn, float gameHours)
         {
             if (worn == null) return;
-            float mult = _hazmatDegradeMultiplier != null ? _hazmatDegradeMultiplier(null) : 1f;
+            float mult = _hazmatDegradeMultiplier != null ? _hazmatDegradeMultiplier(null!) : 1f;
             for (int i = 0; i < worn.Count; i++)
                 worn[i]?.Degrade(gameHours * mult);
         }

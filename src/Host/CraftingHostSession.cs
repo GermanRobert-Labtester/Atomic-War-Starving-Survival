@@ -24,7 +24,7 @@ namespace AtomicWar.GodotApp
         public string LastEvent { get; private set; } = string.Empty;
         public event Action StateChanged;
 
-        public CraftingHostSession(InventoryContainer inventory = null)
+        public CraftingHostSession(InventoryContainer inventory = null!)
         {
             Inventory = inventory ?? new InventoryContainer();
             Engine = new CraftingSystem(Inventory);

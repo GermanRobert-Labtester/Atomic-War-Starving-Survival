@@ -148,6 +148,6 @@ namespace Ashfall.Core.Warlords
             => new WarlordResponseResult { Succeeded = true, ReasonCode = "ok", Record = r };
 
         public static WarlordResponseResult Fail(string reason)
-            => new WarlordResponseResult { Succeeded = false, ReasonCode = reason ?? "fail", Record = null };
+            => new WarlordResponseResult { Succeeded = false, ReasonCode = reason ?? "fail", Record = null! };
     }
 }

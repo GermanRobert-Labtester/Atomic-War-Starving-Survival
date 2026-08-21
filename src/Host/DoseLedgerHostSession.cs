@@ -30,13 +30,13 @@ namespace AtomicWar.GodotApp
         public event Action StateChanged;
 
         public DoseLedgerHostSession(
-            DoseLedgerSystem ledger = null,
-            SickListSystem sickList = null,
-            CohortSystem cohort = null,
-            VoluntaryRegisterSystem voluntary = null,
-            DoseRegistersCatalog registers = null,
-            DoseContentCatalog content = null,
-            QuestlineSystem quests = null)
+            DoseLedgerSystem ledger = null!,
+            SickListSystem sickList = null!,
+            CohortSystem cohort = null!,
+            VoluntaryRegisterSystem voluntary = null!,
+            DoseRegistersCatalog registers = null!,
+            DoseContentCatalog content = null!,
+            QuestlineSystem quests = null!)
         {
             Ledger = ledger ?? new DoseLedgerSystem();
             SickList = sickList ?? new SickListSystem();
@@ -57,7 +57,7 @@ namespace AtomicWar.GodotApp
             Quests.OnQuestlineResolved += (_, _) => StateChanged?.Invoke();
         }
 
-        public static DoseLedgerHostSession Create(string dataDir, ILog log = null)
+        public static DoseLedgerHostSession Create(string dataDir, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             var registers = new DoseRegistersCatalog();

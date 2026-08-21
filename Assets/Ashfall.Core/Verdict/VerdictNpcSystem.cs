@@ -40,7 +40,7 @@ namespace Ashfall.Core.Verdict
 
         public event Action<VerdictNpcEntry> OnSpoken;
 
-        public VerdictNpcSystem(VerdictNpcState state = null)
+        public VerdictNpcSystem(VerdictNpcState state = null!)
         {
             _state = state ?? new VerdictNpcState();
         }
@@ -60,7 +60,7 @@ namespace Ashfall.Core.Verdict
 
         /// <summary>NPCs whose gate flag is set and whose phase requirement is met.</summary>
         public List<VerdictNpcEntry> GetAvailable(
-            IReadOnlyCollection<string> setFlags, int phase, string locationId = null)
+            IReadOnlyCollection<string> setFlags, int phase, string locationId = null!)
         {
             var result = new List<VerdictNpcEntry>();
             foreach (var e in _catalog)
@@ -75,7 +75,7 @@ namespace Ashfall.Core.Verdict
         }
 
         /// <summary>Spend the NPC's only interjection. Idempotent per NPC.</summary>
-        public bool Speak(string npcId, string locationId = null)
+        public bool Speak(string npcId, string locationId = null!)
         {
             var npc = Find(npcId);
             if (npc == null) return false;

@@ -34,13 +34,13 @@ namespace AtomicWar.GodotApp.YearOfAsh
         public IReadOnlyList<SurvivorOccupantSnapshot> DemoRoster => _demoRoster;
 
         public YearOfAshHostSession(
-            YearOfAshTimelineSystem timeline = null,
-            DoorEncounterSystem encounters = null,
-            FactionWarSystem factionWar = null,
-            QuestlineSystem quests = null,
-            YearOfAshDeepFreezeSystem deepFreeze = null,
-            YearOfAshRadonSystem radon = null,
-            WarlordDoctrineSystem warlord = null)
+            YearOfAshTimelineSystem timeline = null!,
+            DoorEncounterSystem encounters = null!,
+            FactionWarSystem factionWar = null!,
+            QuestlineSystem quests = null!,
+            YearOfAshDeepFreezeSystem deepFreeze = null!,
+            YearOfAshRadonSystem radon = null!,
+            WarlordDoctrineSystem warlord = null!)
         {
             _timeline = timeline ?? new YearOfAshTimelineSystem();
             _encounters = encounters ?? new DoorEncounterSystem();
@@ -253,7 +253,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 _timeline,
                 _encounters,
                 _factionWar,
-                null,
+                null!,
                 _deepFreeze,
                 _radon,
                 _quests,

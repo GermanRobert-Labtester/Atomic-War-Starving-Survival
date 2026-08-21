@@ -239,7 +239,7 @@ namespace Ashfall.Core.Combat
                 if (e == null || string.IsNullOrEmpty(e.SurvivorId)) continue;
                 _bySurvivor[e.SurvivorId] = e;
             }
-            OnCombatPerkEarned = null; // do not replay grants on restore
+            OnCombatPerkEarned = null!; // do not replay grants on restore
         }
     }
 }

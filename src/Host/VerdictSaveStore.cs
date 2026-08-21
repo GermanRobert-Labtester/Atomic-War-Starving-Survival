@@ -22,7 +22,7 @@ namespace AtomicWar.GodotApp
 
         public static bool Exists => s_files.FileExists(SavePath);
 
-        public static bool TrySave(VerdictSave save, string pathOverride = null)
+        public static bool TrySave(VerdictSave save, string pathOverride = null!)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static VerdictSave? TryLoad(string pathOverride = null)
+        public static VerdictSave? TryLoad(string pathOverride = null!)
         {
             try
             {

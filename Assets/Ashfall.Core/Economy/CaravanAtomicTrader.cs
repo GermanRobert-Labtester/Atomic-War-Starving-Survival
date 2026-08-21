@@ -124,6 +124,6 @@ namespace Ashfall.Core.Economy
             => new CaravanTradeCommitResult { Succeeded = true, ReasonCode = "ok", Trade = t };
 
         public static CaravanTradeCommitResult Fail(string reason)
-            => new CaravanTradeCommitResult { Succeeded = false, ReasonCode = reason ?? "fail", Trade = null };
+            => new CaravanTradeCommitResult { Succeeded = false, ReasonCode = reason ?? "fail", Trade = null! };
     }
 }

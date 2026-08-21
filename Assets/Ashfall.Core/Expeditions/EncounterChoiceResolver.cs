@@ -125,6 +125,6 @@ namespace Ashfall.Core.Expeditions
 
         public static EncounterChoiceResult Fail(string reason)
             => new EncounterChoiceResult { Succeeded = false, ReasonCode = reason ?? "fail",
-                Resolution = null };
+                Resolution = null! };
     }
 }

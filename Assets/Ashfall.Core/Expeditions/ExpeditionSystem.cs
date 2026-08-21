@@ -412,7 +412,7 @@ namespace Ashfall.Core.Expeditions
                 var exp = CloneExpedition(s);
                 _active[exp.survivorId] = exp;
             }
-            OnStateChanged?.Invoke(null);
+            OnStateChanged?.Invoke(null!);
         }
 
         private static ExpeditionState CloneExpedition(ExpeditionState src)

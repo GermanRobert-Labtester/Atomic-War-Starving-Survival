@@ -93,7 +93,7 @@ namespace Ashfall.Core
 
         public void RegisterRule(string backgroundId, string itemCategory,
             float motivationChance, string descriptionKey,
-            string motivationText = null, string breakdownText = null)
+            string motivationText = null!, string breakdownText = null!)
         {
             if (!_rulesByBackground.TryGetValue(backgroundId, out var rules))
             {

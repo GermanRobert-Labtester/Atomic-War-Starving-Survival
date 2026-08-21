@@ -27,9 +27,9 @@ namespace Ashfall.Core.Verdict
         private readonly ISimClock _clock;
 
         public VerdictRadioSystem(
-            IEventBus bus = null,
-            ISimClock clock = null,
-            IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> corpus = null)
+            IEventBus bus = null!,
+            ISimClock clock = null!,
+            IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> corpus = null!)
         {
             _bus = bus;
             _clock = clock;

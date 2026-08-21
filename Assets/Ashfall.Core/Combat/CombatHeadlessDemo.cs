@@ -26,7 +26,7 @@ namespace Ashfall.Core.Combat
         public const int EnemyCount = 3;
         public const float EnemyHealth = 40f;
 
-        public static CombatHeadlessReport Run(ILog log = null)
+        public static CombatHeadlessReport Run(ILog log = null!)
         {
             log = log ?? NullLog.Instance;
             var report = new CombatHeadlessReport();
@@ -122,7 +122,7 @@ namespace Ashfall.Core.Combat
             ports.ConsumeAmmo = (ammoId, n) => { ammoConsumed += n; return 100 - ammoConsumed; };
             ports.ConsumeItem = (id, n) => id == "scrap_metal";
 
-            var sys = new TacticalCombatSystem(null, ports);
+            var sys = new TacticalCombatSystem(null!, ports);
             var players = new List<CombatantState>
             {
                 new CombatantState { Id = "p1", Name = "Yuki", SurvivorId = "survivor_yuki", IsPlayer = true, Health = 100, MaxHealth = 100, ArmorRating = 0.4f, CoverRating = 0.3f },
@@ -197,7 +197,7 @@ namespace Ashfall.Core.Combat
 
             // ── 8. Expedition → combat handoff (raiding / ambush seam) ──
             var expSys = new Ashfall.Core.Expeditions.ExpeditionSystem();
-            var handoff = new TacticalCombatSystem(null, new CombatHostPorts());
+            var handoff = new TacticalCombatSystem(null!, new CombatHostPorts());
             int triggered = 0;
             expSys.OnEncounterTriggered += st =>
             {

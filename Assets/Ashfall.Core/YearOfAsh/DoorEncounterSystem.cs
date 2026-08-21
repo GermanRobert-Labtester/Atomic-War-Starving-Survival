@@ -102,7 +102,7 @@ namespace Ashfall.Core.YearOfAsh
         public event Action<DoorEncounterEntry> OnEncounterArrived;
         public event Action<EncounterResolutionResult> OnEncounterResolved;
 
-        public DoorEncounterSystem(DoorEncounterSystemState state = null)
+        public DoorEncounterSystem(DoorEncounterSystemState state = null!)
         {
             _state = state ?? new DoorEncounterSystemState();
             PopulateDefaultCatalog();

@@ -44,7 +44,7 @@ namespace Ashfall.Core.Maritime
             new Dictionary<string, List<ContaminationEntry>>(StringComparer.Ordinal);
 
         public void ApplyContamination(string survivorId, string locationId,
-            float moraleAtVisit, string survivorArchetype = null)
+            float moraleAtVisit, string survivorArchetype = null!)
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(locationId)) return;
             if (!LocationContaminations.TryGetValue(locationId, out var types)) return;

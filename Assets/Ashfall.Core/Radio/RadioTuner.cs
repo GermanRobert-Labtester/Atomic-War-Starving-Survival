@@ -149,7 +149,7 @@ namespace Ashfall.Core.Radio
         public static SignalLockResult NoSignal => new SignalLockResult
         {
             IsLocked = false,
-            Broadcast = null,
+            Broadcast = null!,
             VuStrength = 0f,
             Noise = 1f,
             DecodedContent = string.Empty

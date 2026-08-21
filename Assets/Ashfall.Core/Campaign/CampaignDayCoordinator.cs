@@ -141,7 +141,7 @@ namespace Ashfall.Core.Campaign
         /// or null when a guard rejects the call (already advancing, or stale
         /// day). The host should treat a null return as "no-op".
         /// </summary>
-        public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence persistence = null)
+        public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence persistence = null!)
         {
             if (!TryBegin(day)) return null;
 
@@ -158,7 +158,7 @@ namespace Ashfall.Core.Campaign
                         reg.Owner.CapturePreDaySnapshot(day);
                         var events = new List<DayStateChangeEvent>();
                         reg.Owner.TickDay(day, events);
-                        report = new DayOwnerReport(reg.OwnerId, true, events, null);
+                        report = new DayOwnerReport(reg.OwnerId, true, events, null!);
                     }
                     catch (Exception e)
                     {
@@ -239,7 +239,7 @@ namespace Ashfall.Core.Campaign
         public DayStateChangeEvent() { }
 
         public DayStateChangeEvent(string kind, string sourceOwnerId,
-            string primaryId = null, string secondaryId = null, float numeric = 0f)
+            string primaryId = null!, string secondaryId = null!, float numeric = 0f)
         {
             Kind = kind;
             SourceOwnerId = sourceOwnerId;

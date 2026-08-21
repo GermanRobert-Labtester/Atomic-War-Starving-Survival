@@ -72,7 +72,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Drop the pending queue without resolving. No invented outcomes.</summary>
         public void ClearAllPending() => _narrative?.ClearAllPending();
 
-        public ExpeditionHostSession(ExpeditionSystem engine = null, NarrativeEncounterSystem narrative = null)
+        public ExpeditionHostSession(ExpeditionSystem engine = null!, NarrativeEncounterSystem narrative = null!)
         {
             Engine = engine ?? new ExpeditionSystem();
             _rng = new SeededRng(DemoSeed);
@@ -125,9 +125,9 @@ namespace AtomicWar.GodotApp
             DemoDefinitions.Add(cut);
         }
 
-        public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null)
+        public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null!)
         {
-            var session = new ExpeditionHostSession(null, narrative);
+            var session = new ExpeditionHostSession(null!, narrative);
             var save = ExpeditionSaveStore.TryLoad();
             if (save != null)
             {
@@ -174,7 +174,7 @@ namespace AtomicWar.GodotApp
         /// happened rather than wherever the newest encounter surfaced.
         /// </summary>
         public bool EncounterApplyChoice(string encounterId, string choiceId, int day)
-            => EncounterApplyChoice(encounterId, choiceId, day, null);
+            => EncounterApplyChoice(encounterId, choiceId, day, null!);
 
         /// <summary>
         /// Apply a player choice with an explicit locationId. Pass null to let the

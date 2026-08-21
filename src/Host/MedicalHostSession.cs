@@ -23,7 +23,7 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public MedicalHostSession(ChemicalDependencySystem engine = null, VigilStateMachine vigil = null)
+        public MedicalHostSession(ChemicalDependencySystem engine = null!, VigilStateMachine vigil = null!)
         {
             Engine = engine ?? new ChemicalDependencySystem();
             Vigil = vigil ?? new VigilStateMachine();

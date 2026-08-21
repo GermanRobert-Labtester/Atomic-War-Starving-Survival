@@ -39,7 +39,7 @@ namespace Ashfall.Core
         public event Action<string, string> OnSuccessionPerformed;
         public event Action OnLineageChanged;
 
-        public GenerationalLineageExtension(GenerationalSuccessionEngine engine, ILog log = null)
+        public GenerationalLineageExtension(GenerationalSuccessionEngine engine, ILog log = null!)
         {
             _engine = engine ?? throw new ArgumentNullException(nameof(engine));
             _log = log ?? NullLog.Instance;

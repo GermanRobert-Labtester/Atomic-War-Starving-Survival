@@ -67,7 +67,7 @@ namespace Ashfall.Core
             Inventory.Inventory inventory,
             AirlockSecuritySystem airlock,
             StartingLevelSystem startingLevel,
-            ILog log = null)
+            ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _radiation = radiation ?? throw new ArgumentNullException(nameof(radiation));

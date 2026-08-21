@@ -168,7 +168,7 @@ namespace AtomicWar.GodotApp
         private readonly Dictionary<string, PhaseProgressionState> _phaseStates = new Dictionary<string, PhaseProgressionState>();
         private readonly ISeededRng _rng;
 
-        public Phase0HostSession(int seed = DefaultSeed, ChemicalDependencySystem dependency = null)
+        public Phase0HostSession(int seed = DefaultSeed, ChemicalDependencySystem dependency = null!)
         {
             _rng = new CoreSeededRng(seed);
 

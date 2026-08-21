@@ -321,7 +321,7 @@ namespace AtomicWar.GodotApp
         /// once-only → faction standing → mid-sequence save/restore without
         /// duplication. This is the running-session equivalent of the Core demo.
         /// </summary>
-        public static int RunDeepCoastHostSelfTest(string dataDirectory = null)
+        public static int RunDeepCoastHostSelfTest(string dataDirectory = null!)
         {
             int failures = 0;
             void Check(bool condition, string name)
@@ -386,7 +386,7 @@ namespace AtomicWar.GodotApp
 
                 // 6. Complete with scavenge through ProceduralScavengeSystem.
                 int itemsBefore = inventory.Items.Count;
-                string done = host.CompleteDockDive(true, null, 185);
+                string done = host.CompleteDockDive(true, null!, 185);
                 Check(done.Contains("levy"), "completion reports the fleet levy");
                 Check(!host.Maritime.Dive.IsActive, "dive ended");
                 Check(!host.DeepCoast.IsDockOperationActive, "operation reference cleared");
@@ -404,7 +404,7 @@ namespace AtomicWar.GodotApp
                 Check(!fresh.DeepCoast.IsDockOperationActive, "restore keeps the operation closed after completion");
 
                 // 8. Repeat completion cannot double-spend the operation.
-                string repeat = fresh.CompleteDockDive(true, null, 185);
+                string repeat = fresh.CompleteDockDive(true, null!, 185);
                 Check(repeat.Contains("No active"), "second completion is refused (no duplicate rewards)");
             }
             catch (Exception e)

@@ -46,7 +46,7 @@ namespace Ashfall.Core
         public event Action<AirlockIncidentLog> OnIncidentResolved;
         public event Action OnSecurityChanged;
 
-        public AirlockSecuritySystem(ISeededRng rng, ILog log = null)
+        public AirlockSecuritySystem(ISeededRng rng, ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;

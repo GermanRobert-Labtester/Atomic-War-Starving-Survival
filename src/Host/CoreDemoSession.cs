@@ -54,7 +54,7 @@ namespace AtomicWar.GodotApp
             BrineWaterSystem brine,
             HoldfastQuestSystem quests,
             LocationLayoutSystem layouts,
-            District8DeepCoastSystem deepCoast = null)
+            District8DeepCoastSystem deepCoast = null!)
         {
             IceRoad = iceRoad;
             Clock = clock;

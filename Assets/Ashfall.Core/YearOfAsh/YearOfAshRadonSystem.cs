@@ -33,7 +33,7 @@ namespace Ashfall.Core.YearOfAsh
         public event Action<float> OnRadonLevelChanged;
         public event Action<string> OnRadonAlarmTriggered;
 
-        public YearOfAshRadonSystem(YearOfAshRadonState state = null)
+        public YearOfAshRadonSystem(YearOfAshRadonState state = null!)
         {
             _state = state ?? new YearOfAshRadonState();
         }

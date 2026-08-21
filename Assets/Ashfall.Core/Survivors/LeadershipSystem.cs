@@ -132,7 +132,7 @@ namespace Ashfall.Core.Survivors
 
             var st = GetOrAdd(survivorId);
             st.IsDesignatedLeader = false;
-            _currentLeaderId = null;
+            _currentLeaderId = null!;
             _stepDownCooldown = StepDownCooldownDays;
 
             OnLeaderSteppedDown?.Invoke(survivorId);
@@ -239,7 +239,7 @@ namespace Ashfall.Core.Survivors
         public void RestoreState(LeadershipSaveState save)
         {
             _states.Clear();
-            _currentLeaderId = null;
+            _currentLeaderId = null!;
             _stepDownCooldown = 0f;
 
             if (save != null)

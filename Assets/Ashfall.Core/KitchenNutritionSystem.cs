@@ -78,7 +78,7 @@ namespace Ashfall.Core
             ISeededRng rng,
             Inventory.Inventory inventory,
             NeedsSystem needs,
-            ILog log = null)
+            ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));

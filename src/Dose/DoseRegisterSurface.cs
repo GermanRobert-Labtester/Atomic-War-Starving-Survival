@@ -110,7 +110,7 @@ namespace AtomicWar.GodotApp.Dose
         {
             if (_session == null) return;
             _session.StateChanged -= RefreshView;
-            _session = null;
+            _session = null!;
         }
 
         public override void _ExitTree()

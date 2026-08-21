@@ -47,7 +47,7 @@ namespace Ashfall.Core
             SkillProgressionSystem skills,
             DutyRosterSystem roster,
             SurvivorRelationsSystem relations,
-            ILog log = null)
+            ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _skills = skills ?? throw new ArgumentNullException(nameof(skills));

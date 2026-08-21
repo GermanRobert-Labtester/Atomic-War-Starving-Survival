@@ -30,9 +30,9 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public CombatHostSession(TacticalCombatSystem engine = null, CombatHostPorts ports = null)
+        public CombatHostSession(TacticalCombatSystem engine = null!, CombatHostPorts ports = null!)
         {
-            Engine = engine ?? new TacticalCombatSystem(null, ports ?? new CombatHostPorts());
+            Engine = engine ?? new TacticalCombatSystem(null!, ports ?? new CombatHostPorts());
             Engine.OnStateChanged += _ => StateChanged?.Invoke();
             Engine.OnCombatEvent += (s, e) => { LastEvent = e.Detail; StateChanged?.Invoke(); };
             Engine.OnEncounterEnded += s =>

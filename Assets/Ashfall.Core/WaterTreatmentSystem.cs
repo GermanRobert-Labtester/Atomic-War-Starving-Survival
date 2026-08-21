@@ -100,7 +100,7 @@ namespace Ashfall.Core
         public event Action<float> OnRadiationExposure;    // parameter = dose
         public event Action<float> OnPathogenExposure;     // parameter = dose
 
-        public WaterTreatmentSystem(ILog log = null)
+        public WaterTreatmentSystem(ILog log = null!)
         {
             _log = log ?? NullLog.Instance;
         }

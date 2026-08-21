@@ -19,7 +19,7 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public PhantomMemoryHostSession(PhantomMemoryEngine engine = null)
+        public PhantomMemoryHostSession(PhantomMemoryEngine engine = null!)
         {
             Engine = engine ?? new PhantomMemoryEngine();
             DemoSurvivors = CreateDemoSurvivors();

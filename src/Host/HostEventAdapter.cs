@@ -127,7 +127,7 @@ namespace AtomicWar.GodotApp.Host
             _state.lastDispatchedEvent = EventThinMarginDisclosure;
             int day = _state.eventTriggerDays.GetValueOrDefault(EventThinMarginDisclosure, 210);
             _journal?.UnlockEventFired(EventThinMarginDisclosure);
-            _journal?.TryAddRawEntry(EventThinMarginDisclosure, desc, null, day);
+            _journal?.TryAddRawEntry(EventThinMarginDisclosure, desc, null!, day);
             OnEventDispatched?.Invoke(EventThinMarginDisclosure, desc);
             StateChanged?.Invoke();
         }
@@ -138,7 +138,7 @@ namespace AtomicWar.GodotApp.Host
             _state.lastDispatchedEvent = EventThirstySeason;
             int day = _state.eventTriggerDays.GetValueOrDefault(EventThirstySeason, 225);
             _journal?.UnlockEventFired(EventThirstySeason);
-            _journal?.TryAddRawEntry(EventThirstySeason, desc, null, day);
+            _journal?.TryAddRawEntry(EventThirstySeason, desc, null!, day);
             OnEventDispatched?.Invoke(EventThirstySeason, desc);
             StateChanged?.Invoke();
         }
@@ -149,7 +149,7 @@ namespace AtomicWar.GodotApp.Host
             _state.lastDispatchedEvent = EventOsteophageExplanation;
             int day = _state.eventTriggerDays.GetValueOrDefault(EventOsteophageExplanation, 205);
             _journal?.UnlockEventFired(EventOsteophageExplanation);
-            _journal?.TryAddRawEntry(EventOsteophageExplanation, desc, null, day);
+            _journal?.TryAddRawEntry(EventOsteophageExplanation, desc, null!, day);
             OnEventDispatched?.Invoke(EventOsteophageExplanation, desc);
             StateChanged?.Invoke();
         }
@@ -160,7 +160,7 @@ namespace AtomicWar.GodotApp.Host
             _state.lastDispatchedEvent = EventMeasurementBroadcast;
             int day = _state.eventTriggerDays.GetValueOrDefault(EventMeasurementBroadcast, 250);
             _journal?.UnlockEventFired(EventMeasurementBroadcast);
-            _journal?.TryAddRawEntry(EventMeasurementBroadcast, desc, null, day);
+            _journal?.TryAddRawEntry(EventMeasurementBroadcast, desc, null!, day);
             OnEventDispatched?.Invoke(EventMeasurementBroadcast, desc);
             StateChanged?.Invoke();
         }

@@ -80,7 +80,7 @@ namespace Ashfall.Core
         public event Action<float> OnDependencyRisk; // parameter = risk level
         public event Action OnPharmaStateChanged;
 
-        public PharmaLabSystem(Inventory.Inventory inventory, ISeededRng rng, ILog log = null)
+        public PharmaLabSystem(Inventory.Inventory inventory, ISeededRng rng, ILog log = null!)
         {
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));

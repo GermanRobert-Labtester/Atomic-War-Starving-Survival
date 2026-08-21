@@ -17,7 +17,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class Cluster12CHeadlessDemo
     {
-        public static Cluster12CHeadlessReport Run(string dataDirectory, ILog log = null)
+        public static Cluster12CHeadlessReport Run(string dataDirectory, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

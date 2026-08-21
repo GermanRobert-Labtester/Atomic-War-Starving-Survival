@@ -16,7 +16,7 @@ namespace Ashfall.Core
     {
         public const int DemoSeed = 1013;
 
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string dataDirectory = null!, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

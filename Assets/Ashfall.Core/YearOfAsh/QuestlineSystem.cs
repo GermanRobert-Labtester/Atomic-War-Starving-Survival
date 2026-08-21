@@ -150,7 +150,7 @@ namespace Ashfall.Core.YearOfAsh
         public event Action<QuestChoiceResult>    OnQuestChoiceTaken;
         public event Action<string, QuestlineStatus> OnQuestlineResolved;
 
-        public QuestlineSystem(QuestlineSystemState state = null)
+        public QuestlineSystem(QuestlineSystemState state = null!)
         {
             _state = state ?? new QuestlineSystemState();
             if (_state.active == null) _state.active = new List<ActiveQuestlineRecord>();

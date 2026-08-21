@@ -459,10 +459,10 @@ namespace AtomicWar.GodotApp.Economy
 
         public void BindSession(
             EconomyHostSession session,
-            IFactionStanceProvider stanceProvider = null,
-            IPriceShockProvider priceShockProvider = null,
-            IFactionRadioProvider radioProvider = null,
-            ISeededRng rng = null)
+            IFactionStanceProvider stanceProvider = null!,
+            IPriceShockProvider priceShockProvider = null!,
+            IFactionRadioProvider radioProvider = null!,
+            ISeededRng rng = null!)
         {
             _session = session;
             _stanceProvider = stanceProvider;
@@ -473,8 +473,8 @@ namespace AtomicWar.GodotApp.Economy
             if (_viewModel != null)
             {
                 _viewModel.Changed -= OnViewModelChanged;
-                _viewModel = null;
-                _intentSink = null;
+                _viewModel = null!;
+                _intentSink = null!;
             }
 
             if (_session != null)

@@ -22,7 +22,7 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public InventoryHostSession(InventoryContainer inventory = null, ItemCatalog catalog = null)
+        public InventoryHostSession(InventoryContainer inventory = null!, ItemCatalog catalog = null!)
         {
             Inventory = inventory ?? new InventoryContainer();
             Catalog = catalog ?? new ItemCatalog();

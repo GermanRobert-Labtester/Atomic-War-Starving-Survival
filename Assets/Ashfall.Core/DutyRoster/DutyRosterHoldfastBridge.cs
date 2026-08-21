@@ -110,12 +110,12 @@ namespace Ashfall.Core
 
             // ── A.1 levy substitute: Kess marks it irregular; the ladle defaults. ──
             if (census != null && census.LevySubstitute && marks != null)
-                marks.SetMark(MarkLadleDefault, null, day);
+                marks.SetMark(MarkLadleDefault, null!, day);
 
             // ── A.1 levy refuse: Edor's stool; the road may run dark (11-day lamps). ──
             if (census != null && census.LevyRefuse)
             {
-                if (marks != null) marks.SetMark(MarkEdorStool, null, day);
+                if (marks != null) marks.SetMark(MarkEdorStool, null!, day);
                 if (encounters != null && encounters.IsUnlocked)
                     encounters.StartEncounter("se_edor_stool_levy_refuse", ShelterEncounterSystem.KindEdorStool, day,
                         ShelterEncounterSystem.VisitorEdor, "levy refused");
@@ -123,7 +123,7 @@ namespace Ashfall.Core
 
             // ── A.1 membrane strip: iodine/filters/brass short; filtration cough. ──
             if (brine != null && brine.State != null && brine.State.membraneSector4Strip && marks != null)
-                marks.SetMark(MarkFilterWho, null, day);
+                marks.SetMark(MarkFilterWho, null!, day);
 
             // ── A.1 waystation staffed: home watch is short. ──
             if (waystation != null
@@ -131,12 +131,12 @@ namespace Ashfall.Core
                 && waystation.State.watchSurvivorIds != null
                 && waystation.State.watchSurvivorIds.Length > 0
                 && marks != null)
-                marks.SetMark(MarkTamsinWatchShort, null, day);
+                marks.SetMark(MarkTamsinWatchShort, null!, day);
 
             // ── A.1 ice road dark (Yara withdrew): everyone home, crowd at the hatch. ──
             if (iceRoad != null && iceRoad.IsUnlocked && !iceRoad.IsOpen)
             {
-                if (marks != null) marks.SetMark(MarkHouseThinned, null, day);
+                if (marks != null) marks.SetMark(MarkHouseThinned, null!, day);
                 if (encounters != null && encounters.IsUnlocked)
                     encounters.StartEncounter("se_road_dark_crowd", ShelterEncounterSystem.KindRoadDarkCrowd, day,
                         payload: "ice road dark");
@@ -150,7 +150,7 @@ namespace Ashfall.Core
         /// </summary>
         public static DutyRosterHoldfastSnapshot SnapshotForHoldfast(DutyRosterSystem roster)
         {
-            return SnapshotForHoldfast(roster, null, null);
+            return SnapshotForHoldfast(roster, null!, null!);
         }
 
         /// <summary>

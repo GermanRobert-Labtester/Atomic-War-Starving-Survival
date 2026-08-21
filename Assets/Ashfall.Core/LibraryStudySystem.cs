@@ -63,7 +63,7 @@ namespace Ashfall.Core
             ResearchSystem research,
             JournalSystem journal,
             DutyRosterSystem roster,
-            ILog log = null)
+            ILog log = null!)
         {
             _skills = skills ?? throw new ArgumentNullException(nameof(skills));
             _research = research ?? throw new ArgumentNullException(nameof(research));

@@ -48,7 +48,7 @@ namespace Ashfall.Core.Combat
         public CombatState State => _state;
         public CombatHostPorts Ports { get => _ports; set => _ports = value; }
 
-        public TacticalCombatSystem(CombatState state = null, CombatHostPorts ports = null)
+        public TacticalCombatSystem(CombatState state = null!, CombatHostPorts ports = null!)
         {
             if (state != null) _state = state;
             _ports = ports ?? new CombatHostPorts();
@@ -123,7 +123,7 @@ namespace Ashfall.Core.Combat
             IReadOnlyList<WeaponInstanceState> playerWeapons,
             int enemyCount,
             float enemyHealth,
-            ILog log = null)
+            ILog log = null!)
         {
             if (string.IsNullOrEmpty(encounterId)
                 || players == null || players.Count == 0
@@ -322,7 +322,7 @@ namespace Ashfall.Core.Combat
 
         // ══ Player actions ═══════════════════════════════════════════════
 
-        public CombatActionResult SetStance(TacticalStance stance, string subjectSurvivorId = null)
+        public CombatActionResult SetStance(TacticalStance stance, string subjectSurvivorId = null!)
         {
             var res = new CombatActionResult();
             if (_state.Resolved)
@@ -464,7 +464,7 @@ namespace Ashfall.Core.Combat
                 IntendedTarget = target,
                 CoverMaterial = coverMaterial!,
                 ArmorMaterial = armorMaterial!,
-                BarrierMaterial = null,
+                BarrierMaterial = null!,
                 RicochetTargets = LivingEnemies()
             };
 
@@ -681,7 +681,7 @@ namespace Ashfall.Core.Combat
             var leading = enemies[0];
             var perkMultiplier = GetMaxTrapDamageMultiplier();
             float dmg = 14f * perkMultiplier;
-            ApplyDamage(leading, dmg, null, false, rng);
+            ApplyDamage(leading, dmg, null!, false, rng);
             AddEvent("trap", leading.Id, "A jury-rigged trap tears into " + leading.Name + ".");
             res.Success = true;
             res.Message = "Trap wounds " + leading.Name + " (" + dmg.ToString("0") + ").";
@@ -795,7 +795,7 @@ namespace Ashfall.Core.Combat
             {
                 var victim = players[0];
                 float inj = MathfCompat.Max(8f, victim.Health * 0.4f);
-                ApplyDamage(victim, inj, null, false, rng);
+                ApplyDamage(victim, inj, null!, false, rng);
                 AddEvent("retreat_fail", victim.Id, "The retreat collapses; " + victim.Name + " is hit.");
             }
             res.Success = true;

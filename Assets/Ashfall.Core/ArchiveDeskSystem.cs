@@ -68,7 +68,7 @@ namespace Ashfall.Core
             KnowledgeBase knowledge,
             Inventory.Inventory inventory,
             DutyRosterSystem roster,
-            ILog log = null)
+            ILog log = null!)
         {
             _journal = journal ?? throw new ArgumentNullException(nameof(journal));
             _knowledge = knowledge ?? throw new ArgumentNullException(nameof(knowledge));

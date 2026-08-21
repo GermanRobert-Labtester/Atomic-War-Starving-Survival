@@ -50,7 +50,7 @@ namespace Ashfall.Core.YearOfAsh
         public event Action<int, string> OnEnvironmentalCrisisTriggered;
         public event Action<int> OnDayAdvanced;
 
-        public YearOfAshTimelineSystem(YearOfAshTimelineState state = null)
+        public YearOfAshTimelineSystem(YearOfAshTimelineState state = null!)
         {
             _state = state ?? new YearOfAshTimelineState();
             RecalculateEnvironmentalParameters();

@@ -494,10 +494,10 @@ namespace Ashfall.Core.Inventory
         /// <summary>Consume one unit, applying effects via optional needs/radiation callbacks.</summary>
         public bool Consume(
             ItemDefinition item,
-            Func<ItemType, float, bool> applyNeed = null,
-            Action<float> applyRadCleanse = null,
-            Action applyIodine = null,
-            Action<float> applyContamination = null,
+            Func<ItemType, float, bool> applyNeed = null!,
+            Action<float> applyRadCleanse = null!,
+            Action applyIodine = null!,
+            Action<float> applyContamination = null!,
             float therapeuticScale = 1f)
         {
             if (item == null) return false;

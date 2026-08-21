@@ -10,7 +10,7 @@ namespace Ashfall.Core.UtilityAI
     /// </summary>
     public static class UtilityAiHeadlessDemo
     {
-        public static HeadlessReport Run(string dataDirectory, ILog log = null)
+        public static HeadlessReport Run(string dataDirectory, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

@@ -81,7 +81,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             _session.Timeline.OnPhaseTransitioned -= OnPhaseTransition;
             _session.Timeline.OnDayAdvanced -= OnDayAdvanced;
             _session.FactionWar.OnFactionStandingChanged -= OnFactionStandingChanged;
-            _session = null;
+            _session = null!;
         }
 
         private void OnFactionStandingChanged(string factionId, int standing)

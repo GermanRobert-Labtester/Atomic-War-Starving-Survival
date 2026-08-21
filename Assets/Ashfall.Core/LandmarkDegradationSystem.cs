@@ -34,7 +34,7 @@ namespace Ashfall.Core
         public LandmarkSaveState State => _state;
         public event Action<LandmarkStatusRecord> OnLandmarkCollapsed;
 
-        public LandmarkDegradationSystem(ISeededRng rng = null, ILog log = null)
+        public LandmarkDegradationSystem(ISeededRng rng = null!, ILog log = null!)
         {
             _rng = rng ?? new SeededRng(42);
             _log = log ?? NullLog.Instance;

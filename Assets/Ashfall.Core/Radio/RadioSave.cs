@@ -66,7 +66,7 @@ namespace Ashfall.Core.Radio
 
         public static bool TryDecode(string json, IJsonSerializer serializer, out RadioSaveState state)
         {
-            state = null;
+            state = null!;
             if (string.IsNullOrEmpty(json) || serializer == null) return false;
             try
             {

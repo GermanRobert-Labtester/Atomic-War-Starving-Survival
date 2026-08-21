@@ -26,11 +26,11 @@ namespace AtomicWar.GodotApp
         public event Action StateChanged;
 
         public WorldHostSession(
-            WeatherSystem weather = null,
-            SkyLayerArmorSystem skyArmor = null,
-            LocationEvolutionSystem locationEvolution = null,
-            WildlifeMigrationSystem wildlife = null,
-            LandmarkDegradationSystem landmarks = null)
+            WeatherSystem weather = null!,
+            SkyLayerArmorSystem skyArmor = null!,
+            LocationEvolutionSystem locationEvolution = null!,
+            WildlifeMigrationSystem wildlife = null!,
+            LandmarkDegradationSystem landmarks = null!)
         {
             Weather = weather ?? new WeatherSystem();
             SkyArmor = skyArmor ?? new SkyLayerArmorSystem();

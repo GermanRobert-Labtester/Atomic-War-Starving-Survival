@@ -150,7 +150,7 @@ namespace Ashfall.Core
 
         public static bool TryFindDataDirectory(string startDirectory, out string dataDirectory)
         {
-            dataDirectory = null;
+            dataDirectory = null!;
             if (string.IsNullOrEmpty(startDirectory))
                 return false;
 

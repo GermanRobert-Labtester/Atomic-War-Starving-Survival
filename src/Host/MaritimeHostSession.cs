@@ -27,9 +27,9 @@ namespace AtomicWar.GodotApp
         public event Action StateChanged;
 
         public MaritimeHostSession(
-            StealthDiveInstance dive = null,
-            ProceduralScavengeSystem scavenge = null,
-            PsychologicalContaminationSystem psychology = null)
+            StealthDiveInstance dive = null!,
+            ProceduralScavengeSystem scavenge = null!,
+            PsychologicalContaminationSystem psychology = null!)
         {
             Dive = dive ?? new StealthDiveInstance();
             Scavenge = scavenge ?? new ProceduralScavengeSystem(new SeededRng(DemoSeed));

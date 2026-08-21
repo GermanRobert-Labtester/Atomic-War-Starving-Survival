@@ -368,7 +368,7 @@ namespace AtomicWar.GodotApp.UI
                     AshfallUiHelpers.MakeMetadata($"Last medical event: {_medicalHost.LastEvent}"));
         }
 
-        private int CountItem(string primaryId, string fallbackId = null)
+        private int CountItem(string primaryId, string fallbackId = null!)
         {
             if (_inventoryHost == null) return 0;
             int count = _inventoryHost.Inventory.CountById(primaryId);

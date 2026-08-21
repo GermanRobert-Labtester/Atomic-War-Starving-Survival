@@ -60,7 +60,7 @@ namespace Ashfall.Core
         public ExpeditionVehicleState State => _state;
         public event Action OnVehicleStateChanged;
 
-        public ExpeditionVehicleSystem(ISeededRng rng, ILog log = null)
+        public ExpeditionVehicleSystem(ISeededRng rng, ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;

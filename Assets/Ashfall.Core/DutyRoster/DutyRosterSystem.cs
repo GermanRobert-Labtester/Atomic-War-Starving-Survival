@@ -511,7 +511,7 @@ namespace Ashfall.Core
             if (string.IsNullOrEmpty(survivorId))
             {
                 // Clearing: no duplicate concern.
-                return AssignInternal(role, null);
+                return AssignInternal(role, null!);
             }
             DutyRosterRow row = GetRow(survivorId);
             if (row == null) return false;

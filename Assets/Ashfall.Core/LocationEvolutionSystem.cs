@@ -37,7 +37,7 @@ namespace Ashfall.Core
         public event Action<string, string> OnLocationOwnerChanged;
         public event Action<string> OnLocationMutated;
 
-        public LocationEvolutionSystem(ISeededRng rng = null, ILog log = null)
+        public LocationEvolutionSystem(ISeededRng rng = null!, ILog log = null!)
         {
             _rng = rng ?? new SeededRng(42);
             _log = log ?? NullLog.Instance;

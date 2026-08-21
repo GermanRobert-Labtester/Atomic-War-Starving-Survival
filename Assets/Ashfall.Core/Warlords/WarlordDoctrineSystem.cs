@@ -161,7 +161,7 @@ namespace Ashfall.Core.Warlords
         public event Action<string, string> OnNarrativeRequested;             // journalKey / radioKey
         public event Action OnStateChanged;
 
-        public WarlordDoctrineSystem(WarlordDoctrineCatalog catalog = null, int seedSalt = 808)
+        public WarlordDoctrineSystem(WarlordDoctrineCatalog catalog = null!, int seedSalt = 808)
         {
             _catalog = catalog ?? new WarlordDoctrineCatalog();
             _state.seedSalt = seedSalt;
@@ -858,7 +858,7 @@ namespace Ashfall.Core.Warlords
             _state.supply += gain;
         }
 
-        private void EmitNarrative(WarlordDoctrineDef doctrine = null)
+        private void EmitNarrative(WarlordDoctrineDef doctrine = null!)
         {
             var d = doctrine ?? Doctrine;
             if (d == null) return;

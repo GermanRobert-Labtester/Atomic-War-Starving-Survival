@@ -25,7 +25,7 @@ namespace AtomicWar.GodotApp
         public static bool Exists => s_files.FileExists(SavePath);
 
         /// <summary>Writes through the codec (checksum stamped). Returns false on failure.</summary>
-        public static bool TrySave(HoldfastSave save, string pathOverride = null)
+        public static bool TrySave(HoldfastSave save, string pathOverride = null!)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>Reads and validates through the codec. Returns null when absent or corrupt.</summary>
-        public static HoldfastSave? TryLoad(string pathOverride = null)
+        public static HoldfastSave? TryLoad(string pathOverride = null!)
         {
             try
             {

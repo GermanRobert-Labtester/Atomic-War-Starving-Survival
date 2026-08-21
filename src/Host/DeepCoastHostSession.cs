@@ -36,11 +36,11 @@ namespace AtomicWar.GodotApp
         public event Action StateChanged;
 
         public DeepCoastHostSession(
-            District8DeepCoastSystem deepCoast = null,
-            JournalSystem journal = null,
-            FactionStanceEngine stances = null,
-            HoldfastTradeInventory inventory = null,
-            MaritimeHostSession maritime = null)
+            District8DeepCoastSystem deepCoast = null!,
+            JournalSystem journal = null!,
+            FactionStanceEngine stances = null!,
+            HoldfastTradeInventory inventory = null!,
+            MaritimeHostSession maritime = null!)
         {
             DeepCoast = deepCoast ?? new District8DeepCoastSystem(DemoSeed);
             Journal = journal ?? new JournalSystem();
@@ -59,11 +59,11 @@ namespace AtomicWar.GodotApp
         }
 
         public static DeepCoastHostSession Create(
-            District8DeepCoastSystem deepCoast = null,
-            JournalSystem journal = null,
-            FactionStanceEngine stances = null,
-            HoldfastTradeInventory inventory = null,
-            MaritimeHostSession maritime = null)
+            District8DeepCoastSystem deepCoast = null!,
+            JournalSystem journal = null!,
+            FactionStanceEngine stances = null!,
+            HoldfastTradeInventory inventory = null!,
+            MaritimeHostSession maritime = null!)
         {
             return new DeepCoastHostSession(deepCoast, journal, stances, inventory, maritime);
         }
@@ -201,7 +201,7 @@ namespace AtomicWar.GodotApp
         /// The Fleet levy (when fleet-controlled) is deducted here and the rest
         /// goes to the canonical inventory.
         /// </summary>
-        public string CompleteDockDive(bool success, List<SalvageEntry> rewards = null, int day = 1)
+        public string CompleteDockDive(bool success, List<SalvageEntry> rewards = null!, int day = 1)
         {
             if (!Maritime.Dive.IsActive) return "No active dock dive to complete.";
             Maritime.Dive.EndDive(success);

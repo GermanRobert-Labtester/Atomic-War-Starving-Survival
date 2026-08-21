@@ -22,7 +22,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class CrossingArbitrationHeadlessDemo
     {
-        public static ArbitrationHeadlessReport Run(ILog log = null)
+        public static ArbitrationHeadlessReport Run(ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

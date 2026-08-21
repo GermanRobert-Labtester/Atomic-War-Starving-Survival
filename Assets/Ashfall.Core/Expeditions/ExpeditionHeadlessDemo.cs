@@ -8,7 +8,7 @@ namespace Ashfall.Core.Expeditions
     /// </summary>
     public static class ExpeditionHeadlessDemo
     {
-        public static HeadlessReport Run(ILog log = null)
+        public static HeadlessReport Run(ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -45,7 +45,7 @@ namespace Ashfall.Core.Expeditions
             ExpeditionDefinitionRegistry.Register(def);
 
             var sys = new ExpeditionSystem();
-            Check(!sys.Start(null, "sv_mae", 1), "null definition refused");
+            Check(!sys.Start(null!, "sv_mae", 1), "null definition refused");
             Check(sys.Start(def, "sv_mae", 1, ExpeditionStance.Stealth), "expedition starts");
             Check(!sys.Start(def, "sv_mae", 1), "second expedition for same survivor refused");
 

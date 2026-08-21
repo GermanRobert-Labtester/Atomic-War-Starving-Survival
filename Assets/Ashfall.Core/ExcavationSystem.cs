@@ -36,7 +36,7 @@ namespace Ashfall.Core
         public ExcavationState State => _state;
         public event Action OnExcavationChanged;
 
-        public ExcavationSystem(ISeededRng rng, ILog log = null)
+        public ExcavationSystem(ISeededRng rng, ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;

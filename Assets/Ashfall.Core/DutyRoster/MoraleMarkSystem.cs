@@ -57,7 +57,7 @@ namespace Ashfall.Core
             }
         }
 
-        public void SetMark(string id, string payload = null, int day = 0)
+        public void SetMark(string id, string payload = null!, int day = 0)
         {
             if (string.IsNullOrEmpty(id)) return;
             if (!_byId.TryGetValue(id, out var rec) || rec == null)

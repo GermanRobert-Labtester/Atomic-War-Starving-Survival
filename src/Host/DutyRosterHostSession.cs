@@ -34,9 +34,9 @@ namespace AtomicWar.GodotApp
             ShelterEncounterSystem encounters,
             DutyRosterCatalog catalog,
             SimClock clock,
-            DutyRosterQuestRuntime quests = null,
-            Ashfall.Core.Journal.JournalSystem journal = null,
-            ILog log = null)
+            DutyRosterQuestRuntime quests = null!,
+            Ashfall.Core.Journal.JournalSystem journal = null!,
+            ILog log = null!)
         {
             _log = log ?? NullLog.Instance;
             Roster = roster;
@@ -88,14 +88,14 @@ namespace AtomicWar.GodotApp
             // in the journal and KnowledgeBase dedupes on reload.
             string key = string.IsNullOrEmpty(def.knowledge_key) ? p.questId : def.knowledge_key;
             string text = def.briefing ?? key;
-            _journal.TryAddRawEntry(key, text, null, p.completedDay);
+            _journal.TryAddRawEntry(key, text, null!, p.completedDay);
         }
 
         /// <summary>Raised when any roster/mark/encounter state changes (save dirty flag).</summary>
         public event Action StateChanged;
 
         public static DutyRosterHostSession Create(string dataDirectory, ILog? log = null,
-            Ashfall.Core.Journal.JournalSystem journal = null)
+            Ashfall.Core.Journal.JournalSystem journal = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log ??= new GodotLog();
@@ -110,7 +110,7 @@ namespace AtomicWar.GodotApp
             var encounters = new ShelterEncounterSystem(DefaultSeed);
             var clock = new SimClock(1);
             return new DutyRosterHostSession(roster, marks, encounters, catalog, clock,
-                quests: null, journal: journal, log: log);
+                quests: null!, journal: journal, log: log);
         }
 
         public void Unlock(int day)
@@ -278,7 +278,7 @@ namespace AtomicWar.GodotApp
                 return "second winter already active";
             Roster.SetSecondWinterActive(true);
             Encounters.SetSecondWinter(DutyRosterSystem.SecondWinterEncounterWeight, Clock.Day);
-            Marks.SetMark("mark_second_winter", null, Clock.Day);
+            Marks.SetMark("mark_second_winter", null!, Clock.Day);
             LastEvent = "SECOND WINTER";
             return "second winter active: windows 8-12d, encounters x" + DutyRosterSystem.SecondWinterEncounterWeight;
         }
@@ -299,9 +299,9 @@ namespace AtomicWar.GodotApp
 
         // ── Hatch-return bridge (owned magnitudes stay in ExpeditionSystem) ──
 
-        public string BridgeHatchReturn(string survivorId = null, bool crisis = false)
+        public string BridgeHatchReturn(string survivorId = null!, bool crisis = false)
         {
-            bool ok = Encounters.BridgeHatchReturn(Clock.Day, survivorId, null, crisis);
+            bool ok = Encounters.BridgeHatchReturn(Clock.Day, survivorId, null!, crisis);
             return ok ? "hatch return staged" : "no hatch scene tonight (one per night unless crisis)";
         }
 

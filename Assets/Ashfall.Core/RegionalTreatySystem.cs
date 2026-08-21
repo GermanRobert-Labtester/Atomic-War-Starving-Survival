@@ -58,7 +58,7 @@ namespace Ashfall.Core
         public RegionalTreatyState State => _state;
         public event Action<TreatyInstance> OnTreatyStatusChanged;
 
-        public RegionalTreatySystem(ILog log = null)
+        public RegionalTreatySystem(ILog log = null!)
         {
             _log = log ?? NullLog.Instance;
         }

@@ -37,7 +37,7 @@ namespace Ashfall.Core
         private readonly Dictionary<string, int> _items = new Dictionary<string, int>(StringComparer.Ordinal);
         private readonly HoldfastCatalog _catalog;
 
-        public HoldfastTradeInventory(HoldfastCatalog catalog = null)
+        public HoldfastTradeInventory(HoldfastCatalog catalog = null!)
         {
             _catalog = catalog;
         }

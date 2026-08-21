@@ -42,7 +42,7 @@ namespace Ashfall.Core
         public event Action<float> OnFlashbackSuppressed; // suppression amount
         public event Action OnPlaybackChanged;
 
-        public VinylMoraleSystem(ILog log = null)
+        public VinylMoraleSystem(ILog log = null!)
         {
             _log = log ?? NullLog.Instance;
         }

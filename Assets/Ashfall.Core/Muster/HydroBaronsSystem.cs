@@ -33,7 +33,7 @@ namespace Ashfall.Core.Muster
         public event Action<HydroBaronsState> OnStateChanged;
         public event Action<string> OnApproachResolved; // "A".."D"
 
-        public HydroBaronsSystem(HydroBaronsState state = null)
+        public HydroBaronsSystem(HydroBaronsState state = null!)
         {
             _state = state ?? new HydroBaronsState();
             if (_state.systemId != SystemId) _state.systemId = SystemId;

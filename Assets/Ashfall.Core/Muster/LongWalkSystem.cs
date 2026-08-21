@@ -48,7 +48,7 @@ namespace Ashfall.Core.Muster
         public event Action<LongWalkState> OnStateChanged;
         public event Action OnRegionChanged;
 
-        public LongWalkSystem(LongWalkState state = null)
+        public LongWalkSystem(LongWalkState state = null!)
         {
             _state = state ?? new LongWalkState();
             if (_state.systemId != SystemId) _state.systemId = SystemId;

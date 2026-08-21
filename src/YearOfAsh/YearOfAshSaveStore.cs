@@ -19,7 +19,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
 
         public static bool Exists => File.Exists(SavePath);
 
-        public static bool TrySave(YearOfAshSave save, string pathOverride = null)
+        public static bool TrySave(YearOfAshSave save, string pathOverride = null!)
         {
             if (save == null) return false;
             try
@@ -40,7 +40,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             }
         }
 
-        public static YearOfAshSave? TryLoad(string pathOverride = null)
+        public static YearOfAshSave? TryLoad(string pathOverride = null!)
         {
             string path = pathOverride ?? SavePath;
             if (!File.Exists(path)) return null;

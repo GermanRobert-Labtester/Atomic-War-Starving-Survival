@@ -72,7 +72,7 @@ namespace Ashfall.Core
             Inventory.Inventory inventory,
             DutyRosterSystem roster,
             ExpeditionSystem expedition,
-            ILog log = null)
+            ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));

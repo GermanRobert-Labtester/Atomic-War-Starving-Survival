@@ -22,7 +22,7 @@ namespace Ashfall.Core.Narrative
         public event Action<EncounterResolutionRecord> OnEncounterResolved;
         public event Action<NarrativeEncounterState> OnStateChanged;
 
-        public NarrativeEncounterSystem(NarrativeEncounterState state = null)
+        public NarrativeEncounterSystem(NarrativeEncounterState state = null!)
         {
             _state = state ?? new NarrativeEncounterState();
             if (_state.history == null) _state.history = new List<EncounterResolutionRecord>();

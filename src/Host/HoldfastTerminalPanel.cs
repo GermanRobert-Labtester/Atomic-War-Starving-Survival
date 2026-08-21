@@ -167,7 +167,7 @@ namespace AtomicWar.GodotApp
             return result;
         }
 
-        public bool PressSave(string basePathOverride = null, string tradePathOverride = null)
+        public bool PressSave(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool saved = _session != null && _session.TrySave(basePathOverride, tradePathOverride);
             _feedback.Text = _session == null
@@ -182,7 +182,7 @@ namespace AtomicWar.GodotApp
             return saved;
         }
 
-        public bool PressReload(string basePathOverride = null, string tradePathOverride = null)
+        public bool PressReload(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool loaded = _session != null && _session.TryReload(basePathOverride, tradePathOverride);
             _feedback.Text = _session == null
@@ -686,7 +686,7 @@ namespace AtomicWar.GodotApp
             if (definition == null)
             {
                 _tradeDetails.Text = "No item selected.";
-                UpdateTradeActions(null, 0, 0);
+                UpdateTradeActions(null!, 0, 0);
                 return;
             }
             int stock = _session.Trade.GetStock(definition.Id);

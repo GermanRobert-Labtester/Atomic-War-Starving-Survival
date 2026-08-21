@@ -34,7 +34,7 @@ namespace Ashfall.Core.Muster
         public event Action<string> OnStrategySet;      // "A".."D"
         public event Action<int> OnLockoutShifted;      // delta
 
-        public CoalitionCampSystem(CoalitionCampState state = null)
+        public CoalitionCampSystem(CoalitionCampState state = null!)
         {
             _state = state ?? new CoalitionCampState();
             if (_state.systemId != SystemId) _state.systemId = SystemId;

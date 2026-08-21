@@ -20,7 +20,7 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public EconomyHostSession(MarketSystem market = null)
+        public EconomyHostSession(MarketSystem market = null!)
         {
             Market = market ?? new MarketSystem();
             Market.OnDemandAdjusted += (itemId, delta) =>

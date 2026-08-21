@@ -148,7 +148,7 @@ namespace Ashfall.Core
 
         public bool Plant(int plotIndex, string seedItemId, int currentDay, out string consumedSeedId)
         {
-            consumedSeedId = null;
+            consumedSeedId = null!;
             var plot = PlotAt(plotIndex);
             if (plot == null) return false;
             var def = GreenhouseExpansionCatalog.CropCatalog.Get(seedItemId);

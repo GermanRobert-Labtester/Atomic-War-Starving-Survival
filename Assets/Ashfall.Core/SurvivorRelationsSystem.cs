@@ -60,7 +60,7 @@ namespace Ashfall.Core
         public event Action<MediationEntry> OnConflictResolved;
         public event Action OnRelationsChanged;
 
-        public SurvivorRelationsSystem(ISeededRng rng, ILog log = null)
+        public SurvivorRelationsSystem(ISeededRng rng, ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;

@@ -332,10 +332,10 @@ namespace Ashfall.Core.Foundry
         public const float StandingNeutral = 0f;
 
         public SilentFoundrySystem(
-            SilentFoundryState state = null,
-            ISeededRng rng = null,
-            Func<int, ISeededRng> rngFactory = null,
-            ILog log = null)
+            SilentFoundryState state = null!,
+            ISeededRng rng = null!,
+            Func<int, ISeededRng> rngFactory = null!,
+            ILog log = null!)
         {
             _rngFactory = rngFactory ?? (seed => new SeededRng(seed));
             _state = state ?? new SilentFoundryState();

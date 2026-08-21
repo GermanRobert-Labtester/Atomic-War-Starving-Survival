@@ -52,7 +52,7 @@ namespace Ashfall.Core.Survivors
         public event Action<SurvivorRosterEntry, string> OnSurvivorDied; // entry, reason
         public event Action<SurvivorRosterState> OnStateChanged;
 
-        public SurvivorRosterSystem(SurvivorRosterState state = null)
+        public SurvivorRosterSystem(SurvivorRosterState state = null!)
         {
             _state = state ?? new SurvivorRosterState();
             if (_state.entries == null) _state.entries = new List<SurvivorRosterEntry>();

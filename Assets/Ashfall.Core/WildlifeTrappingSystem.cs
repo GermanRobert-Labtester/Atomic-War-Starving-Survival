@@ -40,7 +40,7 @@ namespace Ashfall.Core
         public WildlifeTrappingState State => _state;
         public event Action OnTrappingChanged;
 
-        public WildlifeTrappingSystem(ISeededRng rng, ILog log = null)
+        public WildlifeTrappingSystem(ISeededRng rng, ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;

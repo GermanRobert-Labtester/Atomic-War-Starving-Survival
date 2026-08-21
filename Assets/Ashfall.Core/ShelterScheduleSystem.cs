@@ -65,7 +65,7 @@ namespace Ashfall.Core
         public event Action<SchedulePhase> OnPhaseChanged;
         public event Action OnScheduleChanged;
 
-        public ShelterScheduleSystem(PowerGridSystem powerGrid, ILog log = null)
+        public ShelterScheduleSystem(PowerGridSystem powerGrid, ILog log = null!)
         {
             _powerGrid = powerGrid ?? throw new ArgumentNullException(nameof(powerGrid));
             _log = log ?? NullLog.Instance;

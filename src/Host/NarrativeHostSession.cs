@@ -20,7 +20,7 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public NarrativeHostSession(NarrativeEncounterSystem engine = null)
+        public NarrativeHostSession(NarrativeEncounterSystem engine = null!)
         {
             Engine = engine ?? new NarrativeEncounterSystem();
             Engine.OnEncounterSelected += def =>

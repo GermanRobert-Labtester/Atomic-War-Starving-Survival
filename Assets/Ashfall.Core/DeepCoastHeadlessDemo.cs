@@ -22,7 +22,7 @@ namespace Ashfall.Core
     {
         public const int DefaultSeed = 4048;
 
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string dataDirectory = null!, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -220,8 +220,8 @@ namespace Ashfall.Core
             // ── Journal once-only (real JournalSystem dedupe) ──────────
             var journal = new JournalSystem();
             int before = journal.EntryCount;
-            journal.TryAddRawEntry(District8DeepCoastSystem.JournalSurvey, "first", null, 1);
-            journal.TryAddRawEntry(District8DeepCoastSystem.JournalSurvey, "second", null, 2);
+            journal.TryAddRawEntry(District8DeepCoastSystem.JournalSurvey, "first", null!, 1);
+            journal.TryAddRawEntry(District8DeepCoastSystem.JournalSurvey, "second", null!, 2);
             Check(journal.EntryCount == before + 1, "journal entry lands once per knowledge key");
 
             // ── Daily tick idempotence ─────────────────────────────────

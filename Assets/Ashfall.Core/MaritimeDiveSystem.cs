@@ -48,7 +48,7 @@ namespace Ashfall.Core
         public event Action<DiveOutcome> OnDiveCompleted;
         public event Action OnSitesChanged;
 
-        public MaritimeDiveSystem(ISeededRng rng, ILog log = null)
+        public MaritimeDiveSystem(ISeededRng rng, ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;

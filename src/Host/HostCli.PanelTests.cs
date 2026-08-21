@@ -2853,7 +2853,7 @@ namespace AtomicWar.GodotApp
         /// <summary>
         /// Phase-2 visual-evidence harness (delegates to SnapshotHarness).
         /// </summary>
-        public static int RunUiSnapshotSelfTest(string outputRoot = null)
+        public static int RunUiSnapshotSelfTest(string outputRoot = null!)
         {
             string root = string.IsNullOrEmpty(outputRoot)
                 ? Path.Combine(Directory.GetCurrentDirectory(), "snapshots")

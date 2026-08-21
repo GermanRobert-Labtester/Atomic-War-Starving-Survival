@@ -80,10 +80,10 @@ namespace Ashfall.Core.YearOfAsh
             DoorEncounterSystem encounters,
             FactionWarSystem factionWar,
             IClock clock,
-            YearOfAshDeepFreezeSystem deepFreeze = null,
-            YearOfAshRadonSystem radon = null,
-            QuestlineSystem quests = null,
-            WarlordDoctrineSystem warlord = null)
+            YearOfAshDeepFreezeSystem deepFreeze = null!,
+            YearOfAshRadonSystem radon = null!,
+            QuestlineSystem quests = null!,
+            WarlordDoctrineSystem warlord = null!)
         {
             var save = new YearOfAshSave
             {
@@ -113,10 +113,10 @@ namespace Ashfall.Core.YearOfAsh
             YearOfAshTimelineSystem timeline,
             DoorEncounterSystem encounters,
             FactionWarSystem factionWar,
-            YearOfAshDeepFreezeSystem deepFreeze = null,
-            YearOfAshRadonSystem radon = null,
-            QuestlineSystem quests = null,
-            WarlordDoctrineSystem warlord = null)
+            YearOfAshDeepFreezeSystem deepFreeze = null!,
+            YearOfAshRadonSystem radon = null!,
+            QuestlineSystem quests = null!,
+            WarlordDoctrineSystem warlord = null!)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));

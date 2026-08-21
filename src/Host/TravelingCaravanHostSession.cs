@@ -19,7 +19,7 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public TravelingCaravanHostSession(TravelingCaravanSystem engine = null)
+        public TravelingCaravanHostSession(TravelingCaravanSystem engine = null!)
         {
             Engine = engine ?? new TravelingCaravanSystem();
             Engine.OnCaravanArrivedAtNode += (c, node) => { LastEvent = c.caravanName + " arrived at " + node + "."; StateChanged?.Invoke(); };

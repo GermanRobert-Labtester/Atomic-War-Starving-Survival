@@ -53,7 +53,7 @@ namespace AtomicWar.GodotApp
             _deepCoast = DeepCoastHostSession.Create(
                 _core.DeepCoast,
                 _journal,
-                null,
+                null!,
                 _holdfastRuntime!.Trade.Inventory!,
                 _maritime!);
             // Seasonal (Ice Road) + route-stage gate for expedition dispatch.

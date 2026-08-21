@@ -84,9 +84,9 @@ namespace Ashfall.Core.Verdict
             ReckoningSystem reckoning,
             EvidenceLedger evidence,
             int censusLastWindowDay,
-            VerdictNpcSystem npcs = null,
-            VerdictRadioSystem radio = null,
-            QuestlineSystem quests = null)
+            VerdictNpcSystem npcs = null!,
+            VerdictRadioSystem radio = null!,
+            QuestlineSystem quests = null!)
         {
             var save = new VerdictSave
             {
@@ -118,7 +118,7 @@ namespace Ashfall.Core.Verdict
         /// </summary>
         public static bool TryDecode(string json, IJsonSerializer serializer, out VerdictSave save)
         {
-            save = null;
+            save = null!;
             if (string.IsNullOrEmpty(json) || serializer == null) return false;
             try
             {
@@ -147,7 +147,7 @@ namespace Ashfall.Core.Verdict
 
         private static bool MigrateV1(string json, IJsonSerializer serializer, out VerdictSave save)
         {
-            save = null;
+            save = null!;
             var v1 = serializer.Deserialize<VerdictSaveV1>(json);
             if (v1 == null) return false;
             if (string.IsNullOrEmpty(v1.Checksum)) return false;
@@ -170,7 +170,7 @@ namespace Ashfall.Core.Verdict
 
         private static bool MigrateV2(string json, IJsonSerializer serializer, out VerdictSave save)
         {
-            save = null;
+            save = null!;
             var v2 = serializer.Deserialize<VerdictSaveV2>(json);
             if (v2 == null) return false;
             if (string.IsNullOrEmpty(v2.Checksum)) return false;
@@ -198,9 +198,9 @@ namespace Ashfall.Core.Verdict
             MachineLogSystem machineLog,
             ReckoningSystem reckoning,
             EvidenceLedger evidence,
-            VerdictNpcSystem npcs = null,
-            VerdictRadioSystem radio = null,
-            QuestlineSystem quests = null)
+            VerdictNpcSystem npcs = null!,
+            VerdictRadioSystem radio = null!,
+            QuestlineSystem quests = null!)
         {
             if (save == null) return;
             machineLog.RestoreState(save.machineLog);

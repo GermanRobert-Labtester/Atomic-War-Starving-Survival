@@ -429,7 +429,7 @@ namespace Ashfall.Core
 
         private static bool TryParse(string path, out JsonDocument doc)
         {
-            doc = null;
+            doc = null!;
             try
             {
                 string text = File.ReadAllText(path);

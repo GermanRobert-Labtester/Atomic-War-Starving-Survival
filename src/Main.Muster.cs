@@ -67,7 +67,7 @@ namespace AtomicWar.GodotApp
                 _approachModal.OnModalClosed += () =>
                 {
                     _approachModal.QueueFree();
-                    _approachModal = null;
+                    _approachModal = null!;
                 };
                 AddChild(_approachModal);
             }
@@ -266,7 +266,7 @@ namespace AtomicWar.GodotApp
                 _approachModal.OnModalClosed += () =>
                 {
                     _approachModal?.QueueFree();
-                    _approachModal = null;
+                    _approachModal = null!;
                 };
                 AddChild(_approachModal);
             }
@@ -310,7 +310,7 @@ namespace AtomicWar.GodotApp
                 _journal.TryAddRawEntry(
                     $"muster_{record.questlineId}_{record.selectedApproach}",
                     line,
-                    null,
+                    null!,
                     _simDay);
                 _journalDirty = true;
             }

@@ -82,7 +82,7 @@ namespace Ashfall.Core.Verdict
             public string category = "story_item";
             public string tier = string.Empty;
             public string description = string.Empty;
-            public VerdictItemEffects mechanical_effects = null;
+            public VerdictItemEffects mechanical_effects = null!;
             public string downstream_quest_trigger = string.Empty;
             public string faction_affinity = string.Empty;
             public string rarity = string.Empty;

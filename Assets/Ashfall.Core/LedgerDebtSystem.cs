@@ -185,7 +185,7 @@ namespace Ashfall.Core
         /// not in an optional host wrapper, so no host can bypass it.
         /// </summary>
         public bool RenegotiateContract(string debtorId, float newPrincipal, int newTermDays, float newRate, string newForfeit,
-            bool contested = false, Func<bool> freshStanding = null)
+            bool contested = false, Func<bool> freshStanding = null!)
         {
             if (string.IsNullOrEmpty(debtorId)) return false;
             if (newPrincipal <= 0f || newTermDays <= 0) return false;

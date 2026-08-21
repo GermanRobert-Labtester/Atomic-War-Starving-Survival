@@ -47,11 +47,11 @@ namespace Ashfall.Core
             LocationLayoutSystem standingRecord,
             CrossingSession crossing,
             SimClock clock,
-            ILog log = null,
-            SilentFoundrySystem silentFoundry = null,
-            SilentFoundryCatalog foundryData = null,
-            DiseaseSystem disease = null,
-            DiseaseCatalog diseaseData = null)
+            ILog log = null!,
+            SilentFoundrySystem silentFoundry = null!,
+            SilentFoundryCatalog foundryData = null!,
+            DiseaseSystem disease = null!,
+            DiseaseCatalog diseaseData = null!)
         {
             Holdfast = holdfast ?? throw new ArgumentNullException(nameof(holdfast));
             DutyRoster = dutyRoster ?? throw new ArgumentNullException(nameof(dutyRoster));
@@ -66,7 +66,7 @@ namespace Ashfall.Core
             DiseaseData = diseaseData ?? new DiseaseCatalog();
         }
 
-        public static ExpansionMasterSession Load(string dataDirectory, int seed = 808, ILog log = null)
+        public static ExpansionMasterSession Load(string dataDirectory, int seed = 808, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -132,8 +132,8 @@ namespace Ashfall.Core
         /// <summary>
         /// Daily advance simulation across all 4 active expansion subsystems.
         /// </summary>
-        public void TickDaily(WeatherKind weather, float outdoorTemp, List<DutyRosterOccupant> homeOccupants = null,
-            IReadOnlyList<string> diseaseCandidates = null)
+        public void TickDaily(WeatherKind weather, float outdoorTemp, List<DutyRosterOccupant> homeOccupants = null!,
+            IReadOnlyList<string> diseaseCandidates = null!)
         {
             Clock.AdvanceDays(1);
             int day = Clock.Day;
@@ -164,7 +164,7 @@ namespace Ashfall.Core
         /// <summary>
         /// Runs comprehensive validation across all 4 expansion packs.
         /// </summary>
-        public static HeadlessReport RunAllSelfTests(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport RunAllSelfTests(string dataDirectory = null!, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

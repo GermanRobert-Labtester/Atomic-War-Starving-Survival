@@ -68,7 +68,7 @@ namespace Ashfall.Core.World
         public event Action<WeatherKind> OnWeatherChanged;
         public event Action<WorldWeatherState> OnStateChanged;
 
-        public WeatherSystem(WorldWeatherState state = null)
+        public WeatherSystem(WorldWeatherState state = null!)
         {
             _state = state ?? new WorldWeatherState();
         }

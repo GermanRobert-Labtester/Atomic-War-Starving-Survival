@@ -53,7 +53,7 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>NPCs currently available given live progress (flag + phase + optional site).</summary>
-        public System.Collections.Generic.List<Ashfall.Core.Verdict.VerdictNpcEntry> AvailableNpcs(string locationId = null)
+        public System.Collections.Generic.List<Ashfall.Core.Verdict.VerdictNpcEntry> AvailableNpcs(string locationId = null!)
         {
             int phase = (int)Reckoning.Phase;
             return Npcs.GetAvailable(MaterializedNpcFlags(), phase, locationId);
@@ -64,15 +64,15 @@ namespace AtomicWar.GodotApp
         public event Action StateChanged;
 
         public VerdictHostSession(
-            MachineLogSystem machineLog = null,
-            ReckoningSystem reckoning = null,
-            EvidenceLedger evidence = null,
-            VerdictNpcSystem npcs = null,
-            VerdictCensusBroadcast census = null,
-            IReadOnlyList<VerdictCatalogLoader.VerdictLocationEntry> locations = null,
-            IReadOnlyList<VerdictCatalogLoader.VerdictItemEntry> items = null,
-            IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> radio = null,
-            QuestlineSystem quests = null)
+            MachineLogSystem machineLog = null!,
+            ReckoningSystem reckoning = null!,
+            EvidenceLedger evidence = null!,
+            VerdictNpcSystem npcs = null!,
+            VerdictCensusBroadcast census = null!,
+            IReadOnlyList<VerdictCatalogLoader.VerdictLocationEntry> locations = null!,
+            IReadOnlyList<VerdictCatalogLoader.VerdictItemEntry> items = null!,
+            IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> radio = null!,
+            QuestlineSystem quests = null!)
         {
             MachineLog = machineLog ?? new MachineLogSystem();
             Reckoning = reckoning ?? new ReckoningSystem();
@@ -97,11 +97,11 @@ namespace AtomicWar.GodotApp
 
         public static VerdictHostSession Create(
             string dataDir,
-            ISimClock clock = null,
-            IEventBus bus = null,
-            IFlagLedger flags = null,
-            ISeededRng radioRng = null,
-            IWorldCensus census = null)
+            ISimClock clock = null!,
+            IEventBus bus = null!,
+            IFlagLedger flags = null!,
+            ISeededRng radioRng = null!,
+            IWorldCensus census = null!)
         {
             clock = clock ?? new ClockSimClock();
             bus = bus ?? new SimpleEventBus();

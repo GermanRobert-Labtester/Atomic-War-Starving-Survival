@@ -87,19 +87,19 @@ namespace Ashfall.Core.Shelter
         }
 
         public ShelterAssignmentResult Assign(string survivorId, string roomId,
-            string workstationId = null, int day = 0)
+            string workstationId = null!, int day = 0)
         {
             if (string.IsNullOrEmpty(survivorId))
-                return new ShelterAssignmentResult(false, "missing_survivor_id", null);
+                return new ShelterAssignmentResult(false, "missing_survivor_id", null!);
             if (string.IsNullOrEmpty(roomId))
-                return new ShelterAssignmentResult(false, "missing_room_id", null);
+                return new ShelterAssignmentResult(false, "missing_room_id", null!);
             var room = FindRoom(roomId);
             if (room == null)
-                return new ShelterAssignmentResult(false, "unknown_room", null);
+                return new ShelterAssignmentResult(false, "unknown_room", null!);
             if (GetAssignmentForSurvivor(survivorId) != null)
-                return new ShelterAssignmentResult(false, "already_assigned", null);
+                return new ShelterAssignmentResult(false, "already_assigned", null!);
             if (GetRoomOccupancy(roomId) >= room.Capacity)
-                return new ShelterAssignmentResult(false, "room_full", null);
+                return new ShelterAssignmentResult(false, "room_full", null!);
             var assignment = new ShelterAssignment
             {
                 SurvivorId = survivorId,
@@ -117,7 +117,7 @@ namespace Ashfall.Core.Shelter
         public ShelterAssignmentResult Unassign(string survivorId, int day = 0)
         {
             if (string.IsNullOrEmpty(survivorId))
-                return new ShelterAssignmentResult(false, "missing_survivor_id", null);
+                return new ShelterAssignmentResult(false, "missing_survivor_id", null!);
             for (int i = 0; i < _state.Assignments.Count; i++)
             {
                 if (_state.Assignments[i].SurvivorId == survivorId)
@@ -126,10 +126,10 @@ namespace Ashfall.Core.Shelter
                     _state.Assignments.RemoveAt(i);
                     OnAssignmentChanged?.Invoke(new ShelterAssignmentEvent(
                         ShelterAssignmentEventKind.Unassigned, survivorId, roomId, day));
-                    return new ShelterAssignmentResult(true, "ok", null);
+                    return new ShelterAssignmentResult(true, "ok", null!);
                 }
             }
-            return new ShelterAssignmentResult(false, "not_assigned", null);
+            return new ShelterAssignmentResult(false, "not_assigned", null!);
         }
 
         public ShelterAssignmentState CaptureState() => _state.Capture();
@@ -160,7 +160,7 @@ namespace Ashfall.Core.Shelter
         public ShelterRoom() { }
 
         public ShelterRoom(string roomId, string displayName, int capacity,
-            string requiredSkillId = null, string workstationId = null)
+            string requiredSkillId = null!, string workstationId = null!)
         {
             RoomId = roomId;
             DisplayName = displayName;

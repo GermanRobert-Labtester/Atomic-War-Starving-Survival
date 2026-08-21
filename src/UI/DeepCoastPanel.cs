@@ -281,7 +281,7 @@ namespace AtomicWar.GodotApp.UI
                 diveBox.AddChild(AshfallUiHelpers.MakeButton("CRANK COMPRESSOR (+30s)", () => { _statusLabel.Text = _deepCoast.CrankDockDive(); RefreshView(); }));
                 diveBox.AddChild(AshfallUiHelpers.MakeButton("ADVANCE ROOM (+10 NOISE)", () => { _statusLabel.Text = _deepCoast.AdvanceDockDive(10); RefreshView(); }));
                 diveBox.AddChild(AshfallUiHelpers.MakeButton("SIMULATE DIVE (+30s)", () => { _statusLabel.Text = _deepCoast.TickDockDive(30f); RefreshView(); }));
-                diveBox.AddChild(AshfallUiHelpers.MakeButton("SURFACE — RECOVER SALVAGE", () => { _statusLabel.Text = _deepCoast.CompleteDockDive(true, null, Day()); RefreshView(); }));
+                diveBox.AddChild(AshfallUiHelpers.MakeButton("SURFACE — RECOVER SALVAGE", () => { _statusLabel.Text = _deepCoast.CompleteDockDive(true, null!, Day()); RefreshView(); }));
                 diveBox.AddChild(AshfallUiHelpers.MakeButton("ABORT DIVE", () => { _statusLabel.Text = _deepCoast.CompleteDockDive(false); RefreshView(); }));
             }
         }

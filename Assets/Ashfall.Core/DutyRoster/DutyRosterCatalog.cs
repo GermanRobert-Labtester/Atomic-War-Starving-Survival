@@ -128,7 +128,7 @@ namespace Ashfall.Core
         private readonly IJsonSerializer _json;
         private readonly ILog _log;
 
-        public DutyRosterCatalogLoader(IFileIO files, IJsonSerializer json, ILog log = null)
+        public DutyRosterCatalogLoader(IFileIO files, IJsonSerializer json, ILog log = null!)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));

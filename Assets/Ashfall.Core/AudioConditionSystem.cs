@@ -33,7 +33,7 @@ namespace Ashfall.Core
         public event Action<ActiveAudioCondition> OnConditionStopped;
         public event Action OnConditionsChanged;
 
-        public AudioConditionSystem(ILog log = null)
+        public AudioConditionSystem(ILog log = null!)
         {
             _log = log ?? NullLog.Instance;
         }

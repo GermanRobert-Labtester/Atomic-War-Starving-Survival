@@ -26,10 +26,10 @@ namespace AtomicWar.GodotApp
 
         public static bool TrySave(
             WorldWeatherState state,
-            SkyArmorSaveState skyArmor = null,
-            LocationEvolutionSaveState locationEvolution = null,
-            WildlifeSaveState wildlife = null,
-            LandmarkSaveState landmark = null)
+            SkyArmorSaveState skyArmor = null!,
+            LocationEvolutionSaveState locationEvolution = null!,
+            WildlifeSaveState wildlife = null!,
+            LandmarkSaveState landmark = null!)
         {
             try
             {

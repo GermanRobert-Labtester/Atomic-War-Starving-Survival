@@ -18,7 +18,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class EndingsHeadlessDemo
     {
-        public static EndingsHeadlessReport Run(ILog log = null)
+        public static EndingsHeadlessReport Run(ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

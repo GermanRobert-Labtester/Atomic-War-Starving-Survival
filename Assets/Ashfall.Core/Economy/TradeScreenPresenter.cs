@@ -38,12 +38,12 @@ namespace Ashfall.Core.Economy
 
         public TradeScreenPresenter(
             IFactionStanceProvider stanceProvider,
-            IPriceShockProvider priceShockProvider = null,
-            ITradeTellProvider tells = null,
-            ISeededRng rng = null,
-            Func<string, float> unitPriceLookup = null,
-            Func<string, string> displayNameLookup = null,
-            ITradeExecutionSink executionSink = null)
+            IPriceShockProvider priceShockProvider = null!,
+            ITradeTellProvider tells = null!,
+            ISeededRng rng = null!,
+            Func<string, float> unitPriceLookup = null!,
+            Func<string, string> displayNameLookup = null!,
+            ITradeExecutionSink executionSink = null!)
         {
             _stance = stanceProvider;
             _shocks = priceShockProvider;

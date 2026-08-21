@@ -85,7 +85,7 @@ namespace AtomicWar.GodotApp
         public event Action StateChanged;
         public event Action<CrossingStageNarrativeEvent>? OnCrossingStageNarrative;
 
-        public static ExpansionHostSession Create(string dataDirectory, ILog log = null)
+        public static ExpansionHostSession Create(string dataDirectory, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? new GodotLog();

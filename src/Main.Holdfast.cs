@@ -142,7 +142,7 @@ namespace AtomicWar.GodotApp
                 _journal.TryAddRawEntry(
                     $"crossing_{evt.questId}_{evt.stageIndex}_{(evt.isCompletion ? "complete" : "stage")}",
                     line,
-                    null,
+                    null!,
                     _simDay);
                 _journalDirty = true;
             }

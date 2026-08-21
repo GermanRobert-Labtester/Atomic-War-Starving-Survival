@@ -22,7 +22,7 @@ namespace Ashfall.Core.UtilityAI
             AIActionContext context,
             IReadOnlyList<UtilityActionDef> candidates,
             ISeededRng rng,
-            UtilityActionScorer scorer = null)
+            UtilityActionScorer scorer = null!)
         {
             if (context == null || candidates == null || candidates.Count == 0) return null;
             scorer = scorer ?? new UtilityActionScorer();
@@ -63,7 +63,7 @@ namespace Ashfall.Core.UtilityAI
         public List<KeyValuePair<UtilityActionDef, float>> ScoreAll(
             AIActionContext context,
             IReadOnlyList<UtilityActionDef> candidates,
-            UtilityActionScorer scorer = null)
+            UtilityActionScorer scorer = null!)
         {
             var result = new List<KeyValuePair<UtilityActionDef, float>>();
             if (context == null || candidates == null) return result;

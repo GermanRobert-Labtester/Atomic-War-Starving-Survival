@@ -292,7 +292,7 @@ namespace Ashfall.Core.Medical
         public MedicalWardEvent() { }
 
         public MedicalWardEvent(MedicalWardEventKind kind, string patientId,
-            string bedId, int day, string detail = null)
+            string bedId, int day, string detail = null!)
         {
             Kind = kind;
             PatientId = patientId ?? string.Empty;
@@ -313,7 +313,7 @@ namespace Ashfall.Core.Medical
             => new MedicalWardAdmissionResult { Succeeded = true, ReasonCode = "ok", Record = r };
 
         public static MedicalWardAdmissionResult Fail(string reason)
-            => new MedicalWardAdmissionResult { Succeeded = false, ReasonCode = reason ?? "fail", Record = null };
+            => new MedicalWardAdmissionResult { Succeeded = false, ReasonCode = reason ?? "fail", Record = null! };
     }
 
     [Serializable]

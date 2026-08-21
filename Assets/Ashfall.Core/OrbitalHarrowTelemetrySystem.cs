@@ -45,7 +45,7 @@ namespace Ashfall.Core
         public event Action<int, float> OnImpactResolved; // day, energy
         public event Action OnTelemetryChanged;
 
-        public OrbitalHarrowTelemetrySystem(SkyLayerArmorSystem armor, ISeededRng rng, ILog log = null)
+        public OrbitalHarrowTelemetrySystem(SkyLayerArmorSystem armor, ISeededRng rng, ILog log = null!)
         {
             _armor = armor ?? throw new ArgumentNullException(nameof(armor));
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));

@@ -107,7 +107,7 @@ namespace Ashfall.Core.Economy
             string key = PoolKey(stance, band);
             if (!_pools.TryGetValue(key, out var pool) || pool.Count == 0)
             {
-                tell = null;
+                tell = null!;
                 return false;
             }
 

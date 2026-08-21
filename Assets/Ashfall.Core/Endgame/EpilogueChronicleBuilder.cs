@@ -84,7 +84,7 @@ namespace Ashfall.Core.Endgame
 
         public EpilogueSlide() { }
 
-        public EpilogueSlide(int order, string title, string prose, string artAssetId = null)
+        public EpilogueSlide(int order, string title, string prose, string artAssetId = null!)
         {
             Order = order;
             Title = title ?? string.Empty;

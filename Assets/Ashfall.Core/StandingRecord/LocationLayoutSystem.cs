@@ -108,7 +108,7 @@ namespace Ashfall.Core
         public string CurrentParentId => _state.currentParentId;
         public IReadOnlyList<LocationLayoutDef> Layouts => _layouts;
 
-        public LocationLayoutSystem(IFileIO files, IJsonSerializer json, ILog log = null)
+        public LocationLayoutSystem(IFileIO files, IJsonSerializer json, ILog log = null!)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -189,7 +189,7 @@ namespace Ashfall.Core
 
         public void LeaveParent()
         {
-            _state.currentParentId = null;
+            _state.currentParentId = null!;
             RaiseChanged();
         }
 

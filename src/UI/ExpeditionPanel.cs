@@ -468,7 +468,7 @@ namespace AtomicWar.GodotApp.UI
                 encounter_id = encounterId,
                 trigger = trigger,
                 resolved_at_lead = null,
-                encounter_record_resolution_id = null
+                encounter_record_resolution_id = null!
             };
 
             if (def == null)

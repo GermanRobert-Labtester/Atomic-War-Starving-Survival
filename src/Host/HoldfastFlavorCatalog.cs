@@ -32,7 +32,7 @@ namespace AtomicWar.GodotApp
             return FactionVoices.TryGetValue(factionId, out FactionVoice voice) ? voice : NeutralFactionVoice;
         }
 
-        public static HoldfastFlavorCatalog Load(string dataDirectory, ILog log = null)
+        public static HoldfastFlavorCatalog Load(string dataDirectory, ILog log = null!)
         {
             log ??= new GodotLog();
             var catalog = new HoldfastFlavorCatalog();

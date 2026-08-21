@@ -138,7 +138,7 @@ namespace Ashfall.Core.Campaign
         public DailyBriefingEntry() { }
 
         public DailyBriefingEntry(string category, string primaryId,
-            string text, int order = 0, string secondaryId = null, float numeric = 0f)
+            string text, int order = 0, string secondaryId = null!, float numeric = 0f)
         {
             Category = category ?? string.Empty;
             PrimaryId = primaryId ?? string.Empty;

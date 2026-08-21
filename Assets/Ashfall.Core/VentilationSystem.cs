@@ -75,7 +75,7 @@ namespace Ashfall.Core
         public event Action<VentilationLogEntry> OnHazardWarning;
         public event Action OnVentilationChanged;
 
-        public VentilationSystem(StartingLevelSystem startingLevel, ILog log = null)
+        public VentilationSystem(StartingLevelSystem startingLevel, ILog log = null!)
         {
             _startingLevel = startingLevel ?? throw new ArgumentNullException(nameof(startingLevel));
             _log = log ?? NullLog.Instance;

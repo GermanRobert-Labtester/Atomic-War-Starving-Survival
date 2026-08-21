@@ -411,7 +411,7 @@ namespace AtomicWar.GodotApp
             // ── Part 4: Empty States Probe ──
             var emptyPanel = new TradeScreenGodotPanel();
             AddChild(emptyPanel);
-            emptyPanel.BindSession(_economy, stanceEngine, null, radioEngine, radioRng);
+            emptyPanel.BindSession(_economy, stanceEngine, null!, radioEngine, radioRng);
             emptyPanel.SetActiveFaction("unknown_nomads");
             bool emptyStatePass = emptyPanel.ActiveOfferCount == 0 &&
                                  emptyPanel.ActiveAskCount == 0 &&

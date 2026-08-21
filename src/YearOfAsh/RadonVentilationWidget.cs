@@ -103,7 +103,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
         {
             if (_session == null) return;
             _session.Radon.OnRadonLevelChanged -= _radonChangedHandler;
-            _session = null;
+            _session = null!;
         }
 
         public override void _ExitTree()

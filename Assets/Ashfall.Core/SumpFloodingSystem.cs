@@ -66,7 +66,7 @@ namespace Ashfall.Core
             WeatherSystem weather,
             PowerGridSystem powerGrid,
             YearOfAshDeepFreezeSystem deepFreeze,
-            ILog log = null)
+            ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _weather = weather ?? throw new ArgumentNullException(nameof(weather));

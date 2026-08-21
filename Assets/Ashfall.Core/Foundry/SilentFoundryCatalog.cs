@@ -130,8 +130,8 @@ namespace Ashfall.Core.Foundry
         /// </summary>
         public static Dictionary<string, int> LoadAccordRatificationDays(
             string dataDirectory,
-            IFileIO files = null,
-            IJsonSerializer serializer = null)
+            IFileIO files = null!,
+            IJsonSerializer serializer = null!)
         {
             var ratification = new Dictionary<string, int>(StringComparer.Ordinal);
             files = files ?? new FileSystemIO();
@@ -161,8 +161,8 @@ namespace Ashfall.Core.Foundry
 
         public static FoundryProductionFile LoadProduction(
             string dataDirectory,
-            IFileIO files = null,
-            IJsonSerializer serializer = null)
+            IFileIO files = null!,
+            IJsonSerializer serializer = null!)
         {
             files = files ?? new FileSystemIO();
             serializer = serializer ?? new SystemTextJsonSerializer();
@@ -183,8 +183,8 @@ namespace Ashfall.Core.Foundry
 
         public static FoundryFactionEntry? LoadFaction(
             string dataDirectory,
-            IFileIO files = null,
-            IJsonSerializer serializer = null)
+            IFileIO files = null!,
+            IJsonSerializer serializer = null!)
         {
             files = files ?? new FileSystemIO();
             serializer = serializer ?? new SystemTextJsonSerializer();

@@ -58,7 +58,7 @@ namespace Ashfall.Core
             MedicalWardSystem medical,
             ChemicalDependencySystem dependency,
             DutyRosterSystem roster,
-            ILog log = null)
+            ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _needs = needs ?? throw new ArgumentNullException(nameof(needs));

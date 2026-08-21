@@ -19,7 +19,7 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public UtilityAiHostSession(UtilityAiSystem engine = null)
+        public UtilityAiHostSession(UtilityAiSystem engine = null!)
         {
             Engine = engine ?? new UtilityAiSystem();
             Engine.OnActionSelected += (sv, actionId, score) =>
