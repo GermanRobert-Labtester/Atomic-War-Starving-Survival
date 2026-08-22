@@ -1,112 +1,131 @@
-# ASHFALL (working title) — 2D Atomic-War Survival
+# ASHFALL: Atomic War — Starving Survival
 
-Original 2D survival-management game set after a nuclear exchange.
-Unity 6 LTS · 2D · URP · C#. Data-driven (ScriptableObjects + JSON).
-Thin MonoBehaviours; logic in plain C# systems; event bus; Utility AI (no LLM at runtime).
+Post-nuclear survival strategy RPG written in C#, currently migrating from a Unity-first implementation to a Godot 4.7.1 .NET host through an engine-agnostic shared Core.
 
-This document maps the project folders to their responsibilities.
+The project is data-driven, deterministic by design, and built around plain-C# simulation systems with thin host/UI layers. No LLM is used at runtime.
 
-## Stack & conventions
+## Source authority
 
-- **Namespace scheme:** root `AtomicWar`; the gameplay code under `Assets/_Game/`
-  uses `AtomicWar._Game.<Folder>` (e.g. `AtomicWar._Game.Radiation`). Namespaces
-  mirror folders.
-- **Ids:** snake_case everywhere (`item_clean_water`, `recipe_iodine`).
-- **State changes:** every public system raises C# events on the EventBus (for UI + save).
-- **Save/load safe:** system state is serializable primitives only.
-- **Tone:** cold, exhausted, human, restrained. No magic/fantasy, no real
-  countries/wars/people, no glorified violence.
+The most important repository rule is to modify the correct layer.
 
-## Folder map
-
-### `Assets/_Game/` — gameplay code
-
-| Folder | Namespace | Responsibility |
-| --- | --- | --- |
-| `Core/` | `AtomicWar._Game.Core` | Session lifecycle (`GameState`), the publish/subscribe `EventBus`, the `TimeSystem` clock (hours/days + tick events), and the `SaveSystem` (JSON slot persistence). |
-| `Survivors/` | `AtomicWar._Game.Survivors` | The `Survivor` runtime model, its `Needs` (hunger, thirst, fatigue, warmth, morale, health), and the `NeedsSystem` that decays/restores them and raises threshold events. |
-| `Radiation/` | `AtomicWar._Game.Radiation` | `RadiationSystem` (dose accumulation, iodine/anti-rad, chronic illness), `Contamination` (zones/items/survivors), and the personal `Dosimeter` reading. |
-| `Environment/` | `AtomicWar._Game.Environment` | `FalloutMap` (spatial dose field), `WeatherSystem` (incl. fallout storms), and `TemperatureSystem` (nuclear-winter cold → Warmth need). |
-| `Inventory/` | `AtomicWar._Game.Inventory` | `ItemType` enum, `ItemDefinition` ScriptableObject, and the runtime `Inventory` container (stacks). |
-| `Crafting/` | `AtomicWar._Game.Crafting` | `Recipe` ScriptableObject, `CraftingSystem` (validation, timers, consume/produce), and `CraftingStation` (gating + wear). |
-| `Shelter/` | `AtomicWar._Game.Shelter` | The bunker aggregate `Shelter` plus its `Shielding` (rad attenuation) and `AirFiltration` (degrading filters) sub-systems. |
-| `AI/` | `AtomicWar._Game.AI` | Utility AI: `UtilityAI` engine, `ActionScorer` (0..1 scoring), and `SurvivorAction` ScriptableObject candidates. |
-| `Events/` | `AtomicWar._Game.Events` | `GameEvent` ScriptableObject (scripted/narrative events) and `EventRunner` (weighted/scheduled selection + cooldowns). |
-| `Data/` | `AtomicWar._Game.Data` | ScriptableObject **catalogs** that hold collections and are the runtime source of truth, imported from the JSON below (items, recipes, survivors, locations, events, radio). |
-| `Editor/` | `AtomicWar._Game.Editor` | Editor-only importers/validators (`Tools/ASHFALL/...` menu) that turn JSON into ScriptableObject catalogs and check snake_case ids. |
-| `UI/` | `AtomicWar._Game.UI` | Thin MonoBehaviours over UI Toolkit: `HUD` (root binder), the widgets it binds (`NeedsBar`, `DosimeterHUD`, `EventModalUI`, `DiegeticHudController`, …), and `MainMenu/`. No game logic. |
-
-### `Assets/StreamingAssets/Data/` — authored JSON data
-
-One file per catalog, imported by `Assets/_Game/Editor/`:
-
-| File | Feeds |
+| Concern | Authority |
 | --- | --- |
-| `items.json` | `Data/ItemCatalogSO` → `Inventory/ItemDefinition` |
-| `recipes.json` | `Data/RecipeCatalogSO` → `Crafting/Recipe` |
-| `survivors.json` | `Data/SurvivorCatalogSO` → `SurvivorArchetypeSO` |
-| `locations.json` | `Data/LocationCatalogSO` → `LocationDefinitionSO` |
-| `events.json` | `Data/GameEventCatalogSO` → `Events/GameEvent` |
-| `radio.json` | `Data/RadioCatalogSO` → `RadioBroadcastSO` |
+| Engine-agnostic gameplay/simulation logic | `Assets/Ashfall.Core/` |
+| Active Godot host, composition and UI | `src/`, `scenes/`, `project.godot` |
+| Authored gameplay/content data | `Assets/StreamingAssets/Data/` |
+| Unity-coupled legacy gameplay awaiting migration | `Assets/_Game/` |
+| Unity compatibility project/build | `Assets/`, `Packages/`, `ProjectSettings/` |
+| Historical/generated/quarantined material | reference only; not runtime authority |
 
-`echoes.json` also lives here. It has no importer and no catalog yet, and no
-`GameBootstrap` field references it.
+See [`docs/ENGINE_SUPPORT_POLICY.md`](docs/ENGINE_SUPPORT_POLICY.md) for the canonical engine and migration policy and [`docs/ASHFALL_CODE_INDEX.md`](docs/ASHFALL_CODE_INDEX.md) for the detailed engineering map.
 
-**Data flow:** JSON (authored) → Editor importer → per-entry ScriptableObject →
-`Tools/ASHFALL/Generate Catalogs` → catalog asset (runtime source of truth) → systems.
+## Migration architecture
 
-### `Assets/Tests/` — automated tests
+ASHFALL uses a strangler migration rather than a Godot rewrite.
 
-| Folder | Assembly | Runs where |
-| --- | --- | --- |
-| `EditMode/` | `AtomicWar.Tests.EditMode` | Editor only — pure-C# system tests (no scene). |
-| `PlayMode/` | `AtomicWar.Tests.PlayMode` | In play mode — integration tests over frames. |
+- `Assets/_Game/` contains the large Unity-coupled implementation that is being migrated subsystem by subsystem.
+- `Assets/Ashfall.Core/` is the migration destination. It contains engine-agnostic domain logic, ports, deterministic RNG/clock infrastructure, save/checksum logic, and migrated gameplay systems.
+- `Ashfall.Core/Ashfall.Core.csproj` compiles the exact Core sources from `Assets/Ashfall.Core/` for xUnit tests.
+- `Ashfall.csproj` is the Godot .NET aggregate project. It compiles `src/`, `scripts/`, `Assets/Ashfall.Core/`, and the legacy `_Game` surface through the compatibility bridge.
+- `src/Bridge/` provides the Unity compatibility shim used to keep legacy code compilable while migration proceeds. Load-bearing semantic gaps fail loudly rather than silently returning plausible defaults.
+- `scenes/Main.tscn` boots `src/Main.cs`.
 
-Both are Unity test assemblies (`.asmdef` referencing the Test Runner, gated by
-`UNITY_INCLUDE_TESTS`). Almost all of them construct systems directly in C# and
-never load a scene, which is why the suite stayed green while the shipped player
-booted into an empty scene. `PlayMode/GameplaySceneSmokeTests.cs` is the fixture
-that loads the real scene and catches that class of failure.
+A migrated gameplay rule should have one domain authority in Core. Do not create a second Godot-only implementation of logic that already exists in `_Game` or Core.
 
-> **Note on test location:** Unity only compiles and runs scripts under
-> `Assets/` (or `Packages/`). A project-root `Tests/` folder would be silently
-> ignored and never executed by `-runTests`, so the tests live at
-> `Assets/Tests/` to remain runnable.
+## Data authority
 
-## Current state
+`Assets/StreamingAssets/Data/` is the authored JSON authority for shared gameplay/content data. Both hosts consume this data during the migration.
 
-**The simulation runs from the main menu.**
+Important conventions:
 
-- `Assets/Scenes/StartScreen.unity` is the boot scene; NEW EXPEDITION loads
-  `Assets/Scenes/Gameplay.unity`, where `GameBootstrap` initializes every
-  system, the clock advances, and needs decay.
-- Both scenes are generated or authored through `Tools/ASHFALL/` editor
-  commands. `Gameplay.unity` is built by
-  `Tools/ASHFALL/Build Gameplay Scene` and must be regenerated rather than
-  hand-edited — a hand edit survives only until the next rebuild. CI cannot
-  diff the scene to prove this (Unity renumbers every local fileID on each
-  save, so two builds of identical input differ by ~480 lines); instead the
-  builder refuses to save a scene with an unassigned reference, and CI fails
-  when that throws. Generated **data** assets *are* byte-compared.
-- Data assets come from `Assets/StreamingAssets/Data/*.json` via
-  `Tools/ASHFALL/Import All Data`, then
-  `Tools/ASHFALL/Generate Catalogs`.
-- UI is UI Toolkit (UXML/USS + `PanelSettings`). The main menu is complete;
-  the in-game HUD wires 4 of its 21 widgets — the rest are tracked in
-  `GameplaySceneBuilder.HudExpectedUnwired` and land incrementally.
-- There is no localization; all user-facing strings are inline literals.
+- IDs are `snake_case`.
+- Do not invent IDs in host code when a catalog owns them.
+- Simulation state must be deterministic for the same seed and inputs.
+- Save integrity must not depend on serializer formatting.
+- Core code must not use Unity `JsonUtility`.
+- Simulation calendar/randomness belongs behind `IClock` / `ISeededRng` rather than wall-clock or process-randomized APIs.
 
-## Verify
+## Active host
+
+The canonical development and verification host is Godot 4.7.1 .NET.
+
+`project.godot` currently boots:
+
+```text
+scenes/Main.tscn -> src/Main.cs
+```
+
+The Godot host contains interactive UI plus a large headless diagnostic/self-test surface exposed by `src/Host/HostCli.cs`.
+
+Examples:
 
 ```bash
-# Compile (opens the project, compiles all assemblies, quits)
-unity -batchmode -quit -nographics -projectPath . -logFile -
-
-# Run the tests. Note: no -quit. Combining -quit with -runTests kills the
-# editor before the run finishes, and it exits 0 with an empty result file.
-unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode \
-  -testResults "$(pwd)/em.xml" -logFile -
-unity -batchmode -nographics -projectPath . -runTests -testPlatform PlayMode \
-  -testResults "$(pwd)/pm.xml" -logFile -
+godot --headless --path . -- --data-integrity-selftest
+godot --headless --path . -- --bridge-selftest
+godot --headless --path . -- --survivors-selftest
+godot --headless --path . -- --combat-selftest
+godot --headless --path . -- --expansions-selftest
 ```
-# Atomic-War-Starving-Survival
+
+Use `godot --headless --path . -- --host-help` for the current command list.
+
+## Build and test
+
+Canonical verification is .NET + Godot:
+
+```bash
+# Engine-agnostic Core tests
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
+
+# Compile the Godot host + Core + compatibility surface
+dotnet build Ashfall.csproj
+
+# Canonical asset/data/bridge/gameplay gates
+./scripts/ci/godot-asset-gate.sh
+```
+
+The primary GitHub Actions workflow, `.github/workflows/ci.yml`, performs JSON validation, Core tests, the Godot aggregate build/import, and canonical headless gates.
+
+## Unity compatibility
+
+The Unity project remains in the repository as a migration source and compatibility build surface. It is not the canonical gameplay verification host.
+
+`.github/workflows/build.yml` can still produce Unity Windows/WebGL compatibility artifacts on `main` when Unity credentials are available. Those builds do not replace the Godot/Core quality gate.
+
+Do not invoke Unity tooling for ordinary migration work unless the task explicitly requires Unity compatibility validation.
+
+## Repository map
+
+| Path | Responsibility |
+| --- | --- |
+| `Assets/Ashfall.Core/` | Shared engine-agnostic domain logic and migration target |
+| `Ashfall.Core/` | .NET project wrapper that globs the shared Core sources |
+| `Ashfall.Core.Tests/` | xUnit tests for shared Core behavior |
+| `Assets/_Game/` | Unity-coupled legacy gameplay implementation |
+| `Assets/StreamingAssets/Data/` | Authored JSON catalogs and shared data authority |
+| `src/` | Godot host, sessions, UI, bridge, CLI/self-test harness |
+| `scenes/` | Godot scenes; `Main.tscn` is the application entry scene |
+| `scripts/ci/` | Canonical repository/Godot validation scripts |
+| `.github/workflows/ci.yml` | Primary Godot/Core CI gate |
+| `.github/workflows/build.yml` | Unity compatibility artifact workflow |
+| `docs/` | Current engineering, migration and design documentation |
+| `sources.md` | Comprehensive repository audit/risk report dated 2026-08-22 |
+
+## Engineering principles
+
+Keep changes reviewable and preserve these invariants:
+
+1. One simulation/domain authority per system.
+2. Same seed + same inputs must produce the same simulation result.
+3. Validate all action preconditions before consuming resources.
+4. Save capture/restore must be symmetric and must not alias live state.
+5. Host wiring is part of correctness; a Core feature is incomplete until the active host supplies its required ports.
+6. Persisted queues/histories must remain bounded or explicitly compacted.
+7. Semantic compatibility-bridge gaps should fail loudly.
+
+## Additional references
+
+- `docs/ENGINE_SUPPORT_POLICY.md` — authoritative engine/support/migration policy.
+- `docs/ASHFALL_CODE_INDEX.md` — detailed codebase map and subsystem reference.
+- `sources.md` — current comprehensive architecture/codebase audit.
+- `10LOOP_AUDIT_REPORT.md` — historical deep-audit ledger and regression evidence; treat reported test results as historical snapshots, not current CI status.
