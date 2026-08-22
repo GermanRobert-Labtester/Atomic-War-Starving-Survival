@@ -1,3 +1,4 @@
+using System;
 using Ashfall.Core;
 using Ashfall.Core.Shelter;
 using Xunit;
@@ -195,6 +196,33 @@ namespace Ashfall.Core.Tests
             };
             power = new PowerGridSystem(state, rooms, new SeededRng(42));
             return new ShelterScheduleSystem(power);
+        }
+
+        // Bug-15 deferred from Batch 2: brownout halves the schedule's daily
+        // lighting demand *after* the base assignment, so a brownout-shelter
+        // shows 0.25 ('day' baseline 0.5 halved) rather than 0.5.
+        [Fact] public void TickDay_Brownout_DoublesLightingDemandHalving()
+        {
+            var s = Create(out var power);
+            // Force a brownout: demand > generation, no battery reserve.
+            power.State.GenerationWatts = 50f;
+            power.State.BatteryReserveWh = 0f;
+            power.State.BatteryCapacityWh = 0f;
+
+            s.LoadCatalog(new System.Collections.Generic.List<ScheduleDefinition>
+            {
+                new ScheduleDefinition { schedule_id = "default", display_name = "Default" }
+            });
+            float before = s.State.lightingDemand;
+            s.TickDay(1);
+            float after = s.State.lightingDemand;
+
+            // Baseline demand in day phase with default definitions is 0.5.
+            // Brownout applies ×0.5. Assertuion checks the multiplied value.
+            float expectedBase = 0.5f;
+            float expectedBrownout = expectedBase * 0.5f;
+            Assert.True(Math.Abs(after - expectedBrownout) < 0.001f,
+                $"brownout lighting demand = {after}, expected {expectedBrownout}; pre={before}");
         }
     }
 }

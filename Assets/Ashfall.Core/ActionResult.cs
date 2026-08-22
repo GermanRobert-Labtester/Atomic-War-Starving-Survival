@@ -6,12 +6,15 @@ namespace Ashfall.Core
 {
     /// <summary>
     /// Deterministic event ID counter for <see cref="ActionResult"/>.
-    /// Uses a thread-safe incrementing counter seeded from ticks so IDs are
-    /// stable within a session and unique across actions.
+    /// Uses a thread-safe incrementing counter seeded at zero so IDs are
+    /// stable across sessions and reproducible when same seed => same
+    /// operation ordering. AGENTS.md Invariant 4 forbids `Environment.*`
+    /// / `DateTime.Now` seed sources here — they would break cross-host
+    /// determinism (Unity vs Godot process startup timings differ).
     /// </summary>
     internal static class ActionEventIdCounter
     {
-        private static long _counter = Environment.TickCount64 & 0x3FFFFFFF;
+        private static long _counter = 0L;
         internal static long Next() => Interlocked.Increment(ref _counter);
         internal static string NextString() => $"aev{Next():x}";
     }

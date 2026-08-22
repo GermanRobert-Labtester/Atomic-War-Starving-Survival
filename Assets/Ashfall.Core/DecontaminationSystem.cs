@@ -58,7 +58,13 @@ namespace Ashfall.Core
         public const float SafeReleaseSurfaceDelta = -0.8f;
         public const float SafeReleaseShelterDelta = -0.05f;
         public const float BypassSurfaceDelta = -0.1f;
-        public const float BypassShelterDelta = 0.1f;
+        // Bug-11: previously +0.1f (symmetric +0.1f/−0.1f transfer — shelter
+        // air gained exactly what the surface lost; audit §8 "bypass should
+        // at minimum NOT increase net shelter contamination"). By making this
+        // 0 the bypassed surface dust is NOT transferred into shelter air:
+        // the surface loses 0.1 surface contamination, shelter air stays put,
+        // and the net movement is strictly less severe in-shelter terms.
+        public const float BypassShelterDelta = 0f;
 
         private DecontaminationState _state = new DecontaminationState();
         private readonly ISeededRng _rng;

@@ -43,6 +43,14 @@ namespace AtomicWar.GodotApp
         private ContractorRosterHostSession _contractorRoster = null!;
         private MentalHealthCrisisHostSession _mentalHealthCrisis = null!;
 
+        // Batch 4 BUG-14 follow-up: a SINGLE shared duty roster passed to
+        // the eight systems above that consult the roster (apprenticeship,
+        // library study, archive desk, contractor roster, mental health).
+        // Previously each system held a fresh `new DutyRosterSystem()`, so
+        // cross-system busy checks (mentor_busy / caregiver_busy) observed
+        // an empty per-instance roster and never blocked.
+        private readonly DutyRosterSystem _expandedShelterRoster = new DutyRosterSystem();
+
         // ── Shelter Assignment (orphan wired in this batch) ──
         private ShelterAssignmentHostSession _shelterAssignment = null!;
 
@@ -166,8 +174,7 @@ namespace AtomicWar.GodotApp
             // 8. Apprenticeship
             var appState = ApprenticeshipSaveStore.TryLoad() ?? new ApprenticeshipState();
             var appSkills = new SkillProgressionSystem();
-            var appRoster = new DutyRosterSystem();
-            var appSys = new ApprenticeshipSystem(new SeededRng(1986), appSkills, appRoster, srSys, new GodotLog());
+            var appSys = new ApprenticeshipSystem(new SeededRng(1986), appSkills, _expandedShelterRoster, srSys, new GodotLog());
             appSys.RestoreState(appState);
             _apprenticeship = new ApprenticeshipHostSession(appSys);
             _apprenticeship.StateChanged += () => _apprenticeshipDirty = true;
@@ -284,10 +291,9 @@ namespace AtomicWar.GodotApp
             var lsSkills = new SkillProgressionSystem();
             var lsResearch = new ResearchSystem();
             var lsJournal = new JournalSystem();
-            var lsRoster = new DutyRosterSystem();
-            var lsSys = new LibraryStudySystem(lsSkills, lsResearch, lsJournal, lsRoster, new GodotLog());
+            var lsSys = new LibraryStudySystem(lsSkills, lsResearch, lsJournal, _expandedShelterRoster, new GodotLog());
             lsSys.RestoreState(lsState);
-            _libraryStudy = new LibraryStudyHostSession(lsSys, lsSkills, lsResearch, lsJournal, lsRoster);
+            _libraryStudy = new LibraryStudyHostSession(lsSys, lsSkills, lsResearch, lsJournal, _expandedShelterRoster);
             _libraryStudy.LoadCatalog(_dataDir);
             _libraryStudy.StateChanged += () => _libraryStudyDirty = true;
 
@@ -296,21 +302,19 @@ namespace AtomicWar.GodotApp
             var adJournal = new JournalSystem();
             var adKnowledge = new KnowledgeBase();
             var adInv = new Ashfall.Core.Inventory.Inventory();
-            var adRoster = new DutyRosterSystem();
-            var adSys = new ArchiveDeskSystem(adJournal, adKnowledge, adInv, adRoster, new GodotLog());
+            var adSys = new ArchiveDeskSystem(adJournal, adKnowledge, adInv, _expandedShelterRoster, new GodotLog());
             adSys.RestoreState(adState);
-            _archiveDesk = new ArchiveDeskHostSession(adSys, adJournal, adKnowledge, adInv, adRoster);
+            _archiveDesk = new ArchiveDeskHostSession(adSys, adJournal, adKnowledge, adInv, _expandedShelterRoster);
             _archiveDesk.LoadInkCatalog(_dataDir);
             _archiveDesk.StateChanged += () => _archiveDeskDirty = true;
 
             // 19. Contractor Roster
             var crState = ContractorRosterSaveStore.TryLoad() ?? new ContractorRosterState();
             var crInv = new Ashfall.Core.Inventory.Inventory();
-            var crRoster = new DutyRosterSystem();
             var crExpedition = new ExpeditionSystem();
-            var crSys = new ContractorRosterSystem(new SeededRng(1986), crInv, crRoster, crExpedition, new GodotLog());
+            var crSys = new ContractorRosterSystem(new SeededRng(1986), crInv, _expandedShelterRoster, crExpedition, new GodotLog());
             crSys.RestoreState(crState);
-            _contractorRoster = new ContractorRosterHostSession(crSys, crInv, crRoster, crExpedition);
+            _contractorRoster = new ContractorRosterHostSession(crSys, crInv, _expandedShelterRoster, crExpedition);
             _contractorRoster.StateChanged += () => _contractorRosterDirty = true;
 
             // 20. Mental Health Crisis
@@ -321,10 +325,9 @@ namespace AtomicWar.GodotApp
             var mhProc = new MedicalProcedureDef("proc_1", "Procedure 1", "MedicalSystem");
             var mhMedical = new MedicalWardSystem(mhWardState, new[] { mhBed }, new[] { mhProc });
             var mhDependency = new ChemicalDependencySystem();
-            var mhRoster = new DutyRosterSystem();
-            var mhSys = new MentalHealthCrisisSystem(new SeededRng(1986), mhNeeds, mhMedical, mhDependency, mhRoster, new GodotLog());
+            var mhSys = new MentalHealthCrisisSystem(new SeededRng(1986), mhNeeds, mhMedical, mhDependency, _expandedShelterRoster, new GodotLog());
             mhSys.RestoreState(mhState);
-            _mentalHealthCrisis = new MentalHealthCrisisHostSession(mhSys, mhNeeds, mhMedical, mhDependency, mhRoster);
+            _mentalHealthCrisis = new MentalHealthCrisisHostSession(mhSys, mhNeeds, mhMedical, mhDependency, _expandedShelterRoster);
             _mentalHealthCrisis.StateChanged += () => _mentalHealthCrisisDirty = true;
 
             // 21. Shelter Assignment

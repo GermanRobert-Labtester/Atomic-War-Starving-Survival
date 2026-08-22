@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Ashfall.Core;
 using Ashfall.Core.Medical;
@@ -118,6 +119,54 @@ namespace Ashfall.Core.Tests
             var m2 = Create(out _, out _, out _, out _, out _);
             m2.RestoreState(state);
             Assert.Single(m2.State.activeCases);
+        }
+
+        // Batch 4 Bug-14 follow-up regression: a *single* shared
+        // DutyRosterSystem passed to both MentalHealthCrisisSystem and
+        // ApprenticeshipSystem must surface duty-role assignments to BOTH
+        // consumers. Previously, Main.ExpandedShelterSystems.cs created
+        // a new DutyRosterSystem per system; cross-system busy checks
+        // never observed another system's assignments. Here we hold one
+        // roster instance alive, then assert both systems reject it.
+        [Fact] public void SharedRoster_BothSystems_BlockSurvivorOnDuty()
+        {
+            var sharedRoster = new DutyRosterSystem();
+            var needs = new NeedsSystem();
+            var wardState = new MedicalWardState();
+            var bed = new MedicalBed("bed_1", "Bed 1", MedicalBedCategory.Psychiatric);
+            var proc = new MedicalProcedureDef("proc_1", "P1", "M");
+            var medical = new MedicalWardSystem(wardState, new[] { bed }, new[] { proc });
+            var dependency = new ChemicalDependencySystem();
+            var relations = new SurvivorRelationsSystem(new SeededRng(42));
+
+            var mh = new MentalHealthCrisisSystem(new SeededRng(42),
+                needs, medical, dependency, sharedRoster, null!);
+            var app = new ApprenticeshipSystem(new SeededRng(42),
+                new SkillProgressionSystem(), sharedRoster, relations, null!);
+
+            // Single shared roster, single survivor on a duty.
+            sharedRoster.Unlock(0);
+            string roleKey = DutyRosterSystem.AssignmentRoles[0];
+            sharedRoster.WriteName("shared_survivor", "Shared", "medic",
+                DutyRosterSystem.ScriptPencil, 1, true);
+            Assert.True(sharedRoster.Assign(roleKey, "shared_survivor"));
+
+            // Mental Health: BeginTreatment must reject this survivor as
+            // caregiver (Bug-09 path).
+            mh.TriggerCrisis("patient_1", 70f, CrisisProfile.AcuteStress);
+            string caseId = mh.State.activeCases[0].caseId;
+            var mhResult = mh.BeginTreatment(caseId, "shared_survivor", "counseling");
+            Assert.Equal(ActionResult.StatusKind.Blocked, mhResult.Status);
+            Assert.Equal("caregiver_busy", mhResult.FailureCode);
+            Assert.Equal(CrisisStatus.Active, mh.State.activeCases[0].status);
+
+            // Apprenticeship: StartPair must reject this survivor as mentor
+            // OR apprentice (Bug-14 Core-Side path), proving the same roster
+            // instance is observed by both systems.
+            var appResult = app.StartPair("mentor_x", "shared_survivor",
+                targetSkillId: "medicine", targetXp: 100f);
+            Assert.Equal(ActionResult.StatusKind.Blocked, appResult.Status);
+            Assert.Equal("apprentice_busy", appResult.FailureCode);
         }
 
         private static MentalHealthCrisisSystem Create(out DutyRosterSystem roster, out NeedsSystem needs, out MedicalWardSystem medical, out ChemicalDependencySystem dependency, out SurvivorRelationsSystem relations)
