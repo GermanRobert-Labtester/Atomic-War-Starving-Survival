@@ -42,6 +42,27 @@ namespace Ashfall.Core.Survivors
         void SetSkillBonus(string disciplineId, float bonus);
     }
 
+    public class SimpleSkillActor : SkillActor
+    {
+        public string Id { get; }
+        public bool IsAlive { get; set; } = true;
+        public float Morale { get; set; } = 50f;
+        public float Health { get; set; } = 100f;
+        public string ExpertDisciplineId { get; set; } = string.Empty;
+        private readonly Dictionary<string, float> _bonuses = new Dictionary<string, float>(StringComparer.Ordinal);
+
+        public SimpleSkillActor(string id, string expertDisciplineId = "")
+        {
+            Id = id ?? string.Empty;
+            ExpertDisciplineId = expertDisciplineId ?? string.Empty;
+        }
+
+        public void SetSkillBonus(string disciplineId, float bonus)
+        {
+            if (!string.IsNullOrEmpty(disciplineId)) _bonuses[disciplineId] = bonus;
+        }
+    }
+
     /// <summary>
     /// Per-survivor per-discipline progression bookkeeping. Save/load safe —
     /// parallel arrays because <c>JsonUtility</c> cannot serialize
