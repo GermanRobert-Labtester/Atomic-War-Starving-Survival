@@ -44,6 +44,20 @@ namespace AtomicWar.GodotApp
             StateChanged?.Invoke();
         }
 
+        /// <summary>Load the archive_inks.json catalog into the Core system (the authority).</summary>
+        public void LoadInkCatalog(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            int count = ArchiveInkCatalogLoader.LoadAndRegister(System, dataDir, fileIO, serializer);
+            if (count > 0)
+            {
+                LastEvent = $"Ink catalog loaded: {count} inks";
+                StateChanged?.Invoke();
+            }
+        }
+
         public ActionResult QueueTranscription(string evidenceId, string archivistId, string inkId)
         {
             var res = System.QueueTranscription(evidenceId, archivistId, inkId);

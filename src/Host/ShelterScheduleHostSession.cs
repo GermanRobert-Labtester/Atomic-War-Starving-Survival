@@ -73,6 +73,20 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
+        /// <summary>Load the shelter_schedules.json catalog into the Core system (the authority).</summary>
+        public void LoadCatalog(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            int count = ShelterScheduleCatalogLoader.LoadAndRegister(System, dataDir, fileIO, serializer);
+            if (count > 0)
+            {
+                LastEvent = $"Shelter schedule catalog loaded: {count} schedules";
+                StateChanged?.Invoke();
+            }
+        }
+
         public void TickDay(int day)
         {
             System.TickDay(day);

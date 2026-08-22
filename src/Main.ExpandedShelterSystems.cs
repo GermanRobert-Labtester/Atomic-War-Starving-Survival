@@ -195,6 +195,7 @@ namespace AtomicWar.GodotApp
             var ssSys = new ShelterScheduleSystem(ssPower, new GodotLog());
             ssSys.RestoreState(ssState);
             _shelterSchedule = new ShelterScheduleHostSession(ssSys);
+            _shelterSchedule.LoadCatalog(_dataDir);
             _shelterSchedule.StateChanged += () => _shelterScheduleDirty = true;
             _shelterSchedulePanel = new ShelterSchedulePanel();
             _shelterSchedulePanel.Bind(_shelterSchedule);
@@ -215,6 +216,7 @@ namespace AtomicWar.GodotApp
             var auSys = new AutopsySystem(new SeededRng(1986), auInv, auRad, auVent, auRes, auMedical, new GodotLog());
             auSys.RestoreState(auState);
             _autopsy = new AutopsyHostSession(auSys);
+            _autopsy.LoadCatalog(_dataDir);
             _autopsy.StateChanged += () => _autopsyDirty = true;
             _autopsyReportPanel = new AutopsyReportPanel();
             _autopsyReportPanel.Bind(_autopsy);
@@ -283,6 +285,7 @@ namespace AtomicWar.GodotApp
             var lsSys = new LibraryStudySystem(lsSkills, lsResearch, lsJournal, lsRoster, new GodotLog());
             lsSys.RestoreState(lsState);
             _libraryStudy = new LibraryStudyHostSession(lsSys, lsSkills, lsResearch, lsJournal, lsRoster);
+            _libraryStudy.LoadCatalog(_dataDir);
             _libraryStudy.StateChanged += () => _libraryStudyDirty = true;
 
             // 18. Archive Desk
@@ -294,6 +297,7 @@ namespace AtomicWar.GodotApp
             var adSys = new ArchiveDeskSystem(adJournal, adKnowledge, adInv, adRoster, new GodotLog());
             adSys.RestoreState(adState);
             _archiveDesk = new ArchiveDeskHostSession(adSys, adJournal, adKnowledge, adInv, adRoster);
+            _archiveDesk.LoadInkCatalog(_dataDir);
             _archiveDesk.StateChanged += () => _archiveDeskDirty = true;
 
             // 19. Contractor Roster

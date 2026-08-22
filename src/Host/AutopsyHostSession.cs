@@ -72,6 +72,20 @@ namespace AtomicWar.GodotApp
             return res;
         }
 
+        /// <summary>Load the autopsy_procedures.json catalog into the Core system (the authority).</summary>
+        public void LoadCatalog(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            int count = AutopsyProcedureCatalogLoader.LoadAndRegister(System, dataDir, fileIO, serializer);
+            if (count > 0)
+            {
+                LastEvent = $"Autopsy procedure catalog loaded: {count} procedures";
+                StateChanged?.Invoke();
+            }
+        }
+
         public void TickDay(int day)
         {
             System.TickDay(day);

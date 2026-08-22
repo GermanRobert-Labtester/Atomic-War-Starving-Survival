@@ -45,6 +45,20 @@ namespace AtomicWar.GodotApp
             StateChanged?.Invoke();
         }
 
+        /// <summary>Load the library_manuals.json catalog into the Core system (the authority).</summary>
+        public void LoadCatalog(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            int count = LibraryManualCatalogLoader.LoadAndRegister(System, dataDir, fileIO, serializer);
+            if (count > 0)
+            {
+                LastEvent = $"Library manual catalog loaded: {count} manuals";
+                StateChanged?.Invoke();
+            }
+        }
+
         public ActionResult StartStudy(string manualId, string readerId)
         {
             var res = System.StartStudy(manualId, readerId);
