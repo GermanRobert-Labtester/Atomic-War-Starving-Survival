@@ -75,6 +75,27 @@ namespace Ashfall.Core.Tests
             Assert.Equal(70f, e2.State.items[0].condition);
         }
 
+        [Fact] public void StartMaintenance_LaterPartMissing_DoesNotConsumeEarlierPart()
+        {
+            // CR3-03 regression: StartMaintenance previously consumed the
+            // first required part before checking whether later parts were
+            // available. The fix pre-checks ALL required parts first;
+            // inventory is mutated only when every required part resolves.
+            var e = Create(out var inv, out _);
+            e.RegisterItem("tool_1", "wrench", "survivor_1", EquipmentFamily.Tool);
+            inv.AddById("part_cleaner", 5);
+            // part_grease intentionally absent.
+            int cleanerBefore = inv.CountById("part_cleaner");
+            var r = e.StartMaintenance("tool_1", "station_1", MaintenanceType.Clean,
+                new System.Collections.Generic.List<string> { "part_cleaner", "part_grease" });
+            Assert.Equal(ActionResult.StatusKind.Blocked, r.Status);
+            Assert.Equal("missing_part", r.FailureCode);
+            // Atomicity: cleaner inventory must be unchanged.
+            Assert.Equal(cleanerBefore, inv.CountById("part_cleaner"));
+            // No job was created.
+            Assert.Empty(e.State.pendingJobs);
+        }
+
         private static EquipmentConditionSystem Create(out Inventory.Inventory inv, out CraftingSystem crafting)
         {
             inv = new Inventory.Inventory();

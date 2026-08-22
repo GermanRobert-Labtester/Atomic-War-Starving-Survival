@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "collection_id": "archive_inks",
+  "inks": [
+    {
+      "ink_id": "ink_iron_gall",
+      "display_name": "Iron Gall Ink",
+      "legibility_score": 0.9,
+      "archival_longevity_days": 500,
+      "fade_rate_per_day": 0.0008,
+      "required_item_id": "charcoal",
+      "required_amount": 2
+    },
+    {
+      "ink_id": "ink_soot_lamp",
+      "display_name": "Soot Lamp Ink",
+      "legibility_score": 0.7,
+      "archival_longevity_days": 300,
+      "fade_rate_per_day": 0.0015,
+      "required_item_id": "charcoal",
+      "required_amount": 1
+    },
+    {
+      "ink_id": "ink_plant_dye",
+      "display_name": "Plant Dye Ink",
+      "legibility_score": 0.6,
+      "archival_longevity_days": 200,
+      "fade_rate_per_day": 0.002,
+      "required_item_id": "cloth",
+      "required_amount": 1
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "collection_id": "shelter_schedules",
+  "schedules": [
+    {
+      "schedule_id": "schedule_standard",
+      "display_name": "Standard Rotation",
+      "day_start_hour": 6.0,
+      "day_end_hour": 22.0,
+      "curfew_start_hour": 22.0,
+      "curfew_end_hour": 6.0,
+      "fatigue_recovery_modifier": 1.0,
+      "lighting_demand_day": 0.5,
+      "lighting_demand_night": 0.8,
+      "lighting_demand_curfew": 0.3,
+      "allow_emergency_override": true
+    },
+    {
+      "schedule_id": "schedule_night_shift",
+      "display_name": "Night Rotation",
+      "day_start_hour": 18.0,
+      "day_end_hour": 6.0,
+      "curfew_start_hour": 6.0,
+      "curfew_end_hour": 18.0,
+      "fatigue_recovery_modifier": 0.9,
+      "lighting_demand_day": 0.6,
+      "lighting_demand_night": 0.7,
+      "lighting_demand_curfew": 0.4,
+      "allow_emergency_override": true
+    },
+    {
+      "schedule_id": "schedule_curfew_locked",
+      "display_name": "Locked-Down Curfew",
+      "day_start_hour": 8.0,
+      "day_end_hour": 20.0,
+      "curfew_start_hour": 20.0,
+      "curfew_end_hour": 8.0,
+      "fatigue_recovery_modifier": 1.2,
+      "lighting_demand_day": 0.4,
+      "lighting_demand_night": 0.9,
+      "lighting_demand_curfew": 0.2,
+      "allow_emergency_override": false
+    }
+  ]
+}

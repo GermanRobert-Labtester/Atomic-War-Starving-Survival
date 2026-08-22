@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core.Journal;
 
 namespace Ashfall.Core
@@ -68,7 +69,7 @@ namespace Ashfall.Core
             KnowledgeBase knowledge,
             Inventory.Inventory inventory,
             DutyRosterSystem roster,
-            ILog log = null)
+            ILog log = null!)
         {
             _journal = journal ?? throw new ArgumentNullException(nameof(journal));
             _knowledge = knowledge ?? throw new ArgumentNullException(nameof(knowledge));
@@ -94,15 +95,21 @@ namespace Ashfall.Core
             if (!_inkCatalog.TryGetValue(inkId, out var ink))
                 return ActionResult.Failed("unknown_ink", "archive.unknown_ink");
 
-            // Reserve ink material
+            // CR3-04 atomicity: pre-check ALL gating predicates (ink availability
+            // AND roster state) BEFORE any inventory mutation. Pre-fix, ink was
+            // consumed before the roster check, leaving a busy archivist with
+            // their inventory drained and no transcription queued. Twin to
+            // CR3-02 (Kitchen) and CR3-03 (Equipment) atomicity pattern.
             if (_inventory.CountById(ink.requiredItemId) < ink.requiredAmount)
                 return ActionResult.Blocked("insufficient_ink", "archive.insufficient_ink");
 
-            _inventory.RemoveById(ink.requiredItemId, ink.requiredAmount);
-
-            // Check duty roster
-            if (_roster.GetAssignment(archivistId) != null)
+            // Bug-14 follow-on: GetAssignment takes a ROLE, not a survivorId.
+            // Use GetRoleOf so an archivist currently held on a duty shift
+            // actually triggers the busy block.
+            if (_roster.GetRoleOf(archivistId) != null)
                 return ActionResult.Blocked("busy", "archive.busy");
+
+            _inventory.RemoveById(ink.requiredItemId, ink.requiredAmount);
 
             var job = new TranscriptionJob
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core.Expeditions;
 
 namespace Ashfall.Core
@@ -72,7 +73,7 @@ namespace Ashfall.Core
             Inventory.Inventory inventory,
             DutyRosterSystem roster,
             ExpeditionSystem expedition,
-            ILog log = null)
+            ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
@@ -161,6 +162,16 @@ namespace Ashfall.Core
             {
                 if (c.status != ContractStatus.Active) continue;
 
+                // Expiry check FIRST — a contractor whose contract is ending today
+                // must not be charged for a missed daily wage on their last day.
+                if (day >= c.expiryDay && c.status == ContractStatus.Active)
+                {
+                    c.status = ContractStatus.Expired;
+                    _log.Info($"[Contractor] {c.contractorId} contract expired");
+                    OnContractorStatusChanged?.Invoke(c);
+                    continue;
+                }
+
                 // Daily hazard pay
                 var activeOffer = _state.activeOffers.Find(o => o.candidateId == c.contractorId && o.status == ContractStatus.Active);
                 if (activeOffer != null)
@@ -182,14 +193,6 @@ namespace Ashfall.Core
                         }
                     }
                 }
-
-                // Expiry check
-                if (day >= c.expiryDay && c.status == ContractStatus.Active)
-                {
-                    c.status = ContractStatus.Expired;
-                    _log.Info($"[Contractor] {c.contractorId} contract expired");
-                    OnContractorStatusChanged?.Invoke(c);
-                }
             }
 
             OnRosterChanged?.Invoke();
@@ -198,7 +201,18 @@ namespace Ashfall.Core
         public bool IsAvailableForExpedition(string contractorId)
         {
             var c = _state.contractors.Find(c => c.contractorId == contractorId);
-            return c != null && c.status == ContractStatus.Active && !c.isInjured && !c.isDeceased;
+            if (c == null || c.status != ContractStatus.Active || c.isInjured || c.isDeceased)
+                return false;
+
+            // Chain 5 (audit): a contractor already on an active expedition is
+            // not available for another. The _expedition port was injected but
+            // never consulted, so a single contractor could be sent out twice
+            // simultaneously. ExpeditionSystem.Start enforces one expedition
+            // per survivor; this guard surfaces that constraint here.
+            if (_expedition != null && _expedition.Active.ContainsKey(contractorId))
+                return false;
+
+            return true;
         }
 
         public ContractorRosterState CaptureState() => _state;
