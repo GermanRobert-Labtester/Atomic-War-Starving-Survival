@@ -578,7 +578,17 @@ namespace AtomicWar.GodotApp
             var key = @event as InputEventKey;
             if (key == null || !key.Pressed || key.Echo) return;
 
-            if (key.Keycode == Key.J)
+            if (key.Keycode == Key.F && _state == GameState.Playing)
+            {
+                OpenWeatherForecastPanel();
+                GetViewport().SetInputAsHandled();
+            }
+            else if (key.Keycode == Key.H && _state == GameState.Playing)
+            {
+                OpenWeatherHistoryPanel();
+                GetViewport().SetInputAsHandled();
+            }
+            else if (key.Keycode == Key.J)
             {
                 if (_state == GameState.Playing && _dashboard.Visible)
                     OpenPlayerPanel("journal");
