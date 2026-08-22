@@ -62,7 +62,24 @@ namespace AtomicWar.GodotApp
             // The Foundry Guild is registered with the existing stance engine
             // (no alias, no second standing system). Its trust is derived from
             // the Core consequence ledger; the ledger is the save authority.
-            GuildStanceEngine = new FactionStanceEngine();
+            GuildStanceEngine = new FactionStanceEngine
+            {
+                // GAP-STUB-03 partial wire: inventory-grounded providers that
+                // SilentFoundryHostSession can see. The remaining providers
+                // (Day, radiation, hated military, military-faction check) need
+                // Main-level state injection and remain as defaults until then.
+                PartyHasArsProvider = () => _inventory.CountByType(ItemType.AntiRad) > 0,
+                PartyIntactHazmatProvider = () =>
+                {
+                    for (int i = 0; i < _inventory.Equipped.Count; i++)
+                    {
+                        var e = _inventory.Equipped[i];
+                        if (e.Item != null && (e.Item.id == "hazmat_suit" || e.Item.id == "gas_mask"))
+                            return true;
+                    }
+                    return false;
+                }
+            };
             GuildStanceEngine.RegisterFaction(new FactionThresholds(
                 SilentFoundryIds.FactionId,
                 raidThreshold: -50f,

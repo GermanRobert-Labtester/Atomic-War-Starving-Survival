@@ -98,14 +98,21 @@ namespace AtomicWar.GodotApp
             return Math.Max(0, delta);
         }
 
-        // Phase 6.D Chain 3 (Survival Reckoning) hook surface. Real survivor
-        // dose aggregates from Ashfall.Core.Survivors are not yet exposed;
-        // this helper returns 0 and preserves the API for a future commit
-        // that adds SurvivorsHostSession.TotalSieverts. Until then, the
-        // ReckoningSystem.RecordCumulativeDose contract is exercised by
-        // VerdictChainTests and reachable from any host that does supply a
-        // value.
-        public float LivingCumulativeDoseSieverts() => 0f;
+        // Phase 6.D Chain 3 (Survival Reckoning) hook surface. Sums
+        // LifetimeDose across all living survivors from the live
+        // RadiationSystem. Replaces the previous 0f stub.
+        public float LivingCumulativeDoseSieverts()
+        {
+            if (_survivors == null || _survivors.Roster == null) return 0f;
+            float total = 0f;
+            foreach (var entry in _survivors.Roster.Roster)
+            {
+                if (!entry.isAlive) continue;
+                var dosimeter = _survivors.Radiation.GetDosimeter(entry.survivorId);
+                total += dosimeter?.LifetimeDose ?? 0f;
+            }
+            return total;
+        }
 
         /// <summary>Unlock lore_verdict_* codex beats from authoritative Verdict state
         /// (located knowledge: the ladder only opens when the machine/evidence reaches it).</summary>
