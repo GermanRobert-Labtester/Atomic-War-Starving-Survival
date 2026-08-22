@@ -302,8 +302,8 @@ None new. Bridge shim removed. Unity tree is read-only.
 | **G0** | GAP-UI-02 WeatherForecastPanel placeholder → real binding | HOST + possibly CORE | Medium | ✅ RESOLVED (`63de12d0`) |
 | **G0** | GAP-UI-03 WeatherHistoryPanel placeholder → real binding | HOST + possibly CORE | Medium | ✅ RESOLVED (`63de12d0`) |
 | **G1** | GAP-STUB-02 SomaticFlashback companion proximity | HOST | Small | ⚠️ PHASE0 LIMITATION — no room assignments in Phase0 context; mechanic dormant until MentalHealthCrisisSystem integrates SomaticFlashbackSystem or Phase0 gains rooms |
-| **G1** | GAP-STUB-03 FactionStanceEngine providers | HOST | Medium | 🔴 OPEN — 7 providers default to stubs; Silent Foundry guild unaffected (TrustInversion=false), but any TrustInversion faction produces wrong trust |
-| **G1** | GAP-STUB-01 Verdict cumulative dose | HOST + possibly CORE | Medium | 🔴 OPEN — `LivingCumulativeDoseSieverts() => 0f`; Survival Reckoning always records 0 sieverts |
+| **G1** | GAP-STUB-03 FactionStanceEngine providers | HOST | Medium | ⚠️ PARTIAL — 2 of 7 wired in SilentFoundry; 5 remain stubs; no TrustInversion factions registered so zero blast radius |
+| **G1** | GAP-STUB-01 Verdict cumulative dose | HOST + possibly CORE | Medium | ✅ RESOLVED (`d0bc0708`) — sums living survivors' LifetimeDose via RadiationSystem |
 | **G2** | GAP-TEST-01..04 Test coverage gaps | TEST | Small | 🔴 OPEN |
 | **G3** | GAP-ARCH-01 Main.cs monolith | ARCH | Large | ⚠️ ACKNOWLEDGED — functional, not a gap |
 
@@ -347,8 +347,8 @@ None new. Bridge shim removed. Unity tree is read-only.
 
 **Batch repair arc:** CLOSED. 5 batches + BUG-03 host wiring committed. 2497/2497 tests pass.
 
-**Current genuine gaps:** 2 Core stubs (GAP-STUB-01/03), 1 architectural debt (GAP-ARCH-01). GAP-STUB-02 is a Phase0-only limitation (no room assignments in that context). GAP-UI-01/02/03 are RESOLVED.
+**Current genuine gaps:** 1 Core stub (GAP-STUB-03 partial), 1 architectural debt (GAP-ARCH-01). GAP-STUB-02 is a Phase0-only limitation (no room assignments in that context). GAP-UI-01/02/03 and GAP-STUB-01 are RESOLVED.
 
-**Recommended next action:** Seal GAP-STUB-01 (Verdict dose) and GAP-STUB-03 (FactionStanceEngine providers). Both are host-side wiring with no Core changes required.
+**Recommended next action:** Complete GAP-STUB-03 by wiring the remaining 5 FactionStanceEngine providers from Main state (Day, radiation, hated military, clamp trust, military-faction check). Low urgency — no TrustInversion factions are currently registered.
 
-**What NOT to do:** Do not declare the project "repaired" or "complete." Two Core stubs and one architectural debt remain. The batch-repair arc closed its scoped bugs; the gap audit found additional items, some of which are now sealed.
+**What NOT to do:** Do not declare the project "repaired" or "complete." One Core stub is partially sealed and one architectural debt remains. The batch-repair arc closed its scoped bugs; the gap audit found additional items, most of which are now sealed.
