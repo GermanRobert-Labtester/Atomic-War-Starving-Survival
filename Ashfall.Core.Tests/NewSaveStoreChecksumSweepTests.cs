@@ -11,6 +11,7 @@
 using System;
 using Xunit;
 using Ashfall.Core;
+using Ashfall.Core.Shelter;
 
 namespace Ashfall.Core.Tests
 {
@@ -486,6 +487,71 @@ namespace Ashfall.Core.Tests
             var envelope = new MentalHealthCrisisHostSave { State = BuildState(), Checksum = null };
             string actual = SaveChecksum.Compute(envelope);
             Assert.False(string.Equals(envelope.Checksum, actual, StringComparison.Ordinal));
+        }
+    }
+
+    public class ShelterAssignmentSaveChecksumTests
+    {
+        private static ShelterAssignmentSave BuildSave() => new ShelterAssignmentSave
+        {
+            saveVersion = ShelterAssignmentSave.CurrentSaveVersion,
+            simDay = 12,
+            Rooms = new System.Collections.Generic.List<ShelterRoomSave>
+            {
+                new ShelterRoomSave { RoomId = "room_bunks", DisplayName = "Bunks", Capacity = 4 }
+            },
+            State = new ShelterAssignmentState
+            {
+                Assignments = new System.Collections.Generic.List<ShelterAssignment>
+                {
+                    new ShelterAssignment
+                    {
+                        SurvivorId = "survivor_1", RoomId = "room_bunks",
+                        WorkstationId = null, AssignedDay = 5,
+                        Status = ShelterAssignmentStatus.Active
+                    }
+                }
+            }
+        };
+
+        [Fact]
+        public void CleanRoundTrip_PreservesChecksum()
+        {
+            var json = new SystemTextJsonSerializer();
+            var save = BuildSave();
+            string raw = ShelterAssignmentSaveCodec.EncodeToString(save, json);
+            var restored = ShelterAssignmentSaveCodec.Decode(raw, json);
+            Assert.NotNull(restored);
+            Assert.Equal(save.Checksum, restored.Checksum, StringComparer.Ordinal);
+        }
+
+        [Fact]
+        public void TamperedAssignment_ChangesChecksum()
+        {
+            var json = new SystemTextJsonSerializer();
+            string before = ShelterAssignmentSaveCodec.EncodeToString(BuildSave(), json);
+
+            var tampered = BuildSave();
+            tampered.State.Assignments[0].RoomId = "room_clinic";
+            string after = ShelterAssignmentSaveCodec.EncodeToString(tampered, json);
+
+            Assert.NotEqual(before, after);
+        }
+
+        [Fact]
+        public void NullChecksumField_RejectedByDecode()
+        {
+            var json = new SystemTextJsonSerializer();
+            var save = BuildSave();
+            string raw = ShelterAssignmentSaveCodec.EncodeToString(save, json);
+
+            // Strip the checksum from the serialized payload — Decode must
+            // reject a new-format envelope whose Checksum is null/empty rather
+            // than silently treating it as legacy (the shared bypass fixed in
+            // SaveStoreChecksumSweepTests).
+            string stripped = raw.Replace(save.Checksum, string.Empty);
+            Assert.Throws<System.InvalidOperationException>(
+                () => ShelterAssignmentSaveCodec.Decode(stripped, json));
         }
     }
 }

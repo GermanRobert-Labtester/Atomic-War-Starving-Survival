@@ -43,6 +43,9 @@ namespace AtomicWar.GodotApp
         private ContractorRosterHostSession _contractorRoster = null!;
         private MentalHealthCrisisHostSession _mentalHealthCrisis = null!;
 
+        // ── Shelter Assignment (orphan wired in this batch) ──
+        private ShelterAssignmentHostSession _shelterAssignment = null!;
+
         // ── 12 UI Panels ──
         private WaterTreatmentPanel _waterTreatmentPanel = null!;
         private AirlockSecurityPanel _airlockSecurityPanel = null!;
@@ -323,6 +326,13 @@ namespace AtomicWar.GodotApp
             mhSys.RestoreState(mhState);
             _mentalHealthCrisis = new MentalHealthCrisisHostSession(mhSys, mhNeeds, mhMedical, mhDependency, mhRoster);
             _mentalHealthCrisis.StateChanged += () => _mentalHealthCrisisDirty = true;
+
+            // 21. Shelter Assignment
+            _shelterAssignment = ShelterAssignmentHostSession.CreateDefault(new SeededRng(1986));
+            if (!_shelterAssignment.TryLoad())
+            {
+                // Fresh start — the default rooms are already registered.
+            }
         }
 
         private void SaveAllExpandedShelterSystems()
@@ -426,6 +436,10 @@ namespace AtomicWar.GodotApp
             {
                 MentalHealthCrisisSaveStore.TrySave(_mentalHealthCrisis.System.CaptureState());
                 _mentalHealthCrisisDirty = false;
+            }
+            if (_shelterAssignment != null)
+            {
+                _shelterAssignment.TrySave();
             }
         }
 
