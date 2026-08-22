@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "collection_id": "autopsy_procedures",
+  "procedures": [
+    {
+      "procedure_id": "procedure_rad_pathology",
+      "display_name": "Radiation Pathology",
+      "required_tools": ["medical_scissors", "protective_rubber_gloves", "field_surgical_kit"],
+      "required_consumables": ["sterilised_bandage", "clean_water"],
+      "airborne_risk": 0.15,
+      "pathogen_risk": 0.05,
+      "procedure_hours": 4,
+      "possible_findings": ["finding_acute_rad_burn", "finding_bone_marrow_failure", "finding_organ_fibrosis"],
+      "research_unlocks": ["research_rad_pathology"]
+    },
+    {
+      "procedure_id": "procedure_toxicology",
+      "display_name": "Toxicology Screen",
+      "required_tools": ["medical_scissors", "protective_rubber_gloves"],
+      "required_consumables": ["bandage", "clean_water"],
+      "airborne_risk": 0.1,
+      "pathogen_risk": 0.08,
+      "procedure_hours": 3,
+      "possible_findings": ["finding_chemical_exposure", "finding_organ_damage"],
+      "research_unlocks": ["research_toxicology"]
+    },
+    {
+      "procedure_id": "procedure_containment_autopsy",
+      "display_name": "Containment Autopsy",
+      "required_tools": ["medical_scissors", "protective_rubber_gloves", "field_surgical_kit", "surgical_mask"],
+      "required_consumables": ["sterilised_bandage", "clean_water", "antibiotics"],
+      "airborne_risk": 0.3,
+      "pathogen_risk": 0.2,
+      "procedure_hours": 6,
+      "possible_findings": ["finding_pathogen_strain", "finding_contamination_source"],
+      "research_unlocks": ["research_containment_protocols"]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 using Ashfall.Core.Radiation;
 using Ashfall.Core.StartingLevel;
@@ -47,6 +48,18 @@ namespace Ashfall.Core
     public sealed class DecontaminationSystem
     {
         public const string SystemId = "decontamination";
+
+        // BUG-11 tunables: amount of surface contamination cleared per cycle,
+        // and the symmetric transfer-from-surface-to-shelter-air delta when a
+        // case is bypassed (positive shelter contamination) or completed
+        // (negative shelter contamination). Previously magic 0.1 / 0.05 / 0.8
+        // literals; now named so design intent is explicit and designers can
+        // tune without touching the math.
+        public const float SafeReleaseSurfaceDelta = -0.8f;
+        public const float SafeReleaseShelterDelta = -0.05f;
+        public const float BypassSurfaceDelta = -0.1f;
+        public const float BypassShelterDelta = 0.1f;
+
         private DecontaminationState _state = new DecontaminationState();
         private readonly ISeededRng _rng;
         private readonly ILog _log;
@@ -67,7 +80,7 @@ namespace Ashfall.Core
             Inventory.Inventory inventory,
             AirlockSecuritySystem airlock,
             StartingLevelSystem startingLevel,
-            ILog log = null)
+            ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _radiation = radiation ?? throw new ArgumentNullException(nameof(radiation));
@@ -82,6 +95,23 @@ namespace Ashfall.Core
             var caseId = $"decon_{_currentDay}_{survivorId}";
             if (_state.queue.Exists(c => c.caseId == caseId))
                 return ActionResult.Blocked("already_queued", "decon.already_queued");
+
+            // CR3-06: caseId changes every day, so the caseId predicate alone
+            // lets a survivor re-enqueue every new day forever, even with an
+            // unresolved case on the queue or as the active case. Lock by
+            // (survivorId + not-yet-resolved) — matches MentalHealthCrisisSystem's
+            // survivor+status pattern. Keeps the caseId check as defense-in-depth.
+            if (_state.queue.Exists(c => c.survivorId == survivorId
+                                     && c.status != DeconStatus.Complete
+                                     && c.status != DeconStatus.Bypassed
+                                     && c.status != DeconStatus.Failed))
+                return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
+            if (_state.activeCase != null
+                && _state.activeCase.survivorId == survivorId
+                && _state.activeCase.status != DeconStatus.Complete
+                && _state.activeCase.status != DeconStatus.Bypassed
+                && _state.activeCase.status != DeconStatus.Failed)
+                return ActionResult.Blocked("survivor_busy", "decon.survivor_busy");
 
             var deconCase = new DeconCase
             {
@@ -137,13 +167,13 @@ namespace Ashfall.Core
 
             if (safeRelease)
             {
-                c.surfaceContamination = Math.Max(0, c.surfaceContamination - 0.8f);
+                c.surfaceContamination = Math.Max(0, c.surfaceContamination + SafeReleaseSurfaceDelta);
                 c.status = DeconStatus.Complete;
                 c.completeDay = _currentDay;
                 c.outcome = "decontaminated";
 
-                // Reduce shelter air contamination slightly
-                _state.shelterContaminationLevel = Math.Max(0, _state.shelterContaminationLevel - 0.05f);
+                // Reduce shelter air contamination slightly (air returns to baseline).
+                _state.shelterContaminationLevel = Math.Max(0, _state.shelterContaminationLevel + SafeReleaseShelterDelta);
                 if (_state.shelterContaminationLevel == 0)
                     _state.shelterContaminated = false;
             }
@@ -152,10 +182,13 @@ namespace Ashfall.Core
                 c.status = DeconStatus.Bypassed;
                 c.bypassed = true;
                 c.outcome = "bypassed";
-                c.surfaceContamination = Math.Max(0, c.surfaceContamination - 0.1f);
+                c.surfaceContamination = Math.Max(0, c.surfaceContamination + BypassSurfaceDelta);
 
-                // Shelter contamination consequence
-                _state.shelterContaminationLevel = Math.Min(1f, _state.shelterContaminationLevel + 0.1f);
+                // Shelter contamination consequence: surface contamination NOT
+                // cleaned away is transferred to shelter air. Net shelter-level
+                // change is BypassShelterDelta + BypassSurfaceDelta (currently
+                // symmetric — see class-level constants for design notes).
+                _state.shelterContaminationLevel = Math.Min(1f, _state.shelterContaminationLevel + BypassShelterDelta);
                 _state.shelterContaminated = true;
 
                 var incident = new DeconIncident

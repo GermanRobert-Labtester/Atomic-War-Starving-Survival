@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "collection_id": "library_manuals",
+  "manuals": [
+    {
+      "manual_id": "manual_water_filtration",
+      "display_name": "Field Water Filtration",
+      "category": "technical",
+      "study_hours_required": 10,
+      "fatigue_per_hour": 0.3,
+      "morale_effect": -0.5,
+      "skill_xp_grants": ["skill_survival"],
+      "research_unlocks": ["research_water_filtration"],
+      "knowledge_unlocks": ["knowledge_water_filtration"],
+      "prerequisites": [],
+      "requires_power": true
+    },
+    {
+      "manual_id": "manual_rad_first_aid",
+      "display_name": "Radiation First Aid",
+      "category": "medical",
+      "study_hours_required": 12,
+      "fatigue_per_hour": 0.35,
+      "morale_effect": -0.4,
+      "skill_xp_grants": ["skill_medical"],
+      "research_unlocks": ["research_rad_first_aid"],
+      "knowledge_unlocks": ["knowledge_rad_first_aid"],
+      "prerequisites": [],
+      "requires_power": false
+    },
+    {
+      "manual_id": "manual_improvised_weapons",
+      "display_name": "Improvised Weapons Fabrication",
+      "category": "military",
+      "study_hours_required": 14,
+      "fatigue_per_hour": 0.4,
+      "morale_effect": -0.6,
+      "skill_xp_grants": ["skill_combat"],
+      "research_unlocks": ["research_improvised_weapons"],
+      "knowledge_unlocks": ["knowledge_improvised_weapons"],
+      "prerequisites": ["manual_water_filtration"],
+      "requires_power": false
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core.Crafting;
 
 namespace Ashfall.Core
@@ -63,7 +64,7 @@ namespace Ashfall.Core
             ISeededRng rng,
             Inventory.Inventory inventory,
             CraftingSystem crafting,
-            ILog log = null)
+            ILog log = null!)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
@@ -104,14 +105,28 @@ namespace Ashfall.Core
             var item = _state.items.Find(i => i.instanceId == instanceId);
             if (item == null) return ActionResult.Failed("unknown_item", "equip.unknown_item");
 
-            // Reserve parts atomically
-            var reserved = new List<string>();
-            foreach (var part in requiredParts)
+            // CR3-03: was a single-pass loop that called _inventory.RemoveById
+            // before checking the next iteration's CountById. Make this atomic:
+            // pre-check every required part's availability first; only consume
+            // when every required part resolves. Earlier parts are not drained
+            // when a later part is missing.
+            if (requiredParts != null)
             {
-                if (_inventory.CountById(part) < 1)
-                    return ActionResult.Blocked("missing_part", "equip.missing_part");
-                _inventory.RemoveById(part, 1);
-                reserved.Add(part);
+                foreach (var part in requiredParts)
+                {
+                    if (_inventory.CountById(part) < 1)
+                        return ActionResult.Blocked("missing_part", "equip.missing_part");
+                }
+            }
+
+            var reserved = new List<string>();
+            if (requiredParts != null)
+            {
+                foreach (var part in requiredParts)
+                {
+                    _inventory.RemoveById(part, 1);
+                    reserved.Add(part);
+                }
             }
 
             var job = new MaintenanceJob
