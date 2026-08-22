@@ -285,6 +285,27 @@ namespace Ashfall.Core.Inventory
             return true;
         }
 
+        /// <summary>
+        /// Add items by ID only, creating a minimal ItemDefinition.
+        /// Useful for systems like workshop reverse-engineering that
+        /// operate on item IDs without needing full definition metadata.
+        /// </summary>
+        public bool AddById(string itemId, int amount)
+        {
+            if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
+            var def = new ItemDefinition { id = itemId, stackMax = 99 };
+            bool result = Add(def, amount);
+            return result;
+        }
+
+        /// <summary>Check if items can be added by ID.</summary>
+        public bool CanAddById(string itemId, int amount)
+        {
+            if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
+            var def = new ItemDefinition { id = itemId, stackMax = 99 };
+            return CanAdd(def, amount);
+        }
+
         public bool Remove(ItemDefinition item, int amount)
         {
             if (item == null || amount <= 0) return false;

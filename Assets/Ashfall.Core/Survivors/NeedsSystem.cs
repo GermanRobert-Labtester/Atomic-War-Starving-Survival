@@ -97,6 +97,21 @@ namespace Ashfall.Core.Survivors
             _survivors.Remove(survivor);
         }
 
+        public SurvivorNeedsState Get(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            for (int i = 0; i < _survivors.Count; i++)
+                if (_survivors[i] != null && string.Equals(_survivors[i].Id, id, StringComparison.Ordinal))
+                    return _survivors[i];
+            return null;
+        }
+
+        public void Modify(string survivorId, NeedKind need, float delta)
+        {
+            var s = Get(survivorId);
+            if (s != null) Modify(s, need, delta);
+        }
+
         public void Tick(float gameHours)
         {
             for (int i = 0; i < _survivors.Count; i++)
