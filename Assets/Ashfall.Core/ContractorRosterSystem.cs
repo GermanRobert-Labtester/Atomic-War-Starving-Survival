@@ -201,7 +201,18 @@ namespace Ashfall.Core
         public bool IsAvailableForExpedition(string contractorId)
         {
             var c = _state.contractors.Find(c => c.contractorId == contractorId);
-            return c != null && c.status == ContractStatus.Active && !c.isInjured && !c.isDeceased;
+            if (c == null || c.status != ContractStatus.Active || c.isInjured || c.isDeceased)
+                return false;
+
+            // Chain 5 (audit): a contractor already on an active expedition is
+            // not available for another. The _expedition port was injected but
+            // never consulted, so a single contractor could be sent out twice
+            // simultaneously. ExpeditionSystem.Start enforces one expedition
+            // per survivor; this guard surfaces that constraint here.
+            if (_expedition != null && _expedition.Active.ContainsKey(contractorId))
+                return false;
+
+            return true;
         }
 
         public ContractorRosterState CaptureState() => _state;

@@ -95,6 +95,32 @@ namespace Ashfall.Core.Tests
             Assert.Single(c2.State.activeOffers);
         }
 
+        [Fact] public void IsAvailableForExpedition_FalseWhenAlreadyOnExpedition()
+        {
+            // Chain 5 (audit): a contractor already on an active expedition is
+            // not available for another. The _expedition port was injected but
+            // never consulted, so a single contractor could be sent out twice.
+            var c = Create(out var inv, out _, out var expedition);
+            inv.AddById("scrap_metal", 100);
+            c.GenerateOffer("drifter_1", "guard", new System.Collections.Generic.List<string>(), 20, 2, 10);
+            var r = c.AcceptOffer(c.State.activeOffers[0].offerId);
+            Assert.True(r.Status == ActionResult.StatusKind.Success, "FailureCode: " + r.FailureCode);
+
+            // Not yet on an expedition → available.
+            Assert.True(c.IsAvailableForExpedition("drifter_1"));
+
+            // Put the contractor on an active expedition.
+            var def = new ExpeditionDefinition
+            {
+                id = "loc_ruins", displayName = "The Ruins", distanceTicks = 4, dangerLevel = 1
+            };
+            bool started = expedition.Start(def, "drifter_1", 1);
+            Assert.True(started, "expedition should start");
+
+            // Now unavailable — already committed to a sortie.
+            Assert.False(c.IsAvailableForExpedition("drifter_1"));
+        }
+
         private static ContractorRosterSystem Create(out Inventory.Inventory inv, out DutyRosterSystem roster, out ExpeditionSystem expedition)
         {
             inv = new Inventory.Inventory();
