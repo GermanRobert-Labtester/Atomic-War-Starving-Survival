@@ -302,7 +302,7 @@ None new. Bridge shim removed. Unity tree is read-only.
 | **G0** | GAP-UI-02 WeatherForecastPanel placeholder → real binding | HOST + possibly CORE | Medium | ✅ RESOLVED (`63de12d0`) |
 | **G0** | GAP-UI-03 WeatherHistoryPanel placeholder → real binding | HOST + possibly CORE | Medium | ✅ RESOLVED (`63de12d0`) |
 | **G1** | GAP-STUB-02 SomaticFlashback companion proximity | HOST | Small | ⚠️ PHASE0 LIMITATION — no room assignments in Phase0 context; mechanic dormant until MentalHealthCrisisSystem integrates SomaticFlashbackSystem or Phase0 gains rooms |
-| **G1** | GAP-STUB-03 FactionStanceEngine providers | HOST | Medium | ⚠️ PARTIAL — 2 of 7 wired in SilentFoundry; 5 remain stubs; no TrustInversion factions registered so zero blast radius |
+| **G1** | GAP-STanceEngine providers | HOST | Medium | ✅ RESOLVED (`68ce46bf`) — all 7 providers wired from Main state |
 | **G1** | GAP-STUB-01 Verdict cumulative dose | HOST + possibly CORE | Medium | ✅ RESOLVED (`d0bc0708`) — sums living survivors' LifetimeDose via RadiationSystem |
 | **G2** | GAP-TEST-01..04 Test coverage gaps | TEST | Small | 🔴 OPEN |
 | **G3** | GAP-ARCH-01 Main.cs monolith | ARCH | Large | ⚠️ ACKNOWLEDGED — functional, not a gap |
