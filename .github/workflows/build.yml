@@ -1,10 +1,10 @@
-# Release-style multi-platform build. Unity version pinned to match ProjectVersion.txt.
+# Unity compatibility artifact build. Unity version pinned to ProjectVersion.txt.
 #
-# Deliberately does NOT run tests. ci.yml is the gate (data validation → EditMode →
-# PlayMode → Linux build) and fires on the same push/PR events, so an EditMode job
-# here was a second identical Unity run on every pull request: double the CI minutes
-# and two red checks for one failure. Post-merge platform builds only.
-name: Build ASHFALL
+# Canonical gameplay verification lives in ci.yml and uses Core + Godot/.NET.
+# This workflow deliberately does not duplicate that test battery; it only checks
+# that the retained Unity compatibility surface can still produce platform artifacts.
+# See docs/ENGINE_SUPPORT_POLICY.md.
+name: Build ASHFALL (Unity Compatibility)
 
 on:
   push:
@@ -19,8 +19,8 @@ env:
 
 jobs:
   build-windows:
-    if: ${{ env.UNITY_LICENSE != '' }}
-    name: Build Windows
+    if: ${{ env.UNITY_LICENSE != '' && env.UNITY_EMAIL != '' && env.UNITY_PASSWORD != '' }}
+    name: Build Windows Compatibility Artifact
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -43,11 +43,12 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: build-Windows
+          name: unity-compat-Windows
           path: builds/StandaloneWindows64
 
   build-webgl:
-    name: Build WebGL
+    if: ${{ env.UNITY_LICENSE != '' && env.UNITY_EMAIL != '' && env.UNITY_PASSWORD != '' }}
+    name: Build WebGL Compatibility Artifact
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -70,5 +71,5 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: build-WebGL
+          name: unity-compat-WebGL
           path: builds/WebGL
