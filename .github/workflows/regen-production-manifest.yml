@@ -1,0 +1,39 @@
+name: Regenerate production art manifest (temporary)
+
+on:
+  push:
+    branches: [maintenance/authority-ci-policy]
+    paths:
+      - '.github/workflows/regen-production-manifest.yml'
+      - 'tools/production_manifest.py'
+      - 'docs/visual/WIRING_MATRIX.json'
+      - 'assets/art/**'
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: maintenance/authority-ci-policy
+
+      - name: Run canonical production manifest generator
+        run: python3 tools/production_manifest.py
+
+      - name: Commit regenerated manifest when changed
+        shell: bash
+        run: |
+          if git diff --quiet -- docs/visual/PRODUCTION_ART_GENERATION_MANIFEST.json; then
+            echo "Production manifest is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/visual/PRODUCTION_ART_GENERATION_MANIFEST.json
+          git commit -m "chore(art): regenerate production manifest"
+          git push origin HEAD:maintenance/authority-ci-policy
