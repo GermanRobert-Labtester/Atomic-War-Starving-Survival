@@ -8,6 +8,7 @@ using Ashfall.Core.Foundry;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Narrative;
+using Ashfall.Core.Survivors;
 using InventoryContainer = Ashfall.Core.Inventory.Inventory;
 
 namespace AtomicWar.GodotApp
@@ -181,6 +182,57 @@ namespace AtomicWar.GodotApp
         public void SyncGuildStanding()
         {
             GuildStanceEngine.SetTrust(SilentFoundryIds.FactionId, Engine.GuildStanding);
+        }
+
+        /// <summary>
+        /// Wire the remaining FactionStanceEngine providers from Main state
+        /// (day, radiation, hated-military check). Called once after construction
+        /// from Main.Economy.SetupEconomy().
+        /// </summary>
+        public void BindStanceProviders(int day, float radiation, SurvivorsHostSession survivors)
+        {
+            GuildStanceEngine.DayProvider = () => day;
+            GuildStanceEngine.PartyRadiationProvider = () => radiation;
+            GuildStanceEngine.HasHatedMilitarySurvivor = () => HasMilitarySurvivor(survivors);
+            GuildStanceEngine.ClampTrustProvider = v => Math.Clamp(v, -100f, 100f);
+            GuildStanceEngine.IsMilitaryFaction = id => IsMilitaryFaction(id);
+        }
+
+        private static bool IsMilitaryFaction(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return false;
+            // Known military faction IDs from data authority (characters.json,
+            // faction_radio_corpus.json). Extend as new military factions are
+            // added to the catalogs.
+            return factionId == "military_remnants"
+                || factionId.StartsWith("military_", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool HasMilitarySurvivor(SurvivorsHostSession survivors)
+        {
+            if (survivors?.Roster == null) return false;
+            foreach (var entry in survivors.Roster.Roster)
+            {
+                if (!entry.isAlive) continue;
+                var def = survivors.Roster.FindDefinition(entry.definitionId);
+                if (def == null) continue;
+                if (IsMilitaryProfession(def.profession)) return true;
+            }
+            return false;
+        }
+
+        private static bool IsMilitaryProfession(string profession)
+        {
+            if (string.IsNullOrEmpty(profession)) return false;
+            var lower = profession.ToLowerInvariant();
+            return lower.Contains("military")
+                || lower.Contains("garrison")
+                || lower.Contains("soldier")
+                || lower.Contains("enforcer")
+                || lower.Contains("martial")
+                || lower.Contains("army")
+                || lower.Contains("navy")
+                || lower.Contains("commander");
         }
 
         /// <summary>
