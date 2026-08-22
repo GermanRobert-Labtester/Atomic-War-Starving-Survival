@@ -18,7 +18,8 @@ namespace AtomicWar.GodotApp
 
         public event Action? StateChanged;
 
-        public ShelterThermalHostSession(ShelterThermalSystem system)
+        public ShelterThermalHostSession(ShelterThermalSystem? system = null,
+            Ashfall.Core.Shelter.ShelterAssignmentSystem? assignment = null)
         {
             if (system == null)
             {
@@ -26,7 +27,8 @@ namespace AtomicWar.GodotApp
                 var needs = new NeedsSystem();
                 var starting = new StartingLevelSystem();
                 var deepFreeze = new YearOfAshDeepFreezeSystem(new YearOfAshDeepFreezeState());
-                system = new ShelterThermalSystem(rng, needs, starting, deepFreeze, new GodotLog());
+                system = new ShelterThermalSystem(rng, needs, starting, deepFreeze,
+                    new GodotLog(), assignment);
             }
             System = system;
 
@@ -67,6 +69,11 @@ namespace AtomicWar.GodotApp
         {
             System.TickDay(day);
             StateChanged?.Invoke();
+        }
+
+        public void SetAssignments(Ashfall.Core.Shelter.ShelterAssignmentSystem? assignment)
+        {
+            System.SetAssignments(assignment);
         }
     }
 }

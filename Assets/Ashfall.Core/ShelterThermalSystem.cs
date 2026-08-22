@@ -97,12 +97,17 @@ namespace Ashfall.Core
         private readonly NeedsSystem _needs;
         private readonly StartingLevelSystem _startingLevel;
         private readonly YearOfAshDeepFreezeSystem _deepFreeze;
-        private readonly ShelterAssignmentSystem? _assignments;
+        private ShelterAssignmentSystem? _assignments;
         private int _currentDay;
 
         public ShelterThermalState State => _state;
         public event Action<ThermalIncident> OnIncident;
         public event Action OnThermalChanged;
+
+        public void SetAssignments(ShelterAssignmentSystem? assignments)
+        {
+            _assignments = assignments;
+        }
 
         public ShelterThermalSystem(
             ISeededRng rng,

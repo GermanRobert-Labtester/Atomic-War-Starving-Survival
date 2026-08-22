@@ -336,6 +336,11 @@ namespace AtomicWar.GodotApp
             {
                 // Fresh start — the default rooms are already registered.
             }
+
+            // BUG-03 host wiring: pass the assignment system into ShelterThermal
+            // so room warmth propagates into NeedsSystem.Warmth for in-room
+            // survivors at runtime (Core seam was added in Batch 5).
+            _shelterThermal.SetAssignments(_shelterAssignment.System);
         }
 
         private void SaveAllExpandedShelterSystems()
