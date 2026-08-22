@@ -19,9 +19,9 @@ Active Godot 4.7+ host. Legacy Unity tree (`Assets/_Game/`) treated as read-only
 
 ## 3. Executive Summary
 
-Batch 1–5 + BUG-03 host wiring closed 14 audit-bug items. The current branch is **not** fully implemented. Three UI panels are hardcoded placeholders that show fiction text instead of live Core state. Three Core APIs return degenerate stub values in production. One architectural debt is acknowledged but unfinished.
+Batch 1–5 + BUG-03 host wiring closed 14 audit-bug items. Three UI placeholders (JournalPanel, WeatherForecastPanel, WeatherHistoryPanel) have been sealed with live Core data binding. Three Core APIs still return degenerate stub values in production. One architectural debt is acknowledged but unfinished.
 
-**Verdict: do not declare this repaired.** The batch-repair arc closed specific numbered bugs from the 10-loop audit. That audit is itself stale (written during Batch 3, 1000+ commits ago). This gap audit replaces it.
+**Verdict: do not declare this repaired.** The batch-repair arc closed specific numbered bugs. Three UI placeholders are now resolved. Three Core stubs remain. One architectural debt remains. This gap audit is the source of truth.
 
 ## 4. Completion Chain Model
 
@@ -40,7 +40,7 @@ None new. All numbered bugs from the 10-loop audit (§17 priority list) have bee
 **Category:** UI GAP / PLACEHOLDER  
 **Severity:** HIGH  
 **Confidence:** HIGH  
-**Status:** PARTIAL — Core complete, UI incomplete  
+**Status:** RESOLVED  
 **Active Runtime:** YES (panel is visible and renders)  
 **Expected chain:** `JournalSystem → JournalHostSession → JournalPanel.Bind → player sees real entries`  
 **Broken link:** `JournalPanel.Bind(object)` is a no-op; real `JournalHostSession` binding is commented out  
@@ -67,7 +67,7 @@ None new. All numbered bugs from the 10-loop audit (§17 priority list) have bee
 **Category:** UI GAP / PLACEHOLDER  
 **Severity:** HIGH  
 **Confidence:** HIGH  
-**Status:** PARTIAL — Core exists, UI incomplete  
+**Status:** RESOLVED  
 **Active Runtime:** YES  
 **Expected chain:** `WeatherSystem → WeatherForecastHostSession → WeatherForecastPanel.Bind → player sees real forecast`  
 **Broken link:** `Bind(object)` accepts anything; `RefreshView()` renders 4 hardcoded string arrays  
@@ -92,8 +92,8 @@ None new. All numbered bugs from the 10-loop audit (§17 priority list) have bee
 **Category:** UI GAP / PLACEHOLDER  
 **Severity:** MEDIUM  
 **Confidence:** HIGH  
-**Status:** PARTIAL — Core exists, UI incomplete  
-**Active Runtime:** YES  
+**Status:** RESOLVED  
+**Active Runtime:** YES (openable via `H` key)  
 **Expected chain:** `WeatherSystem history → WeatherHistoryHostSession → WeatherHistoryPanel.Bind → player sees real history`  
 **Broken link:** Same pattern as GAP-UI-02  
 **Observed behavior:** Player sees 5 hardcoded history periods, 6 hardcoded patterns, 5 hardcoded anomalies  
@@ -296,16 +296,16 @@ None new. Bridge shim removed. Unity tree is read-only.
 
 ## 23. Ranked Gap-Sealing Backlog
 
-| Priority | Gap | Sealing class | Effort estimate |
-|---|---|---|---|
-| **G0** | GAP-UI-01 JournalPanel placeholder → real binding | HOST | Medium — wire `JournalSystem`/`JournalHostSession` into `Bind`; replace placeholder arrays with live data consumers |
-| **G0** | GAP-UI-02 WeatherForecastPanel placeholder → real binding | HOST + possibly CORE | Medium — create `WeatherForecastHostSession` or expose forecast API from `WeatherSystem` |
-| **G0** | GAP-UI-03 WeatherHistoryPanel placeholder → real binding | HOST + possibly CORE | Medium — same pattern as GAP-UI-02 |
-| **G1** | GAP-STUB-02 SomaticFlashback companion proximity | HOST | Small — wire `_shelterAssignment.System.GetAssignmentsForRoom` into `IsCompanionInSameRoom` lambda |
-| **G1** | GAP-STUB-03 FactionStanceEngine providers | HOST | Medium — wire 7 providers from Main state; verify each source exists |
-| **G1** | GAP-STUB-01 Verdict cumulative dose | HOST + possibly CORE | Medium — expose survivor dose aggregate; wire into `LivingCumulativeDoseSieverts` |
-| **G2** | GAP-TEST-01..04 Test coverage gaps | TEST | Small — add 4 regression tests |
-| **G3** | GAP-ARCH-01 Main.cs monolith | ARCH | Large — requires phased partial-class split |
+| Priority | Gap | Sealing class | Effort estimate | Status |
+|---|---|---|---|---|
+| **G0** | GAP-UI-01 JournalPanel placeholder → real binding | HOST | Medium | ✅ RESOLVED (`63de12d0`) |
+| **G0** | GAP-UI-02 WeatherForecastPanel placeholder → real binding | HOST + possibly CORE | Medium | ✅ RESOLVED (`63de12d0`) |
+| **G0** | GAP-UI-03 WeatherHistoryPanel placeholder → real binding | HOST + possibly CORE | Medium | ✅ RESOLVED (`63de12d0`) |
+| **G1** | GAP-STUB-02 SomaticFlashback companion proximity | HOST | Small | ⚠️ PHASE0 LIMITATION — no room assignments in Phase0 context; mechanic dormant until MentalHealthCrisisSystem integrates SomaticFlashbackSystem or Phase0 gains rooms |
+| **G1** | GAP-STUB-03 FactionStanceEngine providers | HOST | Medium | 🔴 OPEN — 7 providers default to stubs; Silent Foundry guild unaffected (TrustInversion=false), but any TrustInversion faction produces wrong trust |
+| **G1** | GAP-STUB-01 Verdict cumulative dose | HOST + possibly CORE | Medium | 🔴 OPEN — `LivingCumulativeDoseSieverts() => 0f`; Survival Reckoning always records 0 sieverts |
+| **G2** | GAP-TEST-01..04 Test coverage gaps | TEST | Small | 🔴 OPEN |
+| **G3** | GAP-ARCH-01 Main.cs monolith | ARCH | Large | ⚠️ ACKNOWLEDGED — functional, not a gap |
 
 ## 24. Evidence Index
 
@@ -347,8 +347,8 @@ None new. Bridge shim removed. Unity tree is read-only.
 
 **Batch repair arc:** CLOSED. 5 batches + BUG-03 host wiring committed. 2497/2497 tests pass.
 
-**Current genuine gaps:** 3 UI placeholders (GAP-UI-01/02/03), 3 Core stubs (GAP-STUB-01/02/03), 1 architectural debt (GAP-ARCH-01).
+**Current genuine gaps:** 2 Core stubs (GAP-STUB-01/03), 1 architectural debt (GAP-ARCH-01). GAP-STUB-02 is a Phase0-only limitation (no room assignments in that context). GAP-UI-01/02/03 are RESOLVED.
 
-**Recommended next action:** Seal G0 gaps (UI placeholders) in a new pinned batch. GAP-STUB-02 (companion proximity) is a single host-side lambda and could be sealed in the same batch as a warm-up.
+**Recommended next action:** Seal GAP-STUB-01 (Verdict dose) and GAP-STUB-03 (FactionStanceEngine providers). Both are host-side wiring with no Core changes required.
 
-**What NOT to do:** Do not declare the project "repaired" or "complete." The batch-repair arc closed specific numbered bugs. This audit found 6 new genuine gaps that were not in the original 10-loop scope.
+**What NOT to do:** Do not declare the project "repaired" or "complete." Two Core stubs and one architectural debt remain. The batch-repair arc closed its scoped bugs; the gap audit found additional items, some of which are now sealed.
