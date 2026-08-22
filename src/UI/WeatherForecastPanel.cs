@@ -1,208 +1,234 @@
 using System;
-#pragma warning disable CS8618
 using Godot;
+using Ashfall.Core;
+using Ashfall.Core.World;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using DesignTheme = Ashfall.Core.UI.Theme;
 
-namespace AtomicWar.GodotApp.UI
+namespace AtomicWar.GodotApp.UI;
+
+/// <summary>
+/// ASHFALL — Weather Forecast panel (wired).
+/// Shows real 7-day forecast from WeatherSystem.PeekForecast().
+/// Replaces hardcoded placeholder strings with live data binding.
+/// </summary>
+public partial class WeatherForecastPanel : Control
 {
-    /// <summary>
-    /// ASHFALL — Weather Forecast panel.
-    /// Shows detailed 7-day weather forecast with temperature trends, precipitation, and wind patterns.
-    /// </summary>
-    public partial class WeatherForecastPanel : Control
+    public event Action? OnClose;
+
+    private WeatherSystem? _weather;
+
+    private VBoxContainer _forecastData = null!;
+    private VBoxContainer _temperatureTrend = null!;
+    private VBoxContainer _precipitationData = null!;
+    private VBoxContainer _windForecast = null!;
+
+    public void Bind(WeatherSystem weather)
     {
-        public event Action? OnClose;
+        if (_weather != null)
+            _weather.OnWeatherChanged -= _ => RefreshView();
 
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblForecastTitle;
-        private VBoxContainer _forecastData;
-        private Label _lblTemperatureTitle;
-        private VBoxContainer _temperatureTrend;
-        private Label _lblPrecipitationTitle;
-        private VBoxContainer _precipitationData;
-        private Label _lblWindTitle;
-        private VBoxContainer _windForecast;
+        _weather = weather;
 
-        private readonly string[] _placeholderForecast = {
-            "[Day 26] Clear, -8°C, low wind, radiation dropping",
-            "[Day 27] Overcast, -6°C, wind increasing to 20 km/h",
-            "[Day 28] Dust storm, -4°C, visibility <100m, rad spike",
-            "[Day 29] Clearing, -7°C, wind calming, radiation falling",
-            "[Day 30] Clear, -10°C, low wind, radiation normal",
-            "[Day 31] Sunny, -12°C, calm conditions, optimal visibility",
-            "[Day 32] Clear, -9°C, light breeze, radiation stable"
-        };
+        if (_weather != null)
+            _weather.OnWeatherChanged += _ => RefreshView();
 
-        private readonly string[] _placeholderTemperature = {
-            "Day 26: -8°C (Clear)",
-            "Day 27: -6°C (Overcast)",
-            "Day 28: -4°C (Storm)",
-            "Day 29: -7°C (Clearing)",
-            "Day 30: -10°C (Clear)",
-            "Day 31: -12°C (Sunny)",
-            "Day 32: -9°C (Clear)",
-            "Trend: Cooling trend, nuclear winter persisting"
-        };
+        RefreshView();
+    }
 
-        private readonly string[] _placeholderPrecipitation = {
-            "Day 26: None (Clear)",
-            "Day 27: Light snow expected",
-            "Day 28: Heavy dust storm",
-            "Day 29: Light snow clearing",
-            "Day 30: None (Clear)",
-            "Day 31: None (Sunny)",
-            "Day 32: Light snow possible",
-            "Total precipitation: Low (Nuclear winter conditions)"
-        };
+    public void RefreshView()
+    {
+        if (_weather == null || _forecastData == null) return;
 
-        private readonly string[] _placeholderWind = {
-            "Day 26: 10 km/h West",
-            "Day 27: 20 km/h West (Increasing)",
-            "Day 28: 30 km/h NW (Storm)",
-            "Day 29: 15 km/h NW (Calming)",
-            "Day 30: 8 km/h West (Calm)",
-            "Day 31: 5 km/h West (Calm)",
-            "Day 32: 10 km/h West (Light breeze)",
-            "Pattern: Western flow, storm cycle Day 27-29"
-        };
+        AshfallUiHelpers.EmptyChildren(_forecastData);
+        AshfallUiHelpers.EmptyChildren(_temperatureTrend);
+        AshfallUiHelpers.EmptyChildren(_precipitationData);
+        AshfallUiHelpers.EmptyChildren(_windForecast);
 
-        public void Bind(object weatherForecast)
+        var forecast = _weather.PeekForecast(7);
+        if (forecast.Count == 0)
         {
-            RefreshView();
+            AddEmptyHint(_forecastData, "No forecast data available.");
+            return;
         }
 
-        public void RefreshView()
+        foreach (var f in forecast)
         {
-            if (_forecastData == null || _temperatureTrend == null || _precipitationData == null || _windForecast == null) return;
-
-            AshfallUiHelpers.EmptyChildren(_forecastData);
-            AshfallUiHelpers.EmptyChildren(_temperatureTrend);
-            AshfallUiHelpers.EmptyChildren(_precipitationData);
-            AshfallUiHelpers.EmptyChildren(_windForecast);
-
-            foreach (string forecast in _placeholderForecast)
-            {
-                var label = new Label { Text = forecast };
-                label.CustomMinimumSize = new Vector2(350, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
-                _forecastData.AddChild(label);
-            }
-
-            foreach (string temp in _placeholderTemperature)
-            {
-                var label = new Label { Text = temp };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _temperatureTrend.AddChild(label);
-            }
-
-            foreach (string precip in _placeholderPrecipitation)
-            {
-                var label = new Label { Text = precip };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _precipitationData.AddChild(label);
-            }
-
-            foreach (string wind in _placeholderWind)
-            {
-                var label = new Label { Text = wind };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _windForecast.AddChild(label);
-            }
+            AddForecastRow(_forecastData, f);
+            AddTemperatureRow(_temperatureTrend, f);
+            AddPrecipRow(_precipitationData, f);
+            AddWindRow(_windForecast, f);
         }
+    }
 
-        public override void _Ready()
+    private void AddForecastRow(VBoxContainer container, WeatherForecastEntry f)
+    {
+        var when = f.Day > 0 ? $"Day {f.Day}" : "Today";
+        var rad = f.OutdoorRad > 0f ? $", RAD +{f.OutdoorRad:0}" : "";
+        var vis = f.Visibility is < 1f and > 0f ? $", VIS {f.Visibility:P0}" : "";
+        var text = $"{when}: {f.Kind}{rad}{vis}";
+
+        var label = new Label { Text = text };
+        label.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+        label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
+        label.CustomMinimumSize = new Vector2(350, 30);
+        label.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        container.AddChild(label);
+    }
+
+    private void AddTemperatureRow(VBoxContainer container, WeatherForecastEntry f)
+    {
+        // Temperature is implicit in weather kind; show the kind with hazard flag.
+        string tempNote = f.Kind switch
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
-            Visible = false;
+            Ashfall.Core.WeatherKind.Blizzard => "−15 °C wind chill",
+            Ashfall.Core.WeatherKind.FalloutStorm => "−5 °C wind chill",
+            Ashfall.Core.WeatherKind.BlackRain => "−8 °C wind chill",
+            _ => "Baseline winter temperature"
+        };
 
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
+        var when = f.Day > 0 ? $"Day {f.Day}" : "Today";
+        var text = $"{when}: {f.Kind} ({tempNote})";
 
-            var container = new CenterContainer();
-            container.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(container);
+        var label = new Label { Text = text };
+        label.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+        label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
+        label.CustomMinimumSize = new Vector2(350, 30);
+        label.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        container.AddChild(label);
+    }
 
-            var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
-            container.AddChild(vbox);
-
-            var title = AshfallUiHelpers.MakeTitle("WEATHER FORECAST", Ashfall.Core.UI.Theme.FontSizeH1);
-            title.HorizontalAlignment = HorizontalAlignment.Center;
-            vbox.AddChild(title);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblForecastTitle = AshfallUiHelpers.MakeSectionHeader("7-DAY FORECAST");
-            vbox.AddChild(_lblForecastTitle);
-
-            _forecastData = new VBoxContainer();
-            _forecastData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _forecastData.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_forecastData);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblTemperatureTitle = AshfallUiHelpers.MakeSectionHeader("TEMPERATURE TREND");
-            vbox.AddChild(_lblTemperatureTitle);
-
-            _temperatureTrend = new VBoxContainer();
-            _temperatureTrend.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _temperatureTrend.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_temperatureTrend);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblPrecipitationTitle = AshfallUiHelpers.MakeSectionHeader("PRECIPITATION");
-            vbox.AddChild(_lblPrecipitationTitle);
-
-            _precipitationData = new VBoxContainer();
-            _precipitationData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _precipitationData.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_precipitationData);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblWindTitle = AshfallUiHelpers.MakeSectionHeader("WIND FORECAST");
-            vbox.AddChild(_lblWindTitle);
-
-            _windForecast = new VBoxContainer();
-            _windForecast.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _windForecast.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_windForecast);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
-            vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
-        }
-
-        public void Open()
+    private void AddPrecipRow(VBoxContainer container, WeatherForecastEntry f)
+    {
+        string precip = f.Kind switch
         {
-            Visible = true;
-            QueueRedraw();
-        }
+            Ashfall.Core.WeatherKind.Rain => "Light rain",
+            Ashfall.Core.WeatherKind.Ashfall => "Ashfall (radioactive dust)",
+            Ashfall.Core.WeatherKind.FalloutStorm => "Heavy fallout storm",
+            Ashfall.Core.WeatherKind.BlackRain => "Black rain (highly radioactive)",
+            Ashfall.Core.WeatherKind.Blizzard => "Blizzard (snow + wind)",
+            _ => "None"
+        };
 
-        public override void _UnhandledInput(InputEvent @event)
+        var when = f.Day > 0 ? $"Day {f.Day}" : "Today";
+        var text = $"{when}: {precip}";
+
+        var label = new Label { Text = text };
+        label.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+        label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
+        label.CustomMinimumSize = new Vector2(350, 30);
+        label.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        container.AddChild(label);
+    }
+
+    private void AddWindRow(VBoxContainer container, WeatherForecastEntry f)
+    {
+        string wind = f.Kind switch
         {
-            if (!Visible) return;
-            if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
-            {
-                OnClose?.Invoke();
-                GetViewport().SetInputAsHandled();
-            }
+            Ashfall.Core.WeatherKind.Blizzard => "High (storm-force)",
+            Ashfall.Core.WeatherKind.FalloutStorm => "Gale (20–40 km/h)",
+            Ashfall.Core.WeatherKind.BlackRain => "Heavy (30+ km/h)",
+            Ashfall.Core.WeatherKind.Ashfall => "Moderate (15–25 km/h)",
+            _ => "Light (< 10 km/h)"
+        };
+
+        var vis = f.Visibility is < 1f and > 0f ? $", visibility {f.Visibility:P0}" : "";
+        var when = f.Day > 0 ? $"Day {f.Day}" : "Today";
+        var text = $"{when}: {wind}{vis}";
+
+        var label = new Label { Text = text };
+        label.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+        label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
+        label.CustomMinimumSize = new Vector2(350, 30);
+        label.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        container.AddChild(label);
+    }
+
+    private static void AddEmptyHint(VBoxContainer container, string hint)
+    {
+        var lbl = new Label { Text = hint };
+        lbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
+        lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Muted));
+        lbl.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        container.AddChild(lbl);
+    }
+
+    public override void _Ready()
+    {
+        SetAnchorsPreset(LayoutPreset.FullRect);
+        Visible = false;
+
+        var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
+        bg.SetAnchorsPreset(LayoutPreset.FullRect);
+        AddChild(bg);
+
+        var container = new CenterContainer();
+        container.SetAnchorsPreset(LayoutPreset.FullRect);
+        AddChild(container);
+
+        var vbox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingLg);
+        vbox.CustomMinimumSize = new Vector2(550, 0);
+        container.AddChild(vbox);
+
+        var title = AshfallUiHelpers.MakeTitle("WEATHER FORECAST", DesignTheme.FontSizeH1);
+        title.HorizontalAlignment = HorizontalAlignment.Center;
+        vbox.AddChild(title);
+
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        _forecastData = new VBoxContainer();
+        _forecastData.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _forecastData.CustomMinimumSize = new Vector2(400, 0);
+        vbox.AddChild(_forecastData);
+
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        _temperatureTrend = new VBoxContainer();
+        _temperatureTrend.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _temperatureTrend.CustomMinimumSize = new Vector2(400, 0);
+        vbox.AddChild(_temperatureTrend);
+
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        _precipitationData = new VBoxContainer();
+        _precipitationData.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _precipitationData.CustomMinimumSize = new Vector2(400, 0);
+        vbox.AddChild(_precipitationData);
+
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        _windForecast = new VBoxContainer();
+        _windForecast.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _windForecast.CustomMinimumSize = new Vector2(400, 0);
+        vbox.AddChild(_windForecast);
+
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
+        btnClose.CustomMinimumSize = new Vector2(200, 40);
+        vbox.AddChild(btnClose);
+
+        var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
+        hint.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
+        hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Dim));
+        vbox.AddChild(hint);
+    }
+
+    public void Open()
+    {
+        Visible = true;
+        RefreshView();
+        QueueRedraw();
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (!Visible) return;
+        if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
+        {
+            OnClose?.Invoke();
+            GetViewport().SetInputAsHandled();
         }
     }
 }

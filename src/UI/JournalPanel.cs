@@ -1,250 +1,399 @@
 using System;
-#pragma warning disable CS8618
+using System.Linq;
 using Godot;
+using Ashfall.Core.IO;
+using Ashfall.Core.Journal;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
-using Ashfall.Core.IO;
-namespace AtomicWar.GodotApp.UI
+namespace AtomicWar.GodotApp.UI;
+
+/// <summary>
+/// ASHFALL — Journal panel (wired).
+/// Shows real journal entries, discovered items, survivors met, locations
+/// visited, and narrative events from the live JournalSystem. Replaces the
+/// previous hardcoded placeholder strings with live data binding.
+/// </summary>
+public partial class JournalPanel : Control
 {
-    /// <summary>
-    /// ASHFALL — Journal panel.
-    /// Shows day logs, personal notes, narrative progression, and story entries.
-    /// Wrapped in the ASHFALL Dashboard Shell so a sidebar lets the user jump
-    /// between Day Logs / Personal Notes / Story Progression sections. The
-    /// shell preserves the existing modal-style chrome (warm amber, dim
-    /// labels, 9-slice frame) — Stitch's sidebar / memorial layout is
-    /// deliberately treated as inspiration, not contract.
-    /// </summary>
-    public partial class JournalPanel : Control
+    public event Action? OnClose;
+
+    private AshfallDashboardShell _shell = null!;
+    private AshfallSidebar? _sidebar;
+    private JournalSystem? _journal;
+
+    private ScrollContainer _scrollRoot = null!;
+
+    // Tab containers
+    private VBoxContainer _logEntries = null!;
+    private VBoxContainer _itemsList = null!;
+    private VBoxContainer _peopleList = null!;
+    private VBoxContainer _placesList = null!;
+    private VBoxContainer _eventsList = null!;
+
+    // Section headers (scroll targets)
+    private Label _lblLogsTitle = null!;
+    private Label _lblItemsTitle = null!;
+    private Label _lblPeopleTitle = null!;
+    private Label _lblPlacesTitle = null!;
+    private Label _lblEventsTitle = null!;
+
+    /// <summary>Bind the live JournalSystem. Re-subscribes events and refreshes.</summary>
+    public void Bind(JournalSystem journal)
     {
-        public event Action? OnClose;
-
-        private VBoxContainer _contentVBox = null!;
-        private Label _lblLogsTitle;
-        private VBoxContainer _logEntries;
-        private Label _lblNotesTitle;
-        private VBoxContainer _notesList;
-        private Label _lblStoryTitle;
-        private VBoxContainer _storyEntries;
-
-        private AshfallDashboardShell _shell = null!;
-        private AshfallSidebar? _sidebar;
-
-        // Placeholder journal data
-        private readonly string[] _placeholderLogs = {
-            "[Day 1] The exchange is over. We survived the initial blast. Bunker is intact.",
-            "[Day 3] First day outside. Radiation levels elevated but manageable.",
-            "[Day 5] Found a survivor group at the perimeter. Tented them in the east wing.",
-            "[Day 8] Radio contact established. Unknown frequency, but they're listening.",
-            "[Day 12] Water supply critical. Need to find a clean source within 5km.",
-            "[Day 15] Medical supplies running low. Need to scavenge or trade."
-        };
-
-        private readonly string[] _placeholderNotes = {
-            "Elena — Leader. Decisive but carries the weight of command.",
-            "Marcus — Medic. Skilled but haunted by what he's seen.",
-            "Yuki — Scout. Quiet, observant, knows the wasteland.",
-            "David — Engineer. Pragmatic, builds what's needed, when it's needed.",
-            "Sofia — Trader. Calculating, but not unkind. Sees opportunity in everything."
-        };
-
-        private readonly string[] _placeholderStory = {
-            "Chapter 1: The Exchange — Nuclear detonations across the globe.",
-            "Chapter 2: Ashfall — Surviving the initial fallout and radiation.",
-            "Chapter 3: The Bunker — Establishing shelter and community.",
-            "Chapter 4: First Contact — Encountering other survivors.",
-            "Chapter 5: The Long Winter — Nuclear winter conditions setting in.",
-            "Chapter 6: Scavenging — venturing out for supplies and knowledge.",
-            "Chapter 7: The Ledger — Documenting everything, everything matters.",
-            "Chapter 8: The Radio — Listening for hope in the static.",
-            "Chapter 9: The Expedition — Risking the wasteland for resources.",
-            "Chapter 10: The Choice — What survives, what's sacrificed."
-        };
-
-        // Real data from host session
-        // private JournalHostSession? _journalHost;
-
-        public void Bind(object journal) // placeholder for JournalHostSession
+        if (_journal != null)
         {
-            // _journalHost = (JournalHostSession)journal;
-            // RefreshView();
+            _journal.OnEntryAdded -= OnEntryAdded;
+            _journal.OnTabChanged -= OnTabChanged;
+            _journal.OnCodexUnlocked -= OnCodexUnlocked;
         }
 
-        public void RefreshView()
+        _journal = journal;
+
+        if (_journal != null)
         {
-            if (_logEntries == null || _notesList == null || _storyEntries == null) return;
+            _journal.OnEntryAdded += OnEntryAdded;
+            _journal.OnTabChanged += OnTabChanged;
+            _journal.OnCodexUnlocked += OnCodexUnlocked;
+        }
 
-            // Clear existing entries
-            AshfallUiHelpers.EmptyChildren(_logEntries);
-            AshfallUiHelpers.EmptyChildren(_notesList);
-            AshfallUiHelpers.EmptyChildren(_storyEntries);
+        RefreshView();
+    }
 
-            // Display placeholder day logs
-            foreach (string log in _placeholderLogs)
+    private void OnEntryAdded(JournalEntry _) => RefreshView();
+    private void OnTabChanged(int _) => RefreshView();
+    private void OnCodexUnlocked(string _) => RefreshView();
+
+    public void RefreshView()
+    {
+        if (_journal == null) return;
+
+        // Clear all tab containers
+        ClearContainer(_logEntries);
+        ClearContainer(_itemsList);
+        ClearContainer(_peopleList);
+        ClearContainer(_placesList);
+        ClearContainer(_eventsList);
+
+        // ── Log tab: all entries newest-first ──
+        if (_journal.Entries.Count == 0)
+        {
+            AddEmptyHint(_logEntries, "No entries yet. Explore the wasteland.");
+        }
+        else
+        {
+            foreach (var entry in _journal.Entries)
             {
-                var label = new Label { Text = log };
-                label.CustomMinimumSize = new Vector2(450, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                _logEntries.AddChild(label);
-            }
-
-            // Display placeholder character notes
-            foreach (string note in _placeholderNotes)
-            {
-                var label = new Label { Text = note };
-                label.CustomMinimumSize = new Vector2(450, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
-                _notesList.AddChild(label);
-            }
-
-            // Display placeholder story chapters
-            foreach (string chapter in _placeholderStory)
-            {
-                var label = new Label { Text = chapter };
-                label.CustomMinimumSize = new Vector2(450, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _storyEntries.AddChild(label);
+                AddEntryLabel(_logEntries, entry);
             }
         }
 
-        public override void _Ready()
+        // ── Items tab: discovered items ──
+        var itemKeys = _journal.Knowledge.Snapshot()
+            .Where(k => k.StartsWith("item_seen_"))
+            .OrderBy(k => k)
+            .ToList();
+        if (itemKeys.Count == 0)
         {
-            SetAnchorsPreset(LayoutPreset.FullRect);
-            Visible = false;
-
-            var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
-            bg.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(bg);
-
-            var center = new CenterContainer();
-            center.SetAnchorsPreset(LayoutPreset.FullRect);
-            AddChild(center);
-
-            // Dashboard shell — sidebar lets the user jump between Day Logs /
-            // Personal Notes / Story Progression. No status rail here — the
-            // journal is a narrative surface, not a metrics dashboard.
-            _shell = new AshfallDashboardShell(
-                "JOURNAL & NARRATIVE", 820, 600);
-            center.AddChild(_shell);
-            _sidebar = _shell.SetSidebar(new[]
+            AddEmptyHint(_itemsList, "No items discovered yet.");
+        }
+        else
+        {
+            foreach (var key in itemKeys)
             {
-                new AshfallSidebar.Item { Id = "logs",    Label = "Day Logs",      Hint = "CHRONICLE" },
-                new AshfallSidebar.Item { Id = "notes",   Label = "Personal Notes",Hint = "COHORT NOTATIONS" },
-                new AshfallSidebar.Item { Id = "story",   Label = "Story",         Hint = "PROGRESSION" },
-            }, "CHAPTERS", "logs");
-            _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());
+                var itemId = key.Substring("item_seen_".Length);
+                AddDiscoveryLabel(_itemsList, FormatId(itemId), "ITEM");
+            }
+        }
 
-            // Content slot — single scrollable VBox that hosts the three
-            // named sub-sections. Sidebar selection scrolls the matching
-            // sub-section into view.
-            var scrollRoot = new ScrollContainer();
-            scrollRoot.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            scrollRoot.SizeFlagsVertical = SizeFlags.ExpandFill;
-            var scrollMargin = new MarginContainer();
-            scrollMargin.AddThemeConstantOverride("margin_left", DesignTheme.SpacingLg);
-            scrollMargin.AddThemeConstantOverride("margin_top", DesignTheme.SpacingMd);
-            scrollMargin.AddThemeConstantOverride("margin_right", DesignTheme.SpacingLg);
-            scrollMargin.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingMd);
-            scrollRoot.AddChild(scrollMargin);
-            _shell.SetContent(scrollRoot);
-
-            var vbox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingLg);
-            vbox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-            scrollMargin.AddChild(vbox);
-
-            // Day logs section
-            _lblLogsTitle = AshfallUiHelpers.MakeSectionHeader("DAY LOGS");
-            vbox.AddChild(_lblLogsTitle);
-
-            _logEntries = new VBoxContainer();
-            _logEntries.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
-            _logEntries.CustomMinimumSize = new Vector2(500, 0);
-            vbox.AddChild(_logEntries);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Character notes section
-            _lblNotesTitle = AshfallUiHelpers.MakeSectionHeader("PERSONAL NOTES");
-            vbox.AddChild(_lblNotesTitle);
-
-            _notesList = new VBoxContainer();
-            _notesList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
-            _notesList.CustomMinimumSize = new Vector2(500, 0);
-            vbox.AddChild(_notesList);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            // Story chapters section
-            _lblStoryTitle = AshfallUiHelpers.MakeSectionHeader("STORY PROGRESSION");
-            vbox.AddChild(_lblStoryTitle);
-
-            _storyEntries = new VBoxContainer();
-            _storyEntries.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
-            _storyEntries.CustomMinimumSize = new Vector2(500, 0);
-            vbox.AddChild(_storyEntries);
-
-            if (_sidebar != null)
+        // ── People tab: survivors met ──
+        var peopleKeys = _journal.Knowledge.Snapshot()
+            .Where(k => k.StartsWith("survivor_met_"))
+            .OrderBy(k => k)
+            .ToList();
+        if (peopleKeys.Count == 0)
+        {
+            AddEmptyHint(_peopleList, "No survivors met yet.");
+        }
+        else
+        {
+            foreach (var key in peopleKeys)
             {
-                _sidebar.OnSelected += id =>
+                var survivorId = key.Substring("survivor_met_".Length);
+                AddDiscoveryLabel(_peopleList, FormatId(survivorId), "SURVIVOR");
+            }
+        }
+
+        // ── Places tab: locations visited ──
+        var placeKeys = _journal.Knowledge.Snapshot()
+            .Where(k => k.StartsWith("location_visited_"))
+            .OrderBy(k => k)
+            .ToList();
+        if (placeKeys.Count == 0)
+        {
+            AddEmptyHint(_placesList, "No locations visited yet.");
+        }
+        else
+        {
+            foreach (var key in placeKeys)
+            {
+                var locId = key.Substring("location_visited_".Length);
+                AddDiscoveryLabel(_placesList, FormatId(locId), "LOCATION");
+            }
+        }
+
+        // ── Events tab: narrative events fired ──
+        var eventKeys = _journal.Knowledge.Snapshot()
+            .Where(k => k.StartsWith("event_fired_"))
+            .OrderBy(k => k)
+            .ToList();
+        if (eventKeys.Count == 0)
+        {
+            AddEmptyHint(_eventsList, "No narrative events yet.");
+        }
+        else
+        {
+            foreach (var key in eventKeys)
+            {
+                var eventId = key.Substring("event_fired_".Length);
+                AddDiscoveryLabel(_eventsList, FormatId(eventId), "EVENT");
+            }
+        }
+
+        UpdateTabVisibility();
+    }
+
+    private void UpdateTabVisibility()
+    {
+        // All sections always visible; sidebar scrolls to the selected one.
+        // Section visibility is controlled by the scroll-to logic in the
+        // sidebar handler, not by hiding containers.
+    }
+
+    private static string FormatId(string snakeId)
+    {
+        if (string.IsNullOrEmpty(snakeId)) return "???";
+        return snakeId.Replace("_", " ").Trim();
+    }
+
+    private static void ClearContainer(VBoxContainer? container)
+    {
+        if (container == null) return;
+        foreach (Node child in container.GetChildren())
+            child.QueueFree();
+    }
+
+    private void AddEntryLabel(VBoxContainer container, JournalEntry entry)
+    {
+        var when = string.IsNullOrEmpty(entry.Timestamp) ? $"Day {entry.Day}" : entry.Timestamp;
+        var who = string.IsNullOrEmpty(entry.AuthorName) ? "Someone" : entry.AuthorName;
+
+        var hbox = new HBoxContainer();
+        hbox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+
+        var lblWhen = new Label { Text = when };
+        lblWhen.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
+        lblWhen.AddThemeFontOverride("font", AshfallUiHelpers.LoadFont("res://assets/fonts/ShareTechMono-Regular.ttf"));
+        lblWhen.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Muted));
+        lblWhen.CustomMinimumSize = new Vector2(90, 0);
+        hbox.AddChild(lblWhen);
+
+        var lblWho = new Label { Text = who + ":" };
+        lblWho.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+        lblWho.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Warm));
+        lblWho.CustomMinimumSize = new Vector2(110, 0);
+        hbox.AddChild(lblWho);
+
+        var lblText = new Label { Text = entry.Text };
+        lblText.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+        lblText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
+        lblText.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        lblText.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        hbox.AddChild(lblText);
+
+        container.AddChild(hbox);
+    }
+
+    private void AddDiscoveryLabel(VBoxContainer container, string displayName, string kind)
+    {
+        var hbox = new HBoxContainer();
+        hbox.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+
+        var lblKind = new Label { Text = $"[{kind}]" };
+        lblKind.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
+        lblKind.AddThemeFontOverride("font", AshfallUiHelpers.LoadFont("res://assets/fonts/ShareTechMono-Regular.ttf"));
+        lblKind.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Muted));
+        lblKind.CustomMinimumSize = new Vector2(70, 0);
+        hbox.AddChild(lblKind);
+
+        var lblName = new Label { Text = displayName };
+        lblName.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeBody);
+        lblName.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Pale));
+        lblName.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        lblName.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        hbox.AddChild(lblName);
+
+        container.AddChild(hbox);
+    }
+
+    private void AddEmptyHint(VBoxContainer container, string hint)
+    {
+        var lbl = new Label { Text = hint };
+        lbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeSmall);
+        lbl.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(DesignTheme.Muted));
+        lbl.AutowrapMode = TextServer.AutowrapMode.WordSmart;
+        container.AddChild(lbl);
+    }
+
+    public override void _Ready()
+    {
+        SetAnchorsPreset(LayoutPreset.FullRect);
+        Visible = false;
+
+        var bg = new ColorRect { Color = new Color(0.05f, 0.05f, 0.05f, 0.92f) };
+        bg.SetAnchorsPreset(LayoutPreset.FullRect);
+        AddChild(bg);
+
+        var center = new CenterContainer();
+        center.SetAnchorsPreset(LayoutPreset.FullRect);
+        AddChild(center);
+
+        _shell = new AshfallDashboardShell("JOURNAL & NARRATIVE", 820, 600);
+        center.AddChild(_shell);
+
+        _sidebar = _shell.SetSidebar(new[]
+        {
+            new AshfallSidebar.Item { Id = "log",     Label = "Day Log",       Hint = "CHRONICLE" },
+            new AshfallSidebar.Item { Id = "items",   Label = "Items",         Hint = "DISCOVERIES" },
+            new AshfallSidebar.Item { Id = "people",  Label = "People",        Hint = "SURVIVORS MET" },
+            new AshfallSidebar.Item { Id = "places",  Label = "Places",        Hint = "LOCATIONS" },
+            new AshfallSidebar.Item { Id = "events",  Label = "Events",        Hint = "NARRATIVE" },
+        }, "CHAPTERS", "log");
+
+        _shell.AttachHeaderCloseButton("CLOSE [Esc]", () => OnClose?.Invoke());
+
+        var scrollRoot = new ScrollContainer();
+        scrollRoot.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        scrollRoot.SizeFlagsVertical = SizeFlags.ExpandFill;
+        var scrollMargin = new MarginContainer();
+        scrollMargin.AddThemeConstantOverride("margin_left", DesignTheme.SpacingLg);
+        scrollMargin.AddThemeConstantOverride("margin_top", DesignTheme.SpacingMd);
+        scrollMargin.AddThemeConstantOverride("margin_right", DesignTheme.SpacingLg);
+        scrollMargin.AddThemeConstantOverride("margin_bottom", DesignTheme.SpacingMd);
+        scrollRoot.AddChild(scrollMargin);
+        _shell.SetContent(scrollRoot);
+        _scrollRoot = scrollRoot;
+
+        var vbox = AshfallUiHelpers.MakeVBox(DesignTheme.SpacingLg);
+        vbox.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        scrollMargin.AddChild(vbox);
+
+        // Day Log section
+        _lblLogsTitle = AshfallUiHelpers.MakeSectionHeader("DAY LOG");
+        vbox.AddChild(_lblLogsTitle);
+        _logEntries = new VBoxContainer();
+        _logEntries.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _logEntries.CustomMinimumSize = new Vector2(500, 0);
+        vbox.AddChild(_logEntries);
+
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        // Items section
+        _lblItemsTitle = AshfallUiHelpers.MakeSectionHeader("DISCOVERED ITEMS");
+        vbox.AddChild(_lblItemsTitle);
+        _itemsList = new VBoxContainer();
+        _itemsList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _itemsList.CustomMinimumSize = new Vector2(500, 0);
+        vbox.AddChild(_itemsList);
+
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        // People section
+        _lblPeopleTitle = AshfallUiHelpers.MakeSectionHeader("SURVIVORS MET");
+        vbox.AddChild(_lblPeopleTitle);
+        _peopleList = new VBoxContainer();
+        _peopleList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _peopleList.CustomMinimumSize = new Vector2(500, 0);
+        vbox.AddChild(_peopleList);
+
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        // Places section
+        _lblPlacesTitle = AshfallUiHelpers.MakeSectionHeader("LOCATIONS VISITED");
+        vbox.AddChild(_lblPlacesTitle);
+        _placesList = new VBoxContainer();
+        _placesList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _placesList.CustomMinimumSize = new Vector2(500, 0);
+        vbox.AddChild(_placesList);
+
+        vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+        // Events section
+        _lblEventsTitle = AshfallUiHelpers.MakeSectionHeader("NARRATIVE EVENTS");
+        vbox.AddChild(_lblEventsTitle);
+        _eventsList = new VBoxContainer();
+        _eventsList.AddThemeConstantOverride("separation", DesignTheme.SpacingSm);
+        _eventsList.CustomMinimumSize = new Vector2(500, 0);
+        vbox.AddChild(_eventsList);
+
+        if (_sidebar != null)
+        {
+            _sidebar.OnSelected += id =>
+            {
+                Label? target = id switch
                 {
-                    if (id == "logs" && _lblLogsTitle != null)
-                        ScrollToChild(scrollRoot, _lblLogsTitle);
-                    else if (id == "notes" && _lblNotesTitle != null)
-                        ScrollToChild(scrollRoot, _lblNotesTitle);
-                    else if (id == "story" && _lblStoryTitle != null)
-                        ScrollToChild(scrollRoot, _lblStoryTitle);
+                    "log"    => _lblLogsTitle,
+                    "items"  => _lblItemsTitle,
+                    "people" => _lblPeopleTitle,
+                    "places" => _lblPlacesTitle,
+                    "events" => _lblEventsTitle,
+                    _        => null,
                 };
-            }
-
-            // Populate placeholder entries (SnapshotHarness doesn't bind a
-            // host session, so we render the in-file fixtures so the screen
-            // remains inspectable).
-            RefreshView();
+                if (target != null)
+                    ScrollToChild(_scrollRoot, target);
+            };
         }
 
-        private static void ScrollToChild(ScrollContainer scroll, Control child)
+        RefreshView();
+    }
+
+    private static void ScrollToChild(ScrollContainer? scroll, Control? child)
+    {
+        if (scroll == null || child == null) return;
+        try
         {
-            if (scroll == null || child == null) return;
-            try
+            float targetOffset = 0f;
+            Node walker = child;
+            while (walker != null && walker != scroll)
             {
-                float targetOffset = 0f;
-                Node walker = child;
-                while (walker != null && walker != scroll)
-                {
-                    if (walker is Control w && walker != scroll)
-                        targetOffset += w.Position.Y;
-                    walker = walker.GetParent();
-                }
-                if (targetOffset > 0)
-                    scroll.ScrollVertical = (int)Math.Max(0, targetOffset - 8);
+                if (walker is Control w && walker != scroll)
+                    targetOffset += w.Position.Y;
+                walker = walker.GetParent();
             }
-            catch (Exception ex_CATDIAG)
-            {
-                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                // best-effort
-            }
+            if (targetOffset > 0)
+                scroll.ScrollVertical = (int)Math.Max(0, targetOffset - 8);
         }
-
-        public void Open()
+        catch (Exception ex)
         {
-            Visible = true;
-            QueueRedraw();
+            CatalogDiagnostics.Warn("<unknown>", "unknown", ex);
         }
+    }
 
-        public override void _UnhandledInput(InputEvent @event)
+    public void Open()
+    {
+        Visible = true;
+        QueueRedraw();
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (!Visible) return;
+
+        if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
         {
-            if (!Visible) return;
-
-            if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
-            {
-                OnClose?.Invoke();
-                GetViewport().SetInputAsHandled();
-            }
+            OnClose?.Invoke();
+            GetViewport().SetInputAsHandled();
         }
     }
 }

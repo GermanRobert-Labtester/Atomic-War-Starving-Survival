@@ -31,6 +31,16 @@ namespace AtomicWar.GodotApp
         public void OpenDutyRosterPanel() => _dutyRosterPanel?.Open();
         public void OpenExpeditionPanel() => _expeditionPanel?.Open();
         public void OpenWeatherPanel() => _weatherPanel?.Open();
+        public void OpenWeatherForecastPanel()
+        {
+            _weatherForecastPanel?.Bind(_world.Weather);
+            _weatherForecastPanel?.Open();
+        }
+        public void OpenWeatherHistoryPanel()
+        {
+            _weatherHistoryPanel?.Bind(_world.Weather);
+            _weatherHistoryPanel?.Open();
+        }
         public void OpenQuestsPanel()
         {
             SetupHoldfastRuntime();
@@ -39,7 +49,11 @@ namespace AtomicWar.GodotApp
             _questsPanel.Bind(_core.Quests, _expansions?.CrossingQuests, _dutyRoster, _holdfastRuntime?.Day ?? _simDay);
             _questsPanel.Open();
         }
-        public void OpenJournalPanel() => _journalPanel?.Open();
+        public void OpenJournalPanel()
+        {
+            _journalPanel?.Bind(_journal);
+            _journalPanel?.Open();
+        }
         public void OpenFactionsPanel()
         {
             SetupHoldfastRuntime();
