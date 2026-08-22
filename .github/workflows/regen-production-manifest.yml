@@ -10,7 +10,7 @@ on:
       - 'assets/art/**'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   regenerate:
@@ -26,15 +26,10 @@ jobs:
       - name: Run canonical production manifest generator
         run: python3 tools/production_manifest.py
 
-      - name: Commit regenerated manifest when changed
-        shell: bash
-        run: |
-          if git diff --quiet -- docs/visual/PRODUCTION_ART_GENERATION_MANIFEST.json; then
-            echo "Production manifest is already current."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/visual/PRODUCTION_ART_GENERATION_MANIFEST.json
-          git commit -m "chore(art): regenerate production manifest"
-          git push origin HEAD:maintenance/authority-ci-policy
+      - name: Upload regenerated production manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: regenerated-production-art-manifest
+          path: docs/visual/PRODUCTION_ART_GENERATION_MANIFEST.json
+          if-no-files-found: error
+          retention-days: 1
