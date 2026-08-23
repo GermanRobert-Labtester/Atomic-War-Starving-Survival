@@ -1004,3 +1004,18 @@ namespace Ashfall.Core.Quests
                     )
                 },
                 failureConsequences: new List<string>
+                {
+                    "Yara withdraws permanently",
+                    "Ice Road access lost",
+                    "Accident risk increases"
+                },
+                hostileElements: new List<string>
+                {
+                    "Yara's rule is absolute",
+                    "The beacon is a contract",
+                    "Dark ice is a death sentence"
+                }
+            );
+        }
+    }
+}
