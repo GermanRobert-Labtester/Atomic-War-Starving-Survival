@@ -1,0 +1,619 @@
+[
+  {
+    "record_id": "edu_record_001",
+    "day": 58,
+    "teacher": "the_teacher",
+    "subject": "reading",
+    "students": [
+      "Lima-1 (age 8)",
+      "the_naive_son (age 16)",
+      "the_feral_orphan (age 10)",
+      "bunker_born_child_1 (age 6)",
+      "bunker_born_child_2 (age 5)",
+      "the_child_soldier (age 12)"
+    ],
+    "topic": "Pre-war children literature: selection of short stories",
+    "materials": [
+      "3 paperbacks from the_historian collection",
+      "charcoal pencils",
+      "salvaged paper"
+    ],
+    "observations": "Lima-1 reads fluently for her age but does not engage with the stories emotionally. the_naive_son reads ahead of the group and is already discussing themes the_teacher has not introduced. the_child_soldier struggles with decoding but comprehends at a high level when read to. The younger children are engaged by pictures.",
+    "assessment": "Wide reading range in one room. the_naive_son needs advanced material. Lima-1 needs emotional engagement support. the_child_soldier needs phonics reinforcement. Differentiated instruction is necessary but resources are limited.",
+    "follow_up": "the_historian to provide advanced reading material for the_naive_son. the_teacher to develop phonics exercises for the_child_soldier.",
+    "cross_refs": [
+      "therapy_session_007",
+      "conflict_mediation_records"
+    ],
+    "tags": [
+      "reading",
+      "mixed_ages",
+      "differentiated_instruction"
+    ]
+  },
+  {
+    "record_id": "edu_record_002",
+    "day": 60,
+    "teacher": "the_teacher",
+    "subject": "mathematics",
+    "students": [
+      "Lima-1",
+      "the_naive_son",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2",
+      "the_child_soldier"
+    ],
+    "topic": "Basic arithmetic: addition, subtraction, multiplication tables",
+    "materials": [
+      "charcoal pencils",
+      "salvaged paper",
+      "stones for counting"
+    ],
+    "observations": "the_naive_son completed all exercises in 10 minutes and began creating his own problems. Lima-1 grasps concepts quickly. the_feral_orphan is behind in multiplication but catching up. The younger children are learning number recognition. the_child_soldier applies mathematics to tactical scenarios without being asked.",
+    "assessment": "the_naive_son is operating at a level 3 years ahead of his age group. He needs algebra. the_child_soldier mathematical thinking is applied but not abstract. Lima-1 is the most balanced learner in the group.",
+    "follow_up": "Introduce algebra for the_naive_son. Continue multiplication tables for the_feral_orphan. Number games for the younger children.",
+    "tags": [
+      "mathematics",
+      "arithmetic",
+      "advanced_student",
+      "applied_math"
+    ]
+  },
+  {
+    "record_id": "edu_record_003",
+    "day": 63,
+    "teacher": "the_teacher",
+    "subject": "survival skills",
+    "students": [
+      "the_child_soldier",
+      "the_naive_son",
+      "Lima-1",
+      "the_feral_orphan"
+    ],
+    "topic": "Knot tying, basic navigation, water identification",
+    "materials": [
+      "rope samples from the_quartermaster",
+      "hand-drawn compass rose",
+      "water samples from the_plumber"
+    ],
+    "observations": "the_child_soldier already knows 12 knot types and demonstrated 3 more to the group. the_naive_son asked why they need to learn this when adults do the surviving. the_teacher explained that knowledge is not about immediate utility but about being prepared. Lima-1 tied a bowline on the third try. the_feral_orphan struggled but persisted.",
+    "assessment": "the_child_soldier is a peer instructor for survival skills. His knowledge is practical and extensive. the_naive_son resistance is intellectual, not practical. He will learn when he sees the value. Lima-1 learns by doing. the_feral_orphan needs repetition.",
+    "follow_up": "the_child_soldier to lead the bunker safety patrol (see conflict_mediation_records). Practical navigation exercise on the next surface patrol (adult-supervised).",
+    "cross_refs": [
+      "conflict_mediation_records",
+      "therapy_session_014"
+    ],
+    "tags": [
+      "survival_skills",
+      "knots",
+      "navigation",
+      "peer_instruction"
+    ]
+  },
+  {
+    "record_id": "edu_record_004",
+    "day": 66,
+    "teacher": "the_teacher",
+    "subject": "history",
+    "students": [
+      "the_naive_son",
+      "Lima-1",
+      "the_feral_orphan",
+      "the_child_soldier"
+    ],
+    "topic": "Pre-war world: what was it like? (age-appropriate version)",
+    "materials": [
+      "the_historian 12 paperbacks (selected passages)",
+      "hand-drawn maps from memory"
+    ],
+    "observations": "the_naive_son asked questions the_teacher could not answer. Why did they build cities so close to each other? Why did they trust machines more than people? Why did they not see it coming? Lima-1 drew pictures while the_teacher spoke. She drew a blue sky. She has never seen a blue sky. the_child_soldier was silent. He does not care about before. He cares about now.",
+    "assessment": "the_naive_son is engaging with existential history. His questions are philosophical, not factual. the_historian should be invited for a guest session. Lima-1 processes through art. the_child_soldier has no pre-war memory and no interest in one. His history starts at the bunker.",
+    "follow_up": "the_historian guest session on pre-war society for the_naive_son. Art-based history for Lima-1. Accept the_child_soldier present-focused orientation.",
+    "cross_refs": [
+      "undertaker_burial_records",
+      "childrens_artwork_batch_2"
+    ],
+    "tags": [
+      "history",
+      "existential_questions",
+      "art_processing",
+      "present_focused"
+    ]
+  },
+  {
+    "record_id": "edu_record_005",
+    "day": 69,
+    "teacher": "the_teacher",
+    "subject": "science",
+    "students": [
+      "Lima-1",
+      "the_naive_son",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2",
+      "the_child_soldier"
+    ],
+    "topic": "Plants: what they need to grow, photosynthesis (simplified)",
+    "materials": [
+      "the_botanist seedlings from the greenhouse",
+      "charcoal pencils",
+      "salvaged paper"
+    ],
+    "observations": "the_botanist visited and brought seedlings. The children touched the leaves. Lima-1 asked if the plants were alive the same way she was alive. the_botanist said yes but differently. Lima-1 said she preferred plants. the_naive_son asked about radiation effects on plant DNA. the_botanist gave him an answer he could research. the_younger children just wanted to dig in the dirt.",
+    "assessment": "Science education is enriched by the_botanist participation. Hands-on learning is essential for the younger children. the_naive_son is ready for genetics. Lima-1 has an affinity for biology. the_child_soldier observed but did not participate.",
+    "follow_up": "Weekly greenhouse visit for practical science. the_botanist to co-teach plant biology unit. the_naive_son independent research project on radiation genetics.",
+    "cross_refs": [
+      "greenhouse_cultivation_logs",
+      "crop_experiment_logs"
+    ],
+    "tags": [
+      "science",
+      "botany",
+      "hands_on",
+      "greenhouse_visit"
+    ]
+  },
+  {
+    "record_id": "edu_record_006",
+    "day": 72,
+    "teacher": "the_teacher",
+    "subject": "reading",
+    "students": [
+      "Lima-1",
+      "the_naive_son",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2"
+    ],
+    "topic": "the_naive_son independent reading: philosophy excerpt (the_historian supervised)",
+    "observations": "the_historian joined the reading session. the_naive_son read a passage about ethics in extreme conditions. He asked: is it ethical to refuse entry to someone who will die outside? the_historian said the question is older than the bunker. the_naive_son said he knew that. He was referring to Kilo-1. The room went quiet. the_teacher did not redirect. the_historian said: the question is not whether it is ethical. The question is whether you can live with the answer.",
+    "assessment": "the_naive_son is processing the Kilo-1 refusal through intellectual frameworks because he cannot process it emotionally. He was not present for the event but he heard about it. the_historian response was perfect: it honoured the question without providing a false answer.",
+    "follow_up": "the_therapist to check whether the_naive_son needs to talk about Kilo-1 directly. the_historian to continue supervised advanced reading.",
+    "cross_refs": [
+      "undertaker_burial_records",
+      "conflict_mediation_records",
+      "therapy_session_007"
+    ],
+    "tags": [
+      "reading",
+      "philosophy",
+      "kilo_1_reference",
+      "ethical_questioning"
+    ]
+  },
+  {
+    "record_id": "edu_record_007",
+    "day": 75,
+    "teacher": "the_teacher",
+    "subject": "art",
+    "students": [
+      "Lima-1",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2",
+      "the_child_soldier"
+    ],
+    "topic": "Free drawing: draw something that matters to you",
+    "materials": [
+      "charcoal pencils",
+      "salvaged paper",
+      "a few crayons from the_quartermaster trade"
+    ],
+    "observations": "Lima-1 drew the cemetery with green turnip spots. the_feral_orphan drew a dog she said she had before. The dog was brown. She could not remember the breed. bunker_born_child_1 drew the bunker from above, showing all the rooms. She knows the layout better than the_architect. bunker_born_child_2 drew a single red circle and said it was the sun. He has never seen the sun. the_child_soldier drew a map of the bunker with escape routes marked. He is 12.",
+    "assessment": "The children are processing their environment through art. Lima-1 connects death and growth. the_feral_orphan is grieving a pet she may have imagined. The bunker-born children know only the bunker. the_child_soldier maps everything for survival. Each drawing is a window.",
+    "follow_up": "Art exhibition planned for day 104. These pieces will be included. the_teacher to continue art as a regular subject.",
+    "cross_refs": [
+      "childrens_artwork_batch_2",
+      "undertaker_burial_records"
+    ],
+    "tags": [
+      "art",
+      "free_drawing",
+      "processing_environment",
+      "exhibition_prep"
+    ]
+  },
+  {
+    "record_id": "edu_record_008",
+    "day": 78,
+    "teacher": "the_teacher",
+    "subject": "mathematics",
+    "students": [
+      "the_naive_son",
+      "Lima-1",
+      "the_feral_orphan",
+      "the_child_soldier"
+    ],
+    "topic": "Algebra (the_naive_son), continued multiplication (others)",
+    "materials": [
+      "charcoal pencils",
+      "salvaged paper"
+    ],
+    "observations": "the_naive_son solved linear equations in 20 minutes. He then asked about quadratic equations. the_teacher admitted she had not taught algebra in 10 years and needed to review. the_naive_son said that was okay. He waited while the_teacher relearned the material. Lima-1 completed all multiplication exercises correctly. the_feral_orphan is now at 7 times tables. the_child_soldier used mathematics to calculate ration distribution for his safety patrol.",
+    "assessment": "the_naive_son is operating at a level the_teacher cannot sustainably support alone. He needs a mathematics mentor. the_historian has some mathematical background. the_electrician could teach applied mathematics. the_child_soldier applied mathematics is creative but unsystematic.",
+    "follow_up": "the_electrician to guest-teach applied mathematics for the_child_soldier. the_historian to mentor the_naive_son on advanced topics. the_teacher to focus on age-appropriate material for the rest.",
+    "tags": [
+      "mathematics",
+      "algebra",
+      "advanced_student",
+      "peer_mentoring"
+    ]
+  },
+  {
+    "record_id": "edu_record_009",
+    "day": 81,
+    "teacher": "the_teacher",
+    "subject": "music",
+    "students": [
+      "Lima-1",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2",
+      "the_child_soldier"
+    ],
+    "topic": "Rhythm and singing: learning songs from the_radio_host archive",
+    "materials": [
+      "the_radio_host provided vinyl recordings",
+      "improvised percussion (spoons, cups)"
+    ],
+    "observations": "the_radio_host visited and played records. The children learned to clap in rhythm. bunker_born_child_1 has perfect pitch and can reproduce melodies after one hearing. Lima-1 sang but her voice was very quiet. the_feral_orphan made up her own words to the melodies. the_child_soldier did not sing but he tapped his foot.",
+    "assessment": "Music is a new subject and it is working. bunker_born_child_1 musical ability is notable. Lima-1 quiet singing may indicate emotional reservation. the_feral_orphan creativity is a coping mechanism. the_child_soldier foot-tapping is engagement without participation.",
+    "follow_up": "Continue weekly music sessions. bunker_born_child_1 to receive informal pitch training. the_radio_host to provide more recordings.",
+    "cross_refs": [
+      "radio_broadcast_rundowns"
+    ],
+    "tags": [
+      "music",
+      "rhythm",
+      "perfect_pitch",
+      "emotional_expression"
+    ]
+  },
+  {
+    "record_id": "edu_record_010",
+    "day": 84,
+    "teacher": "the_teacher",
+    "subject": "writing",
+    "students": [
+      "the_naive_son",
+      "Lima-1",
+      "the_feral_orphan",
+      "the_child_soldier"
+    ],
+    "topic": "Essay writing: what I would do if the sky came back",
+    "materials": [
+      "charcoal pencils",
+      "salvaged paper"
+    ],
+    "observations": "the_naive_son wrote 3 pages about rebuilding civilisation with ethical governance. Lima-1 wrote 1 page about planting a garden on the surface. the_feral_orphan wrote half a page about finding her dog. the_child_soldier wrote one sentence: I would make sure everyone was safe. the_teacher read all essays aloud with permission. The bunker_born children drew pictures instead of writing.",
+    "assessment": "The essays reveal each child relationship to the future. the_naive_son thinks in systems. Lima-1 thinks in growth. the_feral_orphan thinks in loss. the_child_soldier thinks in protection. All are valid. The essays were broadcast on the_radio_host programme (see radio_broadcast_rundowns).",
+    "follow_up": "Essays to be kept in the education archive. the_naive_son writing ability suggests future leadership potential. the_child_soldier sentence is the most honest thing written in the bunker.",
+    "cross_refs": [
+      "radio_broadcast_rundowns",
+      "therapy_session_014"
+    ],
+    "tags": [
+      "writing",
+      "essays",
+      "future_visions",
+      "broadcast"
+    ]
+  },
+  {
+    "record_id": "edu_record_011",
+    "day": 87,
+    "teacher": "the_teacher",
+    "subject": "science",
+    "students": [
+      "Lima-1",
+      "the_naive_son",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2",
+      "the_child_soldier"
+    ],
+    "topic": "Radiation: what it is, why we cannot see it, how we protect ourselves",
+    "materials": [
+      "the_hazmat_tech dosimeters (demonstration)",
+      "hand-drawn diagrams",
+      "the_hazmat_tech guest lecture (pre-recorded notes used)"
+    ],
+    "observations": "the_hazmat_tech had died on the seed vault expedition (day 88). the_teacher used his written notes for the lesson. The children were quiet when the_teacher told them the_hazmat_tech was gone. Lima-1 asked if radiation killed him. the_teacher said yes. Lima-1 said she was sorry. the_naive_son asked technical questions about dose rates. the_younger children drew dosimeters.",
+    "assessment": "Teaching science after the death of the scientist is difficult but necessary. The children need to understand radiation because it shapes every decision the bunker makes. the_hazmat_tech notes are clear and age-appropriate. His death makes the lesson more real.",
+    "follow_up": "Continue science education using the_hazmat_tech notes as primary text. the_hazmat_tech legacy lives in the education programme.",
+    "cross_refs": [
+      "patrol_debriefs",
+      "undertaker_burial_records"
+    ],
+    "tags": [
+      "science",
+      "radiation",
+      "hazmat_tech_legacy",
+      "death_in_education"
+    ]
+  },
+  {
+    "record_id": "edu_record_012",
+    "day": 90,
+    "teacher": "the_teacher",
+    "subject": "survival skills",
+    "students": [
+      "the_child_soldier",
+      "the_naive_son",
+      "Lima-1",
+      "the_feral_orphan"
+    ],
+    "topic": "Emergency procedures: what to do if the alarm sounds",
+    "materials": [
+      "bunker emergency plan (the_general)",
+      "bunker map (the_architect)",
+      "assembly point markers"
+    ],
+    "observations": "the_child_soldier led the emergency drill with precision. He knew every assembly point, every evacuation route. He directed the other children to their positions. the_naive_son followed instructions but asked why at each step. Lima-1 was frightened by the alarm sound. the_feral_orphan froze for 5 seconds before moving.",
+    "assessment": "the_child_soldier is the best-prepared person in the bunker for emergencies. His training is real and his instinct is correct. Lima-1 fear response to the alarm needs desensitisation. the_feral_orphan freeze response is normal but needs addressing. the_naive_son needs to understand that questions can wait during emergencies.",
+    "follow_up": "Monthly emergency drills. the_child_soldier to continue as drill leader. the_therapist to work with Lima-1 on alarm desensitisation. the_feral_orphan freeze response to be monitored.",
+    "cross_refs": [
+      "bunker_blueprints_codex",
+      "conflict_mediation_records"
+    ],
+    "tags": [
+      "survival_skills",
+      "emergency_drill",
+      "alarm_response",
+      "child_soldier_leadership"
+    ]
+  },
+  {
+    "record_id": "edu_record_013",
+    "day": 93,
+    "teacher": "the_teacher",
+    "subject": "reading",
+    "students": [
+      "Lima-1",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2"
+    ],
+    "topic": "Picture book reading: the children take turns telling the story from pictures",
+    "materials": [
+      "a pre-war children picture book from the_historian collection"
+    ],
+    "observations": "bunker_born_child_1 narrated the pictures with remarkable fluency. She described a beach scene and the_teacher asked her how she knew what a beach looked like. She said she saw it in a dream. Lima-1 narrated a forest scene with accuracy that suggests prior knowledge she has not disclosed. the_feral_orphan narrated a farm scene and started crying. She said she remembered a farm. the_younger children just pointed at animals.",
+    "assessment": "bunker_born_child_1 dream claim is either imagination or inherited memory. Lima-1 prior knowledge is unexplained; she arrived alone at age 8 and may have memories she has not shared. the_feral_orphan farm memory is genuine and painful. The picture book is a trigger for buried memories.",
+    "follow_up": "the_therapist to be informed of the_feral_orphan reaction. Lima-1 prior knowledge to be explored gently. bunker_born_child_1 imagination to be encouraged.",
+    "cross_refs": [
+      "therapy_session_007",
+      "childrens_artwork_batch_2"
+    ],
+    "tags": [
+      "reading",
+      "picture_book",
+      "buried_memories",
+      "emotional_triggers"
+    ]
+  },
+  {
+    "record_id": "edu_record_014",
+    "day": 96,
+    "teacher": "the_teacher",
+    "subject": "mathematics",
+    "students": [
+      "the_naive_son",
+      "Lima-1",
+      "the_feral_orphan",
+      "the_child_soldier"
+    ],
+    "topic": "Applied mathematics: ration calculations, greenhouse yield projections",
+    "materials": [
+      "the_quartermaster ration data",
+      "the_botanist greenhouse yield data",
+      "charcoal pencils"
+    ],
+    "observations": "the_quartermaster and the_botanist provided real data. the_naive_son calculated per-person caloric allocation from greenhouse yield. He said at current trajectory the bunker reaches 20 percent self-sufficiency by month 6. the_child_soldier calculated patrol ration requirements for different mission durations. Lima-1 calculated seed spacing for the greenhouse. the_feral_orphan struggled with the large numbers.",
+    "assessment": "Applied mathematics using real bunker data is the most effective teaching method. The children are contributing to actual planning. the_naive_son calculations are accurate and he presented them to the_quartermaster. the_child_soldier patrol calculations were adopted by the_general.",
+    "follow_up": "Continue applied mathematics with real data. the_naive_son to attend the_quartermaster inventory sessions as observer. the_child_soldier to present patrol calculations to the_general.",
+    "cross_refs": [
+      "greenhouse_cultivation_logs",
+      "supply_audit_records"
+    ],
+    "tags": [
+      "mathematics",
+      "applied",
+      "real_data",
+      "bunker_planning"
+    ]
+  },
+  {
+    "record_id": "edu_record_015",
+    "day": 99,
+    "teacher": "the_teacher",
+    "subject": "community",
+    "students": [
+      "Lima-1",
+      "the_naive_son",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2",
+      "the_child_soldier"
+    ],
+    "topic": "What is a community? Why do we stay together?",
+    "materials": [
+      "none. Discussion only."
+    ],
+    "observations": "the_teacher asked the question and let the children answer. the_naive_son said a community is a social contract. the_child_soldier said a community is a squad. Lima-1 said a community is people who bury your mother for you. The room went quiet. Lima-1 was referring to the_undertaker burying her mother (cenotaph). the_feral_orphan said a community is people who let you cry. bunker_born_child_1 said a community is people who share the turnips. bunker_born_child_2 said a community is people who sing together.",
+    "assessment": "The children understand community better than most adults. Lima-1 answer was the most profound thing said in the bunker this month. She has experienced both loss and the community response to loss. She knows what it means to be held by strangers. the_teacher did not need to say anything after that.",
+    "follow_up": "The children to participate in the day 95 anniversary service. Their understanding of community is needed.",
+    "cross_refs": [
+      "undertaker_burial_records",
+      "radio_broadcast_rundowns",
+      "council_meeting_minutes"
+    ],
+    "tags": [
+      "community",
+      "discussion",
+      "profound_answers",
+      "lima_1_grief",
+      "anniversary_prep"
+    ]
+  },
+  {
+    "record_id": "edu_record_016",
+    "day": 102,
+    "teacher": "the_teacher",
+    "subject": "art (exhibition prep)",
+    "students": [
+      "Lima-1",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2",
+      "the_child_soldier"
+    ],
+    "topic": "Finalising pieces for the corridor A art exhibition",
+    "materials": [
+      "charcoal pencils",
+      "crayons",
+      "salvaged paper",
+      "improvised frames from cardboard"
+    ],
+    "observations": "Each child selected their best piece. Lima-1 chose the cemetery drawing with green turnip spots. the_feral_orphan chose the brown dog. bunker_born_child_1 chose the bunker map from above. bunker_born_child_2 chose the red circle sun. the_child_soldier chose his escape route map. the_teacher helped them mount the pieces on cardboard frames. They looked like real art.",
+    "assessment": "The exhibition is ready. Each piece tells a different story about what it means to be a child in the bunker. Lima-1 connects death and growth. the_feral_orphan holds onto memory. The bunker-born children document what they know. the_child_soldier prepares for the worst. All of it is true.",
+    "follow_up": "Exhibition day 104. the_radio_host to announce. the_chef to provide refreshments. The adults need to see what the children see.",
+    "cross_refs": [
+      "childrens_artwork_batch_2",
+      "council_meeting_minutes",
+      "radio_broadcast_rundowns"
+    ],
+    "tags": [
+      "art",
+      "exhibition_prep",
+      "framing",
+      "children_perspectives"
+    ]
+  },
+  {
+    "record_id": "edu_record_017",
+    "day": 105,
+    "teacher": "the_teacher",
+    "subject": "science",
+    "students": [
+      "Lima-1",
+      "the_naive_son",
+      "the_feral_orphan",
+      "the_child_soldier"
+    ],
+    "topic": "The greenhouse: a living laboratory",
+    "materials": [
+      "the_botanist guided tour of the greenhouse",
+      "soil samples",
+      "seed packets"
+    ],
+    "observations": "the_botanist showed the children the turnip rows, the barley plot, the potato bed, the mushroom logs. Lima-1 touched a turnip leaf and said it felt alive. the_botanist said it was. the_naive_son asked about genetic diversity and inbreeding depression in the seed stock. the_botanist said that was a real concern. the_feral_orphan planted a seed in a small pot and said she would take care of it. the_child_soldier asked how many calories the greenhouse produced per square metre.",
+    "assessment": "The greenhouse is the best classroom in the bunker. It teaches biology, mathematics, chemistry, and hope. Lima-1 connection to living things is deepening. the_naive_son is thinking about long-term viability. the_feral_orphan nurturing a plant is therapeutic. the_child_soldier caloric thinking is practical.",
+    "follow_up": "Each child to maintain a small plant in the greenhouse. Responsibility and observation. the_botanist to co-teach weekly.",
+    "cross_refs": [
+      "greenhouse_cultivation_logs",
+      "crop_experiment_logs"
+    ],
+    "tags": [
+      "science",
+      "greenhouse",
+      "living_laboratory",
+      "plant_responsibility"
+    ]
+  },
+  {
+    "record_id": "edu_record_018",
+    "day": 108,
+    "teacher": "the_teacher",
+    "subject": "history",
+    "students": [
+      "the_naive_son",
+      "Lima-1",
+      "the_feral_orphan",
+      "the_child_soldier"
+    ],
+    "topic": "The bunker: our history so far (oral history project)",
+    "materials": [
+      "the_teacher compiled timeline from council minutes and radio broadcasts",
+      "charcoal pencils",
+      "salvaged paper"
+    ],
+    "observations": "the_teacher presented a timeline of bunker events from day 1 to day 108. The children added their own memories. Lima-1 said day 74 was the most important day because she arrived. the_naive_son said day 56 was the most important because of Kilo-1. the_child_soldier said day 88 was the most important because someone died on an expedition he heard about. the_feral_orphan said day 53 was the most important because a baby was born.",
+    "assessment": "Each child identifies a different pivotal event. Lima-1 identifies with arrival (her own). the_naive_son identifies with moral crisis (Kilo-1). the_child_soldier identifies with death (the_hazmat_tech). the_feral_orphan identifies with birth (Asha). These are the four pillars of the bunker story: arrival, ethics, loss, and hope.",
+    "follow_up": "Oral history project to continue. Each child to interview one adult about their bunker experience. the_naive_son to interview the_general. Lima-1 to interview the_undertaker.",
+    "cross_refs": [
+      "undertaker_burial_records",
+      "council_meeting_minutes",
+      "radio_broadcast_rundowns"
+    ],
+    "tags": [
+      "history",
+      "oral_history",
+      "timeline",
+      "pivotal_events"
+    ]
+  },
+  {
+    "record_id": "edu_record_019",
+    "day": 111,
+    "teacher": "the_teacher",
+    "subject": "mathematics",
+    "students": [
+      "the_naive_son",
+      "Lima-1",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2",
+      "the_child_soldier"
+    ],
+    "topic": "Measurement: building things requires measuring things",
+    "materials": [
+      "improvised ruler (calibrated by the_mechanic)",
+      "string for measuring",
+      "the_architect bunker dimensions"
+    ],
+    "observations": "the_architect visited and brought bunker dimensions. The children measured the classroom, the corridor, and the dormitory. bunker_born_child_1 discovered that the corridor is exactly 3 times her height long. She measured herself first. the_naive_son calculated the bunker total volume. Lima-1 measured her sleeping space. It was 2 of her heights long and 1 of her heights wide. She said it was enough. the_child_soldier measured the blast door thickness.",
+    "assessment": "Measurement is practical mathematics that the children can see and touch. bunker_born_child_1 self-calibration is creative. Lima-1 statement that her space is enough is both factual and poignant. the_child_soldier measuring the blast door is thinking about defence.",
+    "follow_up": "Continue measurement unit with area and volume calculations. The children to map their own living spaces.",
+    "cross_refs": [
+      "bunker_blueprints_codex"
+    ],
+    "tags": [
+      "mathematics",
+      "measurement",
+      "practical",
+      "spatial_awareness"
+    ]
+  },
+  {
+    "record_id": "edu_record_020",
+    "day": 114,
+    "teacher": "the_teacher",
+    "subject": "community (end of term)",
+    "students": [
+      "Lima-1",
+      "the_naive_son",
+      "the_feral_orphan",
+      "bunker_born_child_1",
+      "bunker_born_child_2",
+      "the_child_soldier"
+    ],
+    "topic": "What have we learned? What do we still need to learn?",
+    "materials": [
+      "none. Discussion and self-assessment."
+    ],
+    "observations": "the_teacher asked each child to say one thing they had learned and one thing they still wanted to learn. the_naive_son: learned ethics, wants to learn law. Lima-1: learned that plants are alive like her, wants to learn why people die. the_feral_orphan: learned to read better, wants to learn to write a letter. bunker_born_child_1: learned songs, wants to learn to make music. bunker_born_child_2: learned numbers, wants to learn what the sun looks like. the_child_soldier: learned to tie knots, wants to learn to build a wall.",
+    "assessment": "The children are honest and specific. Lima-1 question about death is the hardest question in the bunker. the_feral_orphan wanting to write a letter suggests she wants to communicate with someone who is gone. bunker_born_child_2 wanting to see the sun is the most heartbreaking. the_child_soldier wanting to build a wall is the most practical. the_naive_son wanting to learn law is the most hopeful.",
+    "cross_refs": [
+      "therapy_session_007",
+      "undertaker_burial_records"
+    ],
+    "tags": [
+      "end_of_term",
+      "self_assessment",
+      "honest_answers",
+      "future_needs"
+    ]
+  }
+]

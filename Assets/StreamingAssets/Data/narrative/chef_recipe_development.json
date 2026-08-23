@@ -1,0 +1,484 @@
+[
+  {
+    "recipe_id": "recipe_dev_001",
+    "day": 38,
+    "author": "the_chef",
+    "title": "Mushroom Broth Mark I",
+    "status": "abandoned",
+    "ingredients": [
+      "dried wild mushrooms",
+      "water",
+      "salt"
+    ],
+    "method": "Boiled dried mushrooms for 4 hours. The water turned brown. Tasted like wet earth. the_botanist identified the mushrooms as edible but not flavourful. Abandoned because it tasted like hot dirt.",
+    "lessons": "Dried mushrooms need rehydration before cooking. The flavour is locked in until they soak. Next attempt: soak overnight, then simmer.",
+    "servings": 0,
+    "calories_estimate": 0,
+    "tags": [
+      "mushroom",
+      "broth",
+      "abandoned",
+      "learning"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_002",
+    "day": 40,
+    "author": "the_chef",
+    "title": "Mushroom Broth Mark II",
+    "status": "successful",
+    "ingredients": [
+      "rehydrated dried mushrooms",
+      "water",
+      "salt",
+      "dried herbs from the_hoarder"
+    ],
+    "method": "Soaked mushrooms overnight in cold water. Simmered for 2 hours with herbs. Added salt at the end. The broth is clear, brown, and tastes like something. Not much, but something.",
+    "servings": 8,
+    "calories_estimate": 120,
+    "lessons": "Rehydration is the key. Herbs help more than salt. the_hoarder donated dried herbs and was compensated with a bowl. He ate it standing up.",
+    "tags": [
+      "mushroom",
+      "broth",
+      "successful",
+      "herbs"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_003",
+    "day": 43,
+    "author": "the_chef",
+    "title": "Barley Porridge",
+    "status": "successful",
+    "ingredients": [
+      "barley grain",
+      "water",
+      "salt",
+      "mushroom broth (from recipe_dev_002)"
+    ],
+    "method": "Cracked barley between two stones. Boiled in water until soft. Added mushroom broth for flavour. The result is a thick grey porridge. It fills the stomach. That is the point.",
+    "servings": 12,
+    "calories_estimate": 280,
+    "lessons": "Barley cracks easier than expected. Two stones and a cloth works. The porridge is bland but filling. Adding broth improves it significantly. This is now a staple.",
+    "tags": [
+      "barley",
+      "porridge",
+      "staple",
+      "successful"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_004",
+    "day": 46,
+    "author": "the_chef",
+    "title": "Turnip Mash",
+    "status": "successful",
+    "ingredients": [
+      "greenhouse turnips",
+      "water",
+      "salt",
+      "dried mushroom powder"
+    ],
+    "method": "Boiled turnips from the first greenhouse harvest. Mashed with a flat stone. Added mushroom powder for umami. The turnips are small and bitter but cooking removes most of the bitterness. The mash is pale green.",
+    "servings": 6,
+    "calories_estimate": 180,
+    "lessons": "Greenhouse turnips are smaller than pre-war varieties. The bitterness is reduced by boiling in two changes of water. Mushroom powder is the best flavour enhancer available.",
+    "tags": [
+      "turnip",
+      "greenhouse",
+      "mash",
+      "successful",
+      "first_harvest"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_005",
+    "day": 49,
+    "author": "the_chef",
+    "title": "Sunday Special Mark I",
+    "status": "successful",
+    "ingredients": [
+      "barley porridge base",
+      "mushroom broth",
+      "dried herbs",
+      "a handful of dried berries from the_hunter"
+    ],
+    "method": "Combined the three staples into one dish for the Sunday meal. Layered porridge, broth, and berries. the_priest blessed it. It looks like something. It tastes like a meal.",
+    "servings": 47,
+    "calories_estimate": 350,
+    "lessons": "Presentation matters. Even in a bunker, people eat with their eyes first. Layering the components makes it look intentional rather than desperate. the_priest blessing adds a psychological element.",
+    "tags": [
+      "sunday_special",
+      "composite_dish",
+      "successful",
+      "morale_food"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_006",
+    "day": 52,
+    "author": "the_chef",
+    "title": "Nettle Tea",
+    "status": "successful",
+    "ingredients": [
+      "dried nettle leaves (surface foraged by the_hunter)",
+      "boiling water"
+    ],
+    "method": "Dried nettle leaves in the oven overnight. Crushed by hand. Steeped in boiling water for 5 minutes. The tea is green and tastes like grass. It is warm and it is not water. That is enough.",
+    "servings": 20,
+    "calories_estimate": 5,
+    "lessons": "Nettles lose their sting when dried. The tea has no nutritional value but the warmth and the ritual of drinking something from a cup is worth the effort. the_botanist says nettles have trace minerals.",
+    "tags": [
+      "nettle",
+      "tea",
+      "surface_forage",
+      "successful",
+      "ritual"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_007",
+    "day": 55,
+    "author": "the_chef",
+    "title": "Charred Turnip Steaks",
+    "status": "experimental",
+    "ingredients": [
+      "large greenhouse turnips",
+      "salt",
+      "mushroom powder",
+      "a few drops of rendered fat from the_hunter"
+    ],
+    "method": "Sliced large turnips into 2cm rounds. Searred on the hot stove plate until charred on both sides. Sprinkled with mushroom powder and salt. Added one drop of animal fat per serving. The result looks like a steak. It does not taste like a steak.",
+    "servings": 6,
+    "calories_estimate": 200,
+    "lessons": "Charring adds a flavour dimension that boiling cannot achieve. The Maillard reaction works on turnips the same as meat. the_mechanic said it tasted like something from before. He was wrong but he smiled.",
+    "tags": [
+      "turnip",
+      "experimental",
+      "charring",
+      "maillard",
+      "morale"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_008",
+    "day": 58,
+    "author": "the_chef",
+    "title": "Bone Broth",
+    "status": "successful",
+    "ingredients": [
+      "venison bones from the_hunter",
+      "water",
+      "salt",
+      "dried herbs",
+      "a splash of vinegar from the_chemist"
+    ],
+    "method": "Cracked venison bones with a hammer. Simmered for 12 hours with herbs and a splash of vinegar. The vinegar helps extract minerals from the bone. The broth is rich and dark. the_surgeon says it has calcium and iron.",
+    "servings": 10,
+    "calories_estimate": 80,
+    "lessons": "Bone broth is the most nutritious thing the kitchen has produced. The 12-hour simmer is fuel-intensive but the_electrician approved the generator time. Vinegar is the catalyst. the_chemist provided it.",
+    "tags": [
+      "bone_broth",
+      "venison",
+      "nutritious",
+      "long_simmer",
+      "successful"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_009",
+    "day": 61,
+    "author": "the_chef",
+    "title": "Mushroom and Barley Soup",
+    "status": "successful",
+    "ingredients": [
+      "rehydrated mushrooms",
+      "cracked barley",
+      "bone broth base",
+      "dried herbs",
+      "salt"
+    ],
+    "method": "Combined the three best recipes into one pot. Mushrooms for flavour, barley for body, bone broth for nutrition. Simmered for 3 hours. This is the best thing the kitchen has produced. the_botanist cried. She said it tasted like the forest.",
+    "servings": 47,
+    "calories_estimate": 320,
+    "lessons": "This is the bunker signature dish. Every component is locally sourced. Every step is documented. The recipe has been posted in the kitchen and the greenhouse. It is the first recipe that belongs to the bunker, not to before.",
+    "tags": [
+      "signature_dish",
+      "mushroom",
+      "barley",
+      "bone_broth",
+      "successful",
+      "community"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_010",
+    "day": 64,
+    "author": "the_chef",
+    "title": "Fermented Turnip",
+    "status": "failed",
+    "ingredients": [
+      "greenhouse turnips",
+      "salt",
+      "water"
+    ],
+    "method": "Attempted fermentation by submerging sliced turnips in salt brine. Sealed in a jar. Waited 7 days. The result is sour, slimy, and smells like death. the_botanist says the fermentation culture was wrong. The bunker does not have the right bacteria.",
+    "servings": 0,
+    "calories_estimate": 0,
+    "lessons": "Fermentation requires specific bacterial cultures that may not exist in the bunker environment. the_botanist is trying to isolate lactobacillus from the compost. Until then, no fermentation. The jar was buried. It smelled terrible.",
+    "tags": [
+      "fermentation",
+      "failed",
+      "turnip",
+      "contamination",
+      "learning"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_011",
+    "day": 67,
+    "author": "the_chef",
+    "title": "Dried Mushroom Powder",
+    "status": "successful",
+    "ingredients": [
+      "dried mushrooms"
+    ],
+    "method": "Ground dried mushrooms between stones until fine powder. The powder is shelf-stable and concentrates the flavour. One teaspoon flavours a whole pot of broth. This is the key ingredient for everything else.",
+    "servings": 50,
+    "calories_estimate": 10,
+    "lessons": "Mushroom powder is the bunker umami. It keeps for months. It is the most efficient use of the mushroom harvest. Every mushroom that cannot be used fresh should be dried and powdered.",
+    "tags": [
+      "mushroom",
+      "powder",
+      "shelf_stable",
+      "flavour_base",
+      "successful"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_012",
+    "day": 70,
+    "author": "the_chef",
+    "title": "Potato Flatbread",
+    "status": "experimental",
+    "ingredients": [
+      "greenhouse potatoes",
+      "barley flour",
+      "water",
+      "salt"
+    ],
+    "method": "Grated raw potato. Mixed with barley flour and water to form a dough. Pressed flat and cooked on the hot stove plate. The result is a dense, grey flatbread. It tastes like potato and barley. It is not light and fluffy. It is food.",
+    "servings": 8,
+    "calories_estimate": 250,
+    "lessons": "Potato flatbread works but the texture is dense. The potato needs to be squeezed dry before mixing. Barley flour does not rise. This is a dense food for dense times. It fills the stomach.",
+    "tags": [
+      "potato",
+      "flatbread",
+      "experimental",
+      "barley_flour",
+      "dense"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_013",
+    "day": 73,
+    "author": "the_chef",
+    "title": "Herb Butter (Imitation)",
+    "status": "experimental",
+    "ingredients": [
+      "rendered animal fat from the_hunter",
+      "dried herbs",
+      "salt"
+    ],
+    "method": "Melted animal fat. Mixed in dried herbs and salt. Let it cool until solid. The result looks like butter. It does not taste like butter. It tastes like herbed fat. But it spreads on flatbread and makes it better.",
+    "servings": 12,
+    "calories_estimate": 180,
+    "lessons": "Fat is the most valuable flavour carrier. the_hunter provides it irregularly. When he does, the kitchen converts it to herb butter immediately. It makes everything else taste better. the_quartermaster has approved fat as a trade item.",
+    "tags": [
+      "fat",
+      "herb_butter",
+      "experimental",
+      "flavour_carrier",
+      "trade_item"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_014",
+    "day": 76,
+    "author": "the_chef",
+    "title": "Smoked Venison Strips",
+    "status": "successful",
+    "ingredients": [
+      "venison from the_hunter",
+      "salt",
+      "wood smoke from the stove"
+    ],
+    "method": "Sliced venison thin. Salted and hung above the stove for 3 days. The smoke preserves the meat and adds flavour. The strips are dark, chewy, and salty. They keep for weeks. the_quartermaster has approved this as a preservation method.",
+    "servings": 15,
+    "calories_estimate": 200,
+    "lessons": "Smoking is the best preservation method available. The stove provides continuous heat and smoke. The salt draws moisture. The combination produces shelf-stable protein. This is critical for expedition rations.",
+    "tags": [
+      "venison",
+      "smoked",
+      "preservation",
+      "expedition_ration",
+      "successful"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_015",
+    "day": 79,
+    "author": "the_chef",
+    "title": "Sunday Special Mark II",
+    "status": "successful",
+    "ingredients": [
+      "mushroom and barley soup base",
+      "smoked venison strips",
+      "herb butter",
+      "charred turnip"
+    ],
+    "method": "Combined all successful recipes into the Sunday Special. Soup base with smoked venison, topped with charred turnip and a dot of herb butter. This is the best meal the bunker has produced. People closed their eyes when they ate it.",
+    "servings": 47,
+    "calories_estimate": 450,
+    "lessons": "The Sunday Special is now an institution. It is the one meal that feels like a celebration. the_chef has documented every iteration. Mark II is the peak. Future versions will refine, not replace.",
+    "tags": [
+      "sunday_special",
+      "composite_dish",
+      "peak_meal",
+      "successful",
+      "institution"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_016",
+    "day": 82,
+    "author": "the_chef",
+    "title": "Potato and Nettle Soup",
+    "status": "successful",
+    "ingredients": [
+      "greenhouse potatoes",
+      "dried nettle",
+      "bone broth",
+      "salt",
+      "mushroom powder"
+    ],
+    "method": "Boiled potatoes until soft. Added dried nettle and bone broth. Seasoned with mushroom powder. The nettle adds a green colour and a mineral taste. the_botanist says nettles have vitamins the bunker needs.",
+    "servings": 10,
+    "calories_estimate": 220,
+    "lessons": "Nettle soup is nutritious and uses a free surface resource. the_hunter forages nettles on every patrol. The soup is green, which makes people think of vegetables and growing things. Psychological value is high.",
+    "tags": [
+      "potato",
+      "nettle",
+      "soup",
+      "nutritious",
+      "green",
+      "successful"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_017",
+    "day": 85,
+    "author": "the_chef",
+    "title": "Barley Biscuits",
+    "status": "experimental",
+    "ingredients": [
+      "barley flour",
+      "water",
+      "salt",
+      "rendered fat"
+    ],
+    "method": "Mixed barley flour with water, salt, and a small amount of fat. Formed into flat discs. Baked on the stove plate until hard. The biscuits are dense and dry. They keep for months. They are expedition food.",
+    "servings": 20,
+    "calories_estimate": 150,
+    "lessons": "Barley biscuits are not pleasant to eat but they are shelf-stable and calorie-dense. the_quartermaster has approved them as emergency rations. They are better than nothing. They are not much better.",
+    "tags": [
+      "barley",
+      "biscuit",
+      "expedition_ration",
+      "shelf_stable",
+      "experimental"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_018",
+    "day": 88,
+    "author": "the_chef",
+    "title": "Celebration Cake (Asha)",
+    "status": "special",
+    "ingredients": [
+      "barley flour",
+      "rendered fat",
+      "dried berries",
+      "honey from the_botanist bee colony",
+      "water"
+    ],
+    "method": "Made for the birth of Asha, the first bunker-born child. Barley flour cake sweetened with honey and dried berries. It is small and dense and the most beautiful thing the kitchen has produced. the_botanist donated the honey. the_hunter donated the berries.",
+    "servings": 12,
+    "calories_estimate": 300,
+    "lessons": "This cake was not about nutrition. It was about marking a moment. The bunker needed to celebrate a birth. The cake was the ceremony. the_mother cried. the_father smiled. the_chef documented the recipe for future births.",
+    "tags": [
+      "celebration",
+      "cake",
+      "birth",
+      "honey",
+      "community",
+      "special"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_019",
+    "day": 91,
+    "author": "the_chef",
+    "title": "Lentil Stew",
+    "status": "successful",
+    "ingredients": [
+      "greenhouse lentils",
+      "bone broth",
+      "dried herbs",
+      "mushroom powder",
+      "salt",
+      "rendered fat"
+    ],
+    "method": "The seed vault lentils have produced a small harvest. Soaked overnight. Simmered in bone broth with herbs and mushroom powder. The stew is thick and protein-rich. the_surgeon says lentils have iron and folate.",
+    "servings": 8,
+    "calories_estimate": 350,
+    "lessons": "Lentils from the seed vault are a game-changer. They fix nitrogen in the soil, improving the greenhouse. They provide protein that the bunker desperately needs. the_botanist is expanding the lentip crop.",
+    "tags": [
+      "lentil",
+      "stew",
+      "seed_vault",
+      "protein",
+      "nutritious",
+      "successful"
+    ]
+  },
+  {
+    "recipe_id": "recipe_dev_020",
+    "day": 95,
+    "author": "the_chef",
+    "title": "Memorial Feast",
+    "status": "special",
+    "ingredients": [
+      "mushroom and barley soup",
+      "smoked venison",
+      "charred turnip",
+      "herb butter",
+      "potato flatbread",
+      "nettle tea",
+      "bone broth",
+      "every ingredient the kitchen has"
+    ],
+    "method": "Prepared for the 95-day anniversary. Every recipe the kitchen has developed, served in sequence. The meal lasted two hours. People ate slowly. They talked. They remembered. the_chef cooked for 12 hours straight. His hands shook at the end.",
+    "servings": 47,
+    "calories_estimate": 500,
+    "lessons": "This was not about nutrition. This was about marking time. The bunker has been alive for 95 days. The kitchen has produced 19 recipes. Every one of them is in this meal. The Memorial Feast is the kitchen autobiography.",
+    "tags": [
+      "memorial",
+      "anniversary",
+      "feast",
+      "community",
+      "autobiography",
+      "special"
+    ]
+  }
+]

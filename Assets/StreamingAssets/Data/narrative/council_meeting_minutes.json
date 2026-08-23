@@ -1,0 +1,780 @@
+[
+  {
+    "minutes_id": "council_minutes_001",
+    "day": 38,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "ration review",
+      "surface patrol schedule",
+      "radio broadcast protocol"
+    ],
+    "decisions": [
+      {
+        "item": "ration review",
+        "outcome": "the_quartermaster reported rice reserves at 75 days. No change to current ration allocation. Next review day 50.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "surface patrol schedule",
+        "outcome": "the_general proposed daily perimeter patrol plus one long-range expedition per week. Approved. the_cop to lead perimeter, the_hunter to lead expeditions.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "radio broadcast protocol",
+        "outcome": "the_radio_host proposed twice-daily broadcasts at 0600 and 1800. the_general approved with content review for security-sensitive information. the_therapist suggested a community request segment.",
+        "vote": "5_for_2_abstain (the_electrician and the_architect abstained citing no opinion on media)"
+      }
+    ],
+    "action_items": [
+      "the_quartermaster: ration review day 50",
+      "the_general: finalise patrol roster by day 40",
+      "the_radio_host: first broadcast day 38 at 1800"
+    ],
+    "notes": "First formal council meeting. the_general established the council as the governing body. Membership: 7 permanent seats. Decisions by majority. the_general has veto on security matters only.",
+    "cross_refs": [
+      "radio_broadcast_rundowns",
+      "bunker_shift_schedules_and_notices"
+    ],
+    "tags": [
+      "founding_meeting",
+      "rations",
+      "patrols",
+      "radio"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_002",
+    "day": 42,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "new arrival policy",
+      "water pump status",
+      "medical supply inventory"
+    ],
+    "decisions": [
+      {
+        "item": "new arrival policy",
+        "outcome": "the_general proposed a 7-day quarantine for all new arrivals. Medical screening by the_surgeon. Security assessment by the_general. the_therapist to conduct psychological evaluation. Council approved unanimously.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "water pump status",
+        "outcome": "the_electrician reported the water pump impeller seal failure. Repaired with improvised gasket. the_plumber has fabricated spare seals. No further action required.",
+        "vote": "noted"
+      },
+      {
+        "item": "medical supply inventory",
+        "outcome": "the_surgeon reported antibiotics at zero. Painkillers at 30 doses. Bandages at 200 units. the_quartermaster to prioritise medical supply recovery on next expedition.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_general: draft new arrival intake protocol",
+      "the_surgeon: medical supply priority list for expeditions",
+      "the_plumber: quarterly seal replacement schedule"
+    ],
+    "notes": "the_therapist raised the question of what happens if a new arrival is refused. the_general said the bunker cannot afford to turn away useful people but also cannot afford to accept security risks. The council did not resolve this tension.",
+    "cross_refs": [
+      "new_arrival_intake_interviews",
+      "equipment_failure_logs"
+    ],
+    "tags": [
+      "new_arrival_policy",
+      "water_pump",
+      "medical_supplies"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_003",
+    "day": 47,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "Kilo-1 refusal aftermath",
+      "greenhouse expansion",
+      "generator fuel status"
+    ],
+    "decisions": [
+      {
+        "item": "Kilo-1 refusal aftermath",
+        "outcome": "the_therapist formally objected to the Kilo-1 refusal on humanitarian grounds. the_general defended the decision on resource grounds. The council voted to uphold the refusal policy but allocated one emergency ration pack to leave at the bunker entrance for future refused applicants. Vote: 4_for (uphold with ration), 2_against (the_therapist and the_priest wanted to reverse the refusal), 1_abstain.",
+        "vote": "4_for_2_against_1_abstain"
+      },
+      {
+        "item": "greenhouse expansion",
+        "outcome": "the_botanist (invited for this item) proposed doubling greenhouse capacity using salvaged glass from surface expeditions. the_architect confirmed structural feasibility. the_electrician confirmed grow light capacity for 50 percent expansion. Approved.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "generator fuel status",
+        "outcome": "the_electrician reported fuel reserves at 40 days. Consumption rate stable. the_quartermaster proposed fuel rationing to extend to 50 days. the_general opposed, saying fuel rationing would reduce generator runtime and affect the water pump. Status quo maintained.",
+        "vote": "4_for_status_quo_3_for_rationing"
+      }
+    ],
+    "action_items": [
+      "the_quartermaster: place emergency ration pack at bunker entrance",
+      "the_botanist: greenhouse expansion plan by day 55",
+      "the_electrician: fuel consumption optimisation study"
+    ],
+    "notes": "The Kilo-1 debate was the most contentious council meeting to date. the_therapist and the_general are not speaking outside of council sessions. the_priest offered pastoral support to both. The emergency ration pack compromise was the_chemist idea.",
+    "cross_refs": [
+      "undertaker_burial_records",
+      "conflict_mediation_records",
+      "greenhouse_cultivation_logs"
+    ],
+    "tags": [
+      "kilo_1_aftermath",
+      "greenhouse_expansion",
+      "fuel_debate",
+      "contentious"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_004",
+    "day": 52,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "dysentery outbreak response",
+      "court establishment",
+      "trade protocol"
+    ],
+    "decisions": [
+      {
+        "item": "dysentery outbreak response",
+        "outcome": "the_surgeon reported 7 dysentery cases. Source identified as contaminated water from a pipe cross-connection. the_plumber has isolated and repaired the cross-connection. the_quartermaster ordered full water system flush and re-test. Kitchen quarantine until water quality confirmed.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "court establishment",
+        "outcome": "the_general proposed a formal court for dispute resolution and rule enforcement. the_therapist proposed mediation as the first step before court. Compromise: the_therapist mediates interpersonal disputes; the_general adjudicates security and resource violations. Court sessions weekly.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "trade protocol",
+        "outcome": "the_quartermaster proposed a formal internal barter recording system. All trades to be logged with the_quartermaster for inventory tracking. No currency. Pure barter with quartermaster oversight. Approved.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_plumber: water system flush complete by day 53",
+      "the_general: court protocol document by day 55",
+      "the_quartermaster: barter recording system operational by day 54"
+    ],
+    "notes": "The dysentery outbreak was the first public health crisis. The response was swift and effective. the_surgeon credit to the_plumber for rapid identification of the cross-connection. The court establishment fills a governance gap that has been growing since day 1.",
+    "cross_refs": [
+      "surgeons_casebook_batch_2",
+      "water_quality_test_reports_batch_2",
+      "bunker_trade_ledger_batch_2"
+    ],
+    "tags": [
+      "dysentery",
+      "court_establishment",
+      "trade_protocol",
+      "crisis_response"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_005",
+    "day": 57,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "court first cases",
+      "surface radiation trend",
+      "children education"
+    ],
+    "decisions": [
+      {
+        "item": "court first cases",
+        "outcome": "the_general reported two cases adjudicated: unauthorised medical bay access (reprimand plus kitchen duty) and ration dispute (mediated by the_therapist, both parties accepted terms). the_therapist reported three additional mediations completed. Court and mediation are functioning.",
+        "vote": "noted"
+      },
+      {
+        "item": "surface radiation trend",
+        "outcome": "the_hazmat_tech (invited) reported quarterly average 0.9 uSv/h bunker internal, 35 uSv/h surface. Trend is slowly declining. the_meteorologist projects safe surface work (under 50 uSv/h with PPE) for the next 6 months.",
+        "vote": "noted"
+      },
+      {
+        "item": "children education",
+        "outcome": "the_teacher (invited) proposed a formal education programme for the 6 children in the bunker. Reading, mathematics, and survival skills. the_quartermaster allocated paper and charcoal pencils from inventory. Approved.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_general: court schedule weekly on day 72",
+      "the_hazmat_tech: quarterly radiation report",
+      "the_teacher: education programme operational by day 60"
+    ],
+    "notes": "The council is settling into a rhythm. Formal agenda, recorded decisions, action items. the_general says this is how governance works in a functioning society. the_therapist says it is also how people feel heard.",
+    "cross_refs": [
+      "bunker_court_verdicts_batch_2",
+      "radiation_survey_readings_batch_2"
+    ],
+    "tags": [
+      "court_cases",
+      "radiation_trend",
+      "children_education",
+      "governance_rhythm"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_006",
+    "day": 62,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "Delta-1 emissary protocol",
+      "generator voltage issue",
+      "anniversary planning"
+    ],
+    "decisions": [
+      {
+        "item": "Delta-1 emissary protocol",
+        "outcome": "the_general reported that Delta-1, the Salt Freeholder emissary, is expected day 65. the_general proposed a controlled introduction: Delta-1 to be met at the airlock, escorted to the meeting room, and not given unsupervised access to the bunker. the_therapist objected to the hostile framing. Compromise: Delta-1 to be treated as a guest but the_general will accompany at all times.",
+        "vote": "5_for_compromise_2_for_open_access (the_therapist and the_priest)"
+      },
+      {
+        "item": "generator voltage issue",
+        "outcome": "the_electrician reported the Variac bypass is holding. Voltage stable at 220V plus/minus 2V. Fuel consumption down 8 percent. The bypass has extended fuel reserves from 40 to 45 days. the_quartermaster is pleased.",
+        "vote": "noted"
+      },
+      {
+        "item": "anniversary planning",
+        "outcome": "the_priest proposed a memorial service for day 95, marking 95 days since the event. the_council approved. the_radio_host will broadcast the service. the_chef will prepare a special meal. the_undertaker will read the names of the dead.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_general: Delta-1 reception protocol by day 64",
+      "the_electrician: Variac bypass performance report day 70",
+      "the_priest: anniversary service plan by day 85"
+    ],
+    "notes": "Delta-1 is the first external visitor. The council is divided between openness and security. the_general default is containment; the_therapist default is trust. The compromise satisfies neither fully but both can live with it.",
+    "cross_refs": [
+      "new_arrival_intake_interviews",
+      "equipment_failure_logs",
+      "radio_broadcast_rundowns"
+    ],
+    "tags": [
+      "delta_1_protocol",
+      "generator_voltage",
+      "anniversary_planning",
+      "openness_vs_security"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_007",
+    "day": 67,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "Delta-1 visit assessment",
+      "salt trade terms",
+      "security review"
+    ],
+    "decisions": [
+      {
+        "item": "Delta-1 visit assessment",
+        "outcome": "Delta-1 visited day 65. the_general reported the visit was productive. Delta-1 proposed salt-for-goods trade: 2kg salt per 1kg dried goods. the_quartermaster counter-proposed 2kg salt per 1kg smoked fish or dried mushrooms. Delta-1 accepted provisionally. Final terms to be confirmed by the_Freeholder.",
+        "vote": "unanimous_approve_terms"
+      },
+      {
+        "item": "salt trade terms",
+        "outcome": "the_quartermaster presented the trade terms. Salt is the highest-priority import for the bunker. the_chef and the_chemist both confirmed salt is critical for food preservation and chemical processes. the_quartermaster to prepare first trade shipment: 10kg dried mushrooms and 5kg dried herbs for 30kg salt.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "security review",
+        "outcome": "the_general reported the generator sabotage investigation is ongoing. No suspects identified. the_cop has increased lock changes. the_general proposed a bunker-wide security audit. the_architect to assess physical vulnerabilities. the_electrician to assess electronic access points.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_quartermaster: prepare first salt trade shipment by day 75",
+      "the_architect: physical security audit by day 75",
+      "the_electrician: electronic access audit by day 75",
+      "the_general: security review report day 80"
+    ],
+    "notes": "Delta-1 impressed the council. the_therapist said the emissary was genuine. the_general said the emissary was professional. Both are true. The salt trade is the first external economic relationship. It changes the bunker from isolated to connected.",
+    "cross_refs": [
+      "bunker_trade_ledger_batch_2",
+      "new_arrival_intake_interviews",
+      "security_incident_reports_batch_2"
+    ],
+    "tags": [
+      "delta_1_assessment",
+      "salt_trade",
+      "security_review",
+      "external_relations"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_008",
+    "day": 72,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "court session 2 results",
+      "security audit results",
+      "expedition planning"
+    ],
+    "decisions": [
+      {
+        "item": "court session 2 results",
+        "outcome": "the_general reported four cases: two mediations (the_therapist) and two adjudications. All resolved. the_therapist proposed that mediation outcomes be confidential unless both parties agree to disclosure. Approved.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "security audit results",
+        "outcome": "the_architect and the_electrician presented joint audit findings. Three physical vulnerabilities identified: eastern periscope blind spot, ventilation shaft access point in corridor D, and the drainage sump external connection. the_architect has remediation plans for all three. Estimated completion: day 85.",
+        "vote": "unanimous_approve_remediation"
+      },
+      {
+        "item": "expedition planning",
+        "outcome": "the_general proposed the seed vault expedition for day 61 window. the_hazmat_tech to lead radiation safety. the_courier to lead navigation. the_hunter to provide security. the_quartermaster to prepare extraction equipment.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_architect: security remediation by day 85",
+      "the_general: seed vault expedition briefing day 59",
+      "the_quartermaster: extraction equipment ready by day 60"
+    ],
+    "notes": "The security audit was thorough. The eastern blind spot is the highest priority. the_architect says a periscope extension can cover it. The drainage sump connection is the most concerning because it is an unmonitored physical access point.",
+    "cross_refs": [
+      "bunker_court_verdicts_batch_2",
+      "bunker_blueprints_codex",
+      "patrol_debriefs"
+    ],
+    "tags": [
+      "court_results",
+      "security_audit",
+      "expedition_planning",
+      "remediation"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_009",
+    "day": 77,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "seed vault expedition results",
+      "Shallows Market trade",
+      "mental health status"
+    ],
+    "decisions": [
+      {
+        "item": "seed vault expedition results",
+        "outcome": "the_courier reported 17 total seed ampoules recovered across two missions. the_botanist reports 12 viable, 3 uncertain, 2 failed. the_quartermaster says the viable seeds could increase bunker food production by 40 percent within one growing season. the_council expressed gratitude for the expedition team and noted the loss of the_hazmat_tech on the second mission.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "Shallows Market trade",
+        "outcome": "the_quartermaster reported the first salt trade completed. 15kg dried goods exchanged for 30kg salt. the_chef says the salt quality is high. the_chemist is already using it for preservation. Monthly trade schedule established.",
+        "vote": "noted"
+      },
+      {
+        "item": "mental health status",
+        "outcome": "the_therapist reported 18 active therapy cases. 12 resolved or improving. 3 stable. 3 requiring increased attention. the_therapist requested an additional counselling space. the_architect identified the laundry alcove annex as available after the_widow relocation. Approved.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_botanist: seed planting schedule by day 80",
+      "the_quartermaster: monthly salt trade shipment by day 85",
+      "the_architect: counselling space conversion by day 82"
+    ],
+    "notes": "The seed vault recovery is the most significant material gain since the bunker was sealed. 17 ampoules represent genetic diversity that the greenhouse desperately needs. The_hazmat_tech death was acknowledged with a moment of silence.",
+    "cross_refs": [
+      "patrol_debriefs",
+      "greenhouse_cultivation_logs",
+      "bunker_trade_ledger_batch_2",
+      "undertaker_burial_records"
+    ],
+    "tags": [
+      "seed_vault_results",
+      "salt_trade",
+      "mental_health",
+      "expedition_loss"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_010",
+    "day": 82,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "settlement survey intelligence",
+      "spring preparation",
+      "bunker population review"
+    ],
+    "decisions": [
+      {
+        "item": "settlement survey intelligence",
+        "outcome": "the_general reported the Juliet-1 settlement survey. 3 of 12 settlements assessed: 1 abandoned, 1 active (Settlement 2, Salt Freeholders), 1 burned out. the_general recommends approaching 3 more settlements for potential trade or alliance. the_council approved continued survey missions.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "spring preparation",
+        "outcome": "the_meteorologist (invited) reported temperature trending above seasonal average. Ice melt beginning on the frozen river. Spring thaw expected within 3 weeks. the_quartermaster proposed spring preparation: surface route assessment, meltwater radiation monitoring, greenhouse planting schedule acceleration.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "bunker population review",
+        "outcome": "the_quartermaster reported current population: 47 adults, 3 children, 1 infant (Asha). Food reserves: 58 days at current ration. With greenhouse production and trade: 72 days effective. Fuel: 43 days. Medical supplies: 35 days. the_quartermaster says the bunker is stable but not comfortable.",
+        "vote": "noted"
+      }
+    ],
+    "action_items": [
+      "the_general: next settlement survey by day 90",
+      "the_meteorologist: weekly spring thaw updates",
+      "the_quartermaster: spring resource projection by day 85"
+    ],
+    "notes": "The bunker is approaching its first spring. Everything changes when the surface thaws. New routes open, new risks emerge. the_general says spring is both opportunity and vulnerability. the_quartermaster says the numbers are better than expected but not good enough to relax.",
+    "cross_refs": [
+      "patrol_debriefs",
+      "radiation_survey_readings_batch_2"
+    ],
+    "tags": [
+      "settlement_intel",
+      "spring_preparation",
+      "population_review",
+      "seasonal_transition"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_011",
+    "day": 87,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "security remediation status",
+      "radio signal anomaly",
+      "trade expansion"
+    ],
+    "decisions": [
+      {
+        "item": "security remediation status",
+        "outcome": "the_architect reported: eastern periscope blind spot fixed with extension mirror. Ventilation shaft access point secured with grate and motion sensor. Drainage sump connection: grate installed but external access still possible. the_architect recommends surface-side barrier. the_general approved.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "radio signal anomaly",
+        "outcome": "the_radio_host (invited) reported a fragment broadcast on 7.2 MHz at 0340. Male voice, English, partial content. the_electrician confirmed the signal was real, not atmospheric. the_general ordered continued monitoring at the same time daily. the_radio_host to log all receptions.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "trade expansion",
+        "outcome": "the_quartermaster proposed expanding trade beyond salt. Target items: medical supplies, tools, information. the_general says information about other settlements is the highest-value trade commodity. the_quartermaster to develop a trade priority list.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_architect: drainage sump surface barrier by day 95",
+      "the_radio_host: 7.2 MHz monitoring log",
+      "the_quartermaster: trade priority list by day 90"
+    ],
+    "notes": "The radio signal is the most intriguing item. A voice on 7.2 MHz means someone else is broadcasting. the_electrician says the signal origin is approximately 80km north. the_general is cautious. the_radio_host is excited. The council is watching.",
+    "cross_refs": [
+      "radio_broadcast_rundowns",
+      "equipment_failure_logs"
+    ],
+    "tags": [
+      "security_remediation",
+      "radio_anomaly",
+      "trade_expansion",
+      "mysterious_signal"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_012",
+    "day": 92,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "anniversary service final plan",
+      "Salt Freeholder emissary visit",
+      "Asha health report"
+    ],
+    "decisions": [
+      {
+        "item": "anniversary service final plan",
+        "outcome": "the_priest presented the day 95 memorial plan: roll call of the dead by the_undertaker, survivor testimonies (8 volunteers), music by the_radio_host, special meal by the_chef. the_council approved. the_general ordered a security stand-down for the duration of the service. All personnel welcome.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "Salt Freeholder emissary visit",
+        "outcome": "the_general reported that the_Freeholder will send a second emissary on day 100 to formalise the trade agreement. the_quartermaster has prepared the trade goods. the_general will host the emissary in the meeting room. the_therapist offered to attend as observer. Approved.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "Asha health report",
+        "outcome": "the_surgeon reported Asha (the first bunker-born infant) is developing normally. Weight gain on track. Motor skills age-appropriate. the_surgeon says the child is the healthest person in the bunker because she has never been on the surface. the_council noted this with mixed emotions.",
+        "vote": "noted"
+      }
+    ],
+    "action_items": [
+      "the_priest: finalise anniversary programme by day 94",
+      "the_general: emissary reception protocol by day 99",
+      "the_surgeon: monthly infant health reports"
+    ],
+    "notes": "The anniversary is approaching. 95 days. The bunker has changed in that time. We have trade, a court, a school, a garden, and a cemetery. the_therapist said that is either a lot or very little depending on how you measure it. the_general said they measure it in survival. We are still here.",
+    "cross_refs": [
+      "radio_broadcast_rundowns",
+      "undertaker_burial_records",
+      "new_arrival_intake_interviews"
+    ],
+    "tags": [
+      "anniversary_plan",
+      "salt_freeholder_emissary",
+      "infant_health",
+      "95_days"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_013",
+    "day": 97,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "anniversary aftermath",
+      "spring route assessment",
+      "long-term planning"
+    ],
+    "decisions": [
+      {
+        "item": "anniversary aftermath",
+        "outcome": "the_general reported the day 95 memorial service was successful. 47 attendees. 8 testimonies. No incidents. the_therapist said the service served an important communal function. the_radio_host broadcast the service. External signal bounce suggests at least 3 listeners received the broadcast.",
+        "vote": "noted"
+      },
+      {
+        "item": "spring route assessment",
+        "outcome": "the_hunter (invited) reported spring surface routes. Frozen river ice unsafe. Northern overland routes thawing. Southern routes passable. the_courier recommends shifting to southern routes for expeditions. the_general approved route change.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "long-term planning",
+        "outcome": "the_general proposed a 6-month strategic plan. Targets: formalise trade with 3 external settlements, achieve 50 percent food self-sufficiency from greenhouse, reduce fuel consumption by 15 percent, complete all security remediation. the_council approved the framework. Quarterly review scheduled.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_general: 6-month strategic plan document by day 100",
+      "the_hunter: southern route survey by day 102",
+      "the_quartermaster: food self-sufficiency projection by day 100"
+    ],
+    "notes": "The council is thinking beyond survival now. The 6-month plan is the first time the bunker has planned for a future that extends beyond the next crisis. the_therapist says this is the difference between existing and living. the_general says it is the difference between a bunker and a community.",
+    "cross_refs": [
+      "patrol_debriefs",
+      "radio_broadcast_rundowns",
+      "greenhouse_cultivation_logs"
+    ],
+    "tags": [
+      "anniversary_aftermath",
+      "spring_routes",
+      "long_term_planning",
+      "strategic_framework"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_014",
+    "day": 102,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "6-month plan progress",
+      "seed vault fatality follow-up",
+      "children art exhibition"
+    ],
+    "decisions": [
+      {
+        "item": "6-month plan progress",
+        "outcome": "the_general reported initial progress: trade contact with Salt Freeholders established, Shallows Market contact established. Greenhouse production at 7 percent of caloric needs, projected to reach 15 percent by month 3. Fuel consumption down 8 percent from Variac bypass. Security remediation 75 percent complete.",
+        "vote": "noted"
+      },
+      {
+        "item": "seed vault fatality follow-up",
+        "outcome": "the_architect reported the seed vault access tunnel is permanently collapsed. No alternative access route identified. the_general ordered the tunnel entrance sealed and marked as hazardous. the_undertaker burial of the_hazmat_tech completed day 90.",
+        "vote": "unanimous_approve_sealing"
+      },
+      {
+        "item": "children art exhibition",
+        "outcome": "the_teacher (invited) proposed a children art exhibition in corridor A on day 104. 12 pieces from 6 children. the_council approved. the_radio_host will announce on the broadcast. the_chef will provide refreshments.",
+        "vote": "unanimous"
+      }
+    ],
+    "action_items": [
+      "the_architect: seal seed vault tunnel entrance by day 105",
+      "the_teacher: art exhibition setup day 103",
+      "the_quartermaster: monthly 6-month plan progress report"
+    ],
+    "notes": "The 6-month plan is on track. The seed vault is sealed. The children are making art. These three things can be true at the same time. the_council is learning to hold multiple truths.",
+    "cross_refs": [
+      "patrol_debriefs",
+      "undertaker_burial_records",
+      "childrens_artwork_batch_2"
+    ],
+    "tags": [
+      "plan_progress",
+      "seed_vault_sealed",
+      "art_exhibition",
+      "multiple_truths"
+    ]
+  },
+  {
+    "minutes_id": "council_minutes_015",
+    "day": 107,
+    "attendees": [
+      "the_general",
+      "the_quartermaster",
+      "the_surgeon",
+      "the_therapist",
+      "the_architect",
+      "the_electrician",
+      "the_priest"
+    ],
+    "agenda": [
+      "Salt Freeholder formal agreement",
+      "radio signal follow-up",
+      "greenhouse first major harvest"
+    ],
+    "decisions": [
+      {
+        "item": "Salt Freeholder formal agreement",
+        "outcome": "the_Freeholder emissary visited day 100. Formal trade agreement signed (verbal, witnessed by council). Terms: 2kg salt per 1kg dried goods or smoked fish. Monthly exchanges. Information exchange encouraged. the_Freeholder also offered intelligence about 4 additional settlements. the_general accepted.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "radio signal follow-up",
+        "outcome": "the_radio_host reported 7.2 MHz monitoring over 15 days. No repeat of the fragment broadcast. the_electrician analysed the signal characteristics. Conclusion: the transmission was real, from a fixed location approximately 80km north. the_signal may have been automated or the operator may have moved on. Continued monitoring at reduced priority.",
+        "vote": "unanimous"
+      },
+      {
+        "item": "greenhouse first major harvest",
+        "outcome": "the_botanist (invited) reported the first major greenhouse harvest: 45kg turnips, 12kg barley, 8kg potatoes, 3kg mushrooms, 2kg herbs. Total caloric value: approximately 44,000 kcal. This represents 7 percent of bunker monthly caloric needs. the_botanist projects 15 percent by month 4 with the seed vault ampoules planted.",
+        "vote": "noted"
+      }
+    ],
+    "action_items": [
+      "the_quartermaster: first formal salt trade shipment by day 115",
+      "the_radio_host: 7.2 MHz monitoring weekly",
+      "the_botanist: seed vault ampoule planting schedule by day 110"
+    ],
+    "notes": "The Salt Freeholder agreement is the bunker first formal external treaty. the_general says it is the beginning of diplomacy. the_quartermaster says it is the beginning of economics. Both are correct. The greenhouse harvest is small but it is real food from real soil grown by real hands. It is the future.",
+    "cross_refs": [
+      "bunker_trade_ledger_batch_2",
+      "radio_broadcast_rundowns",
+      "greenhouse_cultivation_logs",
+      "patrol_debriefs"
+    ],
+    "tags": [
+      "formal_trade_agreement",
+      "radio_signal",
+      "greenhouse_harvest",
+      "diplomacy",
+      "economics"
+    ]
+  }
+]

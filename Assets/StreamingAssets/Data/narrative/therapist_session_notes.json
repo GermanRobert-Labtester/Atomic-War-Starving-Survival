@@ -1,0 +1,342 @@
+[
+  {
+    "session_id": "therapy_session_001",
+    "patient": "the_bouncer",
+    "day": 42,
+    "duration_min": 45,
+    "presenting_issue": "Recurrent nightmares. Wakes swinging. Hit the wall twice last night, knuckles split.",
+    "observations": "Patient sits with back to wall, scans room. Hands are wrapped in improvised bandages. Speaks in fragments. Flinches at the sound of the ventilation fan cycling on.",
+    "therapist_approach": "Grounding exercises. Asked him to name five things he can hear. He named them all, including the frequency of the fluorescent hum. Hyper-vigilant auditory awareness.",
+    "assessment": "Classic hypervigilance with startle response. The nightmares are likely replays of whatever happened before he arrived. He will not say. Progress: he stayed seated for the full session.",
+    "follow_up": "Next session: introduce controlled breathing. Bring the metronome from the mechanic, steady rhythm may help regulate.",
+    "tags": [
+      "ptsd",
+      "nightmares",
+      "hypervigilance",
+      "somatic"
+    ]
+  },
+  {
+    "session_id": "therapy_session_002",
+    "patient": "the_widow",
+    "day": 44,
+    "duration_min": 50,
+    "presenting_issue": "Cannot sleep in the dormitory. Says the breathing of others makes her feel trapped. Has been sleeping in the laundry alcove.",
+    "observations": "Patient is articulate but emotionally flat. Describes her husband in present tense, then catches herself. No tears. Hands folded in lap, perfectly still.",
+    "therapist_approach": "Did not challenge the present-tense references. Let her talk about the laundry alcove instead. She has made a nest there from clean towels. It smells of lye soap.",
+    "assessment": "Complicated grief with avoidance. The dormitory triggers claustrophobia because she associates enclosed spaces with the event that killed her husband. The laundry alcove is her transitional object, a controlled environment.",
+    "follow_up": "Do not force her back to the dormitory yet. The alcove is functional. When she is ready, she will move.",
+    "tags": [
+      "grief",
+      "avoidance",
+      "sleep_displacement",
+      "complicated_bereavement"
+    ]
+  },
+  {
+    "session_id": "therapy_session_003",
+    "patient": "the_exhausted_father",
+    "day": 47,
+    "duration_min": 30,
+    "presenting_issue": "Panic attacks when surface assignments require leaving the bunker. Missed two rotation calls. Says he cannot leave his daughter unprotected.",
+    "observations": "Patient is visibly fatigued, dark circles under eyes. His daughter (survivor_family_child) is healthy and well-fed, suggesting he is giving her his rations. He speaks about her with intense focus, as if she is the only real thing.",
+    "therapist_approach": "Explored what unprotected means. He described a scenario where raiders enter while he is outside. The fear is not of the surface but of failing as a parent. I told him his daughter is cared for by the_teacher during his shifts.",
+    "assessment": "Agoraphobia rooted in parental responsibility rather than open-space fear. The panic is a displacement of guilt. He believes he should be able to protect her from everything, including radiation, and his inability to do so manifests as physical symptoms.",
+    "follow_up": "Arrange for him to do internal maintenance shifts for now. Surface exposure should be gradual. First step: stand in the airlock with the door closed for five minutes.",
+    "tags": [
+      "panic_disorder",
+      "agoraphobia",
+      "parental_guilt",
+      "surface_avoidance"
+    ]
+  },
+  {
+    "session_id": "therapy_session_004",
+    "patient": "the_addict",
+    "day": 49,
+    "duration_min": 20,
+    "presenting_issue": "Relapsed. Found him behind the compost bay with a tincture of unknown origin. Smelled like willow bark and ethanol.",
+    "observations": "Patient is defensive, then contrite, then angry, all within the session. Pacing. Says he was managing until day 45 when the courier came back from the surface with news of a settlement that sounds like where he grew up.",
+    "therapist_approach": "Did not shame. Asked what the settlement was called. He could not remember. Asked what he felt when he heard the name. He said nothing, then said everything. Wept for the first time in treatment.",
+    "assessment": "Relapse triggered by geographical memory. The settlement name unlocked a grief he has been holding with white-knuckle sobriety. The substance was likely improvised painkiller, not hard narcotic. Still a violation of bunker medical protocol.",
+    "follow_up": "Increase session frequency to twice weekly. Refer to the_surgeon for physical assessment of the tincture. Do not involve the court; this is medical, not disciplinary.",
+    "tags": [
+      "relapse",
+      "addiction",
+      "geographical_trigger",
+      "improvised_substance"
+    ]
+  },
+  {
+    "session_id": "therapy_session_005",
+    "patient": "the_hoarder",
+    "day": 52,
+    "duration_min": 40,
+    "presenting_issue": "the_quartermaster reports patient has been stockpiling items in a crawlspace behind the water treatment room. Found: 14 spoons, 3 lengths of wire, a broken clock, 22 buttons, a jar of nails.",
+    "observations": "Patient becomes agitated when the word stockpile is used. Insists the items are saved for when they are needed. Eyes track the door constantly. Says he grew up with nothing and will not go back.",
+    "therapist_approach": "Asked him to show me the collection. He did, proudly. Each item had a purpose. The spoons were for trading. The wire was for repairs. The buttons were his mother's. The jar of nails was found in a collapsed house on day 1.",
+    "assessment": "Hoarding behaviour rooted in scarcity trauma. The items are not random; they represent control over an environment that has been fundamentally uncontrollable. The buttons are the emotional anchor. Removing them would be experienced as a second loss of his mother.",
+    "follow_up": "Negotiate a compromise. He keeps the collection but moves it to a designated shelf in his quarters. the_quartermaster to conduct a monthly inventory together. Transparency reduces the shame cycle.",
+    "tags": [
+      "hoarding",
+      "scarcity_trauma",
+      "control_behaviour",
+      "object_attachment"
+    ]
+  },
+  {
+    "session_id": "therapy_session_006",
+    "patient": "the_psychopath",
+    "day": 55,
+    "duration_min": 35,
+    "presenting_issue": "Mandated session after incident in the kitchen. Pushed the_chef against the hot stove. No burns but the_chef is now refusing to work the same shift.",
+    "observations": "Patient is calm, cooperative, and entirely without remorse. Describes the incident as a corrective action. Says the_chef was wasting flour and someone needed to stop it. Maintains eye contact throughout. Smiles at inappropriate moments.",
+    "therapist_approach": "Did not attempt empathy exercises; they are performative for this patient. Instead, focused on consequences. Asked him to predict what happens if he pushes someone into a stove again. He said he would be confined. I confirmed.",
+    "assessment": "Instrumental aggression, not reactive. The patient calculated that the_chef's behaviour was inefficient and acted. The lack of affective empathy is consistent with prior assessment. Risk to community is managed by clear boundaries, not by expecting emotional change.",
+    "follow_up": "Recommend to the_general that patient be assigned to solo tasks. Surface patrol or solo maintenance. Reduce contact density with other survivors. This is containment, not treatment.",
+    "tags": [
+      "mandated",
+      "instrumental_aggression",
+      "low_empathy",
+      "community_risk"
+    ]
+  },
+  {
+    "session_id": "therapy_session_007",
+    "patient": "the_naive_son",
+    "day": 58,
+    "duration_min": 45,
+    "presenting_issue": "His parents (the_exhausted_father, the_fierce_mother) report he has stopped speaking to them. He is 16. Leaves notes on their shelf instead.",
+    "observations": "Patient is not hostile. He is distant, polite, and preternaturally calm. Says he has nothing to say to them because they do not hear him. When asked what he wants them to hear, he said that he is not a child and the bunker is not a home and none of this is real.",
+    "therapist_approach": "Let him read one of his notes aloud. It was three pages, meticulously written, about the ethics of rationing. He has been reading the_historian's books. His argument was coherent and unsettling.",
+    "assessment": "Adolescent individiation amplified by extreme environment. The notes are a developmentally appropriate attempt at autonomy, but the content suggests existential distress beyond normal teenage rebellion. He is grappling with meaning in a space that offers none.",
+    "follow_up": "Encourage the_historian to engage him in structured discussion. Give him intellectual work that channels the existential energy. Do not pathologize the silence; it is communication.",
+    "tags": [
+      "adolescent",
+      "familial_strain",
+      "existential_distress",
+      "individuation"
+    ]
+  },
+  {
+    "session_id": "therapy_session_008",
+    "patient": "the_cop",
+    "day": 61,
+    "duration_min": 30,
+    "presenting_issue": "Voluntary. Says he cannot stop checking the blast door locks. Has been doing three rounds per night instead of one. the_general has asked him to scale back.",
+    "observations": "Patient is exhausted but resistant to the idea that his behaviour is problematic. Says someone has to be vigilant. Describes the lock-checking as a duty, not a compulsion. Pupils are dilated; likely self-medicating with caffeine from the_chef's tea stores.",
+    "therapist_approach": "Reframed the behaviour. Told him vigilance is valued but diminishing returns set in after the second check. Asked when he last felt the door was actually secure. He could not name a time.",
+    "assessment": "OCD-pattern compulsive checking, masked as duty. The pre-war identity of law enforcement provides a narrative framework that makes the compulsion feel purposeful. The caffeine is worsening the anxiety cycle.",
+    "follow_up": "Negotiate a reduction to two rounds. the_general to formally acknowledge the patrol in the duty log so it feels sanctioned. Reduce caffeine access gradually, not cold-turkey.",
+    "tags": [
+      "ocd_pattern",
+      "compulsive_checking",
+      "duty_masking",
+      "caffeine_dependency"
+    ]
+  },
+  {
+    "session_id": "therapy_session_009",
+    "patient": "the_empath",
+    "day": 63,
+    "duration_min": 55,
+    "presenting_issue": "Patient is absorbing everyone else's distress. Other survivors report she cries when they cry, flinches when they flinch. She says she cannot turn it off.",
+    "observations": "Patient is physically depleted. Has lost weight. Says she dreams other people's dreams. She described the_bouncer's nightmares in detail before I asked. She should not know those details.",
+    "therapist_approach": "Established a boundary exercise. Asked her to place her hands on her own chest and say her name. She could not do it without shaking. We practiced for twenty minutes before she managed it.",
+    "assessment": "Extreme affective empathy with boundary dissolution. In a normal environment this would be a personality trait; here it is a survival risk. She is burning calories on other people's stress responses. If unchecked, she will develop secondary traumatic stress for the entire bunker.",
+    "follow_up": "Teach grounding and boundary visualization daily. Assign her to the_greenhouse where plants do not have affect. Monitor caloric intake. If she continues to lose weight, consider reducing her contact with high-distress survivors.",
+    "tags": [
+      "empathy_overload",
+      "boundary_dissolution",
+      "secondary_trauma",
+      "weight_loss"
+    ]
+  },
+  {
+    "session_id": "therapy_session_010",
+    "patient": "the_blind_preacher",
+    "day": 66,
+    "duration_min": 40,
+    "presenting_issue": "the_priest reports patient has been holding unauthorized sermons in the dormitory at night. Other survivors are attending. Some are frightened.",
+    "observations": "Patient is blind from radiation cataracts, pre-war. Speaks with resonance and cadence that commands attention. Does not seem to believe he is doing anything wrong. Says the dark is his pulpit and God speaks louder in it.",
+    "therapist_approach": "Did not challenge the theology. Asked what he tells the people who come to him. He said he tells them it will be okay. I asked if he believes that. He was silent for a long time.",
+    "assessment": "The sermons are not pathological. They serve a genuine pastoral function that the_priest's scheduled services do not fulfill for some survivors. However, the nighttime setting and the content about God speaking in the dark are feeding the bunker's collective anxiety about the surface. The fear he is addressing is real; the framework is maladaptive.",
+    "follow_up": "Arrange a joint session with the_priest. Negotiate a shared pastoral schedule. Give the_blind_preacher a sanctioned time and place. Channel the impulse; do not suppress it.",
+    "tags": [
+      "unauthorized_pastoral",
+      "radiation_blindness",
+      "collective_anxiety",
+      "theological_distress"
+    ]
+  },
+  {
+    "session_id": "therapy_session_011",
+    "patient": "the_pyromaniac",
+    "day": 69,
+    "duration_min": 25,
+    "presenting_issue": "Found staring at the stove flame for 40 minutes. Would not respond when called. the_chef had to physically move him out of the kitchen.",
+    "observations": "Patient is calm post-episode. Describes the flame as the only clean thing left. Says it is the only thing that does exactly what it is supposed to do. No aggression, no distress during the trance.",
+    "therapist_approach": "Explored what clean means. He said the world is contaminated, everything is poisoned, but fire purifies. He knows this is not healthy. He said he knows.",
+    "assessment": "Fire fixation as dissociative coping. The trance state suggests a fugue-like episode rather than intentional behaviour. He is not a danger to the bunker deliberately, but an unattended stove near this patient is an unacceptable risk.",
+    "follow_up": "Patient must not be alone in the kitchen. Assign him to cold environments, surface patrol in winter, the cold store. Recommend the_electrician find him a task involving electrical systems where heat is a byproduct but not the focus.",
+    "tags": [
+      "fire_fixation",
+      "dissociative_trance",
+      "kitchen_safety",
+      "supervised_access"
+    ]
+  },
+  {
+    "session_id": "therapy_session_012",
+    "patient": "the_fierce_mother",
+    "day": 71,
+    "duration_min": 35,
+    "presenting_issue": "Her son (the_naive_son) is not speaking to her. She has started checking his food rations, ensuring he eats. She is not sleeping. Says if she stops moving, she will fall apart.",
+    "observations": "Patient is high-energy, rapid speech, intense eye contact. Her hands are chapped raw from washing. She has reorganized the laundry three times this week. Every surface she touches gets cleaned.",
+    "therapist_approach": "Let her exhaust herself. When she paused for breath, I asked what she was afraid would happen if she stopped. She said he would disappear. I asked how. She could not say.",
+    "assessment": "Anxiety-driven overfunctioning. Her son is growing away from her and she is interpreting normal adolescent development as imminent loss. The cleaning and food-monitoring are displacement activities. She is trying to control the uncontrollable.",
+    "follow_up": "Give her a responsibility that is tangible and finite. The greenhouse needs weeding. Physical work with visible results. Separate her from the laundry where she can ruminate. Reassess in one week.",
+    "tags": [
+      "anxiety",
+      "overfunctioning",
+      "adolescent_separation",
+      "displacement_activity"
+    ]
+  },
+  {
+    "session_id": "therapy_session_013",
+    "patient": "the_misanthrope",
+    "day": 74,
+    "duration_min": 15,
+    "presenting_issue": "Has not attended a communal meal in 12 days. Eats alone in the storage corridor. the_quartermaster says he is taking his allotted rations but nothing more.",
+    "observations": "Patient is terse, hostile to the process. Says therapy is for people who need other people and he has established that he does not. He is not malnourished. He is not distressed. He is alone by choice.",
+    "therapist_approach": "Asked one question: are you sleeping? He said yes. Are you eating? Yes. Are you in pain? No. Then I said we are done. He looked surprised.",
+    "assessment": "This patient does not require treatment. His isolation is a stable personality configuration, not a symptom. Forcing communal integration would cause more harm than the isolation itself. He is functional.",
+    "follow_up": "Close the file. Note that he is welcome to return. Do not mandate future sessions. Check with the_quartermaster quarterly to confirm he remains physically functional.",
+    "tags": [
+      "personality_configuration",
+      "voluntary_isolation",
+      "functional",
+      "file_closed"
+    ]
+  },
+  {
+    "session_id": "therapy_session_014",
+    "patient": "the_child_soldier",
+    "day": 77,
+    "duration_min": 30,
+    "presenting_issue": "the_teacher reports the patient (age 12) has been organizing the other children into squads. They march in the corridor. She has tried to stop it; he becomes aggressive.",
+    "observations": "Patient is small for his age, precise in movement, watchful. Speaks when spoken to, answers in complete sentences. Does not play. When asked what he does for fun, he said he maintains readiness.",
+    "therapist_approach": "Did not try to make him play. Asked him to describe his squad. He did, with tactical precision. Each child has a role. The youngest is the messenger because she is fast. I asked what they are preparing for. He said the next attack.",
+    "assessment": "He is recreating the structure that kept him alive. The squads are not play; they are a survival protocol he cannot decommission. The other children follow because it gives them a sense of control. This is both adaptive and concerning.",
+    "follow_up": "Work with the_teacher to channel this. Create structured activities that use his organizational skills without the military framing. Bunker safety patrols, supply sorting teams. Give him a role that serves the community without rehearsing war.",
+    "tags": [
+      "child_trauma",
+      "military_reenactment",
+      "organizational_drive",
+      "readiness_protocol"
+    ]
+  },
+  {
+    "session_id": "therapy_session_015",
+    "patient": "the_pollyanna",
+    "day": 80,
+    "duration_min": 40,
+    "presenting_issue": "Other survivors are finding her optimism exhausting. She thanks people for things that are not good. She said the radiation storm was a beautiful display of atmospheric chemistry.",
+    "observations": "Patient smiles constantly. The smile does not reach her eyes. When I asked her what she felt about the storm, she said terrible, and then smiled. The disconnect between affect and content is total.",
+    "therapist_approach": "Gently confronted the mismatch. Asked her to try saying something bad without smiling. She could not. Her face would not comply. She started crying and the smile stayed.",
+    "assessment": "Toxic positivity as a trauma response. The optimism is a lid on a pressure cooker. She believes that if she allows herself to feel the reality of their situation, she will collapse. The smile is a structural element, not a choice.",
+    "follow_up": "Create a private space where she is allowed to not be okay. Start with one minute. Sit with her in silence. When the crack appears, do not rush to fill it. This will take many sessions.",
+    "tags": [
+      "toxic_positivity",
+      "affect_mismatch",
+      "trauma_lid",
+      "smile_as_armor"
+    ]
+  },
+  {
+    "session_id": "therapy_session_016",
+    "patient": "the_hypochondriac",
+    "day": 83,
+    "duration_min": 25,
+    "presenting_issue": "the_surgeon reports this is the fourth time this week the patient has requested a medical examination. All previous exams found nothing. Patient insists something is wrong.",
+    "observations": "Patient is convinced he has internal bleeding. Says he can feel it. His hands are on his abdomen. He is not in pain. He has normal colour, normal vitals, normal everything.",
+    "therapist_approach": "Asked him to describe the feeling. He said it is a warmth, low and constant. I asked if he has ever felt it before the bunker. He said yes, always. It is his baseline body sensation that he has catastrophized.",
+    "assessment": "Somatic symptom disorder. The warmth is real; the interpretation is not. He is monitoring his interoception with a magnifying glass because the bunker has made him hyper-aware of bodily signals. Every sensation is a potential radiation symptom.",
+    "follow_up": "Coordinate with the_surgeon. One scheduled checkup per week, not on-demand. Between appointments, give him a body journal to record the sensation with intensity ratings. Data collection replaces catastrophic interpretation.",
+    "tags": [
+      "somatic_symptom",
+      "interoception_hypervigilance",
+      "health_anxiety",
+      "baseline_sensation"
+    ]
+  },
+  {
+    "session_id": "therapy_session_017",
+    "patient": "the_martyr",
+    "day": 86,
+    "duration_min": 45,
+    "presenting_issue": "Has volunteered for every undesirable task in the bunker. Took three extra generator shifts last week. Is now sleep-deprived and physically depleted. Refuses to stop.",
+    "observations": "Patient is gaunt, trembling slightly, but insists he is fine. Says there is always someone who needs help and he is willing. When asked what happens if he stops, he said then who will do it.",
+    "therapist_approach": "Asked him to list everyone currently doing undesirable tasks. He could. He knew every name, every burden. I asked who was doing his. He had no answer.",
+    "assessment": "Self-sacrifice as identity. The martyr role gives him meaning in a space where meaning is scarce. But he is on a trajectory toward physical collapse. His value system does not permit self-care. The only way to reach him is through the community: if others see him breaking down, they will insist he rest.",
+    "follow_up": "Speak to the_general about capping his shift allocation. Frame it as a bunker safety issue, not a personal limitation. He will accept an order more easily than a suggestion.",
+    "tags": [
+      "self_sacrifice",
+      "identity_through_service",
+      "physical_depletion",
+      "community_intervention"
+    ]
+  },
+  {
+    "session_id": "therapy_session_018",
+    "patient": "the_liar",
+    "day": 89,
+    "duration_min": 30,
+    "presenting_issue": "Caught telling the_botanist that the surface radiation has dropped to safe levels. It has not. the_botanist confronted him. Patient said he was giving her hope.",
+    "observations": "Patient is charming, contrite, and already composing the next explanation. Says he knows it was wrong but the_botanist was so discouraged and the numbers change every week anyway.",
+    "therapist_approach": "Asked what he believes the actual radiation level is. He knew it precisely. He is not confused; he chose to distort. Asked why hope requires a lie. He had no answer.",
+    "assessment": "Pathological reassurance-seeking through fabrication. The patient is not lying for gain; he is lying to manage other people's emotional states because he cannot tolerate their distress. This is a form of the_pollyanna's problem but with active deception rather than affective masking.",
+    "follow_up": "The_botanist needs to hear the truth from a credible source. Arrange a joint radiation briefing with the_hazmat_tech. Patient must understand that false hope is more damaging than honest despair. Monitor for further fabrications.",
+    "tags": [
+      "pathological_reassurance",
+      "fabrication",
+      "distress_intolerance",
+      "community_trust"
+    ]
+  },
+  {
+    "session_id": "therapy_session_019",
+    "patient": "the_general",
+    "day": 92,
+    "duration_min": 50,
+    "presenting_issue": "Voluntary. Says he cannot make decisions about the Kilo-1 refusal case. The therapist objected to turning the applicant away. He cannot tell if he made the right call.",
+    "observations": "Patient is composed but his hands are clasped tightly. He speaks in operational language even about emotional matters. Says the bunker cannot support another mouth but the therapist said the refusal was inhumane. He keeps turning the word inhumane over.",
+    "therapist_approach": "Did not offer an opinion on the decision. Asked him what he would tell a subordinate in the same situation. He said he would tell them the decision was correct based on available information. I asked if he believed it. He said he did not know anymore.",
+    "assessment": "Moral injury. Not guilt about a wrong action but erosion of the moral framework that previously guided his decisions. The commander identity is cracking under the weight of civilian ethics. He is discovering that military triage logic does not feel the same when applied to people he sees every day.",
+    "follow_up": "This is the most important work in the bunker. If the_general loses his moral coherence, the security structure follows. Schedule weekly sessions. Do not treat; witness. Let him think out loud in a space where the answer does not have to be operational.",
+    "tags": [
+      "moral_injury",
+      "command_burden",
+      "ethical_erosion",
+      "leadership_isolation"
+    ]
+  },
+  {
+    "session_id": "therapy_session_020",
+    "patient": "the_serial_killer",
+    "day": 95,
+    "duration_min": 40,
+    "presenting_issue": "Mandated quarterly assessment. No incidents since intake. Has been assigned to solo compost duty. Other survivors avoid him. He seems content.",
+    "observations": "Patient is methodical, calm, and highly intelligent. Speaks about the compost system with genuine interest. Has developed a temperature-management protocol that has improved decomposition rates by 30 percent. When I asked about his past, he said he has changed. I asked how. He said he found a use for the impulse.",
+    "therapist_approach": "Did not challenge the change narrative. Explored what the impulse feels like now. He said it is quiet. He channels it into the precision of the compost work. The turning, the layering, the temperature control. He said destruction and creation require the same attention to detail.",
+    "assessment": "Sublimation. The violent impulse has not disappeared; it has been redirected into meticulous physical work. This is the best possible outcome for this patient. The risk is not zero. If the compost assignment is removed, the impulse will seek another outlet. He must never be moved to a position involving vulnerable people.",
+    "follow_up": "Maintain current assignment indefinitely. the_quartermaster to keep him on solo tasks. Do not reduce his responsibilities as a reward; the work itself is the treatment. Next quarterly assessment in 90 days.",
+    "tags": [
+      "mandated",
+      "sublimation",
+      "impulse_redirection",
+      "long_term_containment"
+    ]
+  }
+]
