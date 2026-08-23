@@ -6,10 +6,10 @@
       "id": "disease_cholera",
       "display_name": "Cholera",
       "vector": "water",
-      "lethality": 0.30,
+      "lethality": 0.3,
       "incubation_days": 2,
       "illness_days": 4,
-      "infectivity": 0.40,
+      "infectivity": 0.4,
       "spread_interval_days": 2,
       "spread_radius": 3,
       "countermeasure_item_id": "clean_water",
@@ -48,15 +48,39 @@
       "id": "disease_spore_blight",
       "display_name": "Spore Blight",
       "vector": "spore",
-      "lethality": 0.40,
+      "lethality": 0.4,
       "incubation_days": 2,
       "illness_days": 7,
-      "infectivity": 0.30,
+      "infectivity": 0.3,
       "spread_interval_days": 2,
       "spread_radius": 3,
       "countermeasure_item_id": "hazmat_suit",
       "guidance": "Engage air filtration and keep sealed kit on anyone who peeled mold off the walls. Spores live longer than patience.",
       "source_note": "A grey bloom that rode the dust down from the dead farms. It does not need a wound, only a breath."
+    },
+    {
+      "id": "disease_acute_radiation_syndrome",
+      "name": "Acute Radiation Syndrome",
+      "lethality": 0.8,
+      "infectivity": 0.0,
+      "spread_radius": 1,
+      "countermeasure_item_id": "iodine_pills"
+    },
+    {
+      "id": "disease_fungal_respiratory",
+      "name": "Fungal Respiratory Infection",
+      "lethality": 0.3,
+      "infectivity": 0.4,
+      "spread_radius": 2,
+      "countermeasure_item_id": "gas_mask"
+    },
+    {
+      "id": "disease_typhoid_waterborne",
+      "name": "Typhoid (Waterborne)",
+      "lethality": 0.5,
+      "infectivity": 0.3,
+      "spread_radius": 3,
+      "countermeasure_item_id": "clean_water"
     }
   ]
 }
