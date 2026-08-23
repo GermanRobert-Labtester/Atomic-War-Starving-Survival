@@ -11,7 +11,7 @@ namespace Ashfall.Core.Economy
         public static readonly string[] Known =
         {
             "food", "water", "medical", "fuel", "weapons", "tools",
-            "materials", "ammo", "documents", "luxury", "misc"
+            "materials", "ammo", "documents", "luxury", "misc", "contraband"
         };
 
         public static bool IsKnown(string category)
@@ -20,6 +20,46 @@ namespace Ashfall.Core.Economy
             for (int i = 0; i < Known.Length; i++)
                 if (Known[i] == category) return true;
             return false;
+        }
+
+        public static string DisplayName(string category)
+        {
+            return category switch
+            {
+                "food" => "Provisions",
+                "water" => "Hydration",
+                "medical" => "Medical Supplies",
+                "fuel" => "Energy Sources",
+                "weapons" => "Armaments",
+                "tools" => "Tools & Hardware",
+                "materials" => "Raw Materials",
+                "ammo" => "Munitions",
+                "documents" => "Intel",
+                "luxury" => "Comforts",
+                "misc" => "Miscellaneous",
+                "contraband" => "Forbidden Goods",
+                _ => category
+            };
+        }
+
+        public static string CategoryDescription(string category)
+        {
+            return category switch
+            {
+                "food" => "Nourishment for the long watch. Freshness varies. Some say the canned goods whisper when opened.",
+                "water" => "Clean water is life itself in the irradiated wastes. The universal measure. Every faction prices its offers against the litre.",
+                "medical" => "Bandages, antiseptics, and remedies for body and mind. The antiseptic stings worse than the wound.",
+                "fuel" => "Power the generators that keep the bunker's heart beating. A full can means warmth through the night. An empty can means a long, cold watch.",
+                "weapons" => "Tools of survival and defense in a hostile world. The brass is tarnished, the powder smells old. But a bullet is a bullet when the lights go out.",
+                "tools" => "The means to repair, build, and adapt. The prying end is polished bright from use. It opens doors, crates, and arguments.",
+                "materials" => "Raw resources for crafting and construction. Nothing is thrown away if it is still metal. The ground is full of it now.",
+                "ammo" => "Projectiles for ranged defense and hunting. Ammo holds value better than most promises.",
+                "documents" => "Knowledge is power, but dangerous knowledge doubly so. Paper currency from before, bundled with a band that still says a bank name nobody visits.",
+                "luxury" => "Small comforts that keep morale from fracturing completely. Wedding rings are the most common, then watches, then everything else.",
+                "misc" => "Odds and ends with unpredictable value. The wasteland runs on salvage.",
+                "contraband" => "Forbidden goods that could get you executed. Worth every rad you'll absorb trying to move them.",
+                _ => "A mysterious commodity of uncertain origin."
+            };
         }
     }
 
@@ -41,6 +81,24 @@ namespace Ashfall.Core.Economy
         public int stackSize = 10;
         public float weightKg = 1f;
         public string barterNote = string.Empty; // optional barter-relevant metadata
+
+        public string Description =>
+            category switch
+            {
+                "food" => "Nourishment for the long watch. Freshness varies. Some say the canned goods whisper when opened.",
+                "water" => "Clean water is life itself in the irradiated wastes. The universal measure. Every faction prices its offers against the litre.",
+                "medical" => "Bandages, antiseptics, and remedies for body and mind. The antiseptic stings worse than the wound.",
+                "fuel" => "Power the generators that keep the bunker's heart beating. A full can means warmth through the night. An empty can means a long, cold watch.",
+                "weapons" => "Tools of survival and defense in a hostile world. The brass is tarnished, the powder smells old. But a bullet is a bullet when the lights go out.",
+                "tools" => "The means to repair, build, and adapt. The prying end is polished bright from use. It opens doors, crates, and arguments.",
+                "materials" => "Raw resources for crafting and construction. Nothing is thrown away if it is still metal. The ground is full of it now.",
+                "ammo" => "Projectiles for ranged defense and hunting. Ammo holds value better than most promises.",
+                "documents" => "Knowledge is power, but dangerous knowledge doubly so. Paper currency from before, bundled with a band that still says a bank name nobody visits.",
+                "luxury" => "Small comforts that keep morale from fracturing completely. Wedding rings are the most common, then watches, then everything else.",
+                "misc" => "Odds and ends with unpredictable value. The wasteland runs on salvage.",
+                "contraband" => "Forbidden goods that could get you executed. Worth every rad you'll absorb trying to move them.",
+                _ => "A mysterious commodity of uncertain origin."
+            };
     }
 
     /// <summary>Load outcome: goods plus any validation errors (domain result, no exceptions).</summary>
