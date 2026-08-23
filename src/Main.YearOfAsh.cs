@@ -29,6 +29,19 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Year of Ash fields (GAP-ARCH-01 Phase 1) ──
+        private YearOfAshHostSession _yearOfAsh = null!;
+        private bool _yearOfAshDirty;
+        private DoorEncounterModal _doorModal = null!;
+        private QuestlineModal _questlineModal = null!;
+        private int _doorEncounterIndex = 0;
+        private FactionWarMapWidget _factionWarMap = null!;
+        private RadioBroadcastTerminal _radioTerminal = null!;
+        private GeothermalHeatingWidget _geothermalWidget = null!;
+        private RadonVentilationWidget _radonWidget = null!;
+        private VBoxContainer _yearOfAshPanel = null!;
+        private VBoxContainer _rightColumn = null!;
+
         /// <summary>
         /// Pay the warlord's tribute from the canonical Holdfast inventory.
         /// Consumption happens here (the inventory authority); settlement and

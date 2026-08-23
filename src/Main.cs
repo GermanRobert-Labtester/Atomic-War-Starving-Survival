@@ -46,101 +46,10 @@ namespace AtomicWar.GodotApp
         private VBoxContainer _menuContainer = null!;
         private TextEdit _codexViewer = null!;
 
-        // Year of Ash (Days 180-360)
-        private YearOfAshHostSession _yearOfAsh = null!;
-        private bool _yearOfAshDirty;
-        private DoorEncounterModal _doorModal = null!;
-        private QuestlineModal _questlineModal = null!;
-        private int _doorEncounterIndex = 0;
-        private FactionWarMapWidget _factionWarMap = null!;
-        private RadioBroadcastTerminal _radioTerminal = null!;
-        private GeothermalHeatingWidget _geothermalWidget = null!;
-        private RadonVentilationWidget _radonWidget = null!;
-        private VBoxContainer _yearOfAshPanel = null!;
-        private VBoxContainer _rightColumn = null!;
-        private PhantomMemoryHostSession _phantomMemory = null!;
-        private Phase0HostSession _phase0 = null!;
-        private bool _phase0Dirty;
-
-        // Phase 0 — Campaign Day Coordinator (single authority for day-advance)
-        private CampaignDayCoordinator _campaignDay = null!;
-        private DailyBriefingState _dailyBriefing = null!;
-        private DailyBriefingModal _dailyBriefingModal = null!;
-        private bool _briefingPending;
-        private bool _dailyBriefingDirty;
-
-        // Phase 1.7 — Medical Ward (item 11)
-        private Ashfall.Core.Medical.MedicalWardSystem _medicalWard = null!;
-        private bool _medicalWardDirty;
-        // Phase 1.9 — Memorial (item 15)
-        private Ashfall.Core.Memorial.MemorialSystem _memorial = null!;
-        private bool _memorialDirty;
-        // Phase 2.10 — Travel Map (item 4)
-        private Ashfall.Core.World.WastelandMapSystem _wastelandMap = null!;
-        // Phase 2.11 — Encounter Choice Resolver (item 5)
-        private Ashfall.Core.Expeditions.EncounterChoiceResolver _encounterChoice = null!;
-        private bool _encounterChoiceDirty;
-        private DoseLedgerHostSession _doseLedger = null!;
-        private bool _doseLedgerDirty;
-        private DoseRegisterSurface _doseSurface = null!;
-
-        // Muster (Expansion 06, Days 180-360 escalation)
-        private MusterHostSession _muster = null!;
-        private CurrentsRosterWidget _currentsRoster = null!;
-        private ApproachSelectionModal _approachModal = null!;
-        private DeserterCoalitionCampWidget _campWidget = null!;
-        private JournalWitnessPanel _witnessPanel = null!;
-
-        // ASHFALL: THE VERDICT (Expansion 08 — the machine that keeps the count)
-        private AtomicWar.GodotApp.VerdictHostSession _verdict = null!;
-        private Godot.Label _verdictReadoutLabel = null!;
-        private VerdictPanel _verdictPanel = null!;
-        private bool _verdictDirty;
-
-        // ASHFALL: THE BLACK FLOTILLA (Expansion 09 — maritime salvage & stealth dive)
-        private MaritimeHostSession _maritime = null!;
-        private bool _maritimeDirty;
-        private DeepCoastHostSession _deepCoast = null!;
-
-        // Expedition (Encounters port + dive instance)
-        private ExpeditionHostSession _expeditions = null!;
-        private bool _expeditionDirty;
-
-        // ASHFALL: COMBAT EXPANSION (Expansion 06 — tactical combat authority)
-        private CombatHostSession _combat = null!;
-        private bool _combatDirty;
-
-        // Narrative (encounters port), Medical (chemical dependency), World (weather), Crafting
-        private NarrativeHostSession _narrative = null!;
-        private bool _narrativeDirty;
-        private MedicalHostSession _medical = null!;
-        private bool _medicalDirty;
-        private WorldHostSession _world = null!;
-        private bool _worldDirty;
-        private RadioHostSession _radio = null!;
-        private CraftingHostSession _crafting = null!;
-        private bool _craftingDirty;
-
-        // ASHFALL: traveling caravans (Expansion V spec §3.3 — wandering merchants)
-        private TravelingCaravanHostSession _caravans = null!;
-        private bool _caravansDirty;
-
-        // Inventory (ported from Unity _Game/Inventory)
-        private InventoryHostSession _inventory = null!;
-        private AtomicWar.GodotApp.UI.InventoryPanel _inventoryPanel = null!;
-
-        // Survivors (needs + radiation, ported from Unity Survivors/Radiation)
-        private SurvivorsHostSession _survivors = null!;
-        private EconomyHostSession _economy = null!;
-        private bool _economyDirty;
-        private EconomyMarketPanel _economyPanel = null!;
-        private UtilityAiHostSession _utilityAi = null!;
-        private UtilityAiPanel _utilityAiPanel = null!;
+        // Questline master registry (loaded early for expansion quest ID validation)
+        private QuestlineMasterCatalog _questlineMaster = null!;
 
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
-        private JournalSystem _journal = null!;
-        private JournalCodex _journalCodex = null!;
-        private JournalBookUI _journalBook = null!;
         private Ashfall.Core.Events.SimpleEventBus _eventBus = new Ashfall.Core.Events.SimpleEventBus();
         private AtomicWar.GodotApp.Host.HostEventAdapter _hostEventAdapter = null!;
         private string _dataDir = string.Empty;
@@ -159,31 +68,6 @@ namespace AtomicWar.GodotApp
         // on close, and on quit instead.
         private bool _journalDirty;
 
-        // Phase 0 core slice: ice-road seasonal gate + Holdfast catalogs
-        private CoreDemoSession _core = null!;
-        // Playable Holdfast vertical slice: catalog-backed terminal + mutable trade state.
-        private HoldfastRuntimeSession _holdfastRuntime = null!;
-        private HoldfastTerminalPanel _holdfastTerminal = null!;
-        // ASHFALL: THE DUTY ROSTER (Exp 02) — chart, marks, encounters
-        private DutyRosterHostSession _dutyRoster = null!;
-        private ExpansionHostSession _expansions = null!;
-        // ASHFALL: THE SILENT FOUNDRY (Exp 10) — thin presentation wrapper over
-        // the Core system owned by the expansion hub.
-        private AtomicWar.GodotApp.SilentFoundryHostSession _silentFoundry = null!;
-        private SilentFoundryPanel _silentFoundryPanel = null!;
-        // ASHFALL: DISEASE EXPANSION — thin presentation wrapper over the Core
-        // contagion engine owned by the expansion hub (rides the hub save).
-        private AtomicWar.GodotApp.DiseaseHostSession _disease = null!;
-        private AtomicWar.GodotApp.Economy.TradeScreenGodotPanel _tradePanel = null!;
-        private Ashfall.Core.Radio.FactionRadioEngine _tradeRadio = null!;
-        // Holdfast S1 save coalescing (same pattern as the journal): any state
-        // change in IceRoad or Census marks the save dirty; the diagnostics tick
-        // flushes it. Quit and the explicit menu button flush immediately.
-        private bool _holdfastDirty;
-        // Duty Roster (Exp 02) and Expansion Hub save coalescing — same pattern.
-        private bool _dutyRosterDirty;
-        private bool _expansionHubDirty;
-        private bool _foundryDirty;
 
         // Sleep / Advance confirmation fields
         private const double AdvanceCountdownDefaultSeconds = 3.0;
@@ -191,83 +75,6 @@ namespace AtomicWar.GodotApp
         private bool _advanceConfirmed;
         private bool _advanceCancelled;
 
-        // ── Game flow state ───────────────────────────────────────────
-        private MainMenuPanel _mainMenu = null!;
-        private GameOverPanel _gameOver = null!;
-        private GameHudOverlay _hudOverlay = null!;
-        private GameDashboardPanel _dashboard = null!;
-        private VBoxContainer _gameUiContainer = null!;
-        private AudioManager _audio = null!;
-        private SettingsPanel _settingsPanel = null!;
-        private InventoryPanel _inventoryOverlay = null!;
-        private SurvivorsPanel _survivorsOverlay = null!;
-        private CraftingPanel _craftingPanel = null!;
-        private RadioPanel _radioPanel = null!;
-        private MedicalPanel _medicalPanel = null!;
-        private Phase0Panel _phase0Panel = null!;
-        private DutyRosterPanel _dutyRosterPanel = null!;
-        private EconomyOverlayPanel _economyOverlayPanel = null!;
-        private ExpeditionPanel _expeditionPanel = null!;
-        private WeatherPanel _weatherPanel = null!;
-        private QuestsPanel _questsPanel = null!;
-        private JournalPanel _journalPanel = null!;
-        private FactionsPanel _factionsPanel = null!;
-        private MusterPanel _musterPanel = null!;
-        private ExpansionsHubPanel _expansionsHubPanel = null!;
-        private StandingRecordPanel _standingRecordPanel = null!;
-        private MaritimePanel _maritimePanel = null!;
-        private DeepCoastPanel _deepCoastPanel = null!;
-        private CenturySeedPanel _centurySeedPanel = null!;
-        private EpiloguePanel _epiloguePanel = null!;
-        private CrossingQuestPanel _crossingQuestPanel = null!;
-        private ResearchPanel _researchPanel = null!;
-        private ShelterPanel _shelterPanel = null!;
-        private StartingLevelHostSession _startingLevel = null!;
-        private bool _startingLevelDirty;
-        private OpeningProtocolModal _openingProtocolModal = null!;
-        private PowerGridHostSession _powerGrid = null!;
-        private PowerGridPanel _powerGridPanel = null!;
-        private bool _powerGridDirty;
-        private GreenhouseHostSession _greenhouse = null!;
-        private GreenhousePanel _greenhousePanel = null!;
-        private bool _greenhouseDirty;
-        private CombatPanel _combatPanel = null!;
-        private MapPanel _mapPanel = null!;
-        private SurvivorDetailPanel _survivorDetailPanel = null!;
-        private InventoryDetailPanel _inventoryDetailPanel = null!;
-        private QuestDetailPanel _questDetailPanel = null!;
-        private AchievementsPanel _achievementsPanel = null!;
-        private WeatherDetailPanel _weatherDetailPanel = null!;
-        private RadiationDetailPanel _radiationDetailPanel = null!;
-        private EventsLogPanel _eventsLogPanel = null!;
-        private DutyRosterDetailPanel _dutyRosterDetailPanel = null!;
-        private EconomyDetailPanel _economyDetailPanel = null!;
-        private CombatDetailPanel _combatDetailPanel = null!;
-        private FactionDetailPanel _factionDetailPanel = null!;
-        private MedicalDetailPanel _medicalDetailPanel = null!;
-        private ExpeditionDetailPanel _expeditionDetailPanel = null!;
-        private RadioDetailPanel _radioDetailPanel = null!;
-        private ShelterDetailPanel _shelterDetailPanel = null!;
-        private SaveLoadPanel _saveLoadPanel = null!;
-        private TutorialPanel _tutorialPanel = null!;
-        private AfflictionsPanel _afflictionsPanel = null!;
-        private WeatherForecastPanel _weatherForecastPanel = null!;
-        private RadiationHistoryPanel _radiationHistoryPanel = null!;
-        private JournalDetailPanel _journalDetailPanel = null!;
-        private CombatHistoryPanel _combatHistoryPanel = null!;
-        private MapDetailPanel _mapDetailPanel = null!;
-        private EventDetailPanel _eventDetailPanel = null!;
-        private StatusPanel _statusPanel = null!;
-        private SurvivalDetailPanel _survivalDetailPanel = null!;
-        private CraftingDetailPanel _craftingDetailPanel = null!;
-        private TradeDetailPanel _tradeDetailPanel = null!;
-        private ResearchDetailPanel _researchDetailPanel = null!;
-        private WeatherHistoryPanel _weatherHistoryPanel = null!;
-        private FactionHistoryPanel _factionHistoryPanel = null!;
-        private MedicalHistoryPanel _medicalHistoryPanel = null!;
-        private ExpeditionHistoryPanel _expeditionHistoryPanel = null!;
-        private ShelterHistoryPanel _shelterHistoryPanel = null!;
-        private CraftingHistoryPanel _craftingHistoryPanel = null!;
         private enum GameState { Menu, Playing, GameOver }
         private GameState _state = GameState.Menu;
 
@@ -359,6 +166,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.JournalSelfTest:
                     RunSelfTestAndQuit();
+                    return;
+                case HostCliAction.JournalWeatherPanelSelfTest:
+                    GetTree().Quit(HostCli.RunJournalWeatherPanelSelfTest());
                     return;
                 case HostCliAction.JournalUiTest:
                     RunJournalUiTestAndQuit();
@@ -508,6 +318,11 @@ namespace AtomicWar.GodotApp
             SetupJournal();
             SetupIceRoad();
             SetupDutyRoster();
+            // Questline master registry: loaded early so expansion quest catalogs
+            // can validate their quest IDs against the canonical list.
+            _questlineMaster = new QuestlineMasterCatalogLoader(
+                new FileSystemIO(), new SystemTextJsonSerializer()).Load(_dataDir);
+            GD.Print($"[Ashfall Godot] Questline master: {_questlineMaster.Count} quest IDs registered");
             SetupExpansions();
             // Year of Ash used to initialise lazily on first button press, so its save
             // was not restored at boot and it was the only subsystem with no banner line.
@@ -536,7 +351,7 @@ namespace AtomicWar.GodotApp
             if (_diagnosticsLogAccum >= 1.0)
             {
                 _diagnosticsLogAccum = 0.0;
-                GD.Print($"[DevUI Diagnostics] FPS: {fps:F0} | Static Mem: {memMb:F1} MB | Godot {s_engineVersion}");
+                // GD.Print($"[DevUI Diagnostics] FPS: {fps:F0} | Static Mem: {memMb:F1} MB | Godot {s_engineVersion}");
             }
 
             // Flush any journal writes that were coalesced since the last tick.
@@ -626,17 +441,13 @@ namespace AtomicWar.GodotApp
                 // countdowns don't tick after the window closes.
                 CancelAdvanceConfirmation();
 
-                SaveJournal();
-                SaveHoldfast();
-                SaveHoldfastRuntime();
-                SaveDutyRoster();
-                SaveExpansionHub();
-                SavePhantomMemory();
-                SaveDoseLedger();
-                SaveMuster();
-                SaveInventory();
-                SaveSurvivors();
-                SaveEconomy();
+                // GAP-ARCH-01 Phase 0: save ALL 34 stores on window close, not just
+                // the original 11. The partial list silently dropped Verdict, Maritime,
+                // Expeditions, Combat, Narrative, Medical, World, Crafting, Caravans,
+                // YearOfAsh, Phase0, StartingLevel, Greenhouse, Radio, DailyBriefing,
+                // PowerGrid, MedicalWard, Memorial, SilentFoundry, Disease, WastelandMap,
+                // EncounterChoice, and all 21 ExpandedShelter stores.
+                SaveAll();
 
                 GetTree().Quit();
             }

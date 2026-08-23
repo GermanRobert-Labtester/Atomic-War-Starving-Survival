@@ -29,6 +29,14 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Economy fields (GAP-ARCH-01 Phase 1) ──
+        private EconomyHostSession _economy = null!;
+        private bool _economyDirty;
+        private TravelingCaravanHostSession _caravans = null!;
+        private bool _caravansDirty;
+        private AtomicWar.GodotApp.Economy.TradeScreenGodotPanel _tradePanel = null!;
+        private Ashfall.Core.Radio.FactionRadioEngine _tradeRadio = null!;
+
         private void FlushCaravanIfDirty()
         {
             if (_caravansDirty) SaveCaravans();

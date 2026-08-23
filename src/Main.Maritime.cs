@@ -29,6 +29,11 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Maritime fields (GAP-ARCH-01 Phase 1) ──
+        private MaritimeHostSession _maritime = null!;
+        private bool _maritimeDirty;
+        private DeepCoastHostSession _deepCoast = null!;
+
         private void FlushMaritimeIfDirty()
         {
             if (_maritimeDirty) SaveMaritime();

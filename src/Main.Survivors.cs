@@ -29,6 +29,10 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Survivor / UtilityAI fields (GAP-ARCH-01 Phase 1) ──
+        private SurvivorsHostSession _survivors = null!;
+        private UtilityAiHostSession _utilityAi = null!;
+
         private static string FormatSurvivorName(string id)
         {
             if (string.IsNullOrEmpty(id)) return "Unknown";

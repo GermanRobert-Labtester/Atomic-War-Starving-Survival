@@ -54,6 +54,10 @@ namespace AtomicWar.GodotApp
         // ── Shelter Assignment (orphan wired in this batch) ──
         private ShelterAssignmentHostSession _shelterAssignment = null!;
 
+        // Promoted from SetupExpandedShelterSystems local — Apprenticeship needs
+        // the core SurvivorRelationsSystem instance for its constructor.
+        private SurvivorRelationsSystem _survivorRelationsCore = null!;
+
         // ── 12 UI Panels ──
         private WaterTreatmentPanel _waterTreatmentPanel = null!;
         private AirlockSecurityPanel _airlockSecurityPanel = null!;
@@ -94,7 +98,31 @@ namespace AtomicWar.GodotApp
 
         private void SetupExpandedShelterSystems()
         {
-            // 1. Water Treatment
+            SetupWaterTreatment();
+            SetupAirlockSecurity();
+            SetupSurvivorRelations();
+            SetupRegionalTreaty();
+            SetupVinylMorale();
+            SetupWildlifeTrapping();
+            SetupExcavation();
+            SetupApprenticeship();
+            SetupShelterThermal();
+            SetupShelterSchedule();
+            SetupAutopsy();
+            SetupWaystation();
+            SetupSumpFlooding();
+            SetupDecontamination();
+            SetupKitchenNutrition();
+            SetupEquipmentCondition();
+            SetupLibraryStudy();
+            SetupArchiveDesk();
+            SetupContractorRoster();
+            SetupMentalHealthCrisis();
+            SetupShelterAssignment();   // last — post-wiring to Thermal + Phase0
+        }
+
+        private void SetupWaterTreatment()
+        {
             var wtState = WaterTreatmentSaveStore.TryLoad() ?? new WaterTreatmentState();
             var wtSys = new WaterTreatmentSystem(new GodotLog());
             wtSys.RestoreState(wtState);
@@ -104,8 +132,10 @@ namespace AtomicWar.GodotApp
             _waterTreatmentPanel.Bind(_waterTreatment);
             _waterTreatmentPanel.Visible = false;
             AddChild(_waterTreatmentPanel);
+        }
 
-            // 2. Airlock Security
+        private void SetupAirlockSecurity()
+        {
             var asState = AirlockSecuritySaveStore.TryLoad() ?? new AirlockSecurityState();
             var asSys = new AirlockSecuritySystem(new SeededRng(1986), new GodotLog());
             asSys.RestoreState(asState);
@@ -115,10 +145,13 @@ namespace AtomicWar.GodotApp
             _airlockSecurityPanel.Bind(_airlockSecurity);
             _airlockSecurityPanel.Visible = false;
             AddChild(_airlockSecurityPanel);
+        }
 
-            // 3. Survivor Relations
+        private void SetupSurvivorRelations()
+        {
             var srState = SurvivorRelationsSaveStore.TryLoad() ?? new SurvivorRelationsState();
             var srSys = new SurvivorRelationsSystem(new SeededRng(1986), new GodotLog());
+            _survivorRelationsCore = srSys;
             srSys.RestoreState(srState);
             _survivorRelations = new SurvivorRelationsHostSession(srSys);
             _survivorRelations.StateChanged += () => _survivorRelationsDirty = true;
@@ -126,8 +159,10 @@ namespace AtomicWar.GodotApp
             _survivorRelationsPanel.Bind(_survivorRelations);
             _survivorRelationsPanel.Visible = false;
             AddChild(_survivorRelationsPanel);
+        }
 
-            // 4. Regional Treaty
+        private void SetupRegionalTreaty()
+        {
             var rtState = RegionalTreatySaveStore.TryLoad() ?? new RegionalTreatyState();
             var rtSys = new RegionalTreatySystem(new GodotLog());
             rtSys.RestoreState(rtState);
@@ -137,8 +172,10 @@ namespace AtomicWar.GodotApp
             _regionalTreatyPanel.Bind(_regionalTreaty);
             _regionalTreatyPanel.Visible = false;
             AddChild(_regionalTreatyPanel);
+        }
 
-            // 5. Vinyl Morale
+        private void SetupVinylMorale()
+        {
             var vmState = VinylMoraleSaveStore.TryLoad() ?? new VinylMoraleState();
             var vmSys = new VinylMoraleSystem(new GodotLog());
             vmSys.RestoreState(vmState);
@@ -148,8 +185,10 @@ namespace AtomicWar.GodotApp
             _vinylMoralePanel.Bind(_vinylMorale);
             _vinylMoralePanel.Visible = false;
             AddChild(_vinylMoralePanel);
+        }
 
-            // 6. Wildlife Trapping
+        private void SetupWildlifeTrapping()
+        {
             var wtrapState = WildlifeTrappingSaveStore.TryLoad() ?? new WildlifeTrappingState();
             var wtrapSys = new WildlifeTrappingSystem(new SeededRng(1986), new GodotLog());
             wtrapSys.RestoreState(wtrapState);
@@ -159,8 +198,10 @@ namespace AtomicWar.GodotApp
             _wildlifeTrappingPanel.Bind(_wildlifeTrapping);
             _wildlifeTrappingPanel.Visible = false;
             AddChild(_wildlifeTrappingPanel);
+        }
 
-            // 7. Excavation
+        private void SetupExcavation()
+        {
             var exState = ExcavationSaveStore.TryLoad() ?? new ExcavationState();
             var exSys = new ExcavationSystem(new SeededRng(1986), new GodotLog());
             exSys.RestoreState(exState);
@@ -170,11 +211,13 @@ namespace AtomicWar.GodotApp
             _excavationPanel.Bind(_excavation);
             _excavationPanel.Visible = false;
             AddChild(_excavationPanel);
+        }
 
-            // 8. Apprenticeship
+        private void SetupApprenticeship()
+        {
             var appState = ApprenticeshipSaveStore.TryLoad() ?? new ApprenticeshipState();
             var appSkills = new SkillProgressionSystem();
-            var appSys = new ApprenticeshipSystem(new SeededRng(1986), appSkills, _expandedShelterRoster, srSys, new GodotLog());
+            var appSys = new ApprenticeshipSystem(new SeededRng(1986), appSkills, _expandedShelterRoster, _survivorRelationsCore, new GodotLog());
             appSys.RestoreState(appState);
             _apprenticeship = new ApprenticeshipHostSession(appSys);
             _apprenticeship.StateChanged += () => _apprenticeshipDirty = true;
@@ -182,8 +225,10 @@ namespace AtomicWar.GodotApp
             _apprenticeshipPanel.Bind(_apprenticeship);
             _apprenticeshipPanel.Visible = false;
             AddChild(_apprenticeshipPanel);
+        }
 
-            // 9. Shelter Thermal
+        private void SetupShelterThermal()
+        {
             var stState = ShelterThermalSaveStore.TryLoad() ?? new ShelterThermalState();
             var stNeeds = new NeedsSystem();
             var stStarting = new StartingLevelSystem();
@@ -196,8 +241,10 @@ namespace AtomicWar.GodotApp
             _shelterThermalPanel.Bind(_shelterThermal);
             _shelterThermalPanel.Visible = false;
             AddChild(_shelterThermalPanel);
+        }
 
-            // 10. Shelter Schedule
+        private void SetupShelterSchedule()
+        {
             var ssState = ShelterScheduleSaveStore.TryLoad() ?? new ShelterScheduleState();
             var ssPowerState = new PowerGridState { GenerationWatts = 800, FuelUnits = 100, BatteryCapacityWh = 4000, BatteryReserveWh = 2000 };
             var ssRooms = new List<PowerGridRoom> { new PowerGridRoom("room_main", "Main Vault", 100f) };
@@ -211,8 +258,10 @@ namespace AtomicWar.GodotApp
             _shelterSchedulePanel.Bind(_shelterSchedule);
             _shelterSchedulePanel.Visible = false;
             AddChild(_shelterSchedulePanel);
+        }
 
-            // 11. Autopsy
+        private void SetupAutopsy()
+        {
             var auState = AutopsySaveStore.TryLoad() ?? new AutopsyState();
             var auInv = new Ashfall.Core.Inventory.Inventory();
             var auRad = new RadiationSystem(seed: 1986);
@@ -232,8 +281,10 @@ namespace AtomicWar.GodotApp
             _autopsyReportPanel.Bind(_autopsy);
             _autopsyReportPanel.Visible = false;
             AddChild(_autopsyReportPanel);
+        }
 
-            // 12. Waystation
+        private void SetupWaystation()
+        {
             var wsState = WaystationSaveStore.TryLoad() ?? new WaystationSystemState();
             var wsSys = new WaystationSystem();
             wsSys.RestoreState(wsState);
@@ -243,8 +294,10 @@ namespace AtomicWar.GodotApp
             _waystationPanel.Bind(_waystation);
             _waystationPanel.Visible = false;
             AddChild(_waystationPanel);
+        }
 
-            // 13. Sump Flooding
+        private void SetupSumpFlooding()
+        {
             var sfState = SumpFloodingSaveStore.TryLoad() ?? new SumpFloodingState();
             var sfWeather = new WeatherSystem();
             sfWeather.BindProfile(new SeasonProfileDef { id = "default" }, 1986);
@@ -256,8 +309,10 @@ namespace AtomicWar.GodotApp
             sfSys.RestoreState(sfState);
             _sumpFlooding = new SumpFloodingHostSession(sfSys, sfWeather, sfPower, sfDeepFreeze);
             _sumpFlooding.StateChanged += () => _sumpFloodingDirty = true;
+        }
 
-            // 14. Decontamination
+        private void SetupDecontamination()
+        {
             var dcState = DecontaminationSaveStore.TryLoad() ?? new DecontaminationState();
             var dcInv = new Ashfall.Core.Inventory.Inventory();
             var dcRad = new RadiationSystem(seed: 1986);
@@ -267,8 +322,10 @@ namespace AtomicWar.GodotApp
             dcSys.RestoreState(dcState);
             _decontamination = new DecontaminationHostSession(dcSys, dcRad, dcInv, dcAirlock, dcStarting);
             _decontamination.StateChanged += () => _decontaminationDirty = true;
+        }
 
-            // 15. Kitchen Nutrition
+        private void SetupKitchenNutrition()
+        {
             var knState = KitchenNutritionSaveStore.TryLoad() ?? new KitchenNutritionState();
             var knInv = new Ashfall.Core.Inventory.Inventory();
             var knNeeds = new NeedsSystem();
@@ -276,8 +333,10 @@ namespace AtomicWar.GodotApp
             knSys.RestoreState(knState);
             _kitchenNutrition = new KitchenNutritionHostSession(knSys, knInv, knNeeds);
             _kitchenNutrition.StateChanged += () => _kitchenNutritionDirty = true;
+        }
 
-            // 16. Equipment Condition
+        private void SetupEquipmentCondition()
+        {
             var ecState = EquipmentConditionSaveStore.TryLoad() ?? new EquipmentConditionState();
             var ecInv = new Ashfall.Core.Inventory.Inventory();
             var ecCrafting = new CraftingSystem(ecInv);
@@ -285,8 +344,10 @@ namespace AtomicWar.GodotApp
             ecSys.RestoreState(ecState);
             _equipmentCondition = new EquipmentConditionHostSession(ecSys, ecInv, ecCrafting);
             _equipmentCondition.StateChanged += () => _equipmentConditionDirty = true;
+        }
 
-            // 17. Library Study
+        private void SetupLibraryStudy()
+        {
             var lsState = LibraryStudySaveStore.TryLoad() ?? new LibraryStudyState();
             var lsSkills = new SkillProgressionSystem();
             var lsResearch = new ResearchSystem();
@@ -296,8 +357,10 @@ namespace AtomicWar.GodotApp
             _libraryStudy = new LibraryStudyHostSession(lsSys, lsSkills, lsResearch, lsJournal, _expandedShelterRoster);
             _libraryStudy.LoadCatalog(_dataDir);
             _libraryStudy.StateChanged += () => _libraryStudyDirty = true;
+        }
 
-            // 18. Archive Desk
+        private void SetupArchiveDesk()
+        {
             var adState = ArchiveDeskSaveStore.TryLoad() ?? new ArchiveDeskState();
             var adJournal = new JournalSystem();
             var adKnowledge = new KnowledgeBase();
@@ -307,8 +370,10 @@ namespace AtomicWar.GodotApp
             _archiveDesk = new ArchiveDeskHostSession(adSys, adJournal, adKnowledge, adInv, _expandedShelterRoster);
             _archiveDesk.LoadInkCatalog(_dataDir);
             _archiveDesk.StateChanged += () => _archiveDeskDirty = true;
+        }
 
-            // 19. Contractor Roster
+        private void SetupContractorRoster()
+        {
             var crState = ContractorRosterSaveStore.TryLoad() ?? new ContractorRosterState();
             var crInv = new Ashfall.Core.Inventory.Inventory();
             var crExpedition = new ExpeditionSystem();
@@ -316,8 +381,10 @@ namespace AtomicWar.GodotApp
             crSys.RestoreState(crState);
             _contractorRoster = new ContractorRosterHostSession(crSys, crInv, _expandedShelterRoster, crExpedition);
             _contractorRoster.StateChanged += () => _contractorRosterDirty = true;
+        }
 
-            // 20. Mental Health Crisis
+        private void SetupMentalHealthCrisis()
+        {
             var mhState = MentalHealthCrisisSaveStore.TryLoad() ?? new MentalHealthState();
             var mhNeeds = new NeedsSystem();
             var mhWardState = new MedicalWardState();
@@ -329,8 +396,10 @@ namespace AtomicWar.GodotApp
             mhSys.RestoreState(mhState);
             _mentalHealthCrisis = new MentalHealthCrisisHostSession(mhSys, mhNeeds, mhMedical, mhDependency, _expandedShelterRoster);
             _mentalHealthCrisis.StateChanged += () => _mentalHealthCrisisDirty = true;
+        }
 
-            // 21. Shelter Assignment
+        private void SetupShelterAssignment()
+        {
             _shelterAssignment = ShelterAssignmentHostSession.CreateDefault(new SeededRng(1986));
             if (!_shelterAssignment.TryLoad())
             {
@@ -341,110 +410,219 @@ namespace AtomicWar.GodotApp
             // so room warmth propagates into NeedsSystem.Warmth for in-room
             // survivors at runtime (Core seam was added in Batch 5).
             _shelterThermal.SetAssignments(_shelterAssignment.System);
+
+            // GAP-STUB-02: wire real companion proximity for SomaticFlashback grounding.
+            SetupPhase0();
+            _phase0.BindShelterAssignment(_shelterAssignment.System);
         }
 
         private void SaveAllExpandedShelterSystems()
+        {
+            SaveWaterTreatment();
+            SaveAirlockSecurity();
+            SaveSurvivorRelations();
+            SaveRegionalTreaty();
+            SaveVinylMorale();
+            SaveWildlifeTrapping();
+            SaveExcavation();
+            SaveApprenticeship();
+            SaveShelterThermal();
+            SaveShelterSchedule();
+            SaveAutopsy();
+            SaveWaystation();
+            SaveSumpFlooding();
+            SaveDecontamination();
+            SaveKitchenNutrition();
+            SaveEquipmentCondition();
+            SaveLibraryStudy();
+            SaveArchiveDesk();
+            SaveContractorRoster();
+            SaveMentalHealthCrisis();
+            SaveShelterAssignment();
+        }
+
+        private void SaveWaterTreatment()
         {
             if (_waterTreatment != null)
             {
                 WaterTreatmentSaveStore.TrySave(_waterTreatment.System.CaptureState());
                 _waterTreatmentDirty = false;
             }
+        }
+
+        private void SaveAirlockSecurity()
+        {
             if (_airlockSecurity != null)
             {
                 AirlockSecuritySaveStore.TrySave(_airlockSecurity.System.CaptureState());
                 _airlockSecurityDirty = false;
             }
+        }
+
+        private void SaveSurvivorRelations()
+        {
             if (_survivorRelations != null)
             {
                 SurvivorRelationsSaveStore.TrySave(_survivorRelations.System.CaptureState());
                 _survivorRelationsDirty = false;
             }
+        }
+
+        private void SaveRegionalTreaty()
+        {
             if (_regionalTreaty != null)
             {
                 RegionalTreatySaveStore.TrySave(_regionalTreaty.System.CaptureState());
                 _regionalTreatyDirty = false;
             }
+        }
+
+        private void SaveVinylMorale()
+        {
             if (_vinylMorale != null)
             {
                 VinylMoraleSaveStore.TrySave(_vinylMorale.System.CaptureState());
                 _vinylMoraleDirty = false;
             }
+        }
+
+        private void SaveWildlifeTrapping()
+        {
             if (_wildlifeTrapping != null)
             {
                 WildlifeTrappingSaveStore.TrySave(_wildlifeTrapping.System.CaptureState());
                 _wildlifeTrappingDirty = false;
             }
+        }
+
+        private void SaveExcavation()
+        {
             if (_excavation != null)
             {
                 ExcavationSaveStore.TrySave(_excavation.System.CaptureState());
                 _excavationDirty = false;
             }
+        }
+
+        private void SaveApprenticeship()
+        {
             if (_apprenticeship != null)
             {
                 ApprenticeshipSaveStore.TrySave(_apprenticeship.System.CaptureState());
                 _apprenticeshipDirty = false;
             }
+        }
+
+        private void SaveShelterThermal()
+        {
             if (_shelterThermal != null)
             {
                 ShelterThermalSaveStore.TrySave(_shelterThermal.System.CaptureState());
                 _shelterThermalDirty = false;
             }
+        }
+
+        private void SaveShelterSchedule()
+        {
             if (_shelterSchedule != null)
             {
                 ShelterScheduleSaveStore.TrySave(_shelterSchedule.System.CaptureState());
                 _shelterScheduleDirty = false;
             }
+        }
+
+        private void SaveAutopsy()
+        {
             if (_autopsy != null)
             {
                 AutopsySaveStore.TrySave(_autopsy.System.CaptureState());
                 _autopsyDirty = false;
             }
+        }
+
+        private void SaveWaystation()
+        {
             if (_waystation != null)
             {
                 WaystationSaveStore.TrySave(_waystation.System.CaptureState());
                 _waystationDirty = false;
             }
+        }
+
+        private void SaveSumpFlooding()
+        {
             if (_sumpFlooding != null)
             {
                 SumpFloodingSaveStore.TrySave(_sumpFlooding.System.CaptureState());
                 _sumpFloodingDirty = false;
             }
+        }
+
+        private void SaveDecontamination()
+        {
             if (_decontamination != null)
             {
                 DecontaminationSaveStore.TrySave(_decontamination.System.CaptureState());
                 _decontaminationDirty = false;
             }
+        }
+
+        private void SaveKitchenNutrition()
+        {
             if (_kitchenNutrition != null)
             {
                 KitchenNutritionSaveStore.TrySave(_kitchenNutrition.System.CaptureState());
                 _kitchenNutritionDirty = false;
             }
+        }
+
+        private void SaveEquipmentCondition()
+        {
             if (_equipmentCondition != null)
             {
                 EquipmentConditionSaveStore.TrySave(_equipmentCondition.System.CaptureState());
                 _equipmentConditionDirty = false;
             }
+        }
+
+        private void SaveLibraryStudy()
+        {
             if (_libraryStudy != null)
             {
                 LibraryStudySaveStore.TrySave(_libraryStudy.System.CaptureState());
                 _libraryStudyDirty = false;
             }
+        }
+
+        private void SaveArchiveDesk()
+        {
             if (_archiveDesk != null)
             {
                 ArchiveDeskSaveStore.TrySave(_archiveDesk.System.CaptureState());
                 _archiveDeskDirty = false;
             }
+        }
+
+        private void SaveContractorRoster()
+        {
             if (_contractorRoster != null)
             {
                 ContractorRosterSaveStore.TrySave(_contractorRoster.System.CaptureState());
                 _contractorRosterDirty = false;
             }
+        }
+
+        private void SaveMentalHealthCrisis()
+        {
             if (_mentalHealthCrisis != null)
             {
                 MentalHealthCrisisSaveStore.TrySave(_mentalHealthCrisis.System.CaptureState());
                 _mentalHealthCrisisDirty = false;
             }
+        }
+
+        private void SaveShelterAssignment()
+        {
             if (_shelterAssignment != null)
             {
                 _shelterAssignment.TrySave();

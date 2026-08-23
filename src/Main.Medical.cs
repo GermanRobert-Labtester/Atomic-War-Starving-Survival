@@ -29,6 +29,11 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Medical fields (GAP-ARCH-01 Phase 1) ──
+        private MedicalHostSession _medical = null!;
+        private bool _medicalDirty;
+        private AtomicWar.GodotApp.DiseaseHostSession _disease = null!;
+
         private string DiseaseStatusLine()
         {
             if (_expansions?.Disease == null) return "DISEASE WARD: offline";

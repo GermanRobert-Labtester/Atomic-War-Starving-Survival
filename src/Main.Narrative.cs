@@ -29,6 +29,14 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Narrative fields (GAP-ARCH-01 Phase 1) ──
+        private NarrativeHostSession _narrative = null!;
+        private bool _narrativeDirty;
+        private RadioHostSession _radio = null!;
+        private CraftingHostSession _crafting = null!;
+        private bool _craftingDirty;
+        private JournalSystem _journal = null!;
+
         private void SetupJournal()
         {
             if (_journal != null) return;

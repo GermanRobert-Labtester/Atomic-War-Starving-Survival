@@ -29,6 +29,9 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Inventory fields (GAP-ARCH-01 Phase 1) ──
+        private InventoryHostSession _inventory = null!;
+
         private void SetupInventory()
         {
             if (_inventory != null) return;

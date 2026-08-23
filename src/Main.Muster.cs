@@ -29,6 +29,13 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Muster fields (GAP-ARCH-01 Phase 1) ──
+        private MusterHostSession _muster = null!;
+        private CurrentsRosterWidget _currentsRoster = null!;
+        private ApproachSelectionModal _approachModal = null!;
+        private DeserterCoalitionCampWidget _campWidget = null!;
+        private JournalWitnessPanel _witnessPanel = null!;
+
         private void SetupMuster()
         {
             if (_muster != null) return;

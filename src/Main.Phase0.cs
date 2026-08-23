@@ -29,6 +29,14 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Phase 0 / Dose fields (GAP-ARCH-01 Phase 1) ──
+        private PhantomMemoryHostSession _phantomMemory = null!;
+        private Phase0HostSession _phase0 = null!;
+        private bool _phase0Dirty;
+        private DoseLedgerHostSession _doseLedger = null!;
+        private bool _doseLedgerDirty;
+        private DoseRegisterSurface _doseSurface = null!;
+
         private void SetupPhantom()
         {
             if (_phantomMemory != null) return;

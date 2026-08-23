@@ -29,6 +29,28 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── World / Campaign Day / Shelter fields (GAP-ARCH-01 Phase 1) ──
+        private CampaignDayCoordinator _campaignDay = null!;
+        private DailyBriefingState _dailyBriefing = null!;
+        private DailyBriefingModal _dailyBriefingModal = null!;
+        private bool _briefingPending;
+        private bool _dailyBriefingDirty;
+        private Ashfall.Core.Medical.MedicalWardSystem _medicalWard = null!;
+        private bool _medicalWardDirty;
+        private Ashfall.Core.Memorial.MemorialSystem _memorial = null!;
+        private bool _memorialDirty;
+        private StartingLevelHostSession _startingLevel = null!;
+        private bool _startingLevelDirty;
+        private OpeningProtocolModal _openingProtocolModal = null!;
+        private PowerGridHostSession _powerGrid = null!;
+        private PowerGridPanel _powerGridPanel = null!;
+        private bool _powerGridDirty;
+        private GreenhouseHostSession _greenhouse = null!;
+        private GreenhousePanel _greenhousePanel = null!;
+        private bool _greenhouseDirty;
+        private WorldHostSession _world = null!;
+        private bool _worldDirty;
+
         private void OnGreenhousePlantClicked()
         {
             SetupExpansions();

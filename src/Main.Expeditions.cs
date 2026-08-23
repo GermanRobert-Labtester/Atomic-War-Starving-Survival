@@ -29,6 +29,15 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Expedition fields (GAP-ARCH-01 Phase 1) ──
+        private ExpeditionHostSession _expeditions = null!;
+        private bool _expeditionDirty;
+        private Ashfall.Core.World.WastelandMapSystem _wastelandMap = null!;
+        private Ashfall.Core.Expeditions.EncounterChoiceResolver _encounterChoice = null!;
+        private bool _encounterChoiceDirty;
+        private CombatHostSession _combat = null!;
+        private bool _combatDirty;
+
         private void FlushExpeditionIfDirty()
         {
             if (_expeditionDirty) SaveExpeditions();

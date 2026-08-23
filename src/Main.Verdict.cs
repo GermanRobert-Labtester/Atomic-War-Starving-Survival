@@ -29,6 +29,12 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Verdict fields (GAP-ARCH-01 Phase 1) ──
+        private AtomicWar.GodotApp.VerdictHostSession _verdict = null!;
+        private Godot.Label _verdictReadoutLabel = null!;
+        private VerdictPanel _verdictPanel = null!;
+        private bool _verdictDirty;
+
         private void FlushVerdictIfDirty()
         {
             if (_verdictDirty) SaveVerdict();

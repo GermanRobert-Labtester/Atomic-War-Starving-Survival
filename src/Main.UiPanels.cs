@@ -3,11 +3,106 @@ using System;
 using AtomicWar.GodotApp.UI;
 using AtomicWar.GodotApp.Audio;
 using AtomicWar.GodotApp.YearOfAsh;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using AtomicWar.Journal;
+using Ashfall.Core;
+using Ashfall.Core.Campaign;
+using Ashfall.Core.Economy;
+using Ashfall.Core.Expeditions;
+using Ashfall.Core.Foundry;
+using Ashfall.Core.Inventory;
+using Ashfall.Core.Journal;
+using Ashfall.Core.Muster;
+using Ashfall.Core.YearOfAsh;
+using Ashfall.Core.Radio;
+using Ashfall.Core.Survivors;
+using AtomicWar.GodotApp.Economy;
+using AtomicWar.GodotApp.Muster;
+using AtomicWar.GodotApp.Dose;
+using AtomicWar.GodotApp.UtilityAI;
+using AtomicWar.GodotApp.Radio;
 
 namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── UI Panel fields (GAP-ARCH-01 Phase 1) ──
+        private MainMenuPanel _mainMenu = null!;
+        private GameOverPanel _gameOver = null!;
+        private GameHudOverlay _hudOverlay = null!;
+        private GameDashboardPanel _dashboard = null!;
+        private VBoxContainer _gameUiContainer = null!;
+        private AudioManager _audio = null!;
+        private SettingsPanel _settingsPanel = null!;
+        private InventoryPanel _inventoryOverlay = null!;
+        private SurvivorsPanel _survivorsOverlay = null!;
+        private CraftingPanel _craftingPanel = null!;
+        private RadioPanel _radioPanel = null!;
+        private MedicalPanel _medicalPanel = null!;
+        private Phase0Panel _phase0Panel = null!;
+        private DutyRosterPanel _dutyRosterPanel = null!;
+        private EconomyOverlayPanel _economyOverlayPanel = null!;
+        private ExpeditionPanel _expeditionPanel = null!;
+        private WeatherPanel _weatherPanel = null!;
+        private QuestsPanel _questsPanel = null!;
+        private JournalPanel _journalPanel = null!;
+        private FactionsPanel _factionsPanel = null!;
+        private MusterPanel _musterPanel = null!;
+        private ExpansionsHubPanel _expansionsHubPanel = null!;
+        private StandingRecordPanel _standingRecordPanel = null!;
+        private MaritimePanel _maritimePanel = null!;
+        private DeepCoastPanel _deepCoastPanel = null!;
+        private CenturySeedPanel _centurySeedPanel = null!;
+        private EpiloguePanel _epiloguePanel = null!;
+        private CrossingQuestPanel _crossingQuestPanel = null!;
+        private ResearchPanel _researchPanel = null!;
+        private ShelterPanel _shelterPanel = null!;
+        private CombatPanel _combatPanel = null!;
+        private MapPanel _mapPanel = null!;
+        private InventoryPanel _inventoryPanel = null!;
+        private EconomyMarketPanel _economyPanel = null!;
+        private UtilityAiPanel _utilityAiPanel = null!;
+        private JournalCodex _journalCodex = null!;
+        private JournalBookUI _journalBook = null!;
+        private SurvivorDetailPanel _survivorDetailPanel = null!;
+        private InventoryDetailPanel _inventoryDetailPanel = null!;
+        private QuestDetailPanel _questDetailPanel = null!;
+        private AchievementsPanel _achievementsPanel = null!;
+        private WeatherDetailPanel _weatherDetailPanel = null!;
+        private RadiationDetailPanel _radiationDetailPanel = null!;
+        private EventsLogPanel _eventsLogPanel = null!;
+        private DutyRosterDetailPanel _dutyRosterDetailPanel = null!;
+        private EconomyDetailPanel _economyDetailPanel = null!;
+        private CombatDetailPanel _combatDetailPanel = null!;
+        private FactionDetailPanel _factionDetailPanel = null!;
+        private MedicalDetailPanel _medicalDetailPanel = null!;
+        private ExpeditionDetailPanel _expeditionDetailPanel = null!;
+        private RadioDetailPanel _radioDetailPanel = null!;
+        private ShelterDetailPanel _shelterDetailPanel = null!;
+        private SaveLoadPanel _saveLoadPanel = null!;
+        private TutorialPanel _tutorialPanel = null!;
+        private AfflictionsPanel _afflictionsPanel = null!;
+        private WeatherForecastPanel _weatherForecastPanel = null!;
+        private RadiationHistoryPanel _radiationHistoryPanel = null!;
+        private JournalDetailPanel _journalDetailPanel = null!;
+        private CombatHistoryPanel _combatHistoryPanel = null!;
+        private MapDetailPanel _mapDetailPanel = null!;
+        private EventDetailPanel _eventDetailPanel = null!;
+        private StatusPanel _statusPanel = null!;
+        private SurvivalDetailPanel _survivalDetailPanel = null!;
+        private CraftingDetailPanel _craftingDetailPanel = null!;
+        private TradeDetailPanel _tradeDetailPanel = null!;
+        private ResearchDetailPanel _researchDetailPanel = null!;
+        private WeatherHistoryPanel _weatherHistoryPanel = null!;
+        private FactionHistoryPanel _factionHistoryPanel = null!;
+        private MedicalHistoryPanel _medicalHistoryPanel = null!;
+        private ExpeditionHistoryPanel _expeditionHistoryPanel = null!;
+        private ShelterHistoryPanel _shelterHistoryPanel = null!;
+        private CraftingHistoryPanel _craftingHistoryPanel = null!;
+
         private void BuildUserInterface()
         {
             // Root full-rect styling
