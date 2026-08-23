@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "collection_id": "wildlife_field_encounter_logs_from_expeditions",
+  "description": "First-person field observation logs from wildlife encounters during expeditions. Distinct from the bestiary (which is a reference catalog) — these are raw encounter reports with behavioural observations, environmental context, and personal reactions.",
+  "logs": [
+    {
+      "log_id": "encounter_armored_cockroach_swarm",
+      "observer": "the_hunter",
+      "day": 38,
+      "location": "rural_gas_station",
+      "species_common": "Armored Cockroach",
+      "individuals_observed": "Approximately 200+",
+      "distance_metres": 3,
+      "behaviour": "The gas station floor was moving. At first I thought it was water seepage — a dark sheen spreading across the concrete. Then the surface broke into individual shapes. Cockroaches, each one the size of my thumbnail, with carapaces that looked like overlapping plates of dark leather. They were migrating — a slow, organised flow from the cracked foundation toward the collapsed canopy. I crouched and watched for ten minutes. The swarm moved with purpose, not random scattering. When I tapped the concrete with my boot heel, the nearest individuals stopped and raised their antennae. Then they adjusted course to flow around my boot. They weren't fleeing. They were rerouting.",
+      "threat_assessment": "Low direct threat to persons. High threat to food stores if they enter the bunker. The carapaces are hard enough to deflect a finger press.",
+      "tags": ["insect", "swarm", "armored", "migration"]
+    },
+    {
+      "log_id": "encounter_blind_molerat_colony",
+      "observer": "the_vet",
+      "day": 52,
+      "location": "location_subterranean_seed_vault",
+      "species_common": "Blind Cave Molerat",
+      "individuals_observed": 12,
+      "distance_metres": 5,
+      "behaviour": "The vault's rear chamber was unexplored — we'd spent two days on the main storage area. When I pushed through the collapsed shelving into the back room, the floor was honeycombed with burrow entrances. The molerats were everywhere — pale, eyeless, moving through the tunnels with their noses twitching. They weren't afraid of the light. They didn't react to it at all. One of them climbed onto my boot and sat there, grooming its whiskers. It weighed maybe 300 grams. The others continued their tunnel work — digging, packing, sealing. The colony has clearly been here since the vault was sealed. They've been living on the stored grain and the condensation from the cold walls. They're blind but they're not lost. They know every centimetre of this space.",
+      "threat_assessment": "No threat to persons. Potential threat to seed stores — they're eating the grain. But they're also aerating the soil in the rear chamber, which could be useful if we convert the space to a growing area.",
+      "tags": ["rodent", "colony", "subterranean", "blind", "seed_vault"]
+    },
+    {
+      "log_id": "encounter_carrion_vulture_roost",
+      "observer": "the_hunter",
+      "day": 66,
+      "location": "location_arcology_sector_4",
+      "species_common": "Carrion Vulture",
+      "individuals_observed": 8,
+      "distance_metres": 40,
+      "behaviour": "The vultures had claimed the ninth floor of the eastern wing — the same floor where the Warlords had their cooking fire. The birds were perched on the broken concrete columns, silhouetted against the grey sky. They were enormous — wingspan at least 2.5 metres, possibly larger. Their feathers were a mottled grey-brown, not the clean black of pre-war photographs. The ash has stained them. They watched me from forty metres without alarm. When I moved closer, the nearest one spread its wings — not to fly, but to display. The wing membrane was translucent in the grey light, veined with dark blood vessels. It held the pose for thirty seconds, then folded its wings and went back to watching. They're not hunting. They're waiting. They know the Warlords kill. They know the dead will come to them.",
+      "threat_assessment": "No direct threat unless provoked. The vultures are scavengers, not predators. But their presence indicates recent carrion in the area — the Warlords' kills, or something else.",
+      "tags": ["bird", "scavenger", "vulture", "arcology", "warlord_territory"]
+    },
+    {
+      "log_id": "encounter_irradiated_wolf_pack",
+      "observer": "the_vet",
+      "day": 50,
+      "location": "suburban_house",
+      "species_common": "Grey Wolf (Irradiated)",
+      "individuals_observed": 3,
+      "distance_metres": 25,
+      "behaviour": "Three wolves in the garden behind the suburban house. The alpha was a large male — maybe 45kg, with a coat that was patchy brown and white. The radiation has broken up the normal grey pattern. His muzzle had lesions — the same beta-burn pattern I've seen on the dogs near the bunker. The other two were smaller, younger. They were digging in the garden bed, looking for roots or buried food. When they saw me, they stopped. The alpha stared at me for a full minute without moving. Then he turned and walked away, and the other two followed. They didn't run. They didn't snarl. They just left, in a line, the alpha in front. It was the most disciplined retreat I've ever seen from a wild animal. They're not feral. They're organised. And they're learning.",
+      "threat_assessment": "Moderate. The pack is not currently aggressive but they are habituating to human presence. If they associate the bunker with food, they will return. And three wolves with radiation-compromised immune systems may carry disease.",
+      "tags": ["canid", "pack", "irradiated", "lesions", "organised"]
+    },
+    {
+      "log_id": "encounter_mutated_botanical_grove",
+      "observer": "the_botanist",
+      "day": 70,
+      "location": "location_geo_thermal_plant_ruins",
+      "species_common": "Mutated Birch (Betula sp.)",
+      "individuals_observed": "Grove of approximately 15 trees",
+      "distance_metres": 10,
+      "behaviour": "The birch trees growing around the geo-thermal plant's cooling tower are wrong. The bark is white — normal — but the leaves are a deep, almost black green, and they're thick and leathery like succulent tissue. The trees are growing in a tight circle around the tower base, their roots visible where the concrete has cracked. The roots are pale — almost white — and they pulse. Not a lot. Maybe one millimetre of movement every few seconds. I knelt and touched one. It was warm. Not from the geothermal heat — the concrete was cool to the touch. The warmth was coming from inside the root. The trees are metabolising something. The geothermal steam carries dissolved minerals — sulphur, iron, maybe trace radionuclides. The trees have adapted to feed on it. They're not surviving the contamination. They're eating it.",
+      "threat_assessment": "No direct threat. The trees are not aggressive. But they represent a fundamental biological adaptation — plants that metabolise radiation byproducts. If this is heritable, it changes everything we know about reclamation of contaminated soil.",
+      "tags": ["botanical", "mutation", "birch", "geothermal", "adaptation"]
+    },
+    {
+      "log_id": "encounter_feral_cat_colony",
+      "observer": "the_courier",
+      "day": 85,
+      "location": "rural_gas_station",
+      "species_common": "Domestic Cat (Feral)",
+      "individuals_observed": 6,
+      "distance_metres": 8,
+      "behaviour": "The cats were living in the gas station's collapsed canopy — a tangle of rusted metal and broken concrete that provides shelter from the weather and a vantage point for hunting. Six cats: two adults, four kittens. The adults were thin but not starving. They'd caught something — I found mouse bones under the canopy, small and clean-picked. The cats watched me but didn't flee. One of the adults — a tabby with a torn ear — approached to within two metres and sat down. It looked at me the way a cat looks at a person who might have food. The kittens hid behind the adult. They're feral but they remember what humans are. Somewhere in their genetics, or their memory, we're still the species that feeds them. I left a strip of dried meat. The tabby waited until I was ten metres away before eating it.",
+      "threat_assessment": "No threat. The cats are useful — they control the rodent population around the gas station. If they could be socialised, they'd be valuable for the bunker's rodent problem. But feral cats don't trust easily, and the kittens are probably too young to handle safely.",
+      "tags": ["feline", "colony", "feral", "gas_station", "rodent_control"]
+    },
+    {
+      "log_id": "encounter_giant_centipede",
+      "observer": "the_veteran",
+      "day": 77,
+      "location": "government_bunker",
+      "species_common": "Giant Centipede (Scolopendra sp.)",
+      "individuals_observed": 1,
+      "distance_metres": 1.5,
+      "behaviour": "Found it in the government bunker's Sub-Level 2 corridor — a centipede the length of my forearm, pressed flat against the ceiling above a dripping pipe. Its body was segmented, dark brown with orange leg pairs, and it moved with a rippling motion that was hypnotic and deeply wrong. I stood still for two minutes while it crossed the ceiling above me. It was heading toward a cluster of small insects gathered around the dripping water. When it reached the cluster, it dropped — a fast, controlled fall — and struck. The insects scattered. The centipede caught one, held it in its forcipeds, and began feeding. It was efficient. It was patient. It was the most successful predator in that bunker, and it wasn't even trying to be anything other than what it is.",
+      "threat_assessment": "Low to moderate. The centipede's bite is painful but not lethal to humans. However, its presence indicates a significant insect population in the bunker's lower levels — which means organic matter is accumulating somewhere it shouldn't be. Check the drainage system.",
+      "tags": ["insect", "predator", "giant", "bunker", "subterranean"]
+    },
+    {
+      "log_id": "encounter_deer_herd_radiation_zone",
+      "observer": "the_hunter",
+      "day": 92,
+      "location": "location_frozen_river_barge",
+      "species_common": "Red Deer (Cervus elaphus)",
+      "individuals_observed": 11,
+      "distance_metres": 60,
+      "behaviour": "A herd of eleven deer grazing on the frozen river bank near the barge. They were in good condition — better than I expected for animals living in a radiation zone. The coats were thick and glossy, the right colour for winter. But the antlers on the stags were wrong. They were asymmetrical — one beam growing straight, the other curving at an odd angle, like the bone had received conflicting growth signals. One stag had a fifth antler point growing from the base of the beam, a supernumerary tine that shouldn't exist in the species' morphology. The deer were calm. They grazed and watched and grazed again. They've adapted to this landscape. The radiation is in their bones, in their antlers, in the water they drink from the river. And they're thriving. That should terrify me more than if they were dying.",
+      "threat_assessment": "No direct threat. The deer are not aggressive. But their meat would carry bioaccumulated radionuclides — consuming even one deer could push a person's annual dose above safe limits. They are food we cannot eat, walking in front of us, alive and healthy and untouchable.",
+      "tags": ["ungulate", "herd", "radiation", "antler_deformity", "frozen_river"]
+    },
+    {
+      "log_id": "encounter_spider_web_canopy",
+      "observer": "the_botanist",
+      "day": 58,
+      "location": "abandoned_hospital",
+      "species_common": "Orb-Weaver Spider (Araneus sp.) — Enlarged",
+      "individuals_observed": "Web network spanning approximately 40 square metres",
+      "distance_metres": 5,
+      "behaviour": "The hospital's second-floor corridor had been converted into a spider web. Not one web — a network of webs, connected by bridge lines, spanning from wall to wall and floor to ceiling. The silk was thick — maybe 2mm diameter for the frame threads. At the centre of the largest web sat a spider the size of my palm. Its abdomen was swollen and translucent — I could see the dark shape of prey wrapped inside. The spider was an orb-weaver, modified. The radiation has made it larger — pre-war orb-weavers had a leg span of maybe 5cm. This one was 20cm. The web pattern was normal — a perfect logarithmic spiral. The spider is not a mutant. It's just bigger. And there are more of them. I could see web anchors in the doorframes of three adjacent rooms.",
+      "threat_assessment": "Low to moderate. The spider's venom is not lethal to humans but the bite is painful and can cause localised necrosis. The web network blocks the corridor — anyone entering would have to clear the webs first. The spiders are controlling the insect population in the hospital. They may be more useful alive than dead.",
+      "tags": ["arachnid", "enlarged", "web_network", "hospital", "predator"]
+    },
+    {
+      "log_id": "encounter_river_fish_mutated",
+      "observer": "the_mechanic",
+      "day": 83,
+      "location": "location_frozen_river_barge",
+      "species_common": "River Carp (Cyprinus carpio) — Mutated",
+      "individuals_observed": "School of approximately 30 visible through ice",
+      "distance_metres": 2,
+      "behaviour": "The ice on the river is clear enough to see through in places. Below the barge, in water about 2 metres deep, a school of carp was moving slowly. The fish were large — 40-50cm each — but their colouration was wrong. Instead of the normal golden-brown, they were mottled grey and black, with irregular patches of pale tissue that looked like depigmentation. Some individuals had extra fin rays — the dorsal fin was wider than normal, with a frilled edge. One fish swam close to the ice and I could see its eye: the iris was pale, almost white. Cataracts, probably, from chronic radiation exposure. The fish are alive. They're feeding. They're reproducing. The river is contaminated and the fish have adapted. I don't know if eating them would kill us slowly or kill us quickly. I'm not going to find out.",
+      "threat_assessment": "No direct threat from the fish themselves. High threat from consumption — bioaccumulated radionuclides in fish tissue would deliver a significant internal radiation dose. The fish are a food source we cannot use. They swim beneath us, alive and abundant and poisonous.",
+      "tags": ["fish", "mutated", "river", "radiation", "food_source_unusable"]
+    }
+  ]
+}

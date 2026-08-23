@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "collection_id": "oral_lore_codex_batch_2_songs_ballads_and_shanties",
+  "description": "Second batch of oral lore — songs, ballads, work shanties, and hymns passed down among the bunker population and wasteland settlements.",
+  "entries": [
+    {
+      "lore_id": "oral_b2_the_pump_room_shanty",
+      "title": "The Pump Room Shanty",
+      "genre": "WORK_SHANTY",
+      "tempo": "STEADY_4_BEAT",
+      "performance_context": "Sung by the water crew when hand-pumping from the emergency well. The rhythm matches the pump handle stroke.",
+      "lyrics": "Heave her down, the water's deep. / Heave her up, the children sleep. / The pipe is long, the handle's cold. / The story's old, the story's old.\n\nHeave her down, the bucket's full. / Heave her up, don't let it pull. / The well is deep, the rope is frayed. / The price is paid, the price is paid.\n\nHeave her down, the sun is gone. / Heave her up, we carry on. / The ash may fall, the wind may blow. / The water flows, the water flows.",
+      "tags": ["work_song", "water", "pump", "shanty"]
+    },
+    {
+      "lore_id": "oral_b2_ballad_of_the_last_caravan",
+      "title": "Ballad of the Last Caravan",
+      "genre": "BALLAD",
+      "tempo": "SLOW_MINOR",
+      "performance_context": "Sung at gatherings and funerals. Accompanied by a single string instrument — usually a makeshift fiddle from wire and a tin can.",
+      "lyrics": "They left at dawn with seven carts, / The iron wheels, the breaking hearts. / The road was ash, the sky was grey, / They drove the last load south today.\n\nThe leader rode a mule named Pat. / He wore his father's woolen hat. / He said: 'The Cluster needs the grain. / We'll be back before the rain.'\n\nThe rain came down in sheets of grey. / The road dissolved. The mule gave way. / They buried Pat beside the track. / They dropped the grain and didn't look back.\n\nSix carts returned. The seventh broke. / The driver coughed and never spoke. / The Cluster got their grain that spring. / But no one heard the caravan sing.",
+      "tags": ["ballad", "caravan", "trade", "loss", "journey"]
+    },
+    {
+      "lore_id": "oral_b2_the_bunker_is_my_body",
+      "title": "The Bunker Is My Body",
+      "genre": "HYMN",
+      "tempo": "SLOW_UNISON",
+      "performance_context": "Sung in unison at community gatherings. The Therapist introduced it as a grounding exercise. It became a hymn.",
+      "lyrics": "The bunker is my body. / The walls are my skin. / The air is my breathing. / The water runs within.\n\nThe generator's heartbeat / Keeps the lights alive. / The hatch is my mouth opening / When I choose to survive.\n\nI am the concrete. / I am the steel. / I am the silence / That the ash can't heal.\n\nThe bunker is my body. / And I am still here.",
+      "tags": ["hymn", "bunker", "identity", "grounding", "community"]
+    },
+    {
+      "lore_id": "oral_b2_lament_for_the_surface",
+      "title": "Lament for the Surface",
+      "genre": "LAMENT",
+      "tempo": "FREE_TIME",
+      "performance_context": "Sung solo, usually at night, by someone standing near the airlock. Never performed in daylight. Never performed for an audience — it's considered bad luck to sing it where others can hear.",
+      "lyrics": "There was a sky once. / Blue, they say. Not grey. / There was a sun once. / Warm, they say. Not cold.\n\nThere were trees. / Green, they say. Not brown. / There was rain. / Clean, they say. Not ash.\n\nI don't remember. / I wasn't there. / But I dream it sometimes — / The blue, the warm, the green, the clean.\n\nAnd then I wake up / And the walls are here / And the air is filtered / And the water's clear / And the sun is a story / That someone told / To a child who will never / See it unfold.",
+      "tags": ["lament", "surface", "memory", "loss", "night_song"]
+    },
+    {
+      "lore_id": "oral_b2_the_geiger_counter_waltz",
+      "title": "The Geiger Counter Waltz",
+      "genre": "DANCE_TUNE",
+      "tempo": "THREE_FOUR_TIME",
+      "performance_context": "Played on any available instrument at social gatherings. The rhythm mimics the click pattern of a dosimeter in a moderate radiation field. Couples dance to it — slowly, because the tempo is deliberately uneven.",
+      "lyrics": "Click... click-click... click... / Turn your partner, hold her tight. / Click-click... click... click-click... / The needle's steady, all is right.\n\nClick... click... click-click-click... / Don't look at the dial, just dance. / Click-click-click... click... click... / The ash is falling, take the chance.\n\nOne-two-three, one-two-three, / The radiation waltz with me. / One-two-three, the dose is low. / One-two-three, we dance until we go.",
+      "tags": ["dance", "geiger", "waltz", "social", "dark_humour"]
+    },
+    {
+      "lore_id": "oral_b2_surgeons_lullaby",
+      "title": "The Surgeon's Lullaby",
+      "genre": "LULLABY",
+      "tempo": "GENTLE_THREE_FOUR",
+      "performance_context": "The Surgeon hums this to patients before surgery. It has no words — just a melody, passed down from her mother, who was a nurse. The melody is in a minor key but resolves to major on the last phrase.",
+      "lyrics": "[NO WORDS — HUMMED MELODY]\n\nTranscription: E-G-A, E-G-A, F-E-D, C-D-E. / Repeat. / Final phrase: C-D-E-F-G-A-B, resolve to C major.\n\nThe Therapist notes that patients who hear this lullaby before surgery report lower anxiety and faster recovery. The Surgeon says it's just a song. The patients say it's the only gentle thing in the bunker.",
+      "tags": ["lullaby", "surgery", "gentle", "surgeon", "healing"]
+    },
+    {
+      "lore_id": "oral_b2_the_salt_freeholders_march",
+      "title": "The Salt Freeholders' March",
+      "genre": "MARCHING_SONG",
+      "tempo": "STEADY_MARCH_120_BPM",
+      "performance_context": "Sung by the Salt Freeholders when walking between claim posts. The rhythm matches a walking pace. The lyrics are a statement of territorial claim — sung loudly, so anyone within earshot knows the land is occupied.",
+      "lyrics": "This ridge is ours, this water's ours, / This salt is ours beneath the ground. / We walked it first, we marked it plain, / We'll walk it still till we go down.\n\nThe Brine Accord is signed in sweat, / The claim post stands, the tin plate shines. / No trespasser takes what we have earned, / No raider crosses these salt lines.\n\nMarch on, march on, the Freeholders walk, / From ridge to creek, from creek to sea. / The salt is ours, the water's ours, / And we are free. And we are free.",
+      "tags": ["march", "salt_freeholders", "territory", "claim", "walking"]
+    },
+    {
+      "lore_id": "oral_b2_nursery_rhyme_the_ash_falls_down",
+      "title": "The Ash Falls Down",
+      "genre": "NURSERY_RHYME",
+      "tempo": "SIMPLE_REPEATING",
+      "performance_context": "Sung by toddlers and young children in the nursery. Accompanied by hand gestures — raising hands above the head for 'ash falls,' covering eyes for 'can't see,' hugging self for 'warm inside.'",
+      "lyrics": "The ash falls down, the ash falls down, / All over the bunker, all over the town. / It falls on the roof, it falls on the door, / It falls on the ground where we can't go anymore.\n\nBut we're warm inside, we're warm inside, / The walls keep the cold and the ash outside. / The lights go on, the water runs, / We're safe and warm until the sun.\n\nThe ash falls down but we don't care, / We've got each other and we've got air. / The ash falls down and we stay here, / Safe and warm until the year.",
+      "tags": ["nursery_rhyme", "children", "ash", "comfort", "bunker"]
+    },
+    {
+      "lore_id": "oral_b2_the_cartographers_song",
+      "title": "The Cartographer's Song",
+      "genre": "FOLK_SONG",
+      "tempo": "MODERATE_WALKING",
+      "performance_context": "Attributed to Bram Ostrowski, the mapmaker. Sung by couriers and scouts when walking long routes. The lyrics describe landmarks in order — a mnemonic device for navigation as much as a song.",
+      "lyrics": "From the Toll Gate head south by east, / Past the silo where the green light ceased. / Cross the creek at the broken bridge, / Climb the ridge to the western ridge.\n\nThe geo-thermal vents steam white, / The arcology stands against the night. / The frozen barge lists in the ice, / The seed vault holds its cargo nice.\n\nForty kilometres, give or take, / Of broken road and frozen lake. / Walk the line, don't lose the track, / The map is true. Come safely back.",
+      "tags": ["folk_song", "cartographer", "navigation", "scout", "bram"]
+    },
+    {
+      "lore_id": "oral_b2_hymn_of_the_settling_dust",
+      "title": "Hymn of the Settling Dust",
+      "genre": "HYMN",
+      "tempo": "SLOW_PROCESSIONAL",
+      "performance_context": "Sung at the annual Day of Remembrance — the anniversary of the first detonation. The entire bunker stands in silence for one minute, then sings this hymn in unison. The Priest leads. No one else speaks.",
+      "lyrics": "The dust is settling, grain by grain. / The wind is dying, breath by breath. / The fire is cooling, year by year. / The earth is patient. We are less.\n\nWe built our towers. They fell. / We drew our borders. They burned. / We named our dead. They rest. / The dust remembers what we learned.\n\nThe dust is settling. Let it settle. / The ash is patient. Let it rest. / We are the ones who broke the world. / Let us be the ones who mend what's left.\n\nThe dust is settling. We are still here. / The ash is quiet. We endure. / The world is broken. We are whole. / The dust is settling. We endure.",
+      "tags": ["hymn", "remembrance", "dust", "settling", "annual"]
+    }
+  ]
+}

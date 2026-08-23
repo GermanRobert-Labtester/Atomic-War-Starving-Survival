@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "collection_id": "quest_narrative_documents_supporting_existing_questlines",
+  "description": "Narrative documents that serve as quest items, clues, or story support for existing quest IDs in the questline_master. Each document references a specific quest_id and provides diegetic content that could be discovered during quest stages.",
+  "documents": [
+    {
+      "doc_id": "quest_doc_shaking_hand_patient_file",
+      "quest_id": "quest_the_shaking_hand",
+      "doc_type": "medical_file",
+      "title": "Patient File — Case #7 (Redacted Name)",
+      "origin": "The Surgeon's desk, medical bay",
+      "material": "Manila folder with handwritten notes on clinical forms",
+      "physical_description": "Folder is stained with iodine solution. The clinical form inside is filled in in the Surgeon's precise handwriting, then crossed out and rewritten. A photograph is paperclipped to the inside cover — a middle-aged man, smiling, standing in front of a garden.",
+      "transcript": "PATIENT: [REDACTED — Surgeon's notation: 'I will not write her name here. Not again.']\nADMITTED: Day 1, Year 0\nDIAGNOSIS: Compound fracture, left tibia. Surgical intervention required.\nPROCEDURE: Open reduction, internal fixation with steel plate. Duration: 4 hours.\nCOMPLICATION: Patient went into cardiac arrest at 03:47. Resuscitation attempted for 12 minutes. Time of death: 03:59.\n\nSURGEON'S NOTE (written in different ink, added later): The anaesthesia dosage was correct. I checked three times. The equipment was functional. I had done this procedure forty-seven times before the war. Every time before, the patient survived. I do not know what went wrong. I have replayed the procedure in my mind approximately once per hour for 94 days. I cannot find the error. My hands shake when I think about it. They shake more when I stop thinking about it.",
+      "lore_flags": ["flag_quest_shaking_hand_patient_file"],
+      "tags": ["quest_document", "medical", "surgeon", "trauma"]
+    },
+    {
+      "doc_id": "quest_doc_empty_bottles_inventory",
+      "quest_id": "quest_the_empty_bottles",
+      "doc_type": "inventory_ledger",
+      "title": "Pharmacy Inventory Ledger — Final Entry",
+      "origin": "The Pharmacist's shelf, medical storage",
+      "material": "Hardcover ledger book, pre-war office supply",
+      "physical_description": "Ledger is bound in green cloth. The first 40 pages are detailed inventory records in neat columns. The final page has a single entry, written larger than the rest, pressed hard into the paper.",
+      "transcript": "PHARMACY INVENTORY LEDGER\n\n[Previous 40 pages: detailed records of all medications received, dispensed, and counted. Every entry balanced. Every pill accounted for.]\n\nFINAL ENTRY — Day 88:\n\nMorphine ampoules: 4 remaining (of 20 original)\nIodine pills: 11 remaining (of 50 original)\nAnti-rad bottles: 3 remaining (of 8 original)\nAntibiotic courses: 2 remaining (of 12 original)\nBandaging material: 6 rolls\nAntiseptic: 1 bottle (half-full)\n\nTOTAL VALUE OF REMAINING STOCK: Enough for 3 emergency treatments. Or 1 prolonged care case. Not both.\n\nNOTE: I have balanced this ledger every day for 88 days. Every pill in, every pill out. The numbers are correct. The numbers have always been correct. The problem is not the numbers. The problem is that the numbers end.",
+      "lore_flags": ["flag_quest_empty_bottles_inventory"],
+      "tags": ["quest_document", "pharmacy", "inventory", "scarcity"]
+    },
+    {
+      "doc_id": "quest_doc_rabid_pack_scout_report",
+      "quest_id": "quest_the_rabid_pack",
+      "doc_type": "field_report",
+      "title": "Scout Report — Irradiated Canine Pack, Western Ridge",
+      "origin": "The Vet's field notes",
+      "material": "Waterproof notebook, spiral-bound",
+      "physical_description": "Notebook is small enough to fit in a coat pocket. Pages are filled with quick sketches of animal tracks, bite marks, and behavioural observations. Several pages have blood stains — animal blood, dark and flaking.",
+      "transcript": "SCOUT REPORT — DAY 49\n\nPACK SIZE: 7 adults, 3 pups\nLOCATION: Western ridge, den site in collapsed storm drain\nBEHAVIOUR: Aggressive. Pack has killed two deer within 200m of the bunker perimeter in the last 5 days. Carrion vultures are following the pack — they know the kills are coming.\n\nSYMPTOMS OBSERVED:\n- Alpha female: lesions on muzzle and forelegs, consistent with chronic beta exposure. Coat patchy. Eyes show clouding — possible radiation cataracts.\n- Two males: no visible symptoms but behaviour is abnormal — circling, snapping at air, not responding to normal deterrents.\n- Pups: appear healthy but were born post-impact. Long-term effects unknown.\n\nASSESSMENT: The pack is not going to leave. The den site provides shelter and the irradiated deer provide food. They will continue to hunt within our perimeter zone. Options:\n1. Relocate the pack (not possible — they're territorial and won't move)\n2. Cull the pack (risky — 7 adults, we have limited ammunition, and the noise will attract scavengers)\n3. Coexist (the Vet's preference — study the pack, learn what the radiation does to them, use the data)\n\nThe Vet's handwritten note in the margin: 'They're not monsters. They're animals living in a poisoned world. So are we.'",
+      "lore_flags": ["flag_quest_rabid_pack_scout_report"],
+      "tags": ["quest_document", "wildlife", "radiation", "veterinarian"]
+    },
+    {
+      "doc_id": "quest_doc_broken_mind_session_notes",
+      "quest_id": "quest_the_broken_mind",
+      "doc_type": "session_notes",
+      "title": "Therapy Session Notes — Patient 'K'",
+      "origin": "The Therapist's office, Sub-Level 1",
+      "material": "Personal notebook, leather-bound, locked in desk drawer",
+      "physical_description": "Notebook is small, personal. The entries are written in shorthand that only the Therapist can read. The cover has no label. A dried sprig of lavender is tucked between the pages.",
+      "transcript": "SESSION 14 — PATIENT 'K'\nDay 76\n\nK. continues to report auditory hallucinations — 'the walls talking.' Description has evolved from general murmuring to specific voices with distinct identities. K. can now name three voices: one male, one female, one that K. describes as 'neither — it sounds like a radio tuned between stations.'\n\nK. is not distressed by the voices. K. is distressed by the fact that the voices sometimes say things K. later discovers to be true. Yesterday, the 'radio voice' told K. that the water recycler membrane was failing. K. reported this to the Plumber. The Plumber confirmed the membrane was degrading — but K. had no way to know this. K. did not report it through any observable channel.\n\nI have checked K.'s medical records. No neurological damage. No radiation exposure above safe limits. No history of psychosis prior to the bunker.\n\nI do not know what is happening. I know what I am trained to call it. But calling it something and understanding it are different things.\n\nI am writing this down because I need to believe that I am still a professional observing a patient, not a person in a bunker listening to walls.",
+      "lore_flags": ["flag_quest_broken_mind_session_notes"],
+      "tags": ["quest_document", "psychological", "therapy", "mystery"]
+    },
+    {
+      "doc_id": "quest_doc_mass_grave_plot_map",
+      "quest_id": "quest_the_mass_grave",
+      "doc_type": "plot_map",
+      "title": "Mass Grave Site — Plot Map and Burial Register",
+      "origin": "The Undertaker's field kit",
+      "material": "Laminated plot map with handwritten annotations, attached to burial register",
+      "physical_description": "Map is drawn on graph paper, laminated with salvaged plastic sheeting. Each plot is numbered and colour-coded: blue for adults, yellow for children, red for unidentified. The register is a separate sheet of paper clipped to the map.",
+      "transcript": "MASS GRAVE SITE — PLOT MAP\nLocation: Eastern field, 200m from bunker hatch\nDimensions: 20m x 15m (300 square metres)\nCapacity: 60 plots (3m depth, clay-lined)\n\nCURRENT STATUS:\n- Plots 1-26: Filled (Days 1-30)\n- Plots 27-31: Filled (Days 31-40)\n- Plot 32: Reserved (pending — family request)\n- Plots 33-60: Empty\n\nBURIAL REGISTER (recent entries):\nPlot 27: MORA, J. — Day 31. Pulmonary fibrosis.\nPlot 28: CHILD, unknown — Day 33. ARS. Buried with mother.\nPlot 29: LASKO, P. — Day 36. Blunt trauma, accidental fall.\nPlot 30: [RESERVED]\nPlot 31: VASQUEZ, R. — Day 40. Natural causes, cardiac arrest.\n\nTHE UNDERTAKER'S NOTE (written on the back of the map):\n'I have buried thirty-one people in forty days. I know each of their names. I know the sound the earth makes when it hits the coffin lid. I know how long it takes for the flowers to wilt. I do not know how to stop knowing these things.'",
+      "lore_flags": ["flag_quest_mass_grave_plot_map"],
+      "tags": ["quest_document", "burial", "undertaker", "death"]
+    },
+    {
+      "doc_id": "quest_doc_ghosts_day1_service_record",
+      "quest_id": "quest_ghosts_of_day_1",
+      "doc_type": "military_record",
+      "title": "Service Record Extract — The Veteran, Day 1 Deployment",
+      "origin": "The Veteran's personal effects",
+      "material": "Folded military document, pre-war issue",
+      "physical_description": "Document is standard military form, printed on onion-skin paper. Stamped with unit insignia. Folded into quarters and kept in a waterproof pouch. The paper is soft from repeated handling.",
+      "transcript": "SERVICE RECORD — EXTRACT\nUNIT: 3rd Mechanised Infantry, Bravo Company\nOPERATION: Emergency deployment, Day 1, Year 0\nORDERS: Proceed to Checkpoint Kilo (grid ref: 47-N-2219). Establish defensive perimeter. Await further instructions.\n\nTIMELINE (from after-action report):\n06:00 — Unit deployed from garrison\n08:30 — Reached Checkpoint Kilo. No hostiles observed.\n09:15 — First detonation observed on northern horizon. Multiple flashes.\n09:17 — EMP effect confirmed. All vehicle electronics dead. Communications lost.\n09:30 — Mushroom cloud visible. Distance estimated at 40km.\n10:00 — Fallout begins. Unit takes cover in roadside ditch.\n14:00 — Order given to withdraw to secondary rally point.\n16:00 — Rally point reached. 14 of 22 personnel accounted for.\n18:00 — 8 personnel still unaccounted for. Search party dispatched.\n20:00 — Search party returns. No trace of missing personnel.\n\nSTATUS: 8 KIA (presumed). 14 survivors. Checkpoint Kilo abandoned.\n\nVETERAN'S HANDWRITTEN NOTE (on the back):\n'I left them at the checkpoint. I followed orders. The orders were to withdraw. I don't know if they were alive when we left. I don't know if they died quickly. I don't know anything except that I walked away and they didn't.'",
+      "lore_flags": ["flag_quest_ghosts_day1_service_record"],
+      "tags": ["quest_document", "military", "veteran", "day_1", "trauma"]
+    },
+    {
+      "doc_id": "quest_doc_precinct_lockbox_contents",
+      "quest_id": "quest_the_precinct",
+      "doc_type": "police_notebook",
+      "title": "Precinct Sergeant's Notebook — Final Entries",
+      "origin": "Inside the precinct lockbox",
+      "material": "Pocket notebook, leather cover, pre-war police issue",
+      "physical_description": "Notebook is small, fits in a breast pocket. The cover is embossed with a police badge. Pages are filled with case notes in pencil. The final entries are written in heavier pressure — the pen was pressed hard into the paper.",
+      "transcript": "POLICE NOTEBOOK — SERGEANT [NAME REDACTED]\n\n[Previous pages: routine case notes — theft reports, disturbance calls, missing persons. All pre-war. All mundane.]\n\nFINAL ENTRIES:\n\nDay 1, 09:30 — First detonation. All units to emergency stations.\nDay 1, 10:00 — Fallout beginning. Seal the precinct. No one in, no one out.\nDay 1, 14:00 — Radio dead. Phone lines dead. We're on our own.\nDay 2, 06:00 — 4 officers present. 3 absent (presumed dead or trapped at home). Lock the armoury. Key is in my desk.\nDay 3, 08:00 — Sealed the doors. Threw the key in the sump. If anyone finds this notebook, the armoury is yours. Use it wisely. I'm going home. Even if home is gone.\n\nNOTE (written on the inside back cover):\n'The law is not the building. The law is not the badge. The law is what we agree to do for each other when no one is watching. If you're reading this, you're probably the kind of person who still believes that. Don't let the bunker take that from you.'",
+      "lore_flags": ["flag_quest_precinct_notebook"],
+      "tags": ["quest_document", "police", "precinct", "law"]
+    },
+    {
+      "doc_id": "quest_doc_holdout_hatch_log",
+      "quest_id": "quest_the_holdout",
+      "doc_type": "hatch_log",
+      "title": "Hatch Duty Log — The Bouncer's Watch",
+      "origin": "Clipboard at the main airlock",
+      "material": "Standard duty log form, pre-war bunker supply",
+      "physical_description": "Log form is clipped to a metal board mounted beside the inner hatch. Pages are filled with entries in block capitals. Several pages have been torn out — the remaining stubs show ragged edges.",
+      "transcript": "HATCH DUTY LOG — MAIN AIRLOCK\n\nDay 44, 02:00 — Three persons requesting entry. Refugees. Dosimeter readings elevated but within acceptable limits. Opened inner door. Processed.\nDay 44, 03:30 — Two persons requesting entry. One injured (broken leg). Dosimeter readings acceptable. Opened inner door. Processed.\nDay 45, 19:00 — Five persons requesting entry. Family group. Two children. Dosimeter readings HIGH. Quarantine protocol activated. Held at outer door for 6 hours. Readings dropped to acceptable. Opened inner door. Processed.\nDay 46, 01:00 — One person requesting entry. Alone. Dosimeter reading CRITICAL. Refused entry. Person collapsed at outer door. Left them there. I'm sorry.\nDay 47, 14:00 — Twelve persons requesting entry. Group from the south. Dosimeter readings MODERATE. Rations cannot support 12 more. Consulted with command. Admitted 6. Turned away 6. The six who were turned away stood at the outer door for an hour before leaving. I watched through the periscope the entire time.\n\nBOUNCER'S NOTE (written in the margin):\n'The hatch is the only thing between us and the world. Every time I open it, I'm letting the world in. Every time I close it, I'm keeping the world out. I don't know which is worse.'",
+      "lore_flags": ["flag_quest_holdout_hatch_log"],
+      "tags": ["quest_document", "hatch", "refugees", "moral_choice"]
+    },
+    {
+      "doc_id": "quest_doc_dying_signal_transcript",
+      "quest_id": "quest_the_dying_signal",
+      "doc_type": "radio_transcript",
+      "title": "Radio Transcript — 142.5 MHz Distress Beacon, Decoded",
+      "origin": "Maya Lin's radio workstation",
+      "material": "Printed paper tape from the radio receiver, with handwritten annotations",
+      "physical_description": "Paper tape is 80mm wide, printed in dot-matrix style. Maya has annotated the tape with pencil — circling specific sequences, writing translations in the margins. The tape is 3 metres long and folded into a plastic sleeve.",
+      "transcript": "RADIO TRANSCRIPT — 142.5 MHz\nSIGNAL TYPE: Emergency Action Message (EAM) format\nPATTERN: Repeating every 47 minutes\nORIGIN: Checkpoint Kilo (confirmed by coordinates in header)\n\nDECODED MESSAGE:\n'CHECKPOINT KILO — ALL PERSONNEL — THIS IS SPECIALIST JAKOB LIN — I AM THE LAST OPERATOR AT THIS STATION — REPEAT — I AM THE LAST OPERATOR — SUPPLIES EXHAUSTED — WATER CONTAMINATED — RADIATION EXCEEDING METER RANGE — IF ANYONE RECEIVES THIS — THE COORDINATES ARE — [coordinates] — DO NOT COME — I REPEAT — DO NOT COME — THIS IS NOT A RESCUE SITUATION — THIS IS A GOODBYE — TELL MY SISTER — TELL MAYA — TELL HER I — '\n\n[MESSAGE CUTS OFF]\n\n[REPEATS FROM TOP]\n\nMAYA'S ANNOTATION (written on the plastic sleeve, in shaking handwriting):\n'He's been dead for three years. The battery is still transmitting. The machine doesn't know he's gone.'",
+      "lore_flags": ["flag_quest_dying_signal_transcript"],
+      "tags": ["quest_document", "radio", "distress", "maya", "brother"]
+    },
+    {
+      "doc_id": "quest_doc_cracked_floor_engineering_report",
+      "quest_id": "quest_the_cracked_floor",
+      "doc_type": "engineering_report",
+      "title": "Structural Assessment — Sub-Floor Crack, Sub-Level 3",
+      "origin": "Aris Thorne's engineering workstation",
+      "material": "Graph paper with hand-drawn cross-sections, attached to typed summary",
+      "physical_description": "Graph paper shows detailed engineering drawings of the crack pattern, stress vectors, and repair options. The typed summary is on recycled paper. Both documents have coffee rings and pencil smudges.",
+      "transcript": "STRUCTURAL ASSESSMENT — SUB-FLOOR CRACK\nLocation: Sub-Level 3, east corridor, 12m from junction B\n\nFINDINGS:\n- Hairline crack in concrete sub-floor, width 0.3mm, length 4.2m\n- Water seepage observed — contaminated water from external source\n- Crack follows a construction joint — original concrete pour was incomplete\n- Stress analysis indicates crack is propagating at approximately 2cm per week\n- At current rate, structural integrity compromised within 8-12 weeks\n\nREPAIR OPTIONS:\n1. Surface patch (epoxy filler) — temporary, 2-3 weeks, does not address root cause\n2. Steel reinforcement plate bolted across crack — medium-term, 4-6 weeks, requires drilling into compromised concrete\n3. Full section replacement — pour new concrete over 3m section — permanent, requires 24-hour curing time, 40kg concrete mix, 6 steel rebar lengths\n\nRECOMMENDATION: Option 3. Nothing else addresses the propagation. I can do the work myself. I need the materials and 48 hours of uninterrupted time.\n\nARIS'S NOTE (handwritten at the bottom):\n'I designed shelters like this before the war. I know the concrete specs. I know the rebar spacing. I know what happens when the pour is rushed and the joint isn't sealed properly. This building has my fingerprints on it. Not literally. But I know what I did wrong. Or what someone before me did wrong. It doesn't matter whose fault it is. It matters that I fix it.'",
+      "lore_flags": ["flag_quest_cracked_floor_report"],
+      "tags": ["quest_document", "engineering", "structural", "crack", "water"]
+    },
+    {
+      "doc_id": "quest_doc_refugee_screening_form",
+      "quest_id": "quest_the_refugee_mass_influx",
+      "doc_type": "screening_form",
+      "title": "Refugee Screening Form — Family Group, Day 44",
+      "origin": "Vance's tactical assessment folder",
+      "material": "Standard intake form, pre-war bunker supply",
+      "physical_description": "Form is printed on standard paper. Fields are filled in in pencil. A dosimeter reading is written in the margin in red ink. The form has been folded and unfolded multiple times.",
+      "transcript": "REFUGEE SCREENING FORM\n\nDATE: Day 44, Year 3\nSCREENING OFFICER: Victor Vance\n\nFAMILY GROUP: 3 persons\n- Adult female, age approx. 30-35. Name: [not recorded]. Condition: Exhausted, dehydrated. Dosimeter reading: 2.4 mSv cumulative (acceptable). No visible injuries.\n- Child, female, age approx. 8. Name: [not recorded]. Condition: Malnourished, mild radiation symptoms (hair thinning). Dosimeter reading: 3.1 mSv (borderline — within 20% of safe limit).\n- Child, male, age approx. 5. Name: [not recorded]. Condition: Crying, cold. Dosimeter reading: 1.8 mSv (acceptable).\n\nRISK ASSESSMENT:\n- Medical risk: LOW (no acute radiation sickness, no contagious symptoms)\n- Resource impact: MODERATE (3 additional persons = 15% increase in food/water consumption)\n- Security risk: LOW (no weapons observed, no hostile behaviour)\n- Integration risk: MODERATE (no vouching from existing residents, unknown background)\n\nRECOMMENDATION: [Vance's original recommendation, crossed out]: 'Turn away. Resource strain unacceptable at current ration levels.'\n[Handwritten addition in different ink]: 'Override. Admit. They're children.'",
+      "lore_flags": ["flag_quest_refugee_screening_form"],
+      "tags": ["quest_document", "refugees", "screening", "moral_choice", "vance"]
+    },
+    {
+      "doc_id": "quest_doc_ars_crisis_treatment_protocol",
+      "quest_id": "quest_the_ars_crisis",
+      "doc_type": "treatment_protocol",
+      "title": "ARS Treatment Protocol — Terminal Case",
+      "origin": "Elena Rostov's medical workstation",
+      "material": "Typed protocol on recycled paper, with handwritten cost annotations",
+      "physical_description": "Protocol is 2 pages, typed in small font. Handwritten annotations in red ink mark each treatment step with its resource cost. The paper is creased from being folded into a pocket.",
+      "transcript": "ARS TREATMENT PROTOCOL — TERMINAL CASE\nPatient: [NAME — Elena's notation: 'I know their name. I'm not writing it here because this is a protocol, not a person. If I make this about a person, I can't do the math.']\n\nPROGNOSIS: 12 days without intervention. 30% survival probability with full treatment. 0% with palliative care only.\n\nFULL TREATMENT PROTOCOL:\nDay 1-3: IV fluid therapy (8 litres saline), anti-emetics, potassium iodide loading dose\nDay 4-7: Bone marrow stimulation (requires G-CSF — we have 2 vials), antibiotic prophylaxis\nDay 8-12: Blood transfusion (requires compatible donor — screen bunker population), continued antibiotics, nutritional support\n\nRESOURCE COST:\n- Saline: 8 litres (40% of current stock)\n- Anti-emetics: 12 doses (60% of current stock)\n- Iodine: 10 days supply (90% of current stock)\n- G-CSF: 2 vials (100% of current stock — no resupply possible)\n- Antibiotics: 10-day course (80% of current stock)\n- Blood: 4 units (requires 2 donors, each giving 2 units)\n\nTOTAL RESOURCE IMPACT: 80% of medical supplies consumed for one patient with 30% survival probability.\n\nALTERNATIVE: Palliative care only. Morphine for pain. Sedation for anxiety. Presence for companionship. Cost: 4 morphine ampoules, 2 sedative doses. Resource impact: negligible.\n\nELENA'S NOTE (handwritten at the bottom):\n'The mathematics is clear. One patient, 30% chance, 80% of our supplies. Or thirty future patients with minor ailments who will each have a 90% chance because we kept the medicine in the cupboard. I know which answer is correct. I don't know which answer I can live with.'",
+      "lore_flags": ["flag_quest_ars_treatment_protocol"],
+      "tags": ["quest_document", "medical", "ars", "triage", "elena"]
+    }
+  ]
+}

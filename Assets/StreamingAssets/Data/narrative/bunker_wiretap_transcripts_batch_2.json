@@ -1,0 +1,162 @@
+[
+  {
+    "id": "wiretap_b2_garrison_toll_dispute",
+    "intercept_channel": "FIELD_TELEPHONE_LINE_SOUTH_PERIMETER",
+    "target_faction": "IRON_GARRISON",
+    "audio_clarity_score": 0.81,
+    "speaker_identities": "SERGEANT_PELL_AND_UNNAMED_CORPORAL",
+    "timestamp_relative": "YEAR_03_MONTH_08_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "iron_garrison",
+      "toll",
+      "dispute",
+      "sigint"
+    ],
+    "prose": "[PELL]: 'The caravan says they already paid at the eastern checkpoint.' / [CORPORAL]: 'They paid the eastern checkpoint for east-west transit. This is north-south. Different tariff.' / [PELL]: 'They don't have the water, Sergeant. I counted their packs. They have trade goods but not the water surplus.' / [CORPORAL]: 'Then they trade the goods or they go around. Forty kilometres through the Drown. That's the rule.' / [PELL]: 'The children are crying, Sergeant.' / [CORPORAL]: 'I know. Let them through. Mark it as a discretionary exemption. But tell the caravan leader if he comes through this sector again without the full toll, I keep his copper wire.' / [PELL]: 'Yes, Sergeant.' / [Long pause.] / [PELL, quietly]: 'God help us all.'"
+  },
+  {
+    "id": "wiretap_b2_cult_recruitment_conversation",
+    "intercept_channel": "PASSIVE_ACOUSTIC_BUG_MARKET_SQUARE",
+    "target_faction": "CULT_OF_THE_ASH_SIGN",
+    "audio_clarity_score": 0.63,
+    "speaker_identities": "FEMALE_RECRUITER_AND_MALE_HESITANT",
+    "timestamp_relative": "YEAR_05_MONTH_03_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "cult",
+      "recruitment",
+      "conversion",
+      "sigint"
+    ],
+    "prose": "[WOMAN]: 'You feel it too. The clicking. The dosimeter doesn't lie.' / [MAN]: 'I feel it. But I don't — I don't worship it.' / [WOMAN]: 'No one worships the ash. We witness it. There's a difference. The ash is not a god. The ash is a mirror. It shows us what we were. What we built. What we lost. Come to the gathering tonight. Just listen. If the words are wrong, you leave. No one stops you.' / [MAN]: 'And if they're right?' / [WOMAN]: 'Then you'll know. And knowing is the first sacrament.' / [Man does not respond for twelve seconds.] / [MAN]: 'What time?' / [WOMAN]: 'When the wind stops. You'll hear the bell.'"
+  },
+  {
+    "id": "wiretap_b2_railway_guild_schedule_dispute",
+    "intercept_channel": "TELEGRAPH_LINE_RIDGE_JUNCTION",
+    "target_faction": "RAILWAY_GUILD",
+    "audio_clarity_score": 0.91,
+    "speaker_identities": "CONDUCTOR_GENERAL_VANE_AND_STATION_MASTER_KELL",
+    "timestamp_relative": "YEAR_03_MONTH_11_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "railway_guild",
+      "schedule",
+      "dispute",
+      "sigint"
+    ],
+    "prose": "[VANE]: 'The Saltworks Siding freight is three days late, Kell.' / [KELL]: 'The rail between km 8 and km 11 has a warped tie. I sent a crew to replace it but they found two more warped ties when they got there. The schedule is impossible until the track is cleared.' / [VANE]: 'The Cluster is waiting for medical supplies. The Rebuilders have a dysentery outbreak.' / [KELL]: 'I can run a single car over the warped section at walking pace if you authorise the risk.' / [VANE]: 'Authorised. But if the car tips, you're walking to the Cluster to explain it to the Rebuilders yourself.' / [KELL]: 'Understood. We roll at dawn.' / [VANE]: 'And Kell — fix the ties. I don't care how many there are. Fix them.'"
+  },
+  {
+    "id": "wiretap_b2_warlord_raid_planning",
+    "intercept_channel": "SHORTWAVE_LEAK_ARCOLOGY_EAST_WING",
+    "target_faction": "WARLORDS_OF_SECTOR_4",
+    "audio_clarity_score": 0.44,
+    "speaker_identities": "WARLORD_LEADER_AND_LIEUTENANT",
+    "timestamp_relative": "YEAR_04_MONTH_06_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "warlords",
+      "raid",
+      "planning",
+      "sigint"
+    ],
+    "prose": "[LEADER]: 'The bunker has a new water recycler membrane. I can hear the pump from the south perimeter. They're running at full capacity.' / [LIEUTENANT]: 'How many defenders?' / [LEADER]: 'Two visible on the south watch. One on the north. Maybe a roving patrol underground.' / [LIEUTENANT]: 'We hit the south at dawn. Two minutes to breach.' / [LEADER]: 'No breach. We don't go inside. We take the water pump from outside. Cut the pipe, take the membrane, leave the bunker standing. They'll come out to negotiate.' / [LIEUTENANT]: 'And if they shoot?' / [LEADER]: 'Then we shoot back. And we take the membrane from their dead.' / [Long pause. Static.] / [LIEUTENANT]: 'When?' / [LEADER]: 'When the ash storm covers the sound. Watch the weather.'"
+  },
+  {
+    "id": "wiretap_b2_rebuilders_census_discrepancy",
+    "intercept_channel": "INTERCOM_LEAK_COUNCIL_HALL",
+    "target_faction": "REBUILDERS",
+    "audio_clarity_score": 0.87,
+    "speaker_identities": "REGISTRAR_GENERAL_CAEL_ORMUND_AND_CLERK_KESS",
+    "timestamp_relative": "YEAR_03_MONTH_09_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "rebuilders",
+      "census",
+      "discrepancy",
+      "sigint"
+    ],
+    "prose": "[ORMUND]: 'The census shows 147 registered residents. But the ration count says 153 mouths. Six unregistered.' / [KESS]: 'I know. Three are children born in the last year — I haven't processed the paperwork. Two are visitors from the Quiet House who haven't left. And one is... I don't know, Registrar. Someone is eating a ration every night from the communal pot and no one claims them.' / [ORMUND]: 'A ghost eater?' / [KESS]: 'The Chef swears it. One extra portion disappears every evening. She counts the bowls. She counts the ladles. Six portions unaccounted for in the last month.' / [ORMUND]: 'Check the stores. Check the ventilation shafts. Check everything. I don't care if it's a ghost — I want a name on it by Friday.'"
+  },
+  {
+    "id": "wiretap_b2_salt_freeholders_water_theft_accusation",
+    "intercept_channel": "CARRIER_PIGEON_NOTE_THE_SALTWORKS",
+    "target_faction": "SALT_FREEHOLDERS",
+    "audio_clarity_score": 0.76,
+    "speaker_identities": "SHIFT_LEAD_LEVA_QUIST_AND_FREEHOLDER_COUNCIL",
+    "timestamp_relative": "YEAR_03_MONTH_10_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "salt_freeholders",
+      "water_theft",
+      "accusation",
+      "sigint"
+    ],
+    "prose": "[QUIST]: 'The creek crossing at grid 9-B shows fresh digging marks. Someone took water from a claimed source.' / [COUNCIL]: 'Who?' / [QUIST]: 'Unknown. Boot prints suggest two persons, heading east toward the bunker. The marks are less than 24 hours old.' / [COUNCIL]: 'Send a summons. If they don't appear at Water Court, revoke their water rights.' / [QUIST]: 'The bunker has no registered water rights, Leva. They've never signed the Brine Accord.' / [COUNCIL]: 'Then they are trespassers. Post the notice at the ridge. If they come to collect water again, meet them at the crossing. Politely. With witnesses.' / [QUIST]: 'And if they refuse?' / [COUNCIL]: 'Then we cut the creek. Divert it into the salt pan. Let them walk forty kilometres for their next drink.'"
+  },
+  {
+    "id": "wiretap_b2_hydro_barons_aquifer_concern",
+    "intercept_channel": "TELEPHONE_LINE_STATION_4",
+    "target_faction": "HYDRO_BARONS",
+    "audio_clarity_score": 0.93,
+    "speaker_identities": "SHIFT_LEAD_LEVA_QUIST_AND_HYDRO_ENGINEER",
+    "timestamp_relative": "YEAR_03_MONTH_12_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "hydro_barons",
+      "aquifer",
+      "concern",
+      "sigint"
+    ],
+    "prose": "[ENGINEER]: 'Station 7 drawdown is accelerating. 0.7 metres per month for two consecutive months. The report says reduce delivery by 20%.' / [QUIST]: 'If we reduce delivery, the Cluster and the bunker both complain. If we don't reduce, the aquifer drops below the pump intake.' / [ENGINEER]: 'The pump intake is at 5 metres. We're at 4.1. Three more months at this rate and we're pumping air.' / [QUIST]: 'Can we drill deeper?' / [ENGINEER]: 'Not with the equipment we have. The drill bit broke on the last borehole and we can't find a replacement.' / [QUIST]: 'Then we reduce. Tell the customers. Tell them the truth. The aquifer is declining. We don't know why. We don't know when it will stabilise. But we will not pump it dry to make this month's deliveries.' / [ENGINEER]: 'They'll riot.' / [QUIST]: 'Let them riot. You can't drink a riot.'"
+  },
+  {
+    "id": "wiretap_b2_quiet_house_runner_report",
+    "intercept_channel": "PASSIVE_LISTENING_POST_THE_APPROACH",
+    "target_faction": "QUIET_HOUSE",
+    "audio_clarity_score": 0.58,
+    "speaker_identities": "RUNNER_LEN_QUILL_AND_KEEPER",
+    "timestamp_relative": "YEAR_04_MONTH_02_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "quiet_house",
+      "runner",
+      "report",
+      "sigint"
+    ],
+    "prose": "[QUILL]: 'Fourteen passages this month. Seven northbound, seven southbound. Three families. Two alone. One injured — frostbite, left hand. I left them for two days.' / [KEEPER]: 'Any names?' / [QUILL]: 'The family had a name — Fisk. From the Drown. The injured one would not speak. Left a registry page blank.' / [KEEPER]: 'The blank page is the important one. Someone who will not give a name is running from something. Note the direction, the condition, the season. We will cross-reference with the other runners.' / [QUILL]: 'The bunker to the west sent a message. In the notebook. They left an iodine pill as trade.' / [KEEPER]: 'Read it.' / [QUILL]: 'Thank you. The map is received. We are 47 souls in the bunker to the west. If you ever come near, you are welcome.' / [Long pause.] / [KEEPER]: 'Forty-seven. Write that in the register. Under Known Settlements. And send a reply: You are remembered.'"
+  },
+  {
+    "id": "wiretap_b2_black_ops_dead_drop_confirmation",
+    "intercept_channel": "BURST_TRANSMISSION_SHORTWAVE",
+    "target_faction": "BLACK_OPS",
+    "audio_clarity_score": 0.31,
+    "speaker_identities": "UNKNOWN_OPERATORS",
+    "timestamp_relative": "YEAR_05_MONTH_07_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "black_ops",
+      "dead_drop",
+      "encrypted",
+      "sigint"
+    ],
+    "prose": "[Burst transmission — 3.2 seconds, decoded at 1/8 speed]: / [OPERATOR_A]: 'Cache 7 confirmed. Contents intact. Seal replaced.' / [OPERATOR_B]: 'Acknowledged. Frequency change at next window. Move to 88.4 secondary.' / [OPERATOR_A]: 'Negative. 88.4 is compromised. The schoolteacher is broadcasting on adjacent channel.' / [OPERATOR_B]: 'Then 91.3 tertiary. Confirm dead drop at Grid 14-C.' / [OPERATOR_A]: 'Confirmed. Cairn is active. Note from Surveyor Holt retrieved.' / [OPERATOR_B]: 'Burn the note. Copy the coordinates. Report at next window.' / [Transmission ends. Static.] / [ANALYST NOTE: This is the third burst transmission intercepted from this cell in six months. The operators use pre-arranged frequency shifts to avoid triangulation. The 'dead drop at Grid 14-C' matches the location where the Overlay surveyor Maren Holt left a field note. Either the Black Ops cell is monitoring the Overlay's movements, or they are using the surveyor's cairn as a dead drop without her knowledge.]"
+  },
+  {
+    "id": "wiretap_b2_ash_militia_defence_debate",
+    "intercept_channel": "OPEN_MIC_COUNCIL_HALL_THE_VERGE",
+    "target_faction": "ASH_MILITIA",
+    "audio_clarity_score": 0.89,
+    "speaker_identities": "COUNCIL_MEMBER_AND_SENTIENT_FARMER",
+    "timestamp_relative": "YEAR_03_MONTH_07_INTERCEPT",
+    "tags": [
+      "wiretap",
+      "ash_militia",
+      "defence",
+      "debate",
+      "sigint"
+    ],
+    "prose": "[COUNCIL]: 'We need to double the sentry rotation. The Warlords are probing the south perimeter.' / [FARMER]: 'If you pull people from the greenhouse to stand watch, who feeds us? The turnips don't harvest themselves.' / [COUNCIL]: 'If we don't stand watch, the Warlords take the greenhouse.' / [FARMER]: 'Then we build a wall around the greenhouse instead of a wall around the perimeter.' / [COUNCIL]: 'A wall takes labour. Labour takes calories. Calories take food. We're eating less than we need already.' / [FARMER]: 'So the choice is: feed the guards or feed the farmers. Both are necessary. Neither is sufficient.' / [COUNCIL]: 'Then we ask for volunteers. Night watch, three shifts a week, in addition to their regular labour.' / [FARMER]: 'You'll get volunteers for about a week. Then they'll be too tired to stand and too hungry to care.' / [COUNCIL]: 'Then we rotate. Everyone does a week of double duty. Then everyone rests. Then we do it again.' / [FARMER]: 'That's not a defence plan. That's a exhaustion plan.' / [COUNCIL]: 'It's the only plan we have.'"
+  }
+]

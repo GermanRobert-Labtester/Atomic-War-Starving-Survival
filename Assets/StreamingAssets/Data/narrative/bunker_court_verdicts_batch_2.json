@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "collection_id": "bunker_court_verdicts_codex_batch_2",
+  "description": "Second batch of legal verdicts from the bunker's informal court system. Cases cover disputes, theft, safety violations, and interpersonal conflicts.",
+  "verdicts": [
+    {
+      "verdict_id": "verdict_b2_water_theft_resident_14",
+      "case_day": 66,
+      "judge": "the_general",
+      "defendant": "Resident M. (Bunk 14)",
+      "charge": "Unauthorized water extraction — taking 3 litres above daily ration from the Sub-Level 2 pump",
+      "evidence": "The Plumber installed flow meters on all pumps after noticing a discrepancy in the water recycler output. Resident M.'s bunk assignment shows 2.8 litres of unaccounted extraction over 5 days. Resident M. admits to taking extra water but states it was for washing clothes, not drinking.",
+      "verdict": "GUILTY of ration violation. However, the court notes that the bunker has no laundry facilities and Resident M.'s clothing was visibly soiled. The court finds that the bunker's failure to provide hygiene infrastructure contributed to the violation.\n\nSENTENCE: No punishment. Instead, the court orders the Architect to design a communal laundry facility using greywater from the kitchen. Resident M. is assigned to the construction crew. The extra water usage is retroactively authorised.",
+      "tags": [
+        "court",
+        "water",
+        "theft",
+        "hygiene",
+        "infrastructure"
+      ]
+    },
+    {
+      "verdict_id": "verdict_b2_food_hoarding_resident_22",
+      "case_day": 73,
+      "judge": "the_general",
+      "defendant": "Resident K. (Bunk 22)",
+      "charge": "Food hoarding — concealment of 2.4kg of dried rations under bunk mattress",
+      "evidence": "During a routine bunk inspection for bed bugs, the Therapist discovered the hidden rations. Resident K. admits to hoarding but states it was 'for emergencies.' The Therapist's assessment notes that Resident K. exhibits signs of chronic food anxiety consistent with pre-famine trauma.",
+      "verdict": "GUILTY of hoarding. The court recognises that food anxiety is a psychological condition, not a moral failing. The hoarded rations are returned to the communal store. No punishment.\n\nSENTENCE: Resident K. is assigned to work in the kitchen under the Chef's supervision for two weeks. The Chef will teach Resident K. the food storage and rotation system, so they can see that the stores are managed and sufficient. The Therapist will conduct weekly check-ins regarding food anxiety.",
+      "tags": [
+        "court",
+        "food",
+        "hoarding",
+        "psychological",
+        "trauma"
+      ]
+    },
+    {
+      "verdict_id": "verdict_b2_sentry_sleeping_on_duty",
+      "case_day": 81,
+      "judge": "the_general",
+      "defendant": "Resident P. (Sentry, North Cupola)",
+      "charge": "Sleeping on sentry duty — found asleep at the observation post during the 22:00-06:00 watch",
+      "evidence": "The General conducted a surprise inspection at 03:00 and found Resident P. asleep at the periscope. The log book showed no entries for the previous 4 hours. Resident P. admits to falling asleep and states they had not slept for 36 hours due to a sick child.",
+      "verdict": "GUILTY of dereliction of duty. The court acknowledges the mitigating circumstances — a sick child and chronic sleep deprivation — but finds that sleeping on sentry duty is a safety violation that cannot be excused. The perimeter is the only thing between 47 people and the outside world.\n\nSENTENCE: Resident P. is suspended from sentry duty for one week and assigned to daytime labour. The General orders that sentries with sick children be given the option to swap shifts or request a replacement. The current rotation does not account for family emergencies. This is a systemic failure, not an individual one.",
+      "tags": [
+        "court",
+        "sentry",
+        "dereliction",
+        "sleep_deprivation",
+        "family"
+      ]
+    },
+    {
+      "verdict_id": "verdict_b2_unauthorized_surface_expedition",
+      "case_day": 55,
+      "judge": "the_general",
+      "defendant": "Resident J. (unassigned)",
+      "charge": "Unauthorized surface excursion — exiting the bunker through the emergency hatch without clearance, dosimeter, or gas mask",
+      "evidence": "The emergency hatch alarm triggered at 14:00. Security footage (a mirror rigged to the hatch corridor) shows Resident J. opening the hatch and standing on the surface step for approximately 90 seconds before re-entering. Resident J. was not wearing protective equipment. Dosimeter reading upon return: 180 uSv accumulated in 90 seconds.",
+      "verdict": "GUILDY of reckless endangerment — not just of self but of the entire bunker. An unsealed hatch opening compromises the airlock vestibule and potentially introduces contaminated air into the bunker.\n\nSENTENCE: Resident J. is confined to the bunker for 30 days (no surface access even with clearance). Mandatory radiation screening every 48 hours for two weeks. Resident J. must attend a safety briefing with the General and the Surgeon. The court notes that Resident J. stated they 'just wanted to see the sky.' The court does not consider this a mitigating factor. The sky will still be there when it's safe. The bunker population will not be if everyone opens the hatch on impulse.",
+      "tags": [
+        "court",
+        "surface",
+        "unauthorized",
+        "radiation",
+        "safety"
+      ]
+    },
+    {
+      "verdict_id": "verdict_b2_dispute_over_bunk_assignment",
+      "case_day": 48,
+      "judge": "the_therapist",
+      "defendant": "Resident A. (Bunk 7) vs. Resident B. (Bunk 8)",
+      "charge": "Interpersonal dispute — Resident A. accuses Resident B. of deliberate noise disturbance; Resident B. accuses Resident A. of false accusation motivated by personal animosity",
+      "evidence": "Both parties presented testimony. Three neighbouring residents were interviewed. Two confirm that Resident B. makes noise during the night (coughing, movement). One says Resident A. has complained about noise from multiple bunks and appears hypersensitive. The Therapist's assessment notes that Resident A. exhibits signs of hypervigilance consistent with chronic stress, while Resident B. has a chronic respiratory condition that causes夜间 coughing.",
+      "verdict": "Neither party is found guilty. The court finds that this is a structural problem, not an interpersonal one. The bunker's dormitory design does not provide adequate acoustic separation between bunks. The dispute is a symptom of overcrowding and sleep deprivation.\n\nSENTENCE: No punishment. Resident B. is provided with a cotton mouth cover for sleeping (to reduce coughing disturbance). Resident A. is offered the ear plugs from the medical store and a referral to the Therapist for stress management. The Architect is asked to investigate acoustic dampening options for the dormitory. The court recommends that future bunk assignments consider medical conditions and sleep compatibility.",
+      "tags": [
+        "court",
+        "dispute",
+        "noise",
+        "dormitory",
+        "structural"
+      ]
+    },
+    {
+      "verdict_id": "verdict_b2_tool_misuse_workshop",
+      "case_day": 57,
+      "judge": "the_general",
+      "defendant": "Resident T. (unassigned)",
+      "charge": "Misuse of workshop tools — using the manual lathe without authorization, damaging the cutting tool",
+      "evidence": "The Mechanic reported that the lathe's cutting tool was found broken. Investigation shows that Resident T. used the lathe to turn a piece of scrap metal into a decorative object (a small figurine). Resident T. had no lathe training and did not request authorization. The cutting tool is a pre-war high-speed steel bit — no replacement available.",
+      "verdict": "GUILTY of unauthorized tool use and damage to critical equipment. The court notes that Resident T. stated they 'didn't think it mattered' because the metal was scrap. The court finds that the cutting tool is not scrap — it is one of two remaining precision cutting tools in the bunker.\n\nSENTENCE: Resident T. is banned from the workshop for 30 days. Resident T. must complete a tool safety course with the Mechanic before regaining workshop access. The decorative figurine is confiscated and placed in the Architect's office as a reminder. The Mechanic is asked to assess whether the cutting tool can be resharpened. If not, the next expedition must prioritise finding a replacement.",
+      "tags": [
+        "court",
+        "tools",
+        "workshop",
+        "damage",
+        "unauthorized"
+      ]
+    },
+    {
+      "verdict_id": "verdict_b2_refusal_of_medical_screening",
+      "case_day": 90,
+      "judge": "the_surgeon",
+      "defendant": "Resident D. (new arrival)",
+      "charge": "Refusal of mandatory medical screening — new arrival declined dosimeter reading and visual inspection during the 6-hour quarantine period",
+      "evidence": "Resident D. arrived at the bunker on Day 89 with a group of two others. During the standard quarantine screening, Resident D. refused the dosimeter reading, stating they 'don't believe in dosimeters.' The other two members of the group were screened and cleared. Resident D. was held in the decon adit overnight. On Day 90, Resident D. repeated the refusal.",
+      "verdict": "The court finds that mandatory medical screening is non-negotiable. The bunker cannot accept the radiation risk of an unscreened individual. However, the court also finds that Resident D.'s refusal may stem from distrust of authority rather than genuine belief.\n\nSENTENCE: Resident D. is not admitted to the bunker. They are given water, food for one day, and directions to the Cluster (the nearest settlement). The other two members of their group are admitted. The court notes that this is not a punishment — it is a safety protocol. The bunker's screening exists to protect 47 lives. One person's disbelief does not override that. Resident D. may reapply for entry after obtaining a dosimeter reading from an independent source.",
+      "tags": [
+        "court",
+        "medical",
+        "screening",
+        "refusal",
+        "new_arrival"
+      ]
+    },
+    {
+      "verdict_id": "verdict_b2_grave_desecration",
+      "case_day": 72,
+      "judge": "the_general",
+      "defendant": "Resident V. (age 14)",
+      "charge": "Disturbance of the cemetery — removing flowers and stones from grave plots in the eastern field",
+      "evidence": "The Undertaker reported that three grave plots had been disturbed — flowers removed, stones rearranged. Witness testimony identifies Resident V. (age 14) as the person seen at the cemetery at dawn. Resident V. admits to the disturbance but states they were 'rearranging the stones to make them look better.' Resident V. says the original arrangement was 'ugly and no one cared about it.'",
+      "verdict": "GUILTY of disturbing the cemetery. The court notes that Resident V. is a child and acted from a desire to improve the appearance of the graves, not from malice. However, the cemetery is a sacred space and alterations must be authorised by the Undertaker.\n\nSENTENCE: No punishment. Resident V. is assigned to work with the Undertaker at the cemetery for one week — tending the plots, learning the burial protocols, understanding why the arrangement matters. The Undertaker agrees to mentor Resident V. The court notes that a teenager who cares enough about the dead to rearrange their flowers is not a criminal — they are a person who needs a purpose. The Undertaker says he could use the help.",
+      "tags": [
+        "court",
+        "cemetery",
+        "child",
+        "desecration",
+        "mentorship"
+      ]
+    }
+  ]
+}

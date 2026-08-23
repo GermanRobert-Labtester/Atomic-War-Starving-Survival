@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "collection_id": "faction_field_documents_found_in_the_wasteland",
+  "description": "Found documents — manifests, letters, reports, field notes — recovered from locations and faction contacts. Quest support items that flesh out the underrepresented factions and unexplored locations.",
+  "documents": [
+    {
+      "doc_id": "doc_railway_guild_timetable",
+      "title": "Railway Guild Route Timetable — Sector 7 Spur",
+      "origin": "Handcar rest point, southern rail embankment",
+      "material": "Laminated card stock, pre-war office supply, stamped with Guild wheel-and-hammer seal",
+      "physical_description": "Creased along three fold lines. One corner burned. The ink is typewritten in black with red pencil amendments. Water stain across the lower third.",
+      "transcript": "SECTOR 7 SPUR — WEEKLY SERVICE (WEATHER PERMITTING)\nMon: Toll Gate → Ridge Junction (cargo only, 06:00 departure)\nWed: Ridge Junction → Saltworks Siding (mixed, 07:00 departure)\nFri: Saltworks Siding → Toll Gate (passengers by arrangement, 05:30 departure)\n\nNOTICE: No service during ash storms. No service during rail inspection windows. No service without Guild escort for parties exceeding three persons. Freight surcharge applies for irradiated cargo. Schedule subject to change without notice.\n\n— Dispatched by order of Conductor-General Haldric Vane",
+      "lore_flags": ["flag_lore_railway_timetable_found", "flag_faction_railway_guild_contact"],
+      "item_id_source": "item_punched_tape"
+    },
+    {
+      "doc_id": "doc_salt_freeholders_brine_accord",
+      "title": "The Brine Accord — Extract of Claims",
+      "origin": "Wooden claim post, southern ridge perimeter",
+      "material": "Tin plate nailed to treated pine post, hand-lettered in tar paint",
+      "physical_description": "Plate is 30cm by 20cm, riveted to the post with four copper nails. Letters are white on black. The post is freshly driven — soil undisturbed around the base except for boot prints in one direction.",
+      "transcript": "SALT FREEHOLDERS — CLAIM NOTICE\n\nTHIS RIDGE AND ALL SALT DEPOSITS WITHIN THE DRAINAGE BASIN MARKED ON THE ATTACHED SURVEY (SEE REVERSE) ARE CLAIMED UNDER THE BRINE ACCORD OF YEAR 2.\n\nNO EXTRACTION, NO PASSAGE, NO CAMPING WITHOUT LEAVE OF THE FREEHOLDERS' COUNCIL.\n\nVIOLATORS FORFEIT WATER RIGHTS.\n\n— Signed: Leva Quist, Shift Lead, on behalf of the Freeholders",
+      "lore_flags": ["flag_lore_brine_accord_found", "flag_faction_salt_freeholders_contact"],
+      "item_id_source": "item_triplicate_carbon"
+    },
+    {
+      "doc_id": "doc_black_ops_denial_directive_7",
+      "title": "Denial Directive 7 — Infrastructure Destruction Order",
+      "origin": "False wall cache, sub-basement corridor",
+      "material": "Laminated field card, military-grade waterproof stock",
+      "physical_description": "Card is 10cm by 15cm, sealed in a heat-pressed plastic sleeve. Text is printed in monospaced type. No signature block — only a numeric code at the bottom: 'AUTH: 0941-DELTA-7'.",
+      "transcript": "DENIAL DIRECTIVE 7 — PRIORITY: SECONDARY\n\nTARGET: Bunker ventilation intake manifold, sub-level 3\nMETHOD: Thermite charge on primary bearing housing (est. 4kg minimum)\nCONDITION: Execute only if bunker is abandoned or compromised beyond recovery\nOBJECTIVE: Deny functional shelter to any organized force that occupies the site after withdrawal\n\nNOTE: This directive supersedes all prior preservation orders for this site. The bunker's blueprints are known to multiple parties. Assume it will be found. Make it unusable.\n\n— Issued under Dead Hand Protocol, Authority Level 3",
+      "lore_flags": ["flag_lore_denial_directive_found", "flag_faction_black_ops_directive"],
+      "item_id_source": "item_falsified_clearance"
+    },
+    {
+      "doc_id": "doc_scavenger_manifest_the_toll",
+      "title": "Scavenger Salvage Manifest — The Toll Ruins",
+      "origin": "Leather satchel found at base of collapsed overpass",
+      "material": "Yellow legal pad, spiral-bound, pages torn and refolded",
+      "physical_description": "Written in ballpoint pen, blue ink. Pages are water-stained and crumpled. Several entries are crossed out and rewritten. A coffee ring — or something that smelled like coffee once — stains the bottom third of page two.",
+      "transcript": "DAY 19 SALVAGE LOG — THE TOLL\n\nRecovered:\n- 14 lengths rebar (1m, rusted, usable for fencing)\n- 3 car alternators (1 seized, 2 testable)\n- 1 bicycle frame (no wheels, front fork bent)\n- 22 bricks (firebrick, intact)\n- 1 copper pipe section (80cm, solder joints intact)\n- 4 glass panels (cracked, 40x60cm, maybe usable for greenhouse)\n\nDiscarded:\n- 6 tyres (dry-rotted, no retread possible)\n- 2 car doors (too heavy, no transport)\n- 1 mattress (wet, mouldy, burned for warmth)\n\nTomorrow: the east wing. Roof collapsed but the basement might be dry.\n\n— Bram",
+      "lore_flags": ["flag_lore_scavenger_manifest_found", "flag_npc_bram_ostrowski_trail"],
+      "item_id_source": "item_census_return_blank"
+    },
+    {
+      "doc_id": "doc_quiet_house_registry_page",
+      "title": "Quiet House — Registry Page, Unnumbered",
+      "origin": "Sealed envelope, delivered by runner",
+      "material": "Thin cotton paper, folded into quarters, sealed with grey wax",
+      "physical_description": "Paper is handmade — visible fibre texture, uneven edges. The wax seal is stamped with a simple house outline, no text. The ink is iron gall, brown-black, applied with a fine nib.",
+      "transcript": "REGISTRY — PASSAGE RECORD\n\nName: [illegible, smudged]\nOrigin: [illegible]\nArrived: Day 71, pre-dawn\nDeparted: Day 71, after water\nCondition: Ambulatory. Mild dehydration. No visible lesions.\nDirection of travel: South-southwest\nPurpose stated: Passing through\nVouched by: No one. Walked in alone.\n\nName: Fisk, Nomi\nOrigin: The Drown\nArrived: Day 74, mid-morning\nDeparted: Day 76, after rest\nCondition: Exhausted. Frostbite on left hand, two toes.\nDirection of travel: East\nPurpose stated: Trade contact with the Cluster\nVouched by: Len Quill\n\nName: [blank]\nOrigin: [blank]\nArrived: Day 79, nightfall\nDeparted: Did not depart\nCondition: Found at the doorstep. Unconscious. No identification.\nDisposition: Tended. Still here.\n\n— Recorded by K. Adler, Records Clerk",
+      "lore_flags": ["flag_lore_quiet_house_registry_found", "flag_faction_quiet_house_contact"],
+      "item_id_source": "item_punched_tape"
+    },
+    {
+      "doc_id": "doc_archivists_catalog_card_14",
+      "title": "Archivist Catalog Card — Entry 14",
+      "origin": "Steel filing cabinet, The Vault antechamber",
+      "material": "Standard index card, 10cm by 15cm, ruled lines",
+      "physical_description": "Card is typed on a manual typewriter — uneven ink density, the letter 'e' slightly raised. Filed under 'GEO — THERMAL — SURVEYS.' A paperclip rust mark stains the top left corner.",
+      "transcript": "CATALOG ENTRY 14\nCLASSIFICATION: Geological Survey — Geothermal\nSOURCE: Observation Post 09, recovered Year 2\nPROVENANCE: Original document. Single copy. No duplicates confirmed.\n\nSUMMARY: Pre-war geological survey of the Tessarat Valley geothermal gradient. Borehole data from three test sites. Temperature readings at 50m, 100m, 200m depth. Conclusion: viable for power generation at 200m+ with existing turbine technology.\n\nCONDITION: Fair. Water damage to lower margin. Three borehole diagrams legible. Temperature table partially obscured.\n\nNOTE: Cross-reference Catalog 7 (Hydrology) and Catalog 22 (Industrial Ruins — Power). The geothermal plant site matches Survey Site B from this document.\n\n— Catalogued by Dessa Vane, Underwrite Keeper",
+      "lore_flags": ["flag_lore_archivist_catalog_found", "flag_faction_archivists_contact"],
+      "item_id_source": "item_orbital_chart"
+    },
+    {
+      "doc_id": "doc_overlay_surveyor_field_note",
+      "title": "Overlay Surveyor Field Note — Grid 14-C",
+      "origin": "Tucked into a cairn on the eastern ridge",
+      "material": "Graph paper sheet, torn from a field notebook, folded twice",
+      "physical_description": "Grid lines printed in light blue. Notes written in pencil, smudged but legible. A small sketch map occupies the upper half — contour lines, two landmarks marked with X, and a dotted path labelled 'ROUTE A.'",
+      "transcript": "GRID 14-C — OVERLAY SURVEY\nDate: Day 63\nSurveyor: M. Holt\n\nTerrain: Broken scree slope descending to dry creek bed. Radiation baseline 12 uSv/h. Wind exposure high — no natural shelter within 400m radius.\n\nObservations:\n- Creek bed shows seasonal water marks. Last flow estimated 3-4 weeks ago.\n- Rock cairn at grid reference 14-C-7 contains this note and one prior (from Day 41, surveyor unknown — see attached).\n- Eastern horizon: smoke column visible. Probable cooking fire. No structure visible.\n\nAssessment: Route A is passable on foot with light load. Not suitable for cart or sled. Water source unreliable.\n\nRecommendation: Mark as secondary route only. Do not include in scheduled transit.\n\n— Maren Holt, Overlay Surveyor",
+      "lore_flags": ["flag_lore_overlay_survey_found", "flag_faction_overlay_contact"],
+      "item_id_source": "item_triplicate_carbon"
+    },
+    {
+      "doc_id": "doc_warlord_toll_demand",
+      "title": "Warlords of Sector 4 — Toll Demand Notice",
+      "origin": "Pinned to the south perimeter fence with a knife",
+      "material": "Sheet of lined notebook paper, torn along the left margin",
+      "physical_description": "Written in heavy black marker. The handwriting is large and angular — someone used to writing so it can be read from a distance. The paper is stapled to a thin wooden slat for rigidity.",
+      "transcript": "TO ALL PASSING SOUTH\n\nTHE ARCLOGY IS OURS. THE RIVER CROSSING IS OURS. THE ROAD FROM THE BRIDGE TO THE RIDGE IS OURS.\n\nIF YOU PASS THROUGH SECTOR 4 TERRITORY YOU PAY:\n- 10% OF CARGO BY WEIGHT\n- OR EQUIVALENT IN CLEAN WATER, AMMUNITION, OR MEDICAL SUPPLIES\n- OR ONE PERSON REMAINS AS HOSTAGE UNTIL PAYMENT IS DELIVERED\n\nNO EXCEPTIONS. NO NEGOTIATION.\n\nIF YOU CANNOT PAY, GO AROUND. ADD 40KM TO YOUR ROUTE THROUGH THE DROWN.\n\n— THE WARLORDS OF SECTOR 4",
+      "lore_flags": ["flag_lore_warlord_toll_found", "flag_faction_warlords_contact"],
+      "item_id_source": "item_order_12c"
+    },
+    {
+      "doc_id": "doc_rebuilder_council_minutes_17",
+      "title": "Rebuilders' Council — Meeting Minutes, Session 17",
+      "origin": "Delivered by courier from the Cluster",
+      "material": "Two sheets of recycled paper, hand-stapled, typed on both sides",
+      "physical_description": "Paper is rough-textured — probably made from pulped bunker waste. Type is faint on the second sheet; someone pressed too hard on the original. A coffee-ring stain overlaps the attendance list.",
+      "transcript": "REBUILDERS' COUNCIL — SESSION 17 MINUTES\nDay 84, Year 3\n\nATTENDANCE: Cael Ormund (Chair), Perrin Ashby, Osran Kell, 14 others (see attached sign-in sheet)\n\nAGENDA:\n1. Road repair — eastern approach. Status: 60% complete. Gravel supply from the quarry is sufficient for another 200m. Request for additional labour — 4 persons for 3 days.\n2. Water main extension — southern cluster. Status: Trench dug to 1.2m. Clay pipe laid for 80m. Joint sealing pending — need more pine tar. Mattis Cray to coordinate.\n3. Census update — 3 new arrivals registered this week. 2 departures (direction unknown). Total registered population: 147.\n4. Dispute — boundary between Plot 12 and Plot 13. Resolved by measurement. Fence to be moved 30cm east.\n\nMOTION: Approve labour request for road repair. Carried unanimously.\n\nNEXT SESSION: Day 91, 10:00, Council Hall.\n\n— Recorded by Cael Ormund, Registrar-General",
+      "lore_flags": ["flag_lore_rebuilder_minutes_found", "flag_faction_rebuilders_contact"],
+      "item_id_source": "item_census_return_blank"
+    },
+    {
+      "doc_id": "doc_hydro_barons_water_receipt",
+      "title": "Hydro Barons — Water Delivery Receipt #204",
+      "origin": "Tucked into a supply crate delivered by caravan",
+      "material": "Triplicate carbon copy, pink sheet (customer copy)",
+      "physical_description": "Standard receipt form, pre-printed with the Hydro Barons' seal — a water drop inside a gear. Filled in by hand in blue ink. The top copy (white) was retained by the Barons; this is the customer's record.",
+      "transcript": "HYDRO BARONS — WATER DELIVERY RECEIPT\nReceipt No: 204\nDate: Day 76, Year 3\n\nDELIVERED TO: [Bunker name — stamped, partially illegible]\nCOMMODITY: Clean water (filtered, tested)\nQUANTITY: 40 litres\nSOURCE: Artesian well, Station 4\nQUALITY: Clear. No sediment. Rad count below 0.5 uSv/L.\n\nPAYMENT RECEIVED: 2 lengths copper wire, 1 vacuum tube, 4 bricks (firebrick)\n\nBALANCE OUTSTANDING: None.\n\nNOTE: Next delivery available Day 90. Price subject to change based on aquifer levels. Early payment discount of 10% available for orders placed 7 days in advance.\n\n— Leva Quist, Shift Lead, Hydro Barons",
+      "lore_flags": ["flag_lore_hydro_receipt_found", "flag_faction_hydro_barons_contact"],
+      "item_id_source": "item_triplicate_carbon"
+    },
+    {
+      "doc_id": "doc_undertaker_grave_register_page",
+      "title": "Grave Register — Page 4",
+      "origin": "The Undertaker's ledger, Sub-Level 2 archive",
+      "material": "Heavy bond paper, bound into a hand-stitched ledger",
+      "physical_description": "Each page is ruled with horizontal lines in faded red ink. Entries are in the Undertaker's careful, small handwriting — every letter formed with the precision of someone who learned to write on tombstones. A dried flower — yarrow, probably — is pressed between pages 3 and 4.",
+      "transcript": "GRAVE REGISTER — PAGE 4\n\nPlot 27: MORA, J. — Age 62. Former schoolteacher. Cause: Pulmonary fibrosis, chronic. Day 31. Buried east-facing.\n\nPlot 28: CHILD, unknown — Age est. 4-6 years. Cause: Acute radiation syndrome. Day 33. Buried with Plot 27 (mother). No name on record. If anyone knows this child's name, speak now or it will be forgotten.\n\nPlot 29: LASKO, P. — Age 44. Former mechanic. Cause: Blunt trauma, fall from height (accidental). Day 36. Buried south-facing.\n\nPlot 30: [BLANK — RESERVED]\n\nPlot 31: VASQUEZ, R. — Age 71. Former farmer. Cause: Natural causes, cardiac arrest. Day 40. Buried east-facing. Note: No surviving kin identified. Personal effects: one pocket knife, one photograph (unidentifiable), one silver ring.\n\n— Recorded by the Undertaker",
+      "lore_flags": ["flag_lore_grave_register_found", "flag_quest_mass_grave_progress"],
+      "item_id_source": "item_coroner_tag"
+    },
+    {
+      "doc_id": "doc_veteran_checkpoint_map",
+      "title": "Hand-Drawn Map — Checkpoint Kilo Approach Routes",
+      "origin": "Folded inside the Veteran's field jacket",
+      "material": "Back of a pre-war road atlas page, drawn in pencil and coloured pencil",
+      "physical_description": "Map shows a 5km radius around a point marked 'CKPT K' in red. Three approach routes are drawn in green pencil with distance annotations. Danger zones are shaded in red. A compass rose is drawn in the lower right corner — accurate to within 5 degrees. The paper is soft from repeated folding.",
+      "transcript": "[HAND-DRAWN MAP — NOT TRANSCRIBABLE AS TEXT]\n\nANNOTATIONS (read from map):\n- 'CKPT K' marked at centre with star symbol\n- Route A (north approach): '2.4km, open ground, exposed to wind. 45 min with pack.'\n- Route B (east approach): '1.8km through rubble. Slow. 90 min. Radiation 30 uSv/h at waypoint 3.'\n- Route C (south approach): '3.1km, follows creek bed. Water in spring. 60 min. Mine risk — DO NOT DEVIATE FROM MARKED PATH.'\n- Red shaded area labelled: 'FALLBACK ZONE — DO NOT ENTER AFTER DARK'\n- Bottom margin, in smaller writing: 'Jakob was here. The signal came from the tower on the north ridge. If the antenna is still standing, the cable runs underground to the bunker complex.'",
+      "lore_flags": ["flag_lore_checkpoint_map_found", "flag_quest_dying_signal_progress"],
+      "item_id_source": "item_orbital_chart"
+    }
+  ]
+}
