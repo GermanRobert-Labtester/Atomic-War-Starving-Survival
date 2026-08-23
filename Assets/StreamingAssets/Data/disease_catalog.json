@@ -13,8 +13,8 @@
       "spread_interval_days": 2,
       "spread_radius": 3,
       "countermeasure_item_id": "clean_water",
-      "guidance": "Boil every litre that passes a lip. Purified stores block the water route entirely.",
-      "source_note": "Shared cisterns and ration lines were the old strain's best friend. It lives in what we drink, not in us."
+      "guidance": "Boil every litre that passes a lip. Purified stores block the water route entirely. The first cramps are just the beginning—then comes the purging.",
+      "source_note": "Shared cisterns and ration lines were the old strain's best friend. It lives in what we drink, not in us. The water tastes faintly of copper and decay before the symptoms even begin."
     },
     {
       "id": "disease_zoonotic_flu",
@@ -27,8 +27,8 @@
       "spread_interval_days": 1,
       "spread_radius": 4,
       "countermeasure_item_id": "gas_mask",
-      "guidance": "Seal the vents and keep masks on shift hands. Air moves faster than rumor does.",
-      "source_note": "Carried in from scavenged bedding and dead livestock. It jumps mouths before it jumps fences."
+      "guidance": "Seal the vents and keep masks on shift hands. Air moves faster than rumor does. The cough starts as a tickle, then becomes a rasp that sounds like grinding teeth.",
+      "source_note": "Carried in from scavenged bedding and dead livestock. It jumps mouths before it jumps fences. The fever burns away memories first—then the body."
     },
     {
       "id": "disease_blood_fever",
@@ -41,8 +41,8 @@
       "spread_interval_days": 3,
       "spread_radius": 2,
       "countermeasure_item_id": "antibiotics",
-      "guidance": "Sterilise every tool before it touches skin. One reused blade can seed a ward.",
-      "source_note": "Spread through unsterilised surgical tools and shared field dressings. The worst cases die with clean hands nearby."
+      "guidance": "Sterilise every tool before it touches skin. One reused blade can seed a ward. The fever starts with a chill that feels like ice water in the veins.",
+      "source_note": "Spread through unsterilised surgical tools and shared field dressings. The worst cases die with clean hands nearby. The blood never washes clean—only diluted."
     },
     {
       "id": "disease_spore_blight",
@@ -55,32 +55,50 @@
       "spread_interval_days": 2,
       "spread_radius": 3,
       "countermeasure_item_id": "hazmat_suit",
-      "guidance": "Engage air filtration and keep sealed kit on anyone who peeled mold off the walls. Spores live longer than patience.",
-      "source_note": "A grey bloom that rode the dust down from the dead farms. It does not need a wound, only a breath."
+      "guidance": "Engage air filtration and keep sealed kit on anyone who peeled mold off the walls. Spores live longer than patience. The first cough brings up black flecks that look like ash but aren't.",
+      "source_note": "A grey bloom that rode the dust down from the dead farms. It does not need a wound, only a breath. The lungs fill with grey filaments before the patient even knows they're sick."
     },
     {
       "id": "disease_acute_radiation_syndrome",
-      "name": "Acute Radiation Syndrome",
+      "display_name": "Acute Radiation Syndrome",
+      "vector": "water",
       "lethality": 0.8,
+      "incubation_days": 0,
+      "illness_days": 14,
       "infectivity": 0.0,
+      "spread_interval_days": 1,
       "spread_radius": 1,
-      "countermeasure_item_id": "iodine_pills"
+      "countermeasure_item_id": "iodine_pills",
+      "guidance": "Take iodine immediately. Then pray. The vomiting starts with clear fluid, then becomes bloody. The skin burns from the inside out.",
+      "source_note": "The silent killer. No cough, no fever—just the slow unraveling of the body's ability to heal itself. The first sign is often the refusal to eat."
     },
     {
       "id": "disease_fungal_respiratory",
-      "name": "Fungal Respiratory Infection",
+      "display_name": "Fungal Respiratory Infection",
+      "vector": "air",
       "lethality": 0.3,
+      "incubation_days": 5,
+      "illness_days": 10,
       "infectivity": 0.4,
-      "spread_radius": 2,
-      "countermeasure_item_id": "gas_mask"
+      "spread_interval_days": 3,
+      "spread_radius": 3,
+      "countermeasure_item_id": "gas_mask",
+      "guidance": "The spores are in the air you breathe. The cough starts dry, then produces thick yellow mucus that clogs the lungs. The fever never breaks.",
+      "source_note": "Thrives in damp, dark places where the air doesn't circulate. The bunker's ventilation system is both its enemy and its highway."
     },
     {
       "id": "disease_typhoid_waterborne",
-      "name": "Typhoid (Waterborne)",
+      "display_name": "Typhoid (Waterborne)",
+      "vector": "water",
       "lethality": 0.5,
+      "incubation_days": 3,
+      "illness_days": 8,
       "infectivity": 0.3,
-      "spread_radius": 3,
-      "countermeasure_item_id": "clean_water"
+      "spread_interval_days": 2,
+      "spread_radius": 4,
+      "countermeasure_item_id": "clean_water",
+      "guidance": "Boil all water for at least five minutes. The diarrhea starts watery, then becomes bloody. The fever rises steadily, day by day, until the mind begins to wander.",
+      "source_note": "The classic killer of crowded spaces. The bunker's water purification system is the only thing standing between you and the grave. The taste of the water changes before the symptoms do."
     }
   ]
 }

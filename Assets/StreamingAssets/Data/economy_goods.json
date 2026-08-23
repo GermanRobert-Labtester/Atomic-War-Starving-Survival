@@ -10,7 +10,7 @@
       "elasticity": 1.2,
       "stackSize": 5,
       "weightKg": 1.0,
-      "barterNote": "The universal measure. Every faction prices its offers against the litre."
+      "barterNote": "The universal measure. Every faction prices its offers against the litre. A single bottle can buy a night's silence—or a bullet."
     },
     {
       "id": "scrap_metal",
@@ -21,7 +21,7 @@
       "elasticity": 0.8,
       "stackSize": 20,
       "weightKg": 2.0,
-      "barterNote": "Tier-zero scrap; the fallback value everything else is compared against."
+      "barterNote": "Tier-zero scrap; the fallback value everything else is compared against. A handful can patch a hole in the bunker wall—or a hole in a man."
     },
     {
       "id": "bandages",
@@ -32,7 +32,7 @@
       "elasticity": 1.5,
       "stackSize": 10,
       "weightKg": 0.2,
-      "barterNote": "Shortage-spiked when supplies run thin."
+      "barterNote": "Shortage-spiked when supplies run thin. The white cloth turns pink before it turns red. The antiseptic stings worse than the wound."
     },
     {
       "id": "antibiotics",
@@ -43,7 +43,7 @@
       "elasticity": 1.5,
       "stackSize": 5,
       "weightKg": 0.2,
-      "barterNote": "The medicine tier anchor; the sick room's price follows it."
+      "barterNote": "The medicine tier anchor; the sick room's price follows it. The pills are bitter, the cure is worse than the disease. But it works."
     },
     {
       "id": "iodine_pills",
@@ -54,7 +54,7 @@
       "elasticity": 1.3,
       "stackSize": 10,
       "weightKg": 0.1,
-      "barterNote": "Rises when the fallout maps update."
+      "barterNote": "Rises when the fallout maps update. The taste is metallic and leaves a film on the tongue. One pill a day keeps the thyroid at bay."
     },
     {
       "id": "fuel",
@@ -65,7 +65,7 @@
       "elasticity": 1.4,
       "stackSize": 4,
       "weightKg": 3.0,
-      "barterNote": "The generators drink it; so does the market."
+      "barterNote": "The generators drink it; so does the market. A full can means warmth through the night. An empty can means a long, cold watch."
     },
     {
       "id": "9mm_ammo",
@@ -76,7 +76,7 @@
       "elasticity": 1.2,
       "stackSize": 50,
       "weightKg": 0.5,
-      "barterNote": "Ammo holds value better than most promises."
+      "barterNote": "Ammo holds value better than most promises. The brass is tarnished, the powder smells old. But a bullet is a bullet when the lights go out."
     },
     {
       "id": "crowbar",
@@ -87,7 +87,7 @@
       "elasticity": 0.6,
       "stackSize": 1,
       "weightKg": 2.5,
-      "barterNote": "Tools are inelastic: scarce on supply, steady on price."
+      "barterNote": "Tools are inelastic: scarce on supply, steady on price. The prying end is polished bright from use. It opens doors, crates, and arguments."
     },
     {
       "id": "gas_mask",
@@ -98,7 +98,7 @@
       "elasticity": 1.0,
       "stackSize": 1,
       "weightKg": 1.8,
-      "barterNote": "Storm weather moves this faster than any argument."
+      "barterNote": "Storm weather moves this faster than any argument. The straps are frayed, the filter is questionable. But it's better than breathing in whatever's out there."
     },
     {
       "id": "dosimeter",
@@ -109,7 +109,7 @@
       "elasticity": 0.9,
       "stackSize": 1,
       "weightKg": 0.4,
-      "barterNote": "The registrar's pen; calibration keeps its price honest."
+      "barterNote": "The registrar's pen; calibration keeps its price honest. The needle jumps like a spooked animal. That's never a good sign."
     },
     {
       "id": "canned_food",
@@ -120,7 +120,7 @@
       "elasticity": 1.5,
       "stackSize": 6,
       "weightKg": 0.8,
-      "barterNote": "Food spikes hardest in the shortage windows."
+      "barterNote": "Food spikes hardest in the shortage windows. The label claims 'balanced nutrition.' The contents suggest it's been balanced with something else entirely."
     },
     {
       "id": "diamond",
@@ -131,7 +131,7 @@
       "elasticity": 0.3,
       "stackSize": 1,
       "weightKg": 0.01,
-      "barterNote": "Luxury softens when supplies run short — nobody trades shine for thirst."
+      "barterNote": "Luxury softens when supplies run short — nobody trades shine for thirst. The cut diamond in a velvet box is worth more than the bunker's generator."
     },
     {
       "id": "coal",
@@ -142,7 +142,7 @@
       "elasticity": 1.1,
       "stackSize": 10,
       "weightKg": 1.0,
-      "barterNote": "Cupola fuel and the ice road's payload; scarce when the window closes."
+      "barterNote": "Cupola fuel and the ice road's payload; scarce when the window closes. The chunks are black and heavy, leaving dust on everything they touch."
     },
     {
       "id": "item_foundry_brine_pipe",
@@ -153,7 +153,7 @@
       "elasticity": 1.2,
       "stackSize": 5,
       "weightKg": 12.0,
-      "barterNote": "Lead-antimony pipe owed to the membrane hall under the Brine Pipe Exchange."
+      "barterNote": "Lead-antimony pipe owed to the membrane hall under the Brine Pipe Exchange. The metal is worth more than the pipe itself. The pipe is worth more than your life."
     },
     {
       "id": "item_foundry_ice_anchor",
@@ -164,7 +164,7 @@
       "elasticity": 0.8,
       "stackSize": 50,
       "weightKg": 0.5,
-      "barterNote": "Counted by the bundle; the road charter's quota good."
+      "barterNote": "Counted by the bundle; the road charter's quota good. A handful can save a life—or end one. The ice doesn't care which."
     },
     {
       "id": "item_foundry_winch_drum",
@@ -175,7 +175,7 @@
       "elasticity": 1.0,
       "stackSize": 5,
       "weightKg": 75.0,
-      "barterNote": "Chilled-flange drums for the barge windlass and Berth 9."
+      "barterNote": "Chilled-flange drums for the barge windlass and Berth 9. The weight is the value. The drum is the difference between a working barge and a sunken one."
     }
   ]
 }
