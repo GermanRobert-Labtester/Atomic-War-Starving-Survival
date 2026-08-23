@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "collection_id": "radiation_survey_readings_batch_2",
+  "description": "Radiation survey readings from different bunker zones and surface locations. Recorded by the Pharmacist and the Hazmat Tech. Dosimeter readings in microsieverts per hour (uSv/h) unless otherwise noted.",
+  "surveys": [
+    {
+      "survey_id": "rad_b2_001",
+      "day": 42,
+      "surveyor": "the_pharmacist",
+      "location": "Dormitory (Bunks 1-24)",
+      "reading_usv_h": 0.8,
+      "notes": "Background radiation level. Within normal range for a bunker of this depth and construction. The concrete walls provide adequate shielding. No anomalies.",
+      "tags": [
+        "bunker",
+        "dormitory",
+        "background"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_002",
+      "day": 42,
+      "surveyor": "the_pharmacist",
+      "location": "Medical Bay",
+      "reading_usv_h": 0.5,
+      "notes": "Lower than dormitory. The medical bay is in the deepest part of the bunker, with additional earth shielding. This is the lowest background reading in the bunker. The Surgeon uses this room for the most radiation-sensitive patients.",
+      "tags": [
+        "bunker",
+        "medical",
+        "low_background"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_003",
+      "day": 42,
+      "surveyor": "the_pharmacist",
+      "location": "Greenhouse",
+      "reading_usv_h": 1.2,
+      "notes": "Slightly elevated due to the south-facing wall (thinner concrete for light penetration). The grow lights are between the wall and the plants, providing additional shielding. The Botanist is aware. No action needed.",
+      "tags": [
+        "bunker",
+        "greenhouse",
+        "slightly_elevated"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_004",
+      "day": 42,
+      "surveyor": "the_pharmacist",
+      "location": "Generator Room",
+      "reading_usv_h": 1.5,
+      "notes": "Elevated due to the proximity to the surface ventilation shaft. The generator exhaust penetrates the ceiling. The Electrician spends significant time here. I have recommended rotation schedules to limit cumulative exposure.",
+      "tags": [
+        "bunker",
+        "generator",
+        "elevated",
+        "occupational"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_005",
+      "day": 42,
+      "surveyor": "the_pharmacist",
+      "location": "Workshop",
+      "reading_usv_h": 1.1,
+      "notes": "Normal for this location. The Mechanic has accumulated 0.9 Sv over 14 months of residence. At current rates, he will reach 2 Sv (the cataract threshold) in approximately 3 years. Monitoring continues.",
+      "tags": [
+        "bunker",
+        "workshop",
+        "normal"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_006",
+      "day": 50,
+      "surveyor": "the_hazmat_tech",
+      "location": "Surface - South Perimeter (200m from hatch)",
+      "reading_usv_h": 45.0,
+      "notes": "Surface reading at 200m south. Elevated but not immediately dangerous for short exposure. At this rate, 1 hour on the surface would deliver 45 uSv — approximately 15 minutes of natural background radiation from a pre-war cross-country flight. The ash layer on the ground is the primary source. Wind can increase readings by dispersing contaminated dust.",
+      "tags": [
+        "surface",
+        "south",
+        "moderate"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_007",
+      "day": 50,
+      "surveyor": "the_hazmat_tech",
+      "location": "Surface - East Ridge (500m from hatch)",
+      "reading_usv_h": 120.0,
+      "notes": "Significantly elevated. The east ridge is downwind of the nearest detonation site. The ash accumulation is deeper here (approximately 15cm). The Hazmat Tech recommends avoiding this area without full protective equipment. Expedition teams have been rerouted.",
+      "tags": [
+        "surface",
+        "east",
+        "high",
+        "avoid"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_008",
+      "day": 50,
+      "surveyor": "the_hazmat_tech",
+      "location": "Surface - Frozen River (1km south)",
+      "reading_usv_h": 28.0,
+      "notes": "Lower than expected. The river water appears to dilute the surface contamination. The ice cover prevents dust resuspension. The expedition teams fish here regularly. The fish are tested for bioaccumulation — results are within food safety thresholds.",
+      "tags": [
+        "surface",
+        "river",
+        "moderate",
+        "fishing_safe"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_009",
+      "day": 55,
+      "surveyor": "the_pharmacist",
+      "location": "Water Cistern (inlet)",
+      "reading_usv_h": 0.3,
+      "notes": "The water is clean. The cistern is fed by underground springs that percolate through bedrock, which acts as a natural filter. Radiation content in the water is negligible. The UV sterilization system handles biological contamination.",
+      "tags": [
+        "bunker",
+        "water",
+        "clean"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_010",
+      "day": 55,
+      "surveyor": "the_pharmacist",
+      "location": "Food Stores (kitchen pantry)",
+      "reading_usv_h": 0.6,
+      "notes": "All stored food is within safety thresholds. The dried meat from the last expedition tested at 35 Bq/kg Cs-137 (threshold: 100 Bq/kg). The greenhouse produce tests lower (12-20 Bq/kg) due to the bunker shielding. The Chemist continues to monitor.",
+      "tags": [
+        "bunker",
+        "food",
+        "safe"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_011",
+      "day": 60,
+      "surveyor": "the_hazmat_tech",
+      "location": "Surface - South Perimeter (post-storm)",
+      "reading_usv_h": 85.0,
+      "notes": "Readings have nearly doubled since the fallout storm on Day 58. The storm deposited fresh ash on the surface. The reading is expected to decrease over the next 2-3 weeks as the ash settles and the short-lived isotopes decay. Surface operations are suspended until readings drop below 50 uSv/h.",
+      "tags": [
+        "surface",
+        "post_storm",
+        "elevated",
+        "suspended"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_012",
+      "day": 65,
+      "surveyor": "the_hazmat_tech",
+      "location": "Surface - South Perimeter (recovery)",
+      "reading_usv_h": 42.0,
+      "notes": "Readings have returned to near-normal levels after the storm. The 2-week suspension has been lifted. Surface operations may resume with standard protective equipment. The Meteorologist notes that the ash storm was consistent with seasonal patterns — we should expect 1-2 more before spring.",
+      "tags": [
+        "surface",
+        "recovery",
+        "normal",
+        "resumed"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_013",
+      "day": 70,
+      "surveyor": "the_pharmacist",
+      "location": "East Wing (new resident quarters)",
+      "reading_usv_h": 0.9,
+      "notes": "Normal. The east wing was recently expanded to accommodate new arrivals. The additional concrete walls provide adequate shielding. No anomalies. The new residents have been issued dosimeters for personal monitoring.",
+      "tags": [
+        "bunker",
+        "east_wing",
+        "normal"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_014",
+      "day": 75,
+      "surveyor": "the_hazmat_tech",
+      "location": "Surface - Geo-thermal Plant (3km east)",
+      "reading_usv_h": 350.0,
+      "notes": "Extremely elevated. The geo-thermal plant sits on a geological fault that was targeted during the exchange. The ground is heavily contaminated. The steam vents are releasing radioactive gases. This area is permanently excluded. No expedition should approach within 500m without full hazmat protection and a compelling reason.",
+      "tags": [
+        "surface",
+        "geo_thermal",
+        "extreme",
+        "excluded"
+      ]
+    },
+    {
+      "survey_id": "rad_b2_015",
+      "day": 80,
+      "surveyor": "the_pharmacist",
+      "location": "Bunker-wide quarterly summary",
+      "reading_usv_h": 0.9,
+      "notes": "Quarterly average across all bunker zones: 0.9 uSv/h (range: 0.5 medical bay to 1.5 generator room). Total cumulative dose for the average resident over the past quarter: approximately 0.2 Sv. At this rate, a resident would reach the 2 Sv cataract threshold in approximately 10 years. The 4 Sv acute syndrome threshold would not be reached through bunker residence alone. Surface expeditions remain the primary exposure risk. The Surgeon recommends limiting surface time to essential operations only.",
+      "tags": [
+        "bunker",
+        "quarterly",
+        "summary",
+        "assessment"
+      ]
+    }
+  ]
+}

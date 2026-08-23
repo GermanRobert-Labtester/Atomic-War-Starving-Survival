@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "collection_id": "security_incident_reports_batch_2",
+  "description": "Security incident reports from the bunker. Filed by the General, sentries, and designated safety officers. Covers perimeter breaches, internal disputes, safety violations, and unauthorised access.",
+  "reports": [
+    {
+      "report_id": "sec_b2_001",
+      "day": 43,
+      "reporter": "the_general",
+      "severity": "LOW",
+      "category": "UNAUTHORISED_ACCESS",
+      "title": "Unauthorised Entry to Workshop",
+      "details": "Resident T. was found in the workshop at 02:00 without authorisation. Resident T. states they were curious about the lathe and wanted to look at it. No tools were used and no damage was done. Resident T. was escorted back to their bunk. A warning was issued.",
+      "resolution": "Warning issued. Resident T. reminded that the workshop is restricted to trained personnel. A lock has been installed on the workshop door (the Mechanic fabricated it).",
+      "tags": [
+        "unauthorised",
+        "workshop",
+        "warning"
+      ]
+    },
+    {
+      "report_id": "sec_b2_002",
+      "day": 46,
+      "reporter": "the_general",
+      "severity": "MEDIUM",
+      "category": "PERIMETER_BREACH_ATTEMPT",
+      "title": "Surface Hatch Opened Without Clearance",
+      "details": "The emergency hatch alarm triggered at 14:00. Sentry investigation revealed that Resident J. had opened the hatch and stood on the surface step for approximately 90 seconds without protective equipment. Resident J. was not attempting to leave permanently but wanted to see the sky. Dosimeter reading on return: 180 uSv accumulated in 90 seconds.",
+      "resolution": "Resident J. confined to bunker for 30 days. Mandatory safety briefing with the General and the Surgeon. This incident was escalated to the bunker court (see verdict_b2_unauthorized_surface_expedition).",
+      "tags": [
+        "perimeter",
+        "surface",
+        "unauthorised",
+        "court_referral"
+      ]
+    },
+    {
+      "report_id": "sec_b2_003",
+      "day": 49,
+      "reporter": "the_general",
+      "severity": "LOW",
+      "category": "INTERPERSONAL_DISPUTE",
+      "title": "Argument in Dormitory (Bunk 7 vs Bunk 8)",
+      "details": "Resident A. (Bunk 7) and Resident B. (Bunk 8) engaged in a loud verbal altercation at 23:00. Resident A. accused Resident B. of deliberate noise disturbance. Resident B. accused Resident A. of false accusation. The argument lasted approximately 20 minutes and disturbed neighbouring bunks. No physical violence.",
+      "resolution": "Both residents were separated and interviewed individually. The matter was referred to the Therapist for mediation and subsequently to the bunker court (see verdict_b2_dispute_over_bunk_assignment). Acoustic baffles were later installed to reduce recurrence.",
+      "tags": [
+        "interpersonal",
+        "dormitory",
+        "noise",
+        "court_referral"
+      ]
+    },
+    {
+      "report_id": "sec_b2_004",
+      "day": 52,
+      "reporter": "the_general",
+      "severity": "HIGH",
+      "category": "SAFETY_VIOLATION",
+      "title": "Generator Room Access by Unauthorised Personnel",
+      "details": "The Electrician discovered that the generator room lock had been tampered with. Investigation revealed that Resident P. (the sentry who later fell asleep on duty) had attempted to access the generator room to adjust the voltage himself. Resident P. has no electrical training. When confronted, Resident P. stated they heard the generator making an unusual noise and wanted to investigate.",
+      "resolution": "Resident P. was issued a formal warning and suspended from sentry duty for 3 days (contributing factor in the later sleeping-on-duty incident). The generator room lock was replaced with a combination lock (the Watchmaker built it). Only the Electrician and the General know the combination.",
+      "tags": [
+        "safety",
+        "generator",
+        "unauthorised",
+        "warning"
+      ]
+    },
+    {
+      "report_id": "sec_b2_005",
+      "day": 55,
+      "reporter": "the_general",
+      "severity": "LOW",
+      "category": "CONTRABAND",
+      "title": "Unauthorised Alcohol Distillation",
+      "details": "The Plumber discovered a makeshift distillation apparatus hidden behind the water tanks in the east wing. The apparatus was producing a high-proof alcohol distillate from fermented kitchen waste (fruit peelings and barley water). The still was dismantled. No residents claimed ownership.",
+      "resolution": "The still was confiscated and dismantled. The alcohol was confiscated and transferred to the Pharmacist for medical use (antiseptic). A general notice was posted: unauthorised distillation is prohibited due to fire risk and the risk of methanol poisoning. No individual was identified or punished.",
+      "tags": [
+        "contraband",
+        "alcohol",
+        "fire_risk",
+        "anonymous"
+      ]
+    },
+    {
+      "report_id": "sec_b2_006",
+      "day": 58,
+      "reporter": "the_general",
+      "severity": "MEDIUM",
+      "category": "THEFT",
+      "title": "Food Stores Tampering",
+      "details": "The Chef reported that the dried meat store had been accessed outside of authorised hours. The lock was intact but the quantity did not match the inventory. Approximately 300g of dried meat was missing. Investigation revealed that the store key had been copied (the lock is a simple pin tumbler — the Watchmaker made a duplicate for the investigation). The copy has been confiscated.",
+      "resolution": "The missing meat was not recovered. The lock has been replaced with a more secure mechanism (the Mechanic built a combination lock). The General has posted a notice that theft from communal stores is a serious offence that will be brought before the bunker court. No individual was identified.",
+      "tags": [
+        "theft",
+        "food_stores",
+        "lock_replaced",
+        "unresolved"
+      ]
+    },
+    {
+      "report_id": "sec_b2_007",
+      "day": 61,
+      "reporter": "the_general",
+      "severity": "LOW",
+      "category": "SAFETY_VIOLATION",
+      "title": "Unauthorised Open Flame in Dormitory",
+      "details": "A sentry discovered a candle burning in Bunk 14 at 01:00. Open flames are prohibited in the dormitory due to fire risk. Resident M. (Bunk 14) stated they were using the candle for light because the dormitory lighting in their section was dim. The candle was extinguished.",
+      "resolution": "Resident M. was issued a warning. The Electrician was notified about the dim lighting in the Bunk 14 section and replaced the bulb. A reminder notice was posted about the open flame prohibition.",
+      "tags": [
+        "safety",
+        "fire_risk",
+        "dormitory",
+        "warning"
+      ]
+    },
+    {
+      "report_id": "sec_b2_008",
+      "day": 64,
+      "reporter": "the_general",
+      "severity": "HIGH",
+      "category": "PERIMETER_ALERT",
+      "title": "Unidentified Movement Detected at South Perimeter",
+      "details": "The south perimeter sentry reported unidentified movement at approximately 200 metres from the bunker at 03:00. The movement was detected by the periscope but could not be positively identified due to low visibility (ash storm conditions). The movement persisted for approximately 15 minutes and then ceased. No approach to the bunker was observed.",
+      "resolution": "The sentry rotation was increased to two-person teams for the south perimeter. The General ordered a surface reconnaissance at first light (conditions permitting). The reconnaissance found animal tracks (possibly mutated canids) but no evidence of human approach. The alert was downgraded to a false alarm. The incident has been logged for pattern analysis.",
+      "tags": [
+        "perimeter",
+        "alert",
+        "unidentified",
+        "false_alarm"
+      ]
+    },
+    {
+      "report_id": "sec_b2_009",
+      "day": 67,
+      "reporter": "the_general",
+      "severity": "MEDIUM",
+      "category": "SAFETY_VIOLATION",
+      "title": "Water System Contamination Event",
+      "details": "Seven residents presented with dysentery symptoms within a 24-hour period (see Surgeon casebook case_b2_004). Investigation traced the source to the water recycler UV sterilization system, which was operating at 40% below specification due to a degraded UV lamp. The lamp had been replaced 4 days prior but the replacement was below rated output.",
+      "resolution": "The UV lamp was replaced with a verified unit. All water tanks were flushed and re-sterilized. A new protocol was established: the Electrician must test UV lamp output with a radiometer before and after replacement. The incident was classified as a systemic safety failure, not an individual error.",
+      "tags": [
+        "safety",
+        "water",
+        "contamination",
+        "systemic",
+        "protocol_change"
+      ]
+    },
+    {
+      "report_id": "sec_b2_010",
+      "day": 70,
+      "reporter": "the_general",
+      "severity": "LOW",
+      "category": "INTERPERSONAL_DISPUTE",
+      "title": "Dispute Over Ration Distribution",
+      "details": "Resident K. (Bunk 22) accused the Chef of giving larger portions to certain residents. The accusation was made loudly in the mess hall during dinner service. The Chef denied the accusation and produced the ration scale (all portions are weighed). Resident K. was shown the scale readings and apologised. The incident caused distress to several residents who witnessed the confrontation.",
+      "resolution": "Resident K. was asked to speak with the Therapist regarding food anxiety (this led to the discovery of the hoarding incident — see verdict_b2_food_hoarding_resident_22). The Chef was commended for maintaining professionalism. A notice was posted explaining the ration calculation method for transparency.",
+      "tags": [
+        "interpersonal",
+        "rations",
+        "food_anxiety",
+        "resolved"
+      ]
+    },
+    {
+      "report_id": "sec_b2_011",
+      "day": 73,
+      "reporter": "the_general",
+      "severity": "MEDIUM",
+      "category": "UNAUTHORISED_POSSESSION",
+      "title": "Weapon Found in Resident Possession",
+      "details": "During a routine bunk inspection (bed bug check), the Therapist discovered a sharpened metal implement under the mattress of Bunk 3. The implement is approximately 20cm long, fashioned from a flattened pipe section with a ground edge. It is effectively a makeshift knife. The occupant (Resident P., the sentry) stated it was for self-defence because they felt unsafe after the perimeter alert on Day 64.",
+      "resolution": "The weapon was confiscated. Resident P. was reminded that weapons are not permitted in the bunker without General authorisation. The General acknowledged the resident fear but stated that unauthorised weapons create more risk than they reduce. The perimeter alert findings (animal tracks) were shared with the dormitory residents to reduce anxiety.",
+      "tags": [
+        "weapon",
+        "unauthorised",
+        "fear",
+        "confiscated"
+      ]
+    },
+    {
+      "report_id": "sec_b2_012",
+      "day": 76,
+      "reporter": "the_general",
+      "severity": "HIGH",
+      "category": "GENERATOR_SABOTAGE_SUSPECTED",
+      "title": "Generator Fuel Line Obstruction",
+      "details": "The generator stalled at 16:00 due to a fuel line obstruction. The Electrician discovered a piece of cloth stuffed into the fuel intake. The cloth was soaked in diesel and would have caused the generator to seize if not discovered. This is not a natural blockage — someone placed it deliberately. The generator was damaged (fuel injector clogged) and required 6 hours of repair.",
+      "resolution": "The incident is under investigation. No suspects have been identified. The fuel tank access point has been secured with a locked cage (the Mechanic built it). The General has authorised a discreet investigation: interviews with all residents who had access to the generator room in the 24 hours before the incident. The sabotage is classified as a critical security breach.",
+      "tags": [
+        "sabotage",
+        "generator",
+        "investigation",
+        "critical"
+      ]
+    },
+    {
+      "report_id": "sec_b2_013",
+      "day": 79,
+      "reporter": "the_general",
+      "severity": "LOW",
+      "category": "SAFETY_VIOLATION",
+      "title": "Unauthorised Surface Expedition by Two Residents",
+      "details": "Two residents (November-2 and November-3 from the November group) attempted to leave the bunker through the emergency hatch at 06:00 without clearance. They were stopped by the sentry. They stated they wanted to check on their settlement (The Allotments) because they had not heard from them in 10 days. They did not have dosimeters or gas masks.",
+      "resolution": "Both residents were escorted back to the bunker. The General explained the surface safety protocol. A radio message was sent to The Allotments via the Radio Host — a reply was received the following day (settlement is safe, communications delay was due to antenna damage). The residents were satisfied but were reminded that unauthorised surface excursions are prohibited.",
+      "tags": [
+        "surface",
+        "unauthorised",
+        "family_concern",
+        "resolved"
+      ]
+    },
+    {
+      "report_id": "sec_b2_014",
+      "day": 82,
+      "reporter": "the_general",
+      "severity": "MEDIUM",
+      "category": "CONTRABAND",
+      "title": "Unauthorised Radio Transmission",
+      "details": "The Radio Host detected an unauthorised radio transmission from inside the bunker at 02:00. The transmission was on a frequency not assigned to the bunker radio. Direction-finding equipment (the Electrician built a simple loop antenna) traced the source to Bunk 11 (Charlie-1, the surveyor). Charlie-1 was found with a small handheld radio transmitter (not bunker-issued).",
+      "resolution": "Charlie-1 was interviewed. She stated the transmitter was part of her personal equipment and she was attempting to contact The Overlay (her employer). She was reminded that all radio transmissions from the bunker must be authorised by the General. The transmitter was confiscated. Charlie-1 was issued a warning. The General is reviewing her resident status.",
+      "tags": [
+        "contraband",
+        "radio",
+        "unauthorised",
+        "surveyor",
+        "warning"
+      ]
+    },
+    {
+      "report_id": "sec_b2_015",
+      "day": 85,
+      "reporter": "the_general",
+      "severity": "LOW",
+      "category": "INTERPERSONAL_DISPUTE",
+      "title": "Dispute Over Bunk Assignment Change",
+      "details": "Resident D. (new arrival, refused medical screening — see verdict_b2_refusal_of_medical_screening) was not admitted but had already been assigned to Bunk 15. When the decision was made to deny admission, another new arrival (Lima-1, the unaccompanied child) was assigned to Bunk 17. The General needed to reassign bunks. Resident D. had already placed personal items in Bunk 15 and objected to moving.",
+      "resolution": "Resident D. was not admitted (see court verdict). The bunk was reassigned. The incident highlighted the need for a formal bunk assignment protocol: no resident may occupy a bunk until their admission is finalised. A new protocol has been implemented.",
+      "tags": [
+        "bunk_assignment",
+        "protocol_change",
+        "resolved"
+      ]
+    }
+  ]
+}

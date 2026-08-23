@@ -1,0 +1,705 @@
+{
+  "schema_version": 1,
+  "collection_id": "expedition_route_waypoint_notes_batch_2",
+  "description": "Detailed waypoint notes for established expedition routes. Written by the Courier, the Hunter, and expedition leaders. Each route includes waypoints, hazards, water sources, and shelter options.",
+  "routes": [
+    {
+      "route_id": "route_b2_001",
+      "name": "South Ridge to Frozen River",
+      "author": "the_courier",
+      "total_distance_km": 3.2,
+      "estimated_travel_time_hours": 2.5,
+      "difficulty": "MODERATE",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. Head south along the concrete apron.",
+          "hazards": "None. Clear line of sight to the ridge.",
+          "shelter": "Bunker (behind you)."
+        },
+        {
+          "wp": 2,
+          "distance_km": 0.8,
+          "description": "South perimeter marker (painted concrete post). Turn southeast toward the ridge.",
+          "hazards": "Ash depth increases to 20cm. Watch for hidden debris under the ash.",
+          "shelter": "None. Exposed."
+        },
+        {
+          "wp": 3,
+          "distance_km": 1.5,
+          "description": "Ridge crest. Follow the ridge southeast. The ridge provides a clear path with minimal ash accumulation.",
+          "hazards": "Wind exposure. In an ash storm, descend to the west side of the ridge for shelter.",
+          "shelter": "West side of ridge (lee side)."
+        },
+        {
+          "wp": 4,
+          "distance_km": 2.4,
+          "description": "Descent from ridge to the frozen river valley. The descent is steep (30 degrees) and the ash is loose.",
+          "hazards": "Slip hazard. Ankle-deep ash on the descent. Use the exposed rock on the east side for traction.",
+          "shelter": "None."
+        },
+        {
+          "wp": 5,
+          "distance_km": 3.2,
+          "description": "Frozen river bank. The fishing spot is 50m upstream (east) where the ice is thickest.",
+          "hazards": "Ice thickness varies. Test before walking on. Radiation reading: 28 uSv/h.",
+          "shelter": "River bank (wind shelter from the valley walls)."
+        }
+      ],
+      "water_sources": "Frozen river (must be melted and treated). No liquid water on route.",
+      "radiation_notes": "Background 0.9 uSv/h at bunker, rising to 45 uSv/h at south perimeter, dropping to 28 uSv/h at the river. Total exposure for a round trip: approximately 120 uSv.",
+      "tags": [
+        "south",
+        "river",
+        "fishing",
+        "moderate"
+      ]
+    },
+    {
+      "route_id": "route_b2_002",
+      "name": "East Ridge to Geo-thermal Plant (EXCLUDED)",
+      "author": "the_hunter",
+      "total_distance_km": 3.0,
+      "estimated_travel_time_hours": 4.0,
+      "difficulty": "EXTREME",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. Head east toward the ridge.",
+          "hazards": "None initially.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 1.0,
+          "description": "East ridge approach. Ash depth 30cm. Radiation climbing.",
+          "hazards": "Radiation: 80 uSv/h. Time limit: 30 minutes at this range without full hazmat.",
+          "shelter": "None."
+        },
+        {
+          "wp": 3,
+          "distance_km": 2.0,
+          "description": "East ridge crest. Radiation: 120 uSv/h. The geo-thermal plant is visible to the east — steam rising from multiple vents.",
+          "hazards": "EXTREME radiation. Full hazmat required. No exposed skin. Gas mask mandatory. Time limit: 15 minutes.",
+          "shelter": "None. The steam vents provide wind shelter but increase inhalation risk."
+        },
+        {
+          "wp": 4,
+          "distance_km": 3.0,
+          "description": "Geo-thermal plant perimeter. DO NOT APPROACH WITHIN 500m. Radiation: 350 uSv/h.",
+          "hazards": "LETHAL without full hazmat. The area is permanently excluded. No expedition should approach.",
+          "shelter": "None. Retreat immediately."
+        }
+      ],
+      "water_sources": "None. The geo-thermal steam is contaminated. Do not drink.",
+      "radiation_notes": "This route is EXCLUDED. The geo-thermal plant area is lethally contaminated. No expedition should be sent here under any circumstances. The route is documented for reference only.",
+      "tags": [
+        "east",
+        "excluded",
+        "extreme",
+        "lethal"
+      ]
+    },
+    {
+      "route_id": "route_b2_003",
+      "name": "North Trail to Dead Oak Cache",
+      "author": "the_courier",
+      "total_distance_km": 2.1,
+      "estimated_travel_time_hours": 1.5,
+      "difficulty": "EASY",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. Head north along the old road.",
+          "hazards": "None. The road is clear of major debris.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 0.7,
+          "description": "Road junction. Take the left fork (north-northwest). The right fork leads to a collapsed bridge over a dry creek.",
+          "hazards": "None.",
+          "shelter": "Collapsed building on the right (partial roof, wind shelter only)."
+        },
+        {
+          "wp": 3,
+          "distance_km": 1.4,
+          "description": "Dead oak tree (large, distinctive). The cache is at the base of the tree — a sealed container buried under 10cm of ash.",
+          "hazards": "None. The area is low radiation (15 uSv/h).",
+          "shelter": "The dead oak provides wind shelter. The cache container is large enough to shelter under in an emergency."
+        },
+        {
+          "wp": 4,
+          "distance_km": 2.1,
+          "description": "Cache contents verified. Return via the same route.",
+          "hazards": "None.",
+          "shelter": "Cache site."
+        }
+      ],
+      "water_sources": "None on route. Carry minimum 2 litres per person.",
+      "radiation_notes": "Low radiation throughout. Background to 15 uSv/h at the cache. This is the safest surface route from the bunker.",
+      "tags": [
+        "north",
+        "cache",
+        "easy",
+        "supply_run"
+      ]
+    },
+    {
+      "route_id": "route_b2_004",
+      "name": "West Traverse to The Allotments",
+      "author": "the_courier",
+      "total_distance_km": 8.5,
+      "estimated_travel_time_hours": 6.0,
+      "difficulty": "MODERATE",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. Head west along the ridge.",
+          "hazards": "None initially.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 2.0,
+          "description": "Western ridge descent. The descent is gradual but the ash is deep (25cm).",
+          "hazards": "Ash depth. Watch for hidden holes under the ash.",
+          "shelter": "Ridge crest (wind shelter)."
+        },
+        {
+          "wp": 3,
+          "distance_km": 4.5,
+          "description": "Midpoint rest stop. An abandoned farmhouse with partial roof. The interior is contaminated but the exterior walls provide wind shelter.",
+          "hazards": "Radiation: 35 uSv/h. Do not enter the farmhouse. Rest against the exterior wall.",
+          "shelter": "Farmhouse exterior (wind shelter only)."
+        },
+        {
+          "wp": 4,
+          "distance_km": 6.5,
+          "description": "Approach to The Allotments. Cultivated fields visible (irradiated but tended). A fence line marks the settlement boundary.",
+          "hazards": "Challenge from settlement sentries. Approach openly with hands visible.",
+          "shelter": "Settlement gate."
+        },
+        {
+          "wp": 5,
+          "distance_km": 8.5,
+          "description": "The Allotments settlement. Population approximately 30. Trade goods: dried vegetables, grain. They need medical supplies.",
+          "hazards": "None within the settlement. The settlement is friendly.",
+          "shelter": "Settlement guest quarters (if invited)."
+        }
+      ],
+      "water_sources": "Settlement well at The Allotments (tested, safe). Carry water for the outward journey (4 hours without water).",
+      "radiation_notes": "Moderate throughout. Peak 35 uSv/h at the midpoint. Total round-trip exposure: approximately 250 uSv. This is a full-day expedition.",
+      "tags": [
+        "west",
+        "settlement",
+        "trade",
+        "full_day"
+      ]
+    },
+    {
+      "route_id": "route_b2_005",
+      "name": "Southeast Approach to Shallows Market",
+      "author": "the_hunter",
+      "total_distance_km": 12.0,
+      "estimated_travel_time_hours": 10.0,
+      "difficulty": "HARD",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. Head southeast along the old highway.",
+          "hazards": "Highway is debris-filled. Navigate around wrecked vehicles.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 3.0,
+          "description": "Highway pileup (location: highway_pileup). A massive traffic jam of abandoned vehicles. Navigate through the gap on the east shoulder.",
+          "hazards": "Unstable vehicles. Radiation: 25 uSv/h. Do not enter the vehicles (contamination).",
+          "shelter": "Under the overpass (wind and radiation shelter)."
+        },
+        {
+          "wp": 3,
+          "distance_km": 6.0,
+          "description": "Midpoint. An abandoned service station. The station has a concrete canopy that provides excellent shelter.",
+          "hazards": "Radiation: 30 uSv/h. The station interior is contaminated. Rest under the canopy.",
+          "shelter": "Service station canopy (good shelter)."
+        },
+        {
+          "wp": 4,
+          "distance_km": 9.0,
+          "description": "Descent to the lake. The lake is visible — a grey expanse surrounded by dead trees. The Shallows Market is built on stilts over the shallow end of the lake.",
+          "hazards": "Radiation: 20 uSv/h (the lake water dilutes contamination). Approach from the north causeway.",
+          "shelter": "Lake shore."
+        },
+        {
+          "wp": 5,
+          "distance_km": 12.0,
+          "description": "Shallows Market. Population approximately 60. Trade goods: dried fish, lamp oil, matches. They need antibiotics and bandages.",
+          "hazards": "None within the settlement. The settlement is built over water and is relatively clean.",
+          "shelter": "Settlement guest quarters (if invited)."
+        }
+      ],
+      "water_sources": "Lake water (must be treated — see water quality reports). Settlement has a rainwater collection system.",
+      "radiation_notes": "This is a two-day expedition. Overnight at the service station (Day 1) and return on Day 2. Total exposure: approximately 400 uSv. Full hazmat recommended for the first 6 km.",
+      "tags": [
+        "southeast",
+        "settlement",
+        "trade",
+        "two_day",
+        "hard"
+      ]
+    },
+    {
+      "route_id": "route_b2_006",
+      "name": "Underground Transit Tunnel (East)",
+      "author": "Golf-1 (new arrival, former tunnel dweller)",
+      "total_distance_km": 5.0,
+      "estimated_travel_time_hours": 3.0,
+      "difficulty": "MODERATE",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Access via the sub-level transit entrance (maintenance hatch in the bunker sub-basement). The tunnel is 2m wide, 3m high, concrete-lined.",
+          "hazards": "Darkness. Carry a light. The tunnel is dry but cold (8 degrees C year-round).",
+          "shelter": "Bunker (behind you)."
+        },
+        {
+          "wp": 2,
+          "distance_km": 1.0,
+          "description": "First junction. Left branch goes to the old metro station (flooded). Right branch continues east. Take the right.",
+          "hazards": "The left branch water level is chest-high. Do not enter without wading equipment.",
+          "shelter": "Junction (dry, wind-free)."
+        },
+        {
+          "wp": 3,
+          "distance_km": 2.5,
+          "description": "Mushroom garden. Golf-1 cultivated mushrooms here during his 2 years in the tunnels. The mushrooms are still growing. They are safe to eat (tested).",
+          "hazards": "None. The mushrooms are non-toxic and non-radioactive.",
+          "shelter": "The mushroom garden is dry and has a flat area for resting."
+        },
+        {
+          "wp": 4,
+          "distance_km": 4.0,
+          "description": "Collapse. The tunnel ahead is blocked by a roof fall. The collapse is recent (within 6 months). The rubble is passable but requires climbing.",
+          "hazards": "Unstable rubble. Do not proceed alone. The collapse may extend further.",
+          "shelter": "Before the collapse (dry, wind-free)."
+        },
+        {
+          "wp": 5,
+          "distance_km": 5.0,
+          "description": "Surface access shaft (collapsed). The shaft is blocked but air is flowing from above — this connects to the surface. The shaft could be cleared with effort.",
+          "hazards": "Radiation from above: 40 uSv/h. The shaft is not a viable exit without clearing.",
+          "shelter": "Base of shaft (sheltered from above)."
+        }
+      ],
+      "water_sources": "Condensation on tunnel walls (collectable). A small seepage stream at the 3km mark (water is clean, tested).",
+      "radiation_notes": "Very low throughout. Background 0.2 uSv/h in the tunnel. The underground route provides excellent radiation shielding. This could be an alternative evacuation route if cleared.",
+      "tags": [
+        "underground",
+        "tunnel",
+        "east",
+        "alternative_route"
+      ]
+    },
+    {
+      "route_id": "route_b2_007",
+      "name": "South Perimeter Patrol Route",
+      "author": "the_general",
+      "total_distance_km": 1.5,
+      "estimated_travel_time_hours": 1.0,
+      "difficulty": "EASY",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. The patrol route is a 1.5km circuit around the bunker perimeter at 200m distance.",
+          "hazards": "None. The route is well-travelled and clear.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 0.4,
+          "description": "South perimeter marker. Check the marker post for damage. Check the ash depth (should be under 25cm).",
+          "hazards": "None.",
+          "shelter": "Marker post (wind shelter)."
+        },
+        {
+          "wp": 3,
+          "distance_km": 0.8,
+          "description": "Southeast corner. Check for animal tracks. Report any sign of approach toward the bunker.",
+          "hazards": "Occasional animal tracks (mutated canids). No human sign.",
+          "shelter": "None. Exposed."
+        },
+        {
+          "wp": 4,
+          "distance_km": 1.2,
+          "description": "East perimeter. Check the long-wire antenna (attached to the dead oak 200m south). The antenna should be visible from here.",
+          "hazards": "None.",
+          "shelter": "None."
+        },
+        {
+          "wp": 5,
+          "distance_km": 1.5,
+          "description": "Return to bunker hatch. Report any observations to the General.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        }
+      ],
+      "water_sources": "None. Carry 1 litre per person.",
+      "radiation_notes": "Low. Background to 45 uSv/h at the perimeter. Total exposure for a patrol: approximately 60 uSv. This is a routine daily task.",
+      "tags": [
+        "perimeter",
+        "patrol",
+        "easy",
+        "routine"
+      ]
+    },
+    {
+      "route_id": "route_b2_008",
+      "name": "North Ridge to Seed Vault Antechamber",
+      "author": "the_hunter",
+      "total_distance_km": 4.5,
+      "estimated_travel_time_hours": 3.5,
+      "difficulty": "MODERATE",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. Head north along the ridge.",
+          "hazards": "None initially.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 1.5,
+          "description": "North ridge crest. Follow the ridge north. The path is clear but exposed.",
+          "hazards": "Wind exposure. In an ash storm, descend to the west side.",
+          "shelter": "West side of ridge."
+        },
+        {
+          "wp": 3,
+          "distance_km": 3.0,
+          "description": "Descent from ridge into the valley. The seed vault entrance is visible — a concrete structure built into the hillside.",
+          "hazards": "The descent is steep. Watch for loose rock.",
+          "shelter": "Valley floor (wind shelter from the hills)."
+        },
+        {
+          "wp": 4,
+          "distance_km": 4.0,
+          "description": "Seed vault antechamber entrance (location: location_seed_vault_antechamber). The door is sealed but not locked. The interior is cool and dry.",
+          "hazards": "Radiation: 5 uSv/h (the vault is well-shielded). The interior is clean.",
+          "shelter": "Seed vault antechamber (excellent shelter)."
+        },
+        {
+          "wp": 5,
+          "distance_km": 4.5,
+          "description": "Seed vault interior. The seed samples are stored in sealed containers in a cold room. The Botanist has collected samples on previous expeditions. The vault is a valuable resource.",
+          "hazards": "None. The vault is clean and safe.",
+          "shelter": "Seed vault (long-term shelter possible)."
+        }
+      ],
+      "water_sources": "A small spring at the base of the hill (200m east of the vault). The water is clean (tested).",
+      "radiation_notes": "Low throughout. The seed vault is well-shielded by the hillside and concrete construction. This is a valuable route for seed collection and emergency shelter.",
+      "tags": [
+        "north",
+        "seed_vault",
+        "shelter",
+        "valuable"
+      ]
+    },
+    {
+      "route_id": "route_b2_009",
+      "name": "Emergency Evacuation Route (South)",
+      "author": "the_general",
+      "total_distance_km": 5.0,
+      "estimated_travel_time_hours": 4.0,
+      "difficulty": "HARD",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. Head south at speed. This route is for emergency evacuation only.",
+          "hazards": "None initially. Move fast.",
+          "shelter": "Bunker (abandoning)."
+        },
+        {
+          "wp": 2,
+          "distance_km": 1.5,
+          "description": "South ridge crest. Continue south. Do not stop.",
+          "hazards": "Exposed. If under pursuit, use the ridge for observation before descending.",
+          "shelter": "None."
+        },
+        {
+          "wp": 3,
+          "distance_km": 3.0,
+          "description": "Descent to the dry creek bed. The creek bed provides cover from observation.",
+          "hazards": "The creek bed is debris-filled. Navigate carefully.",
+          "shelter": "Creek bed (cover from above)."
+        },
+        {
+          "wp": 4,
+          "distance_km": 4.0,
+          "description": "Creek bed junction. Turn east. Follow the creek for 1km to the rally point.",
+          "hazards": "None.",
+          "shelter": "Creek bed."
+        },
+        {
+          "wp": 5,
+          "distance_km": 5.0,
+          "description": "Rally point: an abandoned concrete culvert (large enough for 47 people to shelter). The culvert is marked with a painted arrow on the interior wall. Emergency supplies are cached here (see Dead Oak Cache route for resupply).",
+          "hazards": "Radiation: 30 uSv/h. The culvert is sheltered but not sealed.",
+          "shelter": "Concrete culvert (emergency shelter for up to 48 hours)."
+        }
+      ],
+      "water_sources": "None on route. Emergency water caches at the rally point (40 litres, sealed).",
+      "radiation_notes": "Moderate. This route is designed for speed, not safety. Total exposure: approximately 200 uSv. The culvert is a temporary shelter — long-term residence is not viable.",
+      "tags": [
+        "south",
+        "emergency",
+        "evacuation",
+        "hard"
+      ]
+    },
+    {
+      "route_id": "route_b2_010",
+      "name": "Greenhouse to Compost Bay (Internal)",
+      "author": "the_botanist",
+      "total_distance_km": 0.05,
+      "estimated_travel_time_hours": 0.1,
+      "difficulty": "EASY",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Greenhouse exit. Walk through the east wing corridor.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 0.05,
+          "description": "Compost Bay. Deposit kitchen waste, greenhouse plant waste, and compost toilet material. Collect finished compost for the greenhouse beds.",
+          "hazards": "The compost is hot (55 degrees C in the core). Do not insert hands into the active pile. Wear gloves.",
+          "shelter": "Compost Bay (enclosed, ventilated)."
+        }
+      ],
+      "water_sources": "None needed. This is an internal route.",
+      "radiation_notes": "Background. No radiation concern.",
+      "tags": [
+        "internal",
+        "compost",
+        "daily",
+        "easy"
+      ]
+    },
+    {
+      "route_id": "route_b2_011",
+      "name": "Bunker to Cemetery (Eastern Field)",
+      "author": "the_undertaker",
+      "total_distance_km": 0.3,
+      "estimated_travel_time_hours": 0.25,
+      "difficulty": "EASY",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. Walk east across the concrete apron.",
+          "hazards": "None. The path is clear.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 0.3,
+          "description": "Cemetery. The eastern field cemetery contains 23 graves. Each grave is marked with a cross or stone. The Undertaker tends the cemetery weekly.",
+          "hazards": "Radiation: 35 uSv/h. The cemetery is on the surface. Limit time to 30 minutes per visit.",
+          "shelter": "The cemetery has a small shelter (stone wall, roof) for the Undertaker to use during visits."
+        }
+      ],
+      "water_sources": "None. Carry water if needed.",
+      "radiation_notes": "Moderate. The cemetery is on the surface and exposed. The Undertaker wears a dosimeter and gas mask during visits. Total exposure per visit: approximately 15 uSv.",
+      "tags": [
+        "cemetery",
+        "surface",
+        "easy",
+        "memorial"
+      ]
+    },
+    {
+      "route_id": "route_b2_012",
+      "name": "Bunker to Surface Antenna (Maintenance)",
+      "author": "the_electrician",
+      "total_distance_km": 0.25,
+      "estimated_travel_time_hours": 0.5,
+      "difficulty": "MODERATE",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Bunker hatch exit. The antenna is mounted on the surface mast 50m from the hatch, with the long-wire extending 200m south to the dead oak.",
+          "hazards": "None initially.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 0.05,
+          "description": "Surface mast base. Climb the mast (10m) to access the antenna connection point. The mast has ladder rungs welded to it.",
+          "hazards": "Fall hazard. Wear a safety harness (the Tailor made one from webbing). Radiation: 40 uSv/h at mast height.",
+          "shelter": "Mast base (wind shelter)."
+        },
+        {
+          "wp": 3,
+          "distance_km": 0.25,
+          "description": "Dead oak (antenna anchor). Check the wire tension and insulator condition. The wire is copper and may need replacement every 6 months.",
+          "hazards": "The tree is dead and may drop branches. Do not stand under the tree for extended periods.",
+          "shelter": "None. Exposed."
+        }
+      ],
+      "water_sources": "None. This is a short maintenance trip.",
+      "radiation_notes": "Moderate. Total exposure per maintenance visit: approximately 30 uSv. The Electrician visits monthly.",
+      "tags": [
+        "antenna",
+        "maintenance",
+        "surface",
+        "moderate"
+      ]
+    },
+    {
+      "route_id": "route_b2_013",
+      "name": "Internal Bunker Route (Medical Bay to Kitchen)",
+      "author": "the_architect",
+      "total_distance_km": 0.15,
+      "estimated_travel_time_hours": 0.05,
+      "difficulty": "EASY",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Medical bay exit. Turn left into the main corridor.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 0.08,
+          "description": "Pass the workshop (right). Continue straight.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 3,
+          "distance_km": 0.15,
+          "description": "Kitchen entrance. The kitchen is on the left side of the corridor.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        }
+      ],
+      "water_sources": "Kitchen tap.",
+      "radiation_notes": "Background. No concern.",
+      "tags": [
+        "internal",
+        "medical",
+        "kitchen",
+        "daily"
+      ]
+    },
+    {
+      "route_id": "route_b2_014",
+      "name": "Internal Bunker Route (Dormitory to Generator Room)",
+      "author": "the_electrician",
+      "total_distance_km": 0.2,
+      "estimated_travel_time_hours": 0.05,
+      "difficulty": "EASY",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Dormitory exit. Turn right into the main corridor. Head down (sub-level).",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 0.1,
+          "description": "Sub-level corridor. The generator room is at the end.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 3,
+          "distance_km": 0.2,
+          "description": "Generator room entrance. The door requires the combination (known to the Electrician and the General).",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        }
+      ],
+      "water_sources": "None needed. Internal route.",
+      "radiation_notes": "Background to 1.5 uSv/h at the generator room. No concern for short visits.",
+      "tags": [
+        "internal",
+        "dormitory",
+        "generator",
+        "daily"
+      ]
+    },
+    {
+      "route_id": "route_b2_015",
+      "name": "Full Bunker Perimeter Circuit (Internal)",
+      "author": "the_general",
+      "total_distance_km": 0.8,
+      "estimated_travel_time_hours": 0.3,
+      "difficulty": "EASY",
+      "waypoints": [
+        {
+          "wp": 1,
+          "distance_km": 0,
+          "description": "Main corridor junction. The circuit follows the outer wall of the bunker, passing every section.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 2,
+          "distance_km": 0.2,
+          "description": "Dormitory section. Check the acoustic baffles. Check the bunk assignments.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 3,
+          "distance_km": 0.4,
+          "description": "Kitchen and greenhouse section. Check the food stores. Check the greenhouse status.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 4,
+          "distance_km": 0.6,
+          "description": "Medical bay and workshop section. Check the medical supplies. Check the workshop inventory.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        },
+        {
+          "wp": 5,
+          "distance_km": 0.8,
+          "description": "Generator room and blast door section. Check the generator status. Check the blast door mechanism. Return to main junction.",
+          "hazards": "None.",
+          "shelter": "Bunker."
+        }
+      ],
+      "water_sources": "Available at multiple points throughout the bunker.",
+      "radiation_notes": "Background throughout. This is the General daily inspection route. It is walked every morning.",
+      "tags": [
+        "internal",
+        "perimeter",
+        "inspection",
+        "daily"
+      ]
+    }
+  ]
+}

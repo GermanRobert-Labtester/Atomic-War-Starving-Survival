@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "collection_id": "personal_effects_inventory_batch_2",
+  "description": "Catalogue of personal possessions held by bunker residents. Each item has sentimental or practical significance. Recorded by the Quartermaster at resident request.",
+  "items": [
+    {
+      "item_id": "effect_b2_001",
+      "owner": "the_general",
+      "item": "Pre-war officer commission document (framed)",
+      "description": "A framed commission document from the pre-war army. The glass is cracked. The text is faded but legible. The General keeps it in his office. He says it reminds him of the difference between an officer and a warlord. He has never used the rank it confers. He does not need to.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "military",
+        "identity",
+        "office"
+      ]
+    },
+    {
+      "item_id": "effect_b2_002",
+      "owner": "the_surgeon",
+      "item": "Stethoscope (pre-war, cracked diaphragm)",
+      "description": "The Surgeon stethoscope has a cracked diaphragm but still functions for basic auscultation. She has had it since medical school. She says it is the only thing she has that predates the war and still serves its purpose. She cleans it daily.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "medical",
+        "professional",
+        "daily_use"
+      ]
+    },
+    {
+      "item_id": "effect_b2_003",
+      "owner": "the_therapist",
+      "item": "Notebook (leather-bound, pre-war)",
+      "description": "A leather-bound notebook with blank pages. The Therapist uses it for session notes. The leather is worn smooth from handling. She says the notebook was a gift from her supervisor before the war. She writes in it every evening. The notes are coded — no names, only initials and symbols.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "professional",
+        "writing",
+        "confidential"
+      ]
+    },
+    {
+      "item_id": "effect_b2_004",
+      "owner": "the_chef",
+      "item": "Chef knife (pre-war, carbon steel, hand-forged)",
+      "description": "The Chef knife is a 20cm carbon steel blade with a walnut handle. It was hand-forged by a bladesmith before the war. The Chef says it is the only good thing she saved from her restaurant. She sharpens it every morning. The blade has been resharpened so many times it is 5mm shorter than when she bought it.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "kitchen",
+        "tool",
+        "daily_use"
+      ]
+    },
+    {
+      "item_id": "effect_b2_005",
+      "owner": "the_watchmaker",
+      "item": "Pocket watch (pre-war, mechanical, not running)",
+      "description": "A mechanical pocket watch that no longer runs. The mainspring is broken and no replacement exists. The Watchmaker keeps it in his vest pocket. He winds it every morning out of habit, even though it does not tick. He says it belonged to his father. He says: It is not about the time. It is about the weight in my pocket.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "clockwork",
+        "family",
+        "non_functional"
+      ]
+    },
+    {
+      "item_id": "effect_b2_006",
+      "owner": "the_historian",
+      "item": "Book collection (12 pre-war paperbacks)",
+      "description": "Twelve paperbacks in various states of decay. Titles include: a history of the Roman Empire, a collection of poetry, a science fiction novel, a cookbook, a philosophy text, and six others. The Historian reads one page per night before sleep. He says the books are the only windows to the world that was. When they disintegrate, the world will be gone.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "books",
+        "education",
+        "memory"
+      ]
+    },
+    {
+      "item_id": "effect_b2_007",
+      "owner": "the_widow",
+      "item": "Wedding ring (gold, pre-war)",
+      "description": "A simple gold wedding band. The Widow wears it on a chain around her neck. She says she removed it from her finger when her husband died because her fingers shrank and the ring kept falling off. She says: It is not the ring I mourn. It is the hand that gave it to me. But the ring is all I have left of that hand.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "jewellery",
+        "grief",
+        "memory"
+      ]
+    },
+    {
+      "item_id": "effect_b2_008",
+      "owner": "the_priest",
+      "item": "Prayer book (pre-war, leather-bound, annotated)",
+      "description": "A prayer book with handwritten annotations in the margins. The Priest says the annotations were made by his predecessor. He does not know if the annotations are theological insights or grocery lists. He reads from the book at every service. The book is falling apart. He mends the binding with thread from the Tailor.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "religious",
+        "text",
+        "annotated"
+      ]
+    },
+    {
+      "item_id": "effect_b2_009",
+      "owner": "the_teacher",
+      "item": "Chalk set (pre-war, 23 pieces, various colours)",
+      "description": "A box of 23 pieces of coloured chalk. The Teacher uses them for the school lessons. Each piece is down to approximately half its original length. She rationed them from the start — one piece per lesson, no more. At current rates, the chalk will last approximately 6 months. She is teaching the children as much as she can before the chalk runs out.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "MEDIUM",
+      "tags": [
+        "education",
+        "consumable",
+        "finite"
+      ]
+    },
+    {
+      "item_id": "effect_b2_010",
+      "owner": "the_radio_host",
+      "item": "Microphone (pre-war, dynamic, salvaged)",
+      "description": "A dynamic microphone salvaged from a pre-war radio station. The grille is dented. The cable has been spliced three times. The Radio Host says it is the voice of the bunker. He speaks into it every day. He says: Before the war, I talked to no one. Now I talk to everyone. The microphone does not judge. It only transmits.",
+      "origin": "salvaged",
+      "sentimental_value": "MEDIUM",
+      "tags": [
+        "radio",
+        "communication",
+        "daily_use"
+      ]
+    },
+    {
+      "item_id": "effect_b2_011",
+      "owner": "the_undertaker",
+      "item": "Ledger of the Dead (handmade, ongoing)",
+      "description": "A handmade ledger in which the Undertaker records the name, date of death, and burial location of every person who dies in or near the bunker. The ledger currently contains 23 entries. The Undertaker writes in it every evening. He says: The dead deserve to be remembered. The ledger is their monument.",
+      "origin": "bunker_made",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "death",
+        "record",
+        "memorial"
+      ]
+    },
+    {
+      "item_id": "effect_b2_012",
+      "owner": "the_botanist",
+      "item": "Seed collection (47 pre-war seed packets)",
+      "description": "Forty-seven seed packets from a pre-war garden centre. Each packet contains a small number of seeds (5-20 per packet). The varieties include tomatoes, beans, squash, sunflowers, and herbs. The Botanist has planted some but is saving most for future cycles. She says: Each seed is a promise. I do not know which ones will grow. But I keep them all.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "seeds",
+        "food",
+        "future"
+      ]
+    },
+    {
+      "item_id": "effect_b2_013",
+      "owner": "the_mechanic",
+      "item": "Multi-tool (pre-war, stainless steel)",
+      "description": "A multi-tool with pliers, knife, screwdriver, can opener, and file. The Mechanic carries it everywhere. He says it is the most useful object in the bunker. He has used it to repair the generator, fix the water pump, open ration tins, and cut wire. The tool is worn smooth from use. He oil it weekly.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "MEDIUM",
+      "tags": [
+        "tool",
+        "daily_use",
+        "versatile"
+      ]
+    },
+    {
+      "item_id": "effect_b2_014",
+      "owner": "the_courier",
+      "item": "Running shoes (pre-war, worn through)",
+      "description": "A pair of running shoes that the Courier has worn through the soles. He has patched them with rubber from a tyre inner tube. He says they are the only shoes that fit his narrow feet. He has run 400 km in them across the surface. The shoes smell of sweat and ash. He says: They have seen more of the world than anyone in this bunker. They are retired. But I cannot throw them away.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "MEDIUM",
+      "tags": [
+        "footwear",
+        "surface",
+        "worn"
+      ]
+    },
+    {
+      "item_id": "effect_b2_015",
+      "owner": "the_naive_son",
+      "item": "Photograph (pre-war, family, creased)",
+      "description": "A creased photograph of a family of four: mother, father, boy (approximately 10), and a dog. The photograph is from before the war. The Naive Son says the boy is him. He says the dog was named Rex. He says he does not remember what happened to the rest of the family. He keeps the photograph in his bunk. He looks at it every night before sleep.",
+      "origin": "pre_war_personal",
+      "sentimental_value": "HIGH",
+      "tags": [
+        "photograph",
+        "family",
+        "memory",
+        "loss"
+      ]
+    }
+  ]
+}

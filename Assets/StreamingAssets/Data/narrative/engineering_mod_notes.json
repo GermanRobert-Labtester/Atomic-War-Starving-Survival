@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "collection_id": "engineering_mod_notes",
+  "description": "Undocumented modifications and field-expedient engineering solutions applied to bunker systems. Written by the Mechanic, the Electrician, the Plumber, and the Architect.",
+  "mods": [
+    {
+      "mod_id": "eng_mod_001",
+      "day": 42,
+      "author": "the_mechanic",
+      "system": "water_recycler",
+      "title": "Improvised UV Lamp Housing Reflector",
+      "problem": "The water recycler's UV sterilization chamber has a polished aluminium reflector that directs UV light around the water flow tube. The reflector has corroded (pitting from constant water exposure) and UV output dropped by 30%. No replacement aluminium sheet available.",
+      "solution": "Fashioned a replacement reflector from a salvaged satellite dish (found during Expedition 5). The dish is aluminium-coated steel — I cut a section to fit the UV chamber, polished it with progressively finer sandpaper (down to 600 grit from the workshop stores), and installed it. UV output measured by the Electrician's improvised radiometer: 95% of original specification. The dish section is larger than the original reflector, so I had to bend it to fit. It works. The water is safe again.",
+      "materials_used": [
+        "satellite_dish_section",
+        "sandpaper_600grit",
+        "rivets_x4"
+      ],
+      "risk_assessment": "LOW. The steel substrate may rust over time. Estimated lifespan: 18-24 months before re-replacement needed.",
+      "tags": [
+        "water",
+        "UV",
+        "improvised",
+        "salvage"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_002",
+      "day": 47,
+      "author": "the_electrician",
+      "system": "generator",
+      "title": "Voltage Regulator Bypass with Manual Control",
+      "problem": "The generator's electronic voltage regulator failed. The regulator maintains a steady 230V output regardless of load. Without it, the voltage fluctuates between 180V (low load) and 280V (no load). The high voltage will damage sensitive equipment (the Radio Host's transceiver, the medical bay's equipment). No replacement regulator available.",
+      "solution": "Installed a manual variable transformer (Variac) from the workshop between the generator output and the bunker's distribution panel. The Electrician marked the correct output position (230V) with a file notch on the dial. An operator must adjust the Variac when the load changes significantly. I have written a load-management schedule: when the kitchen stove is on (high load), the Variac is set to position 7. When only lights and the water pump are running (low load), position 4. The General has assigned a resident to check the voltage every 4 hours and adjust as needed.",
+      "materials_used": [
+        "variac_manual_transformer",
+        "copper_wire_2m",
+        "file_mark"
+      ],
+      "risk_assessment": "MEDIUM. If the operator forgets to adjust, equipment damage is possible. The file notch provides a tactile reference. I have also installed a voltmeter (salvaged from a pre-war multimeter) on the distribution panel for visual monitoring.",
+      "tags": [
+        "generator",
+        "electrical",
+        "manual_override",
+        "critical"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_003",
+      "day": 51,
+      "author": "the_plumber",
+      "system": "compost_toilet",
+      "title": "Urine Diversion Retrofit",
+      "problem": "The compost toilet produces a mixed waste stream (urine + faeces + bulking material). The high nitrogen content of urine is slowing the composting process — the pile is too wet and anaerobic. The smell is becoming a problem in the east wing.",
+      "solution": "Retrofitted the toilet seats with a urine diversion plate (fashioned from a cut plastic bottle). The plate directs urine into a separate collection container while faeces drop into the composting chamber as before. The urine is collected in a 10-litre bucket and diluted 1:8 with water — this produces a nitrogen-rich liquid fertiliser that the Botanist uses on the turnip beds. The composting chamber is now drier and aerobic. The smell has reduced by approximately 80% (my subjective assessment). The Botanist reports that the urine fertiliser has increased turnip growth rate by an estimated 15%.",
+      "materials_used": [
+        "plastic_bottle_cut",
+        "PVC_pipe_section_50mm",
+        "silicone_sealant"
+      ],
+      "risk_assessment": "LOW. The urine is sterile when fresh and the dilution eliminates any pathogen risk. The system is simple and maintainable.",
+      "tags": [
+        "plumbing",
+        "compost_toilet",
+        "fertiliser",
+        "improvement"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_004",
+      "day": 55,
+      "author": "the_architect",
+      "system": "ventilation",
+      "title": "Passive Airflow Redirectors for Dormitory",
+      "problem": "The dormitory (Bunks 1-24) has poor air circulation. The ventilation inlet is at one end and the outlet at the other, but the bunk arrangement creates dead zones where stale air accumulates. Residents in the centre bunks report stuffiness, condensation on their blankets, and higher CO2 levels.",
+      "solution": "Installed passive airflow redirectors — angled baffles made from sheet metal scraps — at three points along the ventilation duct run. The baffles redirect a portion of the airflow downward into the bunk area rather than letting it flow straight along the ceiling. The effect is measurable: the CO2 monitor (the Chemist's improvised device) shows a 20% reduction in peak CO2 levels in the centre bunks. The residents report improved air quality. The baffles also reduce the noise from the ventilation duct — the angled surfaces break up the standing wave that was causing a low-frequency hum at night.",
+      "materials_used": [
+        "sheet_metal_scraps_x6",
+        "rivets_x12",
+        "measuring_tape"
+      ],
+      "risk_assessment": "LOW. The baffles reduce total airflow by approximately 5% (measured) but improve distribution significantly. Net positive.",
+      "tags": [
+        "ventilation",
+        "dormitory",
+        "passive",
+        "air_quality"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_005",
+      "day": 58,
+      "author": "the_mechanic",
+      "system": "manual_lathe",
+      "title": "External Fixation Device for Fractures",
+      "problem": "The Mechanic's own compound fracture (see Surgeon's Casebook case_b2_003) required bone alignment during healing. No orthopaedic equipment available. The Watchmaker and I collaborated on a solution.",
+      "solution": "Constructed an external fixation frame from clock springs (the Watchmaker's stock), steel pins (ground from drill rod), and aluminium brackets (machined from scrap). The frame attaches to the forearm via two pins inserted through the skin into each bone fragment (under local anaesthetic). The springs provide adjustable compression to hold the fragments in alignment. The brackets connect the springs and allow fine-tuning of the angle. The device is sterilised by boiling before use. It held the Mechanic's fracture in perfect alignment for 6 weeks. The Surgeon now considers it standard equipment for fracture management. We have built two more units.",
+      "materials_used": [
+        "clock_springs_x8",
+        "drill_rod_steel_pins_x4",
+        "aluminium_scrap",
+        "brass_screws"
+      ],
+      "risk_assessment": "MEDIUM. Pin insertion through skin carries infection risk. The Surgeon requires daily pin-site cleaning with alcohol. The device itself is mechanically sound — the springs hold constant force regardless of swelling changes.",
+      "tags": [
+        "medical_device",
+        "orthopaedic",
+        "collaboration",
+        "standard_equipment"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_006",
+      "day": 63,
+      "author": "the_electrician",
+      "system": "lighting",
+      "title": "Emergency Candle-to-Electricity Converter",
+      "problem": "During the generator failure on Day 68 (11-hour blackout), we had no lighting except candles. Candles provide light but no power for critical systems (the medical bay's refrigeration for vaccines, the radio's receiver). We need a way to generate small amounts of electricity without the generator.",
+      "solution": "Built a thermoelectric generator (TEG) from salvaged bismuth-telluride modules (found in a pre-war portable cooler during Expedition 3). The TEG converts a temperature differential into electricity. I mounted 4 modules between a candle holder and a heat sink (an aluminium finned block from the workshop). With 6 candles burning beneath the modules, the TEG produces approximately 3 watts at 5V — enough to power the radio receiver or run a small LED light for 8 hours. The conversion efficiency is terrible (approximately 2%) but it works. I have built two units. They are stored in the emergency kit.",
+      "materials_used": [
+        "TEG_modules_x4",
+        "aluminium_heat_sink",
+        "candle_holder_brass",
+        "copper_wire",
+        "solder"
+      ],
+      "risk_assessment": "LOW. The TEG produces no emissions, requires no fuel beyond candles, and has no moving parts. The output is small but reliable.",
+      "tags": [
+        "electrical",
+        "emergency",
+        "thermoelectric",
+        "candle_power"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_007",
+      "day": 66,
+      "author": "the_plumber",
+      "system": "water_distribution",
+      "title": "Gravity-Feed Emergency Water System",
+      "problem": "The electric water pump failed on Day 65 (motor burnout — see maintenance logs). Without the pump, water cannot be moved from the underground cistern to the kitchen and medical bay. The manual hand pump works but is slow and labour-intensive (one person pumping full-time can deliver 20 litres/hour; the bunker needs 94 litres/day).",
+      "solution": "Installed a gravity-feed backup system. The bunker's water cistern is 12 metres below the kitchen level. I ran a 15mm pipe from the cistern's upper outlet (above the sediment layer) up through the ventilation shaft to the kitchen, with a valve at each end. When the electric pump is unavailable, opening both valves allows gravity to feed water directly to the kitchen tap. The flow rate is slow (approximately 2 litres/minute) but continuous and requires no labour. The system fills a 50-litre storage tank in the kitchen in 25 minutes. The tank has a float valve that shuts off the flow when full.",
+      "materials_used": [
+        "PVC_pipe_15mm_18m",
+        "ball_valves_x2",
+        "50L_storage_tank",
+        "float_valve"
+      ],
+      "risk_assessment": "LOW. Gravity is reliable. The only failure mode is a pipe leak, which would be visible immediately (the pipe runs through accessible spaces).",
+      "tags": [
+        "water",
+        "gravity_feed",
+        "backup_system",
+        "passive"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_008",
+      "day": 70,
+      "author": "the_mechanic",
+      "system": "blast_door",
+      "title": "Blast Door Manual Override Winch",
+      "problem": "The main blast door's hydraulic opener failed on Day 69 (hydraulic fluid leak — the seal degraded). The door weighs approximately 800 kg and cannot be opened by hand. Without the hydraulic system, the bunker has only the emergency hatch as an exit — which is inadequate for evacuation.",
+      "solution": "Built a manual winch system to open the blast door. The winch uses a 20:1 gear reduction (machined from scrap steel gears found in the workshop) and a 1.5-metre crank handle. One person can open the 800 kg door in approximately 4 minutes of cranking. The winch is permanently mounted on the wall beside the door and engages with a toothed rack I welded to the door frame. A ratchet mechanism prevents the door from closing under its own weight if the operator lets go. The General has posted a notice: in an emergency, two residents are assigned to the winch (one cranking, one spotting).",
+      "materials_used": [
+        "steel_gears_x3",
+        "crank_handle",
+        "toothed_rack_2m",
+        "ratchet_pawl",
+        "welding_rod"
+      ],
+      "risk_assessment": "LOW. The mechanical system is simple and robust. The 20:1 reduction means the operator feels approximately 40 kg of force — manageable for an adult. The ratchet is fail-safe.",
+      "tags": [
+        "blast_door",
+        "manual_override",
+        "emergency",
+        "winch"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_009",
+      "day": 74,
+      "author": "the_watchmaker",
+      "system": "medical",
+      "title": "Mechanical Metronome for Sleep Therapy",
+      "problem": "The Therapist requested a device that produces a steady, rhythmic sound at approximately 62 BPM (matching the generator's hum) to help patients with insomnia during generator outages. No electronic metronome available.",
+      "solution": "Built a mechanical metronome from clock components. The mechanism uses a mainspring (from a wall clock), an escapement (modified from a pocket watch), and a pendulum arm with an adjustable weight. The weight slides along the arm to set the tempo — marked positions for 50, 56, 62, 68, and 74 BPM. The tick is produced by a small hammer striking a brass block at each oscillation. The volume is sufficient to hear across a room but not loud enough to disturb adjacent bunks. The metronome runs for approximately 45 minutes per winding. I have built three units: one for the Therapist's office, one for the medical bay, and one for the dormitory (available on loan).",
+      "materials_used": [
+        "mainspring",
+        "escapement_mechanism",
+        "brass_block",
+        "steel_hammer",
+        "pendulum_arm",
+        "adjustable_weight"
+      ],
+      "risk_assessment": "NONE. Purely mechanical. No failure mode that could cause harm. The springs may eventually fatigue after approximately 5,000 hours of operation (estimated 2 years of nightly use).",
+      "tags": [
+        "medical_device",
+        "mechanical",
+        "sleep_therapy",
+        "clockwork"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_010",
+      "day": 78,
+      "author": "the_architect",
+      "system": "acoustics",
+      "title": "Dormitory Acoustic Baffle Installation",
+      "problem": "The interpersonal dispute between Bunk 7 and Bunk 8 (see court verdict verdict_b2_dispute_over_bunk_assignment) highlighted the dormitory's lack of acoustic privacy. The concrete walls reflect sound. Every cough, every movement, every whispered conversation is audible to neighbouring bunks.",
+      "solution": "Installed acoustic baffles between each bunk pair. The baffles are 1.2m high partitions made from a frame of salvaged aluminium tube, filled with compressed wool insulation (from the workshop stores) and covered with fabric (the Tailor sewed covers from salvaged curtains). The baffles reduce sound transmission by approximately 50% (subjective assessment — the Therapist reports that the Bunk 7/8 dispute has not recurred since installation). Twelve baffles installed, dividing the dormitory into semi-private alcoves. The residents report feeling 'more human' with even this small degree of privacy.",
+      "materials_used": [
+        "aluminium_tube_x24",
+        "wool_insulation",
+        "fabric_covers_x12",
+        "cable_ties"
+      ],
+      "risk_assessment": "LOW. The baffles are freestanding (not attached to the walls) and can be moved or removed. The wool insulation is encapsulated in fabric — no fibre exposure. The baffles marginally reduce ventilation airflow but not below acceptable levels.",
+      "tags": [
+        "acoustics",
+        "dormitory",
+        "privacy",
+        "quality_of_life"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_011",
+      "day": 82,
+      "author": "the_electrician",
+      "system": "communications",
+      "title": "Long-Wire Antenna for Extended Radio Range",
+      "problem": "The bunker's radio antenna is a short whip mounted on the surface mast. Range is limited to approximately 30 km for voice communication. The Radio Host has been receiving signals from stations hundreds of kilometres away but cannot reply — our transmitter is too weak for the distance.",
+      "solution": "Strung a 42-metre long-wire antenna from the bunker's surface ventilation outlet to a nearby tree (the largest surviving oak, approximately 200 metres south). The wire is insulated copper (salvaged from building wiring during Expedition 2). The antenna is connected to the radio through a matching network (a coil and variable capacitor I built from salvaged components). The long-wire antenna has increased our effective radiated power by approximately 10 dB — the Radio Host can now reach stations at 150+ km range. He has made contact with three new settlements: one to the east (approximately 180 km), one to the north (220 km), and one to the southeast (90 km). The tree is dead — killed by radiation — so it will not regrow and interfere with the antenna.",
+      "materials_used": [
+        "copper_wire_42m",
+        "coil_former",
+        "variable_capacitor",
+        "insulators_x4"
+      ],
+      "risk_assessment": "MEDIUM. The antenna is on the surface and vulnerable to damage (ash storms, falling branches, interference from expeditions). The Radio Host checks it weekly. The wire is at height and could cause injury if it falls — I have posted a warning marker.",
+      "tags": [
+        "radio",
+        "antenna",
+        "communications",
+        "extended_range"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_012",
+      "day": 85,
+      "author": "the_mechanic",
+      "system": "kitchen_stove",
+      "title": "Pot-Lifting Crane Arm for Kitchen",
+      "problem": "The Chef burned her arm lifting a heavy pot from the wood stove (see Surgeon's Casebook case_b2_018). The stove is at floor level and the pots weigh up to 15 kg when full. Lifting requires bending over the open fire — a burn risk for anyone.",
+      "solution": "Built a small crane arm mounted to the wall above the stove. The arm is a steel pipe section (30mm diameter, 1.2m long) pivoting on a bracket welded to the wall. A chain and hook hang from the free end. The Chef positions the hook over the pot handle, then uses the arm's leverage to lift the pot clear of the stove. The arm can be swung to the side to deposit the pot on the prep table. Maximum load: 25 kg (tested). The arm removes the need to lift heavy pots over an open flame. The Chef says it has changed her workflow entirely.",
+      "materials_used": [
+        "steel_pipe_30mm",
+        "chain_1m",
+        "hook_forged",
+        "wall_bracket_welded"
+      ],
+      "risk_assessment": "LOW. The arm is mechanically simple. The chain is rated for 50 kg (double the maximum expected load). The bracket is through-bolted to the concrete wall with 4 anchors.",
+      "tags": [
+        "kitchen",
+        "safety",
+        "crane",
+        "ergonomic"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_013",
+      "day": 88,
+      "author": "the_chemist",
+      "system": "water_treatment",
+      "title": "Improvised Water Chlorination System",
+      "problem": "The UV sterilization system is the primary water treatment. When it fails (see dysentery outbreak, case_b2_004), there is no backup chemical treatment. Bleach (sodium hypochlorite) is not available in quantity. We need a reliable chemical disinfection method.",
+      "solution": "I have developed a method to produce small quantities of sodium hypochlorite by electrolysis of salt water. The apparatus: a glass jar filled with salt water (5% NaCl solution), two electrodes (graphite rods from salvaged battery cells), and a 12V DC power supply (from the Electrician's bench). Running the electrolysis for 30 minutes produces approximately 200 ml of dilute sodium hypochlorite solution (approximately 0.5% available chlorine). This is sufficient to treat 50 litres of water to the WHO standard (2 mg/L free chlorine after 30 minutes contact time). I have written a protocol: add 4 ml of the solution per litre of water, wait 30 minutes, then test with the Pharmacist's DPD test kit (the last of the reagent — approximately 50 tests remaining).",
+      "materials_used": [
+        "glass_jar",
+        "graphite_electrodes_x2",
+        "12V_DC_supply",
+        "NaCl_salt",
+        "tubing"
+      ],
+      "risk_assessment": "MEDIUM. The electrolysis produces chlorine gas as a byproduct — the process must be conducted in a ventilated area. The sodium hypochlorite degrades over time (loses 5% potency per day) — it must be made fresh. The DPD reagent is finite — when it runs out, we cannot verify chlorine levels.",
+      "tags": [
+        "water_treatment",
+        "chlorination",
+        "electrolysis",
+        "backup"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_014",
+      "day": 90,
+      "author": "the_architect",
+      "system": "dehumidification",
+      "title": "Passive Dehumidification Wall Panels",
+      "problem": "The bunker's humidity is consistently above 70% — this causes mould growth (see respiratory infection cluster, case_b2_016), condensation on surfaces, and discomfort. Active dehumidification requires electricity we cannot spare.",
+      "solution": "Designed passive dehumidification panels using calcium chloride (CaCl2) as a desiccant. The Chemist produced calcium chloride by reacting limestone with hydrochloric acid (salvaged from the pre-war chemical stores). The CaCl2 is packed in cloth bags (the Tailor sewed them from breathable cotton) and hung on the walls of the most humid areas (dormitory, medical bay, greenhouse). Each bag contains 500g of CaCl2 and absorbs approximately 200 ml of water per day from the air. When the bags become saturated (they feel heavy and damp), they are regenerated by placing them near the stove for 2 hours — the heat drives off the absorbed water and the CaCl2 can be reused. I have installed 20 panels across the bunker. The humidity has dropped from 73% to 64% in the dormitory.",
+      "materials_used": [
+        "calcium_chloride_10kg",
+        "cotton_bags_x20",
+        "hanging_hooks"
+      ],
+      "risk_assessment": "LOW. Calcium chloride is non-toxic (it is used as a food additive). The regenerated water is disposed of in the compost toilet. The bags are sealed — no direct contact with residents.",
+      "tags": [
+        "dehumidification",
+        "passive",
+        "humidity",
+        "mould_prevention"
+      ]
+    },
+    {
+      "mod_id": "eng_mod_015",
+      "day": 92,
+      "author": "the_mechanic",
+      "system": "workshop",
+      "title": "Belt-Drive Conversion for Manual Lathe",
+      "problem": "The manual lathe's cutting tool was damaged by unauthorized use (see court verdict verdict_b2_tool_misuse_workshop). The original high-speed steel cutting bit is irreplaceable. I need an alternative cutting method that does not depend on a single precision component.",
+      "solution": "Converted the lathe to use a belt-drive system from the workshop's bicycle (the Courier's backup bike — he agreed to the donation). The bicycle's chain and sprockets provide a 3:1 reduction from the hand crank to the lathe spindle, allowing slower, more controlled cutting. I have also ground a new cutting tool from a file (high-carbon steel — not as hard as HSS but adequate for soft metals like aluminium and brass). The file steel holds an edge for approximately 30 minutes of cutting before needing resharpening. The HSS tool lasted 8 hours. The difference is significant but workable. I have made three file-steel cutting tools as backups. The lathe is operational again, with reduced capability but adequate for most workshop tasks.",
+      "materials_used": [
+        "bicycle_chain_and_sprockets",
+        "file_steel_cutting_tools_x3",
+        "mounting_brackets"
+      ],
+      "risk_assessment": "LOW. The belt-drive is mechanically simple and easily maintained. The file-steel tools are a known quantity — they work, they just need more frequent sharpening. The Courier has been issued the remaining bicycle for emergency transport.",
+      "tags": [
+        "workshop",
+        "lathe",
+        "belt_drive",
+        "improvised_tooling"
+      ]
+    }
+  ]
+}

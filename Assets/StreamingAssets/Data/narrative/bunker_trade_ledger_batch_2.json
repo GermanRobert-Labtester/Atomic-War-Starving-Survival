@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "collection_id": "bunker_trade_ledger_batch_2",
+  "description": "Internal barter transactions between bunker residents. Recorded by the Quartermaster. All trades are voluntary and logged for transparency.",
+  "transactions": [
+    {
+      "tx_id": "trade_b2_001",
+      "day": 42,
+      "giver": "the_chef",
+      "receiver": "the_mechanic",
+      "given": "200g dried mushroom (medicinal grade)",
+      "received": "1 repaired pocket knife (blade resharpened, handle rewrapped)",
+      "notes": "The Chef needed a sharp knife for the Sunday Special prep. The Mechanic needed the mushrooms for a persistent cough. Fair trade.",
+      "tags": [
+        "food",
+        "tools",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_002",
+      "day": 44,
+      "giver": "the_botanist",
+      "receiver": "the_therapist",
+      "given": "50g dried chamomile and lavender mix",
+      "received": "2 therapy session tokens (redeemable for priority scheduling)",
+      "notes": "The Therapist uses the herbs for anxiety tea prescriptions. The Botanist wanted priority access to the Therapist for a personal matter (declined to elaborate).",
+      "tags": [
+        "herbs",
+        "services",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_003",
+      "day": 45,
+      "giver": "the_electrician",
+      "receiver": "the_courier",
+      "given": "1 hand-crank flashlight (repaired, new LED from salvage)",
+      "received": "4 batteries AA (pre-war, tested, 80% charge)",
+      "notes": "The Courier needs reliable light for surface runs. The Electrician needed the batteries for his test equipment.",
+      "tags": [
+        "electronics",
+        "lighting",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_004",
+      "day": 47,
+      "giver": "the_tailor",
+      "receiver": "the_hunter",
+      "given": "1 repaired insulated jacket (patched, lining replaced)",
+      "received": "500g dried venison (radiation-checked, clean)",
+      "notes": "The Hunter jacket was torn during a surface run. The Tailor mended it with salvaged fabric. The Hunter paid with meat from the last expedition.",
+      "tags": [
+        "clothing",
+        "food",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_005",
+      "day": 49,
+      "giver": "the_watchmaker",
+      "receiver": "the_surgeon",
+      "given": "1 magnifying loupe (3x, brass frame, ground lens)",
+      "received": "10 alcohol swabs and 5 sterile gauze packs",
+      "notes": "The Surgeon needed magnification for wound inspection. The Watchmaker needed medical supplies for a cut on his hand (lathe accident).",
+      "tags": [
+        "medical",
+        "optics",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_006",
+      "day": 51,
+      "giver": "the_teacher",
+      "receiver": "the_historian",
+      "given": "3 hours of literacy tutoring for Resident child (age 7)",
+      "received": "1 pre-war children book (illustrated, hardcover, intact)",
+      "notes": "The Historian gave the book to the Teacher for the bunker school library. The Teacher offered tutoring in return. The child is progressing well.",
+      "tags": [
+        "education",
+        "books",
+        "services",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_007",
+      "day": 53,
+      "giver": "the_chemist",
+      "receiver": "the_botanist",
+      "given": "100ml dilute sulphuric acid (for soil pH adjustment)",
+      "received": "200g fresh compost (mature, screened)",
+      "notes": "The Chemist needed organic matter for a filtration experiment. The Botanist needed acid for the greenhouse soil beds. Both benefited.",
+      "tags": [
+        "chemicals",
+        "gardening",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_008",
+      "day": 55,
+      "giver": "the_chef",
+      "receiver": "the_priest",
+      "given": "1 Sunday Special portion (mushroom tart, extra serving)",
+      "received": "1 blessing for the kitchen (spiritual, not material)",
+      "notes": "The Chef requested a blessing for the kitchen before the Sunday Special. The Priest provided it. The Chef says the food tastes better when blessed. The Priest says the blessing is free. The trade is recorded for transparency.",
+      "tags": [
+        "food",
+        "spiritual",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_009",
+      "day": 57,
+      "giver": "the_mechanic",
+      "receiver": "the_plumber",
+      "given": "1 custom pipe wrench (modified for tight spaces)",
+      "received": "3 hours plumbing assistance (kitchen drain repair)",
+      "notes": "The Plumber needed a wrench that fit the narrow space behind the kitchen sink. The Mechanic modified a standard wrench. The Plumber paid with labour.",
+      "tags": [
+        "tools",
+        "services",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_010",
+      "day": 59,
+      "giver": "the_pharmacist",
+      "receiver": "the_vet",
+      "given": "200ml antiseptic solution (diluted povidone-iodine)",
+      "received": "50g rendered animal fat (for salve base)",
+      "notes": "The Pharmacist needed fat for preparing topical medications. The Vet needed antiseptic for treating a surface wound on a returned expedition member.",
+      "tags": [
+        "medical",
+        "animal_products",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_011",
+      "day": 61,
+      "giver": "the_architect",
+      "receiver": "the_general",
+      "given": "1 updated bunker map (hand-drawn, corrected for recent modifications)",
+      "received": "1 ration bonus (extra 100g dried meat for the week)",
+      "notes": "The General requested an updated map showing all engineering modifications. The Architect produced it. The General authorised a ration bonus as payment.",
+      "tags": [
+        "documentation",
+        "food",
+        "official",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_012",
+      "day": 63,
+      "giver": "the_radio_host",
+      "receiver": "the_meteorologist",
+      "given": "2 hours of airtime on the bunker internal broadcast (personal message)",
+      "received": "1 weather prediction chart (7-day forecast, hand-annotated)",
+      "notes": "The Radio Host wanted to broadcast a personal message (a birthday greeting for the Chef). The Meteorologist wanted airtime to distribute his weather forecast. They traded airtime slots.",
+      "tags": [
+        "communications",
+        "services",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_013",
+      "day": 65,
+      "giver": "the_undertaker",
+      "receiver": "the_tailor",
+      "given": "1 burial shroud (hand-sewn, clean linen)",
+      "received": "3 pairs of reinforced work gloves (leather, stitched)",
+      "notes": "The Undertaker needed gloves for cemetery work (handling cold stones, digging). The Tailor needed a burial shroud for a recent death. Both are skilled with needle and thread.",
+      "tags": [
+        "clothing",
+        "funerary",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_014",
+      "day": 67,
+      "giver": "the_bouncer",
+      "receiver": "the_chef",
+      "given": "5 litres clean water (carried from the cistern, personal allocation)",
+      "received": "3 extra bread rolls (turnip bread, fresh-baked)",
+      "notes": "The Bouncer carried extra water for the Chef (she could not make the trip due to a burn injury). The Chef paid with bread. The Bouncer says he would have done it for free. The Chef insisted on payment.",
+      "tags": [
+        "water",
+        "food",
+        "services",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_015",
+      "day": 69,
+      "giver": "the_surgeon",
+      "receiver": "the_pharmacist",
+      "given": "1 surgical procedure (suturing a hand laceration)",
+      "received": "10 doses of willow bark extract (analgesic, pre-prepared)",
+      "notes": "The Pharmacist cut his hand on a glass jar. The Surgeon sutured it. The Pharmacist paid with painkillers for the Surgeon patients.",
+      "tags": [
+        "medical",
+        "services",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_016",
+      "day": 71,
+      "giver": "the_general",
+      "receiver": "the_courier",
+      "given": "1 official courier badge (leather, stamped with bunker seal)",
+      "received": "1 intelligence report (handwritten, 4 pages, settlement locations to the east)",
+      "notes": "The General commissioned the Courier to memorise and record settlement locations from radio contacts. The Courier produced the report. The badge is a mark of official status.",
+      "tags": [
+        "official",
+        "intelligence",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_017",
+      "day": 73,
+      "giver": "the_hazmat_tech",
+      "receiver": "the_chemist",
+      "given": "1 contaminated suit (cleaned, decontaminated, still usable)",
+      "received": "500ml distilled water (for laboratory use)",
+      "notes": "The Hazmat Tech had a suit that was no longer rated for surface use but was clean enough for bunker decontamination work. The Chemist needed distilled water for solution preparation.",
+      "tags": [
+        "equipment",
+        "chemicals",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_018",
+      "day": 75,
+      "giver": "the_firefighter",
+      "receiver": "the_mechanic",
+      "given": "10 fire-starting kits (charcoal cloth, flint, tinder)",
+      "received": "1 repaired fire extinguisher (refilled, pressure tested)",
+      "notes": "The Firefighter prepared fire-starting kits for emergency use. The Mechanic serviced the fire extinguisher. Both are essential safety equipment.",
+      "tags": [
+        "safety",
+        "tools",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_019",
+      "day": 77,
+      "giver": "the_naive_son",
+      "receiver": "the_historian",
+      "given": "3 hours of physical labour (carrying water containers, moving supplies)",
+      "received": "2 hours of history lessons (pre-war civilisation, written notes provided)",
+      "notes": "The Naive Son wanted to learn about the world before the war. The Historian needed help with heavy lifting. They arranged a regular exchange: labour for education.",
+      "tags": [
+        "education",
+        "labour",
+        "services",
+        "barter"
+      ]
+    },
+    {
+      "tx_id": "trade_b2_020",
+      "day": 79,
+      "giver": "the_quartermaster",
+      "receiver": "the_chef",
+      "given": "1 inventory ledger access (full stores list, quantities, expiry dates)",
+      "received": "1 week of priority meal planning (Chef prepares meals around available stock to minimise waste)",
+      "notes": "The Quartermaster needed the Chef to plan meals around inventory to reduce spoilage. The Chef needed full inventory access to do so. The trade is ongoing and has reduced food waste by an estimated 15%.",
+      "tags": [
+        "food",
+        "administration",
+        "ongoing",
+        "barter"
+      ]
+    }
+  ]
+}
