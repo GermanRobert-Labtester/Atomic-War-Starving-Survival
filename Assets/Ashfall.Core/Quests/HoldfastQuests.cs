@@ -1016,6 +1016,168 @@ namespace Ashfall.Core.Quests
                     "Dark ice is a death sentence"
                 }
             );
+
+            // Fleet faction side quests
+            public static QuestDefinition FleetSchedule => new QuestDefinition(
+                id: "quest_fleet_schedule",
+                displayName: "Fixed Frequency",
+                type: QuestType.Expedition,
+                description: "A voice on a fixed frequency, fixed time. Not D/9's. The Fleet was told to wait for a stand-up order that never came.",
+                objectives: new List<QuestObjective>
+                {
+                    new QuestObjective(
+                        id: "obj_fleet_listen_three_nights",
+                        description: "Listen three nights at the scheduled time",
+                        completionText: "The voice is consistent. The schedule is real. The wait is not over.",
+                        requiresPlayerChoice: true
+                    ),
+                    new QuestObjective(
+                        id: "obj_fleet_answer_once",
+                        description: "Answer once with authentication or without",
+                        completionText: "The voice acknowledges. The Fleet is still waiting. The stand-up is still not signed.",
+                        requiresPlayerChoice: true
+                    ),
+                    new QuestObjective(
+                        id: "obj_fleet_meet_mire_ashore",
+                        description: "Meet Mire ashore or not",
+                        completionText: "Mire is ashore. The Fleet is still waiting. The choice is yours.",
+                        requiresPlayerChoice: true
+                    )
+                },
+                rewards: new List<QuestReward>
+                {
+                    new QuestReward(
+                        type: QuestRewardType.Knowledge,
+                        id: "knowledge_key_lore_fleet_schedule"
+                    ),
+                    new QuestReward(
+                        type: QuestRewardType.Item,
+                        id: "item_fleet_schedule_fragment"
+                    ),
+                    new QuestReward(
+                        type: QuestRewardType.CompanionUnlock,
+                        id: "companion_mire_unlocked"
+                    )
+                },
+                failureConsequences: new List<string>
+                {
+                    "Mire's trust is broken",
+                    "The Fleet's schedule remains unanswered",
+                    "No companion unlock"
+                },
+                hostileElements: new List<string>
+                {
+                    "The Fleet's wait is not over",
+                    "The stand-up order is still unsigned",
+                    "Mire's patience is finite"
+                }
+            );
+
+            public static QuestDefinition FleetPad => new QuestDefinition(
+                id: "quest_fleet_pad",
+                displayName: "Stand-Up Authentication",
+                type: QuestType.Exploration,
+                description: "He wants a stand-up. Sole's D/9 form will not verify. The Fleet's authentication system is the same family as D/9's, but it is not the same.",
+                objectives: new List<QuestObjective>
+                {
+                    new QuestObjective(
+                        id: "obj_fleet_show_sole_paper",
+                        description: "Show Sole's paper if owned",
+                        completionText: "The pad does not authenticate. The Fleet's stand-up is still not signed.",
+                        requiresItem: "item_archivist_card"
+                    ),
+                    new QuestObjective(
+                        id: "obj_fleet_find_fleet_annex",
+                        description: "Find the Fleet annex in Ministry files",
+                        completionText: "The annex is found. The Fleet's authentication system is documented. The stand-up is still not signed.",
+                        requiresLocation: "loc_ministry_fleet_annex"
+                    ),
+                    new QuestObjective(
+                        id: "obj_fleet_accept_wait",
+                        description: "Accept that some waits do not end",
+                        completionText: "The choice is made. The Fleet continues to wait. The stand-up is still not signed.",
+                        requiresPlayerChoice: true
+                    )
+                },
+                rewards: new List<QuestReward>
+                {
+                    new QuestReward(
+                        type: QuestRewardType.Knowledge,
+                        id: "knowledge_key_lore_fleet_authentication"
+                    ),
+                    new QuestReward(
+                        type: QuestRewardType.Morale,
+                        id: "morale_event_fleet_wait"
+                    )
+                },
+                failureConsequences: new List<string>
+                {
+                    "Mire's arrival is accelerated",
+                    "The Fleet's wait becomes more desperate",
+                    "No morale event"
+                },
+                hostileElements: new List<string>
+                {
+                    "The Fleet's authentication is not the same",
+                    "The stand-up order is still unsigned",
+                    "Some waits do not end"
+                }
+            );
+
+            public static QuestDefinition FleetBoarding => new QuestDefinition(
+                id: "quest_fleet_boarding",
+                displayName: "Without Blasting",
+                type: QuestType.Expedition,
+                description: "Boarding *Hearth-4* without blasting. The hatch wants a number. The Fleet does not forget.",
+                objectives: new List<QuestObjective>
+                {
+                    new QuestObjective(
+                        id: "obj_fleet_authenticate_with_companion",
+                        description: "Authenticate with an allocated companion or fail",
+                        completionText: "The hatch opens. The Fleet is aboard. The choice is yours.",
+                        requiresPlayerChoice: true
+                    ),
+                    new QuestObjective(
+                        id: "obj_fleet_inventory_living",
+                        description: "Inventory the living aboard",
+                        completionText: "The living are counted. The Fleet is aboard. The choice is yours.",
+                        requiresPlayerChoice: true
+                    ),
+                    new QuestObjective(
+                        id: "obj_fleet_offer_cluster_beds",
+                        description: "Offer Cluster beds or leave them",
+                        completionText: "The beds are offered. The Fleet is aboard. The choice is yours.",
+                        completionText: "The beds are left. The Fleet is aboard. The choice is yours."
+                    )
+                },
+                rewards: new List<QuestReward>
+                {
+                    new QuestReward(
+                        type: QuestRewardType.EndingFlag,
+                        id: "ending_flag_fleet_boarded"
+                    ),
+                    new QuestReward(
+                        type: QuestRewardType.Knowledge,
+                        id: "knowledge_key_lore_fleet_boarded"
+                    ),
+                    new QuestReward(
+                        type: QuestRewardType.Morale,
+                        id: "morale_event_fleet_boarded"
+                    )
+                },
+                failureConsequences: new List<string>
+                {
+                    "The Fleet's trust is broken",
+                    "The hatch remains sealed",
+                    "No ending flag"
+                },
+                hostileElements: new List<string>
+                {
+                    "The hatch wants a number",
+                    "The Fleet does not forget",
+                    "The choice is final"
+                }
+            );
         }
     }
 }
