@@ -1,0 +1,445 @@
+{
+  "schema_version": 1,
+  "collection_id": "trade_ledgers_expansion",
+  "description": "Trade ledgers and barter records — transaction logs, price tables, debt registers, caravan manifests, barter agreements, market day reports. People counting carefully — the rate is the rate, the rate is the law, the law is the rate.",
+  "documents": [
+    {
+      "doc_id": "bunker_doc_price_lock_gate",
+      "doc_type": "price_table",
+      "title": "Price Table — Lock Gate Four, Day 20",
+      "posted_day": 20,
+      "posted_by": "The Barons' Council",
+      "location": "Lock Gate Four, posted on the gate",
+      "material": "Hand-painted on a board, over the previous rate",
+      "transcript": "PRICE TABLE — LOCK GATE FOUR\nEffective Day 20.\n\nWATER (drinking, filtered):\n20L = 2L lamp oil. The 2 is the rate. The rate is the 2.\n40L = 3.5L lamp oil. (Bulk discount. The discount is the 0.5. The 0.5 is the discount.)\n\nWATER (washing, unfiltered):\n40L = 1L lamp oil. The 1 is the rate. The rate is the 1.\n\nSALT:\n1kg = 1L lamp oil OR 500g flour. The OR is the choice. The choice is the OR.\n\nLAMP OIL:\n1L = 20L water OR 1kg salt OR 750g flour. The OR is the three. The three is the OR.\n\nFLOUR:\n1kg = 1.5L lamp oil OR 2kg salt. The 1.5 is the flour. The flour is the 1.5.\n\nMEDICAL (broad-spectrum, 1 course):\n1 course = 5L lamp oil OR 4kg salt OR 3kg flour. The 5 is the medicine. The medicine is the 5. The medicine is the most expensive. The most expensive is the medicine.\n\nNOTES:\n- The rate is the rate. The Barons do not negotiate. The Barons meter. The meter is the law. The law is the meter.\n- The rate is subject to seasonal adjustment. The seasonal is the winter. The winter is the seasonal. The winter rate is higher. The higher is the winter.\n- Unauthorized drilling is theft. Theft is the guard. The guard is the law. The law is the guard.\n- The Barons do not trade in weapons. The Barons do not trade in promises. The Barons trade in water and oil and salt and flour and medicine. The five are the trade. The trade is the five.\n\n— The Barons' Council.",
+      "tags": [
+        "price_table",
+        "lock_gate",
+        "hydro_barons",
+        "water",
+        "oil",
+        "salt",
+        "flour",
+        "medicine"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_price_garrison",
+      "doc_type": "price_table",
+      "title": "Price Table — Garrison Checkpoint, Day 25",
+      "posted_day": 25,
+      "posted_by": "Supply Sergeant, Garrison QM Corps",
+      "location": "Garrison checkpoint, posted at the gate",
+      "material": "Typed on field-issue paper, stamped",
+      "transcript": "PRICE TABLE — GARRISON CHECKPOINT\nEffective Day 25.\n\nFUEL (diesel/heating oil, old stock):\n1L = 2kg flour OR 1.5kg salt OR 500g medical supplies. The 2 is the fuel. The fuel is the 2. The fuel is the most the garrison has. The most is the fuel.\n\nLAMP OIL:\n1L = 1kg flour OR 750g salt. The 1 is the oil. The oil is the 1.\n\nIRON/STEEL (scrap, per kg):\n1kg = 500g flour OR 400g salt. The 500 is the iron. The iron is the 500.\n\nBRASS/COPPER (per kg):\n1kg = 750g flour OR 600g salt. The 750 is the brass. The brass is the 750. The brass is more than the iron. The more is the brass.\n\nMEDICAL SUPPLIES (broad-spectrum, 1 course):\nThe garrison does not sell medicine. The garrison trades medicine for fuel. The fuel is the medicine. The medicine is the fuel. The garrison needs the fuel. The fuel is the need. The need is the fuel.\n\nNOTES:\n- The garrison trades at the checkpoint. The checkpoint is the garrison's. The garrison's is the checkpoint.\n- The garrison does not trade with hostiles. The garrison decides who is hostile. The deciding is the garrison's. The garrison's is the deciding.\n- The garrison reserves the right to refuse any trade. The refusing is the garrison's. The garrison's is the refusing.\n- The garrison does not trade in weapons. The garrison is the weapons. The weapons are the garrison. The garrison does not trade what it is.\n\n— Supply Sgt., Garrison QM Corps.",
+      "tags": [
+        "price_table",
+        "garrison",
+        "fuel",
+        "iron",
+        "brass",
+        "medicine",
+        "no_weapons"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_price_shallows",
+      "doc_type": "price_table",
+      "title": "Price Table — Shallows Market, Day 30",
+      "posted_day": 30,
+      "posted_by": "The Market Steward",
+      "location": "Shallows Market, central board",
+      "material": "Chalk on a large board, rewritten weekly",
+      "transcript": "PRICE TABLE — SHALLOWS MARKET\nEffective Day 30. Market day: every 7 days.\n\nSALT: 1kg = 1kg flour OR 1L lamp oil OR 2m copper wire. The 1 is the salt. The salt is the 1. The salt is the baseline. The baseline is the salt.\n\nFLOUR: 1kg = 1kg salt OR 1L lamp oil OR 2m copper wire. The 1 is the flour. The flour is the 1. The flour and the salt are the same. The same is the flour and the salt.\n\nLAMP OIL: 1L = 1kg salt OR 1kg flour OR 2m copper wire. The 1 is the oil. The oil is the 1. The oil and the salt and the flour are the same. The same is the three.\n\nCOPPER WIRE: 2m = 1kg salt OR 1kg flour OR 1L lamp oil. The 2 is the wire. The wire is the 2. The 2m is the baseline. The baseline is the 2m.\n\nCANDLES: 1 = 200g flour OR 200g salt. The 200 is the candle. The candle is the 200. The candle is the light. The light is the candle. The 200 is the light.\n\nDRIED MUSHROOMS: 1 handful = 100g flour OR 100g salt. The 100 is the mushroom. The mushroom is the 100. The mushroom is the flavor. The flavor is the mushroom.\n\nSMOKED FISH: 1 = 500g flour OR 500g salt OR 0.5L lamp oil. The 500 is the fish. The fish is the 500. The fish is the protein. The protein is the fish.\n\nNOTES:\n- The market is the trade. The trade is the market. The market is the peace. The peace is the market.\n- No weapons. No fights. The market is the peace. The peace is the market.\n- The rate is the rate. The market does not negotiate. The market is the rate. The rate is the market.\n- The market is open from dawn to dusk. The dusk is the close. The close is the dusk.\n\n— The Market Steward.",
+      "tags": [
+        "price_table",
+        "shallows_market",
+        "salt",
+        "flour",
+        "oil",
+        "copper",
+        "candles",
+        "fish",
+        "mushrooms"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_transaction_01",
+      "doc_type": "transaction_log",
+      "title": "Transaction Log — Day 20, Lock Gate",
+      "posted_day": 20,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Lock Gate Four, toll house",
+      "material": "Handwritten in the trade ledger, columns ruled in pencil",
+      "transcript": "TRANSACTION LOG — DAY 20, LOCK GATE FOUR\n\nTrade 1:\nGiven: 20L lamp oil (4 containers, 5L each)\nReceived: 200L water (4 containers, 50L each, filled at the pump)\nThe 20 is the oil. The 200 is the water. The 20 and the 200 are the rate. The rate is the 10:1. The 10:1 is the rate. The rate is the law. The law is the rate.\nCounterparty: The Barons' Council.\nGuard present: 1 (armed, professional, did not speak).\nNotes: The water is clear. The filter is real. The barons meter. The metering is the trade. The trade is the metering.\n\nTrade 2:\nGiven: 1kg salt\nReceived: 500g flour (from the barons' reserve — the barons have flour? The barons have flour. The flour is the barons'. The barons' flour is the question. The question is the barons' flour.)\nThe 1kg is the salt. The 500g is the flour. The 2:1 is the rate. The rate is the 2:1. The 2:1 is the flour-to-salt. The flour-to-salt is the 2:1.\nCounterparty: The Barons' Council.\nNotes: The barons have flour. The flour is not the barons' to grow. The barons did not grow the flour. The barons acquired the flour. The acquiring is the question. The question is the acquiring. Where did the barons get the flour? The flour is the trade. The trade is the flour. The not-asking is the trade. The trade is the not-asking.\n\n— Yelena.",
+      "tags": [
+        "transaction",
+        "lock_gate",
+        "oil_for_water",
+        "salt_for_flour",
+        "barons",
+        "rate_10_1"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_transaction_02",
+      "doc_type": "transaction_log",
+      "title": "Transaction Log — Day 35, Garrison",
+      "posted_day": 35,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Garrison checkpoint",
+      "material": "Handwritten in the trade ledger",
+      "transcript": "TRANSACTION LOG — DAY 35, GARRISON CHECKPOINT\n\nTrade 1:\nGiven: 20kg flour (4 sacks, 5kg each — the flour is the 11. The 11 is the flour. The 20 is the trade. The 20 is more than the 11. The 20 is the trade-flour. The trade-flour is the 20. The 11 is the shelter-flour. The shelter-flour is the 11. The 20 and the 11 are two different flours. The two are the trade and the shelter. The trade is the 20. The shelter is the 11.)\nReceived: 40L fuel (old, convoy stock — the fuel is the old. The old is the fuel. The fuel may burn. The may-burn is the question. The question is the may-burn. The engineer will test. The test is the engineer.)\nThe 20kg is the flour. The 40L is the fuel. The 1:2 is the rate. The rate is the 1:2. The 1:2 is the flour-to-fuel. The flour-to-fuel is the 1:2.\nCounterparty: The Garrison (Supply Sgt.).\nGuard present: 2 (armed, professional, watched the flour being counted).\nNotes: The garrison counted the flour twice. The twice is the garrison. The garrison is the twice. The garrison does not trust the count. The count is the not-trust. The not-trust is the count. The garrison counted the flour and the quartermaster counted the fuel and the two countings are the trade. The trade is the two countings. The two countings are the trade.\n\nThe Overlay was present. The Overlay recorded the trade. The recording is the Overlay. The Overlay is the recording. The Overlay knows the 20. The Overlay may know the 11. The 11 is the question. The question is the 11. If the Overlay knows the 11, the garrison may know the 11. If the garrison knows the 11, the trade is harder. The harder is the knowing. The knowing is the harder.\n\n— Yelena.",
+      "tags": [
+        "transaction",
+        "garrison",
+        "flour_for_fuel",
+        "overlay",
+        "rate_1_2",
+        "two_countings"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_transaction_03",
+      "doc_type": "transaction_log",
+      "title": "Transaction Log — Day 44, Shallows Market",
+      "posted_day": 44,
+      "posted_by": "Boris the Baker",
+      "location": "Shallows Market, the steward's table",
+      "material": "Handwritten in the market ledger",
+      "transcript": "TRANSACTION LOG — DAY 44, SHALLOWS MARKET\n\nTrade 1:\nGiven: 2kg flour (from the shelter's trade stock, not the shelter's eating stock — the 2 is the trade. The trade is the 2. The eating is the 11. The 11 is the eating. The 2 and the 11 are two different flours.)\nReceived: 2kg salt\nThe 2kg is the flour. The 2kg is the salt. The 1:1 is the rate. The rate is the 1:1. The 1:1 is the flour-to-salt. The flour-to-salt is the 1:1. The 1:1 is the baseline. The baseline is the 1:1.\nCounterparty: A salt trader from the east. The trader did not give a name. The not-giving is the trade. The trade is the not-giving.\n\nTrade 2:\nGiven: 4 candles (from the shelter's stock, the candles are the light, the light is the candles)\nReceived: 800g flour (200g per candle, the 200 is the candle, the candle is the 200)\nThe 4 is the candles. The 800g is the flour. The 200g-per-candle is the rate. The rate is the 200. The 200 is the candle. The candle is the 200. The 800 is the 4 x 200. The 4 x 200 is the 800. The 800 is the flour. The flour is the 800.\nCounterparty: A candle-maker from the north. The candle-maker gave a name: Tomas. The Tomas is not the engineer. The Tomas is the candle-maker. The candle-maker is the Tomas. The not-the-engineer is the candle-maker. The candle-maker is the not-the-engineer.\n\nTrade 3:\nGiven: 1 smoked fish (from the hunter, the fish is the creek, the creek is the fish)\nReceived: 500g flour + 500g salt\nThe 1 is the fish. The 500g + 500g is the flour and the salt. The 500 is the fish. The fish is the 500. The fish is the protein. The protein is the fish. The 500g flour and the 500g salt are the trade for the protein. The protein is the trade. The trade is the protein.\nCounterparty: A trader from the south. The trader wanted the fish. The fish is the wanted. The wanted is the fish.\n\nNOTES:\n- The market was busy. The busy is the market. The market is the busy. 40 people at the market. The 40 is the busy. The busy is the 40.\n- The potato was not traded. The potato is the shelter's. The shelter's is the potato. The potato is not the trade. The trade is the not-potato. The not-potato is the trade.\n- The market closed at dusk. The dusk is the close. The close is the dusk. The cloth came down. The cloth is the close. The close is the cloth.\n\n— Boris.",
+      "tags": [
+        "transaction",
+        "shallows_market",
+        "flour_salt",
+        "candles",
+        "fish",
+        "potato_not_traded"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_debt_register",
+      "doc_type": "debt_register",
+      "title": "Debt Register — Month 3, Day 90",
+      "posted_day": 90,
+      "posted_by": "Underwrite Clerk",
+      "location": "Cluster office, ledger room",
+      "material": "Handwritten in a bound ledger, columns ruled in pencil",
+      "transcript": "DEBT REGISTER — MONTH 3, DAY 90\n\nDebt 1:\nDebtor: the grange (Yelena, quartermaster)\nCreditor: the garrison (fuel, 200L)\nAmount: 200L fuel, to be repaid in flour (40kg) by Day 120\nStatus: unpaid. 30 days remaining.\nNote: The quartermaster asked for an extension. The garrison refused. The Underwrite does not grant extensions. The Underwrite records. The recording is the deadline. The deadline is the recording. The 40kg is the debt. The debt is the 40kg. The 40kg is the flour. The flour is the 40kg. The flour is the 11. The 11 is the flour. The 40kg is more than the 11. The 40kg is the not-possible. The not-possible is the 40kg. The 40kg is the debt the grange cannot pay. The cannot-pay is the 40kg. The 40kg is the default. The default is the 40kg.\n\nDebt 2:\nDebtor: the garrison (Col. Voss)\nCreditor: the hydro barons (water, 2000L)\nAmount: 2000L water, to be repaid in lamp oil (200L) by Day 90\nStatus: paid, Day 85. One day early. The garrison pays early. The early is the message. The message is the early. The garrison pays early to show the barons the garrison is the reliable. The reliable is the garrison. The garrison is the reliable. The early is the reliable. The reliable is the early.\n\nDebt 3:\nDebtor: the canal syndicate\nCreditor: the silent foundry (tools, 1 set)\nAmount: 1 set of salvage tools, to be repaid in copper (20kg) by Day 100\nStatus: unpaid. 10 days remaining. The syndicate is salvaging. The copper is in the canal. The canal is the delay. The delay is the canal.\n\nDebt 4:\nDebtor: the shelter (Yelena)\nCreditor: the underwrite (recording fee, 4kg flour)\nAmount: 4kg flour, due Day 90\nStatus: paid, Day 88. The fee is the recording. The recording is the fee. The 4kg is the fee. The fee is the 4kg. The Underwrite collects its own fee by the due date. The due date is the collection. The collection is the due date.\n\n— Underwrite Clerk.",
+      "tags": [
+        "debt",
+        "register",
+        "grange",
+        "garrison",
+        "hydro_barons",
+        "canal_syndicate",
+        "foundry",
+        "underwrite_fee"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_debt_default",
+      "doc_type": "debt_register",
+      "title": "Notice of Default — The Grange, Day 120",
+      "posted_day": 120,
+      "posted_by": "The Underwrite Council",
+      "location": "Cluster office, posted publicly",
+      "material": "Pre-printed form, fields filled in pen, stamped IN DEFAULT",
+      "transcript": "NOTICE OF DEFAULT\n\nDebtor: the grange (Yelena, quartermaster)\nDebt: 40kg flour to the garrison\nDue date: Day 120\nStatus: IN DEFAULT. Payment not received.\n\nThe Underwrite does not collect debts. The Underwrite records that the debt is in default. The recording is the collection. The collection is the recording.\n\nThis notice is posted publicly. The public is the witness. The witness is the enforcement. The enforcement is the public.\n\nThe debtor may settle the debt at any time. The settlement is the recording. The recording is the settlement. Until settled, this notice remains.\n\n— The Underwrite Council.\n\nHANDWRITTEN BELOW:\nThe flour was due. The flour was not there. The number was eleven. The number is the reason. The reason is the flour. The flour is the debt. The debt is the notice. The notice is the public. The public is the quartermaster. I am the quartermaster. The notice is on my door. — Y.\n\nSECOND HANDWRITTEN NOTE (different hand, different day):\nThe garrison saw the notice. The garrison knows. The knowing is the notice. The notice is the knowing. The garrison will come for the flour. The flour is not there. The not-there is the garrison's. The garrison's is the not-there. The not-there is the debt. The debt is the not-there. The garrison will take what the garrison takes. The taking is the garrison's. The garrison's is the taking. — a watcher.",
+      "tags": [
+        "debt",
+        "default",
+        "grange",
+        "garrison",
+        "flour_40kg",
+        "public",
+        "taking"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_caravan_01",
+      "doc_type": "caravan_manifest",
+      "title": "Caravan Manifest — Greybell, Day 15",
+      "posted_day": 15,
+      "posted_by": "The Caravan Leader",
+      "location": "Caravan camp, by the fire",
+      "material": "Handwritten on a salvaged ledger page",
+      "transcript": "CARAVAN MANIFEST — GREYBELL, DAY 15\n\nOutbound:\n- Salt: 40kg (8 bags, 5kg each). The 40 is the salt. The salt is the 40. The salt is the trade. The trade is the salt.\n- Iron scrap: 10kg (1 bundle). The 10 is the iron. The iron is the 10. The iron is the trade. The trade is the iron.\n- Copper wire: 20m (2 coils). The 20 is the copper. The copper is the 20. The copper is the trade. The trade is the copper.\n\nExpected inbound:\n- Flour: 20kg (from the grange). The 20 is the flour. The flour is the 20.\n- Lamp oil: 10L (from the garrison). The 10 is the oil. The oil is the 10.\n- Medical supplies: 2 courses (from the hospital, if available). The 2 is the medicine. The medicine is the 2.\n\nMules: 4. The 4 is the mules. The mules are the 4. The mules are the carrying. The carrying is the mules.\nPersonnel: 3 (the leader, the muleteer, the boy). The 3 is the people. The people are the 3. The boy is 10. The 10 is the boy. The boy is the muleteer's. The muleteer's is the boy.\n\nRoute: south road to the grange (2 days), then east to the garrison (1 day), then north to the hospital (1 day). 4 days total. 5 days before overdue.\n\nNOTES:\n- The salt is the trade. The iron is the trade. The copper is the trade. The three are the outbound. The outbound is the three.\n- The flour is the trade. The oil is the trade. The medicine is the trade. The three are the inbound. The inbound is the three.\n- The mules are the carrying. The carrying is the mules. The mules eat. The eating is the mules. The mules eat the feed. The feed is the 3 days. The 3 is the feed. The feed is the 3.\n- The boy is the singer. The singer is the boy. The boy sings to the mules. The mules are the audience. The audience is the mules.\n\n— The Caravan Leader.",
+      "tags": [
+        "caravan",
+        "manifest",
+        "greybell",
+        "salt",
+        "iron",
+        "copper",
+        "mules",
+        "route"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_caravan_02",
+      "doc_type": "caravan_manifest",
+      "title": "Caravan Manifest — Greybell, Day 50, Winter Run",
+      "posted_day": 50,
+      "posted_by": "The Caravan Leader",
+      "location": "Caravan camp, by the fire",
+      "material": "Handwritten on a salvaged ledger page, the edges are frosty",
+      "transcript": "CARAVAN MANIFEST — GREYBELL, DAY 50, WINTER RUN\n\nOutbound:\n- Salt: 20kg (reduced — winter, the passes are harder, the mules carry less). The 20 is the salt. The salt is the 20. The 20 is half the 40. The half is the winter. The winter is the half.\n- Iron scrap: 5kg (reduced). The 5 is the iron. The iron is the 5.\n- Candles: 10 (from the shelter's stock, the candles are the trade, the trade is the candles). The 10 is the candles. The candles are the 10.\n\nExpected inbound:\n- Flour: 10kg (reduced — the grange has less flour in winter). The 10 is the flour. The flour is the 10.\n- Lamp oil: 5L (reduced — the garrison has less fuel in winter). The 5 is the oil. The oil is the 5.\n- Dried mushrooms: 5 handfuls (from the ash woodland, if the hunter has them). The 5 is the mushrooms. The mushrooms are the 5.\n\nMules: 3 (1 lost to the cold, Day 48). The 3 is the mules. The mules are the 3. The 1 is the lost. The lost is the 1. The 1 is the cold. The cold is the 1.\nPersonnel: 3 (the leader, the muleteer, the boy). The 3 is the people. The people are the 3. The boy is 10. The 10 is the boy.\n\nRoute: south road to the grange (3 days — the snow slows the mules), then east to the garrison (1 day), then north to the hospital (1 day). 5 days total. 6 days before overdue.\n\nNOTES:\n- The winter run is the half. The half is the winter. The winter is the half. The 20 is the half of the 40. The 10 is the half of the 20. The 5 is the half of the 10. The halves are the winter. The winter is the halves.\n- The mule was lost. The lost is the mule. The mule is the lost. The cold took the mule. The mule is the cold's. The cold's is the mule. The muleteer did not cry. The not-crying is the muleteer. The muleteer is the not-crying. The boy cried. The crying is the boy. The boy is the crying.\n- The candles are the new trade. The new is the candles. The candles are the new. The candles are the light. The light is the trade. The trade is the light. The winter is the dark. The dark is the candles. The candles are the dark's counter. The counter is the candles.\n\n— The Caravan Leader.",
+      "tags": [
+        "caravan",
+        "manifest",
+        "winter",
+        "reduced",
+        "mule_lost",
+        "candles",
+        "boy_cried"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_barter_01",
+      "doc_type": "barter_agreement",
+      "title": "Barter Agreement — Shelter and Foundry, Day 20",
+      "posted_day": 20,
+      "posted_by": "Yelena the Quartermaster and Master K.",
+      "location": "Foundry gate, signed in iron dust",
+      "material": "Handwritten on a salvaged blueprint, signed by both parties",
+      "transcript": "BARTER AGREEMENT — SHELTER AND THE SILENT FOUNDRY\n\nDate: Day 20\nParties: the shelter (Yelena, quartermaster) and the Silent Foundry (Master K., iron)\n\nTerms:\nThe shelter gives: 10kg flour (per month, delivered to the foundry gate)\nThe foundry gives: 12 brass pump gaskets (per month, delivered to the shelter)\n\nThe 10kg is the flour. The flour is the 10kg. The 12 is the gaskets. The gaskets are the 12. The 10 and the 12 are the barter. The barter is the 10 and the 12. The rate is the 10:12. The 10:12 is the rate. The rate is the law. The law is the rate.\n\nAdditional terms:\n- The foundry will repair the shelter's pump on emergency request. The emergency is the repair. The repair is the emergency. The emergency is the not-scheduled. The not-scheduled is the emergency. The shelter pays for emergency repairs in flour at 2kg per repair. The 2 is the emergency. The emergency is the 2.\n- The foundry will not make weapons for the shelter. The not-weapons is the foundry. The foundry is the not-weapons. The shelter does not ask for weapons. The not-asking is the shelter. The shelter is the not-asking.\n- The foundry will not trade with the garrison while this agreement is in effect. The not-garrison is the foundry. The foundry is the not-garrison. The shelter is the not-garrison. The not-garrison is the shelter. The two are the not-garrison. The not-garrison is the two.\n- Either party may terminate with 7 days' notice. The 7 is the notice. The notice is the 7. The 7 is the termination. The termination is the 7.\n\nSigned: Yelena (quartermaster, the shelter). Master K. (iron, the foundry). The signing is the iron dust. The iron dust is the signing. The iron dust is the ink. The ink is the iron dust.\n\nWITNESSED: The Overlay (recorded, not signed — the Overlay does not sign. The Overlay records. The recording is the signing. The signing is the recording.)\n\n— Yelena and Master K.",
+      "tags": [
+        "barter",
+        "agreement",
+        "foundry",
+        "flour_for_gaskets",
+        "no_weapons",
+        "no_garrison",
+        "overlay"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_barter_02",
+      "doc_type": "barter_agreement",
+      "title": "Barter Agreement — Shelter and Apiary, Day 35",
+      "posted_day": 35,
+      "posted_by": "Yelena the Quartermaster and Old Petr",
+      "location": "Apiary rows, signed in honey",
+      "material": "Handwritten on a seed packet, signed by both parties",
+      "transcript": "BARTER AGREEMENT — SHELTER AND THE APIARY\n\nDate: Day 35\nParties: the shelter (Yelena, quartermaster) and the apiary (Petr, farmer)\n\nTerms:\nThe shelter gives: 2kg salt (per month, delivered to the apiary)\nThe apiary gives: 1 jar honey (per month, 500ml, delivered to the shelter clinic)\n\nThe 2kg is the salt. The salt is the 2kg. The 1 is the honey. The honey is the 1. The 2 and the 1 are the barter. The barter is the 2 and the 1. The rate is the 2:1. The 2:1 is the rate. The rate is the law. The law is the rate.\n\nAdditional terms:\n- The honey is for the clinic. The clinic is the honey. The honey is the medicine. The medicine is the honey. The honey is the only medicine that does not require a prescription. The prescription is the honey. The honey is the prescription.\n- The apiary will provide 4 frames of honey per year from the dead hives (capped, clean, golden). The 4 is the dead-hive honey. The dead-hive honey is the 4. The 4 is per year. The year is the 4.\n- The shelter will provide 1 cold-frame glass pane for the apiary's greenhouse repair. The 1 is the glass. The glass is the 1. The glass is the trade. The trade is the glass.\n- The apiary will not take the clover. The clover is the bees'. The bees are the clover's. The not-taking is the apiary. The apiary is the not-taking.\n- Either party may terminate with 7 days' notice. The 7 is the notice. The notice is the 7.\n\nSigned: Yelena (quartermaster, the shelter). Petr (farmer, the apiary). The signing is the honey. The honey is the signing. The honey is the ink. The ink is the honey. The signing is the sweet. The sweet is the signing.\n\n— Yelena and Petr.",
+      "tags": [
+        "barter",
+        "agreement",
+        "apiary",
+        "salt_for_honey",
+        "medicine",
+        "clover",
+        "glass"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_market_day_01",
+      "doc_type": "market_report",
+      "title": "Market Day Report — Day 30, Shallows Market",
+      "posted_day": 30,
+      "posted_by": "The Market Steward",
+      "location": "Shallows Market, the steward's table",
+      "material": "Handwritten in the market ledger",
+      "transcript": "MARKET DAY REPORT — DAY 30, SHALLOWS MARKET\n\nAttendance: 40 people. The 40 is the attendance. The attendance is the 40. The 40 is the busy. The busy is the 40.\nStalls: 12. The 12 is the stalls. The stalls are the 12.\nTrades completed: 28. The 28 is the trades. The trades are the 28.\nDisputes: 1 (settled by the steward). The 1 is the dispute. The dispute is the 1. The settled is the steward. The steward is the settled.\n\nTRADE SUMMARY:\n- Salt traded: 15kg. The 15 is the salt. The salt is the 15.\n- Flour traded: 8kg. The 8 is the flour. The flour is the 8. The flour is less than the salt. The less is the flour. The flour is the less. The flour is scarce. The scarce is the flour.\n- Lamp oil traded: 6L. The 6 is the oil. The oil is the 6.\n- Copper wire traded: 15m. The 15 is the copper. The copper is the 15.\n- Candles traded: 8. The 8 is the candles. The candles are the 8.\n- Dried mushrooms traded: 3 handfuls. The 3 is the mushrooms. The mushrooms are the 3.\n- Smoked fish traded: 2. The 2 is the fish. The fish is the 2.\n- Medical supplies traded: 0. The 0 is the medicine. The medicine is the 0. The 0 is the not-traded. The not-traded is the medicine. The medicine is the not-traded. The medicine is too valuable to trade. The too-valuable is the medicine. The medicine is the too-valuable.\n\nDISPUTE:\n- A trader from the east claimed the salt was short-weighted. The short-weighted is the claim. The claim is the short-weighted. The steward weighed the salt. The weighing is the steward. The steward is the weighing. The salt was not short. The not-short is the salt. The salt is the not-short. The trader accepted. The accepted is the trader. The trader is the accepted. The dispute is the settled. The settled is the dispute.\n\nNOTES:\n- The flour is scarce. The scarce is the flour. The flour is the 8. The 8 is the scarce. The salt is the 15. The 15 is the not-scarce. The not-scarce is the salt. The flour is the question. The question is the flour. The flour is the number. The number is the flour. The market does not know the number. The market knows the flour is scarce. The scarce is the knowing. The knowing is the scarce.\n- The medicine was not traded. The not-traded is the medicine. The medicine is the too-valuable. The too-valuable is the not-traded. The medicine is the hold. The hold is the medicine. The medicine is the last-resort. The last-resort is the medicine.\n- The market closed at dusk. The dusk is the close. The close is the dusk. The cloth came down. The cloth is the close. The close is the cloth. The snap of the cloth is the close. The close is the snap.\n\n— The Market Steward.",
+      "tags": [
+        "market_report",
+        "shallows",
+        "day_30",
+        "flour_scarce",
+        "medicine_not_traded",
+        "dispute_settled"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_market_day_02",
+      "doc_type": "market_report",
+      "title": "Market Day Report — Day 100, Shallows Market, First Spring",
+      "posted_day": 100,
+      "posted_by": "The Market Steward",
+      "location": "Shallows Market, the steward's table",
+      "material": "Handwritten in the market ledger, the handwriting is lighter",
+      "transcript": "MARKET DAY REPORT — DAY 100, SHALLOWS MARKET, FIRST SPRING\n\nAttendance: 65 people. The 65 is the attendance. The attendance is the 65. The 65 is more than the 40. The more is the spring. The spring is the more. The 40 was the winter. The 65 is the spring.\nStalls: 18. The 18 is the stalls. The stalls are the 18. The 18 is more than the 12. The more is the spring.\nTrades completed: 47. The 47 is the trades. The trades are the 47. The 47 is more than the 28. The more is the spring.\nDisputes: 0. The 0 is the disputes. The disputes are the 0. The 0 is the spring. The spring is the 0. The spring is the peace. The peace is the spring.\n\nTRADE SUMMARY:\n- Salt traded: 20kg. The 20 is the salt. The salt is the 20.\n- Flour traded: 5kg. The 5 is the flour. The flour is the 5. The 5 is less than the 8. The less is the flour. The flour is the less. The flour is scarcer. The scarcer is the flour. The flour is going down.\n- Lamp oil traded: 2L. The 2 is the oil. The oil is the 2. The 2 is less than the 6. The less is the oil. The oil is the less. The oil is going down. The geothermal is the reason. The reason is the geothermal. The geothermal is the counter. The counter is the geothermal. The oil is the not-needed. The not-needed is the oil. The geothermal is the needed. The needed is the geothermal.\n- Potato traded: 1kg. The 1 is the potato. The potato is the 1. The 1 is the first. The first is the potato. The potato is the new trade. The new is the potato. The potato is the spring. The spring is the potato.\n- Nettle tea traded: 5 cups. The 5 is the nettle. The nettle is the 5. The nettle is the new trade. The new is the nettle. The nettle is the medicine. The medicine is the nettle.\n- Fermented cabbage traded: 2 jars. The 2 is the cabbage. The cabbage is the 2. The cabbage is the new trade. The new is the cabbage. The cabbage is the vitamin. The vitamin is the cabbage.\n- Smoked fish traded: 4. The 4 is the fish. The fish is the 4. The 4 is more than the 2. The more is the spring. The spring is the more. The creek is the more. The more is the creek.\n- Dried mushrooms traded: 6 handfuls. The 6 is the mushrooms. The mushrooms are the 6. The 6 is more than the 3. The more is the spring.\n- Medical supplies traded: 1 course. The 1 is the medicine. The medicine is the 1. The 1 is the first medicine traded. The first is the medicine. The medicine is the first. The medicine is the not-too-valuable. The not-too-valuable is the spring. The spring is the not-too-valuable. The spring is the counter. The counter is the spring. The medicine is the less-scarce. The less-scarce is the spring.\n\nNOTES:\n- The spring is the market. The market is the spring. The 65 is the spring. The 47 is the spring. The 0 is the spring. The spring is the more. The more is the spring. The winter was the less. The less was the winter. The spring is the counter. The counter is the spring.\n- The flour is 5. The 5 is less than the 8. The flour is going down. But the potato is 1. The nettle is 5. The cabbage is 2. The fish is 4. The mushrooms are 6. The spring is the counter. The counter is the spring. The flour is going down. The spring is going up. The down and the up are the same direction: the spring. The spring is the direction. The direction is the spring.\n- The medicine was traded. The 1 is the first. The first is the medicine. The medicine is the not-too-valuable. The not-too-valuable is the spring. The spring is the not-too-valuable. The medicine is the less-scarce. The less-scarce is the spring.\n- The market closed at dusk. The dusk is the close. The close is the dusk. The cloth came down. The snap of the cloth is the close. The close is the snap. The spring is the snap. The snap is the spring.\n\n— The Market Steward.",
+      "tags": [
+        "market_report",
+        "shallows",
+        "day_100",
+        "spring",
+        "potato_new",
+        "medicine_traded",
+        "flour_5",
+        "counter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_transaction_04",
+      "doc_type": "transaction_log",
+      "title": "Transaction Log — Day 50, Foundry Trade",
+      "posted_day": 50,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Foundry gate",
+      "material": "Handwritten in the trade ledger",
+      "transcript": "TRANSACTION LOG — DAY 50, SILENT FOUNDRY\n\nTrade 1:\nGiven: 10kg flour (monthly, per the barter agreement)\nReceived: 12 brass pump gaskets (monthly, per the barter agreement)\nThe 10 is the flour. The 12 is the gaskets. The 10:12 is the rate. The rate is the agreement. The agreement is the rate. The agreement is the law. The law is the agreement.\nCounterparty: Master K. (iron, the foundry).\nNotes: The gaskets are good. The brass is clean. The brass is the foundry. The foundry is the brass. The gaskets are for the pump. The pump is the gaskets. The mechanic will fit them. The fitting is the mechanic. The mechanic is the fitting.\n\nTrade 2 (emergency):\nGiven: 2kg flour (emergency rate, per the barter agreement)\nReceived: 1 repaired pump valve (the valve was broken, the foundry repaired it, the repair is the emergency)\nThe 2 is the emergency. The emergency is the 2. The 1 is the valve. The valve is the 1. The 2:1 is the emergency rate. The emergency rate is the 2:1. The 2:1 is the emergency. The emergency is the 2:1.\nCounterparty: Master K.\nNotes: The valve was broken. The broken is the valve. The valve is the broken. The pump was failing. The failing is the pump. The pump is the failing. The foundry repaired the valve. The repair is the foundry. The foundry is the repair. The 2kg is the emergency flour. The emergency flour is the 2kg. The 2kg is the not-monthly. The not-monthly is the 2kg. The emergency is the not-monthly. The not-monthly is the emergency.\n\n— Yelena.",
+      "tags": [
+        "transaction",
+        "foundry",
+        "flour_for_gaskets",
+        "emergency_valve",
+        "master_k"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_transaction_05",
+      "doc_type": "transaction_log",
+      "title": "Transaction Log — Day 100, Spring Market",
+      "posted_day": 100,
+      "posted_by": "Boris the Baker",
+      "location": "Shallows Market, the steward's table",
+      "material": "Handwritten in the market ledger",
+      "transcript": "TRANSACTION LOG — DAY 100, SHALLOWS MARKET, FIRST SPRING\n\nTrade 1:\nGiven: 1kg potato (the first new food, the first trade of the harvest, the harvest is the 1, the 1 is the harvest)\nReceived: 2kg salt + 500g dried mushrooms\nThe 1 is the potato. The potato is the 1. The 2kg + 500g is the salt and the mushrooms. The salt and the mushrooms are the 2kg + 500g. The potato is the new. The new is the potato. The salt and the mushrooms are the old. The old is the salt and the mushrooms. The new for the old is the trade. The trade is the new for the old. The new is the spring. The spring is the new. The old is the winter. The winter is the old. The spring for the winter is the trade. The trade is the spring for the winter.\nCounterparty: A trader from the south. The trader wanted the potato. The potato is the wanted. The wanted is the potato. The trader paid 2kg salt + 500g mushrooms for 1kg potato. The 1kg potato is the most expensive trade of the day. The most expensive is the potato. The potato is the most expensive. The new is the most expensive. The most expensive is the new.\n\nTrade 2:\nGiven: 5 cups nettle tea (brewed at the shelter, the nettle is the foraging, the foraging is the nettle)\nReceived: 500g flour + 500g salt\nThe 5 is the nettle. The nettle is the 5. The 500g + 500g is the flour and the salt. The flour and the salt are the 500g + 500g. The nettle is the medicine. The medicine is the nettle. The medicine is the trade. The trade is the medicine. The medicine is the new trade. The new is the medicine. The medicine is the new.\nCounterparty: A mother from the north. The mother wanted the nettle. The nettle is the wanted. The wanted is the nettle. The mother has a thin child. The thin is the child. The child is the thin. The nettle is the iron. The iron is the nettle. The mother traded for the iron. The iron is the trade. The trade is the iron.\n\nTrade 3:\nGiven: 2 jars fermented cabbage (the cabbage is the vitamin, the vitamin is the cabbage, the sour is the vitamin, the vitamin is the sour)\nReceived: 1kg flour + 1kg salt\nThe 2 is the cabbage. The cabbage is the 2. The 1kg + 1kg is the flour and the salt. The flour and the salt are the 1kg + 1kg. The cabbage is the vitamin. The vitamin is the cabbage. The vitamin is the trade. The trade is the vitamin. The vitamin is the new trade. The new is the vitamin.\nCounterparty: A trader from the east. The trader wanted the vitamin. The vitamin is the wanted. The wanted is the vitamin. The trader has a crew. The crew is the scurvy-risk. The scurvy-risk is the crew. The cabbage is the scurvy-preventing. The scurvy-preventing is the cabbage. The trader traded for the scurvy-preventing. The scurvy-preventing is the trade. The trade is the scurvy-preventing.\n\n— Boris.",
+      "tags": [
+        "transaction",
+        "spring_market",
+        "potato",
+        "nettle_tea",
+        "cabbage",
+        "new_trades",
+        "medicine_traded"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_price_update_winter",
+      "doc_type": "price_table",
+      "title": "Price Table Update — Winter Adjustment, Day 50",
+      "posted_day": 50,
+      "posted_by": "The Barons' Council",
+      "location": "Lock Gate Four, over the old rate",
+      "material": "Hand-painted on a board, over the previous rate",
+      "transcript": "PRICE TABLE UPDATE — WINTER ADJUSTMENT\nEffective Day 50.\n\nWATER (drinking): 2L lamp oil per 20L. (Was 1.5L. The winter is the reason. The reason is the winter. The 0.5 is the winter. The winter is the 0.5.)\nWATER (washing): 1L per 40L. (Unchanged. The Barons are not unreasonable.)\nSALT: 1kg = 1.2L lamp oil. (Was 1L. The 0.2 is the winter. The winter is the 0.2.)\nFLOUR: 1kg = 2L lamp oil. (Was 1.5L. The 0.5 is the winter. The winter is the 0.5. The flour is scarcer in winter. The scarcer is the flour. The flour is the winter.)\nMEDICAL: 1 course = 6L lamp oil. (Was 5L. The 1 is the winter. The winter is the 1. The medicine is the most expensive. The most expensive is the medicine. The medicine is the winter.)\n\nNOTE: The winter is the rate. The rate is the winter. The winter raises the rate. The rate is the winter. The Barons do not negotiate with the season. The season negotiates with the Barons. The Barons are the season's. The season's are the Barons. The winter is the Barons'. The Barons' is the winter.\n\n— The Barons' Council.",
+      "tags": [
+        "price_table",
+        "winter",
+        "adjustment",
+        "rate_increase",
+        "barons"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_debt_settled",
+      "doc_type": "debt_register",
+      "title": "Debt Settled — The Grange, Day 125",
+      "posted_day": 125,
+      "posted_by": "Underwrite Clerk",
+      "location": "Cluster office, ledger room",
+      "material": "Handwritten in the ledger, stamped SETTLED",
+      "transcript": "DEBT SETTLED — THE GRANGE\n\nDate: Day 125\nDebt: 40kg flour to the garrison\nStatus: SETTLED. Payment received Day 125.\n\nThe grange paid the 40kg flour. The 40kg is the flour. The flour is the 40kg. The grange paid in 5 deliveries of 8kg each over 5 days. The 5 is the deliveries. The deliveries are the 5. The 8 is the per-delivery. The per-delivery is the 8. The 5 x 8 is the 40. The 40 is the 5 x 8. The 40 is the debt. The debt is the 40. The debt is the settled. The settled is the debt.\n\nThe grange paid the 40kg. The grange did not have the 40kg. The grange had the 11. The 11 is the flour. The flour is the 11. The 40kg is more than the 11. The 40kg is the not-possible from the 11. The grange paid the 40kg from the not-the-11. The not-the-11 is the trade. The trade is the not-the-11. The grange traded the potato and the nettle and the cabbage and the fish and the mushrooms for the flour to pay the garrison. The trading is the paying. The paying is the trading. The grange traded the spring to pay the winter. The spring is the paying. The paying is the spring. The winter is the debt. The debt is the winter. The spring paid the winter. The winter is the paid. The paid is the winter.\n\nThe garrison accepted the flour. The accepting is the garrison. The garrison is the accepting. The garrison counted the flour. The counting is the garrison. The garrison is the counting. The garrison counted 5 times. The 5 is the counting. The counting is the 5.\n\nThe notice is removed from the door. The removing is the settled. The settled is the removing. The door is the not-notice. The not-notice is the door. The door is the door. The notice is the gone. The gone is the notice. The gone is the settled. The settled is the gone.\n\n— Underwrite Clerk.\n\nHANDWRITTEN BELOW:\nThe spring paid the winter. The winter is the paid. The paid is the winter. The spring is the counter. The counter is the spring. The flour is the 3. The 3 is the flour. The 3 is the lowest. The lowest is the 3. But the spring is the counter. The counter is the spring. The spring paid the winter. The winter is the paid. — Y.",
+      "tags": [
+        "debt",
+        "settled",
+        "grange",
+        "garrison",
+        "spring_paid_winter",
+        "counter",
+        "flour_3"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_caravan_03",
+      "doc_type": "caravan_manifest",
+      "title": "Caravan Manifest — Greybell, Day 100, Spring Run",
+      "posted_day": 100,
+      "posted_by": "The Caravan Leader",
+      "location": "Caravan camp, by the fire",
+      "material": "Handwritten on a salvaged ledger page, the handwriting is lighter",
+      "transcript": "CARAVAN MANIFEST — GREYBELL, DAY 100, SPRING RUN\n\nOutbound:\n- Salt: 40kg (full load — the spring is the full. The full is the spring. The winter was the half. The half was the winter. The spring is the full. The full is the spring.)\n- Iron scrap: 10kg (full load)\n- Copper wire: 20m (full load)\n- Candles: 20 (doubled — the winter is over, but the dark is the dark, the candles are the light, the light is the trade)\n- Smoked fish: 5 (from the hunter, the creek is the spring, the spring is the creek, the fish are the spring)\n- Fermented cabbage: 3 jars (from the shelter, the cabbage is the vitamin, the vitamin is the trade)\n\nExpected inbound:\n- Flour: 15kg (more than winter, less than before — the flour is the 15, the 15 is the flour, the flour is going down but the spring is the counter)\n- Lamp oil: 5L (less — the geothermal is the counter, the geothermal is the heat, the heat is the counter, the oil is the not-needed)\n- Medical supplies: 3 courses (more — the spring is the medicine, the medicine is the spring, the spring is the less-scarce)\n- Potato seed: 2kg (from the seed vault, the vault is the spring, the spring is the vault, the seed is the spring)\n- Nettle seeds: 1 packet (from the farmer, the nettle is the iron, the iron is the seed, the seed is the iron)\n\nMules: 4 (the lost mule replaced — the spring is the replacement, the replacement is the spring, the 4 is the full, the full is the 4)\nPersonnel: 3 (the leader, the muleteer, the boy — the boy is 10, the boy is the spring, the spring is the boy, the boy is taller)\n\nRoute: south road to the grange (2 days — the snow is gone, the road is clear, the clear is the spring), then east to the garrison (1 day), then north to the hospital (1 day), then north to the seed vault (1 day). 5 days total. 6 days before overdue.\n\nNOTES:\n- The spring run is the full. The full is the spring. The winter was the half. The half was the winter. The spring is the full. The full is the spring.\n- The mule is replaced. The replaced is the mule. The mule is the spring. The spring is the mule. The muleteer did not cry when the new mule came. The not-crying is the muleteer. The muleteer is the not-crying. The boy did cry. The crying is the boy. The boy is the crying. The boy cried because the new mule is not the old mule. The not-the-old is the new. The new is the not-the-old. The boy knows the difference. The difference is the boy. The boy is the difference.\n- The seed is the new trade. The new is the seed. The seed is the spring. The spring is the seed. The seed is the future. The future is the seed. The seed is the trade. The trade is the seed. The seed is the most valuable. The most valuable is the seed. The seed is the spring. The spring is the most valuable.\n\n— The Caravan Leader.",
+      "tags": [
+        "caravan",
+        "manifest",
+        "spring",
+        "full_load",
+        "mule_replaced",
+        "seed",
+        "new_trade",
+        "boy_taller"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_barter_03",
+      "doc_type": "barter_agreement",
+      "title": "Barter Agreement — Shelter and Hunter, Day 40",
+      "posted_day": 40,
+      "posted_by": "Yelena the Quartermaster and The Hunter",
+      "location": "Shelter yard, signed in ash",
+      "material": "Handwritten on a scrap of leather, signed by both parties",
+      "transcript": "BARTER AGREEMENT — SHELTER AND THE HUNTER\n\nDate: Day 40\nParties: the shelter (Yelena, quartermaster) and the hunter\n\nTerms:\nThe shelter gives: 1kg salt per week + 500g flour per week\nThe hunter gives: whatever the hunt provides (fish, meat, fur — the whatever is the hunt, the hunt is the whatever)\n\nThe 1kg + 500g is the salt and the flour. The salt and the flour are the 1kg + 500g. The whatever is the hunt. The hunt is the whatever. The 1.5kg and the whatever are the barter. The barter is the 1.5kg and the whatever. The rate is the 1.5kg-to-whatever. The whatever is the not-fixed. The not-fixed is the whatever. The hunt is the not-fixed. The not-fixed is the hunt. The hunt is the variable. The variable is the hunt.\n\nAdditional terms:\n- The hunter will not hunt the deer in the ash woodland. The deer are the seed stock. The seed stock is the deer. The not-hunting is the hunter. The hunter is the not-hunting. The deer are the future. The future is the deer.\n- The hunter will provide fish from the creek. The creek is the fish. The fish is the creek. The creek is the reliable. The reliable is the creek. The fish is the protein. The protein is the reliable.\n- The hunter will provide fur from the small game (rabbits, hares). The fur is the warmth. The warmth is the fur. The small game is the not-deer. The not-deer is the small game.\n- Either party may terminate with 7 days' notice.\n\nSigned: Yelena (quartermaster). The Hunter (no name given — the not-giving is the hunter, the hunter is the not-giving). The signing is the ash. The ash is the signing. The ash is the ink. The ink is the ash.\n\n— Yelena and The Hunter.",
+      "tags": [
+        "barter",
+        "agreement",
+        "hunter",
+        "salt_flour_for_hunt",
+        "no_deer",
+        "creek_fish",
+        "fur"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_market_day_03",
+      "doc_type": "market_report",
+      "title": "Market Day Report — Day 65, Shallows Market, Solstice",
+      "posted_day": 65,
+      "posted_by": "The Market Steward",
+      "location": "Shallows Market, the steward's table",
+      "material": "Handwritten in the market ledger, the handwriting is small",
+      "transcript": "MARKET DAY REPORT — DAY 65, SHALLOWS MARKET, SOLSTICE\n\nAttendance: 25 people. The 25 is the attendance. The attendance is the 25. The 25 is less than the 40. The less is the solstice. The solstice is the less. The cold is the less. The less is the cold.\nStalls: 8. The 8 is the stalls. The stalls are the 8. The 8 is less than the 12. The less is the solstice.\nTrades completed: 12. The 12 is the trades. The trades are the 12. The 12 is less than the 28. The less is the solstice.\nDisputes: 0. The 0 is the disputes. The disputes are the 0. The 0 is the cold. The cold is the 0. The cold is the peace. The peace is the cold. No one disputes in the cold. The cold is the not-disputing. The not-disputing is the cold.\n\nTRADE SUMMARY:\n- Salt traded: 5kg. The 5 is the salt. The salt is the 5. The 5 is less than the 15. The less is the solstice.\n- Flour traded: 3kg. The 3 is the flour. The flour is the 3. The 3 is less than the 8. The less is the solstice. The flour is the scarcest. The scarcest is the flour.\n- Lamp oil traded: 4L. The 4 is the oil. The oil is the 4. The 4 is less than the 6. The less is the solstice. The oil is the dark. The dark is the oil. The solstice is the dark. The dark is the solstice. The oil is the solstice. The solstice is the oil.\n- Candles traded: 15. The 15 is the candles. The candles are the 15. The 15 is more than the 8. The more is the solstice. The solstice is the dark. The dark is the candles. The candles are the dark. The candles are the most-traded. The most-traded is the candles. The dark is the trade. The trade is the dark.\n- Medical supplies traded: 0. The 0 is the medicine. The medicine is the 0. The 0 is the not-traded. The not-traded is the medicine. The medicine is the too-valuable. The too-valuable is the medicine. The solstice is the too-valuable. The too-valuable is the solstice.\n\nNOTES:\n- The solstice is the longest dark. The dark is the longest. The longest is the solstice. The market is the dark. The dark is the market. The 25 is the dark. The 12 is the dark. The candles are the dark. The dark is the candles. The market is the candles. The candles are the market.\n- The flour is 3. The 3 is the scarcest. The scarcest is the 3. The flour is the solstice. The solstice is the flour. The 3 is the solstice. The solstice is the 3. The flour is the number. The number is the flour. The 3 is the number. The number is the 3. The market does not know the 3 is the shelter's number too. The 3 is the market's and the shelter's. The two 3s are the same. The same is the two 3s. The market 3 is the flour traded. The shelter 3 is the flour remaining. The two 3s are the solstice. The solstice is the two 3s.\n- The market closed early. The early is the dark. The dark is the early. The cloth came down at 15:00. The 15:00 is the early. The early is the 15:00. The dark is the early. The early is the dark.\n\n— The Market Steward.",
+      "tags": [
+        "market_report",
+        "solstice",
+        "day_65",
+        "dark",
+        "candles_most_traded",
+        "flour_3",
+        "two_threes",
+        "early_close"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_transaction_06",
+      "doc_type": "transaction_log",
+      "title": "Transaction Log — Day 110, Final Trade of the Rotation",
+      "posted_day": 110,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Lock Gate Four, toll house",
+      "material": "Handwritten in the trade ledger, the last page",
+      "transcript": "TRANSACTION LOG — DAY 110, FINAL TRADE\n\nTrade 1:\nGiven: 10L lamp oil (the last of the oil — the geothermal is the heat, the heat is the geothermal, the oil is the not-needed, the not-needed is the oil, the oil is the last, the last is the oil)\nReceived: 100L water (the water is the life, the life is the water, the 100 is the water, the water is the 100)\nThe 10 is the oil. The 100 is the water. The 10:100 is the rate. The rate is the 10:100. The 10:100 is the last oil. The last oil is the 10:100. The oil is the last. The last is the oil. The geothermal is the after-the-oil. The after-the-oil is the geothermal. The geothermal is the heat. The heat is the geothermal. The oil is the before-the-geothermal. The before-the-geothermal is the oil. The oil is the last before. The last before is the oil. The geothermal is the first after. The first after is the geothermal.\nCounterparty: The Barons' Council.\nNotes: The barons asked why the oil is the last. The last is the geothermal. The geothermal is the last. The barons do not know about the geothermal. The not-knowing is the barons. The barons are the not-knowing. The geothermal is the shelter's. The shelter's is the geothermal. The not-telling is the shelter. The shelter is the not-telling. The geothermal is the not-told. The not-told is the geothermal. The barons will know when the shelter stops buying oil. The stopping is the knowing. The knowing is the stopping. The barons will know the geothermal when the oil is the 0. The 0 is the knowing. The knowing is the 0.\n\n— Yelena. The last trade of the rotation. The rotation is the trade. The trade is the rotation. The quartermaster is the trade. The trade is the quartermaster. The quartermaster is the last. The last is the quartermaster. The quartermaster is the book. The book is the quartermaster. The book is the last. The last is the book. The book is the spring. The spring is the book.",
+      "tags": [
+        "transaction",
+        "final",
+        "day_110",
+        "last_oil",
+        "geothermal",
+        "barons_not_told",
+        "spring"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_price_final",
+      "doc_type": "price_table",
+      "title": "Price Table — First Spring, Day 100, All Markets",
+      "posted_day": 100,
+      "posted_by": "Compiled by the Overlay",
+      "location": "Cluster office, posted in the archive",
+      "material": "Typed on thin paper, compiled from all market reports",
+      "transcript": "PRICE TABLE — FIRST SPRING, DAY 100, ALL MARKETS\nCompiled by the Overlay from all market reports.\n\nLOCK GATE FOUR (Hydro Barons):\nWater: 2L oil / 20L (winter rate, unchanged — the barons do not lower the rate for the spring. The not-lowering is the barons. The barons are the not-lowering. The spring is the not-lowering. The barons are the spring's not-lowering.)\nSalt: 1.2L oil / kg (winter rate, unchanged)\nFlour: 2L oil / kg (winter rate, unchanged — the flour is the scarcest. The scarcest is the flour. The flour is the 2L. The 2L is the flour.)\nMedicine: 6L oil / course (winter rate, unchanged — the medicine is the most expensive. The most expensive is the medicine.)\n\nGARRISON:\nFuel: 2kg flour / L (unchanged — the garrison has fuel. The fuel is the garrison's. The garrison's is the fuel.)\nIron: 500g flour / kg (unchanged)\nBrass: 750g flour / kg (unchanged)\n\nSHALLOWS MARKET (open market, weekly):\nSalt: 1kg = 1kg flour = 1L oil = 2m copper (the 1:1:1:2 is the baseline. The baseline is the 1:1:1:2. The baseline is the spring. The spring is the baseline.)\nPotato: 1kg = 2kg salt + 500g mushrooms (new — the new is the potato. The potato is the new. The 2kg + 500g is the potato. The potato is the 2kg + 500g. The potato is the most expensive. The most expensive is the potato. The new is the most expensive. The most expensive is the new.)\nNettle tea: 1 cup = 100g flour + 100g salt (new — the new is the nettle. The nettle is the new. The 100g + 100g is the nettle. The nettle is the 100g + 100g. The nettle is the medicine. The medicine is the nettle.)\nFermented cabbage: 1 jar = 500g flour + 500g salt (new — the new is the cabbage. The cabbage is the new. The 500g + 500g is the cabbage. The cabbage is the 500g + 500g. The cabbage is the vitamin. The vitamin is the cabbage.)\nSmoked fish: 1 = 500g flour + 500g salt (unchanged — the fish is the 500g + 500g. The 500g + 500g is the fish.)\nCandles: 1 = 200g flour + 200g salt (unchanged)\n\nOVERLAY ANALYSIS:\nThe flour is the scarcest. The scarcest is the flour. The flour is the 2L at the barons. The flour is the 2kg at the garrison. The flour is the 1:1 at the market. The flour is the most expensive at every market. The most expensive is the flour. The flour is the winter. The winter is the flour. The flour is going down. The down is the flour. The spring is the counter. The counter is the spring. The potato and the nettle and the cabbage and the fish and the mushrooms are the counter. The counter is the new. The new is the counter. The spring is the new. The new is the spring.\n\nThe medicine is the most expensive. The most expensive is the medicine. The medicine is the 6L at the barons. The medicine is the not-traded at the market. The medicine is the too-valuable. The too-valuable is the medicine. The medicine is the spring's less-scarce. The less-scarce is the spring. The spring is the medicine's less-scarce. The 1 course was traded at the spring market. The 1 is the first. The first is the medicine. The medicine is the first-traded. The first-traded is the medicine. The spring is the first-traded. The first-traded is the spring.\n\nThe oil is the going-down. The going-down is the oil. The oil is the 10L at the barons. The oil is the 1L at the market. The oil is the less-needed. The less-needed is the oil. The geothermal is the reason. The reason is the geothermal. The geothermal is the counter. The counter is the geothermal. The oil is the before-the-geothermal. The before-the-geothermal is the oil. The geothermal is the after-the-oil. The after-the-oil is the geothermal.\n\n— The Overlay. The Overlay is the price. The price is the Overlay. The Overlay is the record. The record is the Overlay. The Overlay does not set the price. The Overlay records the price. The recording is the price. The price is the recording.",
+      "tags": [
+        "price_table",
+        "spring",
+        "all_markets",
+        "overlay",
+        "flour_scarcest",
+        "medicine_most_expensive",
+        "oil_going_down",
+        "geothermal"
+      ]
+    }
+  ]
+}
