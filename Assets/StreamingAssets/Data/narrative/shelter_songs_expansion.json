@@ -1,0 +1,599 @@
+{
+  "schema_version": 1,
+  "collection_id": "shelter_songs_expansion",
+  "description": "Shelter songs and music — work songs, lullabies, marching songs, mourning songs, celebration songs. The music people make when they have nothing to make music with. Repetitive, simple, sometimes wrong, sometimes beautiful, always about the thing they are doing right now.",
+  "documents": [
+    {
+      "doc_id": "bunker_doc_song_shoveling",
+      "doc_type": "work_song",
+      "title": "The Shoveling Song",
+      "posted_day": 3,
+      "posted_by": "Fyodor the Stoker",
+      "location": "Boiler room (-10m)",
+      "material": "Sung while shoveling lignite, no accompaniment, the rhythm is the shovel",
+      "transcript": "Shovel down, shovel up, shovel in the dark, / shovel down, shovel up, the coal is the spark. / Shovel left, shovel right, the fire is the red, / shovel left, shovel right, the fire is the bed. / The bed is the shelter, the shelter is the fire, / the fire is the coal, the coal is the wire. / The wire is the heat, the heat is the wire, / the shelter is the fire and the fire is the fire. / Shovel down, shovel up, the dark is the light, / shovel down, shovel up, the coal is the night. / The night is the coal, the coal is the night, / the shovel is the song and the song is the light.\n\nSung by the stoker while feeding the boiler. The rhythm is the shovel. The shovel is the rhythm. The stoker does not sing for an audience. The stoker sings for the fire. The fire is the audience. The audience is the fire.",
+      "tags": [
+        "work_song",
+        "stoker",
+        "shovel",
+        "coal",
+        "fire",
+        "boiler"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_pumping",
+      "doc_type": "work_song",
+      "title": "The Pump Song",
+      "posted_day": 14,
+      "posted_by": "The Mechanic",
+      "location": "Pump room, south corridor",
+      "material": "Sung while working the pump handle, the rhythm is the handle",
+      "transcript": "Pump and pull, pump and pull, / the water is the well, the well is the full. / Pump and push, pump and push, / the water is the rush, the rush is the hush. / The hush is the water, the water is the hush, / the pump is the song and the song is the rush. / Two litres a day, two litres a day, / the pump is the ration, the ration is the way. / The way is the water, the water is the way, / the pump is the song and the song is the day.\n\nSung by the mechanic while working the pump handle. The rhythm is the handle. The handle is the rhythm. The mechanic sings for the water. The water is the audience. The audience is the water.",
+      "tags": [
+        "work_song",
+        "pump",
+        "water",
+        "mechanic",
+        "handle",
+        "rhythm"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_digging",
+      "doc_type": "work_song",
+      "title": "The Digging Song",
+      "posted_day": 22,
+      "posted_by": "The Mason",
+      "location": "North wall, shelter yard",
+      "material": "Sung while digging the foundation for the cold frame, the rhythm is the spade",
+      "transcript": "Down goes the spade, up comes the earth, / down goes the spade, the earth is the worth. / The worth is the ground, the ground is the worth, / the spade is the song and the song is the earth. / Down goes the spade, up comes the stone, / down goes the spade, the stone is the bone. / The bone is the ground, the ground is the bone, / the spade is the song and the song is the stone. / The farmer is the waiting, the waiting is the farmer, / the ground is the song and the song is the farmer.\n\nSung by the mason while digging for the cold frame. The rhythm is the spade. The spade is the rhythm. The mason sings for the ground. The ground is the audience. The audience is the ground.",
+      "tags": [
+        "work_song",
+        "digging",
+        "spade",
+        "earth",
+        "mason",
+        "cold_frame"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_kneading",
+      "doc_type": "work_song",
+      "title": "The Kneading Song",
+      "posted_day": 7,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall kitchen",
+      "material": "Sung while kneading bread, the rhythm is the hands",
+      "transcript": "Fold and press, fold and press, / the dough is the flour, the flour is the less. / Fold and turn, fold and turn, / the dough is the thin, the thin is the burn. / The burn is the bread, the bread is the burn, / the hands are the song and the song is the turn. / Five hundred grams, five hundred grams, / the flour is the number, the number is the hands. / The hands are the kneading, the kneading is the hands, / the bread is the song and the song is the grams.\n\nSung by the baker while kneading the daily bread. The rhythm is the hands. The hands are the rhythm. The baker sings for the bread. The bread is the audience. The audience is the bread. The baker does not sing well. The baker sings true. The true is the bread. The bread is the true.",
+      "tags": [
+        "work_song",
+        "kneading",
+        "bread",
+        "baker",
+        "flour",
+        "hands"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_lullaby_dima",
+      "doc_type": "lullaby",
+      "title": "The Candle Lullaby",
+      "posted_day": 22,
+      "posted_by": "A mother",
+      "location": "Ward C, by the empty bed",
+      "material": "Sung softly, almost spoken, no accompaniment, the voice is the only sound",
+      "transcript": "Close your eyes, the candle is the light, / close your eyes, the dark is the night. / The night is the candle, the candle is the night, / the candle is the song and the song is the light. / The light is the small, the small is the light, / the candle is the last and the last is the light. / Sleep now, sleep now, the candle is the keeping, / sleep now, sleep now, the candle is the weeping. / The weeping is the candle, the candle is the weeping, / the sleep is the song and the song is the sleeping.\n\nSung by a mother to a child who is not in the bed. The bed is empty. The candle is by the bed. The candle is for the seeing of the empty. The mother sings to the empty. The empty is the child. The child is the empty. The mother does not sing for the child. The mother sings for the candle. The candle is the child. The child is the candle.",
+      "tags": [
+        "lullaby",
+        "candle",
+        "empty_bed",
+        "mother",
+        "child",
+        "sleep"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_lullaby_rima",
+      "doc_type": "lullaby",
+      "title": "The Sun Lullaby",
+      "posted_day": 27,
+      "posted_by": "A mother",
+      "location": "Ward C, by Rima's bed",
+      "material": "Sung softly, the child is sleeping, the voice is barely audible",
+      "transcript": "The sun is the drawing, the drawing is the sun, / the face is the smiling, the smiling is the one. / The one is the child, the child is the one, / the sun is the gone and the drawing is the sun. / Sleep now, sleep now, the sun is the wall, / sleep now, sleep now, the sun is the all. / The all is the drawing, the drawing is the all, / the sun is the face and the face is the wall. / The wall is the porridge, the porridge is the wall, / the sun is the smiling and the smiling is the all.\n\nSung by a mother to a sleeping child. The child drew the sun on the wall. The sun has a face. The face is smiling. The mother sings to the sun on the wall. The sun is the child. The child is the sun. The mother sings for the smiling. The smiling is the audience. The audience is the smiling.",
+      "tags": [
+        "lullaby",
+        "sun",
+        "drawing",
+        "rima",
+        "mother",
+        "sleep",
+        "smiling"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_lullaby_general",
+      "doc_type": "lullaby",
+      "title": "The Quiet Lullaby",
+      "posted_day": 18,
+      "posted_by": "A mother",
+      "location": "Dormitory B",
+      "material": "Sung in a whisper, the children are sleeping, the boots are outside",
+      "transcript": "Quiet now, quiet now, the boots are the outside, / quiet now, quiet now, the inside is the hide. / The hide is the quiet, the quiet is the hide, / the boots are the loud and the loud is the outside. / Sleep now, sleep now, the quiet is the game, / sleep now, sleep now, the quiet is the name. / The name is the not-saying, the not-saying is the name, / the quiet is the sleep and the sleep is the game. / Do not breathe, do not breathe, the boots are the hall, / do not breathe, do not breathe, the boots are the all.\n\nSung by a mother to sleeping children when the boots are outside. The children are playing the quiet game in their sleep. The quiet game is the sleep. The sleep is the quiet game. The mother sings the quiet. The quiet is the song. The song is the quiet. The mother does not sing loud. The mother sings the not-loud. The not-loud is the quiet. The quiet is the not-loud.",
+      "tags": [
+        "lullaby",
+        "quiet",
+        "boots",
+        "mother",
+        "children",
+        "sleep",
+        "hide"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_walking",
+      "doc_type": "marching_song",
+      "title": "The Walking Song",
+      "posted_day": 1,
+      "posted_by": "Bram the Courier",
+      "location": "The south road",
+      "material": "Sung while walking, the rhythm is the boots, the boots are the road",
+      "transcript": "Left right left, the road is the walking, / left right left, the road is the talking. / The talking is the road, the road is the talking, / the boots are the song and the song is the walking. / The pouch is the skin, the skin is the pouch, / the treaty is the word and the word is the ouch. / The ouch is the blister, the blister is the ouch, / the road is the song and the song is the crouch. / Left right left, the miles are the counting, / left right left, the miles are the mounting. / The mounting is the miles, the miles are the mounting, / the boots are the song and the song is the counting.\n\nSung by the courier on the road. The rhythm is the boots. The boots are the rhythm. The courier sings for the miles. The miles are the audience. The audience is the miles. The courier does not sing for people. The courier sings for the road. The road is the people. The people are the road.",
+      "tags": [
+        "marching_song",
+        "walking",
+        "courier",
+        "boots",
+        "road",
+        "miles",
+        "pouch"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_sentry",
+      "doc_type": "marching_song",
+      "title": "The Sentry Song",
+      "posted_day": 12,
+      "posted_by": "Sgt. Ilya",
+      "location": "North cupola (-2m)",
+      "material": "Sung quietly while on watch, the rhythm is the pacing, the pacing is the watch",
+      "transcript": "Step and turn, step and turn, / the dark is the watching, the watching is the dark. / Step and look, step and look, / the dark is the nothing, the nothing is the book. / The book is the seeing, the seeing is the book, / the step is the song and the song is the look. / The lamp is the circle, the circle is the lamp, / the dark is the outside and the outside is the camp. / Step and turn, step and turn, / the watch is the song and the song is the burn. / The burn is the cold, the cold is the burn, / the watch is the song and the song is the turn.\n\nSung by the sentry on the cupola. The rhythm is the pacing. The pacing is the rhythm. The sentry sings for the dark. The dark is the audience. The audience is the dark. The sentry does not sing loud. The sentry sings the quiet. The quiet is the watch. The watch is the quiet.",
+      "tags": [
+        "marching_song",
+        "sentry",
+        "watch",
+        "dark",
+        "lamp",
+        "cupola",
+        "pacing"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_mourning_river",
+      "doc_type": "mourning_song",
+      "title": "The River Woman's Song",
+      "posted_day": 34,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, by the sheeted bay",
+      "material": "Sung softly, almost spoken, no accompaniment, after the sheet is taken down",
+      "transcript": "She came from the water, she went to the dark, / she came from the river, she went to the ark. / The ark is the sheet, the sheet is the ark, / the dark is the keeping and the keeping is the dark. / She did not speak, she did not speak, / the water was the language and the language was the creek. / I named her the river, the river was the name, / the naming was the medicine and the medicine was the name. / The name is the keeping, the keeping is the name, / the river is the song and the song is the same. / The same is the river, the river is the same, / the naming is the song and the song is the name.\n\nSung by the nurse after the river woman died. The sheet is taken down. The bay is empty. The nurse sings to the empty. The empty is the river woman. The river woman is the empty. The nurse sings the naming. The naming is the song. The song is the naming. The nurse does not cry while singing. The nurse cries after. The singing is the before-the-crying. The crying is the after-the-singing.",
+      "tags": [
+        "mourning_song",
+        "river_woman",
+        "nurse",
+        "naming",
+        "sheet",
+        "empty"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_mourning_dima",
+      "doc_type": "mourning_song",
+      "title": "The Quiet Game Song",
+      "posted_day": 23,
+      "posted_by": "A mother",
+      "location": "Ward C, by the empty bed",
+      "material": "Sung in a whisper, the candle is the only light, the bed is empty",
+      "transcript": "You were the quiet, the quiet was the you, / you were the game and the game was the true. / The true was the not-giggling, the not-giggling was the true, / the quiet was the game and the game was the you. / The boots were the outside, the outside was the boots, / the quiet was the inside and the inside was the roots. / The roots are the wall, the wall is the roots, / the quiet is the game and the game is the boots. / You were the six, the six was the you, / the quiet is the game and the game is the through. / The through is the dark, the dark is the through, / the quiet is the candle and the candle is the you.\n\nSung by a mother to an empty bed. The child is not in the bed. The child was six. The six is the quiet. The quiet is the six. The mother sings to the candle. The candle is the child. The child is the candle. The mother does not sing for the child. The mother sings for the quiet. The quiet is the child. The child is the quiet.",
+      "tags": [
+        "mourning_song",
+        "dima",
+        "quiet_game",
+        "mother",
+        "candle",
+        "six",
+        "empty"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_mourning_victor",
+      "doc_type": "mourning_song",
+      "title": "The Ninety-Five Days Song",
+      "posted_day": 96,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, by the empty bed",
+      "material": "Sung softly, no accompaniment, the cigarette is on the desk",
+      "transcript": "Ninety-five days, ninety-five days, / the books said thirty, the books were the maze. / The maze was the number, the number was the maze, / the ninety-five was the man and the man was the days. / The cigarette was the morning, the morning was the one, / the one was the last and the last was the sun. / The sun was the clearing, the clearing was the lie, / the smile was the truth and the truth was the sky. / The sky was not clearing, the sky was the grey, / the smile was the truth and the truth was the day. / Ninety-five days, ninety-five days, / the books were the wrong and the man was the ways. / The ways were the living, the living was the ways, / the ninety-five was the man and the man was the days.\n\nSung by the nurse after the conscript died. The cigarette is on the desk. The cigarette was the morning. The morning was the one. The one was the last. The nurse sings for the ninety-five. The ninety-five is the audience. The audience is the ninety-five. The nurse does not sing for the books. The nurse sings for the man. The man is the ninety-five. The ninety-five is the man.",
+      "tags": [
+        "mourning_song",
+        "victor",
+        "95_days",
+        "cigarette",
+        "smile",
+        "sky",
+        "nurse"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_harvest",
+      "doc_type": "celebration_song",
+      "title": "The Potato Song",
+      "posted_day": 44,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall, the evening of the harvest",
+      "material": "Sung loudly, clapping, stamping, the whole mess hall, the first new food",
+      "transcript": "The potato is the up, the up is the potato! / The four is the kilo, the kilo is the four! / The four is the first, the first is the four! / The spring is the four and the four is the spring! / The farmer is the wall, the wall is the farmer! / The wall remembered, the wall was the right! / The potato is the brown, the brown is the done! / The salt is the flavor, the flavor is the fun! / The fun is the first, the first is the fun! / The potato is the spring and the spring is the one! / The one is the potato, the potato is the one! / The four is the spring and the spring has begun!\n\nSung by the whole mess hall on the evening of the first harvest. The potato is the first new food. The first is the potato. The potato is the spring. The spring is the potato. The baker leads the singing. The baker is the Chef. The Chef is the Baker. The singing is the loud. The loud is the singing. The mess hall has not been loud in a long time. The loud is the first. The first is the loud. The potato is the loud. The loud is the potato.",
+      "tags": [
+        "celebration_song",
+        "potato",
+        "harvest",
+        "four_kilos",
+        "spring",
+        "first",
+        "loud",
+        "mess_hall"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_spring",
+      "doc_type": "celebration_song",
+      "title": "The Spring Song",
+      "posted_day": 100,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall, the first spring day",
+      "material": "Sung loudly, the whole shelter, the first warm day, the first thin ash",
+      "transcript": "The spring is the green, the green is the spring! / The clover is the first, the first is the clover! / The nettle is the iron, the iron is the nettle! / The cabbage is the sour, the sour is the vitamin! / The fish is the creek, the creek is the fish! / The berry is the ridge, the ridge is the berry! / The pine is the needle, the needle is the tea! / The dandelion is the weed, the weed is the food! / The flour is the three, the three is the low! / But the spring is the all, the all is the spring! / The spring is the counter, the counter is the spring! / The flour is the down, the spring is the up! / The down and the up are the same: the spring!\n\nSung by the whole shelter on the first spring day. The spring is the counter. The counter is the spring. The flour is going down. The spring is going up. The down and the up are the same direction: the spring. The spring is the direction. The direction is the spring. The singing is the loud. The loud is the singing. The shelter has not been this loud since the harvest. The loud is the spring. The spring is the loud.",
+      "tags": [
+        "celebration_song",
+        "spring",
+        "green",
+        "counter",
+        "flour_down",
+        "spring_up",
+        "direction",
+        "loud"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_solstice",
+      "doc_type": "celebration_song",
+      "title": "The Solstice Song (The Turning)",
+      "posted_day": 65,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall, the longest dark",
+      "material": "Sung quietly, the whole mess hall, the longest dark, the turning",
+      "transcript": "The dark is the longest, the longest is the dark, / the turning is the solstice, the solstice is the spark. / The spark is the tomorrow, the tomorrow is the longer, / the longer is the spring and the spring is the stronger. / The dark is the now, the now is the dark, / but the turning is the promise and the promise is the spark. / The spark is the small, the small is the spark, / but the small is the spring and the spring is the dark. / The dark is the longest, the longest is the dark, / but the turning is the after and the after is the spark. / The spark is the spring, the spring is the spark, / the solstice is the turning and the turning is the dark.\n\nSung by the whole mess hall on the longest dark. The solstice is the turning. The turning is the solstice. The dark is the longest. The longest is the dark. But the turning is the promise. The promise is the longer. The longer is the spring. The spring is the longer. The singing is the quiet. The quiet is the singing. The mess hall is not loud. The mess hall is the quiet-loud. The quiet-loud is the solstice. The solstice is the quiet-loud.",
+      "tags": [
+        "celebration_song",
+        "solstice",
+        "turning",
+        "dark",
+        "spark",
+        "spring",
+        "promise"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_filing",
+      "doc_type": "work_song",
+      "title": "The Filing Song",
+      "posted_day": 50,
+      "posted_by": "The Electrician",
+      "location": "Sub-level 2, junction box",
+      "material": "Sung while filing corroded contacts, the rhythm is the file",
+      "transcript": "File and scrape, file and scrape, / the corrosion is the contact, the contact is the shape. / File and clean, file and clean, / the contact is the shine, the shine is the clean. / The clean is the current, the current is the clean, / the file is the song and the song is the machine. / The file is the smaller, the smaller is the file, / the corrosion is the bigger, the bigger is the while. / The while is the filing, the filing is the while, / the file is the electrician and the electrician is the file.\n\nSung by the electrician while filing the junction box contacts. The rhythm is the file. The file is the rhythm. The file is getting smaller. The smaller is the file. The corrosion is getting bigger. The bigger is the corrosion. The electrician sings for the contact. The contact is the audience. The audience is the contact. The electrician does not sing well. The electrician sings true. The true is the clean. The clean is the true.",
+      "tags": [
+        "work_song",
+        "filing",
+        "electrician",
+        "corrosion",
+        "contact",
+        "file"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_sewing",
+      "doc_type": "work_song",
+      "title": "The Mending Song",
+      "posted_day": 30,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, by the lamp",
+      "material": "Sung while mending bandages, the rhythm is the needle",
+      "transcript": "Needle and thread, needle and thread, / the bandage is the cloth, the cloth is the red. / The red is the before, the before is the red, / the white is the after, the after is the thread. / Needle and pull, needle and pull, / the bandage is the clean, the clean is the full. / The full is the roll, the roll is the full, / the needle is the song and the song is the pull. / Stitch and stitch, stitch and stitch, / the bandage is the mend, the mend is the stitch. / The stitch is the holding, the holding is the stitch, / the needle is the song and the song is the stitch.\n\nSung by the nurse while mending bandages by the lamp. The rhythm is the needle. The needle is the rhythm. The nurse sings for the bandage. The bandage is the audience. The audience is the bandage. The nurse does not sing for the patient. The nurse sings for the cloth. The cloth is the patient. The patient is the cloth.",
+      "tags": [
+        "work_song",
+        "sewing",
+        "nurse",
+        "bandage",
+        "needle",
+        "mending",
+        "cloth"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_scavenging",
+      "doc_type": "work_song",
+      "title": "The Scavenging Song",
+      "posted_day": 14,
+      "posted_by": "Mira the Scavenger",
+      "location": "The printing works, office wing",
+      "material": "Sung quietly while searching drawers, the rhythm is the opening and closing",
+      "transcript": "Open the drawer, close the drawer, / the drawer is the finding, the finding is the more. / Open the drawer, close the drawer, / the finding is the brass, the brass is the store. / The store is the shelter, the shelter is the store, / the drawer is the song and the song is the more. / The more is the iodine, the iodine is the jar, / the jar is the secret, the secret is the star. / The star is the finding, the finding is the star, / the drawer is the song and the song is the jar. / Do not tell, do not tell, / the finding is the secret, the secret is the well.\n\nSung by the scavenger while searching the office wing drawers. The rhythm is the opening and closing. The opening and closing is the rhythm. The scavenger sings for the finding. The finding is the audience. The audience is the finding. The scavenger does not sing loud. The scavenger sings the quiet. The quiet is the secret. The secret is the quiet. The iodine is the star. The star is the iodine.",
+      "tags": [
+        "work_song",
+        "scavenging",
+        "drawers",
+        "brass",
+        "iodine",
+        "secret",
+        "mira"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_lullaby_cold",
+      "doc_type": "lullaby",
+      "title": "The Cold Lullaby",
+      "posted_day": 35,
+      "posted_by": "A grandmother",
+      "location": "Dormitory A, the Loma family bay",
+      "material": "Sung in a low voice, the children are cold, the blanket is thin",
+      "transcript": "The cold is the floor, the floor is the cold, / the blanket is the thin, the thin is the old. / The old is the blanket, the blanket is the old, / the cold is the song and the song is the hold. / The hold is the warm, the warm is the hold, / the blanket is the thin and the thin is the cold. / But the hold is the warm, the warm is the hold, / the arms are the blanket and the blanket is the old. / Sleep now, sleep now, the cold is the outside, / sleep now, sleep now, the inside is the hide. / The hide is the arms, the arms are the hide, / the cold is the outside and the inside is the guide.\n\nSung by the grandmother to the Loma children. The children are cold. The blanket is thin. The grandmother's arms are the blanket. The arms are the warm. The warm is the arms. The grandmother sings for the warm. The warm is the audience. The audience is the warm. The grandmother does not sing about the cold. The grandmother sings about the arms. The arms are the counter. The counter is the arms. The cold is the floor. The arms are the warm. The two are the same. The same is the two.",
+      "tags": [
+        "lullaby",
+        "cold",
+        "grandmother",
+        "loma",
+        "blanket",
+        "arms",
+        "warm",
+        "hold"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_lullaby_engineer",
+      "doc_type": "lullaby",
+      "title": "The Generator Lullaby",
+      "posted_day": 31,
+      "posted_by": "Tomas the Engineer",
+      "location": "Boiler room (-10m)",
+      "material": "Sung to the generator, almost spoken, the hum is the accompaniment",
+      "transcript": "Sleep now, sleep now, the hum is the keeping, / sleep now, sleep now, the hum is the sleeping. / The sleeping is the generator, the generator is the sleeping, / the hum is the song and the song is the keeping. / The keeping is the brass, the brass is the bone, / the clock is the time and the time is the stone. / The stone is the shelter, the shelter is the stone, / the hum is the song and the song is the bone. / Do not stop, do not stop, the hum is the alive, / do not stop, do not stop, the hum is the five. / The five is the cylinders, the cylinders are the five, / the hum is the song and the song is the alive.\n\nSung by the engineer to the generator. The generator is the child. The child is the generator. The engineer sings for the hum. The hum is the audience. The audience is the hum. The engineer does not sing for people. The engineer sings for the machine. The machine is the people. The people are the machine. The hum is the lullaby. The lullaby is the hum.",
+      "tags": [
+        "lullaby",
+        "generator",
+        "engineer",
+        "hum",
+        "brass",
+        "bone",
+        "clock",
+        "sleep"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_mourning_general",
+      "doc_type": "mourning_song",
+      "title": "The Names Song",
+      "posted_day": 62,
+      "posted_by": "The Duty Clerk",
+      "location": "Plaza, the tally wall",
+      "material": "Sung while carving marks on the wall, the rhythm is the chalk",
+      "transcript": "One mark is the one, the one is the name, / two marks is the two, the two is the same. / The same is the mark, the mark is the same, / the name is the mark and the mark is the name. / Five marks is the hand, the hand is the five, / the close is the hand and the hand is the alive. / The alive is the mark, the mark is the alive, / the hand is the five and the five is the survive. / The wall does not thank you, the wall does not need, / the mark is the thanks and the thanks is the seed. / The seed is the forward, the forward is the seed, / the mark is the song and the song is the need.\n\nSung by the duty clerk while carving marks on the tally wall. The rhythm is the chalk. The chalk is the rhythm. The clerk sings for the names. The names are the audience. The audience is the names. The clerk does not sing for the living. The clerk sings for the marks. The marks are the living. The living are the marks. The wall does not thank you. The wall does not need to. The mark is the thanks. The thanks is the mark.",
+      "tags": [
+        "mourning_song",
+        "names",
+        "marks",
+        "tally_wall",
+        "duty_clerk",
+        "five",
+        "hand",
+        "forward"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_mourning_old",
+      "doc_type": "mourning_song",
+      "title": "The Old Man's Song",
+      "posted_day": 50,
+      "posted_by": "A passer",
+      "location": "South road, by the ditch",
+      "material": "Sung softly, almost spoken, the passer found the note",
+      "transcript": "The old is the slow, the slow is the old, / the ditch is the cold, the cold is the hold. / The hold is the note, the note is the hold, / the daughter is the word and the word is the told. / The told is the sorry, the sorry is the slow, / the old is the cold and the cold is the snow. / The note is the last, the last is the note, / the daughter is the word and the word is the wrote. / The wrote is the sorry, the sorry is the wrote, / the old is the song and the song is the note.\n\nSung by a passer who found the old man in the ditch. The note was in the pocket. The note said: 'For my daughter. I am sorry I am slow.' The passer sings for the note. The note is the audience. The audience is the note. The passer does not know the daughter. The passer knows the sorry. The sorry is the song. The song is the sorry. The slow is the old. The old is the slow. The cold is the ditch. The ditch is the cold.",
+      "tags": [
+        "mourning_song",
+        "old_man",
+        "ditch",
+        "note",
+        "daughter",
+        "sorry",
+        "slow",
+        "cold"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_bread",
+      "doc_type": "celebration_song",
+      "title": "The Tuesday Bread Song",
+      "posted_day": 38,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall, Tuesday evening",
+      "material": "Sung by the baker and the children, the Tuesday bread is the bread",
+      "transcript": "The Tuesday is the bread, the bread is the Tuesday! / The Tuesday is the eternal, the eternal is the bread! / The bread is the thin, the thin is the bread! / The Tuesday is the burning, the burning is the thread! / The thread is the flour, the flour is the thread! / The Tuesday is the bread and the bread is the red! / The red is the crust, the crust is the red! / The Tuesday is the bread and the bread is the said! / The said is the eating, the eating is the said! / The Tuesday is the bread and the bread is the fed!\n\nSung by the baker and the children on Tuesday evening. The Tuesday bread is the bread. The bread is the Tuesday. The Tuesday is eternal. The eternal is the Tuesday. The baker burns the bread on Tuesday. The burning is the Tuesday. The Tuesday is the burning. The children sing the burning. The burning is the singing. The singing is the burning. The baker is the Chef. The Chef is the Baker. The Tuesday is the Chef. The Chef is the Tuesday.",
+      "tags": [
+        "celebration_song",
+        "tuesday",
+        "bread",
+        "burning",
+        "baker",
+        "children",
+        "eternal"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_bees",
+      "doc_type": "celebration_song",
+      "title": "The Bee Song",
+      "posted_day": 17,
+      "posted_by": "Old Petr",
+      "location": "Apiary rows, the allotments",
+      "material": "Sung softly, the bees are the audience, the clover is the stage",
+      "transcript": "The bee is the hum, the hum is the bee, / the clover is the flower, the flower is the free. / The free is the first, the first is the free, / the bee is the song and the song is the bee. / The honey is the medicine, the medicine is the honey, / the bee is the gold and the gold is the sunny. / The sunny is the before, the before is the sun, / the bee is the now and the now is the one. / The one is the bee, the bee is the one, / the hum is the song and the song is the done. / The done is the hive, the hive is the done, / the bee is the song and the song is the sun.\n\nSung by the farmer at the apiary. The bees are the audience. The audience is the bees. The farmer sings for the bees. The bees are the song. The song is the bees. The farmer does not sing loud. The farmer sings the hum. The hum is the bee. The bee is the hum. The clover is the first flower. The first flower is the clover. The bee is the proof the ground is healing. The healing is the bee. The bee is the healing.",
+      "tags": [
+        "celebration_song",
+        "bees",
+        "honey",
+        "clover",
+        "farmer",
+        "hum",
+        "first_flower",
+        "healing"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_washing",
+      "doc_type": "work_song",
+      "title": "The Washing Song",
+      "posted_day": 27,
+      "posted_by": "The Steward",
+      "location": "Mess hall, after the meal",
+      "material": "Sung while washing the pots, the rhythm is the scrub",
+      "transcript": "Scrub and rinse, scrub and rinse, / the pot is the black, the black is the since. / The since is the meal, the meal is the since, / the scrub is the song and the song is the rinse. / The rinse is the water, the water is the rinse, / the water is the two and the two is the pints. / The pints are the ration, the ration is the pints, / the scrub is the song and the song is the tints. / The tints are the clean, the clean is the tints, / the pot is the black and the black is the hints. / The hints are the meal, the meal is the hints, / the scrub is the song and the song is the rinses.\n\nSung by the steward while washing the pots after the meal. The rhythm is the scrub. The scrub is the rhythm. The steward sings for the pot. The pot is the audience. The audience is the pot. The steward does not sing for the meal. The steward sings for the clean. The clean is the pot. The pot is the clean. The water is the ration. The ration is the water. The two is the ration. The ration is the two.",
+      "tags": [
+        "work_song",
+        "washing",
+        "pots",
+        "steward",
+        "scrub",
+        "water",
+        "clean"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_chopping",
+      "doc_type": "work_song",
+      "title": "The Chopping Song",
+      "posted_day": 42,
+      "posted_by": "The Hunter",
+      "location": "Ash woodland, by the dead trees",
+      "material": "Sung while chopping dead wood for the smoking shed, the rhythm is the axe",
+      "transcript": "Down goes the axe, up comes the chip, / the wood is the smoke, the smoke is the dip. / The dip is the preserving, the preserving is the dip, / the axe is the song and the song is the grip. / The grip is the axe, the axe is the grip, / the wood is the dead, the dead is the strip. / The strip is the bark, the bark is the strip, / the axe is the song and the song is the lip. / The lip is the whistle, the whistle is the lip, / the axe is the song and the song is the chip. / The chip is the wood, the wood is the chip, / the smoke is the preserving and the preserving is the dip.\n\nSung by the hunter while chopping dead wood for the smoking shed. The rhythm is the axe. The axe is the rhythm. The hunter sings for the wood. The wood is the audience. The audience is the wood. The hunter does not sing for the trees. The hunter sings for the smoke. The smoke is the preserving. The preserving is the smoke. The dead trees are the wood. The wood is the dead trees. The dead is the wood. The wood is the dead. The axe is the song. The song is the axe.",
+      "tags": [
+        "work_song",
+        "chopping",
+        "axe",
+        "wood",
+        "smoke",
+        "hunter",
+        "ash_woodland"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_planting",
+      "doc_type": "work_song",
+      "title": "The Planting Song",
+      "posted_day": 8,
+      "posted_by": "Old Petr",
+      "location": "Cold frame, south wall",
+      "material": "Sung while planting seed potatoes, the rhythm is the hands in the dirt",
+      "transcript": "Down goes the seed, the seed is the dirt, / down goes the seed, the dirt is the shirt. / The shirt is the work, the work is the shirt, / the seed is the song and the song is the dirt. / The dirt is the bed, the bed is the dirt, / the seed is the sleep and the sleep is the earth. / The earth is the waiting, the waiting is the earth, / the seed is the song and the song is the worth. / The worth is the spring, the spring is the worth, / the seed is the song and the song is the birth. / The birth is the green, the green is the birth, / the seed is the song and the song is the earth.\n\nSung by the farmer while planting seed potatoes in the cold frame. The rhythm is the hands in the dirt. The hands are the rhythm. The dirt is the rhythm. The rhythm is the dirt. The farmer sings for the seed. The seed is the audience. The audience is the seed. The farmer does not sing for the spring. The farmer sings for the planting. The planting is the spring. The spring is the planting. The seed is the sleep. The sleep is the seed. The dirt is the bed. The bed is the dirt.",
+      "tags": [
+        "work_song",
+        "planting",
+        "seed",
+        "dirt",
+        "farmer",
+        "cold_frame",
+        "spring",
+        "earth"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_lullaby_spring",
+      "doc_type": "lullaby",
+      "title": "The Spring Lullaby",
+      "posted_day": 100,
+      "posted_by": "A mother",
+      "location": "Dormitory B, the first warm night",
+      "material": "Sung softly, the children are sleeping, the first warm night",
+      "transcript": "The warm is the night, the night is the warm, / the spring is the sleeping, the sleeping is the form. / The form is the child, the child is the form, / the warm is the song and the song is the norm. / The norm is the growing, the growing is the norm, / the spring is the warm and the warm is the form. / Sleep now, sleep now, the spring is the here, / sleep now, sleep now, the spring is the near. / The near is the green, the green is the near, / the spring is the song and the song is the clear. / The clear is the water, the water is the clear, / the spring is the song and the song is the here.\n\nSung by a mother to sleeping children on the first warm night. The warm is the spring. The spring is the warm. The children are sleeping. The sleeping is the growing. The growing is the sleeping. The mother sings for the warm. The warm is the audience. The audience is the warm. The mother does not sing for the winter. The mother sings for the spring. The spring is the warm. The warm is the spring.",
+      "tags": [
+        "lullaby",
+        "spring",
+        "warm",
+        "mother",
+        "children",
+        "sleep",
+        "growing",
+        "green"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_mourning_unknown",
+      "doc_type": "mourning_song",
+      "title": "The Unknown Song",
+      "posted_day": 40,
+      "posted_by": "The Undertaker",
+      "location": "South plot, after the burial",
+      "material": "Sung softly, no accompaniment, the stone is the only marker",
+      "transcript": "The stone is the name, the name is the stone, / the unknown is the mark and the mark is the bone. / The bone is the earth, the earth is the bone, / the stone is the song and the song is the known. / The known is the not-known, the not-known is the known, / the stone is the name and the name is the lone. / The lone is the stone, the stone is the lone, / the unknown is the song and the song is the bone. / The bone is the earth, the earth is the bone, / the stone is the only and the only is the stone.\n\nSung by the undertaker after burying an unknown. The stone is the marker. The marker is the stone. The stone is not a name. The stone is a stone. The undertaker sings for the unknown. The unknown is the audience. The audience is the unknown. The undertaker does not know the name. The undertaker knows the stone. The stone is the name. The name is the stone. The unknown is the known. The known is the unknown. The stone is the only. The only is the stone.",
+      "tags": [
+        "mourning_song",
+        "unknown",
+        "stone",
+        "undertaker",
+        "burial",
+        "name",
+        "lone"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_final_walking",
+      "doc_type": "marching_song",
+      "title": "The Last Walking Song",
+      "posted_day": 110,
+      "posted_by": "Bram the Courier",
+      "location": "The south road, the last trip",
+      "material": "Sung while walking, the rhythm is the boots, the boots are the last",
+      "transcript": "Left right left, the road is the last, / left right left, the road is the past. / The past is the walking, the walking is the past, / the boots are the song and the song is the last. / The last is the road, the road is the last, / the walking is the song and the song is the fast. / The fast is the walking, the walking is the fast, / the road is the song and the song is the past. / The past is the spring, the spring is the past, / the road is the song and the song is the last.\n\nSung by the courier on the last trip of the rotation. The rhythm is the boots. The boots are the rhythm. The courier sings for the road. The road is the audience. The audience is the road. The courier does not sing for the end. The courier sings for the walking. The walking is the song. The song is the walking. The last is the road. The road is the last. The past is the spring. The spring is the past.",
+      "tags": [
+        "marching_song",
+        "walking",
+        "courier",
+        "last",
+        "road",
+        "boots",
+        "spring"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_song_final_shelter",
+      "doc_type": "celebration_song",
+      "title": "The Shelter Song",
+      "posted_day": 110,
+      "posted_by": "The whole shelter",
+      "location": "Mess hall, the last evening of the rotation",
+      "material": "Sung by everyone, the whole shelter, the last evening, the loud",
+      "transcript": "The shelter is the wall, the wall is the shelter, / the shelter is the all, the all is the shelter. / The flour is the three, the three is the low, / but the spring is the all and the all is the grow. / The grow is the potato, the potato is the grow, / the shelter is the song and the song is the know. / The know is the spring, the spring is the know, / the shelter is the all and the all is the show. / The show is the singing, the singing is the show, / the shelter is the song and the song is the grow. / The grow is the spring, the spring is the grow, / the shelter is the all and the all is the now.\n\nSung by the whole shelter on the last evening of the rotation. The shelter is the all. The all is the shelter. The singing is the loud. The loud is the singing. The shelter has not been this loud since the first spring. The loud is the spring. The spring is the loud. The flour is the three. The three is the low. But the spring is the all. The all is the spring. The shelter is the all. The all is the shelter. The singing is the all. The all is the singing.",
+      "tags": [
+        "celebration_song",
+        "shelter",
+        "all",
+        "spring",
+        "loud",
+        "flour_three",
+        "last",
+        "rotation"
+      ]
+    }
+  ]
+}
