@@ -22,27 +22,33 @@ namespace AtomicWar.GodotApp.UI
         // and caches the result. Returns null when the resource is missing
         // so callers can fall back to Godot's default system font.
 
+        private static readonly System.Collections.Generic.Dictionary<string, FontFile?> _fontCache = new(StringComparer.Ordinal);
         private static FontFile? _fontBarlowRegular;
         private static FontFile? _fontBarlowSemiBold;
         private static FontFile? _fontBarlowBold;
         private static FontFile? _fontShareTechMono;
 
         /// <summary>
-        /// Loads a FontFile from a res:// path. Returns null on failure.
+        /// Loads a FontFile from a res:// path. Returns cached instance or null on failure.
         /// </summary>
         public static FontFile? LoadFont(string path)
         {
             if (string.IsNullOrEmpty(path)) return null;
+            if (_fontCache.TryGetValue(path, out var cached))
+                return cached;
+
+            FontFile? loaded = null;
             try
             {
                 if (ResourceLoader.Exists(path))
-                    return ResourceLoader.Load<FontFile>(path);
+                    loaded = ResourceLoader.Load<FontFile>(path);
             }
             catch (Exception e)
             {
                 GD.PrintErr($"[AshfallUiHelpers] Failed to load font '{path}': {e.Message}");
             }
-            return null;
+            _fontCache[path] = loaded;
+            return loaded;
         }
 
         public static FontFile? FontBarlowRegular =>
@@ -152,6 +158,20 @@ namespace AtomicWar.GodotApp.UI
             lbl.AddThemeFontSizeOverride("font_size", fontSize);
             lbl.AddThemeColorOverride("font_color", ToColor(colorToken));
             ApplyFont(lbl, FontBarlowRegular);
+            return lbl;
+        }
+
+        /// <summary>
+        /// Creates a label with an explicit font size and weight. Bold selects the
+        /// semi-bold face; otherwise the regular face is used. Used by panel
+        /// headers (e.g. fontSize: 20, bold: true).
+        /// </summary>
+        public static Label MakeLabel(string text, int fontSize, bool bold)
+        {
+            var lbl = new Label { Text = text };
+            lbl.AddThemeFontSizeOverride("font_size", fontSize);
+            lbl.AddThemeColorOverride("font_color", ToColor(Theme.Pale));
+            ApplyFont(lbl, bold ? FontBarlowSemiBold : FontBarlowRegular);
             return lbl;
         }
 
@@ -497,9 +517,14 @@ namespace AtomicWar.GodotApp.UI
 
         // ── Texture Loading ─────────────────────────────────────────────
 
+        private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, Texture2D> _fallbackTextureCache = new();
+
         public static Texture2D? TryLoadTexture(string path)
         {
             if (string.IsNullOrEmpty(path)) return null;
+
+            if (_fallbackTextureCache.TryGetValue(path, out var cached) && cached != null && GodotObject.IsInstanceValid(cached))
+                return cached;
 
             // 1. Preferred: Native Godot ResourceLoader import pipeline
             try
@@ -542,7 +567,12 @@ namespace AtomicWar.GodotApp.UI
                 try
                 {
                     var img = Godot.Image.LoadFromFile(osPath);
-                    if (img != null) return ImageTexture.CreateFromImage(img);
+                    if (img != null)
+                    {
+                        var tex = ImageTexture.CreateFromImage(img);
+                        _fallbackTextureCache[path] = tex;
+                        return tex;
+                    }
                 }
                 catch (Exception ex_CATDIAG)
                 {
@@ -559,7 +589,12 @@ namespace AtomicWar.GodotApp.UI
                     try
                     {
                         var img = Godot.Image.LoadFromFile(altOsPath);
-                        if (img != null) return ImageTexture.CreateFromImage(img);
+                        if (img != null)
+                        {
+                            var tex = ImageTexture.CreateFromImage(img);
+                            _fallbackTextureCache[path] = tex;
+                            return tex;
+                        }
                     }
                     catch (Exception ex_CATDIAG)
                     {
