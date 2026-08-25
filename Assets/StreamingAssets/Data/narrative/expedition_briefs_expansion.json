@@ -1,0 +1,1603 @@
+{
+  "schema_version": 1,
+  "collection_id": "expedition_briefs_expansion",
+  "description": "Expedition planning briefs and route waypoints — mission briefings, route assessments, supply calculations, team rosters, risk evaluations, return debriefs. The math of survival, the cost of every kilometer.",
+  "briefs": [
+    {
+      "brief_id": "brief_01_pharmacy_run",
+      "day": 12,
+      "author": "the_quartermaster",
+      "reviewed_by": "the_captain",
+      "objective": "Recover medical supplies from the hospital pharmacy. The clinic has 8 courses of broad-spectrum remaining. The pharmacy may have sealed stock in the front cabinets. The back room is off-limits — the cold chain is broken, the vaccines are warm, the decay is the warning.",
+      "route": "South approach via the creek bed. Creek is frozen — foot traffic only. Enter through the loading bay. Pharmacy is ground floor, west wing. Do not enter the back room.",
+      "distance_km": 3,
+      "estimated_duration_hours": 4,
+      "team_size": 2,
+      "team_requirements": [
+        "1 scavenger (Mira — knows the layout)",
+        "1 medic (Anya — can identify viable stock)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "lamp (1)",
+        "pack frames (2)",
+        "rope (10m)"
+      ],
+      "weather_forecast": "Clear, -18C, wind north 10 km/h, visibility 200m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.3,
+      "key_questions": [
+        "Is the front cabinet stock sealed and viable?",
+        "Is the back room safe to enter for the non-vaccine stock? (Answer: no. Do not enter.)",
+        "Are there iodine supplies beyond what Mira found on Day 11?"
+      ],
+      "success_criteria": [
+        "Recover 4+ courses of broad-spectrum (sealed, oral)",
+        "Recover iodine if available",
+        "Recover gauze, surgical tools, bandages",
+        "Do not enter the back room"
+      ],
+      "risks": [
+        "Cold chain broken — vaccines are warm, do not use",
+        "Decay in the back room — biological hazard, do not enter",
+        "Structural: ceiling tiles down in the ticket hall, stay to the walls",
+        "Feral dogs possible on upper floors — do not ascend"
+      ],
+      "recommendations": [
+        "2-person team, 4-hour window. Enter and exit through the loading bay. Do not split up. If the dosimeter ticks above 5 uSv/h, leave immediately. The medicine is not worth the dose. The dose is the cost. The cost is the dose.",
+        "If the pharmacy is picked clean, check the dental surgery two blocks north — the dentists had clean rooms and may have stockpiled antibiotics.",
+        "Return before dark. The creek freezes solid at dusk and the crossing becomes impassable."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "scavenging",
+        "pharmacy",
+        "medicine",
+        "mira",
+        "anya",
+        "hospital"
+      ]
+    },
+    {
+      "brief_id": "brief_02_printing_works",
+      "day": 14,
+      "author": "the_quartermaster",
+      "reviewed_by": "the_captain",
+      "objective": "Recover brass, copper wire, and lamp fittings from the printing works office wing. The office wing has drawers the others do not bother with. The printing works is Mira's route — do not send others without her.",
+      "route": "East approach via the loading bay. Bay door jammed half-open — crawl entry. Office wing through the fire stair. Main floor collapsed in the centre — stay to the walls.",
+      "distance_km": 2,
+      "estimated_duration_hours": 3,
+      "team_size": 1,
+      "team_requirements": [
+        "1 scavenger (Mira — knows the layout, has the route)"
+      ],
+      "equipment": [
+        "dosimeter (1)",
+        "lamp (1)",
+        "pack frame (1)",
+        "screwdriver (1, for the brass fittings)"
+      ],
+      "weather_forecast": "Overcast, -15C, wind east 5 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.2,
+      "key_questions": [
+        "Are the brass screws still in the desk drawers?",
+        "Is the iodine jar still in the back of the drawer, or has someone else found it?",
+        "Is the office wing structurally sound since the last visit?"
+      ],
+      "success_criteria": [
+        "Recover 20+ brass screws",
+        "Recover copper wire (2+ spools)",
+        "Recover lamp fittings if available",
+        "Do not tell others about the printing works"
+      ],
+      "risks": [
+        "Collapsed floor in main hall — marked with chalk, do not cross",
+        "Fire stair rusted but stable — test each step",
+        "Bay door may close without warning — propped with a pipe, do not remove the pipe"
+      ],
+      "recommendations": [
+        "Solo mission, 3-hour window. Mira knows the route. Do not send a team — the office wing is narrow and a team is noise. The noise is the risk. The risk is the noise.",
+        "If the iodine jar is still there, take it. Do not tell the others. The jar is the medicine the quartermaster did not name. The not-naming is the protection.",
+        "Leave something for the other scavenger if the other scavenger has been there. The screws on the desk were left. The leaving is the respect. The respect is the leaving."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "scavenging",
+        "printing_works",
+        "brass",
+        "mira",
+        "iodine",
+        "solo"
+      ]
+    },
+    {
+      "brief_id": "brief_03_water_plant",
+      "day": 20,
+      "author": "the_engineer",
+      "reviewed_by": "the_captain",
+      "objective": "Assess the water treatment plant for possible restoration of the south well pump. The south well is the backup. The artesian is the primary. The artesian is dropping. The backup is the question.",
+      "route": "West approach via the service road. Road is passable on foot. The plant is 4km west. The plant was the first contested resource on Day 2. The standoff ended in a rationing protocol. The protocol is still the protocol.",
+      "distance_km": 4,
+      "estimated_duration_hours": 6,
+      "team_size": 3,
+      "team_requirements": [
+        "1 engineer (Tomas — pump assessment)",
+        "1 mechanic (pump mechanics)",
+        "1 guard (security, the plant is contested territory)"
+      ],
+      "equipment": [
+        "dosimeters (3)",
+        "masks (3)",
+        "tool kit (pump assessment)",
+        "lamp (1)",
+        "rope (15m)",
+        "water (4L)"
+      ],
+      "weather_forecast": "Clear, -20C, wind north 15 km/h, visibility 250m. Ashfall moderate.",
+      "surface_dose_estimate_uSv_h": 0.5,
+      "key_questions": [
+        "Is the south well pump mechanically restorable?",
+        "Is the aquifer at the south well still viable, or has the hydro barons' drilling dropped the table below the pump intake?",
+        "Is the plant still contested, or has the garrison absorbed it?"
+      ],
+      "success_criteria": [
+        "Assess the south well pump — mechanical condition, parts needed",
+        "Assess the aquifer — water table depth, flow rate",
+        "Assess the political situation — who controls the plant now?"
+      ],
+      "risks": [
+        "The plant is contested — the garrison, the barons, and the original municipal staff all claim it. Do not engage in territorial disputes. Assess and leave.",
+        "The aquifer may be dropping — the barons are drilling deeper. The south well may be dry. The dry is the answer, but the answer is not the one we want.",
+        "Structural: the plant is old. The pre-war concrete is sound but the post-war additions (barricades, tarps) are failing."
+      ],
+      "recommendations": [
+        "3-person team, 6-hour window. Approach openly — do not sneak. The plant is watched. The watching is the garrison's or the barons' or both. Announce yourselves at the gate. Ask permission. The asking is the respect. The respect is the asking.",
+        "If the pump is restorable, return with a parts list. The parts list is the plan. The plan is the parts list. Do not attempt repairs on this trip — assess only.",
+        "If the aquifer is dry, the south well is not the backup. The artesian is the only well. The only well is the risk. The risk is the only well."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "water",
+        "treatment_plant",
+        "pump",
+        "aquifer",
+        "tomas",
+        "contested"
+      ]
+    },
+    {
+      "brief_id": "brief_04_fuel_depot",
+      "day": 30,
+      "author": "the_quartermaster",
+      "reviewed_by": "the_captain",
+      "objective": "Recover fuel from the convoy yard. 12 vehicles, lined up, doors open. Some with fuel still in the tanks. The fuel is old. The fuel may still burn. The burning is the question. The question is the burning.",
+      "route": "South approach via the highway. Highway is buckled but passable on foot. The convoy yard is 6km south. The convoy was ready to leave. The convoy did not leave. The fuel is why they stayed.",
+      "distance_km": 6,
+      "estimated_duration_hours": 8,
+      "team_size": 2,
+      "team_requirements": [
+        "1 scavenger (Mira — siphon experience)",
+        "1 guard (the convoy yard is exposed, no cover)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "siphon kit (1)",
+        "fuel containers (4, 20L each)",
+        "lamp (1)",
+        "rope (10m)"
+      ],
+      "weather_forecast": "Overcast, -22C, wind west 10 km/h, visibility 200m. Ashfall moderate.",
+      "surface_dose_estimate_uSv_h": 0.4,
+      "key_questions": [
+        "How much fuel remains in the vehicles?",
+        "Is the fuel viable (will it burn in the generator)?",
+        "Is the convoy yard occupied or watched?"
+      ],
+      "success_criteria": [
+        "Recover 40+ litres of fuel",
+        "Test the fuel in the generator before committing to a second trip",
+        "Map the convoy yard for a potential second recovery run"
+      ],
+      "risks": [
+        "The fuel is old — it may not burn. The not-burning is the risk. The risk is the not-burning. Test before the second trip.",
+        "The convoy yard is exposed — no cover, no perimeter. A 2-person team is the minimum. A 1-person team is the risk.",
+        "The driver is still in the lead vehicle. The driver is bones. The bones are the driver. The driver has a letter. The letter is sealed. Take the letter. Deliver the letter."
+      ],
+      "recommendations": [
+        "2-person team, 8-hour window. The convoy yard is a long walk. Start at dawn. Return before dark. The dark is the road. The road is the dark.",
+        "Siphon from three vehicles minimum. Test the fuel in a lamp first — if it burns, it burns in the generator. If it does not burn, it is not fuel. It is old oil. Old oil is not fuel. Fuel is fuel.",
+        "The driver's letter is sealed. Deliver to the Overlay for routing. The Overlay does not open letters. The Overlay routes letters. The routing is the Overlay."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "fuel",
+        "convoy_yard",
+        "siphon",
+        "mira",
+        "letter",
+        "bones"
+      ]
+    },
+    {
+      "brief_id": "brief_05_seed_vault",
+      "day": 55,
+      "author": "the_teacher",
+      "reviewed_by": "the_captain",
+      "objective": "Recover seed samples from the subterranean seed vault. The vault was opened on Day 61. 47 varieties, all labelled, all viable per cold test. The seeds are the spring. The spring is in the vault. The vault is the spring.",
+      "route": "North approach via the hillside access road. Road is drifted over but passable. The outer door is a steel plug, frost-rimed. The keypad is dark. The handwritten label: CLOSED INDEFINITELY. DO NOT FORCE. Below it: It still opens. It always opens.",
+      "distance_km": 8,
+      "estimated_duration_hours": 12,
+      "team_size": 4,
+      "team_requirements": [
+        "1 teacher (Suki — botanical knowledge, can identify viable seed)",
+        "1 farmer (Petr — agricultural assessment)",
+        "1 engineer (Tomas — vault mechanics, door assessment)",
+        "1 guard (security, the vault is remote)"
+      ],
+      "equipment": [
+        "dosimeters (4)",
+        "masks (4)",
+        "lamps (2)",
+        "seed collection jars (10, sealed)",
+        "gloves (4, for handling seed)",
+        "rope (20m)",
+        "food (12 hours, 4 people)",
+        "water (8L)"
+      ],
+      "weather_forecast": "Clear, -25C, wind north 5 km/h, visibility 400m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.1,
+      "key_questions": [
+        "Are the 47 varieties still viable after the vault was opened?",
+        "Can we take a portion of each without depleting the vault?",
+        "Is the vault's cold chain still functional (the vault was designed for -20C storage)?"
+      ],
+      "success_criteria": [
+        "Recover samples of 10+ varieties (a portion of each, not all)",
+        "Assess the vault's cold chain for long-term storage",
+        "Document the vault's inventory for future reference"
+      ],
+      "risks": [
+        "The vault is remote — 8km north, 12-hour round trip. The cold is the risk. The risk is the cold. Dress for minus 30. The minus 30 is the vault. The vault is the minus 30.",
+        "The vault door — the keypad is dark. The handwritten label says it still opens. The 'it still opens' is the question. The question is the 'it still opens.'",
+        "The seeds are the spring. The spring is the seeds. Do not take all the seeds. Take a portion. The portion is the future. The future is the portion."
+      ],
+      "recommendations": [
+        "4-person team, 12-hour window. This is the longest expedition. Start before dawn. The dawn is the start. The start is the dawn. Return by dark. The dark is the return. The return is the dark.",
+        "Take a portion of each variety — 10 seeds per variety, not more. The vault is the future. The future is the vault. Do not deplete the vault. The vault is for the next expedition and the next spring.",
+        "Petr will assess which varieties are suitable for the cold frame and the allotments. The assessment is the plan. The plan is the assessment. The seeds are the plan. The plan is the seeds."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "seed_vault",
+        "seeds",
+        "spring",
+        "suki",
+        "petr",
+        "tomas",
+        "long_range"
+      ]
+    },
+    {
+      "brief_id": "brief_06_allotments_assessment",
+      "day": 8,
+      "author": "the_farmer",
+      "reviewed_by": "the_quartermaster",
+      "objective": "Assess the allotments for cold-frame construction and spring planting. The greenhouse glass is mostly gone. The mold is the hazard. The soil in the shed is clean. The cold frame is the plan. The plan is the cold frame.",
+      "route": "South approach via the lane. The lane is clear. The allotments are 1km south. The greenhouse is the landmark. The landmark is the greenhouse.",
+      "distance_km": 1,
+      "estimated_duration_hours": 2,
+      "team_size": 1,
+      "team_requirements": [
+        "1 farmer (Petr — the only one who knows the soil)"
+      ],
+      "equipment": [
+        "dosimeter (1)",
+        "mask (1 — the mold is the hazard)",
+        "lamp (1)",
+        "soil test kit (1)",
+        "trowel (1)"
+      ],
+      "weather_forecast": "Overcast, -12C, wind south 5 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.2,
+      "key_questions": [
+        "Is the shed soil clean and usable for the cold frame?",
+        "Is the greenhouse mold contained to the bars, or is it in the soil?",
+        "Can the cold frame be built against the south wall with the salvaged glass?"
+      ],
+      "success_criteria": [
+        "Assess the shed soil for the cold frame",
+        "Assess the greenhouse mold — is it safe to work near?",
+        "Identify the best south wall for the cold frame"
+      ],
+      "risks": [
+        "The mold — black, on the greenhouse bars. Do not breathe near it. The mask is the medicine. The medicine is the mask.",
+        "The glass — mostly gone. The remaining panes are sharp. Wear gloves. The gloves are the glass. The glass is the gloves.",
+        "No hostiles. The allotments are empty. The empty is the good. The good is the empty."
+      ],
+      "recommendations": [
+        "Solo mission, 2-hour window. Petr knows the soil. The soil is Petr's. The Petr is the soil's. Do not send others — the soil assessment is the farmer's. The farmer is the assessment.",
+        "If the shed soil is clean, build the cold frame against the south wall. The south wall is the warm. The warm is the south. The south remembers the sun. The sun is the south. The south is the wall.",
+        "Plant the seed potatoes against the season. The season is not the season. The ground is workable. The ground is the calendar. The calendar is the ground."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "allotments",
+        "cold_frame",
+        "soil",
+        "petr",
+        "greenhouse",
+        "mold",
+        "planting"
+      ]
+    },
+    {
+      "brief_id": "brief_07_substation_recon",
+      "day": 50,
+      "author": "the_electrician",
+      "reviewed_by": "the_captain",
+      "objective": "Reconnoiter Substation Omega for long-term power assessment. The substation is still live. The transformers hum. The hum is the grid. The grid does not know it is over. The grid feeds the relay. The relay feeds the air. The air is the radio.",
+      "route": "West approach via the service road. Road is buckled but passable. The substation fence is down in three places. Enter through the west gate. Check the railing — it was warm from current on Day 50. Grounded with a copper jumper.",
+      "distance_km": 5,
+      "estimated_duration_hours": 6,
+      "team_size": 2,
+      "team_requirements": [
+        "1 electrician (the electrician — the only one who understands the grid)",
+        "1 guard (security, the substation is exposed)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "insulated gloves (2)",
+        "multimeter (1)",
+        "lamp (1)",
+        "rope (10m)",
+        "copper jumper (1, spare, for re-grounding if needed)"
+      ],
+      "weather_forecast": "Clear, -18C, wind west 10 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.3,
+      "key_questions": [
+        "Is the substation still feeding the relay on the ridge?",
+        "Is the transformer load sustainable, or is the grid bleeding power into dead infrastructure?",
+        "Can the substation be repurposed to feed the shelter directly, bypassing the relay?"
+      ],
+      "success_criteria": [
+        "Assess the substation's current load and output",
+        "Map the grid connections — what is still live, what is dead",
+        "Assess the feasibility of routing power from the substation to the shelter"
+      ],
+      "risks": [
+        "The railing is live — do not touch without the jumper grounded. The jumper is the ground. The ground is the jumper. The railing is the current. The current is the railing.",
+        "The transformers are old. The hum is the proof they are alive. The hum is also the proof they are dying. The dying is the hum. The hum is the dying.",
+        "The grid is the unknown. The grid connects to things we cannot see. The seeing is the question. The question is the seeing."
+      ],
+      "recommendations": [
+        "2-person team, 6-hour window. The electrician is the only one who understands the grid. Do not send others. The others are the risk. The risk is the others.",
+        "Do not cut the power. The power is the relay. The relay is the air. The air is the radio. The radio is the only thing on the grid that is still on. The on is the reason. The reason is the on.",
+        "If the substation can feed the shelter, the shelter has power. The power is the lamp. The lamp is the power. The power is the stove. The stove is the power. The power is the pump. The pump is the power. The power is the shelter. The shelter is the power."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "substation",
+        "power",
+        "grid",
+        "electrician",
+        "relay",
+        "recon"
+      ]
+    },
+    {
+      "brief_id": "brief_08_radio_telescope",
+      "day": 41,
+      "author": "the_relay_operator",
+      "reviewed_by": "the_captain",
+      "objective": "Assess the radio telescope array for potential communication use. The array still has power. The control room is intact. The headphones work. The array is listening to nothing. If we had a signal to send, the array could send it.",
+      "route": "Approach via the service road. The dishes are too large and too still. Standing among them, you are the wrong scale. The sky above the dishes is not the sky you grew up under. It is the sky the dishes were built to hear. It is not listening back.",
+      "distance_km": 7,
+      "estimated_duration_hours": 10,
+      "team_size": 2,
+      "team_requirements": [
+        "1 relay operator (the relay operator — the only one who knows radio)",
+        "1 guard (security, the array is remote and exposed)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "headphones (1, from the control room)",
+        "lamp (1)",
+        "rope (15m)",
+        "food (10 hours, 2 people)",
+        "water (4L)"
+      ],
+      "weather_forecast": "Clear above ash, -28C, wind west 15 km/h, visibility excellent above 500m.",
+      "surface_dose_estimate_uSv_h": 0.1,
+      "key_questions": [
+        "Can the array transmit, or only receive?",
+        "Is the array's power source sustainable (solar? grid? unknown?)",
+        "Could the array be used to contact other regions beyond our radio range?"
+      ],
+      "success_criteria": [
+        "Assess the array's transmit capability",
+        "Assess the power source",
+        "Test a transmission if safe to do so"
+      ],
+      "risks": [
+        "The dishes — do not climb them. The ladders are rusted. The rust is the fall. The fall is the rust.",
+        "Wind exposure — the dishes focus the wind. It is colder between them than outside them. Dress for minus 35. The minus 35 is the dishes. The dishes are the minus 35.",
+        "The array is remote — 7km, 10-hour round trip. The distance is the cold. The cold is the distance."
+      ],
+      "recommendations": [
+        "2-person team, 10-hour window. The relay operator is the only one who understands the array. Do not send others. The others are the noise. The noise is the others.",
+        "If the array can transmit, we have a voice beyond the relay. The relay is the ridge. The ridge is the relay. The array is beyond the ridge. The beyond is the array. The array is the beyond.",
+        "Do not test a transmission without the captain's approval. The transmission is the signal. The signal is the beacon. The beacon is the invitation. The invitation is the risk. The risk is the invitation."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "telescope",
+        "array",
+        "transmit",
+        "relay_operator",
+        "communication",
+        "long_range"
+      ]
+    },
+    {
+      "brief_id": "brief_09_treaty_delivery",
+      "day": 1,
+      "author": "the_captain",
+      "reviewed_by": "the_council",
+      "objective": "Deliver the treaty pouch to Millhaven camp. The pouch is sealed. The pouch contains the terms and the ratification word. The pouch is the treaty. The treaty is the pouch. The courier is Bram. Bram runs clean.",
+      "route": "South road, 2 days outbound, 2 days return. The south road is the route. The route is the south road. The road is clear to the bridge. The bridge is the gap. The gap is the bridge. The bridge is passable on foot.",
+      "distance_km": 30,
+      "estimated_duration_hours": 48,
+      "team_size": 1,
+      "team_requirements": [
+        "1 courier (Bram — the only one who runs the road clean)"
+      ],
+      "equipment": [
+        "dosimeter (1)",
+        "mask (1)",
+        "lamp (1)",
+        "blade (1)",
+        "water (4L)",
+        "food (4 days, trail rations)",
+        "the sealed pouch (1, against the skin)"
+      ],
+      "weather_forecast": "Clear, -10C, wind south 5 km/h, visibility 400m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.2,
+      "key_questions": [
+        "Is the south road clear past the bridge?",
+        "Is Millhaven still occupied and expecting the courier?",
+        "Is the ratification word correct (confirmed by the captain before departure)?"
+      ],
+      "success_criteria": [
+        "Deliver the pouch to the captain at Millhaven",
+        "Return with the signed treaty within 4 days",
+        "5 days before overdue is declared"
+      ],
+      "risks": [
+        "The south road — clear to the bridge, unknown past. The unknown is the road. The road is the unknown.",
+        "The bridge — the gap is the width of a decision. The decision is the gap. The gap is the decision. Cross on foot. Do not look down.",
+        "The forest — if the road is blocked, the forest is the detour. The forest is the unknown. The unknown is the forest. The forest adds a day. The day is the forest."
+      ],
+      "recommendations": [
+        "Solo mission, 4-day window. Bram is the courier. The courier is Bram. Do not send a team — a team is noise. The noise is the risk. The risk is the noise.",
+        "The pouch is against the skin. The skin is the pouch. The pouch is the treaty. The treaty is the skin. Do not remove the pouch. Do not open the pouch. The pouch is sealed. The sealed is the pouch.",
+        "If the road is blocked, take the forest. The forest adds a day. The day is the cost. The cost is the day. The treaty is late but the treaty is the treaty. The late is the cost. The cost is the late."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "courier",
+        "treaty",
+        "bram",
+        "millhaven",
+        "south_road",
+        "solo"
+      ]
+    },
+    {
+      "brief_id": "brief_10_trade_lock_gate",
+      "day": 25,
+      "author": "the_quartermaster",
+      "reviewed_by": "the_captain",
+      "objective": "Trade lamp oil for water at Lock Gate Four. The hydro barons control the lock. The barons meter the water. The meter is the law. The law is the meter. The rate is 2 litres of oil per 20 litres of water.",
+      "route": "West approach via the canal path. The path is clear. The lock is 3km west. The toll house is the trade point. The toll house is neutral ground. Trade only. No weapons. No fights.",
+      "distance_km": 3,
+      "estimated_duration_hours": 4,
+      "team_size": 2,
+      "team_requirements": [
+        "1 quartermaster (Yelena — the only one who knows the count)",
+        "1 guard (security, the barons' guard is armed)"
+      ],
+      "equipment": [
+        "lamp oil (20L, in 4 containers)",
+        "water containers (4, 20L each, empty)",
+        "dosimeters (2)",
+        "masks (2)",
+        "rope (5m)"
+      ],
+      "weather_forecast": "Overcast, -15C, wind west 10 km/h, visibility 250m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.3,
+      "key_questions": [
+        "Is the rate still 2 litres per 20, or has the barons raised it again?",
+        "Is the water clean (the barons filter, but the aquifer is dropping)?",
+        "Are the barons' guards cooperative or hostile?"
+      ],
+      "success_criteria": [
+        "Trade 20L lamp oil for 200L water",
+        "Return within 4 hours",
+        "Do not argue the rate. The rate is the rate."
+      ],
+      "risks": [
+        "The barons' guard — armed, professional. Do not test them. The testing is the risk. The risk is the testing.",
+        "The water — the barons filter, but the aquifer is dropping. The dropping is the quality. The quality is the dropping. Test the water before drinking.",
+        "The toll house — neutral ground, but neutral is the barons' neutral. The neutral is not ours. The neutral is the barons'."
+      ],
+      "recommendations": [
+        "2-person team, 4-hour window. Yelena is the quartermaster. The quartermaster is the count. The count is the trade. The trade is the count. Do not send others — the others do not know the count.",
+        "Do not argue the rate. The rate is the rate. The barons do not negotiate. The barons meter. The meter is the law. The law is the meter. Pay the rate. The rate is the water. The water is the rate.",
+        "Test the water before drinking. The barons filter, but the filter is the barons'. The barons' filter is the barons' water. The water is the barons'. Test the water. The test is the water. The water is the test."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "trade",
+        "water",
+        "lock_gate",
+        "hydro_barons",
+        "yelena",
+        "oil_for_water"
+      ]
+    },
+    {
+      "brief_id": "brief_11_rescue_sick_child",
+      "day": 18,
+      "author": "the_captain",
+      "reviewed_by": "the_council",
+      "objective": "Recover a sick child found at a doorway on the south road. The child is alone, coughing, fevered. The child is old enough to speak but does not — points to a dark house, says one name. The child is the mission. The mission is the child.",
+      "route": "South approach via the road. The child is at the third house past the crossroads. The house is dark. The child is in the doorway. The child is the landmark. The landmark is the child.",
+      "distance_km": 2,
+      "estimated_duration_hours": 3,
+      "team_size": 2,
+      "team_requirements": [
+        "1 medic (Anya — the child needs care immediately)",
+        "1 guard (security, the road is exposed)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2 — the cough is the hazard)",
+        "medical kit (basic, for the child)",
+        "blanket (1)",
+        "water (2L)",
+        "lamp (1)"
+      ],
+      "weather_forecast": "Overcast, -15C, wind south 10 km/h, visibility 200m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.2,
+      "key_questions": [
+        "Is the child contagious? (The cough is the question. The question is the cough.)",
+        "Is the named adult in the dark house alive?",
+        "Can the child be carried back to the shelter clinic?"
+      ],
+      "success_criteria": [
+        "Recover the child and bring to the shelter clinic",
+        "Search the dark house for the named adult if safe",
+        "Do not enter the dark house without a lamp and a mask"
+      ],
+      "risks": [
+        "The cough — the child is coughing. The cough is the hazard. The mask is the medicine. The medicine is the mask. The child needs the mask too if we have one.",
+        "The dark house — the house is dark. The dark is the unknown. The unknown is the dark. Do not enter without the lamp. The lamp is the seeing. The seeing is the lamp.",
+        "The road — exposed, 2km. The child is the weight. The weight is the child. The carrying is the 2km. The 2km is the carrying."
+      ],
+      "recommendations": [
+        "2-person team, 3-hour window. Anya is the medic. The medic is the child. The child is the medic. The carrying is the 2km. The 2km is the carrying.",
+        "Carry the child. Do not let the child walk. The walking is the coughing. The coughing is the walking. The carrying is the rest. The rest is the carrying.",
+        "If the named adult is in the dark house and alive, bring them too. If the named adult is not alive, bring the child. The child is the mission. The mission is the child. The adult is the secondary. The secondary is the adult."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "rescue",
+        "child",
+        "sick",
+        "anya",
+        "south_road",
+        "cough"
+      ]
+    },
+    {
+      "brief_id": "brief_12_geothermal_assessment",
+      "day": 31,
+      "author": "the_engineer",
+      "reviewed_by": "the_captain",
+      "objective": "Assess the geothermal vent shaft for potential heat extraction. The vent is hot. The steam is the heat. The heat is the vent. The vent could be piped. The piping is the question. The question is the piping.",
+      "route": "East approach via the maintenance road. Road is cracked from heat. The vent grate shimmers — too hot to touch. Stay back from the grate. The CO2 is the danger. The lamp is the canary. The canary is the lamp.",
+      "distance_km": 4,
+      "estimated_duration_hours": 6,
+      "team_size": 2,
+      "team_requirements": [
+        "1 engineer (Tomas — heat assessment, piping knowledge)",
+        "1 mechanic (pipe fitting, mechanical assessment)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "insulated gloves (2)",
+        "lamp (1, for CO2 testing)",
+        "rope (15m)",
+        "food (6 hours, 2 people)",
+        "water (4L)"
+      ],
+      "weather_forecast": "Clear, -20C, wind east 10 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.4,
+      "key_questions": [
+        "Is the steam pressure sufficient for heat extraction?",
+        "Is the CO2 level safe for prolonged work near the vent?",
+        "Can the steam be piped to the shelter (4km) without excessive heat loss?"
+      ],
+      "success_criteria": [
+        "Assess steam pressure and flow rate",
+        "Assess CO2 levels at various distances from the vent",
+        "Assess the feasibility of a 4km insulated pipe run"
+      ],
+      "risks": [
+        "CO2 — the vent pools carbon dioxide. The lamp gutters near the vent. If the lamp goes out, leave immediately. The leaving is the lamp. The lamp is the leaving.",
+        "Heat — the grate is too hot to touch. The touch is the burn. The burn is the touch. Insulated gloves are the minimum. The minimum is the gloves.",
+        "Sulfur — the smell masks the CO2. The smell is the lie. The lie is the smell. The lamp is the truth. The truth is the lamp."
+      ],
+      "recommendations": [
+        "2-person team, 6-hour window. Tomas is the engineer. The engineer is the heat. The heat is the engineer. The mechanic is the pipe. The pipe is the mechanic.",
+        "If the steam is sufficient, the shelter has heat. The heat is the stove. The stove is the heat. The heat is the shelter. The shelter is the heat. The fuel is the question. The question is the fuel. If the heat is the vent, the fuel is the vent. The vent is the fuel. The fuel is the vent.",
+        "Do not approach the vent without the lamp. The lamp is the CO2 test. The test is the lamp. If the lamp gutters, leave. The leaving is the test. The test is the leaving."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "geothermal",
+        "vent",
+        "steam",
+        "heat",
+        "tomas",
+        "co2",
+        "assessment"
+      ]
+    },
+    {
+      "brief_id": "brief_13_observatory_recon",
+      "day": 68,
+      "author": "the_teacher",
+      "reviewed_by": "the_captain",
+      "objective": "Reconnoiter the observatory dome for potential use as a weather station and star-count post. The dome is open — the shutter is stuck. The instruments are dark. The dome still turns. The stars are fewer. The fewer is the ash. The ash is the fewer.",
+      "route": "Ridge road approach. The road is steep. The dome is at the summit. The summit is the wind. The wind is the summit.",
+      "distance_km": 6,
+      "estimated_duration_hours": 8,
+      "team_size": 2,
+      "team_requirements": [
+        "1 teacher (Suki — astronomical knowledge, star count)",
+        "1 guard (security, the summit is exposed)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "lamp (1)",
+        "star chart (1, pre-war, for comparison)",
+        "notebook (1, for star count)",
+        "food (8 hours, 2 people)",
+        "water (4L)"
+      ],
+      "weather_forecast": "Clear above ash, -25C, wind west 20 km/h, visibility excellent above 500m.",
+      "surface_dose_estimate_uSv_h": 0.1,
+      "key_questions": [
+        "Is the dome habitable (shutter stuck open — weather ingress)?",
+        "Can the motor be restarted safely, or is it too degraded?",
+        "Is the observatory useful as a weather post even with the instruments dark?"
+      ],
+      "success_criteria": [
+        "Assess the dome's structural condition",
+        "Count stars in the north quadrant for comparison with the relay operator's count",
+        "Assess the dome as a potential weather station"
+      ],
+      "risks": [
+        "The shutter is stuck open — snow and rain enter. The floor is wet. The wet is the shutter. The shutter is the wet.",
+        "The motor — do not touch it. It has been turning for years without maintenance. It may not restart if stopped. The stopping is the risk. The risk is the stopping.",
+        "Wind — the summit is the wind. The wind is the summit. Dress for minus 35. The minus 35 is the wind. The wind is the minus 35."
+      ],
+      "recommendations": [
+        "2-person team, 8-hour window. Suki is the teacher. The teacher is the stars. The stars are the teacher. The guard is the wind. The wind is the guard.",
+        "Count the stars. The stars are fewer. The fewer is the ash. The ash is the fewer. The count is the record. The record is the count. The count is the proof the sky is changing. The changing is the count.",
+        "If the dome is habitable, it is a weather post. The weather post is the dome. The dome is the weather post. The dome is the highest point. The highest point is the seeing. The seeing is the highest point."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "observatory",
+        "dome",
+        "stars",
+        "weather",
+        "suki",
+        "summit",
+        "recon"
+      ]
+    },
+    {
+      "brief_id": "brief_14_debrief_pharmacy",
+      "day": 13,
+      "author": "anya",
+      "reviewed_by": "the_quartermaster",
+      "objective": "Return debrief: pharmacy expedition, Day 12. The pharmacy was assessed. The front cabinets had sealed stock. The back room was not entered. The medicine is recovered. The back room is the warning.",
+      "route": "N/A — debrief",
+      "distance_km": 3,
+      "estimated_duration_hours": 4,
+      "team_size": 2,
+      "team_requirements": [
+        "N/A"
+      ],
+      "equipment": [
+        "N/A"
+      ],
+      "weather_forecast": "N/A",
+      "surface_dose_estimate_uSv_h": 0.3,
+      "key_questions": [
+        "Did we recover enough? (4 courses broad-spectrum, 1 bottle iodine, 3 rolls gauze, 1 pair surgical scissors — yes, for now)",
+        "Is the pharmacy worth a second trip? (The front cabinets are picked. The back room is off-limits. The dental surgery is the next option.)",
+        "Is the child's cough the same as the Ward B cluster? (Unknown. The doctor will assess.)"
+      ],
+      "success_criteria": [
+        "4 courses broad-spectrum recovered (sealed, oral, viable)",
+        "1 bottle iodine recovered (half full, usable)",
+        "3 rolls gauze, 1 pair surgical scissors",
+        "Back room not entered — decay, biological hazard"
+      ],
+      "risks": [
+        "The back room — the decay is the sweet smell. The sweet is the decay. The decay is the sweet. Do not enter. The not-entering is the medicine. The medicine is the not-entering.",
+        "The feral dogs — we heard them on the third floor. We did not ascend. The not-ascending is the safety. The safety is the not-ascending.",
+        "The dental surgery — two blocks north. The dentists had clean rooms. The clean rooms may have stockpiled antibiotics. The antibiotics are the next trip. The next trip is the antibiotics."
+      ],
+      "recommendations": [
+        "The pharmacy is done. The front cabinets are picked. The back room is off-limits. The dental surgery is the next. The next is the dental. The dental is the next.",
+        "The iodine is half full. The half is the usable. The usable is the half. The iodine is the medicine the quartermaster did not name. The not-naming is the protection. The protection is the not-naming.",
+        "The child's cough — the doctor will assess. The assessment is the doctor. The doctor is the assessment. If the cough is the Ward B cluster, the clinic is the quarantine. The quarantine is the clinic. If the cough is not the cluster, the child is the clinic. The clinic is the child."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "debrief",
+        "pharmacy",
+        "medicine",
+        "anya",
+        "dental_surgery",
+        "next_trip"
+      ]
+    },
+    {
+      "brief_id": "brief_15_debrief_convoy",
+      "day": 59,
+      "author": "mira",
+      "reviewed_by": "the_quartermaster",
+      "objective": "Return debrief: convoy yard fuel recovery, Day 58. 40 litres of fuel recovered from three vehicles. The fuel is old. The fuel burns in the lamp. The lamp is the test. The test is the lamp. The fuel burns. The driver's letter was recovered. The letter is sealed. The letter is for the Overlay.",
+      "route": "N/A — debrief",
+      "distance_km": 6,
+      "estimated_duration_hours": 8,
+      "team_size": 2,
+      "team_requirements": [
+        "N/A"
+      ],
+      "equipment": [
+        "N/A"
+      ],
+      "weather_forecast": "N/A",
+      "surface_dose_estimate_uSv_h": 0.4,
+      "key_questions": [
+        "Is the fuel viable for the generator? (It burns in the lamp. The lamp is the test. The test is the lamp. The engineer will test in the generator.)",
+        "Is the convoy yard worth a second trip? (3 vehicles remain with fuel. The fuel is old. The old is the question. The question is the old.)",
+        "Was the driver's letter delivered to the Overlay? (Yes. The Overlay does not open letters. The Overlay routes letters. The routing is the Overlay.)"
+      ],
+      "success_criteria": [
+        "40 litres of fuel recovered (old, burns in lamp, generator test pending)",
+        "1 map recovered (pre-war, route to coast marked in red — delivered to the quartermaster)",
+        "1 letter recovered (sealed, from driver's pocket — delivered to the Overlay)",
+        "4 blankets recovered (mildewed, drying at the shelter)"
+      ],
+      "risks": [
+        "The fuel is old — it burns in the lamp but may not burn in the generator. The generator is the test. The test is the generator. The engineer will test. The test is the engineer.",
+        "The convoy yard is exposed — no cover. A second trip is possible but the weather is the risk. The risk is the weather. The weather is the risk.",
+        "The driver — the driver is bones. The bones are the driver. The letter is the driver's last word. The last word is the letter. The Overlay has the letter. The letter has the Overlay."
+      ],
+      "recommendations": [
+        "The fuel will be tested in the generator. If it burns, the generator has 40 more litres. The 40 litres is the time. The time is the 40 litres. If it does not burn, the fuel is old oil. The old oil is not fuel. The fuel is the fuel. The old oil is the old oil.",
+        "A second trip to the convoy yard is possible. 3 vehicles remain. The fuel is old. The old is the question. The question is the old. The second trip is the weather. The weather is the second trip.",
+        "The map — the route to the coast is marked in red. The coast is 300km. The convoy had fuel for 200. The 200 is the 100 short. The 100 short is the coast. The coast is the 100 short. The map is the question. The question is the map. The coast is the answer. The answer is the coast. The coast is the 300km. The 300km is the question."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "debrief",
+        "convoy",
+        "fuel",
+        "mira",
+        "letter",
+        "overlay",
+        "map",
+        "coast"
+      ]
+    },
+    {
+      "brief_id": "brief_16_cold_store_trade",
+      "day": 16,
+      "author": "the_quartermaster",
+      "reviewed_by": "the_captain",
+      "objective": "Investigate the cold store at Atlantic. The door is sealed with a chain that has been cut and re-chained. Someone is keeping this cold. Someone is keeping something cold. Leave a trade offer. Do not cut the chain.",
+      "route": "South approach via the old delivery road. Road clear. Cold store door is sealed with a fresh chain. The compressor is running. Do not enter. Knock. Leave a note.",
+      "distance_km": 3,
+      "estimated_duration_hours": 3,
+      "team_size": 1,
+      "team_requirements": [
+        "1 scavenger (Mira — observation, trade experience)"
+      ],
+      "equipment": [
+        "dosimeter (1)",
+        "mask (1)",
+        "lamp (1)",
+        "trade note (1, pinned to the chain)",
+        "salt (500g, trade offer)"
+      ],
+      "weather_forecast": "Overcast, -12C, wind south 5 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.2,
+      "key_questions": [
+        "Who is keeping the cold store, and what are they keeping cold?",
+        "Will they respond to a trade offer?",
+        "Is the compressor sustainable (fuel source unknown)?"
+      ],
+      "success_criteria": [
+        "Leave a trade offer pinned to the chain (salt for information)",
+        "Do not enter. Do not cut the chain. The chain is the respect. The respect is the chain.",
+        "Return in 7 days to check for a response"
+      ],
+      "risks": [
+        "The chain — fresh, cut and re-chained. The re-chaining is the claim. The claim is the re-chaining. Do not cut. The cutting is the disrespect. The disrespect is the cutting.",
+        "The compressor — running, audible. The fuel source is unknown. The unknown is the compressor. The compressor is the unknown.",
+        "The occupant — unknown. The unknown is the occupant. The occupant is the unknown. Do not confront. The confronting is the risk. The risk is the confronting."
+      ],
+      "recommendations": [
+        "Solo mission, 3-hour window. Mira is the scavenger. The scavenger is the observation. The observation is the scavenger. Do not enter. The not-entering is the mission. The mission is the not-entering.",
+        "Leave salt and a note. The salt is the offer. The offer is the salt. The note is: 'We have salt. We want to know what is being kept cold. We mean no harm. We will return in 7 days.' The note is the respect. The respect is the note.",
+        "Return in 7 days. If the salt is taken and a response is left, we have a trade partner. If the salt is taken and no response, we have a thief. If the salt is not taken, we have a mystery. The mystery is the cold. The cold is the mystery."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "cold_store",
+        "trade",
+        "observation",
+        "mira",
+        "chain",
+        "mystery"
+      ]
+    },
+    {
+      "brief_id": "brief_17_ash_woodland_hunt",
+      "day": 25,
+      "author": "the_hunter",
+      "reviewed_by": "the_captain",
+      "objective": "Assess the ash woodland for game. The woodland is recovering. New growth at the base of the dead trees. Deer tracks in the ash — fresh. The deer are returning. The deer are the seed stock. Do not hunt the deer yet. The yet is the question. The question is the yet.",
+      "route": "East approach via the forest track. Track is clear. The woodland is 3km east. The stream runs through the centre. The stream is the water. The water is the stream.",
+      "distance_km": 3,
+      "estimated_duration_hours": 4,
+      "team_size": 1,
+      "team_requirements": [
+        "1 hunter (the hunter — the only one who reads tracks)"
+      ],
+      "equipment": [
+        "dosimeter (1)",
+        "mask (1)",
+        "lamp (1)",
+        "bow (1, for assessment, not hunting)",
+        "notebook (1, for track count)"
+      ],
+      "weather_forecast": "Clear, -18C, wind east 5 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.1,
+      "key_questions": [
+        "How many deer are in the woodland? (The tracks will tell. The tell is the tracks.)",
+        "Is the stream water clean and drinkable?",
+        "Is the woodland safe for a future hunting expedition?"
+      ],
+      "success_criteria": [
+        "Count the deer tracks — assess the population",
+        "Test the stream water",
+        "Map the woodland for a future hunting expedition"
+      ],
+      "risks": [
+        "The deer — do not hunt. The deer are the seed stock. The seed stock is the deer. The hunting is the future. The future is the hunting. The yet is the not-now. The not-now is the yet.",
+        "The stream — the water is clear and cold. The clear is the clean. The clean is the clear. Test before drinking. The test is the water. The water is the test.",
+        "The woodland — recovering. The recovery is the growth. The growth is the recovery. The new growth is the proof. The proof is the new growth."
+      ],
+      "recommendations": [
+        "Solo mission, 4-hour window. The hunter is the only one who reads tracks. The tracks are the hunter. The hunter is the tracks. Do not send others — the others are the noise. The noise is the others.",
+        "Do not hunt the deer. The deer are the seed stock. The seed stock is the future. The future is the seed stock. The hunting is the later. The later is the hunting. The yet is the patience. The patience is the yet.",
+        "If the stream is clean, mark it on the map. The map is the water. The water is the map. The stream is the life. The life is the stream."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "ash_woodland",
+        "deer",
+        "hunt",
+        "stream",
+        "hunter",
+        "assessment",
+        "seed_stock"
+      ]
+    },
+    {
+      "brief_id": "brief_18_apiary_assessment",
+      "day": 17,
+      "author": "the_farmer",
+      "reviewed_by": "the_quartermaster",
+      "objective": "Assess the apiary rows for honey production and bee health. Three hives still active. The bees are working the clover. The clover is the first flower. The first flower is the bees. The bees are the first flower.",
+      "route": "South approach via the lane. The apiary is 1km south. The hives are in rows. The rows are the hives. The hives are the rows.",
+      "distance_km": 1,
+      "estimated_duration_hours": 2,
+      "team_size": 1,
+      "team_requirements": [
+        "1 farmer (Petr — the only one who knows the bees)"
+      ],
+      "equipment": [
+        "dosimeter (1)",
+        "mask (1)",
+        "smoke pot (1, for hive approach)",
+        "lamp (1)",
+        "jars (2, for honey sample)"
+      ],
+      "weather_forecast": "Overcast, -10C, wind south 5 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.1,
+      "key_questions": [
+        "Are the three active hives healthy and producing?",
+        "Are the four dead hives harvestable (capped honey)?",
+        "Is the clover sufficient to sustain the bees through the season?"
+      ],
+      "success_criteria": [
+        "Assess the three active hives — bee count, honey production",
+        "Harvest capped honey from the dead hives (the bees died of cold, not ash — the honey is good)",
+        "Assess the clover coverage for sustained bee foraging"
+      ],
+      "risks": [
+        "The bees — active, defensive. Approach slowly. The slowly is the respect. The respect is the slowly. Smoke if needed. The smoke is the calm. The calm is the smoke.",
+        "The dead hives — the bees died of the cold. The cold is the death. The death is the cold. The honey is capped. The capped is the honey. The honey is good. The good is the honey.",
+        "The clover — the first flower. The first flower is the clover. The clover is the bees. The bees are the clover. The clover is the proof the ground is healing. The healing is the clover."
+      ],
+      "recommendations": [
+        "Solo mission, 2-hour window. Petr is the farmer. The farmer is the bees. The bees are the farmer. Do not send others — the others are the stings. The stings are the others.",
+        "Take honey only from the dead hives. The dead hives are the honey. The honey is the dead hives. Do not disturb the living hives. The living hives are the bees. The bees are the living hives. The bees are making more bees. The more bees are the future. The future is the more bees.",
+        "The honey is the medicine. The medicine is the honey. The honey is the only medicine that does not require a prescription. The prescription is the honey. The honey is the prescription."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "apiary",
+        "bees",
+        "honey",
+        "petr",
+        "clover",
+        "assessment"
+      ]
+    },
+    {
+      "brief_id": "brief_19_cave_spring_recon",
+      "day": 72,
+      "author": "the_teacher",
+      "reviewed_by": "the_captain",
+      "objective": "Reconnoiter the cave spring for water source assessment. The cave has a pool. The pool has life — small, pale, eyeless things swimming in the dark. The fish are the proof. The proof is the fish. The water is clean. The fish are the proof the water is clean.",
+      "route": "Approach via the ridge trail. Trail is steep. The cave is at the base of the ridge. The cave is the dark. The dark is the cave. Bring two lamps. The two is the safety. The safety is the two.",
+      "distance_km": 5,
+      "estimated_duration_hours": 6,
+      "team_size": 2,
+      "team_requirements": [
+        "1 teacher (Suki — biological assessment, cave fish identification)",
+        "1 guard (security, the cave is remote and dark)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "lamps (2 — the two is the safety)",
+        "water test kit (1)",
+        "rope (15m)",
+        "food (6 hours, 2 people)",
+        "water (4L)"
+      ],
+      "weather_forecast": "Clear, -22C, wind north 10 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.1,
+      "key_questions": [
+        "Is the cave spring water clean and drinkable?",
+        "Are the cave fish an indicator of water quality?",
+        "Can the cave spring be used as a backup water source?"
+      ],
+      "success_criteria": [
+        "Test the cave spring water",
+        "Document the cave fish (sketch, count)",
+        "Assess the spring's flow rate and reliability"
+      ],
+      "risks": [
+        "The cave — dark, wet, slippery. The slippery is the dark. The dark is the slippery. Two lamps. The two is the safety. The safety is the two. One lamp is the risk. The risk is the one.",
+        "The pool — the fish are alive. The alive is the proof. The proof is the alive. Do not disturb the pool. The pool is the fish. The fish are the pool. Take water from the stream outside, not the pool. The pool is the fish's.",
+        "The cave — remote, 5km, 6-hour round trip. The distance is the dark. The dark is the distance."
+      ],
+      "recommendations": [
+        "2-person team, 6-hour window. Suki is the teacher. The teacher is the fish. The fish are the teacher. The guard is the dark. The dark is the guard.",
+        "Take water from the stream outside the cave, not the pool. The pool is the fish. The fish are the pool. The fish have been here since before. The before is the fish. The fish are the before. The fish will be here after. The after is the fish.",
+        "If the water is clean, the cave spring is a backup. The backup is the cave. The cave is the backup. The artesian is the primary. The primary is the artesian. The cave is the secondary. The secondary is the cave. The two is the safety. The safety is the two."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "cave",
+        "spring",
+        "water",
+        "fish",
+        "suki",
+        "recon",
+        "backup"
+      ]
+    },
+    {
+      "brief_id": "brief_20_debrief_seed_vault",
+      "day": 62,
+      "author": "suki",
+      "reviewed_by": "the_quartermaster",
+      "objective": "Return debrief: seed vault expedition, Day 61. 47 varieties found, all labelled, all viable per cold test. 10 varieties sampled (10 seeds each, 100 seeds total). The vault is the spring. The spring is in the vault. The vault is for the future. The future is the vault.",
+      "route": "N/A — debrief",
+      "distance_km": 8,
+      "estimated_duration_hours": 12,
+      "team_size": 4,
+      "team_requirements": [
+        "N/A"
+      ],
+      "equipment": [
+        "N/A"
+      ],
+      "weather_forecast": "N/A",
+      "surface_dose_estimate_uSv_h": 0.1,
+      "key_questions": [
+        "Are the 10 sampled varieties suitable for the cold frame and the allotments? (Petr will assess. The assessment is Petr. Petr is the assessment.)",
+        "Is the vault's cold chain still functional for long-term storage? (Yes. The vault is cold. The cold is the vault. The cold chain is the vault. The vault is the cold chain.)",
+        "Should we return for more varieties? (Yes, in the spring. The spring is the return. The return is the spring.)"
+      ],
+      "success_criteria": [
+        "10 varieties sampled (100 seeds total, a portion of each)",
+        "Vault inventory documented (47 varieties, all labelled)",
+        "Vault cold chain confirmed functional (the vault is cold)",
+        "1 maintenance logbook recovered (pre-war, last entry Exchange-3Y)"
+      ],
+      "risks": [
+        "The vault is cold — the cold chain is functional. The functional is the cold. The cold is the functional. The vault is the spring. The spring is the vault.",
+        "The seeds are viable — the cold test confirmed. The confirmed is the viable. The viable is the confirmed. The seeds are the spring. The spring is the seeds.",
+        "The vault is remote — 8km, 12-hour round trip. The distance is the cost. The cost is the distance. The seeds are worth the cost. The cost is the seeds."
+      ],
+      "recommendations": [
+        "The 10 varieties will be assessed by Petr. Petr is the soil. The soil is Petr. The assessment is the plan. The plan is the assessment. The seeds are the plan. The plan is the seeds.",
+        "Return in the spring for more varieties. The spring is the return. The return is the spring. The vault is for the future. The future is the vault. Do not deplete the vault. The vault is the spring. The spring is the vault.",
+        "The maintenance logbook is pre-war. The logbook is the before. The before is the logbook. The logbook says the vault was built for the future. The future is the vault. The vault is the future. The logbook is the proof. The proof is the logbook."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "debrief",
+        "seed_vault",
+        "seeds",
+        "suki",
+        "petr",
+        "spring",
+        "47_varieties"
+      ]
+    },
+    {
+      "brief_id": "brief_21_garrison_trade",
+      "day": 35,
+      "author": "the_quartermaster",
+      "reviewed_by": "the_captain",
+      "objective": "Trade flour for fuel with the garrison. The garrison has fuel. The garrison wants flour. The flour is the trade. The trade is the flour. The fuel is the flour. The flour is the fuel. Do not tell the garrison the real number. The real number is the quartermaster's.",
+      "route": "East approach via the road. The garrison is 5km east. The checkpoint is the trade point. The checkpoint is the garrison's. The garrison's is the checkpoint.",
+      "distance_km": 5,
+      "estimated_duration_hours": 6,
+      "team_size": 2,
+      "team_requirements": [
+        "1 quartermaster (Yelena — the count)",
+        "1 guard (security, the garrison is armed)"
+      ],
+      "equipment": [
+        "flour (20kg, in 4 sacks)",
+        "fuel containers (4, 20L each, empty)",
+        "dosimeters (2)",
+        "masks (2)"
+      ],
+      "weather_forecast": "Clear, -20C, wind east 10 km/h, visibility 250m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.3,
+      "key_questions": [
+        "Will the garrison trade at the agreed rate (20kg flour for 40L fuel)?",
+        "Is the garrison's fuel viable (old fuel, same as the convoy)?",
+        "Does the garrison know our real flour number? (The Overlay may have told them. The Overlay is the truth. The truth is the Overlay.)"
+      ],
+      "success_criteria": [
+        "Trade 20kg flour for 40L fuel",
+        "Return within 6 hours",
+        "Do not reveal the real number"
+      ],
+      "risks": [
+        "The garrison — armed, professional. Do not test. The testing is the risk.",
+        "The Overlay — may have told the garrison the real number. The number is the truth. The truth is the Overlay's. The Overlay's is the truth. If the garrison knows, the trade is harder. The harder is the knowing. The knowing is the harder.",
+        "The fuel — old, same as the convoy. Test before the generator. The generator is the test. The test is the generator."
+      ],
+      "recommendations": [
+        "2-person team, 6-hour window. Yelena is the quartermaster. The quartermaster is the count. The count is the trade. The trade is the count. Do not reveal the real number. The real number is the quartermaster's. The quartermaster's is the real number.",
+        "If the garrison knows the real number, the trade is harder. The harder is the knowing. The knowing is the harder. Do not confirm. Do not deny. The not-confirming is the trade. The trade is the not-confirming.",
+        "Test the fuel in the generator. The generator is the test. The test is the generator. If it burns, the fuel is fuel. If it does not burn, the fuel is old oil. The old oil is not fuel."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "trade",
+        "garrison",
+        "flour",
+        "fuel",
+        "yelena",
+        "overlay",
+        "real_number"
+      ]
+    },
+    {
+      "brief_id": "brief_22_ice_road_recon",
+      "day": 60,
+      "author": "the_captain",
+      "reviewed_by": "the_council",
+      "objective": "Assess the ice road at Lock Gate Four for winter trade route viability. The river is frozen. The ice road is the route. The route is the ice road. The ice is the road. The road is the ice.",
+      "route": "West approach via the canal path. The lock is 3km west. The ice road is marked with branches. The branches are the markers. The markers are the branches.",
+      "distance_km": 3,
+      "estimated_duration_hours": 3,
+      "team_size": 2,
+      "team_requirements": [
+        "1 guard (security, the ice is the risk)",
+        "1 mechanic (ice thickness assessment)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "ice probe (1, for thickness testing)",
+        "rope (15m)",
+        "lamp (1)"
+      ],
+      "weather_forecast": "Clear, -30C, wind north 5 km/h, visibility 400m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.2,
+      "key_questions": [
+        "Is the ice thick enough for foot traffic? (The probe will tell. The tell is the probe.)",
+        "Is the ice thick enough for a cart? (The cart is the question. The question is the cart.)",
+        "Is the ice road stable for the remainder of the winter?"
+      ],
+      "success_criteria": [
+        "Assess ice thickness at 5 points along the route",
+        "Mark any thin spots with new branches",
+        "Assess the ice road's viability for cart traffic"
+      ],
+      "risks": [
+        "The ice — the white ice is the shallow. The black ice is the deep. The deep is the black. The black is the deep. Walk on the white. Do not walk on the black. The black is the current. The current is the black.",
+        "The cold — minus 30. The 30 is the frostbite. The frostbite is the 30. Exposed skin warns once. The once is the warning. The warning is the once.",
+        "The ice road — marked with branches. The branches are the markers. The markers are the branches. If a branch is missing, the ice is thin. The thin is the missing. The missing is the thin."
+      ],
+      "recommendations": [
+        "2-person team, 3-hour window. The mechanic is the ice. The ice is the mechanic. The guard is the cold. The cold is the guard.",
+        "Walk on the white ice. Do not walk on the black ice. The white is the safe. The safe is the white. The black is the deep. The deep is the black. If the ice speaks, in any voice, leave. The voice is the ice. The ice is the voice.",
+        "If the ice is thick enough for a cart, the trade route is open. The trade route is the ice. The ice is the trade route. The cart is the trade. The trade is the cart. The ice is the reason. The reason is the ice."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "ice_road",
+        "lock_gate",
+        "winter",
+        "route",
+        "ice",
+        "assessment"
+      ]
+    },
+    {
+      "brief_id": "brief_23_borehole_heat",
+      "day": 39,
+      "author": "the_engineer",
+      "reviewed_by": "the_captain",
+      "objective": "Assess the geothermal borehole for heat extraction. The borehole hums. The steam is the heat. The heat is the borehole. The borehole could be piped. The piping is the question. The question is the piping. The shed is the shelter. The shelter is the shed.",
+      "route": "East approach via the access track. Track is passable. The borehole is 4km east. The wellhead is hot. The shed is beside the wellhead. The shed is the shelter. The shelter is the shed.",
+      "distance_km": 4,
+      "estimated_duration_hours": 5,
+      "team_size": 2,
+      "team_requirements": [
+        "1 engineer (Tomas — heat assessment)",
+        "1 mechanic (pipe fitting)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "insulated gloves (2)",
+        "lamp (1)",
+        "rope (10m)",
+        "food (5 hours, 2 people)",
+        "water (4L)"
+      ],
+      "weather_forecast": "Overcast, -22C, wind east 5 km/h, visibility 250m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.3,
+      "key_questions": [
+        "Is the borehole's steam pressure sufficient for heat extraction?",
+        "Is the shed habitable as a staging point?",
+        "Can the steam be piped to the shelter (4km)?"
+      ],
+      "success_criteria": [
+        "Assess steam pressure and flow rate",
+        "Assess the shed as a staging point",
+        "Assess the feasibility of a 4km pipe run"
+      ],
+      "risks": [
+        "The wellhead — hot to the touch. The touch is the burn. The burn is the touch. Insulated gloves. The gloves are the minimum.",
+        "The shed — someone was here recently. The dust on the bench is disturbed. The disturbed is the recent. The recent is the disturbed. The occupant left. The left is the occupant.",
+        "The steam — mineral smell, sulfur and salt. Not toxic at this concentration. The concentration is the smell. The smell is the concentration."
+      ],
+      "recommendations": [
+        "2-person team, 5-hour window. Tomas is the engineer. The engineer is the heat. The heat is the engineer. The mechanic is the pipe. The pipe is the mechanic.",
+        "If the steam is sufficient, the shelter has heat. The heat is the vent. The vent is the heat. The fuel is the question. The question is the fuel. If the heat is the borehole, the fuel is the borehole. The borehole is the fuel.",
+        "The shed is a staging point. The staging point is the shed. The shed is the shelter for the pipe team. The pipe team is the shed. The shed is the pipe team. The occupant left. The left is the shed. The shed is the left."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "borehole",
+        "geothermal",
+        "heat",
+        "steam",
+        "tomas",
+        "shed",
+        "assessment"
+      ]
+    },
+    {
+      "brief_id": "brief_24_munitions_avoid",
+      "day": 36,
+      "author": "the_veteran",
+      "reviewed_by": "the_captain",
+      "objective": "Mark the munitions site on the south road as contaminated and dangerous. The site is a crater pond. The UXO is the shell. The shell is the UXO. Do not approach the shell. Mark and leave. The leaving is the marking. The marking is the leaving.",
+      "route": "South approach via the highway. Highway is buckled. The munitions site is 5km south. The crater is the landmark. The landmark is the crater.",
+      "distance_km": 5,
+      "estimated_duration_hours": 6,
+      "team_size": 2,
+      "team_requirements": [
+        "1 veteran (the veteran — UXO identification)",
+        "1 guard (security, the road is exposed)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "flag markers (5, for the perimeter)",
+        "rope (20m, for the safe perimeter)",
+        "lamp (1)"
+      ],
+      "weather_forecast": "Clear, -18C, wind south 10 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.4,
+      "key_questions": [
+        "Is the unexploded shell still present? (Yes. The shell is the shell. The shell does not care how long it has been waiting.)",
+        "Is the crater pond water contaminated? (Yes. The green is the algae. The algae is the fertilizer runoff. The runoff is the exploded stores.)",
+        "Is the surrounding ground safe to walk? (The metal fragments are sharp. The sharp is the ground. The ground is the sharp.)"
+      ],
+      "success_criteria": [
+        "Mark the UXO site with flags at a 50m perimeter",
+        "Mark the site on the route map as contaminated and dangerous",
+        "Do not approach the shell. Do not touch the shell. The shell is the shell."
+      ],
+      "risks": [
+        "The shell — unexploded, half-buried, rusted. Do not approach. The approach is the risk. The risk is the approach. The shell does not care. The care is not the shell's.",
+        "The crater pond — green water. Do not drink. The green is the algae. The algae is the contamination. The contamination is the green.",
+        "The metal fragments — sharp, everywhere. Wear boots. The boots are the sharp. The sharp is the boots. The ground is the sharp. The sharp is the ground."
+      ],
+      "recommendations": [
+        "2-person team, 6-hour window. The veteran is the UXO. The UXO is the veteran. Do not approach the shell. The shell is the waiting. The waiting is the shell. Mark and leave. The leaving is the marking. The marking is the leaving.",
+        "Do not return to this site. The site is contaminated. The contaminated is the site. The shell is the waiting. The waiting is the shell. The shell does not care how long it has been waiting.",
+        "Mark the site on the route map. The map is the warning. The warning is the map. The map is for the others. The others are the map. The map is the not-approaching. The not-approaching is the map."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "munitions",
+        "uxo",
+        "crater",
+        "contamination",
+        "veteran",
+        "marking",
+        "avoid"
+      ]
+    },
+    {
+      "brief_id": "brief_25_debrief_cold_store",
+      "day": 23,
+      "author": "mira",
+      "reviewed_by": "the_quartermaster",
+      "objective": "Return debrief: cold store investigation, Day 16. The door is sealed with a fresh chain. The compressor is running. Did not enter. Left a trade note and salt. The salt is the offer. The offer is the salt. The note is the respect. The respect is the note.",
+      "route": "N/A — debrief",
+      "distance_km": 3,
+      "estimated_duration_hours": 3,
+      "team_size": 1,
+      "team_requirements": [
+        "N/A"
+      ],
+      "equipment": [
+        "N/A"
+      ],
+      "weather_forecast": "N/A",
+      "surface_dose_estimate_uSv_h": 0.2,
+      "key_questions": [
+        "Did the occupant take the salt? (Return in 7 days to check. The check is the 7 days. The 7 days is the check.)",
+        "Is the compressor still running? (The running is the occupant. The occupant is the running. If the compressor stops, the occupant is gone or the fuel is gone.)",
+        "What is being kept cold? (Unknown. The unknown is the cold. The cold is the unknown.)"
+      ],
+      "success_criteria": [
+        "Trade note left (pinned to the chain)",
+        "Salt left (500g, as trade offer)",
+        "Did not enter. Did not cut the chain. The chain is the respect.",
+        "Observed: compressor running, ammonia smell faint near the shed, no occupant visible"
+      ],
+      "risks": [
+        "The chain — fresh, re-chained. The re-chaining is the claim. The claim is the re-chaining. The chain is the respect. The respect is the chain.",
+        "The compressor — running. The running is the fuel. The fuel is the running. The fuel source is unknown. The unknown is the fuel.",
+        "The ammonia — faint, near the compressor shed. Possible leak. The leak is the ammonia. The ammonia is the leak. Do not investigate the leak without a mask."
+      ],
+      "recommendations": [
+        "Return in 7 days. The 7 days is the check. The check is the 7 days. If the salt is taken and a response is left, we have a trade partner. If the salt is taken and no response, we have a thief. If the salt is not taken, we have a mystery. The mystery is the cold. The cold is the mystery.",
+        "Do not enter the cold store. The not-entering is the respect. The respect is the not-entering. The chain is the door. The door is the chain. The chain is the claim. The claim is the chain.",
+        "If the compressor stops, the occupant is gone or the fuel is gone. The gone is the compressor. The compressor is the gone. If the compressor stops, the cold is gone. The gone is the cold. The cold is the gone. The cold store is the cold. The cold is the cold store."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "debrief",
+        "cold_store",
+        "trade",
+        "mira",
+        "chain",
+        "mystery",
+        "7_days"
+      ]
+    },
+    {
+      "brief_id": "brief_26_sump_cathedral_shelter",
+      "day": 66,
+      "author": "the_veteran",
+      "reviewed_by": "the_captain",
+      "objective": "Assess the sump cathedral as a potential shelter and water source. The cathedral is a cistern, vaulted, stone. Benches carved into the stone. A sound in the pillars — a choir or a pipe. The acoustics explain it, if you want them to. The water is clean. The benches are beds.",
+      "route": "Approach via the sub-level transit tunnel. Tunnel is dry, stable. The cathedral is at the end. The cathedral is the cistern. The cistern is the cathedral.",
+      "distance_km": 3,
+      "estimated_duration_hours": 4,
+      "team_size": 2,
+      "team_requirements": [
+        "1 veteran (the veteran — structural assessment)",
+        "1 medic (water testing)"
+      ],
+      "equipment": [
+        "dosimeters (2)",
+        "masks (2)",
+        "lamps (2)",
+        "water test kit (1)",
+        "rope (10m)"
+      ],
+      "weather_forecast": "Indoor assessment. Cathedral temperature 8C. Damp.",
+      "surface_dose_estimate_uSv_h": 0.1,
+      "key_questions": [
+        "Is the cistern water clean and drinkable?",
+        "Is the cathedral structurally sound for habitation?",
+        "What is the sound in the pillars? (The acoustics explain it. The acoustics are the explanation. The explanation is the acoustics.)"
+      ],
+      "success_criteria": [
+        "Test the cistern water",
+        "Assess the cathedral's structural condition",
+        "Assess the cathedral as a potential shelter"
+      ],
+      "risks": [
+        "The sound — a choir or a pipe. The acoustics are the explanation. The explanation is the acoustics. The faithful did not want the explanation. You may choose. The choosing is the sound. The sound is the choosing.",
+        "The water — the cistern still holds water. The water is the cathedral. The cathedral is the water. Test before drinking. The test is the water. The water is the test.",
+        "The floor — wet. The wet is the cistern. The cistern is the wet. The benches are beds. The beds are the benches. The wet is the floor. The floor is the wet."
+      ],
+      "recommendations": [
+        "2-person team, 4-hour window. The veteran is the structure. The structure is the veteran. The medic is the water. The water is the medic.",
+        "If the water is clean and the structure is sound, the cathedral is a shelter. The shelter is the cathedral. The cathedral is the shelter. The benches are the beds. The beds are the benches. The water is the life. The life is the water.",
+        "Leave the hymnal. Leave the candle. The cathedral is the faithful's. The cathedral is also ours. The two are not in conflict. The sound does not care which we choose. The choosing is the sound. The sound is the choosing."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "sump_cathedral",
+        "cistern",
+        "shelter",
+        "water",
+        "choir",
+        "acoustics",
+        "veteran"
+      ]
+    },
+    {
+      "brief_id": "brief_27_wild_wheat_survey",
+      "day": 44,
+      "author": "the_farmer",
+      "reviewed_by": "the_quartermaster",
+      "objective": "Survey the south field for volunteer wheat. The wheat is thin, scattered, but it is wheat. The wheat is growing without being planted. The wheat remembers. The remembering is the wheat. The wheat is the remembering.",
+      "route": "South approach via the field path. Path is clear. The south field is 2km south. The field is the wheat. The wheat is the field.",
+      "distance_km": 2,
+      "estimated_duration_hours": 3,
+      "team_size": 1,
+      "team_requirements": [
+        "1 farmer (Petr — the only one who knows the wheat)"
+      ],
+      "equipment": [
+        "dosimeter (1)",
+        "mask (1)",
+        "lamp (1)",
+        "soil test kit (1)",
+        "seed collection bag (1)"
+      ],
+      "weather_forecast": "Clear, -15C, wind south 5 km/h, visibility 300m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.1,
+      "key_questions": [
+        "Is the volunteer wheat viable for seed collection?",
+        "Is the soil improvable for a future planting?",
+        "Can the wheat be transplanted to the cold frame?"
+      ],
+      "success_criteria": [
+        "Collect wheat heads for seed",
+        "Assess the soil for improvement",
+        "Assess the wheat's viability for transplant"
+      ],
+      "risks": [
+        "The wheat — scattered, thin. The thin is the soil. The soil is the thin. The ash is the fertilizer. The ash is not enough. The not-enough is the ash.",
+        "The weeds — heavy competition. The wheat is losing. The losing is the weeds. The weeds are the losing. The wheat is still there. The there is the wheat.",
+        "No hostiles. The field is the field. The field is the wheat."
+      ],
+      "recommendations": [
+        "Solo mission, 3-hour window. Petr is the farmer. The farmer is the wheat. The wheat is the farmer. Do not send others — the others are the weeds. The weeds are the others.",
+        "Collect the wheat heads. The heads are the seed. The seed is the heads. The wheat remembers. The remembering is the wheat. The wheat is the remembering. The seed is the future. The future is the seed.",
+        "If the soil is improvable, bring the farmer's assessment to the quartermaster. The assessment is the plan. The plan is the assessment. The soil needs compost. The compost is the ash and the manure and the rot. The rot is the compost. The compost is the rot."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "wild_wheat",
+        "volunteer",
+        "south_field",
+        "petr",
+        "seed",
+        "soil"
+      ]
+    },
+    {
+      "brief_id": "brief_28_bridge_assessment",
+      "day": 1,
+      "author": "the_courier",
+      "reviewed_by": "the_captain",
+      "objective": "Assess bridge seven for crossing viability. The bridge is passable on foot and not passable on wheel. The gap is the width of a decision. The decision is the gap. The gap is the decision. The barricade is the history. The history is the barricade.",
+      "route": "The bridge is on the south road, 2km from the shelter. The bridge is the crossing. The crossing is the bridge.",
+      "distance_km": 2,
+      "estimated_duration_hours": 2,
+      "team_size": 1,
+      "team_requirements": [
+        "1 courier (Bram — the only one who runs the road)"
+      ],
+      "equipment": [
+        "dosimeter (1)",
+        "mask (1)",
+        "lamp (1)",
+        "rope (10m)"
+      ],
+      "weather_forecast": "Clear, -10C, wind south 5 km/h, visibility 400m. Ashfall light.",
+      "surface_dose_estimate_uSv_h": 0.2,
+      "key_questions": [
+        "Is the gap crossable on foot? (Yes. The gap is the width of a decision. The decision is the gap.)",
+        "Is the bridge structurally sound for repeated foot traffic?",
+        "Can the gap be bridged with a plank for light cart traffic?"
+      ],
+      "success_criteria": [
+        "Assess the gap — width, depth, edge stability",
+        "Assess the bridge structure — sound or failing",
+        "Assess the feasibility of a plank bridge for carts"
+      ],
+      "risks": [
+        "The gap — the width of a decision. The decision is the step. The step is the decision. Do not jump. The jumping is the fall. The fall is the jumping. Step across.",
+        "The barricade — the table and the fire pit from Day 21. The 21 is the barricade. The barricade is the 21. Do not move the table. The table is the history. The history is the table.",
+        "The river — below. Do not look down. The river is not what you are crossing. The crossing is the bridge. The bridge is the crossing."
+      ],
+      "recommendations": [
+        "Solo mission, 2-hour window. Bram is the courier. The courier is the bridge. The bridge is the courier. Do not send others — the others are the weight. The weight is the others.",
+        "The gap is crossable on foot. The foot is the gap. The gap is the foot. The cart is the question. The question is the cart. A plank could bridge the gap for a light cart. The plank is the bridge. The bridge is the plank.",
+        "Do not look down into the river. The river is not what you are crossing. The crossing is the bridge. The bridge is the crossing. The river is the below. The below is the river. The crossing is the above. The above is the crossing."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "bridge",
+        "assessment",
+        "bram",
+        "gap",
+        "crossing",
+        "cart"
+      ]
+    },
+    {
+      "brief_id": "brief_29_debrief_geothermal",
+      "day": 32,
+      "author": "tomas",
+      "reviewed_by": "the_captain",
+      "objective": "Return debrief: geothermal vent assessment, Day 31. The vent is hot. The steam is the heat. The CO2 is the danger. The lamp is the canary. The canary is the lamp. The steam could be piped. The piping is the question. The question is the piping.",
+      "route": "N/A — debrief",
+      "distance_km": 4,
+      "estimated_duration_hours": 6,
+      "team_size": 2,
+      "team_requirements": [
+        "N/A"
+      ],
+      "equipment": [
+        "N/A"
+      ],
+      "weather_forecast": "N/A",
+      "surface_dose_estimate_uSv_h": 0.4,
+      "key_questions": [
+        "Is the steam pressure sufficient? (Yes. The pressure is the steam. The steam is the pressure. The steam is sufficient for heat extraction.)",
+        "Is the CO2 safe for prolonged work? (No. The CO2 pools. The pooling is the CO2. The CO2 is the pooling. The lamp gutters at 5m from the vent. The 5m is the safe perimeter.)",
+        "Can the steam be piped to the shelter? (Yes, with insulated pipe. The pipe is the 4km. The 4km is the pipe. The pipe is the question. The question is the pipe.)"
+      ],
+      "success_criteria": [
+        "Steam pressure: sufficient for heat extraction",
+        "CO2: pools at the vent, lamp gutters at 5m, safe perimeter is 10m",
+        "Pipe run: 4km feasible with insulated pipe, heat loss estimated at 30% over 4km"
+      ],
+      "risks": [
+        "The CO2 — the lamp is the canary. The canary is the lamp. If the lamp gutters, leave. The leaving is the lamp. The lamp is the leaving. The safe perimeter is 10m. The 10m is the safe. The safe is the 10m.",
+        "The pipe — 4km. The 4km is the pipe. The pipe is the 4km. The heat loss is 30%. The 30% is the heat loss. The heat loss is the 30%. The 70% is the shelter. The shelter is the 70%.",
+        "The vent — the heat is the vent. The vent is the heat. The fuel is the vent. The vent is the fuel. If the heat is the vent, the fuel is the vent. The vent is the fuel. The fuel is the vent."
+      ],
+      "recommendations": [
+        "The steam is sufficient. The sufficient is the steam. The pipe is the next step. The next step is the pipe. The pipe is the 4km. The 4km is the pipe. The pipe is the plan. The plan is the pipe.",
+        "The CO2 is the danger. The danger is the CO2. The lamp is the canary. The canary is the lamp. Work at 10m from the vent. The 10m is the safe. The safe is the 10m. If the lamp gutters, leave. The leaving is the safe. The safe is the leaving.",
+        "If the pipe is built, the shelter has heat. The heat is the vent. The vent is the heat. The fuel is the vent. The vent is the fuel. The fuel is the question answered. The answered is the vent. The vent is the answered."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "debrief",
+        "geothermal",
+        "vent",
+        "steam",
+        "tomas",
+        "co2",
+        "pipe"
+      ]
+    },
+    {
+      "brief_id": "brief_30_final_rotation_debrief",
+      "day": 110,
+      "author": "the_captain",
+      "reviewed_by": "the_council",
+      "objective": "Final rotation debrief: all expeditions, Day 1 to Day 110. 30 expeditions planned. 28 completed. 2 overdue (the convoy second trip, the cold store second check). The 28 is the done. The done is the 28. The 2 is the question. The question is the 2.",
+      "route": "N/A — debrief",
+      "distance_km": 0,
+      "estimated_duration_hours": 0,
+      "team_size": 0,
+      "team_requirements": [
+        "N/A"
+      ],
+      "equipment": [
+        "N/A"
+      ],
+      "weather_forecast": "N/A",
+      "surface_dose_estimate_uSv_h": 0.0,
+      "key_questions": [
+        "Did we do enough? (The enough is the question. The question is the enough. The 28 is the done. The done is the 28. The 2 is the not-done. The not-done is the 2.)",
+        "What did we learn? (The math of survival. The cost of every kilometer. The kilometer is the cost. The cost is the kilometer.)",
+        "What is the next rotation? (The next is the spring. The spring is the next. The seeds are the spring. The spring is the seeds.)"
+      ],
+      "success_criteria": [
+        "28 expeditions completed (medicine, fuel, seeds, water, trade, recon, rescue, assessment)",
+        "2 overdue (convoy second trip — weather; cold store second check — 7-day window not yet elapsed)",
+        "0 lost (no expedition team lost. The 0 is the good. The good is the 0.)"
+      ],
+      "risks": [
+        "The 2 overdue — the convoy is the weather. The weather is the convoy. The cold store is the 7 days. The 7 days is the cold store. The 2 is the not-done. The not-done is the 2. The 2 is not the lost. The lost is the 0.",
+        "The 0 lost — the 0 is the good. The good is the 0. The 0 is the number the captain carries. The carrying is the 0. The 0 is the carrying. The 0 is the weight that is not. The not is the 0.",
+        "The math — the cost of every kilometer. The kilometer is the fuel. The fuel is the kilometer. The kilometer is the food. The food is the kilometer. The kilometer is the dose. The dose is the kilometer. The kilometer is the risk. The risk is the kilometer."
+      ],
+      "recommendations": [
+        "The rotation is the 28. The 28 is the rotation. The 2 is the question. The question is the 2. The 0 is the good. The good is the 0. The captain carries the 0. The 0 is the carrying. The carrying is the 0.",
+        "The next rotation is the spring. The spring is the next. The seeds are the spring. The spring is the seeds. The seeds are the vault. The vault is the seeds. The spring is the planting. The planting is the spring. The farmer is the spring. The spring is the farmer.",
+        "The math of survival is the cost of every kilometer. The kilometer is the fuel. The fuel is the kilometer. The kilometer is the food. The food is the the kilometer. The kilometer is the dose. The dose is the kilometer. The kilometer is the risk. The risk is the kilometer. The math is the survival. The survival is the math."
+      ],
+      "cross_refs": [],
+      "tags": [
+        "debrief",
+        "final",
+        "rotation",
+        "28_completed",
+        "2_overdue",
+        "0_lost",
+        "spring",
+        "math_of_survival"
+      ]
+    }
+  ]
+}
