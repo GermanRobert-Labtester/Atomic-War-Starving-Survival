@@ -106,7 +106,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void ScoreClampsAtCapAndFiresLegendOncePerDirection()
+        public void ScoreClampsAndLegendSettlesAtReconcileOncePerDirection()
         {
             var sys = Sys();
             var fired = new List<string>();
@@ -114,16 +114,18 @@ namespace Ashfall.Core.Tests
 
             sys.Resolve(Quest("quest_moral_cap_a", (250, 0)), 0, "", 1);
             Assert.Equal(MoralChoiceSystem.MaxScore, sys.MoralScore);
-            Assert.Contains(MoralChoiceSystem.EventLegendPositive, fired);
+            Assert.Empty(fired); // overflow never lands mid-scene
 
             sys.Resolve(Quest("quest_moral_cap_b", (250, 0)), 0, "", 2);
             Assert.Equal(MoralChoiceSystem.MaxScore, sys.MoralScore);
-            Assert.Single(fired.Where(e => e == MoralChoiceSystem.EventLegendPositive));
+            sys.Reconcile(3);
+            Assert.Equal(1, fired.Count(id => id == MoralChoiceSystem.EventLegendPositive));
 
-            sys.Resolve(Quest("quest_moral_cap_c", (-400, 0)), 0, "", 3);
-            sys.Resolve(Quest("quest_moral_cap_d", (-400, 0)), 0, "", 4);
+            sys.Resolve(Quest("quest_moral_cap_c", (-600, 0)), 0, "", 4);
+            sys.Resolve(Quest("quest_moral_cap_d", (-600, 0)), 0, "", 5);
             Assert.Equal(MoralChoiceSystem.MinScore, sys.MoralScore);
-            Assert.Single(fired.Where(e => e == MoralChoiceSystem.EventLegendNegative));
+            sys.Reconcile(6);
+            Assert.Equal(1, fired.Count(id => id == MoralChoiceSystem.EventLegendNegative));
         }
 
         [Fact]
@@ -187,11 +189,31 @@ namespace Ashfall.Core.Tests
             sys.Resolve(Quest("quest_moral_return", (250, 0)), 0, "", 6);
             sys.Reconcile(7);
 
-            // Insertion order: both VeryPositive events on entry, bounty on the
-            // fall to VeryEvil; the return crossing re-fires nothing.
+            // Insertion order: crossing Neutral -> VeryPositive settles the
+            // Positive contract plus both VeryPositive events; the fall to
+            // VeryEvil settles the bounty; the return crossing re-fires nothing.
             Assert.Equal(
-                new[] { MoralChoiceSystem.EventContractRaised, MoralChoiceSystem.EventPatrolDefense,
-                        MoralChoiceSystem.EventBountyIssued },
+                new[] { MoralChoiceSystem.EventContractTaken, MoralChoiceSystem.EventContractRaised,
+                        MoralChoiceSystem.EventPatrolDefense, MoralChoiceSystem.EventBountyIssued },
+                fired);
+        }
+
+        [Fact]
+        public void ReconcileFiresAllCrossedBandsOnBigJump()
+        {
+            var sys = Sys();
+            var fired = new List<string>();
+            sys.OnThresholdEventFired += fired.Add;
+
+            sys.Resolve(Quest("quest_moral_deep", (-150, 0)), 0, "", 1);
+            sys.Reconcile(2);
+            Assert.Equal(new[] { MoralChoiceSystem.EventBountyIssued }, fired);
+
+            sys.Resolve(Quest("quest_moral_swing", (250, 0)), 0, "", 3);
+            sys.Reconcile(4);
+            Assert.Equal(
+                new[] { MoralChoiceSystem.EventBountyIssued, MoralChoiceSystem.EventContractTaken,
+                        MoralChoiceSystem.EventContractRaised, MoralChoiceSystem.EventPatrolDefense },
                 fired);
         }
 
@@ -255,6 +277,58 @@ namespace Ashfall.Core.Tests
             Assert.Equal(MoralEndingKind.Warlord, MoralChoiceSystem.SelectEnding(-150, 45, 24));
             Assert.Equal(MoralEndingKind.Warlord, MoralChoiceSystem.SelectEnding(-150, 44, 25));
             Assert.Equal(MoralEndingKind.Storykeeper, MoralChoiceSystem.SelectEnding(-150, 45, 25));
+        }
+
+        [Fact]
+        public void ListenerAndConfidantThresholdsPinnedAtBoundary()
+        {
+            var sys = Sys();
+            sys.Resolve(Quest("quest_moral_em14", (0, 14)), 0, "", 1);
+            Assert.False(sys.IsListener);
+
+            sys.Resolve(Quest("quest_moral_em15", (0, 1)), 0, "", 2);
+            Assert.True(sys.IsListener);
+            Assert.False(sys.IsConfidant);
+
+            sys.Resolve(Quest("quest_moral_em29", (0, 14)), 0, "", 3);
+            Assert.False(sys.IsConfidant);
+
+            sys.Resolve(Quest("quest_moral_em30", (0, 1)), 0, "", 4);
+            Assert.True(sys.IsConfidant);
+        }
+
+        [Fact]
+        public void RestoreRejectsMismatchedSystemAndBadSchema()
+        {
+            var sys = Sys();
+            Assert.Throws<ArgumentException>(() =>
+                sys.RestoreState(new MoralChoiceState { systemId = "other_system", schemaVersion = 1 }));
+
+            var future = sys.CaptureState();
+            future.schemaVersion = 2;
+            Assert.Throws<NotSupportedException>(() => sys.RestoreState(future));
+
+            var malformed = sys.CaptureState();
+            malformed.schemaVersion = 0;
+            Assert.Throws<ArgumentException>(() => sys.RestoreState(malformed));
+        }
+
+        [Fact]
+        public void PendingLegendFlagsSurviveRoundTrip()
+        {
+            var sys = Sys();
+            sys.Resolve(Quest("quest_moral_overflow", (500, 0)), 0, "", 1);
+            Assert.Equal(MoralChoiceSystem.LegendPositiveFlag, sys.State.pendingLegendFlags);
+
+            var restored = Sys(99);
+            restored.RestoreState(sys.CaptureState());
+            Assert.Equal(MoralChoiceSystem.LegendPositiveFlag, restored.State.pendingLegendFlags);
+
+            var fired = new List<string>();
+            restored.OnThresholdEventFired += fired.Add;
+            restored.Reconcile(2);
+            Assert.Contains(MoralChoiceSystem.EventLegendPositive, fired);
+            Assert.Equal(0, restored.State.pendingLegendFlags);
         }
 
         [Fact]

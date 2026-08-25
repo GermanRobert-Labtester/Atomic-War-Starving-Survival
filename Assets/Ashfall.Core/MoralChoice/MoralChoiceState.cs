@@ -24,11 +24,16 @@ namespace Ashfall.Core.MoralChoice
 
         /// <summary>One-time threshold/legend events already fired, by id.</summary>
         public List<string> firedThresholdEvents = new List<string>();
+
+        /// <summary>Overflow bits (LegendPositiveFlag/LegendNegativeFlag) awaiting overnight settlement.</summary>
+        public int pendingLegendFlags;
     }
 
     /// <summary>
     /// One resolved moral quest: the journal line, the ledger entry, and the
-    /// seeded rolls drawn at resolution time. Immutable after creation.
+    /// seeded rolls drawn at resolution time. Treated as immutable after
+    /// creation; fields stay public/mutable to match the save-DTO convention
+    /// the JSON pipeline deserializes into.
     /// </summary>
     [Serializable]
     public sealed class MoralChoiceResolution

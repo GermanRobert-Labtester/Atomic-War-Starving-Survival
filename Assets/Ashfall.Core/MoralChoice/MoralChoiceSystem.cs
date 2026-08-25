@@ -41,6 +41,11 @@ namespace Ashfall.Core.MoralChoice
         /// <summary>share | listen | comfort | dead | trust</summary>
         public string Category { get; set; } = string.Empty;
 
+        public string Trigger { get; set; } = string.Empty;
+
+        /// <summary>Encounter prose shown when the quest is discovered.</summary>
+        public string Discovery { get; set; } = string.Empty;
+
         public string LocationId { get; set; } = string.Empty;
 
         /// <summary>First day the quest may be offered; 0 = always.</summary>
@@ -54,6 +59,9 @@ namespace Ashfall.Core.MoralChoice
 
     public sealed class MoralChoiceOption
     {
+        /// <summary>UI text for the choice, e.g. "Give all your food".</summary>
+        public string Label { get; set; } = string.Empty;
+
         public int MoralDelta { get; set; }
         public int EmpathyDelta { get; set; }
         public string OutcomeText { get; set; } = string.Empty;
@@ -89,6 +97,10 @@ namespace Ashfall.Core.MoralChoice
         public const string EventContractTaken = "moral_event_contract_taken";
         public const string EventContractRaised = "moral_event_contract_raised";
         public const string EventPatrolDefense = "moral_event_patrol_defense";
+
+        /// <summary>Pending-overflow bits settled at the next Reconcile (bit 1 = positive, bit 2 = negative).</summary>
+        public const int LegendPositiveFlag = 1;
+        public const int LegendNegativeFlag = 2;
 
         private readonly ISeededRng _rng;
         private readonly ILog _log;
@@ -179,26 +191,46 @@ namespace Ashfall.Core.MoralChoice
             _state.resolutions.Add(resolution);
             OnQuestResolved?.Invoke(resolution);
 
-            if (unclamped > MaxScore) FireThresholdEvent(EventLegendPositive);
-            else if (unclamped < MinScore) FireThresholdEvent(EventLegendNegative);
+            // Overflow never lands mid-scene: flag it, settle it overnight.
+            if (unclamped > MaxScore) _state.pendingLegendFlags |= LegendPositiveFlag;
+            else if (unclamped < MinScore) _state.pendingLegendFlags |= LegendNegativeFlag;
 
             return resolution;
         }
 
         /// <summary>
-        /// Overnight settlement: band crossings and their one-time faction
-        /// events are evaluated here so an act's consequences always land
-        /// overnight, never mid-scene. Out-of-order days are ignored.
+        /// Overnight settlement: pending legend overflow, then band crossings
+        /// and their one-time faction events, so an act's consequences always
+        /// land overnight, never mid-scene. Every band crossed between the
+        /// last reconcile and now settles its event (dedup keeps each
+        /// one-time). Out-of-order days are ignored. A never-reconciled save
+        /// starts from the Neutral band.
         /// </summary>
         public void Reconcile(int day)
         {
             if (day < _state.lastReconciledDay) return;
             _state.lastReconciledDay = day;
 
-            int band = (int)CurrentBand;
-            if (band == _state.bandAtLastReconcile) return;
+            if ((_state.pendingLegendFlags & LegendPositiveFlag) != 0) FireThresholdEvent(EventLegendPositive);
+            if ((_state.pendingLegendFlags & LegendNegativeFlag) != 0) FireThresholdEvent(EventLegendNegative);
+            _state.pendingLegendFlags = 0;
 
-            switch (CurrentBand)
+            int from = _state.bandAtLastReconcile < 0 ? (int)MoralPathBand.Neutral : _state.bandAtLastReconcile;
+            int to = (int)CurrentBand;
+            if (to == from) return;
+
+            int step = to > from ? 1 : -1;
+            for (int band = from + step; ; band += step)
+            {
+                FireBandEvents((MoralPathBand)band);
+                if (band == to) break;
+            }
+            _state.bandAtLastReconcile = to;
+        }
+
+        private void FireBandEvents(MoralPathBand band)
+        {
+            switch (band)
             {
                 case MoralPathBand.VeryEvil:
                     FireThresholdEvent(EventBountyIssued);
@@ -211,7 +243,6 @@ namespace Ashfall.Core.MoralChoice
                     FireThresholdEvent(EventPatrolDefense);
                     break;
             }
-            _state.bandAtLastReconcile = band;
         }
 
         public MoralEndingKind SelectEnding() =>
@@ -264,7 +295,22 @@ namespace Ashfall.Core.MoralChoice
 
         public void RestoreState(MoralChoiceState state)
         {
-            _state = Clone(state ?? throw new ArgumentNullException(nameof(state)));
+            if (state == null) throw new ArgumentNullException(nameof(state));
+            if (!string.Equals(state.systemId, SystemId, StringComparison.Ordinal))
+            {
+                throw new ArgumentException(
+                    $"State belongs to system '{state.systemId}', expected '{SystemId}'.", nameof(state));
+            }
+            if (state.schemaVersion > 1)
+            {
+                throw new NotSupportedException(
+                    $"Future moral choice save schema {state.schemaVersion}; supported schema is 1.");
+            }
+            if (state.schemaVersion < 1)
+            {
+                throw new ArgumentException("Moral choice save is missing a valid schemaVersion.", nameof(state));
+            }
+            _state = Clone(state);
         }
 
         private void FireThresholdEvent(string eventId)
@@ -288,6 +334,7 @@ namespace Ashfall.Core.MoralChoice
                 empathyPoints = source.empathyPoints,
                 lastReconciledDay = source.lastReconciledDay,
                 bandAtLastReconcile = source.bandAtLastReconcile,
+                pendingLegendFlags = source.pendingLegendFlags,
                 firedThresholdEvents = new List<string>(source.firedThresholdEvents ?? new List<string>()),
                 resolutions = new List<MoralChoiceResolution>()
             };
