@@ -1,5 +1,6 @@
-# ASHFALL primary CI gate — Godot 4.7.1 .NET/C#
-# Godot is the only active engine. CI must not invoke Unity tooling.
+# ASHFALL canonical CI gate — Godot 4.7.1 .NET/C#.
+# Unity compatibility artifacts are built separately in build.yml; they are not gameplay gates.
+# Policy: docs/ENGINE_SUPPORT_POLICY.md
 name: ASHFALL CI
 
 on:
