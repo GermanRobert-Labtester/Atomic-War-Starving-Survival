@@ -1,0 +1,423 @@
+{
+  "schema_version": 1,
+  "radio_broadcasts": [
+    {
+      "frequency_id": "freq_distress_77_3",
+      "frequency_mhz": "77.3",
+      "source_name": "Meridian Cold Store — Sub-Level 2 Intercom",
+      "outcome_type": "survivor_isolated",
+      "days_to_trace": 5,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.2,
+          "text": "...anyone on this channel... the blast door closed on me... sub-level two... the cold room... I have hours, not days..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.4,
+          "text": "...this is Pavel, shift supervisor, Meridian Cold Store... the door sequencer failed during the storm... I have a lamp and a coat... the stock is still frozen, but I am too..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.6,
+          "text": "...day two. The lamp died. I can hear the compressors still running, which means the grid is up, which means someone is up... if you can hear this, the manual release is on the wall by the west rack, but I cannot reach it, the frost has... I cannot feel my fingers..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.8,
+          "text": "...day three. I am writing this down in case the recorder keeps it. The stock here is seed potatoes, not meat, the manifest was wrong, or I read it wrong in the dark. There are forty crates. If the door opens, they are for the spring planting, the co-op was counting on them. Do not eat them. Pavel out."
+        },
+        {
+          "day": 5,
+          "clarity": 0.95,
+          "text": "...this is the last broadcast from sub-level two. The compressors stopped an hour ago. I am leaving the recorder running. Take the potatoes. Find my daughter, her name is Rima, she was at the grange when the storm came. Tell her the door was not her fault. I told her to go ahead of me. Meridian Cold Store, out."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_162_8",
+      "frequency_mhz": "162.8",
+      "source_name": "Barge 'Olenka' — VHF Channel 16",
+      "outcome_type": "survivor_drift",
+      "days_to_trace": 4,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.3,
+          "text": "...mayday, mayday, this is the barge Olenka, we are adrift, the tow snapped... position is... the river is taking us west... we have fuel but no steerage..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.5,
+          "text": "...Olenka, day two. The current has us. We passed the red buoy this morning, the one with the bell. If you know the river you know that means we are past the last bridge. There are three of us. The dog is fine. We have fuel for the lamp but the water is the problem..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.75,
+          "text": "...day three. We hit something in the night. The hull is sound but the rudder is gone, we are spinning now, slowly, the river is wide here. I can see a light on the south bank, it is steady, it might be a house. If it is a house and you hear this, we are the barge with the single lamp, please..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.9,
+          "text": "...this is Olenka, final. We have made the south bank. The light was a house, it was empty, it has a stove. We are beached on a sandbar and we can walk at dawn. The fuel stays on the barge, it is too heavy to move, mark it for whoever comes next. Three of us, and the dog. Olenka, out and grateful."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_55_1",
+      "frequency_mhz": "55.1",
+      "source_name": "Primary School 14 — Roof Hatch Radio",
+      "outcome_type": "survivor_community",
+      "days_to_trace": 6,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.15,
+          "text": "...is this on... we are on the roof, the school, Primary 14, the water came up fast... there are children here, eleven of them, I am the only adult... please..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.35,
+          "text": "...day two. The water is at the second floor. We have the roof hatch and we have the tarp from the gym. The children are being brave. The youngest, Dima, he is six, he has not cried. I do not know if that is good. We have the lunch crates, they were delivered yesterday, we have food for... I am counting..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.55,
+          "text": "...day three. A boat went past this morning, it did not see us, or it pretended not to. I waved the tarp. The children waved. The boat kept the middle of the street. We have enough food for four more days if I am careful. I am being careful. Dima spoke today, he asked if the water is going home. I said yes."
+        },
+        {
+          "day": 4,
+          "clarity": 0.7,
+          "text": "...day four. The water is going down, slowly, you can see the windows on the ground floor now, they are still under but you can see them. We moved the crates to the high side. One of the older children, Anya, she is twelve, she has been keeping the roll, she is better at it than me, she is a teacher already..."
+        },
+        {
+          "day": 5,
+          "clarity": 0.85,
+          "text": "...day five. The water is below the first floor. We can see the yard. There is a boat there, the same boat, it is moored now, someone has been here. We are going down tomorrow, all of us, the hatch is the only way and I will go first. If anyone hears this and comes, we are eleven children and one teacher and we are coming down at dawn..."
+        },
+        {
+          "day": 6,
+          "clarity": 0.95,
+          "text": "...day six, morning. We are down. The boat was ours, the one from day three, they came back in the night, they left water and a note. We are going with them. The school is intact, the lunch crates are intact, the roll is intact. Eleven children, one teacher, all present. Primary 14, out. Dima waved at the water."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_311_0",
+      "frequency_mhz": "311.0",
+      "source_name": "Salt Mine Survey Team — Emergency Beacon",
+      "outcome_type": "survivor_isolated",
+      "days_to_trace": 4,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.25,
+          "text": "...this is surveyor three, I took a wrong turn off the main drift, the marker lights are down... I have a lamp and a radio and a little water... the rock is stable... I am not panicking..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.45,
+          "text": "...day two. I found the survey station, the one from the seventies, the one they sealed. It is not sealed. Someone has been here, recently, there are footprints in the dust and they are not mine. There is a cache: water, candles, a notebook. The notebook is in a language I do not read but the diagrams are the mine diagrams, someone has been mapping..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.65,
+          "text": "...day three. I followed the footprints. They go deeper, not out. I do not understand. The notebook has dates, recent dates, someone was here two weeks ago. There is a second cache further in, larger, with a cot and a lamp that still has oil. Someone lives here, or lived here. I am going to leave a note and turn back..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.85,
+          "text": "...day four. I am out. I found the main drift by following my own footprints back, which is how I should have done it the first time. The sealed station is on the map, it was never sealed, the map was wrong. I am leaving the notebook where I found it. If the person who lives down here hears this: I did not take your maps. Surveyor three, out."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_401_9",
+      "frequency_mhz": "401.9",
+      "source_name": "Relay Station Kestrel-9 — Operator Log",
+      "outcome_type": "survivor_isolated",
+      "days_to_trace": 7,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.3,
+          "text": "...this is Kestrel-9, the relay on the ridge, I am the operator, I stayed when the others went down... the wind took the road... the repeater is up, that is why you hear me... I have power for a week if I am careful..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.5,
+          "text": "...day two. The road is gone, not blocked, gone, the whole south face came down in the rain. I can see the valley from here. There are lights, three of them, in the valley, they are not moving. I do not know if they are people or houses. I am broadcasting because the repeater is the only one still up in this sector..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.65,
+          "text": "...day three. The three lights are people, I saw a fire this morning, they are people. I cannot reach them, the road is gone and the slope is loose. I am relaying their traffic too, I heard a woman call for a doctor this morning, I do not have a doctor, I have a relay, I passed it on, that is what I can do..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.75,
+          "text": "...day four. The wind has been steady for two days, the antenna is humming, it is the only music up here. I have been reading the logbook from the last operator, he left in the spring, he wrote that the ridge is a good place to watch the end of things from, he was not wrong, but he was not right either, the end is slow..."
+        },
+        {
+          "day": 5,
+          "clarity": 0.8,
+          "text": "...day five. The valley people are gone, the fire is out, I hope they moved, I do not know. I am still up. The repeater is still up. I will keep it up as long as the power holds, that is the job, the job is the thing that keeps the shape of the day..."
+        },
+        {
+          "day": 6,
+          "clarity": 0.85,
+          "text": "...day six. Power is low. I am broadcasting less. If you hear this and you have power, the repeater takes over on its own when I stop, it will relay whatever it hears, it does not need me, I was only here to watch it..."
+        },
+        {
+          "day": 7,
+          "clarity": 0.95,
+          "text": "...day seven. This is the last operator log from Kestrel-9. The power is going. The repeater will stay up on its reserve. I am leaving the logbook open on the desk, and the coffee tin is half full, it is for the next operator, there is always a next operator. Relay station Kestrel-9, operator out. The wind is still humming."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_88_5",
+      "frequency_mhz": "88.5",
+      "source_name": "Caravan 'Greybell' — Outriders' Band",
+      "outcome_type": "survivor_community",
+      "days_to_trace": 5,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.35,
+          "text": "...greybell caravan, we are held in the pass, the snow came in behind us... we have the mules and we have the trade but we cannot move forward or back... we are seven, plus the muleteer's boy... we have feed for three days..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.55,
+          "text": "...day two. We dug the lead mule out by morning. The boy is keeping the animals calm, he has a way with them, he is maybe ten. We have moved the trade goods to the high cart, the one with the canvas, if we lose a cart we lose the low one, that was the decision, the muleteer agreed..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.7,
+          "text": "...day three. The pass is clearing, we can see the far valley, it is green, which means it is lower, which means it is warmer. We are going to try to move at dawn. The trade is salt and iron, it is heavy, but the mules are rested, they have eaten, we have eaten, the boy found a way to make the hard bread soft, he is useful, that boy..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.85,
+          "text": "...day four. We are moving. The pass is open enough. We lost the low cart, the snow took it in the night, but the trade is on the high cart, the salt and the iron, we are walking with the mules. The boy is on the lead mule, he is singing, I do not know the song, the muleteer does, it is his..."
+        },
+        {
+          "day": 5,
+          "clarity": 0.95,
+          "text": "...day five. We are down. The far valley is a town, it is occupied, they have a market. We are trading the salt, the iron we are keeping, the muleteer says iron is for friends not strangers. The boy is eating a fruit, an actual fruit, he has never seen one, he is holding it like it is a lamp. Greybell caravan, out, and trading."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_217_4",
+      "frequency_mhz": "217.4",
+      "source_name": "District Hospital 3 — Basement Generator Room",
+      "outcome_type": "survivor_community",
+      "days_to_trace": 6,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.25,
+          "text": "...this is the basement, District Hospital 3, the generator is the only power in the building... I am the night nurse, I stayed... there are four patients who cannot be moved, two on the ward, two in the cold room... the fuel is low..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.45,
+          "text": "...day two. I have moved the two from the ward to the basement, it is warmer here, the generator gives heat. The two in the cold room I cannot move, they are the ones who... I am keeping the generator for the cold room, the cold room is the reason, the generator is for them..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.6,
+          "text": "...day three. The fuel is the question. I have been rationing it, an hour on, two hours off. The cold room holds the cold for the off hours, it is designed to. The two from the ward are stable, they are sleeping, they do not know the power is going, I have not told them, there is no need..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.75,
+          "text": "...day four. A man came, he was looking for medicine, he was not a doctor. I gave him what I could spare, which was not much. He offered fuel, from a car, he said there is a car at the bottom of the hill. I cannot leave to get it. He said he would bring it. He left. I do not know if he will come back..."
+        },
+        {
+          "day": 5,
+          "clarity": 0.85,
+          "text": "...day five. He came back. With the fuel. He would not give his name. He would not stay. He said the car was his sister's, and she did not need it now, and he left. The fuel is in the generator. The cold room is cold. The two from the ward are awake and they ate, I found food in the canteen, it is not much but it is food..."
+        },
+        {
+          "day": 6,
+          "clarity": 0.95,
+          "text": "...day six. The fuel is enough for two more days. The two in the cold room are... the cold room is doing what it does. The man came back once more, in the night, he left more fuel and a note that said 'for the nurse who stayed.' I do not know him. I will keep the generator as long as there is fuel, and then I will keep the patients as long as there is me. District Hospital 3, basement, out."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_148_2",
+      "frequency_mhz": "148.2",
+      "source_name": "Cape Verity Lighthouse — Keeper's Set",
+      "outcome_type": "survivor_isolated",
+      "days_to_trace": 5,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.3,
+          "text": "...this is Cape Verity, the light is automated, I am the keeper, I stayed because the light is not the only thing that needs keeping... the boat did not come... the sea is up... I have the lamp and the clock..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.5,
+          "text": "...day two. The sea is down. The boat did not come. The light is on, it is automatic, it does not need me, but I am here. There is a ship, far out, it is not moving, it is riding the swell, it has no lights, I do not know if it is crewed. I am flashing the light at it, the light is for the rocks, but I am flashing it at the ship..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.65,
+          "text": "...day three. The ship is gone, or it was never there, the fog was thick and the fog makes shapes. The clock is still keeping time, the clock is the only thing that is. I have food for a week, the keeper before me left a store, he was organized, he left a list, the list is on the wall, I am following the list..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.8,
+          "text": "...day four. A boat, a small boat, it came close, I called to it, it did not answer, it may not have had a radio. It went south, toward the village, I hope it makes it, the sea is kind today. I am leaving the light on, the light is the point of the place, the point is not me..."
+        },
+        {
+          "day": 5,
+          "clarity": 0.9,
+          "text": "...day five. The boat came back, with people, three, they are in the village, they are well, they saw the light, they said the light was the reason they came in. I did not tell them the light is automatic. I let them think I kept it. The keeper before me kept it, and the keeper after me will keep it, and the light keeps itself, and that is the truth, and the truth is not what they needed. Cape Verity, out."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_392_7",
+      "frequency_mhz": "392.7",
+      "source_name": "North Dam Control — Spillway Station",
+      "outcome_type": "survivor_isolated",
+      "days_to_trace": 4,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.35,
+          "text": "...this is North Dam, the spillway is stuck, the gate will not close, the river is up, the reservoir is rising... I have the manual winch but it takes two, I am one... if the water overtops the emergency spill it is the town downstream..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.55,
+          "text": "...day two. I have been on the winch for sixteen hours, the gate moves, it moves, it is not enough. The water is at the second mark. I sent the family downstream, my wife and the girl, they went at dawn, I told them to go to the high school and not to come back until I call. I have not called..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.75,
+          "text": "...day three. The gate closed. It closed at four in the morning, I do not remember the last hour, I was on the winch and then the gate was closed and I was on the floor. The reservoir is dropping. The town is fine, I do not know if they know. I am going to leave the winch locked and walk down at dawn, I am going to the high school..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.95,
+          "text": "...day four. I am down. The high school is full, the town is fine, they did not know, the water never came. My wife is there, the girl is there, she is asleep, she does not know about the dam, I will not tell her yet. The gate is closed, the winch is locked, the dam is the dam. North Dam, out, and going home."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_101_3",
+      "frequency_mhz": "101.3",
+      "source_name": "Unknown Origin — Band 6 Loop",
+      "outcome_type": "mystery",
+      "days_to_trace": 5,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.2,
+          "text": "...seven, fourteen, three, nine, twenty-two, seven, fourteen, three, nine, twenty-two... [the loop is steady, unhurried, a woman's voice, reading numbers in a language no one speaks here]..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.4,
+          "text": "...seven, fourteen, three, nine, twenty-two... [the loop continues, but at 03:14 it stops, and the voice says, clearly, in the local tongue: 'the water is at the second step.' Then the loop resumes.]..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.6,
+          "text": "...seven, fourteen, three, nine, twenty-two... [the loop continues. At 03:14 the voice says: 'the water is at the third step. The gate is open.' The loop resumes. The river is at the third step. The gate is the dam. The dam operator has not called.]..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.8,
+          "text": "...seven, fourteen, three, nine, twenty-two... [the loop continues. At 03:14 the voice says: 'the water is at the fourth step. The gate is closed. The man is on the floor.' The loop resumes. The dam operator called this morning. He said the gate closed at four. He said he was on the floor.]..."
+        },
+        {
+          "day": 5,
+          "clarity": 0.95,
+          "text": "...seven, fourteen, three, nine, twenty-two... [the loop continues. At 03:14 the voice says: 'the man is down. The girl is asleep. The water is going home.' The loop resumes. The dam operator is down. The girl is asleep. The water is going home. The voice knows what it should not. The loop does not care that you know.]..."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_55_6",
+      "frequency_mhz": "55.6",
+      "source_name": "Patrol Echo-4 — Field Radio",
+      "outcome_type": "survivor_isolated",
+      "days_to_trace": 5,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.3,
+          "text": "...echo-4, we lost the map in the river, the case opened... we are four, we know the general direction but not the route... we have rations for three days... we are not lost, we are mapless, there is a difference..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.5,
+          "text": "...day two. We found a road, it is not on any list, it is paved, it goes east, we are following it. There are houses, empty, one had a meal on the table, cold, we did not take it, we took the water. The sergeant says the road will meet the highway, the highway goes home..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.7,
+          "text": "...day three. The road does not meet the highway, it meets a river, the same river that took the map. There is a bridge, it is intact, we are crossing. On the far side there is a sign, it is for a town we do not know, the sign is new, the town is not on any old map, we are going to the town..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.85,
+          "text": "...day four. The town is real, it is occupied, they have a radio, they let us use it, this is it. They are not on our maps because they are not from our maps, they are from before, they say. They are kind. They fed us. The sergeant is crying, he has not cried, he is crying now, we are safe, that is why..."
+        },
+        {
+          "day": 5,
+          "clarity": 0.95,
+          "text": "...day five. We are staying. The sergeant says we are staying. The town does not need our maps and we do not need our maps here. They have a school and a well and a woman who keeps the radio. We are four, and now we are four more. Echo-4, out, and home, a different home, but home."
+        }
+      ]
+    },
+    {
+      "frequency_id": "freq_distress_88_9",
+      "frequency_mhz": "88.9",
+      "source_name": "Allotment 7 — Greenhouse Bench Radio",
+      "outcome_type": "survivor_isolated",
+      "days_to_trace": 6,
+      "message_fragments": [
+        {
+          "day": 1,
+          "clarity": 0.25,
+          "text": "...this is allotment seven, the greenhouse, the glass is mostly gone and the heater is out... I have one seedling, it is the winter wheat, the one we were saving... I have a lamp and a little paraffin... I am keeping the frost off it with the lamp and a jar..."
+        },
+        {
+          "day": 2,
+          "clarity": 0.45,
+          "text": "...day two. The seedling is up, it is pale, it is the only green thing in the allotment. The frost took the rest in the first night. I have moved it to the bench under the remaining pane, the pane is cracked but it holds the heat of the lamp. The paraffin is the question, I have three nights..."
+        },
+        {
+          "day": 3,
+          "clarity": 0.6,
+          "text": "...day three. I went to the shed for the paraffin, there was a can, half full, someone left it, or forgot it, I am taking it as a loan, I will repay it in wheat, if the wheat lives. The seedling has a second leaf, it is small and it is green and it is the only green thing I have seen in a week..."
+        },
+        {
+          "day": 4,
+          "clarity": 0.75,
+          "text": "...day four. A child came, from the next allotment, she is maybe eight, she came to see if anyone was here. She saw the seedling. She asked if she could name it. I said yes. She named it Tuesday, because that is the day. She is coming back on Tuesday. I do not know if she knows the wheat is for eating, not for naming..."
+        },
+        {
+          "day": 5,
+          "clarity": 0.85,
+          "text": "...day five. Tuesday came, the child came, she brought a candle, she said the candle was for Tuesday, the wheat, to keep it warm. I lit the candle by the seedling. The child is right, the candle is for Tuesday. The paraffin is low, the candle is low, the wheat is up, it is the only thing that is up..."
+        },
+        {
+          "day": 6,
+          "clarity": 0.95,
+          "text": "...day six. The wheat is in the ground, I moved it to the cold frame, it is hardy, it is winter wheat, it is meant for this. The child came with her mother, the mother saw the wheat and she sat down, she did not speak, she sat and she looked, and then she said 'we will share the bread.' I said yes. Allotment seven, out, and planting."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,655 @@
+{
+  "schema_version": 1,
+  "collection_id": "graffiti_expansion_wall_text",
+  "description": "Graffiti and wall text — directions, warnings, accusations, territorial claims, jokes, grief, practical marks, memorial fragments. Most are short. A few are longer. Not every wall is profound. The wall is the honest place. The wall is where the things that cannot be said are written.",
+  "postings": [
+    {
+      "posting_id": "graf_dir_01_pump",
+      "recorded_day": 5,
+      "location": "South corridor junction",
+      "medium": "Chalk on wall, arrow",
+      "author_signature": "unknown",
+      "category": "Directional / Practical",
+      "content": "PUMP →",
+      "morale_effect": "+1 navigation, -0 patience",
+      "tags": [
+        "direction",
+        "pump",
+        "chalk"
+      ]
+    },
+    {
+      "posting_id": "graf_dir_02_well",
+      "recorded_day": 8,
+      "location": "Sub-level 1 stairwell",
+      "medium": "Charcoal arrow, smudged",
+      "author_signature": "unknown",
+      "category": "Directional / Practical",
+      "content": "WELL IS DOWN. GOOD WATER.",
+      "morale_effect": "+2 morale (hope), -0",
+      "tags": [
+        "direction",
+        "well",
+        "water"
+      ]
+    },
+    {
+      "posting_id": "graf_dir_03_school",
+      "recorded_day": 16,
+      "location": "Ward C corridor, by the lamp",
+      "medium": "Handwritten on paper, taped",
+      "author_signature": "the teacher",
+      "category": "Directional / Community",
+      "content": "SCHOOL — 10:00 — HERE — ALL CHILDREN",
+      "morale_effect": "+3 community, -0",
+      "tags": [
+        "direction",
+        "school",
+        "children",
+        "teacher"
+      ]
+    },
+    {
+      "posting_id": "graf_dir_04_cache",
+      "recorded_day": 22,
+      "location": "Scavenger trail, third marker",
+      "medium": "Red cloth strip on branch",
+      "author_signature": "the scavengers",
+      "category": "Directional / Scavenger",
+      "content": "GOOD STUFF THIS WAY. WATCH FOR RAIDERS.",
+      "morale_effect": "+1 scavenger morale, -1 safety",
+      "tags": [
+        "direction",
+        "scavenger",
+        "cache",
+        "raiders"
+      ]
+    },
+    {
+      "posting_id": "graf_dir_05_wrong_way",
+      "recorded_day": 30,
+      "location": "North road, fallen sign",
+      "medium": "Spray paint on asphalt",
+      "author_signature": "unknown",
+      "category": "Directional / Warning",
+      "content": "DEAD END. ROAD GONE. TURN AROUND.",
+      "morale_effect": "+0, -1 morale (truth)",
+      "tags": [
+        "direction",
+        "warning",
+        "dead_end"
+      ]
+    },
+    {
+      "posting_id": "graf_dir_06_mess_hall",
+      "recorded_day": 12,
+      "location": "Main corridor, eye-level",
+      "medium": "Chalk, large, clear",
+      "author_signature": "the steward",
+      "category": "Directional / Practical",
+      "content": "MESS HALL → EAT AT THE BELL. LATE = NOTHING.",
+      "morale_effect": "+0, -1 impatience",
+      "tags": [
+        "direction",
+        "mess_hall",
+        "meals"
+      ]
+    },
+    {
+      "posting_id": "graf_warn_07_rad",
+      "recorded_day": 3,
+      "location": "Bunker perimeter fence",
+      "medium": "Yellow paint on metal sign",
+      "author_signature": "unknown (pre-war)",
+      "category": "Warning / Hazard",
+      "content": "RADIATION. DO NOT ENTER. LEVELS EXCEED SAFE LIMITS.",
+      "morale_effect": "+0, -2 morale (fear)",
+      "tags": [
+        "warning",
+        "radiation",
+        "hazard"
+      ]
+    },
+    {
+      "posting_id": "graf_warn_08_rad_added",
+      "recorded_day": 20,
+      "location": "Same sign, below the paint",
+      "medium": "Black marker, different hand",
+      "author_signature": "someone who came back",
+      "category": "Warning / Correction",
+      "content": "THE NUMBER IS HIGHER NOW.",
+      "morale_effect": "+0, -3 morale (dread)",
+      "tags": [
+        "warning",
+        "radiation",
+        "correction",
+        "dread"
+      ]
+    },
+    {
+      "posting_id": "graf_warn_09_filter",
+      "recorded_day": 30,
+      "location": "Sub-level 3 entrance",
+      "medium": "Red chalk, crude",
+      "author_signature": "the mechanic",
+      "category": "Warning / Hazard",
+      "content": "90% OCCLUDED. NOT AIR. MASK OR DIE.",
+      "morale_effect": "+0, -2 morale (fear)",
+      "tags": [
+        "warning",
+        "filters",
+        "air",
+        "sublevel_3"
+      ]
+    },
+    {
+      "posting_id": "graf_warn_10_dont_drink",
+      "recorded_day": 14,
+      "location": "Blue drum, stores",
+      "medium": "Marker on plastic",
+      "author_signature": "Mara",
+      "category": "Warning / Practical",
+      "content": "DON'T DRINK THIS. I WASHED THE PUMP FILTER IN IT. USE THE KETTLE WATER.",
+      "morale_effect": "+0, -1 trust",
+      "tags": [
+        "warning",
+        "water",
+        "contamination",
+        "practical"
+      ]
+    },
+    {
+      "posting_id": "graf_warn_11_floor",
+      "recorded_day": 25,
+      "location": "Collapsed building, hallway",
+      "medium": "Rope with rag, shin height",
+      "author_signature": "unknown",
+      "category": "Warning / Structural",
+      "content": "DROP. NO FLOOR PAST THE ROPE.",
+      "morale_effect": "+0, -1 morale (caution)",
+      "tags": [
+        "warning",
+        "structural",
+        "drop"
+      ]
+    },
+    {
+      "posting_id": "graf_warn_12_live",
+      "recorded_day": 50,
+      "location": "Substation omega, railing",
+      "medium": "Tape, red, on the railing",
+      "author_signature": "the electrician",
+      "category": "Warning / Electrical",
+      "content": "RAILING IS LIVE. GROUNDED. DO NOT REMOVE THE JUMPER.",
+      "morale_effect": "+0, -2 morale (fear)",
+      "tags": [
+        "warning",
+        "electrical",
+        "live",
+        "railing"
+      ]
+    },
+    {
+      "posting_id": "graf_warn_13_quiet",
+      "recorded_day": 18,
+      "location": "Shelter, near the hatch",
+      "medium": "Whispered chalk, small",
+      "author_signature": "a mother",
+      "category": "Warning / Behavioral",
+      "content": "BE QUIET. THE BOOTS ARE OUTSIDE. BE QUIET.",
+      "morale_effect": "+0, -3 morale (fear)",
+      "tags": [
+        "warning",
+        "quiet",
+        "hiding",
+        "boots"
+      ]
+    },
+    {
+      "posting_id": "graf_warn_14_gas",
+      "recorded_day": 35,
+      "location": "Submerged data center, stairwell",
+      "medium": "Painted on the wall at the top",
+      "author_signature": "unknown",
+      "category": "Warning / Hazard",
+      "content": "AIR IS FINE HERE. AIR IS NOT DOWN. DO NOT GO DOWN.",
+      "morale_effect": "+0, -2 morale (caution)",
+      "tags": [
+        "warning",
+        "gas",
+        "stairwell"
+      ]
+    },
+    {
+      "posting_id": "graf_acc_15_thief",
+      "recorded_day": 22,
+      "location": "West locker, inside door",
+      "medium": "Scratched with a nail",
+      "author_signature": "the quartermaster",
+      "category": "Accusation / Theft",
+      "content": "I KNOW WHICH KEY. I KNOW.",
+      "morale_effect": "+0, -2 trust (internal)",
+      "tags": [
+        "accusation",
+        "theft",
+        "flour",
+        "quartermaster"
+      ]
+    },
+    {
+      "posting_id": "graf_acc_16_raid",
+      "recorded_day": 40,
+      "location": "Scavenger camp, perimeter",
+      "medium": "Spray paint on a board",
+      "author_signature": "the scavengers",
+      "category": "Territorial / Warning",
+      "content": "OURS. TRADE OR LEAVE. NO THIRD OPTION.",
+      "morale_effect": "+1 scavenger cohesion, -2 outsider trust",
+      "tags": [
+        "territory",
+        "scavenger",
+        "trade",
+        "warning"
+      ]
+    },
+    {
+      "posting_id": "graf_acc_17_lied",
+      "recorded_day": 27,
+      "location": "Bunker wall, main corridor",
+      "medium": "Charcoal, large, angry",
+      "author_signature": "unknown",
+      "category": "Accusation / Political",
+      "content": "THEY LIED. THE GOVERNMENT LIED. WE ARE ALL GOING TO DIE OUT HERE.",
+      "morale_effect": "+0, -4 morale (despair)",
+      "tags": [
+        "accusation",
+        "government",
+        "despair",
+        "political"
+      ]
+    },
+    {
+      "posting_id": "graf_acc_18_who",
+      "recorded_day": 33,
+      "location": "Clinic, by the sheeted bay",
+      "medium": "Pencil, small, near the floor",
+      "author_signature": "the doctor",
+      "category": "Accusation / Self",
+      "content": "I CHOSE THE STRONG. I WROTE IT HERE SO I CANNOT UN-WRITE IT.",
+      "morale_effect": "+0, -3 morale (guilt)",
+      "tags": [
+        "accusation",
+        "self",
+        "triage",
+        "guilt",
+        "doctor"
+      ]
+    },
+    {
+      "posting_id": "graf_acc_19_left",
+      "recorded_day": 50,
+      "location": "House, blue door, inside",
+      "medium": "Scratched into the door",
+      "author_signature": "someone who came back",
+      "category": "Accusation / Abandonment",
+      "content": "YOU LEFT THE TABLE SET. I CAME BACK. YOU DID NOT.",
+      "morale_effect": "+0, -3 morale (grief)",
+      "tags": [
+        "accusation",
+        "abandonment",
+        "return",
+        "grief"
+      ]
+    },
+    {
+      "posting_id": "graf_joke_20_biscuit",
+      "recorded_day": 12,
+      "location": "Canteen entryway slate",
+      "medium": "Charcoal pencil on lime plaster",
+      "author_signature": "Boris the Baker",
+      "category": "Culinary / Humor",
+      "content": "THE BROWN SPECKLES IN THE TUESDAY HARDTACK ARE PINE BARK FLOUR, NOT WEEVILS. WEEVILS WOULD HAVE MORE PROTEIN.",
+      "morale_effect": "+3 humor, -2 appetite",
+      "tags": [
+        "joke",
+        "food",
+        "hardtack",
+        "weevils",
+        "boris"
+      ]
+    },
+    {
+      "posting_id": "graf_joke_21_stoker",
+      "recorded_day": 3,
+      "location": "Boiler room corridor, steam pipe",
+      "medium": "White chalk on cast-iron",
+      "author_signature": "Fyodor the Stoker",
+      "category": "Gripe / Humor",
+      "content": "WET GLOVES ON THE DRAFT LEVER = 2 TONS OF LIGNITE ON SATURDAY. YES YOU DMITRI.",
+      "morale_effect": "+2 discipline, -1 dmitri",
+      "tags": [
+        "joke",
+        "stoker",
+        "boiler",
+        "dmitri"
+      ]
+    },
+    {
+      "posting_id": "graf_joke_22_sun",
+      "recorded_day": 27,
+      "location": "Shelter yard, low wall",
+      "medium": "Child's chalk, yellow",
+      "author_signature": "Rima, age 9",
+      "category": "Education / Hope",
+      "content": "THE SUN (WITH A FACE). THE FACE IS SMILING. THE SUN IS NOT. THE DRAWING IS.",
+      "morale_effect": "+2 morale (tenderness), -0",
+      "tags": [
+        "joke",
+        "child",
+        "sun",
+        "drawing",
+        "rima"
+      ]
+    },
+    {
+      "posting_id": "graf_joke_23_coffee",
+      "recorded_day": 30,
+      "location": "Mess hall, by the hatch",
+      "medium": "Scratched with a spoon",
+      "author_signature": "unknown",
+      "category": "Scarcity / Humor",
+      "content": "MISS COFFEE. MISS EVERYTHING. — SOMEONE WHO ALSO MISSES COFFEE.",
+      "morale_effect": "+1 solidarity, -2 morale (longing)",
+      "tags": [
+        "joke",
+        "coffee",
+        "longing",
+        "scarcity"
+      ]
+    },
+    {
+      "posting_id": "graf_joke_24_tuesday",
+      "recorded_day": 38,
+      "location": "Mess hall entrance, over the hatch",
+      "medium": "Handwritten on the back of a prior notice",
+      "author_signature": "the steward",
+      "category": "Scarcity / Humor",
+      "content": "TUESDAY IS THE BREAD. THE BREAD IS TUESDAY. TUESDAY IS ETERNAL.",
+      "morale_effect": "+2 humor, -1 morale (resignation)",
+      "tags": [
+        "joke",
+        "bread",
+        "tuesday",
+        "eternal"
+      ]
+    },
+    {
+      "posting_id": "graf_joke_25_boots",
+      "recorded_day": 45,
+      "location": "Generator room, on the logbook",
+      "medium": "Pencil, in the margin",
+      "author_signature": "Tomas the Engineer",
+      "category": "Technical / Humor",
+      "content": "THE BOOT IS THE GASKET. THE GASKET IS THE BOOT. WEAR THE SHELTER.",
+      "morale_effect": "+2 humor, -0",
+      "tags": [
+        "joke",
+        "engineering",
+        "boot",
+        "gasket",
+        "tomas"
+      ]
+    },
+    {
+      "posting_id": "graf_grief_26_dima",
+      "recorded_day": 23,
+      "location": "School, by his bed",
+      "medium": "Candle, lit, no text",
+      "author_signature": "a mother",
+      "category": "Grief / Memorial",
+      "content": "[a candle, lit, no words. the candle is the text. the candle is for dima.]",
+      "morale_effect": "+0, -4 morale (grief)",
+      "tags": [
+        "grief",
+        "memorial",
+        "dima",
+        "candle",
+        "child"
+      ]
+    },
+    {
+      "posting_id": "graf_grief_27_names",
+      "recorded_day": 62,
+      "location": "Plaza wall, the tally",
+      "medium": "Chalk, clusters of five",
+      "author_signature": "everyone and no one",
+      "category": "Grief / Memorial",
+      "content": "[tally marks, in clusters of five, the way a hand counts. the marks go back years. one mark is one person who came to the queue.]",
+      "morale_effect": "+0, -1 morale (witness)",
+      "tags": [
+        "grief",
+        "memorial",
+        "tally",
+        "queue",
+        "community"
+      ]
+    },
+    {
+      "posting_id": "graf_grief_28_stone",
+      "recorded_day": 33,
+      "location": "South plot, to the left of her husband",
+      "medium": "A stone, unmarked, placed",
+      "author_signature": "the widow",
+      "category": "Grief / Memorial",
+      "content": "[a stone. the stone is not a marker. the stone is a stone. the widow knows the stone. the stone is for the widow, not for the husband.]",
+      "morale_effect": "+0, -3 morale (grief)",
+      "tags": [
+        "grief",
+        "memorial",
+        "stone",
+        "burial",
+        "widow"
+      ]
+    },
+    {
+      "posting_id": "graf_grief_29_victor",
+      "recorded_day": 95,
+      "location": "Clinic, by his bed, after",
+      "medium": "Pencil, small, on the wall",
+      "author_signature": "Nurse Anya",
+      "category": "Grief / Memorial",
+      "content": "VICTOR LIVED 95 DAYS. THE BOOKS SAID 30. THE BOOKS ARE THE BOOKS. VICTOR WAS VICTOR.",
+      "morale_effect": "+1 morale (defiance), -3 morale (loss)",
+      "tags": [
+        "grief",
+        "memorial",
+        "victor",
+        "95_days",
+        "nurse"
+      ]
+    },
+    {
+      "posting_id": "graf_grief_30_river",
+      "recorded_day": 34,
+      "location": "Clinic, sheeted bay, after",
+      "medium": "Marker on the sheet",
+      "author_signature": "Nurse Anya",
+      "category": "Grief / Memorial",
+      "content": "RIVER WOMAN. I NAMED HER. SHE DIED WITH THE NAME I GAVE HER.",
+      "morale_effect": "+0, -3 morale (grief)",
+      "tags": [
+        "grief",
+        "memorial",
+        "river_woman",
+        "naming",
+        "nurse"
+      ]
+    },
+    {
+      "posting_id": "graf_grief_31_empty",
+      "recorded_day": 22,
+      "location": "Shelter, a bed, by the candle",
+      "medium": "Nothing, the bed is empty",
+      "author_signature": "a mother",
+      "category": "Grief / Memorial",
+      "content": "[the bed is empty. the candle is by the bed. the candle is for the seeing of the empty. there is no text. the empty is the text.]",
+      "morale_effect": "+0, -4 morale (grief)",
+      "tags": [
+        "grief",
+        "memorial",
+        "empty_bed",
+        "candle",
+        "child"
+      ]
+    },
+    {
+      "posting_id": "graf_mark_32_tally",
+      "recorded_day": 9,
+      "location": "Stores, west locker wall",
+      "medium": "Chalk, vertical strokes",
+      "author_signature": "the quartermaster",
+      "category": "Practical / Inventory",
+      "content": "[tally marks, in sets of five. the count of the sacks. the count is the honest place.]",
+      "morale_effect": "+0, -0",
+      "tags": [
+        "practical",
+        "tally",
+        "inventory",
+        "quartermaster"
+      ]
+    },
+    {
+      "posting_id": "graf_mark_33_key",
+      "recorded_day": 1,
+      "location": "Tin by the bed, under the handkerchiefs",
+      "medium": "Scratched on the tin lid",
+      "author_signature": "a father",
+      "category": "Practical / Personal",
+      "content": "THE KEY IS HERE. NOT AT WORK. HERE.",
+      "morale_effect": "+0, -0",
+      "tags": [
+        "practical",
+        "key",
+        "father",
+        "personal"
+      ]
+    },
+    {
+      "posting_id": "graf_mark_34_locker",
+      "recorded_day": 20,
+      "location": "Public swimming baths, locker row",
+      "medium": "Marker on the locker door",
+      "author_signature": "unknown",
+      "category": "Practical / Claim",
+      "content": "TAKEN. DO NOT FORCE. — THE ONE WHO WILL COME BACK",
+      "morale_effect": "+0, -0",
+      "tags": [
+        "practical",
+        "locker",
+        "claim",
+        "return"
+      ]
+    },
+    {
+      "posting_id": "graf_mark_35_shift",
+      "recorded_day": 7,
+      "location": "Sentry post, north cupola",
+      "medium": "Chalk on the wall, times",
+      "author_signature": "the general",
+      "category": "Practical / Schedule",
+      "content": "06-14 V+H. 14-22 G+C. 22-06 B+P. BRING THE THERMOS.",
+      "morale_effect": "+1 discipline, -0",
+      "tags": [
+        "practical",
+        "shift",
+        "sentry",
+        "thermos"
+      ]
+    },
+    {
+      "posting_id": "graf_mark_36_water",
+      "recorded_day": 14,
+      "location": "Pump, south corridor",
+      "medium": "Painted on the pump base",
+      "author_signature": "the mechanic",
+      "category": "Practical / Instruction",
+      "content": "2 LITRES PER PERSON. FILL 06-20. DO NOT WASTE.",
+      "morale_effect": "+0, -1 impatience",
+      "tags": [
+        "practical",
+        "water",
+        "ration",
+        "pump"
+      ]
+    },
+    {
+      "posting_id": "graf_mark_37_fuel",
+      "recorded_day": 60,
+      "location": "Diesel tank farm, tank side",
+      "medium": "Chalk, updated daily",
+      "author_signature": "whoever is here",
+      "category": "Practical / Inventory",
+      "content": "[a finger-width mark for the fuel level. the mark is the law. the law is a finger. the finger is honest.]",
+      "morale_effect": "+0, -0",
+      "tags": [
+        "practical",
+        "fuel",
+        "inventory",
+        "finger"
+      ]
+    },
+    {
+      "posting_id": "graf_long_38_stop",
+      "recorded_day": 100,
+      "location": "Crossroads, a cairn",
+      "medium": "Road sign, STOP, set upright, hung with tokens",
+      "author_signature": "unknown, over years",
+      "category": "Cultural / Memorial",
+      "content": "[a shrine, not to a god but to a sign. a STOP sign, upright in a cairn, hung with tokens: a bus pass, a ring of keys, a folded map of a country that no longer answers to its name. people leave things here. they do not take things. that is the rule. the rule is older than the road.]",
+      "morale_effect": "+2 morale (community), -1 morale (loss)",
+      "tags": [
+        "cultural",
+        "shrine",
+        "tokens",
+        "stop",
+        "community"
+      ]
+    },
+    {
+      "posting_id": "graf_long_39_sun_face",
+      "recorded_day": 27,
+      "location": "Shelter yard, low wall",
+      "medium": "Chalk, a child's drawing",
+      "author_signature": "Rima, age 9 (and an adult's correction)",
+      "category": "Cultural / Folklore",
+      "content": "[a row of chalk figures: a sun with a face, a tree with a door, a dog the size of a horse. beside them, an adult's hand: 'the sun has no face.' the child has drawn the face back, smaller. the adult has not corrected it again. the wall is the argument, and the child is winning, slowly, by attrition.]",
+      "morale_effect": "+3 morale (hope), -1 morale (the argument)",
+      "tags": [
+        "cultural",
+        "children",
+        "folklore",
+        "sun",
+        "face",
+        "attrition"
+      ]
+    },
+    {
+      "posting_id": "graf_long_40_wall",
+      "recorded_day": 62,
+      "location": "Plaza, the tally wall",
+      "medium": "Chalk, a hand, over years",
+      "author_signature": "everyone and no one",
+      "category": "Grief / Memorial",
+      "content": "[a wall given over to a tally, not of days, but of people. a mark for each one who came to the queue. the marks are in clusters of five, the way a hand counts. the clusters go back years. you add your mark. the wall does not thank you. the wall does not need to. the mark is the thanks, given forward to the next person who counts.]",
+      "morale_effect": "+1 morale (community), -1 morale (witness)",
+      "tags": [
+        "grief",
+        "memorial",
+        "tally",
+        "wall",
+        "community",
+        "forward"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,459 @@
+{
+  "schema_version": 1,
+  "collection_id": "bureaucratic_documents_expansion",
+  "description": "Institutional paperwork from the shelter — requisitions, denials, transfers, inspections, assignments, incidents, rosters, chits, and notices. The texture of communal survival administered. Most are mundane. A few are not. The horror is in the form.",
+  "documents": [
+    {
+      "doc_id": "bunker_doc_req_fuel_03",
+      "doc_type": "requisition_form",
+      "title": "Requisition — Heating Fuel, Ward B",
+      "posted_day": 41,
+      "posted_by": "Ward B Duty Clerk",
+      "location": "Quartermaster's inbox, Main Office",
+      "material": "Pre-printed form, carbon-copy, fields filled in pencil",
+      "transcript": "REQUISITION — HEATING FUEL\nForm 7-C (rev. 3)\n\nRequesting ward: B\nDate of request: Day 41\nRequested by: Duty Clerk, Ward B\n\nItem: Heating fuel (diesel, grade 2)\nQuantity requested: 40 litres\nPurpose: Ward heating, night cycle, Days 42-48\n\nJustification: Ward B ambient temperature has fallen below the minimum habitable threshold (12C) for three consecutive nights. Two patients in the south bays are presenting with respiratory complaints attributable to cold exposure.\n\nQuartermaster action:\n[ ] Approved — full quantity\n[ ] Approved — reduced quantity: ______ litres\n[ ] Denied — reason: ____________________\n\nQuartermaster signature: ____________________  Date: ______\n\n---\nQM NOTE (added Day 42): Reduced to 25L. Ward B is to consolidate patients into the south bays and close the north corridor. The 25L is for the south bays only. The corridor is not a ward. The corridor is a corridor.",
+      "tags": [
+        "requisition",
+        "fuel",
+        "ward_b",
+        "reduction"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_req_medicine_07",
+      "doc_type": "requisition_form",
+      "title": "Requisition — Broad-Spectrum Antibiotics, Clinic",
+      "posted_day": 26,
+      "posted_by": "Clinic Duty Nurse",
+      "location": "Quartermaster's inbox, Main Office",
+      "material": "Pre-printed form, carbon-copy, fields filled in pen",
+      "transcript": "REQUISITION — MEDICAL SUPPLIES\nForm 7-M (rev. 1)\n\nRequesting unit: Clinic\nDate of request: Day 26\nRequested by: Duty Nurse (night)\n\nItem: Broad-spectrum antibiotic (type A), oral\nQuantity requested: 3 courses\nPurpose: Treatment of respiratory infection, Ward (sheeted bay)\n\nJustification: Two patients presenting consistent symptoms. Culturing unavailable. Clinical judgment: broad-spectrum indicated pending improvement.\n\nQuartermaster action:\n[ ] Approved — full quantity\n[ ] Approved — reduced quantity: ______ courses\n[ ] Denied — reason: ____________________\n\nQuartermaster signature: ____________________  Date: ______\n\n---\nQM NOTE (added Day 26): Approved, 2 courses. The third is held in reserve per standing order. Clinic to report outcome before further issue. The reserve is the reserve.",
+      "tags": [
+        "requisition",
+        "medicine",
+        "clinic",
+        "reserve"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_req_candles_12",
+      "doc_type": "requisition_form",
+      "title": "Requisition — Candles, Sub-Level 3",
+      "posted_day": 58,
+      "posted_by": "Sub-Level 3 Steward",
+      "location": "Quartermaster's inbox, Main Office",
+      "material": "Pre-printed form, carbon-copy, fields filled in pencil, smudged",
+      "transcript": "REQUISITION — LIGHTING\nForm 7-L (rev. 2)\n\nRequesting unit: Sub-Level 3 (stores)\nDate of request: Day 58\nRequested by: Sub-Level 3 Steward\n\nItem: Candles (standard, 8-hour)\nQuantity requested: 12\nPurpose: Store illumination, night shift, Days 59-65\n\nJustification: Sub-Level 3 has been without wired lighting for 11 days (see Incident Report IR-3-11). Two night-shift stock-pickers sustained minor injuries in the dark on Day 56. Candles are requested for safety, not comfort.\n\nQuartermaster action:\n[ ] Approved — full quantity\n[ ] Approved — reduced quantity: ______\n[ ] Denied — reason: ____________________\n\nQuartermaster signature: ____________________  Date: ______\n\n---\nQM NOTE (added Day 59): Approved, 6. Sub-Level 3 is to consolidate night shifts to a single 4-hour window (22:00-02:00) to conserve candles. The injuries are noted. The wiring is not my department. The candles are.",
+      "tags": [
+        "requisition",
+        "candles",
+        "sub_level_3",
+        "safety"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_denial_extra_04",
+      "doc_type": "ration_denial_notice",
+      "title": "Notice of Ration Denial — Extra Allocation, Family Loma",
+      "posted_day": 23,
+      "posted_by": "Quartermaster",
+      "location": "Ward A notice board, pinned over the meal roster",
+      "material": "Pre-printed notice, fields filled in pen, stamped DENIED",
+      "transcript": "NOTICE OF RATION DENIAL\nForm 12-D\n\nDate: Day 23\nApplicant: Loma, G. (on behalf of Loma family, 7 persons)\n\nRequest: Extra protein ration for nursing mother (Loma, M.)\n\nBasis of request: Applicant cites post-natal condition, infant age 4 months.\n\nDecision: DENIED\n\nReason: Current headcount (147) exceeds the provisioning basis (140). Extra allocations are suspended until headcount returns to basis or new supply is confirmed. The infant is counted in the headcount. The infant's ration is the infant's ration.\n\nRight of appeal: Appeals are heard on the last Friday of the month. The next appeal day is Day 27. Applicant may register with the Duty Clerk.\n\nQuartermaster signature: Yelena, QM\n\n---\nCLERK MARGIN NOTE: Applicant wept at the counter. Did not register appeal. The infant is Loma M.'s, four months, per the form. The grandmother also has a granddaughter, Rima, age nine, who is not the infant. The form conflated the two. The form is the form. Rima is not the infant. The infant is the infant.",
+      "tags": [
+        "ration",
+        "denial",
+        "loma",
+        "appeal",
+        "infant"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_denial_second_09",
+      "doc_type": "ration_denial_notice",
+      "title": "Notice of Ration Denial — Second Helping, Mess Hall",
+      "posted_day": 35,
+      "posted_by": "Mess Hall Steward",
+      "location": "Mess hall entrance, taped to the serving hatch",
+      "material": "Handwritten on the back of a prior notice, dated",
+      "transcript": "NOTICE — SECOND HELPINGS\n\nDate: Day 35\n\nUntil further notice, second helpings are suspended at all meals.\n\nThis is not a punishment. This is the flour.\n\nThe flour is at a number I am not going to write on this notice. The number is known to the Quartermaster. The Quartermaster is not in the mess hall. The mess hall serves what the Quartermaster sends. The Quartermaster sends what the flour sends.\n\nIf you are on the heavy-labour roster, you are entitled to a half-ration supplement at midday. See the Steward. The Steward is me. I am the Steward. I will not give you more than the half. The half is the rule.\n\nChildren eat first. Children eat the same as everyone. Children do not get more. Children get first. That is the rule and that is all the rule there is.\n\nMess Hall Steward",
+      "tags": [
+        "ration",
+        "denial",
+        "mess_hall",
+        "flour",
+        "children"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_transfer_bram_02",
+      "doc_type": "transfer_order",
+      "title": "Transfer Order — Courier Bram, South Route",
+      "posted_day": 1,
+      "posted_by": "Captain of the Gate",
+      "location": "Gate house dispatch box",
+      "material": "Pre-printed order, sealed with wax, fields filled in pen",
+      "transcript": "TRANSFER ORDER\nForm 3-T\n\nDate of order: Day 1\nEffective: Day 2, dawn\n\nPersonnel: Bram (courier, second class)\nFrom: Gate house\nTo: Millhaven camp, via south road\n\nPurpose: Delivery of sealed pouch to Captain, Millhaven. Contents: treaty terms, ratification word. Pouch to remain sealed. Pouch to remain on the courier's person.\n\nDuration: 2 days outbound, 2 days return, weather permitting. 4 days total. 5 days before overdue is declared.\n\nProvisions issued: 4 days rations (trail), 1 water bottle (filled), 1 lamp (filled), 1 blade.\n\nAuthority: Captain of the Gate, by order of the Council of Three.\n\nSeal: [wax, broken on opening]\n\nCaptain's hand: Let him run. He runs clean. He comes back.",
+      "tags": [
+        "transfer",
+        "courier",
+        "treaty",
+        "route"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_transfer_ward_05",
+      "doc_type": "transfer_order",
+      "title": "Transfer Order — Patient, Ward B to Clinic",
+      "posted_day": 19,
+      "posted_by": "Doctor (senior)",
+      "location": "Ward B duty desk, filed",
+      "material": "Handwritten on clinic letterhead",
+      "transcript": "TRANSFER ORDER — PATIENT\n\nDate: Day 19\nFrom: Ward B (south bay, bed 4)\nTo: Clinic (sheeted bay)\n\nPatient: Female, adult, name: river woman (unidentified, admitted Day 12, river intake)\n\nReason for transfer: Respiratory presentation consistent with Ward B cases 1 and 2. Clinic has isolation capacity (sheeted bay). Clinic has the broad-spectrum. Ward B does not.\n\nCondition at transfer: Stable, wet cough, febrile. Ambulatory with assistance.\n\nAccompany: Duty Nurse (night). Patient to be carried on the litter, not walked. The cough is worse when she walks.\n\nDoctor's note: The sheet is not medicine. The sheet is what we have. The clinic is not a clinic. The clinic is what we have. We are transferring her to what we have. That is the medicine we are practicing.",
+      "tags": [
+        "transfer",
+        "patient",
+        "clinic",
+        "ward_b",
+        "isolation"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_inspect_generator_06",
+      "doc_type": "inspection_sheet",
+      "title": "Inspection Sheet — Generator, Weekly",
+      "posted_day": 21,
+      "posted_by": "Engineer Tomas",
+      "location": "Generator room logbook, page 47",
+      "material": "Pre-printed sheet, columns filled in pencil, grease-marked",
+      "transcript": "GENERATOR INSPECTION — WEEKLY\nForm 14-G\n\nDate: Day 21\nInspector: Tomas (engineer, senior)\nUnit: Meridian 4-cyl diesel, model K, 1971\n\nHours run this week: 168 (continuous)\nFuel consumed: 96 litres (heating oil, grade 2)\nFuel remaining (tank): 184 litres\nFuel remaining (reserve drum): 40 litres\n\nCylinders:\n  Cyl 1: nominal\n  Cyl 2: nominal\n  Cyl 3: KNOCK (bearing, see note)\n  Cyl 4: nominal\n\nInjectors: cleaned twice this week. Third cleaning due Day 24. Gasket: improvised (leather, boot). Holding.\n\nOil: black, changed Day 18. Next change: Day 32 or on pressure drop.\n\nCoolant: n/a (air-cooled block). Fins fouled. Cleaned Day 20.\n\nNOTE (cyl 3): The knock is the bearing. The race is scored. I have no bearing. I am running at half load to buy time. Time is the only thing an engineer can buy. I have bought a week, maybe two. After that the cylinder seizes and the generator is a shape. I am writing this in the logbook because the logbook is the only place that will remember. The quartermaster counts the power as a supply. The power is a supply. The supply is a week, maybe two.\n\nInspector signature: Tomas\nAction required: BEARING, cyl 3. Source: none. Fabrication: attempted (pipe + clock brass). Outcome: pending.",
+      "tags": [
+        "inspection",
+        "generator",
+        "bearing",
+        "failure",
+        "supply"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_inspect_filters_08",
+      "doc_type": "inspection_sheet",
+      "title": "Inspection Sheet — Air Filters, Shelter",
+      "posted_day": 30,
+      "posted_by": "Maintenance Crew Lead",
+      "location": "Maintenance office, filed",
+      "material": "Pre-printed sheet, columns filled in pen, water-stained",
+      "transcript": "AIR FILTER INSPECTION — SHELTER\nForm 14-AF\n\nDate: Day 30\nInspector: Crew Lead (maintenance)\n\nMain intake (north): Filter bank 1 — 62% occluded. Filter bank 2 — 78% occluded. Recommend replace bank 2 within 7 days.\n\nMain intake (south): Filter bank 1 — 45% occluded. Bank 2 — 51%. Serviceable.\n\nSub-level 2: Filter bank 1 — 90% occluded. REPLACE IMMEDIATELY. Sub-level 2 is the stores. Stores are occupied by night-shift stock-pickers. The filter is the air. The air is the filter. 90% is not air.\n\nReserve filters on hand: 3 (bank-1 type), 1 (bank-2 type).\n\nAction: Replace sub-level 2 bank 1 today, from reserve. Reserve after: 2 (bank-1), 1 (bank-2). South bank 2 replacement scheduled Day 37. North bank 2 replacement: INDEFICIENT. No reserve. Request to Quartermaster: source 2 bank-2 filters or equivalent. Equivalent is not a filter. Equivalent is cloth. Cloth is not a filter. Cloth is what we have.\n\nInspector signature: Crew Lead\nQuartermaster action: see Requisition 7-AF-3 (pending).",
+      "tags": [
+        "inspection",
+        "filters",
+        "air",
+        "sub_level_2",
+        "reserve"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_assign_loma_01",
+      "doc_type": "shelter_assignment",
+      "title": "Shelter Assignment — Loma Family",
+      "posted_day": 14,
+      "posted_by": "Duty Clerk, Admissions",
+      "location": "Admissions counter, filed in family folder",
+      "material": "Pre-printed slip, carbon-copy, fields filled in pen",
+      "transcript": "SHELTER ASSIGNMENT SLIP\nForm 1-A\n\nDate: Day 14\nFamily: Loma (7 persons)\nArrival: Day 14, afternoon, on foot\nOrigin: [left blank — family declined to state]\n\nAssigned ward: A\nAssigned bays: A-3 (family bay, double)\nAssigned cots: 4 (adults) + 3 (children, lower tier)\n\nRation status: Full, effective Day 15. Back-ration to Day 14 not issued (arrived after midday meal).\n\nWater status: Full, effective immediately. Fill at the pump, south corridor, 06:00-20:00.\n\nConditions:\n- Family bays are not private. The curtain is the privacy.\n- Children are the responsibility of the family. The shelter does not mind children. The shelter houses children.\n- Work assignment: see the Duty Clerk on Day 16. All adults are assessed for work. The assessment is not optional.\n- Possessions: held by the family. The shelter is not liable for loss. Lockers are in the south corridor. Bring your own lock. We do not provide locks.\n\nDuty Clerk note: The grandmother asked where the school was. I said there is no school. She said there is a teacher. I said the teacher is in Ward C. She said then there is a school. I did not argue. The form does not have a field for the school. The form has a field for the ward. The ward is A. The school is in C. The form is the form.",
+      "tags": [
+        "assignment",
+        "loma",
+        "ward_a",
+        "family",
+        "school"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_assign_single_03",
+      "doc_type": "shelter_assignment",
+      "title": "Shelter Assignment — Single Adult, Unidentified",
+      "posted_day": 37,
+      "posted_by": "Duty Clerk, Admissions",
+      "location": "Admissions counter, filed under UNIDENTIFIED",
+      "material": "Pre-printed slip, carbon-copy, fields filled in pencil, name field blank",
+      "transcript": "SHELTER ASSIGNMENT SLIP\nForm 1-A\n\nDate: Day 37\nFamily: n/a (single adult)\nArrival: Day 37, pre-dawn, at the gate\nOrigin: [not stated — does not speak the common tongue, or will not]\nName: [not given — admitted as UNIDENTIFIED-37A]\n\nAssigned ward: B\nAssigned bay: B-7 (single, upper tier)\nAssigned cot: 1\n\nRation status: Full, effective Day 38. Day 37 back-ration issued (arrived before midday).\n\nWater status: Full, effective immediately.\n\nConditions:\n- Single bays are shared. The cot is yours. The bay is shared.\n- Work assignment: deferred pending language assessment. The assessment is not optional. The deferral is temporary.\n- Medical: to report to Clinic on Day 38, morning. Standard intake exam. The exam is not optional.\n- Possessions: one bag, one blade, one item of jewellery (ring, gold, retained by occupant). The ring is the ring. The ring is not ours.\n\nDuty Clerk note: The ring is a wedding ring, I think, or a ring that is meant to look like one. The occupant covered it when I looked. I did not ask. The form does not have a field for the ring. The form has a field for possessions. The ring is a possession. The ring is also something else. The form is the form.",
+      "tags": [
+        "assignment",
+        "unidentified",
+        "ward_b",
+        "single",
+        "ring"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_incident_theft_02",
+      "doc_type": "incident_report",
+      "title": "Incident Report — Missing Stores, West Locker",
+      "posted_day": 22,
+      "posted_by": "Quartermaster",
+      "location": "Quartermaster's office, filed",
+      "material": "Pre-printed form, fields filled in pen, marked PRIORITY",
+      "transcript": "INCIDENT REPORT\nForm 9-I\n\nDate of incident: between Day 20 (evening) and Day 22 (morning)\nDate of report: Day 22\nReported by: Quartermaster\n\nLocation: West locker (stores, sub-level 1)\n\nDescription: Two sacks of flour (milled, 25kg each) missing from the west locker. Lock not broken. No sign of forced entry. Access limited to key-holders (3: QM, Duty Clerk, Steward).\n\nInventory impact: Flour reserve reduced from [number on file] to [number on file]. The number on file is the number on file. The number in this report is the number in this report. The two numbers are the same number. The number is lower than the number I have been reporting verbally. This report corrects the verbal number. The verbal number was forty-two. The number is eleven. The number has been eleven for some time. This report is the first time the number is the number.\n\nSuspected cause: Key-holder access. Internal. Not a breach. A decision made by a key-holder without the Quartermaster's authority.\n\nAction taken: Lock changed. Remaining stores moved to QM office. Verbal report to Captain of the Gate. No public notice. The number is not public. The number is in this report.\n\nQuartermaster note: I know which key-holder. I am not writing which key-holder in this report. I have spoken to the key-holder. The key-holder states the flour was issued to the night watch, who were under-rationed. This may be true. The night watch were under-rationed. That is also my error. Two errors do not make a distribution. This report is the report.",
+      "tags": [
+        "incident",
+        "theft",
+        "flour",
+        "west_locker",
+        "internal"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_incident_injury_05",
+      "doc_type": "incident_report",
+      "title": "Incident Report — Minor Injury, Sub-Level 3",
+      "posted_day": 56,
+      "posted_by": "Sub-Level 3 Steward",
+      "location": "Maintenance office, filed",
+      "material": "Pre-printed form, fields filled in pencil",
+      "transcript": "INCIDENT REPORT\nForm 9-I\n\nDate of incident: Day 56, approx 23:00\nDate of report: Day 57\nReported by: Sub-Level 3 Steward\n\nLocation: Sub-level 3, stores, aisle 4\n\nPerson(s) affected: Stock-picker (name on file), night shift\n\nDescription: Stock-picker sustained a fall in the unlit aisle 4. No wired lighting (see IR-3-11, Day 45). No candle issued (see Requisition 7-L-12, pending). Stock-picker fell against the rack, sustained a laceration to the forearm and a contusion to the knee. Ambulatory. Treated at Clinic (wound cleaned, bound). Two days light duty prescribed.\n\nCause: Insufficient illumination. The aisle is dark. The aisle has been dark for eleven days. The candles were requested. The candles were approved (6). The candles have not been issued. The candles are in the Quartermaster's office. The candles are not in sub-level 3.\n\nAction taken: Night shift consolidated to 22:00-02:00 (see QM note, Req 7-L-12). Stock-picker on light duty. Aisle 4 closed at night pending candles.\n\nSteward note: This is the second injury in the dark. The first was Day 52, also aisle 4, also a stock-picker, also a fall. The first was not reported because the stock-picker did not report it. This one is reported because I am reporting it. The dark is the dark. The dark is not an accident. The dark is a decision. I am reporting the decision.",
+      "tags": [
+        "incident",
+        "injury",
+        "sub_level_3",
+        "dark",
+        "candles"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_incident_mortality_07",
+      "doc_type": "incident_report",
+      "title": "Incident Report — Mortality, Ward B, Bed 4",
+      "posted_day": 33,
+      "posted_by": "Doctor (senior)",
+      "location": "Clinic, filed in patient folder",
+      "material": "Pre-printed form, fields filled in pen, stamped CLOSED",
+      "transcript": "INCIDENT REPORT — MORTALITY\nForm 9-M\n\nDate of incident: Day 33, approx 04:00\nDate of report: Day 33\nReported by: Doctor (senior)\n\nLocation: Clinic, sheeted bay (transferred from Ward B bed 4, Day 19)\n\nDecedent: Female, adult, unidentified (river woman, admitted Day 12)\n\nCause: Respiratory failure, secondary to infection. Treatment: broad-spectrum (2 courses, narrow 1 course). Outcome: not responsive.\n\nTime of death: 04:00, confirmed by Doctor.\n\nDisposition: Body removed to the cold room (sub-level 1) at 06:00. Cold room is functional (generator). Burial detail: Day 34, morning, south plot, unmarked. The unmarked is the policy. The policy is not mine. The policy is the policy.\n\nPersonal effects: one bag (empty), one item of clothing (donated to stores), one ring (gold, retained per assignment slip, no claimant). The ring is in the office. The ring has no claimant. The ring is the ring.\n\nDoctor note: She did not respond to the narrow. I did not expect her to respond to the narrow. I gave her the narrow because the broad was for the strong. I wrote that decision down on Day 26. I am writing it down again here. The decision is the same decision. The outcome is the outcome. The form is the form. I am the doctor. I wrote it down. That is what the doctor does.",
+      "tags": [
+        "incident",
+        "mortality",
+        "ward_b",
+        "clinic",
+        "river_woman",
+        "ring"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_roster_sentry_w7",
+      "doc_type": "shift_schedule",
+      "title": "Sentry Rotation — Week 7",
+      "posted_day": 44,
+      "posted_by": "Captain of the Gate",
+      "location": "Gate house notice board",
+      "material": "Typed on recycled paper, pinned with two nails",
+      "transcript": "SENTRY ROTATION — WEEK 7\nAll times bunker standard\n\nNORTH CUPOLA (24h, 2-person):\n06-14 — Veteran + Hunter\n14-22 — General + Cop\n22-06 — Bouncer + Prepper\n\nSOUTH PERIMETER (12h, 1-person):\n06-18 — Courier (Bram, returned Day 5)\n18-06 — Mechanic\n\nNOTES:\n- Dosimeter every 2h. Log it. The log is the proof.\n- Do not engage unidentified persons. Radio. The radio is the engagement.\n- North cupola: the thermos. It is cold up there. It is always cold up there.\n- South perimeter: the creek bed is slippery. It is always slippery. Watch your footing. It is always your footing.\n- Bram is back. Bram runs clean. Welcome Bram back. Do not ask Bram about the forest. Bram will tell you or Bram will not.",
+      "tags": [
+        "sentry",
+        "roster",
+        "week_7",
+        "bram"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_meal_notice_flour",
+      "doc_type": "meal_notice",
+      "title": "Mess Hall Notice — Flour Reduction",
+      "posted_day": 38,
+      "posted_by": "Mess Hall Steward",
+      "location": "Mess hall entrance, over the serving hatch",
+      "material": "Handwritten on the back of the Day 35 notice",
+      "transcript": "NOTICE — FLOUR\n\nThe flour is reduced. This is not a notice I wanted to write. The flour is reduced because the flour is reduced. There is no other reason. There is no other flour.\n\nNew portions, effective Day 39:\n- Bread: one slice, not two. The slice is the slice. Do not ask for a second. The second is not.\n- Porridge: half-depth, not full. The half is the half.\n- Children: the same. Children are not more. Children are first. First is not more.\n\nThe Chef is making the bread thinner. The bread is the same bread. The bread is thinner. That is the flour. That is the flour.\n\nMess Hall Steward",
+      "tags": [
+        "meal",
+        "flour",
+        "reduction",
+        "notice"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_chit_repair_lamp",
+      "doc_type": "maintenance_chit",
+      "title": "Maintenance Chit — Corridor Lamp, Ward C",
+      "posted_day": 49,
+      "posted_by": "Duty Clerk, Ward C",
+      "location": "Maintenance office inbox",
+      "material": "Pre-printed chit, fields filled in pencil, grease-marked",
+      "transcript": "MAINTENANCE CHIT\nForm 5-M\n\nDate: Day 49\nRequested by: Duty Clerk, Ward C\nLocation: Ward C corridor, lamp 3 (by the school corner)\n\nFault: Lamp flickers. Ballast audible (clicks every 6 sec). Light discoloured (violet). Children report the corridor looks narrower when it flickers. The corridor is not narrower. The corridor is the same. The lamp is the lamp.\n\nPriority: Low (light present, fault cosmetic + audible). High if the children stop using the corridor. The school is in the corridor. The school is the children. If the children stop, the school stops.\n\nAssigned to: Maintenance, queue.\n\nMaintenance note: Ballast failing. No replacement ballast. Lamp 3 is on the list. The list is long. The list is the list. If the children stop using the corridor, escalate to the Engineer. The Engineer is the Generator. The Generator is the knock. The knock is the list. Everything is the list.",
+      "tags": [
+        "maintenance",
+        "lamp",
+        "ward_c",
+        "school",
+        "ballast"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_chit_repair_pump",
+      "doc_type": "maintenance_chit",
+      "title": "Maintenance Chit — Water Pump, South Corridor",
+      "posted_day": 52,
+      "posted_by": "Duty Clerk, South Corridor",
+      "location": "Maintenance office inbox",
+      "material": "Pre-printed chit, fields filled in pen",
+      "transcript": "MAINTENANCE CHIT\nForm 5-M\n\nDate: Day 52\nRequested by: Duty Clerk, South Corridor\nLocation: South corridor, water pump (public)\n\nFault: Pump handle stiff. Requires two hands where it required one. Flow reduced. Water is clear, no discoloration. The pump is the pump. The pump is older than the shelter. The pump is older than most of the people in the shelter.\n\nPriority: Medium. The pump is the water. The water is the ration. A stiff pump is a slow ration. A slow ration is a queue. A queue is a frustration. A frustration is a fight. We do not fight over water. We have not fought over water. We do not want to fight over water.\n\nAssigned to: Maintenance, queue (position 4).\n\nMaintenance note: Handle gasket worn. No gasket. Leather substitute (boot, see Generator gasket precedent). The boot is the gasket. The boot is the pump. The pump is the boot. We are wearing the shelter. The shelter is wearing us.",
+      "tags": [
+        "maintenance",
+        "pump",
+        "water",
+        "gasket",
+        "boot"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_evacuation_dam",
+      "doc_type": "evacuation_order",
+      "title": "Evacuation Order — Downstream Settlements, North Dam",
+      "posted_day": 4,
+      "posted_by": "Dam Operator (relayed via Relay Station Kestrel-9)",
+      "location": "Gate house, received by radio, transcribed",
+      "material": "Handwritten on gate house log paper, radio transcription",
+      "transcript": "EVACUATION ORDER — RELAYED\n\nReceived: Day 4, 03:30, via Kestrel-9 relay\nOrigin: North Dam Control (operator, single)\n\nTEXT OF TRANSMISSION:\n\"This is North Dam. The spillway gate is stuck open. The reservoir is rising. I cannot close it alone. The manual winch takes two. I am one. If the water overtops the emergency spill it is the town downstream. I have sent my family to the high school. I am telling you to send everyone to the high school. The high school is the high ground. Send them now. I will stay on the winch. I will call when the gate is closed or when the gate is not closed. North Dam out.\"\n\nAction taken by Gate House:\n- Runner dispatched to downstream settlements at 03:45.\n- Captain of the Gate notified 04:00.\n- Evacuation to high ground (school) begun 04:15.\n\nFollow-up (Day 5, dawn): Dam operator's family confirmed at the school. Dam operator confirmed at the dam. Gate closed, Day 5, 04:00 (approx). Reservoir dropping. The town is fine. The town does not know. The town is the high school now.\n\nRelay note: The dam operator said the winch takes two. He is one. He closed it. The math is wrong. The math is the math. The man is the man. The man is more than the math.",
+      "tags": [
+        "evacuation",
+        "dam",
+        "relay",
+        "kestrel_9",
+        "high_school"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_quarantine_ward_b",
+      "doc_type": "quarantine_order",
+      "title": "Quarantine Order — Ward B, Respiratory",
+      "posted_day": 19,
+      "posted_by": "Doctor (senior)",
+      "location": "Ward B door, posted; copy to Captain of the Gate",
+      "material": "Pre-printed order, stamped QUARANTINE, fields filled in pen",
+      "transcript": "QUARANTINE ORDER\nForm 6-Q\n\nDate: Day 19\nEffective: immediately\nLocation: Ward B (full ward)\n\nReason: Respiratory presentation in two patients, consistent pattern, possible contagion. Culturing unavailable. Precautionary quarantine pending clinical outcome.\n\nRestrictions:\n- No entry to Ward B except: medical staff, Duty Clerk (supervised).\n- No exit from Ward B except: medical transfer (see Transfer Order 3-T-05, to Clinic sheeted bay).\n- Meals delivered to the ward door. Ward B residents do not attend the mess hall.\n- Water: filled at the pump by the Duty Clerk, delivered. Ward B residents do not use the public pump.\n\nDuration: Until lifted by the Doctor. The Doctor lifts when the cough is clear or the cause is clear. Neither is clear. The quarantine is the quarantine until it is not.\n\nDoctor note: The sheet is not a wall. The sheet is what we have between the sick and the not-sick. The sheet is not medicine. The sheet is the policy. The policy is the sheet. I am the doctor. I am also the policy. That is not in the form. The form has a field for the doctor. The form does not have a field for the policy. The policy is in the margin. The margin is where the doctor writes. The margin is where the doctor lives.",
+      "tags": [
+        "quarantine",
+        "ward_b",
+        "respiratory",
+        "clinic",
+        "sheet"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_amnesty_weapons",
+      "doc_type": "amnesty_notice",
+      "title": "Notice — Weapons Amnesty, Voluntary Surrender",
+      "posted_day": 60,
+      "posted_by": "Captain of the Gate",
+      "location": "Gate house notice board, posted at all wards",
+      "material": "Pre-printed notice, fields filled in pen, stamped VOLUNTARY",
+      "transcript": "NOTICE — WEAPONS AMNESTY\n\nDate: Day 60\nPosted by: Captain of the Gate\n\nAll residents are invited to voluntarily surrender personal weapons to the Gate House for the duration of the shelter emergency.\n\nThis is not a search. This is not a seizure. This is an invitation. The invitation is voluntary. The voluntary is the word. The word is the word.\n\nSurrendered weapons will be:\n- Catalogued (by the Duty Clerk)\n- Stored (Gate House armory, locked)\n- Returned to the owner on departure or on lifting of the emergency.\n\nResidents who do not surrender will not be penalised. Residents who do not surrender will be asked why. The asking is not a penalty. The asking is the asking.\n\nReason: The shelter is a close community. The close community is a close temper. The close temper is a close violence. We have not had the violence. We do not want the violence. The weapons are the violence, waiting. The waiting is the reason.\n\nCaptain's note: I am not taking your blade. I am asking for your blade. The asking is the difference. If I take the blade, I am the violence. If I ask for the blade, I am the Captain. I am the Captain. I am asking.",
+      "tags": [
+        "amnesty",
+        "weapons",
+        "voluntary",
+        "gate_house"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_census_correction",
+      "doc_type": "census_correction",
+      "title": "Census Correction — Headcount, Day 62",
+      "posted_day": 62,
+      "posted_by": "Quartermaster",
+      "location": "Quartermaster's office, filed; copy to Captain of the Gate",
+      "material": "Pre-printed form, fields filled in pen, stamped CORRECTED",
+      "transcript": "CENSUS CORRECTION\nForm 2-C\n\nDate of correction: Day 62\nCorrected by: Quartermaster\n\nPrevious headcount (Day 30): 140\nPrevious basis: 140 (provisioning basis)\n\nCorrected headcount (Day 62): 147\nReason for correction: Loma family arrival (Day 14, +7) not entered in the Day 30 census. The Lomas were entered in the ration ledger (Day 15) but not in the headcount census (Day 30). The ration ledger and the headcount census are two books. They should be one book. They are two books. This is the correction. The correction is the two books agreeing.\n\nImpact:\n- Provisioning basis exceeded by 7.\n- Ration reductions in effect since Day 23 (see Denial 12-D-04) were applied to a basis of 140. The basis is 147. The reductions were correct for 140 and are correct for 147. The 7 are the 7. The 7 eat. The 7 have always eaten. The 7 were not in the book. The book was wrong. The book is corrected. The 7 are in the book. The 7 have been in the shelter since Day 14. The 7 are the Lomas. The 7 include an infant who is not an infant. The form is wrong. The form is corrected. The correction is the form.\n\nQuartermaster note: I have been carrying two numbers. The number in the book and the number in the shelter. The number in the book was 140. The number in the shelter was 147. The number in the book is now 147. The number in the shelter is 147. The numbers are the same. The book is the honest place. The book is now honest. I am tired. The tired is not in the form. The tired is in the margin.",
+      "tags": [
+        "census",
+        "correction",
+        "headcount",
+        "loma",
+        "honesty"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_roster_kitchen_w9",
+      "doc_type": "shift_schedule",
+      "title": "Kitchen Roster — Week 9",
+      "posted_day": 60,
+      "posted_by": "Mess Hall Steward",
+      "location": "Mess hall entrance, by the schedule board",
+      "material": "Handwritten on the back of a prior roster",
+      "transcript": "KITCHEN ROSTER — WEEK 9\n\nMon — Chef + Helper (Rima, the elder Loma)\nTue — Chef + Helper (Boris)\nWed — Chef + Helper (Rima)\nThu — Chef + Helper (Boris)\nFri — Chef + Helper (Rima)\nSat — Chef + Helper (the Scavenger, volunteered)\nSun — Chef alone (Helper day off)\n\nNOTES:\n- Rima is the best helper. Rima does not say so. The bread says so.\n- Boris is the fastest. Boris does not say so. The bread says so.\n- The Scavenger volunteered for Saturday. The Scavenger does not usually volunteer for the kitchen. The Scavenger brought chalk for the Teacher on Day 35. The Scavenger is bringing herself in. I am letting her. The kitchen is the letting-in.\n- Sunday the Chef is alone. The Chef is always alone on Sunday. The Sunday bread is the Chef's bread. The Sunday bread is the best bread. The alone is the bread.",
+      "tags": [
+        "kitchen",
+        "roster",
+        "week_9",
+        "scavenger"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_notice_laundry",
+      "doc_type": "general_notice",
+      "title": "Notice — Laundry Suspension",
+      "posted_day": 27,
+      "posted_by": "Duty Clerk, Ward B",
+      "location": "Ward B notice board, pinned over the wash basin",
+      "material": "Handwritten on a scrap of inventory paper",
+      "transcript": "NOTICE — LAUNDRY\n\nLaundry service is suspended for Ward B until further notice.\n\nThis is not a punishment. This is the water. The water is the ration. The ration is the laundry. The laundry is not the ration. The laundry is suspended. The water is not.\n\nWard B residents are provided with one change of linen from stores (see Steward). The linen is the linen. The linen is not yours. The linen is returned when the laundry resumes. The laundry resumes when the water allows. The water allows when the pump allows. The pump is the boot. The boot is the gasket. The gasket is the list.\n\nWear the linen. Wear it twice. Wear it three times. The third time is the linen. The linen is the linen. We are the laundry. We are wearing the shelter.\n\nDuty Clerk, Ward B",
+      "tags": [
+        "laundry",
+        "suspension",
+        "ward_b",
+        "water",
+        "linen"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_chit_door_hatch",
+      "doc_type": "maintenance_chit",
+      "title": "Maintenance Chit — Hatch Seal, Main Entrance",
+      "posted_day": 18,
+      "posted_by": "Gate House Sentry",
+      "location": "Maintenance office inbox, marked PRIORITY",
+      "material": "Pre-printed chit, fields filled in pen, stamped PRIORITY",
+      "transcript": "MAINTENANCE CHIT\nForm 5-M\n\nDate: Day 18\nRequested by: Gate House Sentry (night)\nLocation: Main entrance hatch, outer seal\n\nFault: Outer hatch seal perished. Rubber cracked through. Secondary seal (rope + tar, see prior repair) holding but compressing. Wind audible through the seal at night. Wind audible is air audible. Air audible is rad audible. Rad audible is not acceptable.\n\nPriority: HIGH. The hatch is the door. The door is the shelter. The seal is the door. The seal is the shelter.\n\nAssigned to: Maintenance, IMMEDIATE.\n\nMaintenance note: Rubber perished. No rubber. Rope + tar (second application, see Day 9). Tar is low. Rope is low. The rope is the seal. The tar is the seal. The seal is the rope and the tar. We are sealing the door with what we have. What we have is rope and tar. The rope and the tar are the door. The door is the shelter. We are the shelter. We are the rope and the tar.",
+      "tags": [
+        "maintenance",
+        "hatch",
+        "seal",
+        "priority",
+        "rope_tar"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_notice_school",
+      "doc_type": "general_notice",
+      "title": "Notice — School Hours, Ward C Corridor",
+      "posted_day": 16,
+      "posted_by": "Teacher Suki",
+      "location": "Ward C corridor, by the chalk diagram",
+      "material": "Handwritten on the back of a meal notice",
+      "transcript": "NOTICE — SCHOOL\n\nThe school is in the Ward C corridor, by the lamp, 10:00-11:00, daily.\n\nAll children welcome. All children are the school.\n\nThe lesson is the water cycle. The lesson is also the ash cycle. The lesson is also the chalk. The chalk is the lesson. The chalk is also almost gone. The lesson is also almost gone. The lesson is not the chalk. The lesson is the cycle. The cycle is not gone. The cycle is the sky and the sky is still there, even when it is grey. Especially when it is grey.\n\nThe teacher is Suki. Suki is the teacher. Suki is also the cycle. The cycle is also the teacher. The children are also the cycle. The school is the cycle. The school is the corridor. The corridor is the school.\n\nTeacher Suki",
+      "tags": [
+        "school",
+        "children",
+        "ward_c",
+        "cycle",
+        "chalk"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_req_seed_potato_01",
+      "doc_type": "requisition_form",
+      "title": "Requisition — Seed Potatoes, Cold Frame",
+      "posted_day": 8,
+      "posted_by": "Farmer Petr",
+      "location": "Quartermaster's inbox, Main Office",
+      "material": "Pre-printed form, fields filled in pencil, dirt on the corner",
+      "transcript": "REQUISITION — SEED STOCK\nForm 7-S (rev. 1)\n\nRequesting unit: Allotment 7 (cold frame, south wall)\nDate of request: Day 8\nRequested by: Petr (farmer, senior)\n\nItem: Seed potatoes (winter variety, stored)\nQuantity requested: 4 kg\nPurpose: Planting, cold frame, against the season\n\nJustification: The season is not the season. The spring is not the spring. The ground is workable now. The wall is south. The wall remembers the sun. I am betting on the wall. The bet is the bet. The potato is the bet. The bet is the spring. I am planting the spring in the autumn because the autumn is the only season I have.\n\nQuartermaster action:\n[ ] Approved — full quantity\n[ ] Approved — reduced quantity: ______ kg\n[ ] Denied — reason: ____________________\n\nQuartermaster signature: ____________________  Date: ______\n\n---\nQM NOTE (added Day 8): Approved, 4 kg. The farmer is older than the calendar. If the farmer says plant, I plant the potato. The calendar is wrong. The farmer is not. The harvest, if there is a harvest, is the spring. If there is no harvest, the 4 kg is the flour we did not lose. I am betting on the farmer. The farmer is betting on the wall. The wall is betting on the sun. The sun is gone. Someone is wrong. We are all betting.",
+      "tags": [
+        "requisition",
+        "seed_potato",
+        "cold_frame",
+        "season",
+        "bet"
+      ]
+    }
+  ]
+}

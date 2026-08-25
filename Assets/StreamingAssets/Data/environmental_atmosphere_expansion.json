@@ -1,0 +1,3180 @@
+{
+  "schema_version": 1,
+  "collection_id": "environmental_atmosphere_expansion",
+  "environmental_texts": [
+    {
+      "id": "atm_loc_approach_thermal_plant",
+      "location": "geothermal_plant_ruins",
+      "text": "The road surface has buckled here, pushed up from below by something that still ticks. Steam leaks from a cracked valve pit to the left, and the air smells of sulfur and heated concrete. A faded hazard diamond on the gatehouse reads 4-3-2-W. The chain on the gate has been cut, not unlocked.",
+      "type": "location_description",
+      "tags": [
+        "approach",
+        "thermal",
+        "steam",
+        "hazard"
+      ],
+      "atmosphere": [
+        "danger",
+        "industrial",
+        "unstable"
+      ],
+      "sense": "smell_sulfur_heat",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_loc_arrival_flooded_subway",
+      "location": "flooded_subway_depot",
+      "text": "Water sits in the tunnel mouth, black and still, reflecting nothing. The tiled station name is chipped down to its first letter. Something has dragged a row of seats into a barricade across the stairwell, then abandoned the effort. The echo of your step comes back a half-beat late, as if the tunnel kept one.",
+      "type": "location_description",
+      "tags": [
+        "arrival",
+        "flooded",
+        "tunnel",
+        "silence"
+      ],
+      "atmosphere": [
+        "isolation",
+        "decay",
+        "cold"
+      ],
+      "sense": "sound_echo_water_drip",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_loc_first_sight_seed_vault",
+      "location": "subterranean_seed_vault",
+      "text": "The outer door is a steel plug, frost-rimed, set into a hillside that no longer resembles anything engineered. A wind-up siren on a post has been bent ninety degrees by weather or impact. The keypad is dark. A handwritten label taped to the frame reads, in careful block letters: CLOSED INDEFINITELY. DO NOT FORCE. Below it, in different ink: It still opens. It always opens.",
+      "type": "location_description",
+      "tags": [
+        "arrival",
+        "vault",
+        "frost",
+        "contradiction"
+      ],
+      "atmosphere": [
+        "isolation",
+        "hope",
+        "danger"
+      ],
+      "sense": "touch_cold_metal",
+      "time_phase": "any",
+      "weather": "snow",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_loc_departure_train",
+      "location": "bus_reversal_loop",
+      "text": "The last bus still sits in the loop, doors open, schedule board still showing a route to a district that was renamed and then unmade. The driver's seat has a coat folded on it. The coat is cold. The keys are in the ignition and the fuel gauge reads empty, which is the only honest thing on the dashboard. The bus is not waiting. The bus has finished waiting and has not yet been told.",
+      "type": "location_description",
+      "tags": [
+        "departure",
+        "bus",
+        "schedule"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_abandoned_bus",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_loc_approach_geothermal_borehole",
+      "location": "geothermal_borehole_site",
+      "text": "The borehole hums underfoot, a vibration you feel in the soles before you hear it in the ears. The wellhead is hot to the touch and the steam from it has a mineral smell, like a bath house, like a hospital. A shed beside the wellhead has a door that does not close and a bench that has been sat on recently, the dust disturbed in the shape of a person who waited and then went. The borehole does not care that they went. The borehole is still going.",
+      "type": "location_description",
+      "tags": [
+        "approach",
+        "geothermal",
+        "borehole"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation",
+        "despair"
+      ],
+      "sense": "touch_borehole_hum",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_sens_deprivation_basement",
+      "location": "sub_level_4_transit",
+      "text": "The lights died three turns ago. You hold one hand against the wall to keep count of the doors. The concrete is the same temperature as your palm, and after a while you cannot tell where your hand ends. Your breathing sounds like someone else's. You count steps to keep the count honest.",
+      "type": "sensory_deprivation",
+      "tags": [
+        "darkness",
+        "touch",
+        "disorientation"
+      ],
+      "atmosphere": [
+        "isolation",
+        "danger",
+        "cold"
+      ],
+      "sense": "touch_wall_temperature",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_sens_deprivation_whiteout",
+      "location": "abandoned_ski_resort",
+      "text": "Snow has erased the slope. There is no horizon, only a uniform grey that swallows distance. You walk by the line of the lift cables, which sag lower than they should. Your footprints fill behind you before you can turn to check them. The cold does not feel cold anymore. That is the part that should worry you.",
+      "type": "sensory_deprivation",
+      "tags": [
+        "whiteout",
+        "cold",
+        "disorientation"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation",
+        "cold"
+      ],
+      "sense": "sight_whiteout",
+      "time_phase": "day",
+      "weather": "snow_heavy",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_sens_deprivation_deep_mine",
+      "location": "collapsed_salt_mine",
+      "text": "Deep in the shaft the lamp makes a sphere the size of a body and beyond it is not darkness, it is absence. The salt walls weep and the weeping is the only clock. You have been walking long enough that the way back has become a theory. You stop. You listen. The mine does not answer. You are the only thing in here that knows you are in here.",
+      "type": "sensory_deprivation",
+      "tags": [
+        "mine",
+        "darkness",
+        "depth"
+      ],
+      "atmosphere": [
+        "isolation",
+        "danger",
+        "despair"
+      ],
+      "sense": "sound_salt_weep",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_sens_deprivation_white_room",
+      "location": "low_background_lab",
+      "text": "The low-background room is white and lit and silent and without feature, and after a few minutes the white stops being a color and starts being a sound, a high thin ringing that is not in the room but in the ear, or in the mind, or in the space between. You came here to measure a thing that is faint, and the room is so quiet that you become the faint thing. You leave the measurement for another day. You leave the room for another person. The room does not mind.",
+      "type": "sensory_deprivation",
+      "tags": [
+        "white_room",
+        "silence",
+        "lab"
+      ],
+      "atmosphere": [
+        "isolation",
+        "danger",
+        "mystery"
+      ],
+      "sense": "sound_white_ring",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_env_load_dust_storm",
+      "location": "ash_dune_cemetery",
+      "text": "The wind carries grit fine enough to breathe in and coarse enough to taste. It strips exposed skin raw in minutes and finds every gap in your gear. You learn to walk at an angle, head down, mouth shut. The dunes move between morning and evening. A marker you passed at dawn is gone by noon, or buried, or never there.",
+      "type": "environmental_load",
+      "tags": [
+        "storm",
+        "dust",
+        "ash",
+        "exposure"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "movement"
+      ],
+      "sense": "touch_grit_wind",
+      "time_phase": "any",
+      "weather": "dust_storm",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_env_load_deep_cold",
+      "location": "frozen_river_barge",
+      "text": "Below minus thirty, metal stops being a material and becomes a decision. A bare hand on a railing will hold the railing. Tools shatter if dropped. Fuel thickens. You stop sweating because the sweat has nowhere to go. The river has not frozen solid; it has frozen in motion, the current locked mid-bend under a skin of black ice that drums when you step on it.",
+      "type": "environmental_load",
+      "tags": [
+        "cold",
+        "ice",
+        "exposure",
+        "river"
+      ],
+      "atmosphere": [
+        "danger",
+        "cold",
+        "isolation"
+      ],
+      "sense": "touch_extreme_cold",
+      "time_phase": "any",
+      "weather": "deep_cold",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_env_load_altitude",
+      "location": "summit_relay",
+      "text": "The air is thin enough that effort costs twice and rest costs half of what it should. A flight of stairs here is a negotiation. You breathe through the nose to keep the moisture in. The view is the payment and the view is the reason no one lives here, because the view is also the wind and the wind is also the cold and all three are the same thing at this height.",
+      "type": "environmental_load",
+      "tags": [
+        "altitude",
+        "thin_air",
+        "cold"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation",
+        "movement"
+      ],
+      "sense": "touch_thin_air",
+      "time_phase": "any",
+      "weather": "wind",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_env_load_mud",
+      "location": "canyon_mudflow_hazard_reports",
+      "text": "The mud here is not ground, it is a process. It moves in the cold the way water moves in the warm, slowly, with a weight that does not stop when you stop watching. A boot held too long is a boot held forever. You learn to step and lift and step and lift and never rest the weight. The mud is patient in the way that cold is patient, which is the way of a thing that has all the time there is.",
+      "type": "environmental_load",
+      "tags": [
+        "mud",
+        "movement",
+        "hazard"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "movement"
+      ],
+      "sense": "touch_mud_suction",
+      "time_phase": "any",
+      "weather": "thaw",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_threat_detection_fresh_tracks",
+      "location": "scavenger_trail",
+      "text": "Boot prints in the ash, two sets, heading the same way you are. The tread pattern is civilian. One stride is longer than the other; one of them is carrying something heavy, or hurt. They are less than an hour old. The ash has not settled back into them. You did not make them. Someone is ahead of you.",
+      "type": "threat_detection",
+      "tags": [
+        "tracks",
+        "pursuit",
+        "awareness"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sight_tracks",
+      "time_phase": "any",
+      "weather": "ash",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_threat_detection_wire_trip",
+      "location": "collapsed_building",
+      "text": "A length of wire crosses the hallway at ankle height, run from a door handle to a pipe. It is new wire, bright where it has been bent. Whatever it triggers is no longer here, or no longer works, or is waiting for you to finish stepping over it. The dust on the floor on the far side is undisturbed. Nothing has come back this way.",
+      "type": "threat_detection",
+      "tags": [
+        "trap",
+        "wire",
+        "awareness"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sight_wire",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_threat_detection_silence_dogs",
+      "location": "scavenger_camp",
+      "text": "The camp dogs, if there are any, are quiet. That is the threat. A camp with dogs should have dogs that announce you. These do not, which means they have been told not to, which means someone saw you before the dogs did. You are already inside the perimeter of someone's attention. Walk as if you have been invited, until you know you have not.",
+      "type": "threat_detection",
+      "tags": [
+        "dogs",
+        "silence",
+        "camp"
+      ],
+      "atmosphere": [
+        "danger",
+        "community"
+      ],
+      "sense": "sound_no_dogs",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_threat_detection_fresh_ash_disturbance",
+      "location": "ash_dune_cemetery",
+      "text": "The ash has been disturbed in a line that is not the wind, the line too straight and too recent. Something dragged, or was dragged, from the marker to the low wall. The ash has not filled the line back in, which means it was made in the last windless hour, and the wind has been still since before you arrived. You did not make the line. The line was made by something that is still here, or was, and left by the same route it came, which is the line.",
+      "type": "threat_detection",
+      "tags": [
+        "tracks",
+        "ash",
+        "drag"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sight_ash_line",
+      "time_phase": "any",
+      "weather": "ash",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_stealth_awareness_floorboards",
+      "location": "suburban_house",
+      "text": "The floor here is original pine, warped and cupped by years of damp. Every fourth board has a voice. You learn the safe ones by pressing with your toe before committing your weight. The family upstairs, if there is one, has not heard you yet. The wind covers the rest. You move when the wind moves.",
+      "type": "stealth_awareness",
+      "tags": [
+        "stealth",
+        "sound",
+        "house"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sound_floor_creak",
+      "time_phase": "any",
+      "weather": "wind",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_stealth_awareness_breathing",
+      "location": "old_library_cache",
+      "text": "You hold your breath and listen for someone else holding theirs. The building answers with its own small sounds: a settling shelf, a draft under a door, the tick of cooling pipes. You sort the living sounds from the dead ones. The living ones keep time. So far, you are the only one keeping it.",
+      "type": "stealth_awareness",
+      "tags": [
+        "stealth",
+        "silence",
+        "listening"
+      ],
+      "atmosphere": [
+        "isolation",
+        "danger"
+      ],
+      "sense": "sound_silence",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_stealth_awareness_water_crossing",
+      "location": "flooded_subway_depot",
+      "text": "Moving water is louder than still water and slower than dry ground. You choose the still parts, where the tunnel has pooled rather than flowed, and you set each foot down without pushing. The water does not splash if you do not let it. The sound you are afraid of is the sound of your own impatience, given back to you by the tunnel.",
+      "type": "stealth_awareness",
+      "tags": [
+        "stealth",
+        "water",
+        "tunnel"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sound_water_step",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_stealth_awareness_gear_rattle",
+      "location": "scrap_neuromancer_camp",
+      "text": "Your gear rattles: the canteen on the carabiner, the tin cup on the canteen, the spare rounds in the loose pocket. You learn to muffle each one, with cloth, with tape, with the pressure of a hand. You cannot muffle all of them at once. You choose the loudest and you carry the rest as a debt, to be paid if you have to move fast, which is the moment you can least afford to pay it. Silence is a budget. You spend it where it counts.",
+      "type": "stealth_awareness",
+      "tags": [
+        "stealth",
+        "gear",
+        "sound"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation",
+        "survival"
+      ],
+      "sense": "sound_gear_rattle",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_loot_weight_full_pack",
+      "location": "tech_cache",
+      "text": "The pack pulls backward now when you stand, and the straps have cut new lines into your shoulders through the coat. You have started choosing by density, not value: the batteries stay, the spare lamp stays, the book does not. You will regret at least one of these choices by tonight. You always do.",
+      "type": "loot_weight",
+      "tags": [
+        "encumbrance",
+        "choice",
+        "pack"
+      ],
+      "atmosphere": [
+        "survival",
+        "despair"
+      ],
+      "sense": "touch_strap_pressure",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_loot_weight_choice_fuel_vs_food",
+      "location": "diesel_tank_farm",
+      "text": "You can carry the jerry can or the food, not both, and the jerry can is worth three days of warmth and the food is worth three days of you. You stand between them and the arithmetic does not help because the arithmetic is the same. You take the fuel. You will eat the fuel's worth in cold instead of in hunger, and you will find out tonight which one you should have taken.",
+      "type": "loot_weight",
+      "tags": [
+        "choice",
+        "fuel",
+        "food"
+      ],
+      "atmosphere": [
+        "survival",
+        "despair"
+      ],
+      "sense": "touch_jerry_can",
+      "time_phase": "any",
+      "weather": "cold",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_loot_weight_water_weight",
+      "location": "pump_station_nine",
+      "text": "Water is the heaviest thing you carry and the only thing you cannot leave. A liter is a kilogram and a day is two liters and a week is a weight you cannot lift. You carry the water and you carry the cost of the water, which is the distance you could have traveled if the water were not there. You make the trade every morning and you resent it every evening and you make it again the next morning, because the alternative is not a morning.",
+      "type": "loot_weight",
+      "tags": [
+        "water",
+        "weight",
+        "choice"
+      ],
+      "atmosphere": [
+        "survival",
+        "despair"
+      ],
+      "sense": "touch_water_weight",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_encumbrance_strain_stairs",
+      "location": "relay_mast",
+      "text": "Four flights with a full load and your legs begin to lie to you about which step is next. Your knees negotiate each riser separately. You stop on the landing and your pulse keeps climbing the stairs without you. The weight does not get heavier. You get slower. There is a difference.",
+      "type": "encumbrance_strain",
+      "tags": [
+        "encumbrance",
+        "fatigue",
+        "stairs"
+      ],
+      "atmosphere": [
+        "survival",
+        "despair",
+        "movement"
+      ],
+      "sense": "touch_weight_legs",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_extraction_vignette_narrow_window",
+      "location": "mirror_factory",
+      "text": "Out through the loading bay, across the yard, over the wall where the top course has fallen. You do not look back at the building; you look back at the gaps in it. The alarm, if there was one, has not found a voice yet. You move toward the tree line and do not run until the trees are close enough to touch. Then you run.",
+      "type": "extraction_vignette",
+      "tags": [
+        "escape",
+        "extraction",
+        "movement"
+      ],
+      "atmosphere": [
+        "danger",
+        "movement",
+        "hope"
+      ],
+      "sense": "sight_escape_route",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_extraction_vignette_storm_cover",
+      "location": "magnetic_anomaly_crater",
+      "text": "The rain comes in sideways and you let it. It blurs your outline, drowns your footfalls, fills the crater with noise. You keep the ridge to your left and count drainages. Three more and the road bends south. You do not stop to rest. Rest is how the rain finds your heat and tells someone where you were.",
+      "type": "extraction_vignette",
+      "tags": [
+        "escape",
+        "rain",
+        "cover"
+      ],
+      "atmosphere": [
+        "danger",
+        "movement",
+        "cold"
+      ],
+      "sense": "touch_rain_horizontal",
+      "time_phase": "any",
+      "weather": "rain_heavy",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_extraction_vignette_dawn_border",
+      "location": "garrison_checkpoint_gamma",
+      "text": "Dawn, and the checkpoint is grey, and the barrier is down, and the guard is not at the post but the post is not empty. You cross in the grey, in the gap between the light and the guard's first look. You do not run. Running is a shape, and the grey is not kind to shapes. You walk as if late for something that is not this.",
+      "type": "extraction_vignette",
+      "tags": [
+        "escape",
+        "dawn",
+        "checkpoint"
+      ],
+      "atmosphere": [
+        "danger",
+        "movement",
+        "hope"
+      ],
+      "sense": "sight_grey_checkpoint",
+      "time_phase": "dawn",
+      "weather": "fog",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_extraction_vignette_ridge_line",
+      "location": "abandoned_ski_resort",
+      "text": "Up the lift pylon, across the cable, onto the ridge, and the ridge is a line of wind and you walk it like a beam. Below you on both sides the slope is white and wrong and you do not look at it. You look at the ridge and the ridge is narrow and the ridge is the only safe thing and the safe thing is a line you walk. You make the ridge and you drop over the far side and you do not stand up until you are below the line, because the line is the line that sees you and you do not want to be seen.",
+      "type": "extraction_vignette",
+      "tags": [
+        "escape",
+        "ridge",
+        "ridge_line"
+      ],
+      "atmosphere": [
+        "danger",
+        "movement",
+        "cold"
+      ],
+      "sense": "touch_ridge_wind",
+      "time_phase": "day",
+      "weather": "snow_heavy",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_entryway_door_sealed",
+      "location": "municipal_archive",
+      "text": "The door is steel, painted grey, with a push-bar and a small wired-glass panel that has been starred but not broken. A strip of tape across the frame reads CONTAMINATED - DO NOT ENTER - AUTH. The tape is original. The lock has been picked and relocked so many times the keyhole has lost its shape. Someone still considers this door a door.",
+      "type": "entryway_description",
+      "tags": [
+        "door",
+        "entry",
+        "sealed"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_door_sealed",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_entryway_window_broken",
+      "location": "suburban_house",
+      "text": "The window frame holds no glass. The sill is lined with a strip of cloth, grey and stiff, laid there so the climb in does not cut you. Someone has been considerate of the next person, or of themselves on the way out. A child's drawing is pinned inside the frame, facing out, as if the house is still expected to have children.",
+      "type": "entryway_description",
+      "tags": [
+        "window",
+        "entry",
+        "consideration"
+      ],
+      "atmosphere": [
+        "despair",
+        "hope",
+        "isolation"
+      ],
+      "sense": "sight_window_cloth",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "broken"
+    },
+    {
+      "id": "atm_entryway_hatch_bunker",
+      "location": "government_bunker",
+      "text": "The hatch is steel set in concrete, with a wheel that turns and a counterweight that no longer assists. A rubber seal has perished and been replaced with rope and tar, twice, by the look of it. The wheel turns hard and then easy and then hard again, which means the mechanism is bent, not broken. Someone has been opening this hatch regularly and has not been fixing it. They will be back.",
+      "type": "entryway_description",
+      "tags": [
+        "hatch",
+        "bunker",
+        "mechanism"
+      ],
+      "atmosphere": [
+        "isolation",
+        "community",
+        "danger"
+      ],
+      "sense": "touch_hatch_wheel",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_entryway_gate_code",
+      "location": "checkpoint_kilo_armory",
+      "text": "The gate has a keypad and the keypad has a code and the code has been written on the wall beside the keypad in chalk, in a hand that is not the hand that set the code. The chalk code works. The gate opens. The chalk is a kindness left by someone who came after the gatekeeper and before you, and the kindness is the kind that assumes the next person is welcome, which is a bet, and the bet has been paying out, and you are the latest payout, and you do not know what you owe.",
+      "type": "entryway_description",
+      "tags": [
+        "gate",
+        "code",
+        "kindness"
+      ],
+      "atmosphere": [
+        "community",
+        "hope",
+        "danger"
+      ],
+      "sense": "sight_chalk_code",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_room_search_kitchen",
+      "location": "suburban_house",
+      "text": "Cupboards open, one by one. The first three hold nothing but the smell of old spice and a mug with a chip in the rim. The fourth has been emptied and refilled with candles, counted out in dozens, each one shaved flat on the bottom so it stands. Someone lived here after the lights went, and they were organized, and they are not here now.",
+      "type": "room_search",
+      "tags": [
+        "search",
+        "kitchen",
+        "candles"
+      ],
+      "atmosphere": [
+        "discovery",
+        "isolation",
+        "history"
+      ],
+      "sense": "smell_old_spice",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_room_search_office",
+      "location": "transit_authority_hq",
+      "text": "Desk drawers, top to bottom. The top drawer has a roster and a pen that no longer writes. The middle drawer is locked and has been forced; inside, a photograph of a retirement party and a tin of mints, still sealed. The bottom drawer is full of water and a single shoe. You close the bottom drawer.",
+      "type": "room_search",
+      "tags": [
+        "search",
+        "office",
+        "oddity"
+      ],
+      "atmosphere": [
+        "discovery",
+        "despair",
+        "isolation"
+      ],
+      "sense": "sight_drawer_contents",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "water_damaged"
+    },
+    {
+      "id": "atm_room_search_locker_room",
+      "location": "public_swimming_baths",
+      "text": "Lockers, row on row, most open, a few still locked. The locked ones have been locked by people who expected to come back for what was inside. You do not force them. The unlocked ones hold towels turned to dust, a comb with three teeth, a key to a car that is now a planter in the lot. One locker, unlocked, holds a single pair of shoes, clean, paired, placed toe-down, as if for morning. You close it gently.",
+      "type": "room_search",
+      "tags": [
+        "search",
+        "lockers",
+        "baths"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_locker_shoes",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_room_search_attic",
+      "location": "suburban_house",
+      "text": "The attic is the last room and the last room is where people keep the things they cannot throw away and cannot use. A box of photographs, a wedding dress in a bag, a child's bicycle with the training wheels still on. The things here are the things that survived because they were forgotten, which is the only kind of survival that does not require choosing. You take nothing. You leave the attic to the things that are already good at being left.",
+      "type": "room_search",
+      "tags": [
+        "search",
+        "attic",
+        "keepsakes"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_attic_box",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_threshold_warning_radiation",
+      "location": "bio_remediation_lab",
+      "text": "A yellow trefoil on the threshold, painted by hand, with a number beside it that someone has crossed out and written a new, higher number over. The doorframe has been taped with plastic sheeting, half-collapsed. The air on the other side tastes different. You have been warned by someone who came back out, at least once.",
+      "type": "threshold_warning",
+      "tags": [
+        "radiation",
+        "threshold",
+        "warning"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "taste_metallic_air",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_threshold_warning_floor",
+      "location": "collapsed_salt_mine",
+      "text": "The floor changes from stone to salt, and then from salt to nothing, over the width of a single step. A rope has been strung across at shin height with a rag tied to it. The rag is old. The drop beyond it is older. You do not test the rope.",
+      "type": "threshold_warning",
+      "tags": [
+        "threshold",
+        "drop",
+        "warning"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sight_rope_marker",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_threshold_warning_gas",
+      "location": "submerged_data_center",
+      "text": "The air at the top of the stairwell is fine and the air at the bottom is not, and the difference is the height of a man. A gas has pooled in the lower level, heavier than air, invisible, and it has been there long enough that the dust has settled on top of it. Do not go down to check. The dust is the warning. The dust is lying flat where nothing has walked in a long time.",
+      "type": "threshold_warning",
+      "tags": [
+        "gas",
+        "threshold",
+        "stairwell"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sight_flat_dust",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_threshold_warning_radiation_door",
+      "location": "submerged_data_center",
+      "text": "A radiation symbol on the inner door, painted after the outer door was sealed, which means someone was inside when the symbol went on and someone was outside when the symbol went on and the two someones disagreed about which side of the door was safe. The door is still sealed. The symbol is still bright. You do not open the door. You do not know which side won. You do not need to know. You know which side you are on.",
+      "type": "threshold_warning",
+      "tags": [
+        "radiation",
+        "door",
+        "disagreement"
+      ],
+      "atmosphere": [
+        "danger",
+        "mystery",
+        "despair"
+      ],
+      "sense": "sight_rad_symbol",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_collapse_warning_roof",
+      "location": "concrete_batching_plant",
+      "text": "The roof has begun to rain indoors. A fine, constant fall of dust, not enough to see in the air but enough to taste and to collect on the shoulders. A main beam has cracked along its length and the two halves no longer agree on where level is. The building is deciding. It has not decided yet. Do not give it a reason.",
+      "type": "collapse_warning",
+      "tags": [
+        "collapse",
+        "structural",
+        "dust"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair"
+      ],
+      "sense": "touch_dust_fall",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_collapse_warning_stair",
+      "location": "drowned_cinema",
+      "text": "The staircase has detached from the wall at the second landing and now hangs by its stringer alone. Each step flexes under your weight and does not return all the way. The lobby below is flooded and dark. You can hear the water moving, or you can hear the building moving. From up here they sound the same.",
+      "type": "collapse_warning",
+      "tags": [
+        "collapse",
+        "stairs",
+        "flood"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "isolation"
+      ],
+      "sense": "sound_structural_groan",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_collapse_warning_wall_bulge",
+      "location": "department_store",
+      "text": "The back wall of the stockroom has bulged inward, slowly, the way a wall does when the earth behind it has decided to move. The shelves nearest the wall have leaned away from it, as if the stockroom is trying to step aside. A crack runs floor to ceiling and the crack is wet. The wall is not going to fall today. It is going to fall on a day that has not been chosen yet, and you should not be the one who chooses it.",
+      "type": "collapse_warning",
+      "tags": [
+        "collapse",
+        "wall",
+        "bulge"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair"
+      ],
+      "sense": "sight_wall_crack",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_collapse_warning_floor_flex",
+      "location": "drowned_cinema",
+      "text": "The lobby floor flexes under your weight and the flex is not local, it travels, a wave that moves out from your foot and meets the walls and comes back. The floor is a membrane over the water below, and the water is the basement, and the basement is the foundation, and the foundation is the thing that has given up. Walk along the walls, where the floor meets the structure, and do not walk in the middle, where the floor meets only the water.",
+      "type": "collapse_warning",
+      "tags": [
+        "collapse",
+        "floor",
+        "water"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair"
+      ],
+      "sense": "touch_floor_flex",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_radiation_warning_hot_spot",
+      "location": "radar_array_spire",
+      "text": "The dosimeter ticks once, then again, then forgets to stop. You step back two paces and it slows. Forward one and it resumes. The hot spot is the size of a footprint and it is exactly where someone stood, once, for a long time. You mark the floor with chalk and you do not stand in the chalk.",
+      "type": "radiation_warning",
+      "tags": [
+        "radiation",
+        "hot_spot",
+        "dosimeter"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation",
+        "history"
+      ],
+      "sense": "sound_dosimeter_tick",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_radiation_warning_surface",
+      "location": "crashed_icebreaker_convoy",
+      "text": "Out here the contamination is not a place, it is a weather. It settles on the snow like a second snow, invisible, and the only proof is the counter and the way the ice near the hull has darkened in a fan-shape behind the broken reactor compartment. Walk where the ice is light. Do not eat the snow. Do not touch the hull. Do not stay for the view.",
+      "type": "radiation_warning",
+      "tags": [
+        "radiation",
+        "surface",
+        "snow",
+        "reactor"
+      ],
+      "atmosphere": [
+        "danger",
+        "cold",
+        "despair"
+      ],
+      "sense": "sight_discoloration",
+      "time_phase": "any",
+      "weather": "snow",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_radiation_warning_dosimeter_silent",
+      "location": "automated_mortar_pit",
+      "text": "The dosimeter is silent here, which is not the same as safe. The pit was cleaned, or the contamination was carried off by someone who did not know they were carrying it, or the reading is below the threshold of a tired instrument. Silence from a dosimeter is a thing you earn with a second instrument. You do not have a second instrument. You limit your minutes and you leave.",
+      "type": "radiation_warning",
+      "tags": [
+        "radiation",
+        "dosimeter",
+        "uncertainty"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sound_dosimeter_silent",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_radiation_warning_fuel_pool",
+      "location": "crashed_icebreaker_convoy",
+      "text": "The water in the reactor compartment has a glow to it that is not the sky, a faint blue that is the color of a thing that is happening to the water and not to the light. The glow is the warning and the warning is the color and the color is the thing you cannot look at for long without it being in your eyes later, when you close them. You do not look at the pool. You mark the pool. You leave. The glow does not leave you for a while, and that is the pool, still working, in you.",
+      "type": "radiation_warning",
+      "tags": [
+        "radiation",
+        "fuel_pool",
+        "glow"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "isolation"
+      ],
+      "sense": "sight_blue_glow",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_chemical_warning_chlorine",
+      "location": "lethe_water_treatment",
+      "text": "The chlorine room door is marked with a green band and a warning that the seal is broken. The air inside has a sweetness to it that is not air. Your eyes water before your nose tells you anything. Do not enter without a mask. Do not enter with a mask you have not tested. Do not enter to retrieve what you dropped. It is already gone.",
+      "type": "chemical_warning",
+      "tags": [
+        "chemical",
+        "chlorine",
+        "warning"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "smell_sweet_chlorine",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_chemical_warning_ammonia",
+      "location": "cold_store_atlantic",
+      "text": "Ammonia, sharp enough to bite the back of the throat. The refrigeration loop has failed somewhere behind the wall and the gas has pooled in the cold room, which is no longer cold. A frost line on the pipes shows where the level sat before it began to leak out. Stay below the line. Breathe through cloth, not through nothing.",
+      "type": "chemical_warning",
+      "tags": [
+        "chemical",
+        "ammonia",
+        "refrigeration"
+      ],
+      "atmosphere": [
+        "danger",
+        "cold"
+      ],
+      "sense": "smell_ammonia_sharp",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_chemical_warning_solvent",
+      "location": "printworks",
+      "text": "The solvent store has vented into the hall and the hall smells of a clean that is not clean. The fumes pool at floor level and rise as the day warms. A rag left on a bench has dried into a shape that means it was soaked in something that evaporated and left its weight behind. Do not light a flame in this hall. Do not assume the fumes are gone because you cannot smell them anymore. That is the fumes winning.",
+      "type": "chemical_warning",
+      "tags": [
+        "chemical",
+        "solvent",
+        "fumes"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "smell_solvent",
+      "time_phase": "day",
+      "weather": "warm",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_chemical_warning_acid_mist",
+      "location": "bio_remediation_lab",
+      "text": "A mist in the lab that is not a mist, a haze that hangs in the still air and does not move when you move. It is the color of nothing, which is to say it is invisible, and you know it is there because the metal near the floor is etched and the rubber seals are soft. Do not walk through it. Do not let it touch the skin. It is not a gas and it is not a vapor and it is not safe. It is a thing that was kept in a jar that is no longer a jar.",
+      "type": "chemical_warning",
+      "tags": [
+        "chemical",
+        "acid",
+        "mist"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sight_etched_metal",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_biological_warning_mold",
+      "location": "the_allotments",
+      "text": "The glass of the greenhouse has mostly gone, and what remains has grown a pelt of black mold along the bars, thick enough to drip. The soil inside is warm and wrong. Do not disturb the mold. Do not breathe near it. The warmth is not the sun. Something in the soil is still working.",
+      "type": "biological_warning",
+      "tags": [
+        "biological",
+        "mold",
+        "greenhouse"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "isolation"
+      ],
+      "sense": "smell_must_warm",
+      "time_phase": "any",
+      "weather": "humid",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_biological_warning_water",
+      "location": "artesian_well_contamination_logs",
+      "text": "The well still flows, which is the problem. The water is clear and cold and carries nothing you can see. The logbook on the pump house bench lists the last six samples as NOT POTABLE in the same careful hand, then stops. The hand did not stop because the water got better. Do not drink clear water that someone stopped testing.",
+      "type": "biological_warning",
+      "tags": [
+        "biological",
+        "water",
+        "well"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "isolation"
+      ],
+      "sense": "taste_water_cold_clear",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_biological_warning_dust_plague",
+      "location": "red_light_audits",
+      "text": "A fine dust on the floor of the apiary, grey-yellow, in a pattern that follows the flight paths of the last bees. The hives are quiet. The dust is not pollen. The audits on the wall stopped on the same day the dust began. Do not stir the dust. Do not breathe where the dust has settled. The bees knew first. The audit knew second. You know third, which is late enough.",
+      "type": "biological_warning",
+      "tags": [
+        "biological",
+        "dust",
+        "apiary"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "isolation"
+      ],
+      "sense": "sight_grey_dust",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_biological_warning_still_air_sick",
+      "location": "hospital_pharmacy",
+      "text": "The air in the pharmacy is still and the stillness is the warning, because a working pharmacy has the hum of refrigeration and the hum is gone and the stillness is what the hum left behind. The vaccines are warm. The antibiotics are warm. The air is warm in a way that is not the building, it is the failure of the building, and the failure has been happening long enough that the air has given up on being cold and has decided to be the temperature of the room, which is the temperature of the sick.",
+      "type": "biological_warning",
+      "tags": [
+        "biological",
+        "still_air",
+        "pharmacy"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "isolation"
+      ],
+      "sense": "touch_warm_still_air",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_temperature_warning_heat",
+      "location": "geothermal_vent_shaft",
+      "text": "The air shimmers above the vent grate and the grate itself is too hot to touch for more than a second. Sweat dries before it runs. Your water is warm and tastes of the bottle. Stay back from the grate; the heat is not the danger, the carbon dioxide pooling around it is. If your lamp gutters for no wind, leave.",
+      "type": "temperature_warning",
+      "tags": [
+        "heat",
+        "vent",
+        "co2"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair"
+      ],
+      "sense": "touch_radiant_heat",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_temperature_warning_cold",
+      "location": "ice_core_store",
+      "text": "Minus forty is where Celsius and Fahrenheit agree, and the store is past it. Exposed skin warns you once, then stops warning you, which is the warning. Keep moving. Keep your hands in your armpits when you can. A metal doorknob here will take skin. The cold is not weather. It is terrain, and it is winning.",
+      "type": "temperature_warning",
+      "tags": [
+        "cold",
+        "extreme",
+        "frostbite"
+      ],
+      "atmosphere": [
+        "danger",
+        "cold",
+        "despair"
+      ],
+      "sense": "touch_extreme_cold",
+      "time_phase": "any",
+      "weather": "deep_cold",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_temperature_warning_freeze_thaw",
+      "location": "weighbridge",
+      "text": "The weighbridge plate has split along a seam where water got in and froze and thawed and froze again until the steel gave up. The same thing is happening to the road, to the wall, to the steps. The cold here does not break things once. It breaks them a hundred times, slowly, and the hundredth time is the one that shows. You are walking on the hundredth time of a lot of things.",
+      "type": "temperature_warning",
+      "tags": [
+        "cold",
+        "freeze_thaw",
+        "damage"
+      ],
+      "atmosphere": [
+        "danger",
+        "cold",
+        "despair"
+      ],
+      "sense": "sight_split_steel",
+      "time_phase": "any",
+      "weather": "deep_cold",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_temperature_warning_hot_pipe",
+      "location": "geothermal_vent_shaft",
+      "text": "A pipe that runs along the wall is hot enough to boil the rain that hits it, and the rain hits it and does not boil, which means the rain is not rain, it is something the pipe has already boiled and is boiling again, in a cycle that the pipe has been running since the plant was abandoned. The pipe is the only thing here still doing its job. You respect the pipe. You do not touch the pipe. You give the pipe the wall and you take the middle of the corridor.",
+      "type": "temperature_warning",
+      "tags": [
+        "heat",
+        "pipe",
+        "steam"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "sight_rain_on_pipe",
+      "time_phase": "any",
+      "weather": "rain",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_weather_rain_acid",
+      "location": "the_shallows_market",
+      "text": "The rain stings the backs of the hands and leaves a faint film on standing water. It is not the rain of before. The market stalls' awnings have been patched with plastic that has now itself rotted. People pull their collars up and keep trading, because the rain does not stop trade, it only shortens it. The puddles are the color of weak tea.",
+      "type": "weather_effect",
+      "tags": [
+        "rain",
+        "acid",
+        "market"
+      ],
+      "atmosphere": [
+        "despair",
+        "community",
+        "movement"
+      ],
+      "sense": "touch_stinging_rain",
+      "time_phase": "any",
+      "weather": "acid_rain",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_weather_wind_katabatic",
+      "location": "pilgrim_switchbacks",
+      "text": "The wind comes down the slope in a steady, heavy push, not gusts but weight. It is colder than the air it replaces. You lean into it and it lets you lean. A pack on your back becomes a sail. Turn sideways and it tries to spin you. The switchbacks are built for this wind; the low walls are windbreaks, not railings. Use them as both.",
+      "type": "weather_effect",
+      "tags": [
+        "wind",
+        "katabatic",
+        "slope"
+      ],
+      "atmosphere": [
+        "danger",
+        "cold",
+        "movement"
+      ],
+      "sense": "touch_wind_pressure",
+      "time_phase": "any",
+      "weather": "strong_wind",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_weather_snow_load",
+      "location": "avalanche_gallery",
+      "text": "Snow has found the gallery and decided to stay. It comes in through a gap in the roof and builds a cone on the floor, soft and architectural. The cone grows by the hour. The roof above it sags in a way it did not yesterday. The snow is not the danger. The roof is. The snow is the proof.",
+      "type": "weather_effect",
+      "tags": [
+        "snow",
+        "roof",
+        "load"
+      ],
+      "atmosphere": [
+        "danger",
+        "cold",
+        "despair"
+      ],
+      "sense": "sight_snow_cone",
+      "time_phase": "any",
+      "weather": "snow_heavy",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_weather_fog_sound_damp",
+      "location": "bathymetric_boat",
+      "text": "The fog has eaten the far shore and is working on the near one. Sound dies in it. A shout goes out and does not come back. The water is flat and the boat is still and the two together are a silence that has a floor. You could be anywhere on the water in this fog. You could be nowhere. The compass says you are somewhere. The compass has been wrong before, in fog, in the way of instruments that are sure.",
+      "type": "weather_effect",
+      "tags": [
+        "fog",
+        "water",
+        "silence"
+      ],
+      "atmosphere": [
+        "isolation",
+        "danger",
+        "despair"
+      ],
+      "sense": "sound_fog_damp",
+      "time_phase": "any",
+      "weather": "fog",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_weather_hail_on_metal",
+      "location": "concrete_batching_plant",
+      "text": "The hail on the metal roof is a sound that erases thought, a continuous hard rattle that fills the skull and leaves no room for anything else. You wait it out under the roof and the roof is the only shelter and the shelter is the sound. When the hail stops, the silence is so sudden that you hear your own breath for the first time in an hour, and you are surprised by it, as if you had forgotten you were a thing that breathes.",
+      "type": "weather_effect",
+      "tags": [
+        "hail",
+        "roof",
+        "sound"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation",
+        "movement"
+      ],
+      "sense": "sound_hail_rattle",
+      "time_phase": "any",
+      "weather": "hail",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_daynight_dawn_false",
+      "location": "ash_dune_cemetery",
+      "text": "Dawn here is a rumor. The sky lightens from black to grey without ever committing to a color. Shadows do not appear; they just become slightly more honest about being there. You cannot tell east from the light. You tell it from the wind, which turns at first light whether you can see it or not.",
+      "type": "daynight_cycle",
+      "tags": [
+        "dawn",
+        "ash",
+        "light"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "time"
+      ],
+      "sense": "sight_grey_dawn",
+      "time_phase": "dawn",
+      "weather": "ash",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_daynight_dusk_long",
+      "location": "observatory_dome",
+      "text": "Dusk lasts an hour here, a long bruise of color that the dome was built to watch and now watches alone. The instruments are dark but the dome still turns, slowly, on a motor that no one has wound. As the light goes, the cold comes up out of the floor. The stars, when they arrive, are fewer than the books promised.",
+      "type": "daynight_cycle",
+      "tags": [
+        "dusk",
+        "observatory",
+        "cold"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "time"
+      ],
+      "sense": "sight_long_dusk",
+      "time_phase": "dusk",
+      "weather": "clear",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_daynight_night_no_moon",
+      "location": "the_vessels_cell",
+      "text": "Night without a moon, and the cell has no window, and the dark is the kind that has weight. You keep a hand on the wall and count doors. The candle is out and you do not relight it, because the candle is a beacon and the beacon is for someone you have not invited. You move by memory and by the memory of the wall. The wall has not moved. You hope the wall has not moved.",
+      "type": "daynight_cycle",
+      "tags": [
+        "night",
+        "darkness",
+        "cell"
+      ],
+      "atmosphere": [
+        "isolation",
+        "danger",
+        "despair"
+      ],
+      "sense": "touch_wall_guide",
+      "time_phase": "night",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_daynight_noon_grey",
+      "location": "ash_dune_cemetery",
+      "text": "Noon is the brightest it gets and the brightest is a grey that casts no shadow. You cannot tell the time by the shadow because there is no shadow, and you cannot tell the time by the heat because there is no heat, and you tell the time by the wind, which turns at noon whether the sky agrees or not. The wind is the only clock that still keeps the old time. You set your day by it and you are wrong as often as you are right, which is the best a clock can do now.",
+      "type": "daynight_cycle",
+      "tags": [
+        "noon",
+        "grey",
+        "wind"
+      ],
+      "atmosphere": [
+        "time",
+        "isolation",
+        "despair"
+      ],
+      "sense": "touch_noon_wind",
+      "time_phase": "noon",
+      "weather": "ash",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_sound_cue_distant_generator",
+      "location": "forward_roster_camp",
+      "text": "A generator, far off, cycling unevenly. It catches, labors, catches again. Someone is keeping it alive by ear, feeding it fuel a little at a time. The sound tells you the camp before the camp tells you itself. A generator that runs unevenly is a generator someone cannot afford to lose. Approach with that in mind.",
+      "type": "sound_cue",
+      "tags": [
+        "sound",
+        "generator",
+        "camp"
+      ],
+      "atmosphere": [
+        "community",
+        "danger",
+        "hope"
+      ],
+      "sense": "sound_generator_uneven",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_sound_cue_no_birds",
+      "location": "drone_hive_silo",
+      "text": "No birds. That is the sound. The fields around the silo should be full of them at this hour and they are not. The silence has a texture to it, like cloth held over the ears. Something has cleared the air of everything that flies and kept it cleared. You listen for what replaced them. You do not hear it. That is not reassuring.",
+      "type": "sound_cue",
+      "tags": [
+        "sound",
+        "silence",
+        "birds"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation",
+        "despair"
+      ],
+      "sense": "sound_absence_birds",
+      "time_phase": "day",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_sound_cue_water_tank_tick",
+      "location": "terrace_pumphouse",
+      "text": "The tank above the pumphouse ticks as it cools, a slow metronome of metal contracting. It has been ticking since sunset and will tick until the tank and the night agree on a temperature. The sound is regular and small and it is the only thing in the valley keeping time. You set your breathing to it without meaning to. The valley approves of nothing else you are doing.",
+      "type": "sound_cue",
+      "tags": [
+        "sound",
+        "tank",
+        "tick"
+      ],
+      "atmosphere": [
+        "isolation",
+        "cold",
+        "time"
+      ],
+      "sense": "sound_tank_tick",
+      "time_phase": "night",
+      "weather": "clear",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_sound_cue_no_wind_silence",
+      "location": "silent_observatory",
+      "text": "The wind has stopped and the stopping is the sound, a silence that is the shape of the wind, a negative where the positive was. The observatory, which was built to hear the sky, now hears the absence of the wind, and the absence is louder than the wind was. You stand in it and you are part of the silence, and the silence is a thing you can walk out of, and you do, and the wind, when it returns, is a relief that surprises you.",
+      "type": "sound_cue",
+      "tags": [
+        "sound",
+        "silence",
+        "wind"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "time"
+      ],
+      "sense": "sound_wind_absence",
+      "time_phase": "any",
+      "weather": "calm",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_smell_cue_smoke_wet",
+      "location": "snowline_station",
+      "text": "Woodsmoke, but wet, the smell of a fire that is winning only barely. Someone is burning green fuel because they have nothing else. The smoke hangs low in the cold air and moves along the ground before it rises. Follow it and you will find a chimney. Find a chimney and you have found a decision.",
+      "type": "smell_cue",
+      "tags": [
+        "smell",
+        "smoke",
+        "wet_wood"
+      ],
+      "atmosphere": [
+        "community",
+        "hope",
+        "cold"
+      ],
+      "sense": "smell_wet_smoke",
+      "time_phase": "any",
+      "weather": "cold",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_smell_cue_decay_sweet",
+      "location": "hospital_pharmacy",
+      "text": "A sweetness under the disinfectant, the kind that does not belong in a pharmacy. It comes from the back room, where the cold chain broke weeks or months ago. The smell is not strong. It is patient. You can hold your breath and it is still there when you breathe again, as if it has been waiting.",
+      "type": "smell_cue",
+      "tags": [
+        "smell",
+        "decay",
+        "pharmacy"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "isolation"
+      ],
+      "sense": "smell_sweet_decay",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_smell_cue_bread_community",
+      "location": "grange_hall",
+      "text": "Real bread, under the door, the first in a long time. The smell is yeast and a warmth that is not the oven, it is the doing. Someone in the grange has flour and has kept it and has decided tonight is the night to use it. The smell is a public announcement in a town that no longer has a public address system. You are being told something. You are being invited, or you are being warned that the bread will be gone by morning.",
+      "type": "smell_cue",
+      "tags": [
+        "smell",
+        "bread",
+        "community"
+      ],
+      "atmosphere": [
+        "community",
+        "hope",
+        "survival"
+      ],
+      "sense": "smell_bread_yeast",
+      "time_phase": "night",
+      "weather": "cold",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_smell_cue_old_fire",
+      "location": "concrete_batching_plant",
+      "text": "The smell of a fire that went out days ago, the cold charcoal and the ash and the thing the fire was meant to do that it did not finish. The smell is the smell of an interrupted intention, and you can tell, from the smell, that the fire was put out by rain and not by choice, and that the person who lit it did not come back to relight it, which means the rain was bad enough to keep them away, which means the rain was bad, and you check the sky.",
+      "type": "smell_cue",
+      "tags": [
+        "smell",
+        "fire",
+        "rain"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "danger"
+      ],
+      "sense": "smell_cold_charcoal",
+      "time_phase": "any",
+      "weather": "rain",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_touch_cue_railing_warm",
+      "location": "substation_omega",
+      "text": "The stair railing is warm. Not from the sun, which has not touched it, and not from a fire, which you would see. Warm from current. Something in the substation is still live, still finding a path through the steel of the building. Lift your hand. Watch where you put it next. The building has not been told it is abandoned.",
+      "type": "touch_cue",
+      "tags": [
+        "touch",
+        "electricity",
+        "hazard"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "touch_warm_metal_live",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_touch_cue_floor_glass",
+      "location": "mirror_factory",
+      "text": "The floor grits under your boots, and you realize it is not grit. It is glass, fine as sand, ground down by years of foot traffic over a broken stock. Every step announces you to anyone listening. You slow. You cannot silence it. You can only choose when to be loud, and be loud when the wind is loud.",
+      "type": "touch_cue",
+      "tags": [
+        "touch",
+        "glass",
+        "stealth"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation"
+      ],
+      "sense": "touch_glass_grit",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "broken"
+    },
+    {
+      "id": "atm_touch_cue_frost_inside",
+      "location": "motel_verity",
+      "text": "Frost on the inside of the window, which means the cold has been here longer than the heating has been absent. The pattern of the frost follows the old water stains on the glass, the ice growing where the water once ran. You put a hand on the glass and the frost melts into a handprint and then the handprint freezes again, slowly, after you take your hand away. The room remembers you were here. It will not remember for long.",
+      "type": "touch_cue",
+      "tags": [
+        "touch",
+        "frost",
+        "window"
+      ],
+      "atmosphere": [
+        "cold",
+        "isolation",
+        "despair"
+      ],
+      "sense": "touch_frost_glass",
+      "time_phase": "night",
+      "weather": "deep_cold",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_touch_cue_warm_handprint",
+      "location": "motel_verity",
+      "text": "A handprint on the frost of a car window, on the inside, which means someone was in the car and pressed a hand to the glass and the glass was cold enough to keep the print. The print is small. The print is a child's, or a person with small hands, and it has been here long enough that the frost around it has grown back over the edges but not the center, which is still the shape of a hand, which is still the shape of a person, who is not in the car.",
+      "type": "touch_cue",
+      "tags": [
+        "touch",
+        "handprint",
+        "frost"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_frost_handprint",
+      "time_phase": "any",
+      "weather": "deep_cold",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_taste_cue_metal_water",
+      "location": "pump_station_nine",
+      "text": "The water from the tap runs clear and tastes of iron and something sharper, like a battery. It leaves a film on the teeth. Boil it and it still tastes the same. The pipes here run through ground that was not always this ground. Carry your own if you can. If you cannot, carry less of this.",
+      "type": "taste_cue",
+      "tags": [
+        "taste",
+        "water",
+        "iron"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "survival"
+      ],
+      "sense": "taste_iron_water",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_taste_cue_dust_bread",
+      "location": "ration_queue_plaza",
+      "text": "The bread has a dust to it that is not flour. It bakes out of the ration ovens this way now, because the grain stores have been open to the air for a season. It is not poison. It is not clean. You eat it because the alternative is not eating, and the taste is the taste of that bargain.",
+      "type": "taste_cue",
+      "tags": [
+        "taste",
+        "bread",
+        "ration"
+      ],
+      "atmosphere": [
+        "despair",
+        "community",
+        "survival"
+      ],
+      "sense": "taste_dusty_bread",
+      "time_phase": "any",
+      "weather": "ash",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_taste_cue_snow_clean",
+      "location": "abandoned_ski_resort",
+      "text": "The snow here, above the line, tastes clean, which is a thing you have learned to distrust. Clean snow is snow that has not fallen through anything, and above the line, that is possible, and it is also possible that the snow is clean because everything that would dirty it is gone. You melt a handful and let it cool before you drink. The taste is the taste of nothing, which is the taste of a place that has been emptied.",
+      "type": "taste_cue",
+      "tags": [
+        "taste",
+        "snow",
+        "clean"
+      ],
+      "atmosphere": [
+        "isolation",
+        "cold",
+        "despair"
+      ],
+      "sense": "taste_clean_snow",
+      "time_phase": "day",
+      "weather": "snow",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_taste_cue_melted_snow_ash",
+      "location": "ash_dune_cemetery",
+      "text": "The snow, melted, tastes of ash, which is the taste of the sky now, and the taste is in everything that falls from the sky and everything that catches what falls. You boil it and the taste stays. You filter it and the taste stays. The taste is the new water, and the new water is the old water with the sky in it, and the sky is in everything, and you drink it, because the body does not give you the choice, and the body is right, and the body is also wrong, and you drink it anyway.",
+      "type": "taste_cue",
+      "tags": [
+        "taste",
+        "snow",
+        "ash"
+      ],
+      "atmosphere": [
+        "despair",
+        "survival",
+        "danger"
+      ],
+      "sense": "taste_ash_water",
+      "time_phase": "any",
+      "weather": "snow",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_visual_cue_light_shaft",
+      "location": "the_memory_vault",
+      "text": "A single shaft of light falls through a hole in the vault ceiling and lands on a reading desk, as if placed. The dust in the beam moves slowly and does not settle. Everything else is dark. The desk has a chair, and the chair has been pulled out, and the book on the desk is open to a page someone chose. You do not know how long ago they chose it.",
+      "type": "visual_cue",
+      "tags": [
+        "sight",
+        "light",
+        "vault"
+      ],
+      "atmosphere": [
+        "discovery",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_light_shaft",
+      "time_phase": "day",
+      "weather": "clear",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_visual_cue_reflection",
+      "location": "mirror_factory",
+      "text": "A sheet of mirror glass, intact, leans against a wall where it should not be. It reflects the aisle behind you, and in the reflection there is a coat on a hook that is not on a hook in the room. You step to the side and the coat stays. You step back and it is gone. The mirror is a window now, or it always was, and you have not been told which.",
+      "type": "visual_cue",
+      "tags": [
+        "sight",
+        "mirror",
+        "ambiguity"
+      ],
+      "atmosphere": [
+        "isolation",
+        "danger",
+        "discovery"
+      ],
+      "sense": "sight_mirror_reflection",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_visual_cue_shadow_figure",
+      "location": "acoustic_testing_facility",
+      "text": "A shadow in the test chamber that is not your shadow, because the light is behind you and the shadow is in front of you, and it is the wrong shape for a chair. You step left. The shadow does not step with you. You step right. It does not follow. You blink and it is the same. It is probably a coat on a stand. It is almost certainly a coat on a stand. You walk toward it to make it a coat on a stand, because you would rather know than wonder, and wondering is worse.",
+      "type": "visual_cue",
+      "tags": [
+        "sight",
+        "shadow",
+        "ambiguity"
+      ],
+      "atmosphere": [
+        "danger",
+        "isolation",
+        "mystery"
+      ],
+      "sense": "sight_shadow",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_visual_cue_dust_motes_one_light",
+      "location": "the_memory_vault",
+      "text": "In the single shaft of light, the dust motes rise and do not fall, caught in a convection that the air in the vault has been running since the light first came in. The motes are the only moving thing in the room. They move up, and they do not come down, which is not how dust works, which is how you know the air is not air, it is a current, and the current is warm, and the warm is coming from below, and you do not step on the grate under the light.",
+      "type": "visual_cue",
+      "tags": [
+        "sight",
+        "dust",
+        "light"
+      ],
+      "atmosphere": [
+        "mystery",
+        "danger",
+        "isolation"
+      ],
+      "sense": "sight_dust_rising",
+      "time_phase": "day",
+      "weather": "clear",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_hidden_detail_loose_tile",
+      "location": "municipal_archive",
+      "text": "One floor tile, near the base of the third stack, sits a half-millimeter proud of its neighbors. Press it and it rocks. Beneath it, a hollow the size of a shoe, lined with cloth, holding a key and a folded list of names. The names are not in the archive's index. The key is not to any door on this floor.",
+      "type": "hidden_detail",
+      "tags": [
+        "hidden",
+        "tile",
+        "cache",
+        "clue"
+      ],
+      "atmosphere": [
+        "discovery",
+        "mystery",
+        "isolation"
+      ],
+      "sense": "touch_loose_tile",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_hidden_detail_second_hand",
+      "location": "dentists_row",
+      "text": "On the back of the appointment board, behind the day's cards, someone has kept a second set of cards, face down. They are not appointments. They are names and a number, and the numbers go down over the weeks. The last card has no number, only a line. The board on the front still says WELCOME and the clock still keeps a time no one here keeps anymore.",
+      "type": "hidden_detail",
+      "tags": [
+        "hidden",
+        "records",
+        "clue"
+      ],
+      "atmosphere": [
+        "mystery",
+        "despair",
+        "isolation"
+      ],
+      "sense": "sight_hidden_cards",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_hidden_detail_false_wall",
+      "location": "ministry_of_truth_bunker",
+      "text": "A wall in the records room that is too clean, the paint too fresh, the joints too even. Tap it and one panel returns a different sound, a hollower note. The panel is a door that has been made to not be a door. Behind it, a narrow room, a desk, a lamp, and a logbook that lists things the other records room does not. The clean wall was the real record. The rest was the copy.",
+      "type": "hidden_detail",
+      "tags": [
+        "hidden",
+        "wall",
+        "records"
+      ],
+      "atmosphere": [
+        "mystery",
+        "history",
+        "isolation"
+      ],
+      "sense": "sound_hollow_panel",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_hidden_detail_mismatched_bricks",
+      "location": "municipal_archive",
+      "text": "A section of the archive wall where the bricks do not match, a panel of a different color and a different size, set in with mortar that is newer than the rest. Tap it and it sounds like the rest, which is the trick, because it is not the rest, it is a door, and the door has been made to sound like a wall by someone who knew that a hollow sound would be found. You do not find the way to open it. You mark it. You come back with a different tool. The wall is patient. So are you, for now.",
+      "type": "hidden_detail",
+      "tags": [
+        "hidden",
+        "bricks",
+        "door"
+      ],
+      "atmosphere": [
+        "mystery",
+        "discovery",
+        "isolation"
+      ],
+      "sense": "touch_mismatched_brick",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_env_storytelling_dinner_table",
+      "location": "suburban_house",
+      "text": "The table is set for four. The plates are not clean, but they are not as dirty as the rest of the house. A pot on the stove has cooled into a shape that means it was stirred last, not poured. The back door is open to the yard, and the yard is open to the field, and the field is empty in a way that has an edge to it. They left during the meal. All of them, together, in a hurry that was not a panic.",
+      "type": "environmental_storytelling",
+      "tags": [
+        "story",
+        "table",
+        "departure"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_abandoned_meal",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_env_storytelling_workbench",
+      "location": "ruined_garage",
+      "text": "The workbench is organized in a way that survived the person who organized it. Tools laid out on a cloth in the shapes of themselves, each shape outlined in marker so a missing tool would be noticed. Two shapes are empty. The rest are full. A half-rebuilt water pump sits in the vise, and the vise is still tight. He meant to come back. He did not.",
+      "type": "environmental_storytelling",
+      "tags": [
+        "story",
+        "workbench",
+        "tools"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_tool_outlines",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_env_storytelling_school",
+      "location": "school_gymnasium",
+      "text": "The gymnasium floor is marked for a game that was never finished, the tape still down, the scorecards on the bench still showing the second quarter. The bleachers have been folded up and the folding was the last thing done here with care. On the stage behind the game, cots have been laid in rows, and the rows have been kept, and the keeping is the story: this was a shelter, and then it was a gym again, and then it was neither, and the floor remembers all three.",
+      "type": "environmental_storytelling",
+      "tags": [
+        "story",
+        "school",
+        "shelter"
+      ],
+      "atmosphere": [
+        "history",
+        "despair",
+        "community"
+      ],
+      "sense": "sight_tape_scorecards",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_env_storytelling_last_patient",
+      "location": "hospital_psych_wing",
+      "text": "The last chart on the last desk is still open, the last patient still admitted, the last notes still in the hand of the last person to write them. The notes describe a person who was getting better, in the present tense, in a hand that believed it. The date on the chart is the date the wing was closed, which is the date the notes stopped, which is the date the person who was getting better stopped getting better in the record, if not in the world, and the record does not say which.",
+      "type": "environmental_storytelling",
+      "tags": [
+        "story",
+        "hospital",
+        "chart"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_open_chart",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_visual_fog_river",
+      "location": "lock_gate_four",
+      "text": "Fog sits on the river like it has been poured, and the lock gates rise out of it only as far as the rust line. Above the rust, the gates are dry and cold. Below it, they are wet and colder. The fog moves only when the river moves, and the river moves only in the middle, where the current has not given up yet.",
+      "type": "visual_atmosphere",
+      "tags": [
+        "fog",
+        "river",
+        "lock"
+      ],
+      "atmosphere": [
+        "isolation",
+        "cold",
+        "despair"
+      ],
+      "sense": "sight_fog_river",
+      "time_phase": "dawn",
+      "weather": "fog",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_visual_ash_snow_line",
+      "location": "snowline_station",
+      "text": "Below the station, the world is ash. Above it, the world is snow. The station sits on the line between them, and the line is moving, a little every year, the ash climbing as the cold deepens and the snow retreating up the slope. The station is the last place where both are true. You can stand on the platform and put one boot in each, which is a thing people do, for reasons they do not say.",
+      "type": "visual_atmosphere",
+      "tags": [
+        "ash",
+        "snow",
+        "line"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "time"
+      ],
+      "sense": "sight_ash_snow_line",
+      "time_phase": "any",
+      "weather": "snow",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_visual_horizon_cut",
+      "location": "radar_array_spire",
+      "text": "From the top of the spire, the horizon is a clean line, the only clean line for a hundred kilometers, and the line is the edge of the ash and the beginning of the sky and the two are the same color and the line is the only way to tell them apart. You look at the line for a long time. The line does not move. The line is the thing that has not changed, and you hold onto it the way you hold onto a name, because the name is the thing that is still true.",
+      "type": "visual_atmosphere",
+      "tags": [
+        "sight",
+        "horizon",
+        "spire"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "hope"
+      ],
+      "sense": "sight_horizon_line",
+      "time_phase": "day",
+      "weather": "clear",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_auditory_hum_grid",
+      "location": "substation_omega",
+      "text": "A low hum, below music, below speech, at the frequency of the teeth. The transformers are still in circuit with something, somewhere, that still wants power. The hum is the sound of a grid that does not know it is over. You feel it in the fillings before you hear it in the ears.",
+      "type": "auditory_atmosphere",
+      "tags": [
+        "sound",
+        "hum",
+        "grid"
+      ],
+      "atmosphere": [
+        "isolation",
+        "danger",
+        "despair"
+      ],
+      "sense": "sound_low_hum",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_auditory_wire_sing",
+      "location": "railway_span_44_alpha",
+      "text": "The wind through the dead catenary wires makes a note, a single, sustained, wrong note, the pitch of a wire that has been tightened by years of cold and never relieved. It does not waver. It is the sound of the span itself, and it has been singing it longer than you have been listening. You hum it back without meaning to. The span does not harmonize. It does not need to.",
+      "type": "auditory_atmosphere",
+      "tags": [
+        "sound",
+        "wire",
+        "wind"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "time"
+      ],
+      "sense": "sound_wire_note",
+      "time_phase": "any",
+      "weather": "wind",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_atmos_auditory_drip_chamber",
+      "location": "the_sump_cathedral",
+      "text": "A single drip, in the high cistern, falling from a height that makes it a sound and not a splash, a note that the chamber has been tuning for as long as it has been a chamber. The drip is regular and the regular is the music and the music is the only music in the cathedral, and it has been playing since before the cathedral was a cathedral, and it will play after, and it is playing now, and you are the audience, and the audience is the only thing the drip has ever had.",
+      "type": "auditory_atmosphere",
+      "tags": [
+        "sound",
+        "drip",
+        "cathedral"
+      ],
+      "atmosphere": [
+        "isolation",
+        "time",
+        "despair"
+      ],
+      "sense": "sound_single_drip",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_olfactory_ash_dust",
+      "location": "ash_dune_cemetery",
+      "text": "The air here has a dryness that is not thirst. It is the smell of everything that burned and then stopped burning and is now just waiting to be breathed. It coats the inside of the nose and does not leave. You stop smelling it after an hour. That is the smell winning.",
+      "type": "olfactory_atmosphere",
+      "tags": [
+        "smell",
+        "ash",
+        "dust"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "danger"
+      ],
+      "sense": "smell_dry_ash",
+      "time_phase": "any",
+      "weather": "ash",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_olfactory_old_paper",
+      "location": "old_library_cache",
+      "text": "The smell of paper that has outlived its readers, dry and faintly sweet and a little like dust should not be. It is the smell of a room that has been closed and is now open and is not sure it wants to be. The books on the shelves have kept their smell better than their words. You breathe it in because it is the smell of a thing that was cared for, and the caring is the part that is gone.",
+      "type": "olfactory_atmosphere",
+      "tags": [
+        "smell",
+        "paper",
+        "library"
+      ],
+      "atmosphere": [
+        "isolation",
+        "history",
+        "despair"
+      ],
+      "sense": "smell_old_paper",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_atmos_olfactory_iron_blood",
+      "location": "ordnance_shoulder",
+      "text": "The smell of iron, which is the smell of blood, which is the smell of the ground here, which has been the smell of the ground here for long enough that the grass has grown into it and the grass smells of it too. You do not see the blood. You smell the blood. The smell is the ground remembering, the way ground remembers, which is slowly, and with everything that grows in it, and without choice.",
+      "type": "olfactory_atmosphere",
+      "tags": [
+        "smell",
+        "iron",
+        "ground"
+      ],
+      "atmosphere": [
+        "despair",
+        "history",
+        "isolation"
+      ],
+      "sense": "smell_iron_ground",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_tactile_damp_cold",
+      "location": "municipal_sewage",
+      "text": "The cold here is wet and comes up through the floor rather than in through the walls. It finds the gaps in your boots and stays. Your hands lose their grip sooner than they should. Everything you touch is the same temperature, which is the temperature of the place, which is the temperature of the stone, which is winning.",
+      "type": "tactile_atmosphere",
+      "tags": [
+        "touch",
+        "damp",
+        "cold"
+      ],
+      "atmosphere": [
+        "cold",
+        "despair",
+        "danger"
+      ],
+      "sense": "touch_damp_cold",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_atmos_tactile_grit_everywhere",
+      "location": "scrap_neuromancer_camp",
+      "text": "Grit in the pockets, grit in the folds of the pack, grit in the hinges of the lighter, grit in the thread of the screws. The camp is built on grit and the grit is in everything, including the food, including the sleep. You stop trying to keep it out. You start trying to keep it out of the things that matter, which are fewer than you thought. The grit teaches you which things those are.",
+      "type": "tactile_atmosphere",
+      "tags": [
+        "touch",
+        "grit",
+        "camp"
+      ],
+      "atmosphere": [
+        "despair",
+        "survival",
+        "isolation"
+      ],
+      "sense": "touch_grit_pockets",
+      "time_phase": "any",
+      "weather": "ash",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_tactile_wind_exposed",
+      "location": "telescope_array",
+      "text": "The wind here has nothing to hit before it hits you, and it hits you with the full history of the distance it has crossed. It is not cold or warm, it is force, and the force is the only quality it has. You lean into it and it holds you up, and you lean out of it and it lets you fall, and the choice is yours and the wind does not care, and the not-caring is the thing that makes it honest, and the honesty is the thing that makes it hard.",
+      "type": "tactile_atmosphere",
+      "tags": [
+        "touch",
+        "wind",
+        "exposed"
+      ],
+      "atmosphere": [
+        "isolation",
+        "danger",
+        "movement"
+      ],
+      "sense": "touch_full_wind",
+      "time_phase": "any",
+      "weather": "strong_wind",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_gustatory_stale_air",
+      "location": "subterranean_seed_vault",
+      "text": "The air has a taste that is not a taste, a staleness that sits on the tongue like a coin. It has been the same air for a long time, recycled through filters that no one has changed. You taste the filters and the seeds and the stone and the years, all at once, faintly, and you taste that you are the newest thing in here.",
+      "type": "gustatory_atmosphere",
+      "tags": [
+        "taste",
+        "stale",
+        "vault"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "time"
+      ],
+      "sense": "taste_stale_air",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_gustatory_canned_metal",
+      "location": "convoy_echo7_cache",
+      "text": "Everything from the cache tastes of the can, a flat metal tang that has seeped into the beans and the fruit and the water alike. You eat it because it is calories and the calories are the point. The taste is the price, paid in the mouth, for not having to find the calories yourself. You stop tasting it after a week. That is the can winning, the same way the ash wins, by becoming the only thing left.",
+      "type": "gustatory_atmosphere",
+      "tags": [
+        "taste",
+        "canned",
+        "cache"
+      ],
+      "atmosphere": [
+        "despair",
+        "survival",
+        "isolation"
+      ],
+      "sense": "taste_can_metal",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_emotional_smallness",
+      "location": "telescope_array",
+      "text": "The dishes are too large and too still and too many. Standing among them, you are the wrong scale, and the place knows it. The sky above the dishes is not the sky you grew up under. It is the sky the dishes were built to hear, and it is not listening back. You feel small in a way that is not a feeling. It is a measurement.",
+      "type": "emotional_atmosphere",
+      "tags": [
+        "emotion",
+        "scale",
+        "dishes"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "time"
+      ],
+      "sense": "sight_scale_dishes",
+      "time_phase": "night",
+      "weather": "clear",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_emotional_guilt_leaving",
+      "location": "family_bunker_backyard_shed",
+      "text": "The shed still has the things you did not take when you left the first time, and they are exactly where you left them, which is the part that sits in the chest. The shovel is where you put it down. The box is where you slid it. Nothing has moved, because no one came back, because you did not come back, and the shed has been keeping your last afternoon for you in case you wanted it. You do not want it. You take the shovel. You leave the box.",
+      "type": "emotional_atmosphere",
+      "tags": [
+        "emotion",
+        "guilt",
+        "return"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "touch_shovel_handle",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_historical_bunker_door",
+      "location": "government_bunker",
+      "text": "The blast door has a depth gauge scratched into its inner face, marking how far it closed against tests that are now the least interesting thing about it. Beside the gauge, a list of shift passwords, crossed out one by one as the months went. The last password is not crossed out. No one came to cross it out. The door is still closed, which is how you know.",
+      "type": "historical_atmosphere",
+      "tags": [
+        "history",
+        "bunker",
+        "door"
+      ],
+      "atmosphere": [
+        "history",
+        "isolation",
+        "despair"
+      ],
+      "sense": "sight_scratch_gauge",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_historical_pre_war_sign",
+      "location": "transit_authority_hq",
+      "text": "A pre-war sign, still bolted to the wall, advertising a fare and a destination and a time of departure that has not existed for years. Someone has scratched a new time underneath, in a different hand, and a different destination, and no fare. The new sign is the real one. The old sign is the paint. Both are true, in the way that places are true about more than one time at once.",
+      "type": "historical_atmosphere",
+      "tags": [
+        "history",
+        "sign",
+        "transit"
+      ],
+      "atmosphere": [
+        "history",
+        "despair",
+        "community"
+      ],
+      "sense": "sight_scratched_sign",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_atmos_cultural_shrine_ash",
+      "location": "ash_sign_shrine",
+      "text": "Someone has built a small shrine at the crossroads, not to a god but to a sign. A road sign, STOP, has been set upright in a cairn of ash-block and hung with tokens: a bus pass, a ring of keys, a folded map of a country that no longer answers to its name. People leave things here. They do not take things. That is the rule of it, and the rule is older than the road.",
+      "type": "cultural_atmosphere",
+      "tags": [
+        "culture",
+        "shrine",
+        "tokens"
+      ],
+      "atmosphere": [
+        "community",
+        "hope",
+        "history"
+      ],
+      "sense": "sight_shrine_tokens",
+      "time_phase": "any",
+      "weather": "ash",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_cultural_folklore_children",
+      "location": "bunker_children_folklore",
+      "text": "On the low wall of the shelter yard, a row of chalk figures, drawn by children who have only ever lived under the ground: a sun with a face, a tree with a door, a dog the size of a horse. Beside them, in an adult's hand, a correction: the sun has no face. The child has drawn the face back, smaller. The adult has not corrected it again. The wall is the argument, and the child is winning, slowly, by attrition.",
+      "type": "cultural_atmosphere",
+      "tags": [
+        "culture",
+        "children",
+        "folklore"
+      ],
+      "atmosphere": [
+        "hope",
+        "community",
+        "despair"
+      ],
+      "sense": "sight_chalk_figures",
+      "time_phase": "day",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_atmos_supernatural_choir",
+      "location": "the_sump_cathedral",
+      "text": "A sound in the pillars, like a choir very far away, or like water in a pipe very close. It does not get louder when you approach. It does not stop when you hold your breath. The acoustics of the old cistern explain it, if you want them to. The faithful who carved the benches here did not want them to. You may choose. The sound does not care which you choose.",
+      "type": "supernatural_atmosphere",
+      "tags": [
+        "ambiguous",
+        "sound",
+        "cathedral"
+      ],
+      "atmosphere": [
+        "isolation",
+        "mystery",
+        "danger"
+      ],
+      "sense": "sound_distant_choir",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_supernatural_radio_loop",
+      "location": "relay_mast",
+      "text": "A broadcast on a band that should be empty, a voice reading numbers in a language no one speaks here, steady, unhurried, without origin. It has been playing since before the mast lost power, which should not be possible. The voice does not respond to the mast. The mast does not respond to the voice. They share a frequency and nothing else. You can turn the dial off. You cannot turn the voice off. You stop trying.",
+      "type": "supernatural_atmosphere",
+      "tags": [
+        "ambiguous",
+        "radio",
+        "numbers"
+      ],
+      "atmosphere": [
+        "mystery",
+        "isolation",
+        "danger"
+      ],
+      "sense": "sound_numbers_voice",
+      "time_phase": "night",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_survival_water_priority",
+      "location": "pump_station_nine",
+      "text": "Everything here is about water: where it comes from, whether it is safe, who is allowed to fill first. The walls carry the argument in chalk and in scratches. The pump itself is the quietest thing in the room because no one argues with the pump. You learn the priority list from the wall before you learn it from anyone living. The wall is more honest about it.",
+      "type": "survival_atmosphere",
+      "tags": [
+        "survival",
+        "water",
+        "priority"
+      ],
+      "atmosphere": [
+        "survival",
+        "community",
+        "despair"
+      ],
+      "sense": "sight_chalk_priority",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_atmos_survival_fuel_discipline",
+      "location": "diesel_tank_farm",
+      "text": "The fuel here is measured in fingers, not liters: a finger in the tank to check the level, a finger's width of fuel for a night of heat, two fingers for a night of cooking. The discipline of the place is written on the tanks in chalk, in the same hand, updated daily. The hand is not the quartermaster's. The hand is whoever is here. The fuel is the law, and the law is a finger, and the finger is honest.",
+      "type": "survival_atmosphere",
+      "tags": [
+        "survival",
+        "fuel",
+        "discipline"
+      ],
+      "atmosphere": [
+        "survival",
+        "community",
+        "despair"
+      ],
+      "sense": "touch_fuel_finger",
+      "time_phase": "any",
+      "weather": "cold",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_atmos_danger_thaw_road",
+      "location": "uxo_highway_choke",
+      "text": "The road surface has thawed and refrozen so many times it has a skin of ice over a body of mud, and beneath the mud, the road is not the road. The ordnance markers are faded to pink and some are gone. Stay on the wheel ruts. The ruts were made by vehicles heavy enough to find what is shallow and survive it. You are not that heavy.",
+      "type": "danger_atmosphere",
+      "tags": [
+        "danger",
+        "uxo",
+        "road"
+      ],
+      "atmosphere": [
+        "danger",
+        "despair",
+        "movement"
+      ],
+      "sense": "sight_faded_markers",
+      "time_phase": "any",
+      "weather": "thaw",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_atmos_danger_ice_over_water",
+      "location": "frozen_river_barge",
+      "text": "The ice is over the river but the river is under the ice, and the ice knows it and the river knows it and you are the only one who has to guess. The ice near the bank is white and the ice in the middle is black and the black is the deep and the deep is the current. Cross on the white. Do not cross on the black. If the ice speaks, in any voice at all, you are already too far out. Come back the way you came, and do not run, because running is a weight.",
+      "type": "danger_atmosphere",
+      "tags": [
+        "danger",
+        "ice",
+        "river"
+      ],
+      "atmosphere": [
+        "danger",
+        "cold",
+        "despair"
+      ],
+      "sense": "sound_ice_voice",
+      "time_phase": "any",
+      "weather": "deep_cold",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_hope_greenhouse_sprout",
+      "location": "the_allotments",
+      "text": "In the corner of the broken greenhouse, a single sprout has come up through the black mold, pale and determined and in the wrong place. Someone has put a glass jar over it to keep the frost off. The jar is cracked but still stands. You do not know if the sprout will live. The person with the jar did not know either. That is the point of the jar.",
+      "type": "hope_atmosphere",
+      "tags": [
+        "hope",
+        "sprout",
+        "greenhouse"
+      ],
+      "atmosphere": [
+        "hope",
+        "community",
+        "survival"
+      ],
+      "sense": "sight_sprout_jar",
+      "time_phase": "day",
+      "weather": "cold",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_atmos_hope_repair_shop_sign",
+      "location": "veterinary_surgery",
+      "text": "A sign in the window of the veterinary surgery, hand-lettered: STILL OPEN FOR SMALL ANIMALS. Below it, in smaller letters: AND FOR PEOPLE, IF YOU ARE KIND. The sign is old and the window is cracked and the surgery behind it is clean in the way of a place that has decided what it is and is being it anyway. You are welcome if you are kind. You are being told the terms before you are told the price.",
+      "type": "hope_atmosphere",
+      "tags": [
+        "hope",
+        "sign",
+        "clinic"
+      ],
+      "atmosphere": [
+        "hope",
+        "community",
+        "survival"
+      ],
+      "sense": "sight_hand_lettered",
+      "time_phase": "day",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_atmos_despair_empty_cots",
+      "location": "hospital_psych_wing",
+      "text": "A ward of empty cots, each still made, the blankets folded back at the same angle as if the next shift would come and find them wrong. The clipboard at the door holds the last round, unfinished. The names on the cots are not the names of the people who slept in them last. The names are the names of the people who were supposed to come back and did not.",
+      "type": "despair_atmosphere",
+      "tags": [
+        "despair",
+        "ward",
+        "absence"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "sight_empty_cots",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_despair_roster_names",
+      "location": "duty_roster_marks",
+      "text": "The duty roster on the wall has names, and some of the names have a line through them, and the line is not always the same width, which means the line was drawn on different days by different hands. A name with a thin line was crossed out by someone who was not sure. A name with a thick line was crossed out by someone who was. The roster is the calendar of the place, and the calendar is mostly lines now.",
+      "type": "despair_atmosphere",
+      "tags": [
+        "despair",
+        "roster",
+        "names"
+      ],
+      "atmosphere": [
+        "despair",
+        "history",
+        "community"
+      ],
+      "sense": "sight_roster_lines",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_atmos_isolation_single_set",
+      "location": "silent_observatory",
+      "text": "One chair, one scope, one thermos still holding the shape of its last heat. The observatory was built for a team and is now run by a habit. The logbook on the desk has entries dated after the last entry that anyone else would have read. Someone is still here, or was, very recently, and has been keeping the sky for no one.",
+      "type": "isolation_atmosphere",
+      "tags": [
+        "isolation",
+        "observatory",
+        "log"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "hope"
+      ],
+      "sense": "sight_single_chair",
+      "time_phase": "night",
+      "weather": "clear",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_isolation_last_cup",
+      "location": "cider_press",
+      "text": "One cup, upside down on the draining board, the last thing washed and the last thing left. The press has been bled and the barrels have been rolled and the room has been swept, all in the order of someone leaving well. The cup is the signature on the letter. They did not leave in a hurry. They left in a finish, which is quieter and harder and means they do not expect to come back, and they wanted you to know that they did not have to.",
+      "type": "isolation_atmosphere",
+      "tags": [
+        "isolation",
+        "cup",
+        "departure"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "history"
+      ],
+      "sense": "sight_last_cup",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_community_shared_meal",
+      "location": "ration_queue_plaza",
+      "text": "The queue is a community that does not introduce itself. You learn the order by watching who steps back for whom. The pot at the head of the line is shared and the sharing is the law, and the law is older than the pot. A child is allowed to cut, and only a child, and only once. No one has had to enforce this. They just do.",
+      "type": "community_atmosphere",
+      "tags": [
+        "community",
+        "ration",
+        "queue"
+      ],
+      "atmosphere": [
+        "community",
+        "hope",
+        "survival"
+      ],
+      "sense": "sight_shared_pot",
+      "time_phase": "day",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_community_wall_tally",
+      "location": "ration_queue_plaza",
+      "text": "A wall of the plaza has been given over to a tally, not of days, but of people: a mark for each one who has come to the queue, kept by whoever keeps it, which is everyone and no one. The marks are in clusters of five, the way a hand counts, and the clusters go back years. You add your mark. The wall does not thank you. The wall does not need to. The mark is the thanks, given forward to the next person who counts.",
+      "type": "community_atmosphere",
+      "tags": [
+        "community",
+        "tally",
+        "wall"
+      ],
+      "atmosphere": [
+        "community",
+        "hope",
+        "history"
+      ],
+      "sense": "touch_chalk_mark",
+      "time_phase": "day",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_atmos_time_clock_stopped",
+      "location": "transit_authority_hq",
+      "text": "Every clock in the building reads a different time, and all of them are wrong, and one of them is still ticking. The ticking one is the one someone wound. The others are the time the place stopped, which is a different time for every room. You cannot set your watch here. You can only set your patience.",
+      "type": "time_atmosphere",
+      "tags": [
+        "time",
+        "clock",
+        "decay"
+      ],
+      "atmosphere": [
+        "time",
+        "isolation",
+        "despair"
+      ],
+      "sense": "sound_one_clock",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_atmos_time_seasons_lost",
+      "location": "weather_seasons",
+      "text": "The seasons here have lost their names and kept their order, and the order is all that is left of the calendar. Winter is longer now and summer is a rumor and the spring is a thaw that does not finish. The people who keep the almanac have stopped writing the names and write only the numbers, and the numbers are the count of days since the last count, which is the only honest calendar left. You mark the day by what the sky does, not by what the page says.",
+      "type": "time_atmosphere",
+      "tags": [
+        "time",
+        "seasons",
+        "calendar"
+      ],
+      "atmosphere": [
+        "time",
+        "despair",
+        "isolation"
+      ],
+      "sense": "sight_almanac_numbers",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "weathered"
+    },
+    {
+      "id": "atm_atmos_weather_pressure_drop",
+      "location": "summit_relay",
+      "text": "The pressure drops and the air gets thicker and slower and the birds, if there were birds, would be low. The relay mast hums a different note as the wind shifts. A storm is coming, or has come, or is here in a way you cannot see from the inside of it. The instruments say it. The instruments have been saying it for an hour. You have only just listened.",
+      "type": "weather_atmosphere",
+      "tags": [
+        "weather",
+        "pressure",
+        "storm"
+      ],
+      "atmosphere": [
+        "danger",
+        "movement",
+        "isolation"
+      ],
+      "sense": "sound_mast_hum",
+      "time_phase": "any",
+      "weather": "storm_incoming",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_weather_first_snow",
+      "location": "avalanche_gallery",
+      "text": "The first snow of the cold season, and the gallery receives it as a guest, the flakes drifting in through the high windows and melting on the stone floor in dark circles that grow and meet. The snow is early this year, or late, depending on which calendar you keep, and you keep the one that says it is early, because early is the one that lets you prepare. The snow does not care which calendar you keep. The snow has its own.",
+      "type": "weather_atmosphere",
+      "tags": [
+        "weather",
+        "snow",
+        "first"
+      ],
+      "atmosphere": [
+        "cold",
+        "isolation",
+        "time"
+      ],
+      "sense": "sight_snow_melt_circles",
+      "time_phase": "day",
+      "weather": "first_snow",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_lighting_single_bulb",
+      "location": "recovery_yard",
+      "text": "A single bulb still burns in the yard office, on a wire run from a battery that someone has been maintaining. It lights a circle the size of a table and nothing else. Everything beyond the circle is shape without detail. The bulb is not for you. The bulb is for the person who comes to change the battery. You are welcome to the light. You are not the reason for it.",
+      "type": "lighting_atmosphere",
+      "tags": [
+        "light",
+        "bulb",
+        "yard"
+      ],
+      "atmosphere": [
+        "hope",
+        "isolation",
+        "community"
+      ],
+      "sense": "sight_single_bulb",
+      "time_phase": "night",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_lighting_lantern_row",
+      "location": "pilgrim_switchbacks",
+      "text": "A row of lanterns along the switchbacks, lit at dusk by someone who walks the path every evening and does not announce themselves. The lanterns are not for the path. The lanterns are for the people on the path, to tell them the path is walked, to tell them the evening is kept, to tell them the dark is not unattended. You pass under them and you are, for a moment, a person for whom a light was lit, and that is a thing you did not know you still needed.",
+      "type": "lighting_atmosphere",
+      "tags": [
+        "light",
+        "lantern",
+        "path"
+      ],
+      "atmosphere": [
+        "hope",
+        "community",
+        "isolation"
+      ],
+      "sense": "sight_lantern_row",
+      "time_phase": "dusk",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_sound_silence_archive",
+      "location": "municipal_archive",
+      "text": "The silence here is the kind that has been earned. The shelves absorb footfall and breath and the small sounds of gear. You can hear your own pulse in your ears, which is a sound you usually do not hear. The silence is not empty. It is full of the pages that are not being turned. It is the sound of all the reading that stopped.",
+      "type": "sound_atmosphere",
+      "tags": [
+        "sound",
+        "silence",
+        "archive"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "history"
+      ],
+      "sense": "sound_deep_silence",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_sound_market_close",
+      "location": "the_shallows_market",
+      "text": "The sound of the market closing is the sound of cloth: awnings dropping, tarps folding, the snap of fabric in wind. There is no bell, no shout, no announcement. The market closes by the sound of its own packing, and everyone knows the sound and goes, because the sound is the law and the law is the cloth. You learn the hour by the cloth. You learn the danger by how fast the cloth comes down.",
+      "type": "sound_atmosphere",
+      "tags": [
+        "sound",
+        "market",
+        "cloth"
+      ],
+      "atmosphere": [
+        "community",
+        "movement",
+        "survival"
+      ],
+      "sense": "sound_cloth_snap",
+      "time_phase": "dusk",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_smell_clean_vs_foul",
+      "location": "st_brigids_almshouse",
+      "text": "The almshouse smells of two things at once: the soap someone still makes and the thing the soap is losing against. The soap is the front room. The other smell is the back. The line between them is the line of the people who still live here, and they have drawn it with a curtain and a candle and the habit of keeping the door shut.",
+      "type": "smell_atmosphere",
+      "tags": [
+        "smell",
+        "soap",
+        "decay"
+      ],
+      "atmosphere": [
+        "community",
+        "despair",
+        "hope"
+      ],
+      "sense": "smell_soap_decay",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_atmos_smell_smoke_home",
+      "location": "grange_hall",
+      "text": "The grange smells of woodsmoke and of the thing the woodsmoke is cooking, which is a stew, and the stew is the smell of the community in a way that no announcement could be. The smell is the invitation. The smell is also the boundary: you smell it, you are welcome; you do not smell it, you are outside. You stand in the smell and you are, for the duration of the smell, a member of a thing you did not join.",
+      "type": "smell_atmosphere",
+      "tags": [
+        "smell",
+        "smoke",
+        "stew"
+      ],
+      "atmosphere": [
+        "community",
+        "hope",
+        "survival"
+      ],
+      "sense": "smell_stew_smoke",
+      "time_phase": "dusk",
+      "weather": "cold",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_touch_comfort_vs_pain",
+      "location": "motel_verity",
+      "text": "The beds are still made, and the mattresses are still soft, and for a moment the room is almost a kindness. Then you sit and the springs find you through the padding, each one a separate complaint. The pillow holds the shape of a head that is not yours. You sleep on top of the blanket, not in it. The comfort is a memory the room is keeping for someone else.",
+      "type": "touch_atmosphere",
+      "tags": [
+        "touch",
+        "bed",
+        "comfort"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "hope"
+      ],
+      "sense": "touch_springs_pillow",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_touch_cold_floor_morning",
+      "location": "st_brigids_almshouse",
+      "text": "The floor in the almshouse is cold in the morning in a way that is a schedule, the cold coming up through the boards at the same hour and leaving at the same hour, as regular as a bell. The residents have learned to keep their boots by the bed and their feet in the boots before the boots are out of the bed. The cold is not the enemy. The cold is the clock. You wake when the cold wakes you, and the cold is punctual, which is more than can be said for the sun.",
+      "type": "touch_atmosphere",
+      "tags": [
+        "touch",
+        "cold",
+        "floor"
+      ],
+      "atmosphere": [
+        "cold",
+        "community",
+        "survival"
+      ],
+      "sense": "touch_cold_floor",
+      "time_phase": "dawn",
+      "weather": "deep_cold",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_atmos_taste_hunger_vs_full",
+      "location": "cider_press",
+      "text": "The press still smells of apple, faintly, and the floor is sticky in a way that is almost a meal. You taste the air and your mouth waters for a thing that is not here, for a season that is not this one. The hunger is not the stomach's. It is the memory of the mouth, which is harder to fill.",
+      "type": "taste_atmosphere",
+      "tags": [
+        "taste",
+        "hunger",
+        "apple"
+      ],
+      "atmosphere": [
+        "despair",
+        "isolation",
+        "history"
+      ],
+      "sense": "taste_apple_memory",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_atmos_taste_first_warm_meal",
+      "location": "grange_hall",
+      "text": "The first warm meal in a week, and the taste of it is the taste of the body remembering that it is a body. The warmth is in the mouth before it is in the stomach, and the taste is the warmth and the warmth is the taste and the two are the same thing. You eat slowly because the body has to be reminded that it can be trusted with this. You eat all of it. You would eat more. You do not ask for more, because the asking is the part that breaks the spell.",
+      "type": "taste_atmosphere",
+      "tags": [
+        "taste",
+        "warm_meal",
+        "recovery"
+      ],
+      "atmosphere": [
+        "hope",
+        "community",
+        "survival"
+      ],
+      "sense": "taste_warm_meal",
+      "time_phase": "dusk",
+      "weather": "cold",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_movement_easy_vs_difficult",
+      "location": "bridge_seven",
+      "text": "The bridge is passable on foot and not passable on wheel, and the difference is the gap in the middle, which a person can step across and a cart cannot. You cross it the way everyone crosses it now: one step, a moment of nothing under you, then the far side. The gap is the width of a decision. You make it. You do not look down into the river, because the river is not what you are crossing.",
+      "type": "movement_atmosphere",
+      "tags": [
+        "movement",
+        "bridge",
+        "gap"
+      ],
+      "atmosphere": [
+        "movement",
+        "danger",
+        "survival"
+      ],
+      "sense": "touch_gap_step",
+      "time_phase": "any",
+      "weather": "wind",
+      "author": "narrator_observation",
+      "condition": "decayed"
+    },
+    {
+      "id": "atm_atmos_movement_crowd_flow",
+      "location": "the_shallows_market",
+      "text": "The market moves as a fluid, in currents and eddies, and you learn to read it as water: the slow pools where the bartering is hard, the fast channels where the theft is easy, the still corners where the watching is done. You do not fight the current. You let it take you and you steer, the way a boat steers, with small corrections. The market is a river and the river is full of people and the people are the current and the current is the market.",
+      "type": "movement_atmosphere",
+      "tags": [
+        "movement",
+        "market",
+        "crowd"
+      ],
+      "atmosphere": [
+        "community",
+        "movement",
+        "survival"
+      ],
+      "sense": "touch_crowd_current",
+      "time_phase": "day",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_discovery_unmarked_door",
+      "location": "low_background_lab",
+      "text": "A door in the corridor that does not appear on the floor plan taped to the wall. It has no handle on this side. The hinges are on this side, which means it opens away from you. Someone did not want this door found from the corridor. The floor in front of it is less dusty than the rest, in a rectangle the size of a mat that is no longer there.",
+      "type": "discovery_atmosphere",
+      "tags": [
+        "discovery",
+        "door",
+        "hidden"
+      ],
+      "atmosphere": [
+        "discovery",
+        "mystery",
+        "isolation"
+      ],
+      "sense": "sight_unmarked_door",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_discovery_locked_cabinet",
+      "location": "veterinary_surgery",
+      "text": "A locked cabinet in the surgery, the lock picked once and relocked by someone who then lost the key they picked it with, which is still in the lock, bent. Inside, when you straighten the key and turn it, a set of instruments laid out in order, and a bottle of a thing that is not for animals, and a note that says FOR THE DOG, which is the name of a person, you think, and you hope you are wrong, and you are, and you are not, and the cabinet does not say which.",
+      "type": "discovery_atmosphere",
+      "tags": [
+        "discovery",
+        "cabinet",
+        "clue"
+      ],
+      "atmosphere": [
+        "mystery",
+        "despair",
+        "isolation"
+      ],
+      "sense": "touch_bent_key",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_interaction_lever_unmarked",
+      "location": "the_dead_hand_core",
+      "text": "A lever on a console, unmarked, in the up position. A label has been placed beside it, handwritten: DO NOT. Not DO NOT PULL. Not DO NOT TOUCH. Just DO NOT. The lever has a fine layer of dust on the handle except where a hand has rested on it and not pulled it. Many hands. The instruction has been obeyed by everyone who came this far. You are now one of them, or you are not.",
+      "type": "interaction_atmosphere",
+      "tags": [
+        "interaction",
+        "lever",
+        "warning"
+      ],
+      "atmosphere": [
+        "danger",
+        "mystery",
+        "isolation"
+      ],
+      "sense": "touch_lever_dust",
+      "time_phase": "any",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    },
+    {
+      "id": "atm_atmos_interaction_radio_dial",
+      "location": "relay_mast",
+      "text": "The dial on the relay set turns and the bands come up and the bands are mostly empty and the empty is a sound, a hiss that is the sound of the air itself, and you turn the dial to listen to the nothing the way you would turn a page. The nothing is not nothing. The nothing is the sound of all the voices that are not there, which is a sound you can learn to hear, and once you can hear it, you cannot stop, and you will turn the dial less, because the nothing is enough.",
+      "type": "interaction_atmosphere",
+      "tags": [
+        "interaction",
+        "radio",
+        "dial"
+      ],
+      "atmosphere": [
+        "isolation",
+        "despair",
+        "mystery"
+      ],
+      "sense": "sound_radio_hiss",
+      "time_phase": "night",
+      "weather": "any",
+      "author": "narrator_observation",
+      "condition": "intact"
+    }
+  ]
+}

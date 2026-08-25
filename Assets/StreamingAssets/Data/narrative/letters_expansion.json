@@ -1,0 +1,580 @@
+{
+  "schema_version": 1,
+  "collection_id": "letters_expansion_personal_and_unsent",
+  "description": "Personal letters and unsent correspondence — to absent family, to lovers, to the dead, to strangers, to places, to the self. Asymmetrical knowledge, personal shorthand, omissions. People do not explain shared history to each other for the player's convenience.",
+  "letters": [
+    {
+      "letter_id": "letter_01_to_mother",
+      "day": 12,
+      "sender": "a_daughter",
+      "recipient": "Mother",
+      "location": "the shelter, by the lamp",
+      "letter_type": "unsent",
+      "tone": "aching",
+      "key_themes": [
+        "the_coat",
+        "the_door",
+        "the_last_morning"
+      ],
+      "content": "Mama,\n\nI have your coat. The grey one, with the velvet collar you sewed back on twice. I took it from the hook by the door. I did not take your boots because your boots would not fit me and because taking your boots would have been a different kind of leaving.\n\nI am somewhere dry. I am somewhere with people. That is all I will say about where, because you taught me that, and because if you are reading this then where I am is where you are and we are past the needing of it.\n\nI want to tell you about the last morning but I cannot write it yet. I will write it. Not yet. The coat is the thing I can write. The coat smells like you and like the kitchen and like the bread you burned on Tuesdays. I am keeping the coat for you. I am wearing it until you come for it.\n\nCome for it.\n\n— R.",
+      "cross_refs": [],
+      "tags": [
+        "family",
+        "mother",
+        "coat",
+        "absence"
+      ]
+    },
+    {
+      "letter_id": "letter_02_to_son",
+      "day": 28,
+      "sender": "a_father",
+      "recipient": "My son, Pavel",
+      "location": "the gate house, night",
+      "letter_type": "unsent",
+      "tone": "ashamed",
+      "key_themes": [
+        "the_key",
+        "the_intake",
+        "the_lie"
+      ],
+      "content": "Pavel,\n\nI owe you the truth about the intake key. You asked me where it was, the night before you left, and I told you I left it at work. I did not leave it at work. It is in the tin by the bed, under the handkerchiefs, where I have always kept it. I told you I left it at work because if you had the key you would have gone to the intake yourself, and the intake is not a place for you, and I was afraid you would not come back from it, and I was wrong about that in the way that fathers are wrong about the things their sons can carry.\n\nYou left without the key. You left without the key because I lied. I do not know if you knew I was lying. I think you knew. You have my face for lying, which is to say, not a good face for it.\n\nIf you come back, the key is in the tin. If you do not come back, the key is in the tin. I am leaving it for you either way. I am sorry I lied. The lie was the only thing I could do for you that was not letting you go to the intake, and it was not enough, and it was wrong, and I am leaving it in this letter because I cannot say it to your face because your face is my face and we would both know.\n\n— Father.",
+      "cross_refs": [],
+      "tags": [
+        "family",
+        "father_son",
+        "key",
+        "lie",
+        "intake"
+      ]
+    },
+    {
+      "letter_id": "letter_03_to_sister",
+      "day": 19,
+      "sender": "an_elder_sister",
+      "recipient": "Katerina",
+      "location": "the mess hall, after the meal",
+      "letter_type": "unsent",
+      "tone": "fretful",
+      "key_themes": [
+        "the_flour",
+        "the_number",
+        "the_quiet"
+      ],
+      "content": "Kat,\n\nI cannot tell you the number. I am sorry. You will understand when I say I cannot tell you the number and you will not ask, which is the thing about you that I rely on and the thing about you that I am writing to, because you are not here to not-ask in person.\n\nThe flour is lower than I have let anyone believe. I am carrying it. I am carrying it the way we used to carry Father's drinking, which was: between us, and not in front of the children, and with a face that said nothing. You taught me that face. I am using it now. I am using it on everyone. I am not using it on you, which is why this letter exists, and which is why this letter does not get sent, because if you read it you would come, and if you came you would be here, and here is where the flour is low and I cannot have you here for the flour and not for the flour both.\n\nStay where you are. Stay with the girls. I will send for you when the number is a number I can say. The number is not that number yet. I love you. Do not come.\n\n— Y.",
+      "cross_refs": [],
+      "tags": [
+        "family",
+        "sisters",
+        "flour",
+        "secret",
+        "the_number"
+      ]
+    },
+    {
+      "letter_id": "letter_04_to_lover_returning",
+      "day": 8,
+      "sender": "a_woman",
+      "recipient": "M.",
+      "location": "the bedside table, folded under the lamp",
+      "letter_type": "delivered",
+      "tone": "tender",
+      "key_themes": [
+        "the_lamp",
+        "the_watch",
+        "the_morning"
+      ],
+      "content": "M.,\n\nI left the lamp filled. I left your watch wound. I left the water in the cup. I am on the early shift, the one I swapped with Boris for, because Boris owes me and because I wanted the morning with you and you sleep past the lamp and I did not want to wake you.\n\nThere is bread in the cloth. There is tea in the pot, cold, because you like it cold, which I have never understood and will never understand and will always leave for you.\n\nDo not look for me until the midday. I will be at the pump or the stores. If the pump, I am well. If the stores, I am well also but come and find me, because the stores are dark and I do not like the dark alone and you know this and you will come and that is why I am writing it here instead of saying it, because saying it would be asking and writing it is leaving it and leaving it is what we do.\n\n— A.",
+      "cross_refs": [],
+      "tags": [
+        "lover",
+        "morning",
+        "lamp",
+        "tea"
+      ]
+    },
+    {
+      "letter_id": "letter_05_to_lover_gone",
+      "day": 44,
+      "sender": "a_man",
+      "recipient": "A.",
+      "location": "the bedside table, unfolded, the lamp cold",
+      "letter_type": "unsent",
+      "tone": "grieving",
+      "key_themes": [
+        "the_cold_tea",
+        "the_watch_stopped",
+        "the_two_shifts"
+      ],
+      "content": "A.,\n\nI filled the lamp for you again. I do not know why I filled the lamp for you again. You are not here to read by it. You are not here. The lamp is full and the lamp is for you and you are not here and the lamp is full.\n\nI wound your watch. It was stopped. I wound it and I set it to the time, which is a time I am guessing at, because the time is not the time anymore and the watch is not the watch anymore but I wound it because it is yours and I wind it because it is yours and that is the only reason I have and it is enough and it is not enough.\n\nI left the tea cold. I left the tea cold because you like it cold. I left the tea cold and I drank it, because you were not here to drink it and the tea does not keep and I did not want it to go to waste and I drank your tea and I cried into your tea and the tea was cold and salted and I drank it and I am sorry.\n\nI do not know which shift I am on. I am on two shifts. I am on the early shift and the late shift and the shift that is the time between them, which is the shift I am on now, which is the shift by the lamp, which is full.\n\n— M.",
+      "cross_refs": [],
+      "tags": [
+        "lover",
+        "grief",
+        "lamp",
+        "watch",
+        "tea"
+      ]
+    },
+    {
+      "letter_id": "letter_06_to_grown_daughter",
+      "day": 33,
+      "sender": "an_old_mother",
+      "recipient": "My Rima",
+      "location": "the cold frame, in the dirt",
+      "letter_type": "unsent",
+      "tone": "proud",
+      "key_themes": [
+        "the_potato",
+        "the_writing",
+        "the_wall"
+      ],
+      "content": "Rima,\n\nYou will not read this. You are nine. You will read this when you are older, if the book lasts, if you last, if the wall lasts. I am writing it in the dirt by the frame because the dirt is where the thing is and the thing is the potato and the potato is up and I wanted someone to know and you are the someone who would know what it means that the potato is up.\n\nI planted against the season. You remember the season, the real one, the one with the names. The names are gone. The ground is workable now. I put the seed in the ground and the ground let it and the green is up and the green is the first green I have seen in a long time and I wanted to tell you and you are at the school and the school is the corridor and the corridor is the lamp and you are there and I am here and the potato is between us.\n\nYou asked me once what the green was for. I said it was for eating. It is for eating. It is also for the seeing. It is also for the knowing that the ground remembers. I wanted you to know the ground remembers. I am writing it in the dirt so the dirt knows I know.\n\nBe good at the school. Be good to the teacher. The teacher is the cycle and the cycle is the sky and the sky is still there. I will see you at the meal. I will have dirt on my hands. Do not mind the dirt. The dirt is the thing.\n\n— Grandmother.\n\n(You call me Bubba. I am writing Bubba. Bubba is the one who plants. Bubba is the one who writes in the dirt. Bubba loves you. The dirt knows.)",
+      "cross_refs": [],
+      "tags": [
+        "family",
+        "grandmother_granddaughter",
+        "potato",
+        "green",
+        "school"
+      ]
+    },
+    {
+      "letter_id": "letter_07_last_letter",
+      "day": 5,
+      "sender": "a_conscript",
+      "recipient": "Mother and Father",
+      "location": "the forward post, in the cap",
+      "letter_type": "unsent",
+      "tone": "calm",
+      "key_themes": [
+        "the_post",
+        "the_cold",
+        "the_two_cigarettes"
+      ],
+      "content": "Mother and Father,\n\nI am writing this in the cap because the cap is dry and the paper is dry and I am dry enough. We are at the forward post. I will not say where. You will know where when you do not get another letter, which is how this works, and I am sorry for that, but it is how it works.\n\nI have two cigarettes left. I am smoking one now. I am saving one for the morning, which is a thing I would not have done before, and which is a thing I do now, which is the kind of man this has made of me, and I want you to know that the man it has made of me is a man who saves one cigarette for the morning, and that is not nothing.\n\nIt is cold. I am not afraid of the cold. I am not afraid. I want you to know that I am not afraid. I was afraid at the first post and I am not afraid at this post and the difference is the two cigarettes and the morning and the cap and the paper and you, which is to say, the difference is everything, and I am not afraid of it.\n\nTell Katerina I am sorry about the coat. I took her coat. I left mine. Mine was warmer. She will be cold. Tell her I am sorry. Tell her the coat kept me warm and that is what coats do and I should have left the warmer one and I did not and I am sorry.\n\nI love you. I am not afraid. I have one cigarette for the morning.\n\n— Your son.",
+      "cross_refs": [],
+      "tags": [
+        "soldier",
+        "last_letter",
+        "cigarettes",
+        "coat",
+        "calm"
+      ]
+    },
+    {
+      "letter_id": "letter_08_confession_theft",
+      "day": 23,
+      "sender": "a_key_holder",
+      "recipient": "the_quartermaster",
+      "location": "the west locker, inside the door",
+      "letter_type": "unsent",
+      "tone": "guilty",
+      "key_themes": [
+        "the_two_sacks",
+        "the_night_watch",
+        "the_reason"
+      ],
+      "content": "Yelena,\n\nI took the two sacks. I know you know. I know you know which key. I am writing this and leaving it in the locker because I cannot say it to your face and because the locker is where the thing happened and the letter should be where the thing happened.\n\nI gave them to the night watch. The night watch were not on the ration you gave them. You gave them the day ration. The night is not the day. The night is colder and longer and the watch is the watch and they were hungry and I was hungry watching them be hungry and I took the decision from you because I could not watch them be hungry and I could not ask you because you would have said no and you would have been right to say no and I took it anyway.\n\nI am sorry I took the decision. I am not sorry I fed the watch. I am sorry about the first and not the second and I do not know what to do with that and I am leaving it in the locker for you to find or not find.\n\nI will not do it again. I will come to you if the watch is hungry again. I will come to you and I will say the watch is hungry and you will say the number and I will accept the number. That is the thing I should have done. I know that now. I knew it then. I did it anyway.\n\n— The key.",
+      "cross_refs": [],
+      "tags": [
+        "confession",
+        "theft",
+        "flour",
+        "night_watch",
+        "guilt"
+      ]
+    },
+    {
+      "letter_id": "letter_09_confession_cowardice",
+      "day": 14,
+      "sender": "a_man_who_ran",
+      "recipient": "no_one",
+      "location": "the road, in the ditch",
+      "letter_type": "unsent",
+      "tone": "self_loathing",
+      "key_themes": [
+        "the_road",
+        "the_screaming",
+        "the_running"
+      ],
+      "content": "To no one,\n\nI ran. I want to write it down so that it is true in a place that is not me, because in me it is not true, because in me it is a thing I can argue with, and on paper it is a thing I cannot argue with, and I want to not be able to argue with it.\n\nThere was screaming on the road. I was on the road. The screaming was behind me. I did not turn. I ran. I ran and I did not turn and the screaming stopped and I did not turn and I am still running, in the ditch, in the dark, and I did not turn.\n\nI do not know who was screaming. I do not know if I could have helped. I do not know. I know I ran. I know I did not turn. That is the thing I know. The rest is the thing I do not know and the not-knowing is the thing I am carrying and the carrying is heavier than the running and I am writing it down to put it down and I cannot put it down because the paper does not take it, the paper holds it, and I am still holding it.\n\nI am a man who ran. That is the sentence. I am writing it. I am a man who ran. I did not turn. I am sorry. I am sorry to no one. The no one is who I am writing to because there is no one to write to who would not hate me and I do not want to be hated and I do not want to be forgiven and I want to put it down and I cannot.\n\n— A man who ran.",
+      "cross_refs": [],
+      "tags": [
+        "confession",
+        "cowardice",
+        "the_road",
+        "running",
+        "guilt"
+      ]
+    },
+    {
+      "letter_id": "letter_10_confession_mercy",
+      "day": 30,
+      "sender": "a_doctor",
+      "recipient": "no_one",
+      "location": "the clinic, in the ledger",
+      "letter_type": "unsent",
+      "tone": "haunted",
+      "key_themes": [
+        "the_choice",
+        "the_strong",
+        "the_narrow"
+      ],
+      "content": "To the book,\n\nI chose the strong. I am writing it here because the ledger is where the medicine is written and the choice is medicine and the medicine is the choice and I want it in the ledger where the medicine is.\n\nI had two courses of the broad and three patients and the broad was for the strong and I gave it to the strong and I gave the narrow to the river woman and the narrow was not enough and I knew the narrow was not enough and I gave it anyway because the broad was for the strong and the strong would live and the river woman might not and I made the bet on the strong and the river woman died and the bet is the bet and the bet is in the ledger now.\n\nI do not know if it was right. I know it was a choice. I know I made it. I know I made it alone. I know the sheet was not a wall and the sheet was not medicine and the sheet was the policy and I was the policy and the policy chose the strong.\n\nI am writing it to the book because the book does not judge and I need a place that does not judge and the ledger is where the medicine is and the medicine is the choice and the choice is in the ledger and the ledger is the book and the book does not judge.\n\n— The doctor.",
+      "cross_refs": [],
+      "tags": [
+        "confession",
+        "triage",
+        "doctor",
+        "the_strong",
+        "guilt"
+      ]
+    },
+    {
+      "letter_id": "letter_11_to_the_dead_husband",
+      "day": 40,
+      "sender": "a_widow",
+      "recipient": "My husband",
+      "location": "the cold room, after",
+      "letter_type": "unsent",
+      "tone": "tender",
+      "key_themes": [
+        "the_cold_room",
+        "the_plot",
+        "the_ring"
+      ],
+      "content": "My husband,\n\nThey put you in the cold room. The cold room is working, which is the generator, which is the engineer, which is the knock, which I do not understand and you would have understood and I am angry that you are not here to explain the knock to me, which is a small anger and a real one and I am allowed it.\n\nI buried you in the south plot. It is unmarked. The policy is unmarked. I hate the policy. I hate it with a small hate and a real one. I put a stone to the left of where you are. The stone is not a marker. The stone is a stone. I will know the stone. The stone is for me, not for you. You do not need a stone. I need a stone.\n\nYour ring is in the office. They took it from you at the clinic. They put it in the office. I have not asked for it. I will ask for it. I will ask for it when I can ask for it without crying in the office, which is a place where people are busy and where crying is not the business.\n\nI am wearing my coat. Not yours. Mine. You are not here to be cold. I am here to be cold. The cold is mine now.\n\nI love you. I am angry. The two are the same. I will bring the stone again in the spring, if there is a spring. There will be a spring. The farmer says there will be a spring. The farmer planted a potato. I am choosing the farmer.\n\n— Your wife.",
+      "cross_refs": [],
+      "tags": [
+        "grief",
+        "widow",
+        "cold_room",
+        "ring",
+        "stone"
+      ]
+    },
+    {
+      "letter_id": "letter_12_to_the_dead_child",
+      "day": 22,
+      "sender": "a_mother",
+      "recipient": "My Dima",
+      "location": "the school, in the book",
+      "letter_type": "unsent",
+      "tone": "inconsolable",
+      "key_themes": [
+        "the_counting",
+        "the_candle",
+        "the_quiet"
+      ],
+      "content": "Dima,\n\nYou were six. You are not six anymore. You are not anything anymore and I am writing to you in the book because the book is where the teacher writes and the teacher let me write in the book and the book is the place where the things that are true are written and I want the true thing to be that you were six and you were here and you are not.\n\nYou were good at the quiet game. You were not good at the quiet game. You giggled. I loved the giggling. I am writing the giggling in the book because the book is true and the giggling was true and I want the true thing to have the giggling in it.\n\nI left a candle by your bed. The candle is not for you. The candle is for me. The candle is so I can see your bed and know your bed is empty and that is a thing I need to see and I do not know why and I am seeing it and the candle is for the seeing.\n\nI count the children at the meal. There are not as many. There is one less. The one less is you. I count the one less. I count you. I will count you every meal. I will count you until I cannot count and then someone will count me and I will be the one less and I will be counted and that is the counting and the counting is the thing.\n\nMama.",
+      "cross_refs": [],
+      "tags": [
+        "grief",
+        "mother_child",
+        "death",
+        "counting",
+        "candle"
+      ]
+    },
+    {
+      "letter_id": "letter_13_to_whoever_finds_this",
+      "day": 50,
+      "sender": "a_dying_man",
+      "recipient": "whoever finds this",
+      "location": "the ditch, by the road",
+      "letter_type": "unsent",
+      "tone": "practical",
+      "key_themes": [
+        "the_ditch",
+        "the_boots",
+        "the_direction"
+      ],
+      "content": "To whoever finds this,\n\nI am in the ditch. I am not going to leave the ditch. I am writing this so you do not have to wonder. I wondered about the last one I found and I do not want you to wonder about me.\n\nMy boots are good. Take the boots. The left one has a crack in the sole but the right one is sound. The coat is wet. Do not take the coat. The coat is not worth the carrying.\n\nI came from the north. Do not go north. The road is gone past the bridge. I do not know what took the road. I did not stay to find out. I should have stayed to find out. I did not. I am in the ditch because I did not stay to find out and that is the kind of man I am and the ditch is the kind of place that man ends and I am writing it so you know.\n\nGo south. Go to the school. There is a school. There is a teacher. The teacher is the cycle. I do not know what the cycle is. Someone told me. The teacher will know. Go south. Go to the school. Do not take the coat.\n\n— A man in a ditch.",
+      "cross_refs": [],
+      "tags": [
+        "stranger",
+        "dying",
+        "boots",
+        "direction",
+        "school"
+      ]
+    },
+    {
+      "letter_id": "letter_14_thank_you_to_scavenger",
+      "day": 28,
+      "sender": "a_stranger",
+      "recipient": "the one who left the screws",
+      "location": "the printing works, on the desk",
+      "letter_type": "delivered",
+      "tone": "grateful",
+      "key_themes": [
+        "the_screws",
+        "the_candle",
+        "the_desk"
+      ],
+      "content": "To the one who was here before me,\n\nThank you for the screws. I found them on the desk, by the open drawer. I took them. They were brass. They were what I was looking for. I do not know why you left them. I am glad you left them.\n\nI left a candle. I do not know if you will find the candle. I left it on the desk, where the screws were. The candle is good. The candle is whole. I find them broken, usually. This one was whole. I left it whole. I left it for you because you left the screws for me and I wanted to leave something and the candle was the thing I had that was whole and I wanted to leave a whole thing because the screws were whole and the whole is the thing between us and I do not know your name and you do not know mine and the whole is the name.\n\nI will not come back for a while. The list is done. But I will come back. I will come back to the desk. I will look for the candle. If the candle is gone, you were here. If the candle is there, you were not, and I will take the candle and use it and think of you and the whole.\n\n— The one who came after.",
+      "cross_refs": [],
+      "tags": [
+        "stranger",
+        "scavenger",
+        "screws",
+        "candle",
+        "gratitude"
+      ]
+    },
+    {
+      "letter_id": "letter_15_child_to_father",
+      "day": 16,
+      "sender": "rima",
+      "recipient": "Papa",
+      "location": "the shelter, in the book",
+      "letter_type": "unsent",
+      "tone": "simple",
+      "key_themes": [
+        "the_book",
+        "the_sun",
+        "the_promise"
+      ],
+      "content": "Papa,\n\nMama gave me the book. I write what I see. I see the book. I am writing you in the book because you are not here to see and I want you in the book because the book is where the things I see are and I want you to be a thing I see.\n\nI drew the sun. Mama said draw it with a face. I drew it with a face. The face is smiling. The sun is not smiling. The sun is gone. But the drawing is smiling and Mama put it on the wall and the wall is the colour of porridge and the sun is not.\n\nI count the people at dinner. I am not going to write the number. The number is for the book and the book is for me and you are not here to count and I am counting for you and I will tell you the number when you come and you are coming and I am counting.\n\nI learned a word. The word is ration. It means everyone gets a little. I think fair is not the same as enough. I did not say this. I wrote it. The book is where I say the things.\n\nCome home. I am counting.\n\nRima.",
+      "cross_refs": [],
+      "tags": [
+        "child",
+        "father",
+        "book",
+        "sun",
+        "counting"
+      ]
+    },
+    {
+      "letter_id": "letter_16_to_old_friend",
+      "day": 25,
+      "sender": "a_woman",
+      "recipient": "Boris",
+      "location": "the mess hall, slipped under his bowl",
+      "letter_type": "delivered",
+      "tone": "wry",
+      "key_themes": [
+        "the_bread",
+        "the_boris",
+        "the_tuesday"
+      ],
+      "content": "Boris,\n\nYou know it was me. I know you know. You ate the bread anyway. The bread was the Tuesday bread, which is the bread you burn, which is the bread I took from your tray when you were not looking, which is the bread I gave to the Loma girl because the Loma girl is hungry and you are not, Boris, you are not, you have the kitchen and the kitchen has the bread and the Loma girl has the ration and the ration is the little and the little is not enough for a girl who is growing and you know this and you ate the bread anyway and you did not say and I did not say and we are the two who did not say and that is us, Boris, that has always been us.\n\nI will do it again on Tuesday. I will take the Tuesday bread. You will burn the Tuesday bread. I will take it. You will let me. We will not say. If you want me to stop, leave the bread on the counter and not on the tray and I will know and I will stop. If you leave it on the tray, I will take it. The tray is the yes. The counter is the no. You know this. I am writing it so you know I know you know.\n\n— A.",
+      "cross_refs": [],
+      "tags": [
+        "friend",
+        "bread",
+        "asymmetry",
+        "the_tray",
+        "the_counter"
+      ]
+    },
+    {
+      "letter_id": "letter_17_to_the_engineer",
+      "day": 24,
+      "sender": "the_quartermaster",
+      "recipient": "Tomas",
+      "location": "the generator room, on the logbook",
+      "letter_type": "delivered",
+      "tone": "blunt",
+      "key_themes": [
+        "the_knock",
+        "the_week",
+        "the_truth"
+      ],
+      "content": "Tomas,\n\nI heard it. I was by the door. I heard the knock. You did not tell me about the knock. I am telling you I heard the knock.\n\nI am not going to ask you how long. I am not going to ask you how bad. I am going to tell you that the power is a supply and the supply is the ration and the ration is the flour and the flour is the number and the number is lower than the number I tell people and the power is the number I do not tell people and I am telling you I do not tell people and you are the only one who knows the power is the number and now you know I know the power is the number.\n\nTell me the week. Tell me the week in the logbook, in the margin, where the trouble pages are, where you write. I will read the margin. I will not tell the margin. The margin is between us. The margin is the number. The number is the week. Tell me the week, Tomas. I will plan for the week. I will not plan for more than the week. The week is honest. The week is the margin.\n\n— Y.",
+      "cross_refs": [],
+      "tags": [
+        "quartermaster",
+        "engineer",
+        "knock",
+        "the_week",
+        "the_margin"
+      ]
+    },
+    {
+      "letter_id": "letter_18_the_list_of_names",
+      "day": 62,
+      "sender": "the_duty_clerk",
+      "recipient": "the_captain",
+      "location": "the admissions counter, in the folder",
+      "letter_type": "delivered",
+      "tone": "bureaucratic",
+      "key_themes": [
+        "the_names",
+        "the_line",
+        "the_correction"
+      ],
+      "content": "Captain,\n\nThe list. The names are the list. The line is the list. I am giving you the list because the list is the thing I carry and I am tired of carrying it and you are the captain and the captain carries the list.\n\nThe names with the thin line:\n- the river woman (unknown, Day 12)\n- the conscript (unknown, Day 5, by the post)\n- the old man in the ditch (unknown, Day 50, by the road)\n\nThe names with the thick line:\n- Dima, age 6, Day 22\n- the Loma grandfather, Day 30\n- the night watchman, the one with the cough, Day 33\n\nThe names with no line:\n- the ones who left and did not come back. I do not have their names. They left. They did not come back. I did not write them down because they were not dead when they left and I do not know when they became dead and I do not know if they became dead and the list is for the dead and the not-come-back are not the dead, they are the not-come-back, and the list does not have a line for the not-come-back and I am sorry.\n\nThe list is the list. I carry the list. I am giving you the list. The list is yours. The line is yours. I have carried it for sixty-two days and I am tired and the list is heavy and you are the captain.\n\n— The clerk.",
+      "cross_refs": [],
+      "tags": [
+        "list",
+        "names",
+        "death",
+        "the_line",
+        "bureaucracy"
+      ]
+    },
+    {
+      "letter_id": "letter_19_to_the_house",
+      "day": 35,
+      "sender": "a_returning_woman",
+      "recipient": "the house",
+      "location": "the door, pinned under the stone",
+      "letter_type": "unsent",
+      "tone": "homesick",
+      "key_themes": [
+        "the_door",
+        "the_table",
+        "the_blue"
+      ],
+      "content": "To the house,\n\nI came back. I am sorry it took me. I came back. The door is open, which I left, which I should not have, which I did. The table is set, which I did not leave, which means someone was here, which means someone set the table for the next person, which means the next person was me, which means someone knew I would come back, which means someone knows me better than I know myself, which is the house, I think, which is the house knowing me.\n\nThe blue door. I am by the blue door. The blue is faded. The blue is the blue. I am writing to the house because the house is the only one who will read this and know what the blue door means and the table and the setting and the leaving and the coming back.\n\nI will not stay. I came back to see. I saw. The table is set. The blue is faded. The house is the house. I am leaving the letter under the stone. The stone is the stone by the door. You know the stone. I am leaving the letter for the house and for the next one who comes back, who will be me, or who will be someone, who will see the table is set and the blue is faded and the letter is under the stone and will know.\n\n— The one who came back.",
+      "cross_refs": [],
+      "tags": [
+        "home",
+        "house",
+        "blue_door",
+        "table",
+        "return"
+      ]
+    },
+    {
+      "letter_id": "letter_20_apology_to_stranger",
+      "day": 17,
+      "sender": "a_man",
+      "recipient": "the woman at the well",
+      "location": "the well, on the ledge",
+      "letter_type": "delivered",
+      "tone": "ashamed",
+      "key_themes": [
+        "the_well",
+        "the_look",
+        "the_water"
+      ],
+      "content": "To the woman at the well,\n\nI took your water. You had filled your jug. You had set it on the ledge while you rested. I took it. I was thirsty and I took it and I did not ask and you turned and the jug was gone and I was gone and you looked and I was behind the wall and I saw you look and I am sorry about the look.\n\nThe look was the look of a person who has carried water and set it down and turned and it is gone. I know that look. I have had that look. I took your water and I gave you that look and I am sorry.\n\nI am leaving this and I am leaving a full jug, which I filled, which took me an hour, which is the hour you spent, which is the hour I owe you. The jug is on the ledge. The jug is full. The letter is under the jug. You will find the letter when you lift the jug. I am sorry. I am sorry about the look. The look is the thing I am sorry about, which is also the water, which is also the hour, which is all of it.\n\n— The man behind the wall.",
+      "cross_refs": [],
+      "tags": [
+        "stranger",
+        "apology",
+        "water",
+        "well",
+        "the_look"
+      ]
+    },
+    {
+      "letter_id": "letter_21_to_the_teacher",
+      "day": 36,
+      "sender": "the_scavenger",
+      "recipient": "the teacher",
+      "location": "the school, on the desk",
+      "letter_type": "delivered",
+      "tone": "quiet",
+      "key_themes": [
+        "the_chalk",
+        "the_cycle",
+        "the_desk"
+      ],
+      "content": "Teacher,\n\nI found chalk. Two sticks. I found them in a desk in the printing works, in the office wing, in the back of a drawer. I thought of you. I do not know why I thought of you. I do not know you. I know you are the teacher. I know the teacher is the cycle. I do not know what the cycle is. Someone told me the cycle is the sky. I thought of you and I thought of the sky and I brought the chalk.\n\nI do not have children. I do not have a school. I have a desk in a printing works and I have a list and I have the things I find. I found chalk and I thought of you and I brought it. That is the letter. The chalk is the letter. The letter is the chalk. I am writing this because the chalk is not enough of an explanation and I wanted to explain and I do not know how to explain except to say I thought of you and I do not know why and that is the truth and the truth is the chalk.\n\n— The scavenger.",
+      "cross_refs": [],
+      "tags": [
+        "scavenger",
+        "teacher",
+        "chalk",
+        "gift",
+        "the_cycle"
+      ]
+    },
+    {
+      "letter_id": "letter_22_to_younger_self",
+      "day": 100,
+      "sender": "an_old_woman",
+      "recipient": "myself, before",
+      "location": "the cold frame, in the dirt",
+      "letter_type": "unsent",
+      "tone": "weary",
+      "key_themes": [
+        "the_planting",
+        "the_season",
+        "the_writing"
+      ],
+      "content": "To myself, before,\n\nYou will plant against the season. I am telling you this so you know it is coming and so you know it is right and so you know the wall remembers, because you will not believe the wall remembers and you will plant anyway and you will be right and you will not know you are right and I am writing to tell you you are right.\n\nYou will lose the calendar. You will lose the names of the months. You will keep the order. The order is the winter is long and the summer is a rumor and the spring is a thaw that does not finish. You will plant in the autumn. Everyone will say you are wrong. You are not wrong. The ground is workable. The ground is the only calendar that is honest. Plant when the ground is workable. That is the whole of it.\n\nYou will cry at the sprout. Let yourself cry at the sprout. The crying is the planting. The planting is the crying. Do not be ashamed of the crying. You have never cried at a sprout before. You will cry at this one. The sprout is the first green in a long time and the green is the thing and the crying is the thing and the two are the same.\n\nYou will write in the dirt. I am writing in the dirt. The dirt is where the thing is. The dirt is the only honest page. Write in the dirt. The dirt will not keep the writing. The dirt does not need to keep the writing. The writing is for the dirt to know you know.\n\n— Yourself, after.",
+      "cross_refs": [],
+      "tags": [
+        "self",
+        "planting",
+        "season",
+        "crying",
+        "the_dirt"
+      ]
+    },
+    {
+      "letter_id": "letter_23_warning_to_the_next",
+      "day": 7,
+      "sender": "a_man_leaving",
+      "recipient": "the next one",
+      "location": "the cabin, on the table",
+      "letter_type": "delivered",
+      "tone": "urgent",
+      "key_themes": [
+        "the_cabin",
+        "the_door",
+        "the_three_things"
+      ],
+      "content": "To the next one,\n\nI am leaving. I am leaving the cabin. I am leaving it to you. There are three things.\n\nOne. The door does not latch from the outside. You have to latch it from the inside and go out the window. The window is the window by the stove. If you latch it from the outside it looks latched and it is not and the wind opens it in the night and the cold comes in and the cold is the thing that will get you, not the door, the cold.\n\nTwo. The well is good. The well is the only good thing. The water is clear and cold and it has been clear and cold for the week I have been here. Do not drink from the river. The river is the color of tea and the tea is not tea. The well is the well. Drink the well.\n\nThree. There is someone in the next cabin. I have not seen them. I have heard them. They are there at night. They do not come here. I do not know why they do not come here. I am leaving because I do not know why they do not come here and the not-knowing is the thing I cannot stay for. You can stay. You are braver than me or stupider than me and the two are the same in the dark.\n\nThe door. The well. The next cabin. Those are the three. I am leaving. The cabin is yours. Latch it from the inside.\n\n— The one before.",
+      "cross_refs": [],
+      "tags": [
+        "warning",
+        "cabin",
+        "door",
+        "well",
+        "the_next_cabin"
+      ]
+    },
+    {
+      "letter_id": "letter_24_love_without_the_word",
+      "day": 48,
+      "sender": "a_woman",
+      "recipient": "M.",
+      "location": "the bedside table, under the watch",
+      "letter_type": "unsent",
+      "tone": "tender",
+      "key_themes": [
+        "the_watch",
+        "the_cold_tea",
+        "the_two_shifts"
+      ],
+      "content": "M.,\n\nI wound your watch again. I set it to the time, which is the time I guess at, which is the time the bell rings, which is the time the engineer says, which is the time we agree on, which is the time I set your watch to, which is the time you are not here for.\n\nI left the tea cold. I drank the tea. I cried in the tea. I am not going to write about the tea again. I have written about the tea before. The tea is the tea. You like it cold. I drank it cold. That is the tea.\n\nI filled the lamp. I filled the lamp because the lamp is for you and you are not here and the lamp is full and the lamp is the thing I do for you and I do it and I will do it and I am doing it and the lamp is full.\n\nI am on two shifts. I have said this before. I am saying it again. The two shifts are the early and the late and the one between, which is the one by the lamp, which is the one I am on now, which is the one I am always on, which is the one that is the lamp and the watch and the tea and the you and the you are not here and the lamp is full and the watch is wound and the tea is drunk and I am here and you are not and I am here and I am here.\n\n— A.",
+      "cross_refs": [],
+      "tags": [
+        "love",
+        "watch",
+        "tea",
+        "lamp",
+        "the_two_shifts"
+      ]
+    },
+    {
+      "letter_id": "letter_25_one_sentence",
+      "day": 3,
+      "sender": "a_mother",
+      "recipient": "my daughter",
+      "location": "the hook, by the door",
+      "letter_type": "delivered",
+      "tone": "fierce",
+      "key_themes": [
+        "the_coat",
+        "the_door",
+        "the_now"
+      ],
+      "content": "Take the coat and go now, do not look for the boots, the boots are not worth the looking, go now, the door is the door and the door is open and the open is the going and the going is the now and I am the staying and you are the going and the coat is yours and the going is yours and the now is the only now there is and I love you and the love is not the staying, the love is the going, go.",
+      "cross_refs": [],
+      "tags": [
+        "mother",
+        "daughter",
+        "coat",
+        "going",
+        "one_sentence"
+      ]
+    }
+  ]
+}
