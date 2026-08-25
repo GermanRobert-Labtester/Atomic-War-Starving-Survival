@@ -1,0 +1,505 @@
+{
+  "schema_version": 1,
+  "collection_id": "shelter_notices_expansion",
+  "description": "Shelter notices and daily life records — curfew notices, work assignments, dormitory rules, communal chore rosters, visitor policies, shelter etiquette, resource notices, the small rules that make communal survival possible. The rule is the shelter, the shelter is the rule.",
+  "documents": [
+    {
+      "doc_id": "bunker_doc_curfew_01",
+      "doc_type": "curfew_notice",
+      "title": "Curfew Notice — Day 5",
+      "posted_day": 5,
+      "posted_by": "The Captain of the Gate",
+      "location": "Main corridor, by the gate",
+      "material": "Typed on field-issue paper, stamped",
+      "transcript": "CURFEW NOTICE\n\nEffective immediately.\n\nCurfew: 22:00 to 06:00. The 22 is the dark. The dark is the 22. The 06 is the dawn. The dawn is the 06. The 22 to the 06 is the curfew. The curfew is the 22 to the 06.\n\nDuring curfew:\n- No movement in the corridors without a lamp. The lamp is the movement. The movement is the lamp. The dark is the not-lamp. The not-lamp is the dark.\n- No noise above a whisper. The whisper is the noise. The noise is the whisper. The loud is the not-whisper. The not-whisper is the loud.\n- No visitors. The visitor is the not-curfew. The not-curfew is the visitor.\n- The sentry has authority to stop and question. The authority is the sentry. The sentry is the authority.\n\nThe curfew is the shelter. The shelter is the curfew. The curfew is the rule. The rule is the curfew. The shelter is the rule. The rule is the shelter.\n\n— The Captain of the Gate.",
+      "tags": [
+        "curfew",
+        "day_5",
+        "22_to_06",
+        "lamp",
+        "whisper",
+        "sentry"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_curfew_02",
+      "doc_type": "curfew_notice",
+      "title": "Curfew Notice — Winter Adjustment, Day 35",
+      "posted_day": 35,
+      "posted_by": "The Captain of the Gate",
+      "location": "Main corridor, by the gate",
+      "material": "Typed on field-issue paper, over the previous notice",
+      "transcript": "CURFEW NOTICE — WINTER ADJUSTMENT\n\nEffective Day 35.\n\nCurfew: 20:00 to 07:00. The 20 is the earlier. The earlier is the 20. The 07 is the later. The later is the 07. The winter is the earlier and the later. The earlier and the later are the winter. The winter is the longer curfew. The longer curfew is the winter.\n\nDuring curfew:\n- No movement without a lamp. The lamp is the winter. The winter is the lamp.\n- No noise above a whisper. The whisper is the winter. The winter is the whisper.\n- No visitors. The visitor is the not-winter. The not-winter is the visitor.\n- The sentry has authority. The authority is the sentry. The sentry is the authority.\n- The lamp oil is the 4 days. The 4 is the lamp. The lamp is the 4. The lamp oil is the curfew. The curfew is the lamp oil. The 4 is the curfew. The curfew is the 4. The lamp oil is the ration. The ration is the lamp oil. The curfew is the ration. The ration is the curfew. The 4 is the ration. The ration is the 4.\n\nThe winter curfew is the longer. The longer is the winter. The winter is the longer. The curfew is the shelter. The shelter is the curfew. The winter is the shelter. The shelter is the winter.\n\n— The Captain of the Gate.",
+      "tags": [
+        "curfew",
+        "winter",
+        "day_35",
+        "20_to_07",
+        "lamp_oil_4",
+        "ration"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_work_assignment_01",
+      "doc_type": "work_assignment",
+      "title": "Work Assignment — Week 1 Roster",
+      "posted_day": 7,
+      "posted_by": "The Duty Clerk",
+      "location": "Main office, posted on the board",
+      "material": "Handwritten on a salvaged ledger page, pinned with two nails",
+      "transcript": "WORK ASSIGNMENT — WEEK 1 ROSTER\n\nWATER DETAIL:\n- The Mechanic: pump maintenance, daily, 06:00. The pump is the mechanic. The mechanic is the pump.\n- Kolya S.: water haul, daily, 07:00. 4 containers, 50L each, from the pump to the stores. The 4 is the haul. The haul is the 4.\n\nHEATING DETAIL:\n- Fyodor S.: boiler, daily, 05:00 and 17:00. Two shovels per shift. The two is the shovels. The shovels are the two.\n- D4 (dependent): ash removal, daily, 18:00. The ash is the removal. The removal is the ash.\n\nMEDICAL DETAIL:\n- Nurse Anya: clinic, daily, all hours. The clinic is the nurse. The nurse is the clinic. The all-hours is the nurse. The nurse is the all-hours.\n- Dr. Ivan: clinic, daily, 08:00 to 18:00. The 08 to 18 is the doctor. The doctor is the 08 to 18.\n\nKITCHEN DETAIL:\n- Boris K.: baking, daily, 04:00. The 04 is the baker. The baker is the 04. The 04 is the before-the-dawn. The before-the-dawn is the 04. The baker is the before-the-dawn.\n- Helper (rotating): mess hall cleanup, daily, after each meal. The cleanup is the helper. The helper is the cleanup.\n\nSCAVENGING DETAIL:\n- Mira V.: as needed, at her discretion. The discretion is the scavenger. The scavenger is the discretion. The shelter does not assign the scavenger. The scavenger assigns herself. The herself is the assignment. The assignment is the herself.\n\nSENTRY DETAIL:\n- North cupola: 2-person teams, 6-hour shifts, 24h watch. The 2 is the team. The team is the 2. The 6 is the shift. The shift is the 6. The 24 is the watch. The watch is the 24.\n- South perimeter: 1-person, 12-hour shifts. The 1 is the solo. The solo is the 1. The 12 is the long. The long is the 12.\n\nNOTE: Every person works. Every mouth earns. The earning is the working. The working is the earning. The not-working is the not-eating. The not-eating is the not-working. The rule is the work. The work is the rule.\n\n— The Duty Clerk.",
+      "tags": [
+        "work_assignment",
+        "week_1",
+        "roster",
+        "every_person_works",
+        "earning"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_work_assignment_02",
+      "doc_type": "work_assignment",
+      "title": "Work Assignment — Spring Roster, Day 100",
+      "posted_day": 100,
+      "posted_by": "The Duty Clerk",
+      "location": "Main office, posted on the board",
+      "material": "Handwritten on a salvaged ledger page, the handwriting is lighter",
+      "transcript": "WORK ASSIGNMENT — SPRING ROSTER, DAY 100\n\nWATER DETAIL:\n- The Mechanic: pump + artesian well check, weekly. The weekly is the well. The well is the weekly.\n- Kolya S.: water haul, daily. (Unchanged. The haul is the Kolya. The Kolya is the haul.)\n\nHEATING DETAIL:\n- Fyodor S.: boiler, daily. (Reduced — the geothermal is coming. The coming is the geothermal. The boiler is the before-the-geothermal. The before-the-geothermal is the boiler. The geothermal is the after-the-boiler. The after-the-boiler is the geothermal. The Fyodor is the before. The before is the Fyodor. The geothermal is the after. The after is the geothermal.)\n- D4: ash removal, daily. (Unchanged.)\n\nMEDICAL DETAIL:\n- Nurse Anya: clinic, daily, all hours. (Unchanged. The all-hours is the nurse. The nurse is the all-hours.)\n- Dr. Ivan: clinic, daily, 08:00 to 18:00. (Unchanged.)\n\nKITCHEN DETAIL:\n- Boris K.: baking + cooking, daily, 04:00. (Expanded — the potato, the nettle, the cabbage, the fish. The expanded is the spring. The spring is the expanded. The baker is the Chef. The Chef is the baker. The Chef is the spring. The spring is the Chef.)\n- Helper (rotating): mess hall cleanup + foraging prep. The foraging is the prep. The prep is the foraging.\n\nAGRICULTURAL DETAIL (NEW):\n- Old Petr: cold frame + allotments + apiary, daily, 06:00. The 06 is the farmer. The farmer is the 06. The cold frame is the spring. The spring is the cold frame. The apiary is the bees. The bees are the apiary. The allotments are the clover. The clover is the allotments. The three are the farmer. The farmer is the three.\n- Rima (age 9): observation, daily, after school. The observation is the Rima. The Rima is the observation. The after-school is the Rima. The Rima is the after-school. (The child is the first child assigned to work. The first is the child. The child is the first. The work is the observation. The observation is the work. The observation is the not-heavy. The not-heavy is the observation. The child is the not-heavy. The not-heavy is the child.)\n\nSCAVENGING DETAIL:\n- Mira V.: as needed. (Unchanged. The discretion is the scavenger. The scavenger is the discretion.)\n\nSENTRY DETAIL:\n- North cupola: 2-person, 6-hour shifts. (Unchanged.)\n- South perimeter: 1-person, 12-hour shifts. (Unchanged.)\n\nNOTE: The spring is the expanded. The expanded is the spring. The winter was the reduced. The reduced was the winter. The spring is the more work. The more work is the spring. The more work is the more food. The more food is the more work. The two are the spring. The spring is the two.\n\n— The Duty Clerk.",
+      "tags": [
+        "work_assignment",
+        "spring",
+        "day_100",
+        "geothermal_coming",
+        "agricultural_new",
+        "rima_observation",
+        "expanded"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_dormitory_rules",
+      "doc_type": "dormitory_rules",
+      "title": "Dormitory Rules — Ward A",
+      "posted_day": 10,
+      "posted_by": "The Duty Clerk",
+      "location": "Ward A entrance, posted on the wall",
+      "material": "Handwritten on the back of a pre-war notice",
+      "transcript": "DORMITORY RULES — WARD A\n\n1. One cot per person. The cot is the person. The person is the cot. Do not take another's cot. The another's is the not-yours. The not-yours is the another's.\n\n2. Quiet after curfew. The quiet is the curfew. The curfew is the quiet. The whisper is the loud. The loud is the whisper. (The whisper is the most you may be. The most is the whisper.)\n\n3. No food in the dormitory. The food is the mess hall. The mess hall is the food. The dormitory is the not-food. The not-food is the dormitory. The food in the dormitory is the mice. The mice are the food in the dormitory. The not-food is the not-mice. The not-mice is the not-food.\n\n4. No lamps after 22:00. The 22 is the lamp-off. The lamp-off is the 22. The lamp oil is the ration. The ration is the lamp oil. The 22 is the ration. The ration is the 22.\n\n5. No weapons in the dormitory. The weapons are the gate. The gate is the weapons. The dormitory is the not-weapons. The not-weapons is the dormitory.\n\n6. Children sleep in the lower tier. The lower is the children. The children are the lower. The lower is the warmer. The warmer is the lower. The children are the warmer. The warmer are the children.\n\n7. The blanket is yours. The blanket is the one. The one is the blanket. Do not take another's blanket. The another's blanket is the not-yours. The not-yours is the another's blanket. The blanket is the warmth. The warmth is the blanket. The another's warmth is the not-yours. The not-yours is the another's warmth.\n\n8. The snoring is the not-fixable. The not-fixable is the snoring. The snoring is the tolerated. The tolerated is the snoring. The not-tolerated is the not-snoring. The not-snoring is the not-tolerated. (If you snore, sleep on your side. The side is the snoring. The snoring is the side. If the side does not fix the snoring, the snoring is the tolerated. The tolerated is the snoring.)\n\nThe rules are the dormitory. The dormitory is the rules. The rules are the shelter. The shelter is the rules.\n\n— The Duty Clerk.",
+      "tags": [
+        "dormitory",
+        "rules",
+        "ward_a",
+        "cots",
+        "quiet",
+        "no_food",
+        "no_lamps",
+        "no_weapons",
+        "children_lower"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_chore_roster_01",
+      "doc_type": "chore_roster",
+      "title": "Communal Chore Roster — Week 4",
+      "posted_day": 28,
+      "posted_by": "The Duty Clerk",
+      "location": "Main office, posted on the board",
+      "material": "Handwritten on a salvaged ledger page",
+      "transcript": "COMMUNAL CHORE ROSTER — WEEK 4\n\nLATRINE DETAIL:\n- Mon: D4 group (3 persons). The 3 is the latrine. The latrine is the 3. The D4 is the detail. The detail is the D4. (The D4 are the dependents. The dependents are the D4. The latrine is the dependent's work. The dependent's work is the latrine. The work is the earning. The earning is the work. The D4 earns by the latrine. The latrine is the earning.)\n- Tue: C3 group (3 persons). The C3 is the support. The support is the C3.\n- Wed: D4 group.\n- Thu: C3 group.\n- Fri: D4 group.\n- Sat: C3 group.\n- Sun: D4 group. (The D4 has 4 days. The C3 has 3 days. The D4 has more because the D4 is the dependent. The dependent is the D4. The more is the dependent. The dependent is the more. The C3 has less because the C3 is the support. The support is the C3. The less is the support. The support is the less.)\n\nASH REMOVAL:\n- Daily: 1 person (rotating through D4). The 1 is the ash. The ash is the 1. The rotating is the D4. The D4 is the rotating.\n\nCORRIDOR SWEEP:\n- Daily: 2 persons (rotating through all classes). The 2 is the sweep. The sweep is the 2. The all-classes is the sweep. The sweep is the all-classes. (The sweep is the one chore where all classes work together. The together is the sweep. The sweep is the together. The all-classes is the together. The together is the all-classes.)\n\nLAMP FILLING:\n- Daily: 1 person (the electrician or apprentice). The 1 is the lamp. The lamp is the 1. The filling is the ration. The ration is the filling. The lamp oil is the 4 days. The 4 is the filling. The filling is the 4. The 4 is the ration. The ration is the 4.\n\nWATER HAUL:\n- Daily: 2 persons (Kolya + rotating). The 2 is the haul. The haul is the 2. The 4 containers is the haul. The haul is the 4 containers. The 50L per container is the haul. The haul is the 50L per container. The 200L total is the haul. The haul is the 200L total. The 200L is the shelter. The shelter is the 200L. (The 200L is the water for the day. The day is the 200L. The 200L is the 147 x 2 minus the stored. The 147 x 2 is the 294. The 200 is the hauled. The 94 is the stored. The stored is the 94. The 94 is the margin. The margin is the 94.)\n\nNOTE: The chore is the shelter. The shelter is the chore. The chore is the rule. The rule is the chore. The not-chore is the not-shelter. The not-shelter is the not-chore. Everyone chores. Everyone shelters. The two are the same. The same is the two.\n\n— The Duty Clerk.",
+      "tags": [
+        "chore_roster",
+        "week_4",
+        "latrine",
+        "ash",
+        "sweep",
+        "lamp",
+        "water_haul",
+        "all_classes"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_visitor_policy",
+      "doc_type": "visitor_policy",
+      "title": "Visitor Policy — Day 14",
+      "posted_day": 14,
+      "posted_by": "The Captain of the Gate",
+      "location": "Main gate, posted on the door",
+      "material": "Typed on field-issue paper, stamped",
+      "transcript": "VISITOR POLICY\n\nEffective Day 14.\n\nDefinition: a visitor is a person who is not a resident. The not-resident is the visitor. The visitor is the not-resident. The resident is the not-visitor. The not-visitor is the resident.\n\nRules:\n1. All visitors must report to the gate. The gate is the report. The report is the gate. The not-report is the not-entry. The not-entry is the not-report.\n\n2. Visitors may stay one night. The one is the night. The night is the one. The one night is the visitor's. The visitor's is the one night. The two nights is the not-visitor. The not-visitor is the two nights. The two nights is the resident. The resident is the two nights.\n\n3. Visitors must surrender weapons at the gate. The surrender is the gate. The gate is the surrender. The weapon is the not-visitor's. The not-visitor's is the weapon. The gate keeps the weapon. The weapon is the gate's. The gate's is the weapon. The weapon is returned on departure. The departure is the return. The return is the departure.\n\n4. Visitors eat the visitor ration (half the resident ration). The half is the visitor. The visitor is the half. The half is the not-full. The not-full is the half. The full is the resident. The resident is the full. The visitor is the half. The half is the visitor.\n\n5. Visitors must leave by 08:00. The 08 is the leaving. The leaving is the 08. The 08 is the not-visitor. The not-visitor is the 08. The after-08 is the resident-or-departed. The resident-or-departed is the after-08.\n\n6. The captain may grant extensions. The extension is the captain. The captain is the extension. The extension is the not-rule. The not-rule is the extension. The captain is the not-rule. The not-rule is the captain. (The captain is the rule and the not-rule. The rule and the not-rule are the captain. The captain is the shelter. The shelter is the captain.)\n\n7. Visitors who do not leave become residents (if the headcount allows) or are escorted to the gate. The headcount is the allowing. The allowing is the headcount. The not-allowing is the escort. The escort is the not-allowing. The gate is the escort. The escort is the gate.\n\nThe visitor is the not-resident. The not-resident is the visitor. The policy is the visitor. The visitor is the policy. The gate is the policy. The policy is the gate.\n\n— The Captain of the Gate.",
+      "tags": [
+        "visitor_policy",
+        "day_14",
+        "one_night",
+        "surrender_weapons",
+        "half_ration",
+        "08_00",
+        "extension"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_etiquette",
+      "doc_type": "shelter_etiquette",
+      "title": "Shelter Etiquette — The Unwritten Rules (Written Down)",
+      "posted_day": 20,
+      "posted_by": "The Duty Clerk",
+      "location": "Main corridor, by the mess hall",
+      "material": "Handwritten on the back of a meal notice",
+      "transcript": "SHELTER ETIQUETTE — THE UNWRITTEN RULES (WRITTEN DOWN)\n\nThe unwritten are the written. The written are the unwritten. The writing is the making-written. The making-written is the writing. The unwritten are now the written. The written are now the unwritten. (The writing down is the making-true. The making-true is the writing down.)\n\n1. The queue is the order. The order is the queue. Do not skip the queue. The skip is the not-order. The not-order is the skip. The queue is the patience. The patience is the queue.\n\n2. The meal is the together. The together is the meal. Do not eat alone. The alone is the not-together. The not-together is the alone. (The alone is the not-shelter. The not-shelter is the alone. The together is the shelter. The shelter is the together.)\n\n3. The children eat first. The first is the children. The children are the first. The first is the not-adult. The not-adult is the first. The adult is the second. The second is the adult. The second is the after-the-children. The after-the-children is the second.\n\n4. The lamp is the shared. The shared is the lamp. Do not take the lamp from the corridor. The corridor is the lamp. The lamp is the corridor. The taking is the not-shared. The not-shared is the taking.\n\n5. The water is the 2 litres. The 2 is the ration. The ration is the 2. Do not take more. The more is the not-2. The not-2 is the more. The more is the not-yours. The not-yours is the more. The 2 is the yours. The yours is the 2.\n\n6. The quiet is the curfew. The curfew is the quiet. The quiet is the not-loud. The not-loud is the quiet. The loud is the not-quiet. The not-quiet is the loud. The loud is the not-shelter. The not-shelter is the loud.\n\n7. The blanket is the yours. The yours is the blanket. Do not take the another's blanket. The another's is the not-yours. The not-yours is the another's. The blanket is the warmth. The warmth is the blanket. The another's warmth is the not-yours. The not-yours is the another's warmth.\n\n8. The gate is the captain. The captain is the gate. Do not open the gate without the captain. The captain is the opening. The opening is the captain. The not-captain is the not-opening. The not-opening is the not-captain.\n\n9. The clinic is the nurse and the doctor. The nurse and the doctor are the clinic. Do not enter the clinic without the nurse or the doctor. The nurse is the clinic. The clinic is the nurse. The doctor is the clinic. The clinic is the doctor.\n\n10. The book is the honest. The honest is the book. The book is the quartermaster's. The quartermaster's is the book. Do not ask the quartermaster the number. The number is the quartermaster's. The quartermaster's is the number. The asking is the not-yours. The not-yours is the asking. The number is the not-yours. The not-yours is the number.\n\nThe etiquette is the shelter. The shelter is the etiquette. The unwritten is the written. The written is the unwritten. The rules are the shelter. The shelter is the rules.\n\n— The Duty Clerk.",
+      "tags": [
+        "etiquette",
+        "unwritten",
+        "queue",
+        "together",
+        "children_first",
+        "lamp_shared",
+        "water_2",
+        "blanket",
+        "gate",
+        "clinic",
+        "book"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_water_notice",
+      "doc_type": "resource_notice",
+      "title": "Water Notice — The 2 Litres",
+      "posted_day": 14,
+      "posted_by": "The Quartermaster",
+      "location": "Pump room, south corridor",
+      "material": "Painted on the pump base",
+      "transcript": "WATER NOTICE — THE 2 LITRES\n\nEvery person: 2 litres per day. The 2 is the ration. The ration is the 2. The every is the person. The person is the every.\n\nFill at the pump, 06:00 to 20:00. The 06 is the start. The start is the 06. The 20 is the end. The end is the 20. The 06 to 20 is the pump. The pump is the 06 to 20.\n\nDo not waste. The waste is the not-2. The not-2 is the waste. The waste is the not-yours. The not-yours is the waste. The 2 is the yours. The yours is the 2.\n\nDo not drink unboiled from the river. The river is the not-boiled. The not-boiled is the river. The boiled is the not-river. The not-river is the boiled. The river is the contamination. The contamination is the river.\n\nThe 2 litres is the life. The life is the 2 litres. The 2 is the life. The life is the 2. The not-2 is the not-life. The not-life is the not-2. The 2 is the shelter. The shelter is the 2.\n\nChildren: 2 litres (same as adult). The same is the children. The children are the same. The children are the not-more. The not-more is the children. The children are the first (at the pump). The first is the children. The children are the first at the pump. The pump is the children's first. The first is the pump.\n\n— The Quartermaster.",
+      "tags": [
+        "water",
+        "notice",
+        "2_litres",
+        "pump",
+        "no_waste",
+        "no_river",
+        "children_first"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_lamp_notice",
+      "doc_type": "resource_notice",
+      "title": "Lamp Oil Notice — The Counting Down",
+      "posted_day": 50,
+      "posted_by": "The Quartermaster",
+      "location": "Main corridor, by the lamp",
+      "material": "Handwritten on the wall beside the lamp",
+      "transcript": "LAMP OIL NOTICE — THE COUNTING DOWN\n\nLamp oil: 2 days. The 2 is the lamp. The lamp is the 2. The 2 is the counting down. The counting down is the 2.\n\nRules:\n- Corridor lamps: lit 18:00 to 22:00 only. The 18 is the lit. The lit is the 18. The 22 is the off. The off is the 22. The 18 to 22 is the 4 hours. The 4 hours is the lamp. The lamp is the 4 hours.\n- Dormitory lamps: lit 18:00 to 20:00 only. The 20 is the off. The off is the 20. The 18 to 20 is the 2 hours. The 2 hours is the dormitory. The dormitory is the 2 hours.\n- Mess hall lamp: lit during meals only. The meals are the lamp. The lamp is the meals.\n- Clinic lamp: always lit. The always is the clinic. The clinic is the always. The clinic is the not-counting. The not-counting is the clinic. (The clinic does not count the lamp oil. The lamp oil is the clinic's. The clinic's is the lamp oil. The clinic is the exception. The exception is the clinic.)\n\nThe lamp oil is the 2. The 2 is the counting down. The counting down is the lamp oil. The geothermal is the after-the-2. The after-the-2 is the geothermal. The geothermal is the not-lamp. The not-lamp is the geothermal. The geothermal is the heat. The heat is the geothermal. The lamp is the before-the-geothermal. The before-the-geothermal is the lamp. The 2 is the before. The before is the 2. The geothermal is the after. The after is the geothermal.\n\nWhen the 2 is 0, the dark is the shelter. The shelter is the dark. The 0 is the dark. The dark is the 0. But the geothermal is the heat. The heat is the not-dark. The not-dark is the geothermal. The geothermal is the not-dark. The dark is the lamp's. The not-dark is the geothermal's. The lamp is the dark's. The geothermal is the not-dark's.\n\n— The Quartermaster.",
+      "tags": [
+        "lamp_oil",
+        "notice",
+        "counting_down",
+        "2_days",
+        "hours",
+        "med_exception",
+        "geothermal"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_sentry_rotation",
+      "doc_type": "duty_roster",
+      "title": "Sentry Rotation — Week 7",
+      "posted_day": 44,
+      "posted_by": "The Captain of the Gate",
+      "location": "Gate house notice board",
+      "material": "Typed on recycled paper, pinned with two nails",
+      "transcript": "SENTRY ROTATION — WEEK 7\nAll times bunker standard.\n\nNORTH CUPOLA (24h, 2-person teams):\n06-14 — Veteran + Hunter\n14-22 — General + Cop\n22-06 — Bouncer + Prepper\n\nSOUTH PERIMETER (12h, 1-person):\n06-18 — Courier (Bram, returned Day 5)\n18-06 — Mechanic\n\nNOTES:\n- Dosimeter readings logged every 2h. The 2h is the log. The log is the 2h. The dosimeter is the log. The log is the dosimeter.\n- Any contact with unidentified persons: do not engage, radio immediately. The radio is the engage. The engage is the radio. The not-engage is the radio. The radio is the not-engage.\n- North cupola: bring the thermos. The thermos is the cupola. The cupola is the thermos. The thermos is the cold. The cold is the thermos. (The cupola is always cold. The always is the cold. The cold is the always. The thermos is the always. The always is the thermos.)\n- South perimeter: the creek bed is slippery after rain. The slippery is the creek. The creek is the slippery. The rain is the slippery. The slippery is the rain. Watch your footing. The footing is the watch. The watch is the footing.\n- Bram is back. Bram runs clean. Welcome Bram back. Do not ask Bram about the forest. Bram will tell you or Bram will not. The not-asking is the welcome. The welcome is the not-asking.\n\n— The Captain of the Gate.",
+      "tags": [
+        "sentry",
+        "rotation",
+        "week_7",
+        "dosimeter",
+        "thermos",
+        "bram",
+        "creek"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_meal_notice",
+      "doc_type": "resource_notice",
+      "title": "Meal Notice — Flour Reduction, Day 38",
+      "posted_day": 38,
+      "posted_by": "The Mess Hall Steward",
+      "location": "Mess hall entrance, over the serving hatch",
+      "material": "Handwritten on the back of the Day 35 notice",
+      "transcript": "MEAL NOTICE — FLOUR REDUCTION\n\nThe flour is reduced. This is not a notice I wanted to write. The flour is reduced because the flour is reduced. There is no other reason. There is no other flour.\n\nNew portions, effective Day 39:\n- Bread: one slice, not two. The one is the slice. The slice is the one. The two is the before. The before is the two. The one is the now. The now is the one.\n- Porridge: half-depth, not full. The half is the depth. The depth is the half. The full is the before. The before is the full. The half is the now. The now is the half.\n- Children: the same. Children are not more. Children are first. First is not more.\n\nThe Chef is making the bread thinner. The bread is the same bread. The bread is thinner. That is the flour. That is the flour.\n\nThe flour is the number. The number is the flour. The number is the quartermaster's. The quartermaster's is the number. The number is not the notice. The notice is not the number. The notice is the reduction. The reduction is the notice. The number is the not-notice. The not-notice is the number.\n\n— The Mess Hall Steward.",
+      "tags": [
+        "meal",
+        "flour",
+        "reduction",
+        "day_38",
+        "one_slice",
+        "half_depth",
+        "children_same"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_laundry_notice",
+      "doc_type": "resource_notice",
+      "title": "Laundry Notice — Suspension",
+      "posted_day": 27,
+      "posted_by": "The Duty Clerk, Ward B",
+      "location": "Ward B notice board, pinned over the wash basin",
+      "material": "Handwritten on a scrap of inventory paper",
+      "transcript": "LAUNDRY NOTICE — SUSPENSION\n\nLaundry service is suspended for Ward B until further notice.\n\nThis is not a punishment. This is the water. The water is the ration. The ration is the laundry. The laundry is not the ration. The laundry is suspended. The water is not.\n\nWard B residents are provided with one change of linen from stores. The linen is the linen. The linen is not yours. The linen is returned when the laundry resumes. The laundry resumes when the water allows. The water allows when the pump allows. The pump is the boot. The boot is the gasket. The gasket is the list.\n\nWear the linen. Wear it twice. Wear it three times. The third time is the linen. The linen is the third time. We are the laundry. We are wearing the shelter. The shelter is the laundry.\n\n— The Duty Clerk, Ward B.",
+      "tags": [
+        "laundry",
+        "suspension",
+        "ward_b",
+        "water",
+        "linen",
+        "wearing_shelter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_school_notice",
+      "doc_type": "general_notice",
+      "title": "School Notice — The Water Cycle",
+      "posted_day": 16,
+      "posted_by": "Teacher Suki",
+      "location": "Ward C corridor, by the chalk diagram",
+      "material": "Handwritten on the back of a meal notice",
+      "transcript": "SCHOOL NOTICE\n\nThe school is in the Ward C corridor, by the lamp, 10:00-11:00, daily.\n\nAll children welcome. All children are the school.\n\nThe lesson is the water cycle. The lesson is also the ash cycle. The lesson is also the chalk. The chalk is the lesson. The chalk is also almost gone. The lesson is also almost gone. The lesson is not the chalk. The lesson is the cycle. The cycle is not gone. The cycle is the sky and the sky is still there, even when it is grey. Especially when it is grey.\n\nThe teacher is Suki. Suki is the teacher. Suki is also the cycle. The cycle is also Suki. The children are also the cycle. The school is the cycle. The school is the corridor. The corridor is the school.\n\nBring your children. The children are the cycle. The cycle is the children.\n\n— Teacher Suki.",
+      "tags": [
+        "school",
+        "water_cycle",
+        "children",
+        "suki",
+        "chalk",
+        "corridor"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weapons_amnesty",
+      "doc_type": "general_notice",
+      "title": "Weapons Amnesty — Voluntary Surrender",
+      "posted_day": 60,
+      "posted_by": "The Captain of the Gate",
+      "location": "Gate house notice board, posted at all wards",
+      "material": "Pre-printed notice, fields filled in pen, stamped VOLUNTARY",
+      "transcript": "WEAPONS AMNESTY — VOLUNTARY SURRENDER\n\nAll residents are invited to voluntarily surrender personal weapons to the Gate House for the duration of the shelter emergency.\n\nThis is not a search. This is not a seizure. This is an invitation. The invitation is voluntary. The voluntary is the word. The word is the voluntary.\n\nSurrendered weapons will be:\n- Catalogued (by the Duty Clerk). The catalogue is the weapon. The weapon is the catalogue.\n- Stored (Gate House armory, locked). The armory is the locked. The locked is the armory.\n- Returned to the owner on departure or on lifting of the emergency. The return is the departure. The departure is the return.\n\nResidents who do not surrender will not be penalised. Residents who do not surrender will be asked why. The asking is not a penalty. The asking is the asking.\n\nThe shelter is a close community. The close community is a close temper. The close temper is a close violence. We have not had the violence. We do not want the violence. The weapons are the violence, waiting. The waiting is the reason.\n\nThe captain is not taking your blade. The captain is asking for your blade. The asking is the difference. If the captain takes the blade, the captain is the violence. If the captain asks for the blade, the captain is the captain. The captain is the captain. The captain is asking.\n\n— The Captain of the Gate.",
+      "tags": [
+        "weapons",
+        "amnesty",
+        "voluntary",
+        "surrender",
+        "asking",
+        "not_taking"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_quarantine_notice",
+      "doc_type": "general_notice",
+      "title": "Quarantine Notice — Ward B Respiratory",
+      "posted_day": 19,
+      "posted_by": "Dr. Ivan",
+      "location": "Ward B door, posted; copy to the Captain of the Gate",
+      "material": "Pre-printed order, stamped QUARANTINE",
+      "transcript": "QUARANTINE NOTICE — WARD B\n\nEffective: immediately.\nLocation: Ward B (full ward).\n\nReason: Respiratory presentation in two patients, consistent pattern, possible contagion. The contagion is the reason. The reason is the contagion.\n\nRestrictions:\n- No entry to Ward B except: medical staff, Duty Clerk (supervised). The supervised is the entry. The entry is the supervised.\n- No exit from Ward B except: medical transfer (to Clinic sheeted bay). The transfer is the exit. The exit is the transfer.\n- Meals delivered to the ward door. The door is the meal. The meal is the door. Ward B residents do not attend the mess hall. The mess hall is the not-Ward-B. The not-Ward-B is the mess hall.\n- Water: filled at the pump by the Duty Clerk, delivered. The delivery is the water. The water is the delivery. Ward B residents do not use the public pump. The public pump is the not-Ward-B. The not-Ward-B is the public pump.\n\nDuration: Until lifted by the Doctor. The Doctor lifts when the cough is clear or the cause is clear. Neither is clear. The quarantine is the quarantine until it is not.\n\nThe sheet is not a wall. The sheet is what we have. The sheet is the policy. The policy is the sheet. The doctor is the policy. The policy is the doctor. The doctor is the margin. The margin is the doctor.\n\n— Dr. Ivan.",
+      "tags": [
+        "quarantine",
+        "ward_b",
+        "respiratory",
+        "sheet",
+        "policy",
+        "doctor",
+        "margin"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_census_correction",
+      "doc_type": "general_notice",
+      "title": "Census Correction — Headcount, Day 62",
+      "posted_day": 62,
+      "posted_by": "The Quartermaster",
+      "location": "Quartermaster's office, filed; copy to the Captain",
+      "material": "Pre-printed form, stamped CORRECTED",
+      "transcript": "CENSUS CORRECTION\n\nDate of correction: Day 62.\nCorrected by: Quartermaster.\n\nPrevious headcount (Day 30): 140.\nPrevious basis: 140 (provisioning basis).\n\nCorrected headcount (Day 62): 147.\nReason for correction: Loma family arrival (Day 14, +7) not entered in the Day 30 census. The Lomas were entered in the ration ledger (Day 15) but not in the headcount census (Day 30). The ration ledger and the headcount census are two books. They should be one book. They are two books. This is the correction. The correction is the two books agreeing.\n\nImpact:\n- Provisioning basis exceeded by 7.\n- The 7 are the Lomas. The Lomas are the 7. The 7 eat. The 7 have always eaten. The 7 were not in the book. The book was wrong. The book is corrected. The 7 are in the book. The 7 have been in the shelter since Day 14.\n- The 7 include an infant who is not an infant. Rima is nine. The form was wrong. The form is corrected. The correction is the form.\n\nThe book is the honest place. The book is now honest. The honest is the book. The book is the 147. The 147 is the book. The 147 is the headcount. The headcount is the 147.\n\n— The Quartermaster.",
+      "tags": [
+        "census",
+        "correction",
+        "headcount",
+        "147",
+        "loma_7",
+        "rima_nine",
+        "honest"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_cold_frame_notice",
+      "doc_type": "general_notice",
+      "title": "Notice — The Cold Frame",
+      "posted_day": 8,
+      "posted_by": "Old Petr",
+      "location": "Allotments, south wall",
+      "material": "Handwritten on a seed packet, dirt on the corner",
+      "transcript": "NOTICE — THE COLD FRAME\n\nThe cold frame is built. The cold frame is against the south wall. The south wall is the warm. The warm is the south wall. The cold frame is the glass and the straw and the south wall. The three are the cold frame. The cold frame is the three.\n\nThe cold frame is for the seed potatoes. The seed potatoes are the quartermaster's. The quartermaster gave the seed. The giving is the trust. The trust is the giving. The seed is the trust. The trust is the seed.\n\nDo not touch the cold frame. The touching is the not-trust. The not-trust is the touching. The cold frame is the farmer's. The farmer is the cold frame's. The farmer is the trust. The trust is the farmer.\n\nThe planting is against the season. The season is not the season. The spring is not the spring. The ground is workable. The ground is the only calendar that is honest. Plant when the ground is workable. That is the whole of it.\n\nThe cold frame is the counter. The counter is the cold frame. The flour is the number. The number is the flour. The cold frame is the not-number. The not-number is the cold frame. The cold frame is the spring. The spring is the cold frame. The spring is the not-flour. The not-flour is the spring. The cold frame is the not-flour. The not-flour is the cold frame.\n\n— Petr. The farmer. The farmer is the cold frame. The cold frame is the farmer.",
+      "tags": [
+        "cold_frame",
+        "notice",
+        "south_wall",
+        "seed_potatoes",
+        "trust",
+        "against_season",
+        "counter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_filter_notice",
+      "doc_type": "resource_notice",
+      "title": "Filter Notice — Sub-Level 3, 90% Occluded",
+      "posted_day": 30,
+      "posted_by": "The Mechanic",
+      "location": "Sub-level 3 entrance",
+      "material": "Red chalk, crude",
+      "transcript": "FILTER NOTICE — SUB-LEVEL 3\n\nFilter bank 1: 90% occluded. 90% is not air. 90% is the filter. The filter is the air. The air is the filter. 90% is the not-air. The not-air is the 90%.\n\nReplaced from reserve. Reserve after: 2 (bank-1), 1 (bank-2). The 2 and the 1 are the reserve. The reserve is the 2 and the 1. The 2 and the 1 are the counting down. The counting down is the 2 and the 1.\n\nRules:\n- Sub-level 3: respirator or damp cloth for all entries. The respirator is the entry. The entry is the respirator. The cloth is the not-respirator. The not-respirator is the cloth. The cloth is the not-filter. The not-filter is the cloth. (The cloth is what we have. The what-we-have is the cloth. The filter is the not-what-we-have. The not-what-we-have is the filter.)\n- No eating or drinking in sub-level 3. The eating is the not-sub-level-3. The not-sub-level-3 is the eating. The drinking is the not-sub-level-3. The not-sub-level-3 is the drinking.\n- Night shift consolidated to 22:00-02:00. The 22 to 02 is the night. The night is the 22 to 02. The 4 hours is the night. The night is the 4 hours. The 4 hours is the candles. The candles are the 4 hours. The 4 hours is the not-dark. The not-dark is the 4 hours.\n\nThe filter is the air. The air is the filter. The 90% is the not-air. The not-air is the 90%. The reserve is the counting down. The counting down is the reserve. The cloth is the not-filter. The not-filter is the cloth. The cloth is what we have. The what-we-have is the cloth.\n\n— The Mechanic.",
+      "tags": [
+        "filter",
+        "sub_level_3",
+        "90_percent",
+        "reserve",
+        "cloth",
+        "candles",
+        "night_shift"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hatch_notice",
+      "doc_type": "resource_notice",
+      "title": "Hatch Notice — Main Entrance Seal",
+      "posted_day": 18,
+      "posted_by": "The Gate Sentry",
+      "location": "Main entrance hatch",
+      "material": "Handwritten on the hatch frame",
+      "transcript": "HATCH NOTICE — MAIN ENTRANCE SEAL\n\nThe outer seal is perished. The rubber is cracked through. The rubber is the not-seal. The not-seal is the rubber. The secondary seal (rope + tar) is holding. The rope is the seal. The tar is the seal. The rope and the tar are the seal. The seal is the rope and the tar.\n\nRules:\n- Do not open the hatch without the captain's permission. The captain is the hatch. The hatch is the captain. The permission is the opening. The opening is the permission.\n- Do not remove the rope. The rope is the seal. The seal is the rope. The removing is the not-seal. The not-seal is the removing.\n- Check the tar daily. The tar is the seal. The seal is the tar. The checking is the tar. The tar is the checking. If the tar is cracked, apply more. The more is the tar. The tar is the more. (The tar is low. The low is the tar. The more is the not-much. The not-much is the more. Apply the not-much. The not-much is the applying.)\n- Wind audible through the seal is the not-acceptable. The not-acceptable is the wind. The wind is the not-acceptable. The wind is the rad. The rad is the wind. The wind audible is the rad audible. The rad audible is the not-acceptable. The not-acceptable is the rad audible.\n\nThe hatch is the door. The door is the shelter. The seal is the door. The door is the seal. The rope and the tar are the door. The door is the rope and the tar. We are the door. The door is us. We are the rope and the tar.\n\n— The Gate Sentry.",
+      "tags": [
+        "hatch",
+        "seal",
+        "rope_tar",
+        "perished",
+        "wind",
+        "rad",
+        "not_acceptable"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_garden_notice",
+      "doc_type": "general_notice",
+      "title": "Notice — The Greenhouse",
+      "posted_day": 30,
+      "posted_by": "Old Petr",
+      "location": "Allotments, greenhouse entrance",
+      "material": "Handwritten on a seed packet",
+      "transcript": "NOTICE — THE GREENHOUSE\n\nThe greenhouse glass is mostly gone. The glass is the gone. The gone is the glass. The remaining glass has black mold. The mold is the glass. The glass is the mold. The mold is the hazard. The hazard is the mold.\n\nRules:\n- Do not enter the greenhouse without a mask. The mask is the entry. The entry is the mask. The not-mask is the not-entry. The not-entry is the not-mask.\n- Do not disturb the mold. The mold is the not-disturbed. The not-disturbed is the mold. The disturbing is the spores. The spores are the disturbing. The spores are the air. The air is the spores. (The mold is in the air if you disturb the mold. The air is the not-mold if you do not disturb. The not-disturb is the not-mold-air. The not-mold-air is the not-disturb.)\n- Do not breathe near the mold. The breathing is the mold. The mold is the breathing. The not-breathing is the not-mold. The not-mold is the not-breathing. (The not-breathing near the mold is the mask. The mask is the not-breathing. The not-breathing is the mask.)\n- The cold frame is the not-greenhouse. The not-greenhouse is the cold frame. The cold frame is the clean. The clean is the cold frame. The greenhouse is the not-clean. The not-clean is the greenhouse. The cold frame is the counter. The counter is the cold frame. The greenhouse is the not-counter. The not-counter is the greenhouse.\n\nThe greenhouse is the mold. The mold is the greenhouse. The cold frame is the spring. The spring is the cold frame. The greenhouse is the not-spring. The not-spring is the greenhouse. The cold frame is the spring. The spring is the cold frame.\n\n— Petr.",
+      "tags": [
+        "greenhouse",
+        "mold",
+        "mask",
+        "cold_frame",
+        "clean",
+        "spring",
+        "counter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_noise_notice",
+      "doc_type": "general_notice",
+      "title": "Noise Notice — The Quiet Hours",
+      "posted_day": 25,
+      "posted_by": "The Duty Clerk",
+      "location": "Main corridor, by the mess hall",
+      "material": "Handwritten on the back of a meal notice",
+      "transcript": "NOISE NOTICE — THE QUIET HOURS\n\nThe quiet hours are 22:00 to 06:00. The 22 is the quiet. The quiet is the 22. The 06 is the not-quiet. The not-quiet is the 06.\n\nDuring the quiet hours:\n- No shouting. The shouting is the not-quiet. The not-quiet is the shouting.\n- No running in the corridors. The running is the not-quiet. The not-quiet is the running. The running is the boots. The boots are the running. The boots are the not-quiet. The not-quiet is the boots.\n- No music above a hum. The hum is the music. The music is the hum. The above-hum is the not-quiet. The not-quiet is the above-hum.\n- No children playing in the corridors. The children are the not-corridor. The not-corridor is the children. The children are the dormitory. The dormitory is the children. (The children are the sleeping. The sleeping is the children. The children are the quiet. The quiet is the children. The children are the quiet game. The quiet game is the children.)\n\nThe quiet hours are the shelter. The shelter is the quiet hours. The quiet is the not-loud. The not-loud is the quiet. The loud is the not-shelter. The not-shelter is the loud.\n\nThe sentry enforces the quiet. The quiet is the sentry. The sentry is the quiet. The sentry is the not-loud. The not-loud is the sentry.\n\nThe quiet hours are the sleeping. The sleeping is the quiet hours. The sleeping is the shelter. The shelter is the sleeping. The quiet is the sleeping. The sleeping is the quiet.\n\n— The Duty Clerk.",
+      "tags": [
+        "noise",
+        "quiet_hours",
+        "22_to_06",
+        "no_shouting",
+        "no_running",
+        "no_music",
+        "children_sleeping"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_work_assignment_03",
+      "doc_type": "work_assignment",
+      "title": "Work Assignment — The Geothermal Team, Day 90",
+      "posted_day": 90,
+      "posted_by": "The Captain of the Gate",
+      "location": "Main office, posted on the board",
+      "material": "Handwritten on a salvaged blueprint",
+      "transcript": "WORK ASSIGNMENT — THE GEOTHERMAL TEAM\n\nEffective Day 90.\n\nTeam:\n- Tomas (engineer): pipe design, heat assessment, CO2 monitoring. The pipe is the Tomas. The Tomas is the pipe.\n- The Mechanic: pipe fitting, mechanical assembly. The fitting is the mechanic. The mechanic is the fitting.\n- 2 laborers (D4, rotating): trenching, pipe carrying, general labor. The trenching is the D4. The D4 is the trenching. The carrying is the D4. The D4 is the carrying.\n\nTask: pipe the geothermal vent steam to the shelter (4km). The 4km is the pipe. The pipe is the 4km. The steam is the heat. The heat is the steam. The pipe is the heat-to-the-shelter. The heat-to-the-shelter is the pipe.\n\nDuration: 10 days (estimated). The 10 is the pipe. The pipe is the 10. The 10 is the estimated. The estimated is the 10. (The estimated is the not-certain. The not-certain is the estimated. The 10 is the not-certain. The not-certain is the 10. The pipe may take 12. The 12 is the not-10. The not-10 is the 12. The estimated is the not-10. The not-10 is the estimated.)\n\nEquipment:\n- Insulated pipe (salvaged, from the substation and the water plant). The salvaged is the pipe. The pipe is the salvaged.\n- Tools (from the foundry, per the barter agreement). The foundry is the tools. The tools are the foundry.\n- Lamps (2, from the lamp oil ration — the geothermal team gets extra lamp oil because the geothermal is the after-the-lamp-oil). The extra is the geothermal. The geothermal is the extra. The lamp oil is the before. The geothermal is the after. The extra is the after. The after is the extra.\n- Dosimeters (4). The 4 is the dosimeter. The dosimeter is the 4.\n- Rope (30m). The 30 is the rope. The rope is the 30.\n\nNOTE: The geothermal is the counter. The counter is the geothermal. The geothermal is the after-the-lamp-oil. The after-the-lamp-oil is the geothermal. The geothermal is the after-the-fuel. The after-the-fuel is the geothermal. The geothermal is the not-counting-down. The not-counting-down is the geothermal. The geothermal is the spring. The spring is the geothermal.\n\n— The Captain of the Gate.",
+      "tags": [
+        "work_assignment",
+        "geothermal",
+        "team",
+        "tomas",
+        "mechanic",
+        "pipe",
+        "4km",
+        "10_days",
+        "counter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_evacuation_notice",
+      "doc_type": "general_notice",
+      "title": "Evacuation Notice — Downstream Settlements, North Dam",
+      "posted_day": 4,
+      "posted_by": "Dam Operator (relayed via Kestrel-9)",
+      "location": "Gate house, received by radio, transcribed",
+      "material": "Handwritten on gate house log paper",
+      "transcript": "EVACUATION NOTICE — RELAYED\n\nReceived: Day 4, 03:30, via Kestrel-9 relay.\nOrigin: North Dam Control (operator, single).\n\nTEXT OF TRANSMISSION:\n'This is North Dam. The spillway gate is stuck open. The reservoir is rising. I cannot close it alone. The manual winch takes two. I am one. If the water overtops the emergency spill it is the town downstream. I have sent my family to the high school. I am telling you to send everyone to the high school. The high school is the high ground. Send them now. I will stay on the winch. I will call when the gate is closed or when the gate is not closed. North Dam out.'\n\nAction taken by Gate House:\n- Runner dispatched to downstream settlements at 03:45.\n- Captain of the Gate notified 04:00.\n- Evacuation to high ground (school) begun 04:15.\n\nFollow-up (Day 5, dawn): Dam operator's family confirmed at the school. Dam operator confirmed at the dam. Gate closed, Day 5, 04:00 (approx). Reservoir dropping. The town is fine. The town does not know. The town is the high school now.\n\nRelay note: The dam operator said the winch takes two. He is one. He closed it. The math is wrong. The math is the math. The man is the man. The man is more than the math.\n\n— Gate House.",
+      "tags": [
+        "evacuation",
+        "dam",
+        "relay",
+        "kestrel_9",
+        "high_school",
+        "math",
+        "man"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_amnesty_followup",
+      "doc_type": "general_notice",
+      "title": "Amnesty Follow-Up — Day 62 Report",
+      "posted_day": 62,
+      "posted_by": "The Duty Clerk",
+      "location": "Gate house, filed",
+      "material": "Handwritten in the gate house ledger",
+      "transcript": "AMNESTY FOLLOW-UP — DAY 62 REPORT\n\nWeapons surrendered: 14. The 14 is the surrendered. The surrendered is the 14.\n- 6 knives (folding and fixed). The 6 is the knives. The knives are the 6.\n- 4 improvised clubs (pipe, wood). The 4 is the clubs. The clubs are the 4.\n- 2 bows (homemade). The 2 is the bows. The bows are the 2.\n- 1 pistol (old, no ammunition). The 1 is the pistol. The pistol is the 1. The no-ammunition is the pistol. The pistol is the no-ammunition.\n- 1 axe (household). The 1 is the axe. The axe is the 1.\n\nWeapons not surrendered: unknown. The unknown is the not-surrendered. The not-surrendered is the unknown. The asking is the not-knowing. The not-knowing is the asking. (The captain asked. The residents answered or did not. The not-answering is the not-surrendering. The not-surrendering is the not-answering. The not-knowing is the not-answering. The not-answering is the not-knowing.)\n\nCatalogued by: The Duty Clerk. The catalogue is the 14. The 14 is the catalogue.\nStored: Gate House armory, locked. The locked is the armory. The armory is the locked.\n\nNOTE: The 14 is the voluntary. The voluntary is the 14. The not-14 is the not-voluntary. The not-voluntary is the not-14. The captain is the asking. The asking is the captain. The 14 is the answer. The answer is the 14. The not-14 is the not-answer. The not-answer is the not-14. The captain does not know the not-14. The not-14 is the not-known. The not-known is the not-14.\n\nThe shelter is the 14. The 14 is the shelter. The not-14 is the not-known. The not-known is the shelter's question. The question is the shelter's. The shelter's is the question.\n\n— The Duty Clerk.",
+      "tags": [
+        "amnesty",
+        "followup",
+        "day_62",
+        "14_surrendered",
+        "catalogued",
+        "not_known",
+        "question"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_spring_notice",
+      "doc_type": "general_notice",
+      "title": "Spring Notice — The Shelter at Day 100",
+      "posted_day": 100,
+      "posted_by": "The Captain of the Gate",
+      "location": "Main corridor, by the mess hall",
+      "material": "Handwritten on a salvaged board, the handwriting is large",
+      "transcript": "SPRING NOTICE — THE SHELTER AT DAY 100\n\nThe spring is here. The here is the spring. The spring is the warming. The warming is the spring. The ash is thin. The thin is the ash. The sky is lighter. The lighter is the sky.\n\nThe shelter at Day 100:\n- Headcount: 147. The 147 is the shelter. The shelter is the 147.\n- Flour: 3 days. The 3 is the lowest. The lowest is the 3. But the potato is the 1. The 1 is the third harvest. The third is the 1. The 1 is the spring. The spring is the 1.\n- Lamp oil: 0. The 0 is the dark. The dark is the 0. But the geothermal is the heat. The heat is the geothermal. The geothermal is the not-dark. The not-dark is the geothermal. The geothermal is the spring. The spring is the geothermal.\n- Water: 294L daily. The 294 is the water. The water is the 294. The artesian is the first. The cave is the second. The two is the safety. The safety is the two.\n- The thin: 14. The 14 is the thin. The thin is the 14. The 14 is lower than the 31. The 31 was the winter. The 14 is the spring. The winter is the 31. The spring is the 14.\n- The children: stalling but eating. The eating is the potato. The potato is the eating. The stalling is the flour. The flour is the stalling. The potato is the counter. The counter is the potato.\n\nThe spring is the counter. The counter is the spring. The flour is going down. The spring is going up. The down and the up are the same direction: the spring. The spring is the direction. The direction is the spring.\n\nThe shelter is the spring. The spring is the shelter. The rule is the spring. The spring is the rule. The shelter is the rule. The rule is the shelter. The spring is the rule. The rule is the spring.\n\n— The Captain of the Gate.",
+      "tags": [
+        "spring",
+        "day_100",
+        "shelter",
+        "flour_3",
+        "potato_1",
+        "geothermal",
+        "thin_14",
+        "counter",
+        "direction"
+      ]
+    }
+  ]
+}
