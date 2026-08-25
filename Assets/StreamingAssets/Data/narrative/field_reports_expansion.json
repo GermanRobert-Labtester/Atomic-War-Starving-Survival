@@ -1,0 +1,1023 @@
+{
+  "schema_version": 1,
+  "collection_id": "field_reports_expansion",
+  "description": "Field reports and expedition logs — scavenger route notes, waypoint descriptions, hazard assessments, weather observations, discovery reports. Practical, specific, terse when appropriate, detailed when the find is important.",
+  "reports": [
+    {
+      "report_id": "exp_report_printing_works",
+      "location_id": "the_printing_works",
+      "expedition_leader": "mira_the_scavenger",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 11,
+      "approach_summary": "East approach via the loading bay. Bay door is jammed half-open — enough clearance to crawl. Office wing accessible through the fire stair. Main floor collapsed in the centre; stay to the walls. No radiation above background. No hostiles observed. The building is quiet. The quiet is the reason I go here.",
+      "hazards_encountered": [
+        "Collapsed floor in main hall — marked with chalk",
+        "Fire stair rusted but stable",
+        "Bay door may close without warning — propped with a pipe"
+      ],
+      "salvage_recovered": [
+        "12 brass screws (small, clean)",
+        "1 bottle of iodine (brown glass, sealed, label intact)",
+        "3 copper wire spools (approx 2m each)",
+        "1 candle (whole, unused)"
+      ],
+      "recommendation": "Return. The office wing has more drawers. The others do not bother with the printing works because it has no food. Keep it that way. Do not tell the others about the printing works.",
+      "tags": [
+        "scavenger",
+        "printing_works",
+        "office_wing",
+        "iodine",
+        "mira"
+      ]
+    },
+    {
+      "report_id": "exp_report_substation_omega",
+      "location_id": "substation_omega",
+      "expedition_leader": "the_electrician",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 50,
+      "approach_summary": "West approach via the service road. Road is buckled but passable on foot. The substation fence is down in three places. Transformers still humming — the grid does not know it is over. Entered through the west gate. Checked the railing: warm from current. Grounded it with a copper jumper.",
+      "hazards_encountered": [
+        "Live railing on the stair — grounded, marked with red tape",
+        "Transformer hum audible at 20m — hearing protection recommended for prolonged work",
+        "Fence down — no perimeter security. Anyone could walk in. No one has"
+      ],
+      "salvage_recovered": [
+        "1 copper jumper (salvaged from stores, installed as ground)",
+        "1 junction box (corroded, cleaned and returned to service)",
+        "1 file (worn, still functional)"
+      ],
+      "recommendation": "Leave the substation live. The hum is the grid. The grid feeds the relay on the ridge. The relay feeds the air. The air is the radio. Do not cut the hum. Check the railing monthly. The jumper is the margin.",
+      "tags": [
+        "substation",
+        "electrical",
+        "live_railing",
+        "hum",
+        "ground"
+      ]
+    },
+    {
+      "report_id": "exp_report_cold_store_atlantic",
+      "location_id": "cold_store_atlantic",
+      "expedition_leader": "mira_the_scavenger",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 16,
+      "approach_summary": "Approached from the south, along the old delivery road. Road clear. Cold store door is sealed with a chain that has been cut and re-chained. Someone is keeping this cold. The compressor is running — audible from outside. Did not enter. Left a note and a trade offer pinned to the chain.",
+      "hazards_encountered": [
+        "Re-chained door — fresh chain, unknown occupant",
+        "Ammonia smell faint near the compressor shed — possible leak, did not investigate",
+        "No hostiles. The occupant, if present, did not make themselves known"
+      ],
+      "salvage_recovered": [
+        "None. Did not enter. This is a report of observation, not salvage."
+      ],
+      "recommendation": "Do not cut the chain. The cold is being kept for a reason. Leave a trade offer: we have salt, we have candles, we want to know what is being kept cold. If no answer in 7 days, return. Knock before entering.",
+      "tags": [
+        "cold_store",
+        "chain",
+        "compressor",
+        "observation",
+        "offer"
+      ]
+    },
+    {
+      "report_id": "exp_report_highway_choke",
+      "location_id": "uxo_highway_choke",
+      "expedition_leader": "bram_the_courier",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 3,
+      "approach_summary": "South road, the choke point at kilometre 14. The road surface is thawing and refreezing — a skin of ice over mud. Ordnance markers are faded to pink. Three markers are gone entirely. Stay on the wheel ruts. The ruts were made by vehicles heavy enough to find the shallow. You are not that heavy.",
+      "hazards_encountered": [
+        "UXO — markers faded, some missing. The road is not the road beneath the mud.",
+        "Thaw cycle — ice skin over mud. Boots break through. A cart would sink.",
+        "No hostiles. The choke is its own defence. No one uses this road if they can help it."
+      ],
+      "salvage_recovered": [
+        "None. Route assessment only. This is a courier's report, not salvage."
+      ],
+      "recommendation": "Do not use this road for heavy loads. Foot traffic only, single file, on the ruts. Mark the missing ordnance sites with new flags if you have them. If you do not, do not use this road.",
+      "tags": [
+        "courier",
+        "highway",
+        "uxo",
+        "thaw",
+        "route_assessment"
+      ]
+    },
+    {
+      "report_id": "exp_report_flooded_subway",
+      "location_id": "flooded_subway_depot",
+      "expedition_leader": "the_veteran",
+      "team_size": 3,
+      "duration_days": 1,
+      "day_completed": 22,
+      "approach_summary": "Northern approach via the street entrance. Stairs down are intact. Water sits in the tunnel mouth, black and still, reflecting nothing. Tiled station name chipped to the first letter. The echo of a footstep comes back a half-beat late.",
+      "hazards_encountered": [
+        "Standing water — depth unknown beyond 10m. Black water means deep or stagnant or both.",
+        "Air quality: damp, metallic taste. Possible mould. Masks worn.",
+        "Structural: ceiling tiles down in the ticket hall. Tunnel arch appears sound from the entrance. Did not enter the tunnel."
+      ],
+      "salvage_recovered": [
+        "None. Hazard assessment only. The tunnel was not entered."
+      ],
+      "recommendation": "Do not enter the tunnel without a boat or a long pole to test depth. The water is black. Black is the unknown. Unknown is the risk. Return with rope and a pole. Mark the depth before entering.",
+      "tags": [
+        "hazard",
+        "flooded",
+        "subway",
+        "black_water",
+        "tunnel"
+      ]
+    },
+    {
+      "report_id": "exp_report_geothermal_vent",
+      "location_id": "geothermal_vent_shaft",
+      "expedition_leader": "tomas_the_engineer",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 31,
+      "approach_summary": "Approached via the maintenance road from the east. Road is cracked from heat. The vent grate shimmers — too hot to touch for more than a second. Air smells of sulfur. Lamp gutters near the vent — carbon dioxide pooling. Stay back from the grate.",
+      "hazards_encountered": [
+        "Heat — radiant, grate too hot to touch. Sweat dries before it runs.",
+        "CO2 pooling near the vent — lamp gutters. Stay back. If your lamp goes out, leave immediately.",
+        "Sulfur smell — not toxic at this concentration but masks the CO2. The smell is the lie."
+      ],
+      "salvage_recovered": [
+        "None. Hazard assessment only. The vent is the hazard. The hazard is the vent."
+      ],
+      "recommendation": "Do not approach the vent without a lamp to test for CO2. If the lamp gutters, leave. Mark the safe perimeter with chalk. The heat is not the danger. The CO2 is. The lamp is the canary.",
+      "tags": [
+        "hazard",
+        "geothermal",
+        "vent",
+        "co2",
+        "heat"
+      ]
+    },
+    {
+      "report_id": "exp_report_ash_dune",
+      "location_id": "ash_dune_cemetery",
+      "expedition_leader": "the_veteran",
+      "team_size": 2,
+      "duration_days": 2,
+      "day_completed": 45,
+      "approach_summary": "Eastern approach across the dune field. The dunes move between morning and evening. A marker passed at dawn is gone by noon, or buried, or never there. Wind carries grit fine enough to breathe and coarse enough to taste. Visibility under 50m in the blow. Do not travel in the blow.",
+      "hazards_encountered": [
+        "Ash dunes — moving, unstable. Navigation by dead reckoning only. Compass affected by local magnetic anomaly (reading 3 degrees east of true).",
+        "Respiratory hazard — ash particulate. Masks mandatory. Goggles recommended.",
+        "No hostiles. Nothing lives in the dune field. The dune field is the hostile."
+      ],
+      "salvage_recovered": [
+        "None. Route survey only. The dunes took nothing. The dunes gave nothing. The dunes are the dunes."
+      ],
+      "recommendation": "Do not cross the dune field in the blow. Wait for still air. Mark the entry point with a tall pole — it will be visible for longer than a ground marker. Travel at dawn, when the dunes are coldest and the air is stillest.",
+      "tags": [
+        "hazard",
+        "ash",
+        "dunes",
+        "navigation",
+        "visibility"
+      ]
+    },
+    {
+      "report_id": "exp_report_seed_vault",
+      "location_id": "subterranean_seed_vault",
+      "expedition_leader": "suki_the_teacher",
+      "team_size": 4,
+      "duration_days": 3,
+      "day_completed": 61,
+      "approach_summary": "Northern approach via the hillside access road. Road is drifted over but passable. The outer door is a steel plug, frost-rimed. A wind-up siren on a post has been bent ninety degrees. The keypad is dark. A handwritten label: CLOSED INDEFINITELY. DO NOT FORCE. Below it, in different ink: It still opens. It always opens.",
+      "hazards_encountered": [
+        "Frost on the outer door — interior is cold. Dress for the cold.",
+        "The siren is bent but may still function — do not wind it.",
+        "No hostiles. The vault is the vault. The vault does not want visitors."
+      ],
+      "salvage_recovered": [
+        "Seed samples (see attached inventory — 47 varieties, all labelled, all viable per cold test)",
+        "1 maintenance logbook (pre-war, last entry Exchange-3Y)",
+        "1 handwritten note (see attached: 'CLOSED INDEFINITELY. DO NOT FORCE.')"
+      ],
+      "recommendation": "Return with a botanist. The seeds are viable. The seeds are the spring. The spring is in the vault. Do not take all the seeds. Take a portion of each. Leave the rest. The vault is the vault. The vault is for the future.",
+      "tags": [
+        "discovery",
+        "seed_vault",
+        "seeds",
+        "spring",
+        "botany"
+      ]
+    },
+    {
+      "report_id": "exp_report_mirror_factory",
+      "location_id": "mirror_factory",
+      "expedition_leader": "mira_the_scavenger",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 28,
+      "approach_summary": "West approach via the yard. The loading bay door is open. The yard is covered in glass — fine as sand, ground down by years of foot traffic. Every step announces you. Move when the wind moves. The wind is your cover.",
+      "hazards_encountered": [
+        "Glass grit — every step audible. Stealth compromised.",
+        "No structural collapse — the factory is sound. The roof is intact.",
+        "A sheet of mirror glass, intact, leans against a wall. It reflects the aisle behind you. There is a coat on a hook in the reflection that is not on a hook in the room."
+      ],
+      "salvage_recovered": [
+        "1 sheet of mirror glass (intact, 1m x 0.5m — use for signalling or shelter lighting)",
+        "3 copper fittings (from the grinding machines)",
+        "1 coat (wool, good condition — the coat from the reflection. It was on a hook in a back room. The mirror was showing the back room.)"
+      ],
+      "recommendation": "The mirror is a window into a back room. The back room has supplies. Return. The coat is wool. The coat is good. The mirror is not supernatural. The mirror is a mirror. The mirror is showing a room.",
+      "tags": [
+        "discovery",
+        "mirror_factory",
+        "glass",
+        "reflection",
+        "coat"
+      ]
+    },
+    {
+      "report_id": "exp_report_memory_vault",
+      "location_id": "the_memory_vault",
+      "expedition_leader": "suki_the_teacher",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 55,
+      "approach_summary": "Approach via the sub-level transit tunnel. Tunnel is dry, stable. The vault door is open — someone was here before us. Inside, a single shaft of light falls through a hole in the ceiling onto a reading desk. The dust in the beam moves slowly and does not settle. Everything else is dark.",
+      "hazards_encountered": [
+        "The light shaft — the ceiling is compromised. Do not walk under it in the rain.",
+        "Dust motes rise and do not fall — convection from below. A grate under the desk is warm. Do not step on the grate.",
+        "No hostiles. The vault is quiet. The quiet is the vault."
+      ],
+      "salvage_recovered": [
+        "1 book (open on the desk, to a page someone chose — a pre-war botanical text, section on winter wheat)",
+        "1 chair (pulled out, as if someone had been reading recently. The dust on the chair is thinner than elsewhere. Someone was here, recently, or the dust is lying.)",
+        "1 lamp (empty, beside the chair)"
+      ],
+      "recommendation": "Return with the engineer. The grate is warm. Something below is generating heat. The vault may have a lower level. The book is about winter wheat. The reader chose the page about winter planting. The reader is the farmer or someone like him. Find the reader.",
+      "tags": [
+        "discovery",
+        "memory_vault",
+        "light_shaft",
+        "book",
+        "warm_grate"
+      ]
+    },
+    {
+      "report_id": "exp_report_waypoint_bridge_seven",
+      "location_id": "bridge_seven",
+      "expedition_leader": "bram_the_courier",
+      "team_size": 1,
+      "duration_days": 0,
+      "day_completed": 1,
+      "approach_summary": "The bridge is passable on foot and not passable on wheel. The gap in the middle is the width of a decision. A person can step across. A cart cannot. The barricade from the twenty-first day is still there — planks, a table, a fire pit. The agreement is still there. The ration is still reduced.",
+      "hazards_encountered": [
+        "Gap in the bridge centre — step across, do not jump. The gap is wider than it looks from the approach.",
+        "Barricade debris — the table is still there. Do not move the table. The table is the history.",
+        "No hostiles. The bridge is the bridge. The bridge remembers the barricade."
+      ],
+      "salvage_recovered": [
+        "None. Waypoint assessment only. The bridge is the waypoint. The waypoint is the bridge."
+      ],
+      "recommendation": "The bridge is the crossing. Mark it on the route map. The gap is the width of a decision. The decision is the crossing. Cross. Do not look down into the river. The river is not what you are crossing.",
+      "tags": [
+        "waypoint",
+        "bridge",
+        "gap",
+        "barricade",
+        "crossing"
+      ]
+    },
+    {
+      "report_id": "exp_report_waypoint_grange_hall",
+      "location_id": "the_grange_hall",
+      "expedition_leader": "bram_the_courier",
+      "team_size": 1,
+      "duration_days": 0,
+      "day_completed": 1,
+      "approach_summary": "The grange is occupied. Headcount approximately 140. Leadership: quartermaster (female, name Yelena). The grange is not fortified. The grange is the grange. Approach from the road is open. The gate is the gate. The gate is not locked. The gate is the welcome.",
+      "hazards_encountered": [
+        "None. The grange is friendly. The grange is the waypoint.",
+        "Road approach clear. The road is the road.",
+        "The quartermaster knows the number. Do not ask the quartermaster the number. The number is the quartermaster's."
+      ],
+      "salvage_recovered": [
+        "None. Waypoint assessment only. This is a courier's note, not a salvage report."
+      ],
+      "recommendation": "The grange is the waypoint. Trade here: salt for flour, medicine for fuel. The quartermaster is honest. The number she tells you is the number you need. The number she knows is the number she carries. Do not ask for the second.",
+      "tags": [
+        "waypoint",
+        "grange",
+        "quartermaster",
+        "trade",
+        "flour"
+      ]
+    },
+    {
+      "report_id": "exp_report_waypoint_lock_gate",
+      "location_id": "lock_gate_four",
+      "expedition_leader": "bram_the_courier",
+      "team_size": 1,
+      "duration_days": 0,
+      "day_completed": 1,
+      "approach_summary": "The lock gate is controlled by the hydro barons. Water rates are posted. The rate is the rate. The winter is the winter. Do not argue the rate. The barons do not negotiate. The barons meter. The meter is the law.",
+      "hazards_encountered": [
+        "Barons' guard present — one at the gate, one at the pump. Armed. Professional. Do not test them.",
+        "Water is available for trade. Bring lamp oil. The rate is 2 litres of oil per 20 litres of water.",
+        "The toll house is neutral ground. Trade only. No weapons. No fights. The toll house is the toll house."
+      ],
+      "salvage_recovered": [
+        "None. Waypoint assessment only."
+      ],
+      "recommendation": "The lock gate is a trade waypoint. Water for oil. The rate is posted. Pay the rate. The barons remember who argues. The barons remember who pays. Be the second.",
+      "tags": [
+        "waypoint",
+        "lock_gate",
+        "hydro_barons",
+        "water",
+        "rate"
+      ]
+    },
+    {
+      "report_id": "exp_report_weather_ash_storm",
+      "location_id": "the_ridge",
+      "expedition_leader": "the_relay_operator",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 12,
+      "approach_summary": "From the relay station on the ridge. Ash storm approaching from the east. Visibility dropping — the valley is gone. The wind is rising. The repeater mast is humming a different note. Barometric pressure falling fast. This is a bad one.",
+      "hazards_encountered": [
+        "Ash storm — visibility under 20m and falling. Do not travel.",
+        "Wind — gusting to 60 km/h at the mast. The mast is rated for 120. The mast will hold. You will not.",
+        "The storm will last 6-8 hours by the pressure curve. Shelter in place."
+      ],
+      "salvage_recovered": [
+        "None. Weather observation only. The storm is the salvage. The salvage is the warning."
+      ],
+      "recommendation": "Do not travel in the ash storm. Shelter in place. Cover your mouth and eyes. The ash is fine enough to breathe and coarse enough to blind. The storm will pass. The ash will settle. Wait for the wind to drop. The wind will drop.",
+      "tags": [
+        "weather",
+        "ash_storm",
+        "visibility",
+        "wind",
+        "warning"
+      ]
+    },
+    {
+      "report_id": "exp_report_weather_fog_river",
+      "location_id": "lock_gate_four",
+      "expedition_leader": "the_hydro_barons_guard",
+      "team_size": 1,
+      "duration_days": 0,
+      "day_completed": 10,
+      "approach_summary": "Fog on the river, thick, visibility under 10m. Sound dies in it. A shout goes out and does not come back. The water is flat. The fog has eaten the far shore and is working on the near one. Do not navigate the river in this fog.",
+      "hazards_encountered": [
+        "Fog — visibility under 10m. Navigation impossible.",
+        "River current still running — the fog hides the current. The current is the danger.",
+        "No hostiles. The fog is the hostile. The fog is the fog."
+      ],
+      "salvage_recovered": [
+        "None. Weather observation only."
+      ],
+      "recommendation": "Wait for the fog to lift. It will lift by midday or it will not. If it does not lift by midday, wait until tomorrow. The river is not going anywhere. You are. The fog decides which.",
+      "tags": [
+        "weather",
+        "fog",
+        "river",
+        "visibility",
+        "navigation"
+      ]
+    },
+    {
+      "report_id": "exp_report_weather_first_snow",
+      "location_id": "the_snowline_station",
+      "expedition_leader": "the_veteran",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 38,
+      "approach_summary": "First snow of the cold season. Early this year, or late, depending on which calendar you keep. The station sits on the line between ash below and snow above. The line is moving — the ash climbing, the snow retreating. The station is the last place where both are true.",
+      "hazards_encountered": [
+        "Snow — accumulating at 2cm per hour. The pass will close by nightfall.",
+        "Temperature dropping — minus 5 and falling. Frostbite risk for exposed skin.",
+        "The line is moving. The station may be below the snow line next year. Mark the line for the record."
+      ],
+      "salvage_recovered": [
+        "None. Weather observation and seasonal record only."
+      ],
+      "recommendation": "Do not attempt the pass after nightfall. The snow will close it. The station has shelter for six. The stove works. The fuel is low. Bring fuel if you come. The station is the station. The snow is the snow.",
+      "tags": [
+        "weather",
+        "snow",
+        "first_snow",
+        "snowline",
+        "season"
+      ]
+    },
+    {
+      "report_id": "exp_report_pharmacy",
+      "location_id": "hospital_pharmacy",
+      "expedition_leader": "mira_the_scavenger",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 21,
+      "approach_summary": "Approach via the hospital loading bay. Bay door is open. The pharmacy is on the ground floor, west wing. The air in the pharmacy is still. The stillness is the warning — a working pharmacy has the hum of refrigeration and the hum is gone. The vaccines are warm. The antibiotics are warm.",
+      "hazards_encountered": [
+        "Still air — the cold chain is broken. The vaccines are warm. Do not use the vaccines.",
+        "Decay smell from the back room — sweet, patient. Do not enter the back room without a mask.",
+        "No hostiles. The pharmacy is the pharmacy. The pharmacy is empty of the living."
+      ],
+      "salvage_recovered": [
+        "2 courses broad-spectrum antibiotics (oral, sealed, from the front cabinet — the cold chain is not required for these)",
+        "1 bottle iodine (half full, usable)",
+        "3 rolls gauze (sealed)",
+        "1 pair surgical scissors (clean)"
+      ],
+      "recommendation": "The back room has bodies. The cold chain broke weeks ago. Do not enter the back room. Take what is sealed and stable. The antibiotics are sealed. The iodine is iodine. The gauze is gauze. Leave the rest.",
+      "tags": [
+        "scavenger",
+        "pharmacy",
+        "antibiotics",
+        "cold_chain",
+        "iodine"
+      ]
+    },
+    {
+      "report_id": "exp_report_library_cache",
+      "location_id": "old_library_cache",
+      "expedition_leader": "mira_the_scavenger",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 34,
+      "approach_summary": "Approach via the side door — the main entrance is blocked by a collapsed shelf. The geology section is intact. Behind the geology books, a cache: water, a blanket, a notebook. The notebook is a log of who has sheltered here. The last entry is a week ago. The cache is for travelers.",
+      "hazards_encountered": [
+        "Collapsed shelf in main hall — do not attempt to clear. Use the side door.",
+        "No radiation. No hostiles. The library is the library. The library is a shelter now."
+      ],
+      "salvage_recovered": [
+        "1 notebook (traveler log — see attached transcript. Last entry: 'Day 27. Heading south. Left a candle. Good luck to the next.')",
+        "1 blanket (wool, good condition)",
+        "2 bottles of water (sealed, left by previous traveler)"
+      ],
+      "recommendation": "The cache is trusted. Use it and replenish what you can. Sign the notebook. The notebook is the trust. The trust is the notebook. Do not take the cache. The cache is for everyone. You are everyone.",
+      "tags": [
+        "scavenger",
+        "library",
+        "cache",
+        "notebook",
+        "trust"
+      ]
+    },
+    {
+      "report_id": "exp_report_garage_tools",
+      "location_id": "ruined_garage",
+      "expedition_leader": "mira_the_scavenger",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 7,
+      "approach_summary": "Approach via the alley. The garage door is open. Inside: a workbench organized in a way that survived the person who organized it. Tools laid out on a cloth in the shapes of themselves, each shape outlined in marker. Two shapes are empty. The rest are full. A half-rebuilt water pump in the vise. The vise is still tight.",
+      "hazards_encountered": [
+        "No structural collapse. The garage is sound.",
+        "No radiation. No hostiles. The garage is the garage. The garage is waiting for someone who will not come back."
+      ],
+      "salvage_recovered": [
+        "1 set of wrenches (4 pieces, metric, good condition)",
+        "1 water pump (half-rebuilt, in the vise — needs a gasket and a valve)",
+        "1 tin of machine oil (half full)",
+        "1 cloth tool roll (the shapes are the inventory)"
+      ],
+      "recommendation": "The tools are good. Take the tools. The pump needs a gasket — the engineer can finish it. The tool roll is the map of what was here. Take the map. The shapes tell you what is missing. The missing is the person. The person is not coming back.",
+      "tags": [
+        "scavenger",
+        "garage",
+        "tools",
+        "workbench",
+        "pump"
+      ]
+    },
+    {
+      "report_id": "exp_report_salt_mine",
+      "location_id": "collapsed_salt_mine",
+      "expedition_leader": "tomas_the_engineer",
+      "team_size": 3,
+      "duration_days": 1,
+      "day_completed": 48,
+      "approach_summary": "Approach via the main drift. The drift is stable. The marker lights are down — bring your own lamp. Deep in the shaft, the lamp makes a sphere the size of a body. Beyond it: absence. The salt walls weep. The weeping is the only clock.",
+      "hazards_encountered": [
+        "Darkness — absolute beyond the lamp. Do not enter without two independent light sources.",
+        "Salt dust — respiratory irritant. Masks worn.",
+        "The 'sealed' survey station is not sealed. Someone has been here recently — footprints in the dust, a cache of water and candles. A notebook in a language the engineer does not read. The diagrams are the mine diagrams."
+      ],
+      "salvage_recovered": [
+        "1 notebook (unreadable — diagrams are mine diagrams. Someone has been mapping the lower levels.)",
+        "2 candles (from the cache — left them. The cache is not ours.)",
+        "1 survey marker (recovered from the station — pre-war, dated Exchange-4Y)"
+      ],
+      "recommendation": "The mine is occupied below. Someone lives in the lower levels. The cache is theirs. Do not take from the cache. Leave a note: we are from the shelter, we mean no harm, we are mapping. If they answer, we have a neighbour. If they do not, we have a mystery.",
+      "tags": [
+        "discovery",
+        "salt_mine",
+        "survey_station",
+        "cache",
+        "occupant"
+      ]
+    },
+    {
+      "report_id": "exp_report_dead_hand_core",
+      "location_id": "the_dead_hand_core",
+      "expedition_leader": "the_electrician",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 62,
+      "approach_summary": "Approach via the blast tunnel. The tunnel is sound. The inner door is open — someone was here before us and did not close it. Inside: a console, a lever in the up position, a label beside it: DO NOT. Not DO NOT PULL. Not DO NOT TOUCH. Just DO NOT.",
+      "hazards_encountered": [
+        "The console is live — power still flowing from an unknown source. Do not touch the console.",
+        "The lever — unmarked, up. The label is handwritten. The dust on the handle is thinner where hands have rested on it and not pulled it. Many hands. The instruction has been obeyed by everyone who came this far.",
+        "Radiation: background. No elevated readings."
+      ],
+      "salvage_recovered": [
+        "None. The core is not for salvage. The core is the core. The lever is the lever. The label is the label."
+      ],
+      "recommendation": "Do not touch the lever. Do not touch the console. Do not stay longer than you need to. The core is not our business. The lever is not our lever. Mark the location on the map. Leave the core to the core.",
+      "tags": [
+        "discovery",
+        "dead_hand",
+        "lever",
+        "do_not",
+        "console"
+      ]
+    },
+    {
+      "report_id": "exp_report_data_center",
+      "location_id": "submerged_data_center",
+      "expedition_leader": "the_electrician",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 57,
+      "approach_summary": "Approach via the sub-level stairwell. The air at the top is fine. The air at the bottom is not. A gas has pooled in the lower level — heavier than air, invisible. The dust on the floor is flat where nothing has walked in a long time. Do not go down.",
+      "hazards_encountered": [
+        "Gas — pooled at the lower level. Heavier than air. Composition unknown. Assume toxic. Assume flammable. Do not enter.",
+        "The flat dust is the warning. The dust has not been disturbed in a long time.",
+        "Radiation: background."
+      ],
+      "salvage_recovered": [
+        "None. The data center is inaccessible. The gas is the door. The door is closed."
+      ],
+      "recommendation": "Do not enter the lower level. The gas is the warning. Return with breathing apparatus if the data is worth the risk. The data may be worth the risk. The gas does not care if the data is worth it.",
+      "tags": [
+        "hazard",
+        "data_center",
+        "gas",
+        "inaccessible",
+        "warning"
+      ]
+    },
+    {
+      "report_id": "exp_report_radio_telescope",
+      "location_id": "telescope_array",
+      "expedition_leader": "the_relay_operator",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 41,
+      "approach_summary": "Approach via the service road. The dishes are too large and too still and too many. Standing among them, you are the wrong scale. The sky above the dishes is not the sky you grew up under. It is the sky the dishes were built to hear. It is not listening back.",
+      "hazards_encountered": [
+        "The dishes — do not climb them. The ladders are rusted.",
+        "No radiation. No hostiles. The array is the array. The array is listening to nothing.",
+        "Wind exposure — the dishes focus the wind. It is colder between them than outside them."
+      ],
+      "salvage_recovered": [
+        "1 maintenance logbook (last entry Exchange-1Y: 'Signal lost. Array still functional. Nothing to listen to.')",
+        "1 set of headphones (from the control room — working)",
+        "1 star chart (pre-war, annotated)"
+      ],
+      "recommendation": "The array still has power. The control room is intact. The headphones work. The array is listening to nothing. If we had a signal to send, the array could send it. The array is the voice we do not have. Keep the headphones.",
+      "tags": [
+        "discovery",
+        "telescope",
+        "array",
+        "signal",
+        "headphones"
+      ]
+    },
+    {
+      "report_id": "exp_report_observatory",
+      "location_id": "observatory_dome",
+      "expedition_leader": "suki_the_teacher",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 68,
+      "approach_summary": "Approach via the ridge road. The dome is open — the shutter is stuck. The instruments are dark. The dome still turns, slowly, on a motor that no one has wound. As the light goes, the cold comes up out of the floor. The stars, when they arrive, are fewer than the books promised.",
+      "hazards_encountered": [
+        "The dome shutter is stuck open — weather ingress. The floor is wet.",
+        "No radiation. No hostiles. The observatory is the observatory. The observatory is alone.",
+        "The motor — do not touch it. It has been turning for years without maintenance. It may not restart if stopped."
+      ],
+      "salvage_recovered": [
+        "1 star atlas (pre-war, annotated with observations up to Exchange-2M)",
+        "1 logbook (the last entry: 'The stars are fewer. The ash is the reason. The ash is in the sky and the sky is in the ash. We will not see the Milky Way again in our lifetimes.')"
+      ],
+      "recommendation": "The dome is a weather station now, not an observatory. The stars are fewer. The ash is the reason. Keep the logbook. The logbook is the record of the sky before the sky changed. The record is the reason we come here.",
+      "tags": [
+        "discovery",
+        "observatory",
+        "dome",
+        "stars",
+        "logbook"
+      ]
+    },
+    {
+      "report_id": "exp_report_borehole",
+      "location_id": "geothermal_borehole_site",
+      "expedition_leader": "tomas_the_engineer",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 39,
+      "approach_summary": "Approach via the access track. The borehole hums underfoot — a vibration you feel in the soles before you hear it in the ears. The wellhead is hot to the touch. Steam has a mineral smell, like a bath house, like a hospital. A shed beside the wellhead: door does not close, a bench sat on recently.",
+      "hazards_encountered": [
+        "Heat — the wellhead is hot. Do not touch.",
+        "Steam — the mineral smell is sulfur and salt. Not toxic at this concentration.",
+        "The shed — someone was here recently. The dust on the bench is disturbed in the shape of a person who waited. They left. The borehole does not care."
+      ],
+      "salvage_recovered": [
+        "None. The borehole is the borehole. The borehole is still going. The heat is the heat. The steam is the steam."
+      ],
+      "recommendation": "The borehole is a potential heat source. The steam could be piped. The engineer should return with the mechanic. The shed is a shelter. The occupant left. The borehole is still here. The borehole will be here when we return.",
+      "tags": [
+        "discovery",
+        "borehole",
+        "geothermal",
+        "steam",
+        "heat_source"
+      ]
+    },
+    {
+      "report_id": "exp_report_acoustic_lab",
+      "location_id": "acoustic_testing_facility",
+      "expedition_leader": "the_electrician",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 71,
+      "approach_summary": "Approach via the service entrance. The facility is quiet — designed to be quiet. The test chamber is anechoic. Standing in it, you hear your own pulse. A shadow in the chamber is not your shadow — the light is behind you, the shadow is in front of you, the wrong shape for a chair.",
+      "hazards_encountered": [
+        "The anechoic chamber — do not stay longer than 10 minutes. The silence is disorienting.",
+        "The shadow — it is a coat on a stand in the corner. It is a coat on a stand. I walked toward it to make it a coat on a stand. It is a coat on a stand.",
+        "No radiation. No hostiles. The facility is the facility."
+      ],
+      "salvage_recovered": [
+        "1 acoustic foam panel (salvaged from the wall — use for sound dampening in the shelter clinic)",
+        "1 set of calibration microphones (working — the electrician will find a use)",
+        "1 coat (wool, on a stand. The coat is a coat. The stand is a stand.)"
+      ],
+      "recommendation": "The acoustic panels are useful for the clinic. The silence is useful for the patients. Take the panels. Leave the coat. The coat is a coat. The shadow is a coat. The fear is the fear. The fear is not the coat.",
+      "tags": [
+        "discovery",
+        "acoustic_lab",
+        "silence",
+        "shadow",
+        "coat"
+      ]
+    },
+    {
+      "report_id": "exp_report_hospital_psych_wing",
+      "location_id": "hospital_psych_wing",
+      "expedition_leader": "the_veteran",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 46,
+      "approach_summary": "Approach via the main corridor. The psych wing is at the end. The door is open. Inside: a ward of empty cots, each still made, blankets folded back at the same angle. The clipboard at the door holds the last round, unfinished. The names on the cots are not the names of the people who slept in them last.",
+      "hazards_encountered": [
+        "No structural damage. The wing is intact.",
+        "No radiation. No hostiles. The wing is the wing. The wing is empty.",
+        "The clipboard — the names are the names of the people who were supposed to come back and did not. The last entry is Day 33. The entry is unfinished."
+      ],
+      "salvage_recovered": [
+        "1 clipboard (the last round — see attached transcript)",
+        "1 blanket (wool, from an empty cot — the blanket was folded by someone who expected the cot to be filled again)",
+        "1 book (left on a bedside table — pre-war poetry, the page marked: 'Do not go gentle into that good night.')"
+      ],
+      "recommendation": "The wing is a shelter now, not a hospital. The cots are clean. The blankets are folded. The wing is waiting. We could use the cots. We could use the blankets. The wing is the wing. The wing is for the living. Take the blankets. Leave the clipboard. The clipboard is the record.",
+      "tags": [
+        "discovery",
+        "hospital",
+        "psych_wing",
+        "cots",
+        "clipboard"
+      ]
+    },
+    {
+      "report_id": "exp_report_concrete_plant",
+      "location_id": "concrete_batching_plant",
+      "expedition_leader": "tomas_the_engineer",
+      "team_size": 3,
+      "duration_days": 1,
+      "day_completed": 53,
+      "approach_summary": "Approach via the quarry road. The plant is intact. The silos are half full. The mixer still turns — manually, with a crank. The roof has begun to rain indoors — a fine, constant fall of dust. A main beam has cracked along its length. The two halves no longer agree on where level is.",
+      "hazards_encountered": [
+        "Structural — the main beam is cracked. The building is deciding. Do not give it a reason.",
+        "Dust — the roof is shedding. Masks worn.",
+        "No radiation. No hostiles. The plant is the plant. The plant is deciding."
+      ],
+      "salvage_recovered": [
+        "4 bags of cement (sealed, dry — the silos kept them)",
+        "1 mixer crank (working — the mixer is manual. The mixer is the mixer.)",
+        "1 set of sieves (for aggregate grading)"
+      ],
+      "recommendation": "The cement is valuable. The plant is unstable. Take the cement. Do not stay. The building is deciding. The decision is not ours. Return with a mason. The mason can read the crack. The crack is the decision.",
+      "tags": [
+        "scavenger",
+        "concrete_plant",
+        "cement",
+        "structural",
+        "crack"
+      ]
+    },
+    {
+      "report_id": "exp_report_allotments",
+      "location_id": "the_allotments",
+      "expedition_leader": "old_petr_the_farmer",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 8,
+      "approach_summary": "Approach via the lane. The glass of the greenhouse has mostly gone. What remains has grown a pelt of black mold along the bars. The soil inside is warm and wrong. Do not disturb the mold. Do not breathe near it. The warmth is not the sun. Something in the soil is still working.",
+      "hazards_encountered": [
+        "Black mold — extensive on the greenhouse bars. Respiratory hazard. Do not enter without a mask.",
+        "The soil — warm to the touch. The warmth is biological. Something is composting. Something is alive.",
+        "No hostiles. The allotments are the allotments. The allotments are alive."
+      ],
+      "salvage_recovered": [
+        "1 bag of potting soil (from the shed — dry, clean, pre-war)",
+        "4 seed trays (wooden, reusable)",
+        "1 trowel (good condition)",
+        "1 cold frame glass pane (intact, salvaged from the fallen section)"
+      ],
+      "recommendation": "The greenhouse mold is a hazard but the allotments are not lost. The soil in the shed is clean. The seed trays are good. The cold frame glass can be used for the shelter's south wall. Return with the farmer. The farmer knows the soil. The soil is the farmer's.",
+      "tags": [
+        "scavenger",
+        "allotments",
+        "greenhouse",
+        "mold",
+        "soil",
+        "cold_frame"
+      ]
+    },
+    {
+      "report_id": "exp_report_thaw_flood",
+      "location_id": "the_creek_bed",
+      "expedition_leader": "bram_the_courier",
+      "team_size": 1,
+      "duration_days": 0,
+      "day_completed": 15,
+      "approach_summary": "The creek bed is flooding. Snowmelt from the ridge. The water is brown and fast and rising. The usual crossing at the stones is underwater. The stones are the crossing. The crossing is gone. Do not attempt the creek today.",
+      "hazards_encountered": [
+        "Flood water — fast, brown, rising. Do not enter. The current is stronger than it looks.",
+        "The stones are gone. The crossing is gone. The detour adds 4km.",
+        "No hostiles. The water is the hostile. The water is the water."
+      ],
+      "salvage_recovered": [
+        "None. Route assessment only. The water is the salvage. The salvage is the warning."
+      ],
+      "recommendation": "Take the detour. The 4km is the cost of the flood. The flood is the cost of the thaw. The thaw is the cost of the spring. The spring is coming. The flood is the proof. Take the detour. The creek will be crossable in 2 days.",
+      "tags": [
+        "weather",
+        "flood",
+        "thaw",
+        "creek",
+        "detour"
+      ]
+    },
+    {
+      "report_id": "exp_report_deep_cold_warning",
+      "location_id": "the_ice_core_store",
+      "expedition_leader": "tomas_the_engineer",
+      "team_size": 1,
+      "duration_days": 0,
+      "day_completed": 32,
+      "approach_summary": "The store is at minus forty and below. Minus forty is where Celsius and Fahrenheit agree. Exposed skin warns you once, then stops warning you. Keep moving. Keep your hands in your armpits. A metal doorknob here will take skin. The cold is not weather. It is terrain.",
+      "hazards_encountered": [
+        "Extreme cold — minus forty and below. Frostbite in under 5 minutes on exposed skin.",
+        "The door — metal. Do not touch with bare hands. The cold will take skin.",
+        "No hostiles. The cold is the hostile. The cold is the terrain."
+      ],
+      "salvage_recovered": [
+        "None. Hazard assessment only. The store is the store. The cold is the cold."
+      ],
+      "recommendation": "Do not enter the store without full cold-weather gear. The temperature is minus forty. The temperature does not care about your mission. The temperature is the mission. The mission is survival. Dress for the cold. The cold is terrain.",
+      "tags": [
+        "hazard",
+        "cold",
+        "ice_core",
+        "frostbite",
+        "temperature"
+      ]
+    },
+    {
+      "report_id": "exp_report_wind_katabatic",
+      "location_id": "the_pilgrim_switchbacks",
+      "expedition_leader": "bram_the_courier",
+      "team_size": 1,
+      "duration_days": 0,
+      "day_completed": 20,
+      "approach_summary": "The wind comes down the slope in a steady, heavy push — not gusts, but weight. It is colder than the air it replaces. Lean into it and it lets you lean. A pack on your back becomes a sail. The switchbacks are built for this wind. The low walls are windbreaks, not railings. Use them as both.",
+      "hazards_encountered": [
+        "Katabatic wind — steady, heavy, cold. Gusts to 80 km/h possible at the switchback turns.",
+        "The low walls — use them. They are windbreaks. Do not walk the outside edge.",
+        "No hostiles. The wind is the hostile. The wind is the wind."
+      ],
+      "salvage_recovered": [
+        "None. Route assessment only."
+      ],
+      "recommendation": "The switchbacks are passable in the wind if you use the walls. Walk on the inside. Stop at each turn to rest. The wind is steady — it will not surprise you. The wind is honest. The wind is the wind.",
+      "tags": [
+        "weather",
+        "wind",
+        "katabatic",
+        "switchbacks",
+        "route"
+      ]
+    },
+    {
+      "report_id": "exp_report_ash_woodland",
+      "location_id": "the_ash_woodland",
+      "expedition_leader": "the_hunter",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 25,
+      "approach_summary": "The ash woodland is recovering. New growth at the base of the dead trees — shoots, pale green, pushing through the ash. Deer tracks in the ash — fresh, this morning. A stream runs clear through the centre. The water is cold and tastes of nothing. The nothing is the clean.",
+      "hazards_encountered": [
+        "Ash cover on the ground — deep in places. The new growth is pushing through. The woodland is alive.",
+        "Deer — fresh tracks. The deer are returning. Do not hunt the deer yet. The deer are the seed stock.",
+        "No hostiles. The woodland is the woodland. The woodland is healing."
+      ],
+      "salvage_recovered": [
+        "None. Observation only. The woodland is the salvage. The salvage is the hope."
+      ],
+      "recommendation": "The woodland is recovering. The deer are returning. Do not hunt the deer. The deer are the future. The stream is clean. Mark the stream on the map. The stream is the water. The water is the life. The life is the woodland.",
+      "tags": [
+        "discovery",
+        "ash_woodland",
+        "deer",
+        "stream",
+        "recovery"
+      ]
+    },
+    {
+      "report_id": "exp_report_apiary",
+      "location_id": "the_apiary_rows",
+      "expedition_leader": "old_petr_the_farmer",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 17,
+      "approach_summary": "The apiary rows. Three hives still active. The bees are working the clover that has come up between the rows. The clover is the first flowering plant the farmer has seen this year. The bees are the bees. The bees do not know the world ended. The bees are making honey.",
+      "hazards_encountered": [
+        "Bees — active, defensive. Approach slowly. Smoke if you have it.",
+        "The hives — three active, four dead. The dead hives have honey still capped. The honey is good. The bees died of the cold, not the ash.",
+        "No hostiles. The bees are the bees. The bees are not hostile. The bees are working."
+      ],
+      "salvage_recovered": [
+        "2 frames of honey (from a dead hive — the honey is capped, clean, golden)",
+        "1 handful of clover (for the record — the clover is the first flower)"
+      ],
+      "recommendation": "The bees are the bees. Take honey only from the dead hives. Do not disturb the living hives. The bees are making more bees. The bees are making honey. The honey is the medicine. The medicine is the bees. Return in the spring. The spring is the bees'.",
+      "tags": [
+        "discovery",
+        "apiary",
+        "bees",
+        "honey",
+        "clover"
+      ]
+    },
+    {
+      "report_id": "exp_report_wild_wheat",
+      "location_id": "the_south_field",
+      "expedition_leader": "old_petr_the_farmer",
+      "team_size": 1,
+      "duration_days": 1,
+      "day_completed": 44,
+      "approach_summary": "The south field. Volunteer wheat growing among the weeds. The wheat is thin, scattered, but it is wheat. The grain heads are small — the soil is poor, the ash is the fertilizer, the ash is not enough. But it is wheat. It is growing without being planted. It is growing because the wheat remembers.",
+      "hazards_encountered": [
+        "The wheat — scattered, thin. Collecting seed will take time. The time is worth the seed.",
+        "Weeds — heavy competition. The wheat is losing. The wheat is still there.",
+        "No hostiles. The field is the field. The field is giving wheat."
+      ],
+      "salvage_recovered": [
+        "1 handful of wheat heads (for seed — the grain is small but viable)",
+        "1 soil sample (for the farmer — the soil is poor, the farmer will know what to add)"
+      ],
+      "recommendation": "The wheat is volunteer. The wheat is growing without us. The wheat remembers. Collect seed. Bring the farmer. The farmer will know how to help the wheat. The wheat is the future. The future is the wheat. The wheat is the wheat.",
+      "tags": [
+        "discovery",
+        "wheat",
+        "volunteer",
+        "field",
+        "seed"
+      ]
+    },
+    {
+      "report_id": "exp_report_cave_biota",
+      "location_id": "the_cave_spring",
+      "expedition_leader": "suki_the_teacher",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 72,
+      "approach_summary": "The cave spring. Water dripping from the ceiling into a clear pool. The pool has life — small, pale, eyeless things swimming in the dark. The teacher says they are cave fish, or something like them. They have been here since before. They do not know the world above. The world above does not know them.",
+      "hazards_encountered": [
+        "The cave — dark, wet, slippery. Bring two lamps.",
+        "The pool — the water is clean. The fish are alive. The fish are the proof.",
+        "No hostiles. The cave is the cave. The cave is full of life that does not know us."
+      ],
+      "salvage_recovered": [
+        "1 water sample (clear, cold — for testing)",
+        "1 sketch of the cave fish (by the teacher — the fish are the lesson. The lesson is the fish.)"
+      ],
+      "recommendation": "The water is clean. The fish are alive. The cave is a refuge. Do not disturb the pool. The fish have been here since before. The fish will be here after. Take water from the stream outside, not the pool. The pool is the fish's. The fish are the fish.",
+      "tags": [
+        "discovery",
+        "cave",
+        "spring",
+        "fish",
+        "water"
+      ]
+    },
+    {
+      "report_id": "exp_report_munitions_site",
+      "location_id": "the_ordnance_shoulder",
+      "expedition_leader": "the_veteran",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 36,
+      "approach_summary": "The old munitions site. Marked on the pre-war map as a storage depot. The depot is gone — cratered. The crater is a pond now, green with algae. The surrounding ground is scattered with metal — casings, fragments, one unexploded shell half-buried in the mud. Do not touch the shell.",
+      "hazards_encountered": [
+        "UXO — one unexploded shell, half-buried, rusted. Do not approach. Mark and leave.",
+        "The crater pond — the water is green. Do not drink. The green is the algae. The algae is the fertilizer runoff from the exploded stores.",
+        "Metal fragments everywhere — sharp. Wear boots. The ground is the ground. The ground is sharp."
+      ],
+      "salvage_recovered": [
+        "None. The site is contaminated. The UXO is the UXO. The UXO is not salvage."
+      ],
+      "recommendation": "Do not return to this site. Mark it on the map as contaminated and dangerous. The shell is unexploded. The shell is waiting. The shell does not care how long it has been waiting. The shell is the shell.",
+      "tags": [
+        "hazard",
+        "munitions",
+        "uxo",
+        "crater",
+        "contamination"
+      ]
+    },
+    {
+      "report_id": "exp_report_convoy_wreck",
+      "location_id": "the_abandoned_convoy_yard",
+      "expedition_leader": "mira_the_scavenger",
+      "team_size": 2,
+      "duration_days": 2,
+      "day_completed": 58,
+      "approach_summary": "The convoy yard. Twelve vehicles, lined up, doors open, engines cold. The convoy was ready to leave. The convoy did not leave. The lead vehicle has a map on the dash — a route marked in red pencil to the coast. The coast is 300km. The convoy had fuel for 200.",
+      "hazards_encountered": [
+        "The vehicles — some with fuel still in the tanks. Siphon carefully. The fuel is old. The fuel may still burn.",
+        "The lead vehicle — the driver is still in the seat. The driver is bones. The driver has a letter in the pocket. The letter is addressed to someone at the coast.",
+        "No hostiles. The convoy is the convoy. The convoy is waiting."
+      ],
+      "salvage_recovered": [
+        "40 litres of fuel (siphoned from three vehicles — old, but burns)",
+        "1 map (pre-war, route to the coast marked in red)",
+        "1 letter (from the driver's pocket — sealed, addressed. Delivered unopened to the Overlay for routing.)",
+        "4 blankets (from the supply truck — mildewed but usable)"
+      ],
+      "recommendation": "The convoy is a fuel source. Siphon what you can. The fuel is old. The fuel is fuel. The map is the map. The letter is the letter. Deliver the letter. The driver is bones. The bones are the driver. The letter is the driver's last word.",
+      "tags": [
+        "scavenger",
+        "convoy",
+        "fuel",
+        "map",
+        "letter",
+        "bones"
+      ]
+    },
+    {
+      "report_id": "exp_report_sump_cathedral",
+      "location_id": "the_sump_cathedral",
+      "expedition_leader": "the_veteran",
+      "team_size": 3,
+      "duration_days": 1,
+      "day_completed": 66,
+      "approach_summary": "The sump cathedral. A cistern, vaulted, stone, built before the Exchange for water and repurposed by the faithful for worship. Benches carved into the stone. A sound in the pillars, like a choir very far away, or like water in a pipe very close. The acoustics of the cistern explain it, if you want them to.",
+      "hazards_encountered": [
+        "The sound — a choir or a pipe. The acoustics are the explanation. The faithful did not want the explanation. You may choose.",
+        "No radiation. No hostiles. The cathedral is the cathedral. The cathedral is empty of people and full of sound.",
+        "The floor is wet. The cistern still holds water. The water is the water."
+      ],
+      "salvage_recovered": [
+        "1 hymnal (hand-copied, left on a bench — the faithful wrote their own)",
+        "1 candle (half-burned, on the altar — left it. The candle is the faithful's.)",
+        "1 carving (on the wall: a sun with a face, crude, childlike. The sun is smiling. The sun is not. The carving is.)"
+      ],
+      "recommendation": "The cathedral is a shelter. The water is clean. The benches are beds. The sound is the sound. Leave the hymnal. Leave the candle. The cathedral is the faithful's. The cathedral is also ours. The two are not in conflict. The sound does not care which we choose.",
+      "tags": [
+        "discovery",
+        "cathedral",
+        "cistern",
+        "choir",
+        "acoustics"
+      ]
+    }
+  ]
+}
