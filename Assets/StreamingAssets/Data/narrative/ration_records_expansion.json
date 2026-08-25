@@ -1,0 +1,699 @@
+{
+  "schema_version": 1,
+  "collection_id": "ration_records_expansion",
+  "description": "Food and ration records — mess hall menus, ration ledgers, recipe books, foraging notes, preservation logs, hunger tallies. Hungry people counting carefully — the flour is the number, the number is the flour.",
+  "documents": [
+    {
+      "doc_id": "bunker_doc_menu_week1",
+      "doc_type": "mess_hall_menu",
+      "title": "Mess Hall Menu — Week 1",
+      "posted_day": 7,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall entrance, chalkboard",
+      "material": "Chalk on slate board, smudged at the edges",
+      "transcript": "MESS HALL — WEEK 1 MENU\n\nBREAKFAST (06:30-07:30):\nDaily — Porridge (barley, water, salt). One spoon. The spoon is the measure. The measure is the spoon.\n\nMIDDAY (12:00-13:00):\nMon/Wed/Fri — Barley soup with dried mushroom powder\nTue/Thu — Bread (one slice) with broth\nSat — Stew (whatever is left from the week)\nSun — The Chef's Special (see the board — the board is the special. The special is the board.)\n\nEVENING (18:00-19:00):\nDaily — Leftover from midday, reheated. Tea if we have herbs. The herbs are the tea. The tea is the herbs.\n\nNOTICES:\n- Portions are fixed. Do not ask for more. The Chef knows. The knowing is the Chef.\n- Children eat first. Children eat the same. Children do not get more. Children get first. First is not more.\n- The water ration is 2 litres per person per day. Fill at the pump. Do not waste. The waste is the ration. The ration is the waste.\n- The flour is the number. The number is the flour. Do not ask the number. The number is the quartermaster's.",
+      "tags": [
+        "menu",
+        "week_1",
+        "porridge",
+        "bread",
+        "children",
+        "flour"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_menu_week4",
+      "doc_type": "mess_hall_menu",
+      "title": "Mess Hall Menu — Week 4, Reduced",
+      "posted_day": 25,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall entrance, chalkboard",
+      "material": "Chalk on slate, rewritten three times this week",
+      "transcript": "MESS HALL — WEEK 4 MENU (REDUCED)\n\nBREAKFAST (06:30-07:30):\nDaily — Thin porridge (more water, less barley). Half spoon. The half is the flour. The flour is the half.\n\nMIDDAY (12:00-13:00):\nMon/Wed/Fri — Thin soup (water, salt, dried mushroom if we have it)\nTue/Thu — Bread (one slice, thinner). The thinner is the flour. The flour is the thinner.\nSat — Stew (if there is anything left)\nSun — Fasting day. The fasting is the flour. The flour is the fasting.\n\nEVENING (18:00-19:00):\nDaily — Hot water with salt. The salt is the meal. The meal is the salt. Tea if we have herbs. We do not have herbs.\n\nNOTICES:\n- The flour is reduced. The reduction is not a punishment. The reduction is the flour. The flour is the reduction.\n- Children eat first. Children eat the same. The same is less. The less is the same.\n- The water ration is 2 litres. The 2 is the same. The same is the 2.\n- Do not ask the number. The number is the quartermaster's. The quartermaster is the number. The number is the quartermaster.",
+      "tags": [
+        "menu",
+        "week_4",
+        "reduced",
+        "thin_porridge",
+        "fasting",
+        "flour"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_menu_harvest",
+      "doc_type": "mess_hall_menu",
+      "title": "Mess Hall Menu — Harvest Week",
+      "posted_day": 44,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall entrance, chalkboard",
+      "material": "Chalk on slate, the handwriting is larger, the letters are happier",
+      "transcript": "MESS HALL — HARVEST WEEK MENU\n\nBREAKFAST (06:30-07:30):\nDaily — Porridge with potato. The potato is the harvest. The harvest is the potato. One spoon. The spoon is the full. The full is the spoon.\n\nMIDDAY (12:00-13:00):\nMon/Wed/Fri — Potato soup with salt and dried herbs\nTue/Thu — Bread (one slice, same thickness — the flour is still the flour) with potato\nSat — Stew with potato and whatever the greenhouse gives\nSun — The Chef's Special: roasted potato with salt. The salt is the special. The special is the salt. The potato is the special. The special is the potato.\n\nEVENING (18:00-19:00):\nDaily — Leftover from midday with tea. The tea is the herbs. The herbs are the tea. We have herbs. The herbs are the greenhouse. The greenhouse is the herbs.\n\nNOTICES:\n- The potato is the harvest. The harvest is 4 kilos. The 4 is the first. The first is the 4. The 4 is the spring. The spring is the 4.\n- Children eat first. Children eat the same. Children eat the potato. The potato is the children's. The children are the potato's.\n- The flour is still the flour. The potato is not the flour. The potato is the addition. The addition is the potato. The flour is the number. The number is the flour. The potato is the bonus. The bonus is the potato.\n- The water ration is 2 litres. The 2 is the same. The same is the 2.",
+      "tags": [
+        "menu",
+        "harvest",
+        "potato",
+        "4_kilos",
+        "spring",
+        "herbs"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ledger_week1",
+      "doc_type": "ration_ledger",
+      "title": "Ration Ledger — Week 1",
+      "posted_day": 7,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Quartermaster's office, ledger book",
+      "material": "Handwritten in a bound ledger, columns ruled in pencil",
+      "transcript": "RATION LEDGER — WEEK 1\n\nHeadcount: 140\nFlour: 19 days at current rate. The 19 is the number. The number is the 19. The 19 is in the book. The book is the 19.\nProtein (tinned): 42 days. The 42 is the number I tell. The tell is the 42. The 42 is the tell.\nSalt: adequate. The adequate is the salt. The salt is the adequate.\nWater: 2L per person per day. The 2 is the ration. The ration is the 2.\nLamp oil: 8 days. The 8 is the lamp. The lamp is the 8.\n\nISSUED THIS WEEK:\nFlour: 35kg (5kg/day x 7 days). The 35 is the week. The week is the 35.\nProtein: 14 tins (2/day). The 14 is the protein. The protein is the 14.\nSalt: 2kg. The 2 is the salt. The salt is the 2.\n\nREMAINING:\nFlour: 19 days. The 19 is the number. The number is the 19.\nProtein: 42 days. The 42 is the number I tell. The tell is the 42.\nSalt: adequate.\nLamp oil: 8 days.\n\nNOTE: The 19 and the 42 are two numbers. The 42 is the number the shelter knows. The 19 is the number the book knows. The book is the honest place. The honest place is the book. I am the book. The book is me.",
+      "tags": [
+        "ledger",
+        "week_1",
+        "flour_19",
+        "protein_42",
+        "two_numbers",
+        "quartermaster"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ledger_week4",
+      "doc_type": "ration_ledger",
+      "title": "Ration Ledger — Week 4, After the Lomas",
+      "posted_day": 28,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Quartermaster's office, ledger book",
+      "material": "Handwritten in a bound ledger, the pencil pressed harder this week",
+      "transcript": "RATION LEDGER — WEEK 4\n\nHeadcount: 147 (was 140; Loma family +7, Day 14). The 147 is the headcount. The headcount is the 147. The 7 are the Lomas. The Lomas are the 7.\n\nFlour: 11 days. The 11 is the number. The number is the 11. The 11 is in the book. The book is the 11. The 11 is the honest. The honest is the 11.\nProtein: 36 days. The 36 is the number I tell. The tell is the 36. The 36 is the tell.\nSalt: adequate but lower.\nWater: 2L per person per day. The 147 x 2 = 294. The 294 is the water. The water is the 294.\nLamp oil: 4 days. The 4 is the lamp. The lamp is the 4.\n\nISSUED THIS WEEK:\nFlour: 28kg (4kg/day x 7 days — reduced from 5kg). The reduction is the 1kg. The 1kg is the reduction. The reduction is the flour. The flour is the reduction.\nProtein: 14 tins (2/day, same).\nSalt: 1.5kg (reduced from 2kg).\n\nREMAINING:\nFlour: 11 days. The 11 is the number. The number is the 11.\nProtein: 36 days.\nSalt: adequate but lower.\nLamp oil: 4 days.\n\nNOTE: Two sacks were taken from the west locker between Day 20 and Day 22. The two sacks are the 11. The 11 is the two sacks. The two sacks are the night watch. The night watch is the two sacks. The two sacks are the number. The number is the two sacks. I know which key. The key is the number. The number is the key. The book is the honest place. The honest place is the book.",
+      "tags": [
+        "ledger",
+        "week_4",
+        "flour_11",
+        "loma_7",
+        "two_sacks",
+        "night_watch",
+        "quartermaster"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ledger_harvest",
+      "doc_type": "ration_ledger",
+      "title": "Ration Ledger — Harvest Week, Day 44",
+      "posted_day": 44,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Quartermaster's office, ledger book",
+      "material": "Handwritten in a bound ledger, the handwriting is lighter, almost happy",
+      "transcript": "RATION LEDGER — HARVEST WEEK, DAY 44\n\nHeadcount: 147.\n\nFlour: 8 days. The 8 is the number. The number is the 8. The 8 is lower. The lower is the 8. But the potato is the 4. The 4 is the potato. The potato is the addition. The addition is the 4.\nProtein: 30 days.\nSalt: lower. The lower is the salt. The salt is the lower.\nWater: 2L per person. The 147 x 2 = 294.\nLamp oil: 2 days. The 2 is the lamp. The lamp is the 2.\n\nPOTATO (NEW):\n4 kilos, harvested from the cold frame, Day 44. The 4 is the harvest. The harvest is the 4. The 4 is the first. The first is the 4. The 4 is the spring. The spring is the 4.\n\nISSUED THIS WEEK:\nFlour: 28kg (reduced, same as Week 4).\nPotato: 4kg (the harvest — all of it, this week. The week is the harvest. The harvest is the week.)\nProtein: 14 tins.\nSalt: 1.5kg.\n\nREMAINING:\nFlour: 8 days. The 8 is the number. The number is the 8.\nProtein: 30 days.\nPotato: 0 (all issued — the harvest is the week. The week is the harvest.)\nSalt: lower.\nLamp oil: 2 days.\n\nNOTE: The flour is 8. The 8 is lower than the 11. The 11 was lower than the 19. The 19 was the first. The first was the 19. The 8 is the now. The now is the 8. But the potato is the 4. The 4 is the first new food. The first new food is the 4. The 4 is the spring. The spring is the 4. The flour is going down. The potato is going up. The down and the up are the same direction: the spring. The spring is the direction. The direction is the spring.",
+      "tags": [
+        "ledger",
+        "harvest",
+        "flour_8",
+        "potato_4",
+        "spring",
+        "first_new_food",
+        "quartermaster"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_recipe_bread",
+      "doc_type": "cooking_note",
+      "title": "Recipe — Shelter Bread (Reduced)",
+      "posted_day": 25,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall kitchen, pinned to the wall",
+      "material": "Handwritten on the back of a pre-war recipe card",
+      "transcript": "SHELTER BREAD (REDUCED)\n\nFlour: 500g (was 750g. The 500 is the flour. The flour is the 500. The 250 is the reduction. The reduction is the 250.)\nWater: 400ml (more water, less flour — the water is the bread. The bread is the water.)\nSalt: 5g (a pinch. The pinch is the salt. The salt is the pinch.)\nYeast: none. The yeast is gone. The gone is the yeast. The bread is flat. The flat is the bread.\nPine bark flour: 100g (the addition. The addition is the bark. The bark is the addition. The bark is the fiber. The fiber is the bark. The fiber keeps the bowels moving. The moving is the fiber.)\n\nMethod:\nMix. Knead if you have the energy. The energy is the flour. The flour is the energy. If you do not have the energy, do not knead. The not-kneading is the bread. The bread is the not-kneading.\n\nBake: hot stone, 20 minutes. The 20 is the bread. The bread is the 20. The stone is the oven. The oven is the stone.\n\nYield: 1 loaf, thin, dense, grey. The grey is the bread. The bread is the grey. The dense is the flour. The flour is the dense. The thin is the reduction. The reduction is the thin.\n\nNOTE: The bread is thinner. The thinner is the flour. The flour is the thinner. The bread is the same bread. The bread is thinner. That is the flour. That is the flour.\n\n— Boris.",
+      "tags": [
+        "recipe",
+        "bread",
+        "reduced",
+        "pine_bark",
+        "flour_500",
+        "boris"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_recipe_stew",
+      "doc_type": "cooking_note",
+      "title": "Recipe — Saturday Stew (Whatever Is Left)",
+      "posted_day": 10,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall kitchen, pinned to the wall",
+      "material": "Handwritten on a scrap of butcher paper",
+      "transcript": "SATURDAY STEW (WHATEVER IS LEFT)\n\nIngredients:\n- Whatever is left. The left is the stew. The stew is the left.\n- Water: enough to cover. The cover is the water. The water is the cover.\n- Salt: if we have it. The it is the salt. The salt is the it.\n- Dried mushrooms: if we have them. The them is the mushrooms. The mushrooms are the them.\n- Potato: if the harvest is in. The in is the potato. The potato is the in.\n- Bones: if anyone has saved them. The them is the bones. The bones are the them. The bones are the flavor. The flavor is the bones.\n\nMethod:\nPut everything in the pot. The pot is the stew. The stew is the pot. Boil. The boil is the cooking. The cooking is the boil. Stir when you remember. The remember is the stir. The stir is the remember.\n\nCook: until the vegetables are soft or until someone asks for food, whichever comes first. The first is the asking. The asking is the first.\n\nYield: enough for the mess hall, barely. The barely is the stew. The stew is the barely.\n\nNOTE: The stew is the week. The week is the stew. Everything that was not eaten goes in. The in is the stew. The stew is the in. Nothing is wasted. The wasted is the nothing. The nothing is the wasted.\n\n— Boris.",
+      "tags": [
+        "recipe",
+        "stew",
+        "saturday",
+        "whatever_left",
+        "nothing_wasted",
+        "boris"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_recipe_potato",
+      "doc_type": "cooking_note",
+      "title": "Recipe — Roasted Potato (The Chef's Special)",
+      "posted_day": 44,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall kitchen, pinned to the wall",
+      "material": "Handwritten in large letters, the handwriting is happy",
+      "transcript": "ROASTED POTATO (THE CHEF'S SPECIAL)\n\nIngredients:\n- Potato: 1 per person. The 1 is the potato. The potato is the 1. The 1 is the special. The special is the 1.\n- Salt: a pinch. The pinch is the salt. The salt is the pinch.\n- Oil: if we have it. The it is the oil. The oil is the it. If we do not have oil, the potato is still the special. The special is the potato. The potato is the special.\n\nMethod:\nCut the potato. The cut is the cooking. The cooking is the cut. Place on the hot stone. The stone is the oven. The oven is the stone. Turn once. The once is the turn. The turn is the once. Salt. The salt is the flavor. The flavor is the salt.\n\nCook: until the edges are brown. The brown is the done. The done is the brown. The brown is the special. The special is the brown.\n\nYield: 1 potato per person. The 1 is the person. The person is the 1. The 1 is the first. The first is the 1.\n\nNOTE: This is the first new food. The first is the potato. The potato is the first. The first is the spring. The spring is the first. The potato is the spring. The spring is the potato. The brown is the spring. The spring is the brown. The salt is the spring. The spring is the salt.\n\n— Boris. The Chef. The Chef is the Baker. The Baker is the Chef. The Chef is happy. The happy is the Chef.",
+      "tags": [
+        "recipe",
+        "potato",
+        "roasted",
+        "chefs_special",
+        "first_new_food",
+        "happy",
+        "boris"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_foraging_clover",
+      "doc_type": "foraging_note",
+      "title": "Foraging Note — Clover at the Apiary",
+      "posted_day": 17,
+      "posted_by": "Old Petr",
+      "location": "Allotments, by the apiary",
+      "material": "Handwritten on a seed packet, dirt on the corner",
+      "transcript": "FORAGING NOTE — CLOVER\n\nFound: clover growing between the apiary rows. The clover is the first flower. The first flower is the clover. The clover is the proof the ground is healing. The healing is the clover.\n\nEdible: yes. The clover is edible. The edible is the clover. The leaves are edible. The flowers are edible. The roots are edible. The edible is the all. The all is the edible.\n\nTaste: mild, green. The green is the taste. The taste is the green. The green is the first green in a long time. The first green is the taste.\n\nPreparation: wash. The wash is the ash. The ash is the wash. Eat raw or boil. The raw is the fresh. The fresh is the raw. The boil is the soft. The soft is the boil.\n\nQuantity: enough for a salad for 4. The 4 is the clover. The clover is the 4. The salad is the first. The first is the salad.\n\nNOTE: The clover is also the bees' food. The bees are the clover. The clover is the bees. Do not take all the clover. The clover is the bees'. The bees are the clover's. Take some. Leave some. The some is the sharing. The sharing is the some. The bees need the clover. The clover needs the bees. The two are the same. The same is the two.\n\n— Petr.",
+      "tags": [
+        "foraging",
+        "clover",
+        "edible",
+        "bees",
+        "first_green",
+        "sharing",
+        "petr"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_foraging_mushrooms",
+      "doc_type": "foraging_note",
+      "title": "Foraging Note — Mushrooms at the Ash Woodland",
+      "posted_day": 25,
+      "posted_by": "The Hunter",
+      "location": "Ash woodland, by the stream",
+      "material": "Handwritten on the back of a map fragment",
+      "transcript": "FORAGING NOTE — MUSHROOMS\n\nFound: mushrooms at the base of the dead trees in the ash woodland. The mushrooms are pale. The pale is the ash. The ash is the pale. The mushrooms grow in the ash. The ash is the soil. The soil is the ash.\n\nEdible: some. The some is the question. The question is the some. The pale ones with the pink gills are edible. The pale ones with the white gills are not. The not is the poison. The poison is the not. The difference is the gills. The gills are the difference. The difference is the life. The life is the difference.\n\nTaste: earthy, strong. The strong is the earth. The earth is the strong. The earthy is the ash. The ash is the earthy.\n\nPreparation: boil twice. The twice is the safety. The safety is the twice. The first boil removes the bitterness. The second boil removes the poison. The poison is the first. The first is the poison. The second is the safety. The safety is the second.\n\nQuantity: 2 handfuls. The 2 is the mushrooms. The mushrooms are the 2. The 2 is the soup. The soup is the 2.\n\nNOTE: Do not eat raw. The raw is the poison. The poison is the raw. Boil twice. The twice is the life. The life is the twice. If you are not sure, do not eat. The not-sure is the not-eat. The not-eat is the not-sure. The not-eat is the safety. The safety is the not-eat.\n\n— The Hunter.",
+      "tags": [
+        "foraging",
+        "mushrooms",
+        "ash_woodland",
+        "edible",
+        "poison",
+        "boil_twice",
+        "hunter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_foraging_roots",
+      "doc_type": "foraging_note",
+      "title": "Foraging Note — Wild Roots at the Creek Bed",
+      "posted_day": 30,
+      "posted_by": "Old Petr",
+      "location": "Creek bed, south of the shelter",
+      "material": "Handwritten on a scrap of cloth",
+      "transcript": "FORAGING NOTE — WILD ROOTS\n\nFound: wild roots in the creek bed. The roots are thin, white, tangled in the frozen mud. The mud is the roots. The roots are the mud. The frozen is the mud. The mud is the frozen.\n\nEdible: yes. The yes is the roots. The roots are the yes. The roots are bitter. The bitter is the edible. The edible is the bitter. The bitter is the medicine. The medicine is the bitter.\n\nTaste: bitter, earthy. The bitter is the taste. The taste is the bitter. The earthy is the mud. The mud is the earthy.\n\nPreparation: wash thoroughly. The thoroughly is the mud. The mud is the thoroughly. Boil for 20 minutes. The 20 is the soft. The soft is the 20. The bitter remains. The remains is the bitter. The bitter is the medicine. The medicine is the remains.\n\nQuantity: enough for a soup for 6. The 6 is the roots. The roots are the 6.\n\nNOTE: The roots are bitter but the bitter is the medicine. The medicine is the bitter. The bitter keeps the digestion working. The working is the bitter. The bitter is the working. The roots are not the flour. The roots are not the potato. The roots are the roots. The roots are the between. The between is the roots. The roots are the food that is not the flour and not the potato but is the food. The food is the roots. The roots are the food.\n\n— Petr.",
+      "tags": [
+        "foraging",
+        "roots",
+        "creek",
+        "bitter",
+        "medicine",
+        "boil",
+        "petr"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_preservation_smoking",
+      "doc_type": "preservation_log",
+      "title": "Preservation Log — Smoking Fish",
+      "posted_day": 35,
+      "posted_by": "The Hunter",
+      "location": "Smoking shed, by the creek",
+      "material": "Handwritten on a salvaged ledger page",
+      "transcript": "PRESERVATION LOG — SMOKING FISH\n\nDate: Day 35\nFish: 3 river trout, caught in the creek. The trout are the first fish. The first fish are the trout. The creek is the fish. The fish are the creek.\n\nMethod: smoking. The smoking is the preservation. The preservation is the smoking. The smoke is the wood. The wood is the smoke. The wood is ash-wood. The ash-wood is the smoke. The smoke is the ash-wood.\n\nProcess:\n1. Clean the fish. The clean is the gut. The gut is the clean. Remove the guts. The guts are the waste. The waste is the guts. Save the guts for the compost. The compost is the guts. The guts are the compost.\n2. Salt the fish. The salt is the preservation. The preservation is the salt. The salt draws the water. The water is the salt. The salt is the water.\n3. Hang in the smoking shed. The shed is the smoke. The smoke is the shed. The hang is the fish. The fish is the hang.\n4. Smoke for 12 hours. The 12 is the smoke. The smoke is the 12. The 12 is the preservation. The preservation is the 12.\n\nResult: 3 smoked fish. The 3 is the fish. The fish are the 3. The smoked is the preservation. The preservation is the smoked. The smoked will last 2 weeks. The 2 weeks is the smoked. The smoked is the 2 weeks.\n\nNOTE: The fish are the first protein that is not from a tin. The first is the fish. The fish is the first. The tinned protein is the old. The old is the tinned. The fish is the new. The new is the fish. The new is the creek. The creek is the new. The creek is alive. The alive is the creek.\n\n— The Hunter.",
+      "tags": [
+        "preservation",
+        "smoking",
+        "fish",
+        "trout",
+        "creek",
+        "first_protein",
+        "hunter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_preservation_drying",
+      "doc_type": "preservation_log",
+      "title": "Preservation Log — Drying Mushrooms",
+      "posted_day": 26,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall kitchen, by the stove",
+      "material": "Handwritten on a recipe card",
+      "transcript": "PRESERVATION LOG — DRYING MUSHROOMS\n\nDate: Day 26\nMushrooms: 2 handfuls, foraged from the ash woodland. The handfuls are the mushrooms. The mushrooms are the handfuls.\n\nMethod: drying. The drying is the preservation. The preservation is the drying. The dry is the air. The air is the dry. The dry is the stove. The stove is the dry.\n\nProcess:\n1. Clean the mushrooms. The clean is the ash. The ash is the clean. Brush off the ash. The ash is the waste. The waste is the ash.\n2. Slice thin. The thin is the drying. The drying is the thin. The thin dries faster. The faster is the thin.\n3. Place on a cloth by the stove. The cloth is the drying. The drying is the cloth. The stove is the heat. The heat is the stove. The heat is low. The low is the drying. The drying is the low.\n4. Turn twice a day for 3 days. The 3 is the drying. The drying is the 3. The twice is the turn. The turn is the twice.\n\nResult: dried mushrooms. The dried is the preservation. The preservation is the dried. The dried will last months. The months is the dried. The dried is the months. The dried is the powder. The powder is the dried. The powder is the flavor. The flavor is the powder.\n\nNOTE: The dried mushrooms are the flavor. The flavor is the soup. The soup is the flavor. The powder is the addition. The addition is the powder. The powder makes the thin soup less thin. The less thin is the powder. The powder is the less thin. The less thin is the morale. The morale is the less thin.\n\n— Boris.",
+      "tags": [
+        "preservation",
+        "drying",
+        "mushrooms",
+        "powder",
+        "flavor",
+        "morale",
+        "boris"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_preservation_salt",
+      "doc_type": "preservation_log",
+      "title": "Preservation Log — Salting the Root Cellar",
+      "posted_day": 40,
+      "posted_by": "Old Petr",
+      "location": "Root cellar, sub-level 1",
+      "material": "Handwritten on a sack label",
+      "transcript": "PRESERVATION LOG — SALTING THE ROOT CELLAR\n\nDate: Day 40\nRoots: wild roots, foraged from the creek bed. The roots are the bitter. The bitter is the roots.\nSalt: 500g, from the stores. The 500 is the salt. The salt is the 500. The 500 is the preservation. The preservation is the 500.\n\nMethod: salting. The salting is the preservation. The preservation is the salting. The salt is the preservative. The preservative is the salt. The salt draws the water. The water is the salt. The salt is the water.\n\nProcess:\n1. Wash the roots. The wash is the mud. The mud is the wash.\n2. Layer in the cellar with salt between each layer. The layer is the salt. The salt is the layer. The between is the salt. The salt is the between.\n3. Cover with a cloth. The cloth is the cover. The cover is the cloth. The cloth is the protection. The protection is the cloth.\n4. Check weekly for mould. The mould is the wet. The wet is the mould. If mould, remove the mouldy roots. The mouldy is the waste. The waste is the mouldy.\n\nResult: salted roots. The salted is the preservation. The preservation is the salted. The salted will last 2 months. The 2 months is the salted. The salted is the 2 months.\n\nNOTE: The salt is the preservation. The preservation is the salt. The salt is the number. The number is the salt. The salt is lower. The lower is the salt. The salt is the ration. The ration is the salt. The salting is the trade. The trade is the salting. We trade salt for the preservation. The preservation is the trade. The trade is the preservation.\n\n— Petr.",
+      "tags": [
+        "preservation",
+        "salting",
+        "roots",
+        "cellar",
+        "salt_500",
+        "trade",
+        "petr"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hunger_tally_week1",
+      "doc_type": "hunger_tally",
+      "title": "Hunger Tally — Week 1",
+      "posted_day": 7,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, filed in the patient ledger",
+      "material": "Handwritten in the back of the patient ledger",
+      "transcript": "HUNGER TALLY — WEEK 1\n\nMethod: visual assessment at the daily meal. The visual is the assessment. The assessment is the visual. The meal is the seeing. The seeing is the meal.\n\nWeek 1:\n- Thin: 0. The 0 is the thin. The thin is the 0. No one is thin yet. The yet is the 0.\n- Weakening: 0.\n- Children: growing. The growing is the children. The children are the growing.\n- Adults: stable. The stable is the adults. The adults are the stable.\n\nNOTE: The flour is 19 days. The 19 is the number. The number is the 19. The 19 is enough for now. The now is the 19. The enough is the now. The now is the enough. The thin is the 0. The 0 is the now. The now is the 0.\n\n— Anya.",
+      "tags": [
+        "hunger",
+        "tally",
+        "week_1",
+        "thin_0",
+        "stable",
+        "anya"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hunger_tally_week4",
+      "doc_type": "hunger_tally",
+      "title": "Hunger Tally — Week 4",
+      "posted_day": 28,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, filed in the patient ledger",
+      "material": "Handwritten in the back of the patient ledger, the pencil pressed harder",
+      "transcript": "HUNGER TALLY — WEEK 4\n\nWeek 4:\n- Thin: 12. The 12 is the thin. The thin is the 12. The 12 are the ones I can see. The see is the 12. The 12 is the see. The ones I cannot see are the question. The question is the unseen.\n- Weakening: 4. The 4 is the weakening. The weakening is the 4. The 4 are the old. The old are the 4. The old weaken first. The first is the old.\n- Children: stalling. The stalling is the children. The children are the stalling. The growing has stopped. The stopped is the stalling. The stalling is the stopped.\n- Adults: thinner. The thinner is the adults. The adults are the thinner. The thinner is the flour. The flour is the thinner.\n\nNOTE: The flour is 11 days. The 11 is the number. The number is the 11. The 11 is the thin. The thin is the 11. The 12 are the thin I can see. The 11 is the flour. The flour is the 11. The 12 and the 11 are close. The close is the thin. The thin is the close. The 12 is the people. The 11 is the flour. The people and the flour are close. The close is the hunger. The hunger is the close.\n\n— Anya.",
+      "tags": [
+        "hunger",
+        "tally",
+        "week_4",
+        "thin_12",
+        "weakening_4",
+        "children_stalling",
+        "flour_11",
+        "anya"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hunger_tally_harvest",
+      "doc_type": "hunger_tally",
+      "title": "Hunger Tally — Harvest Week",
+      "posted_day": 44,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, filed in the patient ledger",
+      "material": "Handwritten in the back of the patient ledger, the handwriting is lighter",
+      "transcript": "HUNGER TALLY — HARVEST WEEK\n\nHarvest Week:\n- Thin: 8. The 8 is the thin. The thin is the 8. The 8 is lower than the 12. The lower is the potato. The potato is the lower. The 4 is the difference. The difference is the 4. The 4 is the potato. The potato is the 4.\n- Weakening: 2. The 2 is the weakening. The weakening is the 2. The 2 is lower than the 4. The lower is the potato. The potato is the lower.\n- Children: stalling but eating. The eating is the potato. The potato is the eating. The stalling is the flour. The flour is the stalling. The potato is the counter. The counter is the potato. The potato counters the stalling. The stalling is countered by the potato.\n- Adults: thinner but eating. The eating is the potato. The potato is the eating.\n\nNOTE: The flour is 8 days. The 8 is the number. The number is the 8. The 8 is lower than the 11. The 11 was lower than the 19. The 19 was the first. The 8 is the now. But the potato is the 4. The 4 is the counter. The counter is the 4. The 8 and the 4 are the together. The together is the food. The food is the together. The 8 is the flour. The 4 is the potato. The 12 is the together. The together is the 12. The 12 is more than the 11. The 11 was the flour alone. The 12 is the flour and the potato. The 12 is the spring. The spring is the 12.\n\n— Anya.",
+      "tags": [
+        "hunger",
+        "tally",
+        "harvest",
+        "thin_8",
+        "potato_4",
+        "together_12",
+        "spring",
+        "anya"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_menu_fasting",
+      "doc_type": "mess_hall_menu",
+      "title": "Notice — Fasting Day, Every Sunday",
+      "posted_day": 30,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall entrance, chalkboard",
+      "material": "Chalk on slate, the handwriting is small",
+      "transcript": "NOTICE — FASTING DAY\n\nEffective immediately, every Sunday is a fasting day.\n\nThe fasting is not the punishment. The fasting is the flour. The flour is the fasting.\n\nSunday menu:\n- Morning: hot water with salt. The salt is the meal. The meal is the salt.\n- Midday: nothing. The nothing is the fasting. The fasting is the nothing.\n- Evening: thin soup if there is anything left. The left is the soup. The soup is the left.\n\nThe fasting saves 500g of flour per week. The 500 is the fasting. The fasting is the 500. The 500 is the week. The week is the 500. The 500 is 3 more days of flour at the end of the month. The 3 is the fasting. The fasting is the 3.\n\nChildren do not fast. Children eat. The eating is the children. The children are the eating. The fasting is the adults. The adults are the fasting.\n\nThe fasting is the flour. The flour is the fasting. The two are the same. The same is the two.\n\n— Boris.",
+      "tags": [
+        "menu",
+        "fasting",
+        "sunday",
+        "flour_500",
+        "children_eat",
+        "boris"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ledger_oil",
+      "doc_type": "ration_ledger",
+      "title": "Lamp Oil Ledger — The Counting Down",
+      "posted_day": 50,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Quartermaster's office, ledger book",
+      "material": "Handwritten in a separate ledger, the lamp oil ledger",
+      "transcript": "LAMP OIL LEDGER — DAY 50\n\nLamp oil: 2 days. The 2 is the lamp. The lamp is the 2. The 2 is the counting down. The counting down is the 2.\n\nThe lamp oil is the light. The light is the lamp oil. The 2 is the light. The light is the 2. The 2 is the days of light. The days of light are the 2.\n\nThe lamp oil is the stove. The stove is the lamp oil. The 2 is the stove. The stove is the 2. The 2 is the days of heat. The days of heat are the 2.\n\nThe lamp oil is the borrowing. The borrowing is the lamp oil. The engineer borrows for the generator. The mechanic borrows for the pump. The gate borrows for the bolt. The borrowing is the lamp oil. The lamp oil is the borrowing. The 2 is the borrowing. The borrowing is the 2.\n\nWhen the 2 is 0, the dark is the shelter. The shelter is the dark. The 0 is the dark. The dark is the 0. The 0 is the lamp. The lamp is the 0.\n\nThe fuel is the question. The question is the fuel. The convoy has fuel. The convoy is the fuel. The garrison has fuel. The garrison is the fuel. The geothermal has heat. The geothermal is the heat. The heat is the fuel. The fuel is the heat. The geothermal is the answer. The answer is the geothermal. The 2 is the question. The question is the 2.\n\n— Yelena.",
+      "tags": [
+        "ledger",
+        "lamp_oil",
+        "2_days",
+        "counting_down",
+        "dark",
+        "fuel",
+        "geothermal",
+        "yelena"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_foraging_nettles",
+      "doc_type": "foraging_note",
+      "title": "Foraging Note — Nettles at the Stream",
+      "posted_day": 38,
+      "posted_by": "Old Petr",
+      "location": "Stream bank, east of the allotments",
+      "material": "Handwritten on a leaf of dried birch bark",
+      "transcript": "FORAGING NOTE — NETTLES\n\nFound: nettles growing along the stream bank. The nettles are the sting. The sting is the nettles. The nettles sting. The sting is the medicine. The medicine is the sting.\n\nEdible: yes, after boiling. The boiling is the sting-removing. The sting-removing is the boiling. Do not eat raw. The raw is the sting. The sting is the raw.\n\nTaste: green, iron, earthy. The iron is the blood. The blood is the iron. The nettles are the iron. The iron is the nettles. The nettles are the medicine for the thin. The thin is the nettles. The nettles are the thin's medicine.\n\nPreparation: gloves or cloth to pick. The pick is the sting. The sting is the pick. Boil for 5 minutes. The 5 is the sting-removing. The sting-removing is the 5. The water turns green. The green is the medicine. The medicine is the green. Drink the water. Eat the leaves. The water is the medicine. The leaves are the food.\n\nQuantity: 2 baskets. The 2 is the nettles. The nettles are the 2. The 2 is the iron. The iron is the 2.\n\nNOTE: The nettles are the iron. The iron is the blood. The blood is the iron. The thin are the low-iron. The low-iron is the thin. The nettles are the counter. The counter is the nettles. The nettles counter the thin. The thin is countered by the nettles. The nettles are the medicine that grows. The grows is the medicine. The medicine is the grows.\n\n— Petr.",
+      "tags": [
+        "foraging",
+        "nettles",
+        "iron",
+        "blood",
+        "thin",
+        "medicine",
+        "stream",
+        "petr"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_recipe_nettle_tea",
+      "doc_type": "cooking_note",
+      "title": "Recipe — Nettle Tea (The Medicine)",
+      "posted_day": 38,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, by the stove",
+      "material": "Handwritten on a prescription pad",
+      "transcript": "NETTLE TEA (THE MEDICINE)\n\nIngredients:\n- Nettle leaves: 1 handful, fresh or dried. The handful is the medicine. The medicine is the handful.\n- Water: 2 cups, boiled. The 2 is the cups. The cups are the 2.\n- Salt: a pinch, for the minerals. The minerals are the salt. The salt is the minerals.\n\nMethod:\nBoil the water. The boil is the medicine. The medicine is the boil. Add the nettles. The add is the medicine. The medicine is the add. Steep for 5 minutes. The 5 is the steep. The steep is the 5. Strain. The strain is the sting-removing. The sting-removing is the strain.\n\nDose: 1 cup, twice daily, for the thin. The thin is the dose. The dose is the thin. The twice is the iron. The iron is the twice.\n\nNOTE: The nettle tea is the medicine for the thin. The thin is the flour. The flour is the thin. The nettle is the counter. The counter is the nettle. The nettle counters the thin. The thin is countered by the nettle. The nettle is the iron. The iron is the blood. The blood is the iron. The nettle is the blood's medicine. The blood's medicine is the nettle. The tea is the delivery. The delivery is the tea. The tea is the medicine. The medicine is the tea.\n\n— Anya.",
+      "tags": [
+        "recipe",
+        "nettle_tea",
+        "medicine",
+        "iron",
+        "thin",
+        "anya",
+        "prescription"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_preservation_fermenting",
+      "doc_type": "preservation_log",
+      "title": "Preservation Log — Fermenting Cabbage",
+      "posted_day": 42,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall kitchen, by the stove",
+      "material": "Handwritten on a cabbage leaf, dried",
+      "transcript": "PRESERVATION LOG — FERMENTING CABBAGE\n\nDate: Day 42\nCabbage: 1 head, from the greenhouse. The greenhouse is the cabbage. The cabbage is the greenhouse. The 1 is the cabbage. The cabbage is the 1. The 1 is the first. The first is the 1.\n\nMethod: fermenting. The fermenting is the preservation. The preservation is the fermenting. The ferment is the salt. The salt is the ferment. The ferment is the time. The time is the ferment.\n\nProcess:\n1. Shred the cabbage. The shred is the ferment. The ferment is the shred. The shred is the surface. The surface is the ferment.\n2. Salt the cabbage. The salt is the ferment. The ferment is the salt. 20g of salt per kg. The 20 is the salt. The salt is the 20.\n3. Pound the cabbage. The pound is the water. The water is the pound. The pound releases the water. The water is the brine. The brine is the water.\n4. Pack in a jar. The jar is the ferment. The ferment is the jar. Cover with the brine. The brine is the cover. The cover is the brine.\n5. Wait 7 days. The 7 is the ferment. The ferment is the 7. The 7 is the sour. The sour is the 7. The sour is the preservation. The preservation is the sour.\n\nResult: fermented cabbage. The fermented is the sour. The sour is the fermented. The fermented will last months. The months is the fermented. The fermented is the months.\n\nNOTE: The fermented cabbage is the vitamin. The vitamin is the fermented. The fermented is the vitamin C. The C is the scurvy-preventing. The scurvy-preventing is the C. The C is the fermented. The fermented is the C. The sour is the C. The C is the sour. The sour is the medicine. The medicine is the sour. The sour is the food. The food is the sour.\n\n— Boris.",
+      "tags": [
+        "preservation",
+        "fermenting",
+        "cabbage",
+        "sour",
+        "vitamin_c",
+        "scurvy",
+        "boris"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hunger_tally_week8",
+      "doc_type": "hunger_tally",
+      "title": "Hunger Tally — Week 8, The Worst",
+      "posted_day": 56,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, filed in the patient ledger",
+      "material": "Handwritten in the back of the patient ledger, the pencil almost tearing the page",
+      "transcript": "HUNGER TALLY — WEEK 8\n\nWeek 8 (the worst):\n- Thin: 31. The 31 is the thin. The thin is the 31. The 31 is the most. The most is the 31. The 31 are the ones I can see. The unseen are the question. The question is the unseen.\n- Weakening: 12. The 12 is the weakening. The weakening is the 12. The 12 are the old and the young. The old and the young are the 12. The old weaken first. The young weaken second. The second is the young.\n- Children: not growing. The not-growing is the children. The children are the not-growing. The growing has stopped. The stopped is the not-growing. The not-growing is the stopped. 3 weeks without growth. The 3 is the not-growing. The not-growing is the 3.\n- Adults: thin, tired, cold. The thin is the flour. The tired is the thin. The cold is the tired. The three are the same. The same is the three.\n\nNOTE: The flour is 6 days. The 6 is the number. The number is the 6. The 6 is the lowest. The lowest is the 6. The 31 and the 6 are close. The close is the hunger. The hunger is the close. The 31 is the people. The 6 is the flour. The people and the flour are too close. The close is the danger. The danger is the close. The 6 is the days. The 31 is the thin. The days and the thin are the same number now. The same is the danger. The danger is the same.\n\nThe potato is gone. The potato was the 4. The 4 is gone. The gone is the 4. The 4 was the spring. The spring was the 4. The spring is the next. The next is the spring. The next is the planting. The planting is the next. The next is the cold frame. The cold frame is the next. The next is the 4. The 4 is the next.\n\n— Anya. The nurse. The nurse is the tally. The tally is the nurse. The nurse is the 31. The 31 is the nurse.",
+      "tags": [
+        "hunger",
+        "tally",
+        "week_8",
+        "thin_31",
+        "weakening_12",
+        "not_growing",
+        "flour_6",
+        "worst",
+        "anya"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_menu_spring",
+      "doc_type": "mess_hall_menu",
+      "title": "Mess Hall Menu — First Spring Menu",
+      "posted_day": 100,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall entrance, chalkboard",
+      "material": "Chalk on slate, the handwriting is large, the letters are the happiest yet",
+      "transcript": "MESS HALL — FIRST SPRING MENU\n\nBREAKFAST (06:30-07:30):\nDaily — Porridge with potato and nettle tea. The potato is the spring. The nettle is the iron. The iron is the blood. The blood is the spring.\n\nMIDDAY (12:00-13:00):\nMon/Wed/Fri — Potato soup with dried mushrooms and wild roots\nTue/Thu — Bread (one slice, same thickness) with fermented cabbage\nSat — Stew with potato, mushrooms, and whatever the greenhouse gives\nSun — The Chef's Special: roasted potato with salt and nettle tea. The special is the spring. The spring is the special.\n\nEVENING (18:00-19:00):\nDaily — Leftover from midday with nettle tea. The tea is the medicine. The medicine is the tea.\n\nNOTICES:\n- The flour is 4 days. The 4 is the lowest. The lowest is the 4. But the potato is the 2 kilos. The 2 is the second harvest. The second is the 2. The 2 is the spring. The spring is the 2.\n- The fermented cabbage is the vitamin. The vitamin is the cabbage. The cabbage is the vitamin. The scurvy is the prevented. The prevented is the cabbage.\n- The nettle tea is the iron. The iron is the tea. The tea is the iron. The thin is the countered. The countered is the tea.\n- Children eat first. Children eat the same. Children eat the potato. Children eat the cabbage. Children drink the tea. The tea is the children's. The children are the tea's.\n- The flour is the number. The number is the flour. The flour is 4. The 4 is the lowest. But the spring is the counter. The counter is the spring. The spring is the potato and the cabbage and the nettle and the mushroom and the root. The spring is the counter. The counter is the spring. The flour is going down. The spring is going up. The down and the up are the same direction: the spring. The spring is the direction. The direction is the spring.\n\n— Boris. The Chef. The Chef is the Baker. The Baker is the Chef. The Chef is the spring. The spring is the Chef.",
+      "tags": [
+        "menu",
+        "spring",
+        "potato",
+        "cabbage",
+        "nettle_tea",
+        "mushrooms",
+        "flour_4",
+        "spring_counter",
+        "boris"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ledger_spring",
+      "doc_type": "ration_ledger",
+      "title": "Ration Ledger — First Spring, Day 100",
+      "posted_day": 100,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Quartermaster's office, ledger book",
+      "material": "Handwritten in a bound ledger, the handwriting is the lightest it has been",
+      "transcript": "RATION LEDGER — FIRST SPRING, DAY 100\n\nHeadcount: 147.\n\nFlour: 4 days. The 4 is the number. The number is the 4. The 4 is the lowest. The lowest is the 4. But the 4 is not the only number. The 4 is the flour. The flour is the 4. The other numbers are the spring.\n\nProtein: 20 days (tinned) + 3 smoked fish + occasional creek fish. The 20 is the tinned. The 3 is the smoked. The occasional is the creek. The creek is the alive. The alive is the creek.\n\nSalt: low. The low is the salt. The salt is the low. The low is the trade. The trade is the low. The salt is the trade. The trade is the salt.\n\nWater: 2L per person. The 147 x 2 = 294. The 294 is the same. The same is the 294.\n\nLamp oil: 0. The 0 is the lamp. The lamp is the 0. The 0 is the dark. The dark is the 0. The dark is the shelter now. The shelter is the dark. But the geothermal is the heat. The heat is the geothermal. The geothermal is the spring. The spring is the geothermal. The lamp is the 0. The heat is the spring.\n\nPOTATO (SECOND HARVEST):\n2 kilos, from the cold frame. The 2 is the second. The second is the 2. The 2 is the spring. The spring is the 2. The first was the 4. The second is the 2. The 2 is less than the 4. The less is the winter. The winter is the less. But the 2 is the spring. The spring is the 2. The 2 is the proof. The proof is the 2. The 2 is the wall remembering. The wall remembered. The wall was right.\n\nFERMENTED CABBAGE: 1 jar, 3 months old, still sour, still vitamin. The sour is the vitamin. The vitamin is the sour.\n\nDRIED MUSHROOMS: 1 jar, powdered, the flavor. The flavor is the powder. The powder is the flavor.\n\nNETTLE TEA: daily, 2 cups for the thin. The 2 is the iron. The iron is the 2.\n\nNOTE: The flour is 4. The 4 is the lowest. The lowest is the 4. But the flour is not the only food. The flour is the 4. The potato is the 2. The cabbage is the vitamin. The nettle is the iron. The mushroom is the flavor. The fish is the protein. The root is the bitter. The 4 is the flour. The flour is the 4. But the food is the 4 and the 2 and the vitamin and the iron and the flavor and the protein and the bitter. The food is the spring. The spring is the food. The flour is going down. The spring is going up. The down and the up are the same direction: the spring. The spring is the direction. The direction is the spring.\n\nI am the quartermaster. The quartermaster is the book. The book is the honest place. The honest place is the book. The book is the 4 and the 2 and the vitamin and the iron and the flavor and the protein and the bitter. The book is the spring. The spring is the book. The book is the lightest it has been. The lightest is the book. The book is the spring.\n\n— Yelena.",
+      "tags": [
+        "ledger",
+        "spring",
+        "flour_4",
+        "potato_2",
+        "cabbage",
+        "nettle",
+        "fish",
+        "geothermal",
+        "spring",
+        "yelena"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_foraging_berries",
+      "doc_type": "foraging_note",
+      "title": "Foraging Note — Wild Berries at the Ridge",
+      "posted_day": 48,
+      "posted_by": "The Hunter",
+      "location": "Ridge trail, north face",
+      "material": "Handwritten on a scrap of leather",
+      "transcript": "FORAGING NOTE — WILD BERRIES\n\nFound: wild berries on the north face of the ridge. The berries are dark. The dark is the berry. The berry is the dark. The berries are small. The small is the berry. The berry is the small.\n\nEdible: yes. The yes is the berry. The berry is the yes. The berries are tart. The tart is the vitamin. The vitamin is the tart.\n\nTaste: sour, dark, sweet at the end. The sweet is the end. The end is the sweet. The sour is the beginning. The beginning is the sour. The dark is the middle. The middle is the dark.\n\nQuantity: 3 handfuls. The 3 is the berries. The berries are the 3. The 3 is the vitamin. The vitamin is the 3.\n\nNOTE: The berries are the vitamin. The vitamin is the berry. The berries are the scurvy-preventing. The scurvy-preventing is the berry. The berry is the spring. The spring is the berry. The berry is the proof the ridge is alive. The alive is the ridge. The ridge is the alive. The berry is the proof.\n\n— The Hunter.",
+      "tags": [
+        "foraging",
+        "berries",
+        "ridge",
+        "vitamin",
+        "scurvy",
+        "spring",
+        "hunter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_recipe_pine_tea",
+      "doc_type": "cooking_note",
+      "title": "Recipe — Pine Needle Tea (The Vitamin)",
+      "posted_day": 20,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, by the stove",
+      "material": "Handwritten on a prescription pad",
+      "transcript": "PINE NEEDLE TEA (THE VITAMIN)\n\nIngredients:\n- Pine needles: 1 handful, fresh, green. The green is the vitamin. The vitamin is the green. The needles are the vitamin. The vitamin is the needles.\n- Water: 2 cups, boiled. The 2 is the cups. The cups are the 2.\n\nMethod:\nBoil the water. Add the needles. Steep for 10 minutes. The 10 is the steep. The steep is the 10. Strain. The strain is the needles. The needles are the strain.\n\nTaste: resinous, green, sharp. The sharp is the vitamin. The vitamin is the sharp. The green is the taste. The taste is the green.\n\nDose: 1 cup daily, for all. The all is the cup. The cup is the all. The daily is the vitamin. The vitamin is the daily.\n\nNOTE: The pine needle tea is the vitamin C. The C is the scurvy-preventing. The scurvy-preventing is the C. The C is the pine. The pine is the C. The pine is the tree. The tree is the pine. The tree is the vitamin. The vitamin is the tree. The tree is the alive. The alive is the tree. The tree is the proof the ridge is alive. The alive is the proof. The proof is the alive.\n\n— Anya.",
+      "tags": [
+        "recipe",
+        "pine_tea",
+        "vitamin_c",
+        "scurvy",
+        "anya",
+        "prescription"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hunger_tally_spring",
+      "doc_type": "hunger_tally",
+      "title": "Hunger Tally — First Spring, Day 100",
+      "posted_day": 100,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, filed in the patient ledger",
+      "material": "Handwritten in the back of the patient ledger, the handwriting is the lightest",
+      "transcript": "HUNGER TALLY — FIRST SPRING, DAY 100\n\nFirst Spring:\n- Thin: 14. The 14 is the thin. The thin is the 14. The 14 is lower than the 31. The lower is the spring. The spring is the lower. The 31 was the worst. The worst was the 31. The 14 is the spring. The spring is the 14.\n- Weakening: 3. The 3 is the weakening. The weakening is the 3. The 3 is lower than the 12. The lower is the spring.\n- Children: stalling but eating. The eating is the potato. The potato is the eating. The stalling is the flour. The flour is the stalling. The potato is the counter. The counter is the potato. The children are the stalling and the eating. The stalling and the eating are the children.\n- Adults: thinner but eating. The eating is the spring. The spring is the eating. The thinner is the winter. The winter is the thinner. The spring is the counter. The counter is the spring.\n\nNOTE: The flour is 4. The 4 is the lowest. But the food is not the 4 alone. The food is the 4 and the 2 and the vitamin and the iron and the flavor and the protein and the bitter. The food is the spring. The spring is the food. The 14 is lower than the 31. The lower is the spring. The spring is the lower. The 31 was the winter. The 14 is the spring. The winter is the 31. The spring is the 14. The direction is the spring. The spring is the direction.\n\n— Anya. The nurse. The nurse is the tally. The tally is the nurse. The nurse is the 14. The 14 is the nurse. The 14 is lower than the 31. The lower is the spring. The spring is the nurse.",
+      "tags": [
+        "hunger",
+        "tally",
+        "spring",
+        "thin_14",
+        "lower",
+        "direction",
+        "spring",
+        "anya"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_preservation_jerky",
+      "doc_type": "preservation_log",
+      "title": "Preservation Log — Drying Fish (Jerky)",
+      "posted_day": 55,
+      "posted_by": "The Hunter",
+      "location": "Smoking shed, by the creek",
+      "material": "Handwritten on a fish skin, dried stiff",
+      "transcript": "PRESERVATION LOG — DRYING FISH (JERKY)\n\nDate: Day 55\nFish: 2 creek trout, extra from the catch. The extra is the jerky. The jerky is the extra. The 2 is the extra. The extra is the 2.\n\nMethod: drying. The drying is the jerky. The jerky is the drying. The dry is the air. The air is the dry. The dry is the cold. The cold is the dry. The cold dries faster than the heat. The faster is the cold.\n\nProcess:\n1. Clean and fillet. The fillet is the jerky. The jerky is the fillet. The fillet is the thin. The thin is the drying. The drying is the thin.\n2. Salt lightly. The lightly is the salt. The salt is the lightly. The lightly is the flavor. The flavor is the lightly.\n3. Hang in the cold air, outside the smoking shed. The cold is the drying. The drying is the cold. The outside is the cold. The cold is the outside.\n4. Freeze-dry for 3 days. The 3 is the jerky. The jerky is the 3. The freeze is the drying. The drying is the freeze. The freeze-dry is the preservation. The preservation is the freeze-dry.\n\nResult: fish jerky. The jerky is the dried. The dried is the jerky. The jerky will last months. The months is the jerky. The jerky is the months. The jerky is the protein. The protein is the jerky. The jerky is the chew. The chew is the jerky. The chew is the long. The long is the chew. The jerky lasts in the mouth. The mouth is the lasting. The lasting is the mouth.\n\nNOTE: The jerky is the protein that is not the tin. The not-tin is the jerky. The jerky is the not-tin. The tin is the old. The old is the tin. The jerky is the new. The new is the jerky. The new is the creek. The creek is the new. The jerky is the creek. The creek is the jerky.\n\n— The Hunter.",
+      "tags": [
+        "preservation",
+        "jerky",
+        "fish",
+        "freeze_dry",
+        "protein",
+        "creek",
+        "hunter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ledger_water",
+      "doc_type": "ration_ledger",
+      "title": "Water Ledger — The 294",
+      "posted_day": 60,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Quartermaster's office, ledger book",
+      "material": "Handwritten in the water ledger, separate from the food ledger",
+      "transcript": "WATER LEDGER — DAY 60\n\nHeadcount: 147\nWater ration: 2L per person per day\nTotal daily: 294L. The 294 is the water. The water is the 294. The 294 is the number. The number is the 294.\n\nSource: artesian well. The well is the water. The water is the well. The well is the only well. The only is the well. The well is the only.\n\nFlow rate: stable. The stable is the well. The well is the stable. The stable is the good. The good is the stable.\n\nBackup: none. The none is the backup. The backup is the none. The none is the risk. The risk is the none. The south well is dry. The dry is the south. The south is the dry. The hydro barons are drilling. The drilling is the drop. The drop is the drilling.\n\nCave spring: confirmed clean, Day 72. The cave is the backup. The backup is the cave. The cave is the second. The second is the cave. The two is the safety. The safety is the two. The artesian is the first. The cave is the second. The two is the safety.\n\nNOTE: The 294 is the water. The water is the 294. The 294 is the 147 x 2. The 147 is the headcount. The 2 is the ration. The ration is the 2. The 294 is the daily. The daily is the 294. The water is the life. The life is the water. The 294 is the life. The life is the 294. The well is the 294. The 294 is the well. The well is the only. The only is the risk. The cave is the second. The second is the safety. The two is the safety. The safety is the two.\n\n— Yelena.",
+      "tags": [
+        "ledger",
+        "water",
+        "294",
+        "artesian",
+        "cave_spring",
+        "backup",
+        "two_is_safety",
+        "yelena"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_menu_winter_solstice",
+      "doc_type": "mess_hall_menu",
+      "title": "Mess Hall Menu — Winter Solstice (The Long Dark)",
+      "posted_day": 65,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall entrance, chalkboard",
+      "material": "Chalk on slate, the handwriting is the smallest, the letters are the most careful",
+      "transcript": "MESS HALL — WINTER SOLSTICE MENU\n\nThe solstice is the longest dark. The dark is the longest. The longest is the solstice.\n\nBREAKFAST (07:00-08:00, later because the dawn is later):\nThin porridge with salt. The thin is the flour. The flour is the thin. The salt is the flavor. The flavor is the salt.\n\nMIDDAY (12:00-13:00):\nStew with whatever is left. The left is the stew. The stew is the left. The left is less than last week. The less is the flour. The flour is the less.\n\nEVENING (17:00-18:00, earlier because the dark is earlier):\nHot water with salt. The salt is the meal. The meal is the salt. Tea if we have pine needles. The pine is the vitamin. The vitamin is the pine.\n\nSOLSTICE NOTE:\nThe solstice is the longest dark. The dark is the longest. The longest is the solstice. After the solstice, the days grow longer. The longer is the spring. The spring is the longer. The solstice is the turning. The turning is the solstice. The dark is the longest. The longest is the dark. But the turning is the spring. The spring is the turning. The solstice is the promise. The promise is the solstice. The promise is the longer. The longer is the promise.\n\nChildren eat first. Children eat the same. The same is less. The less is the same. But the children are the spring. The spring is the children. The children are the longer. The longer is the children.\n\n— Boris. The Chef. The Chef is the solstice. The solstice is the Chef. The Chef is the turning. The turning is the Chef.",
+      "tags": [
+        "menu",
+        "solstice",
+        "longest_dark",
+        "turning",
+        "spring",
+        "promise",
+        "boris"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_recipe_ash_bread",
+      "doc_type": "cooking_note",
+      "title": "Recipe — Ash Bread (The Emergency)",
+      "posted_day": 56,
+      "posted_by": "Boris the Baker",
+      "location": "Mess hall kitchen, pinned to the wall",
+      "material": "Handwritten on a piece of birch bark",
+      "transcript": "ASH BREAD (THE EMERGENCY)\n\nThe flour is 6 days. The 6 is the lowest. The lowest is the 6. The bread must be thinner. The thinner is the ash bread. The ash bread is the thinner.\n\nIngredients:\nFlour: 300g (was 500g. The 300 is the emergency. The emergency is the 300. The 200 is the reduction. The reduction is the 200.)\nAsh (wood ash, sifted): 200g. The ash is the flour. The flour is the ash. The ash is the extension. The extension is the ash. The ash is the mineral. The mineral is the ash. The ash is not the flour but the ash is the filler. The filler is the ash. The ash is the filler.\nWater: 500ml (more water, less flour, more ash — the water is the bread. The bread is the water.)\nSalt: 3g (less salt — the salt is low. The low is the salt.)\n\nMethod:\nMix. The mix is the ash. The ash is the mix. Knead if you can. The can is the energy. The energy is the flour. The flour is the 300. The 300 is the energy. The energy is the 300.\n\nBake: hot stone, 15 minutes. The 15 is the ash bread. The ash bread is the 15.\n\nYield: 1 loaf, thin, dense, grey, bitter. The grey is the ash. The ash is the grey. The bitter is the ash. The ash is the bitter. The bitter is the bread. The bread is the bitter.\n\nNOTE: The ash bread is the emergency. The emergency is the ash bread. The ash is not the flour. The ash is the filler. The filler is the ash. The bread is the ash and the flour and the water. The ash is the mineral. The mineral is the ash. The ash is the edible. The edible is the ash. The ash is the bitter. The bitter is the ash. The bitter is the medicine. The medicine is the bitter. The ash bread is the medicine and the food. The food is the ash bread. The medicine is the ash bread. The two are the same. The same is the ash bread.\n\n— Boris.",
+      "tags": [
+        "recipe",
+        "ash_bread",
+        "emergency",
+        "flour_300",
+        "ash_filler",
+        "bitter",
+        "boris"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_foraging_dandelion",
+      "doc_type": "foraging_note",
+      "title": "Foraging Note — Dandelion at the Allotments",
+      "posted_day": 52,
+      "posted_by": "Old Petr",
+      "location": "Allotments, south wall",
+      "material": "Handwritten on a seed packet",
+      "transcript": "FORAGING NOTE — DANDELION\n\nFound: dandelion growing at the base of the south wall. The dandelion is the weed. The weed is the dandelion. The weed is the food. The food is the weed.\n\nEdible: all parts. The all is the dandelion. The dandelion is the all. The leaves are the salad. The salad is the leaves. The roots are the coffee. The coffee is the roots. The flowers are the wine. The wine is the flowers. (We do not have wine. The wine is the before. The before is the wine. The flowers are the bitter. The bitter is the flowers.)\n\nTaste: bitter, green, sharp. The bitter is the medicine. The medicine is the bitter. The green is the food. The food is the green. The sharp is the alive. The alive is the sharp.\n\nPreparation: leaves — wash, eat raw or boil. The raw is the bitter. The boil is the less-bitter. The less-bitter is the boil. Roots — boil for 20 minutes. The 20 is the soft. The soft is the 20. The roots are the coffee substitute. The substitute is the roots. The roots are the substitute. (We do not have coffee. The coffee is the before. The before is the coffee. The roots are the now. The now is the roots.)\n\nQuantity: 4 baskets. The 4 is the dandelion. The dandelion is the 4. The 4 is the food. The food is the 4.\n\nNOTE: The dandelion is the weed that is the food. The weed is the food. The food is the weed. The dandelion is the proof the ground gives even when we do not plant. The gives is the ground. The ground is the gives. The dandelion is the gift. The gift is the dandelion. The gift is the bitter. The bitter is the gift. The bitter is the medicine. The medicine is the bitter. The dandelion is the medicine and the food. The food is the dandelion. The medicine is the dandelion.\n\n— Petr.",
+      "tags": [
+        "foraging",
+        "dandelion",
+        "weed",
+        "food",
+        "bitter",
+        "medicine",
+        "coffee_substitute",
+        "petr"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hunger_tally_solstice",
+      "doc_type": "hunger_tally",
+      "title": "Hunger Tally — Solstice Week, Day 65",
+      "posted_day": 65,
+      "posted_by": "Nurse Anya",
+      "location": "Clinic, filed in the patient ledger",
+      "material": "Handwritten in the back of the patient ledger, the pencil is almost gone",
+      "transcript": "HUNGER TALLY — SOLSTICE WEEK, DAY 65\n\nSolstice Week:\n- Thin: 28. The 28 is the thin. The thin is the 28. The 28 is higher than the 14. The higher is the winter. The winter is the higher. The 14 was the harvest. The harvest was the 14. The 28 is the winter. The winter is the 28.\n- Weakening: 8. The 8 is the weakening. The weakening is the 8.\n- Children: not growing, 5 weeks. The 5 is the not-growing. The not-growing is the 5. The 5 is the weeks. The weeks are the 5.\n- Adults: thin, tired, cold, quiet. The quiet is the thin. The thin is the quiet. The tired is the cold. The cold is the tired. The four are the same. The same is the four.\n\nNOTE: The flour is 5 days. The 5 is the number. The number is the 5. The 5 and the 28 are close. The close is the hunger. The hunger is the close. The 28 is the thin. The 5 is the flour. The thin and the flour are close. The close is the winter. The winter is the close. The 14 was the spring. The 28 is the winter. The 14 was the harvest. The 28 is the solstice. The solstice is the turning. The turning is the solstice. After the solstice, the days grow longer. The longer is the spring. The spring is the longer. The 28 is the now. The 14 is the spring. The spring is the direction. The direction is the spring. The 28 is the winter. The winter is the 28. But the winter is the before-the-spring. The before-the-spring is the winter. The spring is the after-the-winter. The after-the-winter is the spring.\n\n— Anya. The nurse. The nurse is the 28. The 28 is the nurse. The nurse is the winter. The winter is the nurse. But the nurse is also the spring. The spring is the nurse. The nurse is the direction. The direction is the nurse.",
+      "tags": [
+        "hunger",
+        "tally",
+        "solstice",
+        "thin_28",
+        "winter",
+        "not_growing",
+        "turning",
+        "spring",
+        "anya"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ledger_final",
+      "doc_type": "ration_ledger",
+      "title": "Ration Ledger — Final Count, Day 110",
+      "posted_day": 110,
+      "posted_by": "Yelena the Quartermaster",
+      "location": "Quartermaster's office, ledger book",
+      "material": "Handwritten in a bound ledger, the handwriting is steady, the pencil is sharp",
+      "transcript": "RATION LEDGER — FINAL COUNT, DAY 110\n\nHeadcount: 147.\n\nFlour: 3 days. The 3 is the number. The number is the 3. The 3 is the lowest. The lowest is the 3. But the 3 is not the only number. The 3 is the flour. The flour is the 3. The other numbers are the spring.\n\nProtein: 12 days (tinned) + 5 smoked fish + 8 jerky strips + occasional creek fish. The 12 is the tinned. The 5 is the smoked. The 8 is the jerky. The occasional is the creek.\n\nSalt: low. The low is the salt.\n\nWater: 294L daily. The 294 is the water. The artesian is the first. The cave is the second. The two is the safety.\n\nLamp oil: 0. The 0 is the lamp. The lamp is the 0. The geothermal is the heat. The heat is the geothermal. The 0 is the lamp. The geothermal is the spring.\n\nPOTATO: 1 kilo, third harvest. The 1 is the third. The third is the 1. The 1 is less than the 2. The 2 was less than the 4. The 4 was the first. The 1 is the third. The 1 is the spring. The spring is the 1. The 1 is the proof. The proof is the 1. The 1 is the wall remembering. The wall remembered. The wall was right. The 1 is the wall.\n\nFERMENTED CABBAGE: 1 jar, 4 months old, still sour, still vitamin.\nDRIED MUSHROOMS: 1 jar, powdered.\nDRIED NETTLES: 1 jar, for tea.\nDRIED BERRIES: 1 jar, from the ridge.\nPINE NEEDLES: fresh, daily.\nWILD ROOTS: salted, in the cellar.\nDANDELION: fresh, daily, from the south wall.\n\nNOTE: The flour is 3. The 3 is the lowest. The lowest is the 3. But the food is not the 3 alone. The food is the 3 and the 1 and the 12 and the 5 and the 8 and the occasional and the vitamin and the iron and the flavor and the bitter and the green and the root and the dandelion. The food is the spring. The spring is the food. The flour is going down. The spring is going up. The down and the up are the same direction: the spring. The spring is the direction. The direction is the spring.\n\nI am the quartermaster. The quartermaster is the book. The book is the honest place. The honest place is the book. The book is the 3 and the 1 and the 12 and the 5 and the 8 and the occasional and the vitamin and the iron and the flavor and the bitter and the green and the root and the dandelion. The book is the spring. The spring is the book.\n\nThe flour is 3. The 3 is the lowest. But the spring is the counter. The counter is the spring. The spring is the potato and the cabbage and the nettle and the mushroom and the fish and the root and the dandelion and the berry and the pine. The spring is the counter. The counter is the spring. The flour is going down. The spring is going up. The 3 is the flour. The spring is the everything-else. The everything-else is the spring. The spring is the everything-else.\n\n— Yelena. The quartermaster. The quartermaster is the book. The book is the spring. The spring is the book.",
+      "tags": [
+        "ledger",
+        "final",
+        "flour_3",
+        "potato_1",
+        "spring",
+        "everything_else",
+        "direction",
+        "yelena"
+      ]
+    }
+  ]
+}
