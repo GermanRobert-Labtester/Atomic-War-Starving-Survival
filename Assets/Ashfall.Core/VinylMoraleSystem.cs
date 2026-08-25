@@ -43,7 +43,7 @@ namespace Ashfall.Core
         public event Action<float> OnFlashbackSuppressed; // suppression amount
         public event Action OnPlaybackChanged;
 
-        public VinylMoraleSystem(ILog log = null!)
+        public VinylMoraleSystem(ILog? log = null)
         {
             _log = log ?? NullLog.Instance;
         }
@@ -121,12 +121,20 @@ namespace Ashfall.Core
             return r;
         }
 
-        public VinylMoraleState CaptureState() => _state;
+        public VinylMoraleState CaptureState() => CloneState(_state);
+
         public void RestoreState(VinylMoraleState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnPlaybackChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static VinylMoraleState CloneState(VinylMoraleState src)
+        {
+            if (src == null) return new VinylMoraleState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<VinylMoraleState>(json) ?? new VinylMoraleState();
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Ashfall.Core
         public event Action<AirlockIncidentLog> OnIncidentResolved;
         public event Action OnSecurityChanged;
 
-        public AirlockSecuritySystem(ISeededRng rng, ILog log = null!)
+        public AirlockSecuritySystem(ISeededRng rng, ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
@@ -149,12 +149,20 @@ namespace Ashfall.Core
                 new Dictionary<string, double> { { "integrity", _state.blastDoorIntegrity } });
         }
 
-        public AirlockSecurityState CaptureState() => _state;
+        public AirlockSecurityState CaptureState() => CloneState(_state);
+
         public void RestoreState(AirlockSecurityState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnSecurityChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static AirlockSecurityState CloneState(AirlockSecurityState src)
+        {
+            if (src == null) return new AirlockSecurityState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<AirlockSecurityState>(json) ?? new AirlockSecurityState();
         }
     }
 }

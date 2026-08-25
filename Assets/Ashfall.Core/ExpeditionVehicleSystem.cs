@@ -61,7 +61,7 @@ namespace Ashfall.Core
         public ExpeditionVehicleState State => _state;
         public event Action OnVehicleStateChanged;
 
-        public ExpeditionVehicleSystem(ISeededRng rng, ILog log = null!)
+        public ExpeditionVehicleSystem(ISeededRng rng, ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
@@ -174,12 +174,20 @@ namespace Ashfall.Core
             return (fuelNeeded, v.speedMultiplier, breakdown);
         }
 
-        public ExpeditionVehicleState CaptureState() => _state;
+        public ExpeditionVehicleState CaptureState() => CloneState(_state);
+
         public void RestoreState(ExpeditionVehicleState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnVehicleStateChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static ExpeditionVehicleState CloneState(ExpeditionVehicleState src)
+        {
+            if (src == null) return new ExpeditionVehicleState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<ExpeditionVehicleState>(json) ?? new ExpeditionVehicleState();
         }
     }
 }

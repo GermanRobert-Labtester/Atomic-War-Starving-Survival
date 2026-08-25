@@ -38,7 +38,7 @@ namespace Ashfall.Core
         public event Action<string, string> OnLocationOwnerChanged;
         public event Action<string> OnLocationMutated;
 
-        public LocationEvolutionSystem(ISeededRng rng = null!, ILog log = null!)
+        public LocationEvolutionSystem(ISeededRng? rng = null, ILog? log = null)
         {
             _rng = rng ?? new SeededRng(42);
             _log = log ?? NullLog.Instance;
@@ -92,12 +92,42 @@ namespace Ashfall.Core
             }
         }
 
-        public LocationEvolutionSaveState CaptureState() => _state;
+        public LocationEvolutionSaveState CaptureState() => CloneState(_state);
 
         public void RestoreState(LocationEvolutionSaveState saved)
         {
             if (saved == null) return;
-            _state = saved;
+            _state = CloneState(saved);
+        }
+
+        private static LocationEvolutionSaveState CloneState(LocationEvolutionSaveState src)
+        {
+            if (src == null) return new LocationEvolutionSaveState();
+            var clone = new LocationEvolutionSaveState
+            {
+                schema_version = src.schema_version,
+                systemId = src.systemId,
+                lastEvolutionDay = src.lastEvolutionDay,
+                mutations = new List<LocationMutationRecord>(src.mutations.Count)
+            };
+            for (int i = 0; i < src.mutations.Count; i++)
+            {
+                var m = src.mutations[i];
+                if (m == null) continue;
+                clone.mutations.Add(new LocationMutationRecord
+                {
+                    locationId = m.locationId,
+                    currentOwner = m.currentOwner,
+                    contaminationLevel = m.contaminationLevel,
+                    lootDepletionFactor = m.lootDepletionFactor,
+                    isCleared = m.isCleared,
+                    isRuined = m.isRuined,
+                    lastVisitedDay = m.lastVisitedDay,
+                    activeThreats = new List<string>(m.activeThreats ?? new List<string>()),
+                    discoveredCaches = new List<string>(m.discoveredCaches ?? new List<string>())
+                });
+            }
+            return clone;
         }
     }
 }

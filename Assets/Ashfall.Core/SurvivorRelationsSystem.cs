@@ -61,7 +61,7 @@ namespace Ashfall.Core
         public event Action<MediationEntry> OnConflictResolved;
         public event Action OnRelationsChanged;
 
-        public SurvivorRelationsSystem(ISeededRng rng, ILog log = null!)
+        public SurvivorRelationsSystem(ISeededRng rng, ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
@@ -170,12 +170,20 @@ namespace Ashfall.Core
             TryTriggerConflict();
         }
 
-        public SurvivorRelationsState CaptureState() => _state;
+        public SurvivorRelationsState CaptureState() => CloneState(_state);
+
         public void RestoreState(SurvivorRelationsState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnRelationsChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static SurvivorRelationsState CloneState(SurvivorRelationsState src)
+        {
+            if (src == null) return new SurvivorRelationsState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<SurvivorRelationsState>(json) ?? new SurvivorRelationsState();
         }
     }
 

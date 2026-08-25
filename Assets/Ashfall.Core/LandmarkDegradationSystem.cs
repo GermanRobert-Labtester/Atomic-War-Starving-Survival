@@ -35,7 +35,7 @@ namespace Ashfall.Core
         public LandmarkSaveState State => _state;
         public event Action<LandmarkStatusRecord> OnLandmarkCollapsed;
 
-        public LandmarkDegradationSystem(ISeededRng rng = null!, ILog log = null!)
+        public LandmarkDegradationSystem(ISeededRng? rng = null, ILog? log = null)
         {
             _rng = rng ?? new SeededRng(42);
             _log = log ?? NullLog.Instance;
@@ -89,12 +89,40 @@ namespace Ashfall.Core
             }
         }
 
-        public LandmarkSaveState CaptureState() => _state;
+        public LandmarkSaveState CaptureState() => CloneState(_state);
 
         public void RestoreState(LandmarkSaveState saved)
         {
             if (saved == null) return;
-            _state = saved;
+            _state = CloneState(saved);
+        }
+
+        private static LandmarkSaveState CloneState(LandmarkSaveState src)
+        {
+            if (src == null) return new LandmarkSaveState();
+            var clone = new LandmarkSaveState
+            {
+                schema_version = src.schema_version,
+                systemId = src.systemId,
+                lastDegradationDay = src.lastDegradationDay,
+                landmarks = new List<LandmarkStatusRecord>(src.landmarks.Count)
+            };
+            for (int i = 0; i < src.landmarks.Count; i++)
+            {
+                var l = src.landmarks[i];
+                if (l == null) continue;
+                clone.landmarks.Add(new LandmarkStatusRecord
+                {
+                    landmarkId = l.landmarkId,
+                    locationId = l.locationId,
+                    structuralIntegrity = l.structuralIntegrity,
+                    ashBurialCm = l.ashBurialCm,
+                    isCollapsed = l.isCollapsed,
+                    isScavenged = l.isScavenged,
+                    collapseDay = l.collapseDay
+                });
+            }
+            return clone;
         }
     }
 }

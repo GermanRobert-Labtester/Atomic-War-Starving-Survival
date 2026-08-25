@@ -34,7 +34,7 @@ namespace Ashfall.Core
         public event Action<ActiveAudioCondition> OnConditionStopped;
         public event Action OnConditionsChanged;
 
-        public AudioConditionSystem(ILog log = null!)
+        public AudioConditionSystem(ILog? log = null)
         {
             _log = log ?? NullLog.Instance;
         }
@@ -107,12 +107,20 @@ namespace Ashfall.Core
             };
         }
 
-        public AudioConditionState CaptureState() => _state;
+        public AudioConditionState CaptureState() => CloneState(_state);
+
         public void RestoreState(AudioConditionState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnConditionsChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static AudioConditionState CloneState(AudioConditionState src)
+        {
+            if (src == null) return new AudioConditionState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<AudioConditionState>(json) ?? new AudioConditionState();
         }
     }
 }

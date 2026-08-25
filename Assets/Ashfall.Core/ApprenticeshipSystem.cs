@@ -48,7 +48,7 @@ namespace Ashfall.Core
             SkillProgressionSystem skills,
             DutyRosterSystem roster,
             SurvivorRelationsSystem relations,
-            ILog log = null!)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _skills = skills ?? throw new ArgumentNullException(nameof(skills));
@@ -134,12 +134,20 @@ namespace Ashfall.Core
 
         public List<Apprenticeship> GetActivePairs() => _state.activePairs.FindAll(p => !p.isComplete && !p.isCancelled);
 
-        public ApprenticeshipState CaptureState() => _state;
+        public ApprenticeshipState CaptureState() => CloneState(_state);
+
         public void RestoreState(ApprenticeshipState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnApprenticeshipChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static ApprenticeshipState CloneState(ApprenticeshipState src)
+        {
+            if (src == null) return new ApprenticeshipState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<ApprenticeshipState>(json) ?? new ApprenticeshipState();
         }
     }
 }

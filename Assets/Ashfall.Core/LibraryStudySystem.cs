@@ -56,6 +56,7 @@ namespace Ashfall.Core
         private int _currentDay;
 
         public LibraryStudyState State => _state;
+        public IReadOnlyDictionary<string, ManualDefinition> Catalog => _catalog;
         public event Action<StudyJob> OnJobCompleted;
         public event Action OnLibraryChanged;
 
@@ -64,7 +65,7 @@ namespace Ashfall.Core
             ResearchSystem research,
             JournalSystem journal,
             DutyRosterSystem roster,
-            ILog log = null!)
+ILog? log = null)
         {
             _skills = skills ?? throw new ArgumentNullException(nameof(skills));
             _research = research ?? throw new ArgumentNullException(nameof(research));
@@ -186,12 +187,20 @@ namespace Ashfall.Core
 
         public bool IsManualCompleted(string manualId) => _state.completedManualIds.Contains(manualId);
 
-        public LibraryStudyState CaptureState() => _state;
+        public LibraryStudyState CaptureState() => CloneState(_state);
+
         public void RestoreState(LibraryStudyState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnLibraryChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static LibraryStudyState CloneState(LibraryStudyState src)
+        {
+            if (src == null) return new LibraryStudyState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<LibraryStudyState>(json) ?? new LibraryStudyState();
         }
     }
 }

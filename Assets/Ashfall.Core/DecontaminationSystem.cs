@@ -86,7 +86,7 @@ namespace Ashfall.Core
             Inventory.Inventory inventory,
             AirlockSecuritySystem airlock,
             StartingLevelSystem startingLevel,
-            ILog log = null!)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _radiation = radiation ?? throw new ArgumentNullException(nameof(radiation));
@@ -226,12 +226,20 @@ namespace Ashfall.Core
             }
         }
 
-        public DecontaminationState CaptureState() => _state;
+        public DecontaminationState CaptureState() => CloneState(_state);
+
         public void RestoreState(DecontaminationState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnDeconChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static DecontaminationState CloneState(DecontaminationState src)
+        {
+            if (src == null) return new DecontaminationState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<DecontaminationState>(json) ?? new DecontaminationState();
         }
     }
 }

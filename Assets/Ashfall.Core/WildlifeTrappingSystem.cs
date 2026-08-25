@@ -41,7 +41,7 @@ namespace Ashfall.Core
         public WildlifeTrappingState State => _state;
         public event Action OnTrappingChanged;
 
-        public WildlifeTrappingSystem(ISeededRng rng, ILog log = null!)
+        public WildlifeTrappingSystem(ISeededRng rng, ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
@@ -135,12 +135,20 @@ namespace Ashfall.Core
             CheckTraps();
         }
 
-        public WildlifeTrappingState CaptureState() => _state;
+        public WildlifeTrappingState CaptureState() => CloneState(_state);
+
         public void RestoreState(WildlifeTrappingState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnTrappingChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static WildlifeTrappingState CloneState(WildlifeTrappingState src)
+        {
+            if (src == null) return new WildlifeTrappingState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<WildlifeTrappingState>(json) ?? new WildlifeTrappingState();
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Ashfall.Core
         public event Action<DiveOutcome> OnDiveCompleted;
         public event Action OnSitesChanged;
 
-        public MaritimeDiveSystem(ISeededRng rng, ILog log = null!)
+        public MaritimeDiveSystem(ISeededRng rng, ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
@@ -141,12 +141,20 @@ namespace Ashfall.Core
             _currentDay = day;
         }
 
-        public MaritimeDiveState CaptureState() => _state;
+        public MaritimeDiveState CaptureState() => CloneState(_state);
+
         public void RestoreState(MaritimeDiveState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnSitesChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static MaritimeDiveState CloneState(MaritimeDiveState src)
+        {
+            if (src == null) return new MaritimeDiveState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<MaritimeDiveState>(json) ?? new MaritimeDiveState();
         }
     }
 }

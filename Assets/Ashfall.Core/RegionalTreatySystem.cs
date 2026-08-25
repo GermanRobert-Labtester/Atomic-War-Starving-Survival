@@ -59,7 +59,7 @@ namespace Ashfall.Core
         public RegionalTreatyState State => _state;
         public event Action<TreatyInstance> OnTreatyStatusChanged;
 
-        public RegionalTreatySystem(ILog log = null!)
+        public RegionalTreatySystem(ILog? log = null)
         {
             _log = log ?? NullLog.Instance;
         }
@@ -157,11 +157,20 @@ namespace Ashfall.Core
             }
         }
 
-        public RegionalTreatyState CaptureState() => _state;
+        public RegionalTreatyState CaptureState() => CloneState(_state);
+
         public void RestoreState(RegionalTreatyState saved)
         {
             if (saved == null) return;
-            _state = saved;
+            _state = CloneState(saved);
+        }
+
+        private static RegionalTreatyState CloneState(RegionalTreatyState src)
+        {
+            if (src == null) return new RegionalTreatyState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<RegionalTreatyState>(json) ?? new RegionalTreatyState();
         }
     }
 }

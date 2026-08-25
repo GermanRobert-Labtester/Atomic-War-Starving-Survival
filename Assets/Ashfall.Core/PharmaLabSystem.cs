@@ -81,7 +81,7 @@ namespace Ashfall.Core
         public event Action<float> OnDependencyRisk; // parameter = risk level
         public event Action OnPharmaStateChanged;
 
-        public PharmaLabSystem(Inventory.Inventory inventory, ISeededRng rng, ILog log = null!)
+        public PharmaLabSystem(Inventory.Inventory inventory, ISeededRng rng, ILog? log = null)
         {
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
@@ -260,12 +260,20 @@ namespace Ashfall.Core
 
         // ── Persistence ──────────────────────────────────────────────────────
 
-        public PharmaLabState CaptureState() => _state;
+        public PharmaLabState CaptureState() => CloneState(_state);
+
         public void RestoreState(PharmaLabState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnPharmaStateChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static PharmaLabState CloneState(PharmaLabState src)
+        {
+            if (src == null) return new PharmaLabState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<PharmaLabState>(json) ?? new PharmaLabState();
         }
     }
 }

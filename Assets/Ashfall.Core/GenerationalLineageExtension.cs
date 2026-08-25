@@ -40,7 +40,7 @@ namespace Ashfall.Core
         public event Action<string, string> OnSuccessionPerformed;
         public event Action OnLineageChanged;
 
-        public GenerationalLineageExtension(GenerationalSuccessionEngine engine, ILog log = null!)
+        public GenerationalLineageExtension(GenerationalSuccessionEngine engine, ILog? log = null)
         {
             _engine = engine ?? throw new ArgumentNullException(nameof(engine));
             _log = log ?? NullLog.Instance;
@@ -100,12 +100,20 @@ namespace Ashfall.Core
             _currentDay = day;
         }
 
-        public LineageState CaptureState() => _state;
+        public LineageState CaptureState() => CloneState(_state);
+
         public void RestoreState(LineageState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnLineageChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static LineageState CloneState(LineageState src)
+        {
+            if (src == null) return new LineageState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<LineageState>(json) ?? new LineageState();
         }
     }
 }

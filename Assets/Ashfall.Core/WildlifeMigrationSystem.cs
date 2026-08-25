@@ -36,7 +36,7 @@ namespace Ashfall.Core
         public WildlifeSaveState State => _state;
         public event Action<WildlifePackRecord> OnPackMigrated;
 
-        public WildlifeMigrationSystem(ISeededRng rng = null!, ILog log = null!)
+        public WildlifeMigrationSystem(ISeededRng? rng = null, ILog? log = null)
         {
             _rng = rng ?? new SeededRng(42);
             _log = log ?? NullLog.Instance;
@@ -81,12 +81,41 @@ namespace Ashfall.Core
             }
         }
 
-        public WildlifeSaveState CaptureState() => _state;
+        public WildlifeSaveState CaptureState() => CloneState(_state);
 
         public void RestoreState(WildlifeSaveState saved)
         {
             if (saved == null) return;
-            _state = saved;
+            _state = CloneState(saved);
+        }
+
+        private static WildlifeSaveState CloneState(WildlifeSaveState src)
+        {
+            if (src == null) return new WildlifeSaveState();
+            var clone = new WildlifeSaveState
+            {
+                schema_version = src.schema_version,
+                systemId = src.systemId,
+                lastMigrationDay = src.lastMigrationDay,
+                packs = new List<WildlifePackRecord>(src.packs.Count)
+            };
+            for (int i = 0; i < src.packs.Count; i++)
+            {
+                var p = src.packs[i];
+                if (p == null) continue;
+                clone.packs.Add(new WildlifePackRecord
+                {
+                    packId = p.packId,
+                    speciesId = p.speciesId,
+                    currentSectorId = p.currentSectorId,
+                    population = p.population,
+                    aggressionScore = p.aggressionScore,
+                    starvationLevel = p.starvationLevel,
+                    isRabid = p.isRabid,
+                    lastThreatFiredDay = p.lastThreatFiredDay
+                });
+            }
+            return clone;
         }
     }
 }

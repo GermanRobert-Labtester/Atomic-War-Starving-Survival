@@ -44,7 +44,7 @@ namespace Ashfall.Core
         public event Action OnForecastUpdated;
         public event Action OnStationStateChanged;
 
-        public WeatherStationSystem(WeatherSystem weatherSystem, ISeededRng rng, ILog log = null!)
+        public WeatherStationSystem(WeatherSystem weatherSystem, ISeededRng rng, ILog? log = null)
         {
             _weatherSystem = weatherSystem ?? throw new ArgumentNullException(nameof(weatherSystem));
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
@@ -124,12 +124,20 @@ namespace Ashfall.Core
             return 0f;
         }
 
-        public WeatherStationState CaptureState() => _state;
+        public WeatherStationState CaptureState() => CloneState(_state);
+
         public void RestoreState(WeatherStationState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnStationStateChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static WeatherStationState CloneState(WeatherStationState src)
+        {
+            if (src == null) return new WeatherStationState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<WeatherStationState>(json) ?? new WeatherStationState();
         }
     }
 }

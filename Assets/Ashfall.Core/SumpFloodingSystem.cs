@@ -67,7 +67,7 @@ namespace Ashfall.Core
             WeatherSystem weather,
             PowerGridSystem powerGrid,
             YearOfAshDeepFreezeSystem deepFreeze,
-            ILog log = null!)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _weather = weather ?? throw new ArgumentNullException(nameof(weather));
@@ -279,12 +279,20 @@ namespace Ashfall.Core
             return !node.isFlooded || !node.equipmentDisabled;
         }
 
-        public SumpFloodingState CaptureState() => _state;
+        public SumpFloodingState CaptureState() => CloneState(_state);
+
         public void RestoreState(SumpFloodingState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnFloodingChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static SumpFloodingState CloneState(SumpFloodingState src)
+        {
+            if (src == null) return new SumpFloodingState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<SumpFloodingState>(json) ?? new SumpFloodingState();
         }
     }
 }

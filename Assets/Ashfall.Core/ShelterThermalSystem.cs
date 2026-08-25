@@ -114,8 +114,8 @@ namespace Ashfall.Core
             NeedsSystem needs,
             StartingLevelSystem startingLevel,
             YearOfAshDeepFreezeSystem deepFreeze,
-            ILog log = null!,
-            ShelterAssignmentSystem? assignment = null!)
+ILog? log = null,
+ShelterAssignmentSystem? assignment = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _needs = needs ?? throw new ArgumentNullException(nameof(needs));
@@ -124,6 +124,26 @@ namespace Ashfall.Core
             _assignments = assignment;
             _log = log ?? NullLog.Instance;
         }
+
+        private readonly Dictionary<string, float> _auxiliaryHeatKw = new Dictionary<string, float>(StringComparer.Ordinal);
+
+        /// <summary>
+        /// Inject auxiliary waste heat (e.g. from active Silent Foundry heats, industrial smelting).
+        /// Applied to the specified room during the daily thermal update and cleared after the day tick.
+        /// </summary>
+        public void AddAuxiliaryHeat(string roomId, float heatKw)
+        {
+            if (string.IsNullOrEmpty(roomId) || heatKw <= 0f) return;
+            if (_auxiliaryHeatKw.TryGetValue(roomId, out float cur))
+                _auxiliaryHeatKw[roomId] = cur + heatKw;
+            else
+                _auxiliaryHeatKw[roomId] = heatKw;
+        }
+
+        public float GetAuxiliaryHeat(string roomId) =>
+            !string.IsNullOrEmpty(roomId) && _auxiliaryHeatKw.TryGetValue(roomId, out float val) ? val : 0f;
+
+        public void ClearAuxiliaryHeat() => _auxiliaryHeatKw.Clear();
 
         public ActionResult AddRoom(string roomId, string displayName, float volumeM3, float insulationFactor = 1f, bool hasRadiator = true)
         {
@@ -216,14 +236,14 @@ namespace Ashfall.Core
 
                 float outdoorTemp = _deepFreeze.IndoorTempCelsius;
 
-                float heatGainKw = 0f;
+                float heatGainKw = GetAuxiliaryHeat(room.roomId);
                 if (_state.boilerActive && room.hasRadiator && room.radiatorValveOpen > 0 && !room.isFrozen)
                 {
                     // Per-room allocation: valve × priority-share — independent of roomCount.
                     // Boiler kW total is split by valve and priority share; each room's
                     // ΔT is its own stable steady-state estimate.
                     float roomShare = room.isPriorityRoom ? PriorityRoomShare : 1f;
-                    heatGainKw = totalHeatKw * room.radiatorValveOpen * roomShare;
+                    heatGainKw += totalHeatKw * room.radiatorValveOpen * roomShare;
                 }
 
                 // Analytic per-day solve of dT/dt = (G - k·(T - T_out)) / C:
@@ -355,12 +375,20 @@ namespace Ashfall.Core
             return !room.isFrozen;
         }
 
-        public ShelterThermalState CaptureState() => _state;
+        public ShelterThermalState CaptureState() => CloneState(_state);
+
         public void RestoreState(ShelterThermalState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnThermalChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static ShelterThermalState CloneState(ShelterThermalState src)
+        {
+            if (src == null) return new ShelterThermalState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<ShelterThermalState>(json) ?? new ShelterThermalState();
         }
     }
 }

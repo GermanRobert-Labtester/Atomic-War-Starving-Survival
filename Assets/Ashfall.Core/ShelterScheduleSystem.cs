@@ -66,7 +66,7 @@ namespace Ashfall.Core
         public event Action<SchedulePhase> OnPhaseChanged;
         public event Action OnScheduleChanged;
 
-        public ShelterScheduleSystem(PowerGridSystem powerGrid, ILog log = null!)
+        public ShelterScheduleSystem(PowerGridSystem powerGrid, ILog? log = null)
         {
             _powerGrid = powerGrid ?? throw new ArgumentNullException(nameof(powerGrid));
             _log = log ?? NullLog.Instance;
@@ -224,12 +224,20 @@ namespace Ashfall.Core
             }
         }
 
-        public ShelterScheduleState CaptureState() => _state;
+        public ShelterScheduleState CaptureState() => CloneState(_state);
+
         public void RestoreState(ShelterScheduleState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnScheduleChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static ShelterScheduleState CloneState(ShelterScheduleState src)
+        {
+            if (src == null) return new ShelterScheduleState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<ShelterScheduleState>(json) ?? new ShelterScheduleState();
         }
     }
 }

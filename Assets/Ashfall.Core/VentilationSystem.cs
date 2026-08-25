@@ -76,7 +76,7 @@ namespace Ashfall.Core
         public event Action<VentilationLogEntry> OnHazardWarning;
         public event Action OnVentilationChanged;
 
-        public VentilationSystem(StartingLevelSystem startingLevel, ILog log = null!)
+        public VentilationSystem(StartingLevelSystem startingLevel, ILog? log = null)
         {
             _startingLevel = startingLevel ?? throw new ArgumentNullException(nameof(startingLevel));
             _log = log ?? NullLog.Instance;
@@ -250,13 +250,20 @@ namespace Ashfall.Core
 
         // ── Persistence ──────────────────────────────────────────────────────
 
-        public VentilationState CaptureState() => _state;
+        public VentilationState CaptureState() => CloneState(_state);
 
         public void RestoreState(VentilationState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnVentilationChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static VentilationState CloneState(VentilationState src)
+        {
+            if (src == null) return new VentilationState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<VentilationState>(json) ?? new VentilationState();
         }
     }
 }

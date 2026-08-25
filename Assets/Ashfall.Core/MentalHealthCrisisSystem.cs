@@ -59,7 +59,7 @@ namespace Ashfall.Core
             MedicalWardSystem medical,
             ChemicalDependencySystem dependency,
             DutyRosterSystem roster,
-            ILog log = null!)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _needs = needs ?? throw new ArgumentNullException(nameof(needs));
@@ -188,12 +188,20 @@ namespace Ashfall.Core
             return crisis == null || crisis.status == CrisisStatus.Recovered || crisis.status == CrisisStatus.Chronic;
         }
 
-        public MentalHealthState CaptureState() => _state;
+        public MentalHealthState CaptureState() => CloneState(_state);
+
         public void RestoreState(MentalHealthState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnMentalHealthChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static MentalHealthState CloneState(MentalHealthState src)
+        {
+            if (src == null) return new MentalHealthState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<MentalHealthState>(json) ?? new MentalHealthState();
         }
     }
 }

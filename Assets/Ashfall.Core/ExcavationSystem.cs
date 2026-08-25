@@ -37,7 +37,7 @@ namespace Ashfall.Core
         public ExcavationState State => _state;
         public event Action OnExcavationChanged;
 
-        public ExcavationSystem(ISeededRng rng, ILog log = null!)
+        public ExcavationSystem(ISeededRng rng, ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
@@ -106,12 +106,20 @@ namespace Ashfall.Core
             OnExcavationChanged?.Invoke();
         }
 
-        public ExcavationState CaptureState() => _state;
+        public ExcavationState CaptureState() => CloneState(_state);
+
         public void RestoreState(ExcavationState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnExcavationChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static ExcavationState CloneState(ExcavationState src)
+        {
+            if (src == null) return new ExcavationState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<ExcavationState>(json) ?? new ExcavationState();
         }
     }
 }

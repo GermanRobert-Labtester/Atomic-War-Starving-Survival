@@ -64,7 +64,7 @@ namespace Ashfall.Core
             ISeededRng rng,
             Inventory.Inventory inventory,
             CraftingSystem crafting,
-            ILog log = null!)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
@@ -185,12 +185,20 @@ namespace Ashfall.Core
             return item.condition > 0 && (item.usesRemaining == -1 || item.usesRemaining > 0);
         }
 
-        public EquipmentConditionState CaptureState() => _state;
+        public EquipmentConditionState CaptureState() => CloneState(_state);
+
         public void RestoreState(EquipmentConditionState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnEquipmentChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static EquipmentConditionState CloneState(EquipmentConditionState src)
+        {
+            if (src == null) return new EquipmentConditionState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<EquipmentConditionState>(json) ?? new EquipmentConditionState();
         }
     }
 }

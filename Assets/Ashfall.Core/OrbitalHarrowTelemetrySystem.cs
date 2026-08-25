@@ -46,7 +46,7 @@ namespace Ashfall.Core
         public event Action<int, float> OnImpactResolved; // day, energy
         public event Action OnTelemetryChanged;
 
-        public OrbitalHarrowTelemetrySystem(SkyLayerArmorSystem armor, ISeededRng rng, ILog log = null!)
+        public OrbitalHarrowTelemetrySystem(SkyLayerArmorSystem armor, ISeededRng rng, ILog? log = null)
         {
             _armor = armor ?? throw new ArgumentNullException(nameof(armor));
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
@@ -119,12 +119,20 @@ namespace Ashfall.Core
             OnTelemetryChanged?.Invoke();
         }
 
-        public OrbitalTelemetryState CaptureState() => _state;
+        public OrbitalTelemetryState CaptureState() => CloneState(_state);
+
         public void RestoreState(OrbitalTelemetryState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnTelemetryChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static OrbitalTelemetryState CloneState(OrbitalTelemetryState src)
+        {
+            if (src == null) return new OrbitalTelemetryState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<OrbitalTelemetryState>(json) ?? new OrbitalTelemetryState();
         }
     }
 }
