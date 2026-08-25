@@ -1,0 +1,2005 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_moral_share_medicine",
+      "display_name": "The Last Medicine",
+      "category": "share",
+      "trigger": "A stranger at your gate asks for antibiotics for a sick child.",
+      "discovery": "A man at the gate, holding a small girl, her forehead burning. He has nothing to trade. He asks for antibiotics. You have two courses. The clinic has counted them. The girl is not yours. The man is not of your shelter.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Give a full course",
+          "moral_delta": 10,
+          "empathy_delta": 2,
+          "outcome_text": "You hand over a full course. The man does not thank you with words. He thanks you by leaving before you can change your mind. The girl waves.",
+          "epitaph": "Gave the last medicine to a stranger's child. The clinic counted it. I did not."
+        },
+        {
+          "label": "Give half a course",
+          "moral_delta": 5,
+          "empathy_delta": 1,
+          "outcome_text": "You break the course and give half. The man looks at the half, then at you, and understands the arithmetic of mercy. He leaves.",
+          "epitaph": "Gave half the medicine. Half a chance. It was all I could carry."
+        },
+        {
+          "label": "Refuse, offer shelter instead",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "outcome_text": "You refuse the medicine but offer them a night by the stove. The man refuses. The girl is too sick to move, he says, and the stove is not medicine. He leaves.",
+          "epitaph": "Refused the medicine, offered the stove. The stove is not medicine. They left."
+        },
+        {
+          "label": "Refuse and turn them away",
+          "moral_delta": -8,
+          "empathy_delta": 0,
+          "outcome_text": "You tell him the medicine is counted and the count is the law. He looks at you for a long time, then turns, the girl in his arms, and walks into the dark.",
+          "epitaph": "Turned away a sick child. The count was the law. The law was not enough."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_coat",
+      "display_name": "The Coat in the Snow",
+      "category": "share",
+      "trigger": "A figure in the snow, shivering, wearing not enough.",
+      "discovery": "On the road, a figure sitting in the snow, shivering, wearing a thin shirt and no coat. The figure is conscious, looking at you. Your coat is warm. Your coat is yours. The road is long and the cold is yours too.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 100,
+      "choices": [
+        {
+          "label": "Give your coat",
+          "moral_delta": 10,
+          "empathy_delta": 2,
+          "outcome_text": "You take off your coat and give it. The figure puts it on and is still cold, but less. You are now the figure. The road is longer now.",
+          "epitaph": "Gave my coat in the snow. I am the figure now. The cold is the cold."
+        },
+        {
+          "label": "Share the coat",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You sit beside the figure and share the coat, half each. The cold is halved. The warmth is halved. You walk together, slowly, the coat between you.",
+          "epitaph": "Shared the coat. Half the cold, half the warmth. We walked together."
+        },
+        {
+          "label": "Give food instead",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You give food, not the coat. The figure eats. The figure is still cold. The food is not the coat. You walk on, the coat still yours.",
+          "epitaph": "Gave food, kept the coat. The food was not the cold. The cold stayed."
+        },
+        {
+          "label": "Walk on",
+          "moral_delta": -5,
+          "empathy_delta": 0,
+          "outcome_text": "You walk on. The figure does not call after you. The snow is falling. You do not look back. You know what is behind you.",
+          "epitaph": "Walked past the figure in the snow. I did not look back. I know why."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_fire",
+      "display_name": "The Shared Fire",
+      "category": "share",
+      "trigger": "A group at a roadside fire invites you to sit.",
+      "discovery": "A small fire by the road, three people around it, a pot on the coals. One waves you over. The pot is small. The fire is warm. The road is cold. The invitation is open. The pot is small.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 150,
+      "choices": [
+        {
+          "label": "Sit and share your food",
+          "moral_delta": 8,
+          "empathy_delta": 2,
+          "outcome_text": "You sit and add your food to the pot. The pot is larger now. The three share theirs with you. The fire is warmer with more.",
+          "epitaph": "Shared my food at a stranger's fire. The pot was larger. The fire was warmer."
+        },
+        {
+          "label": "Sit and accept their food",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You sit and accept a bowl. They do not ask for yours. You eat. The food is good. The food is theirs. You owe them.",
+          "epitaph": "Ate at a stranger's fire. The food was theirs. I owe them."
+        },
+        {
+          "label": "Sit and share nothing",
+          "moral_delta": -2,
+          "empathy_delta": 0,
+          "outcome_text": "You sit by the fire and eat your own food in front of them. They say nothing. The fire is still warm. The silence is cold.",
+          "epitaph": "Sat by their fire, ate my own food. The fire was warm. The silence was not."
+        },
+        {
+          "label": "Decline and walk on",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You wave and walk on. The fire is behind you. The road is ahead. The cold is the road.",
+          "epitaph": "Declined the fire. The road was the cold. The cold was the road."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_scout",
+      "display_name": "The Scout's Report",
+      "category": "trust",
+      "trigger": "A scout returns with a report of a clear road ahead.",
+      "discovery": "A scout you have never met arrives at your camp with a report: the road ahead is clear, no raiders, no fallout, no block. The scout is calm, professional, asks for nothing. The scout could be telling the truth. The scout could be a lure. You cannot verify without going.",
+      "location_id": "",
+      "min_day": 30,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Trust the report and take the road",
+          "moral_delta": 5,
+          "empathy_delta": 1,
+          "outcome_text": "You take the road. The road is clear. The scout was right. You do not see the scout again. You wonder, later, why the scout was right.",
+          "epitaph": "Trusted the scout. The road was clear. I never saw the scout again."
+        },
+        {
+          "label": "Send your own scout to verify",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "outcome_text": "You send your own scout. Your scout returns a day later: the road is clear. The stranger's scout was right. You lost a day. The day was the cost of trust.",
+          "epitaph": "Sent my own scout to check. The road was clear. The day was the cost."
+        },
+        {
+          "label": "Take a different road",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You take a different road, longer, harder. The stranger's road was clear, you later hear. The different road cost you two days and a sprained ankle. The trust was the cost.",
+          "epitaph": "Took the long way. The scout was right. The long way was the price of not trusting."
+        },
+        {
+          "label": "Detain the scout",
+          "moral_delta": -5,
+          "empathy_delta": -1,
+          "outcome_text": "You detain the scout and question them. The scout is calm. The scout tells the truth. You let them go. The scout will not report to you again. The trust is broken both ways now.",
+          "epitaph": "Detained the scout. The scout was true. The trust broke both ways."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_stranger_water",
+      "display_name": "The Stranger's Water Filter",
+      "category": "trust",
+      "trigger": "A stranger offers to let you drink from his filter, no charge.",
+      "discovery": "A man at a stream with a working filter, clean water running from it. He offers you a drink, no charge. He says the water is clean. He says the filter is real. The filter looks real. The water looks clean. The man wants nothing. The man wants nothing, which is the thing that makes you wonder.",
+      "location_id": "",
+      "min_day": 15,
+      "max_day": 150,
+      "choices": [
+        {
+          "label": "Drink, trust the stranger",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You drink. The water is clean. The man smiles and leaves. You are not sick the next day. The trust was the gift. The gift was the trust.",
+          "epitaph": "Drank from a stranger's filter. The water was clean. The trust was the gift."
+        },
+        {
+          "label": "Test the water first",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You test the water with your kit. The water is clean. You drink. The man waits, patient, and leaves when you drink. The test was the cost of a minute. The minute was the cost of trust.",
+          "epitaph": "Tested the water. It was clean. The minute was the cost of trusting slowly."
+        },
+        {
+          "label": "Refuse, filter your own",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You refuse and filter your own water, slowly, with your own kit. The man watches, shrugs, and leaves. Your water is clean. Your water took an hour. The hour was the cost of not trusting.",
+          "epitaph": "Filtered my own. The hour was the cost of not trusting a stranger."
+        },
+        {
+          "label": "Take the filter by force",
+          "moral_delta": -10,
+          "empathy_delta": -2,
+          "outcome_text": "You take the filter. The man does not fight you. The man leaves. The filter works. The filter is yours. The man is alive. The taking is the thing you carry.",
+          "epitaph": "Took the filter. The man lived. The filter is mine. The taking is what I carry."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_dying_stranger",
+      "display_name": "The Dying Stranger",
+      "category": "comfort",
+      "trigger": "A stranger, dying by the road, asks for company.",
+      "discovery": "By the road, a person lying still, breathing shallow, eyes open. They see you. They do not ask for food or water. They ask you to sit. They say they do not want to die alone. The road is long. The dark is coming. You have miles to go.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Sit with them until the end",
+          "moral_delta": 10,
+          "empathy_delta": 3,
+          "outcome_text": "You sit. You hold their hand. They do not speak much. They die at dusk. You bury them with stones. You walk in the dark. The dark is the cost. The sitting was the gift.",
+          "epitaph": "Sat with a dying stranger. Held their hand. Walked in the dark after. The dark was the cost."
+        },
+        {
+          "label": "Sit a while, then leave",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You sit for an hour. They thank you. You explain you must go. They understand, they say. They do not. You go. You wonder, later, when they died.",
+          "epitaph": "Sat an hour with the dying. Then I left. I wonder when they died."
+        },
+        {
+          "label": "Leave food and water and go",
+          "moral_delta": 1,
+          "empathy_delta": 0,
+          "outcome_text": "You leave food and water beside them. They cannot eat. You go. The food and water are for whoever finds them next. The dying is for the dying.",
+          "epitaph": "Left food and water for the dying. The food was not for them. The dying was for them."
+        },
+        {
+          "label": "Walk on",
+          "moral_delta": -8,
+          "empathy_delta": -1,
+          "outcome_text": "You walk on. You do not sit. The road is long. The dark is coming. You make your miles. You hear nothing behind you. You hear nothing because you did not stay.",
+          "epitaph": "Walked past the dying. I made my miles. I heard nothing behind me."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_grieving",
+      "display_name": "The Grieving Mother",
+      "category": "comfort",
+      "trigger": "A mother weeps by a small grave.",
+      "discovery": "By a small, fresh grave, a woman sits, weeping. She sees you and looks away, then looks back. She says her son is under the stones. She says she cannot leave. She asks you to sit. She asks nothing else.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 150,
+      "choices": [
+        {
+          "label": "Sit and listen",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You sit. She tells you about the boy. She tells you for an hour. You listen. She thanks you. She is still weeping when you leave, but she is less alone in the weeping.",
+          "epitaph": "Sat with the grieving mother. Listened to the boy. The weeping was less alone."
+        },
+        {
+          "label": "Sit, then help her up",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You sit, then gently help her stand. She leans on you. You walk her to the nearest shelter. She is alive. The grave is behind her. The boy is behind her.",
+          "epitaph": "Helped the grieving mother up. Walked her to shelter. The grave is behind."
+        },
+        {
+          "label": "Leave a token and go",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You leave a small thing on the grave — a coin, a button, a stone. You say nothing. You go. The token is the sitting you could not do.",
+          "epitaph": "Left a token on the grave. The token was the sitting I could not do."
+        },
+        {
+          "label": "Walk on",
+          "moral_delta": -3,
+          "empathy_delta": 0,
+          "outcome_text": "You walk on. The weeping is behind you. You make your miles. The weeping is still behind you. It will be behind you for a long time.",
+          "epitaph": "Walked past the weeping mother. The weeping is behind me. It is still behind me."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_unburied",
+      "display_name": "The Unburied",
+      "category": "dead",
+      "trigger": "A body by the road, unburied, no one to bury them.",
+      "discovery": "By the road, a body, fresh, not yet cold. No one around. The body is alone. The road is busy, or was. You have a shovel. You have time. You have miles to go. The body will be found by animals by nightfall.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Bury the body",
+          "moral_delta": 8,
+          "empathy_delta": 2,
+          "outcome_text": "You dig a shallow grave and bury them. You take nothing from the body. You mark the grave with a stone. You walk on. The burying cost you an hour. The hour was the gift.",
+          "epitaph": "Buried a stranger by the road. Took nothing. The hour was the gift."
+        },
+        {
+          "label": "Bury and take their effects",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "outcome_text": "You bury the body and take their effects — a knife, a tin, a letter. The effects are useful. The burying was the duty. The taking was the question.",
+          "epitaph": "Buried a stranger and took their things. The duty was done. The taking was the question."
+        },
+        {
+          "label": "Take their effects, leave the body",
+          "moral_delta": -5,
+          "empathy_delta": -1,
+          "outcome_text": "You take the useful things and leave the body. The body will be found by animals. The things are yours. The body is not your problem. The body is the question you will carry.",
+          "epitaph": "Took the things, left the body. The things are mine. The body is the question."
+        },
+        {
+          "label": "Walk on",
+          "moral_delta": -3,
+          "empathy_delta": 0,
+          "outcome_text": "You walk on. The body is behind you. You do not look back. You tell yourself you could not bury everyone. You tell yourself this often.",
+          "epitaph": "Walked past the body. I could not bury everyone. I tell myself this often."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_name",
+      "display_name": "The Name on the Body",
+      "category": "dead",
+      "trigger": "A body with a name tag, a family to find.",
+      "discovery": "A body by the road, a name tag on the wrist: a name, a district, a shelter number. The body is not yours. The district is two days away. The family, if they are there, would want to know. The road is long. The body is heavy. The name is the question.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Carry the news to the family",
+          "moral_delta": 10,
+          "empathy_delta": 3,
+          "outcome_text": "You go to the district, find the family, tell them. The mother weeps. The father thanks you. You do not bring the body — you could not. You bring the name. The name is the thing.",
+          "epitaph": "Carried the name to the family. The mother wept. The name was the thing I carried."
+        },
+        {
+          "label": "Bury the body, carry the name tag",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You bury the body and carry the tag. You find the family. You give them the tag. The tag is the proof. The proof is the grave they will never visit.",
+          "epitaph": "Buried the body, carried the tag. The tag is the proof. The grave is far."
+        },
+        {
+          "label": "Bury the body, leave the tag",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You bury the body with the tag. The family will not know. The body will not be a body to the animals. The name is with the body. The family is without the name.",
+          "epitaph": "Buried the body with the tag. The family will not know. The name is with the body."
+        },
+        {
+          "label": "Walk on",
+          "moral_delta": -5,
+          "empathy_delta": -1,
+          "outcome_text": "You walk on. The body is behind you. The name is behind you. The family will not know. You tell yourself you could not find them. You tell yourself this.",
+          "epitaph": "Walked past the body and the name. The family will not know. I tell myself I could not find them."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_confession",
+      "display_name": "The Confession",
+      "category": "listen",
+      "trigger": "A stranger wants to tell you something they have done.",
+      "discovery": "A stranger at your fire, quiet all evening, suddenly says: I have done something. I want to tell someone. Will you listen? The something is in their face. The something is heavy. You do not know them. You will not see them again. They want to tell you. You are the someone.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Listen to the end",
+          "moral_delta": 5,
+          "empathy_delta": 3,
+          "outcome_text": "You listen. The confession is long and heavy. You say nothing. When they finish, they thank you. They sleep. You do not. The confession is in you now. The listening was the gift. The gift is the weight.",
+          "epitaph": "Listened to a stranger's confession. They slept. I did not. The confession is in me."
+        },
+        {
+          "label": "Listen, then offer judgment",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You listen, then you tell them what you think. They listen to your judgment. They do not thank you. They leave. The judgment was not the listening. The judgment was the thing they did not ask for.",
+          "epitaph": "Listened, then judged. They did not ask for judgment. They left."
+        },
+        {
+          "label": "Listen briefly, then change the subject",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You listen for a minute, then steer the talk to the road, the weather. They let you. The confession is unfinished. The unfinished is the thing between you. You both sleep. Neither well.",
+          "epitaph": "Listened briefly, changed the subject. The confession is unfinished between us."
+        },
+        {
+          "label": "Refuse to listen",
+          "moral_delta": -5,
+          "empathy_delta": -1,
+          "outcome_text": "You tell them you do not want to know. They nod. They sleep. The confession stays in them. You sleep. The refusal is the thing you carry, lighter than the confession, but yours.",
+          "epitaph": "Refused to listen. The confession stayed in them. The refusal is mine."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_old_story",
+      "display_name": "The Old Story",
+      "category": "listen",
+      "trigger": "An elder wants to tell you how the world was before.",
+      "discovery": "An old person, by a fire, says: I want to tell you how it was. Before. You are young. You will not remember the before. I want someone to remember. Will you listen? The story will be long. The fire is warm. The road is tomorrow.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Listen to the whole story",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You listen to the whole story. It takes the night. The world before was different. You will remember some of it. The remembering is the gift. The gift is the night.",
+          "epitaph": "Listened to the old story all night. I will remember some. The night was the gift."
+        },
+        {
+          "label": "Listen, take notes",
+          "moral_delta": 6,
+          "empathy_delta": 2,
+          "outcome_text": "You listen and write down what you can. The old person watches you write and is glad. The notes are the remembering. The notes are the thing that will last after the old person.",
+          "epitaph": "Listened and took notes. The notes are the remembering. The notes will last."
+        },
+        {
+          "label": "Listen a while, then sleep",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You listen for an hour, then apologize and sleep. The old person understands. The story is unfinished. The unfinished is the thing. You sleep. The old person does not.",
+          "epitaph": "Listened an hour, then slept. The story is unfinished. The old person did not sleep."
+        },
+        {
+          "label": "Politely decline",
+          "moral_delta": -3,
+          "empathy_delta": 0,
+          "outcome_text": "You politely decline. The old person nods. The story stays in them. The story will die with them. You sleep. The story is not yours. The story is not anyone's now.",
+          "epitaph": "Declined the old story. The story will die with them. The story is not mine."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_seed",
+      "display_name": "The Seed Trader",
+      "category": "share",
+      "trigger": "A trader offers seed for your lamp oil, but spring is uncertain.",
+      "discovery": "A trader with a pouch of seed — real seed, viable, the kind that grows — offers to trade for your lamp oil. The seed is for spring. Spring may not come. The lamp oil is for tonight. Tonight is certain. Spring is not.",
+      "location_id": "",
+      "min_day": 40,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Trade the oil for the seed",
+          "moral_delta": 8,
+          "empathy_delta": 2,
+          "outcome_text": "You trade. The seed is in your hand. The lamp is dark tonight. You sit in the dark. The dark is the cost of the spring. The spring is the hope.",
+          "epitaph": "Traded the lamp oil for seed. Sat in the dark. The dark was the cost of the spring."
+        },
+        {
+          "label": "Keep the oil, refuse the seed",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You keep the oil. The lamp is lit tonight. The seed is gone with the trader. The spring, if it comes, will be without your seed. The dark did not come. The spring may not either.",
+          "epitaph": "Kept the oil. The lamp is lit. The seed is gone. The spring may not come either."
+        },
+        {
+          "label": "Trade half the oil for half the seed",
+          "moral_delta": 5,
+          "empathy_delta": 1,
+          "outcome_text": "You trade half. The lamp is lit, dimmer. The seed is half. The spring is half a hope. The dark is half. The hope is half. The half is the honest thing.",
+          "epitaph": "Traded half the oil for half the seed. The lamp is dim. The hope is half. The half is honest."
+        },
+        {
+          "label": "Take the seed by force",
+          "moral_delta": -10,
+          "empathy_delta": -2,
+          "outcome_text": "You take the seed. The trader does not fight. The seed is yours. The lamp is lit. The spring is yours. The taking is the thing. The trader is in the dark now.",
+          "epitaph": "Took the seed. The lamp is lit. The spring is mine. The taking is what I carry."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_coded_message",
+      "display_name": "The Coded Message",
+      "category": "trust",
+      "trigger": "A coded message on a dead courier, addressed to a camp you know.",
+      "discovery": "A dead courier, a coded message in the pouch, addressed to a camp three days east. The code is simple — you can read it. The message says: 'Come, we have food, we are many, we are safe.' The message could be true. The message could be a lure. The courier is dead. The courier did not arrive.",
+      "location_id": "",
+      "min_day": 30,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Deliver the message as written",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You deliver the message. The camp reads it. Some want to go. Some do not. You have done the courier's work. The courier is dead. The message is delivered. The message may be a lie. You delivered it.",
+          "epitaph": "Delivered the dead courier's message. It may be a lie. I delivered it."
+        },
+        {
+          "label": "Deliver a warning instead",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You deliver a warning: the message may be a lure, the courier is dead. The camp thanks you. The camp does not go. The camp may have missed food and safety. The camp may have avoided a trap. You do not know which.",
+          "epitaph": "Delivered a warning instead. The camp did not go. I do not know if I saved them or starved them."
+        },
+        {
+          "label": "Destroy the message",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You destroy the message. The camp will not know. The courier is dead. The message is gone. The camp will decide on its own. You took the choice from them. The choice is yours now.",
+          "epitaph": "Destroyed the message. The camp will not know. The choice is mine now."
+        },
+        {
+          "label": "Keep the message, investigate yourself",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "outcome_text": "You keep the message and go to the place yourself. Three days there, three days back. You will know. The camp will wait. The camp may not wait. The knowing is the cost of the days.",
+          "epitaph": "Kept the message, went myself. The camp waited. The days were the cost of knowing."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_broken",
+      "display_name": "The Broken Survivor",
+      "category": "comfort",
+      "trigger": "A survivor sits staring, not speaking, not eating.",
+      "discovery": "A survivor in your shelter, sitting against the wall, not speaking, not eating, eyes open, seeing nothing. Three days now. The doctor says the body is fine. The doctor says the mind is not. The doctor does not know what to do. No one does. The survivor is one of yours.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Sit with them, daily",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You sit with them an hour each day. You do not speak. You sit. On the fourth day, they look at you. On the fifth, they take water. The sitting was the medicine. The medicine was the sitting.",
+          "epitaph": "Sat with the broken one daily. On the fifth day, they took water. The sitting was the medicine."
+        },
+        {
+          "label": "Bring them food and water, leave it",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You bring food and water, set it beside them, leave. The food is untouched. The water is sometimes drunk. You are keeping the body alive. The mind is not yours to fix.",
+          "epitaph": "Brought food and water. The body lived. The mind was not mine to fix."
+        },
+        {
+          "label": "Assign someone to watch them",
+          "moral_delta": 1,
+          "empathy_delta": 0,
+          "outcome_text": "You assign a watch. The watcher sits. The broken one does not respond. The watcher is tired. The broken one is still broken. The watching is the duty. The duty is not the medicine.",
+          "epitaph": "Assigned a watcher. The duty was done. The duty was not the medicine."
+        },
+        {
+          "label": "Leave them be",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You leave them be. They are against the wall. The days pass. You hope they come back. You do not sit. You do not bring food. You leave them be. The leaving is the thing.",
+          "epitaph": "Left the broken one be. I hope they come back. I did not sit."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_mass_grave",
+      "display_name": "The Mass Grave",
+      "category": "dead",
+      "trigger": "A mass grave, freshly dug, no one to fill it.",
+      "discovery": "A mass grave, dug by the military before they left, six bodies in it, no one to fill it. The bodies are strangers. The grave is open. The animals will come. You have a shovel. You have miles to go. The grave is not yours to fill. The dead are not yours to bury. The dead are dead.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Fill the grave",
+          "moral_delta": 8,
+          "empathy_delta": 2,
+          "outcome_text": "You fill the grave. It takes an hour. You say nothing. You mark it with a stone. You walk on. The dead are buried. The burying was not yours. You did it anyway.",
+          "epitaph": "Filled the mass grave. It was not mine. I did it anyway. The dead are buried."
+        },
+        {
+          "label": "Fill it and take the dog tags",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "outcome_text": "You fill the grave and take the dog tags. The tags are names. The names are for someone. The burying was the duty. The tags are the question.",
+          "epitaph": "Filled the grave, took the tags. The duty was done. The tags are the question."
+        },
+        {
+          "label": "Cover the bodies lightly, go",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You cover the bodies with branches, lightly, so the animals cannot see them easily. You do not fill the grave. The branches are the compromise. The compromise is the thing you carry.",
+          "epitaph": "Covered the bodies with branches. The compromise is what I carry."
+        },
+        {
+          "label": "Walk on",
+          "moral_delta": -2,
+          "empathy_delta": 0,
+          "outcome_text": "You walk on. The grave is open. The animals will come. The dead will be the animals' dead. You did not fill it. You could not fill every grave. You tell yourself this.",
+          "epitaph": "Walked past the open grave. The animals will come. I tell myself I could not fill every grave."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_child_question",
+      "display_name": "The Child's Question",
+      "category": "listen",
+      "trigger": "A child asks you a question you cannot answer.",
+      "discovery": "A child, maybe seven, asks you: 'Will the sky be blue again?' The child is serious. The child believes you will know. You do not know. The sky is grey. The sky has been grey. You do not know if the sky will be blue. The child is waiting.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 150,
+      "choices": [
+        {
+          "label": "Tell the truth: you don't know",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You tell the child you do not know. The child nods. The child does not cry. The child says: 'okay.' The okay is the thing. The okay is the truth. The truth is the okay.",
+          "epitaph": "Told the child I don't know. The child said okay. The okay was the truth."
+        },
+        {
+          "label": "Tell them yes, it will",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You tell the child yes, the sky will be blue. The child smiles. The child believes you. The child will remember. You will remember. The yes is the hope. The hope may be a lie. The hope is the thing the child needs.",
+          "epitaph": "Told the child yes. The child smiled. The hope may be a lie. The hope is what they needed."
+        },
+        {
+          "label": "Tell them the sky is grey now",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You tell the child the sky is grey now. The child looks at the sky. The child does not ask again. The truth is the grey. The grey is the truth. The child is seven and knows the grey now.",
+          "epitaph": "Told the child the sky is grey. The child did not ask again. The grey is the truth."
+        },
+        {
+          "label": "Change the subject",
+          "moral_delta": -2,
+          "empathy_delta": -1,
+          "outcome_text": "You change the subject. You point at a bird, a stone, anything. The child lets you. The question is unanswered. The question will come again, to someone else. You did not answer. You dodged a child.",
+          "epitaph": "Changed the subject. The question is unanswered. I dodged a child."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_shelter",
+      "display_name": "The Shelter Space",
+      "category": "share",
+      "trigger": "A family asks to share your shelter for one night.",
+      "discovery": "A family of four at your shelter door, one night, a storm. They ask to sleep in your shelter, just the night. Your shelter is counted to your headcount. The count is the law. The storm is bad. The children are small. The night is one night.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Let them in for the night",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You let them in. They sleep in the corridor. The corridor is crowded. The children are warm. The storm passes. They leave at dawn. The count was broken for a night. The night was the gift.",
+          "epitaph": "Let a family in for the storm. The count was broken for a night. The children were warm."
+        },
+        {
+          "label": "Let them in, count them tomorrow",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You let them in and tell the quartermaster to count them at dawn. The count will change. The ration will change. The night was the decision. The dawn is the consequence.",
+          "epitaph": "Let them in, counted them at dawn. The ration changed. The night was the decision."
+        },
+        {
+          "label": "Give them supplies, send them on",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You give them blankets and food and send them to the next shelter, two hours on. The storm is bad. The two hours is the risk. The supplies are the gift. The risk is the question.",
+          "epitaph": "Gave supplies, sent them on in the storm. The two hours was the risk. The supplies were the gift."
+        },
+        {
+          "label": "Turn them away",
+          "moral_delta": -8,
+          "empathy_delta": -2,
+          "outcome_text": "You turn them away. The count is the law. The storm is bad. The children are small. You close the door. You hear them leave. You do not know if they made the next shelter. You do not ask.",
+          "epitaph": "Turned away a family in a storm. The count was the law. I do not know if they made it."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_traitor",
+      "display_name": "The Accused Traitor",
+      "category": "trust",
+      "trigger": "A person in your shelter is accused of betrayal by another.",
+      "discovery": "A person in your shelter is accused by another of giving food to a rival camp. The accuser is sure. The accused denies. There is no proof. There is no witness. You must decide. The shelter is watching. The trust is the thing that is on trial.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Investigate before deciding",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You investigate. You find nothing. You tell the shelter. The accused is cleared. The accuser is angry. The trust is mended, partly. The investigating was the cost of the mending.",
+          "epitaph": "Investigated the accusation. Found nothing. The trust was mended, partly."
+        },
+        {
+          "label": "Believe the accuser, expel the accused",
+          "moral_delta": -5,
+          "empathy_delta": -1,
+          "outcome_text": "You believe the accuser. You expel the accused. The accused goes to the rival camp, now with a grudge. The accuser is satisfied. The shelter is divided. The trust is broken both ways.",
+          "epitaph": "Believed the accuser, expelled the accused. The shelter is divided. The trust broke both ways."
+        },
+        {
+          "label": "Believe the accused, warn the accuser",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You believe the accused. You warn the accuser about false accusations. The accuser is angry. The accused is relieved. The truth is unknown. The shelter is uneasy. The unease is the cost of not knowing.",
+          "epitaph": "Believed the accused. The accuser is angry. The truth is unknown. The unease is the cost."
+        },
+        {
+          "label": "Do nothing, let it settle",
+          "moral_delta": -2,
+          "empathy_delta": 0,
+          "outcome_text": "You do nothing. You let it settle. It does not settle. The accused and accuser avoid each other. The shelter takes sides. The sides are the thing. The nothing was the decision. The decision was the nothing.",
+          "epitaph": "Did nothing. The shelter took sides. The nothing was the decision."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_letter",
+      "display_name": "The Last Letter",
+      "category": "comfort",
+      "trigger": "A dying person asks you to write a letter for them.",
+      "discovery": "A dying person, too weak to write, asks you to write a letter to their daughter. They dictate. The letter is short. The letter is full of love and regret. The daughter is far away. The letter may never arrive. The dying person wants it written. The writing is the thing.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Write the letter and promise to deliver",
+          "moral_delta": 10,
+          "empathy_delta": 3,
+          "outcome_text": "You write the letter. You read it back. The dying person cries. You promise to deliver it. The promise is the cost. The delivery may be impossible. The promise is the thing.",
+          "epitaph": "Wrote the letter, promised to deliver. The promise is the cost. The delivery may be impossible."
+        },
+        {
+          "label": "Write the letter, leave it with the body",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You write the letter and leave it with the body, in the pocket, for whoever finds them. The letter may be found. The letter may not. The writing was the gift. The leaving was the compromise.",
+          "epitaph": "Wrote the letter, left it with the body. The writing was the gift. The finding is chance."
+        },
+        {
+          "label": "Write the letter, keep it, deliver if you can",
+          "moral_delta": 6,
+          "empathy_delta": 2,
+          "outcome_text": "You write the letter and keep it. You will deliver it if you can. The letter is in your pack. The letter is a weight. The weight is the promise. The promise is the thing you carry.",
+          "epitaph": "Wrote the letter, kept it. The letter is a weight in my pack. The promise is what I carry."
+        },
+        {
+          "label": "Refuse, you cannot write",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You tell them you cannot write, which is a lie. You can write. You do not want the weight. The dying person understands, or does not. They die without the letter. The letter is the thing you did not do.",
+          "epitaph": "Refused to write the letter. It was a lie. I can write. The letter is the thing I did not do."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_dog",
+      "display_name": "The Dead Dog",
+      "category": "dead",
+      "trigger": "A dog, loyal, stays by its dead master.",
+      "discovery": "A dog by a body, the dog's master. The dog has been there for days. The dog is thin. The dog will not leave the body. The dog is loyal. The dog will die there. You have food. The dog is not yours. The dog is a dog. The dog is loyal.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Feed the dog, try to coax it away",
+          "moral_delta": 8,
+          "empathy_delta": 2,
+          "outcome_text": "You feed the dog. The dog eats, wary. You coax. The dog follows you, eventually, looking back at the body. The dog is yours now. The loyalty is the thing. The dog will be loyal to you now.",
+          "epitaph": "Fed the dog, coaxed it away. The dog is mine now. The loyalty is the thing."
+        },
+        {
+          "label": "Feed the dog, leave it",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You feed the dog and leave. The dog eats. The dog stays by the body. The dog will die there. The feeding was the mercy. The leaving was the truth.",
+          "epitaph": "Fed the dog, left it. The dog will die by the body. The feeding was the mercy."
+        },
+        {
+          "label": "Bury the master, the dog may follow",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You bury the master. The dog watches. When the grave is filled, the dog lies on it. The dog is on the grave now. The dog will die on the grave. The burying was for the dog. The dog is the loyal thing.",
+          "epitaph": "Buried the master. The dog lies on the grave. The burying was for the dog."
+        },
+        {
+          "label": "Walk on",
+          "moral_delta": -2,
+          "empathy_delta": 0,
+          "outcome_text": "You walk on. The dog is by the body. The dog will die there. You tell yourself it is a dog. You tell yourself this. The dog is a dog. The dog is loyal. The telling is the thing.",
+          "epitaph": "Walked past the dog and the body. The dog will die there. I tell myself it is a dog."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_singer",
+      "display_name": "The Singer in the Ruins",
+      "category": "listen",
+      "trigger": "A person sings in a ruined building, alone, to no one.",
+      "discovery": "In a ruined building, a voice singing, a song you do not know, in a language you do not speak. The singer is alone, eyes closed, singing to the room. The room is empty. The room was full, once. The singer is singing to the room. You are in the doorway.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Listen from the doorway",
+          "moral_delta": 6,
+          "empathy_delta": 2,
+          "outcome_text": "You listen from the doorway. The singer does not see you. The song is sad and beautiful. The singer finishes, opens their eyes, sees you, nods. You nod. The song is between you now. The listening was the gift.",
+          "epitaph": "Listened from the doorway. The song is between us. The listening was the gift."
+        },
+        {
+          "label": "Enter and sit",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You enter and sit. The singer sees you, does not stop, sings to you and the room. The song is for you now too. When it ends, the singer thanks you. The sitting was the audience. The audience was the gift.",
+          "epitaph": "Entered and sat. The song was for me too. The sitting was the gift."
+        },
+        {
+          "label": "Leave quietly",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You leave quietly. The singing continues behind you. The singer does not know you were there. The song is the singer's. The leaving was the respect. The respect is the thing.",
+          "epitaph": "Left quietly. The singing continued. The respect was the thing."
+        },
+        {
+          "label": "Interrupt, ask for directions",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You interrupt and ask for directions. The singer stops, startled, then gives them. The song is gone. The room is empty again. The directions are useful. The song is the thing you broke.",
+          "epitaph": "Interrupted the singer for directions. The song is gone. The directions are useful. The song is what I broke."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_skill",
+      "display_name": "The Skilled Stranger",
+      "category": "share",
+      "trigger": "A stranger offers to teach you a skill for food.",
+      "discovery": "A stranger offers to teach you a skill — how to repair a water pump — in exchange for three days of food. The skill is useful. The food is counted. Three days is a lot of food. The skill is worth more than the food, maybe. The stranger is a stranger. The skill is the thing.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Trade the food for the skill",
+          "moral_delta": 8,
+          "empathy_delta": 2,
+          "outcome_text": "You trade. The stranger teaches you for three days. The skill is real. You can repair a pump now. The food is gone. The skill is the thing that stays. The food is the thing that does not.",
+          "epitaph": "Traded food for the skill. The skill stays. The food does not."
+        },
+        {
+          "label": "Trade half the food, learn half the skill",
+          "moral_delta": 4,
+          "empathy_delta": 1,
+          "outcome_text": "You trade half the food. The stranger teaches half the skill. The half-skill is enough to try. The half-skill is not enough to be sure. The half is the honest thing. The half is the risk.",
+          "epitaph": "Traded half the food for half the skill. The half is the risk. The half is honest."
+        },
+        {
+          "label": "Watch and learn, offer no food",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You watch the stranger work and learn what you can. You offer no food. The stranger notices, says nothing, leaves on the second day. You learned a little. The little is the thing you did not pay for. The not-paying is the thing.",
+          "epitaph": "Watched and learned, paid nothing. The stranger left. The little is what I did not pay for."
+        },
+        {
+          "label": "Refuse, the food is counted",
+          "moral_delta": -2,
+          "empathy_delta": 0,
+          "outcome_text": "You refuse. The food is counted. The stranger leaves. The skill is gone with the stranger. The pump will break someday. The skill will not be there. The count was the law. The law was the cost.",
+          "epitaph": "Refused the skill, kept the food. The pump will break. The skill will not be there."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_child_message",
+      "display_name": "The Child Messenger",
+      "category": "trust",
+      "trigger": "A child brings you a message from another camp.",
+      "discovery": "A child, maybe ten, arrives with a message from a camp a day away: 'Come, we have medicine, we will trade.' The child is alone. The child walked a day. The child is tired. The message could be true. The child could be used. The child believes the message. The child is the messenger. The child is a child.",
+      "location_id": "",
+      "min_day": 15,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Trust the child, go to the camp",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You go. The camp is real. The medicine is real. The trade is fair. The child was true. The child waits for you at the camp. The child is proud. The trust was the gift. The gift was the child's.",
+          "epitaph": "Trusted the child. The camp was real. The child was proud. The trust was the gift."
+        },
+        {
+          "label": "Send the child back with a counter-offer",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You send the child back with a counter-offer. The child walks another day. The child is tired. The child will return, or not. The counter-offer is the cost. The child is the courier. The child is a child.",
+          "epitaph": "Sent the child back with a counter-offer. The child walked another day. The child is a courier."
+        },
+        {
+          "label": "Keep the child, send an adult",
+          "moral_delta": 3,
+          "empathy_delta": 2,
+          "outcome_text": "You keep the child and send an adult with the reply. The child rests. The adult goes. The child is safe. The child is not a courier now. The child is a child. The keeping was the mercy.",
+          "epitaph": "Kept the child, sent an adult. The child rested. The keeping was the mercy."
+        },
+        {
+          "label": "Refuse, send the child home",
+          "moral_delta": -3,
+          "empathy_delta": 0,
+          "outcome_text": "You refuse and send the child home. The child walks another day. The medicine is not traded. The child is the cost. The child is the thing. The child is a child and you sent them back into the road.",
+          "epitaph": "Refused, sent the child home. The child walked another day. The child is the thing I sent back."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_despairing",
+      "display_name": "The Despairing Survivor",
+      "category": "comfort",
+      "trigger": "A survivor says they want to give up.",
+      "discovery": "A survivor in your shelter says, quietly, to you: 'I want to stop. I want to give up. I do not want to do another day.' The survivor is serious. The survivor is not injured. The survivor is tired in the way that is not the body. You are responsible. You are not sure what to say. The survivor is waiting for you to say something.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Sit with them, do not argue",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You sit. You do not argue. You do not tell them to be strong. You sit. After a long time, they say: 'thank you for not telling me to be strong.' The next day, they are still there. The sitting was the thing.",
+          "epitaph": "Sat with the despairing one. Did not argue. The next day, they were still there."
+        },
+        {
+          "label": "Give them a task, a reason",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You give them a task — the water count, the lamp filling, something small. They do it. The task is the reason. The reason is the task. The task is not the cure. The task is the thing to do today.",
+          "epitaph": "Gave them a task. The task is the reason. The task is not the cure. It is the thing to do today."
+        },
+        {
+          "label": "Tell them to be strong",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You tell them to be strong. They nod. They do not eat that night. They are still there the next day, or they are not. The strong was the thing they could not be. The strong was the thing you said.",
+          "epitaph": "Told them to be strong. They could not be. The strong was the thing I said. They did not eat."
+        },
+        {
+          "label": "Tell the doctor, walk away",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You tell the doctor and walk away. The doctor will handle it. The doctor does not know how. You know the doctor does not know. The walking was the giving. The giving was the walking away.",
+          "epitaph": "Told the doctor, walked away. The doctor does not know how. The walking was the giving."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_last_request",
+      "display_name": "The Last Request",
+      "category": "dead",
+      "trigger": "A dying person asks you to do something after they die.",
+      "discovery": "A dying person asks you, with their last strength, to do one thing after they die: burn their notebook. The notebook is full of writing. The notebook is their life. The dying person does not want it read. The dying person wants it gone. You promise. The dying person dies. The notebook is in your hand.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Burn the notebook as promised",
+          "moral_delta": 8,
+          "empathy_delta": 2,
+          "outcome_text": "You burn the notebook. The pages go. The writing goes. The life goes. The promise was kept. The keeping was the cost. The cost was the thing you do not know now.",
+          "epitaph": "Burned the notebook as promised. The life went. The keeping was the cost."
+        },
+        {
+          "label": "Read it first, then burn it",
+          "moral_delta": -2,
+          "empathy_delta": 0,
+          "outcome_text": "You read it first. The life is in it. The secrets are in it. You learn things the dying person did not want you to know. Then you burn it. The promise is kept, partly. The reading was the breaking. The breaking was the reading.",
+          "epitaph": "Read the notebook, then burned it. The promise is kept, partly. The reading was the breaking."
+        },
+        {
+          "label": "Keep the notebook, do not burn it",
+          "moral_delta": -5,
+          "empathy_delta": -1,
+          "outcome_text": "You keep the notebook. You do not burn it. The promise is broken. The notebook is in your pack. The life is in your pack. The dying person trusted you. The trust is the thing you broke. The notebook is the proof.",
+          "epitaph": "Kept the notebook. The promise is broken. The trust is what I broke. The notebook is the proof."
+        },
+        {
+          "label": "Bury it with the body",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You bury the notebook with the body. You did not burn it. You did not read it. You put it with the person. The person is with the writing. The writing is with the person. The promise is bent, not broken. The bend is the thing.",
+          "epitaph": "Buried the notebook with the body. The promise is bent. The bend is the thing."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_veteran",
+      "display_name": "The Old Veteran",
+      "category": "listen",
+      "trigger": "An old veteran wants to tell you about a battle you did not see.",
+      "discovery": "An old veteran, scars on the face, wants to tell you about a battle. The battle was before the Exchange. The battle was a different war. The veteran has told the story many times. The veteran will tell it again. The story is the veteran's life. The story is the thing the veteran carries.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Listen to the battle story",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You listen. The battle is far away and long ago. The veteran is there again, in the telling. When it is done, the veteran thanks you. The veteran is tired. The story is told. The telling was the gift.",
+          "epitaph": "Listened to the old veteran's battle. The veteran was there again. The telling was the gift."
+        },
+        {
+          "label": "Listen, ask questions",
+          "moral_delta": 6,
+          "empathy_delta": 2,
+          "outcome_text": "You listen and ask questions. The veteran brightens. The story is richer with the questions. The veteran has not been asked in a long time. The asking was the gift. The gift was the asking.",
+          "epitaph": "Listened and asked questions. The veteran brightened. The asking was the gift."
+        },
+        {
+          "label": "Listen politely, think of other things",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You listen politely and think of the road, the food, the shelter. The veteran knows. The veteran does not say. The story is told to a wall. You are the wall. The politeness was the wall.",
+          "epitaph": "Listened politely, thought of other things. The veteran knew. I was the wall."
+        },
+        {
+          "label": "Tell them you have heard it before",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You tell them you have heard the story before. The veteran stops. The veteran nods. The veteran does not tell the story again, to you or anyone. The story is the veteran's alone now. The alone is the thing you gave them.",
+          "epitaph": "Told the veteran I had heard it. The veteran stopped. The story is theirs alone now."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_last_match",
+      "display_name": "The Last Match",
+      "category": "share",
+      "trigger": "A stranger asks for a light, and you have one match left.",
+      "discovery": "A stranger asks for a light for their cigarette, or their fire, or their lamp. You have one match left. One. The match is the last. The match is the difference between a warm night and a cold one, for you. The stranger needs a light. You need a light. The match is one.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Give the match",
+          "moral_delta": 10,
+          "empathy_delta": 2,
+          "outcome_text": "You give the match. The stranger lights their cigarette, or their fire, or their lamp. The match is gone. You have no light now. The stranger has light. The giving was the thing. The dark is yours now.",
+          "epitaph": "Gave the last match. The stranger has light. The dark is mine."
+        },
+        {
+          "label": "Split the use — light both",
+          "moral_delta": 6,
+          "empathy_delta": 2,
+          "outcome_text": "You strike the match and light both — their cigarette and your lamp, or their fire and your fire, together. The match is one. The light is two. The sharing is the thing. The match is the reason for the sharing.",
+          "epitaph": "Split the match. The light was two. The sharing was the thing. The match was the reason."
+        },
+        {
+          "label": "Refuse, you need it",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You refuse. You need the match. The stranger understands, or does not. The stranger leaves. The match is yours. The match is the last. The keeping is the thing. The keeping is the cold for the stranger.",
+          "epitaph": "Refused. The match is mine. The keeping is the cold for the stranger."
+        },
+        {
+          "label": "Trade the match for something",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "outcome_text": "You offer to trade the match. The stranger has a little food. You trade. The match is gone. The food is yours. The trade was the thing. The match was the price. The price was the food.",
+          "epitaph": "Traded the last match for food. The trade was the thing. The match was the price."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_map",
+      "display_name": "The Stranger's Map",
+      "category": "trust",
+      "trigger": "A stranger offers to sell you a map of safe routes.",
+      "discovery": "A stranger offers a map of safe routes — marked shelters, clean water, avoided hazards. The price is high: your spare knife. The map could be real. The map could be a fake. The routes could be safe. The routes could be traps. The stranger has used the map, they say. The stranger is alive, which is evidence.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Buy the map",
+          "moral_delta": 5,
+          "empathy_delta": 1,
+          "outcome_text": "You trade the knife for the map. The map is detailed. The routes are marked. You will use it. The routes may be safe. The knife is gone. The map is the thing. The thing may be a lie. The knife was certain.",
+          "epitaph": "Bought the map with the knife. The map may be a lie. The knife was certain."
+        },
+        {
+          "label": "Verify one route first",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You ask to verify one route — the nearest shelter. The stranger agrees. You go. The shelter is there. The route is safe. You buy the map. The verifying was the cost of a day. The day was the cost of trust.",
+          "epitaph": "Verified one route. The shelter was there. Bought the map. The day was the cost of trust."
+        },
+        {
+          "label": "Refuse, keep the knife",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You refuse. The knife is certain. The map is not. The stranger leaves. The routes remain unknown. The knife is in your hand. The certainty is the thing. The unknown is the cost of certainty.",
+          "epitaph": "Refused. Kept the knife. The routes are unknown. The certainty is the thing."
+        },
+        {
+          "label": "Take the map by force",
+          "moral_delta": -10,
+          "empathy_delta": -2,
+          "outcome_text": "You take the map. The stranger does not fight. The map is yours. The knife is yours. The map may be a lie. The taking is the thing. The stranger is without a map now. The stranger is the cost.",
+          "epitaph": "Took the map. The stranger is without it. The taking is the thing. The stranger is the cost."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_dying_alone",
+      "display_name": "The One Who Wants to Die Alone",
+      "category": "comfort",
+      "trigger": "A dying person asks you to leave them, to die alone.",
+      "discovery": "A dying person, injured beyond your help, asks you to leave. They want to die alone. They say they do not want company. They say they want the quiet. You could sit. You could leave. The dying is theirs. The company is the question. The leaving is the request. The sitting is the mercy, or the cruelty.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Respect the wish, leave",
+          "moral_delta": 5,
+          "empathy_delta": 1,
+          "outcome_text": "You leave. The dying person nods. You walk away. The dying is theirs, alone. The alone is what they wanted. The leaving was the respect. The respect is the thing. The thing is the not-sitting.",
+          "epitaph": "Left the dying one alone, as they asked. The alone was theirs. The leaving was the respect."
+        },
+        {
+          "label": "Sit far enough away, in sight",
+          "moral_delta": 6,
+          "empathy_delta": 2,
+          "outcome_text": "You sit far enough away that they have their quiet, but in sight, in case they change their mind. They do not call. They die in the quiet. You are there, but not there. The compromise is the thing. The compromise is the mercy.",
+          "epitaph": "Sat far away, in sight. They died in the quiet. I was there, but not there. The compromise was the mercy."
+        },
+        {
+          "label": "Refuse to leave, sit with them",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You refuse to leave. You sit. The dying person is angry, then quiet, then dead. The dying was not alone. The dying was with you. The wish was not respected. The company was the mercy, or the cruelty. You do not know which.",
+          "epitaph": "Refused to leave. Sat with them. The wish was not respected. The company was the mercy or the cruelty."
+        },
+        {
+          "label": "Leave food and water, then go",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You leave food and water, then go. The dying person cannot eat. The food is for the principle. The going is the request. The food is the compromise. The compromise is the thing you leave.",
+          "epitaph": "Left food and water, then went. The food was the principle. The going was the request."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_unknown",
+      "display_name": "The Unknown Grave",
+      "category": "dead",
+      "trigger": "An unmarked grave, a name you cannot find.",
+      "discovery": "An unmarked grave, old, the marker gone. You are mapping the area. You do not know who is there. You could dig to find a name. You could mark it 'unknown.' You could leave it. The grave is someone's. The someone is unknown. The unknown is the question.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Mark it 'unknown' and move on",
+          "moral_delta": 5,
+          "empathy_delta": 1,
+          "outcome_text": "You mark it 'unknown' on your map and move on. The grave is someone's. The someone is unknown. The unknown is the honest thing. The honest thing is the marker. The marker is the word 'unknown.'",
+          "epitaph": "Marked the grave 'unknown.' The honest thing. The unknown is the marker."
+        },
+        {
+          "label": "Dig to find a name",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You dig. You find a name, or you do not. If you find one, you mark it. If you do not, you have disturbed a grave for nothing. The digging is the question. The question is the name. The name may not be there.",
+          "epitaph": "Dug for a name. The name may not be there. The digging is the question."
+        },
+        {
+          "label": "Leave it unmarked",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You leave it unmarked. The grave is someone's. The someone is unknown. The unmarked is the policy. The policy is not yours to change. The leaving is the thing. The thing is the unmarked.",
+          "epitaph": "Left the grave unmarked. The policy is the unmarked. The leaving is the thing."
+        },
+        {
+          "label": "Mark it with a stone, no name",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You mark it with a stone, no name. The stone is the marker. The marker is the stone. The someone is unknown. The stone is the knowing that someone is there. The stone is the thing.",
+          "epitaph": "Marked the grave with a stone, no name. The stone is the knowing. The knowing is the thing."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_prophecy",
+      "display_name": "The Prophecy of the Cultist",
+      "category": "listen",
+      "trigger": "A cultist tells you a prophecy of the end.",
+      "discovery": "A cultist, marked, in the road, tells you the world will end on a specific day, soon. The cultist is calm. The cultist believes it. The cultist has a following. The prophecy could be madness. The prophecy could be true. The cultist wants you to listen. The cultist wants you to believe. You are the listener. The listening is the question.",
+      "location_id": "",
+      "min_day": 30,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Listen, do not believe",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You listen. You do not believe. The cultist thanks you for listening. The cultist does not ask you to believe. The listening was the gift. The gift was the not-believing. The not-believing is the thing.",
+          "epitaph": "Listened to the cultist. Did not believe. The listening was the gift."
+        },
+        {
+          "label": "Listen, consider it",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You listen and consider it. The prophecy is specific. The day is soon. You will remember the day. The day may come and go. The considering is the thing. The thing is the remembering. The remembering is the cost.",
+          "epitaph": "Listened and considered. The day is in my head now. The remembering is the cost."
+        },
+        {
+          "label": "Argue with the cultist",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You argue. The cultist is calm. The cultist has heard arguments. The cultist is not moved. You are moved, a little, by the calm. The arguing was the thing. The thing was the not-listening.",
+          "epitaph": "Argued with the cultist. The calm moved me. The arguing was the not-listening."
+        },
+        {
+          "label": "Walk on",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You walk on. The cultist calls after you. You do not turn. The prophecy is behind you. The day will come. You will not remember the day, or you will. The walking is the thing. The thing is the not-listening.",
+          "epitaph": "Walked past the cultist. The day will come. The walking was the not-listening."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_blanket",
+      "display_name": "The Shared Blanket",
+      "category": "share",
+      "trigger": "A stranger shivers in a shelter you share for the night.",
+      "discovery": "A public shelter, a stranger in the next cot, shivering, no blanket. The night is cold. You have one blanket. The blanket is yours. The stranger is shivering. The stranger is a stranger. The blanket is one. The cold is the night.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Share the blanket",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You share the blanket. You are both half-warm. The stranger sleeps. You sleep, partly. The morning comes. The stranger thanks you and goes. The sharing was the thing. The thing was the half-warm.",
+          "epitaph": "Shared the blanket. We were half-warm. The sharing was the thing."
+        },
+        {
+          "label": "Give the blanket",
+          "moral_delta": 10,
+          "empathy_delta": 2,
+          "outcome_text": "You give the blanket. The stranger is warm. You are cold. You do not sleep. The morning comes. You are tired. The stranger is warm and grateful. The giving was the thing. The tired is the cost.",
+          "epitaph": "Gave the blanket. The stranger was warm. I was tired. The giving was the thing."
+        },
+        {
+          "label": "Keep the blanket",
+          "moral_delta": -3,
+          "empathy_delta": 0,
+          "outcome_text": "You keep the blanket. You are warm. The stranger shivers all night. The stranger does not ask. The stranger leaves at dawn without a word. The keeping was the thing. The thing was the warm. The warm was the cold for the stranger.",
+          "epitaph": "Kept the blanket. The stranger shivered. The keeping was the warm. The warm was the cold for the stranger."
+        },
+        {
+          "label": "Trade the blanket for their boots",
+          "moral_delta": -2,
+          "empathy_delta": -1,
+          "outcome_text": "You offer to trade the blanket for their boots. The boots are good. The stranger is cold and considers, then trades. You have boots. The stranger has a blanket. The trade was the thing. The thing was the cold for the boots.",
+          "epitaph": "Traded the blanket for boots. The stranger has the blanket. I have the boots. The trade was the cold for the boots."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_returned",
+      "display_name": "The Returned Exile",
+      "category": "trust",
+      "trigger": "A person you exiled returns, asking to be let back in.",
+      "discovery": "A person you exiled a month ago, for a crime, returns. They are thin, hurt, weathered. They ask to be let back. The exile was the sentence. The sentence was just, or seemed so. The person has suffered the exile. The person is asking for mercy. The shelter is watching. The law is the law. The mercy is the question.",
+      "location_id": "",
+      "min_day": 40,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Let them back, forgive the crime",
+          "moral_delta": 5,
+          "empathy_delta": 3,
+          "outcome_text": "You let them back. The shelter is uneasy. The exile is broken. The person is grateful. The law is bent. The bending is the mercy. The mercy is the thing. The thing is the unease.",
+          "epitaph": "Let the exile back. The law is bent. The mercy is the thing. The unease is the cost."
+        },
+        {
+          "label": "Let them back, on probation",
+          "moral_delta": 3,
+          "empathy_delta": 2,
+          "outcome_text": "You let them back on probation — the least rations, the hardest work. The person accepts. The law is bent, not broken. The probation is the thing. The thing is the watching.",
+          "epitaph": "Let the exile back on probation. The law is bent, not broken. The watching is the thing."
+        },
+        {
+          "label": "Turn them away, the exile stands",
+          "moral_delta": -5,
+          "empathy_delta": -1,
+          "outcome_text": "You turn them away. The exile was the sentence. The sentence stands. The person leaves, thinner, quieter. The law is the law. The law is the thing. The thing is the person walking away again.",
+          "epitaph": "Turned the exile away. The law stands. The person walked away again. The law is the thing."
+        },
+        {
+          "label": "Hear them out first",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You hear them out. They tell you what the exile was. You listen. Then you decide. The hearing was the thing. The thing was the respect. The respect is the listening before the law.",
+          "epitaph": "Heard the exile out. Then decided. The hearing was the respect. The respect is the listening."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_reminder",
+      "display_name": "The Reminder of Before",
+      "category": "comfort",
+      "trigger": "A survivor finds a photograph of their family, all gone.",
+      "discovery": "A survivor finds a photograph in the ruins — their family, before, all gone now. The survivor is holding the photograph. The survivor is crying. The survivor is not moving. You are there. The photograph is the before. The before is the thing. The thing is the photograph.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Sit with them, look at the photo",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You sit. You look at the photo with them. They name the people. You learn the names. The names are the before. The before is the thing you share now. The sharing was the gift. The gift is the names.",
+          "epitaph": "Sat with the survivor, looked at the photo. Learned the names. The names are the before we share."
+        },
+        {
+          "label": "Take the photo, put it away for them",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You gently take the photo and put it in their pack, for later. They let you. The photo is put away. The crying is not. The putting was the mercy. The mercy was the not-looking. The not-looking is the thing.",
+          "epitaph": "Put the photo away for them. The crying is not. The putting was the mercy."
+        },
+        {
+          "label": "Tell them to keep moving",
+          "moral_delta": -2,
+          "empathy_delta": -1,
+          "outcome_text": "You tell them to keep moving. The road is long. The photo is the before. The before is behind. They nod. They put the photo away. They move. The moving was the thing. The thing was the not-sitting.",
+          "epitaph": "Told them to keep moving. They moved. The photo is away. The moving was the not-sitting."
+        },
+        {
+          "label": "Leave them be",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You leave them be. The photo is in their hands. The crying is theirs. The before is theirs. You are not part of the before. The leaving is the respect. The respect is the not-sitting. The not-sitting is the thing.",
+          "epitaph": "Left them be with the photo. The before is theirs. The leaving was the respect."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_pet",
+      "display_name": "The Dead Pet",
+      "category": "dead",
+      "trigger": "A child's pet, dead, the child asking you to bury it.",
+      "discovery": "A child's pet — a bird, a cat, a small thing — is dead. The child is holding it, crying. The child asks you to bury it. The child is serious. The pet is a pet. The pet is the child's family. The burial is the request. The request is the child's grief. The grief is the thing.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 150,
+      "choices": [
+        {
+          "label": "Bury the pet with ceremony",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You bury the pet. You let the child say words. You mark the grave with a stone. The child is sad and less sad. The ceremony was the thing. The thing was the respect. The respect is the burial.",
+          "epitaph": "Buried the child's pet with ceremony. The respect was the burial. The child was sad and less sad."
+        },
+        {
+          "label": "Bury the pet simply",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You bury the pet simply. The child watches. You mark it with a stone. The child says thank you. The simple was the thing. The thing was the burying. The burying was the mercy.",
+          "epitaph": "Buried the pet simply. The child said thank you. The simple was the mercy."
+        },
+        {
+          "label": "Tell the child to bury it themselves",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You tell the child to bury it themselves. The child is small. The child tries. The child cries. The child buries it, shallow. The doing was the thing. The thing was the child's grief, alone.",
+          "epitaph": "Told the child to bury it themselves. The child did, shallow, crying. The doing was the grief, alone."
+        },
+        {
+          "label": "Say it is just a pet",
+          "moral_delta": -8,
+          "empathy_delta": -2,
+          "outcome_text": "You say it is just a pet. The child looks at you. The child does not cry anymore. The child is harder now. The just-a-pet was the thing. The thing was the cruelty. The cruelty is the hardness you gave the child.",
+          "epitaph": "Said it was just a pet. The child is harder now. The cruelty is the hardness I gave."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_drunkard",
+      "display_name": "The Drunkard's Story",
+      "category": "listen",
+      "trigger": "A drunk person wants to tell you the truth about something.",
+      "discovery": "A drunk person, at a fire, grabs your sleeve. They say: 'I will tell you the truth. Everyone is afraid to hear it. Are you afraid?' The drunk person is serious. The drunk person is drunk. The truth may be true. The truth may be drunk. You are at the fire. The fire is the night.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Listen to the drunk truth",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You listen. The truth is rambling and raw. Some of it is true. Some of it is drunk. The drunk person weeps at the end. You do not know what was true. The listening was the thing. The thing was the not-knowing.",
+          "epitaph": "Listened to the drunk truth. Some was true. Some was drunk. The listening was the thing."
+        },
+        {
+          "label": "Listen, then ask questions",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You listen and ask questions. The drunk person answers, some clearly, some not. The truth is clearer with the questions. The questions are the thing. The thing is the sober in the drunk.",
+          "epitaph": "Listened and asked questions. The truth is clearer. The questions were the sober in the drunk."
+        },
+        {
+          "label": "Nod and wait for them to sleep",
+          "moral_delta": 1,
+          "empathy_delta": 0,
+          "outcome_text": "You nod and wait. The drunk person talks, then sleeps. The truth is unfinished. The unfinished is the drunk. The nodding was the thing. The thing was the waiting.",
+          "epitaph": "Nodded and waited. The drunk slept. The truth is unfinished. The nodding was the waiting."
+        },
+        {
+          "label": "Tell them to sleep it off",
+          "moral_delta": -2,
+          "empathy_delta": -1,
+          "outcome_text": "You tell them to sleep it off. The drunk person is hurt. The truth stays in them. The telling-off was the thing. The thing was the not-listening. The not-listening is the truth you did not hear.",
+          "epitaph": "Told the drunk to sleep it off. The truth stayed in them. The not-listening is the truth I did not hear."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_rope",
+      "display_name": "The Rope at the Cliff",
+      "category": "share",
+      "trigger": "A stranger hangs from a ledge, you have a rope.",
+      "discovery": "A stranger hangs from a ledge, fingers slipping, a drop below. You have a rope. The stranger is a stranger. The stranger could be a raider. The stranger could be a person. The fingers are slipping. The rope is in your hand. The decision is now. The now is the fingers.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Throw the rope, pull them up",
+          "moral_delta": 10,
+          "empathy_delta": 3,
+          "outcome_text": "You throw the rope. The stranger catches it. You pull. The stranger is up. The stranger is shaking. The stranger thanks you. The stranger is a person. The rope was the thing. The thing was the now.",
+          "epitaph": "Threw the rope. The stranger is up. The rope was the thing. The now was the fingers."
+        },
+        {
+          "label": "Throw the rope, demand a weapon first",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "outcome_text": "You throw the rope but demand their weapon first. The stranger throws a knife up. You pull. The stranger is up, unarmed. You are armed twice. The demand was the thing. The thing was the caution. The caution is the stranger's cost.",
+          "epitaph": "Threw the rope, demanded the weapon. The stranger is up, unarmed. The caution was the cost."
+        },
+        {
+          "label": "Go for help, leave them hanging",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You go for help. The fingers may not last. The help may not be there. The going is the thing. The thing is the not-now. The not-now is the fingers slipping while you run.",
+          "epitaph": "Went for help. The fingers may not last. The not-now is the fingers slipping while I run."
+        },
+        {
+          "label": "Watch and decide",
+          "moral_delta": -8,
+          "empathy_delta": -2,
+          "outcome_text": "You watch. You decide. The decision takes too long. The fingers slip. The stranger falls. The watching was the thing. The thing was the not-throwing. The not-throwing is the fall.",
+          "epitaph": "Watched. The decision took too long. The stranger fell. The not-throwing is the fall."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_camp_invite",
+      "display_name": "The Camp Invitation",
+      "category": "trust",
+      "trigger": "A camp invites you to join them, permanently.",
+      "discovery": "A camp, well-organized, well-fed, invites you to join them — permanently. You would give up your shelter, your people, your count. You would join their count. The camp is better than your shelter. The camp is not your shelter. Your people are your people. Their people are their people. The invitation is the question. The question is the belonging.",
+      "location_id": "",
+      "min_day": 40,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Join the camp",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You join. The camp is better. You eat better. You sleep better. You are not yours anymore. You are theirs. The joining was the thing. The thing was the leaving. The leaving is your people.",
+          "epitaph": "Joined the camp. I eat better. I am theirs. The leaving is my people."
+        },
+        {
+          "label": "Refuse, return to your shelter",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You refuse. You return to your shelter. The shelter is worse. The people are yours. The count is yours. The refusing was the thing. The thing was the belonging. The belonging is your people.",
+          "epitaph": "Refused the camp. Returned to my shelter. The belonging is my people."
+        },
+        {
+          "label": "Visit first, decide later",
+          "moral_delta": 4,
+          "empathy_delta": 1,
+          "outcome_text": "You visit for a week, then decide. The camp is good. Your shelter is yours. The week is the thing. The thing is the knowing. The knowing is the visit.",
+          "epitaph": "Visited for a week. The knowing is the visit. The deciding is later."
+        },
+        {
+          "label": "Negotiate an alliance, not a joining",
+          "moral_delta": 6,
+          "empathy_delta": 2,
+          "outcome_text": "You negotiate an alliance — trade, mutual aid, not a joining. The camp agrees. You keep your shelter. You gain a partner. The negotiating was the thing. The thing was the third way. The third way is the alliance.",
+          "epitaph": "Negotiated an alliance. The third way. I kept my shelter and gained a partner."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_old_fear",
+      "display_name": "The Old Person's Fear",
+      "category": "comfort",
+      "trigger": "An old person is afraid of the dark, and the dark is coming.",
+      "discovery": "An old person in your shelter, trembling, says they are afraid of the dark. The dark is coming. The dark has come every night. The old person has been brave every night. Tonight, the old person is not brave. Tonight, the old person is afraid. You are there. The dark is coming.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Sit with them through the dark",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You sit with them through the dark. You talk, or you do not. The dark comes. The dark goes. The old person is brave again, partly. The sitting was the thing. The thing was the through. The through is the dark you shared.",
+          "epitaph": "Sat with the old one through the dark. The dark went. The through is the dark we shared."
+        },
+        {
+          "label": "Give them a candle, stay nearby",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You give them a candle and stay nearby. The candle is the light. The light is the not-dark. The nearby is the not-alone. The candle and the nearby were the things. The things were the mercy.",
+          "epitaph": "Gave a candle, stayed nearby. The light and the not-alone were the mercy."
+        },
+        {
+          "label": "Tell them the dark is just dark",
+          "moral_delta": -2,
+          "empathy_delta": -1,
+          "outcome_text": "You tell them the dark is just dark. The old person nods. The old person is still afraid. The just-dark was the thing. The thing was the not-understanding. The not-understanding is the fear you dismissed.",
+          "epitaph": "Told the old one the dark is just dark. The fear was dismissed. The not-understanding is the thing."
+        },
+        {
+          "label": "Leave them to be brave alone",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You leave them. The old person has been brave every night. The old person will be brave tonight. The leaving was the thing. The thing was the expectation. The expectation is the brave you assumed.",
+          "epitaph": "Left the old one to be brave alone. The expectation is the brave I assumed."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_letter_unsent",
+      "display_name": "The Unsent Letter",
+      "category": "dead",
+      "trigger": "A dead person, an unsent letter in the pocket, addressed.",
+      "discovery": "A dead person, an unsent letter in the pocket, addressed to someone in a camp you can reach in two days. The letter is sealed. The letter is the dead person's. The letter may be love, confession, warning. The letter is sealed. The seal is the question. The question is the reading.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Deliver the letter unopened",
+          "moral_delta": 10,
+          "empathy_delta": 3,
+          "outcome_text": "You deliver the letter unopened. The recipient reads it, weeps, thanks you. The letter was the dead person's. The delivering was the thing. The thing was the not-reading. The not-reading is the respect.",
+          "epitaph": "Delivered the letter unopened. The recipient wept. The not-reading was the respect."
+        },
+        {
+          "label": "Read it first, then decide",
+          "moral_delta": -2,
+          "empathy_delta": 0,
+          "outcome_text": "You read it first. The letter is a confession of a wrong. You decide whether to deliver it. The reading was the breaking. The breaking is the knowing. The knowing is the thing you were not meant to have.",
+          "epitaph": "Read the letter first. The knowing is the thing I was not meant to have. The breaking is the reading."
+        },
+        {
+          "label": "Deliver it, but read it to the recipient",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You deliver it and read it aloud to the recipient, who cannot read. The letter is the dead person's voice in your mouth. The reading is the thing. The thing is the voice. The voice is the dead in the living.",
+          "epitaph": "Delivered and read it aloud. The dead person's voice in my mouth. The voice is the thing."
+        },
+        {
+          "label": "Keep it, never deliver",
+          "moral_delta": -5,
+          "empathy_delta": -1,
+          "outcome_text": "You keep the letter. You do not deliver it. The letter is in your pack. The recipient will not know. The dead person's last word is with you. The keeping is the thing. The thing is the not-delivering. The not-delivering is the weight.",
+          "epitaph": "Kept the letter. The recipient will not know. The not-delivering is the weight."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_silence",
+      "display_name": "The Silence",
+      "category": "listen",
+      "trigger": "A person sits with you and says nothing, and wants nothing but company.",
+      "discovery": "A person sits beside you at the fire. They say nothing. They want nothing. They are there. You are there. The fire is there. The silence is the thing. The silence is not awkward. The silence is the company. The company is the silence. You could speak. You could not.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Share the silence",
+          "moral_delta": 6,
+          "empathy_delta": 3,
+          "outcome_text": "You share the silence. You do not speak. The fire speaks. The night speaks. You do not. The sharing was the thing. The thing was the not-speaking. The not-speaking is the company.",
+          "epitaph": "Shared the silence. The not-speaking was the company. The fire spoke for us."
+        },
+        {
+          "label": "Speak, gently, about nothing",
+          "moral_delta": 4,
+          "empathy_delta": 2,
+          "outcome_text": "You speak, gently, about nothing — the fire, the night, the road. They speak back, gently, about nothing. The nothing is the thing. The thing is the gentle. The gentle is the speaking about nothing.",
+          "epitaph": "Spoke gently about nothing. They spoke back. The gentle was the thing."
+        },
+        {
+          "label": "Ask if they are alright",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You ask if they are alright. They nod. They are alright. They are there. The asking was the thing. The thing was the care. The care is the question. The question is the alright.",
+          "epitaph": "Asked if they were alright. They nodded. The asking was the care."
+        },
+        {
+          "label": "Leave, the silence is uncomfortable",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You leave. The silence is uncomfortable. The person is alone with the fire. The leaving was the thing. The thing was the discomfort. The discomfort is the not-sitting. The not-sitting is the alone you left them.",
+          "epitaph": "Left the silence. The discomfort was the not-sitting. The alone is what I left them."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_skill_medical",
+      "display_name": "The Medical Skill",
+      "category": "share",
+      "trigger": "A doctor offers to teach you first aid for a week of your labor.",
+      "discovery": "A doctor at a distant shelter offers to teach you first aid — real skills, wound care, splinting, the saving of lives — for a week of your labor. The skill is worth more than the week. The week is your shelter's work. The shelter needs you. The skill could save the shelter. The week is the cost. The skill is the question.",
+      "location_id": "",
+      "min_day": 30,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Trade the week for the skill",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You trade the week. The doctor teaches you. You learn. You return with the skill. The shelter has the skill now. The week was the cost. The skill is the thing. The thing is the saving.",
+          "epitaph": "Traded a week for the medical skill. The shelter has the skill. The week was the cost."
+        },
+        {
+          "label": "Send someone else, you cannot leave",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You send someone else — a younger, stronger person who can learn. They go for the week. They return with the skill. The shelter has the skill. You stayed. The sending was the thing. The thing was the delegation. The delegation is the trust.",
+          "epitaph": "Sent someone else for the skill. They returned with it. The delegation was the trust."
+        },
+        {
+          "label": "Refuse, the shelter needs you now",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You refuse. The shelter needs you now. The skill is for later. The now is the shelter. The refusing was the thing. The thing was the now. The now is the cost of the later.",
+          "epitaph": "Refused the skill. The shelter needs me now. The now is the cost of the later."
+        },
+        {
+          "label": "Negotiate a shorter trade",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You negotiate a shorter trade — three days for the basics. The doctor agrees. You learn the basics. The basics are the thing. The thing is the half. The half is the three days.",
+          "epitaph": "Negotiated three days for the basics. The half is the thing. The three days was the cost."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_returned_thief",
+      "display_name": "The Thief Who Returns",
+      "category": "trust",
+      "trigger": "A thief who stole from you returns what they took, and more.",
+      "discovery": "A thief who stole from you a month ago returns. They bring back what they took, and more — a gift, an apology. They say they are sorry. They say they were desperate. They are thin. They are asking for forgiveness, or for a place. The return is the question. The question is the trust.",
+      "location_id": "",
+      "min_day": 30,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Accept the return, forgive",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You accept the return and forgive. The thief weeps. You give them a meal. They leave, or stay, by your choice. The forgiving was the thing. The thing was the mercy. The mercy is the trust, rebuilt.",
+          "epitaph": "Accepted the return, forgave. The mercy is the trust, rebuilt."
+        },
+        {
+          "label": "Accept the return, do not forgive",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You accept the return but do not forgive. The thief nods. They understand. They leave. The return is accepted. The trust is not. The not-forgiving is the thing. The thing is the honesty.",
+          "epitaph": "Accepted the return, did not forgive. The honesty is the thing. The trust is not."
+        },
+        {
+          "label": "Take the return, turn them away",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You take the return and the extra, and turn them away. The thief is hurt. You have more than you had. The taking was the thing. The thing was the not-forgiving and the not-mercy. The not-mercy is the profit.",
+          "epitaph": "Took the return and the extra, turned them away. The profit is the not-mercy."
+        },
+        {
+          "label": "Refuse the return, call the guard",
+          "moral_delta": -5,
+          "empathy_delta": -1,
+          "outcome_text": "You refuse the return and call the guard. The thief is taken. The law is the law. The return was the apology. The apology was refused. The refusing is the thing. The thing is the law without mercy.",
+          "epitaph": "Refused the return, called the guard. The law without mercy. The refusing is the thing."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_burned",
+      "display_name": "The Burned Survivor",
+      "category": "comfort",
+      "trigger": "A survivor with severe burns, in agony, asks for water.",
+      "discovery": "A survivor with severe burns, found in the ruins, in agony, asks for water. You have water. The water will not save them. The water will ease them. The burns are beyond your help. The survivor is dying, slowly, in pain. The water is the mercy. The mercy is the question. The question is the easing of the dying.",
+      "location_id": "",
+      "min_day": 5,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Give water, sit with them",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You give water and sit. The survivor drinks, painfully. The pain is less, a little. You sit until the end, which is not soon. The sitting was the thing. The thing was the mercy. The mercy is the water and the time.",
+          "epitaph": "Gave water, sat with the burned one. The mercy is the water and the time."
+        },
+        {
+          "label": "Give water, go for the doctor",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You give water and go for the doctor. The doctor may come. The doctor may not. The going is the thing. The thing is the hope. The hope is the doctor. The doctor is the question.",
+          "epitaph": "Gave water, went for the doctor. The hope is the doctor. The doctor is the question."
+        },
+        {
+          "label": "Give water, leave them",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You give water and leave. The survivor is alone with the water. The water is the mercy. The leaving is the not-sitting. The not-sitting is the thing. The thing is the mercy without the time.",
+          "epitaph": "Gave water, left. The mercy without the time. The not-sitting is the thing."
+        },
+        {
+          "label": "Refuse, the water is yours",
+          "moral_delta": -8,
+          "empathy_delta": -2,
+          "outcome_text": "You refuse. The water is yours. The survivor is in agony. The survivor dies, slowly, without the water. The refusing was the thing. The thing was the water. The water is the cost of the dying you did not ease.",
+          "epitaph": "Refused the water. The survivor died without it. The water is the cost of the dying I did not ease."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_mass_burial_help",
+      "display_name": "The Mass Burial Help",
+      "category": "dead",
+      "trigger": "A settlement is burying their dead, and asks for help.",
+      "discovery": "A settlement, hit hard, is burying their dead — many, in a long trench. They ask for help. The digging is hard. The dead are many. The dead are theirs. You are passing. You have a shovel. The help is the thing. The thing is the digging of someone else's dead.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Help dig the trench",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You help dig. The trench is long. The dead are many. The settlement thanks you with a meal and a bed. The digging was the thing. The thing was the someone else's dead. The someone else's dead are the dead.",
+          "epitaph": "Helped dig the trench. The someone else's dead are the dead. The digging was the thing."
+        },
+        {
+          "label": "Help carry the dead, not dig",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You help carry the dead to the trench, but not dig. The carrying is the thing. The thing is the bearing. The bearing is the weight. The weight is the dead. The dead are the weight you carried.",
+          "epitaph": "Helped carry the dead. The weight is the dead. The bearing was the thing."
+        },
+        {
+          "label": "Watch, then leave",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You watch, then leave. The digging is theirs. The dead are theirs. The watching was the thing. The thing was the not-helping. The not-helping is the passing.",
+          "epitaph": "Watched, then left. The not-helping is the passing. The dead are theirs."
+        },
+        {
+          "label": "Refuse, the dead are not yours",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You refuse. The dead are not yours. The settlement nods. They understand. You are passing. The refusing was the thing. The thing was the not-yours. The not-yours is the dead you did not bury.",
+          "epitaph": "Refused. The dead are not mine. The not-yours is the dead I did not bury."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_rumor",
+      "display_name": "The Rumor",
+      "category": "listen",
+      "trigger": "A traveler tells you a rumor about a place you are going.",
+      "discovery": "A traveler at a fire tells you a rumor: the place you are going is gone, burned, everyone dead. The traveler is sure. The traveler heard it from someone who saw it. The someone is not here. The rumor could be true. The rumor could be wrong. You are going there. The rumor is the question. The question is the going.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Listen, then go anyway to verify",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "outcome_text": "You listen, then go anyway. The place is there, or it is not. The going is the thing. The thing is the not-trusting the rumor. The not-trusting is the seeing for yourself.",
+          "epitaph": "Listened, went anyway. The not-trusting is the seeing for myself."
+        },
+        {
+          "label": "Listen, change your destination",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You listen and change your destination. The rumor may be true. The new destination is safer, maybe. The changing was the thing. The thing was the caution. The caution is the cost of the rumor.",
+          "epitaph": "Changed my destination. The caution is the cost of the rumor. The rumor may be wrong."
+        },
+        {
+          "label": "Listen, send a scout first",
+          "moral_delta": 4,
+          "empathy_delta": 1,
+          "outcome_text": "You listen and send a scout first. The scout will return in a day. The day is the cost. The scout is the thing. The thing is the verifying. The verifying is the day.",
+          "epitaph": "Sent a scout first. The verifying is the day. The day is the cost of the rumor."
+        },
+        {
+          "label": "Dismiss the rumor, go anyway",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You dismiss the rumor and go anyway. The rumor is a rumor. The going is the thing. The thing is the not-listening. The not-listening is the risk. The risk is the place that may be gone.",
+          "epitaph": "Dismissed the rumor, went anyway. The not-listening is the risk. The place may be gone."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_share_lamp_oil",
+      "display_name": "The Lamp Oil at the Checkpoint",
+      "category": "share",
+      "trigger": "A cold checkpoint guard asks for lamp oil for the night.",
+      "discovery": "A checkpoint guard, cold, on a long night, asks for lamp oil. The checkpoint is not yours. The guard is cold. The lamp oil is yours. The lamp oil is for your shelter. The guard is the law at the checkpoint. The guard is cold. The cold is the guard. The lamp oil is the question.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Give the lamp oil",
+          "moral_delta": 8,
+          "empathy_delta": 2,
+          "outcome_text": "You give the lamp oil. The guard is warm, grateful. The checkpoint is easier now. The guard waves you through. The lamp oil is gone. The giving was the thing. The thing was the warmth for the guard.",
+          "epitaph": "Gave the lamp oil. The guard was warm. The giving was the thing. The warmth was the guard's."
+        },
+        {
+          "label": "Trade the lamp oil for passage",
+          "moral_delta": 3,
+          "empathy_delta": 0,
+          "outcome_text": "You trade the lamp oil for passage. The guard agrees. The trade is the thing. The thing is the deal. The deal is the lamp oil for the through. The through is the trade.",
+          "epitaph": "Traded the lamp oil for passage. The deal is the through. The through is the trade."
+        },
+        {
+          "label": "Refuse, the oil is for the shelter",
+          "moral_delta": -2,
+          "empathy_delta": 0,
+          "outcome_text": "You refuse. The oil is for the shelter. The guard nods. The guard is cold. The checkpoint is harder now. The refusing was the thing. The thing was the oil. The oil is the cold for the guard.",
+          "epitaph": "Refused. The oil is for the shelter. The guard is cold. The oil is the cold for the guard."
+        },
+        {
+          "label": "Share a little, keep most",
+          "moral_delta": 5,
+          "empathy_delta": 1,
+          "outcome_text": "You share a little, keep most. The guard is a little warmer. You have most of the oil. The sharing was the thing. The thing was the compromise. The compromise is the little.",
+          "epitaph": "Shared a little, kept most. The compromise is the little. The little was the thing."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_orphan",
+      "display_name": "The Orphan's Claim",
+      "category": "trust",
+      "trigger": "A child claims to be the heir of a dead leader, asking for shelter.",
+      "discovery": "A child, maybe twelve, claims to be the heir of a dead leader of a distant camp. The child has a token — a medallion, real-looking. The child asks for shelter, by right of the claim. The claim could be true. The claim could be a child's story. The token could be real. The token could be stolen. The child is a child. The claim is the question.",
+      "location_id": "",
+      "min_day": 30,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Shelter the child, investigate the claim",
+          "moral_delta": 5,
+          "empathy_delta": 3,
+          "outcome_text": "You shelter the child and investigate. The claim may be true. The child is a child. The sheltering was the thing. The thing was the not-turning-away. The not-turning-away is the child.",
+          "epitaph": "Sheltered the child, investigated. The not-turning-away is the child."
+        },
+        {
+          "label": "Shelter the child, ignore the claim",
+          "moral_delta": 6,
+          "empathy_delta": 2,
+          "outcome_text": "You shelter the child and ignore the claim. The child is a child. The claim is the claim. The sheltering is the thing. The thing is the child, not the claim. The claim is the not-the-thing.",
+          "epitaph": "Sheltered the child, ignored the claim. The child is the thing. The claim is not."
+        },
+        {
+          "label": "Refuse, the claim is not your problem",
+          "moral_delta": -5,
+          "empathy_delta": -2,
+          "outcome_text": "You refuse. The claim is not your problem. The child leaves, with the token. The child is a child. The refusing was the thing. The thing was the not-shelter. The not-shelter is the child in the road.",
+          "epitaph": "Refused. The child is in the road. The not-shelter is the thing. The claim was not my problem."
+        },
+        {
+          "label": "Take the token, turn the child away",
+          "moral_delta": -10,
+          "empathy_delta": -3,
+          "outcome_text": "You take the token and turn the child away. The token is real, maybe. The child is without the token now. The taking was the thing. The thing was the theft from a child. The theft is the token.",
+          "epitaph": "Took the token, turned the child away. The theft is the token. The thing is the theft from a child."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_remorse",
+      "display_name": "The Remorseful Raider",
+      "category": "comfort",
+      "trigger": "A raider, wounded and dying, expresses remorse.",
+      "discovery": "A raider, wounded, dying, found by the road, expresses remorse. The raider says they did bad things. The raider says they are sorry. The raider is the enemy. The raider is dying. The remorse may be real. The remorse may be the fear of death. You are there. The raider is dying. The remorse is the question.",
+      "location_id": "",
+      "min_day": 20,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Listen to the remorse, offer comfort",
+          "moral_delta": 5,
+          "empathy_delta": 3,
+          "outcome_text": "You listen to the remorse and offer comfort — water, a word. The raider weeps. The raider dies. The comfort was the thing. The thing was the mercy to an enemy. The mercy is the question you answered yes.",
+          "epitaph": "Listened to the raider's remorse. Offered comfort. The mercy to an enemy. The mercy is the yes."
+        },
+        {
+          "label": "Listen, offer no comfort",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "outcome_text": "You listen but offer no comfort. The raider dies unheard. The listening was the thing. The thing was the not-comfort. The not-comfort is the enemy. The enemy is the not-comfort.",
+          "epitaph": "Listened, offered no comfort. The not-comfort is the enemy. The enemy is the not-comfort."
+        },
+        {
+          "label": "Refuse to listen, walk on",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You refuse to listen and walk on. The raider is the enemy. The raider dies alone. The refusing was the thing. The thing was the enemy. The enemy is the dying you left.",
+          "epitaph": "Refused to listen, walked on. The raider is the enemy. The dying is what I left."
+        },
+        {
+          "label": "Listen, then judge them",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "outcome_text": "You listen, then tell the raider what they did was wrong. The raider nods. The raider dies judged. The judging was the thing. The thing was the verdict. The verdict is the last word.",
+          "epitaph": "Listened, then judged. The verdict is the last word. The judging was the thing."
+        }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_ceremony",
+      "display_name": "The Ceremony for a Stranger",
+      "category": "dead",
+      "trigger": "You find a body and a note requesting a specific funeral rite.",
+      "discovery": "A body, and a note in the pocket: 'If found, please bury me facing east, with a stone on my chest. This is my faith.' The faith is not yours. The rite is specific. The body is a stranger. The rite is the request. The request is the faith. The faith is not yours. The body is the question.",
+      "location_id": "",
+      "min_day": 10,
+      "max_day": 200,
+      "choices": [
+        {
+          "label": "Perform the rite as requested",
+          "moral_delta": 8,
+          "empathy_delta": 3,
+          "outcome_text": "You perform the rite — east-facing, stone on chest. The rite is not yours. The rite is the stranger's. The performing was the thing. The thing was the respect. The respect is the faith that is not yours.",
+          "epitaph": "Performed the stranger's rite. The respect is the faith that is not mine. The performing was the thing."
+        },
+        {
+          "label": "Bury them simply, no rite",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "outcome_text": "You bury them simply, no rite. The body is buried. The rite is not performed. The simple was the thing. The thing was the not-rite. The not-rite is the faith you did not honor.",
+          "epitaph": "Buried them simply, no rite. The not-rite is the faith I did not honor."
+        },
+        {
+          "label": "Bury them your way",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "outcome_text": "You bury them your way — your own rite, your own faith. The body is buried. The rite is yours, not theirs. The your-way was the thing. The thing was the not-theirs. The not-theirs is the faith you put on a stranger.",
+          "epitaph": "Buried them my way. The not-theirs is the faith I put on a stranger."
+        },
+        {
+          "label": "Leave them, the rite is not yours",
+          "moral_delta": -3,
+          "empathy_delta": -1,
+          "outcome_text": "You leave them. The rite is not yours. The body is unburied. The leaving was the thing. The thing was the not-yours. The not-yours is the body you left to the animals.",
+          "epitaph": "Left them. The not-yours is the body I left. The rite was not mine."
+        }
+      ]
+    }
+  ]
+}
