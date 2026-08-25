@@ -1,0 +1,534 @@
+{
+  "schema_version": 1,
+  "collection_id": "found_objects_expansion",
+  "description": "Found objects and item descriptions — the things survivors carry, find, trade, and leave behind. Each with a story in its material condition. Tiers: common (1-2 sentences), distinctive (2-4), unique (3-8). Materiality, provenance, condition.",
+  "items": [
+    {
+      "id": "found_01_tin_cup",
+      "name": "Tin Cup",
+      "description": "A tin cup, dented on one side, the enamel chipped to show the metal beneath. Someone has scratched initials on the bottom that are too worn to read.",
+      "tier": "common",
+      "tags": [
+        "cup",
+        "tin",
+        "common",
+        "carried"
+      ]
+    },
+    {
+      "id": "found_02_wool_scarf",
+      "name": "Wool Scarf",
+      "description": "A wool scarf, dark grey, frayed at both ends, smelling of woodsmoke and old sweat. The weave is tight — pre-war quality, the kind that does not pill.",
+      "tier": "common",
+      "tags": [
+        "scarf",
+        "wool",
+        "common",
+        "warmth"
+      ]
+    },
+    {
+      "id": "found_03_folding_knife",
+      "name": "Folding Knife",
+      "description": "A folding knife with a wooden handle and a blade sharpened past the maker's mark. The blade is thin from years of sharpening. It cuts. It does not lock.",
+      "tier": "common",
+      "tags": [
+        "knife",
+        "folding",
+        "common",
+        "tool"
+      ]
+    },
+    {
+      "id": "found_04_candle_stub",
+      "name": "Candle Stub",
+      "description": "A candle stub, half-burned, the wick black and bent. The wax is tallow, not beeswax — the smell tells you. It will burn for another hour. The hour is the candle.",
+      "tier": "common",
+      "tags": [
+        "candle",
+        "tallow",
+        "common",
+        "light"
+      ]
+    },
+    {
+      "id": "found_05_water_bottle",
+      "name": "Water Bottle",
+      "description": "A steel water bottle, the cap chained to the neck, the seal perished and replaced with tarred rope. It holds water. It does not hold cold. The rope is the seal.",
+      "tier": "common",
+      "tags": [
+        "bottle",
+        "water",
+        "steel",
+        "common",
+        "seal"
+      ]
+    },
+    {
+      "id": "found_06_leather_gloves",
+      "name": "Leather Gloves",
+      "description": "Leather gloves, cracked across the knuckles, the right thumb patched with a scrap of inner tube. The gloves are too large for most hands. The large is the warmth. The warmth is the large.",
+      "tier": "common",
+      "tags": [
+        "gloves",
+        "leather",
+        "common",
+        "warmth",
+        "patched"
+      ]
+    },
+    {
+      "id": "found_07_charcoal_pencil",
+      "name": "Charcoal Pencil",
+      "description": "A charcoal pencil, short, the wood casing chewed where someone held it in their teeth. It writes on anything. The anything is the charcoal. The charcoal is the anything.",
+      "tier": "common",
+      "tags": [
+        "pencil",
+        "charcoal",
+        "common",
+        "writing"
+      ]
+    },
+    {
+      "id": "found_08_metal_spoon",
+      "name": "Metal Spoon",
+      "description": "A metal spoon, stainless, the bowl slightly bent, the handle engraved with a name that someone has scratched out. The scratching-out is more deliberate than the engraving. The spoon is the spoon. The name is not the spoon.",
+      "tier": "common",
+      "tags": [
+        "spoon",
+        "metal",
+        "common",
+        "name_scratched"
+      ]
+    },
+    {
+      "id": "found_09_cloth_pouch",
+      "name": "Cloth Pouch",
+      "description": "A cloth pouch, drawstring, the fabric faded from blue to grey, the seam resewn with a different thread. The pouch holds small things. The small things are the pouch. The pouch is the small things.",
+      "tier": "common",
+      "tags": [
+        "pouch",
+        "cloth",
+        "common",
+        "carrying"
+      ]
+    },
+    {
+      "id": "found_10_rag_bandage",
+      "name": "Rag Bandage",
+      "description": "A strip of cloth torn from a bedsheet, boiled clean, rolled tight. The cloth is white where it was boiled and brown where it was not. The brown is the before. The white is the after. The after is the bandage.",
+      "tier": "common",
+      "tags": [
+        "bandage",
+        "rag",
+        "cloth",
+        "common",
+        "medical"
+      ]
+    },
+    {
+      "id": "found_11_pocket_watch",
+      "name": "Pocket Watch",
+      "description": "A pocket watch, brass, the glass cracked in a star pattern from a single impact. The hands are stopped at 03:14. The watch does not run. The 03:14 is the time the owner stopped too, or the time the watch stopped and the owner kept going. The chain is still attached. The chain is the connection. The connection is the chain.",
+      "tier": "distinctive",
+      "tags": [
+        "watch",
+        "brass",
+        "stopped",
+        "03:14",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_12_family_photo",
+      "name": "Family Photograph",
+      "description": "A family photograph, creased from folding, the colour shifted to sepia. Four people in a garden. The garden is green. The green is the before. The faces are clear. The names are not on the back. The back is blank. The blank is the not-knowing. The not-knowing is the back.",
+      "tier": "distinctive",
+      "tags": [
+        "photograph",
+        "family",
+        "sepia",
+        "garden",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_13_letter_sealed",
+      "name": "Sealed Letter",
+      "description": "A sealed letter, the envelope yellowed, the wax stamp broken but still holding the flap. The address is to a woman at a street that no longer exists in a town that no longer exists. The letter has not been opened. The not-opening is the respect. The respect is the not-opening. The letter is the last word. The last word is sealed.",
+      "tier": "distinctive",
+      "tags": [
+        "letter",
+        "sealed",
+        "envelope",
+        "wax",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_14_child_drawing",
+      "name": "Child's Drawing",
+      "description": "A child's drawing on the back of a ration form. The sun, with a face, smiling. The face is smiling. The sun is not smiling. The sun is gone. The drawing is the sun. The sun is the drawing. The form is the ration. The ration is the form. The drawing is on the ration. The sun is on the ration. The ration is the sun.",
+      "tier": "distinctive",
+      "tags": [
+        "drawing",
+        "child",
+        "sun",
+        "face",
+        "ration_form",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_15_dog_tags",
+      "name": "Dog Tags",
+      "description": "A pair of dog tags on a ball chain, the metal darkened. The name is legible. The blood type is legible. The religion is legible. The religion did not help. The name is the name. The blood type is the blood type. The tags are the tags. The tags are the identity. The identity is the tags. The person is not the tags. The person is gone. The tags remain.",
+      "tier": "distinctive",
+      "tags": [
+        "dog_tags",
+        "military",
+        "identity",
+        "name",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_16_music_box",
+      "name": "Music Box",
+      "description": "A small music box, wood and brass, the mechanism still turning when the key is wound. The tune is three notes, repeated. The three notes are the only tune. The spring is weak. The notes are slow. The slow is the winding down. The winding down is the music. The music is the winding down.",
+      "tier": "distinctive",
+      "tags": [
+        "music_box",
+        "brass",
+        "three_notes",
+        "winding",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_17_wedding_ring",
+      "name": "Wedding Ring",
+      "description": "A gold wedding ring, the inside engraved with a date and two initials. The ring is warm from being carried in a pocket, not worn. The wearing is over. The carrying is the after. The after is the pocket. The pocket is the ring. The ring is the after. The date is the before. The initials are the before. The ring is the after. The after is the ring.",
+      "tier": "distinctive",
+      "tags": [
+        "ring",
+        "wedding",
+        "gold",
+        "engraved",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_18_map_marked",
+      "name": "Marked Map",
+      "description": "A road map, pre-war, the routes marked in three colours of pencil. Red is the safe route. Blue is the water. Black is the gone. The black is the most used. The red is the least. The blue is the middle. The middle is the water. The water is the middle. The map is the world. The world is the map. The black is the world. The red is the hope. The hope is the least used.",
+      "tier": "distinctive",
+      "tags": [
+        "map",
+        "marked",
+        "routes",
+        "safe_water_gone",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_19_bible_worn",
+      "name": "Worn Bible",
+      "description": "A Bible, the cover soft from handling, the pages thumbed to the same passages. The passages are the psalms. The psalms are the lament. The lament is the psalms. The pages are thumbed to the lament. The lament is the most-read. The most-read is the lament. The Bible is the lament. The lament is the Bible.",
+      "tier": "distinctive",
+      "tags": [
+        "bible",
+        "worn",
+        "psalms",
+        "lament",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_20_compass_stuck",
+      "name": "Stuck Compass",
+      "description": "A compass, brass, the needle stuck pointing north-north-east. The needle does not move. The stuck is the magnetic anomaly or the damage. The anomaly is the ash. The damage is the drop. The compass does not tell you which. The compass is the compass. The stuck is the compass. The north-north-east is the stuck. The stuck is the direction. The direction is the stuck.",
+      "tier": "distinctive",
+      "tags": [
+        "compass",
+        "stuck",
+        "magnetic",
+        "brass",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_21_generator_key",
+      "name": "Generator Key",
+      "description": "A brass key, heavy, on a leather fob stamped with a maker's mark and a serial number. The key fits the Meridian model K generator — the one in the shelter, the one the engineer keeps alive with boot leather and clock brass. The fob is stamped 'Service Key — Do Not Duplicate.' The key was found in the engineer's desk, in the drawer he does not open, under the manual with the missing back pages. The key is the trouble pages. The key is the thing the engineer does not use because the generator runs on improvisation now, not keys. The key is the before. The improvisation is the after. The key is kept because the keeping is the respect for the before. The before is the key. The key is the before.",
+      "tier": "unique",
+      "tags": [
+        "key",
+        "generator",
+        "brass",
+        "meridian",
+        "engineer",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_22_seed_jar",
+      "name": "Seed Jar",
+      "description": "A glass jar, sealed with wax, the label in a careful hand: 'Triticum aestivum — winter wheat — harvested Exchange-2Y — 47 seeds.' The jar is cold to the touch. The seeds inside are small and pale and alive. The jar was found in the seed vault, on the shelf, behind the geology books that were not geology books but a cache. The jar is the spring. The spring is in the jar. The jar is the only spring. The 47 is the number. The number is the spring. The spring is the 47. The jar is the future. The future is the jar. The 47 is the future. The future is the 47.",
+      "tier": "unique",
+      "tags": [
+        "seed_jar",
+        "wheat",
+        "glass",
+        "spring",
+        "47",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_23_treaty_pouch",
+      "name": "Treaty Pouch",
+      "description": "A leather pouch, sealed with a wax stamp, the leather darkened from being carried against the skin. The pouch contains a folded paper — a treaty between two shelters, the terms in two hands, the ratification word in a third. The pouch was carried by a courier through a forest in a whiteout. The courier talked to the pouch. The pouch did not answer. The courier was the only one who had to. The pouch is the treaty. The treaty is the words that change the lists. The pouch is the words. The words are the pouch. The pouch is the skin-warm leather. The skin-warm is the carrying. The carrying is the pouch.",
+      "tier": "unique",
+      "tags": [
+        "pouch",
+        "treaty",
+        "leather",
+        "courier",
+        "sealed",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_24_iodine_jar",
+      "name": "Iodine Jar",
+      "description": "A small brown glass jar, the label in pre-war print: 'Povidone Iodine 10% — 50ml.' The seal is intact. The iodine is still iodine. The jar was found in the back of a desk drawer in the printing works, in the office wing, behind the files, where the scavenger who found it did not tell anyone. The jar is the thing the quartermaster did not name. The jar is the medicine. The medicine is the jar. The jar is the last of the old world's medicine. The old world is the jar. The jar is the old world. The iodine is the old world. The old world is the iodine. The jar is the before. The iodine is the before. The before is the jar.",
+      "tier": "unique",
+      "tags": [
+        "iodine",
+        "jar",
+        "brown_glass",
+        "medicine",
+        "printing_works",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_25_chalk_sticks",
+      "name": "Two Sticks of Chalk",
+      "description": "Two sticks of chalk, white, school-grade, found in the back of a desk drawer in the printing works, in the office wing. The chalk is whole. The chalk is rare. The chalk is the thing the scavenger found and thought of the teacher. The teacher is the cycle. The cycle is the sky. The sky is still there. The chalk is the lesson. The lesson is the chalk. The chalk is the cycle. The cycle is the chalk. The teacher drew the cycle on the wall with the last of the chalk. The chalk ran out. The teacher drew the cycle in the air. The chalk is back now. The chalk is the return. The return is the chalk. The chalk is the lesson. The lesson is the return.",
+      "tier": "unique",
+      "tags": [
+        "chalk",
+        "two_sticks",
+        "teacher",
+        "cycle",
+        "printing_works",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_26_clock_brass",
+      "name": "Clock Brass",
+      "description": "Three brass shims, thin, curved, cut from the escapement wheel of an office clock. The clock that no longer keeps time. The brass was cut by the engineer and shimmed into the bearing race of the generator's third cylinder. The clock is in the generator now. The generator is keeping time. The brass is the bearing. The bearing is the brass. The clock is the time. The time is the generator. The generator is the clock. The brass is the time. The time is the brass. The clock is the generator. The generator is the clock. The brass is the connection. The connection is the brass. The clock does not keep time. The generator keeps time. The brass is the reason.",
+      "tier": "unique",
+      "tags": [
+        "brass",
+        "clock",
+        "shims",
+        "generator",
+        "bearing",
+        "engineer",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_27_boot_leather",
+      "name": "Boot Leather",
+      "description": "A rectangle of leather, cut from the left boot of a pair in the stores locker. The leather is thick, dark, oiled. The rectangle is cut to the shape of a gasket — an injector gasket for a Meridian model K generator. The boot is the gasket. The gasket is the boot. The boot was a boot. The boot is now the gasket. The gasket is the generator. The generator is the boot. The boot is the shelter. The shelter is the boot. The leather is the connection between the walking and the running. The walking is the boot. The running is the generator. The leather is both. The both is the leather.",
+      "tier": "unique",
+      "tags": [
+        "boot",
+        "leather",
+        "gasket",
+        "generator",
+        "meridian",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_28_sun_drawing",
+      "name": "The Sun Drawing",
+      "description": "A child's drawing on a scrap of paper, taped to the wall by a cot in the clinic. The sun, with a face, smiling. The face is smiling. The sun is not smiling. The sun is gone. The drawing is the only sun. The drawing was made by a child with a healed hand — a burn, scalded from a kettle, healed with honey and clean cloth. The child drew the sun with the hand that was burned. The hand is the medicine. The sun is the medicine. The medicine is the drawing. The drawing is the sun. The sun is the drawing. The drawing is on the wall by the nurse's cot. The nurse keeps the sun. The sun is the nurse's. The nurse is the sun's.",
+      "tier": "unique",
+      "tags": [
+        "drawing",
+        "sun",
+        "face",
+        "child",
+        "burn",
+        "healed",
+        "nurse",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_29_note_thank_you",
+      "name": "The Thank-You Note",
+      "description": "A note, on a piece of file paper, found on a desk in the printing works, in the office wing. The note says: 'Thank you for the screws.' The screws were brass. The note is from another scavenger. The other scavenger does not have a name. The other scavenger has a note. The note is the name. The name is the note. The note is the thank-you. The thank-you is the note. The note is the connection. The connection is the note. The note is the thing the scavenger carries and does not know what to do with. The not-knowing is the note. The note is the not-knowing. The thank-you is the not-knowing. The not-knowing is the thank-you.",
+      "tier": "unique",
+      "tags": [
+        "note",
+        "thank_you",
+        "scavenger",
+        "screws",
+        "printing_works",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_30_candle_jar",
+      "name": "The Candle Jar",
+      "description": "A glass jar, cracked, placed over a single pale sprout that has come up through black mold in the corner of a broken greenhouse. The jar is the frost protection. The sprout is the life. The jar is the life. The life is the jar. The jar is cracked but still stands. The standing is the jar. The jar is the standing. The crack is the jar. The jar is the crack. The sprout is the life. The life is the sprout. The jar is the life. The life is the jar. The jar was placed by someone who did not know if the sprout would live. The not-knowing is the jar. The jar is the not-knowing. The sprout is the answer. The answer is the sprout. The jar is the question. The question is the jar.",
+      "tier": "unique",
+      "tags": [
+        "candle_jar",
+        "jar",
+        "sprout",
+        "greenhouse",
+        "mold",
+        "frost",
+        "unique"
+      ]
+    },
+    {
+      "id": "found_31_thermos",
+      "name": "Thermos",
+      "description": "A steel thermos, dented, the cap missing, replaced with a cork whittled to fit. The thermos holds heat for four hours. The four hours is the thermos. The thermos is the four hours. The cork is the cap. The cap is the cork. The whittling is the care. The care is the cork.",
+      "tier": "distinctive",
+      "tags": [
+        "thermos",
+        "steel",
+        "cork",
+        "heat",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_32_notebook",
+      "name": "Notebook",
+      "description": "A notebook, cloth-bound, the pages half-filled with a careful hand. The hand is a child's. The writing is what the child sees. The last entry is Day 34. The entry after is blank. The blank is the not-writing. The not-writing is the blank. The child is not writing. The child is the book. The book is the child. The blank is the child. The child is the blank.",
+      "tier": "distinctive",
+      "tags": [
+        "notebook",
+        "child",
+        "cloth",
+        "blank",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_33_pipe_wrench",
+      "name": "Pipe Wrench",
+      "description": "A pipe wrench, heavy, the jaw worn loose from years of pipe work. Someone has wrapped the handle in strips cut from an inner tube. The inner tube is the grip. The grip is the inner tube. The wrench is the pipe. The pipe is the wrench. The loose jaw is the age. The age is the jaw. The jaw is the age.",
+      "tier": "distinctive",
+      "tags": [
+        "wrench",
+        "pipe",
+        "inner_tube",
+        "grip",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_34_sewing_kit",
+      "name": "Sewing Kit",
+      "description": "A sewing kit in a tin, the tin rusted at the hinges but still opening. Three needles, two straight, one bent. A spool of black thread, half used. A spool of white thread, unopened. A button, bone, from a coat that is no longer a coat. The button is the coat. The coat is the button. The button is the last of the coat. The coat is the first of the button.",
+      "tier": "distinctive",
+      "tags": [
+        "sewing_kit",
+        "tin",
+        "needles",
+        "thread",
+        "button",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_35_lantern",
+      "name": "Lantern",
+      "description": "A kerosene lantern, the glass chimney cracked but held with a ring of wire. The wick is trimmed. The kerosene is low. The low is the light. The light is the low. The wire is the glass. The glass is the wire. The lantern is the light. The light is the lantern. The low is the lantern. The lantern is the low.",
+      "tier": "distinctive",
+      "tags": [
+        "lantern",
+        "kerosene",
+        "glass",
+        "wire",
+        "distinctive"
+      ]
+    },
+    {
+      "id": "found_36_rope_coil",
+      "name": "Rope Coil",
+      "description": "A coil of hemp rope, 10 metres, frayed at one end. The rope is strong. The fraying is the age. The age is the fraying. The rope is the rope.",
+      "tier": "common",
+      "tags": [
+        "rope",
+        "hemp",
+        "common",
+        "frayed"
+      ]
+    },
+    {
+      "id": "found_37_fire_steel",
+      "name": "Fire Steel",
+      "description": "A fire steel, the striker worn smooth. The steel throws sparks. The sparks are the fire. The fire is the sparks. The steel is the spark. The spark is the steel.",
+      "tier": "common",
+      "tags": [
+        "fire_steel",
+        "striker",
+        "common",
+        "fire"
+      ]
+    },
+    {
+      "id": "found_38_canvas_tarp",
+      "name": "Canvas Tarp",
+      "description": "A canvas tarp, weathered, the grommets rusted, one corner torn. The tarp is the shelter. The shelter is the tarp. The tarp is the weather. The weather is the tarp.",
+      "tier": "common",
+      "tags": [
+        "tarp",
+        "canvas",
+        "common",
+        "shelter"
+      ]
+    },
+    {
+      "id": "found_39_metal_file",
+      "name": "Metal File",
+      "description": "A metal file, the teeth clogged with rust and old steel. The file is smaller than it was. The smaller is the filing. The filing is the smaller. The file is the electrician. The electrician is the file. The file is getting smaller. The corrosion is getting bigger.",
+      "tier": "common",
+      "tags": [
+        "file",
+        "metal",
+        "rust",
+        "common",
+        "electrician"
+      ]
+    },
+    {
+      "id": "found_40_mess_kit",
+      "name": "Mess Kit",
+      "description": "A mess kit, aluminium, the pot blackened, the cup dented, the handle riveted with a nail. The kit is the meal. The meal is the kit. The nail is the handle. The handle is the nail. The kit is the eating. The eating is the kit.",
+      "tier": "common",
+      "tags": [
+        "mess_kit",
+        "aluminium",
+        "pot",
+        "cup",
+        "common",
+        "nail"
+      ]
+    }
+  ]
+}
