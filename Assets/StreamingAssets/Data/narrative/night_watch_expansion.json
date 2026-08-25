@@ -1,0 +1,729 @@
+{
+  "schema_version": 1,
+  "collection_id": "night_watch_expansion",
+  "description": "Night watch logbooks — sentry observations, perimeter checks, unusual sightings, quiet-hour notes, the small things noticed in the dark. Terse, practical, occasionally eerie, never confirming the supernatural.",
+  "incidents": [
+    {
+      "log_id": "watch_01_routine_sweep",
+      "recorded_day": "12",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_kolya_s",
+      "sentry_name": "Kolya S.",
+      "post_location": "South Perimeter Post 2",
+      "weather_conditions": "Clear, -18C, light wind from the north, visibility good to 200m",
+      "threat_level": "None",
+      "title": "Routine Perimeter Sweep — Nothing Noted",
+      "log_entry": "22:00 — Relieved Sgt. M. at Post 2. Perimeter intact. No movement on the south road. The creek is frozen. The moon is out, which is unusual. The moon has been behind the ash for weeks. The moon is the moon.\n\n23:30 — Swept east to Post 3 and back. No tracks. No sound. The wind shifted north at 23:00, which is normal for the season. The generator hum is audible from here, which means the generator is running, which means the engineer is alive, which is good.\n\n01:00 — Swept west to Post 1 and back. Nothing. The snow is clean. The clean is the good.\n\n01:45 — The moon went behind the ash again. The dark is the dark. The lamp is the lamp.\n\n02:00 — Relieved by D. Nothing to report. The watch was the watch.",
+      "tactical_action": "None. Routine sweep. Logged for the record.",
+      "tags": [
+        "routine",
+        "perimeter",
+        "south",
+        "moon",
+        "nothing"
+      ]
+    },
+    {
+      "log_id": "watch_02_generator_hum",
+      "recorded_day": "15",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_mira_v",
+      "sentry_name": "Mira V.",
+      "post_location": "North Cupola (-2m)",
+      "weather_conditions": "Overcast, -22C, no wind, visibility 50m in ash haze",
+      "threat_level": "None",
+      "title": "Generator Hum Audible from Cupola — Confirmed Running",
+      "log_entry": "02:00 — Relieved K. at the cupola. The hum is audible. The hum is the generator. The generator is the engineer. The engineer is alive.\n\n03:00 — The hum changed pitch. Dropped half a note. I do not know what half a note means for a generator. I know what it means for a violin. The generator is not a violin. I wrote it down because the engineer said to write down anything that changes.\n\n04:00 — The hum is back to the original pitch. The change lasted one hour. I do not know if that is normal. The engineer will know.\n\n05:00 — Dawn light in the east, grey, not gold. The ash eats the gold. The grey is the dawn. The dawn is the grey.\n\n06:00 — Relieved by Sgt. M. Reported the pitch change. Sgt. M. said the engineer would be told. The engineer will know.",
+      "tactical_action": "Logged the pitch change for the engineer. No action required. The hum is the hum.",
+      "tags": [
+        "routine",
+        "generator",
+        "hum",
+        "pitch_change",
+        "north_cupola"
+      ]
+    },
+    {
+      "log_id": "watch_03_filter_check",
+      "recorded_day": "20",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_boris_k",
+      "sentry_name": "Boris K.",
+      "post_location": "Sub-Level 1, Filter Room",
+      "weather_conditions": "Indoor watch. Filter room temperature 8C. Humidity moderate.",
+      "threat_level": "None",
+      "title": "Filter Bank Pressure Check — Nominal",
+      "log_entry": "22:00 — Filter bank 1: 46 Pa. Nominal. Bank 2: 44 Pa. Nominal. The mechanic checked them this morning. The mechanic is the mechanic.\n\n00:00 — Filter bank 1: 45 Pa. Dropped 1 Pa in two hours. Within tolerance. The tolerance is the tolerance.\n\n01:30 — Filter bank 1: 44 Pa. Dropped another 1 Pa. Still within tolerance. The drop is steady. The steady is the concern. The mechanic will want to know. I wrote it down.\n\n02:00 — Relieved by P. Pressure log attached. The drop is steady. The steady is the thing I am reporting. The report is the report.",
+      "tactical_action": "Logged the steady pressure drop for the mechanic. No action required tonight. The tolerance is the tolerance. The steady is the concern.",
+      "tags": [
+        "routine",
+        "filters",
+        "pressure",
+        "sub_level_1",
+        "steady_drop"
+      ]
+    },
+    {
+      "log_id": "watch_04_quiet_hours",
+      "recorded_day": "25",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_anya_p",
+      "sentry_name": "Anya P.",
+      "post_location": "Main Corridor, by the Clinic",
+      "weather_conditions": "Indoor watch. Corridor temperature 12C. Quiet hours.",
+      "threat_level": "None",
+      "title": "Quiet Hours — Clinic Corridor — Nothing Noted",
+      "log_entry": "02:00 — Relieved B. The corridor is quiet. The clinic is quiet. The sheet is hanging. The sheet is the policy. The policy is the sheet.\n\n03:00 — A cough from behind the sheet. One cough. Then nothing. I checked. The patient is sleeping. The cough is the sleeping. The sleeping is the cough.\n\n03:14 — The vent hum dropped half an octave. I know this because the psych journal says to write it down. The vent is the vent. The hum is the hum. The half-octave is the note. I wrote the note.\n\n04:00 — Nothing. The corridor is the corridor. The quiet is the quiet. The quiet is full.\n\n06:00 — Relieved by D. Nothing to report. The watch was quiet. The quiet is the watch.",
+      "tactical_action": "None. Quiet hours. The vent hum noted for the psych journal. The cough was sleeping.",
+      "tags": [
+        "routine",
+        "quiet_hours",
+        "clinic",
+        "vent_hum",
+        "cough"
+      ]
+    },
+    {
+      "log_id": "watch_05_gate_check",
+      "recorded_day": "8",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_petr_m",
+      "sentry_name": "Petr M.",
+      "post_location": "Main Gate",
+      "weather_conditions": "Clear, -15C, no wind, visibility good to 300m",
+      "threat_level": "None",
+      "title": "Gate Seal Check — Nominal",
+      "log_entry": "22:00 — Gate seal intact. The rope and tar are holding. The rope is the seal. The tar is the seal. The seal is the rope and the tar.\n\n23:00 — No movement outside the gate. The road is the road. The road is empty. The empty is the good.\n\n00:30 — A sound from the road. A branch, or a stone, or the wind moving something. I checked through the viewport. Nothing. The sound was the sound. The nothing was the nothing.\n\n02:00 — Relieved by K. Seal intact. Nothing approached. The gate is the gate. The gate is closed.",
+      "tactical_action": "None. Seal checked at 22:00 and 02:00. Nominal. The sound at 00:30 was nothing.",
+      "tags": [
+        "routine",
+        "gate",
+        "seal",
+        "road",
+        "nothing"
+      ]
+    },
+    {
+      "log_id": "watch_06_figure_in_fog",
+      "recorded_day": "30",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_ilya_t",
+      "sentry_name": "Sgt. Ilya T.",
+      "post_location": "North Cupola (-2m)",
+      "weather_conditions": "Dense fog, -10C, no wind, visibility under 10m",
+      "threat_level": "Unclassified",
+      "title": "Figure in the Fog — Visual Contact, No Confirmation",
+      "log_entry": "03:14 — A shape in the fog, south of the perimeter, approximately 40m. Standing. Not moving. The fog is thick. The shape is a shape. I cannot confirm it is a person. I cannot confirm it is not a person.\n\n03:20 — The shape has not moved. Six minutes. A person in the fog at minus ten without shelter would move. The shape does not move.\n\n03:28 — The fog shifted. The shape is gone. Or the shape was the fog. The fog makes shapes. I have seen the fog make shapes before. The shapes are the fog. The fog is the shapes.\n\n03:42 — Another shape, different position, east. Same duration. Same stillness. Same gone. The fog is making shapes tonight. The shapes are the fog. I am writing this because the shapes are the shapes and the fog is the fog and I am the one who saw.\n\n06:00 — Relieved by D. Reported the shapes. The shapes were the fog. The fog was the shapes. No footprints found at dawn. The ground is the ground. The ground does not lie. The fog does not lie either, but the fog is the fog.",
+      "tactical_action": "Logged the sighting. No action taken. The shapes were consistent with fog pareidolia. No footprints at dawn. The ground confirms the fog.",
+      "tags": [
+        "unusual",
+        "fog",
+        "shapes",
+        "pareidolia",
+        "north_cupola"
+      ]
+    },
+    {
+      "log_id": "watch_07_lights_valley",
+      "recorded_day": "35",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_relay_op",
+      "sentry_name": "The Relay Operator",
+      "post_location": "Ridge Relay Station",
+      "weather_conditions": "Clear above the ash layer, -25C, wind 15 km/h from the west, visibility excellent above 500m",
+      "threat_level": "Low",
+      "title": "Valley Lights — Three Sources, One New",
+      "log_entry": "22:00 — Three lights in the valley. Two are known: the grange (south) and the garrison (east). The third is new. The third is west, in the area that was dark last week. The third is steady, not a fire. A lamp. Someone has a lamp where no one had a lamp.\n\n23:00 — The third light is still there. Steady. Not moving. A building with a lamp, or a person with a lamp who is not moving. A person with a lamp who is not moving for an hour is a person who is sitting. A person who is sitting in the dark with a lamp is a person who is waiting or a person who is dead. The lamp does not tell me which.\n\n00:00 — The third light went out. Either the lamp burned out, or the fuel ran out, or the person moved, or the person is dead. The light is out. The dark is back. The dark was there before. The dark is the dark.\n\n02:00 — Relieved by no one. I am alone on the ridge. The relay is the relay. The third light is out. I will watch tomorrow. If the light returns, someone is there. If the light does not return, someone was there. The was is the question.",
+      "tactical_action": "Logged the third light. Reported to the Overlay by radio. The Overlay will record. The Overlay does not investigate. The Overlay records. The recording is the investigation.",
+      "tags": [
+        "unusual",
+        "valley_lights",
+        "third_light",
+        "ridge",
+        "observation"
+      ]
+    },
+    {
+      "log_id": "watch_08_footsteps",
+      "recorded_day": "40",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_kolya_s",
+      "sentry_name": "Kolya S.",
+      "post_location": "South Perimeter Post 2",
+      "weather_conditions": "Clear, -20C, no wind, visibility 200m",
+      "threat_level": "Unclassified",
+      "title": "Footsteps on the Road — No Visual Contact",
+      "log_entry": "03:30 — Footsteps on the south road. I heard them through the viewport. The road is frozen. The frozen road carries sound. The footsteps are real. The footsteps are on the road.\n\n03:35 — The footsteps stopped. I searched the road with the lamp. Nothing. The road is empty. The footsteps are gone. The footsteps were there. The road is the proof. The road carries sound. The sound was the footsteps.\n\n03:45 — The footsteps again. Closer. I cannot see the source. The road is empty. The frozen road carries sound from far away. The footsteps may be 200m away and sound like 20m. The frozen road is the liar. The liar is the frozen road.\n\n04:00 — The footsteps stopped. They did not return. I searched the road at dawn. No footprints. The snow is clean. The clean snow is the proof. The proof is the clean. The footsteps were the frozen road carrying sound from far away, or the footsteps were something else. The snow says nothing was there. The snow does not lie. The frozen road does lie. I believe the snow.",
+      "tactical_action": "Logged the footsteps. Searched at dawn. No footprints. The frozen road carries sound from distances greater than visual range. The footsteps were acoustic, not physical. The snow is the proof.",
+      "tags": [
+        "unusual",
+        "footsteps",
+        "road",
+        "frozen",
+        "acoustic",
+        "no_footprints"
+      ]
+    },
+    {
+      "log_id": "watch_09_vent_voice",
+      "recorded_day": "45",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_anya_p",
+      "sentry_name": "Anya P.",
+      "post_location": "Main Corridor, by the Clinic",
+      "weather_conditions": "Indoor watch. Corridor temperature 10C. Quiet hours. Ventilation running.",
+      "threat_level": "Low",
+      "title": "Vent Voice — Auditory Pareidolia, Noted",
+      "log_entry": "03:14 — The vent hum dropped half an octave as the grid load shifted to battery trickle. The hum sounds like a low B-flat. If you press your forehead to the duct, the air sounds like a choir holding a note. I know it is turbulent air across sheet metal rivets. I know it is the vent. The vent is the vent. The choir is the vent. The vent is the choir.\n\n03:30 — I stopped listening. The listening is the pareidolia. The pareidolia is the listening. I wrote it down because the psych journal says to write it down. The writing is the medicine. The medicine is the writing.\n\n04:00 — The hum is back to the original pitch. The choir is gone. The vent is the vent. The vent was always the vent.\n\n06:00 — Relieved by D. The vent was the vent. The choir was the vent. The writing is the record.",
+      "tactical_action": "Logged the auditory pareidolia for the psych journal. No action. The vent is the vent. The choir is the vent. The vent is the explanation.",
+      "tags": [
+        "unusual",
+        "vent",
+        "voice",
+        "pareidolia",
+        "quiet_hours",
+        "psych"
+      ]
+    },
+    {
+      "log_id": "watch_10_dog_silent",
+      "recorded_day": "50",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_petr_m",
+      "sentry_name": "Petr M.",
+      "post_location": "Farm Perimeter, West",
+      "weather_conditions": "Overcast, -12C, light snow, visibility 100m",
+      "threat_level": "Low",
+      "title": "Farm Dogs Silent — Unusual",
+      "log_entry": "22:00 — The farm dogs are quiet. The dogs bark at 22:00. The dogs bark at everything. The dogs are not barking. The quiet is the thing. The dogs are the warning. The warning is the dogs. The dogs are not warning.\n\n22:30 — I checked the dogs. Three dogs, in the yard, ears forward, tails still. Watching the tree line. Not barking. The not-barking is the command. Someone told them not to bark. Someone is in the tree line. Or someone was. The dogs are waiting for the command to change.\n\n23:00 — The dogs relaxed. Tails down. Ears down. The command was lifted, or the someone left. I searched the tree line with the lamp. Nothing. The snow is clean. The clean is the proof. The dogs were told to be quiet. The telling is the thing. The telling means someone was there.\n\n02:00 — Relieved by K. The dogs are barking again. The barking is the normal. The normal is the barking. The quiet was the not-normal. The not-normal is the report.",
+      "tactical_action": "Logged the silent dogs. Searched the tree line. Nothing found. The silence suggests a human presence that departed before the search. The dogs confirm: someone was there. The snow does not. The dogs are the better witness.",
+      "tags": [
+        "unusual",
+        "dogs",
+        "silent",
+        "tree_line",
+        "human_presence"
+      ]
+    },
+    {
+      "log_id": "watch_11_child_cough",
+      "recorded_day": "18",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_anya_p",
+      "sentry_name": "Anya P.",
+      "post_location": "Ward C, by the School Corner",
+      "weather_conditions": "Indoor watch. Corridor temperature 11C. Quiet hours.",
+      "threat_level": "None",
+      "title": "Child Coughing in Ward C — Noted, Not Serious",
+      "log_entry": "03:00 — A child coughing in Ward C. One cough. Then silence. Then another. The cough is the cold. The cold is the corridor. The corridor is the school. The school is the children. The children are the cold.\n\n03:30 — The coughing stopped. I checked. The child is Rima. Rima is sleeping. The cough was the sleeping. The sleeping is the cough. Rima does not cough when she is awake. Rima is the quiet game. The quiet game is the sleeping.\n\n04:00 — No more coughing. The corridor is quiet. The quiet is full. The full is the children. The children are the quiet.\n\n06:00 — Relieved by D. Rima coughed in her sleep. The cough is the cold. The cold is the corridor. I will tell the doctor. The doctor is the cough. The cough is the doctor.",
+      "tactical_action": "Noted the child's cough for the doctor. Not serious. The cough is the cold. The cold is the corridor. The corridor needs more heat.",
+      "tags": [
+        "quiet_hours",
+        "child",
+        "cough",
+        "rima",
+        "ward_c",
+        "cold"
+      ]
+    },
+    {
+      "log_id": "watch_12_lamp_flicker",
+      "recorded_day": "22",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_boris_k",
+      "sentry_name": "Boris K.",
+      "post_location": "Main Corridor, by the Mess Hall",
+      "weather_conditions": "Indoor watch. Corridor temperature 10C. Lamp 3 flickering.",
+      "threat_level": "None",
+      "title": "Lamp 3 Flicker — Ballast Failing, Noted for Maintenance",
+      "log_entry": "22:00 — Lamp 3 is flickering. The ballast clicks every 6 seconds. The light is discoloured, violet. The children say the corridor looks narrower when it flickers. The corridor is not narrower. The corridor is the corridor. The lamp is the lamp.\n\n23:00 — The flicker is steady. The click is steady. The steady is the failing. The failing is the steady. I wrote it down for the electrician. The electrician is the lamp. The lamp is the electrician.\n\n00:00 — A child came out to use the latrine. The child saw the flicker. The child said: the corridor is narrower. I said: the corridor is the same. The child said: the lamp is the corridor. The child went back to bed. The child is the philosopher.\n\n02:00 — Relieved by P. Lamp 3 is flickering. The ballast is failing. Noted for the electrician. The electrician is the list. The list is the lamp.",
+      "tactical_action": "Noted for maintenance. Lamp 3 ballast failing. The flicker is steady. The electrician will know. The electrician is the list.",
+      "tags": [
+        "quiet_hours",
+        "lamp",
+        "flicker",
+        "ballast",
+        "children",
+        "corridor"
+      ]
+    },
+    {
+      "log_id": "watch_13_water_drip",
+      "recorded_day": "28",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_kolya_s",
+      "sentry_name": "Kolya S.",
+      "post_location": "Sub-Level 2, by the Pump Room",
+      "weather_conditions": "Indoor watch. Sub-level temperature 6C. Damp.",
+      "threat_level": "None",
+      "title": "Water Drip in Sub-Level 2 — Traced to Condensation",
+      "log_entry": "02:00 — A drip. Steady. One drop every 4 seconds. The drip is the clock. The clock is the drip. I found the source: condensation on the cold water pipe, dripping onto the floor. The pipe is cold. The air is damp. The damp is the condensation. The condensation is the drip.\n\n03:00 — The drip has not changed. One drop every 4 seconds. The steady is the good. The changing would be the bad. The steady is the pipe. The pipe is the steady.\n\n04:00 — I put a bucket under the drip. The bucket is the solution. The solution is the bucket. The drip is the water. The water is the bucket. The bucket is the drip.\n\n06:00 — Relieved by D. The drip is condensation. The bucket is the solution. The bucket has 2cm of water. The 2cm is 6 hours of drip. The drip is the clock. The clock is the 2cm.",
+      "tactical_action": "Traced the drip to condensation on the cold water pipe. Placed a bucket. 2cm in 6 hours. Not a leak. The pipe is sound. The damp is the air.",
+      "tags": [
+        "quiet_hours",
+        "drip",
+        "condensation",
+        "sub_level_2",
+        "bucket",
+        "clock"
+      ]
+    },
+    {
+      "log_id": "watch_14_stove_coals",
+      "recorded_day": "33",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_fyodor_s",
+      "sentry_name": "Fyodor S.",
+      "post_location": "Boiler Room (-10m)",
+      "weather_conditions": "Indoor watch. Boiler room temperature 25C. Boiler running at half load.",
+      "threat_level": "None",
+      "title": "Boiler Coals — Routine Check, Nominal",
+      "log_entry": "22:00 — Boiler at half load. Coals are orange. The orange is the heat. The heat is the shelter. The coals are the orange. I am the stoker. The stoker is the coals.\n\n00:00 — Added two shovels of lignite. The orange is brighter. The brighter is the two shovels. The two shovels is the half load. The half load is the fuel. The fuel is the two shovels.\n\n01:00 — The coals are orange. The orange is the steady. The steady is the boiler. The boiler is the steady. The draft is good. The draft lever is dry. The dry is the rule. The rule is the dry. The wet gloves are the lignite. The lignite is the rule.\n\n02:00 — Relieved by M. The boiler is the boiler. The coals are the coals. The orange is the orange. The shelter is the heat. The heat is the shelter.",
+      "tactical_action": "Routine. Two shovels at midnight. Draft good. Coals steady. The boiler is the boiler.",
+      "tags": [
+        "routine",
+        "boiler",
+        "coals",
+        "stoker",
+        "half_load"
+      ]
+    },
+    {
+      "log_id": "watch_15_door_handle",
+      "recorded_day": "38",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_mira_v",
+      "sentry_name": "Mira V.",
+      "post_location": "North Cupola (-2m)",
+      "weather_conditions": "Overcast, -18C, wind 10 km/h, visibility 150m",
+      "threat_level": "Unclassified",
+      "title": "Door Handle Moved — Wind or Hand",
+      "log_entry": "03:00 — The door handle to the cupola moved. Down, then up. A quarter turn. I was watching the perimeter. I heard the click. I turned. The handle was still. The handle was where it was. The handle was where it was not a moment ago.\n\n03:05 — I checked the door. The door is closed. The latch is engaged. The wind is 10 km/h. The wind is not enough to move a handle. The handle is a heavy handle. The heavy is the handle.\n\n03:10 — The handle did not move again. I watched the handle for 10 minutes. The handle is the handle. The handle does not move. The handle moved once. The once is the thing. The thing is the once.\n\n04:00 — I checked the stairwell below the cupola. Empty. The stair is the stair. The stair is empty. The empty is the stair.\n\n06:00 — Relieved by Sgt. M. The handle moved once. The wind was not enough. The stair was empty. The handle is the handle. The once is the once. I am writing it because the once is the thing that happened. The thing that happened is the once.",
+      "tactical_action": "Logged the handle movement. Checked the door and stairwell. Nothing. The wind was insufficient to move the handle. The handle is heavy. The once is unexplained. The unexplained is the once.",
+      "tags": [
+        "unusual",
+        "door_handle",
+        "cupola",
+        "wind",
+        "unexplained"
+      ]
+    },
+    {
+      "log_id": "watch_16_radio_static",
+      "recorded_day": "42",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_relay_op",
+      "sentry_name": "The Relay Operator",
+      "post_location": "Ridge Relay Station",
+      "weather_conditions": "Clear above ash, -28C, wind 20 km/h, visibility excellent",
+      "threat_level": "Low",
+      "title": "Radio Static — Intermittent Pattern, Not Voice",
+      "log_entry": "22:00 — The radio has static. The static is the air. The air is the static. The static is normal. The static is the nothing that the air sounds like when no one is talking.\n\n23:00 — The static changed. A pattern. Short, short, long. Short, short, long. Repeated. The pattern is not a voice. The pattern is not Morse. The pattern is not any code I know. The pattern is the pattern. The pattern is the static.\n\n23:30 — The pattern stopped. The static is back to the normal static. The normal static is the nothing. The pattern was the something. The something was the pattern. The pattern is the pattern.\n\n00:00 — The pattern returned. Short, short, long. I recorded it. The recording is the proof. The proof is the pattern. The pattern is not a voice. The pattern is not a code. The pattern is the static making a shape. The static makes shapes. The shapes are the static.\n\n02:00 — The pattern has not returned since midnight. The static is the static. The static is the nothing. The nothing is the static. I will listen tomorrow. If the pattern returns, the pattern is the pattern. If the pattern does not return, the pattern was the static. The static is the static.",
+      "tactical_action": "Recorded the static pattern. Not Morse, not voice. Reported to the Overlay. The Overlay will analyse. The Overlay does not confirm. The Overlay records. The recording is the pattern. The pattern is the pattern.",
+      "tags": [
+        "unusual",
+        "radio",
+        "static",
+        "pattern",
+        "ridge",
+        "not_voice"
+      ]
+    },
+    {
+      "log_id": "watch_17_shadow_corner",
+      "recorded_day": "48",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_boris_k",
+      "sentry_name": "Boris K.",
+      "post_location": "Stores, Sub-Level 1",
+      "weather_conditions": "Indoor watch. Stores temperature 8C. One lamp.",
+      "threat_level": "Unclassified",
+      "title": "Shadow in the Corner — Lamp Artifact",
+      "log_entry": "03:00 — A shadow in the corner of the stores, by the west locker. The shadow is not mine. My shadow is behind me. This shadow is in front of me, by the locker. The shadow is the shape of a person standing. There is no person standing.\n\n03:05 — I moved the lamp. The shadow moved. The shadow is the lamp. The lamp is the shadow. The shadow is the angle of the lamp on the locker. The locker is the angle. The angle is the shadow.\n\n03:10 — I moved the lamp again. The shadow is gone. The shadow was the lamp. The lamp was the shadow. The locker is the locker. The locker is not the shadow. The shadow was the lamp on the locker.\n\n04:00 — I checked the locker. The locker is locked. The lock is the lock. The lock is the quartermaster's. The quartermaster is the lock. The shadow was the lamp. The lamp is the explanation. The explanation is the lamp.\n\n06:00 — Relieved by P. The shadow was the lamp on the locker. The lamp is the explanation. The shadow is the lamp. The lamp is the shadow. The shadow is not the locker. The locker is not the shadow.",
+      "tactical_action": "Logged the shadow. Confirmed lamp artifact by moving the light source. The shadow moved with the lamp and disappeared. The locker is locked. The shadow was the angle. The angle is the explanation.",
+      "tags": [
+        "unusual",
+        "shadow",
+        "stores",
+        "lamp",
+        "artifact",
+        "locker"
+      ]
+    },
+    {
+      "log_id": "watch_18_wolf_howl",
+      "recorded_day": "52",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_petr_m",
+      "sentry_name": "Petr M.",
+      "post_location": "Farm Perimeter, West",
+      "weather_conditions": "Clear, -25C, no wind, visibility 300m, snow on the ground",
+      "threat_level": "Low",
+      "title": "Wolf Howl — First in Months, Single Animal",
+      "log_entry": "23:00 — A howl. From the north, from the ash woodland. A single howl. Low. Long. The howl of one animal, not a pack. The dogs are quiet. The dogs are listening. The dogs know the howl. The dogs know the difference between one and many. The dogs are afraid of the many. The dogs are not afraid of the one.\n\n23:30 — A second howl. Same direction. Same animal. The one is calling. The one is alone. The one is looking for the many. The many are not answering. The many may be gone. The one is the one.\n\n00:00 — No more howls. The one has stopped calling. The one has moved on, or the one is waiting, or the one is the one. The dogs are barking now. The barking is the normal. The normal is the barking. The howl was the not-normal. The not-normal is the report.\n\n02:00 — Relieved by K. One wolf, from the north, two howls at 23:00 and 23:30. The first wolf howl in months. The wolf is alone. The alone is the wolf. The wolf is the first. The first is the wolf.",
+      "tactical_action": "Logged the wolf howl. Single animal, from the ash woodland. First in months. The dogs confirmed: one, not many. The one is alone. The alone is the report. The report is the one.",
+      "tags": [
+        "unusual",
+        "wolf",
+        "howl",
+        "ash_woodland",
+        "dogs",
+        "alone"
+      ]
+    },
+    {
+      "log_id": "watch_19_ice_crack",
+      "recorded_day": "55",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_kolya_s",
+      "sentry_name": "Kolya S.",
+      "post_location": "River Watch Post, East",
+      "weather_conditions": "Clear, -30C, no wind, visibility 400m, river frozen",
+      "threat_level": "None",
+      "title": "River Ice Cracking — Thermal Contraction, Normal",
+      "log_entry": "02:00 — The river ice is cracking. The cracking is the cold. The cold is the contraction. The contraction is the cracking. The cracking is loud. The cracking is the river. The river is the ice. The ice is the cracking.\n\n03:00 — The cracking is steady. Every few minutes. The steady is the cold. The cold is the steady. The river is frozen solid. The cracking is the solid. The solid is the cracking.\n\n04:00 — The cracking slowed. The cold is dropping. The dropping is the slowing. The slowing is the cracking. The cracking is the cold.\n\n06:00 — Relieved by D. The river ice cracked all night. The cracking is the thermal contraction. The contraction is the cold. The cold is the cracking. The river is frozen. The frozen is the river. The cracking is the normal. The normal is the cracking.",
+      "tactical_action": "Logged the ice cracking. Thermal contraction. Normal for -30C. The river is frozen solid. The cracking is the cold. The cold is the cracking.",
+      "tags": [
+        "routine",
+        "river",
+        "ice",
+        "cracking",
+        "thermal",
+        "cold"
+      ]
+    },
+    {
+      "log_id": "watch_20_snow_on_gate",
+      "recorded_day": "60",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_petr_m",
+      "sentry_name": "Petr M.",
+      "post_location": "Main Gate",
+      "weather_conditions": "Snow, -20C, wind 5 km/h, visibility 200m, light snow falling",
+      "threat_level": "None",
+      "title": "Snow Accumulation on Gate — Cleared Twice",
+      "log_entry": "22:00 — Snow accumulating on the gate. The seal is covered. The snow is the seal now. The snow is the gate. The gate is the snow. I cleared the snow. The clearing is the watch. The watch is the clearing.\n\n23:30 — Snow again. 3cm on the gate. Cleared. The clearing is the watch. The watch is the clearing. The snow is the gate. The gate is the snow.\n\n01:00 — Snow again. 2cm. Cleared. The snow is steady. The steady is the snow. The clearing is the steady. The steady is the clearing.\n\n02:00 — Relieved by K. Cleared the gate three times. The snow is the gate. The gate is the snow. The clearing is the watch. The watch is the clearing. The seal is under the snow. The snow is over the seal. The seal is the seal. The snow is the snow.",
+      "tactical_action": "Cleared the gate three times. Snow accumulation 2-3cm per sweep. The seal is intact under the snow. The snow is the watch. The watch is the snow.",
+      "tags": [
+        "routine",
+        "snow",
+        "gate",
+        "clearing",
+        "seal"
+      ]
+    },
+    {
+      "log_id": "watch_21_patient_sleeping",
+      "recorded_day": "14",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_anya_p",
+      "sentry_name": "Anya P.",
+      "post_location": "Clinic, Sheeted Bay",
+      "weather_conditions": "Indoor watch. Clinic temperature 14C. Patient sleeping.",
+      "threat_level": "None",
+      "title": "Patient Sleeping — Vital Signs Stable",
+      "log_entry": "02:00 — The patient behind the sheet is sleeping. Breathing is steady. The steady is the sleeping. The sleeping is the steady. The sheet is the policy. The policy is the sheet.\n\n03:00 — Still sleeping. I checked the breathing through the sheet. The sheet is thin. The breathing is audible. The audible is the steady. The steady is the good.\n\n04:00 — The patient turned in the sleep. The turning is the sleeping. The sleeping is the turning. The turning is the good. The good is the turning.\n\n06:00 — Relieved by D. The patient slept through the watch. The breathing was steady. The turning was the sleeping. The sheet is the policy. The policy is the sheet. The patient is the patient. The patient is alive.",
+      "tactical_action": "Patient slept through the watch. Breathing steady. No fever spike. The sheet is the policy. The patient is stable. The stable is the watch.",
+      "tags": [
+        "routine",
+        "clinic",
+        "patient",
+        "sleeping",
+        "sheet",
+        "stable"
+      ]
+    },
+    {
+      "log_id": "watch_22_wind_change",
+      "recorded_day": "62",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_ilya_t",
+      "sentry_name": "Sgt. Ilya T.",
+      "post_location": "North Cupola (-2m)",
+      "weather_conditions": "Clear, -22C, wind shifted from north to east at 01:00, visibility 250m",
+      "threat_level": "None",
+      "title": "Wind Shift — North to East, Noted for Weather Log",
+      "log_entry": "22:00 — Wind from the north, 15 km/h. The north wind is the cold. The cold is the north. The north is the wind.\n\n01:00 — Wind shifted to the east. 10 km/h. The east is the warmer. The warmer is the east. The east is the wind. The shift is the weather. The weather is the shift.\n\n01:30 — The temperature rose 2 degrees in 30 minutes. The rise is the east wind. The east wind is the rise. The rise is the weather.\n\n02:00 — Relieved by D. Wind shifted north to east at 01:00. Temperature rose 2 degrees. The shift is the weather. The weather is the shift. The east is the warmer. The warmer is the east.",
+      "tactical_action": "Logged the wind shift for the weather log. North to east at 01:00. Temperature rose 2C. The shift may indicate a weather front. The weather is the shift.",
+      "tags": [
+        "routine",
+        "wind",
+        "shift",
+        "weather",
+        "temperature"
+      ]
+    },
+    {
+      "log_id": "watch_23_blanket_pull",
+      "recorded_day": "65",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_boris_k",
+      "sentry_name": "Boris K.",
+      "post_location": "Ward A, Dormitory",
+      "weather_conditions": "Indoor watch. Ward temperature 12C. Quiet hours. 14 sleepers.",
+      "threat_level": "Unclassified",
+      "title": "Blanket Pulled — Sleep Movement or Not",
+      "log_entry": "03:30 — A blanket on the floor. Cot 7. The blanket was on the cot at 02:00. The blanket is on the floor at 03:30. The sleeper is in the cot. The sleeper did not move. I watched the sleeper. The sleeper is still. The blanket is on the floor. The sleeper did not kick the blanket. The sleeper is sleeping. The sleeping is the still.\n\n03:35 — I put the blanket back on the sleeper. The sleeper did not wake. The sleeping is the deep. The deep is the sleeping.\n\n04:00 — The blanket is on the floor again. The sleeper is still. The sleeper did not move. I watched the sleeper for 10 minutes. The sleeper is still. The blanket is on the floor. The blanket is the blanket. The sleeper is the sleeper. The floor is the floor. The blanket is on the floor and the sleeper is in the cot and the sleeper did not move.\n\n04:15 — I put the blanket back. I tucked it under the mattress. The tucking is the holding. The holding is the tucking.\n\n06:00 — Relieved by D. The blanket stayed. The tucking held. The sleeper is the sleeper. The blanket is the blanket. The blanket was on the floor twice. The sleeper did not move. The blanket is the blanket. The floor is the floor. The twice is the twice.",
+      "tactical_action": "Logged the blanket. The sleeper did not move either time. The blanket fell twice. Tucking the blanket under the mattress held. The twice is unexplained. The tucking is the solution. The solution held.",
+      "tags": [
+        "unusual",
+        "blanket",
+        "ward_a",
+        "dormitory",
+        "sleep",
+        "unexplained"
+      ]
+    },
+    {
+      "log_id": "watch_24_light_window",
+      "recorded_day": "70",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_mira_v",
+      "sentry_name": "Mira V.",
+      "post_location": "South Perimeter Post 2",
+      "weather_conditions": "Clear, -15C, no wind, visibility 400m",
+      "threat_level": "Low",
+      "title": "Light in the Window — Across the Valley, Steady",
+      "log_entry": "22:00 — A light in a window across the valley. South-southwest. A building I have not seen lit before. The light is steady. The steady is a lamp. The lamp is a person. The person is in the building. The building was dark last week.\n\n23:00 — The light is still there. Steady. Not flickering. Not a fire. A lamp. Someone has a lamp in a building that was dark. Someone moved in, or someone was always there and lit the lamp for the first time.\n\n00:00 — The light is still there. I reported it to the cupola by signal. The cupola acknowledged. The acknowledgment is the three clicks. The three clicks are the acknowledgment.\n\n01:00 — The light went out. The lamp is out. The person is sleeping, or the fuel is gone, or the person is gone. The dark is back. The dark was there before. The dark is the dark.\n\n02:00 — Relieved by K. A light in a window across the valley, steady for 3 hours, then out. Reported to the cupola. The light is the person. The person is the light. The out is the sleeping or the gone. The gone is the question.",
+      "tactical_action": "Logged the light. Reported to the cupola by signal. Steady for 3 hours, then out. The building was previously unlit. The light is a new occupant. The occupant is the question.",
+      "tags": [
+        "unusual",
+        "light",
+        "window",
+        "valley",
+        "new_occupant",
+        "observation"
+      ]
+    },
+    {
+      "log_id": "watch_25_creak_floor",
+      "recorded_day": "75",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_anya_p",
+      "sentry_name": "Anya P.",
+      "post_location": "Main Corridor, by the Mess Hall",
+      "weather_conditions": "Indoor watch. Corridor temperature 10C. Quiet hours. No wind outside.",
+      "threat_level": "None",
+      "title": "Floor Creak in the Mess Hall — Thermal Settling",
+      "log_entry": "03:00 — A creak from the mess hall. The mess hall is empty. The creak is the floor. The floor is the creak. The floor is old pine. The pine is the creak. The creak is the pine.\n\n03:30 — Another creak. Same spot. The floor is settling. The settling is the temperature. The temperature dropped 2 degrees. The drop is the settling. The settling is the creak.\n\n04:00 — Two more creaks. Same spot. The settling is steady. The steady is the temperature. The temperature is the settling. The creak is the pine. The pine is the floor. The floor is the creak.\n\n06:00 — Relieved by D. The mess hall floor creaked four times. The creak is the thermal settling. The settling is the temperature drop. The temperature is the creak. The pine is the floor. The floor is the pine. The creak is the settling. The settling is the creak.",
+      "tactical_action": "Logged the floor creaks. Thermal settling. The pine floor contracts as the temperature drops. The creak is the contraction. The contraction is the temperature. Normal.",
+      "tags": [
+        "routine",
+        "creak",
+        "mess_hall",
+        "floor",
+        "thermal",
+        "settling"
+      ]
+    },
+    {
+      "log_id": "watch_26_fuel_check",
+      "recorded_day": "5",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_fyodor_s",
+      "sentry_name": "Fyodor S.",
+      "post_location": "Boiler Room (-10m)",
+      "weather_conditions": "Indoor watch. Boiler room 25C. Boiler at half load.",
+      "threat_level": "None",
+      "title": "Fuel Check — 184L in Tank, 40L in Reserve",
+      "log_entry": "22:00 — Fuel tank: 184L. Reserve drum: 40L. The 184 is the tank. The 40 is the reserve. The 224 is the total. The total is the 224.\n\n00:00 — Fuel tank: 180L. Used 4L in 2 hours. The 4 is the half load. The half load is the 4. The 4 is the rate. The rate is the 4.\n\n02:00 — Fuel tank: 176L. Used 4L in 2 hours. The rate is steady. The steady is the 4. The 4 is the rate. The rate is the half load. The half load is the 4. Relieved by M. The fuel is the 176. The 176 is the fuel. The rate is the 4. The 4 is the rate.",
+      "tactical_action": "Fuel check: 176L tank, 40L reserve. Rate: 4L per 2 hours at half load. The rate is steady. The steady is the rate. The rate is the 4.",
+      "tags": [
+        "routine",
+        "fuel",
+        "boiler",
+        "check",
+        "rate"
+      ]
+    },
+    {
+      "log_id": "watch_27_dawn_grey",
+      "recorded_day": "10",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_kolya_s",
+      "sentry_name": "Kolya S.",
+      "post_location": "North Cupola (-2m)",
+      "weather_conditions": "Overcast, -20C, wind 5 km/h, visibility 200m",
+      "threat_level": "None",
+      "title": "Dawn Watch — Grey, No Colour",
+      "log_entry": "05:00 — The sky is lightening. The lightening is the grey. The grey is the dawn. The dawn is the grey. There is no colour. The colour is behind the ash. The ash is the colour. The colour is the ash.\n\n05:30 — The grey is brighter. The brighter is the grey. The grey is the dawn. The dawn is the grey. The shadows do not appear. The shadows are the grey. The grey is the shadow.\n\n06:00 — Dawn. The grey is the dawn. The dawn is the grey. The east is the grey. The grey is the east. Relieved by Sgt. M. The dawn is the grey. The grey is the dawn. The colour is the ash. The ash is the colour.",
+      "tactical_action": "Dawn watch. Grey dawn, no colour. The ash filters the light. The light is the grey. The grey is the dawn. Normal for the season.",
+      "tags": [
+        "routine",
+        "dawn",
+        "grey",
+        "ash",
+        "no_colour"
+      ]
+    },
+    {
+      "log_id": "watch_28_water_check",
+      "recorded_day": "18",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_mechanic",
+      "sentry_name": "The Mechanic",
+      "post_location": "Pump Room, South Corridor",
+      "weather_conditions": "Indoor watch. Pump room temperature 8C.",
+      "threat_level": "None",
+      "title": "Pump Check — Flow Nominal, Handle Stiff",
+      "log_entry": "22:00 — Pump flow: steady. Handle: stiff but working. The stiff is the age. The age is the stiff. The boot is the gasket. The gasket is the boot. The boot is the pump. The pump is the boot.\n\n00:00 — Pump flow: steady. Handle: same. The same is the good. The good is the same. The stiff is the same. The same is the stiff.\n\n02:00 — Pump flow: steady. Handle: same. Relieved by P. The pump is the pump. The boot is the gasket. The gasket is the boot. The pump is the boot. The boot is the pump. The flow is the steady. The steady is the flow.",
+      "tactical_action": "Pump check: flow steady, handle stiff (boot-leather gasket holding). The pump is older than the shelter. The boot is the gasket. The gasket is the boot. Nominal.",
+      "tags": [
+        "routine",
+        "pump",
+        "water",
+        "gasket",
+        "boot",
+        "flow"
+      ]
+    },
+    {
+      "log_id": "watch_29_number_station",
+      "recorded_day": "80",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_relay_op",
+      "sentry_name": "The Relay Operator",
+      "post_location": "Ridge Relay Station",
+      "weather_conditions": "Clear above ash, -30C, wind 25 km/h, visibility excellent",
+      "threat_level": "Low",
+      "title": "Numbers Station — Band 6, Pattern Repeats",
+      "log_entry": "03:14 — The numbers station is broadcasting. Seven, fourteen, three, nine, twenty-two. The loop is steady. The loop is the loop. The loop has been playing since before the mast lost power. The loop should not be possible. The loop is the loop.\n\n03:15 — The loop stopped. The voice said, clearly, in the local tongue: 'the water is at the second step.' Then the loop resumed. The voice is the loop. The loop is the voice. The voice said the water. The water is the dam. The dam is the water.\n\n04:00 — The loop is still playing. Seven, fourteen, three, nine, twenty-two. The loop does not stop. The loop does not care. The loop is the loop.\n\n06:00 — Relieved by no one. I am alone on the ridge. The loop is the loop. The voice is the voice. The water is the water. The dam is the dam. The voice knows the water. The water does not know the voice. The loop does not care. I wrote it down. The writing is the record. The record is the loop. The loop is the record.",
+      "tactical_action": "Recorded the numbers station broadcast. The voice said 'the water is at the second step' at 03:15. The loop resumed. Reported to the Overlay. The Overlay will record. The Overlay does not explain. The Overlay records. The recording is the loop.",
+      "tags": [
+        "unusual",
+        "numbers_station",
+        "loop",
+        "voice",
+        "water",
+        "dam",
+        "ridge"
+      ]
+    },
+    {
+      "log_id": "watch_30_door_bolt",
+      "recorded_day": "85",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_petr_m",
+      "sentry_name": "Petr M.",
+      "post_location": "Main Gate",
+      "weather_conditions": "Snow, -25C, wind 10 km/h, visibility 150m",
+      "threat_level": "None",
+      "title": "Gate Bolt Check — Frozen, Lubricated with Lamp Oil",
+      "log_entry": "22:00 — The gate bolt is frozen. The frozen is the cold. The cold is the frozen. The bolt will not turn. I applied lamp oil. The lamp oil is the lubricant. The lubricant is the lamp oil. The bolt turned. The turning is the lamp oil. The lamp oil is the turning.\n\n00:00 — The bolt is frozen again. The lamp oil froze. The lamp oil is the lamp oil. The lamp oil freezes at minus 25. The freezing is the lamp oil. The lamp oil is the freezing. I applied more. The bolt turned. The turning is the more. The more is the turning.\n\n02:00 — The bolt is frozen. The lamp oil is the frozen. The bolt is the bolt. The cold is the cold. I will tell the mechanic. The mechanic is the bolt. The bolt is the mechanic. The mechanic will know a grease that does not freeze. The grease is the mechanic. The mechanic is the grease. Relieved by K. The bolt is the bolt. The cold is the cold. The lamp oil is the frozen.",
+      "tactical_action": "Gate bolt frozen. Lamp oil lubricant freezes at -25C. Applied twice. Will request cold-weather grease from the mechanic. The bolt is functional but requires a lubricant that does not freeze.",
+      "tags": [
+        "routine",
+        "gate",
+        "bolt",
+        "frozen",
+        "lamp_oil",
+        "cold"
+      ]
+    },
+    {
+      "log_id": "watch_31_smoke_chimney",
+      "recorded_day": "90",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_ilya_t",
+      "sentry_name": "Sgt. Ilya T.",
+      "post_location": "North Cupola (-2m)",
+      "weather_conditions": "Clear, -18C, wind 5 km/h, visibility 300m",
+      "threat_level": "Low",
+      "title": "Smoke from the South — One Chimney, New",
+      "log_entry": "03:00 — Smoke from the south. One chimney. The chimney is the grange. The grange has a chimney. The chimney is the smoke. The smoke is the chimney. The smoke is steady. The steady is the fire. The fire is the stove. The stove is the grange. The grange is the people. The people are the smoke.\n\n04:00 — The smoke is still there. Steady. The steady is the stove. The stove is the people. The people are awake at 04:00. The 04:00 is the bread. The bread is the 04:00. The baker is awake. The baker is the bread. The bread is the baker. The smoke is the bread. The bread is the smoke.\n\n05:00 — The smoke is thicker. The thicker is the baking. The baking is the thicker. The bread is the baking. The baking is the bread.\n\n06:00 — Relieved by D. The grange is baking. The smoke is the bread. The bread is the smoke. The baker is awake at 04:00. The 04:00 is the bread. The bread is the 04:00. The smoke is the good. The good is the smoke. The bread is the good. The good is the bread.",
+      "tactical_action": "Logged the smoke from the grange chimney. Steady from 03:00. The grange is baking bread at 04:00. The smoke is the bread. The bread is the smoke. The smoke is the good.",
+      "tags": [
+        "routine",
+        "smoke",
+        "chimney",
+        "grange",
+        "bread",
+        "baker"
+      ]
+    },
+    {
+      "log_id": "watch_32_star_count",
+      "recorded_day": "95",
+      "watch_hours": "22:00 – 02:00",
+      "sentry_id": "dwr_relay_op",
+      "sentry_name": "The Relay Operator",
+      "post_location": "Ridge Relay Station",
+      "weather_conditions": "Clear above ash, -32C, wind 5 km/h, visibility excellent",
+      "threat_level": "None",
+      "title": "Star Count — Fewer Than Last Month",
+      "log_entry": "22:00 — The stars are out. The ash is thin tonight. The stars are the stars. The stars are fewer than last month. The fewer is the ash. The ash is the fewer. The stars are behind the ash. The ash is in front of the stars.\n\n23:00 — I counted the stars in the north quadrant. 47. Last month: 62. The 47 is the fewer. The fewer is the 15. The 15 is the ash. The ash is the 15. The 15 is the stars that are gone behind the ash. The gone is the ash. The ash is the gone.\n\n00:00 — The ash is thickening again. The stars are going. The going is the ash. The ash is the going. The stars will be gone by 01:00. The gone is the ash. The ash is the gone.\n\n01:00 — The stars are gone. The ash is the sky. The sky is the ash. The stars are behind the ash. The behind is the ash. The ash is the behind.\n\n02:00 — Relieved by no one. The stars are gone. The ash is the sky. The 47 is the fewer. The fewer is the ash. The ash is the fewer. The stars are the behind. The behind is the ash. I am alone on the ridge. The ridge is the stars. The stars are the ridge. The ridge is the ash. The ash is the ridge.",
+      "tactical_action": "Star count: 47 in the north quadrant, down from 62 last month. The ash is thickening. The stars are going behind the ash. The fewer is the ash. The ash is the fewer. Logged for the observatory record.",
+      "tags": [
+        "routine",
+        "stars",
+        "ash",
+        "count",
+        "ridge",
+        "fewer"
+      ]
+    },
+    {
+      "log_id": "watch_33_ice_voice",
+      "recorded_day": "100",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_kolya_s",
+      "sentry_name": "Kolya S.",
+      "post_location": "River Watch Post, East",
+      "weather_conditions": "Clear, -35C, no wind, visibility 500m, river frozen solid",
+      "threat_level": "Unclassified",
+      "title": "River Ice Voice — Deep Groaning, Not Structural",
+      "log_entry": "03:00 — The river ice is groaning. Not cracking — groaning. A low, deep sound, like a voice in the ice. The ice is frozen solid. The solid is the ice. The groaning is the ice. The ice is the groaning.\n\n03:30 — The groaning is steady. The steady is the ice. The ice is the steady. The groaning is not the cracking. The cracking is the surface. The groaning is the depth. The depth is the ice. The ice is the depth.\n\n04:00 — The groaning stopped. The silence is the ice. The ice is the silence. The groaning was the ice. The ice was the groaning. The silence is the ice. The ice is the silence.\n\n04:30 — The groaning returned. Lower. The lower is the depth. The depth is the lower. The ice is the depth. The depth is the ice. The groaning is the depth. The depth is the groaning.\n\n06:00 — Relieved by D. The river ice groaned all night. The groaning is the deep ice. The deep ice is the groaning. The groaning is not the cracking. The cracking is the surface. The groaning is the depth. The depth is the ice. The ice is the depth. The groaning is the ice. The ice is the groaning. I do not know what the groaning is. The groaning is the ice. The ice is the groaning. I am writing it because the groaning is the thing I heard. The thing I heard is the groaning.",
+      "tactical_action": "Logged the river ice groaning. Deep, low, steady. Not surface cracking — deep ice movement. The ice is frozen solid. The groaning is the ice. The ice is the groaning. Unexplained but consistent with deep thermal stress. The ice is the ice. The groaning is the ice.",
+      "tags": [
+        "unusual",
+        "river",
+        "ice",
+        "groaning",
+        "deep",
+        "unexplained"
+      ]
+    },
+    {
+      "log_id": "watch_34_child_talk",
+      "recorded_day": "105",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_anya_p",
+      "sentry_name": "Anya P.",
+      "post_location": "Ward C, by the School Corner",
+      "weather_conditions": "Indoor watch. Ward temperature 11C. Quiet hours. Children sleeping.",
+      "threat_level": "None",
+      "title": "Child Talking in Sleep — Rima, Single Word",
+      "log_entry": "03:30 — Rima is talking in her sleep. One word. 'Papa.' The word is the sleeping. The sleeping is the word. Rima does not say Papa when she is awake. Rima writes Papa in the book. The book is the Papa. The Papa is the book. The sleeping is the Papa. The Papa is the sleeping.\n\n04:00 — Rima is quiet. The quiet is the sleeping. The sleeping is the quiet. The Papa was the sleeping. The sleeping was the Papa.\n\n04:30 — Rima said it again. 'Papa.' The same word. The same sleeping. The same Papa. The Papa is the sleeping. The sleeping is the Papa.\n\n06:00 — Relieved by D. Rima said 'Papa' twice in her sleep. The Papa is the sleeping. The sleeping is the Papa. Rima does not say Papa when she is awake. Rima writes Papa in the book. The book is the Papa. The sleeping is the Papa. The Papa is the sleeping. I am writing it because the Papa is the thing she carries. The thing she carries is the Papa.",
+      "tactical_action": "Rima talked in her sleep. Said 'Papa' twice. She does not say it when awake. She writes it in her book. The book is the Papa. The sleeping is the Papa. Noted for the record. The record is the Papa.",
+      "tags": [
+        "quiet_hours",
+        "child",
+        "sleep_talking",
+        "rima",
+        "papa",
+        "ward_c"
+      ]
+    },
+    {
+      "log_id": "watch_35_final_watch",
+      "recorded_day": "110",
+      "watch_hours": "02:00 – 06:00",
+      "sentry_id": "dwr_ilya_t",
+      "sentry_name": "Sgt. Ilya T.",
+      "post_location": "North Cupola (-2m)",
+      "weather_conditions": "Clear, -20C, wind 10 km/h from the east, visibility 350m",
+      "threat_level": "None",
+      "title": "Final Watch of the Rotation — Nothing Noted",
+      "log_entry": "02:00 — Last watch of the rotation. The perimeter is the perimeter. The dark is the dark. The lamp is the lamp. The wind is from the east. The east is the warmer. The warmer is the wind.\n\n03:00 — Nothing. The nothing is the good. The good is the nothing. The perimeter is quiet. The quiet is the perimeter. The dark is the dark. The lamp is the lamp.\n\n04:00 — Nothing. The nothing is the watch. The watch is the nothing. The nothing is the good. The good is the nothing.\n\n05:00 — Dawn. The grey is the dawn. The dawn is the grey. The east is the grey. The grey is the east. The ash is the colour. The colour is the ash.\n\n06:00 — Relieved by D. Last watch of the rotation. Nothing noted. Nothing approached. Nothing moved. Nothing was the watch. The watch was the nothing. The nothing was the good. The good was the nothing. The rotation is the rotation. The watch is the watch. The watch is the nothing. The nothing is the watch.",
+      "tactical_action": "Final watch. Nothing noted. Nothing approached. The perimeter is intact. The nothing is the good. The good is the nothing. The watch is the watch.",
+      "tags": [
+        "routine",
+        "final",
+        "rotation",
+        "nothing",
+        "dawn",
+        "grey"
+      ]
+    }
+  ]
+}
