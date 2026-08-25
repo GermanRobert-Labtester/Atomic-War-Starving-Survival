@@ -104,6 +104,13 @@ namespace AtomicWar.GodotApp
         BlackFlotillaSelfTest,
         RadioSelfTest,
         ExpeditionPanelUiTest,
+        JournalSaveSelfTest,
+        JournalWeatherPanelSelfTest,
+        MoralChoiceSelfTest,
+        InventorySaveSelfTest,
+        MedicalWardSaveSelfTest,
+        ChemicalDependencySaveSelfTest,
+        WeatherSaveSelfTest,
         UiSnapshotSelfTest
     }
 
@@ -266,6 +273,20 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ExpeditionPanelUiTest;
             if (Has(args, "--ui-snapshot-uitest") || Has(args, "--ui-snapshots"))
                 return HostCliAction.UiSnapshotSelfTest;
+            if (Has(args, "--journal-save-selftest"))
+                return HostCliAction.JournalSaveSelfTest;
+            if (Has(args, "--journal-weather-panel-selftest"))
+                return HostCliAction.JournalWeatherPanelSelfTest;
+            if (Has(args, "--moral-choice-selftest"))
+                return HostCliAction.MoralChoiceSelfTest;
+            if (Has(args, "--inventory-save-selftest"))
+                return HostCliAction.InventorySaveSelfTest;
+            if (Has(args, "--medical-ward-save-selftest"))
+                return HostCliAction.MedicalWardSaveSelfTest;
+            if (Has(args, "--chemical-dependency-save-selftest"))
+                return HostCliAction.ChemicalDependencySaveSelfTest;
+            if (Has(args, "--weather-save-selftest"))
+                return HostCliAction.WeatherSaveSelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -293,6 +314,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --endings-selftest       EndingsHeadlessDemo (S4 endings exclusive + roundtrip)");
             GD.Print("  --holdfast-briefing      Print location count and every Holdfast quest briefing");
             GD.Print("  --journal-selftest       Journal domain + save roundtrip");
+            GD.Print("  --moral-choice-selftest  Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks");
             GD.Print("  --journal-uitest         Build ledger UI, cycle tabs, quit");
             GD.Print("  --player-panels-uitest  Bind and render Survivors, Medical, Weather, Radio, Shelter panels");
             GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");

@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using AtomicWar.Journal;
+using AtomicWar.GodotApp.Host;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
@@ -45,6 +46,9 @@ namespace AtomicWar.GodotApp
         private Label _briefingPreviewLabel = null!;
         private VBoxContainer _menuContainer = null!;
         private TextEdit _codexViewer = null!;
+        private EventsHostSession _eventsHost = null!;
+        private ExpansionQuestHostSession _expansionQuests = null!;
+        private SaveLoadHostSession _saveLoadHost = null!;
 
         // Questline master registry (loaded early for expansion quest ID validation)
         private QuestlineMasterCatalog _questlineMaster = null!;
@@ -118,6 +122,21 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.DiseaseSelfTest:
                     GetTree().Quit(HostCli.RunDiseaseSelfTest(_dataDir));
+                    return;
+                case HostCliAction.JournalSaveSelfTest:
+                    GetTree().Quit(HostCli.RunJournalSaveSelfTest());
+                    return;
+                case HostCliAction.MoralChoiceSelfTest:
+                    GetTree().Quit(HostCli.RunMoralChoiceSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ChemicalDependencySaveSelfTest:
+                    GetTree().Quit(HostCli.RunChemicalDependencySaveSelfTest());
+                    return;
+                case HostCliAction.MedicalWardSaveSelfTest:
+                    GetTree().Quit(HostCli.RunMedicalWardSaveSelfTest());
+                    return;
+                case HostCliAction.WeatherSaveSelfTest:
+                    GetTree().Quit(HostCli.RunWeatherSaveSelfTest());
                     return;
                 case HostCliAction.CombatSelfTest:
                     GetTree().Quit(HostCli.RunCombatSelfTest(_dataDir));
@@ -199,6 +218,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.InventoryUiTest:
                     RunInventoryUiTestAndQuit();
+                    return;
+                case HostCliAction.InventorySaveSelfTest:
+                    GetTree().Quit(HostCli.RunInventorySaveSelfTest());
                     return;
                 case HostCliAction.ExpeditionPanelUiTest:
                     RunExpeditionPanelUiTestAndQuit();
@@ -327,6 +349,16 @@ namespace AtomicWar.GodotApp
             // Year of Ash used to initialise lazily on first button press, so its save
             // was not restored at boot and it was the only subsystem with no banner line.
             SetupYearOfAsh();
+            // Moral choice ledger ("The Weight of Survival"): constructed at boot so
+            // its save restores before any encounter can resolve against a blank ledger.
+            SetupMoralChoice();
+
+            // ── Save/Load host session ───────────────────────────────────────
+            _saveLoadHost = new SaveLoadHostSession();
+            _saveLoadHost.Initialize(ProjectSettings.GlobalizePath("user://"));
+            AddChild(_saveLoadHost);
+            _saveLoadPanel.Bind(_saveLoadHost);
+            // ─────────────────────────────────────────────────────────────────
         }
 
         public override void _Process(double delta)
@@ -359,6 +391,7 @@ namespace AtomicWar.GodotApp
             // Flush the Holdfast S1 save the same way — one write per burst, not per event.
             FlushHoldfastIfDirty();
             FlushDutyRosterIfDirty();
+            FlushExpansionQuestsIfDirty();
             FlushExpansionHubIfDirty();
             FlushVerdictIfDirty();
             FlushMaritimeIfDirty();
@@ -370,6 +403,7 @@ namespace AtomicWar.GodotApp
             FlushCaravanIfDirty();
             FlushYearOfAshIfDirty();
             FlushPhase0IfDirty();
+            FlushMoralChoiceIfDirty();
 
             // ── Sleep / End Day countdown timer (Phase 2 continuation)
             if (_advanceTimerRemaining > 0 && !_advanceCancelled)
@@ -414,6 +448,11 @@ namespace AtomicWar.GodotApp
             else if (key.Keycode == Key.F1 && _state == GameState.Playing)
             {
                 ToggleDeveloperConsole();
+                GetViewport().SetInputAsHandled();
+            }
+            else if (key.Keycode == Key.E && _state == GameState.Playing)
+            {
+                OpenEventsLogPanel();
                 GetViewport().SetInputAsHandled();
             }
             else if (_journalBook != null && _journalBook.IsOpen)
@@ -465,9 +504,20 @@ namespace AtomicWar.GodotApp
                 $"Ready: {_dataDir}\n" +
                 $"Journal: {_journal.EntryCount} pages · " +
                 $"{(_journal.HasUnread ? "unread" : "nothing new")} · " +
-                $"Day {_simDay} · [J] toggles the ledger.";
+                $"Day {_simDay} · [J] toggles the ledger · [E] opens events log.";
         }
 
+        private void OpenEventsLogPanel()
+        {
+            if (_eventsLogPanel == null)
+            {
+                _eventsLogPanel = new EventsLogPanel();
+                _eventsLogPanel.OnClose += () => _eventsLogPanel.Visible = false;
+                AddChild(_eventsLogPanel);
+            }
+            _eventsLogPanel.Bind(_eventsHost);
+            _eventsLogPanel.Open();
+        }
 
 
 
@@ -626,6 +676,46 @@ namespace AtomicWar.GodotApp
 
 
 
+
+        private void SetupEventsHost()
+        {
+            _eventsHost = new EventsHostSession(new Ashfall.Core.SystemTextJsonSerializer(), new Ashfall.Core.FileSystemIO());
+            AddChild(_eventsHost);
+        }
+
+        private bool _expansionQuestsDirty;
+
+        private void SetupExpansionQuests()
+        {
+            if (_expansionQuests != null) return;
+            _expansionQuests = ExpansionQuestHostSession.Create(_dataDir);
+            _expansionQuests.StateChanged += () => _expansionQuestsDirty = true;
+
+            var save = ExpansionQuestSaveStore.TryLoad();
+            if (save != null)
+            {
+                _expansionQuests.RestoreState(save.state);
+            }
+        }
+
+        private void SaveExpansionQuests()
+        {
+            if (_expansionQuests == null) return;
+            var state = _expansionQuests.CaptureState();
+            var envelope = new ExpansionQuestSaveEnvelope
+            {
+                version = ExpansionQuestSaveEnvelope.CurrentVersion,
+                state = state,
+                checksum = SaveChecksum.Compute(state)
+            };
+            ExpansionQuestSaveStore.Save(envelope);
+            _expansionQuestsDirty = false;
+        }
+
+        private void FlushExpansionQuestsIfDirty()
+        {
+            if (_expansionQuestsDirty) SaveExpansionQuests();
+        }
 
         // ── THE MUSTER (Exp 06) host wiring ─────────────────────────────
     }

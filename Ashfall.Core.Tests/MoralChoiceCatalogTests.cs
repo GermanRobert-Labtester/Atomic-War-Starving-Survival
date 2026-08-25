@@ -110,6 +110,25 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void StaticIdClassMatchesCatalogExactly()
+        {
+            var quests = Load();
+            var catalogIds = quests.Select(q => q.Id).ToHashSet();
+
+            Assert.Equal(MoralChoiceIds.QuestCount, catalogIds.Count);
+            Assert.Equal(MoralChoiceIds.QuestCount, MoralChoiceIds.All.Length);
+            Assert.Equal(MoralChoiceIds.All.Length, MoralChoiceIds.All.Distinct().Count());
+
+            // Every static id is a real catalog quest, and no catalog quest is
+            // missing from the static class.
+            Assert.True(catalogIds.SetEquals(MoralChoiceIds.All),
+                "MoralChoiceIds.All and the catalog quest ids must be the same set");
+
+            // The flag ids carry the canonical flag_ prefix.
+            Assert.StartsWith("flag_moral_", MoralChoiceIds.FlagMessengerKept, StringComparison.Ordinal);
+        }
+
+        [Fact]
         public void LoadsAreStable()
         {
             var first = Load();

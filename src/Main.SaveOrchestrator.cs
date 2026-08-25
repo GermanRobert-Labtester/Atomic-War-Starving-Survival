@@ -29,6 +29,58 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        private static readonly string[] AllSaveSections = new[]
+        {
+            "journal",
+            "holdfast",
+            "holdfast_trade",
+            "duty_roster",
+            "expansion_hub",
+            "expansion_quest",
+            "phantom_memory",
+            "dose_ledger",
+            "muster",
+            "inventory",
+            "survivors",
+            "economy",
+            "verdict",
+            "maritime",
+            "expedition",
+            "combat",
+            "narrative",
+            "medical",
+            "world",
+            "crafting",
+            "caravan",
+            "year_of_ash",
+            "phase0",
+            "starting_level",
+            "greenhouse",
+            "radio",
+            "daily_briefing",
+            "power_grid",
+            "medical_ward",
+            "memorial",
+            "silent_foundry",
+            "disease",
+            "wasteland_map",
+            "encounter_choice",
+            "water_treatment",
+            "airlock_security",
+            "apprenticeship",
+            "autopsy",
+            "chemical_dependency",
+            "equipment_condition",
+            "survivor_relations",
+            "regional_treaty",
+            "vinyl_morale",
+            "wildlife_trapping",
+            "excavation",
+            "waystation",
+            "shelter_thermal",
+            "shelter_schedule"
+        };
+
         /// <summary>
         /// Flushes dirty save stores that were marked during the in-flight day
         /// advance. Invoked by the campaign-day coordinator before the briefing
@@ -143,6 +195,15 @@ namespace AtomicWar.GodotApp
             _dashboard.Visible = true;
             CloseAllOverlayPanels();
 
+            // Load-from-envelope: restore directly from aggregate envelope when available.
+            bool loadedFromEnvelope = _saveLoadHost?.LoadAllDirect() ?? false;
+            if (!loadedFromEnvelope)
+            {
+                // Fallback: unpack aggregate back to individual files so
+                // dependency-safe SetupXxx() calls can restore from disk as before.
+                _saveLoadHost?.UnpackAggregateEnvelope();
+            }
+
             // Restore sessions in dependency-safe order. Each SetupXxx calls its *SaveStore.TryLoad()
             // when present; if no save exists it creates clean/default state so panels never see null.
             SetupHoldfastRuntime();
@@ -192,6 +253,7 @@ namespace AtomicWar.GodotApp
         private void SaveAll()
         {
             SaveJournal();
+            SaveMoralChoice();
             SaveHoldfast();
             SaveHoldfastRuntime();
             SaveDutyRoster();
@@ -228,6 +290,9 @@ namespace AtomicWar.GodotApp
             // ─────────────────────────────────────────────────────────────
             SaveAllExpandedShelterSystems();
             _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
+
+            // Aggregate-first save: pack all subsystem payloads into the canonical envelope.
+            _saveLoadHost?.SaveAllDirect(AllSaveSections);
         }
 
     }

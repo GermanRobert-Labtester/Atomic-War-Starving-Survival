@@ -85,6 +85,12 @@ namespace AtomicWar.GodotApp
         /// </summary>
         private void TickSimDay(int day)
         {
+            // Moral choice: overnight settlement — pending legend overflow and
+            // band-crossing faction events land here, after the campaign day
+            // advance in CommitAdvance and never mid-scene.
+            SetupMoralChoice();
+            _moralChoice.Reconcile(day);
+
             SetupWorld();
             _world.TickDemo(24f);
 
@@ -165,6 +171,9 @@ namespace AtomicWar.GodotApp
                 _expansions.TickGreenhouse(day);
             _expansions.Ledger.TickDaily(day);
             _expansions.TickCrossingQuests(day);
+
+            SetupExpansionQuests();
+            _expansionQuests.TickDay(day);
 
             // The Duty Roster (Exp 02) advances on the real day clock: the morning
             // snapshot comes from the REAL home occupants, and Holdfast state
