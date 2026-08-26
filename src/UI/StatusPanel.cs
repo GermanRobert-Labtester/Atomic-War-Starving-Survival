@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Godot;
 using Ashfall.Core.UI;
+using Ashfall.Core.World;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI

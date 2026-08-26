@@ -81,9 +81,16 @@ namespace AtomicWar.GodotApp
                 && _shelterPanel.Visible;
             CloseAllOverlayPanels();
 
-            bool pass = survivors && medical && weather && radio && shelter;
+            _statusPanel.Bind(_survivors, _world.Weather, _powerGrid, _inventory, _simDay);
+            _statusPanel.Open();
+            bool status = _statusPanel.IsBound
+                && _statusPanel.RenderedDayInfoCount >= 2
+                && _statusPanel.Visible;
+            CloseAllOverlayPanels();
+
+            bool pass = survivors && medical && weather && radio && shelter && status;
             GD.Print($"[PlayerPanelsUiTest] survivors={survivors} medical={medical} weather={weather} " +
-                     $"radio={radio} shelter={shelter}");
+                     $"radio={radio} shelter={shelter} status={status}");
             GD.Print(pass ? "PLAYER_PANELS_UITEST PASS" : "PLAYER_PANELS_UITEST FAIL");
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
