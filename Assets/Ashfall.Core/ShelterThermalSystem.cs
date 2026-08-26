@@ -103,6 +103,7 @@ namespace Ashfall.Core
         public ShelterThermalState State => _state;
         public event Action<ThermalIncident> OnIncident;
         public event Action OnThermalChanged;
+        public event Action<string, string> OnFrostbiteRisk; // roomId, survivorId — cold <5°C with occupant
 
         public void SetAssignments(ShelterAssignmentSystem? assignments)
         {
@@ -314,17 +315,33 @@ ShelterAssignmentSystem? assignment = null)
             // warmth — including a healthy room capping at 100 via NeedsSystem
             // clamp, plus Warmth-critical threshold checks inside NeedsSystem.
             if (_assignments != null && _needs != null)
+                {
+                    foreach (var room in _state.rooms)
+                    {
+                        float warmth = GetRoomWarmthModifier(room.roomId);
+                        if (warmth <= 0f) continue;
+                        var inRoom = _assignments.GetAssignmentsForRoom(room.roomId);
+                        for (int i = 0; i < inRoom.Count; i++)
+                        {
+                            string survivorId = inRoom[i].SurvivorId;
+                            if (!string.IsNullOrEmpty(survivorId))
+                                _needs.Modify(survivorId, NeedKind.Warmth, warmth * 24f);
+                        }
+                    }
+                }
+
+            // Frostbite risk: cold rooms (<5°C) with occupants trigger host-handled affliction
+            if (_assignments != null)
             {
                 foreach (var room in _state.rooms)
                 {
-                    float warmth = GetRoomWarmthModifier(room.roomId);
-                    if (warmth <= 0f) continue;
-                    var inRoom = _assignments.GetAssignmentsForRoom(room.roomId);
-                    for (int i = 0; i < inRoom.Count; i++)
+                    if (room.currentTempC >= 5f) continue;
+                    var occupants = _assignments.GetAssignmentsForRoom(room.roomId);
+                    for (int i = 0; i < occupants.Count; i++)
                     {
-                        string survivorId = inRoom[i].SurvivorId;
-                        if (!string.IsNullOrEmpty(survivorId))
-                            _needs.Modify(survivorId, NeedKind.Warmth, warmth * 24f);
+                        string sid = occupants[i].SurvivorId;
+                        if (!string.IsNullOrEmpty(sid))
+                            OnFrostbiteRisk?.Invoke(room.roomId, sid);
                     }
                 }
             }

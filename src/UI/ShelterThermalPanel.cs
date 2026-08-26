@@ -42,6 +42,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("boiler_status", "Boiler Status", "OFF", AshfallMetricCard.Criticality.Normal, minWidth: 120);
             _statusRail.AddCard("boiler_temp", "Boiler Temp", "20°C", AshfallMetricCard.Criticality.Normal, minWidth: 120);
             _statusRail.AddCard("fuel", "Boiler Fuel", "100 kg", AshfallMetricCard.Criticality.Normal, minWidth: 120);
+            _statusRail.AddCard("frostbite_risk", "Frostbite Risk", "0 zones", AshfallMetricCard.Criticality.Normal, minWidth: 130);
 
             _contentStack = new VBoxContainer();
             _contentStack.AddThemeConstantOverride("separation", 12);
@@ -86,15 +87,32 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("boiler_status", s.boilerActive ? "ACTIVE" : "OFF", s.boilerActive ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("boiler_temp", $"{s.boilerCurrentTempC:F1}°C", s.boilerCurrentTempC < 10f ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("fuel", $"{s.boilerFuelLevel:F0} kg", s.boilerFuelLevel < 20f ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
+            int frostbiteZones = 0;
+            foreach (var r in s.rooms) if (r.currentTempC < 5f) frostbiteZones++;
+            _statusRail.Set("frostbite_risk", frostbiteZones == 0 ? "0 zones" : $"{frostbiteZones} zones <5°C", frostbiteZones > 0 ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Normal);
 
             if (_detailText != null)
             {
                 string text = $"Central Heating Boiler: {(s.boilerActive ? "ONLINE" : "STANDBY")} | Output: {s.totalHeatOutputKw:F1} kW\n" +
                                $"Thermal Rooms ({s.rooms.Count} zones) | Radiator Pipes ({s.pipes.Count} lines)\n" +
-                               $"Incidents Recorded: {s.incidentLog.Count}\n" +
-                               $"Last Event: {_host.LastEvent}";
+                               $"Incidents Recorded: {s.incidentLog.Count}\n";
+                foreach (var r in s.rooms)
+                {
+                    string flag = r.currentTempC < 5f ? " ⚠ FROSTBITE RISK" : r.isFrozen ? " ❄ FROZEN" : "";
+                    text += $"  • {r.displayName} ({r.roomId}): {r.currentTempC:F1}°C{flag}\n";
+                }
+                text += $"Last Event: {_host.LastEvent}";
                 _detailText.Text = text;
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
         }
     }
 }

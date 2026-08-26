@@ -12,12 +12,9 @@ namespace AtomicWar.GodotApp
     /// Manages boiler fuel, heating zones, radiator valves, pipe freeze/burst risks, and thermal incidents.
     /// </summary>
     public sealed class ShelterThermalHostSession
-    {
+    : HostSessionBase{
         public ShelterThermalSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public ShelterThermalHostSession(ShelterThermalSystem? system = null,
             Ashfall.Core.Shelter.ShelterAssignmentSystem? assignment = null)
         {
@@ -35,12 +32,18 @@ namespace AtomicWar.GodotApp
             System.OnIncident += inc =>
             {
                 LastEvent = $"[Thermal] INCIDENT: {inc.kind} in {inc.roomId} (Pipe {inc.pipeId})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnThermalChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
+            };
+
+            System.OnFrostbiteRisk += (roomId, survivorId) =>
+            {
+                LastEvent = $"[Thermal] FROSTBITE RISK: {survivorId} in {roomId} (<5°C)";
+                RaiseStateChanged();
             };
         }
 
@@ -50,7 +53,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Boiler status set to: {(active ? "ACTIVE" : "OFF")}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -60,7 +63,7 @@ namespace AtomicWar.GodotApp
             var res = System.SetRadiatorValve(roomId, openRatio);
             if (res.IsSuccess)
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -68,7 +71,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public void SetAssignments(Ashfall.Core.Shelter.ShelterAssignmentSystem? assignment)
