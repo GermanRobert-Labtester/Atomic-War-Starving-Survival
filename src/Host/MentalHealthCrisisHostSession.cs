@@ -13,12 +13,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class MentalHealthCrisisHostSession
-    {
+    : HostSessionBase{
         public MentalHealthCrisisSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public MentalHealthCrisisHostSession(
             MentalHealthCrisisSystem system,
             NeedsSystem needs,
@@ -29,8 +26,8 @@ namespace AtomicWar.GodotApp
             System = system
                 ?? new MentalHealthCrisisSystem(new SeededRng(1986), needs, ward, chemical, roster, new GodotLog());
 
-            System.OnCrisisResolved += _ => StateChanged?.Invoke();
-            System.OnMentalHealthChanged += () => StateChanged?.Invoke();
+            System.OnCrisisResolved += _ => RaiseStateChanged();
+            System.OnMentalHealthChanged += () => RaiseStateChanged();
         }
 
         public ActionResult TriggerCrisis(string survivorId, float stressInput, CrisisProfile profile)
@@ -39,7 +36,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Crisis triggered: {survivorId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -50,7 +47,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Treatment begun: {caseId} by {caregiverId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -61,7 +58,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

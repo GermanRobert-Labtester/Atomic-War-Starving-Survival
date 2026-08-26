@@ -13,7 +13,7 @@ namespace AtomicWar.GodotApp
     /// Spec: docs/expansions/expansion_02_the_duty_roster_plan.md §5.
     /// </summary>
     public sealed class DutyRosterHostSession
-    {
+    : HostSessionBase{
         public const int DefaultSeed = 908; // roster seed offset: _worldSeed + 1208 style
 
         public DutyRosterSystem Roster { get; }
@@ -69,10 +69,10 @@ namespace AtomicWar.GodotApp
             };
 
             // Persistence: any system-level state change marks the save dirty.
-            Roster.OnStateChanged += _ => StateChanged?.Invoke();
-            Marks.OnStateChanged += _ => StateChanged?.Invoke();
-            Encounters.OnStateChanged += _ => StateChanged?.Invoke();
-            Quests.OnStateChanged += _ => StateChanged?.Invoke();
+            Roster.OnStateChanged += _ => RaiseStateChanged();
+            Marks.OnStateChanged += _ => RaiseStateChanged();
+            Encounters.OnStateChanged += _ => RaiseStateChanged();
+            Quests.OnStateChanged += _ => RaiseStateChanged();
         }
 
         private readonly Ashfall.Core.Journal.JournalSystem? _journal;
@@ -93,8 +93,6 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>Raised when any roster/mark/encounter state changes (save dirty flag).</summary>
-        public event Action StateChanged;
-
         public static DutyRosterHostSession Create(string dataDirectory, ILog? log = null,
             Ashfall.Core.Journal.JournalSystem journal = null!)
         {
@@ -224,7 +222,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Player action: inspect the wall. Returns the roster card prose.</summary>
         public string InspectWall()
         {
-            var wall = Catalog.GetLocation(DutyRosterSystem.LocStackRosterWall);
+            var wall = Catalog.GetLocation(DutyRosterIds.LocStackRosterWall);
             if (!Roster.State.wallInspected)
                 Roster.NotifyWallInspected();
             return wall != null ? wall.inspect + "\n\n" + wall.description : "No chart here.";
@@ -278,10 +276,10 @@ namespace AtomicWar.GodotApp
             if (Roster.IsSecondWinterActive)
                 return "second winter already active";
             Roster.SetSecondWinterActive(true);
-            Encounters.SetSecondWinter(DutyRosterSystem.SecondWinterEncounterWeight, Clock.Day);
+            Encounters.SetSecondWinter(DutyRosterIds.SecondWinterEncounterWeight, Clock.Day);
             Marks.SetMark("mark_second_winter", null!, Clock.Day);
             LastEvent = "SECOND WINTER";
-            return "second winter active: windows 8-12d, encounters x" + DutyRosterSystem.SecondWinterEncounterWeight;
+            return "second winter active: windows 8-12d, encounters x" + DutyRosterIds.SecondWinterEncounterWeight;
         }
 
         // ── Overflow practice (bounded void, spec §2.4) ────────────────

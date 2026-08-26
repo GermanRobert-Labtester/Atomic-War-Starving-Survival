@@ -14,12 +14,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class EquipmentConditionHostSession
-    {
+    : HostSessionBase{
         public EquipmentConditionSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public EquipmentConditionHostSession(
             EquipmentConditionSystem system,
             Inventory inventory,
@@ -28,9 +25,9 @@ namespace AtomicWar.GodotApp
             System = system
                 ?? new EquipmentConditionSystem(new SeededRng(1986), inventory, crafting, new GodotLog());
 
-            System.OnConditionChanged += _ => StateChanged?.Invoke();
-            System.OnMaintenanceCompleted += _ => StateChanged?.Invoke();
-            System.OnEquipmentChanged += () => StateChanged?.Invoke();
+            System.OnConditionChanged += _ => RaiseStateChanged();
+            System.OnMaintenanceCompleted += _ => RaiseStateChanged();
+            System.OnEquipmentChanged += () => RaiseStateChanged();
         }
 
         public ActionResult RegisterItem(string instanceId, string itemId, string ownerId, EquipmentFamily family, float maxCondition = 100f)
@@ -39,7 +36,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Equipment registered: {itemId} ({instanceId})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -50,7 +47,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Equipment used: {instanceId} (-{wearAmount} wear)";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -61,7 +58,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Maintenance started: {instanceId} ({type})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -71,7 +68,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

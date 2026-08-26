@@ -13,12 +13,55 @@ namespace AtomicWar.GodotApp
     public static class VerdictSaveStore
     {
         public const string FileName = "verdict_save.json";
+        public const string SectionName = "verdict";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(VerdictSave state)
+    {
+        return TryCapture(state);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static VerdictSave? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(VerdictSave state)
+    {
+        try
+        {
+            if (state == null) return string.Empty;
+            return new SystemTextJsonSerializer().Serialize(state);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[VerdictSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static VerdictSave? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return new SystemTextJsonSerializer().Deserialize<VerdictSave>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[VerdictSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 

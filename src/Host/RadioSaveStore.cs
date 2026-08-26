@@ -15,12 +15,55 @@ namespace AtomicWar.GodotApp
     public static class RadioSaveStore
     {
         public const string FileName = "radio_save.json";
+        public const string SectionName = "radio";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(RadioSaveState state)
+    {
+        return TryCapture(state);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static RadioSaveState? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(RadioSaveState state)
+    {
+        try
+        {
+            if (state == null) return string.Empty;
+            return new SystemTextJsonSerializer().Serialize(state);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[RadioSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static RadioSaveState? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return new SystemTextJsonSerializer().Deserialize<RadioSaveState>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[RadioSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 

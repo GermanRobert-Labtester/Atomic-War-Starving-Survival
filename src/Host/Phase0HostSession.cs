@@ -7,6 +7,7 @@ using Ashfall.Core.Survivors;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.Phantoms;
+using Ashfall.Core.Shelter;
 
 namespace AtomicWar.GodotApp
 {
@@ -112,7 +113,7 @@ namespace AtomicWar.GodotApp
     /// 10. Respiratory Degeneration
     /// </summary>
     public sealed class Phase0HostSession
-    {
+    : HostSessionBase{
         public const int DefaultSeed = 808;
 
         public RadiationPhaseProgression RadiationPhase { get; }
@@ -161,8 +162,18 @@ namespace AtomicWar.GodotApp
         public Phase0SurvivorEffects GetEffects(string survivorId) => GetOrCreateEffects(survivorId);
 
         public string LastEvent { get; private set; } = string.Empty;
-        public event Action StateChanged;
 
+        // ── Named relay handlers so UnsubscribeSystemEvents can clean up ──
+        private Action _onRadiationPhaseStateChanged = null!;
+        private Action<PhantomMemoryEngineState> _onPhantomStateChanged = null!;
+        private Action _onGuiltStateChanged = null!;
+        private Action _onCombatTraumaStateChanged = null!;
+        private Action _onFlashbacksStateChanged = null!;
+        private Action _onMoralStateChanged = null!;
+        private Action _onDependencyStateChanged = null!;
+        private Action _onTradeSpecialtyStateChanged = null!;
+        private Action _onFinalWishStateChanged = null!;
+        private Action _onRespiratoryStateChanged = null!;
         private readonly List<Phase0SurvivorEffects> _effects = new List<Phase0SurvivorEffects>();
         private readonly List<string> _aliveSurvivorIds = new List<string>();
         private readonly Dictionary<string, MoralBranchState> _moralStates = new Dictionary<string, MoralBranchState>();
@@ -183,13 +194,13 @@ namespace AtomicWar.GodotApp
             RadiationPhase.OnTerminalPrognosisDeclared += (sv, days) =>
             {
                 LastEvent = $"TERMINAL PROGNOSIS: {sv} — {days:F0} days remaining. A final wish opens.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             RadiationPhase.OnPhaseChanged += (sv, oldP, newP) =>
             {
                 LastEvent = $"Radiation phase: {sv} {oldP} → {newP}.";
                 RecomputeSurvivorEffects(sv);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             // ── 2. Phantom Memory ────────────────────────────────────────
@@ -209,7 +220,7 @@ namespace AtomicWar.GodotApp
                     Consumers.ApplyWorkRefusalHours?.Invoke(sv, PhantomMemoryEngine.BreakdownWorkRefusalHours);
                     LastEvent = $"Phantom memory: {sv} breaks down over {item}. Refuses work.";
                 }
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Phantom.OnPhantomBreakdown += (sv, item) => { /* handled above via OnPhantomTriggered */ };
 
@@ -220,13 +231,13 @@ namespace AtomicWar.GodotApp
                 Consumers.ApplyMoraleDelta?.Invoke(sv, -rec.severity * 10f);
                 LastEvent = $"Guilt recorded: {sv} ({rec.sourceId}, severity {rec.severity:F2}). Sleep quality falls.";
                 RecomputeSurvivorEffects(sv);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Guilt.OnGuiltInsomniaCritical += sv =>
             {
                 Consumers.ApplyFatigueDelta?.Invoke(sv, 20f);
                 LastEvent = $"GUILT INSOMNIA: {sv} cannot sleep.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             // ── 4. Combat Trauma ─────────────────────────────────────────
@@ -239,7 +250,7 @@ namespace AtomicWar.GodotApp
             {
                 LastEvent = $"FALSE ALARM: {sv} startled the bunker at night.";
                 RecomputeSurvivorEffects(sv);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             // ── 5. Somatic Flashback ─────────────────────────────────────
@@ -254,14 +265,14 @@ namespace AtomicWar.GodotApp
                 RecomputeSurvivorEffects(sv);
                 Consumers.ApplyWorkEfficiencyMultiplier?.Invoke(sv, GetEffects(sv).workEfficiencyMultiplier);
                 LastEvent = $"SOMATIC FLASHBACK: {sv} — {duration:F1}h of distortion. Work efficiency drops.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Flashbacks.OnFlashbackEnded += sv =>
             {
                 RecomputeSurvivorEffects(sv);
                 Consumers.ApplyWorkEfficiencyMultiplier?.Invoke(sv, GetEffects(sv).workEfficiencyMultiplier);
                 LastEvent = $"Flashback ended: {sv}.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             // ── 6. Moral Branching ───────────────────────────────────────
@@ -277,7 +288,7 @@ namespace AtomicWar.GodotApp
             {
                 LastEvent = $"Moral branch decided: {state.SurvivorId} → {dir}.";
                 RecomputeSurvivorEffects(state.SurvivorId);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             // ── 7. Chemical Dependency (single authority shared with MedicalHostSession) ──
@@ -287,15 +298,15 @@ namespace AtomicWar.GodotApp
             {
                 Consumers.ApplyCraftingPenaltyFactor?.Invoke(sv, factor);
                 RecomputeSurvivorEffects(sv);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Dependency.OnCombatPenaltyChanged += (sv, factor) =>
             {
                 Consumers.ApplyCombatPenaltyFactor?.Invoke(sv, factor);
                 RecomputeSurvivorEffects(sv);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            Dependency.OnDependencyFormed += (sv, item) => { LastEvent = $"DEPENDENCY: {sv} on {item}."; StateChanged?.Invoke(); };
+            Dependency.OnDependencyFormed += (sv, item) => { LastEvent = $"DEPENDENCY: {sv} on {item}."; RaiseStateChanged(); };
 
             // ── 8. Trade Specialty ───────────────────────────────────────
             TradeSpecialty = new TradeSpecialtySystem
@@ -303,20 +314,20 @@ namespace AtomicWar.GodotApp
                 GrantSkillBonus = (sv, prof, bonus) =>
                 {
                     LastEvent = $"Specialty: {sv} ({prof}) skill +{bonus:F2}.";
-                    StateChanged?.Invoke();
+                    RaiseStateChanged();
                 },
                 ApplyMoraleDelta = (sv, delta) =>
                 {
                     Consumers.ApplyMoraleDelta?.Invoke(sv, delta);
                     LastEvent = $"Specialty: {sv} morale {delta:+#.##;-#.##;0}.";
-                    StateChanged?.Invoke();
+                    RaiseStateChanged();
                 },
                 GetNarrativeEventId = prof => $"narrative_trade_mastery_{prof}",
                 FireNarrativeEvent = (narrativeId, sv) =>
                 {
                     Consumers.FireNarrativeEvent?.Invoke(narrativeId, sv);
                     LastEvent = $"Narrative event fired: {narrativeId} for {sv}.";
-                    StateChanged?.Invoke();
+                    RaiseStateChanged();
                 }
             };
 
@@ -329,14 +340,14 @@ namespace AtomicWar.GodotApp
                     PermanentShelterMoraleBuff += delta;
                     Consumers.ApplyShelterMoraleDelta?.Invoke(delta);
                     LastEvent = $"Permanent shelter morale {(delta >= 0 ? "+" : "")}{delta:F0} (total {PermanentShelterMoraleBuff:F0}).";
-                    StateChanged?.Invoke();
+                    RaiseStateChanged();
                 }
             };
             FinalWish.OnFinalWishCompleted += sv =>
             {
                 Consumers.FireNarrativeEvent?.Invoke("narrative_final_wish_completed", sv);
                 RecomputeSurvivorEffects(sv);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             // ── 10. Respiratory Degeneration ─────────────────────────────
@@ -350,27 +361,37 @@ namespace AtomicWar.GodotApp
             {
                 Consumers.ApplyStaminaDrainMultiplier?.Invoke(sv, factor);
                 RecomputeSurvivorEffects(sv);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Respiratory.OnMoraleDrainRequested += (sv, amount) => Consumers.ApplyMoraleDelta?.Invoke(sv, amount);
             Respiratory.OnSevereCoughStarted += sv =>
             {
                 LastEvent = $"SEVERE COUGH: {sv} — stamina reduced until treated.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            Respiratory.OnRequiresInhaler += sv => { LastEvent = $"{sv} now requires an inhaler."; StateChanged?.Invoke(); };
+            Respiratory.OnRequiresInhaler += sv => { LastEvent = $"{sv} now requires an inhaler."; RaiseStateChanged(); };
 
             // ── Global state-changed relay ───────────────────────────────
-            RadiationPhase.OnStateChanged += () => { RecomputeAllEffects(); StateChanged?.Invoke(); };
-            Phantom.OnStateChanged += _ => RecomputeAllEffects();
-            Guilt.OnStateChanged += () => RecomputeAllEffects();
-            CombatTrauma.OnStateChanged += () => RecomputeAllEffects();
-            Flashbacks.OnStateChanged += () => RecomputeAllEffects();
-            Moral.OnStateChanged += () => RecomputeAllEffects();
-            Dependency.OnStateChanged += () => RecomputeAllEffects();
-            TradeSpecialty.OnStateChanged += () => StateChanged?.Invoke();
-            FinalWish.OnStateChanged += () => RecomputeAllEffects();
-            Respiratory.OnStateChanged += () => RecomputeAllEffects();
+            _onRadiationPhaseStateChanged = () => { RecomputeAllEffects(); RaiseStateChanged(); };
+            RadiationPhase.OnStateChanged += _onRadiationPhaseStateChanged;
+            _onPhantomStateChanged = _ => RecomputeAllEffects();
+            Phantom.OnStateChanged += _onPhantomStateChanged;
+            _onGuiltStateChanged = () => RecomputeAllEffects();
+            Guilt.OnStateChanged += _onGuiltStateChanged;
+            _onCombatTraumaStateChanged = () => RecomputeAllEffects();
+            CombatTrauma.OnStateChanged += _onCombatTraumaStateChanged;
+            _onFlashbacksStateChanged = () => RecomputeAllEffects();
+            Flashbacks.OnStateChanged += _onFlashbacksStateChanged;
+            _onMoralStateChanged = () => RecomputeAllEffects();
+            Moral.OnStateChanged += _onMoralStateChanged;
+            _onDependencyStateChanged = () => RecomputeAllEffects();
+            Dependency.OnStateChanged += _onDependencyStateChanged;
+            _onTradeSpecialtyStateChanged = () => RaiseStateChanged();
+            TradeSpecialty.OnStateChanged += _onTradeSpecialtyStateChanged;
+            _onFinalWishStateChanged = () => RecomputeAllEffects();
+            FinalWish.OnStateChanged += _onFinalWishStateChanged;
+            _onRespiratoryStateChanged = () => RecomputeAllEffects();
+            Respiratory.OnStateChanged += _onRespiratoryStateChanged;
         }
 
         // ── Roster wiring ─────────────────────────────────────────────
@@ -386,7 +407,19 @@ namespace AtomicWar.GodotApp
                 string path = System.IO.Path.Combine(dataDir, "phantom_triggers.json");
                 if (!files.FileExists(path)) return;
 
-                var entries = json.Deserialize<List<PhantomTriggerJsonEntry>>(files.ReadAllText(path));
+                string text = files.ReadAllText(path);
+                List<PhantomTriggerJsonEntry>? entries = null;
+                try
+                {
+                    var catalog = json.Deserialize<PhantomTriggerCatalogJson>(text);
+                    entries = catalog?.items;
+                }
+                catch
+                {
+                    // Fallback in case of bare array JSON
+                    entries = json.Deserialize<List<PhantomTriggerJsonEntry>>(text);
+                }
+
                 if (entries == null) return;
 
                 for (int i = 0; i < entries.Count; i++)
@@ -447,7 +480,7 @@ namespace AtomicWar.GodotApp
                     CombatTrauma.RegisterSurvivor(id);
                 }
             }
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         /// <summary>Seed a small demo roster (host demo convenience).</summary>
@@ -471,7 +504,7 @@ namespace AtomicWar.GodotApp
             LastEvent = outcome != TriggerOutcome.None
                 ? $"Phantom: {survivorId} {(outcome == TriggerOutcome.Motivation ? "motivated" : "broke down")} on {itemId}."
                 : $"Phantom: no memory triggered for {survivorId} ({itemId}).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -479,7 +512,7 @@ namespace AtomicWar.GodotApp
         {
             Flashbacks.OnAudioEvent("siren", 1f);
             LastEvent = "Noise event raised (flashbacks checked).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -488,7 +521,7 @@ namespace AtomicWar.GodotApp
             TradeSpecialty.OnItemCrafted(survivorId, professionId, itemId);
             int tier = TradeSpecialty.GetMasteryTier(survivorId);
             LastEvent = $"{survivorId} crafted {itemId}: specialty tier {tier}/3.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -498,7 +531,7 @@ namespace AtomicWar.GodotApp
             var state = GetOrCreateMoralState(survivorId);
             Moral.RegisterMoralChoice(state, isEmpathyChoice);
             LastEvent = $"{survivorId}: moral choice recorded ({(isEmpathyChoice ? "empathy" : "pragmatism")}).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -507,7 +540,7 @@ namespace AtomicWar.GodotApp
         {
             Guilt.RecordGuilt(survivorId, sourceId, severity, CurrentDay);
             LastEvent = $"Guilt recorded for {survivorId} ({sourceId}).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -516,7 +549,7 @@ namespace AtomicWar.GodotApp
         {
             CombatTrauma.OnCombatSurvived(survivorId);
             LastEvent = $"{survivorId} survived combat. Hypervigilance rises.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -525,7 +558,7 @@ namespace AtomicWar.GodotApp
         {
             Dependency.OnSubstanceConsumed(survivorId, itemId, kind);
             LastEvent = $"Substance consumed: {survivorId} ({itemId}).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -534,7 +567,7 @@ namespace AtomicWar.GodotApp
         {
             FinalWish.DeclareTerminalPrognosis(survivorId, archetypeId, true);
             LastEvent = $"Terminal prognosis declared for {survivorId}.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -544,7 +577,7 @@ namespace AtomicWar.GodotApp
             LastEvent = completed
                 ? $"Final wish completed by {survivorId}."
                 : $"Final wish advanced for {survivorId}.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -554,7 +587,7 @@ namespace AtomicWar.GodotApp
             LastEvent = ok
                 ? $"Inhaler applied to {survivorId}. Cough suppressed."
                 : $"Inhaler refused: {survivorId} has no respiratory damage.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -581,7 +614,7 @@ namespace AtomicWar.GodotApp
             RadiationPhase.Tick(gameHours);
             RecomputeAllEffects();
             LastEvent = $"Phase-0 effects ticked {gameHours:F0}h.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -592,7 +625,7 @@ namespace AtomicWar.GodotApp
             CombatTrauma.ResetNightFlags();
             string msg = TickHour(24f);
             LastEvent = $"Day {day} Phase-0 pass complete.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -720,7 +753,7 @@ namespace AtomicWar.GodotApp
                         _aliveSurvivorIds.Add(e.survivorId);
                 }
             }
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         // ── Helpers ────────────────────────────────────────────────────
@@ -818,5 +851,28 @@ namespace AtomicWar.GodotApp
         }
 
         // JSON DTOs consolidated to Assets/Ashfall.Core/Phantoms/PhantomTriggerDto.cs
+    public void BindShelterAssignment(ShelterAssignmentSystem shelterAssignment)
+        {
+            if (shelterAssignment == null) return;
+            shelterAssignment.OnAssignmentChanged += ev =>
+            {
+                LastEvent = $"[Phase0] Shelter assignment changed: {ev?.SurvivorId ?? "unknown"} -> {ev?.RoomId ?? "unknown"}";
+                RaiseStateChanged();
+            };
+        }
+
+        protected override void UnsubscribeSystemEvents()
+        {
+            RadiationPhase.OnStateChanged -= _onRadiationPhaseStateChanged;
+            Phantom.OnStateChanged -= _onPhantomStateChanged;
+            Guilt.OnStateChanged -= _onGuiltStateChanged;
+            CombatTrauma.OnStateChanged -= _onCombatTraumaStateChanged;
+            Flashbacks.OnStateChanged -= _onFlashbacksStateChanged;
+            Moral.OnStateChanged -= _onMoralStateChanged;
+            Dependency.OnStateChanged -= _onDependencyStateChanged;
+            TradeSpecialty.OnStateChanged -= _onTradeSpecialtyStateChanged;
+            FinalWish.OnStateChanged -= _onFinalWishStateChanged;
+            Respiratory.OnStateChanged -= _onRespiratoryStateChanged;
+        }
     }
 }

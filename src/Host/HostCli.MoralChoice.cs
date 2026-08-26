@@ -29,8 +29,8 @@ namespace AtomicWar.GodotApp
 
             // 1. Catalog loads all 60 quests.
             var defs = MoralChoiceCatalogLoader.Load(dataDirectory, new FileSystemIO(), new SystemTextJsonSerializer());
-            Check(defs.Count == MoralChoiceIds.QuestCount,
-                $"catalog loads {MoralChoiceIds.QuestCount} quests (got {defs.Count})");
+            Check(defs.Count == MoralChoiceIds.BaseQuestCount,
+                $"catalog loads {MoralChoiceIds.BaseQuestCount} quests (got {defs.Count})");
 
             MoralChoiceQuestDefinition? Def(string id) => defs.Find(d => d.Id == id);
 

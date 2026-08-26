@@ -25,10 +25,14 @@ namespace AtomicWar.GodotApp
         public const int DefaultSeed = 1009;
 
         public SilentFoundrySystem Engine { get; }
+        public SaltMineExtractionSystem SaltMine { get; }
         public SilentFoundryCatalog Catalog { get; }
         public ItemCatalog FoundryItems { get; }
         public SilentFoundryConsequencePolicyCatalog ConsequencePolicy { get; }
         public FactionStanceEngine GuildStanceEngine { get; }
+
+        public Ashfall.Core.Shelter.PowerGridSystem? PowerGrid { get; set; }
+        public Ashfall.Core.ShelterThermalSystem? ThermalSystem { get; set; }
 
         public string LastEvent { get; set; } = string.Empty;
         public event Action? StateChanged;
@@ -39,8 +43,43 @@ namespace AtomicWar.GodotApp
         private readonly ItemCatalog _inventoryCatalog;
         private readonly MarketSystem? _market;
 
+        public void BindPowerAndThermal(Ashfall.Core.Shelter.PowerGridSystem? powerGrid, Ashfall.Core.ShelterThermalSystem? thermal)
+        {
+            PowerGrid = powerGrid;
+            ThermalSystem = thermal;
+        }
+
+        public void TickDaily(int day)
+        {
+            if (Engine.IsHeatActive)
+            {
+                // Check if the foundry room / workshop is unpowered or experiencing brownout
+                bool isPowered = PowerGrid == null || PowerGrid.IsRoomPowered("room_foundry") || PowerGrid.IsRoomPowered("room_workshop");
+                if (!isPowered)
+                {
+                    Engine.SuspendHeat("Grid brownout / room unpowered", day);
+                    LastEvent = $"Foundry heat suspended on day {day}: electrical grid brownout.";
+                    StateChanged?.Invoke();
+                    return;
+                }
+
+                float powerKw = Engine.CurrentPowerDemandKw;
+                float wasteHeatKw = Engine.CurrentWasteHeatKw;
+
+                // Inject waste heat into shelter workshop / bunker
+                ThermalSystem?.AddAuxiliaryHeat("room_workshop", wasteHeatKw);
+
+                LastEvent = $"Foundry active (Heat: {Engine.HeatStage}): drew {powerKw:F1} kW; emitted +{wasteHeatKw:F1} kW waste heat warming workshop.";
+            }
+
+            Engine.TickDaily(day);
+            SaltMine.TickDaily(day, new CoreSeededRng(day * 31));
+            StateChanged?.Invoke();
+        }
+
         private SilentFoundryHostSession(
             SilentFoundrySystem engine,
+            SaltMineExtractionSystem saltMine,
             SilentFoundryCatalog catalog,
             ItemCatalog foundryItems,
             InventoryContainer inventory,
@@ -51,6 +90,7 @@ namespace AtomicWar.GodotApp
             ILog log)
         {
             Engine = engine;
+            SaltMine = saltMine;
             Catalog = catalog;
             FoundryItems = foundryItems;
             _inventory = inventory;
@@ -113,6 +153,14 @@ namespace AtomicWar.GodotApp
             Engine.OnTreatyQuotaMissed += c => { LastEvent = "Treaty quota missed: " + c.treatyId; StateChanged?.Invoke(); };
             Engine.OnJournalTriggered += BridgeJournalTrigger;
 
+            // Salt mine events
+            SaltMine.OnStateChanged += _ => StateChanged?.Invoke();
+            SaltMine.OnExtractionBatchProduced += (id, kg) => { LastEvent = $"Extraction: {kg:F1} kg from {id}."; StateChanged?.Invoke(); };
+            SaltMine.OnTreatyDeliveryAccepted += r => { LastEvent = $"Treaty delivery accepted: {r.quantityDelivered:F1} barrels."; StateChanged?.Invoke(); };
+            SaltMine.OnTreatyDeliveryMissed += r => { LastEvent = $"Treaty delivery missed."; StateChanged?.Invoke(); };
+            SaltMine.OnDrillFailure += id => { LastEvent = $"DRILL FAILURE at {id}!"; StateChanged?.Invoke(); };
+            SaltMine.OnWorkerExposure += (id, contam) => { LastEvent = $"Worker exposure at {id}: {contam:P0}"; StateChanged?.Invoke(); };
+
             // The authored journal templates stay the source of the narrative text.
             string dataDir = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data");
             string jrnlPath = Path.Combine(dataDir, "narrative", "jrnl_templates_cycle_d.json");
@@ -165,7 +213,8 @@ namespace AtomicWar.GodotApp
             }
             EnsureChargeMaterials(inventory.Catalog);
 
-            var session = new SilentFoundryHostSession(engine, catalog, foundryItems,
+            var saltMine = new SaltMineExtractionSystem();
+            var session = new SilentFoundryHostSession(engine, saltMine, catalog, foundryItems,
                 inventory.Inventory, inventory.Catalog, journal, market, policyCatalog, log);
             SeedFoundrySupplies(inventory);
             return session;
@@ -342,7 +391,7 @@ namespace AtomicWar.GodotApp
             if (!files.FileExists(path)) return catalog;
             try
             {
-                var defs = json.Deserialize<List<FoundryItemJson>>(files.ReadAllText(path));
+                var defs = CatalogLocator.LoadWrappedList<FoundryItemJson>(files.ReadAllText(path), SystemTextJsonSerializer.Options);
                 if (defs == null) return catalog;
                 for (int i = 0; i < defs.Count; i++)
                 {
@@ -435,12 +484,76 @@ namespace AtomicWar.GodotApp
         public string Maintain(int day) => Engine.PerformMaintenance(day);
         public string PrepareSand(int water) => Engine.PrepareSand(water);
         public string CompactMold() => Engine.CompactMold(0.6f);
-        public string StartHeat(string productId, int workers, float skill, int day) => Engine.StartProduction(productId, workers, skill, day);
+        public string StartHeat(string productId, int workers, float skill, int day)
+        {
+            if (PowerGrid != null && !PowerGrid.IsRoomPowered("room_foundry") && !PowerGrid.IsRoomPowered("room_workshop"))
+            {
+                LastEvent = "Cannot start heat: electrical grid is unpowered or in brownout.";
+                StateChanged?.Invoke();
+                return LastEvent;
+            }
+            string res = Engine.StartProduction(productId, workers, skill, day);
+            LastEvent = res;
+            StateChanged?.Invoke();
+            return res;
+        }
         public string Tap(int day) => Engine.TapAndCast(day);
         public string SetOvertime(bool on) { Engine.SetOvertime(on); return on ? "Overtime ordered." : "Overtime rescinded."; }
         public string SetChildLabor(bool on) { Engine.SetChildLaborUsed(on); return on ? "Children sent to the charging floor." : "Children returned to lessons."; }
         public string OpenDispute(int day) => Engine.BeginLaborDispute(day);
         public string ResolveStrike(FoundryStrikeResolution resolution, int day) => Engine.ResolveStrike(resolution, day);
+
+        // ---- Salt mine demo commands ----
+
+        /// <summary>Register and unlock a demo salt mine vein.</summary>
+        public string OpenSaltMineDemo()
+        {
+            var vein = new SaltMineVeinState
+            {
+                veinId = "vein_salt_01",
+                displayName = "Main Salt Vein",
+                isUnlocked = false,
+                remainingOre = 5000f,
+                extractionRate = 10f,
+                maxWorkers = 4,
+                assignedWorkers = 0,
+                drillCondition = 1.0f,
+                pumpPressure = 1.0f
+            };
+            SaltMine.RegisterVein(vein);
+            SaltMine.UnlockVein("vein_salt_01");
+            SaltMine.AssignWorkers("vein_salt_01", 2);
+            return "Salt mine opened. 2 workers assigned to Main Salt Vein.";
+        }
+
+        /// <summary>Run one day of salt extraction.</summary>
+        public string TickSaltMineDemo(int day)
+        {
+            SaltMine.TickDaily(day, new CoreSeededRng(day * 31));
+            var s = SaltMine.State;
+            return $"Salt mine tick d{day}: salt={s.saltStorage:F1} kg, brine={s.brineStorage:F1} brl, sulfur={s.sulfurStorage:F1} kg.";
+        }
+
+        /// <summary>Deliver to treaty.</summary>
+        public string DeliverSaltTreatyDemo(int day)
+        {
+            var record = SaltMine.DeliverToTreaty(day);
+            if (record == null) return "No delivery possible.";
+            return record.accepted
+                ? $"Treaty delivery accepted: {record.quantityDelivered:F1} barrels brine."
+                : "Treaty delivery failed: insufficient stock.";
+        }
+
+        /// <summary>Salt mine status.</summary>
+        public string SaltMineStatusLine()
+        {
+            var s = SaltMine.State;
+            var vein = SaltMine.GetVein("vein_salt_01");
+            string veinStatus = vein != null
+                ? $"vein: {vein.assignedWorkers}/{vein.maxWorkers} workers, drill {vein.drillCondition:P0}, pump {vein.pumpPressure:P0}"
+                : "no vein";
+            return $"SALT MINE: {veinStatus} · storage: salt={s.saltStorage:F1} kg, brine={s.brineStorage:F1} brl, sulfur={s.sulfurStorage:F1} kg · deliveries: {SaltMine.GetDeliveryCount()}";
+        }
 
         public string StatusLine()
         {

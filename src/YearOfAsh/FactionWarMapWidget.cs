@@ -124,10 +124,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
 
             if (_factionsList != null)
             {
-                foreach (Node child in _factionsList.GetChildren())
-                {
-                    child.QueueFree();
-                }
+                AshfallUiHelpers.EmptyChildren(_factionsList);
 
                 foreach (var f in _session.FactionWar.State.factions)
                 {

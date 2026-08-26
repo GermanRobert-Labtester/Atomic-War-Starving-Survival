@@ -14,12 +14,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class DecontaminationHostSession
-    {
+    : HostSessionBase{
         public DecontaminationSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public DecontaminationHostSession(
             DecontaminationSystem system,
             RadiationSystem radiation,
@@ -30,8 +27,8 @@ namespace AtomicWar.GodotApp
             System = system
                 ?? new DecontaminationSystem(new SeededRng(1986), radiation, inventory, airlock, startingLevel, new GodotLog());
 
-            System.OnCaseCompleted += _ => StateChanged?.Invoke();
-            System.OnDeconChanged += () => StateChanged?.Invoke();
+            System.OnCaseCompleted += _ => RaiseStateChanged();
+            System.OnDeconChanged += () => RaiseStateChanged();
         }
 
         public ActionResult Enqueue(string survivorId, string gearId, float surfaceContamination)
@@ -40,7 +37,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Decon case queued: {survivorId} ({gearId})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -51,7 +48,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = "Decon queue processed";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -62,7 +59,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = safeRelease ? "Decon cycle completed (safe release)" : "Decon cycle completed (unsafe release)";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -70,7 +67,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

@@ -52,6 +52,7 @@ namespace AtomicWar.GodotApp.Audio
         // ── Cooldown / dedup ────────────────────────────────────
 
         private readonly Dictionary<string, float> _cooldowns = new();
+        private readonly List<string> _expiredCooldowns = new();
         private const float CooldownEpsilon = 0.01f;
 
         // ── Headless detection ──────────────────────────────────
@@ -126,15 +127,20 @@ namespace AtomicWar.GodotApp.Audio
             }
 
             // Cooldown decay
-            var expired = new List<string>();
-            foreach (var kvp in _cooldowns)
+            if (_cooldowns.Count > 0)
             {
-                _cooldowns[kvp.Key] = kvp.Value - dt;
-                if (_cooldowns[kvp.Key] <= CooldownEpsilon)
-                    expired.Add(kvp.Key);
+                _expiredCooldowns.Clear();
+                foreach (var kvp in _cooldowns)
+                {
+                    float remaining = kvp.Value - dt;
+                    if (remaining <= CooldownEpsilon)
+                        _expiredCooldowns.Add(kvp.Key);
+                    else
+                        _cooldowns[kvp.Key] = remaining;
+                }
+                for (int i = 0; i < _expiredCooldowns.Count; i++)
+                    _cooldowns.Remove(_expiredCooldowns[i]);
             }
-            foreach (string key in expired)
-                _cooldowns.Remove(key);
 
             // Reclaim finished one-shots to pool
             for (int i = _activeOneShots.Count - 1; i >= 0; i--)

@@ -13,12 +13,9 @@ namespace AtomicWar.GodotApp
     /// engine's read surface to the dashboard.
     /// </summary>
     public sealed class ResearchHostSession
-    {
+    : HostSessionBase{
         public ResearchSystem Engine { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public static ResearchHostSession Create()
         {
             return new ResearchHostSession();
@@ -98,7 +95,7 @@ namespace AtomicWar.GodotApp
 
         private void RaiseStateChanged()
         {
-            try { StateChanged?.Invoke(); }
+            try { RaiseStateChanged(); }
             catch (Exception ex) { GD.PrintErr($"[Research] StateChanged event failed: {ex.Message}"); }
         }
     }

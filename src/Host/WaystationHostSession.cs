@@ -10,31 +10,28 @@ namespace AtomicWar.GodotApp
     /// Manages the forward camp at Waystation A, watch assignments, stove heating, and filter maintenance.
     /// </summary>
     public sealed class WaystationHostSession
-    {
+    : HostSessionBase{
         public WaystationSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public WaystationHostSession(WaystationSystem system)
         {
             System = system ?? new WaystationSystem();
 
             System.OnStateChanged += state =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnUnlocked += () =>
             {
                 LastEvent = "[Waystation] Forward camp Waystation A unlocked!";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnStoveDied += () =>
             {
                 LastEvent = "[Waystation] WARNING: Waystation stove has died!";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -42,7 +39,7 @@ namespace AtomicWar.GodotApp
         {
             System.Unlock();
             LastEvent = "Unlocked Waystation A outpost";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public bool AssignWatch(IList<string> survivorIds)
@@ -51,7 +48,7 @@ namespace AtomicWar.GodotApp
             if (ok)
             {
                 LastEvent = "Assigned watch sentries to Waystation A";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return ok;
         }
@@ -60,13 +57,13 @@ namespace AtomicWar.GodotApp
         {
             System.Resupply();
             LastEvent = "Resupplied Waystation A forward camp.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public void TickDaily(bool iceRoadOpen)
         {
             System.TickDaily(iceRoadOpen);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }

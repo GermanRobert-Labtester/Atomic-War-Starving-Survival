@@ -123,11 +123,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
 
         private void ClearChoices()
         {
-            foreach (Node child in _choicesContainer.GetChildren())
-            {
-                _choicesContainer.RemoveChild(child);
-                child.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(_choicesContainer);
         }
 
         /// <summary>

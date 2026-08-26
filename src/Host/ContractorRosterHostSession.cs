@@ -14,12 +14,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class ContractorRosterHostSession
-    {
+    : HostSessionBase{
         public ContractorRosterSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public ContractorRosterHostSession(
             ContractorRosterSystem system,
             Inventory inventory,
@@ -32,14 +29,14 @@ namespace AtomicWar.GodotApp
             System.OnContractorStatusChanged += contractor =>
             {
                 LastEvent = $"Contractor status changed: {contractor.contractorId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             System.OnOfferStatusChanged += offer =>
             {
                 LastEvent = $"Offer status changed: {offer.offerId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            System.OnRosterChanged += () => StateChanged?.Invoke();
+            System.OnRosterChanged += () => RaiseStateChanged();
         }
 
         public ActionResult GenerateOffer(string candidateId, string role, List<string> requiredSkills, int initialFee, int dailyPay, int termDays)
@@ -48,7 +45,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Offer generated for {candidateId} ({role})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -59,7 +56,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Offer accepted: {offerId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -70,7 +67,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Contractor dismissed: {contractorId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -78,7 +75,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

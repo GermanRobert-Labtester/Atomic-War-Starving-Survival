@@ -15,38 +15,42 @@ namespace AtomicWar.GodotApp
     /// rules here — hosts only present and wire.
     /// </summary>
     public sealed class MaritimeHostSession
-    {
+    : HostSessionBase{
         public const int DemoSeed = 9909;
 
         public StealthDiveInstance Dive { get; }
         public ProceduralScavengeSystem Scavenge { get; }
         public PsychologicalContaminationSystem Psychology { get; }
+        public SafeCrackingSystem SafeCrack { get; }
         public List<VariableLootNode> LootNodes { get; } = new List<VariableLootNode>();
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
         public MaritimeHostSession(
             StealthDiveInstance dive = null!,
             ProceduralScavengeSystem scavenge = null!,
-            PsychologicalContaminationSystem psychology = null!)
+            PsychologicalContaminationSystem psychology = null!,
+            SafeCrackingSystem safeCrack = null!)
         {
             Dive = dive ?? new StealthDiveInstance();
             Scavenge = scavenge ?? new ProceduralScavengeSystem(new SeededRng(DemoSeed));
             Psychology = psychology ?? new PsychologicalContaminationSystem();
+            SafeCrack = safeCrack ?? new SafeCrackingSystem(DemoSeed);
             SeedLootNodes();
             WireEvents();
         }
 
         private void WireEvents()
         {
-            Dive.OnDiveEnded += _ => { LastEvent = "Dive ended."; StateChanged?.Invoke(); };
-            Dive.OnRoomEntered += _ => { LastEvent = "Dive moved to next room."; StateChanged?.Invoke(); };
-            Scavenge.OnLootRolled += (_, _, _) => StateChanged?.Invoke();
-            Scavenge.OnItemDegraded += (_, _) => StateChanged?.Invoke();
-            Psychology.OnContaminationApplied += (_, _) => StateChanged?.Invoke();
-            Psychology.OnContaminationExpired += (_, _) => StateChanged?.Invoke();
+            Dive.OnDiveEnded += _ => { LastEvent = "Dive ended."; RaiseStateChanged(); };
+            Dive.OnRoomEntered += _ => { LastEvent = "Dive moved to next room."; RaiseStateChanged(); };
+            Scavenge.OnLootRolled += (_, _, _) => RaiseStateChanged();
+            Scavenge.OnItemDegraded += (_, _) => RaiseStateChanged();
+            Psychology.OnContaminationApplied += (_, _) => RaiseStateChanged();
+            Psychology.OnContaminationExpired += (_, _) => RaiseStateChanged();
+            SafeCrack.OnStateChanged += _ => RaiseStateChanged();
+            SafeCrack.OnSafeOpened += id => { LastEvent = $"Safe {id} opened!"; RaiseStateChanged(); };
+            SafeCrack.OnSafeJammed += id => { LastEvent = $"Safe {id} jammed!"; RaiseStateChanged(); };
+            SafeCrack.OnAlarmTriggered += id => { LastEvent = $"Alarm triggered at safe {id}!"; RaiseStateChanged(); };
         }
 
         public static MaritimeHostSession Create(string dataDir)
@@ -97,7 +101,7 @@ namespace AtomicWar.GodotApp
         {
             Dive.StartDive(diverId, operatorId, 120f);
             LastEvent = $"Dive started: {diverId} (air 120s).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -106,7 +110,7 @@ namespace AtomicWar.GodotApp
             if (!Dive.IsActive) return "No active dive.";
             Dive.Tick(seconds);
             LastEvent = $"Dive tick {seconds}s · air {Dive.AirSupplySeconds:F0}s · room {Dive.CurrentRoomIndex + 1}/4.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -115,7 +119,7 @@ namespace AtomicWar.GodotApp
             if (!Dive.IsActive) return "No active dive.";
             Dive.CrankCompressor();
             LastEvent = $"Compressor cranked. Air {Dive.AirSupplySeconds:F0}s.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -126,7 +130,7 @@ namespace AtomicWar.GodotApp
             LastEvent = ok
                 ? $"Advanced to room {Dive.CurrentRoomIndex + 1} (noise {Dive.NoiseLevel})."
                 : "Cannot advance (at the deep hold or dive inactive).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -145,7 +149,7 @@ namespace AtomicWar.GodotApp
                     .Append(rolls[i].IsDegraded ? " (degraded)" : "")
                     .Append(rolls[i].IsContaminated ? " (contaminated)" : "");
             LastEvent = sb.ToString();
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -155,7 +159,75 @@ namespace AtomicWar.GodotApp
             LastEvent = Psychology.HasContamination(survivorId, PsychologicalContaminationSystem.Contam_ThousandYardStare)
                 ? survivorId + " shows the thousand-yard stare."
                 : survivorId + " visited " + locationId + ".";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
+            return LastEvent;
+        }
+
+        // ── Safe cracking demo actions ───────────────────────────────
+
+        /// <summary>Register a demo safe.</summary>
+        public string RegisterSafeDemo(string safeId = "safe_km19_oil_tin", string locationId = "loc_cut_kilometre_19", string roomId = "room_km19_oil_tin")
+        {
+            var def = new SafeDefinition
+            {
+                id = safeId,
+                displayName = "Locked Safe",
+                roomId = roomId,
+                difficulty = 3,
+                maxAttempts = 10,
+                noisePerAttempt = 0.2f,
+                alarmThreshold = 0.8f,
+                loot = new List<SafeLootEntry>
+                {
+                    new SafeLootEntry { itemId = "scrap_metal", minQuantity = 2, maxQuantity = 5, weightKg = 1f },
+                    new SafeLootEntry { itemId = "clean_water", minQuantity = 1, maxQuantity = 3, weightKg = 1.5f },
+                    new SafeLootEntry { itemId = "bandages", minQuantity = 1, maxQuantity = 2, weightKg = 0.5f }
+                }
+            };
+            bool ok = SafeCrack.RegisterSafe(def, locationId);
+            return ok ? $"Safe {safeId} registered at {locationId}." : $"Safe {safeId} already registered.";
+        }
+
+        /// <summary>Inspect a safe.</summary>
+        public string InspectSafeDemo(string safeId)
+        {
+            var safe = SafeCrack.InspectSafe(safeId);
+            if (safe == null) return $"Unknown safe: {safeId}";
+            return $"Safe {safeId}: difficulty={safe.difficulty}, attempts={safe.attemptsUsed}/{safe.maxAttempts}, " +
+                   $"noise={safe.cumulativeNoise:F2}, opened={safe.isOpened}, jammed={safe.isJammed}";
+        }
+
+        /// <summary>Attempt to open a safe with a guess.</summary>
+        public string AttemptSafeDemo(string safeId, int[] guess, float toolCondition = 1.0f)
+        {
+            var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + safeId.GetHashCode());
+            var feedback = SafeCrack.Attempt(safeId, guess, toolCondition, rng);
+            LastEvent = $"Safe attempt: {feedback.Message} (correct: {feedback.CorrectTumblers}/{feedback.TotalTumblers}, noise: {feedback.NoiseLevel:F2})";
+            RaiseStateChanged();
+            return LastEvent;
+        }
+
+        /// <summary>Attempt accessible mode.</summary>
+        public string AttemptSafeAccessibleDemo(string safeId, float confidence = 0.5f, float toolCondition = 1.0f, float skill = 0.3f)
+        {
+            var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + safeId.GetHashCode());
+            var feedback = SafeCrack.AttemptAccessible(safeId, confidence, toolCondition, skill, rng);
+            LastEvent = $"Safe attempt (accessible): {feedback.Message} (noise: {feedback.NoiseLevel:F2})";
+            RaiseStateChanged();
+            return LastEvent;
+        }
+
+        /// <summary>Transfer loot from an opened safe.</summary>
+        public string TransferLootDemo(string safeId)
+        {
+            var rng = new CoreSeededRng(SafeCrack.State.safes.Count * 31 + safeId.GetHashCode());
+            var loot = SafeCrack.TransferLoot(safeId, rng);
+            if (loot == null) return $"Cannot transfer loot from {safeId} (not opened or already transferred).";
+            var sb = new System.Text.StringBuilder($"Loot from {safeId}:");
+            foreach (var entry in loot)
+                sb.Append($"\n  {entry.minQuantity} × {entry.itemId}");
+            LastEvent = sb.ToString();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -173,7 +245,8 @@ namespace AtomicWar.GodotApp
             {
                 Dive = Dive.CaptureState(),
                 Scavenge = Scavenge.CaptureState(),
-                Psychology = Psychology.CaptureState()
+                Psychology = Psychology.CaptureState(),
+                SafeCrack = SafeCrack.CaptureState()
             };
         }
 
@@ -183,15 +256,17 @@ namespace AtomicWar.GodotApp
             Dive.RestoreState(save.Dive);
             Scavenge.RestoreState(save.Scavenge);
             Psychology.RestoreState(save.Psychology);
+            if (save.SafeCrack != null) SafeCrack.RestoreState(save.SafeCrack);
         }
     }
 
-    /// <summary>Maritime host save envelope (three engine states + checksum).</summary>
+    /// <summary>Maritime host save envelope (four engine states + checksum).</summary>
     public class MaritimeHostSave
     {
         public StealthDiveSaveState Dive;
         public ProceduralScavengeSave Scavenge;
         public PsychContaminationSave Psychology;
+        public SafeCrackingState SafeCrack;
         public string Checksum = string.Empty;
     }
 }

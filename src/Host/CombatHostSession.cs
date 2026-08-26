@@ -16,7 +16,7 @@ namespace AtomicWar.GodotApp
     /// No gameplay rules live here — hosts only present and wire.
     /// </summary>
     public sealed class CombatHostSession
-    {
+    : HostSessionBase{
         public const int DemoSeed = 4242;
 
         public TacticalCombatSystem Engine { get; }
@@ -28,18 +28,15 @@ namespace AtomicWar.GodotApp
         public SurvivorsHostSession Survivors { get; set; }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
         public CombatHostSession(TacticalCombatSystem engine = null!, CombatHostPorts ports = null!)
         {
             Engine = engine ?? new TacticalCombatSystem(null!, ports ?? new CombatHostPorts());
-            Engine.OnStateChanged += _ => StateChanged?.Invoke();
-            Engine.OnCombatEvent += (s, e) => { LastEvent = e.Detail; StateChanged?.Invoke(); };
+            Engine.OnStateChanged += _ => RaiseStateChanged();
+            Engine.OnCombatEvent += (s, e) => { LastEvent = e.Detail; RaiseStateChanged(); };
             Engine.OnEncounterEnded += s =>
             {
                 LastEvent = "Combat ended: " + s.OutcomeText;
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 

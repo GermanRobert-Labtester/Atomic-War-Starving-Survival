@@ -10,12 +10,9 @@ namespace AtomicWar.GodotApp
     /// Manages master-apprentice pairings, mentor qualification checks, daily training ticks, and skill graduations.
     /// </summary>
     public sealed class ApprenticeshipHostSession
-    {
+    : HostSessionBase{
         public ApprenticeshipSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public ApprenticeshipHostSession(ApprenticeshipSystem system)
         {
             if (system == null)
@@ -30,12 +27,12 @@ namespace AtomicWar.GodotApp
             System.OnApprenticeshipCompleted += pair =>
             {
                 LastEvent = $"[Apprenticeship] GRADUATION: {pair.apprenticeId} has mastered {pair.targetSkillId}!";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnApprenticeshipChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -45,7 +42,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Assigned {apprenticeId} under mentor {mentorId} for {targetSkillId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -56,7 +53,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Cancelled apprenticeship pair {pairId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -64,7 +61,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }

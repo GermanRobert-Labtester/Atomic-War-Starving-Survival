@@ -12,7 +12,7 @@ namespace AtomicWar.GodotApp
     /// hosts only wire and present.
     /// </summary>
     public sealed class MedicalHostSession
-    {
+    : HostSessionBase{
         public ChemicalDependencySystem Engine { get; }
         public VigilStateMachine Vigil { get; }
 
@@ -21,9 +21,6 @@ namespace AtomicWar.GodotApp
         public float ActiveCombatPenalty { get; private set; }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
         public MedicalHostSession(ChemicalDependencySystem engine = null!, VigilStateMachine vigil = null!)
         {
             Engine = engine ?? new ChemicalDependencySystem();
@@ -31,39 +28,39 @@ namespace AtomicWar.GodotApp
             Engine.OnMoraleDrainRequested += (sv, amount) =>
             {
                 TotalMoraleDrain += amount;
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Engine.OnCraftingPenaltyChanged += (sv, factor) =>
             {
                 ActiveCraftingPenalty = factor;
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Engine.OnCombatPenaltyChanged += (sv, factor) =>
             {
                 ActiveCombatPenalty = factor;
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Engine.OnDependencyFormed += (sv, item) =>
             {
                 LastEvent = $"Dependency formed: {sv} on {item}.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Engine.OnDetoxCompleted += (sv, item) =>
             {
                 LastEvent = $"Detox complete: {sv} clean of {item}.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            Engine.OnStateChanged += () => StateChanged?.Invoke();
-            Vigil.OnVigilStarted += id => { LastEvent = $"Vigil begun for {id}."; StateChanged?.Invoke(); };
-            Vigil.OnNameRecited += (name, count) => { LastEvent = $"Name recited: {name} ({count})"; StateChanged?.Invoke(); };
-            Vigil.OnPhantomKnock += () => { LastEvent = "Phantom knock heard."; StateChanged?.Invoke(); };
-            Vigil.OnVigilCompleted += skipped => { LastEvent = $"Vigil completed (skipped: {skipped})"; StateChanged?.Invoke(); };
+            Engine.OnStateChanged += () => RaiseStateChanged();
+            Vigil.OnVigilStarted += id => { LastEvent = $"Vigil begun for {id}."; RaiseStateChanged(); };
+            Vigil.OnNameRecited += (name, count) => { LastEvent = $"Name recited: {name} ({count})"; RaiseStateChanged(); };
+            Vigil.OnPhantomKnock += () => { LastEvent = "Phantom knock heard."; RaiseStateChanged(); };
+            Vigil.OnVigilCompleted += skipped => { LastEvent = $"Vigil completed (skipped: {skipped})"; RaiseStateChanged(); };
         }
 
         public void AddCareEntry(string survivorId, string treatmentDetails)
         {
             LastEvent = $"Medical care: {survivorId} — {treatmentDetails}";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public static MedicalHostSession Create(string dataDir)

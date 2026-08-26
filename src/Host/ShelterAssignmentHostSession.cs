@@ -16,7 +16,7 @@ namespace AtomicWar.GodotApp
     /// assignments) runs at the right seam.
     /// </summary>
     public sealed class ShelterAssignmentHostSession
-    {
+    : HostSessionBase{
         public ShelterAssignmentSystem System { get; private set; }
 
         private readonly ISeededRng _rng;

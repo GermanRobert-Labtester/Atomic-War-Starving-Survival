@@ -9,12 +9,9 @@ namespace AtomicWar.GodotApp
     /// Manages blast door state, sentry assignments, visitor triage/quarantine, and security incidents.
     /// </summary>
     public sealed class AirlockSecurityHostSession
-    {
+    : HostSessionBase{
         public AirlockSecuritySystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public AirlockSecurityHostSession(AirlockSecuritySystem system)
         {
             System = system ?? new AirlockSecuritySystem(new SeededRng(1986), new GodotLog());
@@ -22,12 +19,12 @@ namespace AtomicWar.GodotApp
             System.OnIncidentResolved += log =>
             {
                 LastEvent = $"[Airlock] Incident resolved for {log.visitorId}: Decision {log.decision}, Outcome: {log.outcome}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnSecurityChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -35,7 +32,7 @@ namespace AtomicWar.GodotApp
         {
             System.AssignSentry(dwellerId);
             LastEvent = $"Assigned sentry: {dwellerId}";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public ActionResult CycleDoor(AirlockDoorState newState)
@@ -44,7 +41,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Airlock blast door cycled to {newState}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -55,7 +52,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Visitor arrived at airlock: {visitorType} ({visitorId})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -66,7 +63,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Security incident resolved: {decision}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -74,7 +71,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }

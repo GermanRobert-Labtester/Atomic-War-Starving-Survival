@@ -14,12 +14,55 @@ namespace AtomicWar.GodotApp
     public static class WastelandMapSaveStore
     {
         public const string FileName = "wasteland_map_save.json";
+        public const string SectionName = "wasteland_map";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(WastelandMapState state)
+    {
+        return TryCapture(state);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static WastelandMapState? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(WastelandMapState state)
+    {
+        try
+        {
+            if (state == null) return string.Empty;
+            return s_json.Serialize(state);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[WastelandMapSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static WastelandMapState? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return s_json.Deserialize<WastelandMapState>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[WastelandMapSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 

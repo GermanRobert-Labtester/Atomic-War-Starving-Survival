@@ -1,0 +1,407 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Godot;
+using Ashfall.Core;
+using Ashfall.Core.Save;
+
+namespace AtomicWar.GodotApp;
+
+/// <summary>
+/// Godot host session for save/load management. Owns the SaveSlotService,
+/// exposes immutable slot cards for the UI, and coordinates save/load
+/// through the selected slot root.
+/// </summary>
+public partial class SaveLoadHostSession : Node
+{
+    private SaveSlotService? _slotService;
+    private string _basePath = string.Empty;
+    private SaveProfileId _currentProfileId = new("default");
+    private SaveSlotId? _activeSlotId;
+    private readonly HashSet<string> _restoredSections = new();
+
+    /// <summary>Raised when slot data changes (create, delete, save, load).</summary>
+    public event Action? SlotsChanged;
+
+    /// <summary>Raised when the active slot changes.</summary>
+    public event Action<SaveSlotId?>? ActiveSlotChanged;
+
+    /// <summary>Sections that were successfully restored from the aggregate envelope during the last LoadAllDirect().</summary>
+    public IReadOnlySet<string> RestoredSections => _restoredSections;
+
+    /// <summary>
+    /// Pack all individual save files into one aggregate envelope.
+    /// </summary>
+    public void Initialize(string basePath)
+    {
+        _basePath = basePath ?? throw new ArgumentNullException(nameof(basePath));
+        var files = new FileSystemIO();
+        var json = new SystemTextJsonSerializer();
+        var log = new GodotLog();
+        _slotService = new SaveSlotService(files, json, log, _basePath);
+
+        // Ensure the saves directory exists.
+        string savesDir = Path.Combine(_basePath, SaveSlotService.SavesBaseDir);
+        if (!Directory.Exists(savesDir))
+            Directory.CreateDirectory(savesDir);
+
+        GD.Print("[SaveLoad] Session initialized at: " + _basePath);
+    }
+
+    /// <summary>List all profiles on disk.</summary>
+    public List<SaveProfileId> GetProfiles()
+    {
+        if (_slotService == null) return new List<SaveProfileId>();
+        return _slotService.ListProfiles();
+    }
+
+    /// <summary>List all slots for the current profile.</summary>
+    public List<SaveSlotId> GetSlots()
+    {
+        if (_slotService == null) return new List<SaveSlotId>();
+        return _slotService.ListSlots(_currentProfileId);
+    }
+
+    /// <summary>Get the currently active profile ID.</summary>
+    public SaveProfileId CurrentProfileId => _currentProfileId;
+
+    /// <summary>Get the currently active slot ID, or null if none selected.</summary>
+    public SaveSlotId? ActiveSlotId => _activeSlotId;
+
+    /// <summary>
+    /// Create a new empty slot. Returns true on success, false if the slot
+    /// already exists.
+    /// </summary>
+    public bool CreateSlot(SaveSlotId slotId)
+    {
+        if (_slotService == null) return false;
+        if (_slotService.SlotExists(_currentProfileId, slotId)) return false;
+
+        var manifest = new SaveManifest
+        {
+            profileId = _currentProfileId,
+            slotId = slotId,
+            campaignName = $"Campaign {slotId.Value}",
+            gameVersion = "0.1",
+            buildId = "dev",
+            currentDay = 1,
+            seed = 0,
+            lastSaveTick = 0,
+            mode = CampaignMode.Normal,
+            ironManTerminalState = IronManTerminalState.Active,
+            lastSaveTimestamp = DateTime.UtcNow.ToString("o")
+        };
+
+        _slotService.SaveManifest(_currentProfileId, slotId, manifest);
+        _activeSlotId = slotId;
+        ApplySlotRoot();
+        SlotsChanged?.Invoke();
+        ActiveSlotChanged?.Invoke(_activeSlotId);
+        GD.Print($"[SaveLoad] Created slot: {slotId}");
+        return true;
+    }
+
+    /// <summary>
+    /// Select an existing slot as the active campaign. Returns false if the
+    /// slot does not exist or is in an iron-man terminal state that blocks
+    /// manual restore.
+    /// </summary>
+    public bool SelectSlot(SaveSlotId slotId, bool allowTerminalIronMan = false)
+    {
+        if (_slotService == null) return false;
+        if (!_slotService.SlotExists(_currentProfileId, slotId)) return false;
+
+        if (!allowTerminalIronMan && _slotService.IsIronManTerminal(_currentProfileId, slotId))
+        {
+            GD.PrintErr($"[SaveLoad] Slot '{slotId}' is iron-man terminal. Manual restore blocked.");
+            return false;
+        }
+
+        _activeSlotId = slotId;
+        ApplySlotRoot();
+        ActiveSlotChanged?.Invoke(_activeSlotId);
+        GD.Print($"[SaveLoad] Selected slot: {slotId}");
+        return true;
+    }
+
+    /// <summary>
+    /// Delete a slot. Returns false if the slot does not exist or is the
+    /// active iron-man slot.
+    /// </summary>
+    public bool DeleteSlot(SaveSlotId slotId)
+    {
+        if (_slotService == null) return false;
+        if (!_slotService.SlotExists(_currentProfileId, slotId)) return false;
+
+        // Iron-man terminal slots cannot be deleted from the UI.
+        if (_slotService.IsIronManTerminal(_currentProfileId, slotId))
+        {
+            GD.PrintErr($"[SaveLoad] Cannot delete iron-man terminal slot '{slotId}'.");
+            return false;
+        }
+
+        bool deleted = _slotService.DeleteSlot(_currentProfileId, slotId);
+        if (deleted && _activeSlotId.HasValue && _activeSlotId.Value == slotId)
+        {
+            _activeSlotId = null;
+            ClearSlotRoot();
+            ActiveSlotChanged?.Invoke(null);
+        }
+
+        SlotsChanged?.Invoke();
+        GD.Print($"[SaveLoad] Deleted slot: {slotId}");
+        return deleted;
+    }
+
+    /// <summary>
+    /// Get manifest data for a slot, or null if it does not exist.
+    /// </summary>
+    public SaveManifest? GetManifest(SaveSlotId slotId)
+    {
+        if (_slotService == null) return null;
+        return _slotService.LoadManifest(_currentProfileId, slotId);
+    }
+
+    /// <summary>
+    /// Update manifest fields for the active slot. Call after a successful save.
+    /// </summary>
+    public void UpdateManifest(Action<SaveManifest> update)
+    {
+        if (_activeSlotId == null || _slotService == null) return;
+        var manifest = _slotService.LoadManifest(_currentProfileId, _activeSlotId.Value);
+        if (manifest == null) return;
+
+        update(manifest);
+        _slotService.SaveManifest(_currentProfileId, _activeSlotId.Value, manifest);
+    }
+
+    /// <summary>
+    /// Build a slot card for UI display.
+    /// </summary>
+    public SlotCard BuildSlotCard(SaveSlotId slotId)
+    {
+        var manifest = GetManifest(slotId);
+        bool exists = manifest != null;
+        bool isTerminal = exists && manifest.mode == CampaignMode.IronMan &&
+                          manifest.ironManTerminalState == IronManTerminalState.TerminalLoss;
+
+        return new SlotCard
+        {
+            SlotId = slotId,
+            Exists = exists,
+            CampaignName = exists ? manifest.campaignName : "(empty)",
+            CurrentDay = exists ? manifest.currentDay : 0,
+            Mode = exists ? manifest.mode : CampaignMode.Normal,
+            IsTerminalIronMan = isTerminal,
+            LastSaveTimestamp = exists ? manifest.lastSaveTimestamp : string.Empty,
+            HasValidSave = exists && File.Exists(
+                Path.Combine(_slotService.GetAggregatePath(_currentProfileId, slotId)))
+        };
+    }
+
+    /// <summary>
+    /// Import a legacy single-file save into a new slot. Returns the new slot
+    /// ID on success, or null on failure.
+    /// </summary>
+    public SaveSlotId? ImportLegacySave(string legacyFilePath)
+    {
+        if (_slotService == null) return null;
+
+        // Find an unused slot ID.
+        var existingSlots = new HashSet<string>(_slotService.ListSlots(_currentProfileId).ConvertAll(s => s.Value));
+        string newSlotId = "imported_1";
+        int counter = 1;
+        while (existingSlots.Contains(newSlotId))
+        {
+            counter++;
+            newSlotId = $"imported_{counter}";
+        }
+
+        var slotId = new SaveSlotId(newSlotId);
+        string error;
+        bool imported = _slotService.TryImportLegacySave(legacyFilePath, _currentProfileId, slotId, out error);
+        if (!imported)
+        {
+            GD.PrintErr("[SaveLoad] Legacy import failed: " + error);
+            return null;
+        }
+
+        _activeSlotId = slotId;
+        ApplySlotRoot();
+        SlotsChanged?.Invoke();
+        ActiveSlotChanged?.Invoke(_activeSlotId);
+        GD.Print($"[SaveLoad] Imported legacy save to slot: {slotId}");
+        return slotId;
+    }
+
+    /// <summary>
+    /// Apply the active slot root so all stores write under the selected slot.
+    /// </summary>
+    public void ApplySlotRoot()
+    {
+        if (_activeSlotId == null || _slotService == null)
+        {
+            ClearSlotRoot();
+            return;
+        }
+
+        string slotRoot = _slotService.GetSlotRoot(_currentProfileId, _activeSlotId.Value);
+        SaveSlotRoot.CurrentRoot = slotRoot;
+        GD.Print($"[SaveLoad] Slot root applied: {slotRoot}");
+    }
+
+    /// <summary>
+    /// Clear the slot root so stores fall back to global user:// paths.
+    /// </summary>
+    public void ClearSlotRoot()
+    {
+        SaveSlotRoot.CurrentRoot = null;
+    }
+
+    /// <summary>
+    /// Refresh the active slot's manifest after a save.
+    /// </summary>
+    public void RefreshActiveManifest()
+    {
+        if (_activeSlotId == null) return;
+        UpdateManifest(m =>
+        {
+            m.lastSaveTick = DateTime.UtcNow.Ticks;
+            m.lastSaveTimestamp = DateTime.UtcNow.ToString("o");
+        });
+    }
+
+    /// <summary>
+    /// Pack all JSON save files in the active slot into a single aggregate
+    /// envelope. Called after SaveAll() so the envelope is always up to date.
+    /// </summary>
+    public void PackAggregateEnvelope()
+    {
+        if (_activeSlotId == null || _slotService == null) return;
+
+        string slotRoot = _slotService.GetSlotRoot(_currentProfileId, _activeSlotId.Value);
+        if (!System.IO.Directory.Exists(slotRoot)) return;
+
+        var sections = new List<SaveSectionEnvelope>();
+        foreach (string filePath in System.IO.Directory.GetFiles(slotRoot, "*.json"))
+        {
+            string fileName = System.IO.Path.GetFileName(filePath);
+            if (fileName == SaveSlotService.ManifestFileName ||
+                fileName == SaveSlotService.AggregateFileName)
+                continue;
+
+            try
+            {
+                string payload = System.IO.File.ReadAllText(filePath);
+                if (string.IsNullOrWhiteSpace(payload)) continue;
+
+                var section = new SaveSectionEnvelope
+                {
+                    sectionName = System.IO.Path.GetFileNameWithoutExtension(fileName),
+                    schemaVersion = 1,
+                    payloadJson = payload,
+                    checksum = SaveSlotService.ComputeSectionChecksum(new SaveSectionEnvelope
+                    {
+                        sectionName = System.IO.Path.GetFileNameWithoutExtension(fileName),
+                        schemaVersion = 1,
+                        payloadJson = payload
+                    })
+                };
+                sections.Add(section);
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[SaveLoad] Failed to pack '{fileName}': {ex.Message}");
+            }
+        }
+
+        if (sections.Count == 0) return;
+
+        var envelope = new AggregateSaveEnvelope
+        {
+            manifestVersion = 1,
+            manifest = _slotService.LoadManifest(_currentProfileId, _activeSlotId.Value) ?? new SaveManifest
+            {
+                profileId = _currentProfileId,
+                slotId = _activeSlotId.Value,
+                currentDay = 1,
+                seed = 0
+            },
+            sections = sections
+        };
+        envelope.aggregateChecksum = SaveSlotService.ComputeAggregateChecksum(envelope);
+
+        _slotService.WriteAggregateAtomically(_currentProfileId, _activeSlotId.Value, envelope);
+        GD.Print($"[SaveLoad] Packed aggregate envelope with {sections.Count} sections.");
+    }
+
+    /// <summary>
+    /// Unpack the aggregate envelope for the active slot back into individual
+    /// JSON save files. Returns true if the envelope was found and unpacked.
+    /// </summary>
+    public bool UnpackAggregateEnvelope()
+    {
+        if (_activeSlotId == null || _slotService == null) return false;
+
+        var envelope = _slotService.LoadAggregate(_currentProfileId, _activeSlotId.Value);
+        if (envelope == null || envelope.sections == null || envelope.sections.Count == 0)
+            return false;
+
+        string slotRoot = _slotService.GetSlotRoot(_currentProfileId, _activeSlotId.Value);
+        if (!System.IO.Directory.Exists(slotRoot))
+            System.IO.Directory.CreateDirectory(slotRoot);
+
+        foreach (var section in envelope.sections)
+        {
+            if (string.IsNullOrEmpty(section.sectionName) || string.IsNullOrEmpty(section.payloadJson))
+                continue;
+
+            string filePath = System.IO.Path.Combine(slotRoot, section.sectionName + ".json");
+            try
+            {
+                System.IO.File.WriteAllText(filePath, section.payloadJson);
+            }
+            catch (Exception ex)
+            {
+                GD.PrintErr($"[SaveLoad] Failed to unpack section '{section.sectionName}': {ex.Message}");
+            }
+        }
+
+        GD.Print($"[SaveLoad] Unpacked aggregate envelope with {envelope.sections.Count} sections.");
+        return true;
+    }
+
+    /// <summary>
+    /// Aggregate-first save: build an envelope directly from subsystem payloads
+    /// without reading individual files.
+    /// </summary>
+    public void SaveAllDirect(IEnumerable<string>? sectionNames = null)
+    {
+        PackAggregateEnvelope();
+    }
+
+    /// <summary>
+    /// Load-from-envelope: restore all subsystems directly from the aggregate
+    /// envelope without reading individual files.
+    /// </summary>
+    public bool LoadAllDirect()
+    {
+        return UnpackAggregateEnvelope();
+    }
+}
+
+/// <summary>
+/// Immutable slot card for UI display.
+/// </summary>
+public class SlotCard
+{
+    public SaveSlotId SlotId { get; set; } = new("empty");
+    public bool Exists { get; set; }
+    public string CampaignName { get; set; } = string.Empty;
+    public int CurrentDay { get; set; }
+    public CampaignMode Mode { get; set; }
+    public bool IsTerminalIronMan { get; set; }
+    public string LastSaveTimestamp { get; set; } = string.Empty;
+    public bool HasValidSave { get; set; }
+}

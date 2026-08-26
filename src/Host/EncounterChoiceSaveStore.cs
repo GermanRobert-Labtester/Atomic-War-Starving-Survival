@@ -15,12 +15,55 @@ namespace AtomicWar.GodotApp
     public static class EncounterChoiceSaveStore
     {
         public const string FileName = "encounter_choice_save.json";
+        public const string SectionName = "encounter_choice";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(EncounterChoiceState state)
+    {
+        return TryCapture(state);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static EncounterChoiceState? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(EncounterChoiceState state)
+    {
+        try
+        {
+            if (state == null) return string.Empty;
+            return s_json.Serialize(state);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[EncounterChoiceSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static EncounterChoiceState? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return s_json.Deserialize<EncounterChoiceState>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[EncounterChoiceSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 

@@ -13,18 +13,15 @@ namespace AtomicWar.GodotApp
     /// ration-based trade. No gameplay rules here — hosts only present.
     /// </summary>
     public sealed class TravelingCaravanHostSession
-    {
+    : HostSessionBase{
         public TravelingCaravanSystem Engine { get; }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
         public TravelingCaravanHostSession(TravelingCaravanSystem engine = null!)
         {
             Engine = engine ?? new TravelingCaravanSystem();
-            Engine.OnCaravanArrivedAtNode += (c, node) => { LastEvent = c.caravanName + " arrived at " + node + "."; StateChanged?.Invoke(); };
-            Engine.OnTradeCompleted += (c, item, qty) => { LastEvent = "Traded " + qty + " × " + item + " with " + c.caravanName + "."; StateChanged?.Invoke(); };
+            Engine.OnCaravanArrivedAtNode += (c, node) => { LastEvent = c.caravanName + " arrived at " + node + "."; RaiseStateChanged(); };
+            Engine.OnTradeCompleted += (c, item, qty) => { LastEvent = "Traded " + qty + " × " + item + " with " + c.caravanName + "."; RaiseStateChanged(); };
         }
 
         public static TravelingCaravanHostSession Create(string dataDir)
@@ -49,7 +46,7 @@ namespace AtomicWar.GodotApp
                 "faction_wandering_menders",
                 new List<string> { nodeId, "loc_cut_kilometre_19", "loc_the_allotments", nodeId });
             LastEvent = "Caravan spawned at " + nodeId + ".";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -57,7 +54,7 @@ namespace AtomicWar.GodotApp
         {
             Engine.DailyTick();
             LastEvent = "Caravan day ticked.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -67,7 +64,7 @@ namespace AtomicWar.GodotApp
             LastEvent = ok
                 ? $"Bought {amount} × {itemId} for {amount * ItemPrice(caravanId, itemId)} rations."
                 : $"Could not buy {amount} × {itemId} (stock or rations short).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 

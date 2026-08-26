@@ -14,12 +14,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class KitchenNutritionHostSession
-    {
+    : HostSessionBase{
         public KitchenNutritionSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public KitchenNutritionHostSession(
             KitchenNutritionSystem system,
             Inventory inventory,
@@ -28,13 +25,13 @@ namespace AtomicWar.GodotApp
             System = system
                 ?? new KitchenNutritionSystem(new SeededRng(1986), inventory, needs, new GodotLog());
 
-            System.OnJobCompleted += _ => StateChanged?.Invoke();
+            System.OnJobCompleted += _ => RaiseStateChanged();
             System.OnMealServed += serving =>
             {
                 LastEvent = $"Meal served: {serving.recipeId} to {serving.survivorId} (+{serving.moraleBonus} morale)";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            System.OnKitchenChanged += () => StateChanged?.Invoke();
+            System.OnKitchenChanged += () => RaiseStateChanged();
         }
 
         public ActionResult StartPrepJob(string recipeId, string assignedCookId, Dictionary<string, int> inputRequirements)
@@ -43,7 +40,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Prep started: {recipeId} by {assignedCookId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -54,7 +51,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Meal served: {recipeId} to {survivorId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -62,7 +59,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

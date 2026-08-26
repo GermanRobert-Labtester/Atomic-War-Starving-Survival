@@ -180,7 +180,7 @@ namespace AtomicWar.GodotApp
             {
                 var session = DutyRosterHostSession.Create(dataDirectory);
                 session.Unlock(5);
-                session.ResolveChart(DutyRosterSystem.ChoiceWritePencil);
+                session.ResolveChart(DutyRosterIds.ChoiceWritePencil);
                 session.TickDay();
                 session.QueueVisitor(ShelterEncounterSystem.VisitorLen);
 
@@ -1883,14 +1883,14 @@ namespace AtomicWar.GodotApp
                 var dutyRoster = new DutyRosterSystem();
                 // expansionUnlocked must be true for ResolveChartChoice and TickMorning.
                 dutyRoster.State.expansionUnlocked = true;
-                dutyRoster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 1);
+                dutyRoster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 1);
                 dutyRoster.TickMorning(1, new List<DutyRosterOccupant>
                 {
                     new DutyRosterOccupant { survivorId = "npc_kess_adler", displayName = "Kess Adler", sleptHere = true }
                 });
-                bool assigned = dutyRoster.Assign(DutyRosterSystem.RoleNightWatch, "npc_kess_adler");
+                bool assigned = dutyRoster.Assign(DutyRosterIds.RoleNightWatch, "npc_kess_adler");
                 Check(assigned, "§21 step 8: duty assignment took through the real path");
-                bool duplicateBlocked = !dutyRoster.Assign(DutyRosterSystem.RoleMess, "npc_kess_adler");
+                bool duplicateBlocked = !dutyRoster.Assign(DutyRosterIds.RoleMess, "npc_kess_adler");
                 Check(duplicateBlocked, "§21 step 8: duplicate-role rule enforced");
 
                 // ── §21 step 10: pre-advance fingerprint ──
@@ -1949,7 +1949,7 @@ namespace AtomicWar.GodotApp
                     "§21 step 18: water survives save/reload (fingerprint match)");
                 Check(freshInv.Inventory.CountById("canned_food") == foodPost,
                     "§21 step 18: food survives save/reload (fingerprint match)");
-                Check(freshDuty.GetRoleOf("npc_kess_adler") == DutyRosterSystem.RoleNightWatch,
+                Check(freshDuty.GetRoleOf("npc_kess_adler") == DutyRosterIds.RoleNightWatch,
                     "§21 step 18: duty assignment survives state roundtrip");
 
                 // ── §21 step 19: no Day-1 modal/init replay on the fresh host ──
@@ -2383,16 +2383,16 @@ namespace AtomicWar.GodotApp
                 Check(worldSession.Weather.State.rollCount == rollCountBefore, "peeking forecast does not mutate simulation roll count or RNG state");
 
                 // 3. Survivor Work-Shift Assignment (Duty Roster)
-                rosterSession.Roster.WriteName("survivor_sarah_chen", "Dr. Sarah Chen", "Medical Officer", DutyRosterSystem.ScriptPencil, 1, true);
-                rosterSession.Roster.WriteName("survivor_mikhail_volkov", "Gunner Mikhail", "Soldier", DutyRosterSystem.ScriptPencil, 1, true);
-                rosterSession.Roster.WriteName("survivor_elena_vasquez", "Elena Vasquez", "Machinist", DutyRosterSystem.ScriptPencil, 1, true);
+                rosterSession.Roster.WriteName("survivor_sarah_chen", "Dr. Sarah Chen", "Medical Officer", DutyRosterIds.ScriptPencil, 1, true);
+                rosterSession.Roster.WriteName("survivor_mikhail_volkov", "Gunner Mikhail", "Soldier", DutyRosterIds.ScriptPencil, 1, true);
+                rosterSession.Roster.WriteName("survivor_elena_vasquez", "Elena Vasquez", "Machinist", DutyRosterIds.ScriptPencil, 1, true);
 
-                bool assignedIntake = rosterSession.Roster.Assign(DutyRosterSystem.RoleIntakeSleeper, "survivor_sarah_chen");
-                bool assignedWatch = rosterSession.Roster.Assign(DutyRosterSystem.RoleNightWatch, "survivor_mikhail_volkov");
-                bool assignedMess = rosterSession.Roster.Assign(DutyRosterSystem.RoleMess, "survivor_elena_vasquez");
+                bool assignedIntake = rosterSession.Roster.Assign(DutyRosterIds.RoleIntakeSleeper, "survivor_sarah_chen");
+                bool assignedWatch = rosterSession.Roster.Assign(DutyRosterIds.RoleNightWatch, "survivor_mikhail_volkov");
+                bool assignedMess = rosterSession.Roster.Assign(DutyRosterIds.RoleMess, "survivor_elena_vasquez");
                 Check(assignedIntake && assignedWatch && assignedMess, "survivors successfully assigned to canonical Duty Roster roles");
-                Check(rosterSession.Roster.GetAssignment(DutyRosterSystem.RoleIntakeSleeper) == "survivor_sarah_chen", "Dr. Sarah Chen confirmed on Intake Filtration duty");
-                Check(rosterSession.Roster.GetAssignment(DutyRosterSystem.RoleNightWatch) == "survivor_mikhail_volkov", "Gunner Mikhail confirmed on Night Watch");
+                Check(rosterSession.Roster.GetAssignment(DutyRosterIds.RoleIntakeSleeper) == "survivor_sarah_chen", "Dr. Sarah Chen confirmed on Intake Filtration duty");
+                Check(rosterSession.Roster.GetAssignment(DutyRosterIds.RoleNightWatch) == "survivor_mikhail_volkov", "Gunner Mikhail confirmed on Night Watch");
 
                 // 4. Day 1 -> Day 2 Progression (Maintained Filter)
                 startingSession.TickDay(isFilterDutyAssigned: true, outdoorWeather: worldSession.Weather.Current);
@@ -2424,7 +2424,7 @@ namespace AtomicWar.GodotApp
                 Check(startingSession.System.State.mechanicalScrapCount == scrapBefore - 1, "1 mechanical scrap consumed for servicing");
                 Check(startingSession.System.State.airFilterHealthPercent == 67.0f, "filter integrity restored +25% (now 67%)");
                 Check(startingSession.System.State.radonLevelBqm3 == 33.0f, "radon purged by 15 Bq/m³ (now 33 Bq/m³)");
-                rosterSession.Roster.Assign(DutyRosterSystem.RoleIntakeSleeper, "survivor_sarah_chen"); // reassign
+                rosterSession.Roster.Assign(DutyRosterIds.RoleIntakeSleeper, "survivor_sarah_chen"); // reassign
 
                 // 8. Multi-Day Progression: Day 3 -> Day 4 -> Day 5
                 startingSession.TickDay(isFilterDutyAssigned: true, outdoorWeather: worldSession.Weather.Current);

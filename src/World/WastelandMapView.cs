@@ -1,3 +1,4 @@
+using AtomicWar.GodotApp.UI;
 using Godot;
 using System;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace AtomicWar.GodotApp.World
         private Node2D _mapNodesContainer = null!;
         private WorldHostSession? _worldHost;
 
+        private static WastelandMapData? s_cachedMapData;
+
         public override void _Ready()
         {
             _mapNodesContainer = GetNode<Node2D>("MapNodes");
@@ -42,6 +45,9 @@ namespace AtomicWar.GodotApp.World
             
             try
             {
+                // Clear existing markers if any
+                ClearMarkers();
+
                 // Load the wasteland map data
                 var mapData = LoadWastelandMapData();
                 
@@ -66,27 +72,45 @@ namespace AtomicWar.GodotApp.World
             }
         }
 
-        private WastelandMapData? LoadWastelandMapData()
+        private static WastelandMapData? LoadWastelandMapData()
         {
+            if (s_cachedMapData != null)
+                return s_cachedMapData;
+
             // Try to load from StreamingAssets first
             string jsonPath = "res://Assets/StreamingAssets/Data/wasteland_map_v1.json";
             
             try
             {
                 var file = FileAccess.Open(jsonPath, FileAccess.ModeFlags.Read);
+                if (file == null) return null;
                 string json = file.GetAsText();
                 file.Close();
                 
-                return JsonSerializer.Deserialize<WastelandMapData>(json, new JsonSerializerOptions
+                s_cachedMapData = JsonSerializer.Deserialize<WastelandMapData>(json, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
+                return s_cachedMapData;
             }
             catch (Exception ex)
             {
                 GD.PrintErr($"WastelandMapView: Failed to load map data from {jsonPath}: {ex.Message}");
                 return null;
             }
+        }
+
+        private void ClearMarkers()
+        {
+            if (_mapNodesContainer == null) return;
+            foreach (Node child in _mapNodesContainer.GetChildren())
+            {
+                if (child is MapLocationMarkerView marker)
+                {
+                    marker.NodeSelected -= OnNodeSelected;
+                }
+            }
+            AshfallUiHelpers.EmptyChildren(_mapNodesContainer);
         }
 
         private void CreateLocationMarker(WastelandMapNode node)
@@ -119,6 +143,12 @@ namespace AtomicWar.GodotApp.World
         {
             GD.Print($"WastelandMapView: Node selected: {nodeId}");
             EmitSignal(SignalName.NodeSelected, nodeId);
+        }
+
+        public override void _ExitTree()
+        {
+            ClearMarkers();
+            base._ExitTree();
         }
     }
 

@@ -12,7 +12,7 @@ namespace AtomicWar.GodotApp
     /// here — hosts only wire and present.
     /// </summary>
     public sealed class WorldHostSession
-    {
+    : HostSessionBase{
         public const int DemoSeed = 1234;
 
         public WeatherSystem Weather { get; }
@@ -23,9 +23,6 @@ namespace AtomicWar.GodotApp
         public SeasonProfileDef Profile { get; private set; }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
         public WorldHostSession(
             WeatherSystem weather = null!,
             SkyLayerArmorSystem skyArmor = null!,
@@ -43,9 +40,9 @@ namespace AtomicWar.GodotApp
                 LastEvent = $"Weather: {kind}";
                 if (IsHazardWeather(kind))
                     AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayWeatherAlert();
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            Weather.OnStateChanged += _ => StateChanged?.Invoke();
+            Weather.OnStateChanged += _ => RaiseStateChanged();
         }
 
         public static WorldHostSession Create(string dataDir)

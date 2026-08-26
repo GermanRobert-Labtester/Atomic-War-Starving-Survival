@@ -15,14 +15,11 @@ namespace AtomicWar.GodotApp
     /// InventorySaveStore. No gameplay rules — hosts only present.
     /// </summary>
     public sealed class InventoryHostSession
-    {
+    : HostSessionBase{
         public InventoryContainer Inventory { get; }
         public ItemCatalog Catalog { get; }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
         public InventoryHostSession(InventoryContainer inventory = null!, ItemCatalog catalog = null!)
         {
             Inventory = inventory ?? new InventoryContainer();
@@ -31,7 +28,7 @@ namespace AtomicWar.GodotApp
             // seeded too, or RestoreSave cannot resolve item ids.
             if (Catalog.Count == 0)
                 SeedCatalog(Catalog);
-            Inventory.OnInventoryChanged += () => StateChanged?.Invoke();
+            Inventory.OnInventoryChanged += () => RaiseStateChanged();
         }
 
         public static InventoryHostSession Create(string dataDir)

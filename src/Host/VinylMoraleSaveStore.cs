@@ -17,10 +17,53 @@ namespace AtomicWar.GodotApp
     public static class VinylMoraleSaveStore
     {
         public const string FileName = "vinyl_morale_save.json";
+        public const string SectionName = "vinyl_morale";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(VinylMoraleState state)
+    {
+        return TryCapture(state);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static VinylMoraleState? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(VinylMoraleState state)
+    {
+        try
+        {
+            if (state == null) return string.Empty;
+            return s_json.Serialize(state);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[VinylMoraleSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static VinylMoraleState? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return s_json.Deserialize<VinylMoraleState>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[VinylMoraleSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
-        public static string SavePath => Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+        public static string SavePath => SaveSlotRoot.Resolve(FileName);
         public static bool Exists => s_files.FileExists(SavePath);
 
         public static bool TrySave(VinylMoraleState state)

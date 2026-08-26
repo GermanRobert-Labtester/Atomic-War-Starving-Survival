@@ -14,13 +14,56 @@ namespace AtomicWar.GodotApp
     public static class HoldfastSaveStore
     {
         public const string FileName = "holdfast_s1_save.json";
+        public const string SectionName = "holdfast_s1";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(HoldfastSave state)
+    {
+        return TryCapture(state);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static HoldfastSave? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(HoldfastSave state)
+    {
+        try
+        {
+            if (state == null) return string.Empty;
+            return new SystemTextJsonSerializer().Serialize(state);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[HoldfastSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static HoldfastSave? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return new SystemTextJsonSerializer().Deserialize<HoldfastSave>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[HoldfastSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly IFileIO s_files = new FileSystemIO();
         private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();
         private static readonly ILog s_log = new GodotLog();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 

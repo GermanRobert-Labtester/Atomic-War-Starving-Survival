@@ -16,12 +16,55 @@ namespace AtomicWar.GodotApp
     public static class WorldSaveStore
     {
         public const string FileName = "world_save.json";
+        public const string SectionName = "world";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(WorldHostSave envelope)
+    {
+        return TryCapture(envelope);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static WorldHostSave? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(WorldHostSave envelope)
+    {
+        try
+        {
+            if (envelope == null) return string.Empty;
+            return new SystemTextJsonSerializer().Serialize(envelope);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[WorldSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static WorldHostSave? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return new SystemTextJsonSerializer().Deserialize<WorldHostSave>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[WorldSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 

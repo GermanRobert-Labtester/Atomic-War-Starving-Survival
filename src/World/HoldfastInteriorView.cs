@@ -1,3 +1,4 @@
+using AtomicWar.GodotApp.UI;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -102,11 +103,7 @@ namespace AtomicWar.GodotApp.World
         private void PopulateRoomHotspots()
         {
             var roomHotspotsNode = GetNode<Node2D>("RoomHotspots");
-            foreach (Node child in roomHotspotsNode.GetChildren())
-            {
-                roomHotspotsNode.RemoveChild(child);
-                child.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(roomHotspotsNode);
 
             var rooms = new[]
             {
@@ -147,6 +144,12 @@ namespace AtomicWar.GodotApp.World
         {
             EmitSignal(SignalName.RoomSelected, roomId);
             GD.Print($"[HoldfastInterior] Room clicked: {roomId}");
+        }
+
+        public override void _ExitTree()
+        {
+            ClearExistingSurvivors();
+            base._ExitTree();
         }
     }
 }

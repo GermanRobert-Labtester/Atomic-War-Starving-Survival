@@ -11,15 +11,13 @@ namespace AtomicWar.GodotApp
     /// Bridges StartingLevelSystem simulation to Godot UI and persists to user://.
     /// </summary>
     public sealed class StartingLevelHostSession
-    {
+    : HostSessionBase{
         public StartingLevelSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-        public event Action? StateChanged;
-
         public StartingLevelHostSession(StartingLevelSystem? system = null)
         {
             System = system ?? new StartingLevelSystem();
-            System.OnStateChanged += () => StateChanged?.Invoke();
+            System.OnStateChanged += () => RaiseStateChanged();
             System.OnDirectiveLogged += msg => LastEvent = msg;
         }
 
@@ -38,38 +36,38 @@ namespace AtomicWar.GodotApp
         public void ResolveMorningRationTriage(RationPolicy policy)
         {
             System.ResolveMorningRationTriage(policy);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public void ResolveMiddayMaintenance(MaintenanceDirective directive)
         {
             System.ResolveMiddayMaintenance(directive);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public void ResolveEveningRadio(RadioProtocol protocol)
         {
             System.ResolveEveningRadio(protocol);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public void InspectRoom(string roomId)
         {
             System.InspectRoom(roomId);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public bool ServiceAirFilter()
         {
             bool success = System.ServiceAirFilter();
-            if (success) StateChanged?.Invoke();
+            if (success) RaiseStateChanged();
             return success;
         }
 
         public bool ReplaceAirFilter()
         {
             bool success = System.ReplaceAirFilter();
-            if (success) StateChanged?.Invoke();
+            if (success) RaiseStateChanged();
             return success;
         }
 
@@ -78,7 +76,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(bool isFilterDutyAssigned, Ashfall.Core.WeatherKind outdoorWeather)
         {
             System.TickDay(isFilterDutyAssigned, outdoorWeather);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public StartingLevelSaveState CaptureState() => System.CaptureState();
@@ -86,7 +84,7 @@ namespace AtomicWar.GodotApp
         public void RestoreState(StartingLevelSaveState state)
         {
             System.RestoreState(state);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

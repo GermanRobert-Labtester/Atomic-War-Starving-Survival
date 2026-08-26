@@ -16,21 +16,19 @@ namespace AtomicWar.GodotApp
     /// No gameplay rules — hosts only present.
     /// </summary>
     public sealed class CraftingHostSession
-    {
+    : HostSessionBase{
         public CraftingSystem Engine { get; }
         public InventoryContainer Inventory { get; }
         public System.Collections.Generic.List<Recipe> Recipes { get; } =
             new System.Collections.Generic.List<Recipe>();
 
         public string LastEvent { get; private set; } = string.Empty;
-        public event Action StateChanged;
-
         public CraftingHostSession(InventoryContainer inventory = null!)
         {
             Inventory = inventory ?? new InventoryContainer();
             Engine = new CraftingSystem(Inventory);
-            Engine.OnCraftStarted += _ => StateChanged?.Invoke();
-            Engine.OnCraftCompleted += _ => StateChanged?.Invoke();
+            Engine.OnCraftStarted += _ => RaiseStateChanged();
+            Engine.OnCraftCompleted += _ => RaiseStateChanged();
             SeedStation();
             SeedRecipes();
             Engine.SetRecipeLookup(id => FindRecipe(id));
@@ -130,7 +128,7 @@ namespace AtomicWar.GodotApp
             LastEvent = ok
                 ? $"Started {recipe.recipeName} ({recipe.craftingTimeHours:F0}h)."
                 : $"Cannot start {recipe.recipeName}: missing ingredients, station, or room.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -138,7 +136,7 @@ namespace AtomicWar.GodotApp
         {
             Engine.Tick(gameHours);
             LastEvent = $"Advanced crafting by {gameHours:F0}h. {Engine.ActiveCraftCount} craft(s) queued.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -205,7 +203,7 @@ namespace AtomicWar.GodotApp
         {
             Engine.SetRecipeLookup(id => FindRecipe(id));
             Engine.RestoreState(save);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }

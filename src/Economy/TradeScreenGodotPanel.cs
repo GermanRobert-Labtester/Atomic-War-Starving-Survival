@@ -1,3 +1,4 @@
+using AtomicWar.GodotApp.UI;
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
@@ -538,8 +539,7 @@ namespace AtomicWar.GodotApp.Economy
             int day = _session.Market?.Day ?? 1;
             _lblPhaseDay.Text = $"Phase: CivilWar · Day {day}";
 
-            foreach (Node child in _shocksContainer.GetChildren())
-                child.QueueFree();
+            AshfallUiHelpers.EmptyChildren(_shocksContainer);
 
             if (_priceShockProvider != null)
             {
@@ -663,8 +663,7 @@ namespace AtomicWar.GodotApp.Economy
 
         private void RebuildShockBadges(IReadOnlyList<ShockBadgeData> badges)
         {
-            foreach (Node child in _shocksContainer.GetChildren())
-                child.QueueFree();
+            AshfallUiHelpers.EmptyChildren(_shocksContainer);
 
             if (badges == null) return;
             foreach (var badge in badges)
@@ -687,8 +686,7 @@ namespace AtomicWar.GodotApp.Economy
 
         private static void ClearList(VBoxContainer list)
         {
-            foreach (Node child in list.GetChildren())
-                child.QueueFree();
+            AshfallUiHelpers.EmptyChildren(list);
         }
 
         private Label MakeTableLineLabel(string text, bool dimmed = false)
@@ -725,10 +723,8 @@ namespace AtomicWar.GodotApp.Economy
         {
             if (_session?.Catalog == null) return;
 
-            foreach (Node child in _playerOfferList.GetChildren())
-                child.QueueFree();
-            foreach (Node child in _factionStockList.GetChildren())
-                child.QueueFree();
+            AshfallUiHelpers.EmptyChildren(_playerOfferList);
+            AshfallUiHelpers.EmptyChildren(_factionStockList);
 
             foreach (var good in _session.Catalog.All())
             {

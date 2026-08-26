@@ -16,12 +16,9 @@ namespace AtomicWar.GodotApp
     /// only adapts the OnIncident / StateChanged surface for Godot wiring.
     /// </summary>
     public sealed class SumpFloodingHostSession
-    {
+    : HostSessionBase{
         public SumpFloodingSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public SumpFloodingHostSession(
             SumpFloodingSystem system,
             WeatherSystem weather,
@@ -34,12 +31,12 @@ namespace AtomicWar.GodotApp
             System.OnIncident += inc =>
             {
                 LastEvent = $"[Sump] INCIDENT: {inc.kind} in {inc.nodeId} — {inc.description}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnFloodingChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -49,7 +46,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump node registered: {displayName} (cap {maxWaterLevelCm}cm)";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -60,7 +57,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump pump installed at node {nodeId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -71,7 +68,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump pump power set: node {nodeId} -> {(powered ? "ON" : "OFF")}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -82,7 +79,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump mitigation added: {mitigationType} on node {nodeId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -93,7 +90,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump node drained: {nodeId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -101,7 +98,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

@@ -131,12 +131,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             _factionLabel.Text = $"Faction Alignment: {encounter.visitorFaction} | Threat Level: {encounter.threatLevel}";
             _descriptionText.Text = encounter.description;
 
-            foreach (Node child in _choicesContainer.GetChildren())
-                child.QueueFree();
-            foreach (Node child in _reactionsContainer.GetChildren())
-                child.QueueFree();
-
-            foreach (var choice in encounter.choices)
+            AshfallUiHelpers.EmptyChildren(_choicesContainer);AshfallUiHelpers.EmptyChildren(_reactionsContainer);foreach (var choice in encounter.choices)
             {
                 var btn = new Button
                 {
@@ -156,10 +151,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
         {
             if (result == null) return;
 
-            foreach (Node child in _choicesContainer.GetChildren())
-                child.QueueFree();
-
-            var summaryLabel = new Label
+            AshfallUiHelpers.EmptyChildren(_choicesContainer);var summaryLabel = new Label
             {
                 Text = $"RESOLUTION: {result.outcomeText}\nNet Morale Delta: {result.netMoraleDelta:+#;-#;0} | Net Guilt Delta: {result.netGuiltDelta:+#;-#;0}",
                 AutowrapMode = TextServer.AutowrapMode.WordSmart

@@ -9,12 +9,9 @@ namespace AtomicWar.GodotApp
     /// Manages dweller-to-dweller affinity, trust, resentment, interpersonal conflicts, and mediation.
     /// </summary>
     public sealed class SurvivorRelationsHostSession
-    {
+    : HostSessionBase{
         public SurvivorRelationsSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public SurvivorRelationsHostSession(SurvivorRelationsSystem system)
         {
             System = system ?? new SurvivorRelationsSystem(new SeededRng(1986), new GodotLog());
@@ -22,20 +19,20 @@ namespace AtomicWar.GodotApp
             System.OnConflictStarted += conflict =>
             {
                 LastEvent = $"[Relations] CONFLICT: {conflict.dwellerA} and {conflict.dwellerB} clashed over {conflict.cause}!";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnConflictResolved += entry =>
             {
                 LastEvent = $"[Relations] Conflict {entry.conflictId} resolved by {entry.mediatorId}: {entry.outcome}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
         public void ModifyAffinity(string dwellerA, string dwellerB, float delta)
         {
             System.ModifyAffinity(dwellerA, dwellerB, delta);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         public ConflictEntry? TryTriggerConflict()
@@ -44,7 +41,7 @@ namespace AtomicWar.GodotApp
             if (conflict != null)
             {
                 LastEvent = $"Conflict erupted between {conflict.dwellerA} and {conflict.dwellerB}: {conflict.cause}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return conflict;
         }
@@ -55,7 +52,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Mediation completed for conflict {conflictId} by {mediatorId} ({style})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -63,7 +60,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }

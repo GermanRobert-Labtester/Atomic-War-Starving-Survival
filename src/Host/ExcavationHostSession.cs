@@ -9,19 +9,16 @@ namespace AtomicWar.GodotApp
     /// Manages underground rubble clearing, worker assignments, structural shoring, cave-in risk, and room discovery.
     /// </summary>
     public sealed class ExcavationHostSession
-    {
+    : HostSessionBase{
         public ExcavationSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public ExcavationHostSession(ExcavationSystem system)
         {
             System = system ?? new ExcavationSystem(new SeededRng(1986), new GodotLog());
 
             System.OnExcavationChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -31,7 +28,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Surveyed new excavation site: {siteId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -42,7 +39,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Assigned {workerCount} workers to excavation site {siteId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -53,7 +50,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Reinforced shoring on excavation site {siteId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -61,7 +58,7 @@ namespace AtomicWar.GodotApp
         public void TickDay()
         {
             System.TickDay();
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }

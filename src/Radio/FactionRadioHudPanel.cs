@@ -1,3 +1,4 @@
+using AtomicWar.GodotApp.UI;
 using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
@@ -355,10 +356,7 @@ namespace AtomicWar.GodotApp.Radio
         {
             if (_presetGrid == null || _radioProvider == null) return;
 
-            foreach (Node child in _presetGrid.GetChildren())
-                child.QueueFree();
-
-            foreach (var f in _radioProvider.GetAllFactions())
+            AshfallUiHelpers.EmptyChildren(_presetGrid);foreach (var f in _radioProvider.GetAllFactions())
             {
                 float freq = _radioProvider.GetFactionFrequency(f);
                 string callsign = _radioProvider.GetFactionCallsign(f);

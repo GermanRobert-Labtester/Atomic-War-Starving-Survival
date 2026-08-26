@@ -63,10 +63,7 @@ namespace AtomicWar.GodotApp.Muster
         public void RefreshView()
         {
             if (_currentsList == null) return;
-            foreach (Node child in _currentsList.GetChildren())
-                child.QueueFree();
-
-            if (_muster != null)
+            AshfallUiHelpers.EmptyChildren(_currentsList);if (_muster != null)
             {
                 if (_muster.EscalationDay < 0)
                     _lblEscalation.Text = "Escalation: dormant";

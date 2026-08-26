@@ -18,13 +18,56 @@ namespace AtomicWar.GodotApp
     public static class DailyBriefingSaveStore
     {
         public const string FileName = "daily_briefing_save.json";
+        public const string SectionName = "daily_briefing";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(DailyBriefingSave state)
+    {
+        return TryCapture(state);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static DailyBriefingSave? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(DailyBriefingSave state)
+    {
+        try
+        {
+            if (state == null) return string.Empty;
+            return new SystemTextJsonSerializer().Serialize(state);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[DailyBriefingSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static DailyBriefingSave? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return new SystemTextJsonSerializer().Deserialize<DailyBriefingSave>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[DailyBriefingSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly IFileIO s_files = new FileSystemIO();
         private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();
         private static readonly ILog s_log = new GodotLog();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 

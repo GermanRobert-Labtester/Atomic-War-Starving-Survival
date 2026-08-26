@@ -14,12 +14,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class LibraryStudyHostSession
-    {
+    : HostSessionBase{
         public LibraryStudySystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public LibraryStudyHostSession(
             LibraryStudySystem system,
             SkillProgressionSystem skills,
@@ -33,16 +30,16 @@ namespace AtomicWar.GodotApp
             System.OnJobCompleted += _ =>
             {
                 LastEvent = "Study completed";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            System.OnLibraryChanged += () => StateChanged?.Invoke();
+            System.OnLibraryChanged += () => RaiseStateChanged();
         }
 
         public void LoadCatalog(List<ManualDefinition> manuals)
         {
             System.LoadCatalog(manuals);
             LastEvent = $"Library catalog loaded: {manuals.Count} manuals";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         /// <summary>Load the library_manuals.json catalog into the Core system (the authority).</summary>
@@ -55,7 +52,7 @@ namespace AtomicWar.GodotApp
             if (count > 0)
             {
                 LastEvent = $"Library manual catalog loaded: {count} manuals";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
         }
 
@@ -65,7 +62,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Study started: {manualId} by {readerId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -73,7 +70,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

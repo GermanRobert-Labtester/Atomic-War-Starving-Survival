@@ -13,12 +13,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class ArchiveDeskHostSession
-    {
+    : HostSessionBase{
         public ArchiveDeskSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public ArchiveDeskHostSession(
             ArchiveDeskSystem system,
             JournalSystem journal,
@@ -32,16 +29,16 @@ namespace AtomicWar.GodotApp
             System.OnJobCompleted += job =>
             {
                 LastEvent = $"Transcription completed: {job.evidenceId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            System.OnArchiveChanged += () => StateChanged?.Invoke();
+            System.OnArchiveChanged += () => RaiseStateChanged();
         }
 
         public void LoadInkCatalog(List<InkMaterialDefinition> inks)
         {
             System.LoadInkCatalog(inks);
             LastEvent = $"Ink catalog loaded: {inks.Count} inks";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         /// <summary>Load the archive_inks.json catalog into the Core system (the authority).</summary>
@@ -54,7 +51,7 @@ namespace AtomicWar.GodotApp
             if (count > 0)
             {
                 LastEvent = $"Ink catalog loaded: {count} inks";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
         }
 
@@ -64,7 +61,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Transcription queued: {evidenceId} by {archivistId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -75,7 +72,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Transcription cancelled: {jobId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -83,7 +80,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

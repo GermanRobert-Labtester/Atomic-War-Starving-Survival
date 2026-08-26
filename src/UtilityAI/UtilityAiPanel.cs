@@ -75,10 +75,7 @@ namespace AtomicWar.GodotApp.UtilityAI
         {
             if (_session == null) return;
 
-            foreach (Node child in _actionList.GetChildren())
-                child.QueueFree();
-
-            _lblSelection.Text = string.IsNullOrEmpty(_session.LastEvent)
+            AshfallUiHelpers.EmptyChildren(_actionList);_lblSelection.Text = string.IsNullOrEmpty(_session.LastEvent)
                 ? "No selection yet."
                 : _session.LastEvent;
 

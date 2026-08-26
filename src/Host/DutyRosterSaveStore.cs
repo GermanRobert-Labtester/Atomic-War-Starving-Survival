@@ -14,13 +14,56 @@ namespace AtomicWar.GodotApp
     public static class DutyRosterSaveStore
     {
         public const string FileName = "duty_roster_save.json";
+        public const string SectionName = "duty_roster";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(DutyRosterSave state)
+    {
+        return TryCapture(state);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static DutyRosterSave? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(DutyRosterSave state)
+    {
+        try
+        {
+            if (state == null) return string.Empty;
+            return new SystemTextJsonSerializer().Serialize(state);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[DutyRosterSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static DutyRosterSave? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return new SystemTextJsonSerializer().Deserialize<DutyRosterSave>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[DutyRosterSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly IFileIO s_files = new FileSystemIO();
         private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();
         private static readonly ILog s_log = new GodotLog();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 

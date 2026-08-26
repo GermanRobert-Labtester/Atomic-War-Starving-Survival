@@ -18,7 +18,7 @@ namespace AtomicWar.GodotApp
     /// daily seam.
     /// </summary>
     public sealed class PowerGridHostSession
-    {
+    : HostSessionBase{
         public PowerGridSystem System { get; private set; }
         public PowerGridSnapshot LastSnapshot { get; private set; }
 

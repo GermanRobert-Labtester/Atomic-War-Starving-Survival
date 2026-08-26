@@ -11,12 +11,9 @@ namespace AtomicWar.GodotApp
     /// Manages shelter work shifts, sleep assignments, curfews, lighting demand, and emergency overrides.
     /// </summary>
     public sealed class ShelterScheduleHostSession
-    {
+    : HostSessionBase{
         public ShelterScheduleSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public ShelterScheduleHostSession(ShelterScheduleSystem system)
         {
             if (system == null)
@@ -31,12 +28,12 @@ namespace AtomicWar.GodotApp
             System.OnPhaseChanged += phase =>
             {
                 LastEvent = $"[Schedule] Phase changed to {phase}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnScheduleChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -46,7 +43,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Shelter curfew set to: {(active ? "ACTIVE" : "INACTIVE")}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -57,7 +54,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Emergency schedule override set to: {(active ? "ACTIVE" : "OFF")}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -68,7 +65,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Assigned dweller {survivorId} to bunk {bedId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -83,14 +80,14 @@ namespace AtomicWar.GodotApp
             if (count > 0)
             {
                 LastEvent = $"Shelter schedule catalog loaded: {count} schedules";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
         }
 
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }
