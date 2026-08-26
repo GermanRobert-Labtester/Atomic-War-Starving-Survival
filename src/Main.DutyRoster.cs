@@ -75,7 +75,7 @@ namespace AtomicWar.GodotApp
         private void OnRosterPencilClicked()
         {
             SetupDutyRoster();
-            _statusLabel.Text = _dutyRoster.ResolveChart(DutyRosterSystem.ChoiceWritePencil)
+            _statusLabel.Text = _dutyRoster.ResolveChart(DutyRosterIds.ChoiceWritePencil)
                 + "\n" + _dutyRoster.TickDay();
             RefreshRosterStatus();
         }
@@ -116,6 +116,29 @@ namespace AtomicWar.GodotApp
             SetupDutyRoster();
             _statusLabel.Text = _dutyRoster.ActivateSecondWinter();
             RefreshRosterStatus();
+        }
+
+        /// <summary>
+        /// Real home-occupant snapshot for the Duty Roster morning tick.
+        /// </summary>
+        private List<Ashfall.Core.DutyRosterOccupant> BuildHomeOccupantSnapshot()
+        {
+            var occupants = new List<Ashfall.Core.DutyRosterOccupant>();
+            if (_survivors == null) return occupants;
+            for (int i = 0; i < _survivors.RosterState.Count; i++)
+            {
+                var s = _survivors.RosterState[i];
+                if (s == null || string.IsNullOrEmpty(s.Id) || !s.IsAliveState) continue;
+                occupants.Add(new Ashfall.Core.DutyRosterOccupant
+                {
+                    survivorId = s.Id,
+                    displayName = FormatSurvivorName(s.Id),
+                    occupationObserved = string.Empty,
+                    sleptHere = true
+                });
+            }
+            occupants.Sort((a, b) => string.CompareOrdinal(a.survivorId, b.survivorId));
+            return occupants;
         }
 
         private void SaveDutyRoster()

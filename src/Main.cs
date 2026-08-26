@@ -46,8 +46,6 @@ namespace AtomicWar.GodotApp
         private Label _briefingPreviewLabel = null!;
         private VBoxContainer _menuContainer = null!;
         private TextEdit _codexViewer = null!;
-        private EventsHostSession _eventsHost = null!;
-        private ExpansionQuestHostSession _expansionQuests = null!;
         private SaveLoadHostSession _saveLoadHost = null!;
 
         // Questline master registry (loaded early for expansion quest ID validation)
@@ -371,7 +369,7 @@ namespace AtomicWar.GodotApp
             double elapsed = _diagnosticsAccum;
             _diagnosticsAccum = 0.0;
 
-            if (_diagnosticsLabel == null) return;
+            if (_diagnosticsLabel == null || !IsInstanceValid(_diagnosticsLabel)) return;
             double fps = Engine.GetFramesPerSecond();
             double memMb = (long)OS.GetStaticMemoryUsage() / (1024.0 * 1024.0);
             string verdictSave = _verdict != null
@@ -392,11 +390,13 @@ namespace AtomicWar.GodotApp
             FlushHoldfastIfDirty();
             FlushDutyRosterIfDirty();
             FlushExpansionQuestsIfDirty();
+            FlushThirdonaryIfDirty();
             FlushExpansionHubIfDirty();
             FlushVerdictIfDirty();
             FlushMaritimeIfDirty();
             FlushExpeditionIfDirty();
             FlushNarrativeIfDirty();
+            FlushEventAdapterIfDirty();
             FlushMedicalIfDirty();
             FlushWorldIfDirty();
             FlushCraftingIfDirty();
@@ -404,6 +404,7 @@ namespace AtomicWar.GodotApp
             FlushYearOfAshIfDirty();
             FlushPhase0IfDirty();
             FlushMoralChoiceIfDirty();
+            FlushCampaignDayIfDirty();
 
             // ── Sleep / End Day countdown timer (Phase 2 continuation)
             if (_advanceTimerRemaining > 0 && !_advanceCancelled)
@@ -507,46 +508,6 @@ namespace AtomicWar.GodotApp
                 $"Day {_simDay} · [J] toggles the ledger · [E] opens events log.";
         }
 
-        private void OpenEventsLogPanel()
-        {
-            if (_eventsLogPanel == null)
-            {
-                _eventsLogPanel = new EventsLogPanel();
-                _eventsLogPanel.OnClose += () => _eventsLogPanel.Visible = false;
-                AddChild(_eventsLogPanel);
-            }
-            _eventsLogPanel.Bind(_eventsHost);
-            _eventsLogPanel.Open();
-        }
-
-
-
-
-
-        /// <summary>
-        /// Real home-occupant snapshot for the Duty Roster morning tick: every
-        /// alive survivor currently at home is a row candidate (sleptHere=true).
-        /// The chart is a document other systems read — no rules are computed here.
-        /// </summary>
-        private List<Ashfall.Core.DutyRosterOccupant> BuildHomeOccupantSnapshot()
-        {
-            var occupants = new List<Ashfall.Core.DutyRosterOccupant>();
-            if (_survivors == null) return occupants;
-            for (int i = 0; i < _survivors.RosterState.Count; i++)
-            {
-                var s = _survivors.RosterState[i];
-                if (s == null || string.IsNullOrEmpty(s.Id) || !s.IsAliveState) continue;
-                occupants.Add(new Ashfall.Core.DutyRosterOccupant
-                {
-                    survivorId = s.Id,
-                    displayName = FormatSurvivorName(s.Id),
-                    occupationObserved = string.Empty,
-                    sleptHere = true
-                });
-            }
-            occupants.Sort((a, b) => string.CompareOrdinal(a.survivorId, b.survivorId));
-            return occupants;
-        }
 
 
 
@@ -554,34 +515,6 @@ namespace AtomicWar.GodotApp
 
 
 
-
-
-
-
-
-
-
-        private void OnWaystationTickClicked()
-        {
-            SetupExpansions();
-            _expansions.UnlockWaystation();
-            // The wintering filter burn depends on the real ice-road state, not a
-            // host literal: an open window is the only way the bunks trade.
-            bool roadOpen = _core != null && _core.IceRoad.IsOpen;
-            _expansions.TickWaystation(roadOpen);
-            _statusLabel.Text = "Waystation: " + _expansions.WaystationLine();
-            RefreshExpansionsStatus();
-        }
-
-        private void OnWaystationWatchClicked()
-        {
-            SetupExpansions();
-            _expansions.UnlockWaystation();
-            _expansions.AssignWaystationWatch(new[] { "elena_vasquez", "marcus_olejnik", "suki_tanaka" });
-            _expansions.SetWaystationWintering(true);
-            _statusLabel.Text = "Watch assigned (Vasquez, Olejnik, Tanaka). Wintering mode on — stove lit, filter degrades faster.";
-            RefreshExpansionsStatus();
-        }
 
 
 
@@ -676,46 +609,6 @@ namespace AtomicWar.GodotApp
 
 
 
-
-        private void SetupEventsHost()
-        {
-            _eventsHost = new EventsHostSession(new Ashfall.Core.SystemTextJsonSerializer(), new Ashfall.Core.FileSystemIO());
-            AddChild(_eventsHost);
-        }
-
-        private bool _expansionQuestsDirty;
-
-        private void SetupExpansionQuests()
-        {
-            if (_expansionQuests != null) return;
-            _expansionQuests = ExpansionQuestHostSession.Create(_dataDir);
-            _expansionQuests.StateChanged += () => _expansionQuestsDirty = true;
-
-            var save = ExpansionQuestSaveStore.TryLoad();
-            if (save != null)
-            {
-                _expansionQuests.RestoreState(save.state);
-            }
-        }
-
-        private void SaveExpansionQuests()
-        {
-            if (_expansionQuests == null) return;
-            var state = _expansionQuests.CaptureState();
-            var envelope = new ExpansionQuestSaveEnvelope
-            {
-                version = ExpansionQuestSaveEnvelope.CurrentVersion,
-                state = state,
-                checksum = SaveChecksum.Compute(state)
-            };
-            ExpansionQuestSaveStore.Save(envelope);
-            _expansionQuestsDirty = false;
-        }
-
-        private void FlushExpansionQuestsIfDirty()
-        {
-            if (_expansionQuestsDirty) SaveExpansionQuests();
-        }
 
         // ── THE MUSTER (Exp 06) host wiring ─────────────────────────────
     }

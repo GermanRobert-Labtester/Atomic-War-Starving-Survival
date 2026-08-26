@@ -254,6 +254,26 @@ namespace AtomicWar.GodotApp
             RefreshExpansionsStatus();
         }
 
+        private void OnWaystationTickClicked()
+        {
+            SetupExpansions();
+            _expansions.UnlockWaystation();
+            bool roadOpen = _core != null && _core.IceRoad.IsOpen;
+            _expansions.TickWaystation(roadOpen);
+            _statusLabel.Text = "Waystation: " + _expansions.WaystationLine();
+            RefreshExpansionsStatus();
+        }
+
+        private void OnWaystationWatchClicked()
+        {
+            SetupExpansions();
+            _expansions.UnlockWaystation();
+            _expansions.AssignWaystationWatch(new[] { "elena_vasquez", "marcus_olejnik", "suki_tanaka" });
+            _expansions.SetWaystationWintering(true);
+            _statusLabel.Text = "Watch assigned (Vasquez, Olejnik, Tanaka). Wintering mode on — stove lit, filter degrades faster.";
+            RefreshExpansionsStatus();
+        }
+
         private void SaveExpansionHub()
         {
             if (_expansions == null) return;

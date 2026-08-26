@@ -29,16 +29,9 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
-        // ── World / Campaign Day / Shelter fields (GAP-ARCH-01 Phase 1) ──
-        private CampaignDayCoordinator _campaignDay = null!;
-        private DailyBriefingState _dailyBriefing = null!;
-        private DailyBriefingModal _dailyBriefingModal = null!;
-        private bool _briefingPending;
-        private bool _dailyBriefingDirty;
+        // ── World / Shelter fields (refactored: campaign/day split to Main.Campaign) ──
         private Ashfall.Core.Medical.MedicalWardSystem _medicalWard = null!;
         private bool _medicalWardDirty;
-        private Ashfall.Core.Memorial.MemorialSystem _memorial = null!;
-        private bool _memorialDirty;
         private StartingLevelHostSession _startingLevel = null!;
         private bool _startingLevelDirty;
         private OpeningProtocolModal _openingProtocolModal = null!;
@@ -83,6 +76,18 @@ namespace AtomicWar.GodotApp
                     break;
                 case "harvest":
                     _greenhouse.Harvest(plotIndex);
+                    break;
+                case "apiary_inspect":
+                    _greenhouse.InspectHive("hive_01", day);
+                    break;
+                case "apiary_feed":
+                    _greenhouse.FeedHive("hive_01", 0.5f);
+                    break;
+                case "apiary_harvest":
+                    _greenhouse.HarvestHoney("hive_01");
+                    break;
+                case "apiary_install":
+                    _greenhouse.InstallHive("hive_01", "bay_orchard", day);
                     break;
             }
             if (_greenhouseDirty) SaveGreenhouse();
@@ -249,102 +254,6 @@ namespace AtomicWar.GodotApp
             _powerGridPanel.Open();
         }
 
-        private void SetupMemorial()
-        {
-            if (_memorial != null) return;
-            _memorial = new Ashfall.Core.Memorial.MemorialSystem(
-                new Ashfall.Core.Memorial.MemorialState());
-            _memorial.OnMemorialized += _ => _memorialDirty = true;
-            LoadMemorial();
-        }
-
-        private void LoadMemorial()
-        {
-            try
-            {
-                var loaded = MemorialSaveStore.TryLoad();
-                if (loaded != null) _memorial.RestoreState(loaded.State);
-            }
-            catch (Exception e)
-            {
-                GD.PushWarning("[Ashfall Godot] Memorial load failed: " + e.Message);
-            }
-        }
-
-        private void SaveMemorial()
-        {
-            if (_memorial == null) return;
-            try
-            {
-                var save = new Ashfall.Core.Memorial.MemorialSave
-                {
-                    simDay = _simDay,
-                    State = _memorial.CaptureState()
-                };
-                if (MemorialSaveStore.TrySave(save))
-                    _memorialDirty = false;
-            }
-            catch (Exception e)
-            {
-                GD.PushWarning("[Ashfall Godot] Memorial save failed: " + e.Message);
-            }
-        }
-
-        private void SetupCampaignDay()
-        {
-            if (_campaignDay != null) return;
-            _campaignDay = new CampaignDayCoordinator();
-            _dailyBriefing = new DailyBriefingState();
-            LoadDailyBriefing();
-        }
-
-        private void SetupDailyBriefingModal()
-        {
-            if (_dailyBriefingModal != null) return;
-            _dailyBriefingModal = new DailyBriefingModal();
-            _dailyBriefingModal.OnAcknowledged += OnBriefingAcknowledged;
-            AddChild(_dailyBriefingModal);
-            _dailyBriefingModal.Hide();
-        }
-
-        private void LoadDailyBriefing()
-        {
-            try
-            {
-                var loaded = DailyBriefingSaveStore.TryLoad();
-                if (loaded != null) _dailyBriefing.RestoreState(loaded);
-            }
-            catch (Exception e)
-            {
-                GD.PushWarning("[Ashfall Godot] DailyBriefing load failed: " + e.Message);
-                _dailyBriefing = new DailyBriefingState();
-            }
-        }
-
-        private void SaveDailyBriefing()
-        {
-            if (_dailyBriefing == null) return;
-            try
-            {
-                var save = _dailyBriefing.CaptureState();
-                if (DailyBriefingSaveStore.TrySave(save)) _dailyBriefingDirty = false;
-            }
-            catch (Exception e)
-            {
-                GD.PushWarning("[Ashfall Godot] DailyBriefing save failed: " + e.Message);
-            }
-        }
-
-        private void OnBriefingAcknowledged(int day)
-        {
-            _briefingPending = false;
-            if (_dailyBriefing == null) return;
-            _dailyBriefing.Consume(day);
-            _dailyBriefingDirty = true;
-            if (_dailyBriefingDirty) SaveDailyBriefing();
-            UpdateHud();
-        }
-
         private void CloseOpeningProtocolModal()
         {
             _openingProtocolModal.Visible = false;
@@ -399,28 +308,6 @@ namespace AtomicWar.GodotApp
         private void CloseWeatherForecastPanel()
         {
             _weatherForecastPanel.Visible = false;
-        }
-
-        /// <summary>
-        /// Builds the typed <see cref="DailyBriefingInputs"/> snapshot and shows
-        /// the briefing modal. Blocks further simulation until acknowledged.
-        /// </summary>
-        private void ShowBriefingForDay(int day)
-        {
-            SetupDailyBriefingModal();
-            var inputs = new DailyBriefingInputs
-            {
-                Day = day,
-                GeneratedUtc = DateTime.UtcNow.ToString("o"),
-                BuildSeed = day
-            };
-            var report = DailyBriefingReportBuilder.Build(inputs);
-            if (report.IsEmpty) return;
-            _dailyBriefing.Enqueue(report);
-            _dailyBriefingDirty = true;
-            SaveDailyBriefing();
-            _briefingPending = true;
-            _dailyBriefingModal.Show(report);
         }
 
     }
