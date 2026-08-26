@@ -206,7 +206,7 @@ namespace Ashfall.Core.World
 
         public void RestoreInto(WastelandMapState state, IReadOnlyList<MapNode> nodes)
         {
-            Discovered = state.Discovered ?? new List<string>();
+            Discovered = state.Discovered != null ? new List<string>(state.Discovered) : new List<string>();
             NormalizeAndValidate(nodes);
         }
     }
