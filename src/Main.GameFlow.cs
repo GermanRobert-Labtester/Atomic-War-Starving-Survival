@@ -578,7 +578,7 @@ namespace AtomicWar.GodotApp
             Control[] panels =
             {
                 _settingsPanel, _inventoryOverlay, _survivorsOverlay, _craftingPanel,
-                _radioPanel, _medicalPanel, _dutyRosterPanel, _economyOverlayPanel,
+                _radioPanel, _medicalPanel, _dutyRosterPanel,
                 _expeditionPanel, _weatherPanel, _questsPanel, _journalPanel,
                 _factionsPanel, _researchPanel, _shelterPanel, _greenhousePanel, _combatPanel, _mapPanel,
                 _silentFoundryPanel,

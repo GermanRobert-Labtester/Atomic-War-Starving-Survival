@@ -54,7 +54,6 @@ namespace AtomicWar.GodotApp
         private MedicalPanel _medicalPanel = null!;
         private Phase0Panel _phase0Panel = null!;
         private DutyRosterPanel _dutyRosterPanel = null!;
-        private EconomyOverlayPanel _economyOverlayPanel = null!;
         private ExpeditionPanel _expeditionPanel = null!;
         private WeatherPanel _weatherPanel = null!;
         private QuestsPanel _questsPanel = null!;
@@ -88,10 +87,6 @@ namespace AtomicWar.GodotApp
         private EconomyDetailPanel _economyDetailPanel = null!;
         private CombatDetailPanel _combatDetailPanel = null!;
         private FactionDetailPanel _factionDetailPanel = null!;
-        private MedicalDetailPanel _medicalDetailPanel = null!;
-        private ExpeditionDetailPanel _expeditionDetailPanel = null!;
-        private RadioDetailPanel _radioDetailPanel = null!;
-        private ShelterDetailPanel _shelterDetailPanel = null!;
         private SaveLoadPanel _saveLoadPanel = null!;
         private TutorialPanel _tutorialPanel = null!;
         private AfflictionsPanel _afflictionsPanel = null!;
@@ -103,15 +98,7 @@ namespace AtomicWar.GodotApp
         private EventDetailPanel _eventDetailPanel = null!;
         private StatusPanel _statusPanel = null!;
         private SurvivalDetailPanel _survivalDetailPanel = null!;
-        private CraftingDetailPanel _craftingDetailPanel = null!;
-        private TradeDetailPanel _tradeDetailPanel = null!;
-        private ResearchDetailPanel _researchDetailPanel = null!;
         private WeatherHistoryPanel _weatherHistoryPanel = null!;
-        private FactionHistoryPanel _factionHistoryPanel = null!;
-        private MedicalHistoryPanel _medicalHistoryPanel = null!;
-        private ExpeditionHistoryPanel _expeditionHistoryPanel = null!;
-        private ShelterHistoryPanel _shelterHistoryPanel = null!;
-        private CraftingHistoryPanel _craftingHistoryPanel = null!;
 
         private void BuildUserInterface()
         {
@@ -208,11 +195,6 @@ namespace AtomicWar.GodotApp
             _dutyRosterPanel.OnAssignmentChanged += UpdateHud;
             _dutyRosterPanel.OnDetailsRequested += () => OpenPlayerPanel("duty_roster_detail");
             AddChild(_dutyRosterPanel);
-
-            // ── Economy panel (overlay) ──
-            _economyOverlayPanel = new EconomyOverlayPanel();
-            _economyOverlayPanel.OnClose += CloseEconomyPanel;
-            AddChild(_economyOverlayPanel);
 
             // ── Expedition panel (overlay) ──
             _expeditionPanel = new ExpeditionPanel();
