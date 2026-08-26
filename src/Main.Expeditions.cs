@@ -46,9 +46,48 @@ namespace AtomicWar.GodotApp
         private void SetupExpeditions()
         {
             if (_expeditions != null) return;
+            SetupInventory();
+            SetupSurvivors();
             _expeditions = ExpeditionHostSession.Create(_dataDir);
             _expeditions.StateChanged += () => _expeditionDirty = true;
             _expeditions.OnEncounterSurfaced += OnExpeditionEncounterSurfaced;
+            _expeditions.Engine.OnExpeditionCompleted += state =>
+            {
+                if (state == null) return;
+                if (_inventory != null && state.loot != null)
+                {
+                    for (int i = 0; i < state.loot.Count; i++)
+                    {
+                        var item = state.loot[i];
+                        if (item != null && !string.IsNullOrEmpty(item.itemId))
+                        {
+                            _inventory.Add(item.itemId, Math.Max(1, item.quantity));
+                        }
+                    }
+                    SaveInventory();
+                }
+
+                if (_survivors != null && !string.IsNullOrEmpty(state.survivorId))
+                {
+                    var sv = _survivors.Find(state.survivorId);
+                    if (sv != null)
+                    {
+                        // Strenuous expedition exertion adds fatigue
+                        _survivors.Needs.Modify(sv, NeedKind.Fatigue, 25f);
+                    }
+                }
+
+                if (_journal != null)
+                {
+                    _journal.TryAddRawEntry(
+                        $"exp_{state.survivorId}_{_expeditions.CurrentDay}",
+                        $"Survivor {state.survivorId} returned from {state.displayName} with {state.loot?.Count ?? 0} salvage items.",
+                        null!,
+                        _expeditions.CurrentDay);
+                }
+
+                GD.Print($"[Ashfall Godot] Expedition completed for {state.survivorId}: {state.loot?.Count ?? 0} loot items deposited into shelter inventory.");
+            };
             GD.Print("[Ashfall Godot] Expedition host ready: encounters · dive instance.");
         }
 

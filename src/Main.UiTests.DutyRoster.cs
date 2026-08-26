@@ -48,20 +48,20 @@ namespace AtomicWar.GodotApp
             }
 
             Check(_dutyRoster != null && _dutyRoster.Roster.IsUnlocked, "host session unlocked");
-            Check(_dutyRoster!.Roster.ChartScript == DutyRosterSystem.ScriptBlank, "fresh chart starts blank");
+            Check(_dutyRoster!.Roster.ChartScript == DutyRosterIds.ScriptBlank, "fresh chart starts blank");
 
             // Real interaction path through the panel.
             OpenPlayerPanel("duty_roster");
             Check(_dutyRosterPanel.Visible && _dutyRosterPanel.IsBound, "panel opens and binds");
-            _dutyRoster.Roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, _simDay);
+            _dutyRoster.Roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, _simDay);
             _dutyRoster.Roster.TickMorning(_simDay + 1, new List<Ashfall.Core.DutyRosterOccupant>
             {
                 new Ashfall.Core.DutyRosterOccupant { survivorId = "npc_kess_adler", displayName = "Kess Adler", sleptHere = true },
                 new Ashfall.Core.DutyRosterOccupant { survivorId = "npc_ansel_duth", displayName = "Ansel Duth", sleptHere = true }
             });
             Check(_dutyRoster.Roster.OccupiedRowCount >= 2, "morning tick enrolled real home occupants");
-            Check(_dutyRoster.Roster.Assign(DutyRosterSystem.RoleNightWatch, "npc_kess_adler"), "assignment through the real path");
-            Check(!_dutyRoster.Roster.Assign(DutyRosterSystem.RoleMess, "npc_kess_adler"), "duplicate-role rule enforced");
+            Check(_dutyRoster.Roster.Assign(DutyRosterIds.RoleNightWatch, "npc_kess_adler"), "assignment through the real path");
+            Check(!_dutyRoster.Roster.Assign(DutyRosterIds.RoleMess, "npc_kess_adler"), "duplicate-role rule enforced");
 
             _dutyRosterPanel.RefreshView();
             Check(_dutyRosterPanel.StatusStripNonEmpty(), "panel read model renders");
@@ -71,7 +71,7 @@ namespace AtomicWar.GodotApp
             Check(_dutyRoster.Marks.HasMark(DutyRosterHoldfastBridge.MarkThreeAway), "mark set through host");
             Check(_dutyRoster.ActivateSecondWinter().Contains("second winter"), "second winter activates");
             Check(_dutyRoster.GrantOverflowAccess().Contains("granted"), "overflow access granted");
-            Check(_dutyRoster.RegisterOverflowVisit(DutyRosterSystem.LocOverflowAlloc11).Contains("visited"), "overflow visit registered");
+            Check(_dutyRoster.RegisterOverflowVisit(DutyRosterIds.LocOverflowAlloc11).Contains("visited"), "overflow visit registered");
             Check(_dutyRoster.BridgeHatchReturn("npc_ansel_duth").Contains("staged"), "hatch-return bridge stages a scene");
             Check(_dutyRoster.BridgeHatchReturn("npc_hadi_morrow").Contains("one per night"), "one hatch scene per night enforced");
 
@@ -79,7 +79,7 @@ namespace AtomicWar.GodotApp
             _dutyRoster.SaveState();
             Check(System.IO.File.Exists(rosterSave), "duty roster save written");
             _dutyRoster.RestoreSave(DutyRosterSaveStore.TryLoad()!);
-            Check(_dutyRoster.Roster.HasVisitedOverflow(DutyRosterSystem.LocOverflowAlloc11), "overflow state survives save/load");
+            Check(_dutyRoster.Roster.HasVisitedOverflow(DutyRosterIds.LocOverflowAlloc11), "overflow state survives save/load");
             Check(_dutyRoster.Marks.HasMark(DutyRosterHoldfastBridge.MarkThreeAway), "marks survive save/load");
 
             CloseDutyRosterPanel();
@@ -97,10 +97,10 @@ namespace AtomicWar.GodotApp
             // The authored soft gate is day 60; advance the host clock there.
             while (_dutyRoster.Clock.Day < 60) _dutyRoster.TickDay();
             Check(_dutyRoster.Quests.GetAvailableQuests(_dutyRoster.Clock.Day).Count >= 1, "quests available at the real clock day");
-            Check(_dutyRoster.StartRosterQuest(DutyRosterSystem.QuestTheChart).StartsWith("quest started"), "chart quest starts through the host");
-            for (int s = 0; s < 5 && !_dutyRoster.Quests.IsComplete(DutyRosterSystem.QuestTheChart); s++)
-                _dutyRoster.AdvanceRosterQuest(DutyRosterSystem.QuestTheChart);
-            Check(_dutyRoster.Quests.IsComplete(DutyRosterSystem.QuestTheChart), "chart quest completes through the host");
+            Check(_dutyRoster.StartRosterQuest(DutyRosterIds.QuestTheChart).StartsWith("quest started"), "chart quest starts through the host");
+            for (int s = 0; s < 5 && !_dutyRoster.Quests.IsComplete(DutyRosterIds.QuestTheChart); s++)
+                _dutyRoster.AdvanceRosterQuest(DutyRosterIds.QuestTheChart);
+            Check(_dutyRoster.Quests.IsComplete(DutyRosterIds.QuestTheChart), "chart quest completes through the host");
             Check(_dutyRoster.Roster.MutationInUse, "chart quest completion applies the roster-in-use mutation");
             Check(_journal != null && _journal.Knowledge.Has("lore_dr_chart"), "quest knowledge key bridged into the journal");
             Check(_dutyRoster.Quests.GetAvailableQuests(_dutyRoster.Clock.Day).Count >= 1, "prereq unlocks the next quest");
@@ -110,7 +110,7 @@ namespace AtomicWar.GodotApp
             Check(_dutyRoster.StartRosterQuest("quest_roster_ivy_oil").StartsWith("quest started"), "no-key quest starts");
             Check(_dutyRoster.AdvanceRosterQuest("quest_roster_ivy_oil").StartsWith("quest advanced"), "no-key quest completes");
             Check(_journal != null && _journal.Knowledge.Has("quest_roster_ivy_oil"), "journal key falls back to the quest id");
-            Check(!string.IsNullOrEmpty(_dutyRoster.ActiveQuestProse(DutyRosterSystem.QuestTheChart)) || _dutyRoster.Quests.IsComplete(DutyRosterSystem.QuestTheChart),
+            Check(!string.IsNullOrEmpty(_dutyRoster.ActiveQuestProse(DutyRosterIds.QuestTheChart)) || _dutyRoster.Quests.IsComplete(DutyRosterIds.QuestTheChart),
                 "active quest exposes authored stage prose");
 
             // QuestsPanel surfaces the runtime read model.

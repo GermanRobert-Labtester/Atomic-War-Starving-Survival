@@ -16,6 +16,13 @@ namespace AtomicWar.GodotApp
         private List<MoralChoiceQuestDefinition> _moralChoiceDefs = new List<MoralChoiceQuestDefinition>();
         private bool _moralChoiceDirty;
 
+        // ── Branching / gossip / faction reactions (Phase 2 data) ──
+        private MoralChoiceChainData _moralChainData = new MoralChoiceChainData();
+        private MoralChoiceGossipData _moralGossipData = new MoralChoiceGossipData();
+        private MoralChoiceFactionReactionsData _moralFactionReactions = new MoralChoiceFactionReactionsData();
+        private MoralChoiceFlagDefinitions _moralFlagDefs = new MoralChoiceFlagDefinitions();
+        private MoralChoiceGossipRuntime _moralGossipRuntime = null!;
+
         /// <summary>
         /// Fixed world seed so every host agrees on unseeded rolls; per-save
         /// outcome rolls and propagation days are stored in the ledger DTO.
@@ -26,12 +33,35 @@ namespace AtomicWar.GodotApp
         {
             if (_moralChoice != null) return;
             SetupJournal();
+            var fileIO = new FileSystemIO();
+            var json = new SystemTextJsonSerializer();
+
             _moralChoice = new MoralChoiceSystem(new SeededRng(MoralChoiceSeed));
-            _moralChoiceDefs = MoralChoiceCatalogLoader.Load(
-                _dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            _moralChoiceDefs = MoralChoiceCatalogLoader.Load(_dataDir, fileIO, json);
+
+            // Load branching chain quests and merge into the catalog
+            var chainQuests = MoralChoiceBranchQuestCatalogLoader.Load(_dataDir, fileIO, json);
+            _moralChoiceDefs.AddRange(chainQuests);
+
+            // Load expansion quests and merge into the catalog
+            var expansionQuests = MoralChoiceExpansionQuestCatalogLoader.Load(_dataDir, fileIO, json);
+            _moralChoiceDefs.AddRange(expansionQuests);
+
+            // Load chain architecture (branches, gates, echo quests)
+            _moralChainData = MoralChoiceChainCatalogLoader.Load(_dataDir, fileIO, json);
+            _moralChoice.InitializeChainData(_moralChainData);
+
+            // Load gossip, faction reactions, and flag definitions
+            _moralGossipData = MoralChoiceGossipCatalogLoader.Load(_dataDir, fileIO, json);
+            _moralFactionReactions = MoralChoiceFactionReactionsCatalogLoader.Load(_dataDir, fileIO, json);
+            _moralFlagDefs = MoralChoiceFlagCatalogLoader.Load(_dataDir, fileIO, json);
+            _moralGossipRuntime = new MoralChoiceGossipRuntime(_moralGossipData, new SeededRng(MoralChoiceSeed));
+
             _moralChoice.OnQuestResolved += WriteMoralChoiceJournalEntry;
             _moralChoice.OnQuestResolved += _ => _moralChoiceDirty = true;
             _moralChoice.OnThresholdEventFired += _ => _moralChoiceDirty = true;
+            _moralChoice.OnBranchLocked += WriteBranchLockoutJournalEntry;
+            _moralChoice.OnBranchLocked += _ => _moralChoiceDirty = true;
 
             var save = MoralChoiceSaveStore.TryLoad();
             if (save != null)
@@ -47,7 +77,9 @@ namespace AtomicWar.GodotApp
                     GD.PrintErr($"[Ashfall Godot] Moral choice restore rejected: {e.Message}");
                 }
             }
-            GD.Print($"[Ashfall Godot] Moral choice ready. {_moralChoiceDefs.Count} quests in the catalog.");
+            GD.Print($"[Ashfall Godot] Moral choice ready. {_moralChoiceDefs.Count} quests " +
+                     $"({_moralChainData.Branches.Count} branches, " +
+                     $"{_moralGossipData.CampChatter.Neutral.Count} neutral chatter lines).");
         }
 
         /// <summary>
@@ -73,6 +105,42 @@ namespace AtomicWar.GodotApp
                 : resolution.impactMark == "down" ? "🔻" : "⚪";
             _journal.TryAddRawEntry(resolution.questId, $"{arrow} {resolution.epitaph}", null!, resolution.resolvedDay);
             _journalDirty = true;
+        }
+
+        /// <summary>Branch lockout journal entry: a door has closed.</summary>
+        private void WriteBranchLockoutJournalEntry(string lockedBranchId)
+        {
+            if (_moralChainData?.LockoutRules == null) return;
+            var branch = _moralChainData.Branches.FirstOrDefault(
+                b => string.Equals(b.Id, lockedBranchId, StringComparison.Ordinal));
+            string branchName = branch?.DisplayName ?? lockedBranchId;
+            string template = _moralChainData.LockoutRules.LockoutJournalTemplate;
+            string text = template.Replace("{locked_branch_name}", branchName);
+
+            SetupJournal();
+            _journal.TryAddRawEntry($"branch_lockout_{lockedBranchId}", text, null!, _simDay);
+            _journalDirty = true;
+        }
+
+        /// <summary>
+        /// Get the faction reaction dialogue for a threshold event.
+        /// Returns null if no reaction data exists for the event.
+        /// </summary>
+        private MoralThresholdReaction? GetFactionReaction(string eventId)
+        {
+            SetupMoralChoice();
+            if (_moralFactionReactions.ThresholdReactions.TryGetValue(eventId, out var reaction))
+                return reaction;
+            return null;
+        }
+
+        /// <summary>
+        /// Get the current gossip band (with decay) for NPC interactions.
+        /// </summary>
+        private MoralPathBand GetCurrentGossipBand()
+        {
+            SetupMoralChoice();
+            return _moralGossipRuntime.GetEffectiveGossipBand(_moralChoice, _simDay);
         }
 
         private void SaveMoralChoice()

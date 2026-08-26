@@ -36,6 +36,7 @@ namespace AtomicWar.GodotApp
         private CraftingHostSession _crafting = null!;
         private bool _craftingDirty;
         private JournalSystem _journal = null!;
+        private bool _hostEventAdapterDirty;
 
         private void SetupJournal()
         {
@@ -116,12 +117,18 @@ namespace AtomicWar.GodotApp
             SetupJournal();
             if (_eventBus == null) _eventBus = new Ashfall.Core.Events.SimpleEventBus();
             _hostEventAdapter = new AtomicWar.GodotApp.Host.HostEventAdapter(_eventBus, _journal);
+            var loadedEventState = HostEventSaveStore.TryLoad();
+            if (loadedEventState != null)
+            {
+                _hostEventAdapter.RestoreState(loadedEventState);
+            }
             _hostEventAdapter.OnEventDispatched += (id, desc) =>
             {
                 if (_statusLabel != null)
                     _statusLabel.Text = $"[EVENT DISPATCHED] {id}: {desc}";
                 _journalDirty = true;
             };
+            _hostEventAdapter.StateChanged += () => _hostEventAdapterDirty = true;
         }
 
         /// <summary>
@@ -136,6 +143,11 @@ namespace AtomicWar.GodotApp
         private void FlushNarrativeIfDirty()
         {
             if (_narrativeDirty) SaveNarrative();
+        }
+
+        private void FlushEventAdapterIfDirty()
+        {
+            if (_hostEventAdapterDirty) SaveEventAdapter();
         }
 
         private void SetupNarrative()
@@ -156,6 +168,15 @@ namespace AtomicWar.GodotApp
             }
         }
 
+        private void SaveEventAdapter()
+        {
+            if (_hostEventAdapter == null) return;
+            if (HostEventSaveStore.TrySave(_hostEventAdapter.State))
+            {
+                _hostEventAdapterDirty = false;
+            }
+        }
+
         private void OnNarrativeOpenClicked()
         {
             SetupNarrative();
@@ -171,8 +192,19 @@ namespace AtomicWar.GodotApp
                 return;
             }
 
+            SetupJournal();
+            SetupWastelandMap();
             _radio = RadioHostSession.Create(_dataDir, _core != null ? _core.Clock.Day : _simDay);
             _radio.StateChanged += () => _radioPanel?.RefreshView();
+            _radio.Triangulation.OnLocationRevealed += locId =>
+            {
+                _journal?.TryAddRawEntry(
+                    $"sig_disc_{locId}_{_radio.Day}",
+                    $"Direction-finding telemetry confirmed active radio emissions at {locId}.",
+                    null!,
+                    _radio.Day);
+                GD.Print($"[Ashfall Godot] Triangulation discovered wasteland location '{locId}'.");
+            };
             GD.Print("[Ashfall Godot] Radio host ready.");
         }
 

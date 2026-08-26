@@ -104,6 +104,9 @@ namespace AtomicWar.GodotApp
             _holdfastTerminal.OpenTerminal();
 
             SetupStartingLevel();
+            SetupEventsHost();
+            SetupExpansionQuests();
+            SetupThirdonary();
             _openingProtocolModal.Bind(_startingLevel);
             _openingProtocolModal.Open();
 
@@ -361,6 +364,18 @@ namespace AtomicWar.GodotApp
                 case "shelter_schedule":
                 case "autopsy_report":
                 case "waystation_network":
+                case "chemical_dependency":
+                case "sump_flooding":
+                case "decontamination":
+                case "kitchen_nutrition":
+                case "equipment_condition":
+                case "library_study":
+                case "archive_desk":
+                case "contractor_roster":
+                case "mental_health_crisis":
+                case "phantom_memory":
+                case "traveling_caravan":
+                case "medical_ward":
                     OpenExpandedPanel(panelId);
                     break;
             }
@@ -427,7 +442,7 @@ namespace AtomicWar.GodotApp
                     : _survivors.LastEvent;
 
             SetupStartingLevel();
-            string intakeAssignee = _dutyRoster?.Roster.GetAssignment(Ashfall.Core.DutyRosterSystem.RoleIntakeSleeper) ?? "Dr. Sarah Chen";
+            string intakeAssignee = _dutyRoster?.Roster.GetAssignment(Ashfall.Core.DutyRosterIds.RoleIntakeSleeper) ?? "Dr. Sarah Chen";
 
             _dashboard.UpdateState(new GameDashboardPanel.DashboardSnapshot
             {

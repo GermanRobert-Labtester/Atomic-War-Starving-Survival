@@ -42,6 +42,16 @@ namespace AtomicWar.GodotApp
             if (_phantomMemory != null) return;
             _phantomMemory = PhantomMemoryHostSession.Create(_dataDir);
             _phantomMemory.StateChanged += () => SavePhantomMemory();
+            SetupSurvivors();
+            _phantomMemory.Engine.OnPhantomTriggered += (svId, itemId, isMotivation) =>
+            {
+                var sv = _survivors?.Find(svId);
+                if (sv != null)
+                {
+                    float moraleDelta = isMotivation ? PhantomMemoryEngine.MotivationMoraleBoost : PhantomMemoryEngine.BreakdownMoraleDrop;
+                    _survivors!.Needs.Modify(sv, NeedKind.Morale, moraleDelta);
+                }
+            };
 
             var save = PhantomMemorySaveStore.TryLoad();
             if (save != null)

@@ -418,5 +418,14 @@ namespace AtomicWar.GodotApp
 
         [Signal]
         public delegate void NpcSpokenEventHandler(string npcId);
+
+        public override void _ExitTree()
+        {
+            if (_verdict != null)
+            {
+                _verdict.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
+        }
     }
 }

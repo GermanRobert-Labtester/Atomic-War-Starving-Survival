@@ -156,8 +156,10 @@ namespace AtomicWar.GodotApp
             SetupInventory();
             SetupJournal();
             SetupEconomy();
+            SetupPowerGrid();
             _silentFoundry = AtomicWar.GodotApp.SilentFoundryHostSession.Create(
                 _dataDir, _expansions, _inventory, _journal, market: _economy.Market);
+            _silentFoundry.BindPowerAndThermal(_powerGrid?.System, _shelterThermal?.System);
             // GAP-STUB-03: wire the remaining FactionStanceEngine providers
             // from Main state so SilentFoundry guild trust reflects actual
             // campaign day, radiation, and military-survivor presence.

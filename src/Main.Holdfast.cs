@@ -62,9 +62,15 @@ namespace AtomicWar.GodotApp
         private void SetupHoldfastRuntime()
         {
             SetupIceRoad();
-            if (_holdfastRuntime != null) return;
+            SetupSurvivors();
+            if (_holdfastRuntime != null)
+            {
+                _holdfastRuntime.Survivors = _survivors;
+                return;
+            }
 
             _holdfastRuntime = HoldfastRuntimeSession.Create(_core);
+            _holdfastRuntime.Survivors = _survivors;
             if (_holdfastTerminal == null || !_holdfastTerminal.IsInsideTree())
             {
                 _holdfastTerminal = new HoldfastTerminalPanel();
@@ -134,8 +140,14 @@ namespace AtomicWar.GodotApp
             _deepCoast.TickDaily(day, _core.Weather);
             _deepCoastPanel?.SetSimDay(day);
 
+            SetupSurvivors();
+            _survivors.TickHour(24f);
+
             if (_holdfastRuntime != null && !_holdfastRuntime.IsDead)
+            {
+                _holdfastRuntime.Survivors = _survivors;
                 _holdfastRuntime.TickDay();
+            }
 
             SetupStartingLevel();
             _startingLevel.TickDay();
@@ -187,7 +199,7 @@ namespace AtomicWar.GodotApp
 
             // The Silent Foundry (Exp 10) advances on the real day clock.
             SetupSilentFoundry();
-            _silentFoundry.Engine.TickDaily(day);
+            _silentFoundry.TickDaily(day);
             _silentFoundryPanel?.RefreshView();
             if (_foundryDirty) SaveExpansionHub();
 
@@ -333,6 +345,7 @@ namespace AtomicWar.GodotApp
                 // Notify the coordinator (it tracks the last-advanced day and
                 // lets the host build a typed report from owner results).
                 _campaignDay.Advance(targetDay, new CampaignDayPersistenceAdapter(this));
+                _campaignDayDirty = true;
 
                 _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.DayTransition);
                 _statusLabel.Text = $"Day {_core.Clock.Day} advanced ({delta})";

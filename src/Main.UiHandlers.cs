@@ -339,8 +339,7 @@ namespace AtomicWar.GodotApp
             // than loading a disposable child scene. Free those test-owned roots
             // explicitly so Godot does not leave their controls in ObjectDB at
             // process exit (normal gameplay never calls this path).
-            foreach (Node child in GetChildren())
-                child.QueueFree();
+            AshfallUiHelpers.EmptyChildren(this);
 
             await ToSignal(tree, SceneTree.SignalName.ProcessFrame);
             await ToSignal(tree, SceneTree.SignalName.ProcessFrame);

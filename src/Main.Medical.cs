@@ -89,9 +89,12 @@ namespace AtomicWar.GodotApp
                 _medical.TickVigilDemo(30f);
         }
 
+        private MedicalWardHostSession _medicalWardSession = null!;
+        private MedicalWardPanel _medicalWardPanel = null!;
+
         private void SetupMedicalWard()
         {
-            if (_medicalWard != null) return;
+            if (_medicalWardSession != null) return;
             var beds = new List<Ashfall.Core.Medical.MedicalBed>
             {
                 new Ashfall.Core.Medical.MedicalBed("bed_general_a", "General A", Ashfall.Core.Medical.MedicalBedCategory.General),
@@ -108,24 +111,29 @@ namespace AtomicWar.GodotApp
             };
             _medicalWard = new Ashfall.Core.Medical.MedicalWardSystem(
                 new Ashfall.Core.Medical.MedicalWardState(), beds, procs);
+            _medicalWardSession = new MedicalWardHostSession(_medicalWard);
+            _medicalWardSession.Procedures = procs;
+            _medicalWardSession.SimDay = _simDay;
+            _medicalWardSession.StateChanged += () => _medicalWardDirty = true;
             _medicalWard.OnWardChanged += _ => _medicalWardDirty = true;
             LoadMedicalWard();
+            if (_medicalWardPanel == null)
+            {
+                _medicalWardPanel = new MedicalWardPanel();
+                _medicalWardPanel.Bind(_medicalWardSession);
+                _medicalWardPanel.Visible = false;
+                AddChild(_medicalWardPanel);
+            }
         }
 
         private void SaveMedicalWard()
         {
-            if (_medicalWard == null) return;
+            if (_medicalWardSession == null) return;
             try
             {
-                var save = new Ashfall.Core.Medical.MedicalWardSave
-                {
-                    simDay = _simDay,
-                    Beds = new List<Ashfall.Core.Medical.MedicalBedSave>(),
-                    Procedures = _medicalWard.Procedures.ToList(),
-                    State = _medicalWard.CaptureState()
-                };
-                if (MedicalWardSaveStore.TrySave(save))
-                    _medicalWardDirty = false;
+                _medicalWardSession.SimDay = _simDay;
+                _medicalWardSession.Save();
+                _medicalWardDirty = false;
             }
             catch (Exception e)
             {
@@ -138,7 +146,12 @@ namespace AtomicWar.GodotApp
             try
             {
                 var loaded = MedicalWardSaveStore.TryLoad();
-                if (loaded != null) _medicalWard.RestoreState(loaded.State);
+                if (loaded != null)
+                {
+                    _medicalWardSession?.RestoreSave(loaded);
+                    if (_medicalWardSession != null)
+                        _medicalWard = _medicalWardSession.System;
+                }
             }
             catch (Exception e)
             {
