@@ -167,3 +167,45 @@ Legend: JUNK_UNTRACKED (never committed, regenerable), JUNK_TRACKED (committed d
 - ✅ Every candidate classified.
 - ✅ Evidence: size, git status, LFS policy.
 - ✅ Next: Phase 3 (quarantine execution) awaits approval.
+
+---
+
+## Hygiene Pass — Session Quaratine Execution (2026-08-23)
+
+**Commit:** `48807e13` · **Scope:** final 13 untracked items · **Result:** untracked junk 13 → 0
+
+### Actions
+
+| Item | Classification | Action |
+|---|---|---|
+| `tools/agent-skill-manager/` | KEEP (source) | **Committed** — Rust ratatui TUI (Cargo.toml/lock + main.rs 1107 lines); `target/` (254MB build output) ignored |
+| `tools/audit_narrative_continuity.py` | KEEP (source) | **Committed** |
+| `tools/bin/` | JUNK (build output) | Already ignored (line 188) — no action |
+| `_envgate/` | JUNK_UNTRACKED (scratch probe) | Ignored via `/_envgate/` |
+| `fix_queuefree.py/.sh`, `fix_syntax.py`, `fix_using.py`, `safe_fix.py`, `test_parse.py`, `files_to_check.txt` | JUNK_UNTRACKED (session scratch) | Ignored via root-anchored patterns |
+| `summaries.md`, `summaries/` | JUNK_UNTRACKED (session output) | Ignored |
+| `.commandcode/` | JUNK_UNTRACKED (other-agent state) | Ignored |
+
+- **Zero-reference proof:** every ignored path greps clean across src/, Assets/, scripts/, docs/, tests/ (only a debug-audit doc mentions them by name — not a functional reference).
+- **Nothing deleted** — all files remain on disk, quarantined by ignore rules.
+- **Secret scan** on committed tool sources: clean.
+
+### Stash Review (read-only)
+
+| Stash | Date | Content | Verdict |
+|---|---|---|---|
+| `stash@{0}` | Aug 21 | 3,883-file WIP snapshot on `eeff1f79` (ancestor of HEAD) | **STALE** — 0 unique files vs HEAD; 59 identical, 265 evolved further in HEAD, 3,435 added since. Superseded by the 9-commit batch. Drop candidate |
+| `stash@{1}` | Aug 18 | "WIP-shelter-visual-bridge-broken-PH0" — HoldfastInteriorView +88 / SurvivorActorView +89 | **SUPERSEDED** — both files exist in HEAD with newer content; stash self-describes as broken. Drop candidate |
+| `stash@{2}` | Aug 17 | +66 lines to old monolithic Main.cs (was 6.5k lines) | **STALE** — Main.cs is now 73 lines (decomposed into 43 partials); patch target no longer exists. Drop candidate |
+
+All 3 stashes are safe to drop (`git stash drop stash@{N}`), but remain untouched pending owner approval — stash drops are destructive.
+
+### Verification
+
+- `dotnet build Ashfall.csproj`: **0 errors**
+- `--data-integrity-selftest`: **PASS — 0 findings, 129 catalogs**
+- `git status`: untracked junk **0** (remaining changes belong to a concurrent in-flight session on src/Host — dirty-flush wiring — intentionally not touched)
+
+### Concurrent-Session Note
+
+A second agent session was actively editing `src/Host/*HostSession.cs` + `Main.ShelterBatch3.cs` during this pass (file count grew 5→25 mid-task). All its changes were left unstaged; this pass committed only hygiene-scoped files via explicit paths.
