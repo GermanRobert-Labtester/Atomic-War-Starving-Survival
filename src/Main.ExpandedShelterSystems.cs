@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Disease;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Radiation;
@@ -72,6 +73,7 @@ namespace AtomicWar.GodotApp
             SetupWaystation();
             SetupSumpFlooding();
             WireWaterTreatmentSumpBridge();
+            WireWildlifeDiseaseBridge();
             SetupDecontamination();
             SetupKitchenNutrition();
             SetupEquipmentCondition();
@@ -90,6 +92,25 @@ namespace AtomicWar.GodotApp
                 if (incident.kind == FloodIncidentKind.FloodStart || incident.kind == FloodIncidentKind.Contamination)
                 {
                     _waterTreatment.SetIncomingContamination(0.8f);
+                }
+            };
+        }
+
+        private void WireWildlifeDiseaseBridge()
+        {
+            if (_wildlifeTrapping == null || _disease == null) return;
+            _wildlifeTrapping.System.OnButcheryCompleted += (siteId, butcherId, species, isToxic) =>
+            {
+                if (string.IsNullOrEmpty(butcherId)) return;
+                // Sterile technique trait — placeholder deterministic check: butcherId containing "sterile" has the trait
+                // Real check would query SurvivorCatalog/Roster trait, but host keeps it simple and deterministic
+                bool hasSterile = butcherId.IndexOf("sterile", StringComparison.OrdinalIgnoreCase) >= 0;
+                if (hasSterile) return;
+                int seed = StableHash.Of(butcherId) ^ _simDay;
+                var rng = new SeededRng(seed);
+                if (rng.NextDouble() < 0.30)
+                {
+                    _disease.Engine.Infect(butcherId, DiseaseIds.ZoonoticFlu, _simDay);
                 }
             };
         }

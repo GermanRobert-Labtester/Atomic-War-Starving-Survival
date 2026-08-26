@@ -9,19 +9,16 @@ namespace AtomicWar.GodotApp
     /// Manages perimeter snare lines, bait consumption, game butchery, toxin removal, and food reserves.
     /// </summary>
     public sealed class WildlifeTrappingHostSession
-    {
+    : HostSessionBase{
         public WildlifeTrappingSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public WildlifeTrappingHostSession(WildlifeTrappingSystem system)
         {
             System = system ?? new WildlifeTrappingSystem(new SeededRng(1986), new GodotLog());
 
             System.OnTrappingChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -31,7 +28,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Set {baitType} snare at {siteId} (Hunter: {hunterId})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -42,18 +39,20 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = "Inspected all perimeter snares.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
 
-        public ActionResult Butcher(string siteId)
+        public ActionResult Butcher(string siteId, string butcherId = "")
         {
-            var res = System.Butcher(siteId);
+            var res = System.Butcher(siteId, butcherId);
             if (res.IsSuccess)
             {
-                LastEvent = $"Butchered game catch at site {siteId}";
-                StateChanged?.Invoke();
+                LastEvent = string.IsNullOrEmpty(butcherId)
+                    ? $"Butchered game catch at site {siteId}"
+                    : $"Butchered game catch at site {siteId} (butcher: {butcherId})";
+                RaiseStateChanged();
             }
             return res;
         }
@@ -64,7 +63,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Purged radiation glands and toxins from catch at {siteId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -72,7 +71,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }

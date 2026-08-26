@@ -40,6 +40,7 @@ namespace Ashfall.Core
 
         public WildlifeTrappingState State => _state;
         public event Action OnTrappingChanged;
+        public event Action<string, string, string, bool> OnButcheryCompleted; // siteId, butcherId, species, isToxic
 
         public WildlifeTrappingSystem(ISeededRng rng, ILog? log = null)
         {
@@ -99,7 +100,7 @@ namespace Ashfall.Core
                 : ActionResult.Success("trapping.no_catch");
         }
 
-        public ActionResult Butcher(string siteId)
+        public ActionResult Butcher(string siteId, string butcherId = "")
         {
             var site = _state.trapSites.Find(s => s.siteId == siteId);
             if (site == null || !site.hasCatch)
@@ -109,6 +110,7 @@ namespace Ashfall.Core
 
             site.isMeatProcessed = true;
             OnTrappingChanged?.Invoke();
+            OnButcheryCompleted?.Invoke(siteId, butcherId ?? string.Empty, site.catchSpecies ?? string.Empty, site.isToxic);
             return ActionResult.Success("trapping.butchered",
                 new Dictionary<string, double> { { "yield", site.carcassYield }, { "toxic", site.isToxic ? 1 : 0 } });
         }
