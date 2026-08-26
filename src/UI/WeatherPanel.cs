@@ -355,6 +355,26 @@ namespace AtomicWar.GodotApp.UI
             QueueRedraw();
         }
 
+        public void Close()
+        {
+            Visible = false;
+        }
+
+        public void Unbind()
+        {
+            if (_worldHost?.Weather != null)
+            {
+                _worldHost.Weather.OnWeatherChanged -= HandleWeatherChanged;
+            }
+            if (_weatherHost?.System != null)
+            {
+                _weatherHost.System.OnWeatherChanged -= HandleWeatherChanged;
+            }
+            _worldHost = null;
+            _weatherHost = null;
+            RefreshView();
+        }
+
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;

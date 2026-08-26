@@ -60,6 +60,19 @@ namespace AtomicWar.GodotApp
     /// </summary>
     public static class AssetRegistry
     {
+        // ── Centralized Fallback Paths ──────────────────────────────────
+        /// <summary>Canonical resource path for the fallback survivor sprite/portrait.</summary>
+        public const string FallbackSurvivorPath = "res://assets/sprites/Characters/placeholder_survivor.png";
+
+        /// <summary>Relative asset path for the fallback survivor sprite/portrait.</summary>
+        public const string FallbackSurvivorRelativePath = "assets/sprites/Characters/placeholder_survivor.png";
+
+        /// <summary>Canonical resource path for the fallback UI placeholder icon.</summary>
+        public const string FallbackIconPath = "res://assets/ui/Icons/icon_placeholder.png";
+
+        /// <summary>Relative asset path for the fallback UI placeholder icon.</summary>
+        public const string FallbackIconRelativePath = "assets/ui/Icons/icon_placeholder.png";
+
         private static readonly string[] ItemSearchPaths = new[]
         {
             "res://assets/art/{0}.jpg",
@@ -138,9 +151,50 @@ namespace AtomicWar.GodotApp
             ("faction",  "faction_"),
         };
 
-        private static readonly HashSet<string> _loggedMissing = new HashSet<string>();
+        /// <summary>
+        /// Structured diagnostic record for a missing or failed-to-load asset lookup.
+        /// </summary>
+        public readonly struct MissingAssetWarning
+        {
+            public readonly string Category;
+            public readonly string RequestedId;
+            public readonly string FallbackUsed;
+            public readonly string Message;
+
+            public MissingAssetWarning(string category, string requestedId, string fallbackUsed, string message)
+            {
+                Category = category;
+                RequestedId = requestedId;
+                FallbackUsed = fallbackUsed;
+                Message = message;
+            }
+
+            public override string ToString() => Message;
+        }
+
+        private static readonly HashSet<string> _loggedMissing = new HashSet<string>(StringComparer.Ordinal);
+        private static readonly Dictionary<string, MissingAssetWarning> _loggedWarnings = new(StringComparer.Ordinal);
         private static Texture2D? _fallbackTexture;
-        private static bool _fallbackWarned;
+
+        /// <summary>
+        /// Returns the active or default fallback asset path/description for the given category.
+        /// </summary>
+        public static string GetEffectiveFallbackDescription(string category)
+        {
+            if (_fallbackTexture != null)
+            {
+                return !string.IsNullOrEmpty(_fallbackTexture.ResourcePath)
+                    ? _fallbackTexture.ResourcePath
+                    : "(custom fallback texture)";
+            }
+
+            return category switch
+            {
+                "portrait" or "character" or "survivor" => FallbackSurvivorPath,
+                "item" or "icon" or "faction" => FallbackIconPath,
+                _ => "(none)"
+            };
+        }
 
         /// <summary>
         /// Sets a fallback texture to return when an asset is missing.
@@ -230,15 +284,13 @@ namespace AtomicWar.GodotApp
             if (!_loggedMissing.Contains(logKey))
             {
                 _loggedMissing.Add(logKey);
-                GD.Print($"[AssetRegistry] MISSING {category}: '{originalId}' (tried {candidates.Count} candidate stems × {searchPaths.Length} paths)");
+                string fallbackUsed = GetEffectiveFallbackDescription(category);
+                string msg = $"[AssetRegistry] MISSING {category}: '{originalId}' (fallback: '{fallbackUsed}', tried {candidates.Count} candidate stems × {searchPaths.Length} paths)";
+                _loggedWarnings[logKey] = new MissingAssetWarning(category, originalId, fallbackUsed, msg);
+                GD.Print(msg);
             }
             if (_fallbackTexture != null)
             {
-                if (!_fallbackWarned)
-                {
-                    _fallbackWarned = true;
-                    GD.Print("[AssetRegistry] Using fallback texture for missing assets");
-                }
                 return new AssetResult(_fallbackTexture, AssetLoadResult.FallbackUsed, "(fallback)", originalId);
             }
             return new AssetResult(null, AssetLoadResult.Missing, "(none)", originalId);
@@ -326,17 +378,34 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Clears the missing-asset log (useful between scenes or for re-testing).
+        /// Clears the missing-asset log and diagnostic warning records (useful between scenes or for re-testing).
         /// </summary>
         public static void ClearMissingLog()
         {
             _loggedMissing.Clear();
+            _loggedWarnings.Clear();
         }
 
         /// <summary>
         /// Returns the number of unique missing assets that have been logged.
         /// </summary>
         public static int MissingAssetCount => _loggedMissing.Count;
+
+        /// <summary>
+        /// Gets all unique missing-asset warning records logged during this session.
+        /// </summary>
+        public static IReadOnlyCollection<MissingAssetWarning> LoggedWarnings => _loggedWarnings.Values;
+
+        /// <summary>
+        /// Checks if a warning was already logged for the specified category and ID.
+        /// </summary>
+        public static bool HasLoggedWarning(string category, string id) => _loggedWarnings.ContainsKey($"{category}:{id}");
+
+        /// <summary>
+        /// Retrieves the logged warning for a specific category and ID, or null if none was logged.
+        /// </summary>
+        public static MissingAssetWarning? GetLoggedWarning(string category, string id) =>
+            _loggedWarnings.TryGetValue($"{category}:{id}", out var warning) ? warning : null;
 
         private static AssetResult GetWithPaths(string id, string[] searchPaths, string category)
         {
@@ -354,17 +423,15 @@ namespace AtomicWar.GodotApp
             if (!_loggedMissing.Contains(logKey))
             {
                 _loggedMissing.Add(logKey);
-                GD.Print($"[AssetRegistry] MISSING {category}: '{id}' (tried {searchPaths.Length} paths)");
+                string fallbackUsed = GetEffectiveFallbackDescription(category);
+                string msg = $"[AssetRegistry] MISSING {category}: '{id}' (fallback: '{fallbackUsed}', tried {searchPaths.Length} paths)";
+                _loggedWarnings[logKey] = new MissingAssetWarning(category, id, fallbackUsed, msg);
+                GD.Print(msg);
             }
 
             // Return fallback if available
             if (_fallbackTexture != null)
             {
-                if (!_fallbackWarned)
-                {
-                    _fallbackWarned = true;
-                    GD.Print("[AssetRegistry] Using fallback texture for missing assets");
-                }
                 return new AssetResult(_fallbackTexture, AssetLoadResult.FallbackUsed, "(fallback)", id);
             }
 
@@ -399,7 +466,10 @@ namespace AtomicWar.GodotApp
             if (!_loggedMissing.Contains(logKey))
             {
                 _loggedMissing.Add(logKey);
-                GD.PrintErr($"[AssetRegistry] FAILED TO LOAD {category}: '{id}' at path: {path} (origin={origin})");
+                string fallbackUsed = GetEffectiveFallbackDescription(category);
+                string msg = $"[AssetRegistry] FAILED TO LOAD {category}: '{id}' at path: {path} (origin={origin}, fallback: '{fallbackUsed}')";
+                _loggedWarnings[logKey] = new MissingAssetWarning(category, id, fallbackUsed, msg);
+                GD.PrintErr(msg);
             }
 
             if (_fallbackTexture != null)
@@ -610,6 +680,39 @@ namespace AtomicWar.GodotApp
                 });
             }
 
+            // ── Fallback-art smoke assertions ───────────────────────────────
+            // Smoke-test that key fallback/placeholder art assets resolve and load:
+            // - placeholder_survivor.png (used by SurvivorActorView and character fallbacks)
+            // - icon_placeholder.png (used across UI sidebars and icon fallbacks)
+            var fallbackArtProbes = new (string id, string path, string category)[]
+            {
+                ("placeholder_survivor.png", AssetRegistry.FallbackSurvivorPath, "fallback:character"),
+                ("icon_placeholder.png",     AssetRegistry.FallbackIconPath,     "fallback:icon"),
+            };
+
+            GD.Print($"[AssetRegistrySelfTest] Checking {fallbackArtProbes.Length} fallback art assets...");
+            foreach (var (id, path, category) in fallbackArtProbes)
+            {
+                var result = AssetRegistry.GetByPath(path);
+                bool exists = ResourceLoader.Exists(path);
+                bool loaded = result.Result == AssetLoadResult.Loaded && result.Texture != null;
+
+                rows.Add(new ResultRow
+                {
+                    Id = id,
+                    Category = category,
+                    ResolvedPath = result.ResolvedPath,
+                    Exists = exists,
+                    Loaded = loaded,
+                    ReferenceCount = 1000
+                });
+
+                if (!exists || !loaded)
+                {
+                    GD.PrintErr($"[AssetRegistrySelfTest] FALLBACK ART FAILED: id={id} path={path} exists={exists} loaded={loaded} result={result.Result}");
+                }
+            }
+
             // ── Phase 13 normalization / prefix-add assertions ──────────────
             // Verify the new category-aware prefix-add normalization against
             // canonical, named, expected outcomes. Each assertion checks the
@@ -736,6 +839,20 @@ namespace AtomicWar.GodotApp
                 }
             }
             GD.Print($"[AssetRegistrySelfTest] Total probes evaluated: {probesChecked}, mismatches against expectation: {probesChecked - probesFailingAsIntended}");
+
+            // ── Fallback diagnostic deduplication checks ──────────────
+            int initialMissingCount = AssetRegistry.MissingAssetCount;
+            // Re-query the negative probe to prove deduplication per session
+            AssetRegistry.GetItem("__definitely_not_a_real_asset_xyzzy__");
+            if (AssetRegistry.MissingAssetCount != initialMissingCount)
+            {
+                GD.PrintErr($"[AssetRegistrySelfTest] DEDUPLICATION FAILED: missing count increased on repeated query ({AssetRegistry.MissingAssetCount} vs {initialMissingCount})");
+            }
+            var itemWarn = AssetRegistry.GetLoggedWarning("item", "__definitely_not_a_real_asset_xyzzy__");
+            if (itemWarn == null || itemWarn.Value.Category != "item" || string.IsNullOrEmpty(itemWarn.Value.FallbackUsed))
+            {
+                GD.PrintErr("[AssetRegistrySelfTest] DIAGNOSTIC RECORD FAILED: missing category or fallback description in record");
+            }
 
             if (probesChecked - probesFailingAsIntended > 0)
             {

@@ -86,6 +86,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.WeatherSaveSelfTest:
                     GetTree().Quit(HostCli.RunWeatherSaveSelfTest());
                     return;
+                case HostCliAction.SaveLoadUiFailureSelfTest:
+                    GetTree().Quit(HostCli.RunSaveLoadUiFailureSelfTest(_dataDir));
+                    return;
                 case HostCliAction.CombatSelfTest:
                     GetTree().Quit(HostCli.RunCombatSelfTest(_dataDir));
                     return;

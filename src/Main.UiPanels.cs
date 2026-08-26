@@ -383,6 +383,22 @@ namespace AtomicWar.GodotApp
                 _saveLoadHost?.SelectSlot(slotId);
                 UpdateContinueButton();
             };
+            _saveLoadPanel.OnLoadRequested += slotId =>
+            {
+                bool success = TryLoadAndRestoreGame(slotId, out string message);
+                if (success)
+                {
+                    _saveLoadPanel.ShowSuccess(message);
+                    if (_statusLabel != null) _statusLabel.Text = message;
+                }
+                else
+                {
+                    _saveLoadPanel.ShowError(message);
+                    if (_statusLabel != null) _statusLabel.Text = message;
+                }
+                _saveLoadPanel.RefreshView();
+                UpdateContinueButton();
+            };
             _saveLoadPanel.OnSaveRequested += () =>
             {
                 SaveAll();

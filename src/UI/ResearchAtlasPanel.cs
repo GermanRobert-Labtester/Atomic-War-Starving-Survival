@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
-using Ashfall.Core.Journal;
-// (no Muster.Core reference)
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
@@ -11,15 +9,15 @@ using DesignTheme = Ashfall.Core.UI.Theme;
 namespace AtomicWar.GodotApp.UI;
 
 /// <summary>
-/// ASHFALL — The Muster (Expansion 06) Dashboard. Tier-3 HYBRID sub-card
-/// sibling of the legacy Phase-9 modal `MusterPanel.cs`.
+/// ASHFALL — Research Atlas Dashboard. Tier-3 HYBRID sub-card
+/// sibling of the legacy Phase-9 modal `ResearchPanel.cs`.
 ///
-/// Reads the user's own `MusterSystem` (Core) through `ResearchHostSession`.
+/// Reads the user's own `ResearchSystem` (Core) through `ResearchHostSession`.
 /// Four surfaces:
 ///   1. Sector Currents    — push/pop trust momentum per faction
 ///   2. Coalition Camps    — denizens / discontents / sentinels / raiders per faction
 ///   3. Witness Dossiers   — DosId / type / weight / impact / target
-///   4. Action Bar         — Muster Vote / Schedule Muster / Recall Action
+///   4. Action Bar         — Start Research / Force Complete / Abandon Research / View Breakthrough
 ///
 /// Plus six-card status rail and right-side detail inspector.
 /// </summary>
@@ -52,6 +50,8 @@ public partial class ResearchAtlasPanel : Control
         RefreshView();
     }
 
+    private const string DefaultDisciplineIconPath = AshfallUiHelpers.FallbackIconPath;
+
     public override void _Ready()
     {
         SetAnchorsPreset(LayoutPreset.FullRect);
@@ -61,12 +61,12 @@ public partial class ResearchAtlasPanel : Control
 
         var scopes = new[]
         {
-            new AshfallSidebar.Item { Id = "all",       Label = "All Nodes",     Hint = "every faction",                  IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "unlocked",  Label = "Survival", Hint = "trust momentum",                IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "coalition", Label = "Engineering", Hint = "breakthrough items",          IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "remaining",  Label = "Science", Hint = "radio + cipher",      IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "loyalist",  Label = "Scavenging",    Hint = "expedition efficiency",          IconPath = "assets/ui/Icons/icon_placeholder.png" },
-            new AshfallSidebar.Item { Id = "deserter",  Label = "Combat",   Hint = "close-quarters + cover fire",           IconPath = "assets/ui/Icons/icon_placeholder.png" },
+            new AshfallSidebar.Item { Id = "all",       Label = "All Nodes",     Hint = "all disciplines",                  IconPath = DefaultDisciplineIconPath },
+            new AshfallSidebar.Item { Id = "unlocked",  Label = "Survival", Hint = "water + cultivation + shelter",                IconPath = DefaultDisciplineIconPath },
+            new AshfallSidebar.Item { Id = "coalition", Label = "Engineering", Hint = "breakthrough items",          IconPath = DefaultDisciplineIconPath },
+            new AshfallSidebar.Item { Id = "remaining",  Label = "Science", Hint = "radio + cipher",      IconPath = DefaultDisciplineIconPath },
+            new AshfallSidebar.Item { Id = "loyalist",  Label = "Scavenging",    Hint = "expedition efficiency",          IconPath = DefaultDisciplineIconPath },
+            new AshfallSidebar.Item { Id = "deserter",  Label = "Combat",   Hint = "close-quarters + cover fire",           IconPath = DefaultDisciplineIconPath },
         };
         _sidebar = _shell.SetSidebar(scopes, "Discipline Filter", "all");
         _sidebar.OnSelected += HandleSidebar;
@@ -316,8 +316,7 @@ public partial class ResearchAtlasPanel : Control
 
     private List<AshfallDataGrid.Row> DossierRows()
     {
-        // Witness dossiers: author-level pieces of evidence pinned to subsectors
-        // and factions. Their weight influences the muster approach choice.
+        // Research dossiers: technical schematics and field research notes pinned to disciplines.
         var rows = new List<AshfallDataGrid.Row>
         {
             new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
@@ -378,7 +377,7 @@ public partial class ResearchAtlasPanel : Control
         if (_selectedIndex < 0)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
-                "Select a faction row to view approach, current direction, and coalition breakdown."));
+                "Select a row to view approach, current direction, and breakdown."));
             return;
         }
         var id = ResolveVisibleRow(_selectedIndex);
@@ -462,7 +461,7 @@ public partial class ResearchAtlasPanel : Control
             new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
             {
                 new("Start Research",        AshfallDataGrid.CellState.Normal),
-                new("Roll the desertion threshold · select faction card", AshfallDataGrid.CellState.Muted),
+                new("Begin research on the selected knowledge node.", AshfallDataGrid.CellState.Muted),
             }, Selectable = false },
             new AshfallDataGrid.Row { Cells = new List<AshfallDataGrid.Cell>
             {

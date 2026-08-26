@@ -17,6 +17,19 @@ namespace AtomicWar.GodotApp.UI
     /// </summary>
     public static class AshfallUiHelpers
     {
+        // ── Canonical Fallback Texture Constants ─────────────────────────
+        /// <summary>Canonical relative path for the fallback placeholder UI icon.</summary>
+        public const string FallbackIconPath = "assets/ui/Icons/icon_placeholder.png";
+
+        /// <summary>Canonical resource path for the fallback placeholder UI icon.</summary>
+        public const string FallbackIconResPath = "res://assets/ui/Icons/icon_placeholder.png";
+
+        /// <summary>Canonical resource path for the fallback survivor sprite/portrait.</summary>
+        public const string FallbackSurvivorResPath = "res://assets/sprites/Characters/placeholder_survivor.png";
+
+        /// <summary>Canonical relative path for the fallback survivor sprite/portrait.</summary>
+        public const string FallbackSurvivorPath = "assets/sprites/Characters/placeholder_survivor.png";
+
         // ── Font Loading ────────────────────────────────────────────────
         // Lazy-loaded canonical fonts. Each property loads on first access
         // and caches the result. Returns null when the resource is missing

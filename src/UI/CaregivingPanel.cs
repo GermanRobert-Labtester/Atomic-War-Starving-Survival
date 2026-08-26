@@ -6,8 +6,18 @@ using DesignTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.UI
 {
+    /// <summary>
+    /// ASHFALL — Caregiving & Bedside Tending Management Interface.
+    /// Thin presentation panel displaying active caregiver-to-patient pairings, bond strengths,
+    /// and tending capacities.
+    ///
+    /// Presentation only — all caregiving mechanics, recovery boosts, and bond progressions
+    /// are evaluated authoritatively in <see cref="Ashfall.Core.Survivors.CaregivingSystem"/>
+    /// via <see cref="CaregivingHostSession"/>.
+    /// </summary>
     public partial class CaregivingPanel : Control
     {
+        /// <summary>Raised when the panel is dismissed by the player.</summary>
         public event Action? OnClose;
 
         private AshfallDashboardShell _shell = null!;
@@ -19,8 +29,13 @@ namespace AtomicWar.GodotApp.UI
 
         private CaregivingHostSession? _host;
 
+        /// <summary>Indicates whether the panel is currently wired to a live host session.</summary>
         public bool IsBound => _host != null;
 
+        /// <summary>
+        /// Binds this panel to the host session and subscribes to state change events.
+        /// </summary>
+        /// <param name="session">The active caregiving host session.</param>
         public void Bind(CaregivingHostSession session)
         {
             _host = session;
@@ -81,6 +96,10 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
         }
 
+        /// <summary>
+        /// Renders active metrics, assignment pairs, and bond strengths from the
+        /// authoritative <see cref="Ashfall.Core.Survivors.CaregivingSystem"/> state snapshot.
+        /// </summary>
         public void RefreshView()
         {
             if (_host == null || _statusRail == null) return;

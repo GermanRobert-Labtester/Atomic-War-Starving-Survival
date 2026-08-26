@@ -174,7 +174,18 @@ namespace AtomicWar.GodotApp.UI
         public void Open()
         {
             Visible = true;
+            RefreshView();
             QueueRedraw();
+        }
+
+        public void Close()
+        {
+            Visible = false;
+        }
+
+        public void Unbind()
+        {
+            Bind(null);
         }
 
         public override void _UnhandledInput(InputEvent @event)

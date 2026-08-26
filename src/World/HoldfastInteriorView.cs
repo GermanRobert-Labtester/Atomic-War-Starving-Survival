@@ -3,20 +3,69 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
+using Ashfall.Core.Shelter;
 using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp.World
 {
+    /// <summary>
+    /// Configuration data for a room in the Holdfast shelter interior layout.
+    /// </summary>
+    public class InteriorRoomDefinition
+    {
+        public string RoomId { get; set; } = string.Empty;
+        public string DisplayName { get; set; } = string.Empty;
+        public Vector2 BasePosition { get; set; } = Vector2.Zero;
+        public Vector2 HotspotPosition { get; set; } = Vector2.Zero;
+        public string StatusSummary { get; set; } = string.Empty;
+        public int Capacity { get; set; } = 4;
+
+        public InteriorRoomDefinition() { }
+
+        public InteriorRoomDefinition(
+            string roomId,
+            string displayName,
+            Vector2 basePosition,
+            Vector2 hotspotPosition,
+            string statusSummary = "",
+            int capacity = 4)
+        {
+            RoomId = roomId;
+            DisplayName = displayName;
+            BasePosition = basePosition;
+            HotspotPosition = hotspotPosition;
+            StatusSummary = statusSummary;
+            Capacity = capacity;
+        }
+    }
+
+    /// <summary>
+    /// ASHFALL — 2D Holdfast Shelter Interior View.
+    /// Fully data-driven survivor placement and room hotspot management.
+    /// Receives live room layouts, positions, and assignments from <see cref="ShelterAssignmentHostSession"/>
+    /// and <see cref="DutyRosterHostSession"/>, with fallback handling for unknown rooms.
+    /// </summary>
     public partial class HoldfastInteriorView : Node2D
     {
         [Signal]
         public delegate void RoomSelectedEventHandler(string roomId);
 
-        private SurvivorsHostSession _survivors = null!;
+        public const string DefaultFallbackRoomId = "room_bunks";
+        public static readonly Vector2 DefaultFallbackPosition = new Vector2(510, 290);
+        public static readonly Vector2 DefaultFallbackHotspot = new Vector2(510, 240);
+
+        private SurvivorsHostSession? _survivors;
         private DutyRosterHostSession? _dutyRoster;
-        private List<SurvivorActorView> _survivorActors = new List<SurvivorActorView>();
-        private Dictionary<string, RoomHotspotView> _roomHotspots = new Dictionary<string, RoomHotspotView>();
+        private ShelterAssignmentHostSession? _shelterAssignments;
+        private Func<string, string>? _customAssignmentResolver;
+
+        private readonly Dictionary<string, InteriorRoomDefinition> _roomDefinitions = new(StringComparer.Ordinal);
+        private readonly List<SurvivorActorView> _survivorActors = new();
+        private readonly Dictionary<string, RoomHotspotView> _roomHotspots = new(StringComparer.Ordinal);
         private CanvasModulate? _lightingModulate;
+
+        public IReadOnlyDictionary<string, InteriorRoomDefinition> RoomDefinitions => _roomDefinitions;
+        public IReadOnlyList<SurvivorActorView> SurvivorActors => _survivorActors;
 
         public HoldfastInteriorView()
         {
@@ -31,17 +80,105 @@ namespace AtomicWar.GodotApp.World
                 Color = new Color(0.95f, 0.95f, 0.95f, 1.0f)
             };
             AddChild(_lightingModulate);
+
+            InitializeDefaultRooms();
         }
 
-        public void Initialize(SurvivorsHostSession survivors, DutyRosterHostSession? dutyRoster = null)
+        private void InitializeDefaultRooms()
+        {
+            _roomDefinitions.Clear();
+            var defaults = new[]
+            {
+                new InteriorRoomDefinition("room_storage_bay", "Storage Bay", new Vector2(160, 290), new Vector2(160, 240), "Tool & Supply Depot", 4),
+                new InteriorRoomDefinition("room_bunker_corridor", "Central Corridor", new Vector2(340, 290), new Vector2(340, 240), "Access Concourse", 0),
+                new InteriorRoomDefinition("room_bunks", "Bunk Living", new Vector2(510, 290), new Vector2(510, 240), "Living Quarters: Warmth 100%", 6),
+                new InteriorRoomDefinition("room_filtration", "Filtration Stack", new Vector2(680, 290), new Vector2(680, 240), "Filtration Stack: Active · Attenuation: 99%", 2),
+                new InteriorRoomDefinition("room_airlock", "Airlock Hatch", new Vector2(860, 290), new Vector2(860, 240), "Airlock: Sealed · Outer Decon Ready", 2),
+                new InteriorRoomDefinition("room_kitchen", "Galley Kitchen", new Vector2(420, 290), new Vector2(420, 240), "Ration Prep Operational", 2),
+                new InteriorRoomDefinition("room_clinic", "Medical Ward", new Vector2(595, 290), new Vector2(595, 240), "Triage Bay Ready", 2),
+                new InteriorRoomDefinition("room_workshop", "Workshop", new Vector2(250, 290), new Vector2(250, 240), "Fabrication Bench Ready", 2)
+            };
+
+            foreach (var r in defaults)
+            {
+                _roomDefinitions[r.RoomId] = r;
+            }
+        }
+
+        public void Initialize(
+            SurvivorsHostSession survivors,
+            DutyRosterHostSession? dutyRoster = null,
+            ShelterAssignmentHostSession? shelterAssignments = null)
         {
             _survivors = survivors;
             _dutyRoster = dutyRoster;
+            _shelterAssignments = shelterAssignments;
 
+            SyncRoomsFromLiveState();
             ClearExistingSurvivors();
             PopulateRoomHotspots();
             PopulateSurvivors();
             UpdateSurvivorPositions();
+        }
+
+        public void Bind(
+            SurvivorsHostSession survivors,
+            DutyRosterHostSession? dutyRoster = null,
+            ShelterAssignmentHostSession? shelterAssignments = null)
+        {
+            Initialize(survivors, dutyRoster, shelterAssignments);
+        }
+
+        public void SetCustomAssignmentResolver(Func<string, string>? resolver)
+        {
+            _customAssignmentResolver = resolver;
+            UpdateSurvivorPositions();
+        }
+
+        public void ConfigureRooms(IEnumerable<InteriorRoomDefinition> rooms)
+        {
+            if (rooms == null) return;
+            foreach (var room in rooms)
+            {
+                if (room != null && !string.IsNullOrEmpty(room.RoomId))
+                {
+                    _roomDefinitions[room.RoomId] = room;
+                }
+            }
+            PopulateRoomHotspots();
+            UpdateSurvivorPositions();
+        }
+
+        public void SetRoomPosition(string roomId, Vector2 basePosition, Vector2? hotspotPosition = null)
+        {
+            if (string.IsNullOrEmpty(roomId)) return;
+
+            if (_roomDefinitions.TryGetValue(roomId, out var def))
+            {
+                def.BasePosition = basePosition;
+                if (hotspotPosition.HasValue)
+                    def.HotspotPosition = hotspotPosition.Value;
+            }
+            else
+            {
+                _roomDefinitions[roomId] = new InteriorRoomDefinition(
+                    roomId,
+                    FormatRoomDisplayName(roomId),
+                    basePosition,
+                    hotspotPosition ?? (basePosition + new Vector2(0, -50)));
+            }
+
+            PopulateRoomHotspots();
+            UpdateSurvivorPositions();
+        }
+
+        public void SetRoomPositions(IDictionary<string, Vector2> positions)
+        {
+            if (positions == null) return;
+            foreach (var kvp in positions)
+            {
+                SetRoomPosition(kvp.Key, kvp.Value);
+            }
         }
 
         public void SetLightingPhase(string phase)
@@ -59,51 +196,94 @@ namespace AtomicWar.GodotApp.World
             };
         }
 
+        private void SyncRoomsFromLiveState()
+        {
+            if (_shelterAssignments?.System != null)
+            {
+                foreach (var r in _shelterAssignments.System.Rooms)
+                {
+                    if (r == null || string.IsNullOrEmpty(r.RoomId)) continue;
+                    if (_roomDefinitions.TryGetValue(r.RoomId, out var existing))
+                    {
+                        existing.DisplayName = r.DisplayName;
+                        existing.Capacity = r.Capacity;
+                    }
+                    else
+                    {
+                        // Generate fallback slot for new dynamic room
+                        _roomDefinitions[r.RoomId] = new InteriorRoomDefinition(
+                            r.RoomId,
+                            r.DisplayName,
+                            DefaultFallbackPosition,
+                            DefaultFallbackHotspot,
+                            $"{r.DisplayName} Active",
+                            r.Capacity);
+                    }
+                }
+            }
+        }
+
         public void UpdateSurvivorPositions()
         {
             if (_survivors == null)
                 return;
 
-            var roomCounts = new Dictionary<string, int>
+            var roomCounts = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (var key in _roomDefinitions.Keys)
             {
-                { "room_storage_bay", 0 },
-                { "room_bunker_corridor", 0 },
-                { "room_bunks", 0 },
-                { "room_filtration", 0 },
-                { "room_airlock", 0 }
-            };
+                roomCounts[key] = 0;
+            }
 
             foreach (var actor in _survivorActors)
             {
                 UpdateSurvivorActor(actor);
                 string assignedRoom = GetAssignedRoomForSurvivor(actor.SurvivorId);
-                if (roomCounts.ContainsKey(assignedRoom))
+
+                if (!roomCounts.ContainsKey(assignedRoom))
                 {
-                    roomCounts[assignedRoom]++;
-                    int offset = (roomCounts[assignedRoom] - 1) * 35;
-                    actor.Position = GetRoomBasePosition(assignedRoom) + new Vector2(offset, 25);
+                    roomCounts[assignedRoom] = 0;
                 }
+
+                int occupantIndex = roomCounts[assignedRoom]++;
+                int xOffset = occupantIndex * 35;
+                Vector2 basePos = GetRoomBasePosition(assignedRoom);
+                actor.Position = basePos + new Vector2(xOffset, 25);
             }
 
-            // Update hotspot occupant counters
+            // Update hotspot occupant counters and live status
             foreach (var kvp in _roomHotspots)
             {
                 int count = roomCounts.TryGetValue(kvp.Key, out int c) ? c : 0;
-                string status = kvp.Key switch
-                {
-                    "room_filtration" => "Filtration Stack: Active · Attenuation: 99%",
-                    "room_airlock" => "Airlock: Sealed · Outer Decon Ready",
-                    "room_bunks" => "Living Quarters: Warmth 100%",
-                    "room_storage_bay" => "Tool & Supply Depot",
-                    _ => "Access Concourse"
-                };
+                string status = GetRoomStatusSummary(kvp.Key);
                 kvp.Value.SetRoomInfo(GetRoomDisplayName(kvp.Key), status, count);
             }
         }
 
-        private string GetAssignedRoomForSurvivor(string survivorId)
+        public string GetAssignedRoomForSurvivor(string survivorId)
         {
-            if (_dutyRoster != null && _dutyRoster.Roster != null)
+            if (string.IsNullOrEmpty(survivorId))
+                return DefaultFallbackRoomId;
+
+            // 1. Custom assignment override
+            if (_customAssignmentResolver != null)
+            {
+                string customRoom = _customAssignmentResolver(survivorId);
+                if (!string.IsNullOrEmpty(customRoom))
+                    return customRoom;
+            }
+
+            // 2. Authoritative live ShelterAssignmentSystem state
+            if (_shelterAssignments?.System != null)
+            {
+                var assignment = _shelterAssignments.System.GetAssignmentForSurvivor(survivorId);
+                if (assignment != null && !string.IsNullOrEmpty(assignment.RoomId))
+                {
+                    return assignment.RoomId;
+                }
+            }
+
+            // 3. Authoritative live DutyRosterSystem role mapping
+            if (_dutyRoster?.Roster != null)
             {
                 var role = _dutyRoster.Roster.GetRoleOf(survivorId);
                 if (!string.IsNullOrEmpty(role))
@@ -113,37 +293,48 @@ namespace AtomicWar.GodotApp.World
                     if (role == DutyRosterIds.RoleNightWatch || role == DutyRosterIds.RoleHatchOpener)
                         return "room_airlock";
                     if (role == DutyRosterIds.RoleMess)
-                        return "room_bunker_corridor";
+                        return "room_kitchen";
+                    if (role == DutyRosterIds.RoleExpedition)
+                        return "room_storage_bay";
                 }
             }
 
-            return "room_bunks";
+            // 4. Default fallback room
+            return DefaultFallbackRoomId;
         }
 
-        private Vector2 GetRoomBasePosition(string roomId)
+        public Vector2 GetRoomBasePosition(string roomId)
         {
-            return roomId switch
+            if (!string.IsNullOrEmpty(roomId) && _roomDefinitions.TryGetValue(roomId, out var def))
             {
-                "room_storage_bay" => new Vector2(160, 290),
-                "room_bunker_corridor" => new Vector2(340, 290),
-                "room_bunks" => new Vector2(510, 290),
-                "room_filtration" => new Vector2(680, 290),
-                "room_airlock" => new Vector2(860, 290),
-                _ => new Vector2(510, 290)
-            };
+                return def.BasePosition;
+            }
+            return DefaultFallbackPosition;
         }
 
-        private string GetRoomDisplayName(string roomId)
+        public string GetRoomDisplayName(string roomId)
         {
-            return roomId switch
+            if (!string.IsNullOrEmpty(roomId) && _roomDefinitions.TryGetValue(roomId, out var def) && !string.IsNullOrEmpty(def.DisplayName))
             {
-                "room_storage_bay" => "Storage Bay",
-                "room_bunker_corridor" => "Central Corridor",
-                "room_bunks" => "Bunk Living",
-                "room_filtration" => "Filtration Stack",
-                "room_airlock" => "Airlock Hatch",
-                _ => "Shelter Area"
-            };
+                return def.DisplayName;
+            }
+            return FormatRoomDisplayName(roomId);
+        }
+
+        public string GetRoomStatusSummary(string roomId)
+        {
+            if (!string.IsNullOrEmpty(roomId) && _roomDefinitions.TryGetValue(roomId, out var def) && !string.IsNullOrEmpty(def.StatusSummary))
+            {
+                return def.StatusSummary;
+            }
+            return "Shelter Area";
+        }
+
+        private static string FormatRoomDisplayName(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId)) return "Shelter Area";
+            string name = roomId.StartsWith("room_") ? roomId.Substring(5) : roomId;
+            return System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name.Replace('_', ' '));
         }
 
         private void ClearExistingSurvivors()
@@ -168,7 +359,7 @@ namespace AtomicWar.GodotApp.World
 
             var survivorActorsNode = GetNode<Node2D>("SurvivorActors");
 
-            int maxSurvivors = Math.Min(_survivors.RosterState.Count, 6);
+            int maxSurvivors = Math.Min(_survivors.RosterState.Count, 12);
             for (int i = 0; i < maxSurvivors; i++)
             {
                 var survivorState = _survivors.RosterState[i];
@@ -183,7 +374,7 @@ namespace AtomicWar.GodotApp.World
             }
         }
 
-        private string FormatSurvivorName(string id)
+        private static string FormatSurvivorName(string id)
         {
             if (string.IsNullOrEmpty(id)) return "Unknown";
             return System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(id.Replace('_', ' '));
@@ -195,24 +386,15 @@ namespace AtomicWar.GodotApp.World
             AshfallUiHelpers.EmptyChildren(roomHotspotsNode);
             _roomHotspots.Clear();
 
-            var rooms = new[]
-            {
-                new { Id = "room_storage_bay", DisplayName = "Storage Bay", PositionX = 160, PositionY = 240 },
-                new { Id = "room_bunker_corridor", DisplayName = "Central Corridor", PositionX = 340, PositionY = 240 },
-                new { Id = "room_bunks", DisplayName = "Bunk Living", PositionX = 510, PositionY = 240 },
-                new { Id = "room_filtration", DisplayName = "Filtration Stack", PositionX = 680, PositionY = 240 },
-                new { Id = "room_airlock", DisplayName = "Airlock Hatch", PositionX = 860, PositionY = 240 }
-            };
-
-            foreach (var room in rooms)
+            foreach (var def in _roomDefinitions.Values)
             {
                 var hotspot = new RoomHotspotView();
-                hotspot.RoomId = room.Id;
-                hotspot.Position = new Vector2(room.PositionX, room.PositionY);
-                hotspot.SetRoomInfo(room.DisplayName, "Holding status...", 0);
+                hotspot.RoomId = def.RoomId;
+                hotspot.Position = def.HotspotPosition;
+                hotspot.SetRoomInfo(def.DisplayName, def.StatusSummary, 0);
                 hotspot.Connect(RoomHotspotView.SignalName.Clicked, Callable.From<string>(OnRoomClicked));
                 roomHotspotsNode.AddChild(hotspot);
-                _roomHotspots[room.Id] = hotspot;
+                _roomHotspots[def.RoomId] = hotspot;
             }
         }
 
@@ -236,7 +418,7 @@ namespace AtomicWar.GodotApp.World
         private void OnRoomClicked(string roomId)
         {
             EmitSignal(SignalName.RoomSelected, roomId);
-            GD.Print($"[HoldfastInterior] Room clicked: {roomId}");
+            GD.Print($"[Ashfall Godot][World] Room clicked: {roomId}");
         }
 
         public override void _ExitTree()

@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Ashfall.Core.Settings;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.Settings;
 using DesignTheme = Ashfall.Core.UI.Theme;

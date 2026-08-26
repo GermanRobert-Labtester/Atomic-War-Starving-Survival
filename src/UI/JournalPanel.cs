@@ -385,7 +385,30 @@ public partial class JournalPanel : Control
     public void Open()
     {
         Visible = true;
+        RefreshView();
         QueueRedraw();
+    }
+
+    public void Close()
+    {
+        Visible = false;
+    }
+
+    public void Unbind()
+    {
+        if (_journal != null)
+        {
+            _journal.OnEntryAdded -= OnEntryAdded;
+            _journal.OnTabChanged -= OnTabChanged;
+            _journal.OnCodexUnlocked -= OnCodexUnlocked;
+            _journal = null;
+        }
+
+        if (_logEntries != null) ClearContainer(_logEntries);
+        if (_itemsList != null) ClearContainer(_itemsList);
+        if (_peopleList != null) ClearContainer(_peopleList);
+        if (_placesList != null) ClearContainer(_placesList);
+        if (_eventsList != null) ClearContainer(_eventsList);
     }
 
     public override void _UnhandledInput(InputEvent @event)

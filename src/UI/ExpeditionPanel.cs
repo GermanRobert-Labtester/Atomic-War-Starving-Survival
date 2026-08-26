@@ -72,6 +72,19 @@ namespace AtomicWar.GodotApp.UI
             }
         }
 
+        public void Unbind()
+        {
+            if (_expeditionHost != null)
+            {
+                _expeditionHost.Engine.OnExpeditionCompleted -= OnExpeditionCompleted;
+                _expeditionHost.StateChanged -= RefreshView;
+                _expeditionHost = null;
+            }
+            _survivorsHost = null;
+            _inventoryHost = null;
+            RefreshView();
+        }
+
         private void OnExpeditionCompleted(ExpeditionState state)
         {
             if (state != null && state.loot != null && state.loot.Count > 0)
