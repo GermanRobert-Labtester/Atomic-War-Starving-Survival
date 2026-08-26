@@ -5,7 +5,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public class DoseRegistersCatalogTests
-    {
+    : CatalogTestBase{
         private static string FindDataDir()
         {
             string dataDir = string.Empty;
@@ -104,7 +104,7 @@ namespace Ashfall.Core.Tests
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
             string raw = fileIO.ReadAllText(fileIO.Combine(dataDir, "characters.json"));
-            var chars = json.Deserialize<CharacterEntry[]>(raw);
+            var chars = CatalogLocator.LoadWrappedList<CharacterEntry>(raw, SystemTextJsonSerializer.Options);
             int found = 0;
             foreach (var c in chars)
                 if (c.id == "npc_dr_irina_vel" || c.id == "npc_wyn_omah" ||

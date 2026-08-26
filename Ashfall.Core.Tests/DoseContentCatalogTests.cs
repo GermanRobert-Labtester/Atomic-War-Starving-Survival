@@ -10,7 +10,7 @@ namespace Ashfall.Core.Tests
     /// standing locations and five story/tool items that give the four dose
     /// registers a playable surface (plan §IV/VI/VII).</summary>
     public class DoseContentCatalogTests
-    {
+    : CatalogTestBase{
         private static string FindDataDir()
         {
             string dataDir = string.Empty;

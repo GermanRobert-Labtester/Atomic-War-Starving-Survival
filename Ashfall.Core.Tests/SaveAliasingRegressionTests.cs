@@ -37,10 +37,10 @@ namespace Ashfall.Core.Tests
             var sys = new DutyRosterSystem(808);
             sys.Unlock(5);
             sys.WriteName("elena_vasquez", "Elena", "scrounger",
-                DutyRosterSystem.ScriptPencil, 6, true);
+                DutyRosterIds.ScriptPencil, 6, true);
             sys.WriteName("marcus_olejnik", "Marcus", "machinist",
-                DutyRosterSystem.ScriptPencil, 6, true);
-            sys.Assign(DutyRosterSystem.RoleNightWatch, "elena_vasquez");
+                DutyRosterIds.ScriptPencil, 6, true);
+            sys.Assign(DutyRosterIds.RoleNightWatch, "elena_vasquez");
             var envelope = sys.CaptureState();
 
             var restored = new DutyRosterSystem();

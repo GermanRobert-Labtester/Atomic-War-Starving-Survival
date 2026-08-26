@@ -602,7 +602,8 @@ namespace Ashfall.Core.Tests
             string dataDir = FindDataDir();
             var files = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
-            var items = json.Deserialize<List<FoundryItemJsonForTest>>(files.ReadAllText(files.Combine(dataDir, "foundry_items.json")));
+            string foundryItemsRaw = files.ReadAllText(files.Combine(dataDir, "foundry_items.json"));
+            var items = CatalogLocator.LoadWrappedList<FoundryItemJsonForTest>(foundryItemsRaw, SystemTextJsonSerializer.Options);
             var itemIds = new HashSet<string>(StringComparer.Ordinal);
             if (items != null)
                 foreach (var it in items) itemIds.Add(it.id);

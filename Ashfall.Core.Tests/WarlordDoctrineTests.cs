@@ -414,7 +414,7 @@ namespace Ashfall.Core.Tests
             var encounters = new DoorEncounterSystem();
             var factionWar = new FactionWarSystem();
             var save = YearOfAshSaveCodec.Capture(timeline, encounters, factionWar, null, null, null, null, w);
-            Assert.Equal(3, save.saveVersion);
+            Assert.Equal(YearOfAshSave.CurrentSaveVersion, save.saveVersion);
             Assert.False(string.IsNullOrEmpty(save.Checksum));
             string encoded = YearOfAshSaveCodec.Encode(save, json);
 
@@ -449,7 +449,7 @@ namespace Ashfall.Core.Tests
             };
             v2.Checksum = SaveChecksum.Compute(v2);
             var migrated = YearOfAshSaveCodec.Decode(json.Serialize(v2), json);
-            Assert.Equal(3, migrated.saveVersion);
+            Assert.Equal(YearOfAshSave.CurrentSaveVersion, migrated.saveVersion);
             Assert.NotNull(migrated.warlord);
             Assert.Equal("warlord_doctrine_toll", migrated.warlord.doctrineId);
             Assert.Equal("warlords_sector_4", migrated.warlord.factionId);
@@ -464,7 +464,7 @@ namespace Ashfall.Core.Tests
             };
             v1.Checksum = SaveChecksum.Compute(v1);
             var m1 = YearOfAshSaveCodec.Decode(json.Serialize(v1), json);
-            Assert.Equal(3, m1.saveVersion);
+            Assert.Equal(YearOfAshSave.CurrentSaveVersion, m1.saveVersion);
             Assert.Equal("warlord_doctrine_toll", m1.warlord.doctrineId);
 
             // Future-version rejection.

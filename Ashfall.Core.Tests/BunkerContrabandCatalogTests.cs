@@ -6,7 +6,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public sealed class BunkerContrabandCatalogTests
-    {
+    : CatalogTestBase{
         private readonly string _catalogPath;
 
         public BunkerContrabandCatalogTests()

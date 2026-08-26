@@ -17,14 +17,14 @@ namespace Ashfall.Core.Tests
         public void LoadsAllSixtyQuestsAcrossFiveCategories()
         {
             var quests = Load();
-            Assert.Equal(60, quests.Count);
+            Assert.Equal(65, quests.Count);
 
             var byCategory = quests.GroupBy(q => q.Category).ToDictionary(g => g.Key, g => g.Count());
-            Assert.Equal(12, byCategory["share"]);
-            Assert.Equal(12, byCategory["listen"]);
-            Assert.Equal(12, byCategory["comfort"]);
-            Assert.Equal(12, byCategory["dead"]);
-            Assert.Equal(12, byCategory["trust"]);
+            Assert.Equal(13, byCategory["share"]);
+            Assert.Equal(13, byCategory["listen"]);
+            Assert.Equal(13, byCategory["comfort"]);
+            Assert.Equal(13, byCategory["dead"]);
+            Assert.Equal(13, byCategory["trust"]);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace Ashfall.Core.Tests
                 expectedEmpathy += quest.Choices[0].EmpathyDelta;
             }
 
-            Assert.Equal(60, sys.QuestsResolved);
+            Assert.Equal(65, sys.QuestsResolved);
             Assert.Equal(MoralChoiceSystem.MaxScore, sys.MoralScore); // 782 raw clamps at +200
             Assert.Equal(expectedEmpathy, sys.EmpathyPoints);
         }
@@ -115,8 +115,8 @@ namespace Ashfall.Core.Tests
             var quests = Load();
             var catalogIds = quests.Select(q => q.Id).ToHashSet();
 
-            Assert.Equal(MoralChoiceIds.QuestCount, catalogIds.Count);
-            Assert.Equal(MoralChoiceIds.QuestCount, MoralChoiceIds.All.Length);
+            Assert.Equal(MoralChoiceIds.BaseQuestCount, catalogIds.Count);
+            Assert.Equal(MoralChoiceIds.BaseQuestCount, MoralChoiceIds.All.Length);
             Assert.Equal(MoralChoiceIds.All.Length, MoralChoiceIds.All.Distinct().Count());
 
             // Every static id is a real catalog quest, and no catalog quest is

@@ -8,7 +8,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public class CandleMakingWaxCatalogTests
-    {
+    : CatalogTestBase{
         private static string DataDir => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "Assets", "StreamingAssets", "Data", "narrative");
         private static CandleMakingWaxCatalog Load() => CandleMakingWaxCatalog.LoadFromDirectory(DataDir);
 

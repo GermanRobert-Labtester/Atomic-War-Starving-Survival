@@ -6,7 +6,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public sealed class SignalIntelligenceCatalogTests
-    {
+    : CatalogTestBase{
         private readonly string _narrativeDir;
 
         public SignalIntelligenceCatalogTests()

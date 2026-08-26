@@ -6,7 +6,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public class TextileSpinningWeavingCatalogTests
-    {
+    : CatalogTestBase{
         private static string DataDir =>
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
                          "..", "..", "..", "..",

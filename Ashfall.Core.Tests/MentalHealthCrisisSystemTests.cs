@@ -35,9 +35,9 @@ namespace Ashfall.Core.Tests
             roster.Unlock(0); // unlock expansion so WriteName works
             // Register the candidate caregiver as a real roster resident, then
             // put them on a duty shift.
-            string roleKey = DutyRosterSystem.AssignmentRoles[0];
+            string roleKey = DutyRosterIds.AssignmentRoles[0];
             roster.WriteName("caregiver_busy", displayName: "Caregiver Busy",
-                occupationObserved: "medic", script: DutyRosterSystem.ScriptPencil,
+                occupationObserved: "medic", script: DutyRosterIds.ScriptPencil,
                 day: 1, sleptHere: true);
             Assert.True(roster.Assign(roleKey, "caregiver_busy"));
             Assert.Equal(roleKey, roster.GetRoleOf("caregiver_busy"));
@@ -146,9 +146,9 @@ namespace Ashfall.Core.Tests
 
             // Single shared roster, single survivor on a duty.
             sharedRoster.Unlock(0);
-            string roleKey = DutyRosterSystem.AssignmentRoles[0];
+            string roleKey = DutyRosterIds.AssignmentRoles[0];
             sharedRoster.WriteName("shared_survivor", "Shared", "medic",
-                DutyRosterSystem.ScriptPencil, 1, true);
+                DutyRosterIds.ScriptPencil, 1, true);
             Assert.True(sharedRoster.Assign(roleKey, "shared_survivor"));
 
             // Mental Health: BeginTreatment must reject this survivor as

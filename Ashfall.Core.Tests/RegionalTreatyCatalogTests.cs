@@ -6,7 +6,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public sealed class RegionalTreatyCatalogTests
-    {
+    : CatalogTestBase{
         private static string FindDataDir()
         {
             string start = Directory.GetCurrentDirectory();

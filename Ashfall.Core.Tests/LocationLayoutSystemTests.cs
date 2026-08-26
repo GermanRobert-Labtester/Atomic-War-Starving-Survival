@@ -248,7 +248,7 @@ namespace Ashfall.Core.Tests
             string path = Path.Combine(DataDir(), "standing_record_factions.json");
             Assert.True(File.Exists(path));
             var json = new SystemTextJsonSerializer();
-            var factions = json.Deserialize<List<StandingRecordFactionStub>>(File.ReadAllText(path));
+            var factions = CatalogLocator.LoadWrappedList<StandingRecordFactionStub>(File.ReadAllText(path), SystemTextJsonSerializer.Options);
             Assert.NotNull(factions);
             Assert.Single(factions);
             Assert.Equal("faction_the_overlay", factions[0].id);

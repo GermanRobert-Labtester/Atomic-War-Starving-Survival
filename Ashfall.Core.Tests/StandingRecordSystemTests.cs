@@ -243,9 +243,8 @@ namespace Ashfall.Core.Tests
         public void RosterNpcsPresentInCharacters()
         {
             string path = Path.Combine(DataDir(), "characters.json");
-            var json = new SystemTextJsonSerializer();
-            var chars = json.Deserialize<System.Collections.Generic.List<StandingCharProbe>>(
-                File.ReadAllText(path));
+            var chars = CatalogLocator.LoadWrappedList<StandingCharProbe>(
+                File.ReadAllText(path), SystemTextJsonSerializer.Options);
             var ids = new System.Collections.Generic.HashSet<string>();
             for (int i = 0; i < chars.Count; i++) ids.Add(chars[i].id);
             Assert.Contains("npc_maren_holt", ids);

@@ -261,11 +261,13 @@ namespace Ashfall.Core.Tests
 
             var defs = UtilityActionCatalogLoader.Load(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
-            Assert.Equal(4, defs.Count);
+            Assert.Equal(6, defs.Count);
             Assert.Contains(defs, d => d.id == "action_weigh_goods");
             Assert.Contains(defs, d => d.id == "action_read_contract");
             Assert.Contains(defs, d => d.id == "action_canvas_support");
             Assert.Contains(defs, d => d.id == "action_run_vouch");
+            Assert.Contains(defs, d => d.id == "action_audit_inventory");
+            Assert.Contains(defs, d => d.id == "action_file_report");
             foreach (var d in defs)
             {
                 Assert.False(string.IsNullOrEmpty(d.displayName));

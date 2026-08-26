@@ -6,7 +6,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public sealed class SeedBankPreservationCatalogTests
-    {
+    : CatalogTestBase{
         private readonly string _narrativeDir;
 
         public SeedBankPreservationCatalogTests()

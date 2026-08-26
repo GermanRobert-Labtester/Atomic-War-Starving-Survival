@@ -8,7 +8,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public class RopeMakingCordageCatalogTests
-    {
+    : CatalogTestBase{
         private static string DataDir => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "Assets", "StreamingAssets", "Data", "narrative");
         private static RopeMakingCordageCatalog Load() => RopeMakingCordageCatalog.LoadFromDirectory(DataDir);
 
