@@ -80,30 +80,22 @@ namespace AtomicWar.GodotApp.World
         {
             if (node == null) return MapLocationMarkerStatus.Unavailable;
 
-            if (node.Danger == MapNodeDanger.Locked)
-                return MapLocationMarkerStatus.Locked;
-
             if (_mapSystem != null)
             {
-                if (_mapSystem.IsDiscovered(node.Id))
+                var status = _mapSystem.ResolveNodeStatus(node.Id);
+                return status switch
                 {
-                    return MapLocationMarkerStatus.Discovered;
-                }
-
-                // Check if any route connects from an already discovered node to this node
-                foreach (var route in _mapSystem.Routes)
-                {
-                    if ((route.To == node.Id && _mapSystem.IsDiscovered(route.From)) ||
-                        (route.From == node.Id && _mapSystem.IsDiscovered(route.To)))
-                    {
-                        return MapLocationMarkerStatus.Available;
-                    }
-                }
-
-                return MapLocationMarkerStatus.Unavailable;
+                    MapNodeStatusKind.Locked => MapLocationMarkerStatus.Locked,
+                    MapNodeStatusKind.Completed => MapLocationMarkerStatus.Completed,
+                    MapNodeStatusKind.Discovered => MapLocationMarkerStatus.Discovered,
+                    MapNodeStatusKind.Available => MapLocationMarkerStatus.Available,
+                    _ => MapLocationMarkerStatus.Unavailable
+                };
             }
 
             // Fallback when no active system: starting unlocked are discovered, discoverable are available
+            if (node.Danger == MapNodeDanger.Locked)
+                return MapLocationMarkerStatus.Locked;
             if (node.StartingUnlocked)
                 return MapLocationMarkerStatus.Discovered;
             if (node.Discoverable)

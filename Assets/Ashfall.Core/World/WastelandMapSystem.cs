@@ -21,6 +21,8 @@ namespace Ashfall.Core.World
         private readonly List<MapRoute> _routes;
 
         public event Action<string>? OnNodeDiscovered;
+        public event Action<string>? OnNodeCompleted;
+        public event Action<string, bool>? OnNodeLockChanged;
 
         public WastelandMapSystem(WastelandMapState state,
             IEnumerable<MapNode> nodes, IEnumerable<MapRoute> routes)
@@ -42,6 +44,9 @@ namespace Ashfall.Core.World
 
         public IReadOnlyList<MapNode> Nodes => _nodes;
         public IReadOnlyList<MapRoute> Routes => _routes;
+        public IReadOnlyList<string> DiscoveredNodes => _state.Discovered;
+        public IReadOnlyList<string> CompletedNodes => _state.Completed;
+        public IReadOnlyList<string> LockedNodes => _state.Locked;
 
         public bool IsDiscovered(string nodeId)
         {
@@ -60,6 +65,94 @@ namespace Ashfall.Core.World
             _state.Discovered.Add(nodeId);
             OnNodeDiscovered?.Invoke(nodeId);
             return true;
+        }
+
+        public bool IsCompleted(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return false;
+            for (int i = 0; i < _state.Completed.Count; i++)
+                if (_state.Completed[i] == nodeId) return true;
+            return false;
+        }
+
+        public bool Complete(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return false;
+            var node = FindNode(nodeId);
+            if (node == null) return false;
+
+            Discover(nodeId);
+
+            if (IsCompleted(nodeId)) return true; // idempotent
+            _state.Completed.Add(nodeId);
+            OnNodeCompleted?.Invoke(nodeId);
+            return true;
+        }
+
+        public bool IsLocked(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return false;
+            if (_state.Unlocked.Contains(nodeId)) return false;
+            if (_state.Locked.Contains(nodeId)) return true;
+            var node = FindNode(nodeId);
+            return node != null && node.Danger == MapNodeDanger.Locked;
+        }
+
+        public bool SetLocked(string nodeId, bool locked)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return false;
+            var node = FindNode(nodeId);
+            if (node == null) return false;
+
+            bool currentlyLocked = IsLocked(nodeId);
+            if (locked == currentlyLocked) return true; // idempotent
+
+            if (locked)
+            {
+                _state.Unlocked.Remove(nodeId);
+                if (!_state.Locked.Contains(nodeId))
+                    _state.Locked.Add(nodeId);
+            }
+            else
+            {
+                _state.Locked.Remove(nodeId);
+                if (!_state.Unlocked.Contains(nodeId))
+                    _state.Unlocked.Add(nodeId);
+            }
+
+            OnNodeLockChanged?.Invoke(nodeId, locked);
+            return true;
+        }
+
+        public bool Unlock(string nodeId) => SetLocked(nodeId, false);
+        public bool Lock(string nodeId) => SetLocked(nodeId, true);
+
+        public MapNodeStatusKind ResolveNodeStatus(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return MapNodeStatusKind.Unavailable;
+            var node = FindNode(nodeId);
+            if (node == null) return MapNodeStatusKind.Unavailable;
+
+            if (IsLocked(nodeId))
+                return MapNodeStatusKind.Locked;
+
+            if (IsCompleted(nodeId))
+                return MapNodeStatusKind.Completed;
+
+            if (IsDiscovered(nodeId))
+                return MapNodeStatusKind.Discovered;
+
+            for (int i = 0; i < _routes.Count; i++)
+            {
+                var r = _routes[i];
+                if ((r.To == nodeId && IsDiscovered(r.From)) ||
+                    (r.From == nodeId && IsDiscovered(r.To)))
+                {
+                    return MapNodeStatusKind.Available;
+                }
+            }
+
+            return MapNodeStatusKind.Unavailable;
         }
 
         public MapNode? GetNode(string nodeId)
@@ -142,6 +235,15 @@ namespace Ashfall.Core.World
         }
     }
 
+    public enum MapNodeStatusKind
+    {
+        Discovered = 0,
+        Available = 1,
+        Locked = 2,
+        Completed = 3,
+        Unavailable = 4
+    }
+
     [Serializable]
     public sealed class MapNode
     {
@@ -182,6 +284,9 @@ namespace Ashfall.Core.World
     public sealed class WastelandMapState
     {
         public List<string> Discovered = new List<string>();
+        public List<string> Completed = new List<string>();
+        public List<string> Locked = new List<string>();
+        public List<string> Unlocked = new List<string>();
 
         public void NormalizeAndValidate(IReadOnlyList<MapNode> nodes)
         {
@@ -193,20 +298,38 @@ namespace Ashfall.Core.World
             {
                 if (nodes[i].StartingUnlocked && !Discovered.Contains(nodes[i].Id))
                     Discovered.Add(nodes[i].Id);
+
+                if (nodes[i].Danger == MapNodeDanger.Locked && !Unlocked.Contains(nodes[i].Id) && !Locked.Contains(nodes[i].Id))
+                    Locked.Add(nodes[i].Id);
             }
 
             for (int i = Discovered.Count - 1; i >= 0; i--)
                 if (!validIds.Contains(Discovered[i])) Discovered.RemoveAt(i);
+
+            for (int i = Completed.Count - 1; i >= 0; i--)
+                if (!validIds.Contains(Completed[i])) Completed.RemoveAt(i);
+
+            for (int i = Locked.Count - 1; i >= 0; i--)
+                if (!validIds.Contains(Locked[i])) Locked.RemoveAt(i);
+
+            for (int i = Unlocked.Count - 1; i >= 0; i--)
+                if (!validIds.Contains(Unlocked[i])) Unlocked.RemoveAt(i);
         }
 
         public WastelandMapState Capture() => new WastelandMapState
         {
-            Discovered = new List<string>(Discovered)
+            Discovered = new List<string>(Discovered),
+            Completed = new List<string>(Completed),
+            Locked = new List<string>(Locked),
+            Unlocked = new List<string>(Unlocked)
         };
 
         public void RestoreInto(WastelandMapState state, IReadOnlyList<MapNode> nodes)
         {
             Discovered = state.Discovered != null ? new List<string>(state.Discovered) : new List<string>();
+            Completed = state.Completed != null ? new List<string>(state.Completed) : new List<string>();
+            Locked = state.Locked != null ? new List<string>(state.Locked) : new List<string>();
+            Unlocked = state.Unlocked != null ? new List<string>(state.Unlocked) : new List<string>();
             NormalizeAndValidate(nodes);
         }
     }
