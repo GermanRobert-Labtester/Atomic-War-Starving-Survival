@@ -120,6 +120,7 @@ public partial class ShelterHudPanel : Control
         _sidebar = _shell.SetSidebar(new[]
         {
             new AshfallSidebar.Item { Id = "overview",    Label = "Overview",            Hint = "DAY // LOCATION" },
+            new AshfallSidebar.Item { Id = "status",      Label = "Status",              Hint = "OPERATIONS" },
             new AshfallSidebar.Item { Id = "survivors",   Label = "Survivors",           Hint = "ROSTER STATUS" },
             new AshfallSidebar.Item { Id = "inventory",   Label = "Inventory",           Hint = "STORAGE" },
             new AshfallSidebar.Item { Id = "crafting",    Label = "Crafting",            Hint = "WORKSTATION" },

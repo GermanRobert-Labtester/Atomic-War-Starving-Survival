@@ -167,6 +167,13 @@ namespace AtomicWar.GodotApp
 
             switch (panelId)
             {
+                case "status":
+                    SetupSurvivors();
+                    SetupWorld();
+                    SetupInventory();
+                    _statusPanel.Bind(_survivors, _world?.Weather, _powerGrid, _inventory, _simDay);
+                    _statusPanel.Open();
+                    break;
                 case "survivors":
                     SetupSurvivors();
                     _survivorsOverlay.Bind(_survivors);
