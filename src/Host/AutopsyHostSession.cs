@@ -15,12 +15,9 @@ namespace AtomicWar.GodotApp
     /// Manages clinical autopsy queue, tool sterilization, pathogen containment, and research discoveries.
     /// </summary>
     public sealed class AutopsyHostSession
-    {
+    : HostSessionBase{
         public AutopsySystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public AutopsyHostSession(AutopsySystem system)
         {
             if (system == null)
@@ -41,12 +38,12 @@ namespace AtomicWar.GodotApp
             System.OnCaseCompleted += c =>
             {
                 LastEvent = $"[Autopsy] Completed examination for specimen {c.specimenId}: {c.finding}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnAutopsyChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -56,7 +53,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Queued autopsy for {specimenId} with {procedureId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -67,7 +64,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Started procedure on case {caseId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -82,14 +79,14 @@ namespace AtomicWar.GodotApp
             if (count > 0)
             {
                 LastEvent = $"Autopsy procedure catalog loaded: {count} procedures";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
         }
 
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }

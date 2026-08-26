@@ -75,6 +75,7 @@ namespace AtomicWar.GodotApp
             WireWaterTreatmentSumpBridge();
             WireWildlifeDiseaseBridge();
             WireVinylRadioBridge();
+            WireAutopsyBridge();
             SetupDecontamination();
             SetupKitchenNutrition();
             SetupEquipmentCondition();
@@ -128,6 +129,39 @@ namespace AtomicWar.GodotApp
                     return;
                 }
                 _radio.RecordCulturalBroadcast(record.record_id, record.genre, record.display_name, day, _vinylMorale.System.State.lastBroadcastSignalStrength);
+            };
+        }
+
+        private void WireAutopsyBridge()
+        {
+            if (_autopsy == null) return;
+            _autopsy.System.OnCaseCompleted += c =>
+            {
+                string finding = c.finding ?? string.Empty;
+                // Future-proof: keyword-based forensic routing — add new findings without changing host wiring structure
+                if (finding.IndexOf("zoonotic", StringComparison.OrdinalIgnoreCase) >= 0 || finding.IndexOf("influenza", StringComparison.OrdinalIgnoreCase) >= 0 || finding.IndexOf("spore", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    if (_disease != null && !string.IsNullOrEmpty(c.assignedMedicId))
+                        _disease.Engine.Infect(c.assignedMedicId, DiseaseIds.ZoonoticFlu, _simDay);
+                }
+                // Always journal the forensic result for memorial/continuity
+                _journal?.TryAddRawEntry("autopsy_completed", $"Autopsy {c.caseId} ({c.specimenId}): {finding}", null!, _simDay);
+                // Memorialize if system available — use Memorialize with minimal input
+                if (_memorial != null)
+                {
+                    try
+                    {
+                        _memorial.Memorialize(new Ashfall.Core.Memorial.MemorialInput
+                        {
+                            SurvivorId = c.specimenId,
+                            Cause = finding,
+                            Day = _simDay,
+                            BirthDay = 0,
+                            Epitaph = $"Forensic finding: {finding}"
+                        });
+                    }
+                    catch { /* memorial optional — never block autopsy */ }
+                }
             };
         }
 
