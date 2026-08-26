@@ -103,14 +103,44 @@ namespace Ashfall.Core.Economy
     {
         public List<CaravanCommittedTrade> Committed = new List<CaravanCommittedTrade>();
 
-        public CaravanTradeState Capture() => new CaravanTradeState
+        private static CaravanCommittedTrade CloneTrade(CaravanCommittedTrade src)
         {
-            Committed = new List<CaravanCommittedTrade>(Committed)
-        };
+            if (src == null) return null!;
+            return new CaravanCommittedTrade
+            {
+                QuoteId = src.QuoteId,
+                OfferedItemId = src.OfferedItemId,
+                OfferedUnits = src.OfferedUnits,
+                RequestedItemId = src.RequestedItemId,
+                RequestedUnits = src.RequestedUnits,
+                RegionId = src.RegionId,
+                StanceId = src.StanceId,
+                Day = src.Day
+            };
+        }
+
+        public CaravanTradeState Capture()
+        {
+            var clone = new CaravanTradeState();
+            if (Committed != null)
+            {
+                clone.Committed = new List<CaravanCommittedTrade>(Committed.Count);
+                for (int i = 0; i < Committed.Count; i++)
+                    clone.Committed.Add(CloneTrade(Committed[i]));
+            }
+            return clone;
+        }
 
         public void RestoreInto(CaravanTradeState state)
         {
-            Committed = state.Committed ?? new List<CaravanCommittedTrade>();
+            if (state == null || state.Committed == null)
+            {
+                Committed = new List<CaravanCommittedTrade>();
+                return;
+            }
+            Committed = new List<CaravanCommittedTrade>(state.Committed.Count);
+            for (int i = 0; i < state.Committed.Count; i++)
+                Committed.Add(CloneTrade(state.Committed[i]));
         }
     }
 

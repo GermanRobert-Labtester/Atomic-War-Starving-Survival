@@ -86,6 +86,35 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void CaravanCommittedTrade_InnerObject_IsDeep_A()
+        {
+            var state = new CaravanTradeState();
+            state.Committed.Add(new CaravanCommittedTrade { QuoteId = "q1", OfferedItemId = "item_a", OfferedUnits = 5 });
+            var sys = new CaravanAtomicTrader(state);
+            var snap = sys.CaptureState();
+            // Mutate live inner object
+            sys.Committed[0].QuoteId = "mutated_live";
+            sys.Committed[0].OfferedUnits = 999;
+            Assert.Equal("q1", snap.Committed[0].QuoteId);
+            Assert.Equal(5, snap.Committed[0].OfferedUnits);
+            Assert.False(ReferenceEquals(sys.Committed[0], snap.Committed[0]));
+        }
+
+        [Fact]
+        public void CaravanCommittedTrade_InnerObject_IsDeep_B()
+        {
+            var state = new CaravanTradeState();
+            state.Committed.Add(new CaravanCommittedTrade { QuoteId = "q1", OfferedItemId = "item_a", OfferedUnits = 5 });
+            var sys = new CaravanAtomicTrader(state);
+            var snap = sys.CaptureState();
+            snap.Committed[0].QuoteId = "mutated_snap";
+            snap.Committed[0].OfferedUnits = 999;
+            Assert.Equal("q1", sys.Committed[0].QuoteId);
+            Assert.Equal(5, sys.Committed[0].OfferedUnits);
+            Assert.False(ReferenceEquals(sys.Committed[0], snap.Committed[0]));
+        }
+
+        [Fact]
         public void WaystationSystem_Capture_IsSnapshot_ArrayClone()
         {
             var sys = new WaystationSystem();
