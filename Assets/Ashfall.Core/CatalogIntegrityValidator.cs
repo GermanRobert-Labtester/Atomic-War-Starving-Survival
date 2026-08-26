@@ -152,7 +152,8 @@ namespace Ashfall.Core
             "setWorldFlag", "trait_granted", "latentExpertTrait", "inspectKey",
             "questlineId", "stageId", "firstStageId",
             // The Weight of Choices — faction branching system (Military slice).
-            "ponr_flag", "ending_id"
+            "ponr_flag", "ending_id",
+            "recipe_id"
         };
 
         /// <summary>
@@ -292,6 +293,7 @@ namespace Ashfall.Core
             "treadle_unit_id", "heddle_count", "tie_up_pattern",
             "fulling_trough_id", "cloth_substrate_type", "nap_raising_tool",
             // Nun — Tanning & Leatherwork
+            "required_station",
             "tanning_vat_id", "bark_species", "liquor_strength_baume",
             "hide_source_animal", "brain_emulsion_batch_id", "smoke_cycle_count",
             "tanned_hide_lot_id", "fat_liquor_type", "burnishing_tool",
