@@ -216,3 +216,8 @@ generated_AIassets/
 /test-results-*.xml
 /batch20-playmode-results.xml
 /art-wiring-results.xml
+generated_AIassets/
+audit/
+test-results-*.xml
+codex_alt_*.png
+.aider*
