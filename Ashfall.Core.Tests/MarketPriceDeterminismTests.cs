@@ -105,5 +105,27 @@ namespace Ashfall.Core.Tests
             Assert.True(price <= 10f * MarketSystem.PriceCeilingFraction + 1e-5f, $"Price explosion beyond 4x ceiling: {price}");
             Assert.True(price >= 10f * MarketSystem.PriceFloorFraction - 1e-5f);
         }
+
+        [Fact]
+        public void AllGoods_Determinism_And_Bounds()
+        {
+            var sysA = CreateSystemWithGoods();
+            var sysB = CreateSystemWithGoods();
+            var rngA = new SeededRng(123);
+            var rngB = new SeededRng(123);
+            for (int day = 1; day <= 30; day++)
+            {
+                sysA.TickDay(day, rngA);
+                sysB.TickDay(day, rngB);
+                foreach (var id in new[] { "canned_food", "clean_water", "fuel_canister" })
+                {
+                    Assert.Equal(sysA.GetPrice(id), sysB.GetPrice(id));
+                    float price = sysA.GetPrice(id);
+                    Assert.False(float.IsNaN(price));
+                    Assert.False(float.IsInfinity(price));
+                    Assert.True(price > 0);
+                }
+            }
+        }
     }
 }

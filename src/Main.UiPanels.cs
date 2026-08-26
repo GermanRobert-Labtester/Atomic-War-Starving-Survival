@@ -29,6 +29,16 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
+        // ── Legacy UI shell fields (moved from Main.cs for cohesion) ──
+        private Label _titleLabel = null!;
+        private Label _statusLabel = null!;
+        private Label _diagnosticsLabel = null!;
+        private Label _iceRoadLabel = null!;
+        private Label _catalogLabel = null!;
+        private Label _briefingPreviewLabel = null!;
+        private VBoxContainer _menuContainer = null!;
+        private TextEdit _codexViewer = null!;
+
         // ── UI Panel fields (GAP-ARCH-01 Phase 1) ──
         private MainMenuPanel _mainMenu = null!;
         private GameOverPanel _gameOver = null!;
@@ -739,7 +749,19 @@ namespace AtomicWar.GodotApp
             AddChild(_gameOver);
 
             // ── Check for existing save ──
-            bool hasSave = System.IO.File.Exists(HoldfastSaveStore.SavePath);
+            bool hasSave = false;
+            if (_saveLoadHost != null)
+            {
+                var slots = _saveLoadHost.GetSlots();
+                hasSave = slots.Count > 0;
+                if (!hasSave)
+                {
+                    // Fall back to legacy global save files.
+                    hasSave = System.IO.File.Exists(HoldfastSaveStore.SavePath) ||
+                              System.IO.File.Exists(InventorySaveStore.SavePath) ||
+                              System.IO.File.Exists(SurvivorsSaveStore.SavePath);
+                }
+            }
             _mainMenu.EnableContinue(hasSave);
 
             // ── Setup Expanded Shelter Systems (Water, Airlock, Relations, Treaties, etc.) ──

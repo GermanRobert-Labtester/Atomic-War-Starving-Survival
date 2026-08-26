@@ -36,14 +36,6 @@ namespace AtomicWar.GodotApp
 {
     public partial class Main : Control
     {
-        private Label _titleLabel = null!;
-        private Label _statusLabel = null!;
-        private Label _diagnosticsLabel = null!;
-        private Label _iceRoadLabel = null!;
-        private Label _catalogLabel = null!;
-        private Label _briefingPreviewLabel = null!;
-        private VBoxContainer _menuContainer = null!;
-        private TextEdit _codexViewer = null!;
         private SaveLoadHostSession _saveLoadHost = null!;
 
         // Questline master registry (loaded early for expansion quest ID validation)
