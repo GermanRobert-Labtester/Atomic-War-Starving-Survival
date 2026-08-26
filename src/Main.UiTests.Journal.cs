@@ -31,7 +31,7 @@ namespace AtomicWar.GodotApp
     {
         private void RunSelfTestAndQuit()
         {
-            var catalogs = CatalogJsonLoader.Load(_dataDir);
+            var catalogs = CatalogJsonLoader.Load(new FileSystemIO(), _dataDir);
             int code = JournalSelfTest.Run(catalogs);
             GetTree().Quit(code);
         }
