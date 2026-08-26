@@ -6,6 +6,26 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 
+# ── Documented exceptions ────────────────────────────────────────────
+# These Save methods have no matching Setup method BY DESIGN. Each entry
+# must have an owner comment explaining why. If you add a new Save without
+# a Setup, add it here with an explanation — do not silently suppress it.
+#
+# SaveChemicalDependency  — initialized inline in SetupMentalHealthCrisis
+#                           (Main.ShelterBatch3.cs). Owner: medical/expansion team.
+# SaveDailyBriefing       — setup is SetupDailyBriefingModal (Main.Campaign.cs).
+#                           Name mismatch, not a missing triad. Owner: campaign team.
+# SaveExpansionHub        — setup is SetupExpansions (Main.ExpansionHub.cs).
+#                           Name mismatch. Owner: expansion hub team.
+# SaveHoldfast            — setup is SetupHoldfastRuntime (Main.Holdfast.cs).
+#                           Name mismatch. Owner: holdfast/expansion 01 team.
+# SavePhantomMemory       — setup is SetupPhantom (Main.Phase0.cs).
+#                           Name mismatch. Owner: phase0/lineage team.
+# SaveWastelandMap        — setup removed; map is owned by WorldHostSession.Create()
+#                           (src/Host/WorldHostSession.cs). No dedicated Setup in Main.
+#                           Owner: world/map team.
+NO_SETUP_NEEDED="ChemicalDependency DailyBriefing ExpansionHub Holdfast PhantomMemory WastelandMap"
+
 # Extract Setup* and Save* method names (private void SetupXxx() / SaveXxx())
 SETUPS=$(grep -rhoE "private void Setup[A-Za-z0-9_]*\(" src/Main*.cs | sed -E 's/.*Setup([A-Za-z0-9_]+)\(.*/\1/' | sort -u)
 SAVES=$(grep -rhoE "private void Save[A-Za-z0-9_]*\(" src/Main*.cs | grep -v "SaveAll" | sed -E 's/.*Save([A-Za-z0-9_]+)\(.*/\1/' | sort -u)
@@ -29,8 +49,13 @@ for save in $SAVES; do
   # Skip orchestrators already filtered, but double-check
   if [[ "$save" == "All" || "$save" == "AllExpandedShelterSystems" ]]; then continue; fi
   if ! echo "$SETUPS" | grep -qx "$save"; then
-    echo "[WARN] Save$save has no matching Setup$save in src/Main.*.cs" >&2
-    # not fatal — some Saves are for sub-steps, but log
+    # Check if this is a documented exception (Save with no dedicated Setup by design)
+    if echo "$NO_SETUP_NEEDED" | grep -qw "$save"; then
+      echo "[OK]   Save$save — documented exception (see header)"
+    else
+      echo "[WARN] Save$save has no matching Setup$save in src/Main.*.cs" >&2
+      echo "       → Add it to NO_SETUP_NEEDED with an owner comment, or add the missing Setup." >&2
+    fi
   fi
   snake=$(to_snake "$save")
   if ! echo "$SECTIONS" | grep -qx "$snake"; then
