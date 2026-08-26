@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Ashfall.Core.Settings;
 using Xunit;
 
@@ -172,6 +173,114 @@ namespace Ashfall.Core.Tests.Settings
             Assert.Null(diag);
             Assert.Equal(0.5f, reloaded.MasterVolume);
             Assert.Equal(120, reloaded.MaxFps);
+        }
+
+        // ── End-to-end file I/O recovery tests ───────────────────────
+
+        [Fact]
+        public void EndToEnd_SaveCorruptRecover_ResilientRoundTrip()
+        {
+            string path = Path.Combine(Path.GetTempPath(), $"ashfall_settings_e2e_{Guid.NewGuid():N}.json");
+            try
+            {
+                // Phase 1: Save custom settings to a real file.
+                var custom = new UserSettingsData
+                {
+                    MasterVolume = 0.42f,
+                    MaxFps = 144,
+                    HighContrast = true,
+                    ResolutionWidth = 2560,
+                    ResolutionHeight = 1440
+                };
+                File.WriteAllText(path, UserSettingsCodec.Serialize(custom));
+                Assert.True(File.Exists(path));
+
+                // Phase 2: Read back — should match exactly.
+                string raw = File.ReadAllText(path);
+                var (loaded, diag1) = UserSettingsCodec.DeserializeWithRecovery(raw);
+                Assert.Null(diag1);
+                Assert.Equal(0.42f, loaded.MasterVolume);
+                Assert.Equal(144, loaded.MaxFps);
+                Assert.True(loaded.HighContrast);
+
+                // Phase 3: Corrupt the file on disk.
+                File.WriteAllText(path, "{ TRUNCATED_CORRUPT");
+
+                // Phase 4: Recover — should get safe defaults with diagnostic.
+                string corruptRaw = File.ReadAllText(path);
+                var (recovered, diag2) = UserSettingsCodec.DeserializeWithRecovery(corruptRaw);
+                Assert.NotNull(diag2);
+                Assert.Contains("Invalid settings JSON", diag2);
+                Assert.Equal(1.0f, recovered.MasterVolume);
+                Assert.Equal(60, recovered.MaxFps);
+                Assert.Equal(1920, recovered.ResolutionWidth);
+
+                // Phase 5: Re-save recovered defaults, then re-read — clean round-trip.
+                File.WriteAllText(path, UserSettingsCodec.Serialize(recovered));
+                string reread = File.ReadAllText(path);
+                var (final, diag3) = UserSettingsCodec.DeserializeWithRecovery(reread);
+                Assert.Null(diag3);
+                Assert.Equal(1.0f, final.MasterVolume);
+                Assert.Equal(60, final.MaxFps);
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
+
+        [Fact]
+        public void EndToEnd_MissingFile_RecoversToDefaults()
+        {
+            // Simulate the store's missing-file path: no file → defaults.
+            var (data, diag) = UserSettingsCodec.DeserializeWithRecovery(null);
+            Assert.NotNull(diag);
+            Assert.Contains("empty or whitespace", diag);
+            Assert.Equal(1920, data.ResolutionWidth);
+            Assert.Equal(1080, data.ResolutionHeight);
+            Assert.Equal(1.0f, data.MasterVolume);
+            Assert.Equal(60, data.MaxFps);
+        }
+
+        [Fact]
+        public void EndToEnd_OutOfRangeOnDisk_SanitizesAndPersists()
+        {
+            string path = Path.Combine(Path.GetTempPath(), $"ashfall_settings_oor_{Guid.NewGuid():N}.json");
+            try
+            {
+                // Write out-of-range values directly to disk (simulates manual edit or old version).
+                string oorJson = @"{
+                    ""master_volume"": 5.0,
+                    ""music_volume"": -1.0,
+                    ""resolution_width"": 100,
+                    ""max_fps"": 9999,
+                    ""ui_scale"": 0.1
+                }";
+                File.WriteAllText(path, oorJson);
+
+                // Read back through codec — sanitizes on deserialization.
+                string raw = File.ReadAllText(path);
+                var (data, diag) = UserSettingsCodec.DeserializeWithRecovery(raw);
+                Assert.NotNull(diag);
+                Assert.Contains("Sanitized settings", diag);
+                Assert.Equal(1.0f, data.MasterVolume);
+                Assert.Equal(0.0f, data.MusicVolume);
+                Assert.Equal(1920, data.ResolutionWidth);
+                Assert.Equal(60, data.MaxFps);
+                Assert.Equal(1.0f, data.UiScale);
+
+                // Re-save sanitized values — next read should be clean.
+                File.WriteAllText(path, UserSettingsCodec.Serialize(data));
+                string clean = File.ReadAllText(path);
+                var (reloaded, diag2) = UserSettingsCodec.DeserializeWithRecovery(clean);
+                Assert.Null(diag2);
+                Assert.Equal(1.0f, reloaded.MasterVolume);
+                Assert.Equal(60, reloaded.MaxFps);
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
         }
     }
 }
