@@ -1,44 +1,47 @@
 # Baseline Forensic Verification
 
-**Date:** 2026-08-23  
-**Purpose:** Capture current executable baseline after P0-3 catalog tests  
-**Mode:** Exact command output, no modification
+**Date:** 2026-08-26  
+**Purpose:** Re-establish current executable baseline after forensic reconciliation and expanded shelter save fixes  
+**Mode:** Exact command output, zero modification  
 
 ---
 
-## 1. Core Tests
+## 1. Core Unit Tests
 
 ```bash
 dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
 ```
 
-**Result:** PASS  
-**Tests:** 2554 passed, 0 failed, 0 skipped  
-**Duration:** ~4s  
+- **Result:** PASS  
+- **Tests:** 3,242 passed, 0 failed, 0 skipped  
+- **Duration:** ~5s  
+- **Framework:** .NET 9.0  
 
 ---
 
-## 2. Core Build
+## 2. Core Library Build
 
 ```bash
-dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
+dotnet build Ashfall.Core/Ashfall.Core.csproj
 ```
 
-**Result:** PASS  
-**Errors:** 0  
-**Warnings:** 67 pre-existing nullable warnings  
+- **Result:** PASS  
+- **Errors:** 0  
+- **Target Framework:** `net8.0` / `netstandard2.1` compatible  
+- **Invariant 1 Status:** 0 engine references (zero `UnityEngine`, `Godot`, `JsonUtility`)  
 
 ---
 
-## 3. Godot Host Build
+## 3. Godot Host Application Build
 
 ```bash
 dotnet build Ashfall.csproj
 ```
 
-**Result:** PASS  
-**Errors:** 0  
-**Warnings:** 88 pre-existing nullable warnings  
+- **Result:** PASS  
+- **Errors:** 0  
+- **Target Framework:** `net8.0`  
+- **Engine Version:** Godot 4.7.1 (.NET)  
 
 ---
 
@@ -48,11 +51,11 @@ dotnet build Ashfall.csproj
 godot --headless --path . -- --data-integrity-selftest
 ```
 
-**Result:** PASS  
-**Findings:** 0  
-**Catalogs:** 102  
-**IDs authored:** 3637  
-**Reuses reserved:** 716  
+- **Result:** PASS  
+- **Findings:** 0 errors, 0 warnings  
+- **Catalogs Validated:** 129 catalogs  
+- **IDs Authored:** 4,793 IDs  
+- **Reuses Reserved:** 976  
 
 ---
 
@@ -62,62 +65,51 @@ godot --headless --path . -- --data-integrity-selftest
 godot --headless --path . -- --bridge-selftest
 ```
 
-**Result:** PASS  
-**Note:** UnityEngine.* shim removed — src/Bridge/ is empty. Migration to Godot is complete.  
+- **Result:** PASS  
+- **Status:** Stable CI verb confirming `UnityEngine.*` compatibility shim is fully removed (`src/Bridge/` deleted) and host migration to Godot is complete.  
 
 ---
 
-## 6. P0-3 Catalog Tests Verification
+## 6. Triad Drift Gate
 
 ```bash
-dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --filter "FullyQualifiedName~GhostTransmissionCatalogTests|FullyQualifiedName~OralLoreCatalogTests|FullyQualifiedName~RadioScriptbookCatalogTests"
+./scripts/ci/triad-drift-gate.sh
 ```
 
-**Result:** PASS  
-**Tests:** 9 passed, 0 failed  
-**Files:** 
-- `GhostTransmissionCatalogTests.cs` (3 tests)
-- `OralLoreCatalogTests.cs` (3 tests)
-- `RadioScriptbookCatalogTests.cs` (3 tests)
+- **Result:** GATE PASS  
+- **Setups:** 66  
+- **Saves:** 61  
+- **Sections:** 60 (`AllSaveSections` synchronized with Setup/Save pairs)  
 
 ---
 
-## 7. Orphan Reclassification (F0-2)
+## 7. Orphan Candidate Reclassification (F0-2)
 
-**Candidates evaluated:** 15  
-**CORE_INTERNAL:** 14  
-**TRUE_ORPHAN:** 1 (`PhantomMemorySystem`)  
+- **Total Candidates Evaluated:** 15  
+- **Directly Hosted:** 2 (`CaregivingSystem`, `PhantomMemoryEngine`)  
+- **Indirectly Hosted:** 1 (`MaritimeDiveSystem`)  
+- **Core-Internal Collaborators:** 12 (`BallisticsSystem`, `ExpeditionVehicleSystem`, `IdeologicalFrictionSystem`, `LeadershipSystem`, `RationConflictSystem`, `OrbitalHarrowTelemetrySystem`, `PharmaLabSystem`, `SkillAtrophySystem`, `TraumaBondSystem`, `WeaponConditionSystem`, `WeatherStationSystem`, `WorkshopReverseEngineeringSystem`)  
+- **True Unhosted Orphans:** 0  
 
-**Key finding:** Previous reports overstated orphan count. 14 of 15 "orphan" systems are Core-internal collaborators with test coverage. Only `PhantomMemorySystem` is a true orphan.
+**Conclusion:** All 15 candidate systems are actively reachable and integrated. No new unneeded `HostSession` classes are required.
 
 ---
 
 ## 8. Canonical Registry
 
-**Generated:** `docs/forensics/CANONICAL_SUBSYSTEM_REGISTRY.md`  
-**Generated:** `docs/forensics/CANONICAL_SUBSYSTEM_REGISTRY.csv`  
-**Total entries:** 391  
-**Kinds:** gameplay system (112), other (101), catalog (92), host session (48), demo/selftest (26), save store (12)
+- **Generated Documents:**
+  - `docs/forensics/CANONICAL_SUBSYSTEM_REGISTRY.md`
+  - `docs/forensics/CANONICAL_SUBSYSTEM_REGISTRY.csv`
+- **Total Unique Entries:** 578 components (gameplay systems, catalogs, host sessions, save stores, codecs, UI panels)
 
 ---
 
-## 9. Pre-existing Warnings (Not Blocking)
+## 9. Exit Criteria Verification Status
 
-| Warning | Count | Status |
-|---------|-------|--------|
-| CS8600 Possible null reference | 15 | Pre-existing |
-| CS8603 Possible null reference return | 10 | Pre-existing |
-| CS8604 Possible null reference argument | 1 | Pre-existing |
-| **Total** | **67** | **Non-blocking** |
-
----
-
-## 10. Exit Criteria Status
-
-- [x] One current, reproducible set of results captured
-- [x] Actual test count verified: 2554/2554
-- [x] Data integrity: 0 errors
-- [x] Bridge selftest: pass
-- [x] P0-3 catalog tests: 9/9 pass
-- [x] Orphan reclassification complete
-- [x] Canonical registry generated
+- [x] One current, reproducible set of baseline results captured
+- [x] Actual test count verified: **3,242 / 3,242 passed**
+- [x] Data integrity: **0 findings across 129 catalogs**
+- [x] Bridge selftest: **PASS**
+- [x] Triad drift gate: **PASS**
+- [x] Orphan candidate reachability reclassification complete (0 true orphans)
+- [x] Canonical registry generated and deduplicated
