@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Godot;
 
 namespace AtomicWar.GodotApp.UI
@@ -16,20 +17,37 @@ namespace AtomicWar.GodotApp.UI
     ///   FramesWait → a couple of process frames, ensure panel _Ready runs
     ///   Reshow   → re-enforce Visible=true on the panel so layouts draw
     ///   RenderOnce → SubViewport.UpdateMode.Once + several frames
-    ///   Read     → read GetTexture().GetImage().SavePng
+    ///   Read     → read GetTexture().GetImage().SavePng, then (per mode)
+    ///             diff against the golden or overwrite it
     ///   Cleanup  → restore overlays, remove SubViewport
     ///   Idle     → next target
+    ///
+    /// Modes:
+    ///   CaptureOnly — write captures into outputRoot (legacy behaviour)
+    ///   Diff        — capture into captureRoot, compare against goldenRoot,
+    ///                 report MATCH / NEW / DRIFT(pixels %) / FAIL per panel;
+    ///                 exit code 1 when any drift or capture failure occurred
+    ///   Regenerate  — capture straight into goldenRoot (overwrites goldens)
+    ///
+    /// Rendering requirements: SubViewport texture reads need a real renderer.
+    /// The documented capture environment (docs/ui/snapshot_manifest.json) is
+    /// Forward+ on an X11 display; the headless dummy renderer yields empty
+    /// framebuffers, which this orchestrator reports as a per-panel FAIL
+    /// rather than silently writing blank goldens.
     /// </summary>
     public partial class SnapshotOrchestrator : Node
     {
         public bool Done = false;
         public int Exit = 0;
 
-        public static void RunWithTargets(IEnumerable<SnapshotHarness.Target> targets, string outputRoot)
-        {
-            var inst = new SnapshotOrchestrator();
-            inst.Begin(targets, outputRoot);
-        }
+        public enum CaptureMode { CaptureOnly, Diff, Regenerate }
+
+        private sealed record TargetResult(string Id, string Verdict, string Detail);
+
+        private readonly List<TargetResult> _results = new();
+        private CaptureMode _mode = CaptureMode.CaptureOnly;
+        private string _goldenRoot = "";
+        private string _captureRoot = "";
 
         private Queue<Target> _queue = new();
         private Target _current;
@@ -52,11 +70,37 @@ namespace AtomicWar.GodotApp.UI
             public int Height;
         }
 
+        /// <summary>Legacy capture-only entry: writes PNGs into outputRoot.</summary>
         public void Begin(IEnumerable<SnapshotHarness.Target> targets, string outputRoot)
         {
-            _outputRoot = outputRoot;
-            Directory.CreateDirectory(outputRoot);
+            BeginInternal(targets, CaptureMode.CaptureOnly, outputRoot, outputRoot);
+        }
+
+        /// <summary>Diff mode: capture into captureRoot, compare against goldenRoot.</summary>
+        public void BeginDiff(IEnumerable<SnapshotHarness.Target> targets, string goldenRoot, string captureRoot)
+        {
+            BeginInternal(targets, CaptureMode.Diff, goldenRoot, captureRoot);
+        }
+
+        /// <summary>Regenerate mode: capture directly into goldenRoot (overwrites goldens).</summary>
+        public void BeginRegenerate(IEnumerable<SnapshotHarness.Target> targets, string goldenRoot)
+        {
+            BeginInternal(targets, CaptureMode.Regenerate, goldenRoot, goldenRoot);
+        }
+
+        private void BeginInternal(
+            IEnumerable<SnapshotHarness.Target> targets,
+            CaptureMode mode,
+            string goldenRoot,
+            string captureRoot)
+        {
+            _mode = mode;
+            _goldenRoot = goldenRoot;
+            _captureRoot = captureRoot;
+            _outputRoot = captureRoot;
+            Directory.CreateDirectory(captureRoot);
             _queue.Clear();
+            _results.Clear();
             foreach (var t in targets)
                 _queue.Enqueue(new Target
                 {
@@ -79,7 +123,7 @@ namespace AtomicWar.GodotApp.UI
                 case Phase.Idle:
                     if (_queue.Count == 0) { FinishAll(); return; }
                     _current = _queue.Dequeue();
-                    _outPath = Path.Combine(_outputRoot, $"{_current.StableId}.png");
+                    _outPath = Path.Combine(_captureRoot, $"{_current.StableId}.png");
                     try { Mount(); _phase = Phase.Mounted; _ticksLeft = 2; }
                     catch (Exception e) { Fail($"mount-exception: {e.Message}"); }
                     break;
@@ -181,21 +225,112 @@ namespace AtomicWar.GodotApp.UI
             {
                 if (_sub == null) { Fail("no-sub-inread"); return; }
                 var tex = _sub.GetTexture();
-                if (tex == null) { Fail("no-texture"); return; }
+                if (tex == null) { Fail("no-texture (renderer unavailable — SubViewport reads need a real display/renderer, not --headless)"); return; }
                 var img = tex.GetImage();
-                if (img == null) { Fail("no-image"); return; }
+                if (img == null) { Fail("no-image (renderer unavailable — SubViewport reads need a real display/renderer, not --headless)"); return; }
+                if (img.GetWidth() <= 0 || img.GetHeight() <= 0)
+                { Fail($"empty framebuffer {img.GetWidth()}x{img.GetHeight()} (renderer unavailable — SubViewport reads need a real display/renderer, not --headless)"); return; }
+
+                // Guard against blank captures: a fully uniform framebuffer means
+                // the panel never drew (documented headless/dummy-renderer failure).
+                img.Convert(Image.Format.Rgba8);
+                if (IsUniformFramebuffer(img))
+                { Fail("uniform framebuffer — panel content did not render (headless dummy renderer?)"); return; }
+
                 var err = img.SavePng(_outPath);
                 if (err != Error.Ok) { Fail($"SavePng-err={err}"); return; }
                 var bytes = new FileInfo(_outPath).Length;
-                GD.Print($"  [PASS] {_current.StableId} -> {_outPath} ({bytes}B)");
+
+                switch (_mode)
+                {
+                    case CaptureMode.Diff:
+                        EvaluateAgainstGolden(bytes);
+                        break;
+                    case CaptureMode.Regenerate:
+                        GD.Print($"  [PASS] {_current.StableId} -> {_outPath} ({bytes}B)");
+                        _results.Add(new TargetResult(_current.StableId, "PASS", $"{bytes}B"));
+                        break;
+                    default:
+                        GD.Print($"  [PASS] {_current.StableId} -> {_outPath} ({bytes}B)");
+                        _results.Add(new TargetResult(_current.StableId, "PASS", $"{bytes}B"));
+                        break;
+                }
                 _phase = Phase.Cleanup;
             }
             catch (Exception e) { Fail($"read-exception: {e.Message}"); }
         }
 
+        private void EvaluateAgainstGolden(long captureBytes)
+        {
+            string goldenPath = Path.Combine(_goldenRoot, $"{_current.StableId}.png");
+            if (!File.Exists(goldenPath))
+            {
+                GD.Print($"  [NEW]   {_current.StableId} (no golden at {goldenPath}; capture at {_outPath})");
+                _results.Add(new TargetResult(_current.StableId, "NEW", $"capture={_outPath}"));
+                return;
+            }
+
+            // Fast path: byte-identical files are certainly identical renders.
+            var captureBytesArr = File.ReadAllBytes(_outPath);
+            var goldenBytesArr = File.ReadAllBytes(goldenPath);
+            if (captureBytesArr.Length == goldenBytesArr.Length &&
+                captureBytesArr.AsSpan().SequenceEqual(goldenBytesArr))
+            {
+                GD.Print($"  [MATCH] {_current.StableId} ({captureBytes}B)");
+                _results.Add(new TargetResult(_current.StableId, "MATCH", $"{captureBytes}B"));
+                return;
+            }
+
+            // Slow path: pixel-level diff for a meaningful drift report.
+            var golden = Image.LoadFromFile(goldenPath);
+            var capture = Image.LoadFromFile(_outPath);
+            if (golden == null || capture == null)
+            {
+                Drift(goldenPath, -1, -1, "golden-or-capture-decode-failed");
+                return;
+            }
+            golden.Convert(Image.Format.Rgba8);
+            capture.Convert(Image.Format.Rgba8);
+            if (golden.GetWidth() != capture.GetWidth() || golden.GetHeight() != capture.GetHeight())
+            {
+                Drift(goldenPath, -1, (long)golden.GetWidth() * golden.GetHeight(),
+                    $"size-mismatch golden {golden.GetWidth()}x{golden.GetHeight()} vs capture {capture.GetWidth()}x{capture.GetHeight()}");
+                return;
+            }
+
+            var ga = golden.GetData().ToArray();
+            var ca = capture.GetData().ToArray();
+            long total = ga.Length / 4;
+            long diff = 0;
+            for (int i = 0; i < ga.Length; i += 4)
+                if (ga[i] != ca[i] || ga[i + 1] != ca[i + 1] || ga[i + 2] != ca[i + 2] || ga[i + 3] != ca[i + 3])
+                    diff++;
+
+            Drift(goldenPath, diff, total, $"{diff} of {total} pixels ({100f * diff / Math.Max(1, total):0.00}%)");
+        }
+
+        private void Drift(string goldenPath, long diffPixels, long totalPixels, string detail)
+        {
+            GD.Print($"  [DRIFT] {_current.StableId}: {detail} — capture={_outPath} golden={goldenPath}");
+            _results.Add(new TargetResult(_current.StableId, "DRIFT", detail));
+        }
+
+        private static bool IsUniformFramebuffer(Image img)
+        {
+            var data = img.GetData().ToArray();
+            if (data.Length < 4) return true;
+            byte r = data[0], g = data[1], b = data[2], a = data[3];
+            // Full scan: 1280×800 RGBA ≈ 4MB — cheap against writing a blank golden.
+            for (int i = 4; i < data.Length; i += 4)
+                if (data[i] != r || data[i + 1] != g || data[i + 2] != b || data[i + 3] != a)
+                    return false;
+            return true;
+        }
+
         private void Fail(string why)
         {
             GD.Print($"  [FAIL] {_current.StableId}: {why}");
+            _results.Add(new TargetResult(_current.StableId, "FAIL", why));
             _phase = Phase.Cleanup;
         }
 
@@ -216,10 +351,40 @@ namespace AtomicWar.GodotApp.UI
 
         private void FinishAll()
         {
-            Done = true; Exit = 0;
-            GD.Print($"UI_SNAPSHOT_UITEST DONE");
+            Done = true;
+
+            int match = 0, isNew = 0, drift = 0, fail = 0, pass = 0;
+            var driftIds = new List<string>();
+            var failIds = new List<string>();
+            foreach (var r in _results)
+            {
+                switch (r.Verdict)
+                {
+                    case "MATCH": case "PASS": match++; pass++; break;
+                    case "NEW": isNew++; break;
+                    case "DRIFT": drift++; driftIds.Add(r.Id); break;
+                    case "FAIL": fail++; failIds.Add(r.Id); break;
+                }
+            }
+
+            string tag = _mode == CaptureMode.Regenerate ? "UI_SNAPSHOT_REGENERATE" : "UI_SNAPSHOT_UITEST";
+            GD.Print($"{tag} SUMMARY: {_results.Count} targets — {match} match, {isNew} new, {drift} drift, {fail} fail");
+            if (driftIds.Count > 0)
+                GD.Print($"{tag} DRIFT: {string.Join(", ", driftIds)}");
+            if (failIds.Count > 0)
+                GD.Print($"{tag} FAIL: {string.Join(", ", failIds)}");
+
+            // Diff mode is a gate: any drift or capture failure fails the run.
+            // NEW goldens are reported but do not fail (they need approval, not repair).
+            bool ok = _mode != CaptureMode.Diff || (drift == 0 && fail == 0);
+            Exit = ok ? 0 : 1;
+            GD.Print(ok ? $"{tag} PASS" : $"{tag} FAIL");
+            if (_mode == CaptureMode.Diff && fail > 0)
+                GD.Print($"{tag} HINT: capture failures with 'renderer unavailable' mean the run used --headless; " +
+                         "SubViewport reads need a real display (see docs/ui/snapshot_manifest.json — Forward+ on DISPLAY=:0).");
+
             SetProcess(false);
-            (Engine.GetMainLoop() as SceneTree)?.CallDeferred(SceneTree.MethodName.Quit, 0);
+            (Engine.GetMainLoop() as SceneTree)?.CallDeferred(SceneTree.MethodName.Quit, Exit);
             _phase = Phase.Done;
         }
 

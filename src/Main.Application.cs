@@ -279,7 +279,10 @@ namespace AtomicWar.GodotApp
                     GetTree().Quit(HostCli.RunRadioSelfTest());
                     return;
                 case HostCliAction.UiSnapshotSelfTest:
-                    GetTree().Quit(HostCli.RunUiSnapshotSelfTest());
+                    BeginSnapshotRun(regenerate: false);
+                    return;
+                case HostCliAction.UiSnapshotRegenerate:
+                    BeginSnapshotRun(regenerate: true);
                     return;
             }
 
@@ -447,6 +450,35 @@ namespace AtomicWar.GodotApp
         private void ResolveDataDir()
         {
             _dataDir = CatalogPath.ResolveDataDir();
+        }
+
+        /// <summary>
+        /// Snapshot regression driver. Mounts SnapshotOrchestrator into the
+        /// tree (it needs process frames to render each panel in a SubViewport
+        /// and quits the app when the run completes):
+        ///   diff mode      — capture into snapshot-capture/ and compare against
+        ///                    snapshots/ goldens; per-panel MATCH/NEW/DRIFT/FAIL;
+        ///                    exit 1 on any drift or capture failure
+        ///   regenerate mode — capture straight into snapshots/ (overwrites goldens)
+        /// SubViewport texture reads need a real renderer; with --headless every
+        /// target reports FAIL (renderer unavailable) instead of writing blanks.
+        /// </summary>
+        private void BeginSnapshotRun(bool regenerate)
+        {
+            string goldenRoot = HostCli.SnapshotGoldenRoot();
+            var orch = new SnapshotOrchestrator();
+            AddChild(orch);
+            if (regenerate)
+            {
+                GD.Print($"[UiSnapshot] REGENERATE — overwriting goldens in {goldenRoot}");
+                orch.BeginRegenerate(SnapshotHarness.Targets, goldenRoot);
+            }
+            else
+            {
+                string captureRoot = HostCli.SnapshotCaptureRoot();
+                GD.Print($"[UiSnapshot] DIFF — captures in {captureRoot}, goldens in {goldenRoot}");
+                orch.BeginDiff(SnapshotHarness.Targets, goldenRoot, captureRoot);
+            }
         }
 
         private void UpdateStatus()

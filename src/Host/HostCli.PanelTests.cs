@@ -2851,17 +2851,22 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Phase-2 visual-evidence harness (delegates to SnapshotHarness).
+        /// Phase-2 visual-evidence harness. The capture/diff/regenerate run is
+        /// driven by Main.BeginSnapshotRun, which mounts SnapshotOrchestrator
+        /// into the scene tree (it needs process frames to render panels and
+        /// quits the app when done). Kept as the path resolver so callers can
+        /// discover the golden root.
         /// </summary>
-        public static int RunUiSnapshotSelfTest(string outputRoot = null!)
+        public static string SnapshotGoldenRoot()
         {
-            string root = string.IsNullOrEmpty(outputRoot)
-                ? Path.Combine(Directory.GetCurrentDirectory(), "snapshots")
-                : outputRoot;
-            GD.Print($"[UiSnapshotSelfTest] output: {root}");
-            // Main must remain in the loop while captures run; the
-            // orchestrator instance lives in Main and calls Quit on completion.
-            return 0;
+            return Path.Combine(Directory.GetCurrentDirectory(), "snapshots");
+        }
+
+        /// <summary>Capture-side scratch root (outside snapshots/ so the Godot
+        /// importer never sees diff captures; the dir ships a .gdignore).</summary>
+        public static string SnapshotCaptureRoot()
+        {
+            return Path.Combine(Directory.GetCurrentDirectory(), "snapshot-capture");
         }
     }
 }

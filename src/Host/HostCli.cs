@@ -112,7 +112,8 @@ namespace AtomicWar.GodotApp
         MedicalWardSaveSelfTest,
         ChemicalDependencySaveSelfTest,
         WeatherSaveSelfTest,
-        UiSnapshotSelfTest
+        UiSnapshotSelfTest,
+        UiSnapshotRegenerate
     }
 
     /// <summary>
@@ -274,6 +275,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.RadioSelfTest;
             if (Has(args, "--expedition-panel-uitest") || Has(args, "--expedition-panel-lifecycle"))
                 return HostCliAction.ExpeditionPanelUiTest;
+            if (Has(args, "--ui-snapshot-regenerate") || Has(args, "--ui-snapshots-regen"))
+                return HostCliAction.UiSnapshotRegenerate;
             if (Has(args, "--ui-snapshot-uitest") || Has(args, "--ui-snapshots"))
                 return HostCliAction.UiSnapshotSelfTest;
             if (Has(args, "--journal-save-selftest"))
@@ -320,6 +323,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --moral-choice-selftest  Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks");
             GD.Print("  --journal-uitest         Build ledger UI, cycle tabs, quit");
             GD.Print("  --player-panels-uitest  Bind and render Survivors, Medical, Weather, Radio, Shelter panels");
+            GD.Print("  --ui-snapshot-uitest     Capture all snapshot targets, DIFF against snapshots/ goldens (needs real display, not --headless)");
+            GD.Print("  --ui-snapshot-regenerate Recapture all snapshot targets and OVERWRITE snapshots/ goldens (needs real display)");
             GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
             GD.Print("  --expedition-encounter-bridge-selftest  ExpeditionEncounterBridge bare-notice + resolved surface smoke test");
             GD.Print("  --year-of-ash-save-selftest Year of Ash save write → reload → restore → checksum/tamper checks");
