@@ -20,18 +20,12 @@ namespace AtomicWar.GodotApp
     public partial class Main : Control
     {
         // ── 12 Expanded Shelter Host Sessions ──
-        private WaterTreatmentHostSession _waterTreatment = null!;
-        private AirlockSecurityHostSession _airlockSecurity = null!;
         private SurvivorRelationsHostSession _survivorRelations = null!;
         private RegionalTreatyHostSession _regionalTreaty = null!;
         private VinylMoraleHostSession _vinylMorale = null!;
         private WildlifeTrappingHostSession _wildlifeTrapping = null!;
         private ExcavationHostSession _excavation = null!;
         private ApprenticeshipHostSession _apprenticeship = null!;
-        private ShelterThermalHostSession _shelterThermal = null!;
-        private ShelterScheduleHostSession _shelterSchedule = null!;
-        private AutopsyHostSession _autopsy = null!;
-        private WaystationHostSession _waystation = null!;
 
 
 
@@ -48,32 +42,21 @@ namespace AtomicWar.GodotApp
         private SurvivorRelationsSystem _survivorRelationsCore = null!;
 
         // ── 22 UI Panels ──
-        private WaterTreatmentPanel _waterTreatmentPanel = null!;
-        private AirlockSecurityPanel _airlockSecurityPanel = null!;
         private SurvivorRelationsPanel _survivorRelationsPanel = null!;
         private RegionalTreatyPanel _regionalTreatyPanel = null!;
         private VinylMoralePanel _vinylMoralePanel = null!;
         private WildlifeTrappingPanel _wildlifeTrappingPanel = null!;
         private ExcavationPanel _excavationPanel = null!;
         private ApprenticeshipPanel _apprenticeshipPanel = null!;
-        private ShelterThermalPanel _shelterThermalPanel = null!;
-        private ShelterSchedulePanel _shelterSchedulePanel = null!;
-        private AutopsyReportPanel _autopsyReportPanel = null!;
-        private WaystationNetworkPanel _waystationPanel = null!;
 
 
         // ── Dirty Flags ──
-        private bool _airlockSecurityDirty;
         private bool _survivorRelationsDirty;
         private bool _regionalTreatyDirty;
         private bool _vinylMoraleDirty;
         private bool _wildlifeTrappingDirty;
         private bool _excavationDirty;
         private bool _apprenticeshipDirty;
-        private bool _shelterThermalDirty;
-        private bool _shelterScheduleDirty;
-        private bool _autopsyDirty;
-        private bool _waystationDirty;
 
 
 
@@ -115,31 +98,7 @@ namespace AtomicWar.GodotApp
             SetupShelterAssignment();   // last — post-wiring to Thermal + Phase0
         }
 
-        private void SetupWaterTreatment()
-        {
-            var wtState = WaterTreatmentSaveStore.TryLoad() ?? new WaterTreatmentState();
-            var wtSys = new WaterTreatmentSystem(new GodotLog());
-            wtSys.RestoreState(wtState);
-            _waterTreatment = new WaterTreatmentHostSession(wtSys);
-            _waterTreatment.StateChanged += () => _waterTreatment.MarkDirty();
-            _waterTreatmentPanel = new WaterTreatmentPanel();
-            _waterTreatmentPanel.Bind(_waterTreatment);
-            _waterTreatmentPanel.Visible = false;
-            AddChild(_waterTreatmentPanel);
-        }
 
-        private void SetupAirlockSecurity()
-        {
-            var asState = AirlockSecuritySaveStore.TryLoad() ?? new AirlockSecurityState();
-            var asSys = new AirlockSecuritySystem(new SeededRng(1986), new GodotLog());
-            asSys.RestoreState(asState);
-            _airlockSecurity = new AirlockSecurityHostSession(asSys);
-            _airlockSecurity.StateChanged += () => _airlockSecurity.MarkDirty();
-            _airlockSecurityPanel = new AirlockSecurityPanel();
-            _airlockSecurityPanel.Bind(_airlockSecurity);
-            _airlockSecurityPanel.Visible = false;
-            AddChild(_airlockSecurityPanel);
-        }
 
         private void SetupSurvivorRelations()
         {
@@ -221,69 +180,9 @@ namespace AtomicWar.GodotApp
             AddChild(_apprenticeshipPanel);
         }
 
-        private void SetupShelterThermal()
-        {
-            var stState = ShelterThermalSaveStore.TryLoad() ?? new ShelterThermalState();
-            var stNeeds = _survivors.Needs;
-            var stStarting = _startingLevel.System;
-            var stDeepFreeze = new YearOfAshDeepFreezeSystem(new YearOfAshDeepFreezeState());
-            var stSys = new ShelterThermalSystem(new SeededRng(1986), stNeeds, stStarting, stDeepFreeze, new GodotLog());
-            stSys.RestoreState(stState);
-            _shelterThermal = new ShelterThermalHostSession(stSys);
-            _shelterThermal.StateChanged += () => _shelterThermal.MarkDirty();
-            _shelterThermalPanel = new ShelterThermalPanel();
-            _shelterThermalPanel.Bind(_shelterThermal);
-            _shelterThermalPanel.Visible = false;
-            AddChild(_shelterThermalPanel);
-        }
 
-        private void SetupShelterSchedule()
-        {
-            var ssState = ShelterScheduleSaveStore.TryLoad() ?? new ShelterScheduleState();
-            var ssPower = _powerGrid.System;
-            var ssSys = new ShelterScheduleSystem(ssPower, new GodotLog());
-            ssSys.RestoreState(ssState);
-            _shelterSchedule = new ShelterScheduleHostSession(ssSys);
-            _shelterSchedule.LoadCatalog(_dataDir);
-            _shelterSchedule.StateChanged += () => _shelterSchedule.MarkDirty();
-            _shelterSchedulePanel = new ShelterSchedulePanel();
-            _shelterSchedulePanel.Bind(_shelterSchedule);
-            _shelterSchedulePanel.Visible = false;
-            AddChild(_shelterSchedulePanel);
-        }
 
-        private void SetupAutopsy(ResearchSystem sharedResearch)
-        {
-            var auState = AutopsySaveStore.TryLoad() ?? new AutopsyState();
-            var auInv = _inventory.Inventory;
-            var auRad = _survivors.Radiation;
-            var auStarting = _startingLevel.System;
-            var auVent = new VentilationSystem(auStarting);
-            var auRes = sharedResearch;
-            var auMedical = _medicalWard;
-            var auSys = new AutopsySystem(new SeededRng(1986), auInv, auRad, auVent, auRes, auMedical, new GodotLog());
-            auSys.RestoreState(auState);
-            _autopsy = new AutopsyHostSession(auSys);
-            _autopsy.LoadCatalog(_dataDir);
-            _autopsy.StateChanged += () => _autopsy.MarkDirty();
-            _autopsyReportPanel = new AutopsyReportPanel();
-            _autopsyReportPanel.Bind(_autopsy);
-            _autopsyReportPanel.Visible = false;
-            AddChild(_autopsyReportPanel);
-        }
 
-        private void SetupWaystation()
-        {
-            var wsState = WaystationSaveStore.TryLoad() ?? new WaystationSystemState();
-            var wsSys = new WaystationSystem();
-            wsSys.RestoreState(wsState);
-            _waystation = new WaystationHostSession(wsSys);
-            _waystation.StateChanged += () => _waystation.MarkDirty();
-            _waystationPanel = new WaystationNetworkPanel();
-            _waystationPanel.Bind(_waystation);
-            _waystationPanel.Visible = false;
-            AddChild(_waystationPanel);
-        }
 
         private void SaveAllExpandedShelterSystems()
         {
@@ -311,15 +210,7 @@ namespace AtomicWar.GodotApp
             SaveShelterAssignment();
         }
 
-        private void SaveWaterTreatment()
-        {
-            _waterTreatment?.Save();
-        }
 
-        private void SaveAirlockSecurity()
-        {
-            _airlockSecurity?.Save();
-        }
 
         private void SaveSurvivorRelations()
         {
@@ -351,25 +242,9 @@ namespace AtomicWar.GodotApp
             _apprenticeship?.Save();
         }
 
-        private void SaveShelterThermal()
-        {
-            _shelterThermal?.Save();
-        }
 
-        private void SaveShelterSchedule()
-        {
-            _shelterSchedule?.Save();
-        }
 
-        private void SaveAutopsy()
-        {
-            _autopsy?.Save();
-        }
 
-        private void SaveWaystation()
-        {
-            _waystation?.Save();
-        }
 
         private void TickAllExpandedShelterSystems(int day)
         {
