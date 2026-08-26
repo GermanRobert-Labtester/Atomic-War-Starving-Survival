@@ -65,5 +65,12 @@ namespace AtomicWar.GodotApp
             System.TickDaily(iceRoadOpen);
             RaiseStateChanged();
         }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            WaystationSaveStore.TrySave(System.CaptureState());
+            base.Save();
+        }
     }
 }

@@ -90,5 +90,12 @@ namespace AtomicWar.GodotApp
                 LastEvent = $"[WaterTreatment] External contamination influx ({level:F2}) — flood source";
             RaiseStateChanged();
         }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            WaterTreatmentSaveStore.TrySave(System.CaptureState());
+            base.Save();
+        }
     }
 }

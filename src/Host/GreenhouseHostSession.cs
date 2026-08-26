@@ -276,8 +276,7 @@ namespace AtomicWar.GodotApp
             IncludeFields = true
         };
 
-        public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), "greenhouse_save.json");
+        public static string SavePath => SaveSlotRoot.Resolve("greenhouse_save.json");
 
         public static bool Exists => File.Exists(SavePath);
 

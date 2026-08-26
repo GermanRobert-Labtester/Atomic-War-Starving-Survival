@@ -60,5 +60,12 @@ namespace AtomicWar.GodotApp
             System.TickDay();
             RaiseStateChanged();
         }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            ExcavationSaveStore.TrySave(System.CaptureState());
+            base.Save();
+        }
     }
 }

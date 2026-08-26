@@ -102,7 +102,7 @@ namespace AtomicWar.GodotApp
         {
             try
             {
-                string path = pathOverride ?? Path.Combine(ProjectSettings.GlobalizePath("user://"), SaveFileName);
+                string path = pathOverride ?? SaveSlotRoot.Resolve(SaveFileName);
                 string json = s_json.Serialize(state);
                 File.WriteAllText(path, json);
                 return true;
@@ -116,7 +116,7 @@ namespace AtomicWar.GodotApp
 
         public static bool SaveExists(string? pathOverride = null)
         {
-            string path = pathOverride ?? Path.Combine(ProjectSettings.GlobalizePath("user://"), SaveFileName);
+            string path = pathOverride ?? SaveSlotRoot.Resolve(SaveFileName);
             return File.Exists(path);
         }
 
@@ -124,7 +124,7 @@ namespace AtomicWar.GodotApp
         {
             try
             {
-                string path = pathOverride ?? Path.Combine(ProjectSettings.GlobalizePath("user://"), SaveFileName);
+                string path = pathOverride ?? SaveSlotRoot.Resolve(SaveFileName);
                 if (!File.Exists(path)) return null;
                 string json = File.ReadAllText(path);
                 return s_json.Deserialize<StartingLevelSaveState>(json);

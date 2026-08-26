@@ -78,5 +78,12 @@ namespace AtomicWar.GodotApp
         {
             System.SetAssignments(assignment);
         }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            ShelterThermalSaveStore.TrySave(System.CaptureState());
+            base.Save();
+        }
     }
 }

@@ -66,5 +66,12 @@ namespace AtomicWar.GodotApp
             System.ApplyDailyEffect(day);
             RaiseStateChanged();
         }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            VinylMoraleSaveStore.TrySave(System.CaptureState());
+            base.Save();
+        }
     }
 }

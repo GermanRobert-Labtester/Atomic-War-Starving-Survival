@@ -73,5 +73,12 @@ namespace AtomicWar.GodotApp
             System.TickDay(day);
             RaiseStateChanged();
         }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            WildlifeTrappingSaveStore.TrySave(System.CaptureState());
+            base.Save();
+        }
     }
 }

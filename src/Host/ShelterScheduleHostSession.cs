@@ -89,5 +89,12 @@ namespace AtomicWar.GodotApp
             System.TickDay(day);
             RaiseStateChanged();
         }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            ShelterScheduleSaveStore.TrySave(System.CaptureState());
+            base.Save();
+        }
     }
 }

@@ -209,6 +209,7 @@ namespace AtomicWar.GodotApp
             if (!_shelterAssignment.TryLoad())
             {
             }
+            _shelterAssignment.StateChanged += () => _shelterAssignment.MarkDirty();
             _shelterThermal.SetAssignments(_shelterAssignment.System);
             SetupPhase0();
             _phase0.BindShelterAssignment(_shelterAssignment.System);
@@ -223,9 +224,6 @@ namespace AtomicWar.GodotApp
         private void SaveContractorRoster() => _contractorRoster?.Save();
         private void SaveMentalHealthCrisis() => _mentalHealthCrisis?.Save();
         private void SaveChemicalDependency() => _chemicalDependency?.Save();
-        private void SaveShelterAssignment()
-        {
-            if (_shelterAssignment != null) _shelterAssignment.TrySave();
-        }
+        private void SaveShelterAssignment() => _shelterAssignment?.Save();
     }
 }

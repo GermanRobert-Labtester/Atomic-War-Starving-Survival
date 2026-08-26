@@ -40,6 +40,7 @@ namespace AtomicWar.GodotApp
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             System = new ShelterAssignmentSystem(state, rooms, rng);
+            System.OnAssignmentChanged += _ => RaiseStateChanged();
         }
 
         public bool TrySave()
@@ -69,6 +70,13 @@ namespace AtomicWar.GodotApp
             System.State.RestoreInto(loaded.State, System.Rooms);
             return true;
         }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            TrySave();
+            base.Save();
+        }
     }
 
     /// <summary>
@@ -77,12 +85,55 @@ namespace AtomicWar.GodotApp
     public static class ShelterAssignmentSaveStore
     {
         public const string FileName = "shelter_assignment_save.json";
+        public const string SectionName = "shelter_assignment";
+
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(ShelterAssignmentSave save)
+        {
+            return TryCapture(save);
+        }
+
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static ShelterAssignmentSave? TryRestoreDirect(string json)
+        {
+            return TryRestore(json);
+        }
+
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(ShelterAssignmentSave save)
+        {
+            try
+            {
+                if (save == null) return string.Empty;
+                return ShelterAssignmentSaveCodec.EncodeToString(save, s_json);
+            }
+            catch (Exception e)
+            {
+                s_log.Error("[ShelterAssignmentSaveStore] capture failed: " + e.Message);
+                return string.Empty;
+            }
+        }
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static ShelterAssignmentSave? TryRestore(string json)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(json)) return null;
+                return ShelterAssignmentSaveCodec.Decode(json, s_json);
+            }
+            catch (Exception e)
+            {
+                s_log.Error("[ShelterAssignmentSaveStore] restore failed: " + e.Message);
+                return null;
+            }
+        }
+
         private static readonly IFileIO s_files = new FileSystemIO();
         private static readonly IJsonSerializer s_json = new SystemTextJsonSerializer();
         private static readonly ILog s_log = new GodotLog();
 
-        public static string SavePath =>
-            System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+        public static string SavePath => SaveSlotRoot.Resolve(FileName);
 
         public static bool TrySave(ShelterAssignmentSave save)
         {

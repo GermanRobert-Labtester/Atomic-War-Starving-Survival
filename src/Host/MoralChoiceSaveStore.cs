@@ -19,8 +19,7 @@ namespace AtomicWar.GodotApp
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
-        public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+        public static string SavePath => SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 
