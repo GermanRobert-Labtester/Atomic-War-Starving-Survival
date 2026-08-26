@@ -141,7 +141,7 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.AudioSelfTest;
             if (Has(args, "--day1-selftest") || Has(args, "--day-1-selftest") || Has(args, "--day1-playable-selftest"))
                 return HostCliAction.Day1PlayableSelfTest;
-            if (Has(args, "--day1-to-day2-selftest") || Has(args, "--day1-to-day2"))
+            if (Has(args, "--day1-to-day2-selftest") || Has(args, "--day1-to-day2") || Has(args, "--day1-to-day2-milestone-selftest"))
                 return HostCliAction.Day1ToDay2MilestoneSelfTest;
             if (Has(args, "--expansions-selftest") || Has(args, "--all-expansions-selftest"))
                 return HostCliAction.ExpansionsSelfTest;
