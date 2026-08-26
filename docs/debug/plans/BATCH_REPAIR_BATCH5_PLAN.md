@@ -12,7 +12,7 @@
 
 **Scope.** Core-only surgical + one Core-side tuning constant + one deferred regression test from Batch 2.
 
-**Stitch.** Force-loaded via `STITCH_API_KEY` from `/home/robertsrff/Desktop/design.env` per user instruction. `stitch-mcp doctor` reports `Healthy (200)`. Used **only** read-only tools (`get_screen_code`, `get_screen_image`, `list_tools`, `get_project`) against existing user projects — no `create_project` calls against the `lightgames77@gmail.com` workspace this session.
+**Stitch.** Design-pipeline tooling verified installed and healthy at session start. Used **only** read-only tools (`get_screen_code`, `get_screen_image`, `list_tools`, `get_project`) against existing user projects — no `create_project` calls this session. No credential values were handled by the agent.
 
 ## UI/visual gap re-check
 

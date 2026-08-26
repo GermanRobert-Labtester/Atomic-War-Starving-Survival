@@ -1,0 +1,8 @@
+seed,scenario,day,hunger,thirst,fatigue,warmth,morale,health,radiationDose,lifetimeExposure,foodConsumed,waterConsumed,hungerCritical,thirstCritical,healthLossPerDay
+42,SevereScarcity,1,39.20,53.80,19.60,100.00,70.00,100.00,29.00,34.00,0,0,False,False,0.00
+42,SevereScarcity,2,38.40,62.60,29.20,100.00,70.00,100.00,53.00,58.00,2,2,False,False,0.00
+42,SevereScarcity,3,57.60,91.40,38.80,100.00,68.00,98.80,77.00,82.00,2,2,False,True,1.20
+42,SevereScarcity,4,56.80,81.20,48.40,100.00,45.00,85.00,100.00,106.00,4,4,False,False,15.00
+42,SevereScarcity,5,76.00,100.00,58.00,100.00,28.00,74.80,100.00,130.00,4,4,False,True,25.20
+42,SevereScarcity,6,75.20,81.20,67.60,100.00,5.00,58.60,100.00,154.00,6,6,False,False,41.40
+42,SevereScarcity,7,94.40,100.00,77.20,100.00,0.00,46.00,100.00,178.00,6,6,True,True,54.00

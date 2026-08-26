@@ -1,0 +1,392 @@
+canonical_name,source_path,kind,core_authority,host_entrypoint,runtime_reachable,save_owner,test_surface,classification,risk,evidence_source,status_confidence
+AbyssalAnomaliesCatalog,Narrative/AbyssalAnomaliesCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ApicultureBeeCatalog,Narrative/ApicultureBeeCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BlackProjectsCatalog,Narrative/BlackProjectsCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BoneHornCarvingCatalog,Narrative/BoneHornCarvingCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BunkerBlueprintCatalog,Narrative/BunkerBlueprintCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BunkerContrabandCatalog,Narrative/BunkerContrabandCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BunkerCourtCatalog,Narrative/BunkerCourtCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BunkerGraffitiCatalog,Narrative/BunkerGraffitiCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BunkerMaintenanceCatalog,Narrative/BunkerMaintenanceCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CandleMakingWaxCatalog,Narrative/CandleMakingWaxCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CeramicsKilnCatalog,Narrative/CeramicsKilnCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CharcoalPyrolysisCatalog,Narrative/CharcoalPyrolysisCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CombatCatalog,Combat/CombatCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CordageCableCatalog,Narrative/CordageCableCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CourierDispatchCatalog,Narrative/CourierDispatchCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CrossingCatalog,CrossingCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CrucibleFoundryCatalog,Narrative/CrucibleFoundryCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CryoPreservationCatalog,Narrative/CryoPreservationCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CulinaryRationCatalog,Narrative/CulinaryRationCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CurrentsCatalog,Muster/CurrentsCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CurrentsPamphletCatalog,Narrative/CurrentsPamphletCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DailySurvivalCatalog,Narrative/DailySurvivalCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DeadHandDirectiveCatalog,Narrative/DeadHandDirectiveCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DiseaseCatalog,Disease/DiseaseCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DiveSiteCatalog,Maritime/DiveSiteCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DoseContentCatalog,DoseContentCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DoseRegistersCatalog,DoseRegistersCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DutyRosterCatalog,DutyRoster/DutyRosterCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DwellerHeirloomCatalog,Narrative/DwellerHeirloomCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DwellerMedicalCatalog,Narrative/DwellerMedicalCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+EncounterCatalog,Narrative/EncounterCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ExpansionEnrichmentCatalog,ExpansionEnrichmentCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FactionIconCatalog,UI/FactionIconCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FactionWarContentCatalog,YearOfAsh/FactionWarContentCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FaunaEntomologyCatalog,Narrative/FaunaEntomologyCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FermentationYeastCatalog,Narrative/FermentationYeastCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FringeCultsCatalog,Narrative/FringeCultsCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GeologicalStrataCatalog,Narrative/GeologicalStrataCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GhostTransmissionCatalog,Narrative/GhostTransmissionCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GlassblowingDistillationCatalog,Narrative/GlassblowingDistillationCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GoodsCatalog,Economy/GoodsCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GrainMillingCatalog,Narrative/GrainMillingCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GreenhouseExpansionCatalog,Greenhouse/GreenhouseExpansionCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastCatalog,HoldfastCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastFactionsCatalog,HoldfastFactionsCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastItemsCatalog,HoldfastItemsCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HydroGeologyCatalog,Narrative/HydroGeologyCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+IndustrialRuinsCatalog,Narrative/IndustrialRuinsCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LostTechManualCatalog,Narrative/LostTechManualCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MasonryBrickworksCatalog,Narrative/MasonryBrickworksCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MedicalPathologyCatalog,Narrative/MedicalPathologyCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MetallurgyToolingCatalog,Narrative/MetallurgyToolingCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MilitaryArmoryCatalog,Narrative/MilitaryArmoryCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+NarrativeBatchCatalog,Narrative/NarrativeBatchCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+NightWatchCatalog,Narrative/NightWatchCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+OpticsGlassworksCatalog,Narrative/OpticsGlassworksCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+OralLoreCatalog,Narrative/OralLoreCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+PaperMakingCatalog,Narrative/PaperMakingCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+PaperPrintingCatalog,Narrative/PaperPrintingCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+PneumaticTubeDispatchCatalog,Narrative/PneumaticTubeDispatchCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+PolymerTextileCatalog,Narrative/PolymerTextileCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+QuestlineMasterCatalog,QuestlineMasterCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RadioScriptbookCatalog,Narrative/RadioScriptbookCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RefrigerationFermentationCatalog,Narrative/RefrigerationFermentationCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RegionalTreatyCatalog,Narrative/RegionalTreatyCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RelicProvenanceCatalog,Narrative/RelicProvenanceCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RopeMakingCordageCatalog,Narrative/RopeMakingCordageCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SeedBankPreservationCatalog,Narrative/SeedBankPreservationCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SignalIntelligenceCatalog,Narrative/SignalIntelligenceCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SilentFoundryCatalog,Foundry/SilentFoundryCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SoapSaponificationCatalog,Narrative/SoapSaponificationCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+StandingRecordCatalog,StandingRecord/StandingRecordCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SteamTurbinePowerCatalog,Narrative/SteamTurbinePowerCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+StructuralFortificationCatalog,Narrative/StructuralFortificationCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SurvivorCatalog,Survivors/SurvivorCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SurvivorLetterCatalog,Narrative/SurvivorLetterCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TanningLeatherCatalog,Narrative/TanningLeatherCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TanningLeatherworkCatalog,Narrative/TanningLeatherworkCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TextileSpinningWeavingCatalog,Narrative/TextileSpinningWeavingCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TimberCarpentryCatalog,Narrative/TimberCarpentryCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TimekeepingHorologyCatalog,Narrative/TimekeepingHorologyCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TradeCaravanCatalog,Narrative/TradeCaravanCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+UndergroundFungiCatalog,Narrative/UndergroundFungiCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VinylRecordCatalog,Narrative/VinylRecordCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WarlordDoctrineCatalog,Warlords/WarlordDoctrineCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WastelandBestiaryCatalog,Narrative/WastelandBestiaryCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WastelandCartographyCatalog,Narrative/WastelandCartographyCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WastelandExpeditionCatalog,Narrative/WastelandExpeditionCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WastelandGazetteerCatalog,Narrative/WastelandGazetteerCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WaterTreatmentPotableCatalog,Narrative/WaterTreatmentPotableCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WireConfessionCatalog,Narrative/WireConfessionCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WitnessCatalog,Muster/WitnessCatalog.cs,catalog,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BrineWaterHeadlessDemo,BrineWaterHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CensusHeadlessDemo,CensusHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+Cluster12CHeadlessDemo,Cluster12CHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CombatHeadlessDemo,Combat/CombatHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CrossingArbitrationHeadlessDemo,CrossingArbitrationHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CrossingHeadlessDemo,CrossingHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DeepCoastHeadlessDemo,DeepCoastHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DiseaseHeadlessDemo,Disease/DiseaseHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DutyRosterHeadlessDemo,DutyRoster/DutyRosterHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+EconomyHeadlessDemo,Economy/EconomyHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+EndingsHeadlessDemo,EndingsHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ExpeditionHeadlessDemo,Expeditions/ExpeditionHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GreenhouseHeadlessDemo,Greenhouse/GreenhouseHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastHeadlessDemo,HoldfastHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+IceRoadHeadlessDemo,IceRoadHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LedgerDebtHeadlessDemo,LedgerDebtHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MedicalHeadlessDemo,Medical/MedicalHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MusterHeadlessDemo,Muster/MusterHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+NarrativeHeadlessDemo,Narrative/NarrativeHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SilentFoundryHeadlessDemo,Foundry/SilentFoundryHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+StandingRecordHeadlessDemo,StandingRecord/StandingRecordHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SurvivorsHeadlessDemo,Survivors/SurvivorsHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TravelingCaravanHeadlessDemo,TravelingCaravanHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+UtilityAiHeadlessDemo,UtilityAI/UtilityAiHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WarlordHeadlessDemo,Warlords/WarlordHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WorldHeadlessDemo,World/WorldHeadlessDemo.cs,demo/selftest,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+AirlockSecuritySystem,AirlockSecuritySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ApprenticeshipSystem,ApprenticeshipSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ArchiveDeskSystem,ArchiveDeskSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+AudioConditionSystem,AudioConditionSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+AutopsySystem,AutopsySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BallisticsSystem,Combat/BallisticsSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator of TacticalCombatSystem; no HostSession needed
+BrineWaterSystem,BrineWaterSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CaregivingSystem,Survivors/CaregivingSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+CatalogFileSystem,CatalogFileSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CensusClaimSystem,CensusClaimSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ChemicalDependencySystem,Medical/ChemicalDependencySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CoalitionCampSystem,Muster/CoalitionCampSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CohortSystem,CohortSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ColdCountSystem,Muster/ColdCountSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CombatTraumaSystem,Survivors/CombatTraumaSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ContractorRosterSystem,ContractorRosterSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CraftingSystem,Crafting/CraftingSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CrossingArbitrationSystem,CrossingArbitrationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CrossingQuestSystem,Crossing/CrossingQuestSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DecontaminationSystem,DecontaminationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DiseaseSystem,Disease/DiseaseSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+District8DeepCoastSystem,District8DeepCoastSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DoorEncounterSystem,YearOfAsh/DoorEncounterSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DoseLedgerSystem,DoseLedgerSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DutyRosterSystem,DutyRoster/DutyRosterSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+EquipmentConditionSystem,EquipmentConditionSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ExcavationSystem,ExcavationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ExpeditionSystem,Expeditions/ExpeditionSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ExpeditionVehicleSystem,ExpeditionVehicleSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+FactionWarSystem,YearOfAsh/FactionWarSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FinalWishSystem,Survivors/FinalWishSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GreenhouseSystem,Greenhouse/GreenhouseSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GuiltInsomniaSystem,Survivors/GuiltInsomniaSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastQuestSystem,HoldfastQuestSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HydroBaronsSystem,Muster/HydroBaronsSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+IceRoadSystem,IceRoadSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+IdeologicalFrictionSystem,Survivors/IdeologicalFrictionSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+IronRaidersSystem,Muster/IronRaidersSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+JournalSystem,Journal/JournalSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+KitchenNutritionSystem,KitchenNutritionSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LandmarkDegradationSystem,LandmarkDegradationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LeadershipSystem,Survivors/LeadershipSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+LedgerDebtSystem,LedgerDebtSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LibraryStudySystem,LibraryStudySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LocationEvolutionSystem,LocationEvolutionSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LocationLayoutSystem,StandingRecord/LocationLayoutSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LocationMemorySystem,StandingRecord/LocationMemorySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LongWalkSystem,Muster/LongWalkSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MachineLogSystem,Verdict/MachineLogSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MaritimeDiveSystem,MaritimeDiveSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+MarketSystem,Economy/MarketSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MaterialShieldingSystem,Shelter/MaterialShieldingSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MedicalWardSystem,Medical/MedicalWardSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MemorialSystem,Memorial/MemorialSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MentalHealthCrisisSystem,MentalHealthCrisisSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MoralBranchingSystem,Survivors/MoralBranchingSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MoraleMarkSystem,DutyRoster/MoraleMarkSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MusterSystem,Muster/MusterSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+NarrativeEncounterSystem,Narrative/NarrativeEncounterSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+NeedsSystem,Survivors/NeedsSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+OrbitalHarrowTelemetrySystem,OrbitalHarrowTelemetrySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+PharmaLabSystem,PharmaLabSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+PowerGridSystem,Shelter/PowerGridSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ProceduralScavengeSystem,Maritime/ProceduralScavengeSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ProvisionedSystem,Muster/ProvisionedSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+PsychologicalContaminationSystem,Maritime/PsychologicalContaminationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+QuestlineSystem,YearOfAsh/QuestlineSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RadiationSystem,Radiation/RadiationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RationConflictSystem,Survivors/RationConflictSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+ReckoningSystem,Verdict/ReckoningSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RegionalTreatySystem,RegionalTreatySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ResearchSystem,Research/ResearchSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RespiratoryDegenerationSystem,Medical/RespiratoryDegenerationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ScavengerGuildSystem,Muster/ScavengerGuildSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ShelterAssignmentSystem,Shelter/ShelterAssignmentSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ShelterEncounterSystem,DutyRoster/ShelterEncounterSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ShelterScheduleSystem,ShelterScheduleSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ShelterThermalSystem,ShelterThermalSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SickListSystem,SickListSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SilentFoundrySystem,Foundry/SilentFoundrySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SiteEncounterSystem,StandingRecord/SiteEncounterSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SkillAtrophySystem,Survivors/SkillAtrophySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator of SkillProgressionSystem; no HostSession needed
+SkillProgressionSystem,Survivors/SkillProgressionSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SkyLayerArmorSystem,Shelter/SkyLayerArmorSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SomaticFlashbackSystem,Survivors/SomaticFlashbackSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+StartingLevelSystem,StartingLevel/StartingLevelSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SumpFloodingSystem,SumpFloodingSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SurvivorRelationsSystem,SurvivorRelationsSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TacticalCombatSystem,Combat/TacticalCombatSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TradeSpecialtySystem,Survivors/TradeSpecialtySystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TraumaBondSystem,Survivors/TraumaBondSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+TravelingCaravanSystem,TravelingCaravanSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+UtilityAiSystem,UtilityAI/UtilityAiSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VentilationSystem,VentilationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VerdictNpcSystem,Verdict/VerdictNpcSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VerdictRadioSystem,Verdict/VerdictRadioSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VinylMoraleSystem,VinylMoraleSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VoluntaryRegisterSystem,VoluntaryRegisterSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VouchAccessSystem,VouchAccessSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WarlordDoctrineSystem,Warlords/WarlordDoctrineSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WastelandMapSystem,World/WastelandMapSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WaterTreatmentSystem,WaterTreatmentSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WaystationSystem,WaystationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WeaponConditionSystem,Combat/WeaponConditionSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator of TacticalCombatSystem; no HostSession needed
+WeatherStationSystem,WeatherStationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+WeatherSystem,World/WeatherSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WildlifeMigrationSystem,WildlifeMigrationSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WildlifeTrappingSystem,WildlifeTrappingSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WorkshopReverseEngineeringSystem,WorkshopReverseEngineeringSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,CORE_INTERNAL: Core-internal collaborator; tested standalone; no HostSession needed
+YearOfAshDeepFreezeSystem,YearOfAsh/YearOfAshDeepFreezeSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+YearOfAshRadonSystem,YearOfAsh/YearOfAshRadonSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+YearOfAshTimelineSystem,YearOfAsh/YearOfAshTimelineSystem.cs,gameplay system,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+AirlockSecurityHostSession,Host/AirlockSecurityHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ApprenticeshipHostSession,Host/ApprenticeshipHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ArchiveDeskHostSession,Host/ArchiveDeskHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+AutopsyHostSession,Host/AutopsyHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+CombatHostSession,Host/CombatHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ContractorRosterHostSession,Host/ContractorRosterHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+CraftingHostSession,Host/CraftingHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+DecontaminationHostSession,Host/DecontaminationHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+DeepCoastHostSession,Host/DeepCoastHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+DoseLedgerHostSession,Host/DoseLedgerHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+DutyRosterHostSession,Host/DutyRosterHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+EconomyHostSession,Host/EconomyHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+EquipmentConditionHostSession,Host/EquipmentConditionHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ExcavationHostSession,Host/ExcavationHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ExpansionHostSession,Host/ExpansionHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ExpeditionHostSession,Host/ExpeditionHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+GreenhouseHostSession,Host/GreenhouseHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+InventoryHostSession,Host/InventoryHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+KitchenNutritionHostSession,Host/KitchenNutritionHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+LibraryStudyHostSession,Host/LibraryStudyHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+MaritimeHostSession,Host/MaritimeHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+MedicalHostSession,Host/MedicalHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+MentalHealthCrisisHostSession,Host/MentalHealthCrisisHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+MusterHostSession,Host/MusterHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+NarrativeHostSession,Host/NarrativeHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+PhantomMemoryHostSession,Host/PhantomMemoryHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+Phase0HostSession,Host/Phase0HostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+PowerGridHostSession,Host/PowerGridHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+RadioHostSession,Host/RadioHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+RegionalTreatyHostSession,Host/RegionalTreatyHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ResearchHostSession,Host/ResearchHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ShelterAssignmentHostSession,Host/ShelterAssignmentHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ShelterScheduleHostSession,Host/ShelterScheduleHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ShelterThermalHostSession,Host/ShelterThermalHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+StandingRecordHostSession,Host/StandingRecordHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+StartingLevelHostSession,Host/StartingLevelHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+SumpFloodingHostSession,Host/SumpFloodingHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+SurvivorInspectionHostSession,Survivors/SurvivorInspectionHostSession.cs,host session,no,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SurvivorRelationsHostSession,Host/SurvivorRelationsHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+SurvivorsHostSession,Host/SurvivorsHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+TravelingCaravanHostSession,Host/TravelingCaravanHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+UtilityAiHostSession,Host/UtilityAiHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+VerdictHostSession,Host/VerdictHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+VinylMoraleHostSession,Host/VinylMoraleHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+WaterTreatmentHostSession,Host/WaterTreatmentHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+WaystationHostSession,Host/WaystationHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+WildlifeTrappingHostSession,Host/WildlifeTrappingHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+WorldHostSession,Host/WorldHostSession.cs,host session,no,direct,proven,none,unknown,LIVE_GODOT,LOW,direct scan,verified
+ActionResult,ActionResult.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ArchiveInkCatalogLoader,ArchiveInkCatalogLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+AutopsyProcedureCatalogLoader,AutopsyProcedureCatalogLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+BiologicalTradeItem,Economy/BiologicalTradeItem.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CampaignDayCoordinator,Campaign/CampaignDayCoordinator.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CaravanAtomicTrader,Economy/CaravanAtomicTrader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CatalogDiagnostics,IO/CatalogDiagnostics.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CatalogIntegrityValidator,CatalogIntegrityValidator.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CombatPerks,Combat/CombatPerks.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CombatTypes,Combat/CombatTypes.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+CrossingSession,CrossingSession.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DailyBriefingReportBuilder,Campaign/DailyBriefingReportBuilder.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DeepLoreLocationCatalogLoader,Maritime/DeepLoreLocationCatalogLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DeviceState,Inventory/DeviceState.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DiveInstanceRunner,Expeditions/DiveInstanceRunner.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DoorEncounterCatalogLoader,YearOfAsh/DoorEncounterCatalogLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DoseQuestMigration,DoseQuestMigration.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+Dosimeter,Radiation/Dosimeter.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DutyRosterHoldfastBridge,DutyRoster/DutyRosterHoldfastBridge.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DutyRosterQuestRuntime,DutyRoster/DutyRosterQuestRuntime.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+EncounterChoiceResolver,Expeditions/EncounterChoiceResolver.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+EpilogueChronicleBuilder,Endgame/EpilogueChronicleBuilder.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+EpilogueMatrix,Muster/EpilogueMatrix.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+EpilogueMatrixRuntime,Endgame/EpilogueMatrixRuntime.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+EvidenceLedger,Verdict/EvidenceLedger.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ExpansionMasterSession,ExpansionMasterSession.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ExpansionSuite,ExpansionSuite.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ExpeditionEncounterBridge,Expeditions/ExpeditionEncounterBridge.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FactionEventResults,Economy/FactionEventResults.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FactionRadioEngine,Radio/FactionRadioEngine.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FactionRadioTypes,Radio/FactionRadioTypes.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FactionStanceEngine,Economy/FactionStanceEngine.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FactionStanceTypes,Economy/FactionStanceTypes.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+FoundryActionSurface,Foundry/FoundryActionSurface.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GenerationalLineageExtension,GenerationalLineageExtension.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+GenerationalSuccessionEngine,Legacy/GenerationalSuccessionEngine.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HardcoreEconomyEnums,Economy/HardcoreEconomyEnums.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HardcoreEconomyTuning,Economy/HardcoreEconomyTuning.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HardcoreEconomyTuningDto,Economy/HardcoreEconomyTuningDto.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HardcoreEconomyTuningLoader,Economy/HardcoreEconomyTuningLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastEndings,HoldfastEndings.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastSaveFrozen,HoldfastSaveFrozen.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastSession,HoldfastSession.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastTradeSession,HoldfastTradeSession.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HostDefaults,HostDefaults.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+IEconomyInterfaces,Economy/IEconomyInterfaces.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+IEventBus,Events/IEventBus.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+IFlagLedger,Flags/IFlagLedger.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ISimClock,Clock/ISimClock.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+Inventory,Inventory/Inventory.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+IsExternalInit,IsExternalInit.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ItemDefinitions,Inventory/ItemDefinitions.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ItemTypes,Inventory/ItemTypes.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+JournalEntry,Journal/JournalEntry.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+JournalVoice,Journal/JournalVoice.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+KnowledgeBase,Journal/KnowledgeBase.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+LibraryManualCatalogLoader,LibraryManualCatalogLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MathfCompat,MathfCompat.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+OrphanKnockWhitelist,Encounters/OrphanKnockWhitelist.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+PhantomMemoryEngine,PhantomMemoryEngine.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+PhantomTriggerDto,Phantoms/PhantomTriggerDto.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+Ports,Ports.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ProceduralEulogyEngine,Journal/ProceduralEulogyEngine.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ProceduralItemInstance,Inventory/ProceduralItemInstance.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+QuestApproach,Muster/QuestApproach.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RadiationPhaseProgression,Radiation/RadiationPhaseProgression.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RadioTuner,Radio/RadioTuner.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ResearchKnowledgeDef,Research/ResearchKnowledgeDef.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ResearchState,Research/ResearchState.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RiskBiasTrait,Journal/RiskBiasTrait.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SaveChecksum,SaveChecksum.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SaveWireContract,SaveWireContract.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ShelterScheduleCatalogLoader,ShelterScheduleCatalogLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SilentFoundryConsequencePolicy,Foundry/SilentFoundryConsequencePolicy.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SkillDef,Survivors/SkillDef.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+SkillProgressionState,Survivors/SkillProgressionState.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+StableHash,StableHash.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+StandingRecordEngine,StandingRecord/StandingRecordEngine.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+StartingLevelState,StartingLevel/StartingLevelState.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+StealthDiveInstance,Maritime/StealthDiveInstance.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+Theme,UI/Theme.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TradeScreenPresenter,Economy/TradeScreenPresenter.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TradeScreenScenarios,Economy/TradeScreenScenarios.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TradeScreenSeam,Economy/TradeScreenSeam.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TradeStance,Economy/TradeStance.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+TradeTellEngine,Economy/TradeTellEngine.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+UiAssetManifest,UI/UiAssetManifest.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+UtilityAction,UtilityAI/UtilityAction.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+UtilityActionScorer,UtilityAI/UtilityActionScorer.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VariableLootNode,Maritime/VariableLootNode.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VerdictCatalogLoader,Verdict/VerdictCatalogLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VerdictCensusBroadcast,Verdict/VerdictCensusBroadcast.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VerdictEndingEvaluator,Verdict/VerdictEndingEvaluator.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VerdictQuestCatalogLoader,Verdict/VerdictQuestCatalogLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VerdictQuestMigration,Verdict/VerdictQuestMigration.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VerdictReadout,Verdict/VerdictReadout.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VigilStateMachine,Medical/VigilStateMachine.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WarlordResponseActions,Warlords/WarlordResponseActions.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WeatherAtmosphereMap,World/WeatherAtmosphereMap.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+WeatherKind,WeatherKind.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+YearOfAshCatalogLoader,YearOfAsh/YearOfAshCatalogLoader.cs,other,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DailyBriefingSave,Campaign/DailyBriefingSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DoseLedgerSave,DoseLedgerSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+DutyRosterSave,DutyRoster/DutyRosterSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ExpansionHubSave,ExpansionHubSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+HoldfastSave,HoldfastSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MedicalWardSave,Medical/MedicalWardSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+MemorialSave,Memorial/MemorialSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+PowerGridSave,Shelter/PowerGridSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+RadioSave,Radio/RadioSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+ShelterAssignmentSave,Shelter/ShelterAssignmentSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+VerdictSave,Verdict/VerdictSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified
+YearOfAshSave,YearOfAsh/YearOfAshSave.cs,save store,yes,none,proven,none,unknown,LIVE_CORE,LOW,direct scan,verified

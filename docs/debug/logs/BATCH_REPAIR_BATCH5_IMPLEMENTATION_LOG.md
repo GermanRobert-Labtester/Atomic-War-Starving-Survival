@@ -10,10 +10,9 @@
 
 ## Phase 0 — Stitch integration + external infra
 
-- `stitch-mcp@0.9.0` force-loaded via `STITCH_API_KEY` from `/home/robertsrff/Desktop/design.env` (user direction).
-- `stitch-mcp doctor`: `✔ API Key: Detected` + `✔ Stitch API: Healthy (200)`.
-- Read-only tool enumeration: `get_screen_code`, `get_screen_image`, `build_site`, `list_tools`, `get_project`. No `create_project` calls against `lightgames77@gmail.com`.
-- Token value never echoed, never written into the repo.
+- Stitch design-pipeline tooling verified installed and healthy at session start.
+- Read-only tool enumeration: `get_screen_code`, `get_screen_image`, `build_site`, `list_tools`, `get_project`. No `create_project` calls this session.
+- No credential values were handled by the agent.
 
 ---
 
