@@ -174,6 +174,10 @@ namespace AtomicWar.GodotApp
                     _statusPanel.Bind(_survivors, _world?.Weather, _powerGrid, _inventory, _simDay);
                     _statusPanel.Open();
                     break;
+                case "help":
+                    _tutorialPanel.Bind(_simDay);
+                    _tutorialPanel.Open();
+                    break;
                 case "survivors":
                     SetupSurvivors();
                     _survivorsOverlay.Bind(_survivors);

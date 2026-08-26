@@ -133,6 +133,7 @@ public partial class ShelterHudPanel : Control
             new AshfallSidebar.Item { Id = "trade",       Label = "Trade",               Hint = "CARAVAN LEDGER" },
             new AshfallSidebar.Item { Id = "factions",    Label = "Factions",            Hint = "STANCES" },
             new AshfallSidebar.Item { Id = "verdict",     Label = "Verdict",             Hint = "EVALUATION" },
+            new AshfallSidebar.Item { Id = "help",       Label = "Help & Controls",     Hint = "TUTORIAL" },
         }, "BUNKER OPS", "overview");
 
         if (_sidebar != null)
