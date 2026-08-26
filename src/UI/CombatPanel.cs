@@ -259,5 +259,14 @@ namespace AtomicWar.GodotApp.UI
                 GetViewport().SetInputAsHandled();
             }
         }
+
+        public override void _ExitTree()
+        {
+            if (_combat != null)
+            {
+                _combat.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
+        }
     }
 }

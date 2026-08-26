@@ -48,7 +48,11 @@ public partial class MapAtlasPanel : Control
 
     public void Bind(ExpeditionHostSession host)
     {
+        if (_host != null)
+            _host.StateChanged -= RefreshView;
         _host = host;
+        if (_host != null)
+            _host.StateChanged += RefreshView;
         LoadLocationsFromHost();
         RefreshView();
     }
@@ -470,5 +474,14 @@ public partial class MapAtlasPanel : Control
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        if (_host != null)
+        {
+            _host.StateChanged -= RefreshView;
+        }
+        base._ExitTree();
     }
 }

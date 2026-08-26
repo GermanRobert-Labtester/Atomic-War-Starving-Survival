@@ -237,6 +237,15 @@ namespace AtomicWar.GodotApp.UI
             RefreshView();
             Visible = true;
         }
+
+        public override void _ExitTree()
+        {
+            if (_phase0 != null)
+            {
+                _phase0.StateChanged -= OnPhase0StateChanged;
+            }
+            base._ExitTree();
+        }
     }
 
     internal static class Phase0PanelLabelExtensions

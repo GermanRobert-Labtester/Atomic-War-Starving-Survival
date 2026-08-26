@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
+using AtomicWar.GodotApp.Host;
 
 namespace AtomicWar.GodotApp.UI
 {
@@ -22,72 +24,55 @@ namespace AtomicWar.GodotApp.UI
         private Label _lblNarrativeTitle;
         private VBoxContainer _narrativeList;
 
-        // Placeholder events data
-        private readonly string[] _placeholderRecent = {
-            "[Day 25] Supply cache discovered in Sector 12 — +15 rations",
-            "[Day 24] Radio contact with Black Flotilla — trade offer received",
-            "[Day 23] Fallout warning issued — all survivors sheltered",
-            "[Day 22] Medical emergency — Marcus treated radiation sickness",
-            "[Day 21] Expedition returned — 3 new survivors recruited"
-        };
-
-        private readonly string[] _placeholderIncidents = {
-            "[Day 20] Radiation spike — Sector 4 elevated (1.2 mSv/hr)",
-            "[Day 18] Bunker breach attempt — repelled by perimeter guard",
-            "[Day 15] Water contamination — filtration system damaged",
-            "[Day 12] Ambush in Sector 4 — 1 casualty, supplies lost",
-            "[Day 8] Radio interference — unknown signal detected"
-        };
-
-        private readonly string[] _placeholderNarrative = {
-            "Chapter 1 Complete: The Exchange — Nuclear detonations across the globe",
-            "Chapter 2 Complete: Ashfall — Surviving the initial fallout and radiation",
-            "Chapter 3 Active: The Bunker — Establishing shelter and community",
-            "Chapter 4 Pending: First Contact — Encountering other survivors",
-            "Chapter 5 Pending: The Long Winter — Nuclear winter conditions setting in"
-        };
-
         // Real data from host session
-        // private EventsHostSession? _eventsHost;
+        private EventsHostSession? _eventsHost;
 
-        public void Bind(object events) // placeholder for EventsHostSession
+        public void Bind(object events)
         {
-            // _eventsHost = (EventsHostSession)events;
-            // RefreshView();
+            _eventsHost = (EventsHostSession)events;
+            RefreshView();
         }
 
         public void RefreshView()
         {
-            if (_recentList == null || _incidentsList == null || _narrativeList == null) return;
+            if (_recentList == null || _incidentsList == null || _narrativeList == null || _eventsHost == null) return;
 
             // Clear existing lists
             AshfallUiHelpers.EmptyChildren(_recentList);
             AshfallUiHelpers.EmptyChildren(_incidentsList);
             AshfallUiHelpers.EmptyChildren(_narrativeList);
 
-            // Display placeholder recent events
-            foreach (string eventEntry in _placeholderRecent)
+            // Fetch and display recent events
+            var recentEvents = _eventsHost.GetRecentEvents()
+                .OrderByDescending(e => e.Day)
+                .Take(5);
+            foreach (var eventEntry in recentEvents)
             {
-                var label = new Label { Text = eventEntry };
+                var label = new Label { Text = $"[Day {eventEntry.Day}] {eventEntry.Description}" };
                 label.CustomMinimumSize = new Vector2(400, 35);
                 label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
                 _recentList.AddChild(label);
             }
 
-            // Display placeholder incidents
-            foreach (string incident in _placeholderIncidents)
+            // Fetch and display incidents
+            var incidents = _eventsHost.GetIncidents()
+                .OrderByDescending(i => i.Day)
+                .Take(5);
+            foreach (var incident in incidents)
             {
-                var label = new Label { Text = incident };
+                var label = new Label { Text = $"[Day {incident.Day}] {incident.Description}" };
                 label.CustomMinimumSize = new Vector2(400, 35);
                 label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
                 label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
                 _incidentsList.AddChild(label);
             }
 
-            // Display placeholder narrative progression
-            foreach (string narrative in _placeholderNarrative)
+            // Fetch and display narrative progression
+            var narrativeProgression = _eventsHost.GetNarrativeProgression()
+                .OrderBy(n => n.Order);
+            foreach (var narrative in narrativeProgression)
             {
-                var label = new Label { Text = narrative };
+                var label = new Label { Text = narrative.Description };
                 label.CustomMinimumSize = new Vector2(400, 35);
                 label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
                 label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));

@@ -52,9 +52,20 @@ namespace AtomicWar.GodotApp.UI
             WorldHostSession world,
             InventoryHostSession? inventory = null)
         {
+            if (_survivorsHost != null)
+                _survivorsHost.StateChanged -= RefreshView;
+            if (_worldHost != null)
+                _worldHost.StateChanged -= RefreshView;
+
             _survivorsHost = survivors;
             _worldHost = world;
             _inventoryHost = inventory;
+
+            if (_survivorsHost != null)
+                _survivorsHost.StateChanged += RefreshView;
+            if (_worldHost != null)
+                _worldHost.StateChanged += RefreshView;
+
             RefreshView();
         }
 
@@ -135,16 +146,7 @@ namespace AtomicWar.GodotApp.UI
 
         private static void ClearChildren(Node parent)
         {
-            while (parent.GetChildCount() > 0)
-            {
-                var child = parent.GetChild(0);
-                parent.RemoveChild(child);
-                // These rows are detached before disposal. QueueFree() only
-                // flushes reliably for nodes still inside the SceneTree, so
-                // free the removed row synchronously to avoid orphaned UI rows
-                // when the panel is rebound or the headless smoke test exits.
-                child.Free();
-            }
+            AshfallUiHelpers.EmptyChildren(parent);
         }
 
         private int Count(string itemId)
@@ -391,6 +393,19 @@ namespace AtomicWar.GodotApp.UI
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_survivorsHost != null)
+            {
+                _survivorsHost.StateChanged -= RefreshView;
+            }
+            if (_worldHost != null)
+            {
+                _worldHost.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
         }
     }
 }

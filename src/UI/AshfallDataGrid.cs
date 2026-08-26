@@ -352,7 +352,7 @@ public partial class AshfallDataGrid : PanelContainer
         lbl.AddThemeFontSizeOverride("font_size", DesignTheme.FontSizeLabel);
         lbl.AddThemeColorOverride("font_color",
             AshfallUiHelpers.ToColor(DesignTheme.Dim));
-        var mono = AshfallUiHelpers.LoadFont("res://assets/fonts/ShareTechMono-Regular.ttf");
+        var mono = AshfallUiHelpers.FontShareTechMono;
         if (mono != null) lbl.AddThemeFontOverride("font", mono);
         return lbl;
     }
@@ -394,10 +394,8 @@ public partial class AshfallDataGrid : PanelContainer
             AshfallUiHelpers.ToColor(StateToken(cell.State)));
 
         var font = col.Alignment == ColumnAlign.Right
-            ? (AshfallUiHelpers.LoadFont("res://assets/fonts/ShareTechMono-Regular.ttf")
-                ?? AshfallUiHelpers.LoadFont("res://assets/fonts/BarlowCondensed-Regular.ttf"))
-            : (AshfallUiHelpers.LoadFont("res://assets/fonts/BarlowCondensed-Regular.ttf")
-                ?? AshfallUiHelpers.LoadFont("res://assets/fonts/ShareTechMono-Regular.ttf"));
+            ? (AshfallUiHelpers.FontShareTechMono ?? AshfallUiHelpers.FontBarlowRegular)
+            : (AshfallUiHelpers.FontBarlowRegular ?? AshfallUiHelpers.FontShareTechMono);
         if (font != null) lbl.AddThemeFontOverride("font", font);
 
         container.AddChild(lbl);

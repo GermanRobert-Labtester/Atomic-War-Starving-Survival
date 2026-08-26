@@ -26,9 +26,15 @@ namespace AtomicWar.GodotApp.UI
         private Label _brownoutLabel = null!;
         private VBoxContainer _roomList = null!;
 
+        private static readonly PowerGridRoomPriority[] s_priorities = (PowerGridRoomPriority[])Enum.GetValues(typeof(PowerGridRoomPriority));
+
         public void Bind(PowerGridHostSession session)
         {
+            if (_session != null)
+                _session.OnStateChanged -= RefreshView;
             _session = session;
+            if (_session != null)
+                _session.OnStateChanged += RefreshView;
             RefreshView();
         }
 
@@ -69,8 +75,9 @@ namespace AtomicWar.GodotApp.UI
             row.AddChild(drawLbl);
 
             var priRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingXs);
-            foreach (PowerGridRoomPriority p in Enum.GetValues(typeof(PowerGridRoomPriority)))
+            for (int i = 0; i < s_priorities.Length; i++)
             {
+                PowerGridRoomPriority p = s_priorities[i];
                 var btn = AshfallUiHelpers.MakeButton(p.ToString().ToUpperInvariant(),
                     () => OnPriorityChanged?.Invoke(r.RoomId, p));
                 btn.CustomMinimumSize = new Vector2(56, 24);
@@ -177,6 +184,15 @@ namespace AtomicWar.GodotApp.UI
                 Visible = false;
                 GetViewport().SetInputAsHandled();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_session != null)
+            {
+                _session.OnStateChanged -= RefreshView;
+            }
+            base._ExitTree();
         }
     }
 }

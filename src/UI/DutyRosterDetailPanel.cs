@@ -72,9 +72,9 @@ namespace AtomicWar.GodotApp.UI
             }
 
             // Assignments (ordinal role order).
-            for (int i = 0; i < DutyRosterSystem.AssignmentRoles.Length; i++)
+            for (int i = 0; i < DutyRosterIds.AssignmentRoles.Length; i++)
             {
-                string role = DutyRosterSystem.AssignmentRoles[i];
+                string role = DutyRosterIds.AssignmentRoles[i];
                 string who = roster.GetAssignment(role)!;
                 if (string.IsNullOrEmpty(who)) continue;
                 var lbl = new Label { Text = $"{role.Replace('_', ' ').ToUpperInvariant()}: {who}" };

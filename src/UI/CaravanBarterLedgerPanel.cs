@@ -61,8 +61,12 @@ public partial class CaravanBarterLedgerPanel : Control
         IFactionRadioProvider? radioProvider = null,
         ISeededRng? rng = null)
     {
+        if (_session != null)
+            _session.StateChanged -= RefreshView;
         _session = session;
         _stance = stanceProvider;
+        if (_session != null)
+            _session.StateChanged += RefreshView;
         if (_tradeInner != null)
         {
             _tradeInner.BindSession(session, stanceProvider!, priceShockProvider!, radioProvider!, rng!);
@@ -237,5 +241,14 @@ public partial class CaravanBarterLedgerPanel : Control
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        if (_session != null)
+        {
+            _session.StateChanged -= RefreshView;
+        }
+        base._ExitTree();
     }
 }

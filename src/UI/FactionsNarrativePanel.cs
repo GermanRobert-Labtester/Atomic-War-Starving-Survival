@@ -61,9 +61,17 @@ public partial class FactionsNarrativePanel : Control
     /// The matrix survives even when the catalog has not loaded — the snapshot
     /// harness ships a deterministic fixture instead.
     /// </summary>
+    private static readonly List<(string Id, string Display, string Lore, string Ideology, string Neighbors)> s_cachedFactions = new();
+
     private void LoadFactionsFromCatalog()
     {
         _factions.Clear();
+        if (s_cachedFactions.Count > 0)
+        {
+            _factions.AddRange(s_cachedFactions);
+            return;
+        }
+
         try
         {
             string osPath = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data/faction_lore.json");
@@ -82,8 +90,9 @@ public partial class FactionsNarrativePanel : Control
                 string neighbors = entry.TryGetProperty("neighbors", out var nb) && nb.ValueKind == JsonValueKind.Array
                     ? string.Join(", ", System.Linq.Enumerable.Select(nb.EnumerateArray(), e => e.GetString() ?? ""))
                     : "—";
-                _factions.Add((id, display, lore, ideology, neighbors));
+                s_cachedFactions.Add((id, display, lore, ideology, neighbors));
             }
+            _factions.AddRange(s_cachedFactions);
         }
         catch (Exception ex_CATDIAG)
         {
@@ -474,5 +483,11 @@ public partial class FactionsNarrativePanel : Control
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        _factions.Clear();
+        base._ExitTree();
     }
 }

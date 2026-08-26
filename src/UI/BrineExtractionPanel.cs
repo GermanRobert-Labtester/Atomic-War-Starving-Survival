@@ -36,6 +36,7 @@ namespace AtomicWar.GodotApp.UI
         private Button _closeButton = null!;
 
         public bool IsBound => _foundryHost != null;
+        public int SimDay { get; set; } = 1;
 
         public void Bind(SilentFoundryHostSession foundryHost)
         {
@@ -135,7 +136,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnTickDay()
         {
             if (_foundryHost == null) return;
-            string result = _foundryHost.TickSaltMineDemo(40); // TODO: get real day
+            string result = _foundryHost.TickSaltMineDemo(SimDay); // from bound host or caller
             _feedbackLabel.Text = result;
             RefreshView();
         }
@@ -143,7 +144,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnDeliver()
         {
             if (_foundryHost == null) return;
-            string result = _foundryHost.DeliverSaltTreatyDemo(40);
+            string result = _foundryHost.DeliverSaltTreatyDemo(SimDay);
             _feedbackLabel.Text = result;
             RefreshView();
         }

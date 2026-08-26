@@ -53,10 +53,12 @@ namespace AtomicWar.GodotApp.UI
             }
             if (_core != null)
             {
-                _core.IceRoad.OnStateChanged += _ => RefreshView();
+                _core.IceRoad.OnStateChanged += HandleIceRoadStateChanged;
             }
             RefreshView();
         }
+
+        private void HandleIceRoadStateChanged(Ashfall.Core.IceRoadSystemState _) => RefreshView();
 
         public void Open()
         {
@@ -308,13 +310,20 @@ namespace AtomicWar.GodotApp.UI
 
         private static void ClearContainer(VBoxContainer container)
         {
-            if (container == null) return;
-            while (container.GetChildCount() > 0)
+            AshfallUiHelpers.EmptyChildren(container);
+        }
+
+        public override void _ExitTree()
+        {
+            if (_deepCoast != null)
             {
-                var child = container.GetChild(0);
-                container.RemoveChild(child);
-                child.QueueFree();
+                _deepCoast.StateChanged -= RefreshView;
             }
+            if (_core != null)
+            {
+                _core.IceRoad.OnStateChanged -= HandleIceRoadStateChanged;
+            }
+            base._ExitTree();
         }
     }
 }

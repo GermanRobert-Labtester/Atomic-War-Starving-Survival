@@ -43,7 +43,11 @@ public partial class GreenhousePanel : Control
 
     public void Bind(GreenhouseHostSession session)
     {
+        if (_host != null)
+            _host.StateChanged -= RefreshView;
         _host = session;
+        if (_host != null)
+            _host.StateChanged += RefreshView;
         RefreshView();
     }
 
@@ -60,6 +64,7 @@ public partial class GreenhousePanel : Control
             new AshfallSidebar.Item { Id = "fallow",   Label = "Fallow Only",   Hint = "empty soil beds ready to seed",    IconPath = "" },
             new AshfallSidebar.Item { Id = "critical", Label = "Damaged",       Hint = "failed or blight-stricken beds",   IconPath = "" },
             new AshfallSidebar.Item { Id = "harvest",  Label = "Ready",         Hint = "beds at mature stage",            IconPath = "" },
+            new AshfallSidebar.Item { Id = "apiary",   Label = "Apiary (Hives)", Hint = "colony health · pollination · honey & wax", IconPath = "" },
         };
         _sidebar = _shell.SetSidebar(cropsItems, "Filter", "all");
         _sidebar.OnSelected += HandleSidebar;
@@ -120,7 +125,7 @@ public partial class GreenhousePanel : Control
 
     private void HandleSidebar(string id)
     {
-        if (id == "fallow" || id == "critical" || id == "harvest")
+        if (id == "fallow" || id == "critical" || id == "harvest" || id == "apiary")
         {
             // map sidebar filter to a crop filter token for BuildPlotRows
             _cropFilter = id;
@@ -158,6 +163,30 @@ public partial class GreenhousePanel : Control
             _statusRail.Set("blight", "—", AshfallMetricCard.Criticality.Caution);
             return;
         }
+
+        if (_cropFilter == "apiary")
+        {
+            var hive = _host.Apiculture.GetHive("hive_01");
+            if (hive != null && !hive.isDead)
+            {
+                float bonus = _host.Apiculture.GetPollinationBonus("plot_0");
+                _statusRail.Set("active", $"{hive.colonyPopulation:P0}", AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("plotcount", $"{hive.queenVitality:P0}", hive.queenVitality < 0.4f ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("harvests", $"+{bonus:P0}", AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("vault", $"{hive.honeyBuffer:F1} kg", AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("blight", $"{hive.waxBuffer:F1} kg", AshfallMetricCard.Criticality.Normal);
+            }
+            else
+            {
+                _statusRail.Set("active", hive == null ? "NO HIVE" : "COLLAPSED", AshfallMetricCard.Criticality.Critical);
+                _statusRail.Set("plotcount", "0%", AshfallMetricCard.Criticality.Critical);
+                _statusRail.Set("harvests", "+0%", AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("vault", "0 kg", AshfallMetricCard.Criticality.Normal);
+                _statusRail.Set("blight", "0 kg", AshfallMetricCard.Criticality.Normal);
+            }
+            return;
+        }
+
         var state = _host.System.State;
         int plotCount = state.plots.Count;
         int active = 0, blighted = 0;
@@ -180,6 +209,52 @@ public partial class GreenhousePanel : Control
     private void BuildPlotRows()
     {
         if (_plotGrid == null) return;
+
+        if (_cropFilter == "apiary")
+        {
+            var apiaryRows = new List<AshfallDataGrid.Row>();
+            if (_host != null)
+            {
+                var hive = _host.Apiculture.GetHive("hive_01");
+                if (hive != null)
+                {
+                    float bonus = _host.Apiculture.GetPollinationBonus("plot_0");
+                    var popState = hive.isDead ? AshfallDataGrid.CellState.Critical
+                        : hive.colonyPopulation > 0.7f ? AshfallDataGrid.CellState.Positive
+                        : AshfallDataGrid.CellState.Normal;
+                    apiaryRows.Add(new AshfallDataGrid.Row
+                    {
+                        Cells = new List<AshfallDataGrid.Cell>
+                        {
+                            new("Hive #1", AshfallDataGrid.CellState.Normal),
+                            new(hive.isDead ? "DEAD" : "ACTIVE", hive.isDead ? AshfallDataGrid.CellState.Critical : AshfallDataGrid.CellState.Positive),
+                            new($"{hive.waterLevel * 100f:0.0}%", hive.waterLevel < 0.2f ? AshfallDataGrid.CellState.Caution : AshfallDataGrid.CellState.Normal),
+                            new($"{hive.temperatureC:0.0}°C", (hive.temperatureC < 15f || hive.temperatureC > 32f) ? AshfallDataGrid.CellState.Caution : AshfallDataGrid.CellState.Normal),
+                            new($"{hive.colonyPopulation * 100f:0.0}%", popState),
+                            new($"Glass Orchard Apiary (+{bonus:P0} Pollination)", AshfallDataGrid.CellState.Normal),
+                        },
+                        Selectable = true
+                    });
+                }
+            }
+            if (apiaryRows.Count == 0)
+            {
+                apiaryRows.Add(new AshfallDataGrid.Row
+                {
+                    Cells = new List<AshfallDataGrid.Cell>
+                    {
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("NO HIVE", AshfallDataGrid.CellState.Caution),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("—", AshfallDataGrid.CellState.Muted),
+                        new("No active beehives installed in apiary", AshfallDataGrid.CellState.Muted),
+                    }
+                });
+            }
+            _plotGrid.SetRows(apiaryRows);
+            return;
+        }
 
         if (_host == null)
         {
@@ -277,6 +352,63 @@ public partial class GreenhousePanel : Control
         var separator = AshfallUiHelpers.MakeSeparator();
         separator.CustomMinimumSize = new Vector2(0, 2);  // Prevent layout issues
         _detailBox.AddChild(separator);
+
+        if (_cropFilter == "apiary")
+        {
+            _detailTitle.Text = "APIARY // HIVE CONTROL";
+            var hive = _host?.Apiculture.GetHive("hive_01");
+            if (hive != null && !hive.isDead)
+            {
+                float bonus = _host!.Apiculture.GetPollinationBonus("plot_0");
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Hive Unit", "hive_01 (Bay Orchard)", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Colony Pop", $"{hive.colonyPopulation:P0}", AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Queen Vitality", $"{hive.queenVitality:P0}",
+                    hive.queenVitality < 0.4f ? AshfallUiHelpers.ToColor(DesignTheme.Critical) : AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Feed Level", $"{hive.feedLevel:P0}",
+                    hive.feedLevel < 0.2f ? AshfallUiHelpers.ToColor(DesignTheme.LetheAmber) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Water Level", $"{hive.waterLevel:P0}",
+                    hive.waterLevel < 0.2f ? AshfallUiHelpers.ToColor(DesignTheme.LetheAmber) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Hive Temp", $"{hive.temperatureC:F1}°C (Optimal 15-32°C)",
+                    (hive.temperatureC < 15f || hive.temperatureC > 32f) ? AshfallUiHelpers.ToColor(DesignTheme.Entropy) : AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Pollination", $"+{bonus:P0} crop yield bonus", AshfallUiHelpers.ToColor(DesignTheme.Warm)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Honey Reserve", $"{hive.honeyBuffer:F2} kg (-> Food Rations)", AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
+                _detailBox.AddChild(AshfallUiHelpers.MakeDataRow("Wax Reserve", $"{hive.waxBuffer:F2} kg (-> Crafting Parts)", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
+
+                if (!string.IsNullOrEmpty(_host.LastEvent))
+                {
+                    _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                    _detailBox.AddChild(AshfallUiHelpers.MakeSmall(_host.LastEvent));
+                }
+
+                _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                _detailBox.AddChild(AshfallUiHelpers.MakeSectionHeader("APIARY ACTIONS"));
+                var apiaryActionRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+
+                var inspectBtn = AshfallUiHelpers.MakeButton("INSPECT", () => OnActionRequested?.Invoke("apiary_inspect", 0));
+                inspectBtn.CustomMinimumSize = new Vector2(85, 30);
+                apiaryActionRow.AddChild(inspectBtn);
+
+                var feedBtn = AshfallUiHelpers.MakeButton("FEED/WATER", () => OnActionRequested?.Invoke("apiary_feed", 0));
+                feedBtn.CustomMinimumSize = new Vector2(100, 30);
+                apiaryActionRow.AddChild(feedBtn);
+
+                var apiaryHarvestBtn = AshfallUiHelpers.MakeButton("HARVEST", () => OnActionRequested?.Invoke("apiary_harvest", 0));
+                apiaryHarvestBtn.CustomMinimumSize = new Vector2(85, 30);
+                apiaryActionRow.AddChild(apiaryHarvestBtn);
+
+                _detailBox.AddChild(apiaryActionRow);
+            }
+            else
+            {
+                _detailBox.AddChild(AshfallUiHelpers.MakeMetadata("No active beehive installed in the Orchard Apiary bay. Install a colony to provide pollination boost."));
+                _detailBox.AddChild(AshfallUiHelpers.MakeSeparator());
+                var installBtn = AshfallUiHelpers.MakeButton("INSTALL HIVE", () => OnActionRequested?.Invoke("apiary_install", 0));
+                installBtn.CustomMinimumSize = new Vector2(140, 32);
+                _detailBox.AddChild(installBtn);
+            }
+            return;
+        }
+
         if (_host == null || _selectedIndex < 0 || _selectedIndex >= _plotGrid?.Rows?.Count)
         {
             _detailBox.AddChild(AshfallUiHelpers.MakeMetadata(
@@ -441,5 +573,14 @@ public partial class GreenhousePanel : Control
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        if (_host != null)
+        {
+            _host.StateChanged -= RefreshView;
+        }
+        base._ExitTree();
     }
 }

@@ -37,18 +37,26 @@ namespace AtomicWar.GodotApp.UI
             DutyRosterHostSession? dutyRoster = null,
             int currentDay = 1)
         {
+            if (_holdfastQuests != null)
+                _holdfastQuests.OnStateChanged -= HandleHoldfastStateChanged;
+            if (_crossingQuests != null)
+                _crossingQuests.OnStateChanged -= HandleCrossingStateChanged;
+
             _holdfastQuests = holdfastQuests;
             _crossingQuests = crossingQuests;
             _dutyRoster = dutyRoster;
             _currentDay = currentDay;
 
             if (_holdfastQuests != null)
-                _holdfastQuests.OnStateChanged += _ => RefreshView();
+                _holdfastQuests.OnStateChanged += HandleHoldfastStateChanged;
             if (_crossingQuests != null)
-                _crossingQuests.OnStateChanged += _ => RefreshView();
+                _crossingQuests.OnStateChanged += HandleCrossingStateChanged;
 
             RefreshView();
         }
+
+        private void HandleHoldfastStateChanged(HoldfastQuestSystemState _) => RefreshView();
+        private void HandleCrossingStateChanged(CrossingQuestSystemState _) => RefreshView();
 
         public void RefreshView()
         {
@@ -292,15 +300,15 @@ namespace AtomicWar.GodotApp.UI
                         rosterBox.AddChild(AshfallUiHelpers.MakeSmall("+ " + (available.Count - 6) + " more available"));
                 }
 
-                var started = qRuntime.GetProgress(DutyRosterSystem.QuestTheChart);
+                var started = qRuntime.GetProgress(DutyRosterIds.QuestTheChart);
                 var btnStart = AshfallUiHelpers.MakeButton(
                     started != null && started.started && !started.completed ? "ADVANCE CHART QUEST" : "START THE CHART",
                     () =>
                     {
                         if (started != null && started.started && !started.completed)
-                            _dutyRoster.AdvanceRosterQuest(DutyRosterSystem.QuestTheChart);
+                            _dutyRoster.AdvanceRosterQuest(DutyRosterIds.QuestTheChart);
                         else
-                            _dutyRoster.StartRosterQuest(DutyRosterSystem.QuestTheChart);
+                            _dutyRoster.StartRosterQuest(DutyRosterIds.QuestTheChart);
                         RefreshView();
                     });
                 rosterBox.AddChild(btnStart);
@@ -399,6 +407,15 @@ namespace AtomicWar.GodotApp.UI
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_holdfastQuests != null)
+                _holdfastQuests.OnStateChanged -= HandleHoldfastStateChanged;
+            if (_crossingQuests != null)
+                _crossingQuests.OnStateChanged -= HandleCrossingStateChanged;
+            base._ExitTree();
         }
     }
 }

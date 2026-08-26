@@ -32,6 +32,7 @@ namespace AtomicWar.GodotApp.UI
         private Button _closeButton = null!;
 
         public bool IsBound => _weatherHost != null;
+        public int SimDay { get; set; } = 1;
 
         public void Bind(WeatherHostSession weatherHost)
         {
@@ -118,7 +119,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnLaunch()
         {
             if (_weatherHost == null) return;
-            string result = _weatherHost.LaunchSondeDemo(40); // TODO: get real day
+            string result = _weatherHost.LaunchSondeDemo(SimDay); // from bound host or caller
             _feedbackLabel.Text = result;
             RefreshView();
         }

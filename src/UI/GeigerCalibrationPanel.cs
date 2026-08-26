@@ -38,6 +38,7 @@ namespace AtomicWar.GodotApp.UI
         private Button _closeButton = null!;
 
         public bool IsBound => _doseHost != null;
+        public int SimDay { get; set; } = 1;
 
         public void Bind(DoseLedgerHostSession doseHost, string deviceTag = "tag_1")
         {
@@ -133,7 +134,7 @@ namespace AtomicWar.GodotApp.UI
         private void OnCalibratePressed()
         {
             if (_doseHost == null) return;
-            int currentDay = 40; // TODO: get from host
+            int currentDay = SimDay; // from bound host or caller
             var device = _doseHost.Calibration.GetDevice(_selectedDeviceTag);
             if (device == null) return;
 

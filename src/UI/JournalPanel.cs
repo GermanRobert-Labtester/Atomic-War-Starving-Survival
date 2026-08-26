@@ -39,6 +39,9 @@ public partial class JournalPanel : Control
     private Label _lblPlacesTitle = null!;
     private Label _lblEventsTitle = null!;
 
+    /// <summary>Bind the live JournalHostSession.</summary>
+    public void Bind(JournalHostSession session) => Bind(session?.System!);
+
     /// <summary>Bind the live JournalSystem. Re-subscribes events and refreshes.</summary>
     public void Bind(JournalSystem journal)
     {
@@ -180,8 +183,7 @@ public partial class JournalPanel : Control
     private static void ClearContainer(VBoxContainer? container)
     {
         if (container == null) return;
-        foreach (Node child in container.GetChildren())
-            child.QueueFree();
+        AshfallUiHelpers.EmptyChildren(container);
     }
 
     private void AddEntryLabel(VBoxContainer container, JournalEntry entry)
@@ -394,6 +396,18 @@ public partial class JournalPanel : Control
         {
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();
+        }
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        if (_journal != null)
+        {
+            _journal.OnEntryAdded -= OnEntryAdded;
+            _journal.OnTabChanged -= OnTabChanged;
+            _journal.OnCodexUnlocked -= OnCodexUnlocked;
+            _journal = null;
         }
     }
 }

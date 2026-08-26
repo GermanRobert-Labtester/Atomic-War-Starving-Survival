@@ -577,4 +577,14 @@ public partial class SurvivalWorkstationPanel : Control
             GetViewport().SetInputAsHandled();
         }
     }
+
+    public override void _ExitTree()
+    {
+        if (_craftingHost != null)
+        {
+            _craftingHost.Engine.OnCraftStarted -= OnEngineCraftStarted;
+            _craftingHost.Engine.OnCraftCompleted -= OnEngineCraftCompleted;
+        }
+        base._ExitTree();
+    }
 }

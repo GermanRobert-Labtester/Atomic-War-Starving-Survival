@@ -603,5 +603,14 @@ namespace AtomicWar.GodotApp.UI
                 GetViewport().SetInputAsHandled();
             }
         }
+
+        public override void _ExitTree()
+        {
+            if (_respiratory != null)
+            {
+                _respiratory.OnStateChanged -= OnRespiratoryStateChanged;
+            }
+            base._ExitTree();
+        }
     }
 }

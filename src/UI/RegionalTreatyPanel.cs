@@ -95,5 +95,14 @@ namespace AtomicWar.GodotApp.UI
                 _detailText.Text = text;
             }
         }
+
+        public override void _ExitTree()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace AtomicWar.GodotApp.UI
         private ScrollContainer _scroll = null!;
 
         private DailyBriefingReport? _report;
+        private string _cachedFullText = string.Empty;
         private int _revealedChars;
         private int _totalChars;
         private double _revealTimerMs;
@@ -39,10 +40,11 @@ namespace AtomicWar.GodotApp.UI
         public void Show(DailyBriefingReport report)
         {
             _report = report ?? throw new ArgumentNullException(nameof(report));
+            _cachedFullText = ComposeText(report);
+            _totalChars = _cachedFullText.Length;
             _revealedChars = 0;
             _complete = false;
             _revealTimerMs = 0;
-            _totalChars = ComposeText(report).Length;
             _titleLabel.Text = report.Title;
             _bodyLabel.Text = string.Empty;
             _ackLabel.Text = "PRESS [ENTER] / [SPACE] / [ACK] TO CONTINUE";
@@ -126,7 +128,7 @@ namespace AtomicWar.GodotApp.UI
             if (_revealedChars >= _totalChars)
             {
                 _complete = true;
-                _bodyLabel.Text = ComposeText(_report);
+                _bodyLabel.Text = _cachedFullText;
                 return;
             }
             _revealTimerMs += delta * 1000.0;
@@ -134,10 +136,9 @@ namespace AtomicWar.GodotApp.UI
             _revealTimerMs = 0;
             int step = Math.Max(1, (int)(delta * 1000.0 / RevealIntervalMs));
             _revealedChars = Math.Min(_totalChars, _revealedChars + step);
-            var full = ComposeText(_report);
-            _bodyLabel.Text = _revealedChars >= full.Length
-                ? full
-                : full.Substring(0, _revealedChars);
+            _bodyLabel.Text = _revealedChars >= _cachedFullText.Length
+                ? _cachedFullText
+                : _cachedFullText.Substring(0, _revealedChars);
         }
 
         public override void _UnhandledInput(InputEvent @event)
@@ -164,7 +165,7 @@ namespace AtomicWar.GodotApp.UI
             if (_report == null) return;
             _complete = true;
             _revealedChars = _totalChars;
-            _bodyLabel.Text = ComposeText(_report);
+            _bodyLabel.Text = _cachedFullText;
             _skipButton.Disabled = true;
             _ackLabel.Text = "REVEALED // PRESS [ENTER] / [SPACE] / [ACK] TO CONTINUE";
         }

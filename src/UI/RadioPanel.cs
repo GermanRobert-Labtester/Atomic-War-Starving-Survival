@@ -194,6 +194,17 @@ namespace AtomicWar.GodotApp.UI
             presetCol.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
             presetCol.AddChild(AshfallUiHelpers.MakeSectionHeader("FREQUENCY TUNER"));
 
+            // Manual Stepper Controls
+            var stepRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+            stepRow.AddChild(AshfallUiHelpers.MakeButton("-5.0", () => { _radioHost?.TuneDelta(-5.0f); RefreshView(); }));
+            stepRow.AddChild(AshfallUiHelpers.MakeButton("-0.5", () => { _radioHost?.TuneDelta(-0.5f); RefreshView(); }));
+            stepRow.AddChild(AshfallUiHelpers.MakeButton("+0.5", () => { _radioHost?.TuneDelta(+0.5f); RefreshView(); }));
+            stepRow.AddChild(AshfallUiHelpers.MakeButton("+5.0", () => { _radioHost?.TuneDelta(+5.0f); RefreshView(); }));
+            presetCol.AddChild(stepRow);
+
+            presetCol.AddChild(AshfallUiHelpers.MakeSeparator());
+            presetCol.AddChild(AshfallUiHelpers.MakeSectionHeader("CHANNEL PRESETS"));
+
             foreach (var (freq, label) in _presets)
             {
                 float targetFreq = freq;
@@ -209,6 +220,35 @@ namespace AtomicWar.GodotApp.UI
                 btnFreq.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
                 presetCol.AddChild(btnFreq);
             }
+
+            presetCol.AddChild(AshfallUiHelpers.MakeSeparator());
+            presetCol.AddChild(AshfallUiHelpers.MakeSectionHeader("DIRECTION FINDING & TRIANGULATION"));
+
+            var dfRow = AshfallUiHelpers.MakeHBox(DesignTheme.SpacingSm);
+            var btnObs = AshfallUiHelpers.MakeButton("RECORD BEARING (045°)", () =>
+            {
+                if (_radioHost != null)
+                {
+                    _radioHost.RecordBearingObservation(45f);
+                    RefreshView();
+                }
+            });
+            btnObs.CustomMinimumSize = new Vector2(0, 30);
+            btnObs.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            dfRow.AddChild(btnObs);
+
+            var btnTri = AshfallUiHelpers.MakeButton("TRIANGULATE", () =>
+            {
+                if (_radioHost != null)
+                {
+                    _radioHost.TriangulateCurrentSignal();
+                    RefreshView();
+                }
+            });
+            btnTri.CustomMinimumSize = new Vector2(100, 30);
+            dfRow.AddChild(btnTri);
+            presetCol.AddChild(dfRow);
+
             var btnBeacon = AshfallUiHelpers.MakeButton("BROADCAST HOLDFAST EMERGENCY BEACON", () =>
             {
                 if (_radioHost != null)
@@ -218,7 +258,7 @@ namespace AtomicWar.GodotApp.UI
                     RefreshView();
                 }
             });
-            btnBeacon.CustomMinimumSize = new Vector2(0, 36);
+            btnBeacon.CustomMinimumSize = new Vector2(0, 34);
             btnBeacon.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
             presetCol.AddChild(btnBeacon);
             topRow.AddChild(presetCol);
@@ -267,6 +307,15 @@ namespace AtomicWar.GodotApp.UI
                 Close();
                 GetViewport().SetInputAsHandled();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_radioHost != null)
+            {
+                _radioHost.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
         }
     }
 }

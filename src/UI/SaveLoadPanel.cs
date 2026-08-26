@@ -1,92 +1,179 @@
 using System;
-#pragma warning disable CS8618
+using System.Collections.Generic;
 using Godot;
-using Ashfall.Core.UI;
-using AtomicWar.GodotApp.UI;
+using Ashfall.Core;
+using Ashfall.Core.Save;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Save/Load panel.
-    /// Shows save slots, game state information, and save/load operations.
+    /// Real slot management bound to SaveLoadHostSession.
     /// </summary>
     public partial class SaveLoadPanel : Control
     {
         public event Action? OnClose;
+        public event Action<SaveSlotId>? OnSlotSelected;
+        public event Action? OnSaveRequested;
+        public event Action<SaveSlotId>? OnDeleteRequested;
+        public event Action<string>? OnImportRequested;
 
+        private SaveLoadHostSession? _session;
         private VBoxContainer _contentVBox = null!;
         private Label _lblSlotsTitle;
         private VBoxContainer _slotsList;
         private Label _lblInfoTitle;
         private VBoxContainer _infoList;
         private VBoxContainer _actionButtons;
+        private SaveSlotId? _selectedSlotId;
 
-        // Placeholder save data
-        private readonly string[] _placeholderSlots = {
-            "Slot 1 — Day 25 — Bunker Status: Active — 5 Survivors",
-            "Slot 2 — Day 18 — Bunker Status: Active — 4 Survivors",
-            "Slot 3 — Day 12 — Bunker Status: Active — 3 Survivors",
-            "Slot 4 — Day 8 — Bunker Status: Active — 2 Survivors",
-            "Slot 5 — Day 3 — Bunker Status: Active — 1 Survivor"
-        };
-
-        private readonly string[] _placeholderInfo = {
-            "Current Save: Slot 1 (Day 25)",
-            "Total Playtime: 47 hours",
-            "Last Modified: Day 25, 14:32",
-            "Game Version: v0.1",
-            "Platform: Godot 4.7+ .NET Edition",
-            "Save Size: 2.4 MB"
-        };
-
-        // Real data from host session
-        // private SaveLoadHostSession? _saveLoadHost;
-
-        public void Bind(object saveLoad) // placeholder for SaveLoadHostSession
+        public void Bind(SaveLoadHostSession session)
         {
-            // _saveLoadHost = (SaveLoadHostSession)saveLoad;
-            // RefreshView();
+            _session = session ?? throw new ArgumentNullException(nameof(session));
+            _session.SlotsChanged += RefreshView;
+            _session.ActiveSlotChanged += OnActiveSlotChanged;
+            RefreshView();
+        }
+
+        private void OnActiveSlotChanged(SaveSlotId? slotId)
+        {
+            _selectedSlotId = slotId;
+            RefreshView();
         }
 
         public void RefreshView()
         {
             if (_slotsList == null || _infoList == null || _actionButtons == null) return;
+            if (_session == null) return;
 
-            // Clear existing lists
             AshfallUiHelpers.EmptyChildren(_slotsList);
             AshfallUiHelpers.EmptyChildren(_infoList);
             AshfallUiHelpers.EmptyChildren(_actionButtons);
 
-            // Display placeholder save slots
-            foreach (string slot in _placeholderSlots)
+            var slots = _session.GetSlots();
+            if (slots.Count == 0)
             {
-                var label = new Label { Text = slot };
-                label.CustomMinimumSize = new Vector2(400, 40);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _slotsList.AddChild(label);
+                var emptyLabel = AshfallUiHelpers.MakeSmall("No save slots. Create a new slot to begin.");
+                emptyLabel.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+                _slotsList.AddChild(emptyLabel);
+            }
+            else
+            {
+                foreach (SaveSlotId slotId in slots)
+                {
+                    SlotCard card = _session.BuildSlotCard(slotId);
+                    bool isSelected = _selectedSlotId.HasValue && _selectedSlotId.Value == slotId;
+
+                    string status = card.IsTerminalIronMan ? " [TERMINAL]" :
+                                    card.HasValidSave ? $" [Day {card.CurrentDay}]" : " [empty]";
+
+                    var hbox = new HBoxContainer();
+                    var label = new Label
+                    {
+                        Text = $"{card.CampaignName}{status} — {card.Mode}",
+                        CustomMinimumSize = new Vector2(380, 36)
+                    };
+                    label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+                    hbox.AddChild(label);
+
+                    if (isSelected)
+                    {
+                        var selected = new Label { Text = "< active" };
+                        selected.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
+                        selected.AddThemeColorOverride("font_color", new Color(0.53f, 1f, 0.67f));
+                        hbox.AddChild(selected);
+                    }
+
+                    var btnSelect = AshfallUiHelpers.MakeButton("SELECT", () =>
+                    {
+                        _selectedSlotId = slotId;
+                        OnSlotSelected?.Invoke(slotId);
+                        RefreshView();
+                    });
+                    btnSelect.CustomMinimumSize = new Vector2(90, 32);
+                    hbox.AddChild(btnSelect);
+
+                    if (!card.IsTerminalIronMan)
+                    {
+                        var btnDelete = AshfallUiHelpers.MakeButton("DEL", () =>
+                        {
+                            OnDeleteRequested?.Invoke(slotId);
+                            RefreshView();
+                        });
+                        btnDelete.CustomMinimumSize = new Vector2(60, 32);
+                        hbox.AddChild(btnDelete);
+                    }
+
+                    _slotsList.AddChild(hbox);
+                }
             }
 
-            // Display placeholder save info
-            foreach (string info in _placeholderInfo)
+            // Info section.
+            if (_selectedSlotId.HasValue)
             {
-                var label = new Label { Text = info };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _infoList.AddChild(label);
+                SlotCard card = _session.BuildSlotCard(_selectedSlotId.Value);
+                var manifest = _session.GetManifest(_selectedSlotId.Value);
+
+                var infoLines = new List<string>
+                {
+                    $"Slot: {card.SlotId}",
+                    $"Campaign: {card.CampaignName}",
+                    $"Mode: {card.Mode}",
+                    $"Day: {card.CurrentDay}",
+                    $"Terminal: {(card.IsTerminalIronMan ? "Yes" : "No")}",
+                    $"Last Save: {card.LastSaveTimestamp}"
+                };
+
+                if (manifest != null)
+                {
+                    infoLines.Add($"Profile: {manifest.profileId}");
+                    infoLines.Add($"Game Version: {manifest.gameVersion}");
+                    infoLines.Add($"Build: {manifest.buildId}");
+                    infoLines.Add($"Seed: {manifest.seed}");
+                }
+
+                foreach (string line in infoLines)
+                {
+                    var label = new Label { Text = line };
+                    label.CustomMinimumSize = new Vector2(350, 28);
+                    label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+                    _infoList.AddChild(label);
+                }
+            }
+            else
+            {
+                var hint = AshfallUiHelpers.MakeSmall("Select a slot to view details.");
+                hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+                _infoList.AddChild(hint);
             }
 
-            // Display action buttons
-            var btnSave = AshfallUiHelpers.MakeButton("SAVE CURRENT", () => GD.Print("Save clicked"));
-            btnSave.CustomMinimumSize = new Vector2(200, 40);
+            // Action buttons.
+            var btnCreate = AshfallUiHelpers.MakeButton("NEW SLOT", () =>
+            {
+                string newId = "slot_" + DateTime.UtcNow.Ticks.ToString("x");
+                var newSlotId = new SaveSlotId(newId);
+                if (_session.CreateSlot(newSlotId))
+                {
+                    _selectedSlotId = newSlotId;
+                    OnSlotSelected?.Invoke(newSlotId);
+                    RefreshView();
+                }
+            });
+            btnCreate.CustomMinimumSize = new Vector2(160, 40);
+            _actionButtons.AddChild(btnCreate);
+
+            var btnSave = AshfallUiHelpers.MakeButton("SAVE CURRENT", () => OnSaveRequested?.Invoke());
+            btnSave.CustomMinimumSize = new Vector2(160, 40);
+            btnSave.Disabled = !_selectedSlotId.HasValue;
             _actionButtons.AddChild(btnSave);
 
-            var btnLoad = AshfallUiHelpers.MakeButton("LOAD SLOT", () => GD.Print("Load clicked"));
-            btnLoad.CustomMinimumSize = new Vector2(200, 40);
-            _actionButtons.AddChild(btnLoad);
-
-            var btnDelete = AshfallUiHelpers.MakeButton("DELETE SLOT", () => GD.Print("Delete clicked"));
-            btnDelete.CustomMinimumSize = new Vector2(200, 40);
-            _actionButtons.AddChild(btnDelete);
+            var btnImport = AshfallUiHelpers.MakeButton("IMPORT LEGACY", () =>
+            {
+                // Host should present a file dialog; this button signals the intent.
+                OnImportRequested?.Invoke(_session.CurrentProfileId.Value);
+            });
+            btnImport.CustomMinimumSize = new Vector2(160, 40);
+            _actionButtons.AddChild(btnImport);
         }
 
         public override void _Ready()
@@ -103,7 +190,7 @@ namespace AtomicWar.GodotApp.UI
             AddChild(container);
 
             var vbox = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingLg);
-            vbox.CustomMinimumSize = new Vector2(550, 0);
+            vbox.CustomMinimumSize = new Vector2(600, 0);
             container.AddChild(vbox);
 
             var title = AshfallUiHelpers.MakeTitle("SAVE & LOAD", Ashfall.Core.UI.Theme.FontSizeH1);
@@ -112,29 +199,26 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Save slots section
             _lblSlotsTitle = AshfallUiHelpers.MakeSectionHeader("SAVE SLOTS");
             vbox.AddChild(_lblSlotsTitle);
 
             _slotsList = new VBoxContainer();
             _slotsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _slotsList.CustomMinimumSize = new Vector2(450, 0);
+            _slotsList.CustomMinimumSize = new Vector2(500, 0);
             vbox.AddChild(_slotsList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Save info section
-            _lblInfoTitle = AshfallUiHelpers.MakeSectionHeader("SAVE INFORMATION");
+            _lblInfoTitle = AshfallUiHelpers.MakeSectionHeader("SLOT INFORMATION");
             vbox.AddChild(_lblInfoTitle);
 
             _infoList = new VBoxContainer();
             _infoList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _infoList.CustomMinimumSize = new Vector2(400, 0);
+            _infoList.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_infoList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Action buttons section
             _actionButtons = new VBoxContainer();
             _actionButtons.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _actionButtons.CustomMinimumSize = new Vector2(400, 0);
@@ -143,7 +227,7 @@ namespace AtomicWar.GodotApp.UI
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
-            btnClose.CustomMinimumSize = new Vector2(200, 40);
+            btnClose.CustomMinimumSize = new Vector2(160, 40);
             vbox.AddChild(btnClose);
 
             var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
@@ -155,6 +239,7 @@ namespace AtomicWar.GodotApp.UI
         public void Open()
         {
             Visible = true;
+            RefreshView();
             QueueRedraw();
         }
 

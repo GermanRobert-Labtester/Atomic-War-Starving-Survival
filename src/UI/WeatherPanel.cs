@@ -20,17 +20,31 @@ namespace AtomicWar.GodotApp.UI
     {
         public event Action? OnClose;
 
-        public WeatherKind? BoundWeather => _worldHost?.Weather.Current;
-        public bool IsBound => _worldHost != null;
+        public WeatherKind? BoundWeather => ActiveWeather?.Current;
+        public bool IsBound => _worldHost != null || _weatherHost != null;
         public int RenderedHazardCount => _advisoryList?.GetChildCount() ?? 0;
 
         private WorldHostSession? _worldHost;
+        private WeatherHostSession? _weatherHost;
+
+        private WeatherSystem? ActiveWeather => _worldHost?.Weather ?? _weatherHost?.System;
 
         private AshfallDashboardShell _shell = null!;
         private AshfallStatusRail? _statusRail;
         private AshfallDataGrid? _forecastGrid;
         private VBoxContainer _advisoryList = null!;
         private VBoxContainer _seasonList = null!;
+
+        public void Bind(WeatherHostSession weather)
+        {
+            _weatherHost = weather;
+            if (_weatherHost?.System != null)
+            {
+                _weatherHost.System.OnWeatherChanged -= HandleWeatherChanged;
+                _weatherHost.System.OnWeatherChanged += HandleWeatherChanged;
+            }
+            RefreshView();
+        }
 
         public void Bind(WorldHostSession weather)
         {
@@ -56,7 +70,8 @@ namespace AtomicWar.GodotApp.UI
         private void RefreshStatusRail()
         {
             if (_statusRail == null) return;
-            if (_worldHost == null)
+            var w = ActiveWeather;
+            if (w == null)
             {
                 _statusRail.Set("pattern", "—", AshfallMetricCard.Criticality.Normal);
                 _statusRail.Set("outdoor", "0", AshfallMetricCard.Criticality.Normal);
@@ -65,7 +80,6 @@ namespace AtomicWar.GodotApp.UI
                 _statusRail.Set("hazmat_decay", "×1.0", AshfallMetricCard.Criticality.Normal);
                 return;
             }
-            var w = _worldHost.Weather;
             float tempPen = WeatherSystem.TemperaturePenaltyForWeather(w.Current);
             float outdoor = w.OutdoorRadModifier;
             float vis = w.VisibilityFactor;
@@ -99,12 +113,12 @@ namespace AtomicWar.GodotApp.UI
         private void BuildForecastRows()
         {
             if (_forecastGrid == null) return;
-            if (_worldHost == null)
+            var w = ActiveWeather;
+            if (w == null)
             {
                 _forecastGrid.SetRows(BuildForecastFixture());
                 return;
             }
-            var w = _worldHost.Weather;
             int day = Math.Max(1, (int)Math.Floor(w.State.totalElapsedHours / 24f) + 1);
             var forecast = w.PeekForecast(3);
             var rows = new List<AshfallDataGrid.Row>();
@@ -158,15 +172,15 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_seasonList == null) return;
             AshfallUiHelpers.EmptyChildren(_seasonList);
-            if (_worldHost == null)
+            var w = ActiveWeather;
+            if (w == null)
             {
                 _seasonList.AddChild(AshfallUiHelpers.MakeMetadata("No season profile bound."));
                 return;
             }
-            var w = _worldHost.Weather;
             int day = Math.Max(1, (int)Math.Floor(w.State.totalElapsedHours / 24f) + 1);
             var season = w.GetSeasonForDay(day);
-            string profileName = _worldHost.Profile?.displayName ?? season.displayName;
+            string profileName = _worldHost?.Profile?.displayName ?? season.displayName;
             _seasonList.AddChild(AshfallUiHelpers.MakeDataRow("Active Season Profile", profileName, AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
             _seasonList.AddChild(AshfallUiHelpers.MakeDataRow("Next Weather Shift", $"In {w.State.hoursUntilNextCheck:0.0} Hours", AshfallUiHelpers.ToColor(DesignTheme.Pale)));
             _seasonList.AddChild(AshfallUiHelpers.MakeDataRow("Recorded Rolls", $"{w.State.rollCount}", AshfallUiHelpers.ToColor(DesignTheme.Dim)));
@@ -176,12 +190,12 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_advisoryList == null) return;
             AshfallUiHelpers.EmptyChildren(_advisoryList);
-            if (_worldHost == null)
+            var w = ActiveWeather;
+            if (w == null)
             {
                 _advisoryList.AddChild(AshfallUiHelpers.MakeMetadata("No advisories available."));
                 return;
             }
-            var w = _worldHost.Weather;
             int count = 0;
             if (w.IsScavengingBlocked(false))
             {
@@ -349,6 +363,19 @@ namespace AtomicWar.GodotApp.UI
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_worldHost?.Weather != null)
+            {
+                _worldHost.Weather.OnWeatherChanged -= HandleWeatherChanged;
+            }
+            if (_weatherHost?.System != null)
+            {
+                _weatherHost.System.OnWeatherChanged -= HandleWeatherChanged;
+            }
+            base._ExitTree();
         }
     }
 }
