@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
@@ -8,7 +9,8 @@ namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Radiation History panel.
-    /// Shows detailed radiation exposure history, cumulative dosimetry, and radiation events timeline.
+    /// Shows dose history, cumulative exposure, and reading events — bound
+    /// to the live DoseLedgerHostSession. Unbound renders an honest empty state.
     /// </summary>
     public partial class RadiationHistoryPanel : Control
     {
@@ -16,79 +18,96 @@ namespace AtomicWar.GodotApp.UI
 
         private VBoxContainer _contentVBox = null!;
         private Label _lblHistoryTitle;
-        private VBoxContainer _historyData;
+        private VBoxContainer _historyList;
         private Label _lblCumulativeTitle;
-        private VBoxContainer _cumulativeData;
+        private VBoxContainer _cumulativeList;
         private Label _lblEventsTitle;
-        private VBoxContainer _radiationEvents;
+        private VBoxContainer _eventsList;
 
-        private readonly string[] _placeholderHistory = {
-            "[Day 1] Initial exposure: 0.5 mSv (Low)",
-            "[Day 5] Fallout event: +2.5 mSv cumulative",
-            "[Day 10] Routine check: 5.2 mSv total",
-            "[Day 15] Radiation spike: +3.8 mSv",
-            "[Day 20] Medical treatment: Reduced exposure",
-            "[Day 25] Current: 12.4 mSv cumulative (Low risk)"
-        };
+        private DoseLedgerHostSession? _dose;
 
-        private readonly string[] _placeholderCumulative = {
-            "Total Exposure: 12.4 mSv (Low risk)",
-            "Daily Average: 0.5 mSv/day",
-            "Peak Daily: 3.8 mSv (Day 15)",
-            "Weekly Average: 3.2 mSv/week",
-            "Monthly Projection: 15.6 mSv (Safe limit)",
-            "Annual Projection: 182.5 mSv (Above safe limit)",
-            "Safe Limit: 100 mSv/year (Public)",
-            "Occupational Limit: 500 mSv/year"
-        };
+        public bool IsBound => _dose != null;
+        public int RenderedRowCount { get; private set; }
 
-        private readonly string[] _placeholderEvents = {
-            "[Day 5] Fallout storm passed — +2.5 mSv",
-            "[Day 12] Radiation monitoring calibrated",
-            "[Day 15] Radiation spike detected — Sector 4",
-            "[Day 18] Dosimeter recalibrated",
-            "[Day 22] Fallout warning issued",
-            "[Day 25] Levels stabilizing — Normal operations"
-        };
-
-        public void Bind(object radiationHistory)
+        public void Bind(DoseLedgerHostSession? dose)
         {
+            _dose = dose;
             RefreshView();
         }
 
         public void RefreshView()
         {
-            if (_historyData == null || _cumulativeData == null || _radiationEvents == null) return;
+            if (_historyList == null || _cumulativeList == null || _eventsList == null) return;
 
-            AshfallUiHelpers.EmptyChildren(_historyData);
-            AshfallUiHelpers.EmptyChildren(_cumulativeData);
-            AshfallUiHelpers.EmptyChildren(_radiationEvents);
+            AshfallUiHelpers.EmptyChildren(_historyList);
+            AshfallUiHelpers.EmptyChildren(_cumulativeList);
+            AshfallUiHelpers.EmptyChildren(_eventsList);
 
-            foreach (string history in _placeholderHistory)
+            RenderedRowCount = 0;
+
+            if (_dose?.Ledger == null || _dose.Ledger.Entries.Count == 0)
             {
-                var label = new Label { Text = history };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _historyData.AddChild(label);
+                _historyList.AddChild(MakeDimLine("No dose ledger bound."));
+                return;
             }
 
-            foreach (string cumulative in _placeholderCumulative)
+            // ── Per-survivor dose history ──
+            foreach (var entry in _dose.Ledger.Entries)
             {
-                var label = new Label { Text = cumulative };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _cumulativeData.AddChild(label);
+                if (entry == null) continue;
+                AddRow(_historyList, $"{Name(entry.survivorId)} — baseline {entry.baselineMsv:0.0} · cumulative {entry.cumulativeMsv:0.0} mSv",
+                    entry.cumulativeMsv >= 50f ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
             }
 
-            foreach (string eventEntry in _placeholderEvents)
+            // ── Cumulative summary ──
+            float totalCumulative = _dose.Ledger.Entries.Sum(e => e?.cumulativeMsv ?? 0f);
+            float totalBaseline = _dose.Ledger.Entries.Sum(e => e?.baselineMsv ?? 0f);
+            AddRow(_cumulativeList, $"Total cumulative dose: {totalCumulative:0.0} mSv", Ashfall.Core.UI.Theme.Pale);
+            AddRow(_cumulativeList, $"Total inherited baseline: {totalBaseline:0.0} mSv", Ashfall.Core.UI.Theme.Dim);
+            AddRow(_cumulativeList, $"Tracked survivors: {_dose.Ledger.Entries.Count}", Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 3;
+
+            // ── Reading events (capped at 20) ──
+            int shown = 0;
+            foreach (var entry in _dose.Ledger.Entries)
             {
-                var label = new Label { Text = eventEntry };
-                label.CustomMinimumSize = new Vector2(350, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
-                _radiationEvents.AddChild(label);
+                if (entry == null) continue;
+                foreach (var reading in entry.readingsHistory)
+                {
+                    if (reading == null || shown >= 20) continue;
+                    AddRow(_eventsList, $"[Day {reading.day}] {Name(entry.survivorId)} — {reading.bookedMsv:0.0} mSv ({reading.source})",
+                        Ashfall.Core.UI.Theme.Critical);
+                    shown++;
+                    RenderedRowCount++;
+                }
             }
+            if (shown == 0)
+                _eventsList.AddChild(MakeDimLine("No reading events logged."));
+        }
+
+        private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(400, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
+        }
+
+        private static string Name(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return "Unknown";
+            int us = id.IndexOf('_');
+            return us >= 0 ? id.Substring(us + 1).Replace('_', ' ') : id;
         }
 
         public override void _Ready()
@@ -114,44 +133,36 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblHistoryTitle = AshfallUiHelpers.MakeSectionHeader("EXPOSURE HISTORY");
+            _lblHistoryTitle = AshfallUiHelpers.MakeSectionHeader("PER-SURVIVOR DOSE");
             vbox.AddChild(_lblHistoryTitle);
-
-            _historyData = new VBoxContainer();
-            _historyData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _historyData.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_historyData);
+            _historyList = new VBoxContainer();
+            _historyList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _historyList.CustomMinimumSize = new Vector2(450, 0);
+            vbox.AddChild(_historyList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblCumulativeTitle = AshfallUiHelpers.MakeSectionHeader("CUMULATIVE DOSIMETRY");
+            _lblCumulativeTitle = AshfallUiHelpers.MakeSectionHeader("CUMULATIVE SUMMARY");
             vbox.AddChild(_lblCumulativeTitle);
-
-            _cumulativeData = new VBoxContainer();
-            _cumulativeData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _cumulativeData.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_cumulativeData);
+            _cumulativeList = new VBoxContainer();
+            _cumulativeList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _cumulativeList.CustomMinimumSize = new Vector2(450, 0);
+            vbox.AddChild(_cumulativeList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblEventsTitle = AshfallUiHelpers.MakeSectionHeader("RADIATION EVENTS");
+            _lblEventsTitle = AshfallUiHelpers.MakeSectionHeader("READING EVENTS");
             vbox.AddChild(_lblEventsTitle);
-
-            _radiationEvents = new VBoxContainer();
-            _radiationEvents.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _radiationEvents.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_radiationEvents);
+            _eventsList = new VBoxContainer();
+            _eventsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _eventsList.CustomMinimumSize = new Vector2(450, 0);
+            vbox.AddChild(_eventsList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
         }
 
         public void Open()

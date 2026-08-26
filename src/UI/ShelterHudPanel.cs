@@ -136,6 +136,13 @@ public partial class ShelterHudPanel : Control
             new AshfallSidebar.Item { Id = "help",       Label = "Help & Controls",     Hint = "TUTORIAL" },
             new AshfallSidebar.Item { Id = "afflictions", Label = "Afflictions",          Hint = "MEDICAL TRIAGE" },
             new AshfallSidebar.Item { Id = "radiation_detail", Label = "Radiation",       Hint = "DOSIMETRY" },
+            new AshfallSidebar.Item { Id = "radiation_history", Label = "Rad History",    Hint = "DOSE LEDGER" },
+            new AshfallSidebar.Item { Id = "research",    Label = "Research",             Hint = "KNOWLEDGE" },
+            new AshfallSidebar.Item { Id = "weather_detail", Label = "Weather Detail",     Hint = "FORECAST" },
+            new AshfallSidebar.Item { Id = "event_detail", Label = "Events",              Hint = "INCIDENT LOG" },
+            new AshfallSidebar.Item { Id = "economy_detail", Label = "Economy",           Hint = "MARKET" },
+            new AshfallSidebar.Item { Id = "journal_detail", Label = "Journal",          Hint = "CODEX" },
+            new AshfallSidebar.Item { Id = "survival_detail", Label = "Survival",        Hint = "ROSTER OVERVIEW" },
         }, "BUNKER OPS", "overview");
 
         if (_sidebar != null)

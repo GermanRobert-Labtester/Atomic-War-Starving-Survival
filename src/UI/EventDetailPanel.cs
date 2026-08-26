@@ -1,14 +1,17 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
+using AtomicWar.GodotApp.Host;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Event Detail panel.
-    /// Shows detailed event information, event history, and narrative progression.
+    /// Shows recent events, incidents, and narrative progression — bound to
+    /// the live EventsHostSession. Unbound renders an honest empty state.
     /// </summary>
     public partial class EventDetailPanel : Control
     {
@@ -16,76 +19,82 @@ namespace AtomicWar.GodotApp.UI
 
         private VBoxContainer _contentVBox = null!;
         private Label _lblEventInfoTitle;
-        private VBoxContainer _eventInfo;
+        private VBoxContainer _eventInfoList;
         private Label _lblHistoryTitle;
-        private VBoxContainer _eventHistory;
+        private VBoxContainer _historyList;
         private Label _lblNarrativeTitle;
-        private VBoxContainer _narrativeProgress;
+        private VBoxContainer _narrativeList;
 
-        private readonly string[] _placeholderEventInfo = {
-            "Event: Supply Cache Discovery",
-            "Type: Resource Event",
-            "Status: Completed",
-            "Date: Day 25",
-            "Location: Sector 12",
-            "Impact: +15 rations, +3 medicine"
-        };
+        private EventsHostSession? _events;
 
-        private readonly string[] _placeholderHistory = {
-            "[Day 25] Supply cache discovered — +15 rations, +3 medicine",
-            "[Day 24] Radio contact with Black Flotilla — Trade offer",
-            "[Day 23] Fallout warning — All survivors sheltered",
-            "[Day 22] Medical emergency — Marcus treated radiation",
-            "[Day 21] Expedition returned — 3 new survivors recruited"
-        };
+        public bool IsBound => _events != null;
+        public int RenderedRowCount { get; private set; }
 
-        private readonly string[] _placeholderNarrative = {
-            "Day 21-25: Survival and Expansion Phase",
-            "Focus: Resource acquisition and community growth",
-            "Key Events: Supply discovery, radio contact, medical emergency",
-            "Outcome: Community expanded to 8 survivors",
-            "Next Phase: Exploration and diplomacy",
-            "Narrative Arc: Building resilience in the wasteland"
-        };
-
-        public void Bind(object eventDetail)
+        public void Bind(EventsHostSession? events)
         {
+            _events = events;
             RefreshView();
         }
 
         public void RefreshView()
         {
-            if (_eventInfo == null || _eventHistory == null || _narrativeProgress == null) return;
+            if (_eventInfoList == null || _historyList == null || _narrativeList == null) return;
 
-            AshfallUiHelpers.EmptyChildren(_eventInfo);
-            AshfallUiHelpers.EmptyChildren(_eventHistory);
-            AshfallUiHelpers.EmptyChildren(_narrativeProgress);
+            AshfallUiHelpers.EmptyChildren(_eventInfoList);
+            AshfallUiHelpers.EmptyChildren(_historyList);
+            AshfallUiHelpers.EmptyChildren(_narrativeList);
 
-            foreach (string info in _placeholderEventInfo)
+            RenderedRowCount = 0;
+
+            if (_events == null)
             {
-                var label = new Label { Text = info };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _eventInfo.AddChild(label);
+                _eventInfoList.AddChild(MakeDimLine("No events session bound."));
+                return;
             }
 
-            foreach (string history in _placeholderHistory)
+            var recent = _events.GetRecentEvents();
+            foreach (var ev in recent)
             {
-                var label = new Label { Text = history };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _eventHistory.AddChild(label);
+                AddRow(_eventInfoList, $"[Day {ev.Day}] {ev.Description}", Ashfall.Core.UI.Theme.Pale);
+                RenderedRowCount++;
             }
+            if (recent.Count == 0)
+                _eventInfoList.AddChild(MakeDimLine("No recent events."));
 
-            foreach (string narrative in _placeholderNarrative)
+            var incidents = _events.GetIncidents();
+            foreach (var inc in incidents)
             {
-                var label = new Label { Text = narrative };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                _narrativeProgress.AddChild(label);
+                AddRow(_historyList, $"[Day {inc.Day}] {inc.Description}", Ashfall.Core.UI.Theme.Warm);
+                RenderedRowCount++;
             }
+            if (incidents.Count == 0)
+                _historyList.AddChild(MakeDimLine("No incidents logged."));
+
+            var narrative = _events.GetNarrativeProgression();
+            foreach (var nar in narrative)
+            {
+                AddRow(_narrativeList, $"[Order {nar.Order}] {nar.Description}", Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
+            if (narrative.Count == 0)
+                _narrativeList.AddChild(MakeDimLine("No narrative progression logged."));
+        }
+
+        private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(400, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
         }
 
         public override void _Ready()
@@ -111,44 +120,36 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblEventInfoTitle = AshfallUiHelpers.MakeSectionHeader("EVENT INFORMATION");
+            _lblEventInfoTitle = AshfallUiHelpers.MakeSectionHeader("RECENT EVENTS");
             vbox.AddChild(_lblEventInfoTitle);
-
-            _eventInfo = new VBoxContainer();
-            _eventInfo.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _eventInfo.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_eventInfo);
+            _eventInfoList = new VBoxContainer();
+            _eventInfoList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _eventInfoList.CustomMinimumSize = new Vector2(450, 0);
+            vbox.AddChild(_eventInfoList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblHistoryTitle = AshfallUiHelpers.MakeSectionHeader("EVENT HISTORY");
+            _lblHistoryTitle = AshfallUiHelpers.MakeSectionHeader("INCIDENTS LOG");
             vbox.AddChild(_lblHistoryTitle);
-
-            _eventHistory = new VBoxContainer();
-            _eventHistory.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _eventHistory.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_eventHistory);
+            _historyList = new VBoxContainer();
+            _historyList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _historyList.CustomMinimumSize = new Vector2(450, 0);
+            vbox.AddChild(_historyList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             _lblNarrativeTitle = AshfallUiHelpers.MakeSectionHeader("NARRATIVE PROGRESSION");
             vbox.AddChild(_lblNarrativeTitle);
-
-            _narrativeProgress = new VBoxContainer();
-            _narrativeProgress.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _narrativeProgress.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_narrativeProgress);
+            _narrativeList = new VBoxContainer();
+            _narrativeList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _narrativeList.CustomMinimumSize = new Vector2(450, 0);
+            vbox.AddChild(_narrativeList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
         }
 
         public void Open()

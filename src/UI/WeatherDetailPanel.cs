@@ -1,14 +1,18 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
+using Ashfall.Core.World;
+using Ashfall.Core;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Weather Detail panel.
-    /// Shows detailed weather breakdown with hourly forecast, wind patterns, and temperature trends.
+    /// Shows detailed weather breakdown bound to the live WeatherSystem.
+    /// Unbound renders "NOT MONITORED".
     /// </summary>
     public partial class WeatherDetailPanel : Control
     {
@@ -24,96 +28,80 @@ namespace AtomicWar.GodotApp.UI
         private Label _lblTrendTitle;
         private VBoxContainer _trendData;
 
-        // Placeholder weather detail data
-        private readonly string[] _placeholderCurrent = {
-            "Temperature: -5°C (Nuclear Winter)",
-            "Wind: 15 km/h West (Moderate)",
-            "Visibility: 200m (Dust storm)",
-            "Radiation: 0.8 mSv/hr (Elevated)",
-            "Humidity: 65% (High)",
-            "Pressure: 1013 hPa (Normal)"
-        };
+        private WeatherSystem? _weather;
 
-        private readonly string[] _placeholderForecast = {
-            "[Hour 0-6] Clear, -8°C, low wind, radiation dropping",
-            "[Hour 6-12] Overcast, -6°C, wind increasing to 20 km/h",
-            "[Hour 12-18] Dust storm, -4°C, visibility <100m, rad spike",
-            "[Hour 18-24] Clearing, -7°C, wind calming, radiation falling"
-        };
+        public bool IsBound => _weather != null;
+        public int RenderedRowCount { get; private set; }
 
-        private readonly string[] _placeholderWind = {
-            "Current Direction: West (270°)",
-            "Speed: 15 km/h (Moderate)",
-            "Gusts: Up to 25 km/h",
-            "Pattern: Stable western flow",
-            "Expected Change: Shifting to NW by hour 12"
-        };
-
-        private readonly string[] _placeholderTrend = {
-            "Temperature Trend: Stable at -5°C",
-            "Radiation Trend: Elevated but stable",
-            "Wind Trend: Increasing then decreasing",
-            "Visibility Trend: Poor then improving",
-            "7-Day Forecast: Nuclear winter conditions persisting",
-            "Expected Improvement: Day 30+ (weather clearing)"
-        };
-
-        // Real data from host session
-        // private WeatherHostSession? _weatherHost;
-
-        public void Bind(object weather) // placeholder for WeatherHostSession
+        public void Bind(WeatherSystem? weather)
         {
-            // _weatherHost = (WeatherHostSession)weather;
-            // RefreshView();
+            _weather = weather;
+            RefreshView();
         }
 
         public void RefreshView()
         {
             if (_currentWeather == null || _forecastList == null || _windData == null || _trendData == null) return;
 
-            // Clear existing lists
             AshfallUiHelpers.EmptyChildren(_currentWeather);
             AshfallUiHelpers.EmptyChildren(_forecastList);
             AshfallUiHelpers.EmptyChildren(_windData);
             AshfallUiHelpers.EmptyChildren(_trendData);
 
-            // Display placeholder current weather
-            foreach (string data in _placeholderCurrent)
+            RenderedRowCount = 0;
+
+            if (_weather == null)
             {
-                var label = new Label { Text = data };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _currentWeather.AddChild(label);
+                _currentWeather.AddChild(MakeDimLine("No weather system bound."));
+                return;
             }
 
-            // Display placeholder forecast
-            foreach (string forecast in _placeholderForecast)
+            var kind = _weather.Current;
+            bool hazard = kind == WeatherKind.FalloutStorm || kind == WeatherKind.BlackRain || kind == WeatherKind.Blizzard;
+            float tempPenalty = WeatherSystem.TemperaturePenaltyForWeather(kind);
+            float outdoorRad = _weather.OutdoorRadModifier;
+
+            AddRow(_currentWeather, $"Current Weather: {kind}", Ashfall.Core.UI.Theme.Pale);
+            AddRow(_currentWeather, $"Temperature Penalty: {tempPenalty:0}°C", Ashfall.Core.UI.Theme.Lethe);
+            AddRow(_currentWeather, $"Outdoor Rad Modifier: {(outdoorRad > 0 ? "+" : "")}{outdoorRad:0} mSv/h",
+                outdoorRad > 0 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
+            AddRow(_currentWeather, $"Elapsed Hours: {_weather.State.totalElapsedHours:0}", Ashfall.Core.UI.Theme.Pale);
+            AddRow(_currentWeather, $"Next Check In: {_weather.State.hoursUntilNextCheck:0.0} h", Ashfall.Core.UI.Theme.Pale);
+            AddRow(_currentWeather, $"Roll Count: {_weather.State.rollCount}", Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 6;
+
+            if (hazard)
             {
-                var label = new Label { Text = forecast };
-                label.CustomMinimumSize = new Vector2(350, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
-                _forecastList.AddChild(label);
+                AddRow(_forecastList, $"HAZARD ACTIVE — {kind} conditions", Ashfall.Core.UI.Theme.Critical);
+                AddRow(_forecastList, "Keep survivors indoors; outdoor exposure dangerous", Ashfall.Core.UI.Theme.Warm);
+            }
+            else
+            {
+                AddRow(_forecastList, "No hazard weather active", Ashfall.Core.UI.Theme.Lethe);
+                AddRow(_forecastList, $"Next weather check in {_weather.State.hoursUntilNextCheck:0.0} hours", Ashfall.Core.UI.Theme.Dim);
             }
 
-            // Display placeholder wind data
-            foreach (string wind in _placeholderWind)
-            {
-                var label = new Label { Text = wind };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _windData.AddChild(label);
-            }
+            AddRow(_windData, "Wind data not modeled in Core weather system", Ashfall.Core.UI.Theme.Dim);
+            AddRow(_trendData, $"Weather roll #{_weather.State.rollCount} — deterministic from seed", Ashfall.Core.UI.Theme.Dim);
+            AddRow(_trendData, _weather.State.restrictToNonHazardWeather ? "Restricted to non-hazard weather" : "All weather kinds enabled",
+                Ashfall.Core.UI.Theme.Dim);
+        }
 
-            // Display placeholder trend data
-            foreach (string trend in _placeholderTrend)
-            {
-                var label = new Label { Text = trend };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _trendData.AddChild(label);
-            }
+        private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(350, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
         }
 
         public override void _Ready()
@@ -139,10 +127,8 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Current weather section
             _lblCurrentTitle = AshfallUiHelpers.MakeSectionHeader("CURRENT CONDITIONS");
             vbox.AddChild(_lblCurrentTitle);
-
             _currentWeather = new VBoxContainer();
             _currentWeather.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _currentWeather.CustomMinimumSize = new Vector2(400, 0);
@@ -150,10 +136,8 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Forecast section
-            _lblForecastTitle = AshfallUiHelpers.MakeSectionHeader("HOURLY FORECAST");
+            _lblForecastTitle = AshfallUiHelpers.MakeSectionHeader("HAZARD FORECAST");
             vbox.AddChild(_lblForecastTitle);
-
             _forecastList = new VBoxContainer();
             _forecastList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _forecastList.CustomMinimumSize = new Vector2(400, 0);
@@ -161,10 +145,8 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Wind data section
             _lblWindTitle = AshfallUiHelpers.MakeSectionHeader("WIND PATTERN");
             vbox.AddChild(_lblWindTitle);
-
             _windData = new VBoxContainer();
             _windData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _windData.CustomMinimumSize = new Vector2(400, 0);
@@ -172,10 +154,8 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            // Trend section
             _lblTrendTitle = AshfallUiHelpers.MakeSectionHeader("WEATHER TREND");
             vbox.AddChild(_lblTrendTitle);
-
             _trendData = new VBoxContainer();
             _trendData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             _trendData.CustomMinimumSize = new Vector2(400, 0);
@@ -202,7 +182,6 @@ namespace AtomicWar.GodotApp.UI
         public override void _UnhandledInput(InputEvent @event)
         {
             if (!Visible) return;
-
             if (@event is InputEventKey key && key.Pressed && key.Keycode == Key.Escape)
             {
                 OnClose?.Invoke();

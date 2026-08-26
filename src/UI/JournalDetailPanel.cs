@@ -1,94 +1,100 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
+using Ashfall.Core.Journal;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Journal Detail panel.
-    /// Shows detailed journal entries, personal notes, and narrative progression.
+    /// Shows journal entries, codex unlocks, and tab state — bound to the
+    /// live JournalHostSession. Unbound renders an honest empty state.
     /// </summary>
     public partial class JournalDetailPanel : Control
     {
         public event Action? OnClose;
 
         private VBoxContainer _contentVBox = null!;
-        private Label _lblEntryTitle;
-        private VBoxContainer _entryContent;
-        private Label _lblNotesTitle;
-        private VBoxContainer _personalNotes;
-        private Label _lblNarrativeTitle;
-        private VBoxContainer _narrativeProgress;
+        private Label _lblEntriesTitle;
+        private VBoxContainer _entriesList;
+        private Label _lblCodexTitle;
+        private VBoxContainer _codexList;
+        private Label _lblTabsTitle;
+        private VBoxContainer _tabsList;
 
-        private readonly string[] _placeholderEntry = {
-            "Day 25 — The Ledger Continues",
-            "Today we discovered a supply cache in Sector 12. +15 rations, +3 medicine. The wasteland still holds secrets for those brave enough to search.",
-            "Marcus treated Yuki's minor wound from perimeter patrol. No serious injuries today.",
-            "Sofia negotiated a trade with the Black Flotilla. 5 food for 2 medicine. Good deal.",
-            "Radiation levels stable. Shelter holding up. We survive another day."
-        };
+        private JournalSystem? _journal;
 
-        private readonly string[] _placeholderNotes = {
-            "Elena — Leadership is heavy but necessary. She makes tough calls.",
-            "Marcus — Best medic we have. Haunted but reliable.",
-            "Yuki — Quiet scout. Knows the wasteland better than anyone.",
-            "David — Engineer par excellence. Builds what we need.",
-            "Sofia — Trader with a conscience. Fair but calculating."
-        };
+        public bool IsBound => _journal != null;
+        public int RenderedRowCount { get; private set; }
 
-        private readonly string[] _placeholderNarrative = {
-            "Chapter 1: The Exchange — Nuclear detonations across the globe",
-            "Chapter 2: Ashfall — Surviving the initial fallout and radiation",
-            "Chapter 3: The Bunker — Establishing shelter and community",
-            "Chapter 4: First Contact — Encountering other survivors",
-            "Chapter 5: The Long Winter — Nuclear winter conditions setting in",
-            "Chapter 6: Scavenging — Venturing out for supplies and knowledge",
-            "Chapter 7: The Ledger — Documenting everything, everything matters",
-            "Chapter 8: The Radio — Listening for hope in the static",
-            "Chapter 9: The Expedition — Risking the wasteland for resources",
-            "Chapter 10: The Choice — What survives, what's sacrificed"
-        };
-
-        public void Bind(object journal)
+        public void Bind(JournalSystem? journal)
         {
+            _journal = journal;
             RefreshView();
         }
 
         public void RefreshView()
         {
-            if (_entryContent == null || _personalNotes == null || _narrativeProgress == null) return;
+            if (_entriesList == null || _codexList == null || _tabsList == null) return;
 
-            AshfallUiHelpers.EmptyChildren(_entryContent);
-            AshfallUiHelpers.EmptyChildren(_personalNotes);
-            AshfallUiHelpers.EmptyChildren(_narrativeProgress);
+            AshfallUiHelpers.EmptyChildren(_entriesList);
+            AshfallUiHelpers.EmptyChildren(_codexList);
+            AshfallUiHelpers.EmptyChildren(_tabsList);
 
-            foreach (string entry in _placeholderEntry)
+            RenderedRowCount = 0;
+
+            if (_journal == null)
             {
-                var label = new Label { Text = entry };
-                label.CustomMinimumSize = new Vector2(400, 40);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _entryContent.AddChild(label);
+                _entriesList.AddChild(MakeDimLine("No journal session bound."));
+                return;
             }
 
-            foreach (string note in _placeholderNotes)
-            {
-                var label = new Label { Text = note };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
-                _personalNotes.AddChild(label);
-            }
+            var sys = _journal;
 
-            foreach (string narrative in _placeholderNarrative)
+            // ── Recent entries ──
+            foreach (var entry in sys.Entries.Take(15))
             {
-                var label = new Label { Text = narrative };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _narrativeProgress.AddChild(label);
+                if (entry == null) continue;
+                AddRow(_entriesList, $"[Day {entry.Day}] {entry.KnowledgeKey} — {entry.AuthorName}",
+                    Ashfall.Core.UI.Theme.Pale);
+                RenderedRowCount++;
             }
+            if (sys.EntryCount == 0)
+                _entriesList.AddChild(MakeDimLine("No journal entries yet."));
+
+            // ── Codex unlocks ──
+            AddRow(_codexList, $"Codex unlocks: {sys.CodexUnlockCount}", Ashfall.Core.UI.Theme.Lethe);
+            AddRow(_codexList, $"Has unread: {sys.HasUnread}", sys.HasUnread ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 2;
+
+            // ── Tab state ──
+            AddRow(_tabsList, $"Active tab: {sys.ActiveTab} / {JournalSystem.TabCount - 1}", Ashfall.Core.UI.Theme.Pale);
+            for (int t = 0; t < JournalSystem.TabCount; t++)
+            {
+                AddRow(_tabsList, $"Tab {t}: {(sys.HasUnreadForTab(t) ? "unread" : "read")}",
+                    sys.HasUnreadForTab(t) ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+                RenderedRowCount++;
+            }
+        }
+
+        private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(400, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
         }
 
         public override void _Ready()
@@ -114,44 +120,36 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblEntryTitle = AshfallUiHelpers.MakeSectionHeader("JOURNAL ENTRY");
-            vbox.AddChild(_lblEntryTitle);
-
-            _entryContent = new VBoxContainer();
-            _entryContent.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _entryContent.CustomMinimumSize = new Vector2(450, 0);
-            vbox.AddChild(_entryContent);
-
-            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
-
-            _lblNotesTitle = AshfallUiHelpers.MakeSectionHeader("PERSONAL NOTES");
-            vbox.AddChild(_lblNotesTitle);
-
-            _personalNotes = new VBoxContainer();
-            _personalNotes.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _personalNotes.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_personalNotes);
+            _lblEntriesTitle = AshfallUiHelpers.MakeSectionHeader("RECENT ENTRIES");
+            vbox.AddChild(_lblEntriesTitle);
+            _entriesList = new VBoxContainer();
+            _entriesList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _entriesList.CustomMinimumSize = new Vector2(450, 0);
+            vbox.AddChild(_entriesList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblNarrativeTitle = AshfallUiHelpers.MakeSectionHeader("NARRATIVE PROGRESSION");
-            vbox.AddChild(_lblNarrativeTitle);
+            _lblCodexTitle = AshfallUiHelpers.MakeSectionHeader("CODEX UNLOCKS");
+            vbox.AddChild(_lblCodexTitle);
+            _codexList = new VBoxContainer();
+            _codexList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _codexList.CustomMinimumSize = new Vector2(450, 0);
+            vbox.AddChild(_codexList);
 
-            _narrativeProgress = new VBoxContainer();
-            _narrativeProgress.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _narrativeProgress.CustomMinimumSize = new Vector2(400, 0);
-            vbox.AddChild(_narrativeProgress);
+            vbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            _lblTabsTitle = AshfallUiHelpers.MakeSectionHeader("TAB STATE");
+            vbox.AddChild(_lblTabsTitle);
+            _tabsList = new VBoxContainer();
+            _tabsList.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
+            _tabsList.CustomMinimumSize = new Vector2(450, 0);
+            vbox.AddChild(_tabsList);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
         }
 
         public void Open()

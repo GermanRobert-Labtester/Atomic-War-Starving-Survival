@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
@@ -8,7 +9,8 @@ namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Survival Detail panel.
-    /// Shows detailed survival needs tracking, health metrics, and survival status.
+    /// Shows overall survival state across the roster — health, needs, radiation,
+    /// and status — bound to the live SurvivorsHostSession.
     /// </summary>
     public partial class SurvivalDetailPanel : Control
     {
@@ -24,44 +26,14 @@ namespace AtomicWar.GodotApp.UI
         private Label _lblStatusTitle;
         private VBoxContainer _statusData;
 
-        private readonly string[] _placeholderHealth = {
-            "Overall Health: 85/100 (Good)",
-            "Physical Health: 90/100",
-            "Mental Health: 80/100",
-            "Injuries: Minor (Right forearm)",
-            "Illness: None",
-            "Recovery Status: Recovering"
-        };
+        private SurvivorsHostSession? _survivors;
 
-        private readonly string[] _placeholderNeeds = {
-            "Hunger: 80/100 (Adequate)",
-            "Thirst: 75/100 (Moderate)",
-            "Fatigue: 65/100 (Tired)",
-            "Warmth: 85/100 (Adequate)",
-            "Morale: 75/100 (Good)",
-            "Hygiene: 70/100 (Fair)"
-        };
+        public bool IsBound => _survivors != null;
+        public int RenderedRowCount { get; private set; }
 
-        private readonly string[] _placeholderRadiation = {
-            "Current Exposure: 0.8 mSv/hr (Elevated)",
-            "Total Exposure: 12.4 mSv (Low risk)",
-            "Daily Average: 0.5 mSv/day",
-            "Peak Today: 1.2 mSv/hr",
-            "Protection Level: 40% (Basic Gas Mask)",
-            "Next Checkup: Day 26 (In 1 day)"
-        };
-
-        private readonly string[] _placeholderStatus = {
-            "Survival Status: Active",
-            "Daily Consumption: -12 units",
-            "Resource Availability: Adequate",
-            "Work Capacity: 85% (Reduced due to injury)",
-            "Social Status: Integrated (5/5 survivors)",
-            "Long-term Outlook: Stable"
-        };
-
-        public void Bind(object survivalDetail)
+        public void Bind(SurvivorsHostSession? survivors)
         {
+            _survivors = survivors;
             RefreshView();
         }
 
@@ -74,39 +46,59 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(_radiationData);
             AshfallUiHelpers.EmptyChildren(_statusData);
 
-            foreach (string health in _placeholderHealth)
+            RenderedRowCount = 0;
+
+            if (_survivors?.RosterState == null || _survivors.RosterState.Count == 0)
             {
-                var label = new Label { Text = health };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _healthData.AddChild(label);
+                _healthData.AddChild(MakeDimLine("No survivor roster bound."));
+                return;
             }
 
-            foreach (string need in _placeholderNeeds)
-            {
-                var label = new Label { Text = need };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _needsData.AddChild(label);
-            }
+            var roster = _survivors.RosterState.Where(s => s != null).ToList();
+            int alive = roster.Count(s => s.IsAlive);
+            float avgHealth = roster.Count > 0 ? roster.Average(s => s.Health) : 0f;
+            float avgHunger = roster.Count > 0 ? roster.Average(s => s.Hunger) : 0f;
+            float avgThirst = roster.Count > 0 ? roster.Average(s => s.Thirst) : 0f;
+            float avgFatigue = roster.Count > 0 ? roster.Average(s => s.Fatigue) : 0f;
+            float avgMorale = roster.Count > 0 ? roster.Average(s => s.Morale) : 0f;
+            float avgDose = roster.Count > 0 ? roster.Average(s => _survivors.RadStateFor(s.Id)?.RadiationDose ?? 0f) : 0f;
 
-            foreach (string rad in _placeholderRadiation)
-            {
-                var label = new Label { Text = rad };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _radiationData.AddChild(label);
-            }
+            AddRow(_healthData, $"Roster: {alive} / {roster.Count} alive", alive < roster.Count ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
+            AddRow(_healthData, $"Avg Health: {avgHealth:0} / 100", avgHealth < 50 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Lethe);
+            RenderedRowCount += 2;
 
-            foreach (string status in _placeholderStatus)
-            {
-                var label = new Label { Text = status };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                _statusData.AddChild(label);
-            }
+            AddRow(_needsData, $"Avg Hunger: {avgHunger:0}", avgHunger >= 80 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsData, $"Avg Thirst: {avgThirst:0}", avgThirst >= 80 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsData, $"Avg Fatigue: {avgFatigue:0}", avgFatigue >= 80 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale);
+            AddRow(_needsData, $"Avg Morale: {avgMorale:0} / 100", avgMorale < 30 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Pale);
+            RenderedRowCount += 4;
+
+            AddRow(_radiationData, $"Avg Dose: {avgDose:0.0} mSv", avgDose >= 50 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe);
+            int dosed = roster.Count(s => (_survivors.RadStateFor(s.Id)?.RadiationDose ?? 0f) >= 50f);
+            AddRow(_radiationData, $"Survivors above 50 mSv: {dosed}", dosed > 0 ? Ashfall.Core.UI.Theme.Warm : Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 2;
+
+            int critical = roster.Count(s => s.IsAlive && s.Health < 30f);
+            AddRow(_statusData, $"Critical health: {critical} survivor(s)", critical > 0 ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Dim);
+            AddRow(_statusData, $"Shelter weakest ceiling: {_survivors.Shelter?.GetWeakestCeilingAttenuation() * 100f ?? 0:0}%", Ashfall.Core.UI.Theme.Dim);
+            RenderedRowCount += 2;
+        }
+
+        private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(400, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
         }
 
         public override void _Ready()
@@ -132,42 +124,38 @@ namespace AtomicWar.GodotApp.UI
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblHealthTitle = AshfallUiHelpers.MakeSectionHeader("HEALTH STATUS");
+            _lblHealthTitle = AshfallUiHelpers.MakeSectionHeader("ROSTER HEALTH");
             vbox.AddChild(_lblHealthTitle);
-
             _healthData = new VBoxContainer();
             _healthData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _healthData.CustomMinimumSize = new Vector2(400, 0);
+            _healthData.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_healthData);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblNeedsTitle = AshfallUiHelpers.MakeSectionHeader("SURVIVAL NEEDS");
+            _lblNeedsTitle = AshfallUiHelpers.MakeSectionHeader("AVERAGE NEEDS");
             vbox.AddChild(_lblNeedsTitle);
-
             _needsData = new VBoxContainer();
             _needsData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _needsData.CustomMinimumSize = new Vector2(400, 0);
+            _needsData.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_needsData);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblRadiationTitle = AshfallUiHelpers.MakeSectionHeader("RADIATION STATUS");
+            _lblRadiationTitle = AshfallUiHelpers.MakeSectionHeader("RADIATION OVERVIEW");
             vbox.AddChild(_lblRadiationTitle);
-
             _radiationData = new VBoxContainer();
             _radiationData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _radiationData.CustomMinimumSize = new Vector2(400, 0);
+            _radiationData.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_radiationData);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _lblStatusTitle = AshfallUiHelpers.MakeSectionHeader("OVERALL STATUS");
+            _lblStatusTitle = AshfallUiHelpers.MakeSectionHeader("STATUS SUMMARY");
             vbox.AddChild(_lblStatusTitle);
-
             _statusData = new VBoxContainer();
             _statusData.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
-            _statusData.CustomMinimumSize = new Vector2(400, 0);
+            _statusData.CustomMinimumSize = new Vector2(450, 0);
             vbox.AddChild(_statusData);
 
             vbox.AddChild(AshfallUiHelpers.MakeSeparator());
@@ -175,11 +163,6 @@ namespace AtomicWar.GodotApp.UI
             var btnClose = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => OnClose?.Invoke());
             btnClose.CustomMinimumSize = new Vector2(200, 40);
             vbox.AddChild(btnClose);
-
-            var hint = AshfallUiHelpers.MakeSmall("[Esc] to close");
-            hint.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeLabel);
-            hint.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
-            vbox.AddChild(hint);
         }
 
         public void Open()

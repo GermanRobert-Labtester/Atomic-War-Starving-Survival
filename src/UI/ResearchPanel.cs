@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
+using Ashfall.Core;
 using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 
@@ -8,7 +10,8 @@ namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Research panel.
-    /// Shows discovered knowledge, technological advancements, and research progress.
+    /// Shows discovered knowledge, active research, and unlocked tech — bound
+    /// to the live ResearchHostSession. Unbound renders an honest empty state.
     /// </summary>
     public partial class ResearchPanel : Control
     {
@@ -22,77 +25,84 @@ namespace AtomicWar.GodotApp.UI
         private Label _lblTechTitle;
         private VBoxContainer _techList;
 
-        // Placeholder research data
-        private readonly string[] _placeholderKnowledge = {
-            "Nuclear Winter Basics — Understanding climate impact",
-            "Radiation Medicine — Basic treatment protocols",
-            "Water Purification — Filtration methods discovered",
-            "Crop Cultivation — Hydroponic techniques learned",
-            "Radio Communication — Basic signal processing"
-        };
+        private ResearchSystem? _research;
 
-        private readonly string[] _placeholderResearch = {
-            "Advanced Water Filtration — 40% complete",
-            "Radiation Shielding Materials — 25% complete",
-            "Improved Gas Masks — 60% complete",
-            "Solar Power Systems — 10% complete",
-            "Food Preservation Techniques — 75% complete"
-        };
+        public bool IsBound => _research != null;
+        public int RenderedRowCount { get; private set; }
 
-        private readonly string[] _placeholderTech = {
-            "Basic Water Filter — Unlocked",
-            "Gas Mask (Basic) — Unlocked",
-            "Radiation Dosimeter — Unlocked",
-            "Hand-Crank Radio — Unlocked",
-            "Improvised Stove — Unlocked"
-        };
-
-        // Real data from host session
-        // private ResearchHostSession? _researchHost;
-
-        public void Bind(object research) // placeholder for ResearchHostSession
+        public void Bind(ResearchSystem? research)
         {
-            // _researchHost = (ResearchHostSession)research;
-            // RefreshView();
+            _research = research;
+            RefreshView();
         }
 
         public void RefreshView()
         {
             if (_knowledgeList == null || _researchList == null || _techList == null) return;
 
-            // Clear existing lists
             AshfallUiHelpers.EmptyChildren(_knowledgeList);
             AshfallUiHelpers.EmptyChildren(_researchList);
             AshfallUiHelpers.EmptyChildren(_techList);
 
-            // Display placeholder knowledge
-            foreach (string knowledge in _placeholderKnowledge)
+            RenderedRowCount = 0;
+
+            if (_research == null)
             {
-                var label = new Label { Text = knowledge };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _knowledgeList.AddChild(label);
+                _knowledgeList.AddChild(MakeDimLine("No research session bound."));
+                return;
             }
 
-            // Display placeholder research progress
-            foreach (string research in _placeholderResearch)
+            // ── Unlocked knowledge (catalog entries that are unlocked) ──
+            foreach (var kv in _research.Catalog.OrderBy(k => k.Key))
             {
-                var label = new Label { Text = research };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _researchList.AddChild(label);
+                if (!_research.IsManualUnlocked(kv.Key)) continue;
+                AddRow(_knowledgeList, $"{kv.Value.displayName} — {kv.Value.category}",
+                    Ashfall.Core.UI.Theme.Lethe);
+                RenderedRowCount++;
+            }
+            if (RenderedRowCount == 0)
+                _knowledgeList.AddChild(MakeDimLine("No knowledge unlocked yet."));
+
+            // ── Active research ──
+            var active = _research.GetActiveResearch();
+            if (active != null)
+            {
+                AddRow(_researchList, $"{active.displayName} — Day {_research.State.activeResearchDays} in progress",
+                    Ashfall.Core.UI.Theme.Warm);
+            }
+            else
+            {
+                _researchList.AddChild(MakeDimLine("No active research."));
             }
 
-            // Display placeholder unlocked tech
-            foreach (string tech in _placeholderTech)
+            // ── Completed tech ──
+            int completed = 0;
+            foreach (var id in _research.State.completedIds)
             {
-                var label = new Label { Text = tech };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                _techList.AddChild(label);
+                var def = _research.Catalog.TryGetValue(id, out var d) ? d : null;
+                AddRow(_techList, def != null ? $"{def.displayName} — Complete" : $"{id} — Complete",
+                    Ashfall.Core.UI.Theme.Pale);
+                completed++;
             }
+            if (completed == 0)
+                _techList.AddChild(MakeDimLine("No completed research."));
+        }
+
+        private void AddRow(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(400, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
         }
 
         public override void _Ready()

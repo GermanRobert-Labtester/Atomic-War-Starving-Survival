@@ -192,6 +192,57 @@ namespace AtomicWar.GodotApp
                     _radiationDetailPanel.Bind(_doseLedger, _survivors);
                     _radiationDetailPanel.Open();
                     break;
+                case "research":
+                    _researchPanel.Bind(null);
+                    _researchPanel.Open();
+                    break;
+                case "weather_detail":
+                    SetupWorld();
+                    _weatherDetailPanel.Bind(_world?.Weather);
+                    _weatherDetailPanel.Open();
+                    break;
+                case "event_detail":
+                    SetupEventsHost();
+                    _eventDetailPanel.Bind(_eventsHost);
+                    _eventDetailPanel.Open();
+                    break;
+                case "economy_detail":
+                    SetupEconomy();
+                    _economyDetailPanel.Bind(_economy);
+                    _economyDetailPanel.Open();
+                    break;
+                case "radiation_history":
+                    SetupPhase0();
+                    _radiationHistoryPanel.Bind(_doseLedger);
+                    _radiationHistoryPanel.Open();
+                    break;
+                case "journal_detail":
+                    SetupJournal();
+                    _journalDetailPanel.Bind(_journal);
+                    _journalDetailPanel.Open();
+                    break;
+                case "survival_detail":
+                    SetupSurvivors();
+                    _survivalDetailPanel.Bind(_survivors);
+                    _survivalDetailPanel.Open();
+                    break;
+                case "survivor_detail":
+                    SetupSurvivors();
+                    var firstSurvivor = _survivors?.RosterState?.FirstOrDefault(s => s != null)?.Id ?? "";
+                    _survivorDetailPanel.Bind(_survivors, firstSurvivor);
+                    _survivorDetailPanel.Open();
+                    break;
+                case "inventory_detail":
+                    SetupInventory();
+                    var firstItem = _inventory?.Inventory?.FindSlot("bandage")?.Item?.id ?? "bandage";
+                    _inventoryDetailPanel.Bind(_inventory, firstItem);
+                    _inventoryDetailPanel.Open();
+                    break;
+                case "achievements":
+                    SetupSurvivors();
+                    _achievementsPanel.Bind(_survivors, _simDay);
+                    _achievementsPanel.Open();
+                    break;
                 case "survivors":
                     SetupSurvivors();
                     _survivorsOverlay.Bind(_survivors);
