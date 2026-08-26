@@ -110,10 +110,9 @@ namespace AtomicWar.GodotApp
             _wildlifeTrapping.System.OnButcheryCompleted += (siteId, butcherId, species, isToxic) =>
             {
                 if (string.IsNullOrEmpty(butcherId)) return;
-                // Sterile technique trait — placeholder deterministic check: butcherId containing "sterile" has the trait
-                // Real check would query SurvivorCatalog/Roster trait, but host keeps it simple and deterministic
-                bool hasSterile = butcherId.IndexOf("sterile", StringComparison.OrdinalIgnoreCase) >= 0;
-                if (hasSterile) return;
+                var def = _survivors?.Roster?.FindDefinition(butcherId);
+                if (def != null && def.traitIds != null && def.traitIds.Contains("skill_sanitization_expert"))
+                    return;
                 int seed = StableHash.Of(butcherId) ^ _simDay;
                 var rng = new SeededRng(seed);
                 if (rng.NextDouble() < 0.30)
@@ -166,7 +165,11 @@ namespace AtomicWar.GodotApp
                             Epitaph = $"Forensic finding: {finding}"
                         });
                     }
-                    catch { /* memorial optional — never block autopsy */ }
+                    catch (Exception ex)
+                    {
+                        // Memorial integration is optional; log warning without blocking autopsy flow.
+                        GD.PushWarning($"[Ashfall Godot] Autopsy memorialization failed for {c.specimenId}: {ex.Message}");
+                    }
                 }
             };
         }

@@ -14,6 +14,7 @@ namespace Ashfall.Core.Survivors
         public string profession = string.Empty;
         public string bio = string.Empty;
         public float baseHealth = 100f;
+        public List<string> traitIds = new List<string>();
     }
 
     [Serializable]

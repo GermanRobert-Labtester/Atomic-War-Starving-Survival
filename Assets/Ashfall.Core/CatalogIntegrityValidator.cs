@@ -147,7 +147,7 @@ namespace Ashfall.Core
             "archetype_id", "background_id", "belief_profile_id", "profession_id",
             "pre_war_profession_id", "personal_keepsake_item_id",
             "phantom_background_id", "knowledge_key", "complete_mutation",
-            "fail_mutation", "world_flag", "traits", "baseTraits",
+            "fail_mutation", "world_flag", "traits", "baseTraits", "traitIds",
             "manifesto_law_code", "zone_id", "encounterId", "set_flag",
             "setWorldFlag", "trait_granted", "latentExpertTrait", "inspectKey",
             "questlineId", "stageId", "firstStageId",

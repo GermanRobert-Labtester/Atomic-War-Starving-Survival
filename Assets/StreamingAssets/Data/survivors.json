@@ -29,7 +29,8 @@
       "bio": "Haunted by a patient lost on Day 1, a child brought in with a chest wound who was gone before the anesthesia settled. Their hands still remember the cut they could not finish; some nights they wake mid-motion, fingers hooked like they are still holding the clamp. They keep the scalpel from that morning in a rolled cloth. They operate by headlamp when the power fails and do not ask anyone to hold the light for them. They have sewn up every survivor who has come back bleeding. The scars are tidy. That is how the bunker knows it was them.",
       "baseHealth": 90,
       "latentExpertTrait": "trait_miracle_worker",
-      "activeQuestlineId": "quest_the_shaking_hand"
+      "activeQuestlineId": "quest_the_shaking_hand",
+      "traitIds": ["skill_sanitization_expert"]
     },
     {
       "id": "the_pharmacist",
