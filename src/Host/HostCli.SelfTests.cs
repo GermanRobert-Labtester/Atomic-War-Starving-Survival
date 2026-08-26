@@ -734,6 +734,18 @@ namespace AtomicWar.GodotApp
             return SaveLoadUiFailureSelfTest.Run(dataDirectory);
         }
 
+        public static int RunPanelBindLifecycleSelfTest(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+            return PanelBindLifecycleSelfTest.Run(dataDirectory);
+        }
+
+        public static int RunSevenDayDeterministicSmokeSelfTest(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+            return SevenDayDeterministicSmokeTest.Run(dataDirectory);
+        }
+
         public static int RunCoreSelfTest(string dataDirectory)
         {
             int ice = RunIceRoadSelfTest(dataDirectory);
