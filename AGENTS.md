@@ -62,7 +62,7 @@ If an MCP invocation fails because the server/tool is missing, disconnected, or 
 |------------------|-----------------------------|-------------------------------------------|---------------------|-----------------|
 | **Core** (truth) | Engine-agnostic C#          | `Assets/Ashfall.Core/`                    | `Ashfall.Core.*`    | `netstandard2.1` |
 | **Godot host** (active, only editor) | Godot 4.7+ (.NET/C#) | `src/`                                     | `AtomicWar.GodotApp.*` | `net8.0`     |
-| **Unity host** (inactive — migrating out) | Unity 6 LTS, 2D, URP | `Assets/_Game/` (read-only legacy)         | `AtomicWar._Game.*` | Unity 6 (do not run) |
+| **Unity host** (removed — migration complete) | Unity 6 LTS, 2D, URP | `Assets/_Game/` (deleted)         | `AtomicWar._Game.*` | — (do not run) |
 | **Tests**        | xUnit                       | `Ashfall.Core.Tests/`                     | `Ashfall.Core.Tests`| `net9.0`        |
 | **Data authority**| JSON                       | `Assets/StreamingAssets/Data/`            | —                   | —               |
 | **Godot Bridge** (shim) | **REMOVED** — migration complete | `src/Bridge/` (deleted) | — | — |
@@ -89,6 +89,8 @@ Unity assets in `Assets/` are legacy. Every Unity asset has a Godot equivalent �
 | `PhysicsMaterial2D`                 | Godot `PhysicsMaterial`                       | inside scene resource                  |
 | `TileMap`/palettes                  | Godot `TileSet` + `TileMapLayer`              | `assets/<zone>/`                       |
 
+**Remaining debt:** The Unity legacy asset tree (`Assets/art/` ~2080 files, `Assets/sprites/`, `Assets/ui/`, `Assets/audio/radio/`) still lives under the Unity-style `Assets/` tree instead of the Godot root `assets/` tree. Migration direction remains Unity → Godot, but the work is now asset porting (not scene/prefab porting).
+
 **Rules for asset work:**
 - Never edit `.meta` files by hand for Unity — they will be deleted when the asset is migrated.
 - Never create a new `.unity` scene, `.prefab`, or `.asset`.
@@ -105,41 +107,39 @@ Unity assets in `Assets/` are legacy. Every Unity asset has a Godot equivalent �
 ### Invariant 2 — Ports and Adapters
 Host needs are interfaces in `Assets/Ashfall.Core/Ports.cs`:
 
-| Interface       | Purpose                       | Godot adapter          | Unity adapter (legacy, do not extend) |
-|-----------------|-------------------------------|------------------------|---------------------------------------|
-| `IJsonSerializer` | JSON serialize/deserialize   | core default           | **MISSING** — uses `JsonUtility`      |
-| `IFileIO`       | File/directory access         | core default           | **MISSING** — uses `System.IO`        |
-| `ILog`          | Info/Warn/Error logging       | `GodotLog`             | `GameLogAdapter` (private nested)     |
-| `IClock`        | Day counter                   | core default           | core default                          |
-| `ISeededRng`    | Deterministic PRNG            | `CoreSeededRng`        | **MISSING** — uses `System.Random`    |
-| `IEventBus`     | String-based pub/sub          | **NOT USED** (direct calls) | **NOT USED** (Unity static bus) |
+| Interface       | Purpose                       | Godot adapter          |
+|-----------------|-------------------------------|------------------------|
+| `IJsonSerializer` | JSON serialize/deserialize   | core default           |
+| `IFileIO`       | File/directory access         | core default           |
+| `ILog`          | Info/Warn/Error logging       | `GodotLog`             |
+| `IClock`        | Day counter                   | core default           |
+| `ISeededRng`    | Deterministic PRNG            | `CoreSeededRng`        |
+| `IEventBus`     | String-based pub/sub          | **NOT USED** (direct calls) |
 
 `ISimClock` (tick-based) duplicates `IClock` — consolidation planned.
 
 ### Invariant 3 — Cross-host save compatibility
-A save written by one host must load in the other. **Currently violated for the main save** — `Assets/_Game/Core/SaveSystem.*.cs` (967+ lines, 10 partial files) uses `JsonUtility`. Twenty-eight catalog loaders in `Assets/_Game/Data/` use the same anti-pattern.
-
-Fix path: ship a Unity `IJsonSerializer` adapter, then migrate the SaveSystem and all 28 catalog loaders off `JsonUtility`. Until then, do not add new `JsonUtility` call sites.
+A save written by one host must load in the other. **Unity host removed** — save compatibility is now Godot-only. The `SaveWireContract` tests (7 tests) pin the JSON shape and `SaveChecksum` hash for the Godot host. All save stores ship checksummed envelopes; the legacy `JsonUtility` path is gone with `_Game/`.
 
 ### Invariant 4 — Determinism
 Same seed ⇒ identical simulation in both engines. Use `ISeededRng` (xorshift64*). Never `System.Random`. Never `Guid.NewGuid()`.
 
 Known offenders (fix when touching these):
-- `Assets/Ashfall.Core/FinalWishSystem.cs:66` — `public System.Random Rng;`
-- `Assets/Ashfall.Core/CombatTraumaSystem.cs:53` — `public System.Random Rng;`
-- `Assets/Ashfall.Core/WeatherSystem.cs:144` — `new Random(unchecked(...))`
-- `Assets/Ashfall.Core/ProceduralItemInstance.cs:36` — `Guid.NewGuid()`
+- ~~`Assets/Ashfall.Core/FinalWishSystem.cs:66` — `public System.Random Rng;`~~ — **RESOLVED** (now uses `ISeededRng`)
+- ~~`Assets/Ashfall.Core/CombatTraumaSystem.cs:53` — `public System.Random Rng;`~~ — **RESOLVED** (now uses `ISeededRng`)
+- ~~`Assets/Ashfall.Core/WeatherSystem.cs:144` — `new Random(unchecked(...))`~~ — **RESOLVED** (now uses `SeededRng`)
+- `Assets/Ashfall.Core/Inventory/ProceduralItemInstance.cs:36` — `Guid.NewGuid()`
 - `InMemoryFlagLedger` uses `StringComparer.OrdinalIgnoreCase` — case-normalization drift risk across hosts.
 
 ### Invariant 5 — No gameplay logic in hosts
 Thin MonoBehaviours (Unity) and thin Nodes (Godot) handle only presentation, input, and wiring. Gameplay lives in plain C# systems inside `Ashfall.Core`.
 
 Known offenders (do not grow these; migrate logic into Core instead):
-- `Assets/_Game/Quests/PersonalQuestSystem.cs` (4936 lines, 404 methods, 0 core refs)
-- `Assets/_Game/Medical/MedicalSystem.cs` (1287 lines, 0 core refs)
-- `Assets/_Game/Survivors/SurvivorWorkShiftSystem.cs` (1291 lines, 0 core refs)
-- `Assets/_Game/Economy/DynamicEconomySystem.cs` (1797 lines, minimal core refs)
-- `src/Host/HoldfastRuntimeSession.cs` duplicates core survival mechanics — refactor into Core.
+- ~~`Assets/_Game/Quests/PersonalQuestSystem.cs` (4936 lines)~~ — **RESOLVED** (deleted with `_Game/`)
+- ~~`Assets/_Game/Medical/MedicalSystem.cs` (1287 lines)~~ — **RESOLVED** (deleted with `_Game/`)
+- ~~`Assets/_Game/Survivors/SurvivorWorkShiftSystem.cs` (1291 lines)~~ — **RESOLVED** (deleted with `_Game/`)
+- ~~`Assets/_Game/Economy/DynamicEconomySystem.cs` (1797 lines)~~ — **RESOLVED** (deleted with `_Game/`)
+- ~~`src/Host/HoldfastRuntimeSession.cs` duplicates core survival mechanics~~ — **RESOLVED** (thin projection: `Health/Hunger/Thirst/Radiation` read from `SurvivorsHostSession` via `NeedsSystem`/`RadiationSystem` at `src/Host/HoldfastRuntimeSession.cs:44`; `TickDay:164` fallback decay only when `Survivors==null` for headless tests)
 
 ### Invariant 6 — Data authority is JSON
 `Assets/StreamingAssets/Data/` is the authority. ScriptableObjects are a Unity-editor convenience generated from JSON, never the source. Never fork data per engine.
@@ -188,10 +188,10 @@ Two parallel buses (architectural debt, merge planned):
 | Bus                              | Style                            | Where it's real       |
 |----------------------------------|----------------------------------|-----------------------|
 | `IEventBus` / `SimpleEventBus`   | String-based, constructor-injected | Defined, **underused** |
-| `EventBus` static class          | Type-safe generics, allocation-free, editor profiling | Unity side, the real decoupler |
+| ~~`EventBus` static class~~ — **REMOVED** (Unity host deleted) | Type-safe generics, allocation-free, editor profiling | Unity host deleted with `_Game/` |
 | Godot                            | No bus — direct method calls on host sessions | — |
 
-Rule: every public system raises C# events on state change (for UI + save). Use whichever bus the host wires. Unity's `EventBus.IsSuppressed` flag suppresses events during save/load restore.
+Rule: every public system raises C# events on state change (for UI + save). Use whichever bus the host wires.
 
 ---
 
@@ -239,29 +239,29 @@ Known issues:
 
 | # | Issue                                                                              | Location                                                |
 |---|------------------------------------------------------------------------------------|---------------------------------------------------------|
-| C1 | `JsonUtility` in Unity SaveSystem blocks cross-host saves                          | `Assets/_Game/Core/SaveSystem.*.cs` (6 call sites in SaveSystem.IO.cs). Wire-format contract is now pinned by `Assets/Ashfall.Core/SaveWireContract.cs` and `Ashfall.Core.Tests/SaveWireContractTests.cs` (7 tests assert Godot + Unity-shape serializers produce identical JSON trees and the same `SaveChecksum` hash for the same state); the adapter task is reduced from "design from scratch" to "implement `IJsonSerializer` over `JsonUtility` and pass the contract tests". Still missing in `Assets/_Game/Core/`. |
+| C1 | ~~`JsonUtility` in Unity SaveSystem blocks cross-host saves~~ — **RESOLVED** (Unity host removed) | Unity SaveSystem deleted with `_Game/`; `SaveWireContract` tests confirm Godot-only save compatibility |
 | C2 | ~~`System.Random` breaks determinism~~ — RESOLVED                                 | migrated to `ISeededRng`; verified by `Ashfall.Core.Tests` |
 | C3 | ~~`Guid.NewGuid()` breaks determinism~~ — RESOLVED                                 | comment at `Assets/Ashfall.Core/Inventory/ProceduralItemInstance.cs:48` documents the fix |
 | C4 | ~~56 narrative JSON files untracked in git~~ — RESOLVED                            | 196/196 narrative JSON files now tracked |
 | C5 | ~~`HoldfastTradeSessionTests.cs` — 10 compile errors, stale API~~ — RESOLVED      | 3/3 tests pass against current API |
-| C6 | 28 catalog loaders use `JsonUtility` — blocks Godot data loading                   | 21 remaining in `Assets/_Game/Data/*CatalogLoader.cs` (down from 28) |
+| C6 | ~~28 catalog loaders use `JsonUtility`~~ — **RESOLVED** (migrated to Core) | 10 `*CatalogLoader.cs` files now in `Assets/Ashfall.Core/`; all use `SystemTextJsonSerializer` (core default) |
 
 ### High
 
 | #  | Issue                                                              | Location                                                         |
 |----|--------------------------------------------------------------------|------------------------------------------------------------------|
-| H1 | `HoldfastRuntimeSession` duplicates core survival mechanics        | `src/Host/HoldfastRuntimeSession.cs`                             |
+| H1 | ~~`HoldfastRuntimeSession` duplicates core survival mechanics~~ — **RESOLVED** (thin projection onto `NeedsSystem`/`RadiationSystem` via `SurvivorsHostSession`; fallback `_fallback*` only for headless tests) | `src/Host/HoldfastRuntimeSession.cs:44` (`Health`/`Hunger`/`Thirst`/`Radiation` project via `Survivors?.Find()`; `TickDay:164` fallback decay only when `Survivors==null`) |
 | H2 | Duplicate `WornGear` class                                         | both in Core (`Inventory/Inventory.cs:22` + `Radiation/RadiationSystem.cs:64`); consolidate to one location. **Bridge exists:** `Radiation.WornGear.FromInventory(Inventory.WornGear)` is the single sanctioned conversion point, wired by the Godot host `SurvivorsHostSession` (equipped gas mask/hazmat now cuts dose; verified by `--survivors-selftest` gear probes + `InventoryGearBridgeTests`). |
-| H3 | `SimClock` duplicate                                              | not actually a duplicate: `Ashfall.Core/HostDefaults.cs:67` is `IClock` (day-based), `Ashfall.Core/Clock/ISimClock.cs:15` is `ISimClock` (tick-based); both still used |
+| H3 | ~~`SimClock` duplicate~~ — **CLARIFIED** (not a duplicate: `Ashfall.Core/HostDefaults.cs:90` `SimClock:IClock` day-based vs `Ashfall.Core/Clock/ISimClock.cs:16` `SimClock:ISimClock,IClock` tick-based; both intentional, `ISimClock` tick granularity for Verdict/Warlord clocks) | `Ashfall.Core/Clock/ISimClock.cs:6` + `HostDefaults.cs:90` — keep both; consolidation is tick→day alias only if needed |
 | H4 | 13 bare `catch { }` blocks swallow exceptions                      | `YearOfAshCatalogLoader.cs` (7), `VerdictCatalogLoader.cs` (3) — unchanged |
-| H5 | Utility AI forked — Unity uses defective version                   | `Assets/_Game/AI/UtilityAI.cs` vs `Assets/Ashfall.Core/UtilityAI/` |
-| H6 | Unity has no `IFileIO`, `IJsonSerializer`, `IClock` adapters       | `Assets/_Game/Core/`                                             |
+| H5 | Utility AI forked — **Core vs Godot host** (not Unity)             | `Assets/Ashfall.Core/UtilityAI/` vs `src/UtilityAI/` (Godot host) |
+| H6 | ~~Unity has no `IFileIO`, `IJsonSerializer`, `IClock` adapters~~ — **RESOLVED** (Unity host removed) | Unity host deleted with `_Game/` |
 | H7 | `Main.cs` (Godot) — one `partial class Main` in a single ~6.5k-line file, but internally regular: per-subsystem triads of `SetupXxx` (construct + wire system), `SaveXxx` (capture into save; `SaveAll` orchestrates all 24), `FlushXxxIfDirty` (deferred flush) — 31 Setup / 24 Save + `SaveAll` / 17 Flush methods across domains (Expeditions, Combat, Economy, Medical, Narrative, Holdfast, YearOfAsh, Maritime, Muster, …). Risks: triad drift (a Setup without a Save silently drops state) and single-file navigation; end state is one true partial file per domain | `src/Main.cs` |
-| H8 | `SettingsManager` uses `PlayerPrefs` (Unity-only)                  | `Assets/_Game/Settings/SettingsManager.cs`                       |
+| H8 | ~~`SettingsManager` uses `PlayerPrefs` (Unity-only)~~ — **RESOLVED** | Unity `SettingsManager.cs` deleted with `_Game/` |
 | H9 | ~~124 compiler warnings in tests~~ — RESOLVED                       | test suite builds with 0 errors, 3 minor analyzer warnings (xUnit2013/xUnit2020) — not nullable refs |
 | H10 | NeedsSystem & RadiationSystem save/load round-trip tests           | `NeedsRadiationSystemTests.cs` covers tick behaviour (58 tests); save/load round-trip coverage still missing |
 | H11 | JournalSystem coverage                                            | 6 Core files; `JournalSaveStore` has integrity tests; `JournalSystem` core behaviour still untested |
-| H12 | ScriptableObject definitions                                       | 44 in `Assets/_Game/` (down from 121 as Unity migrates to Godot); risk of dual authority reduces as engines diverge |
+| H12 | ~~ScriptableObject definitions~~ — **RESOLVED** (migrated to JSON) | 0 ScriptableObjects remain; all data authority now in `Assets/StreamingAssets/Data/` JSON files |
 
 ---
 
@@ -270,7 +270,7 @@ Known issues:
 | Layer   | Namespace                                              | Directory match |
 |---------|--------------------------------------------------------|-----------------|
 | Core    | `Ashfall.Core`, `Ashfall.Core.Economy`, `Ashfall.Core.Journal`, … | ✅ |
-| Unity (legacy) | `AtomicWar._Game`, `AtomicWar._Game.Core`, …       | ✅              |
+| Unity (removed) | — | ✅ (deleted with `_Game/`) |
 | Godot   | `AtomicWar.GodotApp`, `AtomicWar.GodotApp.Economy`, …  | ✅ (`AtomicWar.Journal` is the one legacy exception) |
 | Tests   | `Ashfall.Core.Tests`                                   | ✅ (flat)       |
 
@@ -324,7 +324,7 @@ Why it matters — the repo deliberately keeps two case-distinct trees:
 
 | Path        | Tree                          |
 |-------------|-------------------------------|
-| `Assets/`   | Unity legacy (`Ashfall.Core`, `StreamingAssets/Data`, `_Game`) |
+| `Assets/`   | Unity legacy (migrated: `Ashfall.Core`, `StreamingAssets/Data`; `_Game` deleted) |
 | `assets/`   | Godot-native assets (`art/ audio/ ui/ sprites/ fonts/`) |
 
 Git's `core.ignorecase` defaults to **true** on macOS/Windows, which aliases
