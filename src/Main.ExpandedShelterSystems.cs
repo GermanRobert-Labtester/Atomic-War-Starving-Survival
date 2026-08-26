@@ -22,6 +22,12 @@ namespace AtomicWar.GodotApp
     {
         // ── 12 Expanded Shelter Host Sessions ──
 
+        // Single shared ResearchSystem consulted by autopsy + library study
+        // (previously a local var in SetupExpandedShelterSystems, which made it
+        // unreachable for the Research panel bind). Created fresh by
+        // SetupExpandedShelterSystems; lazily by the research panel route.
+        private ResearchSystem _sharedResearch = null!;
+
 
 
         // Batch 4 BUG-14 follow-up: a SINGLE shared duty roster passed to
@@ -56,7 +62,7 @@ namespace AtomicWar.GodotApp
             SetupStartingLevel();
             SetupWorld();
 
-            var sharedResearch = new ResearchSystem(log: new GodotLog());
+            _sharedResearch = new ResearchSystem(log: new GodotLog());
 
             SetupWaterTreatment();
             SetupAirlockSecurity();
@@ -69,7 +75,7 @@ namespace AtomicWar.GodotApp
             SetupCaregiving();
             SetupShelterThermal();
             SetupShelterSchedule();
-            SetupAutopsy(sharedResearch);
+            SetupAutopsy(_sharedResearch);
             SetupWaystation();
             SetupSumpFlooding();
             WireWaterTreatmentSumpBridge();
@@ -79,7 +85,7 @@ namespace AtomicWar.GodotApp
             SetupDecontamination();
             SetupKitchenNutrition();
             SetupEquipmentCondition();
-            SetupLibraryStudy(sharedResearch);
+            SetupLibraryStudy(_sharedResearch);
             SetupArchiveDesk();
             SetupContractorRoster();
             SetupMentalHealthCrisis();

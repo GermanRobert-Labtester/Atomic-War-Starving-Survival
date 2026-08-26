@@ -193,7 +193,11 @@ namespace AtomicWar.GodotApp
                     _radiationDetailPanel.Open();
                     break;
                 case "research":
-                    _researchPanel.Bind(null);
+                    // Lazily create when the expanded-shelter setup hasn't run;
+                    // SetupExpandedShelterSystems assigns a fresh instance on
+                    // new-game/continue so the panel always rebinds to current state.
+                    _sharedResearch ??= new ResearchSystem(log: new GodotLog());
+                    _researchPanel.Bind(_sharedResearch);
                     _researchPanel.Open();
                     break;
                 case "weather_detail":

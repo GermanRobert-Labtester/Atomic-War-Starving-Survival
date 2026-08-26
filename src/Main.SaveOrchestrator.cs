@@ -163,6 +163,7 @@ namespace AtomicWar.GodotApp
             _startingLevel = null!;
             _greenhouse?.Dispose();
             _greenhouse = null!;
+            _sharedResearch = null!;
             // The Year of Ash panel holds widgets bound to the old session; drop it
             // so BuildYearOfAshPanel re-creates and rebinds to the fresh session.
             if (_yearOfAshPanel != null && _rightColumn != null && _yearOfAshPanel.IsInsideTree())

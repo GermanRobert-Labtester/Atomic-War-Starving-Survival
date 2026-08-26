@@ -107,10 +107,16 @@ namespace AtomicWar.GodotApp
             bool radiation = _radiationDetailPanel.IsBound && _radiationDetailPanel.Visible;
             CloseAllOverlayPanels();
 
-            bool pass = survivors && medical && weather && radio && shelter && status && tutorial && afflictions && radiation;
+            _sharedResearch = new ResearchSystem(log: new GodotLog());
+            _researchPanel.Bind(_sharedResearch);
+            _researchPanel.Open();
+            bool research = _researchPanel.IsBound && _researchPanel.Visible;
+            CloseAllOverlayPanels();
+
+            bool pass = survivors && medical && weather && radio && shelter && status && tutorial && afflictions && radiation && research;
             GD.Print($"[PlayerPanelsUiTest] survivors={survivors} medical={medical} weather={weather} " +
                      $"radio={radio} shelter={shelter} status={status} tutorial={tutorial} " +
-                     $"afflictions={afflictions} radiation={radiation}");
+                     $"afflictions={afflictions} radiation={radiation} research={research}");
             GD.Print(pass ? "PLAYER_PANELS_UITEST PASS" : "PLAYER_PANELS_UITEST FAIL");
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }
