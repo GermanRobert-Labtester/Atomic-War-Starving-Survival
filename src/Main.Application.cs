@@ -92,6 +92,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.PanelBindLifecycleSelfTest:
                     GetTree().Quit(HostCli.RunPanelBindLifecycleSelfTest(_dataDir));
                     return;
+                case HostCliAction.SaveStoreChecksumSelfTest:
+                    GetTree().Quit(HostCli.RunSaveStoreChecksumSelfTest(_dataDir));
+                    return;
                 case HostCliAction.SevenDayDeterministicSmokeSelfTest:
                     GetTree().Quit(HostCli.RunSevenDayDeterministicSmokeSelfTest(_dataDir));
                     return;

@@ -740,6 +740,12 @@ namespace AtomicWar.GodotApp
             return PanelBindLifecycleSelfTest.Run(dataDirectory);
         }
 
+        public static int RunSaveStoreChecksumSelfTest(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+            return SaveStoreChecksumSelfTest.Run(dataDirectory);
+        }
+
         public static int RunSevenDayDeterministicSmokeSelfTest(string dataDirectory)
         {
             CatalogLocator.UseInvariantCulture();

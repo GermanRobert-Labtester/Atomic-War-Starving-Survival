@@ -114,6 +114,7 @@ namespace AtomicWar.GodotApp
         WeatherSaveSelfTest,
         SaveLoadUiFailureSelfTest,
         PanelBindLifecycleSelfTest,
+        SaveStoreChecksumSelfTest,
         SevenDayDeterministicSmokeSelfTest,
         UiSnapshotSelfTest,
         UiSnapshotRegenerate
@@ -300,6 +301,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.SaveLoadUiFailureSelfTest;
             if (Has(args, "--panel-bind-lifecycle-selftest") || Has(args, "--panel-bind-selftest") || Has(args, "--panel-lifecycle-selftest"))
                 return HostCliAction.PanelBindLifecycleSelfTest;
+            if (Has(args, "--save-store-checksum-selftest") || Has(args, "--save-store-checksums-selftest") || Has(args, "--checksum-sweep-selftest"))
+                return HostCliAction.SaveStoreChecksumSelfTest;
             if (Has(args, "--7-day-smoke-selftest") || Has(args, "--seven-day-smoke-selftest") || Has(args, "--deterministic-smoke-selftest"))
                 return HostCliAction.SevenDayDeterministicSmokeSelfTest;
             return HostCliAction.Interactive;
@@ -361,6 +364,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --weather-save-selftest  Weather system save store round-trip, forecast queue, and atmospheric condition persistence");
             GD.Print("  --save-load-ui-failure-selftest / --save-load-failure-selftest / --save-load-failure-uitest / --save-load-selftest Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact");
             GD.Print("  --panel-bind-lifecycle-selftest / --panel-bind-selftest / --panel-lifecycle-selftest Real Godot-node callback tests for panel bind → unbind → rebind, event propagation, and session-switch");
+            GD.Print("  --save-store-checksum-selftest / --save-store-checksums-selftest / --checksum-sweep-selftest Source-scan all SaveStore files for checksum coverage + 5 in-memory round-trip probes (Weather, Map, Survivors, SaveChecksum stability, null-field guard)");
             GD.Print("  --7-day-smoke-selftest / --seven-day-smoke-selftest / --deterministic-smoke-selftest 7-day deterministic smoke run: map discovery + weather rolls + survivor needs drift + mid-run save/reload round-trip across 10 verification gates");
             GD.Print("  --shelter-operations-selftest / --shelter-ops-selftest / --operations-selftest Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification");
             GD.Print("  --shelter-hazard-loop-selftest / --shelter-hazard-selftest / --duty-roster-loop-selftest Shelter hazard loop and duty roster assignment verification");
