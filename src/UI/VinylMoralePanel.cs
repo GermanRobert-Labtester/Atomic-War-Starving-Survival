@@ -43,6 +43,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("now_playing", "Now Playing", "STOPPED", AshfallMetricCard.Criticality.Normal, minWidth: 140);
             _statusRail.AddCard("morale_applied", "Total Morale", "+0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
             _statusRail.AddCard("records_owned", "Albums Owned", "0", AshfallMetricCard.Criticality.Normal, minWidth: 120);
+            _statusRail.AddCard("broadcast", "Cultural Signal", "IDLE", AshfallMetricCard.Criticality.Normal, minWidth: 150);
 
             _contentStack = new VBoxContainer();
             _contentStack.AddThemeConstantOverride("separation", 12);
@@ -91,13 +92,28 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("now_playing", _host.System.IsPlaying ? s.currentPlayingId : "STOPPED", _host.System.IsPlaying ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("morale_applied", $"+{s.totalMoraleApplied:F0}", AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("records_owned", s.ownedRecordIds.Count.ToString(), AshfallMetricCard.Criticality.Normal);
+            bool broadcasting = !string.IsNullOrEmpty(s.lastBroadcastRecordId) && s.lastBroadcastSignalStrength > 0.01f;
+            _statusRail.Set("broadcast", broadcasting ? $"ON 98.6MHz ({s.broadcastCount})" : "IDLE", broadcasting ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
 
             if (_detailText != null)
             {
-                _detailText.Text = $"Turntable State: {(_host.System.IsPlaying ? "ACTIVE (Broadcasting on AM 7.150 MHz)" : "STANDBY")}\n" +
+                string broadcastLine = broadcasting
+                    ? $"Cultural Broadcast: {s.lastBroadcastRecordId} (Day {s.lastBroadcastDay}, {s.lastBroadcastSignalStrength*100f:F0}% signal, {s.broadcastCount} total) — Wanderers may hear this. 150W transmitter load."
+                    : "Cultural Broadcast: IDLE (rare vinyl required — classical/jazz/symphony or ≥4 morale bonus)";
+                _detailText.Text = $"Turntable State: {(_host.System.IsPlaying ? "ACTIVE" : "STANDBY")} | Power: {(broadcasting ? "150W TX LOAD" : "0W")}\n" +
                                    $"Total Plays: {s.totalPlays} | Last Played: {s.lastPlayedId} (Day {s.lastPlayedDay})\n" +
+                                   $"{broadcastLine}\n" +
                                    $"Last Event: {_host.LastEvent}";
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
         }
     }
 }

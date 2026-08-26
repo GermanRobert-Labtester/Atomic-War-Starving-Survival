@@ -9,11 +9,10 @@ namespace AtomicWar.GodotApp
     /// Manages pre-war vinyl records, common room playback, morale recovery, and flashback suppression.
     /// </summary>
     public sealed class VinylMoraleHostSession
-    {
+    : HostSessionBase{
         public VinylMoraleSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
+        public Func<int> DayProvider { get; set; } = () => -1;
 
         public VinylMoraleHostSession(VinylMoraleSystem system)
         {
@@ -24,13 +23,13 @@ namespace AtomicWar.GodotApp
                 LastEvent = System.IsPlaying
                     ? $"[Vinyl] Turntable started spinning: {System.State.currentPlayingId}"
                     : "[Vinyl] Turntable stopped.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnMoraleApplied += amount =>
             {
                 LastEvent = $"[Vinyl] Daily record broadcast applied +{amount:F0} Morale to all shelter dwellers.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -38,15 +37,16 @@ namespace AtomicWar.GodotApp
         {
             System.AcquireRecord(recordId);
             LastEvent = $"Acquired pre-war vinyl album: {recordId}";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
-        public ActionResult PlayRecord(string recordId)
+        public ActionResult PlayRecord(string recordId, int day = -1)
         {
-            var res = System.Play(recordId);
+            int effectiveDay = day >= 0 ? day : DayProvider != null ? DayProvider.Invoke() : -1;
+            var res = System.Play(recordId, effectiveDay);
             if (res.IsSuccess)
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -56,7 +56,7 @@ namespace AtomicWar.GodotApp
             var res = System.Stop();
             if (res.IsSuccess)
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -64,7 +64,7 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.ApplyDailyEffect(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 }

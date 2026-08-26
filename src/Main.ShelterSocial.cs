@@ -84,6 +84,7 @@ namespace AtomicWar.GodotApp
             var vmSys = new VinylMoraleSystem(new GodotLog());
             vmSys.RestoreState(vmState);
             _vinylMorale = new VinylMoraleHostSession(vmSys);
+            _vinylMorale.DayProvider = () => _simDay;
             _vinylMorale.StateChanged += () => _vinylMorale.MarkDirty();
             _vinylMoralePanel = new VinylMoralePanel();
             _vinylMoralePanel.Bind(_vinylMorale);

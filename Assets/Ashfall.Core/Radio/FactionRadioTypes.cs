@@ -12,7 +12,8 @@ namespace Ashfall.Core.Radio
         ParleyResolution = 1,
         RaidWarning = 2,
         TradeReaction = 3,
-        Silence = 4
+        Silence = 4,
+        CulturalBroadcast = 5
     }
 
     /// <summary>

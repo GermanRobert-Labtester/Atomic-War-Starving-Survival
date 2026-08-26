@@ -12,7 +12,7 @@ namespace AtomicWar.GodotApp
     /// owns the current day, receiver history, and host notifications.
     /// </summary>
     public sealed class RadioHostSession
-    {
+    : HostSessionBase{
         public const int DemoSeed = 2026;
         private const string CorpusFileName = "faction_radio_corpus.json";
         private readonly List<RadioIntercept> _history = new();
@@ -39,24 +39,26 @@ namespace AtomicWar.GodotApp
         public event Action<RadioIntercept, string?>? BroadcastIntercepted;
 
         public FactionRadioEngine Engine { get; }
+        public SignalTriangulationSystem Triangulation { get; }
         public ISeededRng Rng { get; }
         public IReadOnlyList<RadioIntercept> History => _history;
         public int Day { get; private set; }
         public float CurrentFrequency { get; private set; }
         public RadioIntercept? LastIntercept { get; private set; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public RadioHostSession(
             FactionRadioEngine engine,
             ISeededRng? rng = null,
-            int day = 1)
+            int day = 1,
+            SignalTriangulationSystem? triangulation = null)
         {
             Engine = engine ?? new FactionRadioEngine();
+            Triangulation = triangulation ?? new SignalTriangulationSystem();
             Rng = rng ?? new SeededRng(DemoSeed);
             Day = Math.Max(1, day);
             CurrentFrequency = FirstFrequency();
+            Triangulation.OnStateChanged += _ => RaiseStateChanged();
+            Triangulation.OnLocationRevealed += id => { LastEvent = $"Location discovered: {id}"; RaiseStateChanged(); };
         }
 
         public static RadioHostSession Create(string dataDir, int day = 1)
@@ -112,7 +114,7 @@ namespace AtomicWar.GodotApp
             }
 
             BroadcastIntercepted?.Invoke(intercept, voiceOverClip);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -139,8 +141,73 @@ namespace AtomicWar.GodotApp
             LastEvent = $"Emergency beacon broadcast on {CurrentFrequency:0.00} MHz.";
             AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayVoiceOver("vo_kind_parley");
             BroadcastIntercepted?.Invoke(beacon, "vo_kind_parley");
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
+        }
+
+        public void TuneDelta(float deltaMhz)
+        {
+            float target = (float)Math.Round(Math.Clamp(CurrentFrequency + deltaMhz, 88.0f, 150.0f), 2);
+            Listen(target);
+        }
+
+        /// <summary>
+        /// Record a direction-finding observation for the currently intercepted signal.
+        /// </summary>
+        public bool RecordBearingObservation(float bearingDegrees)
+        {
+            string sigId = LastIntercept.HasValue && !string.IsNullOrEmpty(LastIntercept.Value.FactionId)
+                ? LastIntercept.Value.FactionId
+                : $"freq_{CurrentFrequency:000.0}";
+
+            var obs = new RadioObservation
+            {
+                signalId = sigId,
+                stationId = "station_holdfast",
+                day = Day,
+                hour = 12f,
+                bearingDegrees = (float)Math.Round(Math.Clamp(bearingDegrees, 0f, 359f), 1),
+                errorDegrees = 1.5f,
+                signalStrength = (LastIntercept.HasValue ? LastIntercept.Value.SignalStrength : 2) / 5.0f,
+                noiseLevel = 0.05f,
+                frequencyMhz = CurrentFrequency,
+                weatherCondition = "Clear",
+                operatorSkill = 0.9f
+            };
+
+            bool ok = Triangulation.RecordObservation(obs);
+            if (ok)
+            {
+                LastEvent = $"Recorded DF bearing {obs.bearingDegrees:000}° on {CurrentFrequency:0.00} MHz ({Triangulation.GetObservationCount(sigId)} obs).";
+                RaiseStateChanged();
+            }
+            return ok;
+        }
+
+        /// <summary>
+        /// Process collected observations to triangulate signal emitter and reveal wasteland coordinates.
+        /// </summary>
+        public TriangulationCandidate? TriangulateCurrentSignal()
+        {
+            string sigId = LastIntercept.HasValue && !string.IsNullOrEmpty(LastIntercept.Value.FactionId)
+                ? LastIntercept.Value.FactionId
+                : $"freq_{CurrentFrequency:000.0}";
+
+            var candidate = Triangulation.Triangulate(sigId, Rng);
+            if (candidate != null)
+            {
+                bool discovered = Triangulation.IsLocationDiscovered(candidate.locationId);
+                LastEvent = discovered
+                    ? $"Triangulation confirmed: {candidate.displayName} at ({candidate.estimatedX:F1}, {candidate.estimatedY:F1}) [Conf: {candidate.confidence:P0}]."
+                    : $"Triangulation progress on {sigId}: {candidate.confidence:P0} confidence ({Triangulation.GetObservationCount(sigId)} obs).";
+                RaiseStateChanged();
+            }
+            else
+            {
+                LastEvent = $"Insufficient bearing observations to triangulate {sigId} (need ≥2).";
+                RaiseStateChanged();
+            }
+            return candidate;
         }
 
         /// <summary>
@@ -166,7 +233,33 @@ namespace AtomicWar.GodotApp
                 _history.RemoveAt(0);
             LastEvent = "Warlord radio warning intercepted on 94.2 MHz.";
             BroadcastIntercepted?.Invoke(warning, null);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
+            return LastEvent;
+        }
+
+        /// <summary>
+        /// Cultural broadcast bridge: rare vinyl → shortwave. Deterministic, host-wired.
+        /// VinylMoraleSystem fires OnCulturalBroadcast for rare records; Main wires it here.
+        /// Power load (150W) is checked by the host before calling — this method only records the signal.
+        /// </summary>
+        public string RecordCulturalBroadcast(string recordId, string genre, string displayName, int day, float signalStrength)
+        {
+            if (string.IsNullOrWhiteSpace(recordId)) return string.Empty;
+            string msg = $"Cultural broadcast: '{displayName}' ({genre}) — pre-war vinyl on shortwave. Wanderers may hear this.";
+            var broadcast = new RadioIntercept(
+                "faction_holdfast",
+                "HOLDFAST CULTURAL RELAY",
+                98.6f,
+                RadioEventKind.CulturalBroadcast,
+                msg,
+                Math.Clamp((int)(signalStrength * 9f), 1, 9),
+                day > 0 ? day : Day);
+            _history.Add(broadcast);
+            if (_history.Count > 32)
+                _history.RemoveAt(0);
+            LastEvent = $"Cultural broadcast on 98.6 MHz: {recordId} ({genre})";
+            BroadcastIntercepted?.Invoke(broadcast, null);
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -270,6 +363,56 @@ namespace AtomicWar.GodotApp
                         _playedBroadcastKeys.Add(state.playedBroadcastKeys[i]);
 
             LastEvent = "Radio state restored.";
+        }
+
+        // ── Triangulation demo actions ────────────────────────────────
+
+        /// <summary>Record a directional observation of a signal.</summary>
+        public string RecordObservationDemo(string signalId, float bearing, float signalStrength = 0.7f, float noise = 0.2f)
+        {
+            var obs = new RadioObservation
+            {
+                signalId = signalId,
+                stationId = "station_alpha",
+                day = Day,
+                hour = 12f,
+                bearingDegrees = bearing,
+                errorDegrees = 5f + noise * 10f,
+                signalStrength = signalStrength,
+                noiseLevel = noise,
+                frequencyMhz = CurrentFrequency,
+                weatherCondition = "Clear",
+                operatorSkill = 0.6f
+            };
+            bool ok = Triangulation.RecordObservation(obs);
+            return ok
+                ? $"Observation recorded: {signalId} at bearing {bearing:F0}° (strength {signalStrength:F2}, noise {noise:F2})."
+                : "Invalid observation.";
+        }
+
+        /// <summary>Attempt to triangulate a signal.</summary>
+        public string TriangulateDemo(string signalId)
+        {
+            var candidate = Triangulation.Triangulate(signalId, Rng);
+            if (candidate == null)
+                return $"Not enough observations for {signalId}. Need at least {SignalTriangulationSystem.MinObservationsForHypothesis}.";
+            bool discovered = Triangulation.IsLocationDiscovered(candidate.locationId);
+            return discovered
+                ? $"Triangulation complete! Location {candidate.locationId} discovered (confidence {candidate.confidence:F2}, uncertainty ±{candidate.uncertaintyRadiusKm:F0} km)."
+                : $"Hypothesis: {candidate.locationId} (confidence {candidate.confidence:F2}, uncertainty ±{candidate.uncertaintyRadiusKm:F0} km, {candidate.observationCount} observations).";
+        }
+
+        /// <summary>Get triangulation status for a signal.</summary>
+        public string TriangulationStatusLine(string signalId)
+        {
+            int obsCount = Triangulation.GetObservationCount(signalId);
+            var candidate = Triangulation.GetCandidate(signalId);
+            if (candidate == null)
+                return $"Signal {signalId}: {obsCount} observation(s). No hypothesis yet.";
+            bool discovered = Triangulation.IsLocationDiscovered(candidate.locationId);
+            return $"Signal {signalId}: {obsCount} obs, confidence {candidate.confidence:F2}, " +
+                   $"uncertainty ±{candidate.uncertaintyRadiusKm:F0} km" +
+                   (discovered ? " [DISCOVERED]" : " [pending]");
         }
 
         public string StatusLine()

@@ -15,6 +15,11 @@ namespace Ashfall.Core
         public int totalPlays;
         public float totalMoraleApplied;
         public bool isTurntableActive;
+        // Cultural broadcast bridge (future-proof): rare vinyl → shortwave cultural signal
+        public string lastBroadcastRecordId = string.Empty;
+        public int lastBroadcastDay = -1;
+        public int broadcastCount;
+        public float lastBroadcastSignalStrength;
     }
 
     [Serializable]
@@ -42,6 +47,7 @@ namespace Ashfall.Core
         public event Action<float> OnMoraleApplied;      // morale amount
         public event Action<float> OnFlashbackSuppressed; // suppression amount
         public event Action OnPlaybackChanged;
+        public event Action<VinylRecordDefinition, int> OnCulturalBroadcast; // record, day — rare vinyl → radio
 
         public VinylMoraleSystem(ILog? log = null)
         {
@@ -69,6 +75,12 @@ namespace Ashfall.Core
 
         public ActionResult Play(string recordId)
         {
+            return Play(recordId, -1);
+        }
+
+        /// <summary>Play with explicit day for cultural broadcast tracking (host passes _simDay).</summary>
+        public ActionResult Play(string recordId, int day)
+        {
             if (!_state.ownedRecordIds.Contains(recordId))
                 return ActionResult.Blocked("not_owned", "vinyl.not_owned");
             if (!_catalog.TryGetValue(recordId, out var record))
@@ -79,6 +91,17 @@ namespace Ashfall.Core
             _state.isTurntableActive = true;
             _log.Info($"[Vinyl] playing '{record.display_name}'");
             OnPlaybackChanged?.Invoke();
+
+            // Cultural broadcast bridge: rare pre-war vinyl (high morale bonus or classical/jazz) → shortwave signal
+            if (IsRareCulturalRecord(record))
+            {
+                _state.lastBroadcastRecordId = recordId;
+                _state.lastBroadcastDay = day >= 0 ? day : _state.lastPlayedDay;
+                _state.broadcastCount++;
+                _state.lastBroadcastSignalStrength = 0.85f; // 85% — strong cultural signal
+                OnCulturalBroadcast?.Invoke(record, _state.lastBroadcastDay);
+            }
+
             return ActionResult.Success("vinyl.playing",
                 new Dictionary<string, double>
                 {
@@ -87,11 +110,24 @@ namespace Ashfall.Core
                 });
         }
 
+        public bool IsRareCulturalRecord(VinylRecordDefinition record)
+        {
+            if (record == null) return false;
+            if (record.morale_daily_bonus >= 4f) return true;
+            string g = record.genre ?? string.Empty;
+            return g.Equals("classical", StringComparison.OrdinalIgnoreCase)
+                || g.Equals("jazz", StringComparison.OrdinalIgnoreCase)
+                || g.Equals("symphony", StringComparison.OrdinalIgnoreCase)
+                || g.Equals("hymnal", StringComparison.OrdinalIgnoreCase);
+        }
+
         public ActionResult Stop()
         {
             if (!_state.isTurntableActive)
                 return ActionResult.Blocked("not_playing", "vinyl.not_playing");
             _state.isTurntableActive = false;
+            // Broadcast ends when turntable stops — signal drops
+            _state.lastBroadcastSignalStrength = 0f;
             OnPlaybackChanged?.Invoke();
             return ActionResult.Success("vinyl.stopped");
         }

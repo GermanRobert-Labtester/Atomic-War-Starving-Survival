@@ -74,6 +74,7 @@ namespace AtomicWar.GodotApp
             SetupSumpFlooding();
             WireWaterTreatmentSumpBridge();
             WireWildlifeDiseaseBridge();
+            WireVinylRadioBridge();
             SetupDecontamination();
             SetupKitchenNutrition();
             SetupEquipmentCondition();
@@ -112,6 +113,21 @@ namespace AtomicWar.GodotApp
                 {
                     _disease.Engine.Infect(butcherId, DiseaseIds.ZoonoticFlu, _simDay);
                 }
+            };
+        }
+
+        private void WireVinylRadioBridge()
+        {
+            if (_vinylMorale == null || _radio == null || _powerGrid == null) return;
+            _vinylMorale.System.OnCulturalBroadcast += (record, day) =>
+            {
+                // 150W transmitter load — if brownout, cancel broadcast and cut signal
+                if (_powerGrid.System.IsBrownout)
+                {
+                    _vinylMorale.System.Stop();
+                    return;
+                }
+                _radio.RecordCulturalBroadcast(record.record_id, record.genre, record.display_name, day, _vinylMorale.System.State.lastBroadcastSignalStrength);
             };
         }
 
