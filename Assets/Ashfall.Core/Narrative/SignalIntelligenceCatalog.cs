@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string cipherPath = Path.Combine(directoryPath, "numbers_station_ciphers.json");
             if (File.Exists(cipherPath))
             {
-                var list = JsonSerializer.Deserialize<List<NumbersStationCipherEntry>>(File.ReadAllText(cipherPath), options);
+                var list = CatalogLocator.LoadWrappedList<NumbersStationCipherEntry>(File.ReadAllText(cipherPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string seismicPath = Path.Combine(directoryPath, "seismic_array_fault_alarms.json");
             if (File.Exists(seismicPath))
             {
-                var list = JsonSerializer.Deserialize<List<SeismicFaultAlarmEntry>>(File.ReadAllText(seismicPath), options);
+                var list = CatalogLocator.LoadWrappedList<SeismicFaultAlarmEntry>(File.ReadAllText(seismicPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string empPath = Path.Combine(directoryPath, "emp_atmospheric_sniffer_logs.json");
             if (File.Exists(empPath))
             {
-                var list = JsonSerializer.Deserialize<List<EmpSnifferLogEntry>>(File.ReadAllText(empPath), options);
+                var list = CatalogLocator.LoadWrappedList<EmpSnifferLogEntry>(File.ReadAllText(empPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string wiretapPath = Path.Combine(directoryPath, "bunker_wiretap_transcripts.json");
             if (File.Exists(wiretapPath))
             {
-                var list = JsonSerializer.Deserialize<List<BunkerWiretapEntry>>(File.ReadAllText(wiretapPath), options);
+                var list = CatalogLocator.LoadWrappedList<BunkerWiretapEntry>(File.ReadAllText(wiretapPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

@@ -8,7 +8,7 @@ namespace Ashfall.Core.World
     /// </summary>
     public static class WorldHeadlessDemo
     {
-        public static HeadlessReport Run(ILog log = null!)
+        public static HeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

@@ -51,8 +51,8 @@ namespace Ashfall.Core.Economy
     public sealed class TradeTellEngine : ITradeTellProvider
     {
         private readonly List<(string Id, float MinInclusive, float MaxInclusive)> _bands = new();
-        private readonly Dictionary<string, List<string>> _pools = new(StringComparer.OrdinalIgnoreCase);
-        private readonly Dictionary<string, TradeStance> _stances = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, List<string>> _pools = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, TradeStance> _stances = new(StringComparer.Ordinal);
 
         public int BandCount => _bands.Count;
         public int PoolCount => _pools.Count;
@@ -134,7 +134,7 @@ namespace Ashfall.Core.Economy
 
         private static string PoolKey(TradeStance stance, string bandId)
         {
-            return StanceKey(stance) + "/" + bandId;
+            return StanceKey(stance) + "/" + (bandId ?? string.Empty).Trim().ToLowerInvariant();
         }
 
         private static string StanceKey(TradeStance stance)

@@ -156,7 +156,7 @@ namespace Ashfall.Core.Narrative
             string hydroPath = Path.Combine(directoryPath, "hydrophone_acoustic_logs.json");
             if (File.Exists(hydroPath))
             {
-                var list = JsonSerializer.Deserialize<List<HydrophoneAcousticEntry>>(File.ReadAllText(hydroPath), options);
+                var list = CatalogLocator.LoadWrappedList<HydrophoneAcousticEntry>(File.ReadAllText(hydroPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -172,7 +172,7 @@ namespace Ashfall.Core.Narrative
             string boreholePath = Path.Combine(directoryPath, "geothermal_borehole_logs.json");
             if (File.Exists(boreholePath))
             {
-                var list = JsonSerializer.Deserialize<List<GeothermalBoreholeEntry>>(File.ReadAllText(boreholePath), options);
+                var list = CatalogLocator.LoadWrappedList<GeothermalBoreholeEntry>(File.ReadAllText(boreholePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -188,7 +188,7 @@ namespace Ashfall.Core.Narrative
             string cryoPath = Path.Combine(directoryPath, "cryopod_failure_logs.json");
             if (File.Exists(cryoPath))
             {
-                var list = JsonSerializer.Deserialize<List<CryopodFailureEntry>>(File.ReadAllText(cryoPath), options);
+                var list = CatalogLocator.LoadWrappedList<CryopodFailureEntry>(File.ReadAllText(cryoPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -204,7 +204,7 @@ namespace Ashfall.Core.Narrative
             string saltPath = Path.Combine(directoryPath, "salt_mine_inscriptions.json");
             if (File.Exists(saltPath))
             {
-                var list = JsonSerializer.Deserialize<List<SaltMineInscriptionEntry>>(File.ReadAllText(saltPath), options);
+                var list = CatalogLocator.LoadWrappedList<SaltMineInscriptionEntry>(File.ReadAllText(saltPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

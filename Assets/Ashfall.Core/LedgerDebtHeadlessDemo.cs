@@ -24,7 +24,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class LedgerDebtHeadlessDemo
     {
-        public static LedgerDebtHeadlessReport Run(ILog log = null!)
+        public static LedgerDebtHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string carPath = Path.Combine(directoryPath, "pneumatic_carrier_capsule_logs.json");
             if (File.Exists(carPath))
             {
-                var list = JsonSerializer.Deserialize<List<PneumaticCarrierCapsuleEntry>>(File.ReadAllText(carPath), options);
+                var list = CatalogLocator.LoadWrappedList<PneumaticCarrierCapsuleEntry>(File.ReadAllText(carPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string divPath = Path.Combine(directoryPath, "pneumatic_tube_diverter_audits.json");
             if (File.Exists(divPath))
             {
-                var list = JsonSerializer.Deserialize<List<PneumaticTubeDiverterEntry>>(File.ReadAllText(divPath), options);
+                var list = CatalogLocator.LoadWrappedList<PneumaticTubeDiverterEntry>(File.ReadAllText(divPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string blowPath = Path.Combine(directoryPath, "rootes_blower_vacuum_reports.json");
             if (File.Exists(blowPath))
             {
-                var list = JsonSerializer.Deserialize<List<RootesBlowerVacuumEntry>>(File.ReadAllText(blowPath), options);
+                var list = CatalogLocator.LoadWrappedList<RootesBlowerVacuumEntry>(File.ReadAllText(blowPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string cylPath = Path.Combine(directoryPath, "pneumatic_cylinder_leather_assays.json");
             if (File.Exists(cylPath))
             {
-                var list = JsonSerializer.Deserialize<List<PneumaticCylinderLeatherEntry>>(File.ReadAllText(cylPath), options);
+                var list = CatalogLocator.LoadWrappedList<PneumaticCylinderLeatherEntry>(File.ReadAllText(cylPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

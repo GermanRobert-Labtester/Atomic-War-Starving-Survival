@@ -19,7 +19,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class BrineWaterHeadlessDemo
     {
-        public static BrineWaterHeadlessReport Run(ILog log = null!)
+        public static BrineWaterHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

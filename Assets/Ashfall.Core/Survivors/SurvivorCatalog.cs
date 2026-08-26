@@ -16,6 +16,15 @@ namespace Ashfall.Core.Survivors
         public float baseHealth = 100f;
     }
 
+    [Serializable]
+    internal sealed class SurvivorDefinitionsRoot
+    {
+#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
+        public int schema_version;
+#pragma warning restore CS0649
+        public List<SurvivorDefinition> survivors = new List<SurvivorDefinition>();
+    }
+
     /// <summary>One roster entry: a definition instantiated into the bunker.</summary>
     [Serializable]
     public class SurvivorRosterEntry
@@ -53,7 +62,7 @@ namespace Ashfall.Core.Survivors
         public event Action<SurvivorRosterEntry, string> OnSurvivorDied; // entry, reason
         public event Action<SurvivorRosterState> OnStateChanged;
 
-        public SurvivorRosterSystem(SurvivorRosterState state = null!)
+        public SurvivorRosterSystem(SurvivorRosterState? state = null)
         {
             _state = state ?? new SurvivorRosterState();
             if (_state.entries == null) _state.entries = new List<SurvivorRosterEntry>();
@@ -222,9 +231,8 @@ namespace Ashfall.Core.Survivors
 
             try
             {
-                var parsed = json.Deserialize<SurvivorDefinition[]>(raw);
-                if (parsed == null) return result;
-                for (int i = 0; i < parsed.Length; i++)
+                var parsed = CatalogLocator.LoadWrappedList<SurvivorDefinition>(raw, SystemTextJsonSerializer.Options);
+                for (int i = 0; i < parsed.Count; i++)
                 {
                     var def = parsed[i];
                     if (def == null || string.IsNullOrEmpty(def.id)) continue;

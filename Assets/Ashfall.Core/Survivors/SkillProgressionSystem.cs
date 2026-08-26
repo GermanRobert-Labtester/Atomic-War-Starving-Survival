@@ -285,7 +285,7 @@ public sealed class SkillProgressionSystem
     /// reactivates dormant skills, may grant new skills, may fire Epiphany.
     /// </summary>
     public void RecordAction(SkillActor actor, string disciplineId, float xpAmount,
-        int currentDay, ISeededRng rng = null!)
+int currentDay, ISeededRng? rng = null)
     {
         if (actor == null || !actor.IsAlive) return;
         if (string.IsNullOrEmpty(disciplineId) || xpAmount <= 0f) return;
@@ -534,7 +534,7 @@ public sealed class SkillProgressionSystem
     /// reflects the active (non-dormant) catalog. Only Active contributes.
     /// The cache is the read source for delta-encoding across calls.
     /// </summary>
-    public void SyncSkillBonuses(SkillActor actor, SkillProgressionState state = null!)
+    public void SyncSkillBonuses(SkillActor actor, SkillProgressionState? state = null)
     {
         if (actor == null) return;
         if (state == null && !_bySurvivor.TryGetValue(actor.Id, out state))
@@ -613,7 +613,7 @@ public sealed class SkillProgressionSystem
     /// deduplicates by survivor id (last write wins, matches the legacy semantics).
     /// </summary>
     public void RestoreState(SkillProgressionSaveState save,
-        IReadOnlyList<SkillActor> actors = null!)
+IReadOnlyList<SkillActor>? actors = null)
     {
         _bySurvivor.Clear();
         _bonusCacheBySurvivor.Clear();

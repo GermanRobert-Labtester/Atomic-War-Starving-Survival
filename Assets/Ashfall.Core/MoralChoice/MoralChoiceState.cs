@@ -6,8 +6,9 @@ namespace Ashfall.Core.MoralChoice
     /// <summary>
     /// Save DTO for the moral choice system ("The Weight of Survival",
     /// docs/MORAL_CHOICE_SYSTEM.md). Journal resolutions, seeded outcome
-    /// rolls, and gossip propagation schedules all live here so a save
-    /// replays identically — there is no second file format.
+    /// rolls, gossip propagation schedules, branch progress, locked branches,
+    /// echo quest tracking, and moral flags all live here so a save replays
+    /// identically — there is no second file format.
     /// </summary>
     [Serializable]
     public sealed class MoralChoiceState
@@ -27,6 +28,18 @@ namespace Ashfall.Core.MoralChoice
 
         /// <summary>Overflow bits (LegendPositiveFlag/LegendNegativeFlag) awaiting overnight settlement.</summary>
         public int pendingLegendFlags;
+
+        /// <summary>Entry-quest resolutions per branch (branch_id → count). Drives branch locking.</summary>
+        public Dictionary<string, int> branchProgress = new Dictionary<string, int>();
+
+        /// <summary>Branches permanently locked by the lockout mechanic.</summary>
+        public List<string> lockedBranches = new List<string>();
+
+        /// <summary>Echo quests already fired (by quest_id). Each fires at most once per save.</summary>
+        public List<string> firedEchoQuests = new List<string>();
+
+        /// <summary>Moral flags set during this save (flag_id list, treated as a set).</summary>
+        public List<string> activeFlags = new List<string>();
     }
 
     /// <summary>

@@ -162,7 +162,7 @@ namespace Ashfall.Core.Warlords
         public event Action<string, string> OnNarrativeRequested;             // journalKey / radioKey
         public event Action OnStateChanged;
 
-        public WarlordDoctrineSystem(WarlordDoctrineCatalog catalog = null!, int seedSalt = 808)
+        public WarlordDoctrineSystem(WarlordDoctrineCatalog? catalog = null, int seedSalt = 808)
         {
             _catalog = catalog ?? new WarlordDoctrineCatalog();
             _state.seedSalt = seedSalt;
@@ -481,17 +481,35 @@ namespace Ashfall.Core.Warlords
             return ResolveAction(NormalizeActionName(chosen), day, rng, context);
         }
 
+        private static readonly WarlordStrategicAction[] s_allStrategicActions = (WarlordStrategicAction[])Enum.GetValues(typeof(WarlordStrategicAction));
+        private static readonly Dictionary<string, string> s_normalizedActionCache = new(StringComparer.Ordinal);
+
         /// <summary>demand_tribute → DemandTribute; DemandTribute stays as-is.</summary>
         private static string NormalizeActionName(string catalogName)
         {
             if (string.IsNullOrEmpty(catalogName)) return catalogName;
-            foreach (WarlordStrategicAction a in Enum.GetValues(typeof(WarlordStrategicAction)))
+            if (s_normalizedActionCache.TryGetValue(catalogName, out var cached))
+                return cached;
+
+            string normalized = catalogName;
+            for (int i = 0; i < s_allStrategicActions.Length; i++)
             {
+                var a = s_allStrategicActions[i];
                 if (a == WarlordStrategicAction.None) continue;
-                if (a.ToString() == catalogName) return catalogName;
-                if (ToSnake(a.ToString()) == catalogName) return a.ToString();
+                string aStr = a.ToString();
+                if (aStr == catalogName)
+                {
+                    normalized = catalogName;
+                    break;
+                }
+                if (ToSnake(aStr) == catalogName)
+                {
+                    normalized = aStr;
+                    break;
+                }
             }
-            return catalogName;
+            s_normalizedActionCache[catalogName] = normalized;
+            return normalized;
         }
 
         private static bool MatchesActionName(string catalogName, WarlordStrategicAction action)
@@ -859,7 +877,7 @@ namespace Ashfall.Core.Warlords
             _state.supply += gain;
         }
 
-        private void EmitNarrative(WarlordDoctrineDef doctrine = null!)
+        private void EmitNarrative(WarlordDoctrineDef? doctrine = null)
         {
             var d = doctrine ?? Doctrine;
             if (d == null) return;

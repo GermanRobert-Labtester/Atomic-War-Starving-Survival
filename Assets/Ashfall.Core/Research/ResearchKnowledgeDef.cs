@@ -43,8 +43,8 @@ namespace Ashfall.Core
         public ResearchKnowledgeDef(
             string id, string displayName, string category,
             string description, int daysToComplete,
-            string[] prerequisites = null!,
-            string breakthroughItem = null!)
+            string[]? prerequisites = null,
+string? breakthroughItem = null)
         {
             this.id = id;
             this.displayName = displayName;

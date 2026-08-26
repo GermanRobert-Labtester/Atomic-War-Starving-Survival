@@ -66,7 +66,7 @@ namespace Ashfall.Core
             }
         }
 
-        public DutyRosterQuestRuntime(DutyRosterQuestState state = null!)
+        public DutyRosterQuestRuntime(DutyRosterQuestState? state = null)
         {
             _state = state ?? new DutyRosterQuestState();
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
@@ -221,14 +221,14 @@ namespace Ashfall.Core
             if (string.IsNullOrEmpty(flag)) return;
             switch (flag)
             {
-                case DutyRosterSystem.FlagWaitInk:
-                    roster?.ResolveChartChoice(DutyRosterSystem.ChoiceWaitInk, day);
+                case DutyRosterIds.FlagWaitInk:
+                    roster?.ResolveChartChoice(DutyRosterIds.ChoiceWaitInk, day);
                     break;
-                case DutyRosterSystem.MutationFactionBlankRowsAccess:
+                case DutyRosterIds.MutationFactionBlankRowsAccess:
                     roster?.WithdrawBlankRowsAccessPublic();
                     break;
                 case "flag_hadi_hidden":
-                    roster?.HideFromNorthCopy(DutyRosterSystem.NpcHadiMorrow);
+                    roster?.HideFromNorthCopy(DutyRosterIds.NpcHadiMorrow);
                     marks?.SetMark(MarkHadiHidden, null!, day);
                     break;
                 case "flag_hadi_listed":
@@ -250,7 +250,7 @@ namespace Ashfall.Core
                     {
                         RecordMutation(flag);
                     }
-                    else if (roster != null && flag == DutyRosterSystem.MutationFactionBlankRowsAccess)
+                    else if (roster != null && flag == DutyRosterIds.MutationFactionBlankRowsAccess)
                     {
                         // (blank-rows handled above)
                     }
@@ -286,7 +286,7 @@ namespace Ashfall.Core
         /// </summary>
         public bool IsCrisisQuestActive()
         {
-            var p = GetProgress(DutyRosterSystem.QuestWindow);
+            var p = GetProgress(DutyRosterIds.QuestWindow);
             return p != null && p.started && !p.completed && !p.failed;
         }
 
@@ -296,7 +296,7 @@ namespace Ashfall.Core
         /// Mutations without an owning field stay recorded flags read by the
         /// Holdfast bridge / epilogue; unknown ids are logged, never silent.
         /// </summary>
-        public void ApplyKnownEffects(DutyRosterSystem roster, MoraleMarkSystem marks, int day, ILog log = null!)
+        public void ApplyKnownEffects(DutyRosterSystem roster, MoraleMarkSystem marks, int day, ILog? log = null)
         {
             log = log ?? NullLog.Instance;
             if (roster == null) return;
@@ -307,28 +307,28 @@ namespace Ashfall.Core
                 if (string.IsNullOrEmpty(m)) continue;
                 switch (m)
                 {
-                    case DutyRosterSystem.MutationRosterInUse:
+                    case DutyRosterIds.MutationRosterInUse:
                         roster.MarkRosterInUse();
                         break;
-                    case DutyRosterSystem.MutationRosterStillBlank:
+                    case DutyRosterIds.MutationRosterStillBlank:
                         roster.MarkRosterStillBlank();
                         break;
-                    case DutyRosterSystem.MutationRationProtocol:
+                    case DutyRosterIds.MutationRationProtocol:
                         roster.SetRationProtocol(true);
                         if (marks != null) marks.SetMark(MarkRationProtocol, null!, day);
                         break;
-                    case DutyRosterSystem.MutationRosterInk:
+                    case DutyRosterIds.MutationRosterInk:
                         roster.ResolveInkEnding(day);
                         if (marks != null) marks.SetMark(MarkRosterInk, null!, day);
                         break;
-                    case DutyRosterSystem.MutationRosterBurned:
+                    case DutyRosterIds.MutationRosterBurned:
                         roster.BurnChart(day);
                         if (marks != null) marks.SetMark(MarkRosterBurned, null!, day);
                         break;
-                    case DutyRosterSystem.MutationRosterBlank:
+                    case DutyRosterIds.MutationRosterBlank:
                         if (marks != null) marks.SetMark(MarkRosterBlank, null!, day);
                         break;
-                    case DutyRosterSystem.MutationFactionBlankRowsAccess:
+                    case DutyRosterIds.MutationFactionBlankRowsAccess:
                         roster.WithdrawBlankRowsAccessPublic();
                         break;
                     // Bespoke quest outcomes -> authored morale marks (typed map,

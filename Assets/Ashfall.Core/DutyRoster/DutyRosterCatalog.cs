@@ -62,10 +62,10 @@ namespace Ashfall.Core
     /// </summary>
     public class DutyRosterSeasonEntry
     {
-        public string id = DutyRosterSystem.SeasonSecondWinter;
-        public int windowMinDays = DutyRosterSystem.SecondWinterWindowMinDays;
-        public int windowMaxDays = DutyRosterSystem.SecondWinterWindowMaxDays;
-        public float encounterWeight = DutyRosterSystem.SecondWinterEncounterWeight;
+        public string id = DutyRosterIds.SeasonSecondWinter;
+        public int windowMinDays = DutyRosterIds.SecondWinterWindowMinDays;
+        public int windowMaxDays = DutyRosterIds.SecondWinterWindowMaxDays;
+        public float encounterWeight = DutyRosterIds.SecondWinterEncounterWeight;
         public float steamTripChanceBoost;
     }
 
@@ -129,7 +129,7 @@ namespace Ashfall.Core
         private readonly IJsonSerializer _json;
         private readonly ILog _log;
 
-        public DutyRosterCatalogLoader(IFileIO files, IJsonSerializer json, ILog log = null!)
+        public DutyRosterCatalogLoader(IFileIO files, IJsonSerializer json, ILog? log = null)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -163,8 +163,7 @@ namespace Ashfall.Core
             try
             {
                 string json = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<T>>(json);
-                if (items == null) return;
+                var items = CatalogLocator.LoadWrappedList<T>(json, SystemTextJsonSerializer.Options);
                 for (int i = 0; i < items.Count; i++)
                 {
                     if (items[i] != null)

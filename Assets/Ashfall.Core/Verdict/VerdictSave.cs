@@ -84,9 +84,9 @@ namespace Ashfall.Core.Verdict
             ReckoningSystem reckoning,
             EvidenceLedger evidence,
             int censusLastWindowDay,
-            VerdictNpcSystem npcs = null!,
-            VerdictRadioSystem radio = null!,
-            QuestlineSystem quests = null!)
+VerdictNpcSystem? npcs = null,
+VerdictRadioSystem? radio = null,
+QuestlineSystem? quests = null)
         {
             var save = new VerdictSave
             {
@@ -198,9 +198,9 @@ namespace Ashfall.Core.Verdict
             MachineLogSystem machineLog,
             ReckoningSystem reckoning,
             EvidenceLedger evidence,
-            VerdictNpcSystem npcs = null!,
-            VerdictRadioSystem radio = null!,
-            QuestlineSystem quests = null!)
+VerdictNpcSystem? npcs = null,
+VerdictRadioSystem? radio = null,
+QuestlineSystem? quests = null)
         {
             if (save == null) return;
             machineLog.RestoreState(save.machineLog);

@@ -58,7 +58,7 @@ namespace Ashfall.Core.Muster
         public event Action<MusterRecord> OnQuestlineResolved;
         public event Action<MusterState> OnStateChanged;
 
-        public MusterSystem(MusterState state = null!)
+        public MusterSystem(MusterState? state = null)
         {
             _state = state ?? new MusterState();
             if (_state.systemId != SystemId) _state.systemId = SystemId;

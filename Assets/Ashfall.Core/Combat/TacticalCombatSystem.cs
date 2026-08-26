@@ -49,7 +49,7 @@ namespace Ashfall.Core.Combat
         public CombatState State => _state;
         public CombatHostPorts Ports { get => _ports; set => _ports = value; }
 
-        public TacticalCombatSystem(CombatState state = null!, CombatHostPorts ports = null!)
+        public TacticalCombatSystem(CombatState? state = null, CombatHostPorts? ports = null)
         {
             if (state != null) _state = state;
             _ports = ports ?? new CombatHostPorts();
@@ -70,14 +70,17 @@ namespace Ashfall.Core.Combat
 
         // ══ Stance table ══════════════════════════════════════════════════
 
+        private static readonly TacticalStance[] s_allStances = (TacticalStance[])Enum.GetValues(typeof(TacticalStance));
+
         public static string StanceId(TacticalStance s) => "combat_stance_" + s.ToString().ToLowerInvariant();
 
         public static bool TryParseStance(string id, out TacticalStance stance)
         {
             stance = TacticalStance.HoldPosition;
             if (string.IsNullOrEmpty(id)) return false;
-            foreach (TacticalStance s in Enum.GetValues(typeof(TacticalStance)))
+            for (int i = 0; i < s_allStances.Length; i++)
             {
+                TacticalStance s = s_allStances[i];
                 if (string.Equals(id, StanceId(s), StringComparison.OrdinalIgnoreCase))
                 {
                     stance = s;
@@ -124,7 +127,7 @@ namespace Ashfall.Core.Combat
             IReadOnlyList<WeaponInstanceState> playerWeapons,
             int enemyCount,
             float enemyHealth,
-            ILog log = null!)
+ILog? log = null)
         {
             if (string.IsNullOrEmpty(encounterId)
                 || players == null || players.Count == 0
@@ -323,7 +326,7 @@ namespace Ashfall.Core.Combat
 
         // ══ Player actions ═══════════════════════════════════════════════
 
-        public CombatActionResult SetStance(TacticalStance stance, string subjectSurvivorId = null!)
+        public CombatActionResult SetStance(TacticalStance stance, string? subjectSurvivorId = null)
         {
             var res = new CombatActionResult();
             if (_state.Resolved)

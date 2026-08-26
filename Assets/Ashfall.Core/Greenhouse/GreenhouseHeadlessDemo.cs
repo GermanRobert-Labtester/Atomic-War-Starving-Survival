@@ -16,7 +16,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class GreenhouseHeadlessDemo
     {
-        public static GreenhouseHeadlessReport Run(ILog log = null!)
+        public static GreenhouseHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

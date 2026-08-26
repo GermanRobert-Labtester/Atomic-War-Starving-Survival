@@ -78,7 +78,7 @@ namespace Ashfall.Core
             MoraleMarkSystem marks,
             ShelterEncounterSystem encounters,
             IClock clock,
-            DutyRosterQuestRuntime quests = null!)
+DutyRosterQuestRuntime? quests = null)
         {
             var save = new DutyRosterSave
             {
@@ -211,7 +211,7 @@ namespace Ashfall.Core
             MoraleMarkSystem marks,
             ShelterEncounterSystem encounters,
             IClock clock,
-            DutyRosterQuestRuntime quests = null!)
+DutyRosterQuestRuntime? quests = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));

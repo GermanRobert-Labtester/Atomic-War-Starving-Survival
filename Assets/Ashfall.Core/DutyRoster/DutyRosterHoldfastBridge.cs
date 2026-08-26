@@ -98,9 +98,9 @@ namespace Ashfall.Core
                 {
                     var row = roster.Rows[i];
                     if (row == null || string.IsNullOrEmpty(row.survivorId)) continue;
-                    if (row.status == DutyRosterSystem.StatusHome)
+                    if (row.status == DutyRosterIds.StatusHome)
                     {
-                        roster.SetStatus(row.survivorId, DutyRosterSystem.StatusLevy);
+                        roster.SetStatus(row.survivorId, DutyRosterIds.StatusLevy);
                         flipped++;
                     }
                 }
@@ -195,7 +195,7 @@ namespace Ashfall.Core
                 for (int i = 0; i < roster.Rows.Count; i++)
                 {
                     var row = roster.Rows[i];
-                    if (row != null && row.script != DutyRosterSystem.ScriptBlank)
+                    if (row != null && row.script != DutyRosterIds.ScriptBlank)
                         snap.LevyNames.Add(row.survivorId);
                 }
                 snap.LevyNames.Sort(string.CompareOrdinal);
@@ -203,18 +203,18 @@ namespace Ashfall.Core
 
             switch (roster.ChartScript)
             {
-                case DutyRosterSystem.ScriptInk: snap.Mutation = "mutation_roster_ink"; break;
-                case DutyRosterSystem.ScriptPencil: snap.Mutation = "mutation_roster_pencil"; break;
-                case DutyRosterSystem.ScriptBurned: snap.Mutation = "mutation_roster_burned"; break;
+                case DutyRosterIds.ScriptInk: snap.Mutation = "mutation_roster_ink"; break;
+                case DutyRosterIds.ScriptPencil: snap.Mutation = "mutation_roster_pencil"; break;
+                case DutyRosterIds.ScriptBurned: snap.Mutation = "mutation_roster_burned"; break;
                 default: snap.Mutation = "mutation_roster_blank"; break;
             }
 
-            var hadi = roster.GetRow(DutyRosterSystem.NpcHadiMorrow);
+            var hadi = roster.GetRow(DutyRosterIds.NpcHadiMorrow);
             if (hadi != null)
             {
-                if (hadi.status == DutyRosterSystem.StatusMissing || hadi.status == DutyRosterSystem.StatusDead)
+                if (hadi.status == DutyRosterIds.StatusMissing || hadi.status == DutyRosterIds.StatusDead)
                     snap.HadiStatus = "never_back";
-                else if (roster.IsValidLevyName(DutyRosterSystem.NpcHadiMorrow))
+                else if (roster.IsValidLevyName(DutyRosterIds.NpcHadiMorrow))
                     snap.HadiStatus = "listed";
                 else
                     snap.HadiStatus = "hidden";

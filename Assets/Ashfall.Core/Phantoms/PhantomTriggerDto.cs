@@ -30,6 +30,17 @@ namespace Ashfall.Core.Phantoms
     }
 
     /// <summary>
+    /// Root catalog container DTO matching the JSON shape:
+    /// { "schema_version": 1, "items": [ ... ] }
+    /// </summary>
+    [System.Serializable]
+    public sealed class PhantomTriggerCatalogJson
+    {
+        public int schema_version;
+        public List<PhantomTriggerJsonEntry> items = new List<PhantomTriggerJsonEntry>();
+    }
+
+    /// <summary>
     /// Single authoritative per-background JSON DTO. One entry per
     /// background_id, with a list of rules that govern when the entry fires.
     /// </summary>
@@ -40,3 +51,4 @@ namespace Ashfall.Core.Phantoms
         public List<PhantomTriggerRuleJson> triggers;
     }
 }
+

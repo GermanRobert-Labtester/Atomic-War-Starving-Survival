@@ -6,7 +6,7 @@ namespace Ashfall.Core.Medical
     /// </summary>
     public static class MedicalHeadlessDemo
     {
-        public static HeadlessReport Run(ILog log = null!)
+        public static HeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

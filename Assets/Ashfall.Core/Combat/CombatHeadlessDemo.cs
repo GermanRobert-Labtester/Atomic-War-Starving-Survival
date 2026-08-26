@@ -27,7 +27,7 @@ namespace Ashfall.Core.Combat
         public const int EnemyCount = 3;
         public const float EnemyHealth = 40f;
 
-        public static CombatHeadlessReport Run(ILog log = null!)
+        public static CombatHeadlessReport Run(ILog? log = null)
         {
             log = log ?? NullLog.Instance;
             var report = new CombatHeadlessReport();

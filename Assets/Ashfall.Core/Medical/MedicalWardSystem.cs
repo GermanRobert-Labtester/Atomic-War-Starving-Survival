@@ -293,7 +293,7 @@ namespace Ashfall.Core.Medical
         public MedicalWardEvent() { }
 
         public MedicalWardEvent(MedicalWardEventKind kind, string patientId,
-            string bedId, int day, string detail = null!)
+string bedId, int day, string? detail = null)
         {
             Kind = kind;
             PatientId = patientId ?? string.Empty;

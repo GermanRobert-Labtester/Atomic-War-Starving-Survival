@@ -8,7 +8,7 @@ namespace Ashfall.Core.Expeditions
     /// </summary>
     public static class ExpeditionHeadlessDemo
     {
-        public static HeadlessReport Run(ILog log = null!)
+        public static HeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

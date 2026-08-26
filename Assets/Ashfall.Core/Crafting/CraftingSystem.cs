@@ -104,7 +104,7 @@ namespace Ashfall.Core.Crafting
             return true;
         }
 
-        public bool StartCraft(Recipe recipe, string crafterId = null!)
+        public bool StartCraft(Recipe recipe, string? crafterId = null)
         {
             if (!CanCraft(recipe, crafterId)) return false;
 

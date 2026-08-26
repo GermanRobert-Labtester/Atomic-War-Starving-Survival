@@ -41,11 +41,10 @@ namespace Ashfall.Core.Verdict
             if (string.IsNullOrWhiteSpace(raw)) return result;
             try
             {
-                var parsed = json.Deserialize<VerdictLocationEntry[]>(raw);
-                if (parsed == null) return result;
-                for (int i = 0; i < parsed.Length; i++)
+                var list = CatalogLocator.LoadWrappedList<VerdictLocationEntry>(raw, SystemTextJsonSerializer.Options);
+                for (int i = 0; i < list.Count; i++)
                 {
-                    var e = parsed[i];
+                    var e = list[i];
                     if (e == null || string.IsNullOrEmpty(e.id)) continue;
                     result.Add(e);
                 }
@@ -88,6 +87,15 @@ namespace Ashfall.Core.Verdict
             public string rarity = string.Empty;
         }
 
+        [Serializable]
+        internal sealed class VerdictItemsRoot
+        {
+#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
+            public int schema_version;
+#pragma warning restore CS0649
+            public List<VerdictItemEntry> items = new List<VerdictItemEntry>();
+        }
+
         public static List<VerdictItemEntry> LoadItems(
             string dataDir, IFileIO fileIO, IJsonSerializer json)
         {
@@ -99,20 +107,19 @@ namespace Ashfall.Core.Verdict
             if (string.IsNullOrWhiteSpace(raw)) return result;
             try
             {
-                var parsed = json.Deserialize<VerdictItemEntry[]>(raw);
-                if (parsed == null) return result;
-                for (int i = 0; i < parsed.Length; i++)
+                var entries = CatalogLocator.LoadWrappedList<VerdictItemEntry>(raw, SystemTextJsonSerializer.Options);
+                for (int i = 0; i < entries.Count; i++)
                 {
-                    var e = parsed[i];
+                    var e = entries[i];
                     if (e == null || string.IsNullOrEmpty(e.id)) continue;
                     result.Add(e);
                 }
             }
             catch (Exception ex_CATDIAG)
-                                {
-                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                                    return result;
-                                }
+            {
+                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                return result;
+            }
             return result;
         }
 

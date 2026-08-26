@@ -173,7 +173,9 @@ namespace Ashfall.Core.Inventory
             ("chest", EquipSlot.Body),
         };
 
-        public static string[] CanonicalNames => Enum.GetNames(typeof(EquipSlot));
+        private static readonly string[] s_canonicalNames = Enum.GetNames(typeof(EquipSlot));
+
+        public static string[] CanonicalNames => s_canonicalNames;
 
         public static bool TryParse(string raw, out EquipSlot slot)
         {

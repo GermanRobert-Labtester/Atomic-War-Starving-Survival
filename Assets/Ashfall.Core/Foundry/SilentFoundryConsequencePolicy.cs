@@ -124,8 +124,8 @@ namespace Ashfall.Core.Foundry
 
         public static FoundryTreatyConsequenceFile Load(
             string dataDirectory,
-            IFileIO files = null!,
-            IJsonSerializer serializer = null!)
+IFileIO? files = null,
+IJsonSerializer? serializer = null)
         {
             files = files ?? new FileSystemIO();
             serializer = serializer ?? new SystemTextJsonSerializer();

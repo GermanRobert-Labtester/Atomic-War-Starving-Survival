@@ -57,8 +57,9 @@ namespace Ashfall.Core.Muster
                     });
                 }
             }
-            catch
+            catch (System.Exception ex_CATDIAG)
             {
+                Ashfall.Core.IO.CatalogDiagnostics.Warn(path, "EpilogueCatalogRoot", ex_CATDIAG);
                 return result;
             }
             return result;

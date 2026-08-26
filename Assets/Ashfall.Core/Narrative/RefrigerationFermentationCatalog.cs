@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string chillerPath = Path.Combine(directoryPath, "ammonia_chiller_leak_logs.json");
             if (File.Exists(chillerPath))
             {
-                var list = JsonSerializer.Deserialize<List<AmmoniaChillerLeakEntry>>(File.ReadAllText(chillerPath), options);
+                var list = CatalogLocator.LoadWrappedList<AmmoniaChillerLeakEntry>(File.ReadAllText(chillerPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string picklingPath = Path.Combine(directoryPath, "brine_pickling_barrel_spoilage.json");
             if (File.Exists(picklingPath))
             {
-                var list = JsonSerializer.Deserialize<List<BrinePicklingBarrelEntry>>(File.ReadAllText(picklingPath), options);
+                var list = CatalogLocator.LoadWrappedList<BrinePicklingBarrelEntry>(File.ReadAllText(picklingPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string cellarPath = Path.Combine(directoryPath, "root_cellar_humidity_rot_reports.json");
             if (File.Exists(cellarPath))
             {
-                var list = JsonSerializer.Deserialize<List<RootCellarHumidityRotEntry>>(File.ReadAllText(cellarPath), options);
+                var list = CatalogLocator.LoadWrappedList<RootCellarHumidityRotEntry>(File.ReadAllText(cellarPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string smokePath = Path.Combine(directoryPath, "smoked_meat_creosote_assays.json");
             if (File.Exists(smokePath))
             {
-                var list = JsonSerializer.Deserialize<List<SmokedMeatCreosoteEntry>>(File.ReadAllText(smokePath), options);
+                var list = CatalogLocator.LoadWrappedList<SmokedMeatCreosoteEntry>(File.ReadAllText(smokePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

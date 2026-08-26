@@ -88,7 +88,7 @@ namespace Ashfall.Core.Shelter
         }
 
         public ShelterAssignmentResult Assign(string survivorId, string roomId,
-            string workstationId = null!, int day = 0)
+string? workstationId = null, int day = 0)
         {
             if (string.IsNullOrEmpty(survivorId))
                 return new ShelterAssignmentResult(false, "missing_survivor_id", null!);
@@ -161,7 +161,7 @@ namespace Ashfall.Core.Shelter
         public ShelterRoom() { }
 
         public ShelterRoom(string roomId, string displayName, int capacity,
-            string requiredSkillId = null!, string workstationId = null!)
+string? requiredSkillId = null, string? workstationId = null)
         {
             RoomId = roomId;
             DisplayName = displayName;

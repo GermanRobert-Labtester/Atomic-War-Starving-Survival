@@ -19,13 +19,29 @@ namespace Ashfall.Core.Inventory
         public float DegradeRate;
     }
 
-    /// <summary>Ported worn-gear record consumed by radiation exposure.</summary>
+    /// <summary>Authoritative worn-gear record consumed by radiation exposure.</summary>
     public class WornGear
     {
         public float RadProtection;
         public float MaxDurability;
         public float CurrentDurability;
         public float DegradeRate;
+
+        public float DurabilityFraction()
+        {
+            return MaxDurability > 0f ? Math.Clamp(CurrentDurability / MaxDurability, 0f, 1f) : 0f;
+        }
+
+        public float EffectiveProtection()
+        {
+            return Math.Max(0f, RadProtection) * DurabilityFraction();
+        }
+
+        public void Degrade(float gameHours)
+        {
+            if (gameHours <= 0f) return;
+            CurrentDurability = Math.Max(0f, CurrentDurability - DegradeRate * gameHours);
+        }
     }
 
     public class Inventory
@@ -495,10 +511,10 @@ namespace Ashfall.Core.Inventory
         /// <summary>Consume one unit, applying effects via optional needs/radiation callbacks.</summary>
         public bool Consume(
             ItemDefinition item,
-            Func<ItemType, float, bool> applyNeed = null!,
-            Action<float> applyRadCleanse = null!,
-            Action applyIodine = null!,
-            Action<float> applyContamination = null!,
+Func<ItemType, float, bool>? applyNeed = null,
+Action<float>? applyRadCleanse = null,
+Action? applyIodine = null,
+Action<float>? applyContamination = null,
             float therapeuticScale = 1f)
         {
             if (item == null) return false;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Greenhouse;
 #pragma warning disable CS8618
 
 namespace Ashfall.Core
@@ -35,6 +36,7 @@ namespace Ashfall.Core
         public int totalHarvests;
         /// <summary>A11: deterministic blight-roll count (reseed pattern).</summary>
         public long blightRollCount;
+        public ApicultureState? apiculture;
     }
 
     public struct GreenhouseHarvest
@@ -95,6 +97,7 @@ namespace Ashfall.Core
             dst.preWarWheatUnlocked = src.preWarWheatUnlocked;
             dst.totalHarvests = src.totalHarvests;
             dst.blightRollCount = Math.Max(0L, src.blightRollCount);
+            dst.apiculture = src.apiculture;
             dst.plots = new List<GreenhousePlotState>(src.plots != null ? src.plots.Count : 0);
             if (src.plots == null) return;
             for (int i = 0; i < src.plots.Count; i++)

@@ -6,7 +6,7 @@ namespace Ashfall.Core.Survivors
     /// </summary>
     public static class SurvivorsHeadlessDemo
     {
-        public static HeadlessReport Run(ILog log = null!)
+        public static HeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

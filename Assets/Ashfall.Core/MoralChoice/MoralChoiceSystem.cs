@@ -71,7 +71,8 @@ namespace Ashfall.Core.MoralChoice
     /// <summary>
     /// Engine-agnostic moral choice ledger: invisible moral + empathy
     /// accumulators, band computation, overnight reconciliation with
-    /// one-time threshold events, and ending selection. The score is never
+    /// one-time threshold events, ending selection, branch tracking,
+    /// quest gating, and echo quest availability. The score is never
     /// surfaced to the player — the world is the UI (host layers read
     /// CurrentBand / events, never the raw number).
     /// </summary>
@@ -106,10 +107,16 @@ namespace Ashfall.Core.MoralChoice
         private readonly ILog _log;
         private MoralChoiceState _state = new MoralChoiceState();
 
+        /// <summary>Branch architecture from moral_choice_chains.json; null until InitializeChainData.</summary>
+        private MoralChoiceChainData? _chainData;
+        private Dictionary<string, string> _questToBranch = new Dictionary<string, string>();
+        private HashSet<string> _entryQuestSet = new HashSet<string>();
+
         public event Action<MoralChoiceResolution>? OnQuestResolved;
         public event Action<string>? OnThresholdEventFired;
+        public event Action<string>? OnBranchLocked;
 
-        public MoralChoiceSystem(ISeededRng rng, ILog log = null!)
+        public MoralChoiceSystem(ISeededRng rng, ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _log = log ?? NullLog.Instance;
@@ -125,6 +132,36 @@ namespace Ashfall.Core.MoralChoice
         public bool IsListener => _state.empathyPoints >= ListenerEmpathyThreshold;
         public bool IsConfidant => _state.empathyPoints >= ConfidantEmpathyThreshold;
 
+        /// <summary>Chain data reference; null if not yet initialized.</summary>
+        public MoralChoiceChainData? ChainData => _chainData;
+
+        /// <summary>
+        /// Load the branching architecture (moral_choice_chains.json). Builds
+        /// internal lookup maps for branch ownership and entry-quest tracking.
+        /// Safe to call once at startup; subsequent calls are no-ops.
+        /// </summary>
+        public void InitializeChainData(MoralChoiceChainData chainData)
+        {
+            if (chainData == null || _chainData != null) return;
+            _chainData = chainData;
+
+            foreach (var branch in chainData.Branches)
+            {
+                foreach (var entryQuest in branch.EntryQuests)
+                {
+                    _questToBranch[entryQuest] = branch.Id;
+                    _entryQuestSet.Add(entryQuest);
+                }
+            }
+            foreach (var gate in chainData.QuestGates)
+            {
+                if (!string.IsNullOrEmpty(gate.Branch) && !string.IsNullOrEmpty(gate.QuestId))
+                {
+                    _questToBranch[gate.QuestId] = gate.Branch;
+                }
+            }
+        }
+
         public static bool IsCanonicalQuestId(string questId) =>
             questId.StartsWith(QuestIdPrefix, StringComparison.Ordinal);
 
@@ -139,6 +176,112 @@ namespace Ashfall.Core.MoralChoice
             resolution = _state.resolutions.FirstOrDefault(r => string.Equals(r.questId, questId, StringComparison.Ordinal));
             return resolution != null;
         }
+
+        // ── Branch tracking ────────────────────────────────────────────
+
+        /// <summary>Whether a branch has been permanently locked by the lockout mechanic.</summary>
+        public bool IsBranchLocked(string branchId) =>
+            _state.lockedBranches.Contains(branchId);
+
+        /// <summary>How many entry quests the player has resolved for a branch.</summary>
+        public int GetBranchProgress(string branchId) =>
+            _state.branchProgress.TryGetValue(branchId, out int v) ? v : 0;
+
+        /// <summary>Which branch owns a quest (by chain data); empty string if not a chain quest.</summary>
+        public string GetQuestBranch(string questId) =>
+            _questToBranch.TryGetValue(questId, out var b) ? b : string.Empty;
+
+        /// <summary>
+        /// Whether a chain quest is accessible: branch not locked, gate
+        /// prerequisites met, day window valid, and not already resolved.
+        /// Non-chain quests (base/expansion) only check day + resolved.
+        /// </summary>
+        public bool IsChainQuestAccessible(string questId, int day)
+        {
+            if (IsResolved(questId)) return false;
+
+            if (_questToBranch.TryGetValue(questId, out var branchId))
+            {
+                if (IsBranchLocked(branchId)) return false;
+            }
+
+            var gate = _chainData?.QuestGates.FirstOrDefault(
+                g => string.Equals(g.QuestId, questId, StringComparison.Ordinal));
+            if (gate != null && !EvaluateGate(gate)) return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Evaluate a quest gate's prerequisites: prior quests resolved,
+        /// moral/empathy thresholds, and flag requirements.
+        /// </summary>
+        public bool EvaluateGate(MoralQuestGate gate)
+        {
+            if (gate == null) return true;
+
+            foreach (var req in gate.Requires)
+            {
+                if (!IsResolved(req)) return false;
+            }
+
+            if (gate.RequiresMinMoral.HasValue && _state.moralScore < gate.RequiresMinMoral.Value) return false;
+            if (gate.RequiresMaxMoral.HasValue && _state.moralScore > gate.RequiresMaxMoral.Value) return false;
+            if (gate.RequiresMinEmpathy.HasValue && _state.empathyPoints < gate.RequiresMinEmpathy.Value) return false;
+
+            if (!string.IsNullOrEmpty(gate.RequiresFlag) && !_state.activeFlags.Contains(gate.RequiresFlag)) return false;
+
+            return true;
+        }
+
+        /// <summary>Set a moral flag (idempotent).</summary>
+        public void SetFlag(string flagId)
+        {
+            if (string.IsNullOrEmpty(flagId)) return;
+            if (!_state.activeFlags.Contains(flagId))
+                _state.activeFlags.Add(flagId);
+        }
+
+        /// <summary>Whether a moral flag is currently set.</summary>
+        public bool HasFlag(string flagId) =>
+            !string.IsNullOrEmpty(flagId) && _state.activeFlags.Contains(flagId);
+
+        // ── Echo quests ────────────────────────────────────────────────
+
+        /// <summary>
+        /// Find echo quests that should fire given the current state and day.
+        /// An echo quest fires when: its trigger quest was resolved with the
+        /// matching choice, enough days have passed, it hasn't fired yet, and
+        /// its branch (if any) is not locked.
+        /// </summary>
+        public List<MoralEchoQuestDefinition> FindAvailableEchoQuests(int currentDay)
+        {
+            if (_chainData == null) return new List<MoralEchoQuestDefinition>();
+
+            var result = new List<MoralEchoQuestDefinition>();
+            foreach (var echo in _chainData.EchoQuests)
+            {
+                if (_state.firedEchoQuests.Contains(echo.QuestId)) continue;
+                if (!TryGetResolution(echo.TriggeredBy, out var trigger)) continue;
+                if (trigger!.choiceIndex != echo.TriggeredByChoice) continue;
+                if (currentDay < trigger.resolvedDay + echo.MinDaysAfter) continue;
+
+                if (!string.IsNullOrEmpty(echo.Branch) && IsBranchLocked(echo.Branch)) continue;
+
+                result.Add(echo);
+            }
+            return result;
+        }
+
+        /// <summary>Mark an echo quest as fired (called by the host when the echo is presented).</summary>
+        public void MarkEchoQuestFired(string echoQuestId)
+        {
+            if (string.IsNullOrEmpty(echoQuestId)) return;
+            if (!_state.firedEchoQuests.Contains(echoQuestId))
+                _state.firedEchoQuests.Add(echoQuestId);
+        }
+
+        // ── Quest resolution ───────────────────────────────────────────
 
         /// <summary>
         /// Resolve a quest choice. One resolution per quest per save: repeat
@@ -195,7 +338,50 @@ namespace Ashfall.Core.MoralChoice
             if (unclamped > MaxScore) _state.pendingLegendFlags |= LegendPositiveFlag;
             else if (unclamped < MinScore) _state.pendingLegendFlags |= LegendNegativeFlag;
 
+            // Track branch progress for entry quests and check lockout.
+            TrackBranchProgress(quest.Id);
+
             return resolution;
+        }
+
+        /// <summary>
+        /// If the resolved quest is a branch entry quest, increment that
+        /// branch's progress. When the lock threshold is reached, lock out
+        /// the opposing branches and set the branch-locked flags.
+        /// </summary>
+        private void TrackBranchProgress(string questId)
+        {
+            if (!_entryQuestSet.Contains(questId)) return;
+            if (!_questToBranch.TryGetValue(questId, out var branchId)) return;
+            if (_chainData == null) return;
+
+            var branch = _chainData.Branches.FirstOrDefault(
+                b => string.Equals(b.Id, branchId, StringComparison.Ordinal));
+            if (branch == null) return;
+
+            if (!_state.branchProgress.ContainsKey(branchId))
+                _state.branchProgress[branchId] = 0;
+            _state.branchProgress[branchId]++;
+
+            if (_state.branchProgress[branchId] >= branch.LockThreshold)
+            {
+                foreach (var lockedId in branch.LocksOut)
+                {
+                    if (!_state.lockedBranches.Contains(lockedId))
+                    {
+                        _state.lockedBranches.Add(lockedId);
+
+                        var lockedBranch = _chainData.Branches.FirstOrDefault(
+                            b => string.Equals(b.Id, lockedId, StringComparison.Ordinal));
+                        if (lockedBranch != null && !string.IsNullOrEmpty(lockedBranch.LockedFlag))
+                        {
+                            SetFlag(lockedBranch.LockedFlag);
+                        }
+
+                        OnBranchLocked?.Invoke(lockedId);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -336,7 +522,11 @@ namespace Ashfall.Core.MoralChoice
                 bandAtLastReconcile = source.bandAtLastReconcile,
                 pendingLegendFlags = source.pendingLegendFlags,
                 firedThresholdEvents = new List<string>(source.firedThresholdEvents ?? new List<string>()),
-                resolutions = new List<MoralChoiceResolution>()
+                resolutions = new List<MoralChoiceResolution>(),
+                branchProgress = new Dictionary<string, int>(source.branchProgress ?? new Dictionary<string, int>()),
+                lockedBranches = new List<string>(source.lockedBranches ?? new List<string>()),
+                firedEchoQuests = new List<string>(source.firedEchoQuests ?? new List<string>()),
+                activeFlags = new List<string>(source.activeFlags ?? new List<string>())
             };
             if (source.resolutions != null)
             {

@@ -32,7 +32,7 @@ namespace Ashfall.Core
     {
         public const int DefaultSeed = 808;
 
-        public static HeadlessReport Run(string dataDirectory = null!, ILog log = null!)
+        public static HeadlessReport Run(string? dataDirectory = null, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

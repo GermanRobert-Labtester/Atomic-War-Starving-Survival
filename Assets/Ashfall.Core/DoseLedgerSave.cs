@@ -61,7 +61,7 @@ namespace Ashfall.Core
             SickListSystem sickList,
             CohortSystem cohort,
             VoluntaryRegisterSystem voluntaryRegister,
-            QuestlineSystem quests = null!)
+QuestlineSystem? quests = null)
         {
             var save = new DoseLedgerSave
             {
@@ -147,7 +147,7 @@ namespace Ashfall.Core
             SickListSystem sickList,
             CohortSystem cohort,
             VoluntaryRegisterSystem voluntaryRegister,
-            QuestlineSystem quests = null!)
+QuestlineSystem? quests = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));

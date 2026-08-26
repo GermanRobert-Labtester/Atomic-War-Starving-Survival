@@ -168,6 +168,8 @@ namespace Ashfall.Core.Survivors
             OnStateChanged?.Invoke();
         }
 
+        private readonly List<string> _tickKeyBuffer = new();
+
         /// <summary>
         /// Tick all active caregiving assignments over elapsed game hours.
         /// </summary>
@@ -176,12 +178,14 @@ namespace Ashfall.Core.Survivors
             if (gameHours <= 0f) return;
 
             // Snapshot keys to allow mutation during iteration
-            var caregiverIds = new List<string>(_caregiverToPatient.Keys);
+            _tickKeyBuffer.Clear();
+            foreach (var k in _caregiverToPatient.Keys)
+                _tickKeyBuffer.Add(k);
             bool changed = false;
 
-            for (int i = 0; i < caregiverIds.Count; i++)
+            for (int i = 0; i < _tickKeyBuffer.Count; i++)
             {
-                var caregiverId = caregiverIds[i];
+                var caregiverId = _tickKeyBuffer[i];
                 if (!_caregiverToPatient.TryGetValue(caregiverId, out var patientId))
                     continue;
 

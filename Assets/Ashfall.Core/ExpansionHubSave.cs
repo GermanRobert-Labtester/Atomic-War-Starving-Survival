@@ -121,12 +121,12 @@ namespace Ashfall.Core
             SiteEncounterSystem siteEncounters,
             VouchAccessSystem vouch,
             GreenhouseSystem greenhouse,
-            CrossingArbitrationSystem arbitration = null!,
-            LedgerDebtSystem ledger = null!,
-            CrossingQuestSystem crossingQuests = null!,
-            GenerationalSuccessionEngine generational = null!,
-            SilentFoundrySystem silentFoundry = null!,
-            DiseaseSystem disease = null!)
+CrossingArbitrationSystem? arbitration = null,
+LedgerDebtSystem? ledger = null,
+CrossingQuestSystem? crossingQuests = null,
+GenerationalSuccessionEngine? generational = null,
+SilentFoundrySystem? silentFoundry = null,
+DiseaseSystem? disease = null)
         {
             var save = new ExpansionHubSave
             {
@@ -319,12 +319,12 @@ namespace Ashfall.Core
             SiteEncounterSystem siteEncounters,
             VouchAccessSystem vouch,
             GreenhouseSystem greenhouse,
-            CrossingArbitrationSystem arbitration = null!,
-            LedgerDebtSystem ledger = null!,
-            CrossingQuestSystem crossingQuests = null!,
-            GenerationalSuccessionEngine generational = null!,
-            SilentFoundrySystem silentFoundry = null!,
-            DiseaseSystem disease = null!)
+CrossingArbitrationSystem? arbitration = null,
+LedgerDebtSystem? ledger = null,
+CrossingQuestSystem? crossingQuests = null,
+GenerationalSuccessionEngine? generational = null,
+SilentFoundrySystem? silentFoundry = null,
+DiseaseSystem? disease = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));

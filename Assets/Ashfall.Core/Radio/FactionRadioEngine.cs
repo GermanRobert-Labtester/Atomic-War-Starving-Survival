@@ -146,8 +146,10 @@ namespace Ashfall.Core.Radio
             {
                 return rng.Next(0, count);
             }
-            // Deterministic hash fallback if rng is null
-            int hash = HashCode.Combine(day, (int)(seedModifier * 100));
+            // Deterministic hash fallback using StableHash (djb2/x33).
+            // HashCode.Combine is runtime-randomized in modern .NET and would
+            // break cross-host determinism. StableHash.Of is deterministic.
+            int hash = StableHash.Of(day.ToString() + ":" + ((int)(seedModifier * 100)).ToString());
             return Math.Abs(hash) % count;
         }
 

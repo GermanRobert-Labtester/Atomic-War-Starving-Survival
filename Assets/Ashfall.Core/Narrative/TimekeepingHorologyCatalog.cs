@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string escPath = Path.Combine(directoryPath, "deadbeat_escapement_wear_logs.json");
             if (File.Exists(escPath))
             {
-                var list = JsonSerializer.Deserialize<List<DeadbeatEscapementWearEntry>>(File.ReadAllText(escPath), options);
+                var list = CatalogLocator.LoadWrappedList<DeadbeatEscapementWearEntry>(File.ReadAllText(escPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string pendPath = Path.Combine(directoryPath, "invar_pendulum_thermal_expansion.json");
             if (File.Exists(pendPath))
             {
-                var list = JsonSerializer.Deserialize<List<InvarPendulumThermalEntry>>(File.ReadAllText(pendPath), options);
+                var list = CatalogLocator.LoadWrappedList<InvarPendulumThermalEntry>(File.ReadAllText(pendPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string springPath = Path.Combine(directoryPath, "mainspring_fatigue_rupture_audits.json");
             if (File.Exists(springPath))
             {
-                var list = JsonSerializer.Deserialize<List<MainspringFatigueRuptureEntry>>(File.ReadAllText(springPath), options);
+                var list = CatalogLocator.LoadWrappedList<MainspringFatigueRuptureEntry>(File.ReadAllText(springPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string waterPath = Path.Combine(directoryPath, "water_clock_orifice_silt_records.json");
             if (File.Exists(waterPath))
             {
-                var list = JsonSerializer.Deserialize<List<ClepsydraWaterClockEntry>>(File.ReadAllText(waterPath), options);
+                var list = CatalogLocator.LoadWrappedList<ClepsydraWaterClockEntry>(File.ReadAllText(waterPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

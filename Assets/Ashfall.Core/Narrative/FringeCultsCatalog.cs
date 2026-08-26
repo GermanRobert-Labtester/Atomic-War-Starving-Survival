@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string cobaltPath = Path.Combine(directoryPath, "cobalt_liturgies.json");
             if (File.Exists(cobaltPath))
             {
-                var list = JsonSerializer.Deserialize<List<CobaltLiturgyEntry>>(File.ReadAllText(cobaltPath), options);
+                var list = CatalogLocator.LoadWrappedList<CobaltLiturgyEntry>(File.ReadAllText(cobaltPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string ironPath = Path.Combine(directoryPath, "iron_synod_canons.json");
             if (File.Exists(ironPath))
             {
-                var list = JsonSerializer.Deserialize<List<IronSynodCanonEntry>>(File.ReadAllText(ironPath), options);
+                var list = CatalogLocator.LoadWrappedList<IronSynodCanonEntry>(File.ReadAllText(ironPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string geophonePath = Path.Combine(directoryPath, "geophone_hymnals.json");
             if (File.Exists(geophonePath))
             {
-                var list = JsonSerializer.Deserialize<List<GeophoneHymnalEntry>>(File.ReadAllText(geophonePath), options);
+                var list = CatalogLocator.LoadWrappedList<GeophoneHymnalEntry>(File.ReadAllText(geophonePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string epitaphPath = Path.Combine(directoryPath, "wasteland_grave_epitaphs.json");
             if (File.Exists(epitaphPath))
             {
-                var list = JsonSerializer.Deserialize<List<WastelandEpitaphEntry>>(File.ReadAllText(epitaphPath), options);
+                var list = CatalogLocator.LoadWrappedList<WastelandEpitaphEntry>(File.ReadAllText(epitaphPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

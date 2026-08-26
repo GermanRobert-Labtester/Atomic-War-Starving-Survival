@@ -109,7 +109,7 @@ namespace Ashfall.Core
         public string CurrentParentId => _state.currentParentId;
         public IReadOnlyList<LocationLayoutDef> Layouts => _layouts;
 
-        public LocationLayoutSystem(IFileIO files, IJsonSerializer json, ILog log = null!)
+        public LocationLayoutSystem(IFileIO files, IJsonSerializer json, ILog? log = null)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -145,7 +145,7 @@ namespace Ashfall.Core
             try
             {
                 string blob = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<LocationLayoutDef>>(blob);
+                var items = CatalogLocator.LoadWrappedList<LocationLayoutDef>(blob, SystemTextJsonSerializer.Options);
                 if (items == null) return;
                 for (int i = 0; i < items.Count; i++)
                 {

@@ -47,7 +47,7 @@ namespace Ashfall.Core.Survivors
         private readonly Dictionary<string, float> _allocations =
             new Dictionary<string, float>(StringComparer.Ordinal);
 
-        public RationConflictSystem(ISeededRng rng = null!)
+        public RationConflictSystem(ISeededRng? rng = null)
         {
             _rng = rng ?? new SeededRng(31415);
         }

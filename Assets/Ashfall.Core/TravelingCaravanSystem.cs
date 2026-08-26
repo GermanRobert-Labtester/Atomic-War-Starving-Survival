@@ -52,7 +52,7 @@ namespace Ashfall.Core
         public TravelingCaravanState State => _state;
         public int CaravanCount => _state.activeCaravans?.Count ?? 0;
 
-        public TravelingCaravanSystem(TravelingCaravanState state = null!)
+        public TravelingCaravanSystem(TravelingCaravanState? state = null)
         {
             _state = state ?? new TravelingCaravanState();
             if (_state.activeCaravans == null)

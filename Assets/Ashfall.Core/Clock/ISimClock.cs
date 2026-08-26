@@ -1,4 +1,5 @@
 using System;
+using Ashfall.Core;
 
 namespace Ashfall.Core.Clock
 {
@@ -12,7 +13,7 @@ namespace Ashfall.Core.Clock
         void AdvanceDays(int days);
     }
 
-    public sealed class SimClock : ISimClock
+    public sealed class SimClock : ISimClock, IClock
     {
         public const long TicksPerHour = 60;
         public const long TicksPerDay = TicksPerHour * 24;
@@ -21,6 +22,9 @@ namespace Ashfall.Core.Clock
 
         public int DayIndex => (int)(CurrentTick / TicksPerDay);
         public int HourOfDay => (int)((CurrentTick % TicksPerDay) / TicksPerHour);
+
+        // IClock implementation
+        public int Day => DayIndex;
 
         public SimClock(long initialTick = 0)
         {
@@ -45,6 +49,13 @@ namespace Ashfall.Core.Clock
         public void SetTick(long tick)
         {
             CurrentTick = Math.Max(0, tick);
+        }
+
+        public void SetDay(int day)
+        {
+            if (day < 0)
+                throw new ArgumentOutOfRangeException(nameof(day));
+            CurrentTick = (long)day * TicksPerDay;
         }
     }
 }

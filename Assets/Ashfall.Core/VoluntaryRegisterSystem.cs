@@ -43,7 +43,7 @@ namespace Ashfall.Core
         public IReadOnlyList<VolunteerEntry> Entries => _state.entries;
 
         /// <summary>Sign a survivor up for a task. A new signature for a new task.</summary>
-        public bool Volunteer(string survivorId, string task, int day, string reasonText = null!)
+        public bool Volunteer(string survivorId, string task, int day, string? reasonText = null)
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(task)) return false;
             // A new signature is for a new task: double-signing the same task
@@ -78,7 +78,7 @@ namespace Ashfall.Core
             return true;
         }
 
-        public VolunteerEntry? GetEntry(string survivorId, string task = null!)
+        public VolunteerEntry? GetEntry(string survivorId, string? task = null)
         {
             if (string.IsNullOrEmpty(task))
             {

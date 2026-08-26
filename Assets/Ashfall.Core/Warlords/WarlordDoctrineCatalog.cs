@@ -332,18 +332,37 @@ namespace Ashfall.Core.Warlords
             {
                 string path = files.Combine(dataDir, names[f]);
                 if (!files.FileExists(path)) continue;
+                string text = files.ReadAllText(path);
                 try
                 {
-                    var list = json.Deserialize<List<WarlordIdProbe>>(files.ReadAllText(path));
-                    if (list == null) continue;
-                    for (int i = 0; i < list.Count; i++)
-                        if (list[i] != null && !string.IsNullOrEmpty(list[i].id))
-                            ids.Add(list[i].id);
+                    var list = CatalogLocator.LoadWrappedList<WarlordIdProbe>(text, SystemTextJsonSerializer.Options);
+                    if (list != null)
+                    {
+                        for (int i = 0; i < list.Count; i++)
+                            if (list[i] != null && !string.IsNullOrEmpty(list[i].id))
+                                ids.Add(list[i].id);
+                        continue;
+                    }
+                }
+                catch (Exception) { /* Fallback below */ }
+
+                try
+                {
+                    var wrap = json.Deserialize<WarlordCatalogWrapperProbe>(text);
+                    if (wrap != null)
+                    {
+                        var list = (wrap.locations != null && wrap.locations.Count > 0) ? wrap.locations : wrap.items;
+                        if (list != null)
+                        {
+                            for (int i = 0; i < list.Count; i++)
+                                if (list[i] != null && !string.IsNullOrEmpty(list[i].id))
+                                    ids.Add(list[i].id);
+                        }
+                    }
                 }
                 catch (Exception ex_CATDIAG)
                 {
                     CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                    // Not every catalog is a flat id list; skip it.
                 }
             }
             return ids;
@@ -356,7 +375,7 @@ namespace Ashfall.Core.Warlords
             if (!files.FileExists(path)) return ids;
             try
             {
-                var list = json.Deserialize<List<WarlordFactionProbe>>(files.ReadAllText(path));
+                var list = CatalogLocator.LoadWrappedList<WarlordFactionProbe>(files.ReadAllText(path), SystemTextJsonSerializer.Options);
                 if (list == null) return ids;
                 for (int i = 0; i < list.Count; i++)
                     if (list[i] != null && !string.IsNullOrEmpty(list[i].faction_id))
@@ -381,5 +400,12 @@ namespace Ashfall.Core.Warlords
     public class WarlordFactionProbe
     {
         public string faction_id = string.Empty;
+    }
+
+    [Serializable]
+    public class WarlordCatalogWrapperProbe
+    {
+        public System.Collections.Generic.List<WarlordIdProbe> locations = new System.Collections.Generic.List<WarlordIdProbe>();
+        public System.Collections.Generic.List<WarlordIdProbe> items = new System.Collections.Generic.List<WarlordIdProbe>();
     }
 }

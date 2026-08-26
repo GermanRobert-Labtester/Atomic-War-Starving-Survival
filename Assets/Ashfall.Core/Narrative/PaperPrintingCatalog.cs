@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string pulpPath = Path.Combine(directoryPath, "rag_pulp_beater_records.json");
             if (File.Exists(pulpPath))
             {
-                var list = JsonSerializer.Deserialize<List<RagPulpBeaterEntry>>(File.ReadAllText(pulpPath), options);
+                var list = CatalogLocator.LoadWrappedList<RagPulpBeaterEntry>(File.ReadAllText(pulpPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string inkPath = Path.Combine(directoryPath, "iron_gall_ink_acidity_reports.json");
             if (File.Exists(inkPath))
             {
-                var list = JsonSerializer.Deserialize<List<IronGallInkAssayEntry>>(File.ReadAllText(inkPath), options);
+                var list = CatalogLocator.LoadWrappedList<IronGallInkAssayEntry>(File.ReadAllText(inkPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string typePath = Path.Combine(directoryPath, "typographic_lead_wear_logs.json");
             if (File.Exists(typePath))
             {
-                var list = JsonSerializer.Deserialize<List<TypographicLeadWearEntry>>(File.ReadAllText(typePath), options);
+                var list = CatalogLocator.LoadWrappedList<TypographicLeadWearEntry>(File.ReadAllText(typePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string stencilPath = Path.Combine(directoryPath, "stencil_propaganda_smear_logs.json");
             if (File.Exists(stencilPath))
             {
-                var list = JsonSerializer.Deserialize<List<StencilPropagandaSmearEntry>>(File.ReadAllText(stencilPath), options);
+                var list = CatalogLocator.LoadWrappedList<StencilPropagandaSmearEntry>(File.ReadAllText(stencilPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

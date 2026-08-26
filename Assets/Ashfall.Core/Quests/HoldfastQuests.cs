@@ -1146,8 +1146,8 @@ namespace Ashfall.Core.Quests
                     new QuestObjective(
                         id: "obj_fleet_offer_cluster_beds",
                         description: "Offer Cluster beds or leave them",
-                        completionText: "The beds are offered. The Fleet is aboard. The choice is yours.",
-                        completionText: "The beds are left. The Fleet is aboard. The choice is yours."
+                        completionText: "The beds are offered or refused. The Fleet is aboard. The choice is yours.",
+                        requiresPlayerChoice: true
                     )
                 },
                 rewards: new List<QuestReward>

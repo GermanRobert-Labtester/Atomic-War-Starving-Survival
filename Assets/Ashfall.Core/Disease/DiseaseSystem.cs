@@ -172,10 +172,10 @@ namespace Ashfall.Core.Disease
         private readonly ILog _log;
 
         public DiseaseSystem(
-            DiseaseSystemState state = null!,
-            ISeededRng rng = null!,
-            Func<int, ISeededRng> rngFactory = null!,
-            ILog log = null!)
+DiseaseSystemState? state = null,
+ISeededRng? rng = null,
+Func<int, ISeededRng>? rngFactory = null,
+ILog? log = null)
         {
             _rngFactory = rngFactory ?? (seed => new SeededRng(seed));
             _state = state ?? new DiseaseSystemState();
@@ -305,7 +305,7 @@ namespace Ashfall.Core.Disease
         /// spread — the host can still call Infect() directly (legacy hook
         /// contract preserved).
         /// </param>
-        public void TickDaily(int day, IReadOnlyList<string> candidates = null!)
+        public void TickDaily(int day, IReadOnlyList<string>? candidates = null)
         {
             for (int i = 0; i < _entries.Count; i++)
             {

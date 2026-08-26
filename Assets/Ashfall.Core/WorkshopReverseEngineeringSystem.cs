@@ -81,7 +81,7 @@ namespace Ashfall.Core
             global::Ashfall.Core.Inventory.Inventory inventory,
             ResearchSystem researchSystem,
             Crafting.CraftingSystem craftingSystem,
-            ILog log = null!)
+ILog? log = null)
         {
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _researchSystem = researchSystem ?? throw new ArgumentNullException(nameof(researchSystem));

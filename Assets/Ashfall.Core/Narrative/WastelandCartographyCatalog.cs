@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string topoPath = Path.Combine(directoryPath, "surface_radiation_topo_sheets.json");
             if (File.Exists(topoPath))
             {
-                var list = JsonSerializer.Deserialize<List<RadiationTopoSheetEntry>>(File.ReadAllText(topoPath), options);
+                var list = CatalogLocator.LoadWrappedList<RadiationTopoSheetEntry>(File.ReadAllText(topoPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string routePath = Path.Combine(directoryPath, "scavenger_expedition_route_notes.json");
             if (File.Exists(routePath))
             {
-                var list = JsonSerializer.Deserialize<List<ScavengerRouteNoteEntry>>(File.ReadAllText(routePath), options);
+                var list = CatalogLocator.LoadWrappedList<ScavengerRouteNoteEntry>(File.ReadAllText(routePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string mudPath = Path.Combine(directoryPath, "canyon_mudflow_hazard_reports.json");
             if (File.Exists(mudPath))
             {
-                var list = JsonSerializer.Deserialize<List<CanyonMudflowReportEntry>>(File.ReadAllText(mudPath), options);
+                var list = CatalogLocator.LoadWrappedList<CanyonMudflowReportEntry>(File.ReadAllText(mudPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string limPath = Path.Combine(directoryPath, "crater_lake_limnology_records.json");
             if (File.Exists(limPath))
             {
-                var list = JsonSerializer.Deserialize<List<CraterLakeLimnologyEntry>>(File.ReadAllText(limPath), options);
+                var list = CatalogLocator.LoadWrappedList<CraterLakeLimnologyEntry>(File.ReadAllText(limPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

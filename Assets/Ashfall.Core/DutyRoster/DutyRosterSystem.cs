@@ -57,10 +57,10 @@ namespace Ashfall.Core
     [Serializable]
     public class DutyRosterSystemState
     {
-        public string systemId = DutyRosterSystem.SystemId;
+        public string systemId = DutyRosterIds.SystemId;
         public bool expansionUnlocked;
         public bool wallInspected;
-        public string chartScript = DutyRosterSystem.ScriptBlank;
+        public string chartScript = DutyRosterIds.ScriptBlank;
         public bool kessPencilAllowed;
         public bool waitInk;
         public bool blankRowsAccess = true;
@@ -70,7 +70,7 @@ namespace Ashfall.Core
         public bool mutationRationProtocol;
         public string endingId;
         public bool secondWinterActive;
-        public int seedSalt = DutyRosterSystem.SeedUtilityOffset;
+        public int seedSalt = DutyRosterIds.SeedUtilityOffset;
         public int lastMorningDay = -1;
         public int daysLeftBlank;
         public int lastBurnDay = -1;
@@ -84,120 +84,114 @@ namespace Ashfall.Core
 
     public class DutyRosterSystem
     {
-        public const string SystemId = "duty_roster_system";
-        public const string ExpansionId = "expansion_the_duty_roster";
-        public const string FlagExpUnlocked = "exp_duty_roster_unlocked";
+        public const string SystemId = DutyRosterIds.SystemId;
+        public const string ExpansionId = DutyRosterIds.ExpansionId;
+        public const string FlagExpUnlocked = DutyRosterIds.FlagExpUnlocked;
 
-        public const string LocStackRosterWall = "loc_stack_roster_wall";
-        public const string LocStackSleeping = "loc_stack_sleeping";
-        public const string LocStackMess = "loc_stack_mess";
-        public const string LocStackFiltration = "loc_stack_filtration";
-        public const string LocStackAirlock = "loc_stack_airlock";
-        public const string LocStackClinicAlcove = "loc_stack_clinic_alcove";
+        public const string LocStackRosterWall = DutyRosterIds.LocStackRosterWall;
+        public const string LocStackSleeping = DutyRosterIds.LocStackSleeping;
+        public const string LocStackMess = DutyRosterIds.LocStackMess;
+        public const string LocStackFiltration = DutyRosterIds.LocStackFiltration;
+        public const string LocStackAirlock = DutyRosterIds.LocStackAirlock;
+        public const string LocStackClinicAlcove = DutyRosterIds.LocStackClinicAlcove;
 
-        public const string QuestTheChart = "quest_roster_the_chart";
-        public const string QuestWhoEats = "quest_roster_who_eats";
-        public const string QuestFourteenth = "quest_roster_fourteenth";
-        public const string QuestCaretaker = "quest_roster_caretaker";
-        public const string QuestTheColumn = "quest_roster_the_column";
-        public const string QuestTheTin = "quest_roster_the_tin";
-        public const string QuestQuiet = "quest_roster_quiet";
-        public const string QuestSole = "quest_roster_sole";
-        public const string QuestWindow = "quest_roster_window";
-        public const string QuestInk = "quest_roster_ink";
+        public const string QuestTheChart = DutyRosterIds.QuestTheChart;
+        public const string QuestWhoEats = DutyRosterIds.QuestWhoEats;
+        public const string QuestFourteenth = DutyRosterIds.QuestFourteenth;
+        public const string QuestCaretaker = DutyRosterIds.QuestCaretaker;
+        public const string QuestTheColumn = DutyRosterIds.QuestTheColumn;
+        public const string QuestTheTin = DutyRosterIds.QuestTheTin;
+        public const string QuestQuiet = DutyRosterIds.QuestQuiet;
+        public const string QuestSole = DutyRosterIds.QuestSole;
+        public const string QuestWindow = DutyRosterIds.QuestWindow;
+        public const string QuestInk = DutyRosterIds.QuestInk;
 
-        public const string NpcKessAdler = "npc_kess_adler";
-        public const string NpcAnselDuth = "npc_ansel_duth";
-        public const string NpcHadiMorrow = "npc_hadi_morrow";
-        public const string NpcTamsinRook = "npc_tamsin_rook";
-        public const string NpcLenQuill = "npc_len_quill";
-        public const string NpcNilaBrant = "npc_nila_brant";
+        public const string NpcKessAdler = DutyRosterIds.NpcKessAdler;
+        public const string NpcAnselDuth = DutyRosterIds.NpcAnselDuth;
+        public const string NpcHadiMorrow = DutyRosterIds.NpcHadiMorrow;
+        public const string NpcTamsinRook = DutyRosterIds.NpcTamsinRook;
+        public const string NpcLenQuill = DutyRosterIds.NpcLenQuill;
+        public const string NpcNilaBrant = DutyRosterIds.NpcNilaBrant;
 
-        public const string ChoiceWritePencil = "roster_write_pencil";
-        public const string ChoiceLeaveBlank = "roster_leave_blank";
-        public const string ChoiceWaitInk = "roster_wait_ink";
-        public const string ChoiceLadleChild = "roster_ladle_child";
-        public const string ChoiceLadleHatch = "roster_ladle_hatch";
-        public const string ChoiceLadleLeave = "roster_ladle_leave";
-        public const string ChoiceLadleProtocol = "roster_ladle_protocol";
+        public const string ChoiceWritePencil = DutyRosterIds.ChoiceWritePencil;
+        public const string ChoiceLeaveBlank = DutyRosterIds.ChoiceLeaveBlank;
+        public const string ChoiceWaitInk = DutyRosterIds.ChoiceWaitInk;
+        public const string ChoiceLadleChild = DutyRosterIds.ChoiceLadleChild;
+        public const string ChoiceLadleHatch = DutyRosterIds.ChoiceLadleHatch;
+        public const string ChoiceLadleLeave = DutyRosterIds.ChoiceLadleLeave;
+        public const string ChoiceLadleProtocol = DutyRosterIds.ChoiceLadleProtocol;
 
-        public const string ScriptBlank = "blank";
-        public const string ScriptPencil = "pencil";
-        public const string ScriptInk = "ink";
-        public const string ScriptBurned = "burned";
+        public const string ScriptBlank = DutyRosterIds.ScriptBlank;
+        public const string ScriptPencil = DutyRosterIds.ScriptPencil;
+        public const string ScriptInk = DutyRosterIds.ScriptInk;
+        public const string ScriptBurned = DutyRosterIds.ScriptBurned;
 
-        public const string StatusHome = "home";
-        public const string StatusLevy = "levy";
-        public const string StatusWaystation = "waystation";
-        public const string StatusQuiet = "quiet";
-        public const string StatusMissing = "missing";
-        public const string StatusDead = "dead";
+        public const string StatusHome = DutyRosterIds.StatusHome;
+        public const string StatusLevy = DutyRosterIds.StatusLevy;
+        public const string StatusWaystation = DutyRosterIds.StatusWaystation;
+        public const string StatusQuiet = DutyRosterIds.StatusQuiet;
+        public const string StatusMissing = DutyRosterIds.StatusMissing;
+        public const string StatusDead = DutyRosterIds.StatusDead;
 
-        public const string RoleNightWatch = "night_watch";
-        public const string RoleMess = "mess";
-        public const string RoleHatchOpener = "hatch_opener";
-        public const string RoleIntakeSleeper = "intake_sleeper";
-        public const string RoleExpedition = "expedition";
+        public const string RoleNightWatch = DutyRosterIds.RoleNightWatch;
+        public const string RoleMess = DutyRosterIds.RoleMess;
+        public const string RoleHatchOpener = DutyRosterIds.RoleHatchOpener;
+        public const string RoleIntakeSleeper = DutyRosterIds.RoleIntakeSleeper;
+        public const string RoleExpedition = DutyRosterIds.RoleExpedition;
 
-        public const string MutationRosterInUse = "mutation_roster_in_use";
-        public const string MutationRosterStillBlank = "mutation_roster_still_blank";
-        public const string MutationRationProtocol = "mutation_ration_protocol";
-        public const string MutationRosterBurned = "mutation_roster_burned";
-        public const string MutationRosterInk = "mutation_roster_ink";
-        public const string MutationRosterBlank = "mutation_roster_blank";
-        public const string MutationFactionBlankRowsAccess = "faction_blank_rows_access";
-        public const string FlagWaitInk = "flag_wait_ink";
+        public const string MutationRosterInUse = DutyRosterIds.MutationRosterInUse;
+        public const string MutationRosterStillBlank = DutyRosterIds.MutationRosterStillBlank;
+        public const string MutationRationProtocol = DutyRosterIds.MutationRationProtocol;
+        public const string MutationRosterBurned = DutyRosterIds.MutationRosterBurned;
+        public const string MutationRosterInk = DutyRosterIds.MutationRosterInk;
+        public const string MutationRosterBlank = DutyRosterIds.MutationRosterBlank;
+        public const string MutationFactionBlankRowsAccess = DutyRosterIds.MutationFactionBlankRowsAccess;
+        public const string FlagWaitInk = DutyRosterIds.FlagWaitInk;
 
         // Endings (spec §3 Endings — the game does not rank them)
-        public const string EndingInk = "ending_roster_ink";
-        public const string EndingPencil = "ending_roster_pencil";
-        public const string EndingBlank = "ending_roster_blank";
-        public const string EndingBurned = "ending_roster_burned";
-        public const string EndingSecondWinter = "ending_roster_second_winter";
+        public const string EndingInk = DutyRosterIds.EndingInk;
+        public const string EndingPencil = DutyRosterIds.EndingPencil;
+        public const string EndingBlank = DutyRosterIds.EndingBlank;
+        public const string EndingBurned = DutyRosterIds.EndingBurned;
+        public const string EndingSecondWinter = DutyRosterIds.EndingSecondWinter;
 
         // Second Winter (spec §5.4 — data profile, not a 4th simulation class)
-        public const string SeasonSecondWinter = "season_second_winter";
-        public const int SecondWinterWindowMinDays = 8;
-        public const int SecondWinterWindowMaxDays = 12;
-        public const float SecondWinterEncounterWeight = 1.6f;
+        public const string SeasonSecondWinter = DutyRosterIds.SeasonSecondWinter;
+        public const int SecondWinterWindowMinDays = DutyRosterIds.SecondWinterWindowMinDays;
+        public const int SecondWinterWindowMaxDays = DutyRosterIds.SecondWinterWindowMaxDays;
+        public const float SecondWinterEncounterWeight = DutyRosterIds.SecondWinterEncounterWeight;
 
         /// <summary>Printed manifest cap. Over-occupancy is the fourteenth-bunk quest, not a UI cheat.</summary>
-        public const int ManifestCap = 14;
-        public const int SoftGateDay = 60;
-        public const int StillBlankDays = 40;
+        public const int ManifestCap = DutyRosterIds.ManifestCap;
+        public const int SoftGateDay = DutyRosterIds.SoftGateDay;
+        public const int StillBlankDays = DutyRosterIds.StillBlankDays;
         /// <summary>Utility AI salt. Spec: _worldSeed + 1208.</summary>
-        public const int SeedUtilityOffset = 1208;
+        public const int SeedUtilityOffset = DutyRosterIds.SeedUtilityOffset;
 
-        public static readonly string[] StackWingIds =
-        {
-            LocStackRosterWall, LocStackSleeping, LocStackMess, LocStackFiltration, LocStackAirlock, LocStackClinicAlcove
-        };
+        public static readonly string[] StackWingIds = DutyRosterIds.StackWingIds;
 
         /// <summary>
         /// The Overflow is a small authenticated void practice — four bounded
         /// nodes, not a district. Allocation 11 and 13 are dark; the pump hatch
         /// and the blank cellar are reachable through them (spec §2.4).
         /// </summary>
-        public const string LocOverflowAlloc11 = "loc_overflow_alloc_11";
-        public const string LocOverflowAlloc13 = "loc_overflow_alloc_13";
-        public const string LocOverflowPumpHatch = "loc_overflow_pump_hatch";
-        public const string LocOverflowBlankCellar = "loc_overflow_blank_cellar";
+        public const string LocOverflowAlloc11 = DutyRosterIds.LocOverflowAlloc11;
+        public const string LocOverflowAlloc13 = DutyRosterIds.LocOverflowAlloc13;
+        public const string LocOverflowPumpHatch = DutyRosterIds.LocOverflowPumpHatch;
+        public const string LocOverflowBlankCellar = DutyRosterIds.LocOverflowBlankCellar;
 
-        public static readonly string[] OverflowNodeIds =
-        {
-            LocOverflowAlloc11, LocOverflowAlloc13, LocOverflowPumpHatch, LocOverflowBlankCellar
-        };
+        public static readonly string[] OverflowNodeIds = DutyRosterIds.OverflowNodeIds;
 
-        public static readonly string[] AssignmentRoles =
-        {
-            RoleNightWatch, RoleMess, RoleHatchOpener, RoleIntakeSleeper, RoleExpedition
-        };
+        public static readonly string[] AssignmentRoles = DutyRosterIds.AssignmentRoles;
 
         private DutyRosterSystemState _state = new DutyRosterSystemState();
         private readonly Dictionary<string, DutyRosterRow> _byId = new Dictionary<string, DutyRosterRow>();
         private readonly Dictionary<string, string> _assignmentByRole = new Dictionary<string, string>();
         private readonly HashSet<string> _hiddenFromNorth = new HashSet<string>();
         private readonly HashSet<string> _blankRowsLiving = new HashSet<string>();
+        private readonly DutyRosterAssignmentEngine _assignments;
+        private readonly DutyRosterOverflowEngine _overflow;
+        private readonly DutyRosterChartEngine _chart;
 
         public event Action OnRosterUpdated;
         public event Action<string> OnNameWritten;
@@ -222,6 +216,26 @@ namespace Ashfall.Core
         {
             _state.seedSalt = seedSalt;
             EnsureLists();
+            _assignments = new DutyRosterAssignmentEngine(
+                _assignmentByRole,
+                _state.assignments,
+                GetRow,
+                RaiseUpdated,
+                (r, s) => OnAssignmentChanged?.Invoke(r, s),
+                () => _state.seedSalt,
+                () => _state.rows);
+            _overflow = new DutyRosterOverflowEngine(RaiseChanged);
+            _overflow.Bind(_state);
+            _chart = new DutyRosterChartEngine(
+                _byId,
+                _blankRowsLiving,
+                _assignments,
+                RaiseUpdated,
+                id => OnNameWritten?.Invoke(id),
+                id => OnNameErased?.Invoke(id),
+                () => OnRosterBurned?.Invoke(),
+                WithdrawBlankRowsAccess);
+            _chart.Bind(_state);
         }
 
         public void Initialise(int seedSalt)
@@ -271,169 +285,33 @@ namespace Ashfall.Core
             int day,
             bool sleptHere)
         {
-            if (!_state.expansionUnlocked) return false;
-            if (_state.chartScript == ScriptBurned || _state.mutationRosterBurned) return false;
-            if (string.IsNullOrEmpty(survivorId)) return false;
-            if (script != ScriptPencil && script != ScriptInk) return false;
-
-            if (_blankRowsLiving.Contains(survivorId))
-            {
-                // Kess will not pencil a Blank Rows name. Ink is how the hatch at 11 goes dark.
-                if (script != ScriptInk) return false;
-            }
-
-            if (!sleptHere && script == ScriptPencil)
-                return false;
-
-            DutyRosterRow existing = GetRow(survivorId)!;
-            if (existing == null && OccupiedRowCount >= ManifestCap)
-                return false;
-
-            if (existing == null)
-            {
-                existing = new DutyRosterRow { survivorId = survivorId, status = StatusHome };
-                _state.rows.Add(existing);
-                _byId[survivorId] = existing;
-            }
-
-            existing.displayName = displayName ?? string.Empty;
-            existing.occupationObserved = occupationObserved ?? string.Empty;
-            existing.script = script;
-            if (sleptHere) existing.lastSleptDay = day;
-            if (string.IsNullOrEmpty(existing.status)) existing.status = StatusHome;
-
-            if (script == ScriptInk && _blankRowsLiving.Contains(survivorId))
-                WithdrawBlankRowsAccess();
-
-            OnNameWritten?.Invoke(survivorId);
-            RaiseUpdated();
-            return true;
+            return _chart.WriteName(survivorId, displayName, occupationObserved, script, day, sleptHere);
         }
 
         public bool EraseName(string survivorId)
         {
-            if (string.IsNullOrEmpty(survivorId)) return false;
-            DutyRosterRow row = GetRow(survivorId)!;
-            if (row == null) return false;
-
-            _state.rows.Remove(row);
-            _byId.Remove(survivorId);
-            RemoveAssignmentsFor(survivorId);
-            OnNameErased?.Invoke(survivorId);
-            RaiseUpdated();
-            return true;
+            return _chart.EraseName(survivorId);
         }
 
         public bool BurnChart(int day)
         {
-            if (_state.mutationRosterBurned) return false;
-            _state.chartScript = ScriptBurned;
-            _state.mutationRosterBurned = true;
-            _state.mutationRosterInUse = false;
-            _state.kessPencilAllowed = false;
-            _state.waitInk = false;
-            _state.lastBurnDay = day;
-            _state.rows.Clear();
-            _byId.Clear();
-            _assignmentByRole.Clear();
-            _state.assignments.Clear();
-            OnRosterBurned?.Invoke();
-            RaiseUpdated();
-            return true;
+            return _chart.BurnChart(day);
         }
 
         /// <summary>Morning tick. Kess fills pencil if allowed. Ink never auto-fills.</summary>
         public void TickMorning(int day, IReadOnlyList<DutyRosterOccupant> occupants)
         {
-            if (!_state.expansionUnlocked) return;
-            if (_state.chartScript == ScriptBurned) return;
-
-            if (_state.kessPencilAllowed && _state.chartScript == ScriptPencil)
-            {
-                if (occupants != null)
-                {
-                    for (int i = 0; i < occupants.Count; i++)
-                    {
-                        DutyRosterOccupant occ = occupants[i];
-                        if (occ == null || string.IsNullOrEmpty(occ.survivorId) || !occ.sleptHere)
-                            continue;
-                        DutyRosterRow row = GetRow(occ.survivorId)!;
-                        if (row == null)
-                            WriteName(occ.survivorId, occ.displayName, occ.occupationObserved, ScriptPencil, day, true);
-                        else
-                            row.lastSleptDay = day;
-                    }
-                }
-            }
-            else if (_state.chartScript == ScriptBlank && !_state.waitInk && !_state.kessPencilAllowed)
-            {
-                _state.daysLeftBlank++;
-                if (_state.daysLeftBlank >= StillBlankDays)
-                    _state.mutationRosterStillBlank = true;
-            }
-
-            _state.lastMorningDay = day;
-            RaiseUpdated();
+            _chart.TickMorning(day, occupants);
         }
 
         public bool ResolveChartChoice(string choiceId, int day)
         {
-            if (!_state.expansionUnlocked) return false;
-            if (_state.chartScript == ScriptBurned) return false;
-            if (string.IsNullOrEmpty(choiceId)) return false;
-
-            if (choiceId == ChoiceWritePencil)
-            {
-                _state.kessPencilAllowed = true;
-                _state.waitInk = false;
-                _state.chartScript = ScriptPencil;
-                _state.mutationRosterInUse = true;
-                _state.mutationRosterStillBlank = false;
-                _state.daysLeftBlank = 0;
-                RaiseUpdated();
-                return true;
-            }
-
-            if (choiceId == ChoiceLeaveBlank)
-            {
-                _state.kessPencilAllowed = false;
-                _state.waitInk = false;
-                _state.chartScript = ScriptBlank;
-                _state.daysLeftBlank = 0;
-                RaiseUpdated();
-                return true;
-            }
-
-            if (choiceId == ChoiceWaitInk)
-            {
-                _state.kessPencilAllowed = false;
-                _state.waitInk = true;
-                _state.chartScript = ScriptBlank;
-                RaiseUpdated();
-                return true;
-            }
-
-            return false;
+            return _chart.ResolveChartChoice(choiceId, day);
         }
 
         public bool ResolveLadleChoice(string choiceId, int day)
         {
-            if (!_state.expansionUnlocked) return false;
-            if (string.IsNullOrEmpty(choiceId)) return false;
-            if (choiceId == ChoiceLadleProtocol)
-            {
-                _state.mutationRationProtocol = true;
-                RaiseUpdated();
-                return true;
-            }
-
-            if (choiceId == ChoiceLadleChild || choiceId == ChoiceLadleHatch || choiceId == ChoiceLadleLeave)
-            {
-                RaiseUpdated();
-                return true;
-            }
-
-            return false;
+            return _chart.ResolveLadleChoice(choiceId, day);
         }
 
         /// <summary>
@@ -444,19 +322,17 @@ namespace Ashfall.Core
         /// </summary>
         public bool ResolveInkEnding(int day)
         {
-            if (!_state.expansionUnlocked) return false;
-            if (_state.mutationRosterBurned) return false;
-            if (_state.chartScript == ScriptBurned) return false;
+            return _chart.ResolveInkEnding(day);
+        }
 
-            _state.chartScript = ScriptInk;
-            _state.mutationRosterInUse = true;
-            _state.mutationRosterStillBlank = false;
-            _state.daysLeftBlank = 0;
-            _state.kessPencilAllowed = false;
-            _state.waitInk = false;
-            _state.endingId = EndingInk;
-            RaiseUpdated();
-            return true;
+        public bool SetStatus(string survivorId, string status)
+        {
+            return _chart.SetStatus(survivorId, status);
+        }
+
+        public bool SetRowScript(string survivorId, string script)
+        {
+            return _chart.SetRowScript(survivorId, script);
         }
 
         /// <summary>Second Winter season profile active (data, not a 4th sim class).</summary>
@@ -469,100 +345,20 @@ namespace Ashfall.Core
 
         public bool IsSecondWinterActive => _state.secondWinterActive;
 
-        public bool SetStatus(string survivorId, string status)
-        {
-            DutyRosterRow row = GetRow(survivorId);
-            if (row == null) return false;
-            if (!IsKnownStatus(status)) return false;
-            row.status = status;
-            if (status == StatusDead || status == StatusQuiet || status == StatusMissing
-                || status == StatusLevy || status == StatusWaystation)
-            {
-                RemoveAssignmentsFor(survivorId);
-            }
-
-            RaiseUpdated();
-            return true;
-        }
-
-        public bool SetRowScript(string survivorId, string script)
-        {
-            DutyRosterRow row = GetRow(survivorId);
-            if (row == null) return false;
-            if (script != ScriptPencil && script != ScriptInk && script != ScriptBlank) return false;
-            if (_blankRowsLiving.Contains(survivorId) && script == ScriptPencil)
-                return false;
-            row.script = script;
-            if (script == ScriptInk)
-            {
-                _state.chartScript = ScriptInk;
-                if (_blankRowsLiving.Contains(survivorId))
-                    WithdrawBlankRowsAccess();
-            }
-
-            RaiseUpdated();
-            return true;
-        }
-
         public bool Assign(string role, string survivorId)
         {
-            if (!IsKnownRole(role)) return false;
-
-            // Duplicate-role rule: one survivor holds at most one assignment.
-            if (string.IsNullOrEmpty(survivorId))
-            {
-                // Clearing: no duplicate concern.
-                return AssignInternal(role, null!);
-            }
-            DutyRosterRow row = GetRow(survivorId);
-            if (row == null) return false;
-            if (!CanAssign(row)) return false;
-
-            string currentRole = GetRoleOf(survivorId)!;
-            if (currentRole != null && currentRole != role)
-                return false; // already assigned elsewhere
-
-            return AssignInternal(role, survivorId);
-        }
-
-        private bool AssignInternal(string role, string survivorId)
-        {
-            if (!IsKnownRole(role)) return false;
-            if (!string.IsNullOrEmpty(survivorId))
-            {
-                DutyRosterRow row = GetRow(survivorId);
-                if (row == null) return false;
-                if (!CanAssign(row)) return false;
-            }
-
-            if (string.IsNullOrEmpty(survivorId))
-            {
-                _assignmentByRole.Remove(role);
-            }
-            else
-            {
-                _assignmentByRole[role] = survivorId;
-            }
-            SyncAssignmentList();
-            OnAssignmentChanged?.Invoke(role, survivorId);
-            RaiseUpdated();
-            return true;
+            return _assignments.Assign(role, survivorId);
         }
 
         /// <summary>The role a survivor currently holds, or null.</summary>
         public string GetRoleOf(string survivorId)
         {
-            if (string.IsNullOrEmpty(survivorId)) return null;
-            foreach (var kv in _assignmentByRole)
-                if (kv.Value == survivorId) return kv.Key;
-            return null;
+            return _assignments.GetRoleOf(survivorId);
         }
 
         public string GetAssignment(string role)
         {
-            if (string.IsNullOrEmpty(role)) return null;
-            _assignmentByRole.TryGetValue(role, out string id);
-            return id;
+            return _assignments.GetAssignment(role);
         }
 
         /// <summary>
@@ -571,31 +367,7 @@ namespace Ashfall.Core
         /// </summary>
         public int AutoAssignDefaults(int day)
         {
-            var eligible = new List<string>();
-            for (int i = 0; i < _state.rows.Count; i++)
-            {
-                DutyRosterRow row = _state.rows[i];
-                if (row != null && CanAssign(row) && row.status == StatusHome)
-                    eligible.Add(row.survivorId);
-            }
-
-            eligible.Sort(string.CompareOrdinal);
-            int assigned = 0;
-            var used = new HashSet<string>();
-            for (int r = 0; r < AssignmentRoles.Length; r++)
-            {
-                string role = AssignmentRoles[r];
-                if (_assignmentByRole.ContainsKey(role)) continue;
-                string pick = PickEligible(eligible, used, day, role)!;
-                if (pick == null) continue;
-                if (Assign(role, pick))
-                {
-                    used.Add(pick);
-                    assigned++;
-                }
-            }
-
-            return assigned;
+            return _assignments.AutoAssignDefaults(day);
         }
 
         /// <summary>
@@ -698,40 +470,28 @@ namespace Ashfall.Core
 
         // ── Overflow practice (bounded void, spec §2.4) ────────────────
 
-        public bool OverflowAccess => _state.overflowAccess;
-        public IReadOnlyList<string> OverflowVisited => _state.overflowVisited;
+        public bool OverflowAccess => _overflow.Access;
+        public IReadOnlyList<string> OverflowVisited => _overflow.Visited;
 
         public bool GrantOverflowAccess()
         {
-            if (_state.overflowAccess) return false;
-            _state.overflowAccess = true;
-            RaiseChanged();
-            return true;
+            return _overflow.GrantOverflowAccess();
         }
 
         public bool WithdrawOverflowAccess()
         {
-            if (!_state.overflowAccess) return false;
-            _state.overflowAccess = false;
-            RaiseChanged();
-            return true;
+            return _overflow.WithdrawOverflowAccess();
         }
 
         /// <summary>Register a visit to one of the four authenticated Overflow nodes.</summary>
         public bool RegisterOverflowVisit(string nodeId)
         {
-            if (!_state.overflowAccess) return false;
-            if (!IsOverflowNode(nodeId)) return false;
-            if (_state.overflowVisited.Contains(nodeId)) return false;
-            _state.overflowVisited.Add(nodeId);
-            RaiseChanged();
-            return true;
+            return _overflow.RegisterOverflowVisit(nodeId);
         }
 
         public bool HasVisitedOverflow(string nodeId)
         {
-            return !string.IsNullOrEmpty(nodeId) && _state.overflowVisited != null
-                && _state.overflowVisited.Contains(nodeId);
+            return _overflow.HasVisitedOverflow(nodeId);
         }
 
         public static bool IsOverflowNode(string nodeId)
@@ -758,28 +518,13 @@ namespace Ashfall.Core
         /// <summary>Capture the bounded Overflow practice state (v2 envelope field).</summary>
         public DutyRosterOverflowState CaptureOverflowState()
         {
-            var copy = new DutyRosterOverflowState
-            {
-                access = _state.overflowAccess,
-                visitedNodes = _state.overflowVisited != null
-                    ? new List<string>(_state.overflowVisited)
-                    : new List<string>()
-            };
-            return copy;
+            return _overflow.Capture();
         }
 
         /// <summary>Restore the Overflow practice state. Missing state defaults to closed/empty.</summary>
         public void RestoreOverflowState(DutyRosterOverflowState saved)
         {
-            if (saved == null) return;
-            _state.overflowAccess = saved.access;
-            _state.overflowVisited = saved.visitedNodes != null
-                ? new List<string>(saved.visitedNodes)
-                : new List<string>();
-            // Never bless an unauthenticated node into the visited ledger.
-            if (_state.overflowVisited != null)
-                _state.overflowVisited.RemoveAll(n => !IsOverflowNode(n));
-            RaiseChanged();
+            _overflow.Restore(saved);
         }
 
         public void RestoreState(DutyRosterSystemState saved)
@@ -793,6 +538,8 @@ namespace Ashfall.Core
                 _state = new DutyRosterSystemState();
                 CopyState(saved, _state);
             }
+            _overflow.Bind(_state);
+            _chart.Bind(_state);
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             EnsureLists();
             RebuildIndexes();
@@ -806,75 +553,10 @@ namespace Ashfall.Core
             RaiseChanged();
         }
 
-        private bool CanAssign(DutyRosterRow row)
-        {
-            if (row == null) return false;
-            if (row.status == StatusDead || row.status == StatusQuiet || row.status == StatusMissing)
-                return false;
-            if (row.status == StatusLevy || row.status == StatusWaystation)
-                return false;
-            return true;
-        }
-
-        private string PickEligible(List<string> eligible, HashSet<string> used, int day, string role)
-        {
-            var pool = new List<string>();
-            for (int i = 0; i < eligible.Count; i++)
-            {
-                if (!used.Contains(eligible[i]))
-                    pool.Add(eligible[i]);
-            }
-
-            if (pool.Count == 0) return null;
-            int salt = _state.seedSalt + SeedUtilityOffset + day * 17 + StableHash.Of(role);
-            int n = (int)(((long)salt & 0x7FFFFFFF));
-            return pool[n % pool.Count];
-        }
-
-        private static bool IsKnownRole(string role)
-        {
-            for (int i = 0; i < AssignmentRoles.Length; i++)
-                if (AssignmentRoles[i] == role) return true;
-            return false;
-        }
-
         private static bool IsKnownStatus(string status)
         {
             return status == StatusHome || status == StatusLevy || status == StatusWaystation
                 || status == StatusQuiet || status == StatusMissing || status == StatusDead;
-        }
-
-        private void RemoveAssignmentsFor(string survivorId)
-        {
-            var drop = new List<string>();
-            foreach (var kv in _assignmentByRole)
-            {
-                if (kv.Value == survivorId)
-                    drop.Add(kv.Key);
-            }
-
-            for (int i = 0; i < drop.Count; i++)
-                _assignmentByRole.Remove(drop[i]);
-            if (drop.Count > 0)
-                SyncAssignmentList();
-        }
-
-        private void SyncAssignmentList()
-        {
-            // Emit in ordinal role order: dictionary iteration order is not a
-            // cross-host guarantee, and the assignments list is part of the save.
-            _state.assignments.Clear();
-            var roles = new List<string>(_assignmentByRole.Count);
-            foreach (var kv in _assignmentByRole) roles.Add(kv.Key);
-            roles.Sort(string.CompareOrdinal);
-            for (int i = 0; i < roles.Count; i++)
-            {
-                _state.assignments.Add(new DutyRosterAssignmentEntry
-                {
-                    role = roles[i],
-                    survivorId = _assignmentByRole[roles[i]]
-                });
-            }
         }
 
         private void EnsureLists()

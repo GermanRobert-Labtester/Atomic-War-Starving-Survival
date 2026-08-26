@@ -172,7 +172,7 @@ namespace Ashfall.Core.Radiation
 
         public IReadOnlyDictionary<string, PhaseProgressionState> Survivors => _survivors;
 
-        public RadiationPhaseProgression(ISeededRng rng = null!)
+        public RadiationPhaseProgression(ISeededRng? rng = null)
         {
             _rng = rng;
         }

@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string millPath = Path.Combine(directoryPath, "burr_millstone_dressing_logs.json");
             if (File.Exists(millPath))
             {
-                var list = JsonSerializer.Deserialize<List<BurrMillstoneDressingEntry>>(File.ReadAllText(millPath), options);
+                var list = CatalogLocator.LoadWrappedList<BurrMillstoneDressingEntry>(File.ReadAllText(millPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string silkPath = Path.Combine(directoryPath, "bolting_silk_mesh_reports.json");
             if (File.Exists(silkPath))
             {
-                var list = JsonSerializer.Deserialize<List<BoltingSilkMeshEntry>>(File.ReadAllText(silkPath), options);
+                var list = CatalogLocator.LoadWrappedList<BoltingSilkMeshEntry>(File.ReadAllText(silkPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string siloPath = Path.Combine(directoryPath, "grain_silo_weevil_audits.json");
             if (File.Exists(siloPath))
             {
-                var list = JsonSerializer.Deserialize<List<GrainSiloWeevilEntry>>(File.ReadAllText(siloPath), options);
+                var list = CatalogLocator.LoadWrappedList<GrainSiloWeevilEntry>(File.ReadAllText(siloPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string temperPath = Path.Combine(directoryPath, "mill_dampener_tempering_assays.json");
             if (File.Exists(temperPath))
             {
-                var list = JsonSerializer.Deserialize<List<MillDampenerTemperingEntry>>(File.ReadAllText(temperPath), options);
+                var list = CatalogLocator.LoadWrappedList<MillDampenerTemperingEntry>(File.ReadAllText(temperPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

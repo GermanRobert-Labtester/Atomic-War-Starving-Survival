@@ -22,7 +22,7 @@ namespace Ashfall.Core
         public int CatalogCount => _catalog.Count;
         public IReadOnlyDictionary<string, ResearchKnowledgeDef> Catalog => _catalog;
 
-        public ResearchSystem(ILog log = null!, ResearchState state = null!)
+        public ResearchSystem(ILog? log = null, ResearchState? state = null)
         {
             _log = log ?? NullLog.Instance;
             State = state ?? new ResearchState();

@@ -10,7 +10,7 @@ namespace Ashfall.Core.UtilityAI
     /// </summary>
     public static class UtilityAiHeadlessDemo
     {
-        public static HeadlessReport Run(string dataDirectory, ILog log = null!)
+        public static HeadlessReport Run(string dataDirectory, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -35,7 +35,7 @@ namespace Ashfall.Core.UtilityAI
 
             var defs = UtilityActionCatalogLoader.Load(
                 dataDirectory, new FileSystemIO(), new SystemTextJsonSerializer());
-            Check(defs.Count == 4, $"catalog loads 4 crossing actions ({defs.Count})");
+            Check(defs.Count >= 6, $"catalog loads >= 6 utility actions ({defs.Count})");
 
             var sys = new UtilityAiSystem();
             var scorer = new UtilityActionScorer();

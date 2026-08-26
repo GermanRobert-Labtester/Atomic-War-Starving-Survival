@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string autopsyPath = Path.Combine(directoryPath, "rad_pathology_autopsy_records.json");
             if (File.Exists(autopsyPath))
             {
-                var list = JsonSerializer.Deserialize<List<RadiationAutopsyEntry>>(File.ReadAllText(autopsyPath), options);
+                var list = CatalogLocator.LoadWrappedList<RadiationAutopsyEntry>(File.ReadAllText(autopsyPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string pharmaPath = Path.Combine(directoryPath, "bunker_herbalism_pharmacology.json");
             if (File.Exists(pharmaPath))
             {
-                var list = JsonSerializer.Deserialize<List<HerbalPharmacologyEntry>>(File.ReadAllText(pharmaPath), options);
+                var list = CatalogLocator.LoadWrappedList<HerbalPharmacologyEntry>(File.ReadAllText(pharmaPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string surgeryPath = Path.Combine(directoryPath, "operating_theater_surgical_logs.json");
             if (File.Exists(surgeryPath))
             {
-                var list = JsonSerializer.Deserialize<List<SurgicalLogEntry>>(File.ReadAllText(surgeryPath), options);
+                var list = CatalogLocator.LoadWrappedList<SurgicalLogEntry>(File.ReadAllText(surgeryPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string sensoryPath = Path.Combine(directoryPath, "fallout_sensory_loss_records.json");
             if (File.Exists(sensoryPath))
             {
-                var list = JsonSerializer.Deserialize<List<SensoryLossEntry>>(File.ReadAllText(sensoryPath), options);
+                var list = CatalogLocator.LoadWrappedList<SensoryLossEntry>(File.ReadAllText(sensoryPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

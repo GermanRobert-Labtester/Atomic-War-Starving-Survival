@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Ashfall.Core.Narrative
 {
@@ -71,14 +72,14 @@ namespace Ashfall.Core.Narrative
             string path = files.Combine(dataDirectory, FileName);
             if (!files.FileExists(path))
             {
-                catalog.Register(CreateDefaultNpcs());
+                foreach (var npc in CreateDefaultNpcs()) catalog.Register(npc);
                 return catalog;
             }
 
             string raw = files.ReadAllText(path);
             if (string.IsNullOrWhiteSpace(raw))
             {
-                catalog.Register(CreateDefaultNpcs());
+                foreach (var npc in CreateDefaultNpcs()) catalog.Register(npc);
                 return catalog;
             }
 
@@ -94,13 +95,13 @@ namespace Ashfall.Core.Narrative
                 var root = json.Deserialize<HoldfastNpcCatalogRoot>(raw);
                 if (root == null || root.npcs == null)
                 {
-                    catalog.Register(CreateDefaultNpcs());
+                    foreach (var npc in CreateDefaultNpcs()) catalog.Register(npc);
                     return catalog;
                 }
 
                 if (root.schema_version > CurrentSchemaVersion)
                 {
-                    catalog.Register(CreateDefaultNpcs());
+                    foreach (var npc in CreateDefaultNpcs()) catalog.Register(npc);
                     return catalog;
                 }
 
@@ -125,7 +126,7 @@ namespace Ashfall.Core.Narrative
             }
             catch
             {
-                catalog.Register(CreateDefaultNpcs());
+                foreach (var npc in CreateDefaultNpcs()) catalog.Register(npc);
             }
 
             return catalog;
@@ -135,8 +136,7 @@ namespace Ashfall.Core.Narrative
         {
             if (npc != null && !string.IsNullOrEmpty(npc.Id) && !catalog.Contains(npc.Id))
             {
-                catalog._byId[npc.Id] = npc;
-                catalog._order.Add(npc);
+                catalog.Register(npc);
             }
         }
 

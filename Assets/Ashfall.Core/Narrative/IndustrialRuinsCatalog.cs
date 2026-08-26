@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string draglinePath = Path.Combine(directoryPath, "surface_dragline_ruins.json");
             if (File.Exists(draglinePath))
             {
-                var list = JsonSerializer.Deserialize<List<DraglineRuinEntry>>(File.ReadAllText(draglinePath), options);
+                var list = CatalogLocator.LoadWrappedList<DraglineRuinEntry>(File.ReadAllText(draglinePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string subPath = Path.Combine(directoryPath, "substation_transformer_fires.json");
             if (File.Exists(subPath))
             {
-                var list = JsonSerializer.Deserialize<List<SubstationFireEntry>>(File.ReadAllText(subPath), options);
+                var list = CatalogLocator.LoadWrappedList<SubstationFireEntry>(File.ReadAllText(subPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string locoPath = Path.Combine(directoryPath, "armored_locomotive_manifests.json");
             if (File.Exists(locoPath))
             {
-                var list = JsonSerializer.Deserialize<List<ArmoredLocomotiveEntry>>(File.ReadAllText(locoPath), options);
+                var list = CatalogLocator.LoadWrappedList<ArmoredLocomotiveEntry>(File.ReadAllText(locoPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string pipePath = Path.Combine(directoryPath, "pipeline_sabotage_records.json");
             if (File.Exists(pipePath))
             {
-                var list = JsonSerializer.Deserialize<List<PipelineSabotageEntry>>(File.ReadAllText(pipePath), options);
+                var list = CatalogLocator.LoadWrappedList<PipelineSabotageEntry>(File.ReadAllText(pipePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)

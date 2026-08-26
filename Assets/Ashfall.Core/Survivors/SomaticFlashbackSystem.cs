@@ -214,15 +214,19 @@ namespace Ashfall.Core.Survivors
             if (changed) OnStateChanged?.Invoke();
         }
 
+        private readonly List<string> _tickKeyBuffer = new();
+
         /// <summary>
         /// Tick all known survivors at once.
         /// </summary>
         public void TickAll(float gameHours)
         {
             // Copy keys to allow mutation during iteration
-            var keys = new List<string>(_bySurvivor.Keys);
-            for (int i = 0; i < keys.Count; i++)
-                Tick(keys[i], gameHours);
+            _tickKeyBuffer.Clear();
+            foreach (var k in _bySurvivor.Keys)
+                _tickKeyBuffer.Add(k);
+            for (int i = 0; i < _tickKeyBuffer.Count; i++)
+                Tick(_tickKeyBuffer[i], gameHours);
         }
 
         // ── Save / Load ────────────────────────────────────────────────

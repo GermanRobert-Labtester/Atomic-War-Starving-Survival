@@ -62,7 +62,7 @@ namespace Ashfall.Core
         private readonly IJsonSerializer _json;
         private readonly ILog _log;
 
-        public StandingRecordCatalogLoader(IFileIO files, IJsonSerializer json, ILog log = null!)
+        public StandingRecordCatalogLoader(IFileIO files, IJsonSerializer json, ILog? log = null)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -88,7 +88,7 @@ namespace Ashfall.Core
             try
             {
                 string json = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<StandingRecordQuestEntry>>(json);
+                var items = CatalogLocator.LoadWrappedList<StandingRecordQuestEntry>(json, SystemTextJsonSerializer.Options);
                 if (items == null) return catalog;
                 for (int i = 0; i < items.Count; i++)
                 {

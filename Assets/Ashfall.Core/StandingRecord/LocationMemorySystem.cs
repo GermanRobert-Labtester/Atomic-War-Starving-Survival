@@ -83,7 +83,7 @@ namespace Ashfall.Core
         public bool IsUnlocked => _state.expansionUnlocked;
         public int StratumCount => _strata.Count;
 
-        public LocationMemorySystem(IFileIO files, IJsonSerializer json, ILog log = null!)
+        public LocationMemorySystem(IFileIO files, IJsonSerializer json, ILog? log = null)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -110,7 +110,7 @@ namespace Ashfall.Core
             try
             {
                 string blob = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<LocationMemoryStratum>>(blob);
+                var items = CatalogLocator.LoadWrappedList<LocationMemoryStratum>(blob, SystemTextJsonSerializer.Options);
                 if (items == null) return;
                 for (int i = 0; i < items.Count; i++)
                 {

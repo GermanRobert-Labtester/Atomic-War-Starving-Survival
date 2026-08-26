@@ -69,22 +69,22 @@ namespace Ashfall.Core.YearOfAsh
     }
 
     [Serializable]
-    public class YearOfAshItemContainer { public List<YearOfAshItemEntry> items = new List<YearOfAshItemEntry>(); }
+    public class YearOfAshItemContainer { public int schema_version; public List<YearOfAshItemEntry> items = new List<YearOfAshItemEntry>(); }
 
     [Serializable]
-    public class YearOfAshEventContainer { public List<YearOfAshEventEntry> events = new List<YearOfAshEventEntry>(); }
+    public class YearOfAshEventContainer { public int schema_version; public List<YearOfAshEventEntry> events = new List<YearOfAshEventEntry>(); }
 
     [Serializable]
-    public class YearOfAshLocationContainer { public List<YearOfAshLocationEntry> locations = new List<YearOfAshLocationEntry>(); }
+    public class YearOfAshLocationContainer { public int schema_version; public List<YearOfAshLocationEntry> locations = new List<YearOfAshLocationEntry>(); }
 
     [Serializable]
-    public class YearOfAshRadioContainer { public List<YearOfAshRadioEntry> broadcasts = new List<YearOfAshRadioEntry>(); }
+    public class YearOfAshRadioContainer { public int schema_version; public List<YearOfAshRadioEntry> broadcasts = new List<YearOfAshRadioEntry>(); }
 
     [Serializable]
-    public class YearOfAshSurvivorContainer { public List<YearOfAshSurvivorEntry> survivors = new List<YearOfAshSurvivorEntry>(); }
+    public class YearOfAshSurvivorContainer { public int schema_version; public List<YearOfAshSurvivorEntry> survivors = new List<YearOfAshSurvivorEntry>(); }
 
     [Serializable]
-    public class YearOfAshQuestContainer { public List<QuestlineDefinition> quests = new List<QuestlineDefinition>(); }
+    public class YearOfAshQuestContainer { public int schema_version; public List<QuestlineDefinition> quests = new List<QuestlineDefinition>(); }
 
     [Serializable]
     public class RawQuestEntry
@@ -157,7 +157,7 @@ namespace Ashfall.Core.YearOfAsh
 
             try
             {
-                return json.Deserialize<List<YearOfAshItemEntry>>(raw) ?? new List<YearOfAshItemEntry>();
+                return CatalogLocator.LoadWrappedList<YearOfAshItemEntry>(raw, SystemTextJsonSerializer.Options) ?? new List<YearOfAshItemEntry>();
             }
             catch (Exception ex_CATDIAG)
                                 {
@@ -192,7 +192,7 @@ namespace Ashfall.Core.YearOfAsh
 
             try
             {
-                return json.Deserialize<List<YearOfAshEventEntry>>(raw) ?? new List<YearOfAshEventEntry>();
+                return CatalogLocator.LoadWrappedList<YearOfAshEventEntry>(raw, SystemTextJsonSerializer.Options) ?? new List<YearOfAshEventEntry>();
             }
             catch (Exception ex_CATDIAG)
                                 {
@@ -279,7 +279,7 @@ namespace Ashfall.Core.YearOfAsh
 
             try
             {
-                return json.Deserialize<List<QuestlineDefinition>>(raw) ?? new List<QuestlineDefinition>();
+                return CatalogLocator.LoadWrappedList<QuestlineDefinition>(raw, SystemTextJsonSerializer.Options) ?? new List<QuestlineDefinition>();
             }
             catch (Exception ex_CATDIAG)
                                 {
@@ -314,7 +314,7 @@ namespace Ashfall.Core.YearOfAsh
 
             try
             {
-                return json.Deserialize<List<YearOfAshLocationEntry>>(raw) ?? new List<YearOfAshLocationEntry>();
+                return CatalogLocator.LoadWrappedList<YearOfAshLocationEntry>(raw, SystemTextJsonSerializer.Options) ?? new List<YearOfAshLocationEntry>();
             }
             catch (Exception ex_CATDIAG)
                                 {
@@ -349,7 +349,7 @@ namespace Ashfall.Core.YearOfAsh
 
             try
             {
-                return json.Deserialize<List<YearOfAshRadioEntry>>(raw) ?? new List<YearOfAshRadioEntry>();
+                return CatalogLocator.LoadWrappedList<YearOfAshRadioEntry>(raw, SystemTextJsonSerializer.Options) ?? new List<YearOfAshRadioEntry>();
             }
             catch (Exception ex_CATDIAG)
                                 {
@@ -384,7 +384,7 @@ namespace Ashfall.Core.YearOfAsh
 
             try
             {
-                return json.Deserialize<List<YearOfAshSurvivorEntry>>(raw) ?? new List<YearOfAshSurvivorEntry>();
+                return CatalogLocator.LoadWrappedList<YearOfAshSurvivorEntry>(raw, SystemTextJsonSerializer.Options) ?? new List<YearOfAshSurvivorEntry>();
             }
             catch (Exception ex_CATDIAG)
                                 {

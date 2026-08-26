@@ -32,7 +32,7 @@ namespace Ashfall.Core.Maritime
         private int _currentDay;
         private readonly Dictionary<string, int> _locationVisitCounts = new Dictionary<string, int>(StringComparer.Ordinal);
 
-        public ProceduralScavengeSystem(ISeededRng rng = null!)
+        public ProceduralScavengeSystem(ISeededRng? rng = null)
         {
             _rng = rng ?? new SeededRng(9999);
         }

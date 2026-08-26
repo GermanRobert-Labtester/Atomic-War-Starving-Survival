@@ -33,7 +33,7 @@ namespace Ashfall.Core
 
         public HoldfastFactionEntry() { }
 
-        public HoldfastFactionEntry(string id, string displayName, string alignment, string homeRegion = "", bool isActive = true, float trust = 0f, string[] wants = null!, string[] offers = null!, string signatureQuote = "", string accessRule = "", string badgeAssetId = "")
+        public HoldfastFactionEntry(string id, string displayName, string alignment, string homeRegion = "", bool isActive = true, float trust = 0f, string[]? wants = null, string[]? offers = null, string signatureQuote = "", string accessRule = "", string badgeAssetId = "")
         {
             this.id = id ?? string.Empty;
             this.display_name = displayName ?? string.Empty;

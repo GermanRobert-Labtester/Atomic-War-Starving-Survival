@@ -22,7 +22,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class CensusHeadlessDemo
     {
-        public static CensusHeadlessReport Run(ILog log = null!)
+        public static CensusHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

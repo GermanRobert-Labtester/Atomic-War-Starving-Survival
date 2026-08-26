@@ -42,7 +42,7 @@ namespace Ashfall.Core.Verdict
 
         public event Action<string> OnEnrolled;
 
-        public EvidenceLedger(EvidenceLedgerState state = null!)
+        public EvidenceLedger(EvidenceLedgerState? state = null)
         {
             _state = state ?? new EvidenceLedgerState();
         }

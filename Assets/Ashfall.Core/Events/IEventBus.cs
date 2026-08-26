@@ -5,7 +5,7 @@ namespace Ashfall.Core.Events
 {
     public interface IEventBus
     {
-        void Publish(string eventName, object payload = null!);
+        void Publish(string eventName, object? payload = null);
         void Subscribe(string eventName, Action<object> handler);
         void Unsubscribe(string eventName, Action<object> handler);
     }
@@ -17,7 +17,7 @@ namespace Ashfall.Core.Events
 
         public IReadOnlyList<(string name, object payload)> PublishedEvents => _publishedEvents;
 
-        public void Publish(string eventName, object payload = null!)
+        public void Publish(string eventName, object? payload = null)
         {
             if (string.IsNullOrEmpty(eventName)) return;
 

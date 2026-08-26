@@ -15,7 +15,7 @@ namespace Ashfall.Core.Muster
     /// </summary>
     public static class MusterHeadlessDemo
     {
-        public static MusterHeadlessReport Run(ILog log = null!)
+        public static MusterHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

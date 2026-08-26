@@ -369,7 +369,7 @@ namespace Ashfall.Core.Crossing
 
             try
             {
-                var quests = serializer.Deserialize<List<CrossingQuestDef>>(json);
+                var quests = CatalogLocator.LoadWrappedList<CrossingQuestDef>(json, SystemTextJsonSerializer.Options);
                 return quests ?? new List<CrossingQuestDef>();
             }
             catch (Exception ex_CATDIAG)

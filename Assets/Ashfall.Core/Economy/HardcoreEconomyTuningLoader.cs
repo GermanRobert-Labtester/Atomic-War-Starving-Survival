@@ -82,14 +82,15 @@ namespace Ashfall.Core.Economy
             // ── Validate faction preferences ─────────────────────────────
             if (dto.FactionPreferences is not null)
             {
-                var seenFactions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                var seenFactions = new HashSet<string>();
+                string FactionKey(string id) => (id ?? string.Empty).Trim().ToLowerInvariant();
                 for (int i = 0; i < dto.FactionPreferences.Count; i++)
                 {
                     var f = dto.FactionPreferences[i];
                     var entryErrors = new List<string>();
                     if (string.IsNullOrWhiteSpace(f.FactionId))
                         entryErrors.Add($"[faction[{i}] FactionId is required");
-                    else if (!seenFactions.Add(f.FactionId))
+                    else if (!seenFactions.Add(FactionKey(f.FactionId)))
                         entryErrors.Add($"[faction[{i}] duplicate FactionId \"{f.FactionId}\"");
                     if (f.BuysAtPremium is null || f.BuysAtPremium.Count == 0)
                         entryErrors.Add($"[faction[{i}] BuysAtPremium must contain at least one item id prefix");

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Maritime;
@@ -22,7 +23,7 @@ namespace Ashfall.Core
     {
         public const int DefaultSeed = 4048;
 
-        public static HeadlessReport Run(string dataDirectory = null!, ILog log = null!)
+        public static HeadlessReport Run(string? dataDirectory = null, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -327,16 +328,39 @@ namespace Ashfall.Core
                 if (!files.FileExists(path)) continue;
                 try
                 {
-                    var list = json.Deserialize<List<HoldfastItemDto>>(files.ReadAllText(path));
-                    if (list == null) continue;
-                    for (int j = 0; j < list.Count; j++)
-                        if (list[j] != null && list[j].id == itemId)
-                            return true;
+                    string raw = files.ReadAllText(path);
+                    using var doc = JsonDocument.Parse(raw);
+                    JsonElement array = doc.RootElement;
+                    if (array.ValueKind == JsonValueKind.Object)
+                    {
+                        foreach (var prop in array.EnumerateObject())
+                        {
+                            if (prop.Name.Equals("schema_version", StringComparison.OrdinalIgnoreCase))
+                                continue;
+                            if (prop.Value.ValueKind == JsonValueKind.Array)
+                            {
+                                array = prop.Value;
+                                break;
+                            }
+                        }
+                    }
+                    if (array.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var elem in array.EnumerateArray())
+                        {
+                            if (elem.TryGetProperty("id", out var idProp))
+                            {
+                                string id = idProp.GetString();
+                                if (!string.IsNullOrEmpty(id) && id == itemId)
+                                    return true;
+                            }
+                        }
+                    }
                 }
                 catch (Exception ex_CATDIAG)
                 {
                     CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
-                    // Not every catalog uses the HoldfastItemDto shape; skip it.
+                    // Not every catalog uses the item shape; skip it.
                 }
             }
             return false;

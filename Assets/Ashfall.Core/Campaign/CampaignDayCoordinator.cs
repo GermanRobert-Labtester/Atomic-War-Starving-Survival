@@ -142,7 +142,7 @@ namespace Ashfall.Core.Campaign
         /// or null when a guard rejects the call (already advancing, or stale
         /// day). The host should treat a null return as "no-op".
         /// </summary>
-        public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence persistence = null!)
+        public DayAdvancedEventArgs? Advance(int day, IDayAdvancePersistence? persistence = null)
         {
             if (!TryBegin(day)) return null;
 
@@ -195,6 +195,25 @@ namespace Ashfall.Core.Campaign
                 Phase = phase;
             }
         }
+
+        // ── Persistence ───────────────────────────────────────────────
+
+        /// <summary>Capture the coordinator's advancement history for save.</summary>
+        public CampaignDaySave CaptureState()
+        {
+            return new CampaignDaySave
+            {
+                saveVersion = CampaignDaySave.CurrentSaveVersion,
+                lastAdvancedDay = _lastAdvancedDay == int.MinValue ? -1 : _lastAdvancedDay
+            };
+        }
+
+        /// <summary>Restore the coordinator's advancement history from save.</summary>
+        public void RestoreState(CampaignDaySave save)
+        {
+            if (save == null) return;
+            _lastAdvancedDay = save.lastAdvancedDay < 0 ? int.MinValue : save.lastAdvancedDay;
+        }
     }
 
     /// <summary>Engine-agnostic contract for a system that participates in daily ticks.</summary>
@@ -240,7 +259,7 @@ namespace Ashfall.Core.Campaign
         public DayStateChangeEvent() { }
 
         public DayStateChangeEvent(string kind, string sourceOwnerId,
-            string primaryId = null!, string secondaryId = null!, float numeric = 0f)
+string? primaryId = null, string? secondaryId = null, float numeric = 0f)
         {
             Kind = kind;
             SourceOwnerId = sourceOwnerId;

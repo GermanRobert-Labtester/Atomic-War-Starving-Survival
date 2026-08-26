@@ -38,12 +38,12 @@ namespace Ashfall.Core.Economy
 
         public TradeScreenPresenter(
             IFactionStanceProvider stanceProvider,
-            IPriceShockProvider priceShockProvider = null!,
-            ITradeTellProvider tells = null!,
-            ISeededRng rng = null!,
-            Func<string, float> unitPriceLookup = null!,
-            Func<string, string> displayNameLookup = null!,
-            ITradeExecutionSink executionSink = null!)
+IPriceShockProvider? priceShockProvider = null,
+ITradeTellProvider? tells = null,
+ISeededRng? rng = null,
+Func<string, float>? unitPriceLookup = null,
+Func<string, string>? displayNameLookup = null,
+ITradeExecutionSink? executionSink = null)
         {
             _stance = stanceProvider;
             _shocks = priceShockProvider;
@@ -259,13 +259,16 @@ namespace Ashfall.Core.Economy
             return lines;
         }
 
+        private static readonly PriceShockKind[] s_allShockKinds = (PriceShockKind[])Enum.GetValues(typeof(PriceShockKind));
+
         private List<ShockBadgeData> CollectShockBadges()
         {
             var badges = new List<ShockBadgeData>();
             if (_shocks == null) return badges;
 
-            foreach (PriceShockKind kind in Enum.GetValues(typeof(PriceShockKind)))
+            for (int i = 0; i < s_allShockKinds.Length; i++)
             {
+                PriceShockKind kind = s_allShockKinds[i];
                 if (_shocks.TryGetPriceShock(kind, _worldDay, out var rule))
                 {
                     badges.Add(new ShockBadgeData(rule.Kind, rule.Multiplier, rule.Trigger));

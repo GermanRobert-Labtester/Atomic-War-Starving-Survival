@@ -45,8 +45,8 @@ namespace Ashfall.Core
 
         public StandingRecordEngine(
             IFileIO files, IJsonSerializer json,
-            ISeededRng rng, ILog log = null!,
-            StandingRecordState state = null!)
+ISeededRng rng, ILog? log = null,
+StandingRecordState? state = null)
         {
             if (files == null) throw new ArgumentNullException(nameof(files));
             if (json == null) throw new ArgumentNullException(nameof(json));

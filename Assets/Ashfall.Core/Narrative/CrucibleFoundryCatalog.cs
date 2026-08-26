@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string crucPath = Path.Combine(directoryPath, "crucible_clay_pot_slag_logs.json");
             if (File.Exists(crucPath))
             {
-                var list = JsonSerializer.Deserialize<List<CrucibleClayPotSlagEntry>>(File.ReadAllText(crucPath), options);
+                var list = CatalogLocator.LoadWrappedList<CrucibleClayPotSlagEntry>(File.ReadAllText(crucPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string cupPath = Path.Combine(directoryPath, "cupola_melting_ratio_audits.json");
             if (File.Exists(cupPath))
             {
-                var list = JsonSerializer.Deserialize<List<CupolaMeltingRatioEntry>>(File.ReadAllText(cupPath), options);
+                var list = CatalogLocator.LoadWrappedList<CupolaMeltingRatioEntry>(File.ReadAllText(cupPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string patPath = Path.Combine(directoryPath, "pattern_maker_shrinkage_records.json");
             if (File.Exists(patPath))
             {
-                var list = JsonSerializer.Deserialize<List<PatternMakerShrinkageEntry>>(File.ReadAllText(patPath), options);
+                var list = CatalogLocator.LoadWrappedList<PatternMakerShrinkageEntry>(File.ReadAllText(patPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string sandPath = Path.Combine(directoryPath, "green_sand_bentonite_assays.json");
             if (File.Exists(sandPath))
             {
-                var list = JsonSerializer.Deserialize<List<GreenSandBentoniteEntry>>(File.ReadAllText(sandPath), options);
+                var list = CatalogLocator.LoadWrappedList<GreenSandBentoniteEntry>(File.ReadAllText(sandPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
