@@ -26,7 +26,7 @@ namespace AtomicWar.GodotApp.Host
         public bool FileExists(string path)
         {
             if (string.IsNullOrEmpty(path)) return false;
-            if (IsResPath(path)) return FileAccess.FileExists(path);
+            if (IsResPath(path)) return Godot.FileAccess.FileExists(path);
             return File.Exists(path);
         }
 
@@ -35,7 +35,7 @@ namespace AtomicWar.GodotApp.Host
             if (string.IsNullOrEmpty(path)) return string.Empty;
             if (IsResPath(path))
             {
-                using var f = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+                using var f = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read);
                 if (f == null) throw new FileNotFoundException($"GodotFileIO: res file not found {path}", path);
                 return f.GetAsText();
             }

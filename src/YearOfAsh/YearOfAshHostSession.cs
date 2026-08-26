@@ -94,7 +94,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             var session = new YearOfAshHostSession();
             if (!string.IsNullOrEmpty(dataDir))
             {
-                var fileIO = new FileSystemIO();
+                var fileIO = AtomicWar.GodotApp.CatalogPath.CreateFileIOForDataDir(dataDir);
                 var serializer = new SystemTextJsonSerializer();
                 DoorEncounterCatalogLoader.LoadAndRegister(session.Encounters, dataDir, fileIO, serializer);
                 YearOfAshCatalogLoader.LoadAndRegisterQuests(session.Quests, dataDir, fileIO, serializer);

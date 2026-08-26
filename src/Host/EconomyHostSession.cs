@@ -11,6 +11,7 @@ namespace AtomicWar.GodotApp
     /// No rules here — hosts only wire and present.
     /// </summary>
     public sealed class EconomyHostSession
+    : HostSessionBase
     {
         public const int DemoSeed = 2026;
 
@@ -38,7 +39,7 @@ namespace AtomicWar.GodotApp
             var session = new EconomyHostSession();
             if (!string.IsNullOrEmpty(dataDir))
             {
-                var fileIO = new FileSystemIO();
+                var fileIO = CatalogPath.CreateFileIOForDataDir(dataDir);
                 var serializer = new SystemTextJsonSerializer();
                 var load = GoodsCatalogLoader.Load(dataDir, fileIO, serializer);
                 if (!load.HasErrors)

@@ -16,6 +16,7 @@ namespace AtomicWar.GodotApp
     /// No gameplay rules here — everything delegates to Ashfall.Core.
     /// </summary>
     public sealed class ExpansionHostSession
+    : HostSessionBase
     {
         public const int DefaultSeed = 1117; // greenhouse + vouch demo seed
 
@@ -90,7 +91,7 @@ namespace AtomicWar.GodotApp
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? new GodotLog();
-            var files = new FileSystemIO();
+            var files = CatalogPath.CreateFileIOForDataDir(dataDirectory);
             var json = new SystemTextJsonSerializer();
 
             var layouts = new LocationLayoutSystem(files, json, log);

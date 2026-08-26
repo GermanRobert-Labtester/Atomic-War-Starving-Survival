@@ -13,6 +13,7 @@ namespace AtomicWar.GodotApp
     /// No gameplay rules here — hosts only present.
     /// </summary>
     public sealed class MusterHostSession
+    : HostSessionBase
     {
         public MusterSystem Engine { get; }
         public CoalitionCampSystem Camp { get; }
@@ -82,7 +83,7 @@ namespace AtomicWar.GodotApp
             var epilogues = new List<EndingDefinition>();
             if (!string.IsNullOrEmpty(dataDir))
             {
-                var fileIO = new FileSystemIO();
+                var fileIO = CatalogPath.CreateFileIOForDataDir(dataDir);
                 var serializer = new SystemTextJsonSerializer();
                 roster = CurrentsCatalogLoader.LoadCurrents(dataDir, fileIO, serializer);
                 witnesses = WitnessCatalogLoader.LoadWitnesses(dataDir, fileIO, serializer);

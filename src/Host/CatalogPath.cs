@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Godot;
 using Ashfall.Core;
@@ -38,15 +39,19 @@ namespace AtomicWar.GodotApp
                     return direct;
             }
 
-            // 3. PCK virtual FS — when Data is packed inside the .pck (future-proof).
+            // 3. PCK virtual FS — when Data is packed inside the .pck.
             // Use Godot's DirAccess which can see inside the PCK; System.IO cannot.
+            // Return the res:// path directly so GodotFileIO can handle it (not globalized).
             const string resData = "res://Assets/StreamingAssets/Data";
             if (Godot.DirAccess.DirExistsAbsolute(resData))
-                return ProjectSettings.GlobalizePath(resData);
-            // Also try lower-case Godot assets tree (if data migrated to assets/).
+                return resData;
             const string resDataLower = "res://assets/StreamingAssets/Data";
             if (Godot.DirAccess.DirExistsAbsolute(resDataLower))
-                return ProjectSettings.GlobalizePath(resDataLower);
+                return resDataLower;
+            // Also try root StreamingAssets (if packed as res://StreamingAssets/Data)
+            const string resDataRoot = "res://StreamingAssets/Data";
+            if (Godot.DirAccess.DirExistsAbsolute(resDataRoot))
+                return resDataRoot;
 
             // 4. Current working directory walk (development checkout).
             string cwd = Directory.GetCurrentDirectory();
