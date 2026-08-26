@@ -127,5 +127,41 @@ namespace Ashfall.Core.Tests
                 }
             }
         }
+
+        [Fact]
+        public void FuzzCatalog_AllGoods_Determinism_And_Bounds()
+        {
+            GoodsCatalog CreateFuzz()
+            {
+                var result = new GoodsCatalogLoadResult();
+                string[] cats = { "food", "water", "fuel", "medical" };
+                for (int i = 0; i < 12; i++)
+                    result.Goods.Add(new GoodDefinition { id = "g" + i, displayName = "G" + i, category = cats[i % cats.Length], basePrice = 5f + i, volatility = 0.5f, elasticity = 1f });
+                return GoodsCatalogLoader.ToCatalog(result);
+            }
+            var sysA = new MarketSystem(); sysA.BindCatalog(CreateFuzz());
+            var sysB = new MarketSystem(); sysB.BindCatalog(CreateFuzz());
+            var rngA = new SeededRng(99);
+            var rngB = new SeededRng(99);
+            for (int day = 1; day <= 30; day++)
+            {
+                sysA.TickDay(day, rngA);
+                sysB.TickDay(day, rngB);
+                for (int i = 0; i < 12; i++)
+                {
+                    string id = "g" + i;
+                    float pA = sysA.GetPrice(id);
+                    float pB = sysB.GetPrice(id);
+                    Assert.Equal(pA, pB);
+                    Assert.False(float.IsNaN(pA));
+                    Assert.False(float.IsInfinity(pA));
+                    Assert.True(pA > 0);
+                    // Bounds 0.25*base to 4*base
+                    float basePrice = 5f + i;
+                    Assert.True(pA >= basePrice * MarketSystem.PriceFloorFraction - 1e-5f);
+                    Assert.True(pA <= basePrice * MarketSystem.PriceCeilingFraction + 1e-5f);
+                }
+            }
+        }
     }
 }

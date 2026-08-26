@@ -183,5 +183,48 @@ namespace Ashfall.Core.Tests
             }
             Assert.True(s.Hunger > 85f || s.Thirst > 85f, $"Starvation should push needs critical by day 7 (hunger {s.Hunger:F1}, thirst {s.Thirst:F1})");
         }
+
+        [Theory]
+        [InlineData(42, 7)]
+        [InlineData(42, 14)]
+        public void FedLoop_WithPowerGrid_HeatIntegration(int seed, int days)
+        {
+            // Real PowerGrid → brownout → heat → health chain (vs forced true)
+            var rng = new SeededRng(seed);
+            var powerState = new Ashfall.Core.Shelter.PowerGridState { FuelUnits = 100, BatteryReserveWh = 500, BatteryCapacityWh = 1000 };
+            var rooms = new List<Ashfall.Core.Shelter.PowerGridRoom> { new Ashfall.Core.Shelter.PowerGridRoom { RoomId = "room_a", DisplayName = "Test", DrawWatts = 100 } };
+            var power = new Ashfall.Core.Shelter.PowerGridSystem(powerState, rooms, rng);
+            var needs = new NeedsSystem(isNearHeatSource: _ => !power.IsBrownout);
+            var s = new SurvivorNeedsState { Id = "power_heat", Health = 100f, Hunger = 20f, Thirst = 25f, Warmth = 85f, Morale = 70f, Fatigue = 10f };
+            needs.Register(s);
+            for (int day = 1; day <= days; day++)
+            {
+                needs.Tick(24f);
+                needs.Modify(s, NeedKind.Hunger, -20f);
+                needs.Modify(s, NeedKind.Thirst, -30f);
+                needs.Modify(s, NeedKind.Fatigue, -64f);
+                power.TickDay(day, rng);
+            }
+            // With fuel 100, power should remain available for 7-14d, so warmth stays >20 and health high
+            Assert.True(s.Warmth > 20f, $"With fuel 100, warmth should stay >20 after {days}d, got {s.Warmth:F1}");
+            Assert.True(s.Health >= 85f, $"With power, health should stay >=85, got {s.Health:F1}");
+            // Fuel pressure: 10 fuel should brownout by day2
+            var powerLowState = new Ashfall.Core.Shelter.PowerGridState { FuelUnits = 10, BatteryReserveWh = 500, BatteryCapacityWh = 1000 };
+            var powerLow = new Ashfall.Core.Shelter.PowerGridSystem(powerLowState, rooms, new SeededRng(seed));
+            var needsLow = new NeedsSystem(isNearHeatSource: _ => !powerLow.IsBrownout);
+            var sLow = new SurvivorNeedsState { Id = "low", Health = 100f, Hunger = 20f, Thirst = 25f, Warmth = 85f, Morale = 70f, Fatigue = 10f };
+            needsLow.Register(sLow);
+            for (int day = 1; day <= 14; day++)
+            {
+                needsLow.Tick(24f);
+                needsLow.Modify(sLow, NeedKind.Hunger, -20f);
+                needsLow.Modify(sLow, NeedKind.Thirst, -30f);
+                needsLow.Modify(sLow, NeedKind.Fatigue, -64f);
+                powerLow.TickDay(day, new SeededRng(seed));
+            }
+            Assert.True(powerLow.IsBrownout, "Fuel 10 should brownout by day14");
+            // Warmth should have dropped to critical, health should be lower than powered baseline
+            Assert.True(sLow.Warmth <= 20f || sLow.Health < s.Health, $"Low fuel warmth {sLow.Warmth:F1} should be critical or health {sLow.Health:F1} < {s.Health:F1}");
+        }
     }
 }
