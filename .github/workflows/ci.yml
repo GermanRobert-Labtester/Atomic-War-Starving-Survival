@@ -81,3 +81,6 @@ jobs:
 
       - name: 6) godot --headless -- --expansions-selftest
         run: godot --headless --path . -- --expansions-selftest
+
+      - name: 7) triad drift gate (Setup/Save/AllSaveSections)
+        run: bash scripts/ci/triad-drift-gate.sh

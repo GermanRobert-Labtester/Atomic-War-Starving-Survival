@@ -82,7 +82,15 @@ namespace AtomicWar.GodotApp
             "excavation",
             "waystation",
             "shelter_thermal",
-            "shelter_schedule"
+            "shelter_schedule",
+            "sump_flooding",
+            "decontamination",
+            "kitchen_nutrition",
+            "library_study",
+            "archive_desk",
+            "contractor_roster",
+            "mental_health_crisis",
+            "shelter_assignment"
         };
 
         /// <summary>
