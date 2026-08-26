@@ -1,23 +1,38 @@
 using Godot;
 using System;
 using System.IO;
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using Ashfall.Core.Audio;
 
 namespace AtomicWar.GodotApp.Audio
 {
     /// <summary>
     /// Versioned, persisted audio user preferences.
     /// Separate from gameplay saves. Stored at user://audio_settings.json.
-    /// Atomic writes, malformed-file recovery, defaults, reset-to-default.
+    /// Hardened for malformed-file recovery: restores defaults without exception,
+    /// while preserving valid values whenever partial parsing is possible.
     /// </summary>
     public sealed class AudioSettings
     {
-        public const int CurrentVersion = 1;
+        public const int CurrentVersion = AudioSettingsData.CurrentVersion;
         private const string FileName = "audio_settings.json";
 
         private static AudioSettings? _instance;
+        private static string? _lastDiagnosticMessage;
+
         public static AudioSettings Instance => _instance ??= Load();
+
+        /// <summary>
+        /// Diagnostic message from the most recent load/save/recovery operation, or null if clean.
+        /// </summary>
+        public static string? LastDiagnosticMessage => _lastDiagnosticMessage;
+
+        /// <summary>
+        /// True if the most recent load or save encountered an issue and had to recover.
+        /// </summary>
+        public static bool HasDiagnosticError => !string.IsNullOrEmpty(_lastDiagnosticMessage);
+
+        public static void ClearDiagnosticMessage() => _lastDiagnosticMessage = null;
 
         // ── Persisted fields ────────────────────────────────────
 
@@ -102,25 +117,31 @@ namespace AtomicWar.GodotApp.Audio
 
         // ── Paths ───────────────────────────────────────────────
 
-        private static string SavePath => Path.Combine(
+        public static string DefaultSavePath => Path.Combine(
             ProjectSettings.GlobalizePath("user://"), FileName);
 
         // ── Load / Save ─────────────────────────────────────────
 
-        public static AudioSettings Load()
+        public static AudioSettings Load(string? customPath = null)
         {
-            string path = SavePath;
+            string path = customPath ?? DefaultSavePath;
             if (!File.Exists(path))
+            {
+                _lastDiagnosticMessage = null;
                 return new AudioSettings();
+            }
 
             try
             {
                 string json = File.ReadAllText(path);
-                var settings = JsonSerializer.Deserialize<AudioSettings>(json);
-                if (settings == null)
-                    return new AudioSettings();
+                var (data, diag) = AudioSettingsCodec.DeserializeWithRecovery(json);
+                _lastDiagnosticMessage = diag;
+                if (!string.IsNullOrEmpty(diag))
+                {
+                    GD.PrintErr($"[AudioSettings] {diag}");
+                }
 
-                // Version migration
+                var settings = FromData(data);
                 if (settings.Version < CurrentVersion)
                     Migrate(settings);
 
@@ -128,35 +149,98 @@ namespace AtomicWar.GodotApp.Audio
             }
             catch (Exception e)
             {
-                GD.PrintErr($"[AudioSettings] Malformed file, using defaults: {e.Message}");
+                _lastDiagnosticMessage = $"[AudioSettings] Failed to read audio settings from '{path}' ({e.Message}). Restored defaults.";
+                GD.PrintErr(_lastDiagnosticMessage);
                 return new AudioSettings();
             }
         }
 
-        public void Save()
+        public void Save(string? customPath = null)
         {
+            string path = customPath ?? DefaultSavePath;
             try
             {
-                string path = SavePath;
                 string dir = Path.GetDirectoryName(path)!;
-                if (!Directory.Exists(dir))
+                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
 
                 // Atomic write: write to temp, then rename
                 string tempPath = path + ".tmp";
-                var options = new JsonSerializerOptions
-                {
-                    WriteIndented = true,
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                };
-                string json = JsonSerializer.Serialize(this, options);
+                var data = ToData();
+                string json = AudioSettingsCodec.Serialize(data);
                 File.WriteAllText(tempPath, json);
                 File.Move(tempPath, path, overwrite: true);
+                _lastDiagnosticMessage = null;
             }
             catch (Exception e)
             {
-                GD.PrintErr($"[AudioSettings] Save failed: {e.Message}");
+                _lastDiagnosticMessage = $"[AudioSettings] Save failed to '{path}': {e.Message}";
+                GD.PrintErr(_lastDiagnosticMessage);
             }
+        }
+
+        public AudioSettingsData ToData()
+        {
+            return new AudioSettingsData
+            {
+                Version = Version,
+                MasterVolume = MasterVolume,
+                MusicVolume = MusicVolume,
+                AmbienceVolume = AmbienceVolume,
+                SfxVolume = SfxVolume,
+                UiVolume = UiVolume,
+                VoiceVolume = VoiceVolume,
+                AlertVolume = AlertVolume,
+                GeneratorVolume = GeneratorVolume,
+                VentilationVolume = VentilationVolume,
+                RadioVolume = RadioVolume,
+                MedicalVolume = MedicalVolume,
+                SurfaceVolume = SurfaceVolume,
+                MasterMute = MasterMute,
+                MusicMute = MusicMute,
+                SfxMute = SfxMute,
+                VoiceMute = VoiceMute,
+                AlertMute = AlertMute,
+                AmbienceMute = AmbienceMute,
+                UiMute = UiMute,
+                GeneratorMute = GeneratorMute,
+                VentilationMute = VentilationMute,
+                RadioMute = RadioMute,
+                MedicalMute = MedicalMute,
+                SurfaceMute = SurfaceMute
+            };
+        }
+
+        public static AudioSettings FromData(AudioSettingsData data)
+        {
+            return new AudioSettings
+            {
+                Version = data.Version,
+                MasterVolume = data.MasterVolume,
+                MusicVolume = data.MusicVolume,
+                AmbienceVolume = data.AmbienceVolume,
+                SfxVolume = data.SfxVolume,
+                UiVolume = data.UiVolume,
+                VoiceVolume = data.VoiceVolume,
+                AlertVolume = data.AlertVolume,
+                GeneratorVolume = data.GeneratorVolume,
+                VentilationVolume = data.VentilationVolume,
+                RadioVolume = data.RadioVolume,
+                MedicalVolume = data.MedicalVolume,
+                SurfaceVolume = data.SurfaceVolume,
+                MasterMute = data.MasterMute,
+                MusicMute = data.MusicMute,
+                SfxMute = data.SfxMute,
+                VoiceMute = data.VoiceMute,
+                AlertMute = data.AlertMute,
+                AmbienceMute = data.AmbienceMute,
+                UiMute = data.UiMute,
+                GeneratorMute = data.GeneratorMute,
+                VentilationMute = data.VentilationMute,
+                RadioMute = data.RadioMute,
+                MedicalMute = data.MedicalMute,
+                SurfaceMute = data.SurfaceMute
+            };
         }
 
         public void ResetToDefaults()
@@ -204,8 +288,7 @@ namespace AtomicWar.GodotApp.Audio
 
         // ── Volume helpers ──────────────────────────────────────
 
-        public static float ClampVolume(float value) =>
-            Math.Clamp(value, 0f, 100f);
+        public static float ClampVolume(float value) => AudioSettingsData.ClampVolume(value);
 
         /// <summary>
         /// Convert 0-100 percent to Godot dB (-80 = silent, 0 = full).
