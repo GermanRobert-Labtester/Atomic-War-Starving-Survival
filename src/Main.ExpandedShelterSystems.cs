@@ -20,12 +20,6 @@ namespace AtomicWar.GodotApp
     public partial class Main : Control
     {
         // ── 12 Expanded Shelter Host Sessions ──
-        private SurvivorRelationsHostSession _survivorRelations = null!;
-        private RegionalTreatyHostSession _regionalTreaty = null!;
-        private VinylMoraleHostSession _vinylMorale = null!;
-        private WildlifeTrappingHostSession _wildlifeTrapping = null!;
-        private ExcavationHostSession _excavation = null!;
-        private ApprenticeshipHostSession _apprenticeship = null!;
 
 
 
@@ -42,21 +36,9 @@ namespace AtomicWar.GodotApp
         private SurvivorRelationsSystem _survivorRelationsCore = null!;
 
         // ── 22 UI Panels ──
-        private SurvivorRelationsPanel _survivorRelationsPanel = null!;
-        private RegionalTreatyPanel _regionalTreatyPanel = null!;
-        private VinylMoralePanel _vinylMoralePanel = null!;
-        private WildlifeTrappingPanel _wildlifeTrappingPanel = null!;
-        private ExcavationPanel _excavationPanel = null!;
-        private ApprenticeshipPanel _apprenticeshipPanel = null!;
 
 
         // ── Dirty Flags ──
-        private bool _survivorRelationsDirty;
-        private bool _regionalTreatyDirty;
-        private bool _vinylMoraleDirty;
-        private bool _wildlifeTrappingDirty;
-        private bool _excavationDirty;
-        private bool _apprenticeshipDirty;
 
 
 
@@ -100,85 +82,11 @@ namespace AtomicWar.GodotApp
 
 
 
-        private void SetupSurvivorRelations()
-        {
-            var srState = SurvivorRelationsSaveStore.TryLoad() ?? new SurvivorRelationsState();
-            var srSys = new SurvivorRelationsSystem(new SeededRng(1986), new GodotLog());
-            _survivorRelationsCore = srSys;
-            srSys.RestoreState(srState);
-            _survivorRelations = new SurvivorRelationsHostSession(srSys);
-            _survivorRelations.StateChanged += () => _survivorRelations.MarkDirty();
-            _survivorRelationsPanel = new SurvivorRelationsPanel();
-            _survivorRelationsPanel.Bind(_survivorRelations);
-            _survivorRelationsPanel.Visible = false;
-            AddChild(_survivorRelationsPanel);
-        }
 
-        private void SetupRegionalTreaty()
-        {
-            var rtState = RegionalTreatySaveStore.TryLoad() ?? new RegionalTreatyState();
-            var rtSys = new RegionalTreatySystem(new GodotLog());
-            rtSys.RestoreState(rtState);
-            _regionalTreaty = new RegionalTreatyHostSession(rtSys);
-            _regionalTreaty.StateChanged += () => _regionalTreaty.MarkDirty();
-            _regionalTreatyPanel = new RegionalTreatyPanel();
-            _regionalTreatyPanel.Bind(_regionalTreaty);
-            _regionalTreatyPanel.Visible = false;
-            AddChild(_regionalTreatyPanel);
-        }
 
-        private void SetupVinylMorale()
-        {
-            var vmState = VinylMoraleSaveStore.TryLoad() ?? new VinylMoraleState();
-            var vmSys = new VinylMoraleSystem(new GodotLog());
-            vmSys.RestoreState(vmState);
-            _vinylMorale = new VinylMoraleHostSession(vmSys);
-            _vinylMorale.StateChanged += () => _vinylMorale.MarkDirty();
-            _vinylMoralePanel = new VinylMoralePanel();
-            _vinylMoralePanel.Bind(_vinylMorale);
-            _vinylMoralePanel.Visible = false;
-            AddChild(_vinylMoralePanel);
-        }
 
-        private void SetupWildlifeTrapping()
-        {
-            var wtrapState = WildlifeTrappingSaveStore.TryLoad() ?? new WildlifeTrappingState();
-            var wtrapSys = new WildlifeTrappingSystem(new SeededRng(1986), new GodotLog());
-            wtrapSys.RestoreState(wtrapState);
-            _wildlifeTrapping = new WildlifeTrappingHostSession(wtrapSys);
-            _wildlifeTrapping.StateChanged += () => _wildlifeTrapping.MarkDirty();
-            _wildlifeTrappingPanel = new WildlifeTrappingPanel();
-            _wildlifeTrappingPanel.Bind(_wildlifeTrapping);
-            _wildlifeTrappingPanel.Visible = false;
-            AddChild(_wildlifeTrappingPanel);
-        }
 
-        private void SetupExcavation()
-        {
-            var exState = ExcavationSaveStore.TryLoad() ?? new ExcavationState();
-            var exSys = new ExcavationSystem(new SeededRng(1986), new GodotLog());
-            exSys.RestoreState(exState);
-            _excavation = new ExcavationHostSession(exSys);
-            _excavation.StateChanged += () => _excavation.MarkDirty();
-            _excavationPanel = new ExcavationPanel();
-            _excavationPanel.Bind(_excavation);
-            _excavationPanel.Visible = false;
-            AddChild(_excavationPanel);
-        }
 
-        private void SetupApprenticeship()
-        {
-            var appState = ApprenticeshipSaveStore.TryLoad() ?? new ApprenticeshipState();
-            var appSkills = new SkillProgressionSystem();
-            var appSys = new ApprenticeshipSystem(new SeededRng(1986), appSkills, _expandedShelterRoster, _survivorRelationsCore, new GodotLog());
-            appSys.RestoreState(appState);
-            _apprenticeship = new ApprenticeshipHostSession(appSys);
-            _apprenticeship.StateChanged += () => _apprenticeship.MarkDirty();
-            _apprenticeshipPanel = new ApprenticeshipPanel();
-            _apprenticeshipPanel.Bind(_apprenticeship);
-            _apprenticeshipPanel.Visible = false;
-            AddChild(_apprenticeshipPanel);
-        }
 
 
 
@@ -212,35 +120,11 @@ namespace AtomicWar.GodotApp
 
 
 
-        private void SaveSurvivorRelations()
-        {
-            _survivorRelations?.Save();
-        }
 
-        private void SaveRegionalTreaty()
-        {
-            _regionalTreaty?.Save();
-        }
 
-        private void SaveVinylMorale()
-        {
-            _vinylMorale?.Save();
-        }
 
-        private void SaveWildlifeTrapping()
-        {
-            _wildlifeTrapping?.Save();
-        }
 
-        private void SaveExcavation()
-        {
-            _excavation?.Save();
-        }
 
-        private void SaveApprenticeship()
-        {
-            _apprenticeship?.Save();
-        }
 
 
 
