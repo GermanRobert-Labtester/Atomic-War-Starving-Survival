@@ -1,82 +1,133 @@
-[
-  {
-    "id": "glass_melt_quartz_sand_potash_batch_fining",
-    "furnace_pot_identifier": "POT_FURNACE_CRUCIBLE_01",
-    "batch_feedstock_formula": "RIVER_QUARTZ_KELP_SODA_ASH_LIMESTONE",
-    "melt_temperature_celsius": 1420.0,
-    "optical_clarity_grade": "COMMERCIAL_CONTAINER_AMBER",
-    "timestamp_relative": "YEAR_02_GLASSWARE_01",
-    "tags": ["glassblowing", "pot_furnace", "soda_lime", "fining", "crucible"],
-    "prose": "Forty-eight hours of intense coal firing at 1,420°C completely dissolved crushed white river quartz pebbles with seaweed soda ash. Sodium sulfate fining agents swept micro-bubbles to the surface, leaving three hundred pounds of workable glass gather."
-  },
-  {
-    "id": "glass_melt_iron_oxide_green_bottle_tint",
-    "furnace_pot_identifier": "POT_FURNACE_CRUCIBLE_03",
-    "batch_feedstock_formula": "RECYCLED_CULLET_WITH_FERROUS_SCALE",
-    "melt_temperature_celsius": 1380.0,
-    "optical_clarity_grade": "HEAVY_OLIVE_FOREST_GREEN",
-    "timestamp_relative": "YEAR_04_GLASSWARE_03",
-    "tags": ["glassblowing", "green_glass", "iron_oxide", "medicine_bottle", "cullet"],
-    "prose": "Rusty scrap iron turnings introduced 1.8% ferrous oxide (FeO) into the melt, imparting a deep forest green color. The batch was blown into four hundred 500ml medicine bottles, providing vital UV shielding for light-sensitive antibiotics."
-  },
-  {
-    "id": "glass_melt_cobalt_blue_smalt_pigment",
-    "furnace_pot_identifier": "APOTHECARY_SPECIALTY_POT_02",
-    "batch_feedstock_formula": "PURIFIED_SILICA_WITH_COBALT_SMALT",
-    "melt_temperature_celsius": 1400.0,
-    "optical_clarity_grade": "INTENSE_COBALT_BLUE_APOTHECARY",
-    "timestamp_relative": "YEAR_07_GLASSWARE_02",
-    "tags": ["glassblowing", "cobalt_blue", "smalt", "poison_bottle", "pigment"],
-    "prose": "Adding two hundred grams of pre-war cobalt smalt glass powder transformed the clear melt into an unmistakable brilliant royal blue. The glass was reserved exclusively for blowing ridged, octagonal poison bottles to prevent nighttime pharmacy medication errors."
-  },
-  {
-    "id": "glass_melt_arsenic_trioxide_decolorizing_agent",
-    "furnace_pot_identifier": "OPTICAL_FLINT_GLASS_CRUCIBLE",
-    "batch_feedstock_formula": "HIGH_PURITY_SAND_ARSENIC_DECOLOR",
-    "melt_temperature_celsius": 1450.0,
-    "optical_clarity_grade": "WATER_CLEAR_DECOLORIZED_FLINT",
-    "timestamp_relative": "YEAR_09_GLASSWARE_04",
-    "tags": ["glassblowing", "arsenic", "decolorizing", "laboratory_glass", "flint"],
-    "prose": "Trace arsenic trioxide added during fining oxidized green ferrous iron into pale yellow ferric silicates. The resulting glass approached optical water-clarity, allowing glassblowers to fabricate cylindrical graduated cylinders and burettes."
-  },
-  {
-    "id": "glass_melt_cullet_scrap_thermal_shock_crack",
-    "furnace_pot_identifier": "CONTINUOUS_MELT_BAY_04",
-    "batch_feedstock_formula": "DAMP_CRUSHED_BOTTLE_CULLET_SCRAP",
-    "melt_temperature_celsius": 1360.0,
-    "optical_clarity_grade": "CRUCIBLE_FAILURE_CONTAMINATED",
-    "timestamp_relative": "YEAR_12_GLASSWARE_01",
-    "tags": ["glassblowing", "crucible_crack", "thermal_shock", "cullet", "melt_loss"],
-    "prose": "Charging cold, damp scrap glass cullet directly into the red-hot fireclay pot induced severe thermal shock. The five-hundred-pound crucible split horizontally along its girth line, dumping two hundred pounds of molten glass onto the furnace floor."
-  },
-  {
-    "id": "glass_melt_cordierite_gather_pipe_corrosion",
-    "furnace_pot_identifier": "HOLLOWARE_GATHER_HEARTH_01",
-    "batch_feedstock_formula": "LEAD_CRYSTAL_HEAVY_TABLEWARE_BATCH",
-    "melt_temperature_celsius": 1390.0,
-    "optical_clarity_grade": "IRON_STREAKED_REJECT_GATHER",
-    "timestamp_relative": "YEAR_15_GLASSWARE_03",
-    "tags": ["glassblowing", "blowpipe", "gather", "iron_contamination", "carboys"],
-    "prose": "Corrosive lead oxide vapors oxidized the tip of the stainless steel blowpipe. Flakes of black iron scale sheared off during the gathering gather, embedding opaque black streaks across three five-gallon acid carboys."
-  },
-  {
-    "id": "glass_melt_borax_flux_refractory_corrosion",
-    "furnace_pot_identifier": "BOROSILICATE_EXPERIMENT_POT",
-    "batch_feedstock_formula": "HIGH_BORON_SODIUM_BORATE_SLAG",
-    "melt_temperature_celsius": 1480.0,
-    "optical_clarity_grade": "FUSED_REFRACTORY_CONTAMINATED",
-    "timestamp_relative": "YEAR_17_GLASSWARE_02",
-    "tags": ["glassblowing", "borax", "flux_corrosion", "refractory_attack", "borosilicate"],
-    "prose": "Excess crude borax added to lower melting temperatures volatilized into acidic boron trioxide gas. The vapors attacked the silica brick furnace crown, dripping melted stalactites of contaminated refractory slime into the open glass pot."
-  },
-  {
-    "id": "glass_melt_sulfur_amber_carbon_reducing_flame",
-    "furnace_pot_identifier": "BEER_BOTTLE_MASS_MELT_02",
-    "batch_feedstock_formula": "SODA_LIME_WITH_PINE_CHARCOAL_DUST",
-    "melt_temperature_celsius": 1410.0,
-    "optical_clarity_grade": "DEEP_COLLOIDAL_CARBON_AMBER",
-    "timestamp_relative": "YEAR_20_GLASSWARE_01",
-    "tags": ["glassblowing", "amber_glass", "sulfur_carbon", "reducing_flame", "bottles"],
-    "prose": "Milling 0.5% fine pine charcoal and pyrite into the soda-lime batch in a reducing coal flame generated iron polysulfide chromophores. The rich amber-brown glass filters 99% of blue wavelengths, protecting bunker-brewed ale from light-struck skunking."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "glass_melt_quartz_sand_potash_batch_fining",
+      "furnace_pot_identifier": "POT_FURNACE_CRUCIBLE_01",
+      "batch_feedstock_formula": "RIVER_QUARTZ_KELP_SODA_ASH_LIMESTONE",
+      "melt_temperature_celsius": 1420.0,
+      "optical_clarity_grade": "COMMERCIAL_CONTAINER_AMBER",
+      "timestamp_relative": "YEAR_02_GLASSWARE_01",
+      "tags": [
+        "glassblowing",
+        "pot_furnace",
+        "soda_lime",
+        "fining",
+        "crucible"
+      ],
+      "prose": "Forty-eight hours of intense coal firing at 1,420°C completely dissolved crushed white river quartz pebbles with seaweed soda ash. Sodium sulfate fining agents swept micro-bubbles to the surface, leaving three hundred pounds of workable glass gather."
+    },
+    {
+      "id": "glass_melt_iron_oxide_green_bottle_tint",
+      "furnace_pot_identifier": "POT_FURNACE_CRUCIBLE_03",
+      "batch_feedstock_formula": "RECYCLED_CULLET_WITH_FERROUS_SCALE",
+      "melt_temperature_celsius": 1380.0,
+      "optical_clarity_grade": "HEAVY_OLIVE_FOREST_GREEN",
+      "timestamp_relative": "YEAR_04_GLASSWARE_03",
+      "tags": [
+        "glassblowing",
+        "green_glass",
+        "iron_oxide",
+        "medicine_bottle",
+        "cullet"
+      ],
+      "prose": "Rusty scrap iron turnings introduced 1.8% ferrous oxide (FeO) into the melt, imparting a deep forest green color. The batch was blown into four hundred 500ml medicine bottles, providing vital UV shielding for light-sensitive antibiotics."
+    },
+    {
+      "id": "glass_melt_cobalt_blue_smalt_pigment",
+      "furnace_pot_identifier": "APOTHECARY_SPECIALTY_POT_02",
+      "batch_feedstock_formula": "PURIFIED_SILICA_WITH_COBALT_SMALT",
+      "melt_temperature_celsius": 1400.0,
+      "optical_clarity_grade": "INTENSE_COBALT_BLUE_APOTHECARY",
+      "timestamp_relative": "YEAR_07_GLASSWARE_02",
+      "tags": [
+        "glassblowing",
+        "cobalt_blue",
+        "smalt",
+        "poison_bottle",
+        "pigment"
+      ],
+      "prose": "Adding two hundred grams of pre-war cobalt smalt glass powder transformed the clear melt into an unmistakable brilliant royal blue. The glass was reserved exclusively for blowing ridged, octagonal poison bottles to prevent nighttime pharmacy medication errors."
+    },
+    {
+      "id": "glass_melt_arsenic_trioxide_decolorizing_agent",
+      "furnace_pot_identifier": "OPTICAL_FLINT_GLASS_CRUCIBLE",
+      "batch_feedstock_formula": "HIGH_PURITY_SAND_ARSENIC_DECOLOR",
+      "melt_temperature_celsius": 1450.0,
+      "optical_clarity_grade": "WATER_CLEAR_DECOLORIZED_FLINT",
+      "timestamp_relative": "YEAR_09_GLASSWARE_04",
+      "tags": [
+        "glassblowing",
+        "arsenic",
+        "decolorizing",
+        "laboratory_glass",
+        "flint"
+      ],
+      "prose": "Trace arsenic trioxide added during fining oxidized green ferrous iron into pale yellow ferric silicates. The resulting glass approached optical water-clarity, allowing glassblowers to fabricate cylindrical graduated cylinders and burettes."
+    },
+    {
+      "id": "glass_melt_cullet_scrap_thermal_shock_crack",
+      "furnace_pot_identifier": "CONTINUOUS_MELT_BAY_04",
+      "batch_feedstock_formula": "DAMP_CRUSHED_BOTTLE_CULLET_SCRAP",
+      "melt_temperature_celsius": 1360.0,
+      "optical_clarity_grade": "CRUCIBLE_FAILURE_CONTAMINATED",
+      "timestamp_relative": "YEAR_12_GLASSWARE_01",
+      "tags": [
+        "glassblowing",
+        "crucible_crack",
+        "thermal_shock",
+        "cullet",
+        "melt_loss"
+      ],
+      "prose": "Charging cold, damp scrap glass cullet directly into the red-hot fireclay pot induced severe thermal shock. The five-hundred-pound crucible split horizontally along its girth line, dumping two hundred pounds of molten glass onto the furnace floor."
+    },
+    {
+      "id": "glass_melt_cordierite_gather_pipe_corrosion",
+      "furnace_pot_identifier": "HOLLOWARE_GATHER_HEARTH_01",
+      "batch_feedstock_formula": "LEAD_CRYSTAL_HEAVY_TABLEWARE_BATCH",
+      "melt_temperature_celsius": 1390.0,
+      "optical_clarity_grade": "IRON_STREAKED_REJECT_GATHER",
+      "timestamp_relative": "YEAR_15_GLASSWARE_03",
+      "tags": [
+        "glassblowing",
+        "blowpipe",
+        "gather",
+        "iron_contamination",
+        "carboys"
+      ],
+      "prose": "Corrosive lead oxide vapors oxidized the tip of the stainless steel blowpipe. Flakes of black iron scale sheared off during the gathering gather, embedding opaque black streaks across three five-gallon acid carboys."
+    },
+    {
+      "id": "glass_melt_borax_flux_refractory_corrosion",
+      "furnace_pot_identifier": "BOROSILICATE_EXPERIMENT_POT",
+      "batch_feedstock_formula": "HIGH_BORON_SODIUM_BORATE_SLAG",
+      "melt_temperature_celsius": 1480.0,
+      "optical_clarity_grade": "FUSED_REFRACTORY_CONTAMINATED",
+      "timestamp_relative": "YEAR_17_GLASSWARE_02",
+      "tags": [
+        "glassblowing",
+        "borax",
+        "flux_corrosion",
+        "refractory_attack",
+        "borosilicate"
+      ],
+      "prose": "Excess crude borax added to lower melting temperatures volatilized into acidic boron trioxide gas. The vapors attacked the silica brick furnace crown, dripping melted stalactites of contaminated refractory slime into the open glass pot."
+    },
+    {
+      "id": "glass_melt_sulfur_amber_carbon_reducing_flame",
+      "furnace_pot_identifier": "BEER_BOTTLE_MASS_MELT_02",
+      "batch_feedstock_formula": "SODA_LIME_WITH_PINE_CHARCOAL_DUST",
+      "melt_temperature_celsius": 1410.0,
+      "optical_clarity_grade": "DEEP_COLLOIDAL_CARBON_AMBER",
+      "timestamp_relative": "YEAR_20_GLASSWARE_01",
+      "tags": [
+        "glassblowing",
+        "amber_glass",
+        "sulfur_carbon",
+        "reducing_flame",
+        "bottles"
+      ],
+      "prose": "Milling 0.5% fine pine charcoal and pyrite into the soda-lime batch in a reducing coal flame generated iron polysulfide chromophores. The rich amber-brown glass filters 99% of blue wavelengths, protecting bunker-brewed ale from light-struck skunking."
+    }
+  ]
+}

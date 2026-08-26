@@ -1,72 +1,117 @@
-[
-  {
-    "id": "type_wear_antimony_eutectic_matrix_fatigue",
-    "font_case_identifier": "CASLON_OLD_STYLE_12PT_ROMAN",
-    "type_metal_composition": "LEAD_70_ANTIMONY_25_TIN_5",
-    "impression_count_cycles": 12500,
-    "wear_phenomenon": "LETTER_FACE_MUSHROOM_MUSHING",
-    "timestamp_relative": "YEAR_03_PRESS_LOG_01",
-    "tags": ["printing", "typography", "lead_type", "platen_press", "wear"],
-    "prose": "Twelve thousand impressions on the hand platen press mushroomed the serifs of frequently used lowercase vowels ('e', 'a', 'o'). The crushed letter faces produced blurred, filled-in text that required tedious hand-filing with jeweler's rifflers."
-  },
-  {
-    "id": "type_wear_kerning_descender_breakage",
-    "font_case_identifier": "BODONI_BOOK_10PT_ITALIC",
-    "type_metal_composition": "FOUNDRY_HARD_TYPE_METAL",
-    "impression_count_cycles": 4200,
-    "wear_phenomenon": "DESCENDER_CANTILEVER_SNAPPING",
-    "timestamp_relative": "YEAR_05_PRESS_LOG_03",
-    "tags": ["printing", "typography", "descender", "kerned_type", "breakage"],
-    "prose": "Delicate overhanging italic descenders on 'f' and 'j' sorts repeatedly snapped off when compositors tightened the composing stick clamping screw. Missing descenders forced printers to substitute Roman letters into italic narrative passages."
-  },
-  {
-    "id": "type_wear_bed_tympan_leather_packing_uneven",
-    "font_case_identifier": "FRANKLIN_GOTHIC_24PT_HEADLINE",
-    "type_metal_composition": "WOOD_TYPE_ROCK_MAPLE",
-    "impression_count_cycles": 8000,
-    "wear_phenomenon": "HARD_PUNCH_IMPRESSION_INDENTATION",
-    "timestamp_relative": "YEAR_08_PRESS_LOG_02",
-    "tags": ["printing", "tympan", "platen", "packing", "wood_type"],
-    "prose": "Uneven wool blanket packing on the press tympan exerted excessive pressure on the upper right corner of the form. The 24-point hardwood headline type punched completely through the damp rag paper, embossing deep scars into the backing leather."
-  },
-  {
-    "id": "type_wear_turpentine_roller_wash_gumming",
-    "font_case_identifier": "PRESS_INKING_ROLLER_SET_A",
-    "type_metal_composition": "GLUE_MOLASSES_COMPOSITION_ROLLER",
-    "impression_count_cycles": 15000,
-    "wear_phenomenon": "SOLVENT_SAPONIFICATION_SURFACE_MELT",
-    "timestamp_relative": "YEAR_11_PRESS_LOG_04",
-    "tags": ["printing", "inking_rollers", "composition_roller", "turpentine", "cleaning"],
-    "prose": "Washing the cast glue-and-molasses inking rollers with unrefined wood turpentine dissolved the outer gelatin skin. The rollers became a sticky, un-meltable black tar that picked up paper lint and spread splotchy streaks across printed manifestos."
-  },
-  {
-    "id": "type_wear_hand_mold_caster_tin_depletion",
-    "font_case_identifier": "HAND_CASTING_MOLD_PICA_SIZE",
-    "type_metal_composition": "RECYCLED_SCRAP_BULLET_LEAD",
-    "impression_count_cycles": 2000,
-    "wear_phenomenon": "OXIDATIVE_TIN_VOLATILIZATION",
-    "timestamp_relative": "YEAR_14_PRESS_LOG_01",
-    "tags": ["printing", "casting", "type_foundry", "dross", "tin_loss"],
-    "prose": "Repeated melting of type metal in an open iron pot oxidized the critical 5% tin component into yellow stannic dross. Without tin to lower surface tension, newly cast sorts failed to fill fine letter counters, leaving hollow bubbles inside type bodies."
-  },
-  {
-    "id": "type_wear_linotype_spaceband_graphite_wear",
-    "font_case_identifier": "LINOTYPE_MODEL_5_HOT_METAL",
-    "type_metal_composition": "EUTECTIC_LINECASTER_ALLOY",
-    "impression_count_cycles": 25000,
-    "wear_phenomenon": "SPACEBAND_GALLING_MOLTEN_SQUIRT",
-    "timestamp_relative": "YEAR_17_PRESS_LOG_03",
-    "tags": ["printing", "linotype", "spaceband", "hot_metal", "lead_squirt"],
-    "prose": "Wear on the hardened steel spaceband sliding wedges allowed a 0.2mm gap to open during line justification. The machine's plunger squirted three ounces of 280°C molten lead out of the mold pocket, showering the operator's leather apron."
-  },
-  {
-    "id": "type_wear_chase_quoin_wood_furniture_warping",
-    "font_case_identifier": "NEWSPAPER_BROADSIDE_CHASE_01",
-    "type_metal_composition": "CAST_IRON_CHASE_OAK_FURNITURE",
-    "impression_count_cycles": 6000,
-    "wear_phenomenon": "PIED_FORM_LOCKUP_EXPLOSION",
-    "timestamp_relative": "YEAR_20_PRESS_LOG_01",
-    "tags": ["printing", "chase", "quoins", "furniture", "pied_type"],
-    "prose": "High cellar humidity swelled the oak spacing furniture inside the iron chase, causing the wedged metal mechanical quoins to pop loose mid-run. Two thousand lines of hand-set metal type exploded into a tangled heap of 'pied' lead on the printshop floor."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "type_wear_antimony_eutectic_matrix_fatigue",
+      "font_case_identifier": "CASLON_OLD_STYLE_12PT_ROMAN",
+      "type_metal_composition": "LEAD_70_ANTIMONY_25_TIN_5",
+      "impression_count_cycles": 12500,
+      "wear_phenomenon": "LETTER_FACE_MUSHROOM_MUSHING",
+      "timestamp_relative": "YEAR_03_PRESS_LOG_01",
+      "tags": [
+        "printing",
+        "typography",
+        "lead_type",
+        "platen_press",
+        "wear"
+      ],
+      "prose": "Twelve thousand impressions on the hand platen press mushroomed the serifs of frequently used lowercase vowels ('e', 'a', 'o'). The crushed letter faces produced blurred, filled-in text that required tedious hand-filing with jeweler's rifflers."
+    },
+    {
+      "id": "type_wear_kerning_descender_breakage",
+      "font_case_identifier": "BODONI_BOOK_10PT_ITALIC",
+      "type_metal_composition": "FOUNDRY_HARD_TYPE_METAL",
+      "impression_count_cycles": 4200,
+      "wear_phenomenon": "DESCENDER_CANTILEVER_SNAPPING",
+      "timestamp_relative": "YEAR_05_PRESS_LOG_03",
+      "tags": [
+        "printing",
+        "typography",
+        "descender",
+        "kerned_type",
+        "breakage"
+      ],
+      "prose": "Delicate overhanging italic descenders on 'f' and 'j' sorts repeatedly snapped off when compositors tightened the composing stick clamping screw. Missing descenders forced printers to substitute Roman letters into italic narrative passages."
+    },
+    {
+      "id": "type_wear_bed_tympan_leather_packing_uneven",
+      "font_case_identifier": "FRANKLIN_GOTHIC_24PT_HEADLINE",
+      "type_metal_composition": "WOOD_TYPE_ROCK_MAPLE",
+      "impression_count_cycles": 8000,
+      "wear_phenomenon": "HARD_PUNCH_IMPRESSION_INDENTATION",
+      "timestamp_relative": "YEAR_08_PRESS_LOG_02",
+      "tags": [
+        "printing",
+        "tympan",
+        "platen",
+        "packing",
+        "wood_type"
+      ],
+      "prose": "Uneven wool blanket packing on the press tympan exerted excessive pressure on the upper right corner of the form. The 24-point hardwood headline type punched completely through the damp rag paper, embossing deep scars into the backing leather."
+    },
+    {
+      "id": "type_wear_turpentine_roller_wash_gumming",
+      "font_case_identifier": "PRESS_INKING_ROLLER_SET_A",
+      "type_metal_composition": "GLUE_MOLASSES_COMPOSITION_ROLLER",
+      "impression_count_cycles": 15000,
+      "wear_phenomenon": "SOLVENT_SAPONIFICATION_SURFACE_MELT",
+      "timestamp_relative": "YEAR_11_PRESS_LOG_04",
+      "tags": [
+        "printing",
+        "inking_rollers",
+        "composition_roller",
+        "turpentine",
+        "cleaning"
+      ],
+      "prose": "Washing the cast glue-and-molasses inking rollers with unrefined wood turpentine dissolved the outer gelatin skin. The rollers became a sticky, un-meltable black tar that picked up paper lint and spread splotchy streaks across printed manifestos."
+    },
+    {
+      "id": "type_wear_hand_mold_caster_tin_depletion",
+      "font_case_identifier": "HAND_CASTING_MOLD_PICA_SIZE",
+      "type_metal_composition": "RECYCLED_SCRAP_BULLET_LEAD",
+      "impression_count_cycles": 2000,
+      "wear_phenomenon": "OXIDATIVE_TIN_VOLATILIZATION",
+      "timestamp_relative": "YEAR_14_PRESS_LOG_01",
+      "tags": [
+        "printing",
+        "casting",
+        "type_foundry",
+        "dross",
+        "tin_loss"
+      ],
+      "prose": "Repeated melting of type metal in an open iron pot oxidized the critical 5% tin component into yellow stannic dross. Without tin to lower surface tension, newly cast sorts failed to fill fine letter counters, leaving hollow bubbles inside type bodies."
+    },
+    {
+      "id": "type_wear_linotype_spaceband_graphite_wear",
+      "font_case_identifier": "LINOTYPE_MODEL_5_HOT_METAL",
+      "type_metal_composition": "EUTECTIC_LINECASTER_ALLOY",
+      "impression_count_cycles": 25000,
+      "wear_phenomenon": "SPACEBAND_GALLING_MOLTEN_SQUIRT",
+      "timestamp_relative": "YEAR_17_PRESS_LOG_03",
+      "tags": [
+        "printing",
+        "linotype",
+        "spaceband",
+        "hot_metal",
+        "lead_squirt"
+      ],
+      "prose": "Wear on the hardened steel spaceband sliding wedges allowed a 0.2mm gap to open during line justification. The machine's plunger squirted three ounces of 280°C molten lead out of the mold pocket, showering the operator's leather apron."
+    },
+    {
+      "id": "type_wear_chase_quoin_wood_furniture_warping",
+      "font_case_identifier": "NEWSPAPER_BROADSIDE_CHASE_01",
+      "type_metal_composition": "CAST_IRON_CHASE_OAK_FURNITURE",
+      "impression_count_cycles": 6000,
+      "wear_phenomenon": "PIED_FORM_LOCKUP_EXPLOSION",
+      "timestamp_relative": "YEAR_20_PRESS_LOG_01",
+      "tags": [
+        "printing",
+        "chase",
+        "quoins",
+        "furniture",
+        "pied_type"
+      ],
+      "prose": "High cellar humidity swelled the oak spacing furniture inside the iron chase, causing the wedged metal mechanical quoins to pop loose mid-run. Two thousand lines of hand-set metal type exploded into a tangled heap of 'pied' lead on the printshop floor."
+    }
+  ]
+}

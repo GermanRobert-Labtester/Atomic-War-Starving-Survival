@@ -1,58 +1,61 @@
-[
-  {
-    "id": "brain_tanning_001",
-    "hide_source_animal": "dog",
-    "brain_emulsion_batch_id": "bem_01",
-    "smoke_cycle_count": 2,
-    "log_text": "Dog brain mixed with warm water and worked into a paste. The hide had been scraped clean the day before. Worked the emulsion in with both hands for two hours. The hide started out stiff as card and ended soft enough to fold. Two smoke cycles overnight."
-  },
-  {
-    "id": "brain_tanning_002",
-    "hide_source_animal": "dog",
-    "brain_emulsion_batch_id": "bem_02",
-    "smoke_cycle_count": 3,
-    "log_text": "Second dog hide, thicker than the first — needed a third smoke cycle. Hung it over the slow fire pit for an hour, pulled it to cool, staked it while warm. The oils set visible in the surface. It will not go hard if it gets wet."
-  },
-  {
-    "id": "brain_tanning_003",
-    "hide_source_animal": "rabbit",
-    "brain_emulsion_batch_id": "bem_03",
-    "smoke_cycle_count": 1,
-    "log_text": "Rabbit hide — very thin. Brain tanning almost too aggressive; had to work quickly and not over-emulsify. One short smoke cycle at low heat. Result is a soft, almost suede-like panel. Will use for inner boot lining."
-  },
-  {
-    "id": "brain_tanning_004",
-    "hide_source_animal": "rabbit",
-    "brain_emulsion_batch_id": "bem_03",
-    "smoke_cycle_count": 1,
-    "log_text": "Second rabbit from the same batch of emulsion. Applied thinner coat. Worked it on the staking beam for longer — the beam helps more than the hands once the emulsion is in. One smoke cycle. Consistent with the first."
-  },
-  {
-    "id": "brain_tanning_005",
-    "hide_source_animal": "rat_composite",
-    "brain_emulsion_batch_id": "bem_04",
-    "smoke_cycle_count": 2,
-    "log_text": "Six rat hides stitched together before tanning — too small individually. Composite panel worked well enough. Brain emulsion from a single rat brain, barely enough. Supplemented with bone marrow. Smells different but worked. Two smoke cycles."
-  },
-  {
-    "id": "brain_tanning_006",
-    "hide_source_animal": "dog",
-    "brain_emulsion_batch_id": "bem_05",
-    "smoke_cycle_count": 4,
-    "log_text": "Older, thicker hide — possibly from a large dog. Required four smoke cycles to set the oils through the full thickness. Did not want to do it but the hide is excellent quality: almost cowhide-equivalent weight. Worth the fuel."
-  },
-  {
-    "id": "brain_tanning_007",
-    "hide_source_animal": "cat",
-    "brain_emulsion_batch_id": "bem_06",
-    "smoke_cycle_count": 1,
-    "log_text": "Cat hide is small and delicate. Skin tears easily at the flanks if staked too aggressively. One light smoke cycle at a distance from the fire. Result is very soft. The children do not need to know what it came from."
-  },
-  {
-    "id": "brain_tanning_008",
-    "hide_source_animal": "dog",
-    "brain_emulsion_batch_id": "bem_07",
-    "smoke_cycle_count": 3,
-    "log_text": "Tried drying the emulsion-worked hide in filtered shelter air before smoking — first time doing that. The air-dry stiffened it slightly before the smoke. Three cycles to re-soften and set. End result is firmer than usual. Good for sole stock."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "brain_tanning_001",
+      "hide_source_animal": "dog",
+      "brain_emulsion_batch_id": "bem_01",
+      "smoke_cycle_count": 2,
+      "log_text": "Dog brain mixed with warm water and worked into a paste. The hide had been scraped clean the day before. Worked the emulsion in with both hands for two hours. The hide started out stiff as card and ended soft enough to fold. Two smoke cycles overnight."
+    },
+    {
+      "id": "brain_tanning_002",
+      "hide_source_animal": "dog",
+      "brain_emulsion_batch_id": "bem_02",
+      "smoke_cycle_count": 3,
+      "log_text": "Second dog hide, thicker than the first — needed a third smoke cycle. Hung it over the slow fire pit for an hour, pulled it to cool, staked it while warm. The oils set visible in the surface. It will not go hard if it gets wet."
+    },
+    {
+      "id": "brain_tanning_003",
+      "hide_source_animal": "rabbit",
+      "brain_emulsion_batch_id": "bem_03",
+      "smoke_cycle_count": 1,
+      "log_text": "Rabbit hide — very thin. Brain tanning almost too aggressive; had to work quickly and not over-emulsify. One short smoke cycle at low heat. Result is a soft, almost suede-like panel. Will use for inner boot lining."
+    },
+    {
+      "id": "brain_tanning_004",
+      "hide_source_animal": "rabbit",
+      "brain_emulsion_batch_id": "bem_03",
+      "smoke_cycle_count": 1,
+      "log_text": "Second rabbit from the same batch of emulsion. Applied thinner coat. Worked it on the staking beam for longer — the beam helps more than the hands once the emulsion is in. One smoke cycle. Consistent with the first."
+    },
+    {
+      "id": "brain_tanning_005",
+      "hide_source_animal": "rat_composite",
+      "brain_emulsion_batch_id": "bem_04",
+      "smoke_cycle_count": 2,
+      "log_text": "Six rat hides stitched together before tanning — too small individually. Composite panel worked well enough. Brain emulsion from a single rat brain, barely enough. Supplemented with bone marrow. Smells different but worked. Two smoke cycles."
+    },
+    {
+      "id": "brain_tanning_006",
+      "hide_source_animal": "dog",
+      "brain_emulsion_batch_id": "bem_05",
+      "smoke_cycle_count": 4,
+      "log_text": "Older, thicker hide — possibly from a large dog. Required four smoke cycles to set the oils through the full thickness. Did not want to do it but the hide is excellent quality: almost cowhide-equivalent weight. Worth the fuel."
+    },
+    {
+      "id": "brain_tanning_007",
+      "hide_source_animal": "cat",
+      "brain_emulsion_batch_id": "bem_06",
+      "smoke_cycle_count": 1,
+      "log_text": "Cat hide is small and delicate. Skin tears easily at the flanks if staked too aggressively. One light smoke cycle at a distance from the fire. Result is very soft. The children do not need to know what it came from."
+    },
+    {
+      "id": "brain_tanning_008",
+      "hide_source_animal": "dog",
+      "brain_emulsion_batch_id": "bem_07",
+      "smoke_cycle_count": 3,
+      "log_text": "Tried drying the emulsion-worked hide in filtered shelter air before smoking — first time doing that. The air-dry stiffened it slightly before the smoke. Three cycles to re-soften and set. End result is firmer than usual. Good for sole stock."
+    }
+  ]
+}

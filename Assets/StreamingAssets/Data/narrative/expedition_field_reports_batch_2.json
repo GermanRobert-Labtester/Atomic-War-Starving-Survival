@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "collection_id": "expedition_field_reports_batch_2",
+  "reports": [
+    {
+      "report_id": "b2_011",
+      "day": 385,
+      "leader": "the_botanist",
+      "team": [
+        "the_courier",
+        "the_naive_son",
+        "the_feral_orphan",
+        "the_bouncer"
+      ],
+      "route": "low-dose zones 3 and 4 — second spring planting",
+      "distance_km": 16,
+      "duration_hours": 10,
+      "weather": "clear, cold, -1C (the second winter, warming)",
+      "surface_dose_uSv_h": 9,
+      "objective": "Plant zones 3 and 4 for the second spring. Zone 3: east ridge, clover and radish. Zone 4: north flat, wheat variety 2 and oats.",
+      "summary": "The perimeter is the 4 low-dose zones. The perimeter expanded. Zone 1 (south slope, winter rye under snow, the bridge). Zone 2 (valley, oats/beans/lentils harvested, the second-year planting planned). Zone 3 (east ridge, planted Day 380-385 — clover and radish, the second spring). Zone 4 (north flat, planted Day 385 — wheat variety 2 and oats, the second spring).\n\nZone 3 (east ridge): 1.2 uSv/h, rocky soil, south-facing. Planted clover (nitrogen fixer) and radish (fast harvest). the_naive_son dug the rows. He did not speak. The digging is the present-tense practice. The present is the thing the Naive Son is in. The present is the thing the second spring is in. the_feral_orphan placed the seedlings. He did not speak. The placing is the having. The having is the thing the Feral Orphan is in. The having is the thing the second spring is in.\n\nZone 4 (north flat): 0.9 uSv/h, clay soil, flat. Planted wheat variety 2 (cold-tolerant) and oats (fast growth). the_bouncer watched the perimeter. He held the four carvings (wolf, bee, wheat, snowflake). He said, 'The watching is the same. The thing I watch is the 4 zones. The 4 zones are the thing I watch. The watching is the living. The living is the thing I watch.' the_courier carried the water. He said, 'The water is the thing that is the melt. The melt is the thing that is the snowflake. The snowflake is the thing that is the hollow. The hollow is the thing that is the bridge.'\n\nThe 4 zones are planted. The second spring is planted. The family farms the 4 zones. The 4 zones are the family. The family is the 47. The 47 are the thing the 4 zones are for.",
+      "findings": [
+        "Zone 3 (east ridge): rocky, south-facing, 1.2 uSv/h. Clover and radish planted. Nitrogen fixation will improve soil for future plantings.",
+        "Zone 4 (north flat): clay, flat, 0.9 uSv/h. Wheat variety 2 and oats planted. Clay holds moisture but drains poorly. the_botanist recommends raised beds for future plantings.",
+        "the_naive_son: dug rows in zone 3. Did not speak. The digging is the present-tense practice. The present is the thing the Naive Son is in.",
+        "the_feral_orphan: placed seedlings in zone 3. Did not speak. The placing is the having. The having is the thing the Feral Orphan is in.",
+        "the_bouncer: watched the perimeter. Held the four carvings. The watching is the same. The thing he watches is the 4 zones.",
+        "the_courier: carried water. Spoke of the snowflake, the hollow, the bridge. The water is the melt. The melt is the snowflake."
+      ],
+      "recommendations": [
+        "Zone 3: monitor clover growth. Clover is the nitrogen fixer. The nitrogen is the thing that improves the soil.",
+        "Zone 4: raised beds for future plantings. The clay is the thing that holds the water. The water is the thing that drowns the roots.",
+        "the_botanist to assess zone 3 and 4 germination in 7-14 days. The germination is the thing that is the second spring.",
+        "the_council to discuss the hollow. The hollow is the place where the snowflake falls. The snowflake is the thing that is the fourth carving.",
+        "the_family to walk the 4 zones. The walking is the thing the family does. The 4 zones are the thing the family is."
+      ],
+      "cross_refs": [
+        "patrol_debrief_036",
+        "council_minutes_032",
+        "maint_log_b3_025",
+        "diplomatic_contact_004"
+      ],
+      "tags": [
+        "zone_3_planted",
+        "zone_4_planted",
+        "second_spring",
+        "the_4_zones",
+        "the_hollow",
+        "the_snowflake",
+        "the_bridge",
+        "the_naive_son_digs",
+        "the_feral_orphan_places",
+        "the_bouncer_watches",
+        "the_courier_carries_water"
+      ]
+    }
+  ]
+}

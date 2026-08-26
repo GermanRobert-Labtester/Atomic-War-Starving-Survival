@@ -1,72 +1,117 @@
-[
-  {
-    "id": "joint_grease_hydrocarbon_vaseline_leaching",
-    "apparatus_station_id": "ETHER_EXTRACTION_LAB_BENCH_01",
-    "lubricant_compound_used": "PETROLEUM_JELLY_VASELINE",
-    "system_vacuum_torr": 25.0,
-    "failure_outcome": "DISTILLATE_HYDROCARBON_CONTAMINATION",
-    "timestamp_relative": "YEAR_03_GREASE_LOG_01",
-    "tags": ["glassware", "ground_glass", "vacuum_grease", "vaseline", "contamination"],
-    "prose": "Using petroleum jelly on the 29/42 boiling flask joint failed as solvent vapors dissolved the grease. The leached hydrocarbons carried over into the condenser, contaminating five liters of pharmaceutical ether with an oily residue."
-  },
-  {
-    "id": "joint_grease_silicone_high_vacuum_polymerization",
-    "apparatus_station_id": "HIGH_VACUUM_FRACTIONATION_LINE",
-    "lubricant_compound_used": "DOW_CORNING_SILICONE_HIGH_VAC",
-    "system_vacuum_torr": 0.05,
-    "failure_outcome": "HEAT_POLYMERIZATION_PERMANENT_SEIZE",
-    "timestamp_relative": "YEAR_05_GREASE_LOG_03",
-    "tags": ["glassware", "silicone_grease", "vacuum", "joint_seize", "polymerization"],
-    "prose": "Sixteen hours of vacuum distillation at 220°C polymerized the silicone high-vacuum grease into an insoluble, glass-hard silicon dioxide film. The standard taper joints fused into a monolithic unit that resisted all organic solvents."
-  },
-  {
-    "id": "joint_grease_fluorinated_krytox_sublimation",
-    "apparatus_station_id": "RADIOISOTOPE_DISTILLATION_RIG",
-    "lubricant_compound_used": "KRYTOX_FLUORINATED_PERFLUOROPOLYETHER",
-    "system_vacuum_torr": 0.001,
-    "failure_outcome": "VACUUM_SUBLIMATION_CREEP_LEAK",
-    "timestamp_relative": "YEAR_08_GREASE_LOG_02",
-    "tags": ["glassware", "krytox", "fluorinated_grease", "vacuum_leak", "sublimation"],
-    "prose": "Under high vacuum (10^-3 torr) and 240°C head temperature, low-molecular-weight fractions of the fluorinated grease sublimated. The dry joint developed microscopic leak channels that admitted atmospheric air into the sensitive radioisotope trap."
-  },
-  {
-    "id": "joint_grease_paraffin_wax_hot_slip_release",
-    "apparatus_station_id": "BOTANICAL_TINCTURE_REFLUX_STILL",
-    "lubricant_compound_used": "CANDLE_PARAFFIN_WAX_RUB",
-    "system_vacuum_torr": 760.0,
-    "failure_outcome": "THERMAL_MELT_FLASK_DROP_SHATTER",
-    "timestamp_relative": "YEAR_11_GREASE_LOG_04",
-    "tags": ["glassware", "paraffin_wax", "slip_release", "flask_drop", "reflux"],
-    "prose": "An operator rubbed candle wax onto the 24/40 joint of a two-liter boiling flask. As the ethanol began boiling at 78°C, the wax melted into liquid oil; the heavy flask slipped out of its three-finger clamp and shattered on the bench burner."
-  },
-  {
-    "id": "joint_grease_boric_acid_lubricant_crystallization",
-    "apparatus_station_id": "ACID_DIGESTION_KJELDAHL_RACK",
-    "lubricant_compound_used": "BORIC_ACID_GLYCERIN_LUBE",
-    "system_vacuum_torr": 760.0,
-    "failure_outcome": "MICRO_CRYSTAL_TAPER_SCRATCHING",
-    "timestamp_relative": "YEAR_14_GREASE_LOG_01",
-    "tags": ["glassware", "boric_acid", "crystallization", "scratching", "ground_joint"],
-    "prose": "Evaporation of water from a boric acid and glycerin lubricant formulation caused sharp orthoboric acid crystals to precipitate. Rotating the joint ground abrasive furrows into the frosted mating surfaces, destroying vacuum tightness."
-  },
-  {
-    "id": "joint_grease_ptfe_sleeving_wrinkle_vacuum_leak",
-    "apparatus_station_id": "ESSENTIAL_ANESTHETIC_PURIFIER",
-    "lubricant_compound_used": "TEFLON_PTFE_JOINT_SLEEVE_0_05MM",
-    "system_vacuum_torr": 2.0,
-    "failure_outcome": "SLEEVE_CREASE_ATMOSPHERIC_BLOWBY",
-    "timestamp_relative": "YEAR_17_GREASE_LOG_03",
-    "tags": ["glassware", "ptfe_sleeve", "vacuum_leak", "crease", "anesthetic"],
-    "prose": "Inserting a 0.05mm PTFE taper sleeve carelessly caused a longitudinal wrinkle across the sealing face. The crease opened a 2 torr vacuum bypass, venting volatile chloroform anesthetic vapors into the subterranean laboratory."
-  },
-  {
-    "id": "joint_grease_caustic_lye_joint_fusion_etch",
-    "apparatus_station_id": "SOAP_SAPONIFICATION_RECEIVER",
-    "lubricant_compound_used": "UNLUBRICATED_DRY_GROUND_JOINT",
-    "system_vacuum_torr": 760.0,
-    "failure_outcome": "SODIUM_SILICATE_CHEMICAL_WELD",
-    "timestamp_relative": "YEAR_20_GREASE_LOG_01",
-    "tags": ["glassware", "caustic_soda", "chemical_weld", "dry_joint", "alkali_etch"],
-    "prose": "Distilling concentrated 40% sodium hydroxide lye without Teflon sleeves allowed alkaline liquid to capillary-wick into the ungreased joint. The lye dissolved the borosilicate glass into sticky sodium silicate, chemically welding the flask to the condenser forever."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "joint_grease_hydrocarbon_vaseline_leaching",
+      "apparatus_station_id": "ETHER_EXTRACTION_LAB_BENCH_01",
+      "lubricant_compound_used": "PETROLEUM_JELLY_VASELINE",
+      "system_vacuum_torr": 25.0,
+      "failure_outcome": "DISTILLATE_HYDROCARBON_CONTAMINATION",
+      "timestamp_relative": "YEAR_03_GREASE_LOG_01",
+      "tags": [
+        "glassware",
+        "ground_glass",
+        "vacuum_grease",
+        "vaseline",
+        "contamination"
+      ],
+      "prose": "Using petroleum jelly on the 29/42 boiling flask joint failed as solvent vapors dissolved the grease. The leached hydrocarbons carried over into the condenser, contaminating five liters of pharmaceutical ether with an oily residue."
+    },
+    {
+      "id": "joint_grease_silicone_high_vacuum_polymerization",
+      "apparatus_station_id": "HIGH_VACUUM_FRACTIONATION_LINE",
+      "lubricant_compound_used": "DOW_CORNING_SILICONE_HIGH_VAC",
+      "system_vacuum_torr": 0.05,
+      "failure_outcome": "HEAT_POLYMERIZATION_PERMANENT_SEIZE",
+      "timestamp_relative": "YEAR_05_GREASE_LOG_03",
+      "tags": [
+        "glassware",
+        "silicone_grease",
+        "vacuum",
+        "joint_seize",
+        "polymerization"
+      ],
+      "prose": "Sixteen hours of vacuum distillation at 220°C polymerized the silicone high-vacuum grease into an insoluble, glass-hard silicon dioxide film. The standard taper joints fused into a monolithic unit that resisted all organic solvents."
+    },
+    {
+      "id": "joint_grease_fluorinated_krytox_sublimation",
+      "apparatus_station_id": "RADIOISOTOPE_DISTILLATION_RIG",
+      "lubricant_compound_used": "KRYTOX_FLUORINATED_PERFLUOROPOLYETHER",
+      "system_vacuum_torr": 0.001,
+      "failure_outcome": "VACUUM_SUBLIMATION_CREEP_LEAK",
+      "timestamp_relative": "YEAR_08_GREASE_LOG_02",
+      "tags": [
+        "glassware",
+        "krytox",
+        "fluorinated_grease",
+        "vacuum_leak",
+        "sublimation"
+      ],
+      "prose": "Under high vacuum (10^-3 torr) and 240°C head temperature, low-molecular-weight fractions of the fluorinated grease sublimated. The dry joint developed microscopic leak channels that admitted atmospheric air into the sensitive radioisotope trap."
+    },
+    {
+      "id": "joint_grease_paraffin_wax_hot_slip_release",
+      "apparatus_station_id": "BOTANICAL_TINCTURE_REFLUX_STILL",
+      "lubricant_compound_used": "CANDLE_PARAFFIN_WAX_RUB",
+      "system_vacuum_torr": 760.0,
+      "failure_outcome": "THERMAL_MELT_FLASK_DROP_SHATTER",
+      "timestamp_relative": "YEAR_11_GREASE_LOG_04",
+      "tags": [
+        "glassware",
+        "paraffin_wax",
+        "slip_release",
+        "flask_drop",
+        "reflux"
+      ],
+      "prose": "An operator rubbed candle wax onto the 24/40 joint of a two-liter boiling flask. As the ethanol began boiling at 78°C, the wax melted into liquid oil; the heavy flask slipped out of its three-finger clamp and shattered on the bench burner."
+    },
+    {
+      "id": "joint_grease_boric_acid_lubricant_crystallization",
+      "apparatus_station_id": "ACID_DIGESTION_KJELDAHL_RACK",
+      "lubricant_compound_used": "BORIC_ACID_GLYCERIN_LUBE",
+      "system_vacuum_torr": 760.0,
+      "failure_outcome": "MICRO_CRYSTAL_TAPER_SCRATCHING",
+      "timestamp_relative": "YEAR_14_GREASE_LOG_01",
+      "tags": [
+        "glassware",
+        "boric_acid",
+        "crystallization",
+        "scratching",
+        "ground_joint"
+      ],
+      "prose": "Evaporation of water from a boric acid and glycerin lubricant formulation caused sharp orthoboric acid crystals to precipitate. Rotating the joint ground abrasive furrows into the frosted mating surfaces, destroying vacuum tightness."
+    },
+    {
+      "id": "joint_grease_ptfe_sleeving_wrinkle_vacuum_leak",
+      "apparatus_station_id": "ESSENTIAL_ANESTHETIC_PURIFIER",
+      "lubricant_compound_used": "TEFLON_PTFE_JOINT_SLEEVE_0_05MM",
+      "system_vacuum_torr": 2.0,
+      "failure_outcome": "SLEEVE_CREASE_ATMOSPHERIC_BLOWBY",
+      "timestamp_relative": "YEAR_17_GREASE_LOG_03",
+      "tags": [
+        "glassware",
+        "ptfe_sleeve",
+        "vacuum_leak",
+        "crease",
+        "anesthetic"
+      ],
+      "prose": "Inserting a 0.05mm PTFE taper sleeve carelessly caused a longitudinal wrinkle across the sealing face. The crease opened a 2 torr vacuum bypass, venting volatile chloroform anesthetic vapors into the subterranean laboratory."
+    },
+    {
+      "id": "joint_grease_caustic_lye_joint_fusion_etch",
+      "apparatus_station_id": "SOAP_SAPONIFICATION_RECEIVER",
+      "lubricant_compound_used": "UNLUBRICATED_DRY_GROUND_JOINT",
+      "system_vacuum_torr": 760.0,
+      "failure_outcome": "SODIUM_SILICATE_CHEMICAL_WELD",
+      "timestamp_relative": "YEAR_20_GREASE_LOG_01",
+      "tags": [
+        "glassware",
+        "caustic_soda",
+        "chemical_weld",
+        "dry_joint",
+        "alkali_etch"
+      ],
+      "prose": "Distilling concentrated 40% sodium hydroxide lye without Teflon sleeves allowed alkaline liquid to capillary-wick into the ungreased joint. The lye dissolved the borosilicate glass into sticky sodium silicate, chemically welding the flask to the condenser forever."
+    }
+  ]
+}

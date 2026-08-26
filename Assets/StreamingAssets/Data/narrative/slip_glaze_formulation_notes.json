@@ -1,51 +1,54 @@
-[
-  {
-    "id": "slip_glaze_001",
-    "base_clay_type": "basement_fine",
-    "flux_material": "wood_ash",
-    "colorant_source": "iron_scale",
-    "log_text": "Fine basement clay thinned with water to slip consistency. Wood ash added as flux — unwashed, still alkaline. Iron scale from the corroded shelving stirred in for colour. Test tile painted and fired. The glaze melted partially: a semi-matte surface, brown-black with a slight sheen. Usable."
-  },
-  {
-    "id": "slip_glaze_002",
-    "base_clay_type": "basement_fine",
-    "flux_material": "wood_ash_washed",
-    "colorant_source": "ochre",
-    "log_text": "Washed wood ash reduces the alkalinity spike. Yellow ochre from the oxidised rubble — scrubbed and dried. Applied over a bisque bowl. Fired at eight-forty. The glaze ran slightly at the base: ochre-tan, semi-transparent. Where it pooled, a richer amber. Pleasant."
-  },
-  {
-    "id": "slip_glaze_003",
-    "base_clay_type": "wall_rubble_fine",
-    "flux_material": "wood_ash",
-    "colorant_source": "manganese_ore_powder",
-    "log_text": "Manganese ore found in the old electrical panel fittings — crushed and powdered through doubled cloth. Added to the ash-flux slip. Test tile fired dark brown to near-black. Surface is matte and dense. No runny areas. This could be a reliable glaze if we can source more manganese."
-  },
-  {
-    "id": "slip_glaze_004",
-    "base_clay_type": "basement_fine",
-    "flux_material": "bone_ash",
-    "colorant_source": "iron_scale",
-    "log_text": "Bone ash as an alternative flux — fired and powdered vertebrae. Creates a softer, milkier melt than wood ash. Combined with iron scale the surface came out a muted grey-green on this test tile. Less predictable than the wood ash batches; more interesting."
-  },
-  {
-    "id": "slip_glaze_005",
-    "base_clay_type": "mortar_scraping_fine",
-    "flux_material": "wood_ash",
-    "colorant_source": "none",
-    "log_text": "Mortar scraping slip without colorant — testing the base flux alone. The tile fired white-cream. Clean and opaque. Not exciting but it is the most archivally useful: a neutral glaze for vessels meant to hold food. No metallic contamination."
-  },
-  {
-    "id": "slip_glaze_006",
-    "base_clay_type": "basement_fine",
-    "flux_material": "wood_ash_washed",
-    "colorant_source": "copper_wire_dust",
-    "log_text": "Stripped copper from salvage wire and filed it to fine dust. Mixed into the washed ash slip at low percentage. Test tile fired green — unexpected richness. The copper oxide colouration is strong even at two percent addition. The colour variation across the tile suggests reduction at the surface."
-  },
-  {
-    "id": "slip_glaze_007",
-    "base_clay_type": "mixed_basement_rubble",
-    "flux_material": "wood_ash",
-    "colorant_source": "iron_scale",
-    "log_text": "Mixed base clay — less predictable. Some areas of the test tile showed the glaze blistering where the rubble clay's coarser particles sat under the slip. Iron-scale colour was there but uneven. Acceptable for storage vessels. Not for anything that needs to hold liquid cleanly."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "slip_glaze_001",
+      "base_clay_type": "basement_fine",
+      "flux_material": "wood_ash",
+      "colorant_source": "iron_scale",
+      "log_text": "Fine basement clay thinned with water to slip consistency. Wood ash added as flux — unwashed, still alkaline. Iron scale from the corroded shelving stirred in for colour. Test tile painted and fired. The glaze melted partially: a semi-matte surface, brown-black with a slight sheen. Usable."
+    },
+    {
+      "id": "slip_glaze_002",
+      "base_clay_type": "basement_fine",
+      "flux_material": "wood_ash_washed",
+      "colorant_source": "ochre",
+      "log_text": "Washed wood ash reduces the alkalinity spike. Yellow ochre from the oxidised rubble — scrubbed and dried. Applied over a bisque bowl. Fired at eight-forty. The glaze ran slightly at the base: ochre-tan, semi-transparent. Where it pooled, a richer amber. Pleasant."
+    },
+    {
+      "id": "slip_glaze_003",
+      "base_clay_type": "wall_rubble_fine",
+      "flux_material": "wood_ash",
+      "colorant_source": "manganese_ore_powder",
+      "log_text": "Manganese ore found in the old electrical panel fittings — crushed and powdered through doubled cloth. Added to the ash-flux slip. Test tile fired dark brown to near-black. Surface is matte and dense. No runny areas. This could be a reliable glaze if we can source more manganese."
+    },
+    {
+      "id": "slip_glaze_004",
+      "base_clay_type": "basement_fine",
+      "flux_material": "bone_ash",
+      "colorant_source": "iron_scale",
+      "log_text": "Bone ash as an alternative flux — fired and powdered vertebrae. Creates a softer, milkier melt than wood ash. Combined with iron scale the surface came out a muted grey-green on this test tile. Less predictable than the wood ash batches; more interesting."
+    },
+    {
+      "id": "slip_glaze_005",
+      "base_clay_type": "mortar_scraping_fine",
+      "flux_material": "wood_ash",
+      "colorant_source": "none",
+      "log_text": "Mortar scraping slip without colorant — testing the base flux alone. The tile fired white-cream. Clean and opaque. Not exciting but it is the most archivally useful: a neutral glaze for vessels meant to hold food. No metallic contamination."
+    },
+    {
+      "id": "slip_glaze_006",
+      "base_clay_type": "basement_fine",
+      "flux_material": "wood_ash_washed",
+      "colorant_source": "copper_wire_dust",
+      "log_text": "Stripped copper from salvage wire and filed it to fine dust. Mixed into the washed ash slip at low percentage. Test tile fired green — unexpected richness. The copper oxide colouration is strong even at two percent addition. The colour variation across the tile suggests reduction at the surface."
+    },
+    {
+      "id": "slip_glaze_007",
+      "base_clay_type": "mixed_basement_rubble",
+      "flux_material": "wood_ash",
+      "colorant_source": "iron_scale",
+      "log_text": "Mixed base clay — less predictable. Some areas of the test tile showed the glaze blistering where the rubble clay's coarser particles sat under the slip. Iron-scale colour was there but uneven. Acceptable for storage vessels. Not for anything that needs to hold liquid cleanly."
+    }
+  ]
+}

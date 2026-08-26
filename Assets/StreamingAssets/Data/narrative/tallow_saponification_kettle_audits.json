@@ -1,82 +1,133 @@
-[
-  {
-    "id": "tallow_saponification_boiling_kettle_emulsion",
-    "boiling_kettle_id": "COMMISSARY_SOAP_KETTLE_01",
-    "fat_charge_tallow_kg": 250.0,
-    "saponification_temperature_celsius": 95.0,
-    "grain_curd_yield_kg": 290.0,
-    "timestamp_relative": "YEAR_02_SOAP_01",
-    "tags": ["saponification", "tallow_soap", "boiling_kettle", "emulsion", "fat_charge"],
-    "prose": "Charging the steam-jacketed copper kettle with 250 kilograms of rendered beef suet and slowly adding 20° Bé potash lye created a creamy, homogeneous emulsion. Constant paddle agitation at 95°C converted triglycerides into potassium stearate and palmitate soaps."
-  },
-  {
-    "id": "tallow_saponification_salting_out_brine_grain",
-    "boiling_kettle_id": "PRIMARY_GRAINING_KETTLE_02",
-    "fat_charge_tallow_kg": 300.0,
-    "saponification_temperature_celsius": 98.0,
-    "grain_curd_yield_kg": 345.0,
-    "timestamp_relative": "YEAR_04_SOAP_03",
-    "tags": ["saponification", "salting_out", "brine_grain", "curd_separation", "sweet_water"],
-    "prose": "Shoveling forty kilograms of coarse rock salt into the boiling soap mass increased electrolyte ionic strength, causing the soap to 'grain'. The neat soap curd curdled and floated to the top as a spongy white mass, leaving spent lye and glycerin below."
-  },
-  {
-    "id": "tallow_saponification_rosin_soap_lather_boost",
-    "boiling_kettle_id": "MODIFIED_BLENDING_PAN_03",
-    "fat_charge_tallow_kg": 200.0,
-    "saponification_temperature_celsius": 92.0,
-    "grain_curd_yield_kg": 240.0,
-    "timestamp_relative": "YEAR_07_SOAP_02",
-    "tags": ["saponification", "rosin_soap", "lather_booster", "colophony", "cold_water_suds"],
-    "prose": "Melting thirty kilograms of pale pine rosin into the boiling tallow curd formed sodium resinate. The rosin blend increased water solubility, allowing the finished yellow laundry bar to foam freely even in freezing 8°C subterranean aquifer water."
-  },
-  {
-    "id": "tallow_saponification_free_alkali_tongue_bite_test",
-    "boiling_kettle_id": "TRADITIONAL_ASSAY_KETTLE_04",
-    "fat_charge_tallow_kg": 180.0,
-    "saponification_temperature_celsius": 90.0,
-    "grain_curd_yield_kg": 210.0,
-    "timestamp_relative": "YEAR_09_SOAP_04",
-    "tags": ["saponification", "tongue_bite", "alkali_check", "traditional_quality", "neutrality"],
-    "prose": "Master soapers pressed a cooled bead of kettle curd against the tip of their tongue. The complete absence of an electric, biting sting confirmed that all caustic lye had saponified into mild, skin-safe neutral soap."
-  },
-  {
-    "id": "tallow_saponification_phenolphthalein_pink_alkali_assay",
-    "boiling_kettle_id": "QUALITY_CONTROL_LAB_RIG_05",
-    "fat_charge_tallow_kg": 220.0,
-    "saponification_temperature_celsius": 94.0,
-    "grain_curd_yield_kg": 255.0,
-    "timestamp_relative": "YEAR_12_SOAP_01",
-    "tags": ["saponification", "phenolphthalein", "free_alkali", "colorimetric_assay", "skin_safety"],
-    "prose": "Applying 1% phenolphthalein indicator solution to fresh core plugs produced only a momentary faint pink hue that vanished within ten seconds. Free alkali was certified below 0.05%, meeting strict hospital sanitation standards."
-  },
-  {
-    "id": "tallow_saponification_bone_grease_bleaching_acid",
-    "boiling_kettle_id": "GREASE_RECLAMATION_RETORT_06",
-    "fat_charge_tallow_kg": 150.0,
-    "saponification_temperature_celsius": 88.0,
-    "grain_curd_yield_kg": 170.0,
-    "timestamp_relative": "YEAR_15_SOAP_03",
-    "tags": ["saponification", "bone_grease", "acid_bleaching", "odor_removal", "feedstock_recycling"],
-    "prose": "Reclaimed kitchen bone grease carried dark foul-smelling protein impurities. Boiling the grease with 1% dilute sulfuric acid and filtering through fine bone black charcoal deodorized the fat into a pale, clean-smelling soap feedstock."
-  },
-  {
-    "id": "tallow_saponification_pumice_mechanics_grit_blend",
-    "boiling_kettle_id": "HEAVY_DUTY_ABRASIVE_MIXER",
-    "fat_charge_tallow_kg": 280.0,
-    "saponification_temperature_celsius": 85.0,
-    "grain_curd_yield_kg": 350.0,
-    "timestamp_relative": "YEAR_17_SOAP_02",
-    "tags": ["saponification", "pumice_soap", "mechanics_grit", "abrasive_cleaner", "heavy_grease"],
-    "prose": "Blending 25% pulverized 100-mesh volcanic pumice into warm crutched tallow soap created heavy-duty mechanic's grit bars. The abrasive soap stripped oxidized graphite lubricant and diesel soot from machinists' hands without tearing skin."
-  },
-  {
-    "id": "tallow_saponification_steam_coil_thermal_cycling",
-    "boiling_kettle_id": "THERMAL_HEATING_MANIFOLD_08",
-    "fat_charge_tallow_kg": 350.0,
-    "saponification_temperature_celsius": 102.0,
-    "grain_curd_yield_kg": 410.0,
-    "timestamp_relative": "YEAR_20_SOAP_01",
-    "tags": ["saponification", "steam_coil", "caustic_embrittlement", "thermal_stress", "maintenance"],
-    "prose": "Ultrasonic non-destructive testing of internal submerged steel steam coils revealed 0.4mm wall thinning from caustic stress corrosion. Replacing the coil with heavy 316-grade stainless steel tubing prevented catastrophic live steam blowouts into boiling soap vats."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "tallow_saponification_boiling_kettle_emulsion",
+      "boiling_kettle_id": "COMMISSARY_SOAP_KETTLE_01",
+      "fat_charge_tallow_kg": 250.0,
+      "saponification_temperature_celsius": 95.0,
+      "grain_curd_yield_kg": 290.0,
+      "timestamp_relative": "YEAR_02_SOAP_01",
+      "tags": [
+        "saponification",
+        "tallow_soap",
+        "boiling_kettle",
+        "emulsion",
+        "fat_charge"
+      ],
+      "prose": "Charging the steam-jacketed copper kettle with 250 kilograms of rendered beef suet and slowly adding 20° Bé potash lye created a creamy, homogeneous emulsion. Constant paddle agitation at 95°C converted triglycerides into potassium stearate and palmitate soaps."
+    },
+    {
+      "id": "tallow_saponification_salting_out_brine_grain",
+      "boiling_kettle_id": "PRIMARY_GRAINING_KETTLE_02",
+      "fat_charge_tallow_kg": 300.0,
+      "saponification_temperature_celsius": 98.0,
+      "grain_curd_yield_kg": 345.0,
+      "timestamp_relative": "YEAR_04_SOAP_03",
+      "tags": [
+        "saponification",
+        "salting_out",
+        "brine_grain",
+        "curd_separation",
+        "sweet_water"
+      ],
+      "prose": "Shoveling forty kilograms of coarse rock salt into the boiling soap mass increased electrolyte ionic strength, causing the soap to 'grain'. The neat soap curd curdled and floated to the top as a spongy white mass, leaving spent lye and glycerin below."
+    },
+    {
+      "id": "tallow_saponification_rosin_soap_lather_boost",
+      "boiling_kettle_id": "MODIFIED_BLENDING_PAN_03",
+      "fat_charge_tallow_kg": 200.0,
+      "saponification_temperature_celsius": 92.0,
+      "grain_curd_yield_kg": 240.0,
+      "timestamp_relative": "YEAR_07_SOAP_02",
+      "tags": [
+        "saponification",
+        "rosin_soap",
+        "lather_booster",
+        "colophony",
+        "cold_water_suds"
+      ],
+      "prose": "Melting thirty kilograms of pale pine rosin into the boiling tallow curd formed sodium resinate. The rosin blend increased water solubility, allowing the finished yellow laundry bar to foam freely even in freezing 8°C subterranean aquifer water."
+    },
+    {
+      "id": "tallow_saponification_free_alkali_tongue_bite_test",
+      "boiling_kettle_id": "TRADITIONAL_ASSAY_KETTLE_04",
+      "fat_charge_tallow_kg": 180.0,
+      "saponification_temperature_celsius": 90.0,
+      "grain_curd_yield_kg": 210.0,
+      "timestamp_relative": "YEAR_09_SOAP_04",
+      "tags": [
+        "saponification",
+        "tongue_bite",
+        "alkali_check",
+        "traditional_quality",
+        "neutrality"
+      ],
+      "prose": "Master soapers pressed a cooled bead of kettle curd against the tip of their tongue. The complete absence of an electric, biting sting confirmed that all caustic lye had saponified into mild, skin-safe neutral soap."
+    },
+    {
+      "id": "tallow_saponification_phenolphthalein_pink_alkali_assay",
+      "boiling_kettle_id": "QUALITY_CONTROL_LAB_RIG_05",
+      "fat_charge_tallow_kg": 220.0,
+      "saponification_temperature_celsius": 94.0,
+      "grain_curd_yield_kg": 255.0,
+      "timestamp_relative": "YEAR_12_SOAP_01",
+      "tags": [
+        "saponification",
+        "phenolphthalein",
+        "free_alkali",
+        "colorimetric_assay",
+        "skin_safety"
+      ],
+      "prose": "Applying 1% phenolphthalein indicator solution to fresh core plugs produced only a momentary faint pink hue that vanished within ten seconds. Free alkali was certified below 0.05%, meeting strict hospital sanitation standards."
+    },
+    {
+      "id": "tallow_saponification_bone_grease_bleaching_acid",
+      "boiling_kettle_id": "GREASE_RECLAMATION_RETORT_06",
+      "fat_charge_tallow_kg": 150.0,
+      "saponification_temperature_celsius": 88.0,
+      "grain_curd_yield_kg": 170.0,
+      "timestamp_relative": "YEAR_15_SOAP_03",
+      "tags": [
+        "saponification",
+        "bone_grease",
+        "acid_bleaching",
+        "odor_removal",
+        "feedstock_recycling"
+      ],
+      "prose": "Reclaimed kitchen bone grease carried dark foul-smelling protein impurities. Boiling the grease with 1% dilute sulfuric acid and filtering through fine bone black charcoal deodorized the fat into a pale, clean-smelling soap feedstock."
+    },
+    {
+      "id": "tallow_saponification_pumice_mechanics_grit_blend",
+      "boiling_kettle_id": "HEAVY_DUTY_ABRASIVE_MIXER",
+      "fat_charge_tallow_kg": 280.0,
+      "saponification_temperature_celsius": 85.0,
+      "grain_curd_yield_kg": 350.0,
+      "timestamp_relative": "YEAR_17_SOAP_02",
+      "tags": [
+        "saponification",
+        "pumice_soap",
+        "mechanics_grit",
+        "abrasive_cleaner",
+        "heavy_grease"
+      ],
+      "prose": "Blending 25% pulverized 100-mesh volcanic pumice into warm crutched tallow soap created heavy-duty mechanic's grit bars. The abrasive soap stripped oxidized graphite lubricant and diesel soot from machinists' hands without tearing skin."
+    },
+    {
+      "id": "tallow_saponification_steam_coil_thermal_cycling",
+      "boiling_kettle_id": "THERMAL_HEATING_MANIFOLD_08",
+      "fat_charge_tallow_kg": 350.0,
+      "saponification_temperature_celsius": 102.0,
+      "grain_curd_yield_kg": 410.0,
+      "timestamp_relative": "YEAR_20_SOAP_01",
+      "tags": [
+        "saponification",
+        "steam_coil",
+        "caustic_embrittlement",
+        "thermal_stress",
+        "maintenance"
+      ],
+      "prose": "Ultrasonic non-destructive testing of internal submerged steel steam coils revealed 0.4mm wall thinning from caustic stress corrosion. Replacing the coil with heavy 316-grade stainless steel tubing prevented catastrophic live steam blowouts into boiling soap vats."
+    }
+  ]
+}

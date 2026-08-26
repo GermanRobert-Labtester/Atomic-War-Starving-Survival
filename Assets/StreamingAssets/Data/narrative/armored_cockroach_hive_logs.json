@@ -1,82 +1,133 @@
-[
-  {
-    "id": "roach_hive_chitinous_lead_plate_cuticle",
-    "nest_location": "TRANSFORMER_VAULT_SUB_FLOOR_02",
-    "specimen_morph": "PERIPLANETA_PLUMBATA_HEAVY",
-    "average_length_cm": 12.5,
-    "threat_rating": "STRUCTURAL_MATERIAL_DESTRUCTIVE",
-    "timestamp_relative": "YEAR_03_ENTOMOLOGY_01",
-    "tags": ["fauna", "cockroach", "exoskeleton", "lead_cuticle", "sub_floor"],
-    "prose": "Adult specimens measure up to twelve centimeters and possess a mineralized, slate-grey exoskeleton reinforced with bio-sequestered lead-210. A steel-toed work boot stomping upon the carapace produces a metallic clink without crushing the insect."
-  },
-  {
-    "id": "roach_hive_cable_insulation_chewing_swarm",
-    "nest_location": "MAIN_SWITCHBOARD_CABLE_TROUGH",
-    "specimen_morph": "PERIPLANETA_ELECTROPHILA",
-    "average_length_cm": 8.0,
-    "threat_rating": "HIGH_ELECTRICAL_FIRE_RISK",
-    "timestamp_relative": "YEAR_05_ENTOMOLOGY_03",
-    "tags": ["fauna", "cockroach", "cables", "short_circuit", "insulation"],
-    "prose": "Attracted by electromagnetic 60 Hz hum, a colony of eight thousand insects chewed through twenty meters of polyvinyl chloride wire insulation. The resulting phase-to-phase arc flash incinerated four hundred roaches and killed lighting across Level 2."
-  },
-  {
-    "id": "roach_hive_phosphor_trail_nesting_plenum",
-    "nest_location": "AIR_EXHAUST_PLENUM_SECTOR_3",
-    "specimen_morph": "PERIPLANETA_PHOSPHOREA",
-    "average_length_cm": 9.2,
-    "threat_rating": "LOW_AIRWAY_BIOFOULING",
-    "timestamp_relative": "YEAR_07_ENTOMOLOGY_02",
-    "tags": ["fauna", "cockroach", "bioluminescence", "plenum", "ducts"],
-    "prose": "Nymphs and adults deposit sticky fecal pheromone trails that emit a steady yellow-green luminescence. Looking into the unlit ventilation plenum reveals an intricate glowing road network of foraging paths branching across the sheet metal."
-  },
-  {
-    "id": "roach_hive_keratin_scavenging_bunk_infestation",
-    "nest_location": "DORMITORY_B_MATTRESS_SLATS",
-    "specimen_morph": "PERIPLANETA_KERATINOPHAGA",
-    "average_length_cm": 6.5,
-    "threat_rating": "MODERATE_PSYCHOLOGICAL_PARASITISM",
-    "timestamp_relative": "YEAR_09_ENTOMOLOGY_04",
-    "tags": ["fauna", "cockroach", "dormitory", "bunk", "keratin"],
-    "prose": "Small, flattened insects that emerge at 03:00 to feed on human hair, fingernails, and dry epidermal flakes from sleeping dwellers. Five dwellers in Bunk Row 4 woke with clipped eyelashes and chewed cuticles, prompting frantic blowtorch sterilization sweeps."
-  },
-  {
-    "id": "roach_hive_high_frequency_stridulation_mating",
-    "nest_location": "DECOMMISSIONED_ELEVATOR_PIT",
-    "specimen_morph": "PERIPLANETA_STRIDULANS",
-    "average_length_cm": 11.0,
-    "threat_rating": "ACOUSTIC_NEUROLOGICAL_IRRITANT",
-    "timestamp_relative": "YEAR_12_ENTOMOLOGY_01",
-    "tags": ["fauna", "cockroach", "ultrasonic", "stridulation", "noise"],
-    "prose": "During the autumn mating flight, thousands of males scrape their modified hind legs against their abdomen plates, creating a piercing 14,500 Hz acoustic screech that reverberates through structural elevator rails. Sentry guards reported nausea and temporary tinnitus."
-  },
-  {
-    "id": "roach_hive_fungal_symbiont_tallow_fermentation",
-    "nest_location": "ARCHIVE_PAPER_STORAGE_VAULT",
-    "specimen_morph": "PERIPLANETA_XYLOPHAGA",
-    "average_length_cm": 10.0,
-    "threat_rating": "ARCHIVE_RECORD_DESTRUCTION",
-    "timestamp_relative": "YEAR_14_ENTOMOLOGY_03",
-    "tags": ["fauna", "cockroach", "records", "archive_destruction", "fungi"],
-    "prose": "Gut microbiome of this colony contains specialized anaerobic fungi capable of digesting cellulose, casein glue, and drafting linen. The swarm consumed seventy pre-war bunker blueprints and ten years of hand-written ration ledger books in twenty days."
-  },
-  {
-    "id": "roach_hive_defensive_caustic_quinone_spray",
-    "nest_location": "WASTEWATER_SUMP_MANHOLE_05",
-    "specimen_morph": "PERIPLANETA_BOMBARDIER_VAR",
-    "average_length_cm": 14.0,
-    "threat_rating": "HIGH_CHEMICAL_BURN_HAZARD",
-    "timestamp_relative": "YEAR_17_ENTOMOLOGY_02",
-    "tags": ["fauna", "cockroach", "caustic_spray", "quinone", "chemical_burn"],
-    "prose": "When disturbed by maintenance probes, the insect rotates its abdominal tip and discharges an explosive jet of boiling 98°C benzoquinone and hydrogen peroxide. A plumber suffered second-degree facial burns and permanent corneal clouding from a direct discharge."
-  },
-  {
-    "id": "roach_hive_emergency_protein_mash_harvest",
-    "nest_location": "COMMUNAL_PROTEIN_TRAP_BATTERY",
-    "specimen_morph": "PERIPLANETA_COMMUNIS_HARVEST",
-    "average_length_cm": 10.5,
-    "threat_rating": "DOMESTICATED_PROTEIN_RESOURCE",
-    "timestamp_relative": "YEAR_20_ENTOMOLOGY_01",
-    "tags": ["fauna", "cockroach", "protein_paste", "food_crisis", "harvest"],
-    "prose": "Baited with spoiled cabbage mash and warm beer condensate, the automated iron funnel traps yield forty-five kilograms of live roaches weekly. The insects are autoclaved at 120°C, dried on steam coils, and milled into grey 'Tier-3 Survival Flour' providing 62% digestible crude protein."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "roach_hive_chitinous_lead_plate_cuticle",
+      "nest_location": "TRANSFORMER_VAULT_SUB_FLOOR_02",
+      "specimen_morph": "PERIPLANETA_PLUMBATA_HEAVY",
+      "average_length_cm": 12.5,
+      "threat_rating": "STRUCTURAL_MATERIAL_DESTRUCTIVE",
+      "timestamp_relative": "YEAR_03_ENTOMOLOGY_01",
+      "tags": [
+        "fauna",
+        "cockroach",
+        "exoskeleton",
+        "lead_cuticle",
+        "sub_floor"
+      ],
+      "prose": "Adult specimens measure up to twelve centimeters and possess a mineralized, slate-grey exoskeleton reinforced with bio-sequestered lead-210. A steel-toed work boot stomping upon the carapace produces a metallic clink without crushing the insect."
+    },
+    {
+      "id": "roach_hive_cable_insulation_chewing_swarm",
+      "nest_location": "MAIN_SWITCHBOARD_CABLE_TROUGH",
+      "specimen_morph": "PERIPLANETA_ELECTROPHILA",
+      "average_length_cm": 8.0,
+      "threat_rating": "HIGH_ELECTRICAL_FIRE_RISK",
+      "timestamp_relative": "YEAR_05_ENTOMOLOGY_03",
+      "tags": [
+        "fauna",
+        "cockroach",
+        "cables",
+        "short_circuit",
+        "insulation"
+      ],
+      "prose": "Attracted by electromagnetic 60 Hz hum, a colony of eight thousand insects chewed through twenty meters of polyvinyl chloride wire insulation. The resulting phase-to-phase arc flash incinerated four hundred roaches and killed lighting across Level 2."
+    },
+    {
+      "id": "roach_hive_phosphor_trail_nesting_plenum",
+      "nest_location": "AIR_EXHAUST_PLENUM_SECTOR_3",
+      "specimen_morph": "PERIPLANETA_PHOSPHOREA",
+      "average_length_cm": 9.2,
+      "threat_rating": "LOW_AIRWAY_BIOFOULING",
+      "timestamp_relative": "YEAR_07_ENTOMOLOGY_02",
+      "tags": [
+        "fauna",
+        "cockroach",
+        "bioluminescence",
+        "plenum",
+        "ducts"
+      ],
+      "prose": "Nymphs and adults deposit sticky fecal pheromone trails that emit a steady yellow-green luminescence. Looking into the unlit ventilation plenum reveals an intricate glowing road network of foraging paths branching across the sheet metal."
+    },
+    {
+      "id": "roach_hive_keratin_scavenging_bunk_infestation",
+      "nest_location": "DORMITORY_B_MATTRESS_SLATS",
+      "specimen_morph": "PERIPLANETA_KERATINOPHAGA",
+      "average_length_cm": 6.5,
+      "threat_rating": "MODERATE_PSYCHOLOGICAL_PARASITISM",
+      "timestamp_relative": "YEAR_09_ENTOMOLOGY_04",
+      "tags": [
+        "fauna",
+        "cockroach",
+        "dormitory",
+        "bunk",
+        "keratin"
+      ],
+      "prose": "Small, flattened insects that emerge at 03:00 to feed on human hair, fingernails, and dry epidermal flakes from sleeping dwellers. Five dwellers in Bunk Row 4 woke with clipped eyelashes and chewed cuticles, prompting frantic blowtorch sterilization sweeps."
+    },
+    {
+      "id": "roach_hive_high_frequency_stridulation_mating",
+      "nest_location": "DECOMMISSIONED_ELEVATOR_PIT",
+      "specimen_morph": "PERIPLANETA_STRIDULANS",
+      "average_length_cm": 11.0,
+      "threat_rating": "ACOUSTIC_NEUROLOGICAL_IRRITANT",
+      "timestamp_relative": "YEAR_12_ENTOMOLOGY_01",
+      "tags": [
+        "fauna",
+        "cockroach",
+        "ultrasonic",
+        "stridulation",
+        "noise"
+      ],
+      "prose": "During the autumn mating flight, thousands of males scrape their modified hind legs against their abdomen plates, creating a piercing 14,500 Hz acoustic screech that reverberates through structural elevator rails. Sentry guards reported nausea and temporary tinnitus."
+    },
+    {
+      "id": "roach_hive_fungal_symbiont_tallow_fermentation",
+      "nest_location": "ARCHIVE_PAPER_STORAGE_VAULT",
+      "specimen_morph": "PERIPLANETA_XYLOPHAGA",
+      "average_length_cm": 10.0,
+      "threat_rating": "ARCHIVE_RECORD_DESTRUCTION",
+      "timestamp_relative": "YEAR_14_ENTOMOLOGY_03",
+      "tags": [
+        "fauna",
+        "cockroach",
+        "records",
+        "archive_destruction",
+        "fungi"
+      ],
+      "prose": "Gut microbiome of this colony contains specialized anaerobic fungi capable of digesting cellulose, casein glue, and drafting linen. The swarm consumed seventy pre-war bunker blueprints and ten years of hand-written ration ledger books in twenty days."
+    },
+    {
+      "id": "roach_hive_defensive_caustic_quinone_spray",
+      "nest_location": "WASTEWATER_SUMP_MANHOLE_05",
+      "specimen_morph": "PERIPLANETA_BOMBARDIER_VAR",
+      "average_length_cm": 14.0,
+      "threat_rating": "HIGH_CHEMICAL_BURN_HAZARD",
+      "timestamp_relative": "YEAR_17_ENTOMOLOGY_02",
+      "tags": [
+        "fauna",
+        "cockroach",
+        "caustic_spray",
+        "quinone",
+        "chemical_burn"
+      ],
+      "prose": "When disturbed by maintenance probes, the insect rotates its abdominal tip and discharges an explosive jet of boiling 98°C benzoquinone and hydrogen peroxide. A plumber suffered second-degree facial burns and permanent corneal clouding from a direct discharge."
+    },
+    {
+      "id": "roach_hive_emergency_protein_mash_harvest",
+      "nest_location": "COMMUNAL_PROTEIN_TRAP_BATTERY",
+      "specimen_morph": "PERIPLANETA_COMMUNIS_HARVEST",
+      "average_length_cm": 10.5,
+      "threat_rating": "DOMESTICATED_PROTEIN_RESOURCE",
+      "timestamp_relative": "YEAR_20_ENTOMOLOGY_01",
+      "tags": [
+        "fauna",
+        "cockroach",
+        "protein_paste",
+        "food_crisis",
+        "harvest"
+      ],
+      "prose": "Baited with spoiled cabbage mash and warm beer condensate, the automated iron funnel traps yield forty-five kilograms of live roaches weekly. The insects are autoclaved at 120°C, dried on steam coils, and milled into grey 'Tier-3 Survival Flour' providing 62% digestible crude protein."
+    }
+  ]
+}

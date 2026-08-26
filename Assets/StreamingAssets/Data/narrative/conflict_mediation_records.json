@@ -1,516 +1,519 @@
-[
-  {
-    "mediation_id": "mediation_001",
-    "day": 40,
-    "mediator": "the_therapist",
-    "witness": "the_general",
-    "parties": [
-      "the_chef",
-      "the_hoarder"
-    ],
-    "dispute_type": "resource conflict",
-    "summary": "the_chef reported ingredients missing from the kitchen pantry. the_hoarder admitted to taking dried herbs and salt, saying he was saving them for when they would be needed more. the_chef says the kitchen operates on a ration plan and unauthorized removal disrupts meals for everyone.",
-    "root_cause": "the_hoarder's scarcity anxiety drives him to stockpile. He does not see the kitchen stores as communal; he sees them as available resources that might disappear. the_chef sees it as theft.",
-    "resolution": "the_hoarder returned the items. the_quartermaster will give him a weekly allotment of kitchen staples from his personal ration, so he has a sense of controlled access without disrupting the kitchen plan. the_chef accepted this. the_hoarder agreed to stop taking from the pantry.",
-    "outcome": "resolved",
-    "follow_up": "the_therapist to check in with the_hoarder at next session. the_quartermaster to monitor pantry access.",
-    "cross_refs": [
-      "bunker_court_verdicts_batch_2"
-    ],
-    "tags": [
-      "resource_conflict",
-      "hoarding",
-      "kitchen_access",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_002",
-    "day": 43,
-    "mediator": "the_general",
-    "witness": "the_therapist",
-    "parties": [
-      "the_cop",
-      "the_burglar"
-    ],
-    "dispute_type": "trust and surveillance",
-    "summary": "the_cop accused the_burglar of casing the medical supply cabinet. the_burglar denied it but admitted he was curious about the lock mechanism. the_cop says a former burglar checking medical locks is suspicious. the_burglar says profiling him for his pre-war history is unacceptable.",
-    "root_cause": "the_cop's law enforcement instincts are calibrated to a world that no longer exists. the_burglar's skills are genuinely useful but his past makes him a permanent suspect. Neither is wrong. Both are stuck.",
-    "resolution": "the_general ruled that the_burglar may not be in the medical corridor without an escort from medical staff. the_cop agreed to stop shadowing the_burglar unless there is specific evidence of wrongdoing. the_burglar agreed to log his movements in corridors adjacent to secure areas.",
-    "outcome": "resolved",
-    "follow_up": "the_general to review the escort rule after 30 days. If no incidents, relax it.",
-    "cross_refs": [
-      "security_incident_reports_batch_2"
-    ],
-    "tags": [
-      "trust",
-      "profiling",
-      "surveillance",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_003",
-    "day": 46,
-    "mediator": "the_therapist",
-    "witness": "the_priest",
-    "parties": [
-      "the_fierce_mother",
-      "the_teacher"
-    ],
-    "dispute_type": "parental authority vs education",
-    "summary": "the_fierce_mother pulled her son (the_naive_son) from the_teacher's reading group, saying the books are inappropriate. the_teacher says the books are pre-war literature, standard curriculum. the_fierce_mother found a passage about death and objected. the_teacher says sheltering a 16-year-old from death in a bunker is not viable.",
-    "root_cause": "the_fierce_mother is losing control of her son's intellectual development and interpreting it as personal failure. the_teacher is right that the content is age-appropriate but wrong to dismiss the mother's anxiety. The real issue is the_naive_son's silence at home, which the mother blames on the_teacher's influence.",
-    "resolution": "the_teacher will provide the_fierce_mother with a reading list two weeks in advance. The mother has the right to flag specific passages for discussion before her son encounters them. The son still attends. the_therapist will facilitate a joint session with the_naive_son to address the communication gap at home.",
-    "outcome": "resolved",
-    "follow_up": "the_therapist session with the_naive_son scheduled day 49. See therapy_session_007.",
-    "cross_refs": [
-      "therapy_session_007"
-    ],
-    "tags": [
-      "parental_authority",
-      "education",
-      "censorship",
-      "adolescent",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_004",
-    "day": 49,
-    "mediator": "the_general",
-    "witness": "the_quartermaster",
-    "parties": [
-      "the_electrician",
-      "the_mechanic"
-    ],
-    "dispute_type": "tool ownership",
-    "summary": "the_electrician says the multi-tool he found in the surface cache belongs to the electrical workshop. the_mechanic says it was assigned to the mechanical workshop by the_quartermaster on day 30. Both need it daily. Neither will share.",
-    "root_cause": "Tool scarcity. The bunker has limited hardware and no system for shared high-use items. Both parties have legitimate claims. The quartermaster's original assignment was to whoever asked first, not whoever needs it most.",
-    "resolution": "the_quartermaster will create a tool checkout log. High-use items are communal property checked out by shift, not assigned permanently. The multi-tool goes to the workshop that needs it for that day's task. Both parties accepted this reluctantly.",
-    "outcome": "resolved",
-    "follow_up": "the_quartermaster to audit all tool assignments within 14 days and convert permanent assignments to checkout items where demand exceeds one per workshop.",
-    "cross_refs": [
-      "engineering_mod_notes",
-      "personal_effects_inventory_batch_2"
-    ],
-    "tags": [
-      "tool_ownership",
-      "resource_scarcity",
-      "checkout_system",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_005",
-    "day": 52,
-    "mediator": "the_therapist",
-    "witness": "the_general",
-    "parties": [
-      "the_psychopath",
-      "the_chef"
-    ],
-    "dispute_type": "physical aggression",
-    "summary": "the_psychopath pushed the_chef against the hot stove in the kitchen. No burns but the_chef is shaken and refuses to work the same shift. the_general wants confinement. the_therapist argues this is a medical issue, not a disciplinary one.",
-    "root_cause": "the_psychopath perceived the_chef's cooking method as wasteful and acted on corrective impulse. Instrumental aggression, not emotional. the_chef's refusal to share a shift is a reasonable safety response.",
-    "resolution": "the_psychopath will be reassigned to solo tasks and will not enter the kitchen without supervision. the_therapist will conduct weekly mandated sessions. the_chef may request a shift change. No court action; this is containment, not punishment.",
-    "outcome": "resolved",
-    "follow_up": "the_therapist mandated sessions. See therapy_session_006. the_general to review containment terms monthly.",
-    "cross_refs": [
-      "therapy_session_006",
-      "security_incident_reports_batch_2"
-    ],
-    "tags": [
-      "physical_aggression",
-      "kitchen_safety",
-      "containment",
-      "mandated_therapy",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_006",
-    "day": 55,
-    "mediator": "the_general",
-    "witness": "the_quartermaster",
-    "parties": [
-      "the_hunter",
-      "the_tailor"
-    ],
-    "dispute_type": "barter disagreement",
-    "summary": "the_hunter traded venison to the_tailor in exchange for a repaired jacket. the_tailor says the jacket repair required materials worth more than the venison. the_hunter says the meat fed the_tailor for three days and is worth more than thread. Both feel cheated.",
-    "root_cause": "No standardised barter valuation exists in the bunker. Every trade is subjective and both parties leave feeling shortchanged when there is no reference price. This is the second barter dispute this month.",
-    "resolution": "the_quartermaster will establish a informal value reference list based on caloric content, labour hours, and material scarcity. It is not currency and will not be enforced, but it provides a baseline for negotiation. Both parties accepted the current trade as fair in retrospect.",
-    "outcome": "resolved",
-    "follow_up": "the_quartermaster to draft the value reference list by day 60. See bunker_trade_ledger_batch_2 for trade recording.",
-    "cross_refs": [
-      "bunker_trade_ledger_batch_2"
-    ],
-    "tags": [
-      "barter_dispute",
-      "valuation",
-      "trade_reference",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_007",
-    "day": 58,
-    "mediator": "the_therapist",
-    "witness": "the_priest",
-    "parties": [
-      "the_blind_preacher",
-      "the_priest"
-    ],
-    "dispute_type": "unauthorized pastoral activity",
-    "summary": "the_priest reports the_blind_preacher has been holding nighttime sermons in the dormitory. Attendance is growing. the_priest says this undermines the scheduled Sunday service. the_blind_preacher says the scheduled service does not reach people who are afraid of the dark and need someone who understands it.",
-    "root_cause": "Two pastoral models in conflict. the_priest offers structured, scheduled, light-filled worship. the_blind_preacher offers spontaneous, dark, experiential ministry. Both serve real needs. The dormitory sermons are not malicious but they are uncoordinated and some attendees are reporting increased anxiety.",
-    "resolution": "the_blind_preacher will hold his services at a scheduled time in the chapel annex, coordinated with the_priest's calendar. the_priest will attend one service to understand the format. Both will share the pastoral load. the_blind_preacher agreed reluctantly but accepted that structure protects his congregation.",
-    "outcome": "resolved",
-    "follow_up": "the_priest to report on the joint pastoral schedule after 14 days.",
-    "cross_refs": [
-      "therapy_session_010",
-      "cobalt_liturgies"
-    ],
-    "tags": [
-      "pastoral_conflict",
-      "unauthorized_sermons",
-      "shared_ministry",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_008",
-    "day": 61,
-    "mediator": "the_general",
-    "witness": "the_therapist",
-    "parties": [
-      "the_exhausted_father",
-      "the_quartermaster"
-    ],
-    "dispute_type": "duty refusal",
-    "summary": "the_exhausted_father has missed two surface rotation calls, citing panic attacks. the_quartermaster says the rotation system depends on reliable participation and one person's absence burdens everyone. the_exhausted_father says he cannot leave his daughter and the_quartermaster does not understand parental responsibility.",
-    "root_cause": "the_exhausted_father has agoraphobia rooted in parental protection instinct. He is not refusing out of laziness but out of a distorted sense of duty to his daughter. the_quartermaster is not wrong that the rotation suffers, but pushing a panicking man to the surface will not help.",
-    "resolution": "the_exhausted_father will perform internal maintenance shifts in lieu of surface rotation until the_therapist clears him for gradual surface exposure. the_quartermaster will redistribute his surface slots among willing volunteers. the_therapist will begin exposure therapy. See therapy_session_003.",
-    "outcome": "resolved",
-    "follow_up": "the_therapist weekly sessions with the_exhausted_father. Reassessment for surface duty at day 75.",
-    "cross_refs": [
-      "therapy_session_003"
-    ],
-    "tags": [
-      "duty_refusal",
-      "agoraphobia",
-      "parental_duty",
-      "shift_reassignment",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_009",
-    "day": 64,
-    "mediator": "the_therapist",
-    "witness": "the_general",
-    "parties": [
-      "the_empath",
-      "the_bouncer"
-    ],
-    "dispute_type": "emotional boundary violation",
-    "summary": "the_bouncer reports that the_empath cried during his nightmare episode and then described his dreams in detail the next morning. He says she should not know those details. the_empath says she cannot help what she absorbs. the_bouncer says she needs to stay out of his head.",
-    "root_cause": "the_empath has extreme affective empathy with boundary dissolution. She is involuntarily absorbing other survivors' emotional states. the_bouncer's PTSD makes him particularly sensitive to perceived intrusion. Both are victims of the same problem: the bunker has no emotional privacy.",
-    "resolution": "the_empath will be reassigned to the greenhouse where she can work with plants instead of people during high-stress periods. the_bouncer agreed that the_empath is not acting maliciously. the_therapist will work with the_empath on boundary exercises. See therapy_session_009.",
-    "outcome": "resolved",
-    "follow_up": "the_therapist sessions with the_empath. the_botanist to confirm greenhouse reassignment.",
-    "cross_refs": [
-      "therapy_session_009"
-    ],
-    "tags": [
-      "empathy_overload",
-      "boundary_violation",
-      "greenhouse_reassignment",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_010",
-    "day": 67,
-    "mediator": "the_general",
-    "witness": "the_quartermaster",
-    "parties": [
-      "the_saboteur",
-      "the_electrician"
-    ],
-    "dispute_type": "sabotage suspicion",
-    "summary": "the_electrician reports the generator sabotage incident on day 65 and notes the_saboteur was the last person in the generator room before the incident. the_saboteur denies involvement but admits he was in the room adjusting the fuel line without authorization. the_general says this is a security matter.",
-    "root_cause": "the_saboteur has a documented history of destructive behaviour. His presence in the generator room without authorization is a security violation regardless of whether he caused the sabotage. the_electrician's suspicion is reasonable but unproven.",
-    "resolution": "the_saboteur is confined to internal maintenance tasks and may not enter the generator room without the_electrician present. the_general will continue the sabotage investigation. If evidence emerges, the case goes to court. the_saboteur accepted the restriction without protest, which the_general noted.",
-    "outcome": "under_investigation",
-    "follow_up": "the_general to continue investigation. the_electrician to report any further anomalies. See security_incident_reports_batch_2.",
-    "cross_refs": [
-      "security_incident_reports_batch_2",
-      "engineering_mod_notes"
-    ],
-    "tags": [
-      "sabotage_suspicion",
-      "generator_room",
-      "access_restriction",
-      "under_investigation"
-    ]
-  },
-  {
-    "mediation_id": "mediation_011",
-    "day": 70,
-    "mediator": "the_therapist",
-    "witness": "the_priest",
-    "parties": [
-      "the_widow",
-      "the_ex_con"
-    ],
-    "dispute_type": "space conflict",
-    "summary": "the_widow has been sleeping in the laundry alcove. the_ex_con was also using the alcove as a quiet space during the day. They have not spoken about it. the_ex_con says the alcove is a common area. the_widow says she was there first and it is the only place she can sleep.",
-    "root_cause": "The bunker has no private spaces. Every alcove, corridor, and storage room is someone's refuge. the_widow's need for sleep and the_ex_con's need for quiet are both legitimate but the space cannot serve both simultaneously during overlapping hours.",
-    "resolution": "the_laundry alcove is designated as the_widow's sleeping space from 2000 to 0800. the_ex_con may use it as a quiet space from 0800 to 2000. the_quartermaster will post the schedule. Both parties accepted this as a practical solution.",
-    "outcome": "resolved",
-    "follow_up": "the_quartermaster to monitor compliance. If conflicts continue, find an alternative space for the_ex_con.",
-    "cross_refs": [],
-    "tags": [
-      "space_conflict",
-      "sleep_displacement",
-      "scheduling",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_012",
-    "day": 73,
-    "mediator": "the_general",
-    "witness": "the_therapist",
-    "parties": [
-      "the_architect",
-      "the_plumber"
-    ],
-    "dispute_type": "infrastructure priority",
-    "summary": "the_architect wants to reinforce corridor C walls before the next radiation storm season. the_plumber says the water pipe seal replacement is more urgent because a leak could contaminate the cistern. Both need the same two helpers and the same materials. Only one project can proceed this week.",
-    "root_cause": "Resource scarcity forces prioritisation. Both projects are important. The bunker cannot afford to defer either one without risk. The disagreement is not personal; it is a genuine triage problem.",
-    "resolution": "the_general ruled that the water pipe seal takes priority because contamination is an immediate health risk while corridor reinforcement is a seasonal preparedness measure. the_architect accepted this. the_plumber will complete the seal work by day 77, then the_architect begins reinforcement.",
-    "outcome": "resolved",
-    "follow_up": "the_plumber to report completion by day 77. the_architect to begin corridor C reinforcement day 78.",
-    "cross_refs": [
-      "bunker_maintenance_logs_batch_2",
-      "improvised_repair_guides_batch_2"
-    ],
-    "tags": [
-      "infrastructure_priority",
-      "resource_scarcity",
-      "triage",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_013",
-    "day": 76,
-    "mediator": "the_therapist",
-    "witness": "the_general",
-    "parties": [
-      "the_addict",
-      "the_pharmacist"
-    ],
-    "dispute_type": "medical protocol violation",
-    "summary": "the_pharmacist caught the_addict attempting to access the medical supply cabinet after hours. the_addict says he was looking for pain relief for a headache. the_pharmacist says the cabinet is locked for a reason and the_addict has a documented history of substance misuse. the_addict says being treated as a permanent suspect is itself a relapse trigger.",
-    "root_cause": "the_addict is in recovery but the bunker's medical security protocols treat all after-hours access attempts as potential theft. The pharmacist's caution is justified by the_addict's history. The addict's frustration is justified by the lack of trust in his recovery.",
-    "resolution": "the_addict will request pain medication through the_surgeon during scheduled medical hours. If he has a genuine headache, he will receive treatment. The after-hours access attempt is noted but not penalised since no items were taken. the_pharmacist agreed to log all access requests so the_addict can see the system is transparent.",
-    "outcome": "resolved",
-    "follow_up": "the_therapist to discuss the incident in the next mandated session. See therapy_session_004.",
-    "cross_refs": [
-      "therapy_session_004",
-      "surgeons_casebook_batch_2"
-    ],
-    "tags": [
-      "medical_protocol",
-      "addiction_recovery",
-      "trust",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_014",
-    "day": 79,
-    "mediator": "the_general",
-    "witness": "the_quartermaster",
-    "parties": [
-      "the_courier",
-      "the_hunter"
-    ],
-    "dispute_type": "expedition credit",
-    "summary": "the_courier and the_hunter returned from a joint surface expedition. Both claim to have spotted the route hazard that allowed them to avoid a collapsed overpass. Each says the other would have walked into it without their warning. They are arguing over who saved whom.",
-    "root_cause": "This is not really a dispute. Both survivors need to feel their contribution was essential. In a space where individual value is constantly questioned, claiming credit for survival is a way of asserting existence. The argument is performative.",
-    "resolution": "the_general logged both accounts in the expedition report. Both are credited with the hazard detection. The argument dissolved when both names were written down. the_quartermaster noted that expedition debriefs should always credit all participants.",
-    "outcome": "resolved",
-    "follow_up": "None. This resolved itself once both were acknowledged.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "courier_dispatches_master"
-    ],
-    "tags": [
-      "expedition_credit",
-      "recognition",
-      "performative_dispute",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_015",
-    "day": 82,
-    "mediator": "the_therapist",
-    "witness": "the_priest",
-    "parties": [
-      "the_martyr",
-      "the_surgeon"
-    ],
-    "dispute_type": "self-neglect",
-    "summary": "the_surgeon reports the_martyr has been taking on extra shifts and is now sleep-deprived and physically depleted. the_surgeon tried to order him to rest. the_martyr refused, saying there is always someone who needs help. the_surgeon says the_martyr is becoming a medical case himself.",
-    "root_cause": "the_martyr's identity is built on self-sacrifice. He cannot stop because stopping feels like moral failure. the_surgeon's medical authority is being rejected because the_martyr does not see his depletion as a medical issue. He sees it as the cost of being useful.",
-    "resolution": "the_general will cap the_martyr's shift allocation as a bunker safety order, not a medical recommendation. the_martyr will accept an order more easily than a suggestion. the_therapist will explore the identity issue in sessions. See therapy_session_017.",
-    "outcome": "resolved",
-    "follow_up": "the_general to enforce shift cap. the_therapist weekly sessions with the_martyr.",
-    "cross_refs": [
-      "therapy_session_017"
-    ],
-    "tags": [
-      "self_neglect",
-      "identity_through_service",
-      "medical_authority",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_016",
-    "day": 85,
-    "mediator": "the_general",
-    "witness": "the_therapist",
-    "parties": [
-      "the_liar",
-      "the_botanist"
-    ],
-    "dispute_type": "false information",
-    "summary": "the_botanist caught the_liar telling her that surface radiation has dropped to safe levels. It has not. the_liar said he was giving her hope. the_botanist says false hope is more dangerous than honest despair because it leads to unsafe decisions. She was planning a surface expedition based on his lie.",
-    "root_cause": "the_liar fabricates reassurance to manage other people's emotional states. He cannot tolerate their distress and fills the gap with invented good news. the_botanist's work depends on accurate radiation data. False data is not just hurtful; it is operationally dangerous.",
-    "resolution": "the_liar is formally warned that fabricating radiation or safety data is a security violation, not a personality quirk. Any future false information about bunker safety will go to court. the_botanist will receive radiation data directly from the_hazmat_tech. the_therapist will address the underlying behaviour. See therapy_session_018.",
-    "outcome": "resolved",
-    "follow_up": "the_therapist sessions with the_liar. the_hazmat_tech to provide direct radiation briefings to the_botanist.",
-    "cross_refs": [
-      "therapy_session_018",
-      "radiation_survey_readings_batch_2"
-    ],
-    "tags": [
-      "false_information",
-      "safety_violation",
-      "radiation_data",
-      "formal_warning",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_017",
-    "day": 88,
-    "mediator": "the_therapist",
-    "witness": "the_general",
-    "parties": [
-      "the_pollyanna",
-      "the_reporter"
-    ],
-    "dispute_type": "affective mismatch",
-    "summary": "the_reporter confronted the_pollyanna after the_pollyanna described a radiation storm as a beautiful atmospheric display. the_reporter said this is dangerously out of touch and people are scared. the_pollyanna says she was trying to help people see something worth noticing. the_reporter says beauty does not excuse danger.",
-    "root_cause": "the_pollyanna's toxic positivity is a trauma response. She cannot allow herself to feel the reality of their situation. the_reporter, whose job is to report reality accurately, experiences the_pollyanna's framing as a distortion of truth. Both are right in their own framework.",
-    "resolution": "the_therapist will work with the_pollyanna on allowing negative affect in safe spaces. the_reporter agreed that the_pollyanna is not acting maliciously. No restriction on the_pollyanna's speech, but the_therapist will monitor whether her framing is influencing other survivors' risk assessment.",
-    "outcome": "resolved",
-    "follow_up": "the_therapist sessions with the_pollyanna. See therapy_session_015.",
-    "cross_refs": [
-      "therapy_session_015"
-    ],
-    "tags": [
-      "toxic_positivity",
-      "affective_mismatch",
-      "risk_communication",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_018",
-    "day": 91,
-    "mediator": "the_general",
-    "witness": "the_quartermaster",
-    "parties": [
-      "the_prepper",
-      "the_quartermaster"
-    ],
-    "dispute_type": "unauthorised cache",
-    "summary": "the_quartermaster discovered that the_prepper has been maintaining a hidden cache of supplies behind his bunk. Items include 3 days of extra rations, a water bottle, a knife, and a hand-drawn map of the bunker ventilation system. the_prepper says every survivor should have a personal emergency kit.",
-    "root_cause": "the_prepper's identity is built on preparedness. He cannot trust any system to be sufficient. The hidden cache is not theft; he acquired everything through trade and personal ration sacrifice. But the ventilation map is a security concern because it shows structural knowledge that could be exploited.",
-    "resolution": "the_prepper may keep a personal emergency kit with the_quartermaster's knowledge and approval. The kit contents will be reviewed monthly. The ventilation map is confiscated as a security risk. the_prepper accepted the kit approval but objected to the map confiscation. the_general overruled him.",
-    "outcome": "resolved",
-    "follow_up": "the_quartermaster to conduct the first kit review at day 105. the_general to assess whether the ventilation map indicates a broader security concern.",
-    "cross_refs": [
-      "security_incident_reports_batch_2",
-      "bunker_blueprints_codex"
-    ],
-    "tags": [
-      "unauthorised_cache",
-      "preparedness",
-      "security_risk",
-      "map_confiscation",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_019",
-    "day": 94,
-    "mediator": "the_therapist",
-    "witness": "the_priest",
-    "parties": [
-      "the_pyromaniac",
-      "the_chef"
-    ],
-    "dispute_type": "kitchen safety",
-    "summary": "the_chef refused to let the_pyromaniac into the kitchen after finding him staring at the stove flame for 40 minutes. the_pyromaniac says he was not doing anything wrong. the_chef says a man who stares at fire for 40 minutes in a kitchen full of fuel is a danger to everyone.",
-    "root_cause": "the_pyromaniac has a fire fixation that manifests as dissociative trances. He is not deliberately dangerous but he is involuntarily drawn to flame. The kitchen is the worst possible environment for him. the_chef's refusal is a legitimate safety response.",
-    "resolution": "the_pyromaniac will not enter the kitchen without supervision. the_electrician will find him a task involving electrical systems where heat is a byproduct but not the focus. the_therapist will address the fixation in sessions. See therapy_session_011.",
-    "outcome": "resolved",
-    "follow_up": "the_electrician to identify a suitable task. the_therapist sessions with the_pyromaniac.",
-    "cross_refs": [
-      "therapy_session_011"
-    ],
-    "tags": [
-      "kitchen_safety",
-      "fire_fixation",
-      "supervised_access",
-      "resolved"
-    ]
-  },
-  {
-    "mediation_id": "mediation_020",
-    "day": 97,
-    "mediator": "the_general",
-    "witness": "the_therapist",
-    "parties": [
-      "the_child_soldier",
-      "the_teacher"
-    ],
-    "dispute_type": "militarised play",
-    "summary": "the_teacher reports the_child_soldier has been organizing the other children into squads that march in the corridors. She tried to stop it. He became aggressive. She says this is not appropriate behaviour for children. He says they are practicing safety drills.",
-    "root_cause": "the_child_soldier is recreating the military structure that kept him alive. He is 12. The other children follow because the structure gives them a sense of control in an uncontrollable environment. the_teacher is right that marching squads are not healthy play. the_child_soldier is right that he does not know any other way to organize people.",
-    "resolution": "the_child_soldier will lead a bunker safety patrol team with the_teacher's supervision. The patrol will focus on emergency procedures, not military drills. the_teacher will reframe the activity as preparedness rather than combat. the_child_soldier accepted this because it preserves his organizational role while removing the military framing.",
-    "outcome": "resolved",
-    "follow_up": "the_teacher to report on the safety patrol after 14 days. the_therapist to continue working with the_child_soldier. See therapy_session_014.",
-    "cross_refs": [
-      "therapy_session_014",
-      "education_session_records"
-    ],
-    "tags": [
-      "militarised_play",
-      "child_trauma",
-      "safety_patrol",
-      "reframing",
-      "resolved"
-    ]
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "mediation_id": "mediation_001",
+      "day": 40,
+      "mediator": "the_therapist",
+      "witness": "the_general",
+      "parties": [
+        "the_chef",
+        "the_hoarder"
+      ],
+      "dispute_type": "resource conflict",
+      "summary": "the_chef reported ingredients missing from the kitchen pantry. the_hoarder admitted to taking dried herbs and salt, saying he was saving them for when they would be needed more. the_chef says the kitchen operates on a ration plan and unauthorized removal disrupts meals for everyone.",
+      "root_cause": "the_hoarder's scarcity anxiety drives him to stockpile. He does not see the kitchen stores as communal; he sees them as available resources that might disappear. the_chef sees it as theft.",
+      "resolution": "the_hoarder returned the items. the_quartermaster will give him a weekly allotment of kitchen staples from his personal ration, so he has a sense of controlled access without disrupting the kitchen plan. the_chef accepted this. the_hoarder agreed to stop taking from the pantry.",
+      "outcome": "resolved",
+      "follow_up": "the_therapist to check in with the_hoarder at next session. the_quartermaster to monitor pantry access.",
+      "cross_refs": [
+        "bunker_court_verdicts_batch_2"
+      ],
+      "tags": [
+        "resource_conflict",
+        "hoarding",
+        "kitchen_access",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_002",
+      "day": 43,
+      "mediator": "the_general",
+      "witness": "the_therapist",
+      "parties": [
+        "the_cop",
+        "the_burglar"
+      ],
+      "dispute_type": "trust and surveillance",
+      "summary": "the_cop accused the_burglar of casing the medical supply cabinet. the_burglar denied it but admitted he was curious about the lock mechanism. the_cop says a former burglar checking medical locks is suspicious. the_burglar says profiling him for his pre-war history is unacceptable.",
+      "root_cause": "the_cop's law enforcement instincts are calibrated to a world that no longer exists. the_burglar's skills are genuinely useful but his past makes him a permanent suspect. Neither is wrong. Both are stuck.",
+      "resolution": "the_general ruled that the_burglar may not be in the medical corridor without an escort from medical staff. the_cop agreed to stop shadowing the_burglar unless there is specific evidence of wrongdoing. the_burglar agreed to log his movements in corridors adjacent to secure areas.",
+      "outcome": "resolved",
+      "follow_up": "the_general to review the escort rule after 30 days. If no incidents, relax it.",
+      "cross_refs": [
+        "security_incident_reports_batch_2"
+      ],
+      "tags": [
+        "trust",
+        "profiling",
+        "surveillance",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_003",
+      "day": 46,
+      "mediator": "the_therapist",
+      "witness": "the_priest",
+      "parties": [
+        "the_fierce_mother",
+        "the_teacher"
+      ],
+      "dispute_type": "parental authority vs education",
+      "summary": "the_fierce_mother pulled her son (the_naive_son) from the_teacher's reading group, saying the books are inappropriate. the_teacher says the books are pre-war literature, standard curriculum. the_fierce_mother found a passage about death and objected. the_teacher says sheltering a 16-year-old from death in a bunker is not viable.",
+      "root_cause": "the_fierce_mother is losing control of her son's intellectual development and interpreting it as personal failure. the_teacher is right that the content is age-appropriate but wrong to dismiss the mother's anxiety. The real issue is the_naive_son's silence at home, which the mother blames on the_teacher's influence.",
+      "resolution": "the_teacher will provide the_fierce_mother with a reading list two weeks in advance. The mother has the right to flag specific passages for discussion before her son encounters them. The son still attends. the_therapist will facilitate a joint session with the_naive_son to address the communication gap at home.",
+      "outcome": "resolved",
+      "follow_up": "the_therapist session with the_naive_son scheduled day 49. See therapy_session_007.",
+      "cross_refs": [
+        "therapy_session_007"
+      ],
+      "tags": [
+        "parental_authority",
+        "education",
+        "censorship",
+        "adolescent",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_004",
+      "day": 49,
+      "mediator": "the_general",
+      "witness": "the_quartermaster",
+      "parties": [
+        "the_electrician",
+        "the_mechanic"
+      ],
+      "dispute_type": "tool ownership",
+      "summary": "the_electrician says the multi-tool he found in the surface cache belongs to the electrical workshop. the_mechanic says it was assigned to the mechanical workshop by the_quartermaster on day 30. Both need it daily. Neither will share.",
+      "root_cause": "Tool scarcity. The bunker has limited hardware and no system for shared high-use items. Both parties have legitimate claims. The quartermaster's original assignment was to whoever asked first, not whoever needs it most.",
+      "resolution": "the_quartermaster will create a tool checkout log. High-use items are communal property checked out by shift, not assigned permanently. The multi-tool goes to the workshop that needs it for that day's task. Both parties accepted this reluctantly.",
+      "outcome": "resolved",
+      "follow_up": "the_quartermaster to audit all tool assignments within 14 days and convert permanent assignments to checkout items where demand exceeds one per workshop.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "personal_effects_inventory_batch_2"
+      ],
+      "tags": [
+        "tool_ownership",
+        "resource_scarcity",
+        "checkout_system",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_005",
+      "day": 52,
+      "mediator": "the_therapist",
+      "witness": "the_general",
+      "parties": [
+        "the_psychopath",
+        "the_chef"
+      ],
+      "dispute_type": "physical aggression",
+      "summary": "the_psychopath pushed the_chef against the hot stove in the kitchen. No burns but the_chef is shaken and refuses to work the same shift. the_general wants confinement. the_therapist argues this is a medical issue, not a disciplinary one.",
+      "root_cause": "the_psychopath perceived the_chef's cooking method as wasteful and acted on corrective impulse. Instrumental aggression, not emotional. the_chef's refusal to share a shift is a reasonable safety response.",
+      "resolution": "the_psychopath will be reassigned to solo tasks and will not enter the kitchen without supervision. the_therapist will conduct weekly mandated sessions. the_chef may request a shift change. No court action; this is containment, not punishment.",
+      "outcome": "resolved",
+      "follow_up": "the_therapist mandated sessions. See therapy_session_006. the_general to review containment terms monthly.",
+      "cross_refs": [
+        "therapy_session_006",
+        "security_incident_reports_batch_2"
+      ],
+      "tags": [
+        "physical_aggression",
+        "kitchen_safety",
+        "containment",
+        "mandated_therapy",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_006",
+      "day": 55,
+      "mediator": "the_general",
+      "witness": "the_quartermaster",
+      "parties": [
+        "the_hunter",
+        "the_tailor"
+      ],
+      "dispute_type": "barter disagreement",
+      "summary": "the_hunter traded venison to the_tailor in exchange for a repaired jacket. the_tailor says the jacket repair required materials worth more than the venison. the_hunter says the meat fed the_tailor for three days and is worth more than thread. Both feel cheated.",
+      "root_cause": "No standardised barter valuation exists in the bunker. Every trade is subjective and both parties leave feeling shortchanged when there is no reference price. This is the second barter dispute this month.",
+      "resolution": "the_quartermaster will establish a informal value reference list based on caloric content, labour hours, and material scarcity. It is not currency and will not be enforced, but it provides a baseline for negotiation. Both parties accepted the current trade as fair in retrospect.",
+      "outcome": "resolved",
+      "follow_up": "the_quartermaster to draft the value reference list by day 60. See bunker_trade_ledger_batch_2 for trade recording.",
+      "cross_refs": [
+        "bunker_trade_ledger_batch_2"
+      ],
+      "tags": [
+        "barter_dispute",
+        "valuation",
+        "trade_reference",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_007",
+      "day": 58,
+      "mediator": "the_therapist",
+      "witness": "the_priest",
+      "parties": [
+        "the_blind_preacher",
+        "the_priest"
+      ],
+      "dispute_type": "unauthorized pastoral activity",
+      "summary": "the_priest reports the_blind_preacher has been holding nighttime sermons in the dormitory. Attendance is growing. the_priest says this undermines the scheduled Sunday service. the_blind_preacher says the scheduled service does not reach people who are afraid of the dark and need someone who understands it.",
+      "root_cause": "Two pastoral models in conflict. the_priest offers structured, scheduled, light-filled worship. the_blind_preacher offers spontaneous, dark, experiential ministry. Both serve real needs. The dormitory sermons are not malicious but they are uncoordinated and some attendees are reporting increased anxiety.",
+      "resolution": "the_blind_preacher will hold his services at a scheduled time in the chapel annex, coordinated with the_priest's calendar. the_priest will attend one service to understand the format. Both will share the pastoral load. the_blind_preacher agreed reluctantly but accepted that structure protects his congregation.",
+      "outcome": "resolved",
+      "follow_up": "the_priest to report on the joint pastoral schedule after 14 days.",
+      "cross_refs": [
+        "therapy_session_010",
+        "cobalt_liturgies"
+      ],
+      "tags": [
+        "pastoral_conflict",
+        "unauthorized_sermons",
+        "shared_ministry",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_008",
+      "day": 61,
+      "mediator": "the_general",
+      "witness": "the_therapist",
+      "parties": [
+        "the_exhausted_father",
+        "the_quartermaster"
+      ],
+      "dispute_type": "duty refusal",
+      "summary": "the_exhausted_father has missed two surface rotation calls, citing panic attacks. the_quartermaster says the rotation system depends on reliable participation and one person's absence burdens everyone. the_exhausted_father says he cannot leave his daughter and the_quartermaster does not understand parental responsibility.",
+      "root_cause": "the_exhausted_father has agoraphobia rooted in parental protection instinct. He is not refusing out of laziness but out of a distorted sense of duty to his daughter. the_quartermaster is not wrong that the rotation suffers, but pushing a panicking man to the surface will not help.",
+      "resolution": "the_exhausted_father will perform internal maintenance shifts in lieu of surface rotation until the_therapist clears him for gradual surface exposure. the_quartermaster will redistribute his surface slots among willing volunteers. the_therapist will begin exposure therapy. See therapy_session_003.",
+      "outcome": "resolved",
+      "follow_up": "the_therapist weekly sessions with the_exhausted_father. Reassessment for surface duty at day 75.",
+      "cross_refs": [
+        "therapy_session_003"
+      ],
+      "tags": [
+        "duty_refusal",
+        "agoraphobia",
+        "parental_duty",
+        "shift_reassignment",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_009",
+      "day": 64,
+      "mediator": "the_therapist",
+      "witness": "the_general",
+      "parties": [
+        "the_empath",
+        "the_bouncer"
+      ],
+      "dispute_type": "emotional boundary violation",
+      "summary": "the_bouncer reports that the_empath cried during his nightmare episode and then described his dreams in detail the next morning. He says she should not know those details. the_empath says she cannot help what she absorbs. the_bouncer says she needs to stay out of his head.",
+      "root_cause": "the_empath has extreme affective empathy with boundary dissolution. She is involuntarily absorbing other survivors' emotional states. the_bouncer's PTSD makes him particularly sensitive to perceived intrusion. Both are victims of the same problem: the bunker has no emotional privacy.",
+      "resolution": "the_empath will be reassigned to the greenhouse where she can work with plants instead of people during high-stress periods. the_bouncer agreed that the_empath is not acting maliciously. the_therapist will work with the_empath on boundary exercises. See therapy_session_009.",
+      "outcome": "resolved",
+      "follow_up": "the_therapist sessions with the_empath. the_botanist to confirm greenhouse reassignment.",
+      "cross_refs": [
+        "therapy_session_009"
+      ],
+      "tags": [
+        "empathy_overload",
+        "boundary_violation",
+        "greenhouse_reassignment",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_010",
+      "day": 67,
+      "mediator": "the_general",
+      "witness": "the_quartermaster",
+      "parties": [
+        "the_saboteur",
+        "the_electrician"
+      ],
+      "dispute_type": "sabotage suspicion",
+      "summary": "the_electrician reports the generator sabotage incident on day 65 and notes the_saboteur was the last person in the generator room before the incident. the_saboteur denies involvement but admits he was in the room adjusting the fuel line without authorization. the_general says this is a security matter.",
+      "root_cause": "the_saboteur has a documented history of destructive behaviour. His presence in the generator room without authorization is a security violation regardless of whether he caused the sabotage. the_electrician's suspicion is reasonable but unproven.",
+      "resolution": "the_saboteur is confined to internal maintenance tasks and may not enter the generator room without the_electrician present. the_general will continue the sabotage investigation. If evidence emerges, the case goes to court. the_saboteur accepted the restriction without protest, which the_general noted.",
+      "outcome": "under_investigation",
+      "follow_up": "the_general to continue investigation. the_electrician to report any further anomalies. See security_incident_reports_batch_2.",
+      "cross_refs": [
+        "security_incident_reports_batch_2",
+        "engineering_mod_notes"
+      ],
+      "tags": [
+        "sabotage_suspicion",
+        "generator_room",
+        "access_restriction",
+        "under_investigation"
+      ]
+    },
+    {
+      "mediation_id": "mediation_011",
+      "day": 70,
+      "mediator": "the_therapist",
+      "witness": "the_priest",
+      "parties": [
+        "the_widow",
+        "the_ex_con"
+      ],
+      "dispute_type": "space conflict",
+      "summary": "the_widow has been sleeping in the laundry alcove. the_ex_con was also using the alcove as a quiet space during the day. They have not spoken about it. the_ex_con says the alcove is a common area. the_widow says she was there first and it is the only place she can sleep.",
+      "root_cause": "The bunker has no private spaces. Every alcove, corridor, and storage room is someone's refuge. the_widow's need for sleep and the_ex_con's need for quiet are both legitimate but the space cannot serve both simultaneously during overlapping hours.",
+      "resolution": "the_laundry alcove is designated as the_widow's sleeping space from 2000 to 0800. the_ex_con may use it as a quiet space from 0800 to 2000. the_quartermaster will post the schedule. Both parties accepted this as a practical solution.",
+      "outcome": "resolved",
+      "follow_up": "the_quartermaster to monitor compliance. If conflicts continue, find an alternative space for the_ex_con.",
+      "cross_refs": [],
+      "tags": [
+        "space_conflict",
+        "sleep_displacement",
+        "scheduling",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_012",
+      "day": 73,
+      "mediator": "the_general",
+      "witness": "the_therapist",
+      "parties": [
+        "the_architect",
+        "the_plumber"
+      ],
+      "dispute_type": "infrastructure priority",
+      "summary": "the_architect wants to reinforce corridor C walls before the next radiation storm season. the_plumber says the water pipe seal replacement is more urgent because a leak could contaminate the cistern. Both need the same two helpers and the same materials. Only one project can proceed this week.",
+      "root_cause": "Resource scarcity forces prioritisation. Both projects are important. The bunker cannot afford to defer either one without risk. The disagreement is not personal; it is a genuine triage problem.",
+      "resolution": "the_general ruled that the water pipe seal takes priority because contamination is an immediate health risk while corridor reinforcement is a seasonal preparedness measure. the_architect accepted this. the_plumber will complete the seal work by day 77, then the_architect begins reinforcement.",
+      "outcome": "resolved",
+      "follow_up": "the_plumber to report completion by day 77. the_architect to begin corridor C reinforcement day 78.",
+      "cross_refs": [
+        "bunker_maintenance_logs_batch_2",
+        "improvised_repair_guides_batch_2"
+      ],
+      "tags": [
+        "infrastructure_priority",
+        "resource_scarcity",
+        "triage",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_013",
+      "day": 76,
+      "mediator": "the_therapist",
+      "witness": "the_general",
+      "parties": [
+        "the_addict",
+        "the_pharmacist"
+      ],
+      "dispute_type": "medical protocol violation",
+      "summary": "the_pharmacist caught the_addict attempting to access the medical supply cabinet after hours. the_addict says he was looking for pain relief for a headache. the_pharmacist says the cabinet is locked for a reason and the_addict has a documented history of substance misuse. the_addict says being treated as a permanent suspect is itself a relapse trigger.",
+      "root_cause": "the_addict is in recovery but the bunker's medical security protocols treat all after-hours access attempts as potential theft. The pharmacist's caution is justified by the_addict's history. The addict's frustration is justified by the lack of trust in his recovery.",
+      "resolution": "the_addict will request pain medication through the_surgeon during scheduled medical hours. If he has a genuine headache, he will receive treatment. The after-hours access attempt is noted but not penalised since no items were taken. the_pharmacist agreed to log all access requests so the_addict can see the system is transparent.",
+      "outcome": "resolved",
+      "follow_up": "the_therapist to discuss the incident in the next mandated session. See therapy_session_004.",
+      "cross_refs": [
+        "therapy_session_004",
+        "surgeons_casebook_batch_2"
+      ],
+      "tags": [
+        "medical_protocol",
+        "addiction_recovery",
+        "trust",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_014",
+      "day": 79,
+      "mediator": "the_general",
+      "witness": "the_quartermaster",
+      "parties": [
+        "the_courier",
+        "the_hunter"
+      ],
+      "dispute_type": "expedition credit",
+      "summary": "the_courier and the_hunter returned from a joint surface expedition. Both claim to have spotted the route hazard that allowed them to avoid a collapsed overpass. Each says the other would have walked into it without their warning. They are arguing over who saved whom.",
+      "root_cause": "This is not really a dispute. Both survivors need to feel their contribution was essential. In a space where individual value is constantly questioned, claiming credit for survival is a way of asserting existence. The argument is performative.",
+      "resolution": "the_general logged both accounts in the expedition report. Both are credited with the hazard detection. The argument dissolved when both names were written down. the_quartermaster noted that expedition debriefs should always credit all participants.",
+      "outcome": "resolved",
+      "follow_up": "None. This resolved itself once both were acknowledged.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "courier_dispatches_master"
+      ],
+      "tags": [
+        "expedition_credit",
+        "recognition",
+        "performative_dispute",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_015",
+      "day": 82,
+      "mediator": "the_therapist",
+      "witness": "the_priest",
+      "parties": [
+        "the_martyr",
+        "the_surgeon"
+      ],
+      "dispute_type": "self-neglect",
+      "summary": "the_surgeon reports the_martyr has been taking on extra shifts and is now sleep-deprived and physically depleted. the_surgeon tried to order him to rest. the_martyr refused, saying there is always someone who needs help. the_surgeon says the_martyr is becoming a medical case himself.",
+      "root_cause": "the_martyr's identity is built on self-sacrifice. He cannot stop because stopping feels like moral failure. the_surgeon's medical authority is being rejected because the_martyr does not see his depletion as a medical issue. He sees it as the cost of being useful.",
+      "resolution": "the_general will cap the_martyr's shift allocation as a bunker safety order, not a medical recommendation. the_martyr will accept an order more easily than a suggestion. the_therapist will explore the identity issue in sessions. See therapy_session_017.",
+      "outcome": "resolved",
+      "follow_up": "the_general to enforce shift cap. the_therapist weekly sessions with the_martyr.",
+      "cross_refs": [
+        "therapy_session_017"
+      ],
+      "tags": [
+        "self_neglect",
+        "identity_through_service",
+        "medical_authority",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_016",
+      "day": 85,
+      "mediator": "the_general",
+      "witness": "the_therapist",
+      "parties": [
+        "the_liar",
+        "the_botanist"
+      ],
+      "dispute_type": "false information",
+      "summary": "the_botanist caught the_liar telling her that surface radiation has dropped to safe levels. It has not. the_liar said he was giving her hope. the_botanist says false hope is more dangerous than honest despair because it leads to unsafe decisions. She was planning a surface expedition based on his lie.",
+      "root_cause": "the_liar fabricates reassurance to manage other people's emotional states. He cannot tolerate their distress and fills the gap with invented good news. the_botanist's work depends on accurate radiation data. False data is not just hurtful; it is operationally dangerous.",
+      "resolution": "the_liar is formally warned that fabricating radiation or safety data is a security violation, not a personality quirk. Any future false information about bunker safety will go to court. the_botanist will receive radiation data directly from the_hazmat_tech. the_therapist will address the underlying behaviour. See therapy_session_018.",
+      "outcome": "resolved",
+      "follow_up": "the_therapist sessions with the_liar. the_hazmat_tech to provide direct radiation briefings to the_botanist.",
+      "cross_refs": [
+        "therapy_session_018",
+        "radiation_survey_readings_batch_2"
+      ],
+      "tags": [
+        "false_information",
+        "safety_violation",
+        "radiation_data",
+        "formal_warning",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_017",
+      "day": 88,
+      "mediator": "the_therapist",
+      "witness": "the_general",
+      "parties": [
+        "the_pollyanna",
+        "the_reporter"
+      ],
+      "dispute_type": "affective mismatch",
+      "summary": "the_reporter confronted the_pollyanna after the_pollyanna described a radiation storm as a beautiful atmospheric display. the_reporter said this is dangerously out of touch and people are scared. the_pollyanna says she was trying to help people see something worth noticing. the_reporter says beauty does not excuse danger.",
+      "root_cause": "the_pollyanna's toxic positivity is a trauma response. She cannot allow herself to feel the reality of their situation. the_reporter, whose job is to report reality accurately, experiences the_pollyanna's framing as a distortion of truth. Both are right in their own framework.",
+      "resolution": "the_therapist will work with the_pollyanna on allowing negative affect in safe spaces. the_reporter agreed that the_pollyanna is not acting maliciously. No restriction on the_pollyanna's speech, but the_therapist will monitor whether her framing is influencing other survivors' risk assessment.",
+      "outcome": "resolved",
+      "follow_up": "the_therapist sessions with the_pollyanna. See therapy_session_015.",
+      "cross_refs": [
+        "therapy_session_015"
+      ],
+      "tags": [
+        "toxic_positivity",
+        "affective_mismatch",
+        "risk_communication",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_018",
+      "day": 91,
+      "mediator": "the_general",
+      "witness": "the_quartermaster",
+      "parties": [
+        "the_prepper",
+        "the_quartermaster"
+      ],
+      "dispute_type": "unauthorised cache",
+      "summary": "the_quartermaster discovered that the_prepper has been maintaining a hidden cache of supplies behind his bunk. Items include 3 days of extra rations, a water bottle, a knife, and a hand-drawn map of the bunker ventilation system. the_prepper says every survivor should have a personal emergency kit.",
+      "root_cause": "the_prepper's identity is built on preparedness. He cannot trust any system to be sufficient. The hidden cache is not theft; he acquired everything through trade and personal ration sacrifice. But the ventilation map is a security concern because it shows structural knowledge that could be exploited.",
+      "resolution": "the_prepper may keep a personal emergency kit with the_quartermaster's knowledge and approval. The kit contents will be reviewed monthly. The ventilation map is confiscated as a security risk. the_prepper accepted the kit approval but objected to the map confiscation. the_general overruled him.",
+      "outcome": "resolved",
+      "follow_up": "the_quartermaster to conduct the first kit review at day 105. the_general to assess whether the ventilation map indicates a broader security concern.",
+      "cross_refs": [
+        "security_incident_reports_batch_2",
+        "bunker_blueprints_codex"
+      ],
+      "tags": [
+        "unauthorised_cache",
+        "preparedness",
+        "security_risk",
+        "map_confiscation",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_019",
+      "day": 94,
+      "mediator": "the_therapist",
+      "witness": "the_priest",
+      "parties": [
+        "the_pyromaniac",
+        "the_chef"
+      ],
+      "dispute_type": "kitchen safety",
+      "summary": "the_chef refused to let the_pyromaniac into the kitchen after finding him staring at the stove flame for 40 minutes. the_pyromaniac says he was not doing anything wrong. the_chef says a man who stares at fire for 40 minutes in a kitchen full of fuel is a danger to everyone.",
+      "root_cause": "the_pyromaniac has a fire fixation that manifests as dissociative trances. He is not deliberately dangerous but he is involuntarily drawn to flame. The kitchen is the worst possible environment for him. the_chef's refusal is a legitimate safety response.",
+      "resolution": "the_pyromaniac will not enter the kitchen without supervision. the_electrician will find him a task involving electrical systems where heat is a byproduct but not the focus. the_therapist will address the fixation in sessions. See therapy_session_011.",
+      "outcome": "resolved",
+      "follow_up": "the_electrician to identify a suitable task. the_therapist sessions with the_pyromaniac.",
+      "cross_refs": [
+        "therapy_session_011"
+      ],
+      "tags": [
+        "kitchen_safety",
+        "fire_fixation",
+        "supervised_access",
+        "resolved"
+      ]
+    },
+    {
+      "mediation_id": "mediation_020",
+      "day": 97,
+      "mediator": "the_general",
+      "witness": "the_therapist",
+      "parties": [
+        "the_child_soldier",
+        "the_teacher"
+      ],
+      "dispute_type": "militarised play",
+      "summary": "the_teacher reports the_child_soldier has been organizing the other children into squads that march in the corridors. She tried to stop it. He became aggressive. She says this is not appropriate behaviour for children. He says they are practicing safety drills.",
+      "root_cause": "the_child_soldier is recreating the military structure that kept him alive. He is 12. The other children follow because the structure gives them a sense of control in an uncontrollable environment. the_teacher is right that marching squads are not healthy play. the_child_soldier is right that he does not know any other way to organize people.",
+      "resolution": "the_child_soldier will lead a bunker safety patrol team with the_teacher's supervision. The patrol will focus on emergency procedures, not military drills. the_teacher will reframe the activity as preparedness rather than combat. the_child_soldier accepted this because it preserves his organizational role while removing the military framing.",
+      "outcome": "resolved",
+      "follow_up": "the_teacher to report on the safety patrol after 14 days. the_therapist to continue working with the_child_soldier. See therapy_session_014.",
+      "cross_refs": [
+        "therapy_session_014",
+        "education_session_records"
+      ],
+      "tags": [
+        "militarised_play",
+        "child_trauma",
+        "safety_patrol",
+        "reframing",
+        "resolved"
+      ]
+    }
+  ]
+}

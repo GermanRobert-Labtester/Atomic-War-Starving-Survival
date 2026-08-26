@@ -1,144 +1,147 @@
-[
-  {
-    "id": "item_seed_mushroom",
-    "displayName": "Spore Capsule",
-    "description": "A sealed glass vial of mushroom spores. The one crop that asks almost nothing of you — a little damp, a little dark, and it will grow where nothing else will.",
-    "type": "Material",
-    "stackMax": 20,
-    "weight": 0.1,
-    "tradeValue": 4
-  },
-  {
-    "id": "item_seed_tuber",
-    "displayName": "Tuber Cutting",
-    "description": "A knuckle of pale root, wrapped in damp cloth. Plant it deep and wait. It will not thank you for hurrying.",
-    "type": "Material",
-    "stackMax": 10,
-    "weight": 0.3,
-    "tradeValue": 6
-  },
-  {
-    "id": "item_seed_grain",
-    "displayName": "Mutated Grain Spike",
-    "description": "A hard, soot-dark seed head salvaged from a field that never stopped burning. It grows fast and greedy — and it drinks clean water like it remembers the rain.",
-    "type": "Material",
-    "stackMax": 30,
-    "weight": 0.05,
-    "tradeValue": 5
-  },
-  {
-    "id": "item_seed_wheat",
-    "displayName": "Pre-War Wheat Seed",
-    "description": "A folded paper of golden grain, labelled in a careful hand. From before. From when a field was just a field.",
-    "type": "Quest",
-    "stackMax": 5,
-    "weight": 0.05,
-    "tradeValue": 80
-  },
-  {
-    "id": "item_planter_box",
-    "displayName": "Planter Box",
-    "description": "A lead-lined tray of sifted earth, deep enough for roots. One plot, one chance. Stack them against the dark.",
-    "type": "Material",
-    "stackMax": 6,
-    "weight": 8.0,
-    "tradeValue": 25,
-    "durability": 100
-  },
-  {
-    "id": "item_grow_lamp",
-    "displayName": "Grow Lamp",
-    "description": "A salvaged horticultural lamp, jury-rigged to a car battery. It throws a thin, hungry light — enough to convince a seed that the sun still exists.",
-    "type": "Device",
-    "stackMax": 2,
-    "weight": 3.0,
-    "tradeValue": 40,
-    "durability": 100,
-    "empShielded": false
-  },
-  {
-    "id": "item_lead_glass_pane",
-    "displayName": "Lead-Glass Pane",
-    "description": "A heavy sheet of leaded glass. It turns the killing light into something a leaf can bear — and keeps the falling ash out of the soil. Cracks easily.",
-    "type": "Material",
-    "stackMax": 4,
-    "weight": 5.0,
-    "tradeValue": 30,
-    "durability": 100
-  },
-  {
-    "id": "item_blight_treatment",
-    "displayName": "Blight Treatment",
-    "description": "A bitter copper-sulfate wash in a dented tin. It will not save a crop that has already gone black — but it can stop one from getting there.",
-    "type": "Medical",
-    "stackMax": 6,
-    "weight": 0.2,
-    "tradeValue": 15
-  },
-  {
-    "id": "item_grow_medium",
-    "displayName": "Sterile Grow Medium",
-    "description": "A brick of sterilised substrate — clean earth, scrubbed of the worst of what is out there. Lays down a kinder bed for a seed than the floor of a bunker.",
-    "type": "Material",
-    "stackMax": 8,
-    "weight": 2.0,
-    "tradeValue": 8
-  },
-  {
-    "id": "crop_mushroom",
-    "displayName": "Greenhouse Mushroom",
-    "description": "Pale caps grown in the damp dark of the planter box. Not much, but they grew. That still means something.",
-    "type": "Food",
-    "stackMax": 20,
-    "weight": 0.1,
-    "tradeValue": 3,
-    "hungerRestore": 6,
-    "moraleEffect": 1
-  },
-  {
-    "id": "crop_tuber",
-    "displayName": "Greenhouse Tuber",
-    "description": "A small, dense root, boiled soft. Sticks to the ribs and to the memory of anyone who can remember what a meal used to be.",
-    "type": "Food",
-    "stackMax": 12,
-    "weight": 0.3,
-    "tradeValue": 5,
-    "hungerRestore": 12,
-    "thirstRestore": 1
-  },
-  {
-    "id": "crop_grain",
-    "displayName": "Clean Grain",
-    "description": "A handful of soot-dark grain, threshed and winnowed by hand. Rough bread. Real bread, all the same.",
-    "type": "Food",
-    "stackMax": 30,
-    "weight": 0.1,
-    "tradeValue": 6,
-    "hungerRestore": 18,
-    "moraleEffect": 2
-  },
-  {
-    "id": "crop_wheat",
-    "displayName": "Pre-War Wheat",
-    "description": "Golden grain, the colour of a field no one alive has seen. Ground to flour, it makes bread that tastes the way the old songs said it did. People weep over it, quietly, and do not say why.",
-    "type": "Food",
-    "stackMax": 20,
-    "weight": 0.2,
-    "tradeValue": 30,
-    "hungerRestore": 30,
-    "moraleEffect": 8,
-    "healthEffect": 2
-  },
-  {
-    "id": "tainted_food",
-    "displayName": "Tainted Rations",
-    "description": "Food grown in soil that remembers the ash, or spoiled in the damp. It fills the belly. It also remembers the ash.",
-    "type": "ContaminatedFood",
-    "stackMax": 20,
-    "weight": 0.2,
-    "tradeValue": 1,
-    "hungerRestore": 14,
-    "moraleEffect": -3,
-    "contamination": 0.6
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "item_seed_mushroom",
+      "displayName": "Spore Capsule",
+      "description": "A sealed glass vial of mushroom spores. The one crop that asks almost nothing of you — a little damp, a little dark, and it will grow where nothing else will.",
+      "type": "Material",
+      "stackMax": 20,
+      "weight": 0.1,
+      "tradeValue": 4
+    },
+    {
+      "id": "item_seed_tuber",
+      "displayName": "Tuber Cutting",
+      "description": "A knuckle of pale root, wrapped in damp cloth. Plant it deep and wait. It will not thank you for hurrying.",
+      "type": "Material",
+      "stackMax": 10,
+      "weight": 0.3,
+      "tradeValue": 6
+    },
+    {
+      "id": "item_seed_grain",
+      "displayName": "Mutated Grain Spike",
+      "description": "A hard, soot-dark seed head salvaged from a field that never stopped burning. It grows fast and greedy — and it drinks clean water like it remembers the rain.",
+      "type": "Material",
+      "stackMax": 30,
+      "weight": 0.05,
+      "tradeValue": 5
+    },
+    {
+      "id": "item_seed_wheat",
+      "displayName": "Pre-War Wheat Seed",
+      "description": "A folded paper of golden grain, labelled in a careful hand. From before. From when a field was just a field.",
+      "type": "Quest",
+      "stackMax": 5,
+      "weight": 0.05,
+      "tradeValue": 80
+    },
+    {
+      "id": "item_planter_box",
+      "displayName": "Planter Box",
+      "description": "A lead-lined tray of sifted earth, deep enough for roots. One plot, one chance. Stack them against the dark.",
+      "type": "Material",
+      "stackMax": 6,
+      "weight": 8.0,
+      "tradeValue": 25,
+      "durability": 100
+    },
+    {
+      "id": "item_grow_lamp",
+      "displayName": "Grow Lamp",
+      "description": "A salvaged horticultural lamp, jury-rigged to a car battery. It throws a thin, hungry light — enough to convince a seed that the sun still exists.",
+      "type": "Device",
+      "stackMax": 2,
+      "weight": 3.0,
+      "tradeValue": 40,
+      "durability": 100,
+      "empShielded": false
+    },
+    {
+      "id": "item_lead_glass_pane",
+      "displayName": "Lead-Glass Pane",
+      "description": "A heavy sheet of leaded glass. It turns the killing light into something a leaf can bear — and keeps the falling ash out of the soil. Cracks easily.",
+      "type": "Material",
+      "stackMax": 4,
+      "weight": 5.0,
+      "tradeValue": 30,
+      "durability": 100
+    },
+    {
+      "id": "item_blight_treatment",
+      "displayName": "Blight Treatment",
+      "description": "A bitter copper-sulfate wash in a dented tin. It will not save a crop that has already gone black — but it can stop one from getting there.",
+      "type": "Medical",
+      "stackMax": 6,
+      "weight": 0.2,
+      "tradeValue": 15
+    },
+    {
+      "id": "item_grow_medium",
+      "displayName": "Sterile Grow Medium",
+      "description": "A brick of sterilised substrate — clean earth, scrubbed of the worst of what is out there. Lays down a kinder bed for a seed than the floor of a bunker.",
+      "type": "Material",
+      "stackMax": 8,
+      "weight": 2.0,
+      "tradeValue": 8
+    },
+    {
+      "id": "crop_mushroom",
+      "displayName": "Greenhouse Mushroom",
+      "description": "Pale caps grown in the damp dark of the planter box. Not much, but they grew. That still means something.",
+      "type": "Food",
+      "stackMax": 20,
+      "weight": 0.1,
+      "tradeValue": 3,
+      "hungerRestore": 6,
+      "moraleEffect": 1
+    },
+    {
+      "id": "crop_tuber",
+      "displayName": "Greenhouse Tuber",
+      "description": "A small, dense root, boiled soft. Sticks to the ribs and to the memory of anyone who can remember what a meal used to be.",
+      "type": "Food",
+      "stackMax": 12,
+      "weight": 0.3,
+      "tradeValue": 5,
+      "hungerRestore": 12,
+      "thirstRestore": 1
+    },
+    {
+      "id": "crop_grain",
+      "displayName": "Clean Grain",
+      "description": "A handful of soot-dark grain, threshed and winnowed by hand. Rough bread. Real bread, all the same.",
+      "type": "Food",
+      "stackMax": 30,
+      "weight": 0.1,
+      "tradeValue": 6,
+      "hungerRestore": 18,
+      "moraleEffect": 2
+    },
+    {
+      "id": "crop_wheat",
+      "displayName": "Pre-War Wheat",
+      "description": "Golden grain, the colour of a field no one alive has seen. Ground to flour, it makes bread that tastes the way the old songs said it did. People weep over it, quietly, and do not say why.",
+      "type": "Food",
+      "stackMax": 20,
+      "weight": 0.2,
+      "tradeValue": 30,
+      "hungerRestore": 30,
+      "moraleEffect": 8,
+      "healthEffect": 2
+    },
+    {
+      "id": "tainted_food",
+      "displayName": "Tainted Rations",
+      "description": "Food grown in soil that remembers the ash, or spoiled in the damp. It fills the belly. It also remembers the ash.",
+      "type": "ContaminatedFood",
+      "stackMax": 20,
+      "weight": 0.2,
+      "tradeValue": 1,
+      "hungerRestore": 14,
+      "moraleEffect": -3,
+      "contamination": 0.6
+    }
+  ]
+}

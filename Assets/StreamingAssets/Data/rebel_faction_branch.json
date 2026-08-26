@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "faction_id": "faction_rebel",
+  "branches": [
+    {
+      "id": "branch_rebel_1_true_rebel",
+      "display_name": "The True Rebel",
+      "ponr_flag": "flag_branch_rebel_1_ponr",
+      "ponr_trigger": "You strike the blow against the old order that can never be walked back or forgiven.",
+      "entry_band_min": "slightly_evil",
+      "entry_band_max": "slightly_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_1a_liberator", "band_min": "positive", "band_max": "very_positive", "display_name": "The Liberator" },
+        { "ending_id": "ending_rebel_1b_zealot", "band_min": "very_evil", "band_max": "evil", "display_name": "The Zealot" },
+        { "ending_id": "ending_rebel_1c_survivor", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Survivor" }
+      ]
+    },
+    {
+      "id": "branch_rebel_2_defector",
+      "display_name": "The Defector",
+      "ponr_flag": "flag_branch_rebel_2_ponr",
+      "ponr_trigger": "You are formally sworn into the military's ranks; the rebels mark you a collaborator.",
+      "entry_band_min": "evil",
+      "entry_band_max": "positive",
+      "endings": [
+        { "ending_id": "ending_rebel_2a_reformer_of_military", "band_min": "slightly_positive", "band_max": "very_positive", "display_name": "The Reformer" },
+        { "ending_id": "ending_rebel_2b_collaborator", "band_min": "very_evil", "band_max": "evil", "display_name": "The Collaborator" },
+        { "ending_id": "ending_rebel_2c_survivor", "band_min": "slightly_evil", "band_max": "neutral", "display_name": "The Survivor" }
+      ]
+    },
+    {
+      "id": "branch_rebel_3_opportunist",
+      "display_name": "The Opportunist",
+      "ponr_flag": "flag_branch_rebel_3_ponr",
+      "ponr_trigger": "You betray someone who trusted you for personal gain, and there is no unwinding it.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_3a_warlord", "band_min": "very_evil", "band_max": "very_evil", "display_name": "The Warlord" },
+        { "ending_id": "ending_rebel_3b_benevolent_broker", "band_min": "positive", "band_max": "very_positive", "display_name": "The Benevolent Broker" },
+        { "ending_id": "ending_rebel_3c_survivor_king", "band_min": "evil", "band_max": "slightly_positive", "display_name": "The Survivor King" }
+      ]
+    },
+    {
+      "id": "branch_rebel_4_martyr",
+      "display_name": "The Martyr",
+      "ponr_flag": "flag_branch_rebel_4_ponr",
+      "ponr_trigger": "You make the sacrifice for the cause that cannot be taken back.",
+      "entry_band_min": "positive",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_4a_martyr_of_the_cause", "band_min": "very_positive", "band_max": "very_positive", "display_name": "The Martyr of the Cause" },
+        { "ending_id": "ending_rebel_4b_fallen_hero", "band_min": "positive", "band_max": "positive", "display_name": "The Fallen Hero" },
+        { "ending_id": "ending_rebel_4c_broken_martyr", "band_min": "very_evil", "band_max": "evil", "display_name": "The Broken Martyr" }
+      ]
+    },
+    {
+      "id": "branch_rebel_5_warlord",
+      "display_name": "The Warlord",
+      "ponr_flag": "flag_branch_rebel_5_ponr",
+      "ponr_trigger": "You seize command of the rebel cause; there is no council left to answer to.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "evil",
+      "endings": [
+        { "ending_id": "ending_rebel_5a_warlord_king", "band_min": "very_evil", "band_max": "very_evil", "display_name": "The Warlord King" },
+        { "ending_id": "ending_rebel_5b_benevolent_warlord", "band_min": "slightly_evil", "band_max": "evil", "display_name": "The Benevolent Warlord" },
+        { "ending_id": "ending_rebel_5c_survivor_king", "band_min": "neutral", "band_max": "neutral", "display_name": "The Survivor King" }
+      ]
+    },
+    {
+      "id": "branch_rebel_6_reformer",
+      "display_name": "The Reformer",
+      "ponr_flag": "flag_branch_rebel_6_ponr",
+      "ponr_trigger": "A policy change you forced through the rebel council cannot be reversed by anyone who comes after you.",
+      "entry_band_min": "neutral",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_6a_visionary", "band_min": "very_positive", "band_max": "very_positive", "display_name": "The Visionary" },
+        { "ending_id": "ending_rebel_6b_reformer", "band_min": "positive", "band_max": "positive", "display_name": "The Reformer" },
+        { "ending_id": "ending_rebel_6c_survivor", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "The Survivor" }
+      ]
+    },
+    {
+      "id": "branch_rebel_7_lone_wolf",
+      "display_name": "The Lone Wolf",
+      "ponr_flag": "flag_branch_rebel_7_ponr",
+      "ponr_trigger": "You walk away from the cause for the last time; the rebels strike your name from the rolls.",
+      "entry_band_min": "evil",
+      "entry_band_max": "positive",
+      "endings": [
+        { "ending_id": "ending_rebel_7a_lone_survivor", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "The Lone Survivor" },
+        { "ending_id": "ending_rebel_7b_traitor", "band_min": "very_evil", "band_max": "evil", "display_name": "The Traitor" },
+        { "ending_id": "ending_rebel_7c_idealist", "band_min": "positive", "band_max": "very_positive", "display_name": "The Idealist" }
+      ]
+    },
+    {
+      "id": "branch_rebel_8_revolution",
+      "display_name": "The Revolution",
+      "ponr_flag": "flag_branch_rebel_8_ponr",
+      "ponr_trigger": "The old order falls and does not reform; the rebellion wins and must now govern.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_rebel_8a_new_republic", "band_min": "slightly_positive", "band_max": "very_positive", "display_name": "The New Republic" },
+        { "ending_id": "ending_rebel_8b_survivor", "band_min": "slightly_evil", "band_max": "neutral", "display_name": "The Survivor" },
+        { "ending_id": "ending_rebel_8c_warlord", "band_min": "very_evil", "band_max": "evil", "display_name": "The Warlord" }
+      ]
+    }
+  ]
+}

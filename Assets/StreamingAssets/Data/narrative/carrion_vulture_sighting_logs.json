@@ -1,72 +1,117 @@
-[
-  {
-    "id": "vulture_sighting_lead_shadow_thermal_glider",
-    "observation_post": "SURFACE_CROWS_NEST_LOOKOUT_01",
-    "avian_morphology": "CORAGYPS_MEGATHERMICUS",
-    "estimated_wingspan_meters": 3.4,
-    "radiation_tracking_behavior": "THERMAL_CRATER_UPDRAFT_SOARING",
-    "timestamp_relative": "YEAR_04_VULTURE_LOG_01",
-    "tags": ["fauna", "vulture", "carrion_bird", "wingspan", "surface_observation"],
-    "prose": "Massive dark raptor with a wingspan exceeding three meters riding the continuous hot thermal updraft column rising from the central blast crater. The bird circled for seven hours without a single wing beat, scanning the ash plains for frozen animal carcasses."
-  },
-  {
-    "id": "vulture_sighting_calcified_bone_crusher_beak",
-    "observation_post": "PERIMETER_FENCE_RADAR_MAST",
-    "avian_morphology": "GYPS_OSTEOCLASTES_HEAVY",
-    "estimated_wingspan_meters": 2.8,
-    "radiation_tracking_behavior": "MARROW_EXTRACTION_CRUSH",
-    "timestamp_relative": "YEAR_06_VULTURE_LOG_03",
-    "tags": ["fauna", "vulture", "beak", "bone_crusher", "scavenger"],
-    "prose": "A pair of heavy vultures landed on the carcass of an irradiated elk twenty yards from the perimeter wire. Their massive, bulbous yellow beaks exerted over 800 PSI, snapping the frozen elk femur in half with a sharp crack to extract the fat-rich bone marrow."
-  },
-  {
-    "id": "vulture_sighting_sulfuric_regurgitation_defense",
-    "observation_post": "NORTH_PASS_SCOUT_POST_BRAVO",
-    "avian_morphology": "CATHARTES_ACIDICUS_DEFENSE",
-    "estimated_wingspan_meters": 2.6,
-    "radiation_tracking_behavior": "CAUSTIC_VOMIT_TERRITORIALITY",
-    "timestamp_relative": "YEAR_09_VULTURE_LOG_02",
-    "tags": ["fauna", "vulture", "stomach_acid", "defense", "hazards"],
-    "prose": "When two scout scavengers approached a scavenged canned-food crate, the cornered bird regurgitated a pint of foul, semi-digested meat slurry and concentrated stomach acid (pH 0.4). The caustic jet melted a scout's polycarbonate gas mask visor in three seconds."
-  },
-  {
-    "id": "vulture_sighting_carcass_dosimeter_orientation",
-    "observation_post": "WEATHER_STATION_ROOF_TURRET",
-    "avian_morphology": "NEOPHRON_RADIOPHILUS",
-    "estimated_wingspan_meters": 2.2,
-    "radiation_tracking_behavior": "CHERENKOV_OPTICAL_FORAGING",
-    "timestamp_relative": "YEAR_12_VULTURE_LOG_01",
-    "tags": ["fauna", "vulture", "radiation_sensing", "cherenkov", "foraging"],
-    "prose": "Retinal histology of a shot specimen showed specialized ultraviolet cones sensitive to atmospheric Cherenkov ionization. The birds systematically home in on glowing hot-particle deposition fields where migrating deer herds suffer fatal acute radiation sickness."
-  },
-  {
-    "id": "vulture_sighting_featherless_asbestos_leathery_skin",
-    "observation_post": "GATE_ALPHA_SURVEILLANCE_CAMERA",
-    "avian_morphology": "CORAGYPS_GLABRUS_DERMIS",
-    "estimated_wingspan_meters": 3.0,
-    "radiation_tracking_behavior": "HOT_ASH_DUST_BATHING",
-    "timestamp_relative": "YEAR_15_VULTURE_LOG_04",
-    "tags": ["fauna", "vulture", "featherless", "leathery_skin", "adaptation"],
-    "prose": "The bird's head, neck, and chest are entirely featherless, covered in thick, rugose grey skin resembling elephant hide that is completely impervious to beta burns and abrasive volcanic ash. The bird vigorously dust-bathed in a pile of dry fallout soot to smother skin mites."
-  },
-  {
-    "id": "vulture_sighting_telemetry_mast_roosting_cluster",
-    "observation_post": "MICROWAVE_RELAY_TOWER_04",
-    "avian_morphology": "GYPS_COMMUNALIS_PERCH",
-    "estimated_wingspan_meters": 2.9,
-    "radiation_tracking_behavior": "COMMUNAL_MAST_ROOSTING",
-    "timestamp_relative": "YEAR_18_VULTURE_LOG_02",
-    "tags": ["fauna", "vulture", "antenna_damage", "relay_tower", "roost"],
-    "prose": "A flock of fourteen birds roosted on the cross-arms of the microwave dish tower. Their accumulated weight and corrosive guano bent the parabolic reflector three degrees out of alignment and dissolved the neoprene weather boots on the coaxial feed horns."
-  },
-  {
-    "id": "vulture_sighting_nesting_on_tungsten_impact_crater",
-    "observation_post": "HARROW_CRATER_SECTOR_7_RIM",
-    "avian_morphology": "AETHEOGYPS_KINETICA_NEST",
-    "estimated_wingspan_meters": 3.6,
-    "radiation_tracking_behavior": "KINETIC_CRATER_COLONIZATION",
-    "timestamp_relative": "YEAR_20_VULTURE_LOG_01",
-    "tags": ["fauna", "vulture", "crater_nest", "barbed_wire", "harrow"],
-    "prose": "A colossal pair built an eight-foot nest inside the fractured basalt rim of a Project OLYMPUS tungsten penetrator crater. The nest was woven from rusted concertina wire, dead scrub oak, and scraps of insulated copper de-icing cables."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "vulture_sighting_lead_shadow_thermal_glider",
+      "observation_post": "SURFACE_CROWS_NEST_LOOKOUT_01",
+      "avian_morphology": "CORAGYPS_MEGATHERMICUS",
+      "estimated_wingspan_meters": 3.4,
+      "radiation_tracking_behavior": "THERMAL_CRATER_UPDRAFT_SOARING",
+      "timestamp_relative": "YEAR_04_VULTURE_LOG_01",
+      "tags": [
+        "fauna",
+        "vulture",
+        "carrion_bird",
+        "wingspan",
+        "surface_observation"
+      ],
+      "prose": "Massive dark raptor with a wingspan exceeding three meters riding the continuous hot thermal updraft column rising from the central blast crater. The bird circled for seven hours without a single wing beat, scanning the ash plains for frozen animal carcasses."
+    },
+    {
+      "id": "vulture_sighting_calcified_bone_crusher_beak",
+      "observation_post": "PERIMETER_FENCE_RADAR_MAST",
+      "avian_morphology": "GYPS_OSTEOCLASTES_HEAVY",
+      "estimated_wingspan_meters": 2.8,
+      "radiation_tracking_behavior": "MARROW_EXTRACTION_CRUSH",
+      "timestamp_relative": "YEAR_06_VULTURE_LOG_03",
+      "tags": [
+        "fauna",
+        "vulture",
+        "beak",
+        "bone_crusher",
+        "scavenger"
+      ],
+      "prose": "A pair of heavy vultures landed on the carcass of an irradiated elk twenty yards from the perimeter wire. Their massive, bulbous yellow beaks exerted over 800 PSI, snapping the frozen elk femur in half with a sharp crack to extract the fat-rich bone marrow."
+    },
+    {
+      "id": "vulture_sighting_sulfuric_regurgitation_defense",
+      "observation_post": "NORTH_PASS_SCOUT_POST_BRAVO",
+      "avian_morphology": "CATHARTES_ACIDICUS_DEFENSE",
+      "estimated_wingspan_meters": 2.6,
+      "radiation_tracking_behavior": "CAUSTIC_VOMIT_TERRITORIALITY",
+      "timestamp_relative": "YEAR_09_VULTURE_LOG_02",
+      "tags": [
+        "fauna",
+        "vulture",
+        "stomach_acid",
+        "defense",
+        "hazards"
+      ],
+      "prose": "When two scout scavengers approached a scavenged canned-food crate, the cornered bird regurgitated a pint of foul, semi-digested meat slurry and concentrated stomach acid (pH 0.4). The caustic jet melted a scout's polycarbonate gas mask visor in three seconds."
+    },
+    {
+      "id": "vulture_sighting_carcass_dosimeter_orientation",
+      "observation_post": "WEATHER_STATION_ROOF_TURRET",
+      "avian_morphology": "NEOPHRON_RADIOPHILUS",
+      "estimated_wingspan_meters": 2.2,
+      "radiation_tracking_behavior": "CHERENKOV_OPTICAL_FORAGING",
+      "timestamp_relative": "YEAR_12_VULTURE_LOG_01",
+      "tags": [
+        "fauna",
+        "vulture",
+        "radiation_sensing",
+        "cherenkov",
+        "foraging"
+      ],
+      "prose": "Retinal histology of a shot specimen showed specialized ultraviolet cones sensitive to atmospheric Cherenkov ionization. The birds systematically home in on glowing hot-particle deposition fields where migrating deer herds suffer fatal acute radiation sickness."
+    },
+    {
+      "id": "vulture_sighting_featherless_asbestos_leathery_skin",
+      "observation_post": "GATE_ALPHA_SURVEILLANCE_CAMERA",
+      "avian_morphology": "CORAGYPS_GLABRUS_DERMIS",
+      "estimated_wingspan_meters": 3.0,
+      "radiation_tracking_behavior": "HOT_ASH_DUST_BATHING",
+      "timestamp_relative": "YEAR_15_VULTURE_LOG_04",
+      "tags": [
+        "fauna",
+        "vulture",
+        "featherless",
+        "leathery_skin",
+        "adaptation"
+      ],
+      "prose": "The bird's head, neck, and chest are entirely featherless, covered in thick, rugose grey skin resembling elephant hide that is completely impervious to beta burns and abrasive volcanic ash. The bird vigorously dust-bathed in a pile of dry fallout soot to smother skin mites."
+    },
+    {
+      "id": "vulture_sighting_telemetry_mast_roosting_cluster",
+      "observation_post": "MICROWAVE_RELAY_TOWER_04",
+      "avian_morphology": "GYPS_COMMUNALIS_PERCH",
+      "estimated_wingspan_meters": 2.9,
+      "radiation_tracking_behavior": "COMMUNAL_MAST_ROOSTING",
+      "timestamp_relative": "YEAR_18_VULTURE_LOG_02",
+      "tags": [
+        "fauna",
+        "vulture",
+        "antenna_damage",
+        "relay_tower",
+        "roost"
+      ],
+      "prose": "A flock of fourteen birds roosted on the cross-arms of the microwave dish tower. Their accumulated weight and corrosive guano bent the parabolic reflector three degrees out of alignment and dissolved the neoprene weather boots on the coaxial feed horns."
+    },
+    {
+      "id": "vulture_sighting_nesting_on_tungsten_impact_crater",
+      "observation_post": "HARROW_CRATER_SECTOR_7_RIM",
+      "avian_morphology": "AETHEOGYPS_KINETICA_NEST",
+      "estimated_wingspan_meters": 3.6,
+      "radiation_tracking_behavior": "KINETIC_CRATER_COLONIZATION",
+      "timestamp_relative": "YEAR_20_VULTURE_LOG_01",
+      "tags": [
+        "fauna",
+        "vulture",
+        "crater_nest",
+        "barbed_wire",
+        "harrow"
+      ],
+      "prose": "A colossal pair built an eight-foot nest inside the fractured basalt rim of a Project OLYMPUS tungsten penetrator crater. The nest was woven from rusted concertina wire, dead scrub oak, and scraps of insulated copper de-icing cables."
+    }
+  ]
+}

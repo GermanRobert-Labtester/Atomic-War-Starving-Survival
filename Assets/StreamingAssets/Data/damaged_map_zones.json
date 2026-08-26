@@ -1,43 +1,90 @@
-[
-  {
-    "zone_id": "industrial_district",
-    "zone_name": "Industrial District",
-    "total_fragments": 3,
-    "hidden_installation_id": "underground_fuel_depot",
-    "hidden_installation_name": "Underground Fuel Depot",
-    "installation_description": "A pre-war emergency fuel reserve, sealed beneath a collapsed factory. The maps show a maintenance access through the old sewer junction.",
-    "revealed_items": ["diesel_fuel", "generator_parts"],
-    "fragments": [
-      { "fragment_id": "damaged_map_industrial_1", "label": "Northern Sector", "description": "Shows the factory district north of the river. Burn damage obscures the eastern edge." },
-      { "fragment_id": "damaged_map_industrial_2", "label": "Sewer Grid", "description": "A pre-war sewer system map. The junction at sector C-7 is circled in red ink." },
-      { "fragment_id": "damaged_map_industrial_3", "label": "Fuel Reserve Key", "description": "A key card with an access code. Someone wrote 'DEPOT — EMERGENCY ONLY' across the back." }
-    ]
-  },
-  {
-    "zone_id": "suburban_heights",
-    "zone_name": "Suburban Heights",
-    "total_fragments": 2,
-    "hidden_installation_id": "municipal_seed_vault",
-    "hidden_installation_name": "Municipal Seed Vault",
-    "installation_description": "A community seed bank hidden in the basement of the old library. The vault is intact — seeds may still be viable.",
-    "revealed_items": ["seed_packets", "heirloom_seeds", "growing_manual"],
-    "fragments": [
-      { "fragment_id": "damaged_map_suburban_1", "label": "Library Blueprint", "description": "Architectural plans for the old public library. A basement level is shown that doesn't appear on public records." },
-      { "fragment_id": "damaged_map_suburban_2", "label": "Librarian's Note", "description": "A handwritten note: 'Vault code is the date of the first seed catalog. Ask Margaret. She'll remember.'" }
-    ]
-  },
-  {
-    "zone_id": "military_corridor",
-    "zone_name": "Military Supply Corridor",
-    "total_fragments": 3,
-    "hidden_installation_id": "blacksite_armory_7",
-    "hidden_installation_name": "Blacksite Armory 7",
-    "installation_description": "An unmarked military installation beneath a decommissioned radar station. The armory may still contain pre-war weapons and EMP-hardened equipment.",
-    "revealed_items": ["faraday_pack", "military_radio", "night_vision_scope", "ammo_308"],
-    "fragments": [
-      { "fragment_id": "damaged_map_military_1", "label": "Radar Station Exterior", "description": "A survey map of the old radar station. The main building is marked as 'condemned' but the substructure notes say 'active.'" },
-      { "fragment_id": "damaged_map_military_2", "label": "Elevator Access", "description": "A service elevator schematic. The control panel requires a code — the fragment shows digits 7, 4, and 9, but the rest is water-damaged." },
-      { "fragment_id": "damaged_map_military_3", "label": "Supply Manifest", "description": "A quartermaster's manifest: 'Armory 7 — Full Stock. EMP-hardened equipment. Authorization code: CHIMERA-7-4-9.'" }
-    ]
-  }
-]
+{
+  "schema_version": 1,
+  "zones": [
+    {
+      "zone_id": "industrial_district",
+      "zone_name": "Industrial District",
+      "total_fragments": 3,
+      "hidden_installation_id": "underground_fuel_depot",
+      "hidden_installation_name": "Underground Fuel Depot",
+      "installation_description": "A pre-war emergency fuel reserve, sealed beneath a collapsed factory. The maps show a maintenance access through the old sewer junction.",
+      "revealed_items": [
+        "diesel_fuel",
+        "generator_parts"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_industrial_1",
+          "label": "Northern Sector",
+          "description": "Shows the factory district north of the river. Burn damage obscures the eastern edge."
+        },
+        {
+          "fragment_id": "damaged_map_industrial_2",
+          "label": "Sewer Grid",
+          "description": "A pre-war sewer system map. The junction at sector C-7 is circled in red ink."
+        },
+        {
+          "fragment_id": "damaged_map_industrial_3",
+          "label": "Fuel Reserve Key",
+          "description": "A key card with an access code. Someone wrote 'DEPOT — EMERGENCY ONLY' across the back."
+        }
+      ]
+    },
+    {
+      "zone_id": "suburban_heights",
+      "zone_name": "Suburban Heights",
+      "total_fragments": 2,
+      "hidden_installation_id": "municipal_seed_vault",
+      "hidden_installation_name": "Municipal Seed Vault",
+      "installation_description": "A community seed bank hidden in the basement of the old library. The vault is intact — seeds may still be viable.",
+      "revealed_items": [
+        "seed_packets",
+        "heirloom_seeds",
+        "growing_manual"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_suburban_1",
+          "label": "Library Blueprint",
+          "description": "Architectural plans for the old public library. A basement level is shown that doesn't appear on public records."
+        },
+        {
+          "fragment_id": "damaged_map_suburban_2",
+          "label": "Librarian's Note",
+          "description": "A handwritten note: 'Vault code is the date of the first seed catalog. Ask Margaret. She'll remember.'"
+        }
+      ]
+    },
+    {
+      "zone_id": "military_corridor",
+      "zone_name": "Military Supply Corridor",
+      "total_fragments": 3,
+      "hidden_installation_id": "blacksite_armory_7",
+      "hidden_installation_name": "Blacksite Armory 7",
+      "installation_description": "An unmarked military installation beneath a decommissioned radar station. The armory may still contain pre-war weapons and EMP-hardened equipment.",
+      "revealed_items": [
+        "faraday_pack",
+        "military_radio",
+        "night_vision_scope",
+        "ammo_308"
+      ],
+      "fragments": [
+        {
+          "fragment_id": "damaged_map_military_1",
+          "label": "Radar Station Exterior",
+          "description": "A survey map of the old radar station. The main building is marked as 'condemned' but the substructure notes say 'active.'"
+        },
+        {
+          "fragment_id": "damaged_map_military_2",
+          "label": "Elevator Access",
+          "description": "A service elevator schematic. The control panel requires a code — the fragment shows digits 7, 4, and 9, but the rest is water-damaged."
+        },
+        {
+          "fragment_id": "damaged_map_military_3",
+          "label": "Supply Manifest",
+          "description": "A quartermaster's manifest: 'Armory 7 — Full Stock. EMP-hardened equipment. Authorization code: CHIMERA-7-4-9.'"
+        }
+      ]
+    }
+  ]
+}

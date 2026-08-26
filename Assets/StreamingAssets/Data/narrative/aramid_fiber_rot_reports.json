@@ -1,82 +1,133 @@
-[
-  {
-    "id": "aramid_rot_hydrolytic_chain_cleavage",
-    "armor_item_id": "PASGT_BALLISTIC_VEST_MK2",
-    "aramid_yarn_type": "KEVLAR_29_PARA_ARAMID",
-    "residual_tensile_strength_pct": 38.0,
-    "failure_phenomenon": "HYDROLYTIC_PEPTIDE_BOND_CLEAVAGE",
-    "timestamp_relative": "YEAR_03_ARAMID_LOG_01",
-    "tags": ["polymer", "body_armor", "kevlar", "aramid", "hydrolysis"],
-    "prose": "Body armor stored in damp underground armories at 85% relative humidity underwent slow hydrolytic chain scission. Tensile testing of individual 1500-denier yarns showed a 62% strength loss; the vest was easily penetrated by a low-velocity .38 Special bullet."
-  },
-  {
-    "id": "aramid_rot_ultraviolet_photolytic_yellowing",
-    "armor_item_id": "MODULAR_TACTICAL_VEST_CARRIER",
-    "aramid_yarn_type": "TWARON_1000_FILAMENT_WEAVE",
-    "residual_tensile_strength_pct": 45.0,
-    "failure_phenomenon": "SOLAR_PHOTODYNAMIC_YELLOWING",
-    "timestamp_relative": "YEAR_05_ARAMID_LOG_03",
-    "tags": ["polymer", "body_armor", "uv_damage", "twaron", "yellowing"],
-    "prose": "Prolonged surface sentry duty without nylon over-covers exposed outer aramid layers to solar UV-A radiation. The golden fabric turned a dark, brittle brown; surface fibers crumbled into fine yellow dust when rubbed with a thumb."
-  },
-  {
-    "id": "aramid_rot_bullet_shatter_yarn_fraying",
-    "armor_item_id": "CONCEALABLE_THREAT_LEVEL_II_VEST",
-    "aramid_yarn_type": "KEVLAR_129_HIGH_TENACITY",
-    "residual_tensile_strength_pct": 52.0,
-    "failure_phenomenon": "BRITTLE_TRANSVERSE_FIBER_SHATTER",
-    "timestamp_relative": "YEAR_08_ARAMID_LOG_02",
-    "tags": ["polymer", "body_armor", "ballistics", "fiber_shatter", "inhalation"],
-    "prose": "When tested against a 9mm round, the aged, moisture-degraded aramid panel stopped the slug but the fibers shattered transversely into microscopic needle-like fibrils. The airborne fiber cloud caused severe acute bronchitis in the testing officer."
-  },
-  {
-    "id": "aramid_rot_salt_water_capillary_wicking",
-    "armor_item_id": "RIVERINE_PATROL_FLOTATION_ARMOR",
-    "aramid_yarn_type": "TECHNORA_CO_POLYMER_ARAMID",
-    "residual_tensile_strength_pct": 30.0,
-    "failure_phenomenon": "SALT_CRYSTAL_MICRO_WEDGE_SPALLING",
-    "timestamp_relative": "YEAR_11_ARAMID_LOG_04",
-    "tags": ["polymer", "body_armor", "salt_water", "capillary_wicking", "crystals"],
-    "prose": "Brackish marsh water wicked into the unsealed ballistic pack. Repeated drying cycles precipitated sharp halite salt crystals inside the yarn bundles; each footstep ground the internal filaments like abrasive paste, destroying the weave."
-  },
-  {
-    "id": "aramid_rot_sweat_lactic_acid_embrittlement",
-    "armor_item_id": "HEAVY_SENTRY_COLLAR_GORGET",
-    "aramid_yarn_type": "KEVLAR_XP_BALLISTIC_MULTIAXIAL",
-    "residual_tensile_strength_pct": 42.0,
-    "failure_phenomenon": "ACID_SWEAT_AMIDE_BOND_HYDROLYSIS",
-    "timestamp_relative": "YEAR_14_ARAMID_LOG_01",
-    "tags": ["polymer", "body_armor", "sweat_rot", "gorget", "acid_damage"],
-    "prose": "Constant skin contact without undergarments saturated the ballistic throat collar with human sweat (pH 4.2). Lactic acid and skin bacteria hydrolyzed the amide cross-bonds, making the flexible neck protector brittle and tearable by hand."
-  },
-  {
-    "id": "aramid_rot_dry_cleaning_solvent_swelling",
-    "armor_item_id": "OFFICER_TACTICAL_PLATE_CARRIER",
-    "aramid_yarn_type": "SPECTRA_UHMWPE_ARAMID_HYBRID",
-    "residual_tensile_strength_pct": 22.0,
-    "failure_phenomenon": "PERCHLOROETHYLENE_MATRIX_SWELLING",
-    "timestamp_relative": "YEAR_16_ARAMID_LOG_03",
-    "tags": ["polymer", "body_armor", "dry_cleaning", "solvent_damage", "delamination"],
-    "prose": "An orderly washed contaminated armor inserts in scavenged dry-cleaning perchloroethylene solvent. The solvent dissolved the thermoplastic polyurethane matrix holding the multi-directional aramid layers, causing total delamination into loose rags."
-  },
-  {
-    "id": "aramid_rot_soil_bacteria_enzymatic_degradation",
-    "armor_item_id": "CACHED_CONVOY_CHEST_RIG_BUNDLE",
-    "aramid_yarn_type": "KEVLAR_KM2_MILITARY_SPEC",
-    "residual_tensile_strength_pct": 18.0,
-    "failure_phenomenon": "ACTINOMYCETE_ENZYMATIC_DIGESTION",
-    "timestamp_relative": "YEAR_18_ARAMID_LOG_02",
-    "tags": ["polymer", "body_armor", "soil_burial", "bacteria", "cache_rot"],
-    "prose": "A cache of twenty ballistic vests buried in clay soil inside a leaking steel drum was excavated after fifteen years. Soil actinomycete bacteria completely consumed the organic polyurethane sizing and cotton stitching, leaving rotting piles of yellow string."
-  },
-  {
-    "id": "aramid_rot_lead_slug_friction_friction_burn",
-    "armor_item_id": "BALLISTIC_COMBAT_HELMET_SHELL",
-    "aramid_yarn_type": "THERMOSET_PHENOLIC_ARAMID_SHELL",
-    "residual_tensile_strength_pct": 50.0,
-    "failure_phenomenon": "FRICTION_PYROLYSIS_DELAMINATION",
-    "timestamp_relative": "YEAR_20_ARAMID_LOG_01",
-    "tags": ["polymer", "helmet", "ballistics", "pyrolysis", "phenolic"],
-    "prose": "A glancing shrapnel impact on an aged helmet ignited the degraded phenolic binder resin. The localized friction burn melted through four laminations of Kevlar, causing a bubbling blister of toxic aromatic smoke that blinded the wearer."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "aramid_rot_hydrolytic_chain_cleavage",
+      "armor_item_id": "PASGT_BALLISTIC_VEST_MK2",
+      "aramid_yarn_type": "KEVLAR_29_PARA_ARAMID",
+      "residual_tensile_strength_pct": 38.0,
+      "failure_phenomenon": "HYDROLYTIC_PEPTIDE_BOND_CLEAVAGE",
+      "timestamp_relative": "YEAR_03_ARAMID_LOG_01",
+      "tags": [
+        "polymer",
+        "body_armor",
+        "kevlar",
+        "aramid",
+        "hydrolysis"
+      ],
+      "prose": "Body armor stored in damp underground armories at 85% relative humidity underwent slow hydrolytic chain scission. Tensile testing of individual 1500-denier yarns showed a 62% strength loss; the vest was easily penetrated by a low-velocity .38 Special bullet."
+    },
+    {
+      "id": "aramid_rot_ultraviolet_photolytic_yellowing",
+      "armor_item_id": "MODULAR_TACTICAL_VEST_CARRIER",
+      "aramid_yarn_type": "TWARON_1000_FILAMENT_WEAVE",
+      "residual_tensile_strength_pct": 45.0,
+      "failure_phenomenon": "SOLAR_PHOTODYNAMIC_YELLOWING",
+      "timestamp_relative": "YEAR_05_ARAMID_LOG_03",
+      "tags": [
+        "polymer",
+        "body_armor",
+        "uv_damage",
+        "twaron",
+        "yellowing"
+      ],
+      "prose": "Prolonged surface sentry duty without nylon over-covers exposed outer aramid layers to solar UV-A radiation. The golden fabric turned a dark, brittle brown; surface fibers crumbled into fine yellow dust when rubbed with a thumb."
+    },
+    {
+      "id": "aramid_rot_bullet_shatter_yarn_fraying",
+      "armor_item_id": "CONCEALABLE_THREAT_LEVEL_II_VEST",
+      "aramid_yarn_type": "KEVLAR_129_HIGH_TENACITY",
+      "residual_tensile_strength_pct": 52.0,
+      "failure_phenomenon": "BRITTLE_TRANSVERSE_FIBER_SHATTER",
+      "timestamp_relative": "YEAR_08_ARAMID_LOG_02",
+      "tags": [
+        "polymer",
+        "body_armor",
+        "ballistics",
+        "fiber_shatter",
+        "inhalation"
+      ],
+      "prose": "When tested against a 9mm round, the aged, moisture-degraded aramid panel stopped the slug but the fibers shattered transversely into microscopic needle-like fibrils. The airborne fiber cloud caused severe acute bronchitis in the testing officer."
+    },
+    {
+      "id": "aramid_rot_salt_water_capillary_wicking",
+      "armor_item_id": "RIVERINE_PATROL_FLOTATION_ARMOR",
+      "aramid_yarn_type": "TECHNORA_CO_POLYMER_ARAMID",
+      "residual_tensile_strength_pct": 30.0,
+      "failure_phenomenon": "SALT_CRYSTAL_MICRO_WEDGE_SPALLING",
+      "timestamp_relative": "YEAR_11_ARAMID_LOG_04",
+      "tags": [
+        "polymer",
+        "body_armor",
+        "salt_water",
+        "capillary_wicking",
+        "crystals"
+      ],
+      "prose": "Brackish marsh water wicked into the unsealed ballistic pack. Repeated drying cycles precipitated sharp halite salt crystals inside the yarn bundles; each footstep ground the internal filaments like abrasive paste, destroying the weave."
+    },
+    {
+      "id": "aramid_rot_sweat_lactic_acid_embrittlement",
+      "armor_item_id": "HEAVY_SENTRY_COLLAR_GORGET",
+      "aramid_yarn_type": "KEVLAR_XP_BALLISTIC_MULTIAXIAL",
+      "residual_tensile_strength_pct": 42.0,
+      "failure_phenomenon": "ACID_SWEAT_AMIDE_BOND_HYDROLYSIS",
+      "timestamp_relative": "YEAR_14_ARAMID_LOG_01",
+      "tags": [
+        "polymer",
+        "body_armor",
+        "sweat_rot",
+        "gorget",
+        "acid_damage"
+      ],
+      "prose": "Constant skin contact without undergarments saturated the ballistic throat collar with human sweat (pH 4.2). Lactic acid and skin bacteria hydrolyzed the amide cross-bonds, making the flexible neck protector brittle and tearable by hand."
+    },
+    {
+      "id": "aramid_rot_dry_cleaning_solvent_swelling",
+      "armor_item_id": "OFFICER_TACTICAL_PLATE_CARRIER",
+      "aramid_yarn_type": "SPECTRA_UHMWPE_ARAMID_HYBRID",
+      "residual_tensile_strength_pct": 22.0,
+      "failure_phenomenon": "PERCHLOROETHYLENE_MATRIX_SWELLING",
+      "timestamp_relative": "YEAR_16_ARAMID_LOG_03",
+      "tags": [
+        "polymer",
+        "body_armor",
+        "dry_cleaning",
+        "solvent_damage",
+        "delamination"
+      ],
+      "prose": "An orderly washed contaminated armor inserts in scavenged dry-cleaning perchloroethylene solvent. The solvent dissolved the thermoplastic polyurethane matrix holding the multi-directional aramid layers, causing total delamination into loose rags."
+    },
+    {
+      "id": "aramid_rot_soil_bacteria_enzymatic_degradation",
+      "armor_item_id": "CACHED_CONVOY_CHEST_RIG_BUNDLE",
+      "aramid_yarn_type": "KEVLAR_KM2_MILITARY_SPEC",
+      "residual_tensile_strength_pct": 18.0,
+      "failure_phenomenon": "ACTINOMYCETE_ENZYMATIC_DIGESTION",
+      "timestamp_relative": "YEAR_18_ARAMID_LOG_02",
+      "tags": [
+        "polymer",
+        "body_armor",
+        "soil_burial",
+        "bacteria",
+        "cache_rot"
+      ],
+      "prose": "A cache of twenty ballistic vests buried in clay soil inside a leaking steel drum was excavated after fifteen years. Soil actinomycete bacteria completely consumed the organic polyurethane sizing and cotton stitching, leaving rotting piles of yellow string."
+    },
+    {
+      "id": "aramid_rot_lead_slug_friction_friction_burn",
+      "armor_item_id": "BALLISTIC_COMBAT_HELMET_SHELL",
+      "aramid_yarn_type": "THERMOSET_PHENOLIC_ARAMID_SHELL",
+      "residual_tensile_strength_pct": 50.0,
+      "failure_phenomenon": "FRICTION_PYROLYSIS_DELAMINATION",
+      "timestamp_relative": "YEAR_20_ARAMID_LOG_01",
+      "tags": [
+        "polymer",
+        "helmet",
+        "ballistics",
+        "pyrolysis",
+        "phenolic"
+      ],
+      "prose": "A glancing shrapnel impact on an aged helmet ignited the degraded phenolic binder resin. The localized friction burn melted through four laminations of Kevlar, causing a bubbling blister of toxic aromatic smoke that blinded the wearer."
+    }
+  ]
+}

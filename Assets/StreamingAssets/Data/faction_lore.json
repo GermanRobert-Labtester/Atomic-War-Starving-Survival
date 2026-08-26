@@ -1,367 +1,370 @@
-[
- {
-  "faction_id": "iron_garrison",
-  "display_name": "The Iron Garrison",
-  "ideology": "Military continuity, strict resource rationing, absolute martial law",
-  "origin_story": "Formed from surviving remnants of the regional armed forces command structure. Colonel Voss assumed command at Bunker Sigma-7 within 72 hours of the Exchange. His first order: 'Civilian dependents will contribute labor or food to the defense effort.' His second: 'Deserters will be shot.' They view all non-military survivors as civilian dependents who must earn their place through labor or combat service.",
-  "key_beliefs": [
-   "Civilization is maintained by supply chains and ammunition counts",
-   "Democracy is a luxury of peacetime",
-   "Every mouth must earn its rations through labor or combat service",
-   "The chain of command is sacred — orders are not debated, they are executed"
-  ],
-  "dialogue_style": "Formal, terse, military acronyms, cold operational efficiency",
-  "signature_quote": "Civilization isn't built on sympathy; it's maintained by supply chains and ammunition counts.",
-  "relationships": {
-   "ash_militia": "hostile",
-   "cult_of_ash_sign": "suspicious",
-   "warlords_sector_4": "hostile"
-  },
-  "tribute_demands": [
-   "food_rations",
-   "young_recruits_for_service"
-  ],
-  "tech_offerings": [
-   "artillery_support",
-   "military_grade_filtration",
-   "armored_patrol_escort"
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "faction_id": "iron_garrison",
+      "display_name": "The Iron Garrison",
+      "ideology": "Military continuity, strict resource rationing, absolute martial law",
+      "origin_story": "Formed from surviving remnants of the regional armed forces command structure. Colonel Voss assumed command at Bunker Sigma-7 within 72 hours of the Exchange. His first order: 'Civilian dependents will contribute labor or food to the defense effort.' His second: 'Deserters will be shot.' They view all non-military survivors as civilian dependents who must earn their place through labor or combat service.",
+      "key_beliefs": [
+        "Civilization is maintained by supply chains and ammunition counts",
+        "Democracy is a luxury of peacetime",
+        "Every mouth must earn its rations through labor or combat service",
+        "The chain of command is sacred — orders are not debated, they are executed"
+      ],
+      "dialogue_style": "Formal, terse, military acronyms, cold operational efficiency",
+      "signature_quote": "Civilization isn't built on sympathy; it's maintained by supply chains and ammunition counts.",
+      "relationships": {
+        "ash_militia": "hostile",
+        "cult_of_ash_sign": "suspicious",
+        "warlords_sector_4": "hostile"
+      },
+      "tribute_demands": [
+        "food_rations",
+        "young_recruits_for_service"
+      ],
+      "tech_offerings": [
+        "artillery_support",
+        "military_grade_filtration",
+        "armored_patrol_escort"
+      ]
+    },
+    {
+      "faction_id": "ash_militia",
+      "display_name": "The Ash Militia",
+      "ideology": "Local democracy, resource sharing, mutual defense, civilian autonomy",
+      "origin_story": "A coalition of pre-war farmers, miners, teachers, and tradespeople who banded together when both raider gangs and Garrison conscription units threatened their communities. Founded by a farmer named Delacroix with 47 members and 12 rifles. They hold weekly council meetings in the old Grange Hall, lit by salvaged oil lamps. Every member — regardless of age, gender, or pre-war status — gets one vote.",
+      "key_beliefs": [
+        "If we turn into monsters just to survive, the war already won",
+        "Everyone gets a vote and everyone gets a share",
+        "The old world ended — we decide what replaces it",
+        "A community that abandons its weakest has already lost"
+      ],
+      "dialogue_style": "Informal, warm, pragmatic, weary but determined",
+      "signature_quote": "If we turn into monsters just to survive the fallout, then the war already won.",
+      "relationships": {
+        "iron_garrison": "hostile",
+        "cult_of_ash_sign": "neutral",
+        "warlords_sector_4": "hostile"
+      },
+      "tribute_demands": [],
+      "tech_offerings": [
+        "civilian_medical_supplies",
+        "seed_exchange",
+        "trade_network_access",
+        "community_labor_pool"
+      ]
+    },
+    {
+      "faction_id": "cult_of_ash_sign",
+      "display_name": "The Cult of the Ash Sign",
+      "ideology": "Apocalyptic purification, radiation worship, ascetic martyrdom",
+      "origin_story": "A fanatical religious movement that arose in the highest fallout zones — areas too lethal for military patrols. Their prophet, known only as The Vessel, emerged from the ruins of a destroyed reactor unscathed — or so they claim. They believe the nuclear exchange was a divine purging of a corrupt world and view radiation sickness as a spiritual ordeal that cleanses the soul. Members willingly expose themselves to low-level radiation as acts of devotion.",
+      "key_beliefs": [
+        "The nuclear fire was divine judgment on a corrupt world",
+        "Radiation is the breath of the new god — breathe it and be cleansed",
+        "Death by fallout is not death; it is ascension to the Clear World",
+        "The old world's lies were burned away — only truth remains in the ash"
+      ],
+      "dialogue_style": "Arcane, rhythmic, serene, unsettlingly peaceful amidst horror",
+      "signature_quote": "Do not fear the glow, child. The fire burned away the old world's lies. Drink the ash and be renewed.",
+      "relationships": {
+        "iron_garrison": "suspicious",
+        "ash_militia": "neutral",
+        "warlords_sector_4": "neutral"
+      },
+      "tribute_demands": [
+        "ritual_participation_in_hot_zones"
+      ],
+      "tech_offerings": [
+        "rad_resistant_herbal_remedy",
+        "fallout_zone_navigation",
+        "ghoul_deterrent_herbs",
+        "radiation_prophecy"
+      ]
+    },
+    {
+      "faction_id": "warlords_sector_4",
+      "display_name": "The Warlords of Sector 4",
+      "ideology": "Mercenary opportunism, trade control, survival of the fittest",
+      "origin_story": "A loose syndicate of armed scavengers, former convicts, and ex-mercenaries who control key highway bottlenecks, fuel depots, and river crossings. They have no loyalty beyond the contract. Their leader, The Tollman, rose to power by being the only person who knew the bridge demolition codes after the Exchange. He charges passage in blood or bullets — literal or metaphorical.",
+      "key_beliefs": [
+        "Clean water costs blood or bullets — pick which you're paying with",
+        "Loyalty is a tradable commodity, like diesel or antibiotics",
+        "The strong don't survive because they're strong — they survive because they're useful",
+        "A contract is sacred; everything else is negotiable"
+      ],
+      "dialogue_style": "Rough, cynical, transactional, threatening but honest",
+      "signature_quote": "Clean water costs blood or bullets. Pick which one you're paying with today.",
+      "relationships": {
+        "iron_garrison": "hostile",
+        "ash_militia": "hostile",
+        "cult_of_ash_sign": "neutral"
+      },
+      "tribute_demands": [
+        "fuel",
+        "ammunition",
+        "medical_kits"
+      ],
+      "tech_offerings": [
+        "bridge_passage",
+        "smuggled_goods",
+        "mercenary_contracts",
+        "black_market_access"
+      ]
+    },
+    {
+      "faction_id": "faction_rebuilders",
+      "display_name": "The Rebuilders",
+      "ideology": "Municipal continuity. Public works, minuted decisions, and plans longer than the people making them",
+      "origin_story": "Three surviving employees of a district public works department walked out to the floodplain allotments in the first winter because it was the only good soil left in Sector 4, and began farming it in plot order off the pre-war waiting list. They call themselves the Works. The Rebuilders is what the Toll called them, and it was not meant kindly. The soil is good because the ground floods, and everything that floods there is contaminated, so they can grow food and cannot drink; two hundred people now live seventy days from thirst on the best farmland in the sector. They hold the only still and the only working autoclave for forty kilometres, which makes a caretaker's hut the sector's clinic. Their standing purchase order is brass -- door handles, nameplates, lamp bases -- because you cannot cast a valve seat out of scrap steel and every joint in a water system is brass or it is a leak with a schedule. Years on, the Works' most visible face in the district is no longer the allotments but the grain exchange it came to run at the old leaning silo: a market floor with its own scales, its own roster, and its own rope keeping weapons off the trading floor. Adaeze Okonkwo runs that floor the way the Works has always run everything — by name, by shift, by minute — and most traders who deal with the Rebuilders daily have never once seen the floodplain that started it.",
+      "key_beliefs": [
+        "Write it down or it did not happen and cannot be handed over",
+        "The waiting list is the waiting list; plot 114 is still plot 114",
+        "A thing worth building takes longer than the person building it",
+        "There is no one left in this sector who can do water, and that was chosen, not accidental",
+        "We do not ask where the brass came from",
+        "Fair scales or broken fingers, and the fingers get broken by consensus"
+      ],
+      "dialogue_style": "Minutes of a meeting. Carried, noted, deferred. Asks you to sign things and means it",
+      "signature_quote": "Motion: that we plant the north strip anyway. Carried, four to one. The one was me.",
+      "relationships": {
+        "iron_garrison": "suspicious",
+        "central_garrison": "hostile-open",
+        "ash_militia": "neutral",
+        "ash_sign": "wary",
+        "cult_of_ash_sign": "hostile",
+        "warlords_sector_4": "hostile"
+      },
+      "tribute_demands": [
+        "brass_fittings",
+        "water_purification_tablets",
+        "clean_water_by_the_barrel"
+      ],
+      "tech_offerings": [
+        "antibiotics",
+        "antiseptic",
+        "surgical_kit",
+        "seeds",
+        "sterile_field_surgery"
+      ]
+    },
+    {
+      "faction_id": "faction_black_ops",
+      "display_name": "Black Ops (Ex-Military Rebels)",
+      "ideology": "Denial of fixed infrastructure to any organised force, under a tasking order nobody has rescinded",
+      "origin_story": "Ninth Denial Detachment -- D/9 -- was given a continuity task before the Exchange: on loss of central command, deny the sector's bridges, pumping stations, rail cut and substations to any organised force. Not hold them. Deny them. The order to distinguish a hostile organised force from a friendly one was somebody else's job at a headquarters that is now a hole in the ground, so the distinction has never been made and the tasking has never been amended. They do not take ground; they lay charges and leave. Four are left. Doctrine requires friendly obstacles be marked so your own people do not walk into them, and they have never stopped complying, so every trap in Sector 4 is correctly signposted in a notation four living people can read. The Toll calls them Black Ops, which is wrong in all three particulars: they were never covert, they have had no orders in five years, and rebelling would require having stopped.",
+      "key_beliefs": [
+        "The tasking stands until it is rescinded by an authority that can authenticate",
+        "Obstacles are marked. That is not mercy, it is the annex",
+        "Ground held is ground you have to keep holding",
+        "Everyone organised is, by the clock we are still running on, an occupying force"
+      ],
+      "dialogue_style": "Flat and procedural. Distances in metres, times on the 24-hour clock, passive voice for anything they did. Does not threaten, because a threat is a negotiation",
+      "signature_quote": "The bridge was denied on the fourteenth. Nobody has rescinded that.",
+      "relationships": {
+        "iron_garrison": "hostile",
+        "ash_militia": "hostile",
+        "cult_of_ash_sign": "hostile",
+        "warlords_sector_4": "hostile"
+      },
+      "tribute_demands": [],
+      "tech_offerings": []
+    },
+    {
+      "faction_id": "faction_central_garrison",
+      "display_name": "The Central Garrison",
+      "ideology": "Martial continuity, ration discipline, the office as the only legitimate authority",
+      "origin_story": "The garrison remnant that held the sector capital through the exchange. Colonel-level officers run it as a standing command post: inventories, rosters, courts-martial, and a door policy that treats every civilian as a resource to be scheduled. It was the Iron Garrison until Day 238, when Colonel Voss did not report for the regular Sigma-7 briefing and was never seen again. Lieutenant Colonel Harven read the Continuity Reclamation Decree into the record before noon, and the checkpoints never missed a shift change. The Garrison renamed itself within the year, not to hide from what it had been, Harven said, but to stop answering for a man who was no longer giving orders. The old chain of command is still framed on the wall at Checkpoint Gamma. Nobody has taken it down.",
+      "key_beliefs": [
+        "The office is the state; the state is supply",
+        "Desertion is the only capital crime",
+        "Records are the first line of defence",
+        "The decree is the man now, not the man behind the decree",
+        "A command post that keeps its shift schedule has not fallen"
+      ],
+      "dialogue_style": "Formal, decree-numbered, refuses first person singular from officers on duty",
+      "signature_quote": "Reclamation is not repudiation.",
+      "relationships": {
+        "rebuilders": "hostile-open",
+        "ash_sign": "suspicious",
+        "warlords_sector_4": "transactional"
+      },
+      "tribute_demands": [
+        "grain_quota",
+        "conscript_labor"
+      ],
+      "tech_offerings": [
+        "checkpoint_patrol_escort",
+        "ration_priority_stamp"
+      ]
+    },
+    {
+      "faction_id": "faction_ash_sign",
+      "display_name": "The Ash Sign",
+      "ideology": "Redemptive catastrophe, ash as judgement, conversion through survival",
+      "origin_story": "The cult of the Ash Sign preaches that the exchange was a cleansing and the survivors are the chosen remnant. Their charity is real and their prices are theological. They recruit by hunger and by grief, and their judgement falls on those who refuse the sign. What began as small groups reading meaning into dosimeter numbers at the old survey cairn has, in the years since, become an organized presence with its own switchback trail up to a built shrine and its own shrine-keepers to read it. The public sermon is judgement and the chosen remnant; the shrine-keepers' actual daily discipline is narrower and stranger than that — reading the pattern of what the ash burns and what it spares as a text, and in the last year, making predictions that land with a precision the pilgrims find holy and a few outsiders find worth investigating.",
+      "key_beliefs": [
+        "The ash is the proof",
+        "The chosen survive; the rest are seed",
+        "Charity is owed, not given",
+        "The ash spares nothing by accident",
+        "What the fire chooses to leave standing is the only map worth trusting"
+      ],
+      "dialogue_style": "Liturgical, cadenced, quotes numbers like scripture, avoids the word luck",
+      "signature_quote": "The ash does not warn. It measures.",
+      "relationships": {
+        "central_garrison": "suspicious",
+        "rebuilders": "wary",
+        "warlords_sector_4": "neutral"
+      },
+      "tribute_demands": [
+        "ritual_participation_in_hot_zones",
+        "pilgrim_offerings"
+      ],
+      "tech_offerings": [
+        "rad_resistant_herbal_remedy",
+        "fallout_zone_navigation",
+        "blessed_ground_passage"
+      ]
+    },
+    {
+      "faction_id": "faction_scavengers",
+      "display_name": "The Scavengers",
+      "ideology": "Ruin extraction, no territory, everything is salvage",
+      "origin_story": "Loosely organised bands that work the ruins in rotation. They take apart the dead city for anything that still has use: wiring, glass, medicine, memory. They trade with everyone and belong to no one, and their caravans are the only economy the wasteland has.",
+      "key_beliefs": [
+        "The dead city is the last mine",
+        "Trade beats tribute",
+        "Never stay where the ash settles"
+      ]
+    },
+    {
+      "faction_id": "faction_hydro_barons",
+      "display_name": "The Hydro Barons",
+      "ideology": "Water engineering, aquifer claims, technical feudalism",
+      "origin_story": "The engineers who control the surviving water infrastructure: the aqueduct manifolds, the desalination plants, the pump caverns. They sell water by the measure, build alliances by the pipeline, and treat drought as a negotiation tool.",
+      "key_beliefs": [
+        "Water is the only real currency",
+        "Infrastructure is sovereignty",
+        "A measured gallon is a promise"
+      ]
+    },
+    {
+      "faction_id": "faction_unaligned",
+      "display_name": "The Unaligned",
+      "ideology": "No charter, no oath, no flag",
+      "origin_story": "The mass of survivors who belong to no faction: farmers on unclaimed ground, corridor dwellers, the people who keep their heads down and their hands busy. They are not organised, which is both their weakness and their defence.",
+      "key_beliefs": [
+        "Nobody speaks for us",
+        "Survival is not a uniform",
+        "The exchange took our names too"
+      ]
+    },
+    {
+      "faction_id": "faction_salt_freeholders",
+      "display_name": "The Salt Freeholders",
+      "ideology": "Salt rights, coastal claims, measured self-rule",
+      "origin_story": "Communities on the salt flats and the brine coast who hold their ground by right of the salt works. They are slow to trust, quick to ledger, and they measure a stranger by their salt: worth, weight, and willingness to work.",
+      "key_beliefs": [
+        "Salt is weight; weight is truth",
+        "The flats are ours by the pick",
+        "A handshake is a contract"
+      ]
+    },
+    {
+      "faction_id": "faction_railway_guild",
+      "display_name": "The Railway Guild",
+      "ideology": "Rails, steam, and schedules; the line is the law",
+      "origin_story": "The guild that keeps the surviving rail corridors running: switchyards, roundhouses, telegraph repeaters. They move what the wasteland needs and they collect their tolls in labour or goods, and the rails remember every debt.",
+      "key_beliefs": [
+        "The line runs on time or not at all",
+        "A train is a statement",
+        "The rails forgive nothing"
+      ]
+    },
+    {
+      "faction_id": "faction_ordnance_foundry",
+      "display_name": "The Ordnance Foundry",
+      "ideology": "Smelting, forging, and the quiet business of ammunition",
+      "origin_story": "The foundry crews who reprocess scrap into cartridges, casings, and tools. They sell to anyone with trade goods and no questions, and their forges never go cold. In a world of shortages, they are the nearest thing to a mint.",
+      "key_beliefs": [
+        "Steel remembers its shape",
+        "A loaded round is a vote",
+        "The forge has no politics"
+      ]
+    },
+    {
+      "faction_id": "faction_penal_battalion",
+      "display_name": "The Penal Battalion",
+      "ideology": "Debt, discipline, and the promise of redemption by labour",
+      "origin_story": "A unit formed from those convicted or condemned after the exchange, worked in the quarries and the trench works under armed supervision. The battalion believes the sentence can be served, the debt paid, the name cleaned. The office believes the same, for different reasons.",
+      "key_beliefs": [
+        "The debt can be worked off",
+        "Discipline is the only mercy",
+        "Names can be reclaimed"
+      ]
+    },
+    {
+      "faction_id": "faction_ash_militia",
+      "display_name": "The Ash Militia",
+      "ideology": "Local defence, neighbourhood watch, no ranks",
+      "origin_story": "Community militias that formed to hold ground after the garrison pulled back: farmers with rifles, mechanics with shotguns. They are neighbours first and soldiers second, and they fight for the street they live on, not for a flag.",
+      "key_beliefs": [
+        "The street is the unit",
+        "Defend, do not march",
+        "Every neighbour is a brother"
+      ]
+    },
+    {
+      "faction_id": "faction_supply_corps",
+      "display_name": "The Supply Corps",
+      "ideology": "Logistics, depots, and the paperwork of survival",
+      "origin_story": "The quartermaster network that keeps depots stocked and convoys rolling. They are not fighters; they are accountants with rifles, and they know exactly what everyone owes, stores, and wastes.",
+      "key_beliefs": [
+        "Count everything twice",
+        "A depot is a fortress",
+        "Paperwork is logistics"
+      ]
+    },
+    {
+      "faction_id": "raiders",
+      "display_name": "The Raiders",
+      "ideology": "Plunder, movement, and the logic of the ambush",
+      "origin_story": "Bands that live off the road and the raid, striking convoys and caches and vanishing into the ruins. They are not a state and not a tribe; they are a condition the wasteland produces, like rust or radiation.",
+      "key_beliefs": [
+        "Take what moves",
+        "The road belongs to the ambush",
+        "Mercy is a loaded word"
+      ]
+    },
+    {
+      "faction_id": "faction_forward_roster",
+      "display_name": "The Forward Roster",
+      "ideology": "The scale needs a fence, and somebody has to be the fence",
+      "origin_story": "Twelve people walked out of a Rebuilders roster meeting on Day 552 with their coats and their share of the small guard detail Adaeze Okonkwo had approved against her own instinct, and they have not walked back. They still call themselves Rebuilders when it's convenient and something else when it isn't, because nobody has agreed on a name yet and the arguing over one feels beside the point with a Garrison checkpoint sitting close enough to watch their fire at night. They keep the Works' habit of writing everything down. What they write down now is mostly who's on watch and who owes a shift, not minutes of a vote, because they have stopped pretending every decision here gets one.",
+      "key_beliefs": [
+        "A fed block still needs someone standing at the edge of it",
+        "We didn't leave the roster, we became its perimeter",
+        "Adaeze kept the ledger. We kept the argument that made the ledger necessary",
+        "Nobody elected us. Nobody un-elects a fence either"
+      ],
+      "dialogue_style": "Clipped, half military and half market — shift schedules and watch orders spoken in the same breath as trade terms",
+      "signature_quote": "We're not the Garrison. We just stand where the Garrison would, before the Garrison gets there.",
+      "relationships": {
+        "rebuilders": "estranged",
+        "central_garrison": "wary-truce",
+        "ash_sign": "neutral",
+        "warlords_sector_4": "transactional"
+      },
+      "tribute_demands": [
+        "watch_shifts",
+        "ammunition"
+      ],
+      "tech_offerings": [
+        "checkpoint_watch",
+        "escort_to_the_exchange"
+      ]
+    }
   ]
- },
- {
-  "faction_id": "ash_militia",
-  "display_name": "The Ash Militia",
-  "ideology": "Local democracy, resource sharing, mutual defense, civilian autonomy",
-  "origin_story": "A coalition of pre-war farmers, miners, teachers, and tradespeople who banded together when both raider gangs and Garrison conscription units threatened their communities. Founded by a farmer named Delacroix with 47 members and 12 rifles. They hold weekly council meetings in the old Grange Hall, lit by salvaged oil lamps. Every member — regardless of age, gender, or pre-war status — gets one vote.",
-  "key_beliefs": [
-   "If we turn into monsters just to survive, the war already won",
-   "Everyone gets a vote and everyone gets a share",
-   "The old world ended — we decide what replaces it",
-   "A community that abandons its weakest has already lost"
-  ],
-  "dialogue_style": "Informal, warm, pragmatic, weary but determined",
-  "signature_quote": "If we turn into monsters just to survive the fallout, then the war already won.",
-  "relationships": {
-   "iron_garrison": "hostile",
-   "cult_of_ash_sign": "neutral",
-   "warlords_sector_4": "hostile"
-  },
-  "tribute_demands": [],
-  "tech_offerings": [
-   "civilian_medical_supplies",
-   "seed_exchange",
-   "trade_network_access",
-   "community_labor_pool"
-  ]
- },
- {
-  "faction_id": "cult_of_ash_sign",
-  "display_name": "The Cult of the Ash Sign",
-  "ideology": "Apocalyptic purification, radiation worship, ascetic martyrdom",
-  "origin_story": "A fanatical religious movement that arose in the highest fallout zones — areas too lethal for military patrols. Their prophet, known only as The Vessel, emerged from the ruins of a destroyed reactor unscathed — or so they claim. They believe the nuclear exchange was a divine purging of a corrupt world and view radiation sickness as a spiritual ordeal that cleanses the soul. Members willingly expose themselves to low-level radiation as acts of devotion.",
-  "key_beliefs": [
-   "The nuclear fire was divine judgment on a corrupt world",
-   "Radiation is the breath of the new god — breathe it and be cleansed",
-   "Death by fallout is not death; it is ascension to the Clear World",
-   "The old world's lies were burned away — only truth remains in the ash"
-  ],
-  "dialogue_style": "Arcane, rhythmic, serene, unsettlingly peaceful amidst horror",
-  "signature_quote": "Do not fear the glow, child. The fire burned away the old world's lies. Drink the ash and be renewed.",
-  "relationships": {
-   "iron_garrison": "suspicious",
-   "ash_militia": "neutral",
-   "warlords_sector_4": "neutral"
-  },
-  "tribute_demands": [
-   "ritual_participation_in_hot_zones"
-  ],
-  "tech_offerings": [
-   "rad_resistant_herbal_remedy",
-   "fallout_zone_navigation",
-   "ghoul_deterrent_herbs",
-   "radiation_prophecy"
-  ]
- },
- {
-  "faction_id": "warlords_sector_4",
-  "display_name": "The Warlords of Sector 4",
-  "ideology": "Mercenary opportunism, trade control, survival of the fittest",
-  "origin_story": "A loose syndicate of armed scavengers, former convicts, and ex-mercenaries who control key highway bottlenecks, fuel depots, and river crossings. They have no loyalty beyond the contract. Their leader, The Tollman, rose to power by being the only person who knew the bridge demolition codes after the Exchange. He charges passage in blood or bullets — literal or metaphorical.",
-  "key_beliefs": [
-   "Clean water costs blood or bullets — pick which you're paying with",
-   "Loyalty is a tradable commodity, like diesel or antibiotics",
-   "The strong don't survive because they're strong — they survive because they're useful",
-   "A contract is sacred; everything else is negotiable"
-  ],
-  "dialogue_style": "Rough, cynical, transactional, threatening but honest",
-  "signature_quote": "Clean water costs blood or bullets. Pick which one you're paying with today.",
-  "relationships": {
-   "iron_garrison": "hostile",
-   "ash_militia": "hostile",
-   "cult_of_ash_sign": "neutral"
-  },
-  "tribute_demands": [
-   "fuel",
-   "ammunition",
-   "medical_kits"
-  ],
-  "tech_offerings": [
-   "bridge_passage",
-   "smuggled_goods",
-   "mercenary_contracts",
-   "black_market_access"
-  ]
- },
- {
-  "faction_id": "faction_rebuilders",
-  "display_name": "The Rebuilders",
-  "ideology": "Municipal continuity. Public works, minuted decisions, and plans longer than the people making them",
-  "origin_story": "Three surviving employees of a district public works department walked out to the floodplain allotments in the first winter because it was the only good soil left in Sector 4, and began farming it in plot order off the pre-war waiting list. They call themselves the Works. The Rebuilders is what the Toll called them, and it was not meant kindly. The soil is good because the ground floods, and everything that floods there is contaminated, so they can grow food and cannot drink; two hundred people now live seventy days from thirst on the best farmland in the sector. They hold the only still and the only working autoclave for forty kilometres, which makes a caretaker's hut the sector's clinic. Their standing purchase order is brass -- door handles, nameplates, lamp bases -- because you cannot cast a valve seat out of scrap steel and every joint in a water system is brass or it is a leak with a schedule. Years on, the Works' most visible face in the district is no longer the allotments but the grain exchange it came to run at the old leaning silo: a market floor with its own scales, its own roster, and its own rope keeping weapons off the trading floor. Adaeze Okonkwo runs that floor the way the Works has always run everything — by name, by shift, by minute — and most traders who deal with the Rebuilders daily have never once seen the floodplain that started it.",
-  "key_beliefs": [
-   "Write it down or it did not happen and cannot be handed over",
-   "The waiting list is the waiting list; plot 114 is still plot 114",
-   "A thing worth building takes longer than the person building it",
-   "There is no one left in this sector who can do water, and that was chosen, not accidental",
-   "We do not ask where the brass came from",
-   "Fair scales or broken fingers, and the fingers get broken by consensus"
-  ],
-  "dialogue_style": "Minutes of a meeting. Carried, noted, deferred. Asks you to sign things and means it",
-  "signature_quote": "Motion: that we plant the north strip anyway. Carried, four to one. The one was me.",
-  "relationships": {
-   "iron_garrison": "suspicious",
-   "central_garrison": "hostile-open",
-   "ash_militia": "neutral",
-   "ash_sign": "wary",
-   "cult_of_ash_sign": "hostile",
-   "warlords_sector_4": "hostile"
-  },
-  "tribute_demands": [
-   "brass_fittings",
-   "water_purification_tablets",
-   "clean_water_by_the_barrel"
-  ],
-  "tech_offerings": [
-   "antibiotics",
-   "antiseptic",
-   "surgical_kit",
-   "seeds",
-   "sterile_field_surgery"
-  ]
- },
- {
-  "faction_id": "faction_black_ops",
-  "display_name": "Black Ops (Ex-Military Rebels)",
-  "ideology": "Denial of fixed infrastructure to any organised force, under a tasking order nobody has rescinded",
-  "origin_story": "Ninth Denial Detachment -- D/9 -- was given a continuity task before the Exchange: on loss of central command, deny the sector's bridges, pumping stations, rail cut and substations to any organised force. Not hold them. Deny them. The order to distinguish a hostile organised force from a friendly one was somebody else's job at a headquarters that is now a hole in the ground, so the distinction has never been made and the tasking has never been amended. They do not take ground; they lay charges and leave. Four are left. Doctrine requires friendly obstacles be marked so your own people do not walk into them, and they have never stopped complying, so every trap in Sector 4 is correctly signposted in a notation four living people can read. The Toll calls them Black Ops, which is wrong in all three particulars: they were never covert, they have had no orders in five years, and rebelling would require having stopped.",
-  "key_beliefs": [
-   "The tasking stands until it is rescinded by an authority that can authenticate",
-   "Obstacles are marked. That is not mercy, it is the annex",
-   "Ground held is ground you have to keep holding",
-   "Everyone organised is, by the clock we are still running on, an occupying force"
-  ],
-  "dialogue_style": "Flat and procedural. Distances in metres, times on the 24-hour clock, passive voice for anything they did. Does not threaten, because a threat is a negotiation",
-  "signature_quote": "The bridge was denied on the fourteenth. Nobody has rescinded that.",
-  "relationships": {
-   "iron_garrison": "hostile",
-   "ash_militia": "hostile",
-   "cult_of_ash_sign": "hostile",
-   "warlords_sector_4": "hostile"
-  },
-  "tribute_demands": [],
-  "tech_offerings": []
- },
- {
-  "faction_id": "faction_central_garrison",
-  "display_name": "The Central Garrison",
-  "ideology": "Martial continuity, ration discipline, the office as the only legitimate authority",
-  "origin_story": "The garrison remnant that held the sector capital through the exchange. Colonel-level officers run it as a standing command post: inventories, rosters, courts-martial, and a door policy that treats every civilian as a resource to be scheduled. It was the Iron Garrison until Day 238, when Colonel Voss did not report for the regular Sigma-7 briefing and was never seen again. Lieutenant Colonel Harven read the Continuity Reclamation Decree into the record before noon, and the checkpoints never missed a shift change. The Garrison renamed itself within the year, not to hide from what it had been, Harven said, but to stop answering for a man who was no longer giving orders. The old chain of command is still framed on the wall at Checkpoint Gamma. Nobody has taken it down.",
-  "key_beliefs": [
-   "The office is the state; the state is supply",
-   "Desertion is the only capital crime",
-   "Records are the first line of defence",
-   "The decree is the man now, not the man behind the decree",
-   "A command post that keeps its shift schedule has not fallen"
-  ],
-  "dialogue_style": "Formal, decree-numbered, refuses first person singular from officers on duty",
-  "signature_quote": "Reclamation is not repudiation.",
-  "relationships": {
-   "rebuilders": "hostile-open",
-   "ash_sign": "suspicious",
-   "warlords_sector_4": "transactional"
-  },
-  "tribute_demands": [
-   "grain_quota",
-   "conscript_labor"
-  ],
-  "tech_offerings": [
-   "checkpoint_patrol_escort",
-   "ration_priority_stamp"
-  ]
- },
- {
-  "faction_id": "faction_ash_sign",
-  "display_name": "The Ash Sign",
-  "ideology": "Redemptive catastrophe, ash as judgement, conversion through survival",
-  "origin_story": "The cult of the Ash Sign preaches that the exchange was a cleansing and the survivors are the chosen remnant. Their charity is real and their prices are theological. They recruit by hunger and by grief, and their judgement falls on those who refuse the sign. What began as small groups reading meaning into dosimeter numbers at the old survey cairn has, in the years since, become an organized presence with its own switchback trail up to a built shrine and its own shrine-keepers to read it. The public sermon is judgement and the chosen remnant; the shrine-keepers' actual daily discipline is narrower and stranger than that — reading the pattern of what the ash burns and what it spares as a text, and in the last year, making predictions that land with a precision the pilgrims find holy and a few outsiders find worth investigating.",
-  "key_beliefs": [
-   "The ash is the proof",
-   "The chosen survive; the rest are seed",
-   "Charity is owed, not given",
-   "The ash spares nothing by accident",
-   "What the fire chooses to leave standing is the only map worth trusting"
-  ],
-  "dialogue_style": "Liturgical, cadenced, quotes numbers like scripture, avoids the word luck",
-  "signature_quote": "The ash does not warn. It measures.",
-  "relationships": {
-   "central_garrison": "suspicious",
-   "rebuilders": "wary",
-   "warlords_sector_4": "neutral"
-  },
-  "tribute_demands": [
-   "ritual_participation_in_hot_zones",
-   "pilgrim_offerings"
-  ],
-  "tech_offerings": [
-   "rad_resistant_herbal_remedy",
-   "fallout_zone_navigation",
-   "blessed_ground_passage"
-  ]
- },
- {
-  "faction_id": "faction_scavengers",
-  "display_name": "The Scavengers",
-  "ideology": "Ruin extraction, no territory, everything is salvage",
-  "origin_story": "Loosely organised bands that work the ruins in rotation. They take apart the dead city for anything that still has use: wiring, glass, medicine, memory. They trade with everyone and belong to no one, and their caravans are the only economy the wasteland has.",
-  "key_beliefs": [
-   "The dead city is the last mine",
-   "Trade beats tribute",
-   "Never stay where the ash settles"
-  ]
- },
- {
-  "faction_id": "faction_hydro_barons",
-  "display_name": "The Hydro Barons",
-  "ideology": "Water engineering, aquifer claims, technical feudalism",
-  "origin_story": "The engineers who control the surviving water infrastructure: the aqueduct manifolds, the desalination plants, the pump caverns. They sell water by the measure, build alliances by the pipeline, and treat drought as a negotiation tool.",
-  "key_beliefs": [
-   "Water is the only real currency",
-   "Infrastructure is sovereignty",
-   "A measured gallon is a promise"
-  ]
- },
- {
-  "faction_id": "faction_unaligned",
-  "display_name": "The Unaligned",
-  "ideology": "No charter, no oath, no flag",
-  "origin_story": "The mass of survivors who belong to no faction: farmers on unclaimed ground, corridor dwellers, the people who keep their heads down and their hands busy. They are not organised, which is both their weakness and their defence.",
-  "key_beliefs": [
-   "Nobody speaks for us",
-   "Survival is not a uniform",
-   "The exchange took our names too"
-  ]
- },
- {
-  "faction_id": "faction_salt_freeholders",
-  "display_name": "The Salt Freeholders",
-  "ideology": "Salt rights, coastal claims, measured self-rule",
-  "origin_story": "Communities on the salt flats and the brine coast who hold their ground by right of the salt works. They are slow to trust, quick to ledger, and they measure a stranger by their salt: worth, weight, and willingness to work.",
-  "key_beliefs": [
-   "Salt is weight; weight is truth",
-   "The flats are ours by the pick",
-   "A handshake is a contract"
-  ]
- },
- {
-  "faction_id": "faction_railway_guild",
-  "display_name": "The Railway Guild",
-  "ideology": "Rails, steam, and schedules; the line is the law",
-  "origin_story": "The guild that keeps the surviving rail corridors running: switchyards, roundhouses, telegraph repeaters. They move what the wasteland needs and they collect their tolls in labour or goods, and the rails remember every debt.",
-  "key_beliefs": [
-   "The line runs on time or not at all",
-   "A train is a statement",
-   "The rails forgive nothing"
-  ]
- },
- {
-  "faction_id": "faction_ordnance_foundry",
-  "display_name": "The Ordnance Foundry",
-  "ideology": "Smelting, forging, and the quiet business of ammunition",
-  "origin_story": "The foundry crews who reprocess scrap into cartridges, casings, and tools. They sell to anyone with trade goods and no questions, and their forges never go cold. In a world of shortages, they are the nearest thing to a mint.",
-  "key_beliefs": [
-   "Steel remembers its shape",
-   "A loaded round is a vote",
-   "The forge has no politics"
-  ]
- },
- {
-  "faction_id": "faction_penal_battalion",
-  "display_name": "The Penal Battalion",
-  "ideology": "Debt, discipline, and the promise of redemption by labour",
-  "origin_story": "A unit formed from those convicted or condemned after the exchange, worked in the quarries and the trench works under armed supervision. The battalion believes the sentence can be served, the debt paid, the name cleaned. The office believes the same, for different reasons.",
-  "key_beliefs": [
-   "The debt can be worked off",
-   "Discipline is the only mercy",
-   "Names can be reclaimed"
-  ]
- },
- {
-  "faction_id": "faction_ash_militia",
-  "display_name": "The Ash Militia",
-  "ideology": "Local defence, neighbourhood watch, no ranks",
-  "origin_story": "Community militias that formed to hold ground after the garrison pulled back: farmers with rifles, mechanics with shotguns. They are neighbours first and soldiers second, and they fight for the street they live on, not for a flag.",
-  "key_beliefs": [
-   "The street is the unit",
-   "Defend, do not march",
-   "Every neighbour is a brother"
-  ]
- },
- {
-  "faction_id": "faction_supply_corps",
-  "display_name": "The Supply Corps",
-  "ideology": "Logistics, depots, and the paperwork of survival",
-  "origin_story": "The quartermaster network that keeps depots stocked and convoys rolling. They are not fighters; they are accountants with rifles, and they know exactly what everyone owes, stores, and wastes.",
-  "key_beliefs": [
-   "Count everything twice",
-   "A depot is a fortress",
-   "Paperwork is logistics"
-  ]
- },
- {
-  "faction_id": "raiders",
-  "display_name": "The Raiders",
-  "ideology": "Plunder, movement, and the logic of the ambush",
-  "origin_story": "Bands that live off the road and the raid, striking convoys and caches and vanishing into the ruins. They are not a state and not a tribe; they are a condition the wasteland produces, like rust or radiation.",
-  "key_beliefs": [
-   "Take what moves",
-   "The road belongs to the ambush",
-   "Mercy is a loaded word"
-  ]
- },
- {
-  "faction_id": "faction_forward_roster",
-  "display_name": "The Forward Roster",
-  "ideology": "The scale needs a fence, and somebody has to be the fence",
-  "origin_story": "Twelve people walked out of a Rebuilders roster meeting on Day 552 with their coats and their share of the small guard detail Adaeze Okonkwo had approved against her own instinct, and they have not walked back. They still call themselves Rebuilders when it's convenient and something else when it isn't, because nobody has agreed on a name yet and the arguing over one feels beside the point with a Garrison checkpoint sitting close enough to watch their fire at night. They keep the Works' habit of writing everything down. What they write down now is mostly who's on watch and who owes a shift, not minutes of a vote, because they have stopped pretending every decision here gets one.",
-  "key_beliefs": [
-   "A fed block still needs someone standing at the edge of it",
-   "We didn't leave the roster, we became its perimeter",
-   "Adaeze kept the ledger. We kept the argument that made the ledger necessary",
-   "Nobody elected us. Nobody un-elects a fence either"
-  ],
-  "dialogue_style": "Clipped, half military and half market — shift schedules and watch orders spoken in the same breath as trade terms",
-  "signature_quote": "We're not the Garrison. We just stand where the Garrison would, before the Garrison gets there.",
-  "relationships": {
-   "rebuilders": "estranged",
-   "central_garrison": "wary-truce",
-   "ash_sign": "neutral",
-   "warlords_sector_4": "transactional"
-  },
-  "tribute_demands": [
-   "watch_shifts",
-   "ammunition"
-  ],
-  "tech_offerings": [
-   "checkpoint_watch",
-   "escort_to_the_exchange"
-  ]
- }
-]
+}

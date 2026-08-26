@@ -1,202 +1,205 @@
-[
-  {
-    "log_id": "power_log_001",
-    "day": 38,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 65,
-    "voltage": "220V +/- 3V",
-    "fuel_consumed_litres": 8,
-    "notes": "Normal operation. All systems online. Kitchen, greenhouse, and water pump running simultaneously. Load within design parameters."
-  },
-  {
-    "log_id": "power_log_002",
-    "day": 38,
-    "author": "the_electrician",
-    "period": "1800-0600",
-    "generator_load_pct": 35,
-    "voltage": "220V +/- 2V",
-    "fuel_consumed_litres": 4,
-    "notes": "Night cycle. Reduced load. Only essential systems: ventilation, cold storage, radio standby. Fuel consumption predictable."
-  },
-  {
-    "log_id": "power_log_003",
-    "day": 42,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 72,
-    "voltage": "218V +/- 5V",
-    "fuel_consumed_litres": 9,
-    "notes": "Water pump offline for 8 hours due to seal failure (see equip_failure_002). Load dropped during outage then spiked when pump restarted. Voltage dip noted. the_plumber seal repair resolved the issue."
-  },
-  {
-    "log_id": "power_log_004",
-    "day": 45,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 80,
-    "voltage": "215V +/- 8V",
-    "fuel_consumed_litres": 11,
-    "notes": "Radiation storm day. All ventilation at maximum. Air filter bank running continuously. Load at 80 percent for 14 hours. Voltage fluctuation within tolerance but concerning. Fuel consumption elevated."
-  },
-  {
-    "log_id": "power_log_005",
-    "day": 48,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 55,
-    "voltage": "220V +/- 3V",
-    "fuel_consumed_litres": 7,
-    "notes": "Post-storm normalisation. Blast door hydraulic failure required manual winch operation (see equip_failure_004). the_electrician began Variac bypass design during this downtime."
-  },
-  {
-    "log_id": "power_log_006",
-    "day": 51,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 60,
-    "voltage": "220V +/- 4V",
-    "fuel_consumed_litres": 7,
-    "notes": "Radio transmitter output reduced 40 percent due to amplifier tube degradation (see equip_failure_005). Reduced transmitter load saves approximately 0.5 litres fuel per day. Minor saving."
-  },
-  {
-    "log_id": "power_log_007",
-    "day": 54,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 68,
-    "voltage": "219V +/- 5V",
-    "fuel_consumed_litres": 8,
-    "notes": "Greenhouse grow light ballast failure affecting 2 of 6 banks (see equip_failure_006). Light load reduced. the_electrician rebuilt ballast with salvaged capacitors. Load restored to 68 percent."
-  },
-  {
-    "log_id": "power_log_008",
-    "day": 58,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 62,
-    "voltage": "220V +/- 3V",
-    "fuel_consumed_litres": 7,
-    "notes": "Stable day. All systems nominal. the_electrician used downtime to begin Variac bypass wiring. Parts sourced from salvage inventory."
-  },
-  {
-    "log_id": "power_log_009",
-    "day": 63,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 64,
-    "voltage": "220V +/- 3V",
-    "fuel_consumed_litres": 8,
-    "notes": "UV sterilisation lamp end-of-life (see equip_failure_009). Water treatment switched to chemical method. No significant power change. the_electrician monitoring hypochlorite supply."
-  },
-  {
-    "log_id": "power_log_010",
-    "day": 65,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 90,
-    "voltage": "260V spike then 220V manual",
-    "fuel_consumed_litres": 12,
-    "notes": "CRITICAL: Voltage regulator failed. Output spiked to 260V. the_electrician manually disconnected load within 30 seconds. No equipment damage. Variac bypass installed as permanent fix. 12 hours downtime. See equip_failure_010."
-  },
-  {
-    "log_id": "power_log_011",
-    "day": 68,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 58,
-    "voltage": "220V +/- 2V (Variac)",
-    "fuel_consumed_litres": 7,
-    "notes": "Variac bypass operational. Voltage control is manual but stable. the_electrician must adjust during load changes. Fuel consumption down 8 percent from pre-failure baseline. The bypass is working."
-  },
-  {
-    "log_id": "power_log_012",
-    "day": 71,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 60,
-    "voltage": "220V +/- 2V (Variac)",
-    "fuel_consumed_litres": 7,
-    "notes": "Stable operation under Variac control. the_electrician has developed a load-change protocol: adjust voltage before switching large loads. This prevents the spikes that destroyed the regulator."
-  },
-  {
-    "log_id": "power_log_013",
-    "day": 74,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 70,
-    "voltage": "219V +/- 3V (Variac)",
-    "fuel_consumed_litres": 9,
-    "notes": "Cold storage compressor running continuously due to refrigerant leak (see equip_failure_013). Elevated load. the_electrician monitoring compressor amperage for signs of motor stress."
-  },
-  {
-    "log_id": "power_log_014",
-    "day": 77,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 62,
-    "voltage": "220V +/- 2V (Variac)",
-    "fuel_consumed_litres": 7,
-    "notes": "Cold storage compressor cycling normally after seal repair. Load returned to normal. Blast door winch cable replaced (see equip_failure_014). All critical systems operational."
-  },
-  {
-    "log_id": "power_log_015",
-    "day": 80,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 60,
-    "voltage": "220V +/- 2V (Variac)",
-    "fuel_consumed_litres": 7,
-    "notes": "Radio antenna capacitor cleaned and sealed (see equip_failure_015). Reception improved. No power impact. Monthly fuel consumption trending at 210 litres. At current rate, fuel reserves at 43 days."
-  },
-  {
-    "log_id": "power_log_016",
-    "day": 83,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 63,
-    "voltage": "220V +/- 2V (Variac)",
-    "fuel_consumed_litres": 8,
-    "notes": "Water pump float valve failure caused 200 litre water loss (see equip_failure_016). No power impact. the_electrician installed manual override on the valve. the_plumber monitoring."
-  },
-  {
-    "log_id": "power_log_017",
-    "day": 86,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 55,
-    "voltage": "220V +/- 2V (Variac)",
-    "fuel_consumed_litres": 6,
-    "notes": "Generator fuel filter clogged. Engine running at 60 percent power (see equip_failure_017). Load reduced to match. Filter replaced. the_chemist fuel treatment added. Fuel consumption temporarily reduced during low-power operation."
-  },
-  {
-    "log_id": "power_log_018",
-    "day": 89,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 60,
-    "voltage": "220V +/- 2V (Variac)",
-    "fuel_consumed_litres": 7,
-    "notes": "Ventilation baffle re-anchored (see equip_failure_018). No power impact. TEG output reduced to 1.2W (see equip_failure_019). TEG now supplements approximately 0.5 litres fuel savings per day. Marginal but real."
-  },
-  {
-    "log_id": "power_log_019",
-    "day": 92,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 60,
-    "voltage": "220V +/- 2V (Variac)",
-    "fuel_consumed_litres": 7,
-    "notes": "TEG thermoelectric module replaced with last spare. Output restored to 2.8W. No more spare modules. TEG operating schedule reduced to 8 hours per day to extend module life."
-  },
-  {
-    "log_id": "power_log_020",
-    "day": 95,
-    "author": "the_electrician",
-    "period": "0600-1800",
-    "generator_load_pct": 45,
-    "voltage": "220V +/- 2V (Variac)",
-    "fuel_consumed_litres": 5,
-    "notes": "CRITICAL: Generator exhaust gasket failure. CO detected. Generator room evacuated for 2 hours (see equip_failure_020). Generator offline for 14 hours total. the_mechanic fabricated new gasket. CO monitors now permanently installed. Generator back online at reduced load during recovery."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "log_id": "power_log_001",
+      "day": 38,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 65,
+      "voltage": "220V +/- 3V",
+      "fuel_consumed_litres": 8,
+      "notes": "Normal operation. All systems online. Kitchen, greenhouse, and water pump running simultaneously. Load within design parameters."
+    },
+    {
+      "log_id": "power_log_002",
+      "day": 38,
+      "author": "the_electrician",
+      "period": "1800-0600",
+      "generator_load_pct": 35,
+      "voltage": "220V +/- 2V",
+      "fuel_consumed_litres": 4,
+      "notes": "Night cycle. Reduced load. Only essential systems: ventilation, cold storage, radio standby. Fuel consumption predictable."
+    },
+    {
+      "log_id": "power_log_003",
+      "day": 42,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 72,
+      "voltage": "218V +/- 5V",
+      "fuel_consumed_litres": 9,
+      "notes": "Water pump offline for 8 hours due to seal failure (see equip_failure_002). Load dropped during outage then spiked when pump restarted. Voltage dip noted. the_plumber seal repair resolved the issue."
+    },
+    {
+      "log_id": "power_log_004",
+      "day": 45,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 80,
+      "voltage": "215V +/- 8V",
+      "fuel_consumed_litres": 11,
+      "notes": "Radiation storm day. All ventilation at maximum. Air filter bank running continuously. Load at 80 percent for 14 hours. Voltage fluctuation within tolerance but concerning. Fuel consumption elevated."
+    },
+    {
+      "log_id": "power_log_005",
+      "day": 48,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 55,
+      "voltage": "220V +/- 3V",
+      "fuel_consumed_litres": 7,
+      "notes": "Post-storm normalisation. Blast door hydraulic failure required manual winch operation (see equip_failure_004). the_electrician began Variac bypass design during this downtime."
+    },
+    {
+      "log_id": "power_log_006",
+      "day": 51,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 60,
+      "voltage": "220V +/- 4V",
+      "fuel_consumed_litres": 7,
+      "notes": "Radio transmitter output reduced 40 percent due to amplifier tube degradation (see equip_failure_005). Reduced transmitter load saves approximately 0.5 litres fuel per day. Minor saving."
+    },
+    {
+      "log_id": "power_log_007",
+      "day": 54,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 68,
+      "voltage": "219V +/- 5V",
+      "fuel_consumed_litres": 8,
+      "notes": "Greenhouse grow light ballast failure affecting 2 of 6 banks (see equip_failure_006). Light load reduced. the_electrician rebuilt ballast with salvaged capacitors. Load restored to 68 percent."
+    },
+    {
+      "log_id": "power_log_008",
+      "day": 58,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 62,
+      "voltage": "220V +/- 3V",
+      "fuel_consumed_litres": 7,
+      "notes": "Stable day. All systems nominal. the_electrician used downtime to begin Variac bypass wiring. Parts sourced from salvage inventory."
+    },
+    {
+      "log_id": "power_log_009",
+      "day": 63,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 64,
+      "voltage": "220V +/- 3V",
+      "fuel_consumed_litres": 8,
+      "notes": "UV sterilisation lamp end-of-life (see equip_failure_009). Water treatment switched to chemical method. No significant power change. the_electrician monitoring hypochlorite supply."
+    },
+    {
+      "log_id": "power_log_010",
+      "day": 65,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 90,
+      "voltage": "260V spike then 220V manual",
+      "fuel_consumed_litres": 12,
+      "notes": "CRITICAL: Voltage regulator failed. Output spiked to 260V. the_electrician manually disconnected load within 30 seconds. No equipment damage. Variac bypass installed as permanent fix. 12 hours downtime. See equip_failure_010."
+    },
+    {
+      "log_id": "power_log_011",
+      "day": 68,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 58,
+      "voltage": "220V +/- 2V (Variac)",
+      "fuel_consumed_litres": 7,
+      "notes": "Variac bypass operational. Voltage control is manual but stable. the_electrician must adjust during load changes. Fuel consumption down 8 percent from pre-failure baseline. The bypass is working."
+    },
+    {
+      "log_id": "power_log_012",
+      "day": 71,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 60,
+      "voltage": "220V +/- 2V (Variac)",
+      "fuel_consumed_litres": 7,
+      "notes": "Stable operation under Variac control. the_electrician has developed a load-change protocol: adjust voltage before switching large loads. This prevents the spikes that destroyed the regulator."
+    },
+    {
+      "log_id": "power_log_013",
+      "day": 74,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 70,
+      "voltage": "219V +/- 3V (Variac)",
+      "fuel_consumed_litres": 9,
+      "notes": "Cold storage compressor running continuously due to refrigerant leak (see equip_failure_013). Elevated load. the_electrician monitoring compressor amperage for signs of motor stress."
+    },
+    {
+      "log_id": "power_log_014",
+      "day": 77,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 62,
+      "voltage": "220V +/- 2V (Variac)",
+      "fuel_consumed_litres": 7,
+      "notes": "Cold storage compressor cycling normally after seal repair. Load returned to normal. Blast door winch cable replaced (see equip_failure_014). All critical systems operational."
+    },
+    {
+      "log_id": "power_log_015",
+      "day": 80,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 60,
+      "voltage": "220V +/- 2V (Variac)",
+      "fuel_consumed_litres": 7,
+      "notes": "Radio antenna capacitor cleaned and sealed (see equip_failure_015). Reception improved. No power impact. Monthly fuel consumption trending at 210 litres. At current rate, fuel reserves at 43 days."
+    },
+    {
+      "log_id": "power_log_016",
+      "day": 83,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 63,
+      "voltage": "220V +/- 2V (Variac)",
+      "fuel_consumed_litres": 8,
+      "notes": "Water pump float valve failure caused 200 litre water loss (see equip_failure_016). No power impact. the_electrician installed manual override on the valve. the_plumber monitoring."
+    },
+    {
+      "log_id": "power_log_017",
+      "day": 86,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 55,
+      "voltage": "220V +/- 2V (Variac)",
+      "fuel_consumed_litres": 6,
+      "notes": "Generator fuel filter clogged. Engine running at 60 percent power (see equip_failure_017). Load reduced to match. Filter replaced. the_chemist fuel treatment added. Fuel consumption temporarily reduced during low-power operation."
+    },
+    {
+      "log_id": "power_log_018",
+      "day": 89,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 60,
+      "voltage": "220V +/- 2V (Variac)",
+      "fuel_consumed_litres": 7,
+      "notes": "Ventilation baffle re-anchored (see equip_failure_018). No power impact. TEG output reduced to 1.2W (see equip_failure_019). TEG now supplements approximately 0.5 litres fuel savings per day. Marginal but real."
+    },
+    {
+      "log_id": "power_log_019",
+      "day": 92,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 60,
+      "voltage": "220V +/- 2V (Variac)",
+      "fuel_consumed_litres": 7,
+      "notes": "TEG thermoelectric module replaced with last spare. Output restored to 2.8W. No more spare modules. TEG operating schedule reduced to 8 hours per day to extend module life."
+    },
+    {
+      "log_id": "power_log_020",
+      "day": 95,
+      "author": "the_electrician",
+      "period": "0600-1800",
+      "generator_load_pct": 45,
+      "voltage": "220V +/- 2V (Variac)",
+      "fuel_consumed_litres": 5,
+      "notes": "CRITICAL: Generator exhaust gasket failure. CO detected. Generator room evacuated for 2 hours (see equip_failure_020). Generator offline for 14 hours total. the_mechanic fabricated new gasket. CO monitors now permanently installed. Generator back online at reduced load during recovery."
+    }
+  ]
+}

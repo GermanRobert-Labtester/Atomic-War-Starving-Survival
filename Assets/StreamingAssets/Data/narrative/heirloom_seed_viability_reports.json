@@ -1,72 +1,117 @@
-[
-  {
-    "id": "heirloom_seed_inbreeding_depression_isolation_distance",
-    "landrace_variety_id": "CHEROKEE_PURPLE_HERITAGE_TOMATO",
-    "generation_cycle_number": 4.0,
-    "parent_population_size": 28.0,
-    "phenotype_degeneration_pct": 14.5,
-    "timestamp_relative": "YEAR_03_HEIRLOOM_01",
-    "tags": ["seed_banking", "inbreeding_depression", "genetic_drift", "isolation_distance", "heirloom"],
-    "prose": "Restricting the seed-saving parent population to only 28 plants inside an isolated greenhouse bay triggered inbreeding depression. Fourth-generation fruits exhibited blossom-end fasciation, reduced pollen fertility, and a 14.5% drop in yield."
-  },
-  {
-    "id": "heirloom_seed_recalcitrant_citrus_drying_death",
-    "landrace_variety_id": "TRIFOLIATE_HARDY_ORANGE_SEED",
-    "generation_cycle_number": 1.0,
-    "parent_population_size": 12.0,
-    "phenotype_degeneration_pct": 100.0,
-    "timestamp_relative": "YEAR_05_HEIRLOOM_03",
-    "tags": ["seed_banking", "recalcitrant_seed", "desiccation_intolerance", "citrus", "viability_loss"],
-    "prose": "Attempting standard silica gel desiccation on recalcitrant trifoliate citrus seeds proved fatal. Unlike orthodox grains, the high-moisture embryonic axes suffered irreversible protein denaturation and 100% death once seed moisture dropped below 22%."
-  },
-  {
-    "id": "heirloom_seed_grow_out_regeneration_cycle_year_5",
-    "landrace_variety_id": "BLOODY_BUTCHER_FLINT_CORN",
-    "generation_cycle_number": 2.0,
-    "parent_population_size": 250.0,
-    "phenotype_degeneration_pct": 2.0,
-    "timestamp_relative": "YEAR_08_HEIRLOOM_02",
-    "tags": ["seed_banking", "grow_out", "regeneration_cycle", "seed_harvest", "genetic_preservation"],
-    "prose": "Initiating a scheduled Year-5 grow-out of 250 flint corn plants in Hydroponics Bay 4 refreshed the seed vault inventory. Harvesting 40 kg of fresh, disease-free seed replenished emergency reserves with 98% germination vigor."
-  },
-  {
-    "id": "heirloom_seed_epigenetic_low_light_adaptation",
-    "landrace_variety_id": "BLUE_LAKE_POLE_BEAN_BUNKER_SELECTION",
-    "generation_cycle_number": 3.0,
-    "parent_population_size": 80.0,
-    "phenotype_degeneration_pct": 5.0,
-    "timestamp_relative": "YEAR_11_HEIRLOOM_04",
-    "tags": ["seed_banking", "epigenetic", "low_light", "shade_adaptation", "chlorophyll_ratio"],
-    "prose": "Third-generation bean selections grown exclusively under dim 80-watt bunker LED arrays displayed pronounced morphological adaptations: leaves grew 35% thinner with doubled surface area, and chlorophyll b synthesis increased to capture blue photon wavelengths."
-  },
-  {
-    "id": "heirloom_seed_genetic_drift_allele_loss_cull",
-    "landrace_variety_id": "BLACK_BEAUTY_ZUCCHINI_SQUASH",
-    "generation_cycle_number": 5.0,
-    "parent_population_size": 15.0,
-    "phenotype_degeneration_pct": 22.0,
-    "timestamp_relative": "YEAR_14_HEIRLOOM_01",
-    "tags": ["seed_banking", "allele_loss", "genetic_drift", "culling", "phenotypic_drift"],
-    "prose": "Aggressively culling slow-sprouting squash seedlings inadvertently stripped the landrace of its rare cold-soil emergence alleles. Later generations germinated vigorously at 25°C but failed completely when planted into 10°C early spring soil."
-  },
-  {
-    "id": "heirloom_seed_hand_pollination_camel_hair_brush",
-    "landrace_variety_id": "BRANDYWINE_POTATO_LEAF_TOMATO",
-    "generation_cycle_number": 3.0,
-    "parent_population_size": 40.0,
-    "phenotype_degeneration_pct": 0.5,
-    "timestamp_relative": "YEAR_17_HEIRLOOM_03",
-    "tags": ["seed_banking", "hand_pollination", "camel_hair", "bagging", "pure_line"],
-    "prose": "Agronomy aides bagged un-opened flower buds with glassine envelopes and hand-pollinated stigmas using sterilized camel-hair brushes. The rigorous manual crossing prevented bumblebee pollen transfer from neighboring hybrid test plots, preserving varietal purity."
-  },
-  {
-    "id": "heirloom_seed_fermentation_tomato_gel_sarcotesta_removal",
-    "landrace_variety_id": "ROMA_PASTE_OPEN_POLLINATED",
-    "generation_cycle_number": 4.0,
-    "parent_population_size": 60.0,
-    "phenotype_degeneration_pct": 1.2,
-    "timestamp_relative": "YEAR_20_HEIRLOOM_01",
-    "tags": ["seed_banking", "seed_fermentation", "sarcotesta", "bacterial_canker", "germination_inhibitor"],
-    "prose": "Fermenting crushed tomato seed pulp in open crocks for 72 hours encouraged natural yeast and lactic acid bacteria blooms. The biological fermentation digested gelatinous sarcotesta envelopes and eliminated seed-borne bacterial canker pathogens."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "heirloom_seed_inbreeding_depression_isolation_distance",
+      "landrace_variety_id": "CHEROKEE_PURPLE_HERITAGE_TOMATO",
+      "generation_cycle_number": 4.0,
+      "parent_population_size": 28.0,
+      "phenotype_degeneration_pct": 14.5,
+      "timestamp_relative": "YEAR_03_HEIRLOOM_01",
+      "tags": [
+        "seed_banking",
+        "inbreeding_depression",
+        "genetic_drift",
+        "isolation_distance",
+        "heirloom"
+      ],
+      "prose": "Restricting the seed-saving parent population to only 28 plants inside an isolated greenhouse bay triggered inbreeding depression. Fourth-generation fruits exhibited blossom-end fasciation, reduced pollen fertility, and a 14.5% drop in yield."
+    },
+    {
+      "id": "heirloom_seed_recalcitrant_citrus_drying_death",
+      "landrace_variety_id": "TRIFOLIATE_HARDY_ORANGE_SEED",
+      "generation_cycle_number": 1.0,
+      "parent_population_size": 12.0,
+      "phenotype_degeneration_pct": 100.0,
+      "timestamp_relative": "YEAR_05_HEIRLOOM_03",
+      "tags": [
+        "seed_banking",
+        "recalcitrant_seed",
+        "desiccation_intolerance",
+        "citrus",
+        "viability_loss"
+      ],
+      "prose": "Attempting standard silica gel desiccation on recalcitrant trifoliate citrus seeds proved fatal. Unlike orthodox grains, the high-moisture embryonic axes suffered irreversible protein denaturation and 100% death once seed moisture dropped below 22%."
+    },
+    {
+      "id": "heirloom_seed_grow_out_regeneration_cycle_year_5",
+      "landrace_variety_id": "BLOODY_BUTCHER_FLINT_CORN",
+      "generation_cycle_number": 2.0,
+      "parent_population_size": 250.0,
+      "phenotype_degeneration_pct": 2.0,
+      "timestamp_relative": "YEAR_08_HEIRLOOM_02",
+      "tags": [
+        "seed_banking",
+        "grow_out",
+        "regeneration_cycle",
+        "seed_harvest",
+        "genetic_preservation"
+      ],
+      "prose": "Initiating a scheduled Year-5 grow-out of 250 flint corn plants in Hydroponics Bay 4 refreshed the seed vault inventory. Harvesting 40 kg of fresh, disease-free seed replenished emergency reserves with 98% germination vigor."
+    },
+    {
+      "id": "heirloom_seed_epigenetic_low_light_adaptation",
+      "landrace_variety_id": "BLUE_LAKE_POLE_BEAN_BUNKER_SELECTION",
+      "generation_cycle_number": 3.0,
+      "parent_population_size": 80.0,
+      "phenotype_degeneration_pct": 5.0,
+      "timestamp_relative": "YEAR_11_HEIRLOOM_04",
+      "tags": [
+        "seed_banking",
+        "epigenetic",
+        "low_light",
+        "shade_adaptation",
+        "chlorophyll_ratio"
+      ],
+      "prose": "Third-generation bean selections grown exclusively under dim 80-watt bunker LED arrays displayed pronounced morphological adaptations: leaves grew 35% thinner with doubled surface area, and chlorophyll b synthesis increased to capture blue photon wavelengths."
+    },
+    {
+      "id": "heirloom_seed_genetic_drift_allele_loss_cull",
+      "landrace_variety_id": "BLACK_BEAUTY_ZUCCHINI_SQUASH",
+      "generation_cycle_number": 5.0,
+      "parent_population_size": 15.0,
+      "phenotype_degeneration_pct": 22.0,
+      "timestamp_relative": "YEAR_14_HEIRLOOM_01",
+      "tags": [
+        "seed_banking",
+        "allele_loss",
+        "genetic_drift",
+        "culling",
+        "phenotypic_drift"
+      ],
+      "prose": "Aggressively culling slow-sprouting squash seedlings inadvertently stripped the landrace of its rare cold-soil emergence alleles. Later generations germinated vigorously at 25°C but failed completely when planted into 10°C early spring soil."
+    },
+    {
+      "id": "heirloom_seed_hand_pollination_camel_hair_brush",
+      "landrace_variety_id": "BRANDYWINE_POTATO_LEAF_TOMATO",
+      "generation_cycle_number": 3.0,
+      "parent_population_size": 40.0,
+      "phenotype_degeneration_pct": 0.5,
+      "timestamp_relative": "YEAR_17_HEIRLOOM_03",
+      "tags": [
+        "seed_banking",
+        "hand_pollination",
+        "camel_hair",
+        "bagging",
+        "pure_line"
+      ],
+      "prose": "Agronomy aides bagged un-opened flower buds with glassine envelopes and hand-pollinated stigmas using sterilized camel-hair brushes. The rigorous manual crossing prevented bumblebee pollen transfer from neighboring hybrid test plots, preserving varietal purity."
+    },
+    {
+      "id": "heirloom_seed_fermentation_tomato_gel_sarcotesta_removal",
+      "landrace_variety_id": "ROMA_PASTE_OPEN_POLLINATED",
+      "generation_cycle_number": 4.0,
+      "parent_population_size": 60.0,
+      "phenotype_degeneration_pct": 1.2,
+      "timestamp_relative": "YEAR_20_HEIRLOOM_01",
+      "tags": [
+        "seed_banking",
+        "seed_fermentation",
+        "sarcotesta",
+        "bacterial_canker",
+        "germination_inhibitor"
+      ],
+      "prose": "Fermenting crushed tomato seed pulp in open crocks for 72 hours encouraged natural yeast and lactic acid bacteria blooms. The biological fermentation digested gelatinous sarcotesta envelopes and eliminated seed-borne bacterial canker pathogens."
+    }
+  ]
+}

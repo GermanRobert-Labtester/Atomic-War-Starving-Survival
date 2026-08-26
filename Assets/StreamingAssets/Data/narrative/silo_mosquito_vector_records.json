@@ -1,72 +1,117 @@
-[
-  {
-    "id": "mosquito_vector_flooded_silo_breeding_swarm",
-    "silo_location_id": "MISSILE_SILO_BRAVO_04_WATER",
-    "vector_species": "CULEX_SUBTERRANEUS_SILO",
-    "larval_density_per_liter": 8400,
-    "pathogen_transmitted": "BUNKER_HEMORRHAGIC_FEVER_VIRUS",
-    "timestamp_relative": "YEAR_03_VECTOR_SURVEY_01",
-    "tags": ["entomology", "mosquito", "silo", "vector", "epidemic"],
-    "prose": "Four thousand cubic meters of stagnant, lukewarm groundwater in the abandoned missile silo produced an estimated ten million adult mosquitoes per month. Swarms emerged as dense black clouds from the silo exhaust stack every evening at sunset, invading the shelter intake grates."
-  },
-  {
-    "id": "mosquito_vector_anticoagulant_salivary_paralysis",
-    "silo_location_id": "LOWER_CONTAINMENT_SUMP_PIT",
-    "vector_species": "AEDES_NEUROTOXICUS",
-    "larval_density_per_liter": 3200,
-    "pathogen_transmitted": "LOCALIZED_PARALYTIC_SALIVARY_TOXIN",
-    "timestamp_relative": "YEAR_06_VECTOR_SURVEY_03",
-    "tags": ["entomology", "mosquito", "neurotoxin", "paralysis", "bites"],
-    "prose": "The female's salivary glands produce a novel peptide anticoagulant that also inhibits peripheral motor endplates. A dweller receiving fifty bites on an exposed arm suffered complete flaccid motor paralysis of the forearm lasting seventy-two hours."
-  },
-  {
-    "id": "mosquito_vector_blood_spore_filarial_transmission",
-    "silo_location_id": "HYDRO_CULTIVATION_DRAIN_TROUGH",
-    "vector_species": "ANOPHELES_FILARIOSUS_MUT",
-    "larval_density_per_liter": 1950,
-    "pathogen_transmitted": "RADIO_FILARIAL_NEMATODE_MICROFILARIA",
-    "timestamp_relative": "YEAR_09_VECTOR_SURVEY_02",
-    "tags": ["entomology", "mosquito", "filaria", "nematode", "parasite"],
-    "prose": "Vector of a microscopic filarial roundworm that infests human lymphatic vessels. Fourteen hydroponic laborers developed severe lower-extremity lymph stasis and chronic elephantiasis after working barefoot in the drainage channels."
-  },
-  {
-    "id": "mosquito_vector_co2_exhaust_draft_swarming",
-    "silo_location_id": "SECTOR_1_MAIN_EXHAUST_RISER",
-    "vector_species": "CULEX_CARBONICUS_ATTRACTOR",
-    "larval_density_per_liter": 5600,
-    "pathogen_transmitted": "OPPORTUNISTIC_STAPHYLOCOCCAL_BACTEREMIA",
-    "timestamp_relative": "YEAR_12_VECTOR_SURVEY_04",
-    "tags": ["entomology", "mosquito", "co2_tracking", "air_shaft", "swarms"],
-    "prose": "Insects demonstrate hyper-acute chemoreception for carbon dioxide, flying up-gradient against two-meter-per-second bunker exhaust drafts to penetrate unshielded fan housings and infiltrate the living dormitories."
-  },
-  {
-    "id": "mosquito_vector_kerosene_surface_film_larvicide",
-    "silo_location_id": "RAW_WATER_STORAGE_CISTERN_B",
-    "vector_species": "CULEX_SUBTERRANEUS_SILO",
-    "larval_density_per_liter": 120,
-    "pathogen_transmitted": "NONE_CONTROL_TREATMENT",
-    "timestamp_relative": "YEAR_15_VECTOR_SURVEY_01",
-    "tags": ["entomology", "mosquito", "larvicide", "kerosene_film", "sanitation"],
-    "prose": "Sanitation crews poured two hundred liters of waste transformer oil and kerosene across the cistern surface to form a microscopic monomolecular film. The oil suffocated 98% of the surface-breathing pupae within twenty-four hours, though the water required heavy charcoal skimming before use."
-  },
-  {
-    "id": "mosquito_vector_thermal_infrared_antenna_seeking",
-    "silo_location_id": "INFIRMARY_TRIAGE_VERANDA",
-    "vector_species": "AEDES_THERMOPHILUS_HUNT",
-    "larval_density_per_liter": 4100,
-    "pathogen_transmitted": "SECONDARY_STREPTOCOCCAL_CELLULITIS",
-    "timestamp_relative": "YEAR_17_VECTOR_SURVEY_02",
-    "tags": ["entomology", "mosquito", "thermal_pit", "infirmary", "blood_feeder"],
-    "prose": "Antennal sensilla calibrated to detect skin temperature differentials as low as 0.05°C. Swarms selectively target febrile infirmary patients, landing in dense clusters on burning foreheads and infected open wound margins."
-  },
-  {
-    "id": "mosquito_vector_chitinous_pyrethroid_resistance",
-    "silo_location_id": "CENTRAL_DORMITORY_ATRIUM",
-    "vector_species": "CULEX_RESISTENS_SUPERIOR",
-    "larval_density_per_liter": 7200,
-    "pathogen_transmitted": "CHRONIC_PULMONARY_HYPERSENSITIVITY",
-    "timestamp_relative": "YEAR_20_VECTOR_SURVEY_01",
-    "tags": ["entomology", "mosquito", "insecticide_resistance", "pyrethroid", "fogging"],
-    "prose": "Thermal fogging with pre-war permethrin canisters achieved zero insect mortality. Biochemical testing confirmed a high-expression cytochrome P450 mutation and thickened cuticle that metabolizes synthetic neurotoxic pyrethroids in less than eight minutes."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "mosquito_vector_flooded_silo_breeding_swarm",
+      "silo_location_id": "MISSILE_SILO_BRAVO_04_WATER",
+      "vector_species": "CULEX_SUBTERRANEUS_SILO",
+      "larval_density_per_liter": 8400,
+      "pathogen_transmitted": "BUNKER_HEMORRHAGIC_FEVER_VIRUS",
+      "timestamp_relative": "YEAR_03_VECTOR_SURVEY_01",
+      "tags": [
+        "entomology",
+        "mosquito",
+        "silo",
+        "vector",
+        "epidemic"
+      ],
+      "prose": "Four thousand cubic meters of stagnant, lukewarm groundwater in the abandoned missile silo produced an estimated ten million adult mosquitoes per month. Swarms emerged as dense black clouds from the silo exhaust stack every evening at sunset, invading the shelter intake grates."
+    },
+    {
+      "id": "mosquito_vector_anticoagulant_salivary_paralysis",
+      "silo_location_id": "LOWER_CONTAINMENT_SUMP_PIT",
+      "vector_species": "AEDES_NEUROTOXICUS",
+      "larval_density_per_liter": 3200,
+      "pathogen_transmitted": "LOCALIZED_PARALYTIC_SALIVARY_TOXIN",
+      "timestamp_relative": "YEAR_06_VECTOR_SURVEY_03",
+      "tags": [
+        "entomology",
+        "mosquito",
+        "neurotoxin",
+        "paralysis",
+        "bites"
+      ],
+      "prose": "The female's salivary glands produce a novel peptide anticoagulant that also inhibits peripheral motor endplates. A dweller receiving fifty bites on an exposed arm suffered complete flaccid motor paralysis of the forearm lasting seventy-two hours."
+    },
+    {
+      "id": "mosquito_vector_blood_spore_filarial_transmission",
+      "silo_location_id": "HYDRO_CULTIVATION_DRAIN_TROUGH",
+      "vector_species": "ANOPHELES_FILARIOSUS_MUT",
+      "larval_density_per_liter": 1950,
+      "pathogen_transmitted": "RADIO_FILARIAL_NEMATODE_MICROFILARIA",
+      "timestamp_relative": "YEAR_09_VECTOR_SURVEY_02",
+      "tags": [
+        "entomology",
+        "mosquito",
+        "filaria",
+        "nematode",
+        "parasite"
+      ],
+      "prose": "Vector of a microscopic filarial roundworm that infests human lymphatic vessels. Fourteen hydroponic laborers developed severe lower-extremity lymph stasis and chronic elephantiasis after working barefoot in the drainage channels."
+    },
+    {
+      "id": "mosquito_vector_co2_exhaust_draft_swarming",
+      "silo_location_id": "SECTOR_1_MAIN_EXHAUST_RISER",
+      "vector_species": "CULEX_CARBONICUS_ATTRACTOR",
+      "larval_density_per_liter": 5600,
+      "pathogen_transmitted": "OPPORTUNISTIC_STAPHYLOCOCCAL_BACTEREMIA",
+      "timestamp_relative": "YEAR_12_VECTOR_SURVEY_04",
+      "tags": [
+        "entomology",
+        "mosquito",
+        "co2_tracking",
+        "air_shaft",
+        "swarms"
+      ],
+      "prose": "Insects demonstrate hyper-acute chemoreception for carbon dioxide, flying up-gradient against two-meter-per-second bunker exhaust drafts to penetrate unshielded fan housings and infiltrate the living dormitories."
+    },
+    {
+      "id": "mosquito_vector_kerosene_surface_film_larvicide",
+      "silo_location_id": "RAW_WATER_STORAGE_CISTERN_B",
+      "vector_species": "CULEX_SUBTERRANEUS_SILO",
+      "larval_density_per_liter": 120,
+      "pathogen_transmitted": "NONE_CONTROL_TREATMENT",
+      "timestamp_relative": "YEAR_15_VECTOR_SURVEY_01",
+      "tags": [
+        "entomology",
+        "mosquito",
+        "larvicide",
+        "kerosene_film",
+        "sanitation"
+      ],
+      "prose": "Sanitation crews poured two hundred liters of waste transformer oil and kerosene across the cistern surface to form a microscopic monomolecular film. The oil suffocated 98% of the surface-breathing pupae within twenty-four hours, though the water required heavy charcoal skimming before use."
+    },
+    {
+      "id": "mosquito_vector_thermal_infrared_antenna_seeking",
+      "silo_location_id": "INFIRMARY_TRIAGE_VERANDA",
+      "vector_species": "AEDES_THERMOPHILUS_HUNT",
+      "larval_density_per_liter": 4100,
+      "pathogen_transmitted": "SECONDARY_STREPTOCOCCAL_CELLULITIS",
+      "timestamp_relative": "YEAR_17_VECTOR_SURVEY_02",
+      "tags": [
+        "entomology",
+        "mosquito",
+        "thermal_pit",
+        "infirmary",
+        "blood_feeder"
+      ],
+      "prose": "Antennal sensilla calibrated to detect skin temperature differentials as low as 0.05°C. Swarms selectively target febrile infirmary patients, landing in dense clusters on burning foreheads and infected open wound margins."
+    },
+    {
+      "id": "mosquito_vector_chitinous_pyrethroid_resistance",
+      "silo_location_id": "CENTRAL_DORMITORY_ATRIUM",
+      "vector_species": "CULEX_RESISTENS_SUPERIOR",
+      "larval_density_per_liter": 7200,
+      "pathogen_transmitted": "CHRONIC_PULMONARY_HYPERSENSITIVITY",
+      "timestamp_relative": "YEAR_20_VECTOR_SURVEY_01",
+      "tags": [
+        "entomology",
+        "mosquito",
+        "insecticide_resistance",
+        "pyrethroid",
+        "fogging"
+      ],
+      "prose": "Thermal fogging with pre-war permethrin canisters achieved zero insect mortality. Biochemical testing confirmed a high-expression cytochrome P450 mutation and thickened cuticle that metabolizes synthetic neurotoxic pyrethroids in less than eight minutes."
+    }
+  ]
+}

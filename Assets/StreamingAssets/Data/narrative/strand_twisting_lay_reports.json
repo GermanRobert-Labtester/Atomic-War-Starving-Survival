@@ -1,58 +1,61 @@
-[
-  {
-    "id": "strand_twisting_001",
-    "fibre_type": "nettle_line",
-    "twist_direction": "Z",
-    "strand_count_per_yarn": 3,
-    "log_text": "Nettle line drafted and finger-twisted Z-direction into singles. Three singles plied S-direction into a three-ply yarn. The counter-twist locks the plies together. Even tension is everything — let it slack and it kinks when released. A metre of yarn per ten minutes of work."
-  },
-  {
-    "id": "strand_twisting_002",
-    "fibre_type": "hemp_line",
-    "twist_direction": "Z",
-    "strand_count_per_yarn": 4,
-    "log_text": "Hemp line spun to Z-twist singles on the drop spindle. Four singles plied S into a heavier yarn strand. Hemp takes more twist than nettle — needs a longer drafting zone. The four-ply yarn is noticeably stiffer than the three-ply. More suited to standing cordage than running rope."
-  },
-  {
-    "id": "strand_twisting_003",
-    "fibre_type": "flax_line",
-    "twist_direction": "Z",
-    "strand_count_per_yarn": 2,
-    "log_text": "Flax singles are fine and fragile if under-twisted. Spun tight Z on the wheel, then plied S in pairs. Two-ply flax yarn is smooth and consistent — almost thread-like. Not suitable for heavy rope; will use as the warp thread in the next backstrap loom session."
-  },
-  {
-    "id": "strand_twisting_004",
-    "fibre_type": "nettle_tow",
-    "twist_direction": "Z",
-    "strand_count_per_yarn": 3,
-    "log_text": "Tow is shorter and less aligned than line fibre. The yarn is lumpier and weaker at the joins but still functional. Three-ply Z-twist tow yarn. Will use it for the core of a laid rope where the outer strands take the load. Not wasted."
-  },
-  {
-    "id": "strand_twisting_005",
-    "fibre_type": "hemp_tow",
-    "twist_direction": "Z",
-    "strand_count_per_yarn": 3,
-    "log_text": "Hemp tow, coarser and shorter than nettle. Harder to draft evenly. Three-ply Z-twist yarn, thick and hairy. Good surface friction when laid into rope — the outer fibres grip each other. Will use for lashing rather than load-bearing rope."
-  },
-  {
-    "id": "strand_twisting_006",
-    "fibre_type": "jute_line",
-    "twist_direction": "Z",
-    "strand_count_per_yarn": 3,
-    "log_text": "Jute from the sacking. Drafts easily — already aligned. Three-ply Z-twist. The jute strand is dry and the twist does not hold as firmly as hemp or nettle. Will absorb moisture and swell, which actually helps the rope close tighter when wet. Useful characteristic."
-  },
-  {
-    "id": "strand_twisting_007",
-    "fibre_type": "cattail_strip",
-    "twist_direction": "Z",
-    "strand_count_per_yarn": 4,
-    "log_text": "Cattail leaf strips twisted by hand rather than spun — too stiff for the spindle. Z-twist, four strips per strand. The strand is flat and wide, not round. Will close into a flat braid rather than a round rope. Different construction; still strong."
-  },
-  {
-    "id": "strand_twisting_008",
-    "fibre_type": "nettle_line",
-    "twist_direction": "Z",
-    "strand_count_per_yarn": 6,
-    "log_text": "Six-ply heavy yarn — six Z-twist singles all plied together S in two passes. First pass: three and three. Second pass: the resulting two heavy plies twisted together S. The final strand is dense and almost stiff. Intended for the core of a three-strand rope."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "strand_twisting_001",
+      "fibre_type": "nettle_line",
+      "twist_direction": "Z",
+      "strand_count_per_yarn": 3,
+      "log_text": "Nettle line drafted and finger-twisted Z-direction into singles. Three singles plied S-direction into a three-ply yarn. The counter-twist locks the plies together. Even tension is everything — let it slack and it kinks when released. A metre of yarn per ten minutes of work."
+    },
+    {
+      "id": "strand_twisting_002",
+      "fibre_type": "hemp_line",
+      "twist_direction": "Z",
+      "strand_count_per_yarn": 4,
+      "log_text": "Hemp line spun to Z-twist singles on the drop spindle. Four singles plied S into a heavier yarn strand. Hemp takes more twist than nettle — needs a longer drafting zone. The four-ply yarn is noticeably stiffer than the three-ply. More suited to standing cordage than running rope."
+    },
+    {
+      "id": "strand_twisting_003",
+      "fibre_type": "flax_line",
+      "twist_direction": "Z",
+      "strand_count_per_yarn": 2,
+      "log_text": "Flax singles are fine and fragile if under-twisted. Spun tight Z on the wheel, then plied S in pairs. Two-ply flax yarn is smooth and consistent — almost thread-like. Not suitable for heavy rope; will use as the warp thread in the next backstrap loom session."
+    },
+    {
+      "id": "strand_twisting_004",
+      "fibre_type": "nettle_tow",
+      "twist_direction": "Z",
+      "strand_count_per_yarn": 3,
+      "log_text": "Tow is shorter and less aligned than line fibre. The yarn is lumpier and weaker at the joins but still functional. Three-ply Z-twist tow yarn. Will use it for the core of a laid rope where the outer strands take the load. Not wasted."
+    },
+    {
+      "id": "strand_twisting_005",
+      "fibre_type": "hemp_tow",
+      "twist_direction": "Z",
+      "strand_count_per_yarn": 3,
+      "log_text": "Hemp tow, coarser and shorter than nettle. Harder to draft evenly. Three-ply Z-twist yarn, thick and hairy. Good surface friction when laid into rope — the outer fibres grip each other. Will use for lashing rather than load-bearing rope."
+    },
+    {
+      "id": "strand_twisting_006",
+      "fibre_type": "jute_line",
+      "twist_direction": "Z",
+      "strand_count_per_yarn": 3,
+      "log_text": "Jute from the sacking. Drafts easily — already aligned. Three-ply Z-twist. The jute strand is dry and the twist does not hold as firmly as hemp or nettle. Will absorb moisture and swell, which actually helps the rope close tighter when wet. Useful characteristic."
+    },
+    {
+      "id": "strand_twisting_007",
+      "fibre_type": "cattail_strip",
+      "twist_direction": "Z",
+      "strand_count_per_yarn": 4,
+      "log_text": "Cattail leaf strips twisted by hand rather than spun — too stiff for the spindle. Z-twist, four strips per strand. The strand is flat and wide, not round. Will close into a flat braid rather than a round rope. Different construction; still strong."
+    },
+    {
+      "id": "strand_twisting_008",
+      "fibre_type": "nettle_line",
+      "twist_direction": "Z",
+      "strand_count_per_yarn": 6,
+      "log_text": "Six-ply heavy yarn — six Z-twist singles all plied together S in two passes. First pass: three and three. Second pass: the resulting two heavy plies twisted together S. The final strand is dense and almost stiff. Intended for the core of a three-strand rope."
+    }
+  ]
+}

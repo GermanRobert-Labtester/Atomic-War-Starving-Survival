@@ -1,41 +1,44 @@
-[
-  {
-    "morale_band": "high",
-    "morale_min": 60,
-    "morale_max": 100,
-    "templates": [
-      "Another day survived. The tally marks are getting longer.",
-      "A crude drawing of the sun — someone still remembers what it looks like.",
-      "A row of stick figures, each labeled with a name. No one has been crossed out today.",
-      "Someone carved 'HOPE' into the concrete. Underneath, someone else added 'STILL.'",
-      "A recipe for imaginary cake. Six ingredients, all unavailable. It still made people smile."
-    ],
-    "carving_chance": 0.30
-  },
-  {
-    "morale_band": "medium",
-    "morale_min": 30,
-    "morale_max": 59,
-    "templates": [
-      "Tally marks — 47 days. The spacing is getting uneven.",
-      "A question scratched into the wall: 'Does anyone know what date it is?' No one has answered.",
-      "A list of names, some crossed out. The crossings are getting more frequent.",
-      "A child's drawing of the bunker. The sky above it is black, not blue.",
-      "'Miss coffee.' The handwriting is shaky. Someone else added 'miss everything.'"
-    ],
-    "carving_chance": 0.20
-  },
-  {
-    "morale_band": "low",
-    "morale_min": 0,
-    "morale_max": 29,
-    "templates": [
-      "Just tally marks. No drawings. No words. Just lines.",
-      "A name, carved deep, then scratched out completely.",
-      "'I'm sorry' — written so small you'd miss it if you weren't looking.",
-      "A crude clock face, all hands missing. Time doesn't matter anymore.",
-      "A single word: 'WHY' — the letters growing larger and more desperate with each stroke."
-    ],
-    "carving_chance": 0.15
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "morale_band": "high",
+      "morale_min": 60,
+      "morale_max": 100,
+      "templates": [
+        "Another day survived. The tally marks are getting longer.",
+        "A crude drawing of the sun — someone still remembers what it looks like.",
+        "A row of stick figures, each labeled with a name. No one has been crossed out today.",
+        "Someone carved 'HOPE' into the concrete. Underneath, someone else added 'STILL.'",
+        "A recipe for imaginary cake. Six ingredients, all unavailable. It still made people smile."
+      ],
+      "carving_chance": 0.3
+    },
+    {
+      "morale_band": "medium",
+      "morale_min": 30,
+      "morale_max": 59,
+      "templates": [
+        "Tally marks — 47 days. The spacing is getting uneven.",
+        "A question scratched into the wall: 'Does anyone know what date it is?' No one has answered.",
+        "A list of names, some crossed out. The crossings are getting more frequent.",
+        "A child's drawing of the bunker. The sky above it is black, not blue.",
+        "'Miss coffee.' The handwriting is shaky. Someone else added 'miss everything.'"
+      ],
+      "carving_chance": 0.2
+    },
+    {
+      "morale_band": "low",
+      "morale_min": 0,
+      "morale_max": 29,
+      "templates": [
+        "Just tally marks. No drawings. No words. Just lines.",
+        "A name, carved deep, then scratched out completely.",
+        "'I'm sorry' — written so small you'd miss it if you weren't looking.",
+        "A crude clock face, all hands missing. Time doesn't matter anymore.",
+        "A single word: 'WHY' — the letters growing larger and more desperate with each stroke."
+      ],
+      "carving_chance": 0.15
+    }
+  ]
+}

@@ -1,72 +1,117 @@
-[
-  {
-    "id": "stencil_smear_linoleum_carving_gouge_slip",
-    "stencil_print_id": "PROPAGANDA_WOODCUT_POSTER_01",
-    "matrix_material_type": "BATTLESHIP_LINOLEUM_MOUNTED_WOOD",
-    "ink_pigment_base": "MINIUM_RED_LEAD_OXIDE_PASTE",
-    "smear_artifact_description": "ACCIDENTAL_GOUGE_SLIP_BLEED",
-    "timestamp_relative": "YEAR_02_STENCIL_LOG_01",
-    "tags": ["printing", "propaganda", "woodcut", "linoleum", "poster"],
-    "prose": "A carver's U-gouge slipped while cutting the letters of the emergency rationing manifesto. The resulting groove filled with thick red lead paste, producing an ominous blood-red slash across the printed headline that terrified citizens."
-  },
-  {
-    "id": "stencil_smear_mimeograph_wax_stencil_tear",
-    "stencil_print_id": "MIMEOGRAPH_RESISTANCE_CIRCULAR",
-    "matrix_material_type": "PARAFFIN_COATED_YOSHINO_TISSUE",
-    "ink_pigment_base": "METHYLENE_BLUE_SPIRIT_DYE",
-    "smear_artifact_description": "STYLUS_DRUM_TEAR_INK_BLOT",
-    "timestamp_relative": "YEAR_05_STENCIL_LOG_03",
-    "tags": ["printing", "mimeograph", "wax_stencil", "circular", "spirit_duplicator"],
-    "prose": "Typing with a heavy manual typewriter without the ribbon cushion perforated the delicate Japanese wax tissue stencil. Under rotary drum speed, the tear ripped wide open, flooding a fist-sized blot of purple ink across two hundred pamphlets."
-  },
-  {
-    "id": "stencil_smear_screen_print_silk_mesh_blinding",
-    "stencil_print_id": "SERIGRAPH_WARNING_SIGN_YELLOW",
-    "matrix_material_type": "NATURAL_SILK_120_MESH_SCREEN",
-    "ink_pigment_base": "CADMIUM_YELLOW_OIL_ENAMEL",
-    "smear_artifact_description": "PERMANENT_DRIED_EMULSION_BLINDING",
-    "timestamp_relative": "YEAR_08_STENCIL_LOG_02",
-    "tags": ["printing", "screen_printing", "serigraph", "mesh_clog", "warning_sign"],
-    "prose": "An interrupted print run allowed heavy cadmium yellow enamel ink to dry inside the microscopic pores of the silk screen mesh. The dried linseed binder resisted mineral spirits, permanently blinding the radiation trefoil symbol on the master screen."
-  },
-  {
-    "id": "stencil_smear_lampblack_tallow_offset_ghost",
-    "stencil_print_id": "COMMUNAL_NEWS_BROADSHEET_DAILY",
-    "matrix_material_type": "RELIEF_ZINC_ETCHED_PLATE",
-    "ink_pigment_base": "PINE_SOOT_RENDERED_BEEF_TALLOW",
-    "smear_artifact_description": "GREASY_STRIKE_THROUGH_GHOSTING",
-    "timestamp_relative": "YEAR_11_STENCIL_LOG_04",
-    "tags": ["printing", "broadsheet", "tallow_ink", "strike_through", "ghosting"],
-    "prose": "Formulating newspaper ink with cheap beef tallow fat caused heavy mineral oil strike-through on thin rag paper. The grease penetrated through the sheets, creating inverted ghost images that made both sides of the two-page daily bulletin unreadable."
-  },
-  {
-    "id": "stencil_smear_gelatin_hectograph_tray_exhaustion",
-    "stencil_print_id": "HECTOGRAPH_DUTY_ROSTER_SHEET",
-    "matrix_material_type": "GLYCERIN_GELATIN_CAST_TRAY",
-    "ink_pigment_base": "ANILINE_PURPLE_INDELIBLE_PENCIL",
-    "smear_artifact_description": "EXHAUSTION_CONTRAST_FADE_OUT",
-    "timestamp_relative": "YEAR_14_STENCIL_LOG_01",
-    "tags": ["printing", "hectograph", "gelatin_pad", "duty_roster", "spirit_copy"],
-    "prose": "Transferring a master script drawn with an indelible purple pencil onto a cooled gelatin tray allowed forty crisp copies. By copy fifty-five, the aniline dye dissolved deep into the gelatin bed, yielding washed-out pink smudges that caused shift absenteeism."
-  },
-  {
-    "id": "stencil_smear_corrugated_cardboard_stencil_fuzz",
-    "stencil_print_id": "CRATE_MARKING_STENCIL_AMMO",
-    "matrix_material_type": "OILED_CARD_STOCK_STENCIL",
-    "ink_pigment_base": "BITUMINOUS_ASPHALTUM_TAR_WASH",
-    "smear_artifact_description": "FIBER_WICKING_FEATHER_HAZE",
-    "timestamp_relative": "YEAR_17_STENCIL_LOG_03",
-    "tags": ["printing", "stencil", "crate_marking", "asphaltum", "feathering"],
-    "prose": "Dabbing liquid black roofing tar through hand-cut cardboard stencils onto unplaned wooden ammunition crates produced severe fiber bleeding. The tar wicked 10mm along the wood grain, rendering 'CAL 7.62' into an illegible black blob."
-  },
-  {
-    "id": "stencil_smear_lithographic_limestone_grease_scum",
-    "stencil_print_id": "LITHOGRAPHIC_TOPOGRAPHIC_MAP",
-    "matrix_material_type": "SOLNHOFEN_LIMESTONE_SLAB_4INCH",
-    "ink_pigment_base": "FRENCH_CHALK_TUSCHE_GREASE",
-    "smear_artifact_description": "DAMPENING_FAILURE_SCUM_SMUDGE",
-    "timestamp_relative": "YEAR_20_STENCIL_LOG_01",
-    "tags": ["printing", "lithography", "limestone", "grease_scum", "map_printing"],
-    "prose": "The press operator let the limestone slab dry during a map printing run. The greasy tusche ink adhered immediately to the un-dampened non-image areas, filling contour lines and swamp shading with solid black blotches across fifty reconnaissance maps."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "stencil_smear_linoleum_carving_gouge_slip",
+      "stencil_print_id": "PROPAGANDA_WOODCUT_POSTER_01",
+      "matrix_material_type": "BATTLESHIP_LINOLEUM_MOUNTED_WOOD",
+      "ink_pigment_base": "MINIUM_RED_LEAD_OXIDE_PASTE",
+      "smear_artifact_description": "ACCIDENTAL_GOUGE_SLIP_BLEED",
+      "timestamp_relative": "YEAR_02_STENCIL_LOG_01",
+      "tags": [
+        "printing",
+        "propaganda",
+        "woodcut",
+        "linoleum",
+        "poster"
+      ],
+      "prose": "A carver's U-gouge slipped while cutting the letters of the emergency rationing manifesto. The resulting groove filled with thick red lead paste, producing an ominous blood-red slash across the printed headline that terrified citizens."
+    },
+    {
+      "id": "stencil_smear_mimeograph_wax_stencil_tear",
+      "stencil_print_id": "MIMEOGRAPH_RESISTANCE_CIRCULAR",
+      "matrix_material_type": "PARAFFIN_COATED_YOSHINO_TISSUE",
+      "ink_pigment_base": "METHYLENE_BLUE_SPIRIT_DYE",
+      "smear_artifact_description": "STYLUS_DRUM_TEAR_INK_BLOT",
+      "timestamp_relative": "YEAR_05_STENCIL_LOG_03",
+      "tags": [
+        "printing",
+        "mimeograph",
+        "wax_stencil",
+        "circular",
+        "spirit_duplicator"
+      ],
+      "prose": "Typing with a heavy manual typewriter without the ribbon cushion perforated the delicate Japanese wax tissue stencil. Under rotary drum speed, the tear ripped wide open, flooding a fist-sized blot of purple ink across two hundred pamphlets."
+    },
+    {
+      "id": "stencil_smear_screen_print_silk_mesh_blinding",
+      "stencil_print_id": "SERIGRAPH_WARNING_SIGN_YELLOW",
+      "matrix_material_type": "NATURAL_SILK_120_MESH_SCREEN",
+      "ink_pigment_base": "CADMIUM_YELLOW_OIL_ENAMEL",
+      "smear_artifact_description": "PERMANENT_DRIED_EMULSION_BLINDING",
+      "timestamp_relative": "YEAR_08_STENCIL_LOG_02",
+      "tags": [
+        "printing",
+        "screen_printing",
+        "serigraph",
+        "mesh_clog",
+        "warning_sign"
+      ],
+      "prose": "An interrupted print run allowed heavy cadmium yellow enamel ink to dry inside the microscopic pores of the silk screen mesh. The dried linseed binder resisted mineral spirits, permanently blinding the radiation trefoil symbol on the master screen."
+    },
+    {
+      "id": "stencil_smear_lampblack_tallow_offset_ghost",
+      "stencil_print_id": "COMMUNAL_NEWS_BROADSHEET_DAILY",
+      "matrix_material_type": "RELIEF_ZINC_ETCHED_PLATE",
+      "ink_pigment_base": "PINE_SOOT_RENDERED_BEEF_TALLOW",
+      "smear_artifact_description": "GREASY_STRIKE_THROUGH_GHOSTING",
+      "timestamp_relative": "YEAR_11_STENCIL_LOG_04",
+      "tags": [
+        "printing",
+        "broadsheet",
+        "tallow_ink",
+        "strike_through",
+        "ghosting"
+      ],
+      "prose": "Formulating newspaper ink with cheap beef tallow fat caused heavy mineral oil strike-through on thin rag paper. The grease penetrated through the sheets, creating inverted ghost images that made both sides of the two-page daily bulletin unreadable."
+    },
+    {
+      "id": "stencil_smear_gelatin_hectograph_tray_exhaustion",
+      "stencil_print_id": "HECTOGRAPH_DUTY_ROSTER_SHEET",
+      "matrix_material_type": "GLYCERIN_GELATIN_CAST_TRAY",
+      "ink_pigment_base": "ANILINE_PURPLE_INDELIBLE_PENCIL",
+      "smear_artifact_description": "EXHAUSTION_CONTRAST_FADE_OUT",
+      "timestamp_relative": "YEAR_14_STENCIL_LOG_01",
+      "tags": [
+        "printing",
+        "hectograph",
+        "gelatin_pad",
+        "duty_roster",
+        "spirit_copy"
+      ],
+      "prose": "Transferring a master script drawn with an indelible purple pencil onto a cooled gelatin tray allowed forty crisp copies. By copy fifty-five, the aniline dye dissolved deep into the gelatin bed, yielding washed-out pink smudges that caused shift absenteeism."
+    },
+    {
+      "id": "stencil_smear_corrugated_cardboard_stencil_fuzz",
+      "stencil_print_id": "CRATE_MARKING_STENCIL_AMMO",
+      "matrix_material_type": "OILED_CARD_STOCK_STENCIL",
+      "ink_pigment_base": "BITUMINOUS_ASPHALTUM_TAR_WASH",
+      "smear_artifact_description": "FIBER_WICKING_FEATHER_HAZE",
+      "timestamp_relative": "YEAR_17_STENCIL_LOG_03",
+      "tags": [
+        "printing",
+        "stencil",
+        "crate_marking",
+        "asphaltum",
+        "feathering"
+      ],
+      "prose": "Dabbing liquid black roofing tar through hand-cut cardboard stencils onto unplaned wooden ammunition crates produced severe fiber bleeding. The tar wicked 10mm along the wood grain, rendering 'CAL 7.62' into an illegible black blob."
+    },
+    {
+      "id": "stencil_smear_lithographic_limestone_grease_scum",
+      "stencil_print_id": "LITHOGRAPHIC_TOPOGRAPHIC_MAP",
+      "matrix_material_type": "SOLNHOFEN_LIMESTONE_SLAB_4INCH",
+      "ink_pigment_base": "FRENCH_CHALK_TUSCHE_GREASE",
+      "smear_artifact_description": "DAMPENING_FAILURE_SCUM_SMUDGE",
+      "timestamp_relative": "YEAR_20_STENCIL_LOG_01",
+      "tags": [
+        "printing",
+        "lithography",
+        "limestone",
+        "grease_scum",
+        "map_printing"
+      ],
+      "prose": "The press operator let the limestone slab dry during a map printing run. The greasy tusche ink adhered immediately to the un-dampened non-image areas, filling contour lines and swamp shading with solid black blotches across fifty reconnaissance maps."
+    }
+  ]
+}

@@ -1,82 +1,133 @@
-[
-  {
-    "id": "carbide_tool_crater_wear_rake_face_breakout",
-    "tool_identifier": "TURNING_INSERT_CNMG_432",
-    "carbide_grade": "ISO_P20_COBALT_BINDER_8PCT",
-    "cutting_speed_m_min": 140.0,
-    "wear_mechanism": "DIFFUSION_RAKE_CRATER_BREAKOUT",
-    "timestamp_relative": "YEAR_03_TOOLING_LOG_01",
-    "tags": ["tooling", "machining", "carbide", "crater_wear", "lathe"],
-    "prose": "High-speed turning of heat-treated rail axles generated 900°C tool-chip interface temperatures. Carbon diffusion from the tungsten carbide grains into the chip excavated a deep crater on the rake face, causing catastrophic nose breakout after twenty passes."
-  },
-  {
-    "id": "carbide_tool_flank_wear_abrasive_slag_scuff",
-    "tool_identifier": "FACING_INSERT_TNMG_332",
-    "carbide_grade": "ISO_K10_MICROGRAIN_CARBIDE",
-    "cutting_speed_m_min": 65.0,
-    "wear_mechanism": "ABRASIVE_SAND_INCLUSION_SCOUR",
-    "timestamp_relative": "YEAR_05_TOOLING_LOG_03",
-    "tags": ["tooling", "machining", "flank_wear", "cast_iron", "sand_scour"],
-    "prose": "Facing uncleaned rough sand castings embedded with fused silica grains caused severe abrasive flank wear. Flank land width reached 0.85mm within eight minutes of cutting, generating intense chatter and burning the lathe drive belts."
-  },
-  {
-    "id": "carbide_tool_thermal_comb_crack_interrupted_cut",
-    "tool_identifier": "FACE_MILL_INSERT_SEKN_42",
-    "carbide_grade": "ISO_P40_TOUGH_HEAVY_MILL",
-    "cutting_speed_m_min": 90.0,
-    "wear_mechanism": "CYCLIC_THERMAL_FATIGUE_COMB_CRACKS",
-    "timestamp_relative": "YEAR_08_TOOLING_LOG_02",
-    "tags": ["tooling", "machining", "milling", "thermal_cracking", "interrupted_cut"],
-    "prose": "Interrupted milling across keyways and flame-cut armor plate edges induced severe thermal shock cycles. A comb-like network of microscopic transverse thermal cracks formed perpendicular to the cutting edge, leading to sudden wedge flaking."
-  },
-  {
-    "id": "carbide_tool_cobalt_binder_chemical_leaching",
-    "tool_identifier": "SOLID_CARBIDE_ENDMILL_12MM",
-    "carbide_grade": "SUB_MICRON_WC_COBALT_10PCT",
-    "cutting_speed_m_min": 110.0,
-    "wear_mechanism": "ACID_COOLANT_COBALT_EXTRACTION",
-    "timestamp_relative": "YEAR_11_TOOLING_LOG_04",
-    "tags": ["tooling", "machining", "cobalt_leaching", "coolant", "endmill"],
-    "prose": "Degraded, bacterially soured soluble oil coolant (pH 4.8) chemically dissolved the cobalt metal binder holding the tungsten carbide grains. The tool cutting edge crumbled under light loads like chalk, shedding loose grains into the workpiece."
-  },
-  {
-    "id": "carbide_tool_built_up_edge_aluminum_smearing",
-    "tool_identifier": "THREADING_INSERT_16ER_ISO",
-    "carbide_grade": "UNCOATED_POLISHED_ALUMINA_GRADE",
-    "cutting_speed_m_min": 35.0,
-    "wear_mechanism": "PRESSURE_WELDED_BUILT_UP_EDGE",
-    "timestamp_relative": "YEAR_14_TOOLING_LOG_01",
-    "tags": ["tooling", "machining", "built_up_edge", "aluminum", "threading"],
-    "prose": "Threading soft 6061 aircraft aluminum scrap at low cutting speeds caused metal to pressure-weld to the tool tip. When the built-up edge broke away, it plucked fragments of the carbide substrate with it, producing torn 60-degree thread flanks."
-  },
-  {
-    "id": "carbide_tool_chipping_micro_fracture_chatter",
-    "tool_identifier": "BORING_BAR_INSERT_CCMT_325",
-    "carbide_grade": "ISO_K20_BORING_GRADE",
-    "cutting_speed_m_min": 50.0,
-    "wear_mechanism": "HARMONIC_CHATTER_MICRO_CHIPPING",
-    "timestamp_relative": "YEAR_16_TOOLING_LOG_03",
-    "tags": ["tooling", "machining", "chatter", "boring_bar", "micro_chipping"],
-    "prose": "Over-extended 5:1 length-to-diameter steel boring bar developed severe 450 Hz harmonic resonance inside an engine cylinder bore. The continuous mechanical hammering chipped the brittle cutting corner into a ragged saw-tooth profile."
-  },
-  {
-    "id": "carbide_tool_braze_joint_thermal_shear_failure",
-    "tool_identifier": "BRAZED_SHANK_TOOL_STYLE_AL8",
-    "carbide_grade": "C2_BRAZED_TUNGSTEN_TIP",
-    "cutting_speed_m_min": 75.0,
-    "wear_mechanism": "BRAZE_ALLOY_THERMAL_YIELD_SHEAR",
-    "timestamp_relative": "YEAR_18_TOOLING_LOG_02",
-    "tags": ["tooling", "machining", "brazed_tool", "silver_solder", "shank_failure"],
-    "prose": "Heavy roughing cut (6mm depth of cut) on forged steel shaft melted the BAg-7 silver braze joint beneath the carbide tip. The glowing red carbide insert ejected from the carbon steel shank at high velocity, embedding into the wooden lathe chip guard."
-  },
-  {
-    "id": "carbide_tool_diamond_wheel_regrinding_burns",
-    "tool_identifier": "REGROUND_GROOVING_TOOL_MGMN",
-    "carbide_grade": "ISO_P30_RECLAIMED_INSERT",
-    "cutting_speed_m_min": 80.0,
-    "wear_mechanism": "DRY_GRINDING_CRAZING_SHATTER",
-    "timestamp_relative": "YEAR_20_TOOLING_LOG_01",
-    "tags": ["tooling", "machining", "regrinding", "grinding_cracks", "tool_shatter"],
-    "prose": "Resharpening dull inserts on a dry green silicon carbide wheel without flood coolant caused intense localized surface overheating. Quenching the hot tip in cold water produced pervasive micro-crazing; the tool shattered instantly upon touching the workpiece."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "carbide_tool_crater_wear_rake_face_breakout",
+      "tool_identifier": "TURNING_INSERT_CNMG_432",
+      "carbide_grade": "ISO_P20_COBALT_BINDER_8PCT",
+      "cutting_speed_m_min": 140.0,
+      "wear_mechanism": "DIFFUSION_RAKE_CRATER_BREAKOUT",
+      "timestamp_relative": "YEAR_03_TOOLING_LOG_01",
+      "tags": [
+        "tooling",
+        "machining",
+        "carbide",
+        "crater_wear",
+        "lathe"
+      ],
+      "prose": "High-speed turning of heat-treated rail axles generated 900°C tool-chip interface temperatures. Carbon diffusion from the tungsten carbide grains into the chip excavated a deep crater on the rake face, causing catastrophic nose breakout after twenty passes."
+    },
+    {
+      "id": "carbide_tool_flank_wear_abrasive_slag_scuff",
+      "tool_identifier": "FACING_INSERT_TNMG_332",
+      "carbide_grade": "ISO_K10_MICROGRAIN_CARBIDE",
+      "cutting_speed_m_min": 65.0,
+      "wear_mechanism": "ABRASIVE_SAND_INCLUSION_SCOUR",
+      "timestamp_relative": "YEAR_05_TOOLING_LOG_03",
+      "tags": [
+        "tooling",
+        "machining",
+        "flank_wear",
+        "cast_iron",
+        "sand_scour"
+      ],
+      "prose": "Facing uncleaned rough sand castings embedded with fused silica grains caused severe abrasive flank wear. Flank land width reached 0.85mm within eight minutes of cutting, generating intense chatter and burning the lathe drive belts."
+    },
+    {
+      "id": "carbide_tool_thermal_comb_crack_interrupted_cut",
+      "tool_identifier": "FACE_MILL_INSERT_SEKN_42",
+      "carbide_grade": "ISO_P40_TOUGH_HEAVY_MILL",
+      "cutting_speed_m_min": 90.0,
+      "wear_mechanism": "CYCLIC_THERMAL_FATIGUE_COMB_CRACKS",
+      "timestamp_relative": "YEAR_08_TOOLING_LOG_02",
+      "tags": [
+        "tooling",
+        "machining",
+        "milling",
+        "thermal_cracking",
+        "interrupted_cut"
+      ],
+      "prose": "Interrupted milling across keyways and flame-cut armor plate edges induced severe thermal shock cycles. A comb-like network of microscopic transverse thermal cracks formed perpendicular to the cutting edge, leading to sudden wedge flaking."
+    },
+    {
+      "id": "carbide_tool_cobalt_binder_chemical_leaching",
+      "tool_identifier": "SOLID_CARBIDE_ENDMILL_12MM",
+      "carbide_grade": "SUB_MICRON_WC_COBALT_10PCT",
+      "cutting_speed_m_min": 110.0,
+      "wear_mechanism": "ACID_COOLANT_COBALT_EXTRACTION",
+      "timestamp_relative": "YEAR_11_TOOLING_LOG_04",
+      "tags": [
+        "tooling",
+        "machining",
+        "cobalt_leaching",
+        "coolant",
+        "endmill"
+      ],
+      "prose": "Degraded, bacterially soured soluble oil coolant (pH 4.8) chemically dissolved the cobalt metal binder holding the tungsten carbide grains. The tool cutting edge crumbled under light loads like chalk, shedding loose grains into the workpiece."
+    },
+    {
+      "id": "carbide_tool_built_up_edge_aluminum_smearing",
+      "tool_identifier": "THREADING_INSERT_16ER_ISO",
+      "carbide_grade": "UNCOATED_POLISHED_ALUMINA_GRADE",
+      "cutting_speed_m_min": 35.0,
+      "wear_mechanism": "PRESSURE_WELDED_BUILT_UP_EDGE",
+      "timestamp_relative": "YEAR_14_TOOLING_LOG_01",
+      "tags": [
+        "tooling",
+        "machining",
+        "built_up_edge",
+        "aluminum",
+        "threading"
+      ],
+      "prose": "Threading soft 6061 aircraft aluminum scrap at low cutting speeds caused metal to pressure-weld to the tool tip. When the built-up edge broke away, it plucked fragments of the carbide substrate with it, producing torn 60-degree thread flanks."
+    },
+    {
+      "id": "carbide_tool_chipping_micro_fracture_chatter",
+      "tool_identifier": "BORING_BAR_INSERT_CCMT_325",
+      "carbide_grade": "ISO_K20_BORING_GRADE",
+      "cutting_speed_m_min": 50.0,
+      "wear_mechanism": "HARMONIC_CHATTER_MICRO_CHIPPING",
+      "timestamp_relative": "YEAR_16_TOOLING_LOG_03",
+      "tags": [
+        "tooling",
+        "machining",
+        "chatter",
+        "boring_bar",
+        "micro_chipping"
+      ],
+      "prose": "Over-extended 5:1 length-to-diameter steel boring bar developed severe 450 Hz harmonic resonance inside an engine cylinder bore. The continuous mechanical hammering chipped the brittle cutting corner into a ragged saw-tooth profile."
+    },
+    {
+      "id": "carbide_tool_braze_joint_thermal_shear_failure",
+      "tool_identifier": "BRAZED_SHANK_TOOL_STYLE_AL8",
+      "carbide_grade": "C2_BRAZED_TUNGSTEN_TIP",
+      "cutting_speed_m_min": 75.0,
+      "wear_mechanism": "BRAZE_ALLOY_THERMAL_YIELD_SHEAR",
+      "timestamp_relative": "YEAR_18_TOOLING_LOG_02",
+      "tags": [
+        "tooling",
+        "machining",
+        "brazed_tool",
+        "silver_solder",
+        "shank_failure"
+      ],
+      "prose": "Heavy roughing cut (6mm depth of cut) on forged steel shaft melted the BAg-7 silver braze joint beneath the carbide tip. The glowing red carbide insert ejected from the carbon steel shank at high velocity, embedding into the wooden lathe chip guard."
+    },
+    {
+      "id": "carbide_tool_diamond_wheel_regrinding_burns",
+      "tool_identifier": "REGROUND_GROOVING_TOOL_MGMN",
+      "carbide_grade": "ISO_P30_RECLAIMED_INSERT",
+      "cutting_speed_m_min": 80.0,
+      "wear_mechanism": "DRY_GRINDING_CRAZING_SHATTER",
+      "timestamp_relative": "YEAR_20_TOOLING_LOG_01",
+      "tags": [
+        "tooling",
+        "machining",
+        "regrinding",
+        "grinding_cracks",
+        "tool_shatter"
+      ],
+      "prose": "Resharpening dull inserts on a dry green silicon carbide wheel without flood coolant caused intense localized surface overheating. Quenching the hot tip in cold water produced pervasive micro-crazing; the tool shattered instantly upon touching the workpiece."
+    }
+  ]
+}

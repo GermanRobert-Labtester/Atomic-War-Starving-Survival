@@ -1,72 +1,117 @@
-[
-  {
-    "id": "firebrick_spall_silica_inversion_volume_jump",
-    "furnace_zone_id": "REVERBERATORY_HEARTH_ROOF_ARCH",
-    "refractory_brick_grade": "HIGH_SILICA_SUPER_DUTY_95PCT",
-    "operating_temperature_celsius": 1420.0,
-    "failure_mechanism": "QUARTZ_ALPHA_BETA_INVERSION_SHATTER",
-    "timestamp_relative": "YEAR_03_REFRACTORY_LOG_01",
-    "tags": ["masonry", "firebrick", "refractory", "silica_inversion", "furnace"],
-    "prose": "Rapid warm-up through the 573°C quartz alpha-to-beta inversion point caused a sudden 1.3% volumetric expansion jump. Tensile stresses shattered the sprung roof arch, dropping fifty pounds of glowing refractory brick into the copper melt."
-  },
-  {
-    "id": "firebrick_spall_basic_slag_iron_oxide_penetration",
-    "furnace_zone_id": "CUPOLA_WELL_SLAG_LINE_BELT",
-    "refractory_brick_grade": "HIGH_ALUMINA_CORUNDUM_70PCT",
-    "operating_temperature_celsius": 1510.0,
-    "failure_mechanism": "FERROUS_SLAG_INFILTRATION_SPALL",
-    "timestamp_relative": "YEAR_05_REFRACTORY_LOG_03",
-    "tags": ["masonry", "firebrick", "slag_penetration", "spalling", "cupola"],
-    "prose": "Molten iron silicate slag wicked into the open pores of the alumina brick lining. When the furnace cooled overnight, differential thermal contraction popped the slag-saturated outer twenty millimeters of brick face off in solid curved sheets."
-  },
-  {
-    "id": "firebrick_spall_magnesite_carbon_monoxide_disintegration",
-    "furnace_zone_id": "GAS_PRODUCER_SHAFT_LINING_02",
-    "refractory_brick_grade": "DEAD_BURNED_MAGNESITE_CHROME",
-    "operating_temperature_celsius": 1100.0,
-    "failure_mechanism": "CARBON_MONOXIDE_CATALYTIC_DISRUPT",
-    "timestamp_relative": "YEAR_08_REFRACTORY_LOG_02",
-    "tags": ["masonry", "firebrick", "magnesite", "carbon_monoxide", "disintegration"],
-    "prose": "Free iron oxide impurities in the magnesite brick catalyzed the Bell reaction (2CO -> C + CO2) at 450°C. Solid carbon filaments grew inside internal brick voids, expanding with tremendous force and turning dense bricks into loose crumbly powder."
-  },
-  {
-    "id": "firebrick_spall_thermal_shock_burner_flame_impingement",
-    "furnace_zone_id": "ROTARY_CEMENT_KILN_NOZZLE_ZONE",
-    "refractory_brick_grade": "FUSED_CAST_MULLITE_BLOCK",
-    "operating_temperature_celsius": 1380.0,
-    "failure_mechanism": "LOCALIZED_FLAME_IMPINGEMENT_SHEAR",
-    "timestamp_relative": "YEAR_11_REFRACTORY_LOG_04",
-    "tags": ["masonry", "firebrick", "thermal_shock", "flame_impingement", "mullite"],
-    "prose": "A misaligned pulverized coal burner nozzle directed an intense blowtorch flame against one side of the firebrick lining. The localized 500°C temperature gradient created shearing stresses that split three-inch thick fused mullite blocks in half."
-  },
-  {
-    "id": "firebrick_spall_zirconia_nozzle_erosion_cast",
-    "furnace_zone_id": "CONTINUOUS_CASTING_TUNDISH_01",
-    "refractory_brick_grade": "STABILIZED_ZIRCONIA_INSERT_RING",
-    "operating_temperature_celsius": 1560.0,
-    "failure_mechanism": "TURBULENT_STEEL_EROSION_FLARING",
-    "timestamp_relative": "YEAR_14_REFRACTORY_LOG_01",
-    "tags": ["masonry", "refractory", "zirconia", "tundish", "nozzle_wear"],
-    "prose": "High-velocity liquid steel wash eroded the calibrated 12mm bore of the yttria-stabilized zirconia pouring nozzle to 28mm within four heats. Uncontrolled pouring rate flooded ingot molds, forcing emergency stopper rod shutdown."
-  },
-  {
-    "id": "firebrick_spall_silicon_carbide_oxidation_swelling",
-    "furnace_zone_id": "POTTERY_GLAZE_MUFFLE_CHAMBER",
-    "refractory_brick_grade": "NITRIDE_BONDED_SILICON_CARBIDE",
-    "operating_temperature_celsius": 1200.0,
-    "failure_mechanism": "SILICON_CARBIDE_OXIDATIVE_GROWTH",
-    "timestamp_relative": "YEAR_17_REFRACTORY_LOG_03",
-    "tags": ["masonry", "refractory", "silicon_carbide", "oxidation_growth", "muffle"],
-    "prose": "Excess atmospheric air inside the muffle furnace oxidized the silicon carbide tiles into amorphous silica (cristobalite). The resulting 9% volume expansion warped the hearth floor, jamming the ceramic firing cars inside the tunnel."
-  },
-  {
-    "id": "firebrick_spall_mortar_joint_washout_flame_shorting",
-    "furnace_zone_id": "BOILER_FIREBOX_SIDEWALL_NORTH",
-    "refractory_brick_grade": "FIRECLAY_STANDARD_ARCH_BRICK",
-    "operating_temperature_celsius": 1280.0,
-    "failure_mechanism": "MORTAR_WASHOUT_HOT_GAS_SHORTING",
-    "timestamp_relative": "YEAR_20_REFRACTORY_LOG_01",
-    "tags": ["masonry", "firebrick", "mortar_washout", "hot_gas", "boiler_casing"],
-    "prose": "Low-grade sandy fireclay mortar between bricks washed out under turbulent flue gas draft. 1,280°C flames penetrated the open joints to strike the uninsulated external boiler steel casing, blistering red heat and melting electrical conduits."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "firebrick_spall_silica_inversion_volume_jump",
+      "furnace_zone_id": "REVERBERATORY_HEARTH_ROOF_ARCH",
+      "refractory_brick_grade": "HIGH_SILICA_SUPER_DUTY_95PCT",
+      "operating_temperature_celsius": 1420.0,
+      "failure_mechanism": "QUARTZ_ALPHA_BETA_INVERSION_SHATTER",
+      "timestamp_relative": "YEAR_03_REFRACTORY_LOG_01",
+      "tags": [
+        "masonry",
+        "firebrick",
+        "refractory",
+        "silica_inversion",
+        "furnace"
+      ],
+      "prose": "Rapid warm-up through the 573°C quartz alpha-to-beta inversion point caused a sudden 1.3% volumetric expansion jump. Tensile stresses shattered the sprung roof arch, dropping fifty pounds of glowing refractory brick into the copper melt."
+    },
+    {
+      "id": "firebrick_spall_basic_slag_iron_oxide_penetration",
+      "furnace_zone_id": "CUPOLA_WELL_SLAG_LINE_BELT",
+      "refractory_brick_grade": "HIGH_ALUMINA_CORUNDUM_70PCT",
+      "operating_temperature_celsius": 1510.0,
+      "failure_mechanism": "FERROUS_SLAG_INFILTRATION_SPALL",
+      "timestamp_relative": "YEAR_05_REFRACTORY_LOG_03",
+      "tags": [
+        "masonry",
+        "firebrick",
+        "slag_penetration",
+        "spalling",
+        "cupola"
+      ],
+      "prose": "Molten iron silicate slag wicked into the open pores of the alumina brick lining. When the furnace cooled overnight, differential thermal contraction popped the slag-saturated outer twenty millimeters of brick face off in solid curved sheets."
+    },
+    {
+      "id": "firebrick_spall_magnesite_carbon_monoxide_disintegration",
+      "furnace_zone_id": "GAS_PRODUCER_SHAFT_LINING_02",
+      "refractory_brick_grade": "DEAD_BURNED_MAGNESITE_CHROME",
+      "operating_temperature_celsius": 1100.0,
+      "failure_mechanism": "CARBON_MONOXIDE_CATALYTIC_DISRUPT",
+      "timestamp_relative": "YEAR_08_REFRACTORY_LOG_02",
+      "tags": [
+        "masonry",
+        "firebrick",
+        "magnesite",
+        "carbon_monoxide",
+        "disintegration"
+      ],
+      "prose": "Free iron oxide impurities in the magnesite brick catalyzed the Bell reaction (2CO -> C + CO2) at 450°C. Solid carbon filaments grew inside internal brick voids, expanding with tremendous force and turning dense bricks into loose crumbly powder."
+    },
+    {
+      "id": "firebrick_spall_thermal_shock_burner_flame_impingement",
+      "furnace_zone_id": "ROTARY_CEMENT_KILN_NOZZLE_ZONE",
+      "refractory_brick_grade": "FUSED_CAST_MULLITE_BLOCK",
+      "operating_temperature_celsius": 1380.0,
+      "failure_mechanism": "LOCALIZED_FLAME_IMPINGEMENT_SHEAR",
+      "timestamp_relative": "YEAR_11_REFRACTORY_LOG_04",
+      "tags": [
+        "masonry",
+        "firebrick",
+        "thermal_shock",
+        "flame_impingement",
+        "mullite"
+      ],
+      "prose": "A misaligned pulverized coal burner nozzle directed an intense blowtorch flame against one side of the firebrick lining. The localized 500°C temperature gradient created shearing stresses that split three-inch thick fused mullite blocks in half."
+    },
+    {
+      "id": "firebrick_spall_zirconia_nozzle_erosion_cast",
+      "furnace_zone_id": "CONTINUOUS_CASTING_TUNDISH_01",
+      "refractory_brick_grade": "STABILIZED_ZIRCONIA_INSERT_RING",
+      "operating_temperature_celsius": 1560.0,
+      "failure_mechanism": "TURBULENT_STEEL_EROSION_FLARING",
+      "timestamp_relative": "YEAR_14_REFRACTORY_LOG_01",
+      "tags": [
+        "masonry",
+        "refractory",
+        "zirconia",
+        "tundish",
+        "nozzle_wear"
+      ],
+      "prose": "High-velocity liquid steel wash eroded the calibrated 12mm bore of the yttria-stabilized zirconia pouring nozzle to 28mm within four heats. Uncontrolled pouring rate flooded ingot molds, forcing emergency stopper rod shutdown."
+    },
+    {
+      "id": "firebrick_spall_silicon_carbide_oxidation_swelling",
+      "furnace_zone_id": "POTTERY_GLAZE_MUFFLE_CHAMBER",
+      "refractory_brick_grade": "NITRIDE_BONDED_SILICON_CARBIDE",
+      "operating_temperature_celsius": 1200.0,
+      "failure_mechanism": "SILICON_CARBIDE_OXIDATIVE_GROWTH",
+      "timestamp_relative": "YEAR_17_REFRACTORY_LOG_03",
+      "tags": [
+        "masonry",
+        "refractory",
+        "silicon_carbide",
+        "oxidation_growth",
+        "muffle"
+      ],
+      "prose": "Excess atmospheric air inside the muffle furnace oxidized the silicon carbide tiles into amorphous silica (cristobalite). The resulting 9% volume expansion warped the hearth floor, jamming the ceramic firing cars inside the tunnel."
+    },
+    {
+      "id": "firebrick_spall_mortar_joint_washout_flame_shorting",
+      "furnace_zone_id": "BOILER_FIREBOX_SIDEWALL_NORTH",
+      "refractory_brick_grade": "FIRECLAY_STANDARD_ARCH_BRICK",
+      "operating_temperature_celsius": 1280.0,
+      "failure_mechanism": "MORTAR_WASHOUT_HOT_GAS_SHORTING",
+      "timestamp_relative": "YEAR_20_REFRACTORY_LOG_01",
+      "tags": [
+        "masonry",
+        "firebrick",
+        "mortar_washout",
+        "hot_gas",
+        "boiler_casing"
+      ],
+      "prose": "Low-grade sandy fireclay mortar between bricks washed out under turbulent flue gas draft. 1,280°C flames penetrated the open joints to strike the uninsulated external boiler steel casing, blistering red heat and melting electrical conduits."
+    }
+  ]
+}

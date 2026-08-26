@@ -1,72 +1,117 @@
-[
-  {
-    "id": "grain_silo_granary_weevil_larva_hollow_berry",
-    "grain_silo_bin_id": "DEEP_STORAGE_SILO_ALPHA_01",
-    "grain_crop_species": "HARD_RED_WINTER_WHEAT",
-    "grain_moisture_content_pct": 13.8,
-    "grain_temperature_celsius": 24.5,
-    "timestamp_relative": "YEAR_03_SILO_LOG_01",
-    "tags": ["grain_milling", "silo", "granary_weevil", "sitophilus", "hollow_berry"],
-    "prose": "Pinhole inspection of wheat samples revealed internal infestation by the granary weevil (*Sitophilus granarius*). Larvae chewing inside individual wheat berries hollowed out the endosperm, reducing test weight by 14 kg/hectoliter."
-  },
-  {
-    "id": "grain_silo_thermal_convection_moisture_migration",
-    "grain_silo_bin_id": "REINFORCED_CONCRETE_SILO_03",
-    "grain_crop_species": "SPRING_DURUM_WHEAT",
-    "grain_moisture_content_pct": 17.2,
-    "grain_temperature_celsius": 12.0,
-    "timestamp_relative": "YEAR_05_SILO_LOG_03",
-    "tags": ["grain_milling", "silo", "moisture_migration", "convection_current", "caked_crust"],
-    "prose": "Cold subterranean bedrock chilled the concrete silo perimeter while core grain remained warm at 22°C. The resulting natural convection air current drove warm moisture upward, condensing a 20cm thick caked, moldy crust across the top grain surface."
-  },
-  {
-    "id": "grain_silo_carbon_dioxide_inert_gas_asphyxiation",
-    "grain_silo_bin_id": "HERMETIC_STEEL_SILO_CELL_04",
-    "grain_crop_species": "HULLED_MALTING_BARLEY",
-    "grain_moisture_content_pct": 11.5,
-    "grain_temperature_celsius": 16.0,
-    "timestamp_relative": "YEAR_08_SILO_LOG_02",
-    "tags": ["grain_milling", "silo", "carbon_dioxide", "hermetic_storage", "asphyxiation"],
-    "prose": "Injecting carbon dioxide gas into the bottom plenum displaced oxygen, sustaining a 65% CO2 atmosphere for twenty-one days. The hermetic inert gas treatment achieved 100% mortality of adult weevils, pupae, and eggs with zero chemical residues."
-  },
-  {
-    "id": "grain_silo_mycotoxin_aflatoxin_hotspot_probe",
-    "grain_silo_bin_id": "EMERGENCY_RESERVE_SILO_02",
-    "grain_crop_species": "YELLOW_DENT_MAIZE",
-    "grain_moisture_content_pct": 19.5,
-    "grain_temperature_celsius": 48.0,
-    "timestamp_relative": "YEAR_11_SILO_LOG_04",
-    "tags": ["grain_milling", "silo", "hotspot", "mycotoxin", "respiration_heat"],
-    "prose": "Thermocouple cable probes detected an alarming 48°C thermal spike in silo sector 3. Biological respiration from damp corn and *Aspergillus* fungal colonies generated runaway self-heating, necessitating immediate coring to isolate toxic aflatoxin pockets."
-  },
-  {
-    "id": "grain_silo_diatomaceous_earth_desiccant_dusting",
-    "grain_silo_bin_id": "CENTRAL_COMMISSARY_GRAIN_ELEVATOR",
-    "grain_crop_species": "SOFT_WHITE_WHEAT",
-    "grain_moisture_content_pct": 12.2,
-    "grain_temperature_celsius": 18.0,
-    "timestamp_relative": "YEAR_14_SILO_LOG_01",
-    "tags": ["grain_milling", "silo", "diatomaceous_earth", "desiccant", "cuticle_abrasion"],
-    "prose": "Metering 0.1% by weight of natural amorphous diatomaceous earth into the grain bucket elevator stream coated every kernel. The microscopic silica frustules abraded insect epicuticular wax layers, dehydrating and killing crawling beetles within 48 hours."
-  },
-  {
-    "id": "grain_silo_concrete_hopper_funnel_flow_rat_hole",
-    "grain_silo_bin_id": "CONICAL_DISCHARGE_BIN_05",
-    "grain_crop_species": "RAW_FIELD_RYE",
-    "grain_moisture_content_pct": 16.0,
-    "grain_temperature_celsius": 15.0,
-    "timestamp_relative": "YEAR_17_SILO_LOG_03",
-    "tags": ["grain_milling", "silo", "rat_hole", "funnel_flow", "hopper_bridging"],
-    "prose": "Interlocking rye grain awns and damp dust formed a stable cohesive arch above the 60-degree steel hopper outlet. Only a vertical core chimney drained, leaving 120 tons of stagnant grain compacted against the sidewalls ('rat-holing')."
-  },
-  {
-    "id": "grain_silo_pneumatic_grain_turnover_aeration",
-    "grain_silo_bin_id": "MAIN_STORAGE_BATTERY_SILO_06",
-    "grain_crop_species": "HARD_RED_SPRING_WHEAT",
-    "grain_moisture_content_pct": 13.0,
-    "grain_temperature_celsius": 14.0,
-    "timestamp_relative": "YEAR_20_SILO_LOG_01",
-    "tags": ["grain_milling", "silo", "grain_turnover", "aeration", "temperature_cooling"],
-    "prose": "Pneumatically conveying 250 tons of grain from Silo 6 to Silo 7 exposed the grain stream to dry -5°C winter tunnel air. The turnover operation dropped bulk grain temperature by 8°C and purged stagnant carbon dioxide pockets."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "grain_silo_granary_weevil_larva_hollow_berry",
+      "grain_silo_bin_id": "DEEP_STORAGE_SILO_ALPHA_01",
+      "grain_crop_species": "HARD_RED_WINTER_WHEAT",
+      "grain_moisture_content_pct": 13.8,
+      "grain_temperature_celsius": 24.5,
+      "timestamp_relative": "YEAR_03_SILO_LOG_01",
+      "tags": [
+        "grain_milling",
+        "silo",
+        "granary_weevil",
+        "sitophilus",
+        "hollow_berry"
+      ],
+      "prose": "Pinhole inspection of wheat samples revealed internal infestation by the granary weevil (*Sitophilus granarius*). Larvae chewing inside individual wheat berries hollowed out the endosperm, reducing test weight by 14 kg/hectoliter."
+    },
+    {
+      "id": "grain_silo_thermal_convection_moisture_migration",
+      "grain_silo_bin_id": "REINFORCED_CONCRETE_SILO_03",
+      "grain_crop_species": "SPRING_DURUM_WHEAT",
+      "grain_moisture_content_pct": 17.2,
+      "grain_temperature_celsius": 12.0,
+      "timestamp_relative": "YEAR_05_SILO_LOG_03",
+      "tags": [
+        "grain_milling",
+        "silo",
+        "moisture_migration",
+        "convection_current",
+        "caked_crust"
+      ],
+      "prose": "Cold subterranean bedrock chilled the concrete silo perimeter while core grain remained warm at 22°C. The resulting natural convection air current drove warm moisture upward, condensing a 20cm thick caked, moldy crust across the top grain surface."
+    },
+    {
+      "id": "grain_silo_carbon_dioxide_inert_gas_asphyxiation",
+      "grain_silo_bin_id": "HERMETIC_STEEL_SILO_CELL_04",
+      "grain_crop_species": "HULLED_MALTING_BARLEY",
+      "grain_moisture_content_pct": 11.5,
+      "grain_temperature_celsius": 16.0,
+      "timestamp_relative": "YEAR_08_SILO_LOG_02",
+      "tags": [
+        "grain_milling",
+        "silo",
+        "carbon_dioxide",
+        "hermetic_storage",
+        "asphyxiation"
+      ],
+      "prose": "Injecting carbon dioxide gas into the bottom plenum displaced oxygen, sustaining a 65% CO2 atmosphere for twenty-one days. The hermetic inert gas treatment achieved 100% mortality of adult weevils, pupae, and eggs with zero chemical residues."
+    },
+    {
+      "id": "grain_silo_mycotoxin_aflatoxin_hotspot_probe",
+      "grain_silo_bin_id": "EMERGENCY_RESERVE_SILO_02",
+      "grain_crop_species": "YELLOW_DENT_MAIZE",
+      "grain_moisture_content_pct": 19.5,
+      "grain_temperature_celsius": 48.0,
+      "timestamp_relative": "YEAR_11_SILO_LOG_04",
+      "tags": [
+        "grain_milling",
+        "silo",
+        "hotspot",
+        "mycotoxin",
+        "respiration_heat"
+      ],
+      "prose": "Thermocouple cable probes detected an alarming 48°C thermal spike in silo sector 3. Biological respiration from damp corn and *Aspergillus* fungal colonies generated runaway self-heating, necessitating immediate coring to isolate toxic aflatoxin pockets."
+    },
+    {
+      "id": "grain_silo_diatomaceous_earth_desiccant_dusting",
+      "grain_silo_bin_id": "CENTRAL_COMMISSARY_GRAIN_ELEVATOR",
+      "grain_crop_species": "SOFT_WHITE_WHEAT",
+      "grain_moisture_content_pct": 12.2,
+      "grain_temperature_celsius": 18.0,
+      "timestamp_relative": "YEAR_14_SILO_LOG_01",
+      "tags": [
+        "grain_milling",
+        "silo",
+        "diatomaceous_earth",
+        "desiccant",
+        "cuticle_abrasion"
+      ],
+      "prose": "Metering 0.1% by weight of natural amorphous diatomaceous earth into the grain bucket elevator stream coated every kernel. The microscopic silica frustules abraded insect epicuticular wax layers, dehydrating and killing crawling beetles within 48 hours."
+    },
+    {
+      "id": "grain_silo_concrete_hopper_funnel_flow_rat_hole",
+      "grain_silo_bin_id": "CONICAL_DISCHARGE_BIN_05",
+      "grain_crop_species": "RAW_FIELD_RYE",
+      "grain_moisture_content_pct": 16.0,
+      "grain_temperature_celsius": 15.0,
+      "timestamp_relative": "YEAR_17_SILO_LOG_03",
+      "tags": [
+        "grain_milling",
+        "silo",
+        "rat_hole",
+        "funnel_flow",
+        "hopper_bridging"
+      ],
+      "prose": "Interlocking rye grain awns and damp dust formed a stable cohesive arch above the 60-degree steel hopper outlet. Only a vertical core chimney drained, leaving 120 tons of stagnant grain compacted against the sidewalls ('rat-holing')."
+    },
+    {
+      "id": "grain_silo_pneumatic_grain_turnover_aeration",
+      "grain_silo_bin_id": "MAIN_STORAGE_BATTERY_SILO_06",
+      "grain_crop_species": "HARD_RED_SPRING_WHEAT",
+      "grain_moisture_content_pct": 13.0,
+      "grain_temperature_celsius": 14.0,
+      "timestamp_relative": "YEAR_20_SILO_LOG_01",
+      "tags": [
+        "grain_milling",
+        "silo",
+        "grain_turnover",
+        "aeration",
+        "temperature_cooling"
+      ],
+      "prose": "Pneumatically conveying 250 tons of grain from Silo 6 to Silo 7 exposed the grain stream to dry -5°C winter tunnel air. The turnover operation dropped bulk grain temperature by 8°C and purged stagnant carbon dioxide pockets."
+    }
+  ]
+}

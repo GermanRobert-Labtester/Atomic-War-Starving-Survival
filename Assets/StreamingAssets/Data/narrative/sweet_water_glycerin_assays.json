@@ -1,72 +1,117 @@
-[
-  {
-    "id": "sweet_water_glycerin_spent_lye_acid_precipitation",
-    "glycerin_still_id": "SWEET_WATER_ACID_TREATING_TANK",
-    "crude_glycerin_concentration_pct": 14.5,
-    "distillation_vacuum_bar": 0.0,
-    "glycerol_purity_pct": 18.0,
-    "timestamp_relative": "YEAR_02_GLYCERIN_01",
-    "tags": ["saponification", "glycerin", "spent_lye", "acid_treatment", "sweet_water"],
-    "prose": "Acidifying 800 liters of spent lye from the graining kettle with dilute hydrochloric acid precipitated dissolved fatty acid soaps as a floating curd. Skimming off the scum left clear, desalted 'sweet-water' containing 14.5% crude glycerol."
-  },
-  {
-    "id": "sweet_water_glycerin_alum_coagulation_clarification",
-    "glycerin_still_id": "ALUM_COAGULATION_FLOC_TANK_02",
-    "crude_glycerin_concentration_pct": 16.0,
-    "distillation_vacuum_bar": 0.0,
-    "glycerol_purity_pct": 22.0,
-    "timestamp_relative": "YEAR_04_GLYCERIN_03",
-    "tags": ["saponification", "glycerin", "alum_floc", "coagulation", "clarification"],
-    "prose": "Dosing neutralized sweet-water with 0.5% aluminum sulfate (alum) formed gelatinous aluminum hydroxide flocs. The flocs swept down microscopic protein impurities and color bodies, leaving sparkling, water-clear liquor for evaporation."
-  },
-  {
-    "id": "sweet_water_glycerin_vacuum_evaporator_boil",
-    "glycerin_still_id": "VACUUM_CONCENTRATION_PAN_03",
-    "crude_glycerin_concentration_pct": 82.5,
-    "distillation_vacuum_bar": 0.82,
-    "glycerol_purity_pct": 80.0,
-    "timestamp_relative": "YEAR_07_GLYCERIN_02",
-    "tags": ["saponification", "glycerin", "vacuum_evaporation", "concentration", "energy_saving"],
-    "prose": "Boiling clarified sweet-water under 0.82 bar vacuum reduced its boiling point to 58°C. Evaporating water without atmospheric boiling temperatures prevented thermal decomposition and scorching, producing thick, 82.5% crude glycerin syrup."
-  },
-  {
-    "id": "sweet_water_glycerin_vacuum_superheated_steam_distillation",
-    "glycerin_still_id": "SUPERHEATED_STEAM_STILL_04",
-    "crude_glycerin_concentration_pct": 98.8,
-    "distillation_vacuum_bar": 0.94,
-    "glycerol_purity_pct": 99.2,
-    "timestamp_relative": "YEAR_09_GLYCERIN_04",
-    "tags": ["saponification", "glycerin", "steam_distillation", "superheated_steam", "pure_glycerol"],
-    "prose": "Injecting dry 180°C superheated steam through crude glycerin held at 0.94 bar vacuum distilled pure glycerol vapors overhead. Fractionally condensed in air-cooled copper coils, the distillate yielded water-white 99.2% pharmaceutical-grade glycerin."
-  },
-  {
-    "id": "sweet_water_glycerin_refractometer_specific_gravity_assay",
-    "glycerin_still_id": "PHARMACY_ASSAY_BENCH_05",
-    "crude_glycerin_concentration_pct": 99.5,
-    "distillation_vacuum_bar": 0.0,
-    "glycerol_purity_pct": 99.5,
-    "timestamp_relative": "YEAR_12_GLYCERIN_01",
-    "tags": ["saponification", "glycerin", "specific_gravity", "refractometer", "pharmacopeia"],
-    "prose": "Picnometer testing of the refined glycerin registered a specific gravity of 1.2612 at 20°C, corresponding to 99.5% glycerol purity. The viscous, sweet-tasting liquid was bottled for compounding medicinal burn salves and ear drops."
-  },
-  {
-    "id": "sweet_water_glycerin_bunker_antifreeze_hydraulic_fluid",
-    "glycerin_still_id": "TECHNICAL_FLUID_BLENDING_VAT_06",
-    "crude_glycerin_concentration_pct": 60.0,
-    "distillation_vacuum_bar": 0.0,
-    "glycerol_purity_pct": 60.0,
-    "timestamp_relative": "YEAR_15_GLYCERIN_03",
-    "tags": ["saponification", "glycerin", "antifreeze", "hydraulic_fluid", "freeze_protection"],
-    "prose": "Compounding a 60/40 blend of distilled glycerin and deionized water produced non-volatile, non-toxic antifreeze and hydraulic recoil fluid. The solution remained liquid down to -36°C, protecting outdoor intake damper actuators during nuclear winter."
-  },
-  {
-    "id": "sweet_water_glycerin_bone_black_carbon_decolorization",
-    "glycerin_still_id": "BONE_BLACK_DECOLORIZING_COLUMN_07",
-    "crude_glycerin_concentration_pct": 96.0,
-    "distillation_vacuum_bar": 0.0,
-    "glycerol_purity_pct": 98.0,
-    "timestamp_relative": "YEAR_20_GLYCERIN_01",
-    "tags": ["saponification", "glycerin", "bone_black", "decolorization", "acrolein_removal"],
-    "prose": "Percolating warm 96% crude glycerin through a three-meter vertical column of granular bone-black charcoal stripped out yellowish carotenoids and choking acrolein traces. The effluent emerged crystal-clear with zero lingering burnt odor."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "sweet_water_glycerin_spent_lye_acid_precipitation",
+      "glycerin_still_id": "SWEET_WATER_ACID_TREATING_TANK",
+      "crude_glycerin_concentration_pct": 14.5,
+      "distillation_vacuum_bar": 0.0,
+      "glycerol_purity_pct": 18.0,
+      "timestamp_relative": "YEAR_02_GLYCERIN_01",
+      "tags": [
+        "saponification",
+        "glycerin",
+        "spent_lye",
+        "acid_treatment",
+        "sweet_water"
+      ],
+      "prose": "Acidifying 800 liters of spent lye from the graining kettle with dilute hydrochloric acid precipitated dissolved fatty acid soaps as a floating curd. Skimming off the scum left clear, desalted 'sweet-water' containing 14.5% crude glycerol."
+    },
+    {
+      "id": "sweet_water_glycerin_alum_coagulation_clarification",
+      "glycerin_still_id": "ALUM_COAGULATION_FLOC_TANK_02",
+      "crude_glycerin_concentration_pct": 16.0,
+      "distillation_vacuum_bar": 0.0,
+      "glycerol_purity_pct": 22.0,
+      "timestamp_relative": "YEAR_04_GLYCERIN_03",
+      "tags": [
+        "saponification",
+        "glycerin",
+        "alum_floc",
+        "coagulation",
+        "clarification"
+      ],
+      "prose": "Dosing neutralized sweet-water with 0.5% aluminum sulfate (alum) formed gelatinous aluminum hydroxide flocs. The flocs swept down microscopic protein impurities and color bodies, leaving sparkling, water-clear liquor for evaporation."
+    },
+    {
+      "id": "sweet_water_glycerin_vacuum_evaporator_boil",
+      "glycerin_still_id": "VACUUM_CONCENTRATION_PAN_03",
+      "crude_glycerin_concentration_pct": 82.5,
+      "distillation_vacuum_bar": 0.82,
+      "glycerol_purity_pct": 80.0,
+      "timestamp_relative": "YEAR_07_GLYCERIN_02",
+      "tags": [
+        "saponification",
+        "glycerin",
+        "vacuum_evaporation",
+        "concentration",
+        "energy_saving"
+      ],
+      "prose": "Boiling clarified sweet-water under 0.82 bar vacuum reduced its boiling point to 58°C. Evaporating water without atmospheric boiling temperatures prevented thermal decomposition and scorching, producing thick, 82.5% crude glycerin syrup."
+    },
+    {
+      "id": "sweet_water_glycerin_vacuum_superheated_steam_distillation",
+      "glycerin_still_id": "SUPERHEATED_STEAM_STILL_04",
+      "crude_glycerin_concentration_pct": 98.8,
+      "distillation_vacuum_bar": 0.94,
+      "glycerol_purity_pct": 99.2,
+      "timestamp_relative": "YEAR_09_GLYCERIN_04",
+      "tags": [
+        "saponification",
+        "glycerin",
+        "steam_distillation",
+        "superheated_steam",
+        "pure_glycerol"
+      ],
+      "prose": "Injecting dry 180°C superheated steam through crude glycerin held at 0.94 bar vacuum distilled pure glycerol vapors overhead. Fractionally condensed in air-cooled copper coils, the distillate yielded water-white 99.2% pharmaceutical-grade glycerin."
+    },
+    {
+      "id": "sweet_water_glycerin_refractometer_specific_gravity_assay",
+      "glycerin_still_id": "PHARMACY_ASSAY_BENCH_05",
+      "crude_glycerin_concentration_pct": 99.5,
+      "distillation_vacuum_bar": 0.0,
+      "glycerol_purity_pct": 99.5,
+      "timestamp_relative": "YEAR_12_GLYCERIN_01",
+      "tags": [
+        "saponification",
+        "glycerin",
+        "specific_gravity",
+        "refractometer",
+        "pharmacopeia"
+      ],
+      "prose": "Picnometer testing of the refined glycerin registered a specific gravity of 1.2612 at 20°C, corresponding to 99.5% glycerol purity. The viscous, sweet-tasting liquid was bottled for compounding medicinal burn salves and ear drops."
+    },
+    {
+      "id": "sweet_water_glycerin_bunker_antifreeze_hydraulic_fluid",
+      "glycerin_still_id": "TECHNICAL_FLUID_BLENDING_VAT_06",
+      "crude_glycerin_concentration_pct": 60.0,
+      "distillation_vacuum_bar": 0.0,
+      "glycerol_purity_pct": 60.0,
+      "timestamp_relative": "YEAR_15_GLYCERIN_03",
+      "tags": [
+        "saponification",
+        "glycerin",
+        "antifreeze",
+        "hydraulic_fluid",
+        "freeze_protection"
+      ],
+      "prose": "Compounding a 60/40 blend of distilled glycerin and deionized water produced non-volatile, non-toxic antifreeze and hydraulic recoil fluid. The solution remained liquid down to -36°C, protecting outdoor intake damper actuators during nuclear winter."
+    },
+    {
+      "id": "sweet_water_glycerin_bone_black_carbon_decolorization",
+      "glycerin_still_id": "BONE_BLACK_DECOLORIZING_COLUMN_07",
+      "crude_glycerin_concentration_pct": 96.0,
+      "distillation_vacuum_bar": 0.0,
+      "glycerol_purity_pct": 98.0,
+      "timestamp_relative": "YEAR_20_GLYCERIN_01",
+      "tags": [
+        "saponification",
+        "glycerin",
+        "bone_black",
+        "decolorization",
+        "acrolein_removal"
+      ],
+      "prose": "Percolating warm 96% crude glycerin through a three-meter vertical column of granular bone-black charcoal stripped out yellowish carotenoids and choking acrolein traces. The effluent emerged crystal-clear with zero lingering burnt odor."
+    }
+  ]
+}

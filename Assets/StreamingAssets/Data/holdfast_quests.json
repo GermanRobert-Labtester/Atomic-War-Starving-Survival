@@ -1,477 +1,480 @@
-[
-  {
-    "id": "quest_holdfast_the_sheet",
-    "display_name": "The Sheet That Shouldn't",
-    "type": "expedition",
-    "briefing": "Bram Ostrowski sells you a waxed sheet of the estuary. A road is drawn where summer water should be. He will not say who walked it. He will take calories or a favour-by-mass. The sheet smells of lamp oil and fish glue.",
-    "prereq_quest_id": "",
-    "min_day": 90,
-    "knowledge_key": "lore_hf_sheet",
-    "target_location_id": "loc_ice_road_gate",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Bought / copied item_map_sheet_ice_road. The wax takes a fingerprint and keeps it. Channel markers on the sheet do not match the last Sector 4 lamp you know."
-      },
-      {
-        "id": "stage_2",
-        "text": "Compared to Kittiwake log (if owned). The launch's hand is eleven days past the Exchange. Ostrowski's hand is this year. The road exists on only one of them. The ice has not been asked."
-      },
-      {
-        "id": "stage_3",
-        "text": "Asked a Lamplighter about Kilometre 19. Ivy confirms the post. She does not confirm the road. She does not cross."
-      },
-      {
-        "id": "stage_4",
-        "text": "Survived the asking. No exception was requested. The ledger still shows 19 lit. You have a fragment and a direction that is only a direction in winter."
-      }
-    ],
-    "choices": [
-      {
-        "id": "pay_bram",
-        "text": "He wraps the sheet in the same paper he uses for maps that exist in all seasons. He does not wish you luck. He wishes you a freeze.",
-        "set_flag": ""
-      },
-      {
-        "id": "copy_leave",
-        "text": "Your copy smears at Kilometre 19. His does not. He notices. He does not raise the price. He files you as a person who copies.",
-        "set_flag": ""
-      },
-      {
-        "id": "refuse_sale",
-        "text": "He puts the sheet away. The estuary remains a rumour with a smell. Ivy will still light 19. Yara will still open a road you cannot prove.",
-        "set_flag": ""
-      }
-    ]
-  },
-  {
-    "id": "quest_holdfast_the_clerk",
-    "display_name": "The Return",
-    "type": "dialogue",
-    "briefing": "A man stands off the weighbridge plate so he will not be charged as cargo. Census Clerk Grade III Edor Vale. A return in triplicate. Three of your people are already written, occupations wrong by one each. He offers to read it twice. The Tollman charges for the introduction.",
-    "prereq_quest_id": "quest_holdfast_the_sheet",
-    "min_day": 90,
-    "knowledge_key": "",
-    "target_location_id": "loc_weighbridge",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Heard the form. Heading, occupancy, reconstruction pool, ice window. He did not skip a field. You may ask him to start again."
-      },
-      {
-        "id": "stage_2",
-        "text": "Confirmed or denied three occupations. Adjacent errors. Mason / caretaker. Clerk / clerk-grade. Vet assistant / vet. He corrects in the same hand. He thanks you for the truth without using the word."
-      },
-      {
-        "id": "stage_3",
-        "text": "Hatch wait: allowed or refused. If allowed, he keeps off the step with a stove-tin. If refused, he goes as far as the boom."
-      },
-      {
-        "id": "stage_4",
-        "text": "Sela's card (optional). He copies the number. He does not take the laminate. UNCONFIRMED until someone who can confirm, confirms."
-      }
-    ],
-    "choices": [
-      {
-        "id": "let_wait_hatch",
-        "text": "He sleeps in the ash with the tin. Survivors who cannot sleep will knock the tin, not the hatch. In the morning the pink copy has dew in the folds.",
-        "set_flag": "holdfast_edor_wait_hatch"
-      },
-      {
-        "id": "send_to_boom",
-        "text": "He goes. He does not call it a refusal. Ormund will. The weighbridge keeps his stool for him.",
-        "set_flag": ""
-      },
-      {
-        "id": "show_the_card",
-        "text": "He writes the number as if it were a date of birth: once, slowly. He does not look at Sela as a line item while she is in the room. He looks after.",
-        "set_flag": ""
-      }
-    ]
-  },
-  {
-    "id": "quest_holdfast_the_window",
-    "display_name": "When the Cut Takes",
-    "type": "expedition",
-    "briefing": "Yara Holm at the Gate. The boom is up for a freeze that has a length. Fourteen days this window. Outfit three: warmth, iodine, food, welders' glass. Lit hours on the board. Dark ice is not a metaphor.",
-    "prereq_quest_id": "quest_holdfast_the_clerk",
-    "min_day": 90,
-    "knowledge_key": "",
-    "target_location_id": "loc_ice_road_gate",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Column kitted. Glass on faces. Iodine in a tin that will freeze shut if you leave it in a pocket. The axle ledger takes your mass."
-      },
-      {
-        "id": "stage_2",
-        "text": "Waystation A reached. Four bunks. Filter notches. Stove regulator in place. Home still ticking."
-      },
-      {
-        "id": "stage_3",
-        "text": "Dark ice not walked (or walked). If you waited: she marks you rare. If you did not: remarks column, and she does not fetch."
-      },
-      {
-        "id": "stage_4",
-        "text": "Returned or wintered A4. The last bunk is wettest. The window does not care which you chose. The ice will."
-      }
-    ],
-    "choices": [
-      {
-        "id": "wait_dark",
-        "text": "Hours and cold. The beacon stays honest. Yara does not thank you. She puts you on the overnight.",
-        "set_flag": ""
-      },
-      {
-        "id": "walk_marked_dark",
-        "text": "The ice is thick. Thick is not lit. An accident is written whether or not you are in it.",
-        "set_flag": ""
-      },
-      {
-        "id": "winter_a4",
-        "text": "You spend the closed window on A4. Filter at eleven. Do not file a twelfth notch. Home degrades without you.",
-        "set_flag": ""
-      }
-    ]
-  },
-  {
-    "id": "quest_holdfast_the_plant",
-    "display_name": "In Situ Essential",
-    "type": "expedition",
-    "briefing": "The desalination plant is not abandoned. It is staffed, failing, named. Leva Quist's minutes are current. Steam visible toward a place with numbers. Resin is a gift or an insult depending on how you set it down.",
-    "prereq_quest_id": "quest_holdfast_the_window",
-    "min_day": 90,
-    "knowledge_key": "",
-    "target_location_id": "location_abandoned_desalination",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Grade Hut entered. Volume 12 open. Motion: that we keep running. Carried. A failed valve-seat for a paperweight."
-      },
-      {
-        "id": "stage_2",
-        "text": "Membrane Hall toured. Fume at chest height. Tuesday's difference on the drum rims. The dipper stays on the nail unless you steal it."
-      },
-      {
-        "id": "stage_3",
-        "text": "Resin: delivered or refused. Delivered: she counts aloud. Refused: she counts anyway. The count is short."
-      },
-      {
-        "id": "stage_4",
-        "text": "Steam line seen. Canal wheel painted red-white-red. Cluster on the far end of a pipe. Not a rumour."
-      }
-    ],
-    "choices": [
-      {
-        "id": "gift_resin",
-        "text": "She does not say thank you. She marks a drum. Salt trade opens like a valve, which is to say: slowly, with a gauge.",
-        "set_flag": ""
-      },
-      {
-        "id": "refuse_gift",
-        "text": "She needed it anyway. You are a visitor who watched. Watching is not a shift.",
-        "set_flag": ""
-      },
-      {
-        "id": "ask_abandoned",
-        "text": "That was your word. Ours is Municipal Desalination 8. The stop order didn't come. We didn't stop.",
-        "set_flag": ""
-      }
-    ]
-  },
-  {
-    "id": "quest_holdfast_authentication",
-    "display_name": "Take a Number",
-    "type": "exploration",
-    "briefing": "Cluster Gatehouse. Cream paint. A keypad under plastic. They will ask for an Allocation number. Twelve is a known discrepancy. They have a procedure. Guest housing is Block C. The Quad has chains and no seats.",
-    "prereq_quest_id": "quest_holdfast_the_plant",
-    "min_day": 90,
-    "knowledge_key": "",
-    "target_location_id": "loc_cluster_gatehouse",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Number stated, or none. Twelve opens a file. None opens a different tab of the same binder. Both are procedures."
-      },
-      {
-        "id": "stage_2",
-        "text": "Block C accepted, or Gatehouse floor. Metal plates versus paper tags versus tiles. Steam or no steam."
-      },
-      {
-        "id": "stage_3",
-        "text": "Quad walked. Four cultivars, two yellow. Missing-persons strip of Sector 4 trades. One of them is yours."
-      },
-      {
-        "id": "stage_4",
-        "text": "Playground brass: left or taken. Silent. The chain hangs. The Office notes mass if mass leaves."
-      }
-    ],
-    "choices": [
-      {
-        "id": "give_twelve",
-        "text": "The bell does not ring. A clerk says known discrepancy as if it were a weather. Badge: GUEST / BLOCK C or UNSCHEDULED. Both print on paper.",
-        "set_flag": ""
-      },
-      {
-        "id": "give_none",
-        "text": "They do not invent a number for you. The floor of the gatehouse has a blanket that has been washed. The thermometer still reads like survival.",
-        "set_flag": ""
-      },
-      {
-        "id": "take_brass",
-        "text": "No alarm. No speech. Later, a mass note. The chain does not swing. You have brass in the pack.",
-        "set_flag": ""
-      },
-      {
-        "id": "leave_brass",
-        "text": "Children pass. Adults file you. The yellow leaves tick against the trough.",
-        "set_flag": ""
-      }
-    ]
-  },
-  {
-    "id": "quest_holdfast_the_drawer",
-    "display_name": "The Drawer",
-    "type": "exploration",
-    "briefing": "Ormund's right-hand drawer. The Sector 4 Schedule, complete. Names you know. Names you buried. He turns pages with two fingers. He does not ask how you feel about a column.",
-    "prereq_quest_id": "quest_holdfast_authentication",
-    "min_day": 90,
-    "knowledge_key": "lore_hf_two_schedules",
-    "target_location_id": "loc_cluster_office",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Read Sole. SOLE, MARGIT J. Records Clerk II. RUR 9. Score 41.2. NOT ALLOCATED. He does not offer to fix her."
-      },
-      {
-        "id": "stage_2",
-        "text": "Read Renn. RENN, HALVARD — water engineer — allocated — NOT ARRIVED — 12-B UNCONFIRMED. A dependent line that may be Sela if she is yours to name."
-      },
-      {
-        "id": "stage_3",
-        "text": "Searched Frayne. Absent. RUR 11 does not produce an allocation. He will not write her in because you asked."
-      },
-      {
-        "id": "stage_4",
-        "text": "Asked about 12-C (optional). He has a string-tied folder. He may show it. He may say it is for a later hour."
-      }
-    ],
-    "choices": [
-      {
-        "id": "read_sole",
-        "text": "He does. Completeness is not execution. He executes. He does not raise his voice at her number.",
-        "set_flag": ""
-      },
-      {
-        "id": "read_renn",
-        "text": "He does. If Sela is present he does not look at her until the line is finished. Then he does.",
-        "set_flag": ""
-      },
-      {
-        "id": "ask_frayne",
-        "text": "The Schedule is not a petition. He offers no further sentence.",
-        "set_flag": ""
-      },
-      {
-        "id": "ask_12c",
-        "text": "That is a different folder. You may see it after you have slept in a numbered building. Occupancy first.",
-        "set_flag": ""
-      }
-    ]
-  },
-  {
-    "id": "quest_holdfast_the_levy",
-    "display_name": "Reconstruction Pool",
-    "type": "decision",
-    "briefing": "Three names. Thirty days. Occupations as scored or as observed. The ice will not wait for a better feeling. Kit for salt and UV if they go. Tell the people who stay. The duty roster will have holes.",
-    "prereq_quest_id": "quest_holdfast_the_drawer",
-    "min_day": 90,
-    "knowledge_key": "",
-    "target_location_id": "loc_cluster_office",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Named survivors reviewed. Wrong-by-one occupations corrected or left. Faces. Tools. Who still has skin that will hate brine."
-      },
-      {
-        "id": "stage_2",
-        "text": "Honour / substitute / refuse. Flags. No combat. The next paragraph of the form."
-      },
-      {
-        "id": "stage_3",
-        "text": "If sending: kitted. Glass, iodine, salve, calories. Axle ledger. Yara's lit hours."
-      },
-      {
-        "id": "stage_4",
-        "text": "Remaining shelter informed. Morale as a quiet room, not a speech. A blank on the roster where a name was."
-      }
-    ],
-    "choices": [
-      {
-        "id": "holdfast_levy_honour",
-        "text": "You send the three as written. Calories and medicine will come north-to-south on a rate the Office calls regular. The three take Ice Road fatigue and salt-rash risk. Cluster trust ticks up. The people who remain eat easier and sleep worse. One of the three may refuse to return. That refusal will also be filed.",
-        "set_flag": "holdfast_levy_honour"
-      },
-      {
-        "id": "holdfast_levy_substitute",
-        "text": "You send three other people. Ormund notes irregular. Yara respects that the ice got three who would walk lit. Edor does not: the names are wrong, and names are his job. Later, an audit. Possibly a second levy. The roster at home still has holes, just different holes.",
-        "set_flag": "holdfast_levy_substitute"
-      },
-      {
-        "id": "holdfast_levy_refuse",
-        "text": "You refuse in writing, or by not writing. No shots. Edor waits in the ash. Ice Road access withdraws after eleven days if the Office asks the Cutters to treat you as dark. Ormund does not say or else. The next form is 12-C. Threatening prose unlocks on Office scenes. The three named people hear that they were named.",
-        "set_flag": "holdfast_levy_refuse"
-      }
-    ]
-  },
-  {
-    "id": "quest_holdfast_the_membrane",
-    "display_name": "Forty-Eight Hours",
-    "type": "crisis",
-    "briefing": "Bank two trips. Cluster steam clock starts. Leva has the forty-eight hour math in her mouth without making it a threat. Resin, brass, iodine, two workers, an outfall shift. Sector 4's thirst and District 8's thirst are one job until they are not.",
-    "prereq_quest_id": "quest_holdfast_the_levy",
-    "min_day": 90,
-    "knowledge_key": "",
-    "target_location_id": "loc_salt_membrane_hall",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Diagnosed. Gauge, difference, canal wheel, substation thermometer. Not ideology. Valves."
-      },
-      {
-        "id": "stage_2",
-        "text": "Gathered. Resin drums, brass seats, iodine, two bodies who will stand the apron."
-      },
-      {
-        "id": "stage_3",
-        "text": "Outfall shift. Health, salt, the clipboard that is ceremonial until you make it not."
-      },
-      {
-        "id": "stage_4",
-        "text": "Strip / local salvage / let drop. The indoors will feel it or the Verge will, or both, or neither in time."
-      }
-    ],
-    "choices": [
-      {
-        "id": "holdfast_membrane_sector4",
-        "text": "You strip what Sector 4 can spare: Rebuilders brass, iodine, filters. The bank holds. Cluster lives. Allotments thirst clock shortens. Frayne's minutes record a shortage without naming you. Medical market shock. The playground chains do not get their seats back. The tin behind your filter, if you raided it, is lighter. Nobody mentions it.",
-        "set_flag": "holdfast_membrane_sector4"
-      },
-      {
-        "id": "local_salvage",
-        "text": "Spent stack, recoating jig, Salt's hidden iodine key. Yield low. Integrity to forty percent if the apron is stood. Nobody in the Verge goes thirstier today. Tomorrow's Tuesday is still short.",
-        "set_flag": ""
-      },
-      {
-        "id": "holdfast_membrane_let_drop",
-        "text": "You let steam die. 211 people who have not practised this cold. Office legitimacy cracks. Salt may offer a separate bargain — plant over paper. Unifier path hardens because a treaty wants a room that can still hold heat. Children take coats. Attendance is still taken.",
-        "set_flag": "holdfast_membrane_let_drop"
-      }
-    ]
-  },
-  {
-    "id": "quest_holdfast_the_second_list",
-    "display_name": "Order 12-C",
-    "type": "decision",
-    "briefing": "Reconstruction Order 12-C: unlisted occupants of authenticated Allocation 12 are a labour reserve. Published. Nobody in Sector 4 had a copy that survived. Ormund has one. He will come south when the ice allows. You may carry a copy to Sole. She will file it. She will not sign it. Voss will want the pool.",
-    "prereq_quest_id": "quest_holdfast_the_membrane",
-    "min_day": 90,
-    "knowledge_key": "",
-    "target_location_id": "loc_cluster_office",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Copy obtained. item_order_12c. String tie. Civil-service present tense. No please. No or else."
-      },
-      {
-        "id": "stage_2",
-        "text": "Sole (optional). Drown boat. She files. She does not sign. Completeness versus execution, same noun, opposite people."
-      },
-      {
-        "id": "stage_3",
-        "text": "Voss (optional). He wants the pool. He will call it conscription and mean it as a compliment to himself. Intercept risk on a levy column."
-      },
-      {
-        "id": "stage_4",
-        "text": "Hatch prepared. Roster. Temperature. Whether anyone writes a name. Whether the outer dog is thrown."
-      }
-    ],
-    "choices": [
-      {
-        "id": "carry_to_sole",
-        "text": "She reads it twice, which is not Edor's habit, it is hers. She blots the date. She does not blot the refusal.",
-        "set_flag": ""
-      },
-      {
-        "id": "show_voss",
-        "text": "He wants names. He will not pay the Office's rate. He will pay in patrols at the Gate. The Cutters will not like the patrols.",
-        "set_flag": ""
-      },
-      {
-        "id": "show_neither",
-        "text": "The paper lives in your pack like a spare filter. It does not clean anything. It is still a paper that moves people.",
-        "set_flag": ""
-      },
-      {
-        "id": "prepare_shut",
-        "text": "Forty days quiet. A receipt in the ash, cousin to a card in a freezer bag. Different district. Same temperature.",
-        "set_flag": ""
-      }
-    ]
-  },
-  {
-    "id": "quest_holdfast_the_hatch",
-    "display_name": "The Claim, Reversed",
-    "type": "decision",
-    "briefing": "Forms at the outer hatch. Escort in faded Continuity jackets. Temperature. The game stops talking. This is not Sela's arrival, or it is Sela's arrival and this. Open or keep shut. Authenticate, house, or levy. Or wait forty days. Write on the duty roster, or do not.",
-    "prereq_quest_id": "quest_holdfast_the_second_list",
-    "min_day": 90,
-    "knowledge_key": "",
-    "target_location_id": "player_shelter",
-    "stages": [
-      {
-        "id": "stage_1",
-        "text": "Open or shut. The dog on the hatch is a fact. So is the quiet."
-      },
-      {
-        "id": "stage_2",
-        "text": "If open: authenticate / house / levy. Numbers, Block C tags, three names. Edor asks to speak first if he is there."
-      },
-      {
-        "id": "stage_3",
-        "text": "If shut: forty days. No combat. The escort remains on a rota you cannot see. Then a receipt."
-      },
-      {
-        "id": "stage_4",
-        "text": "Roster. A name in a Cluster hand, a name in yours, or a blank that is also a decision."
-      }
-    ],
-    "choices": [
-      {
-        "id": "open_honour",
-        "text": "Some of yours live numbered in Block C. The bunker is easier to feed. The roster has names that did not sleep there last winter.",
-        "set_flag": "ending_holdfast_schedule"
-      },
-      {
-        "id": "open_12c",
-        "text": "Columns both ways. Receipts in triplicate. Nobody is shot. Sela claimed as dependent if present and if she heard it.",
-        "set_flag": "ending_holdfast_reserve"
-      },
-      {
-        "id": "keep_shut",
-        "text": "District 8 continues. Forty empty apartments stay empty. Edor's return may be found later, incomplete, in a good hand.",
-        "set_flag": "ending_holdfast_dark_road"
-      },
-      {
-        "id": "write_roster",
-        "text": "Ink on a chart that was always blank. The people who see it in the morning will know which sentence you believed.",
-        "set_flag": ""
-      },
-      {
-        "id": "write_nothing",
-        "text": "The chart stays honest about who this hole was built for. It stays dishonest about who kept it.",
-        "set_flag": ""
-      }
-    ]
-  }
-]
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_holdfast_the_sheet",
+      "display_name": "The Sheet That Shouldn't",
+      "type": "expedition",
+      "briefing": "Bram Ostrowski sells you a waxed sheet of the estuary. A road is drawn where summer water should be. He will not say who walked it. He will take calories or a favour-by-mass. The sheet smells of lamp oil and fish glue.",
+      "prereq_quest_id": "",
+      "min_day": 90,
+      "knowledge_key": "lore_hf_sheet",
+      "target_location_id": "loc_ice_road_gate",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Bought / copied item_map_sheet_ice_road. The wax takes a fingerprint and keeps it. Channel markers on the sheet do not match the last Sector 4 lamp you know."
+        },
+        {
+          "id": "stage_2",
+          "text": "Compared to Kittiwake log (if owned). The launch's hand is eleven days past the Exchange. Ostrowski's hand is this year. The road exists on only one of them. The ice has not been asked."
+        },
+        {
+          "id": "stage_3",
+          "text": "Asked a Lamplighter about Kilometre 19. Ivy confirms the post. She does not confirm the road. She does not cross."
+        },
+        {
+          "id": "stage_4",
+          "text": "Survived the asking. No exception was requested. The ledger still shows 19 lit. You have a fragment and a direction that is only a direction in winter."
+        }
+      ],
+      "choices": [
+        {
+          "id": "pay_bram",
+          "text": "He wraps the sheet in the same paper he uses for maps that exist in all seasons. He does not wish you luck. He wishes you a freeze.",
+          "set_flag": ""
+        },
+        {
+          "id": "copy_leave",
+          "text": "Your copy smears at Kilometre 19. His does not. He notices. He does not raise the price. He files you as a person who copies.",
+          "set_flag": ""
+        },
+        {
+          "id": "refuse_sale",
+          "text": "He puts the sheet away. The estuary remains a rumour with a smell. Ivy will still light 19. Yara will still open a road you cannot prove.",
+          "set_flag": ""
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_the_clerk",
+      "display_name": "The Return",
+      "type": "dialogue",
+      "briefing": "A man stands off the weighbridge plate so he will not be charged as cargo. Census Clerk Grade III Edor Vale. A return in triplicate. Three of your people are already written, occupations wrong by one each. He offers to read it twice. The Tollman charges for the introduction.",
+      "prereq_quest_id": "quest_holdfast_the_sheet",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "loc_weighbridge",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Heard the form. Heading, occupancy, reconstruction pool, ice window. He did not skip a field. You may ask him to start again."
+        },
+        {
+          "id": "stage_2",
+          "text": "Confirmed or denied three occupations. Adjacent errors. Mason / caretaker. Clerk / clerk-grade. Vet assistant / vet. He corrects in the same hand. He thanks you for the truth without using the word."
+        },
+        {
+          "id": "stage_3",
+          "text": "Hatch wait: allowed or refused. If allowed, he keeps off the step with a stove-tin. If refused, he goes as far as the boom."
+        },
+        {
+          "id": "stage_4",
+          "text": "Sela's card (optional). He copies the number. He does not take the laminate. UNCONFIRMED until someone who can confirm, confirms."
+        }
+      ],
+      "choices": [
+        {
+          "id": "let_wait_hatch",
+          "text": "He sleeps in the ash with the tin. Survivors who cannot sleep will knock the tin, not the hatch. In the morning the pink copy has dew in the folds.",
+          "set_flag": "holdfast_edor_wait_hatch"
+        },
+        {
+          "id": "send_to_boom",
+          "text": "He goes. He does not call it a refusal. Ormund will. The weighbridge keeps his stool for him.",
+          "set_flag": ""
+        },
+        {
+          "id": "show_the_card",
+          "text": "He writes the number as if it were a date of birth: once, slowly. He does not look at Sela as a line item while she is in the room. He looks after.",
+          "set_flag": ""
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_the_window",
+      "display_name": "When the Cut Takes",
+      "type": "expedition",
+      "briefing": "Yara Holm at the Gate. The boom is up for a freeze that has a length. Fourteen days this window. Outfit three: warmth, iodine, food, welders' glass. Lit hours on the board. Dark ice is not a metaphor.",
+      "prereq_quest_id": "quest_holdfast_the_clerk",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "loc_ice_road_gate",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Column kitted. Glass on faces. Iodine in a tin that will freeze shut if you leave it in a pocket. The axle ledger takes your mass."
+        },
+        {
+          "id": "stage_2",
+          "text": "Waystation A reached. Four bunks. Filter notches. Stove regulator in place. Home still ticking."
+        },
+        {
+          "id": "stage_3",
+          "text": "Dark ice not walked (or walked). If you waited: she marks you rare. If you did not: remarks column, and she does not fetch."
+        },
+        {
+          "id": "stage_4",
+          "text": "Returned or wintered A4. The last bunk is wettest. The window does not care which you chose. The ice will."
+        }
+      ],
+      "choices": [
+        {
+          "id": "wait_dark",
+          "text": "Hours and cold. The beacon stays honest. Yara does not thank you. She puts you on the overnight.",
+          "set_flag": ""
+        },
+        {
+          "id": "walk_marked_dark",
+          "text": "The ice is thick. Thick is not lit. An accident is written whether or not you are in it.",
+          "set_flag": ""
+        },
+        {
+          "id": "winter_a4",
+          "text": "You spend the closed window on A4. Filter at eleven. Do not file a twelfth notch. Home degrades without you.",
+          "set_flag": ""
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_the_plant",
+      "display_name": "In Situ Essential",
+      "type": "expedition",
+      "briefing": "The desalination plant is not abandoned. It is staffed, failing, named. Leva Quist's minutes are current. Steam visible toward a place with numbers. Resin is a gift or an insult depending on how you set it down.",
+      "prereq_quest_id": "quest_holdfast_the_window",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "location_abandoned_desalination",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Grade Hut entered. Volume 12 open. Motion: that we keep running. Carried. A failed valve-seat for a paperweight."
+        },
+        {
+          "id": "stage_2",
+          "text": "Membrane Hall toured. Fume at chest height. Tuesday's difference on the drum rims. The dipper stays on the nail unless you steal it."
+        },
+        {
+          "id": "stage_3",
+          "text": "Resin: delivered or refused. Delivered: she counts aloud. Refused: she counts anyway. The count is short."
+        },
+        {
+          "id": "stage_4",
+          "text": "Steam line seen. Canal wheel painted red-white-red. Cluster on the far end of a pipe. Not a rumour."
+        }
+      ],
+      "choices": [
+        {
+          "id": "gift_resin",
+          "text": "She does not say thank you. She marks a drum. Salt trade opens like a valve, which is to say: slowly, with a gauge.",
+          "set_flag": ""
+        },
+        {
+          "id": "refuse_gift",
+          "text": "She needed it anyway. You are a visitor who watched. Watching is not a shift.",
+          "set_flag": ""
+        },
+        {
+          "id": "ask_abandoned",
+          "text": "That was your word. Ours is Municipal Desalination 8. The stop order didn't come. We didn't stop.",
+          "set_flag": ""
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_authentication",
+      "display_name": "Take a Number",
+      "type": "exploration",
+      "briefing": "Cluster Gatehouse. Cream paint. A keypad under plastic. They will ask for an Allocation number. Twelve is a known discrepancy. They have a procedure. Guest housing is Block C. The Quad has chains and no seats.",
+      "prereq_quest_id": "quest_holdfast_the_plant",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "loc_cluster_gatehouse",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Number stated, or none. Twelve opens a file. None opens a different tab of the same binder. Both are procedures."
+        },
+        {
+          "id": "stage_2",
+          "text": "Block C accepted, or Gatehouse floor. Metal plates versus paper tags versus tiles. Steam or no steam."
+        },
+        {
+          "id": "stage_3",
+          "text": "Quad walked. Four cultivars, two yellow. Missing-persons strip of Sector 4 trades. One of them is yours."
+        },
+        {
+          "id": "stage_4",
+          "text": "Playground brass: left or taken. Silent. The chain hangs. The Office notes mass if mass leaves."
+        }
+      ],
+      "choices": [
+        {
+          "id": "give_twelve",
+          "text": "The bell does not ring. A clerk says known discrepancy as if it were a weather. Badge: GUEST / BLOCK C or UNSCHEDULED. Both print on paper.",
+          "set_flag": ""
+        },
+        {
+          "id": "give_none",
+          "text": "They do not invent a number for you. The floor of the gatehouse has a blanket that has been washed. The thermometer still reads like survival.",
+          "set_flag": ""
+        },
+        {
+          "id": "take_brass",
+          "text": "No alarm. No speech. Later, a mass note. The chain does not swing. You have brass in the pack.",
+          "set_flag": ""
+        },
+        {
+          "id": "leave_brass",
+          "text": "Children pass. Adults file you. The yellow leaves tick against the trough.",
+          "set_flag": ""
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_the_drawer",
+      "display_name": "The Drawer",
+      "type": "exploration",
+      "briefing": "Ormund's right-hand drawer. The Sector 4 Schedule, complete. Names you know. Names you buried. He turns pages with two fingers. He does not ask how you feel about a column.",
+      "prereq_quest_id": "quest_holdfast_authentication",
+      "min_day": 90,
+      "knowledge_key": "lore_hf_two_schedules",
+      "target_location_id": "loc_cluster_office",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Read Sole. SOLE, MARGIT J. Records Clerk II. RUR 9. Score 41.2. NOT ALLOCATED. He does not offer to fix her."
+        },
+        {
+          "id": "stage_2",
+          "text": "Read Renn. RENN, HALVARD — water engineer — allocated — NOT ARRIVED — 12-B UNCONFIRMED. A dependent line that may be Sela if she is yours to name."
+        },
+        {
+          "id": "stage_3",
+          "text": "Searched Frayne. Absent. RUR 11 does not produce an allocation. He will not write her in because you asked."
+        },
+        {
+          "id": "stage_4",
+          "text": "Asked about 12-C (optional). He has a string-tied folder. He may show it. He may say it is for a later hour."
+        }
+      ],
+      "choices": [
+        {
+          "id": "read_sole",
+          "text": "He does. Completeness is not execution. He executes. He does not raise his voice at her number.",
+          "set_flag": ""
+        },
+        {
+          "id": "read_renn",
+          "text": "He does. If Sela is present he does not look at her until the line is finished. Then he does.",
+          "set_flag": ""
+        },
+        {
+          "id": "ask_frayne",
+          "text": "The Schedule is not a petition. He offers no further sentence.",
+          "set_flag": ""
+        },
+        {
+          "id": "ask_12c",
+          "text": "That is a different folder. You may see it after you have slept in a numbered building. Occupancy first.",
+          "set_flag": ""
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_the_levy",
+      "display_name": "Reconstruction Pool",
+      "type": "decision",
+      "briefing": "Three names. Thirty days. Occupations as scored or as observed. The ice will not wait for a better feeling. Kit for salt and UV if they go. Tell the people who stay. The duty roster will have holes.",
+      "prereq_quest_id": "quest_holdfast_the_drawer",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "loc_cluster_office",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Named survivors reviewed. Wrong-by-one occupations corrected or left. Faces. Tools. Who still has skin that will hate brine."
+        },
+        {
+          "id": "stage_2",
+          "text": "Honour / substitute / refuse. Flags. No combat. The next paragraph of the form."
+        },
+        {
+          "id": "stage_3",
+          "text": "If sending: kitted. Glass, iodine, salve, calories. Axle ledger. Yara's lit hours."
+        },
+        {
+          "id": "stage_4",
+          "text": "Remaining shelter informed. Morale as a quiet room, not a speech. A blank on the roster where a name was."
+        }
+      ],
+      "choices": [
+        {
+          "id": "holdfast_levy_honour",
+          "text": "You send the three as written. Calories and medicine will come north-to-south on a rate the Office calls regular. The three take Ice Road fatigue and salt-rash risk. Cluster trust ticks up. The people who remain eat easier and sleep worse. One of the three may refuse to return. That refusal will also be filed.",
+          "set_flag": "holdfast_levy_honour"
+        },
+        {
+          "id": "holdfast_levy_substitute",
+          "text": "You send three other people. Ormund notes irregular. Yara respects that the ice got three who would walk lit. Edor does not: the names are wrong, and names are his job. Later, an audit. Possibly a second levy. The roster at home still has holes, just different holes.",
+          "set_flag": "holdfast_levy_substitute"
+        },
+        {
+          "id": "holdfast_levy_refuse",
+          "text": "You refuse in writing, or by not writing. No shots. Edor waits in the ash. Ice Road access withdraws after eleven days if the Office asks the Cutters to treat you as dark. Ormund does not say or else. The next form is 12-C. Threatening prose unlocks on Office scenes. The three named people hear that they were named.",
+          "set_flag": "holdfast_levy_refuse"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_the_membrane",
+      "display_name": "Forty-Eight Hours",
+      "type": "crisis",
+      "briefing": "Bank two trips. Cluster steam clock starts. Leva has the forty-eight hour math in her mouth without making it a threat. Resin, brass, iodine, two workers, an outfall shift. Sector 4's thirst and District 8's thirst are one job until they are not.",
+      "prereq_quest_id": "quest_holdfast_the_levy",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "loc_salt_membrane_hall",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Diagnosed. Gauge, difference, canal wheel, substation thermometer. Not ideology. Valves."
+        },
+        {
+          "id": "stage_2",
+          "text": "Gathered. Resin drums, brass seats, iodine, two bodies who will stand the apron."
+        },
+        {
+          "id": "stage_3",
+          "text": "Outfall shift. Health, salt, the clipboard that is ceremonial until you make it not."
+        },
+        {
+          "id": "stage_4",
+          "text": "Strip / local salvage / let drop. The indoors will feel it or the Verge will, or both, or neither in time."
+        }
+      ],
+      "choices": [
+        {
+          "id": "holdfast_membrane_sector4",
+          "text": "You strip what Sector 4 can spare: Rebuilders brass, iodine, filters. The bank holds. Cluster lives. Allotments thirst clock shortens. Frayne's minutes record a shortage without naming you. Medical market shock. The playground chains do not get their seats back. The tin behind your filter, if you raided it, is lighter. Nobody mentions it.",
+          "set_flag": "holdfast_membrane_sector4"
+        },
+        {
+          "id": "local_salvage",
+          "text": "Spent stack, recoating jig, Salt's hidden iodine key. Yield low. Integrity to forty percent if the apron is stood. Nobody in the Verge goes thirstier today. Tomorrow's Tuesday is still short.",
+          "set_flag": ""
+        },
+        {
+          "id": "holdfast_membrane_let_drop",
+          "text": "You let steam die. 211 people who have not practised this cold. Office legitimacy cracks. Salt may offer a separate bargain — plant over paper. Unifier path hardens because a treaty wants a room that can still hold heat. Children take coats. Attendance is still taken.",
+          "set_flag": "holdfast_membrane_let_drop"
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_the_second_list",
+      "display_name": "Order 12-C",
+      "type": "decision",
+      "briefing": "Reconstruction Order 12-C: unlisted occupants of authenticated Allocation 12 are a labour reserve. Published. Nobody in Sector 4 had a copy that survived. Ormund has one. He will come south when the ice allows. You may carry a copy to Sole. She will file it. She will not sign it. Voss will want the pool.",
+      "prereq_quest_id": "quest_holdfast_the_membrane",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "loc_cluster_office",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Copy obtained. item_order_12c. String tie. Civil-service present tense. No please. No or else."
+        },
+        {
+          "id": "stage_2",
+          "text": "Sole (optional). Drown boat. She files. She does not sign. Completeness versus execution, same noun, opposite people."
+        },
+        {
+          "id": "stage_3",
+          "text": "Voss (optional). He wants the pool. He will call it conscription and mean it as a compliment to himself. Intercept risk on a levy column."
+        },
+        {
+          "id": "stage_4",
+          "text": "Hatch prepared. Roster. Temperature. Whether anyone writes a name. Whether the outer dog is thrown."
+        }
+      ],
+      "choices": [
+        {
+          "id": "carry_to_sole",
+          "text": "She reads it twice, which is not Edor's habit, it is hers. She blots the date. She does not blot the refusal.",
+          "set_flag": ""
+        },
+        {
+          "id": "show_voss",
+          "text": "He wants names. He will not pay the Office's rate. He will pay in patrols at the Gate. The Cutters will not like the patrols.",
+          "set_flag": ""
+        },
+        {
+          "id": "show_neither",
+          "text": "The paper lives in your pack like a spare filter. It does not clean anything. It is still a paper that moves people.",
+          "set_flag": ""
+        },
+        {
+          "id": "prepare_shut",
+          "text": "Forty days quiet. A receipt in the ash, cousin to a card in a freezer bag. Different district. Same temperature.",
+          "set_flag": ""
+        }
+      ]
+    },
+    {
+      "id": "quest_holdfast_the_hatch",
+      "display_name": "The Claim, Reversed",
+      "type": "decision",
+      "briefing": "Forms at the outer hatch. Escort in faded Continuity jackets. Temperature. The game stops talking. This is not Sela's arrival, or it is Sela's arrival and this. Open or keep shut. Authenticate, house, or levy. Or wait forty days. Write on the duty roster, or do not.",
+      "prereq_quest_id": "quest_holdfast_the_second_list",
+      "min_day": 90,
+      "knowledge_key": "",
+      "target_location_id": "player_shelter",
+      "stages": [
+        {
+          "id": "stage_1",
+          "text": "Open or shut. The dog on the hatch is a fact. So is the quiet."
+        },
+        {
+          "id": "stage_2",
+          "text": "If open: authenticate / house / levy. Numbers, Block C tags, three names. Edor asks to speak first if he is there."
+        },
+        {
+          "id": "stage_3",
+          "text": "If shut: forty days. No combat. The escort remains on a rota you cannot see. Then a receipt."
+        },
+        {
+          "id": "stage_4",
+          "text": "Roster. A name in a Cluster hand, a name in yours, or a blank that is also a decision."
+        }
+      ],
+      "choices": [
+        {
+          "id": "open_honour",
+          "text": "Some of yours live numbered in Block C. The bunker is easier to feed. The roster has names that did not sleep there last winter.",
+          "set_flag": "ending_holdfast_schedule"
+        },
+        {
+          "id": "open_12c",
+          "text": "Columns both ways. Receipts in triplicate. Nobody is shot. Sela claimed as dependent if present and if she heard it.",
+          "set_flag": "ending_holdfast_reserve"
+        },
+        {
+          "id": "keep_shut",
+          "text": "District 8 continues. Forty empty apartments stay empty. Edor's return may be found later, incomplete, in a good hand.",
+          "set_flag": "ending_holdfast_dark_road"
+        },
+        {
+          "id": "write_roster",
+          "text": "Ink on a chart that was always blank. The people who see it in the morning will know which sentence you believed.",
+          "set_flag": ""
+        },
+        {
+          "id": "write_nothing",
+          "text": "The chart stays honest about who this hole was built for. It stays dishonest about who kept it.",
+          "set_flag": ""
+        }
+      ]
+    }
+  ]
+}

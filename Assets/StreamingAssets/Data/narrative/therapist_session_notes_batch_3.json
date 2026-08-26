@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "collection_id": "therapist_session_notes_batch_3",
+  "sessions": [
+    {
+      "session_id": "b3_021",
+      "day": 388,
+      "participant": "the_general",
+      "therapist": "the_therapist",
+      "session_type": "weekly_check_in",
+      "location": "shelter_therapy_room",
+      "duration_minutes": 50,
+      "key_themes": [
+        "the_second_spring",
+        "the_4_zones",
+        "the_living",
+        "the_watching",
+        "the_family"
+      ],
+      "summary": "the_general arrived on time, dressed in his field uniform — the one he wears for perimeter patrols. He carried the four carvings (wolf, bee, wheat, snowflake) in his left hand. He placed them on the table in order: wolf, bee, wheat, snowflake. He said, 'The watching is the same. The thing I watch is the 4 zones. The 4 zones are the thing I watch. The watching is the living. The living is the thing I watch.' He did not look at me. He looked at the carvings. I asked him what the living felt like. He said, 'The living is the thing that is not the winter. The living is the thing that is the 4 zones. The 4 zones are the thing that is the family. The family is the 47. The 47 are the thing the living is for.' He paused. He said, 'I do not know how to stop watching. The watching is the thing I do. The thing I watch has changed. The watching has not.' I asked him if the watching was a burden. He said, 'The watching is the thing that is not the burden. The burden is the thing that is not the watching. The watching is the thing that is the living. The living is the thing that is not the burden.' He picked up the snowflake carving. He said, 'The snowflake is the thing that is the hollow. The hollow is the thing that is the bridge. The bridge is the thing that is the living.' He placed the snowflake back on the table. He said, 'The snowflake is the last carving. The Cartographer said there would be 4. The 4 are the wolf, the bee, the wheat, the snowflake. The 4 are the winter, the summer, the harvest, the hollow. The 4 are the thing the family is.' I asked him if he felt the family was safe. He said, 'The family is the 4 zones. The 4 zones are the thing the family farms. The farming is the thing the family does. The family is the thing that is safe because the family is the thing that is the 4 zones. The 4 zones are the thing that is safe because the 4 zones are the thing the family watches.' He stood. He said, 'The session is the thing that is the talking. The talking is the thing that is not the watching. The watching is the thing I do. The talking is the thing I do with you. The watching and the talking are the things I do. The things I do are the things the family needs.' He left the carvings on the table. He said, 'The carvings are the thing the family has. The family has the carvings. The family has the 4 zones. The family has the living.'",
+      "assessment": "the_general's hypervigilance has not decreased, but it has transformed. The hypervigilance is no longer a symptom. It is a role. The role is the watcher. The watcher is the thing the family needs. The watcher is the thing the 4 zones require. The hypervigilance is the asset. The asset is the thing that is not the burden. The burden is the thing that is not the watching. The transformation is complete. The General is the watcher of the 4 zones. The 4 zones are the family. The family is the living. The living is the thing the General watches. The role is stable. The role is the thing the family is built on.",
+      "recommendations": [
+        "Continue weekly sessions. The General's role as watcher is stable, but the role is isolating. The isolation is the thing that may become the burden.",
+        "Introduce a co-watcher rotation. The Bouncer is the natural candidate. The Bouncer is the thing that shares the watching. The watching is the thing that should not be done alone.",
+        "The carvings are the thing the General uses to explain the living. The carvings should be displayed in the common area. The carvings are the thing the family can see. The family should see the thing the General watches.",
+        "The snowflake carving is the thing that represents the hollow. The hollow is the thing the Cartographer described. The hollow is the thing the family may need to find. The family should discuss the hollow."
+      ],
+      "cross_refs": [
+        "patrol_debrief_036",
+        "diplomatic_contact_004",
+        "council_minutes_032",
+        "journal_raw_b3_78"
+      ],
+      "tags": [
+        "the_watcher",
+        "the_4_zones",
+        "the_living",
+        "the_snowflake",
+        "the_hollow",
+        "role_transformation",
+        "hypervigilance_as_asset",
+        "the_family"
+      ]
+    }
+  ]
+}

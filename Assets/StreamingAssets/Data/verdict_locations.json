@@ -1,34 +1,37 @@
-[
-  {
-    "id": "loc_geophone_pit_1",
-    "displayName": "The First Geophone Pit",
-    "description": "A concrete collar sunk like a wellhead, the lid propped on a brick. Below: a seismometer array the size of a dinner plate, bolted to bedrock, humming at a pitch almost too low to hear. The cable runs east, into the treeline, under the ridgeline. No one has recorded anything in the log for four years except the array itself, and the array reads the ground as if the whole valley were one slow heartbeat. A hand-painted sign on the lid, painted over twice: TEMPEST SITE 01 — KEEP OUT — DO NOT ENTER — ENTER AT YOUR OWN RISK. The last line is in a different hand, and it is not a warning.",
-    "dangerLevel": 6,
-    "travelHours": 5.5,
-    "baseRadsPerHour": 34
-  },
-  {
-    "id": "loc_twelve_gauge_array",
-    "displayName": "The Twelve-Gauge Array",
-    "description": "Twelve shot-firing sounding stations on the ridge, each a one-metre steel post with a grease-stained plate reading TEMPEST SITE 07 and a firing order stencilled in flaking yellow. The ordnance is long gone — the holes are empty — but the plates list the charge weights, the depths, the shot ordnance. Somebody has been keeping the plates legible, which is odd, because the nearest human settlement is nine hours away. The array is the fuse world's quiet door: the cable that runs under the treeline is the Tempest's own line, and it runs here because nobody on the surface walks this ridge.",
-    "dangerLevel": 7,
-    "travelHours": 6.0,
-    "baseRadsPerHour": 38
-  },
-  {
-    "id": "loc_network_fuse_bunker",
-    "displayName": "The Fuse World",
-    "description": "A dry shielded service way between two facilities, entered through a door the size of a bank vault with a handle that turns freely. Three years of readouts line the walls in glass-fronted cabinets, each bearing a linen-coded shift charter in a frame. The far end is a tape-silo door: six inches of steel, a wheel handle, and a solenoid that clicks when the tape's schedule demands. The floor is swept. The swept floor is the strange part: the dust in the corners is three years deep, and the swept path is one person's width, and the person's width ends at the tape-silo door.",
-    "dangerLevel": 8,
-    "travelHours": 7.5,
-    "baseRadsPerHour": 42
-  },
-  {
-    "id": "loc_archive_tape_silo",
-    "displayName": "The Archive Tape-Silo",
-    "description": "A vault the size of a chapel, wall-to-wall with steel racks of tape reels, each rack tagged by year. Twenty-one racks, four years per rack, the tags to the front, the labels in the same Department of the Interior hand as the linen charters. The deepest rack is labelled CURRENT YEAR — and every reel in it is dated five years ago, because the archive is not in the habit of taking dictation. At the end of the centre aisle, bolted to the floor, a reading lectern: a slot for a reel, a knob, a speaker the size of a fist. No one has ever heard it read. The dust on the lectern is disturbed, and the disturbance is a handprint, and the handprint is small, and there is no record of a child in the machine's staff.",
-    "dangerLevel": 9,
-    "travelHours": 8.5,
-    "baseRadsPerHour": 48
-  }
-]
+{
+  "schema_version": 1,
+  "locations": [
+    {
+      "id": "loc_geophone_pit_1",
+      "displayName": "The First Geophone Pit",
+      "description": "A concrete collar sunk like a wellhead, the lid propped on a brick. Below: a seismometer array the size of a dinner plate, bolted to bedrock, humming at a pitch almost too low to hear. The cable runs east, into the treeline, under the ridgeline. No one has recorded anything in the log for four years except the array itself, and the array reads the ground as if the whole valley were one slow heartbeat. A hand-painted sign on the lid, painted over twice: TEMPEST SITE 01 — KEEP OUT — DO NOT ENTER — ENTER AT YOUR OWN RISK. The last line is in a different hand, and it is not a warning.",
+      "dangerLevel": 6,
+      "travelHours": 5.5,
+      "baseRadsPerHour": 34
+    },
+    {
+      "id": "loc_twelve_gauge_array",
+      "displayName": "The Twelve-Gauge Array",
+      "description": "Twelve shot-firing sounding stations on the ridge, each a one-metre steel post with a grease-stained plate reading TEMPEST SITE 07 and a firing order stencilled in flaking yellow. The ordnance is long gone — the holes are empty — but the plates list the charge weights, the depths, the shot ordnance. Somebody has been keeping the plates legible, which is odd, because the nearest human settlement is nine hours away. The array is the fuse world's quiet door: the cable that runs under the treeline is the Tempest's own line, and it runs here because nobody on the surface walks this ridge.",
+      "dangerLevel": 7,
+      "travelHours": 6.0,
+      "baseRadsPerHour": 38
+    },
+    {
+      "id": "loc_network_fuse_bunker",
+      "displayName": "The Fuse World",
+      "description": "A dry shielded service way between two facilities, entered through a door the size of a bank vault with a handle that turns freely. Three years of readouts line the walls in glass-fronted cabinets, each bearing a linen-coded shift charter in a frame. The far end is a tape-silo door: six inches of steel, a wheel handle, and a solenoid that clicks when the tape's schedule demands. The floor is swept. The swept floor is the strange part: the dust in the corners is three years deep, and the swept path is one person's width, and the person's width ends at the tape-silo door.",
+      "dangerLevel": 8,
+      "travelHours": 7.5,
+      "baseRadsPerHour": 42
+    },
+    {
+      "id": "loc_archive_tape_silo",
+      "displayName": "The Archive Tape-Silo",
+      "description": "A vault the size of a chapel, wall-to-wall with steel racks of tape reels, each rack tagged by year. Twenty-one racks, four years per rack, the tags to the front, the labels in the same Department of the Interior hand as the linen charters. The deepest rack is labelled CURRENT YEAR — and every reel in it is dated five years ago, because the archive is not in the habit of taking dictation. At the end of the centre aisle, bolted to the floor, a reading lectern: a slot for a reel, a knob, a speaker the size of a fist. No one has ever heard it read. The dust on the lectern is disturbed, and the disturbance is a handprint, and the handprint is small, and there is no record of a child in the machine's staff.",
+      "dangerLevel": 9,
+      "travelHours": 8.5,
+      "baseRadsPerHour": 48
+    }
+  ]
+}

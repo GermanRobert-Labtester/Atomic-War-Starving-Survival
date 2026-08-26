@@ -1,90 +1,141 @@
-[
-  {
-    "id": "hydrophone_shelf_ice_calving_echo",
-    "buoy_callsign": "HYDRO-BUOY-NORTH-04",
-    "acoustic_frequency_hz": 24.5,
-    "depth_meters": 180,
-    "signal_classification": "SHELF_ICE_FRACTURE_TRANSIENT",
-    "timestamp_relative": "YEAR_04_WINTER_DAY_088",
-    "signal_amplitude_db": 142.8,
-    "tags": ["hydrophone", "ice_shelf", "acoustics", "ocean", "sub_surface"],
-    "prose": "A continuous sub-audible shudder registering at 24.5 Hz for eighty-five seconds. The acoustic energy matches the catastrophic shear fracture of the continental shelf ice plate. The ocean under four meters of sea ice vibrates like the soundboard of a cello as thousands of square kilometers of pack ice sag under heavy fallout snow."
-  },
-  {
-    "id": "hydrophone_submarine_cavitation_ghost",
-    "buoy_callsign": "HYDRO-BUOY-NORTH-02",
-    "acoustic_frequency_hz": 11.2,
-    "depth_meters": 320,
-    "signal_classification": "SEVEN_BLADE_PROPELLER_HARMONIC",
-    "timestamp_relative": "YEAR_06_DAY_204",
-    "signal_amplitude_db": 118.4,
-    "tags": ["hydrophone", "submarine", "cavitation", "ghost_ship", "sub_surface"],
-    "prose": "Regular rhythmic cavitation transients at 11.2 Hz, consistent with a seven-bladed bronze skewed propeller rotating at 96 RPM. The contact tracked west-northwest at four knots before fading into the Arctic trench acoustic shadow. No known surface port or naval tender exists to receive her."
-  },
-  {
-    "id": "hydrophone_deep_trench_thermal_vent",
-    "buoy_callsign": "HYDRO-BUOY-DEEP-09",
-    "acoustic_frequency_hz": 480.0,
-    "depth_meters": 850,
-    "signal_classification": "HYDROTHERMAL_SUPERCRITICAL_HISS",
-    "timestamp_relative": "YEAR_08_DAY_012",
-    "signal_amplitude_db": 98.2,
-    "tags": ["hydrophone", "thermal_vent", "geothermal", "abyss", "sub_surface"],
-    "prose": "High-frequency broadband white noise originating from the rift valley floor. Superheated 380C mineral brine boiling through basalt chimneys produces a continuous acoustic hiss. Thermocouple telemetry from the seabed cable indicates the bottom water has warmed by two degrees Celsius since the sky went black."
-  },
-  {
-    "id": "hydrophone_sunken_freighter_bulkhead_collapse",
-    "buoy_callsign": "HYDRO-BUOY-COASTAL-01",
-    "acoustic_frequency_hz": 85.0,
-    "depth_meters": 240,
-    "signal_classification": "HULL_IMPLOSION_TRANSIENT",
-    "timestamp_relative": "YEAR_02_DAY_310",
-    "signal_amplitude_db": 164.5,
-    "tags": ["hydrophone", "shipwreck", "implosion", "coastal", "sub_surface"],
-    "prose": "Sharp, reverberating acoustic spike followed by structural ringing. A scuttled 12,000-ton ore carrier's watertight bulkhead finally buckled under hydrostatic pressure at 240 meters depth. The implosion pulse was detected simultaneously across six buoy arrays spanning forty kilometers of frozen shoreline."
-  },
-  {
-    "id": "hydrophone_biological_benthos_clicks",
-    "buoy_callsign": "HYDRO-BUOY-DEEP-07",
-    "acoustic_frequency_hz": 1250.0,
-    "depth_meters": 620,
-    "signal_classification": "BIO_ACOUSTIC_ECHOLOCATION_TRAIN",
-    "timestamp_relative": "YEAR_11_DAY_145",
-    "signal_amplitude_db": 84.0,
-    "tags": ["hydrophone", "biology", "echolocation", "deep_sea", "sub_surface"],
-    "prose": "A rapid sequence of forty-two ultrasonic click packets with millisecond interval modulation. The frequency characteristics do not match pre-war cetacean catalogs, indicating an abyssal apex cephalopod hunting in the lightless benthic layer beneath the dead fallout seas."
-  },
-  {
-    "id": "hydrophone_coastal_minefield_chain_drag",
-    "buoy_callsign": "HYDRO-BUOY-COASTAL-05",
-    "acoustic_frequency_hz": 310.0,
-    "depth_meters": 95,
-    "signal_classification": "MOORING_CHAIN_GRATING_TRANSIENT",
-    "timestamp_relative": "YEAR_09_DAY_033",
-    "signal_amplitude_db": 105.7,
-    "tags": ["hydrophone", "naval_minefield", "mooring_chain", "hazard", "sub_surface"],
-    "prose": "Metallic screeching and clinking caused by heavy galvanized steel mooring chains dragging against submarine granite reefs during tidal surges. Two dozen contact mines deployed in 1983 remain suspended ten meters below the surface ice, rocking gently with every current."
-  },
-  {
-    "id": "hydrophone_active_sonar_orphan_ping",
-    "buoy_callsign": "HYDRO-BUOY-NORTH-01",
-    "acoustic_frequency_hz": 3500.0,
-    "depth_meters": 410,
-    "signal_classification": "ACTIVE_SONAR_SEARCH_SWEEP",
-    "timestamp_relative": "YEAR_14_DAY_290",
-    "signal_amplitude_db": 155.0,
-    "tags": ["hydrophone", "active_sonar", "orphan_system", "autonomous", "sub_surface"],
-    "prose": "A single, piercing 3.5 kHz FM slide ping transmitted every forty-five seconds with quartz-crystal precision. An autonomous seabed acoustic barrier node continues to ping the empty fjord, searching for submarine hulls that ceased sailing before its primary battery decayed."
-  },
-  {
-    "id": "hydrophone_glacial_earthquake_harmonic",
-    "buoy_callsign": "HYDRO-BUOY-DEEP-03",
-    "acoustic_frequency_hz": 6.8,
-    "depth_meters": 750,
-    "signal_classification": "INFRASONIC_GLACIAL_TECTONIC_RUMBLE",
-    "timestamp_relative": "YEAR_16_DAY_002",
-    "signal_amplitude_db": 158.2,
-    "tags": ["hydrophone", "infrasound", "glacial_earthquake", "tectonics", "sub_surface"],
-    "prose": "Sub-audible infrasonic ground roll oscillating at 6.8 Hz across eighteen minutes. The continental ice sheet, burdened by centuries of compressed ash and nuclear frost, slipped nine centimeters along its basal fault line, sending an acoustic shockwave pulsing through the oceanic abyssal plain."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "hydrophone_shelf_ice_calving_echo",
+      "buoy_callsign": "HYDRO-BUOY-NORTH-04",
+      "acoustic_frequency_hz": 24.5,
+      "depth_meters": 180,
+      "signal_classification": "SHELF_ICE_FRACTURE_TRANSIENT",
+      "timestamp_relative": "YEAR_04_WINTER_DAY_088",
+      "signal_amplitude_db": 142.8,
+      "tags": [
+        "hydrophone",
+        "ice_shelf",
+        "acoustics",
+        "ocean",
+        "sub_surface"
+      ],
+      "prose": "A continuous sub-audible shudder registering at 24.5 Hz for eighty-five seconds. The acoustic energy matches the catastrophic shear fracture of the continental shelf ice plate. The ocean under four meters of sea ice vibrates like the soundboard of a cello as thousands of square kilometers of pack ice sag under heavy fallout snow."
+    },
+    {
+      "id": "hydrophone_submarine_cavitation_ghost",
+      "buoy_callsign": "HYDRO-BUOY-NORTH-02",
+      "acoustic_frequency_hz": 11.2,
+      "depth_meters": 320,
+      "signal_classification": "SEVEN_BLADE_PROPELLER_HARMONIC",
+      "timestamp_relative": "YEAR_06_DAY_204",
+      "signal_amplitude_db": 118.4,
+      "tags": [
+        "hydrophone",
+        "submarine",
+        "cavitation",
+        "ghost_ship",
+        "sub_surface"
+      ],
+      "prose": "Regular rhythmic cavitation transients at 11.2 Hz, consistent with a seven-bladed bronze skewed propeller rotating at 96 RPM. The contact tracked west-northwest at four knots before fading into the Arctic trench acoustic shadow. No known surface port or naval tender exists to receive her."
+    },
+    {
+      "id": "hydrophone_deep_trench_thermal_vent",
+      "buoy_callsign": "HYDRO-BUOY-DEEP-09",
+      "acoustic_frequency_hz": 480.0,
+      "depth_meters": 850,
+      "signal_classification": "HYDROTHERMAL_SUPERCRITICAL_HISS",
+      "timestamp_relative": "YEAR_08_DAY_012",
+      "signal_amplitude_db": 98.2,
+      "tags": [
+        "hydrophone",
+        "thermal_vent",
+        "geothermal",
+        "abyss",
+        "sub_surface"
+      ],
+      "prose": "High-frequency broadband white noise originating from the rift valley floor. Superheated 380C mineral brine boiling through basalt chimneys produces a continuous acoustic hiss. Thermocouple telemetry from the seabed cable indicates the bottom water has warmed by two degrees Celsius since the sky went black."
+    },
+    {
+      "id": "hydrophone_sunken_freighter_bulkhead_collapse",
+      "buoy_callsign": "HYDRO-BUOY-COASTAL-01",
+      "acoustic_frequency_hz": 85.0,
+      "depth_meters": 240,
+      "signal_classification": "HULL_IMPLOSION_TRANSIENT",
+      "timestamp_relative": "YEAR_02_DAY_310",
+      "signal_amplitude_db": 164.5,
+      "tags": [
+        "hydrophone",
+        "shipwreck",
+        "implosion",
+        "coastal",
+        "sub_surface"
+      ],
+      "prose": "Sharp, reverberating acoustic spike followed by structural ringing. A scuttled 12,000-ton ore carrier's watertight bulkhead finally buckled under hydrostatic pressure at 240 meters depth. The implosion pulse was detected simultaneously across six buoy arrays spanning forty kilometers of frozen shoreline."
+    },
+    {
+      "id": "hydrophone_biological_benthos_clicks",
+      "buoy_callsign": "HYDRO-BUOY-DEEP-07",
+      "acoustic_frequency_hz": 1250.0,
+      "depth_meters": 620,
+      "signal_classification": "BIO_ACOUSTIC_ECHOLOCATION_TRAIN",
+      "timestamp_relative": "YEAR_11_DAY_145",
+      "signal_amplitude_db": 84.0,
+      "tags": [
+        "hydrophone",
+        "biology",
+        "echolocation",
+        "deep_sea",
+        "sub_surface"
+      ],
+      "prose": "A rapid sequence of forty-two ultrasonic click packets with millisecond interval modulation. The frequency characteristics do not match pre-war cetacean catalogs, indicating an abyssal apex cephalopod hunting in the lightless benthic layer beneath the dead fallout seas."
+    },
+    {
+      "id": "hydrophone_coastal_minefield_chain_drag",
+      "buoy_callsign": "HYDRO-BUOY-COASTAL-05",
+      "acoustic_frequency_hz": 310.0,
+      "depth_meters": 95,
+      "signal_classification": "MOORING_CHAIN_GRATING_TRANSIENT",
+      "timestamp_relative": "YEAR_09_DAY_033",
+      "signal_amplitude_db": 105.7,
+      "tags": [
+        "hydrophone",
+        "naval_minefield",
+        "mooring_chain",
+        "hazard",
+        "sub_surface"
+      ],
+      "prose": "Metallic screeching and clinking caused by heavy galvanized steel mooring chains dragging against submarine granite reefs during tidal surges. Two dozen contact mines deployed in 1983 remain suspended ten meters below the surface ice, rocking gently with every current."
+    },
+    {
+      "id": "hydrophone_active_sonar_orphan_ping",
+      "buoy_callsign": "HYDRO-BUOY-NORTH-01",
+      "acoustic_frequency_hz": 3500.0,
+      "depth_meters": 410,
+      "signal_classification": "ACTIVE_SONAR_SEARCH_SWEEP",
+      "timestamp_relative": "YEAR_14_DAY_290",
+      "signal_amplitude_db": 155.0,
+      "tags": [
+        "hydrophone",
+        "active_sonar",
+        "orphan_system",
+        "autonomous",
+        "sub_surface"
+      ],
+      "prose": "A single, piercing 3.5 kHz FM slide ping transmitted every forty-five seconds with quartz-crystal precision. An autonomous seabed acoustic barrier node continues to ping the empty fjord, searching for submarine hulls that ceased sailing before its primary battery decayed."
+    },
+    {
+      "id": "hydrophone_glacial_earthquake_harmonic",
+      "buoy_callsign": "HYDRO-BUOY-DEEP-03",
+      "acoustic_frequency_hz": 6.8,
+      "depth_meters": 750,
+      "signal_classification": "INFRASONIC_GLACIAL_TECTONIC_RUMBLE",
+      "timestamp_relative": "YEAR_16_DAY_002",
+      "signal_amplitude_db": 158.2,
+      "tags": [
+        "hydrophone",
+        "infrasound",
+        "glacial_earthquake",
+        "tectonics",
+        "sub_surface"
+      ],
+      "prose": "Sub-audible infrasonic ground roll oscillating at 6.8 Hz across eighteen minutes. The continental ice sheet, burdened by centuries of compressed ash and nuclear frost, slipped nine centimeters along its basal fault line, sending an acoustic shockwave pulsing through the oceanic abyssal plain."
+    }
+  ]
+}

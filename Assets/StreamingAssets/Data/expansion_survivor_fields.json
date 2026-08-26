@@ -1,74 +1,509 @@
-[
-  { "survivor_id": "elena_vasquez", "phantom_background_id": "nurse", "pre_war_profession_id": "nurse", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "worn_stethoscope" },
-  { "survivor_id": "marcus_olejnik", "phantom_background_id": "machinist", "pre_war_profession_id": "machinist", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "tarnished_pocket_watch" },
-  { "survivor_id": "suki_tanaka", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "superstitious_traditional", "personal_keepsake_item_id": "family_heirloom_seeds" },
-  { "survivor_id": "the_surgeon", "phantom_background_id": "nurse", "pre_war_profession_id": "nurse", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "silver_scalpel" },
-  { "survivor_id": "the_pharmacist", "phantom_background_id": "nurse", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "mortar_and_pestle" },
-  { "survivor_id": "the_vet", "phantom_background_id": "nurse", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "dog_whistle" },
-  { "survivor_id": "the_therapist", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "leather_notebook" },
-  { "survivor_id": "the_undertaker", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "religious_faith", "personal_keepsake_item_id": "funeral_program" },
-  { "survivor_id": "the_veteran", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "military_discipline", "personal_keepsake_item_id": "folded_flag" },
-  { "survivor_id": "the_cop", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "military_discipline", "personal_keepsake_item_id": "police_badge" },
-  { "survivor_id": "the_hunter", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "hunting_knife" },
-  { "survivor_id": "the_electrician", "phantom_background_id": "electrician", "pre_war_profession_id": "electrician", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "voltage_tester" },
-  { "survivor_id": "the_mechanic", "phantom_background_id": "machinist", "pre_war_profession_id": "machinist", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "socket_wrench" },
-  { "survivor_id": "the_teacher", "phantom_background_id": "teacher", "pre_war_profession_id": "teacher", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "chalk_box" },
-  { "survivor_id": "the_reporter", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "press_pass" },
-  { "survivor_id": "the_priest", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "religious_faith", "personal_keepsake_item_id": "rosary_beads" },
-  { "survivor_id": "the_chef", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "chefs_knife" },
-  { "survivor_id": "the_firefighter", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "firefighter_patch" },
-  { "survivor_id": "the_parent", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "childs_drawing" },
-  { "survivor_id": "the_plumber", "phantom_background_id": "machinist", "pre_war_profession_id": "machinist", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "pipe_wrench" },
-  { "survivor_id": "the_architect", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "drafting_compass" },
-  { "survivor_id": "the_chemist", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "lab_goggles" },
-  { "survivor_id": "the_botanist", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "superstitious_traditional", "personal_keepsake_item_id": "heirloom_seeds" },
-  { "survivor_id": "the_courier", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "bicycle_bell" },
-  { "survivor_id": "the_meteorologist", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "barometer" },
-  { "survivor_id": "the_hazmat_tech", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "dosimeter_badge" },
-  { "survivor_id": "the_defector", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "pacifist", "personal_keepsake_item_id": "torn_uniform_patch" },
-  { "survivor_id": "the_addict", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "sobriety_chip" },
-  { "survivor_id": "the_fierce_mother", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "baby_blanket" },
-  { "survivor_id": "the_exhausted_father", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "tool_belt" },
-  { "survivor_id": "the_naive_son", "phantom_background_id": "child_refugee", "pre_war_profession_id": "", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "teddy_bear" },
-  { "survivor_id": "the_hardened_daughter", "phantom_background_id": "child_refugee", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "broken_doll" },
-  { "survivor_id": "the_psychopath", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "shaving_razor" },
-  { "survivor_id": "the_serial_killer", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "wedding_ring" },
-  { "survivor_id": "the_general", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "military_discipline", "personal_keepsake_item_id": "medal_of_honor" },
-  { "survivor_id": "the_deserter", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "pacifist", "personal_keepsake_item_id": "draft_notice" },
-  { "survivor_id": "the_child_soldier", "phantom_background_id": "child_refugee", "pre_war_profession_id": "", "belief_profile_id": "military_discipline", "personal_keepsake_item_id": "spent_casing" },
-  { "survivor_id": "the_empath", "phantom_background_id": "nurse", "pre_war_profession_id": "", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "comfort_stone" },
-  { "survivor_id": "the_misanthrope", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "cabin_key" },
-  { "survivor_id": "the_pollyanna", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "lucky_coin" },
-  { "survivor_id": "the_martyr", "phantom_background_id": "nurse", "pre_war_profession_id": "", "belief_profile_id": "collectivist_solidarity", "personal_keepsake_item_id": "first_aid_manual" },
-  { "survivor_id": "the_relapsing_addict", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "empty_pill_bottle" },
-  { "survivor_id": "the_insomniac", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "coffee_mug" },
-  { "survivor_id": "the_prepper", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "survival_manual" },
-  { "survivor_id": "the_outcast", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "superstitious_traditional", "personal_keepsake_item_id": "geiger_counter_card" },
-  { "survivor_id": "the_pacifist", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pacifist", "personal_keepsake_item_id": "peace_symbol_pin" },
-  { "survivor_id": "the_widow", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "religious_faith", "personal_keepsake_item_id": "wedding_photograph" },
-  { "survivor_id": "the_sheriff", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "military_discipline", "personal_keepsake_item_id": "sheriff_star" },
-  { "survivor_id": "survivor_cryo_tech", "phantom_background_id": "electrician", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "cryo_wristband" },
-  { "survivor_id": "survivor_bunker_archivist", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "archive_key" },
-  { "survivor_id": "survivor_ice_walker", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "superstitious_traditional", "personal_keepsake_item_id": "compass" },
-  { "survivor_id": "survivor_defrosted_aristocrat", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "signet_ring" },
-  { "survivor_id": "survivor_thawed_medic", "phantom_background_id": "nurse", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "medical_license" },
-  { "survivor_id": "survivor_ash_diver", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "diving_mask" },
-  { "survivor_id": "survivor_speleologist", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "cave_map" },
-  { "survivor_id": "survivor_sump_diver", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "diving_knife" },
-  { "survivor_id": "survivor_mycologist", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "spore_print" },
-  { "survivor_id": "survivor_hydro_engineer", "phantom_background_id": "machinist", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "pressure_gauge" },
-  { "survivor_id": "survivor_mole", "phantom_background_id": "child_refugee", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "headlamp" },
-  { "survivor_id": "survivor_rot_farmer", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "superstitious_traditional", "personal_keepsake_item_id": "compost_scoop" },
-  { "survivor_id": "survivor_sapper", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "military_discipline", "personal_keepsake_item_id": "eod_badge" },
-  { "survivor_id": "survivor_lineman", "phantom_background_id": "electrician", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "lineman_gloves" },
-  { "survivor_id": "survivor_drone_op", "phantom_background_id": "former_soldier", "pre_war_profession_id": "", "belief_profile_id": "military_discipline", "personal_keepsake_item_id": "drone_fragment" },
-  { "survivor_id": "survivor_acoustic_tech", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "tuning_fork" },
-  { "survivor_id": "survivor_machinist", "phantom_background_id": "machinist", "pre_war_profession_id": "machinist", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "micrometer" },
-  { "survivor_id": "survivor_logistician", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "atheist_rationalist", "personal_keepsake_item_id": "clipboard" },
-  { "survivor_id": "survivor_bunker_born", "phantom_background_id": "child_refugee", "pre_war_profession_id": "", "belief_profile_id": "superstitious_traditional", "personal_keepsake_item_id": "old_world_coin" },
-  { "survivor_id": "survivor_the_waking", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "religious_faith", "personal_keepsake_item_id": "hospital_wristband" },
-  { "survivor_id": "survivor_osteophage", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "copper_bracelet" },
-  { "survivor_id": "survivor_archivist", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "superstitious_traditional", "personal_keepsake_item_id": "vinyl_record" },
-  { "survivor_id": "survivor_concrete_boss", "phantom_background_id": "machinist", "pre_war_profession_id": "machinist", "belief_profile_id": "pragmatic_individualism", "personal_keepsake_item_id": "hard_hat" },
-  { "survivor_id": "survivor_uv_penitent", "phantom_background_id": "generic", "pre_war_profession_id": "", "belief_profile_id": "superstitious_traditional", "personal_keepsake_item_id": "burnt_cloth" }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "survivor_id": "elena_vasquez",
+      "phantom_background_id": "nurse",
+      "pre_war_profession_id": "nurse",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "worn_stethoscope"
+    },
+    {
+      "survivor_id": "marcus_olejnik",
+      "phantom_background_id": "machinist",
+      "pre_war_profession_id": "machinist",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "tarnished_pocket_watch"
+    },
+    {
+      "survivor_id": "suki_tanaka",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "superstitious_traditional",
+      "personal_keepsake_item_id": "family_heirloom_seeds"
+    },
+    {
+      "survivor_id": "the_surgeon",
+      "phantom_background_id": "nurse",
+      "pre_war_profession_id": "nurse",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "silver_scalpel"
+    },
+    {
+      "survivor_id": "the_pharmacist",
+      "phantom_background_id": "nurse",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "mortar_and_pestle"
+    },
+    {
+      "survivor_id": "the_vet",
+      "phantom_background_id": "nurse",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "dog_whistle"
+    },
+    {
+      "survivor_id": "the_therapist",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "leather_notebook"
+    },
+    {
+      "survivor_id": "the_undertaker",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "religious_faith",
+      "personal_keepsake_item_id": "funeral_program"
+    },
+    {
+      "survivor_id": "the_veteran",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "military_discipline",
+      "personal_keepsake_item_id": "folded_flag"
+    },
+    {
+      "survivor_id": "the_cop",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "military_discipline",
+      "personal_keepsake_item_id": "police_badge"
+    },
+    {
+      "survivor_id": "the_hunter",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "hunting_knife"
+    },
+    {
+      "survivor_id": "the_electrician",
+      "phantom_background_id": "electrician",
+      "pre_war_profession_id": "electrician",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "voltage_tester"
+    },
+    {
+      "survivor_id": "the_mechanic",
+      "phantom_background_id": "machinist",
+      "pre_war_profession_id": "machinist",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "socket_wrench"
+    },
+    {
+      "survivor_id": "the_teacher",
+      "phantom_background_id": "teacher",
+      "pre_war_profession_id": "teacher",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "chalk_box"
+    },
+    {
+      "survivor_id": "the_reporter",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "press_pass"
+    },
+    {
+      "survivor_id": "the_priest",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "religious_faith",
+      "personal_keepsake_item_id": "rosary_beads"
+    },
+    {
+      "survivor_id": "the_chef",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "chefs_knife"
+    },
+    {
+      "survivor_id": "the_firefighter",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "firefighter_patch"
+    },
+    {
+      "survivor_id": "the_parent",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "childs_drawing"
+    },
+    {
+      "survivor_id": "the_plumber",
+      "phantom_background_id": "machinist",
+      "pre_war_profession_id": "machinist",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "pipe_wrench"
+    },
+    {
+      "survivor_id": "the_architect",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "drafting_compass"
+    },
+    {
+      "survivor_id": "the_chemist",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "lab_goggles"
+    },
+    {
+      "survivor_id": "the_botanist",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "superstitious_traditional",
+      "personal_keepsake_item_id": "heirloom_seeds"
+    },
+    {
+      "survivor_id": "the_courier",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "bicycle_bell"
+    },
+    {
+      "survivor_id": "the_meteorologist",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "barometer"
+    },
+    {
+      "survivor_id": "the_hazmat_tech",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "dosimeter_badge"
+    },
+    {
+      "survivor_id": "the_defector",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pacifist",
+      "personal_keepsake_item_id": "torn_uniform_patch"
+    },
+    {
+      "survivor_id": "the_addict",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "sobriety_chip"
+    },
+    {
+      "survivor_id": "the_fierce_mother",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "baby_blanket"
+    },
+    {
+      "survivor_id": "the_exhausted_father",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "tool_belt"
+    },
+    {
+      "survivor_id": "the_naive_son",
+      "phantom_background_id": "child_refugee",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "teddy_bear"
+    },
+    {
+      "survivor_id": "the_hardened_daughter",
+      "phantom_background_id": "child_refugee",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "broken_doll"
+    },
+    {
+      "survivor_id": "the_psychopath",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "shaving_razor"
+    },
+    {
+      "survivor_id": "the_serial_killer",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "wedding_ring"
+    },
+    {
+      "survivor_id": "the_general",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "military_discipline",
+      "personal_keepsake_item_id": "medal_of_honor"
+    },
+    {
+      "survivor_id": "the_deserter",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pacifist",
+      "personal_keepsake_item_id": "draft_notice"
+    },
+    {
+      "survivor_id": "the_child_soldier",
+      "phantom_background_id": "child_refugee",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "military_discipline",
+      "personal_keepsake_item_id": "spent_casing"
+    },
+    {
+      "survivor_id": "the_empath",
+      "phantom_background_id": "nurse",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "comfort_stone"
+    },
+    {
+      "survivor_id": "the_misanthrope",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "cabin_key"
+    },
+    {
+      "survivor_id": "the_pollyanna",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "lucky_coin"
+    },
+    {
+      "survivor_id": "the_martyr",
+      "phantom_background_id": "nurse",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "first_aid_manual"
+    },
+    {
+      "survivor_id": "the_relapsing_addict",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "empty_pill_bottle"
+    },
+    {
+      "survivor_id": "the_insomniac",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "coffee_mug"
+    },
+    {
+      "survivor_id": "the_prepper",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "survival_manual"
+    },
+    {
+      "survivor_id": "the_outcast",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "superstitious_traditional",
+      "personal_keepsake_item_id": "geiger_counter_card"
+    },
+    {
+      "survivor_id": "the_pacifist",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pacifist",
+      "personal_keepsake_item_id": "peace_symbol_pin"
+    },
+    {
+      "survivor_id": "the_widow",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "religious_faith",
+      "personal_keepsake_item_id": "wedding_photograph"
+    },
+    {
+      "survivor_id": "the_sheriff",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "military_discipline",
+      "personal_keepsake_item_id": "sheriff_star"
+    },
+    {
+      "survivor_id": "survivor_cryo_tech",
+      "phantom_background_id": "electrician",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "cryo_wristband"
+    },
+    {
+      "survivor_id": "survivor_bunker_archivist",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "archive_key"
+    },
+    {
+      "survivor_id": "survivor_ice_walker",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "superstitious_traditional",
+      "personal_keepsake_item_id": "compass"
+    },
+    {
+      "survivor_id": "survivor_defrosted_aristocrat",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "signet_ring"
+    },
+    {
+      "survivor_id": "survivor_thawed_medic",
+      "phantom_background_id": "nurse",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "medical_license"
+    },
+    {
+      "survivor_id": "survivor_ash_diver",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "diving_mask"
+    },
+    {
+      "survivor_id": "survivor_speleologist",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "cave_map"
+    },
+    {
+      "survivor_id": "survivor_sump_diver",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "diving_knife"
+    },
+    {
+      "survivor_id": "survivor_mycologist",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "spore_print"
+    },
+    {
+      "survivor_id": "survivor_hydro_engineer",
+      "phantom_background_id": "machinist",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "pressure_gauge"
+    },
+    {
+      "survivor_id": "survivor_mole",
+      "phantom_background_id": "child_refugee",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "headlamp"
+    },
+    {
+      "survivor_id": "survivor_rot_farmer",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "superstitious_traditional",
+      "personal_keepsake_item_id": "compost_scoop"
+    },
+    {
+      "survivor_id": "survivor_sapper",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "military_discipline",
+      "personal_keepsake_item_id": "eod_badge"
+    },
+    {
+      "survivor_id": "survivor_lineman",
+      "phantom_background_id": "electrician",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "lineman_gloves"
+    },
+    {
+      "survivor_id": "survivor_drone_op",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "military_discipline",
+      "personal_keepsake_item_id": "drone_fragment"
+    },
+    {
+      "survivor_id": "survivor_acoustic_tech",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "tuning_fork"
+    },
+    {
+      "survivor_id": "survivor_machinist",
+      "phantom_background_id": "machinist",
+      "pre_war_profession_id": "machinist",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "micrometer"
+    },
+    {
+      "survivor_id": "survivor_logistician",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "clipboard"
+    },
+    {
+      "survivor_id": "survivor_bunker_born",
+      "phantom_background_id": "child_refugee",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "superstitious_traditional",
+      "personal_keepsake_item_id": "old_world_coin"
+    },
+    {
+      "survivor_id": "survivor_the_waking",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "religious_faith",
+      "personal_keepsake_item_id": "hospital_wristband"
+    },
+    {
+      "survivor_id": "survivor_osteophage",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "copper_bracelet"
+    },
+    {
+      "survivor_id": "survivor_archivist",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "superstitious_traditional",
+      "personal_keepsake_item_id": "vinyl_record"
+    },
+    {
+      "survivor_id": "survivor_concrete_boss",
+      "phantom_background_id": "machinist",
+      "pre_war_profession_id": "machinist",
+      "belief_profile_id": "pragmatic_individualism",
+      "personal_keepsake_item_id": "hard_hat"
+    },
+    {
+      "survivor_id": "survivor_uv_penitent",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "superstitious_traditional",
+      "personal_keepsake_item_id": "burnt_cloth"
+    }
+  ]
+}

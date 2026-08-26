@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "description": "Flag definitions for the moral choice system. These flags gate quest access and branch locking.",
+  "flags": [
+    { "id": "flag_betrayed_ally", "display_name": "Betrayed an Ally" },
+    { "id": "flag_betrayed_faction", "display_name": "Betrayed a Faction" },
+    { "id": "flag_betrayed_trust", "display_name": "Broke Trust" },
+    { "id": "flag_broken_pact", "display_name": "Broken Pact" },
+    { "id": "flag_become_warlord", "display_name": "Became Warlord" },
+    { "id": "flag_throne_of_ash", "display_name": "Throne of Ash" },
+    { "id": "flag_branch_mercy_road_locked", "display_name": "Mercy Road Locked" },
+    { "id": "flag_branch_iron_way_locked", "display_name": "Iron Way Locked" },
+    { "id": "flag_branch_listener_locked", "display_name": "Listener's Thread Locked" },
+    { "id": "flag_branch_broken_compact_locked", "display_name": "Broken Compact Locked" }
+  ]
+}

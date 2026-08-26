@@ -1,72 +1,117 @@
-[
-  {
-    "id": "pipeline_sabotage_shaped_charge_crude_breach",
-    "pipeline_sector": "TRANSLINE_CRUDE_CORRIDOR_MILE_42",
-    "pipe_diameter_inches": 24.0,
-    "sabotage_method": "LINEAR_SHAPED_CHARGE_BREACH",
-    "environmental_hazard_severity": "CRITICAL_AQUIFER_OIL_BLANKET",
-    "timestamp_relative": "YEAR_02_SABOTAGE_LOG_01",
-    "tags": ["machinery", "pipeline", "sabotage", "crude_oil", "explosives"],
-    "prose": "Raiders attached a six-foot linear shaped charge to the 24-inch buried transmission line. The explosion sheared a 40cm gash through the API-5L X70 steel pipe, releasing forty thousand barrels of sweet crude into the wetlands that feed the primary bunker intake aquifer."
-  },
-  {
-    "id": "pipeline_sabotage_hot_tap_fuel_skimming_manifold",
-    "pipeline_sector": "DIESEL_FEEDER_SPUR_VALVE_08",
-    "pipe_diameter_inches": 12.0,
-    "sabotage_method": "UNDER_PRESSURE_HOT_TAP_SIPHON",
-    "environmental_hazard_severity": "LOW_CONTINUOUS_PRODUCT_LOSS",
-    "timestamp_relative": "YEAR_05_SABOTAGE_LOG_04",
-    "tags": ["machinery", "pipeline", "hot_tap", "fuel_theft", "clandestine"],
-    "prose": "A clandestine machine shop welded a high-pressure saddle and two-inch bronze ball valve directly onto the live diesel pipeline. Over eighteen months, an underground smuggler network drew fifteen hundred gallons of refined diesel weekly into buried tanker trucks."
-  },
-  {
-    "id": "pipeline_sabotage_scrapper_pig_explosive_blockage",
-    "pipeline_sector": "MAINLINE_PIG_RECEIVER_STATION_B",
-    "pipe_diameter_inches": 30.0,
-    "sabotage_method": "BOOBY_TRAPPED_INSPECTION_PIG",
-    "environmental_hazard_severity": "HIGH_PUMP_STATION_EXPLOSION",
-    "timestamp_relative": "YEAR_08_SABOTAGE_LOG_02",
-    "tags": ["machinery", "pipeline", "pig_launcher", "ied", "overpressure"],
-    "prose": "An automated pipeline cleaning pig loaded with fifty pounds of plastic explosive detonated as it entered the receiver trap at Booster Station 4. The blast sheared the manifold header and ignited a fuel vapor fireball that incinerated the pump building."
-  },
-  {
-    "id": "pipeline_sabotage_valve_station_hydraulic_tampering",
-    "pipeline_sector": "MOUNTAIN_CREST_BLOCK_VALVE_03",
-    "pipe_diameter_inches": 20.0,
-    "sabotage_method": "HYDRAULIC_ACCUMULATOR_DEPRESSURIZATION",
-    "environmental_hazard_severity": "HIGH_WATER_HAMMER_RUPTURE",
-    "timestamp_relative": "YEAR_11_SABOTAGE_LOG_01",
-    "tags": ["machinery", "pipeline", "block_valve", "hydraulics", "water_hammer"],
-    "prose": "Saboteurs severed the nitrogen pilot lines on the fast-acting emergency block valve, slamming the thirty-ton gate shut in 1.2 seconds against full pumping velocity. The resulting 120-bar hydraulic pressure wave burst the pipe casing three miles down-gradient."
-  },
-  {
-    "id": "pipeline_sabotage_cathodic_protection_anode_theft",
-    "pipeline_sector": "COASTAL_SWAMP_RIVER_CROSSING",
-    "pipe_diameter_inches": 16.0,
-    "sabotage_method": "SACRIFICIAL_ANODE_METALLURGICAL_THEFT",
-    "environmental_hazard_severity": "MODERATE_RAPID_PITTING_LEAK",
-    "timestamp_relative": "YEAR_14_SABOTAGE_LOG_03",
-    "tags": ["machinery", "pipeline", "cathodic_protection", "theft", "corrosion"],
-    "prose": "Scavengers dug up twelve tons of solid magnesium and zinc sacrificial ground anodes to melt into bullet casings and machine castings. Without cathodic protection, tidal marsh water ate through the steel pipe wall in less than three years, creating dozens of pinhole leaks."
-  },
-  {
-    "id": "pipeline_sabotage_natural_gas_condensate_well_flare",
-    "pipeline_sector": "GAS_WELLHEAD_GATHERING_MANIFOLD",
-    "pipe_diameter_inches": 10.0,
-    "sabotage_method": "FLARE_HEADER_BYPASS_DETONATION",
-    "environmental_hazard_severity": "HIGH_VAPOR_CLOUD_EXPLOSION",
-    "timestamp_relative": "YEAR_17_SABOTAGE_LOG_02",
-    "tags": ["machinery", "pipeline", "natural_gas", "flare_stack", "fireball"],
-    "prose": "Tampering with the flare stack knock-out drum sent raw liquid propane condensate directly into the high-pressure burner tip. A liquid fireball thirty meters wide erupted over the valley, setting fire to surrounding dead pine forests."
-  },
-  {
-    "id": "pipeline_sabotage_salt_cavern_strategic_oil_seep",
-    "pipeline_sector": "STRATEGIC_PETROLEUM_SALT_DOME_01",
-    "pipe_diameter_inches": 36.0,
-    "sabotage_method": "WELLHEAD_CASING_EXPLOSIVE_SEVERANCE",
-    "environmental_hazard_severity": "CATASTROPHIC_SALT_DOME_COLLAPSE",
-    "timestamp_relative": "YEAR_20_SABOTAGE_LOG_01",
-    "tags": ["machinery", "pipeline", "salt_dome", "strategic_reserve", "groundwater"],
-    "prose": "A shaped charge detonated thirty meters down the cavern casing string allowed saturated salt brine and heavy sour crude to bleed into the regional fresh water table. A sinkhole two hundred meters wide opened above the collapsed cavern ceiling."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "pipeline_sabotage_shaped_charge_crude_breach",
+      "pipeline_sector": "TRANSLINE_CRUDE_CORRIDOR_MILE_42",
+      "pipe_diameter_inches": 24.0,
+      "sabotage_method": "LINEAR_SHAPED_CHARGE_BREACH",
+      "environmental_hazard_severity": "CRITICAL_AQUIFER_OIL_BLANKET",
+      "timestamp_relative": "YEAR_02_SABOTAGE_LOG_01",
+      "tags": [
+        "machinery",
+        "pipeline",
+        "sabotage",
+        "crude_oil",
+        "explosives"
+      ],
+      "prose": "Raiders attached a six-foot linear shaped charge to the 24-inch buried transmission line. The explosion sheared a 40cm gash through the API-5L X70 steel pipe, releasing forty thousand barrels of sweet crude into the wetlands that feed the primary bunker intake aquifer."
+    },
+    {
+      "id": "pipeline_sabotage_hot_tap_fuel_skimming_manifold",
+      "pipeline_sector": "DIESEL_FEEDER_SPUR_VALVE_08",
+      "pipe_diameter_inches": 12.0,
+      "sabotage_method": "UNDER_PRESSURE_HOT_TAP_SIPHON",
+      "environmental_hazard_severity": "LOW_CONTINUOUS_PRODUCT_LOSS",
+      "timestamp_relative": "YEAR_05_SABOTAGE_LOG_04",
+      "tags": [
+        "machinery",
+        "pipeline",
+        "hot_tap",
+        "fuel_theft",
+        "clandestine"
+      ],
+      "prose": "A clandestine machine shop welded a high-pressure saddle and two-inch bronze ball valve directly onto the live diesel pipeline. Over eighteen months, an underground smuggler network drew fifteen hundred gallons of refined diesel weekly into buried tanker trucks."
+    },
+    {
+      "id": "pipeline_sabotage_scrapper_pig_explosive_blockage",
+      "pipeline_sector": "MAINLINE_PIG_RECEIVER_STATION_B",
+      "pipe_diameter_inches": 30.0,
+      "sabotage_method": "BOOBY_TRAPPED_INSPECTION_PIG",
+      "environmental_hazard_severity": "HIGH_PUMP_STATION_EXPLOSION",
+      "timestamp_relative": "YEAR_08_SABOTAGE_LOG_02",
+      "tags": [
+        "machinery",
+        "pipeline",
+        "pig_launcher",
+        "ied",
+        "overpressure"
+      ],
+      "prose": "An automated pipeline cleaning pig loaded with fifty pounds of plastic explosive detonated as it entered the receiver trap at Booster Station 4. The blast sheared the manifold header and ignited a fuel vapor fireball that incinerated the pump building."
+    },
+    {
+      "id": "pipeline_sabotage_valve_station_hydraulic_tampering",
+      "pipeline_sector": "MOUNTAIN_CREST_BLOCK_VALVE_03",
+      "pipe_diameter_inches": 20.0,
+      "sabotage_method": "HYDRAULIC_ACCUMULATOR_DEPRESSURIZATION",
+      "environmental_hazard_severity": "HIGH_WATER_HAMMER_RUPTURE",
+      "timestamp_relative": "YEAR_11_SABOTAGE_LOG_01",
+      "tags": [
+        "machinery",
+        "pipeline",
+        "block_valve",
+        "hydraulics",
+        "water_hammer"
+      ],
+      "prose": "Saboteurs severed the nitrogen pilot lines on the fast-acting emergency block valve, slamming the thirty-ton gate shut in 1.2 seconds against full pumping velocity. The resulting 120-bar hydraulic pressure wave burst the pipe casing three miles down-gradient."
+    },
+    {
+      "id": "pipeline_sabotage_cathodic_protection_anode_theft",
+      "pipeline_sector": "COASTAL_SWAMP_RIVER_CROSSING",
+      "pipe_diameter_inches": 16.0,
+      "sabotage_method": "SACRIFICIAL_ANODE_METALLURGICAL_THEFT",
+      "environmental_hazard_severity": "MODERATE_RAPID_PITTING_LEAK",
+      "timestamp_relative": "YEAR_14_SABOTAGE_LOG_03",
+      "tags": [
+        "machinery",
+        "pipeline",
+        "cathodic_protection",
+        "theft",
+        "corrosion"
+      ],
+      "prose": "Scavengers dug up twelve tons of solid magnesium and zinc sacrificial ground anodes to melt into bullet casings and machine castings. Without cathodic protection, tidal marsh water ate through the steel pipe wall in less than three years, creating dozens of pinhole leaks."
+    },
+    {
+      "id": "pipeline_sabotage_natural_gas_condensate_well_flare",
+      "pipeline_sector": "GAS_WELLHEAD_GATHERING_MANIFOLD",
+      "pipe_diameter_inches": 10.0,
+      "sabotage_method": "FLARE_HEADER_BYPASS_DETONATION",
+      "environmental_hazard_severity": "HIGH_VAPOR_CLOUD_EXPLOSION",
+      "timestamp_relative": "YEAR_17_SABOTAGE_LOG_02",
+      "tags": [
+        "machinery",
+        "pipeline",
+        "natural_gas",
+        "flare_stack",
+        "fireball"
+      ],
+      "prose": "Tampering with the flare stack knock-out drum sent raw liquid propane condensate directly into the high-pressure burner tip. A liquid fireball thirty meters wide erupted over the valley, setting fire to surrounding dead pine forests."
+    },
+    {
+      "id": "pipeline_sabotage_salt_cavern_strategic_oil_seep",
+      "pipeline_sector": "STRATEGIC_PETROLEUM_SALT_DOME_01",
+      "pipe_diameter_inches": 36.0,
+      "sabotage_method": "WELLHEAD_CASING_EXPLOSIVE_SEVERANCE",
+      "environmental_hazard_severity": "CATASTROPHIC_SALT_DOME_COLLAPSE",
+      "timestamp_relative": "YEAR_20_SABOTAGE_LOG_01",
+      "tags": [
+        "machinery",
+        "pipeline",
+        "salt_dome",
+        "strategic_reserve",
+        "groundwater"
+      ],
+      "prose": "A shaped charge detonated thirty meters down the cavern casing string allowed saturated salt brine and heavy sour crude to bleed into the regional fresh water table. A sinkhole two hundred meters wide opened above the collapsed cavern ceiling."
+    }
+  ]
+}

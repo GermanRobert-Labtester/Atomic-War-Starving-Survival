@@ -1,82 +1,133 @@
-[
-  {
-    "id": "liturgy_b2_rite_of_the_fading_needle",
-    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
-    "liturgy_type": "DOSIMETER_VIGIL",
-    "ritual_sacrament": "DECAY_MEASUREMENT_CEREMONY",
-    "sacred_rad_threshold_cpm": 3200,
-    "timestamp_relative": "YEAR_07_WINTER_SOLSTICE",
-    "tags": ["cult", "dosimeter", "decay", "vigil", "cobalt_flame"],
-    "prose": "Once per year, the congregation gathers around the oldest dosimeter in the collection — a pre-war civil defence model with a cracked dial face. The Elder holds it aloft while the acolytes count the clicks in silence for sixty seconds. The number is recorded in the Book of Half-Lives. If the count is lower than last year, the congregation murmurs approval: the ash is settling, the world is cooling, the fire is dying. If the count is higher, a penitential fast is declared for three days. The dosimeter is never calibrated. Its readings are accepted as divine testimony."
-  },
-  {
-    "id": "liturgy_b2_hymn_of_the_invisible_fire",
-    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
-    "liturgy_type": "CONGREGATIONAL_HYMN",
-    "ritual_sacrament": "MORNING_DEVOTION",
-    "sacred_rad_threshold_cpm": 1500,
-    "timestamp_relative": "YEAR_09_DAY_001",
-    "tags": ["cult", "hymn", "invisible_fire", "morning", "cobalt_flame"],
-    "prose": "Sung at dawn by the gathered faithful, standing in a circle with their dosimeters clipped to their chests. The hymn has no melody — it is spoken in a low, rhythmic monotone that rises in volume with each verse: 'The fire that has no flame / Burns without consuming / The light that casts no shadow / Sees without illumining / We carry it in our bones / We breathe it in our sleep / The ash is its altar / The wind is its priest / And we, who glow faintly in the dark / Are its congregation.' The faithful believe the hum of their dosimeters during the hymn is the god acknowledging their presence."
-  },
-  {
-    "id": "liturgy_b2_sacrament_of_the_hot_stone",
-    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
-    "liturgy_type": "TRIAL_BY_EXPOSURE",
-    "ritual_sacrament": "RADIOSIGN_JUDGMENT",
-    "sacred_rad_threshold_cpm": 60000,
-    "timestamp_relative": "YEAR_11_DAY_155",
-    "tags": ["cult", "trial", "hot_stone", "judgment", "cobalt_flame"],
-    "prose": "When a member of the congregation is accused of a crime — theft, violence, betrayal — they are brought before the assembly and asked to hold a stone from the reactor foundation in their bare hands for the duration of one full dosimeter reading cycle. The stone is warm to the touch. The assembly watches the dosimeter. If the needle stays below the sacred threshold, the accused is declared clean — the ash has judged them innocent. If the needle spikes, the accused is declared contaminated — guilty. The trial does not distinguish between moral guilt and radiation exposure. To the congregation, they are the same thing. The ash knows. The ash always knows."
-  },
-  {
-    "id": "liturgy_b2_vespers_of_the_settling_dust",
-    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
-    "liturgy_type": "EVENING_PRAYER",
-    "ritual_sacrament": "ASH_COLLECTION_RITE",
-    "sacred_rad_threshold_cpm": 2000,
-    "timestamp_relative": "YEAR_10_DAY_200",
-    "tags": ["cult", "vespers", "ash", "evening", "collection"],
-    "prose": "At sunset, the acolytes walk the perimeter of the settlement with small glass jars, collecting ash from surfaces — window sills, door frames, the tops of walls. The ash is brought to the chapel and poured into a communal vessel. The Elder intones: 'What falls is holy. What settles is remembered. What the wind carries, the wind returns.' The collected ash is sealed in the vessel and stored in the chapel crypt. The crypt now contains forty-seven jars of ash, each labelled with the date and location of collection. The faithful believe that when all the ash in the world has been collected and sealed, the purification will be complete."
-  },
-  {
-    "id": "liturgy_b2_canticle_of_the_geiger_psalm",
-    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
-    "liturgy_type": "MUSICAL_DEVOTION",
-    "ritual_sacrament": "CLICK_PATTERNS_AS_SCRIPTURE",
-    "sacred_rad_threshold_cpm": 9500,
-    "timestamp_relative": "YEAR_12_DAY_088",
-    "tags": ["cult", "canticle", "geiger", "music", "scripture"],
-    "prose": "A musically trained acolyte sits before a Geiger counter and listens to its click pattern for ten minutes. The clicks are transcribed as musical notation — each click a note, the interval between clicks determining the duration. The resulting 'score' is performed by the congregation on whatever instruments are available: tin cups, pipe sections, the hum of the generator. The music is atonal, arrhythmic, and deeply unsettling to outsiders. The congregation finds it beautiful. They believe the radiation is composing the music through the Geiger counter, and that each performance is a unique scripture that will never be repeated. The Elder calls it 'the voice of the bedrock singing.'"
-  },
-  {
-    "id": "liturgy_b2_rite_of_the_glowing_hand",
-    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
-    "liturgy_type": "INITIATION_TRIAL",
-    "ritual_sacrament": "PHOSPHORESCENCE_TEST",
-    "sacred_rad_threshold_cpm": 25000,
-    "timestamp_relative": "YEAR_13_DAY_044",
-    "tags": ["cult", "initiation", "glowing_hand", "phosphorescence", "cobalt_flame"],
-    "prose": "The final initiation trial. The novice is led into a completely dark chamber and asked to hold out their hands, palms up. After ten minutes of darkness, the Elder enters with a UV lamp and examines the novice's skin. If the skin fluoresces — a faint blue-white glow under ultraviolet light — the novice is declared 'marked by the flame.' This is not radiation fluorescence; it is mineral residue on the skin from the bunker's water supply. But the congregation interprets it as a sign that the novice's body has begun to glow with the sacred fire. The novice is clothed in the lead chasuble and admitted to the inner circle. No one has ever failed this trial. The water supply fluoresces in everyone."
-  },
-  {
-    "id": "liturgy_b2_procession_of_the_lead_reliquary",
-    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
-    "liturgy_type": "ANNUAL_PROCESSION",
-    "ritual_sacrament": "RELIC_DISPLAY",
-    "sacred_rad_threshold_cpm": 7000,
-    "timestamp_relative": "YEAR_14_DAY_001",
-    "tags": ["cult", "procession", "reliquary", "lead", "relic"],
-    "prose": "Once per year, the congregation processes from the chapel to the perimeter wall and back, carrying a lead-lined reliquary containing what the Elder calls 'the First Ash' — a sealed glass vial of material collected from ground zero of the nearest detonation site. The reliquary is heavy — the lead shielding weighs eight kilograms. It is carried by the strongest acolyte, who walks barefoot regardless of weather. The procession stops at seven points along the perimeter. At each point, the Elder reads a passage from the Book of Half-Lives and the congregation responds with a single word: 'Settling.' The procession ends at the chapel door, where the reliquary is returned to its alcove. The acolyte who carried it is examined by the medic for radiation burns. No one has ever been refused participation for medical reasons."
-  },
-  {
-    "id": "liturgy_b2_benediction_of_the_clean_count",
-    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
-    "liturgy_type": "CLOSING_BENEDICTION",
-    "ritual_sacrament": "SERVICE_DISMISSAL",
-    "sacred_rad_threshold_cpm": 800,
-    "timestamp_relative": "YEAR_14_DAY_200",
-    "tags": ["cult", "benediction", "clean_count", "dismissal", "cobalt_flame"],
-    "prose": "At the close of every service, the Elder holds the dosimeter aloft and waits for the clicks to slow. When the count drops below eight hundred per minute — the background rate for the bunker's deepest chamber — the Elder pronounces the benediction: 'The count is clean. The ash is settled. The fire is quiet. Go in the warmth of the bedrock. Carry the stillness in your bones. And when the clicking begins again, remember: it is not punishment. It is patience.' The congregation responds: 'We remember.' They then file out in silence. No one speaks until they have passed through the chapel's outer door. The silence is considered part of the benediction — a final moment of listening for the voice of the settling ash."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "liturgy_b2_rite_of_the_fading_needle",
+      "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+      "liturgy_type": "DOSIMETER_VIGIL",
+      "ritual_sacrament": "DECAY_MEASUREMENT_CEREMONY",
+      "sacred_rad_threshold_cpm": 3200,
+      "timestamp_relative": "YEAR_07_WINTER_SOLSTICE",
+      "tags": [
+        "cult",
+        "dosimeter",
+        "decay",
+        "vigil",
+        "cobalt_flame"
+      ],
+      "prose": "Once per year, the congregation gathers around the oldest dosimeter in the collection — a pre-war civil defence model with a cracked dial face. The Elder holds it aloft while the acolytes count the clicks in silence for sixty seconds. The number is recorded in the Book of Half-Lives. If the count is lower than last year, the congregation murmurs approval: the ash is settling, the world is cooling, the fire is dying. If the count is higher, a penitential fast is declared for three days. The dosimeter is never calibrated. Its readings are accepted as divine testimony."
+    },
+    {
+      "id": "liturgy_b2_hymn_of_the_invisible_fire",
+      "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+      "liturgy_type": "CONGREGATIONAL_HYMN",
+      "ritual_sacrament": "MORNING_DEVOTION",
+      "sacred_rad_threshold_cpm": 1500,
+      "timestamp_relative": "YEAR_09_DAY_001",
+      "tags": [
+        "cult",
+        "hymn",
+        "invisible_fire",
+        "morning",
+        "cobalt_flame"
+      ],
+      "prose": "Sung at dawn by the gathered faithful, standing in a circle with their dosimeters clipped to their chests. The hymn has no melody — it is spoken in a low, rhythmic monotone that rises in volume with each verse: 'The fire that has no flame / Burns without consuming / The light that casts no shadow / Sees without illumining / We carry it in our bones / We breathe it in our sleep / The ash is its altar / The wind is its priest / And we, who glow faintly in the dark / Are its congregation.' The faithful believe the hum of their dosimeters during the hymn is the god acknowledging their presence."
+    },
+    {
+      "id": "liturgy_b2_sacrament_of_the_hot_stone",
+      "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+      "liturgy_type": "TRIAL_BY_EXPOSURE",
+      "ritual_sacrament": "RADIOSIGN_JUDGMENT",
+      "sacred_rad_threshold_cpm": 60000,
+      "timestamp_relative": "YEAR_11_DAY_155",
+      "tags": [
+        "cult",
+        "trial",
+        "hot_stone",
+        "judgment",
+        "cobalt_flame"
+      ],
+      "prose": "When a member of the congregation is accused of a crime — theft, violence, betrayal — they are brought before the assembly and asked to hold a stone from the reactor foundation in their bare hands for the duration of one full dosimeter reading cycle. The stone is warm to the touch. The assembly watches the dosimeter. If the needle stays below the sacred threshold, the accused is declared clean — the ash has judged them innocent. If the needle spikes, the accused is declared contaminated — guilty. The trial does not distinguish between moral guilt and radiation exposure. To the congregation, they are the same thing. The ash knows. The ash always knows."
+    },
+    {
+      "id": "liturgy_b2_vespers_of_the_settling_dust",
+      "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+      "liturgy_type": "EVENING_PRAYER",
+      "ritual_sacrament": "ASH_COLLECTION_RITE",
+      "sacred_rad_threshold_cpm": 2000,
+      "timestamp_relative": "YEAR_10_DAY_200",
+      "tags": [
+        "cult",
+        "vespers",
+        "ash",
+        "evening",
+        "collection"
+      ],
+      "prose": "At sunset, the acolytes walk the perimeter of the settlement with small glass jars, collecting ash from surfaces — window sills, door frames, the tops of walls. The ash is brought to the chapel and poured into a communal vessel. The Elder intones: 'What falls is holy. What settles is remembered. What the wind carries, the wind returns.' The collected ash is sealed in the vessel and stored in the chapel crypt. The crypt now contains forty-seven jars of ash, each labelled with the date and location of collection. The faithful believe that when all the ash in the world has been collected and sealed, the purification will be complete."
+    },
+    {
+      "id": "liturgy_b2_canticle_of_the_geiger_psalm",
+      "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+      "liturgy_type": "MUSICAL_DEVOTION",
+      "ritual_sacrament": "CLICK_PATTERNS_AS_SCRIPTURE",
+      "sacred_rad_threshold_cpm": 9500,
+      "timestamp_relative": "YEAR_12_DAY_088",
+      "tags": [
+        "cult",
+        "canticle",
+        "geiger",
+        "music",
+        "scripture"
+      ],
+      "prose": "A musically trained acolyte sits before a Geiger counter and listens to its click pattern for ten minutes. The clicks are transcribed as musical notation — each click a note, the interval between clicks determining the duration. The resulting 'score' is performed by the congregation on whatever instruments are available: tin cups, pipe sections, the hum of the generator. The music is atonal, arrhythmic, and deeply unsettling to outsiders. The congregation finds it beautiful. They believe the radiation is composing the music through the Geiger counter, and that each performance is a unique scripture that will never be repeated. The Elder calls it 'the voice of the bedrock singing.'"
+    },
+    {
+      "id": "liturgy_b2_rite_of_the_glowing_hand",
+      "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+      "liturgy_type": "INITIATION_TRIAL",
+      "ritual_sacrament": "PHOSPHORESCENCE_TEST",
+      "sacred_rad_threshold_cpm": 25000,
+      "timestamp_relative": "YEAR_13_DAY_044",
+      "tags": [
+        "cult",
+        "initiation",
+        "glowing_hand",
+        "phosphorescence",
+        "cobalt_flame"
+      ],
+      "prose": "The final initiation trial. The novice is led into a completely dark chamber and asked to hold out their hands, palms up. After ten minutes of darkness, the Elder enters with a UV lamp and examines the novice's skin. If the skin fluoresces — a faint blue-white glow under ultraviolet light — the novice is declared 'marked by the flame.' This is not radiation fluorescence; it is mineral residue on the skin from the bunker's water supply. But the congregation interprets it as a sign that the novice's body has begun to glow with the sacred fire. The novice is clothed in the lead chasuble and admitted to the inner circle. No one has ever failed this trial. The water supply fluoresces in everyone."
+    },
+    {
+      "id": "liturgy_b2_procession_of_the_lead_reliquary",
+      "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+      "liturgy_type": "ANNUAL_PROCESSION",
+      "ritual_sacrament": "RELIC_DISPLAY",
+      "sacred_rad_threshold_cpm": 7000,
+      "timestamp_relative": "YEAR_14_DAY_001",
+      "tags": [
+        "cult",
+        "procession",
+        "reliquary",
+        "lead",
+        "relic"
+      ],
+      "prose": "Once per year, the congregation processes from the chapel to the perimeter wall and back, carrying a lead-lined reliquary containing what the Elder calls 'the First Ash' — a sealed glass vial of material collected from ground zero of the nearest detonation site. The reliquary is heavy — the lead shielding weighs eight kilograms. It is carried by the strongest acolyte, who walks barefoot regardless of weather. The procession stops at seven points along the perimeter. At each point, the Elder reads a passage from the Book of Half-Lives and the congregation responds with a single word: 'Settling.' The procession ends at the chapel door, where the reliquary is returned to its alcove. The acolyte who carried it is examined by the medic for radiation burns. No one has ever been refused participation for medical reasons."
+    },
+    {
+      "id": "liturgy_b2_benediction_of_the_clean_count",
+      "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+      "liturgy_type": "CLOSING_BENEDICTION",
+      "ritual_sacrament": "SERVICE_DISMISSAL",
+      "sacred_rad_threshold_cpm": 800,
+      "timestamp_relative": "YEAR_14_DAY_200",
+      "tags": [
+        "cult",
+        "benediction",
+        "clean_count",
+        "dismissal",
+        "cobalt_flame"
+      ],
+      "prose": "At the close of every service, the Elder holds the dosimeter aloft and waits for the clicks to slow. When the count drops below eight hundred per minute — the background rate for the bunker's deepest chamber — the Elder pronounces the benediction: 'The count is clean. The ash is settled. The fire is quiet. Go in the warmth of the bedrock. Carry the stillness in your bones. And when the clicking begins again, remember: it is not punishment. It is patience.' The congregation responds: 'We remember.' They then file out in silence. No one speaks until they have passed through the chapel's outer door. The silence is considered part of the benediction — a final moment of listening for the voice of the settling ash."
+    }
+  ]
+}

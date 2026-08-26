@@ -1,82 +1,133 @@
-[
-  {
-    "id": "sourdough_mother_ph_titration_lactic_acetic_ratio",
-    "starter_crock_id": "COMMISSARY_BAKERY_MOTHER_01",
-    "microbial_consortium_type": "LACTOBACILLUS_SANFRANCISCENSIS_CANDIDA",
-    "culture_ph_level": 3.85,
-    "lactic_to_acetic_acid_ratio": 3.2,
-    "timestamp_relative": "YEAR_02_SOURDOUGH_01",
-    "tags": ["fermentation", "sourdough", "mother_culture", "ph_titration", "lactic_acid"],
-    "prose": "Daily pH titration of the bunker mother culture registered a steady pH 3.85. The symbiotic 100:1 population ratio of *Lactobacillus sanfranciscensis* to *Candida humilis* wild yeast produced a balanced 3.2:1 lactic-to-acetic acid profile, giving bread its characteristic tangy aroma."
-  },
-  {
-    "id": "sourdough_mother_flour_refreshment_schedule_hydration",
-    "starter_crock_id": "PRIMARY_RYE_STARTER_VAT_02",
-    "microbial_consortium_type": "WHOLE_GRAIN_RYE_SYMBIOSIS",
-    "culture_ph_level": 3.92,
-    "lactic_to_acetic_acid_ratio": 2.8,
-    "timestamp_relative": "YEAR_04_SOURDOUGH_03",
-    "tags": ["fermentation", "refreshment_schedule", "hydration", "rye_flour", "gas_production"],
-    "prose": "Executing a strict 12-hour feeding cycle with equal parts stone-ground whole rye flour and de-chlorinated well water (100% hydration) doubled starter volume within four hours. Robust carbon dioxide bubbles lifted the dense stoneware lid."
-  },
-  {
-    "id": "sourdough_mother_kahm_yeast_pellicle_surface_scrape",
-    "starter_crock_id": "RESERVE_EMMER_STARTER_03",
-    "microbial_consortium_type": "PICHIA_CONTAMINATED_WILD_YEAST",
-    "culture_ph_level": 4.25,
-    "lactic_to_acetic_acid_ratio": 1.5,
-    "timestamp_relative": "YEAR_07_SOURDOUGH_02",
-    "tags": ["fermentation", "kahm_yeast", "pellicle", "aerobic_surface", "contamination"],
-    "prose": "Oxygen exposure inside a loosely sealed crock allowed aerobic *Pichia membranifaciens* (kahm yeast) to establish a wrinkled white film across the starter. Scraping the surface pellicle and acidifying with pure mother starter salvaged the underlying yeast core."
-  },
-  {
-    "id": "sourdough_mother_proteolytic_gluten_breakdown_overferment",
-    "starter_crock_id": "WARM_FERMENT_TEST_CELL_04",
-    "microbial_consortium_type": "OVER_ACIDIFIED_BACILLI",
-    "culture_ph_level": 3.45,
-    "lactic_to_acetic_acid_ratio": 4.5,
-    "timestamp_relative": "YEAR_09_SOURDOUGH_04",
-    "tags": ["fermentation", "overfermentation", "proteolysis", "gluten_degradation", "acid_damage"],
-    "prose": "Allowing fermentation temperatures to linger at 32°C drove pH down to 3.45. Extreme acidity activated flour aspartic proteinases, which digested the gluten network and liquefied fifty kilograms of bread dough into a sticky, un-kneadable puddle."
-  },
-  {
-    "id": "sourdough_mother_sub_ambient_dormancy_chilling_vault",
-    "starter_crock_id": "COLD_VAULT_DORMANCY_CROCK_05",
-    "microbial_consortium_type": "CRYOTOLERANT_YEAST_BLEND",
-    "culture_ph_level": 4.10,
-    "lactic_to_acetic_acid_ratio": 2.2,
-    "timestamp_relative": "YEAR_12_SOURDOUGH_01",
-    "tags": ["fermentation", "dormancy", "cold_vault", "chilled_storage", "rationing"],
-    "prose": "During winter grain rationing, bakers placed mother culture jars into the 4°C potato cellar. After forty-five days of dormant chilling without feeding, a single warm refreshment restored active bubbling within eight hours."
-  },
-  {
-    "id": "sourdough_mother_hooch_alcohol_layer_decanting",
-    "starter_crock_id": "NEGLECTED_BATCH_JAR_06",
-    "microbial_consortium_type": "ETHANOL_PRODUCING_YEAST",
-    "culture_ph_level": 3.70,
-    "lactic_to_acetic_acid_ratio": 2.0,
-    "timestamp_relative": "YEAR_15_SOURDOUGH_03",
-    "tags": ["fermentation", "hooch", "ethanol_layer", "decanting", "starvation"],
-    "prose": "Starved yeast cells exhausted available maltose sugars and entered stationary phase, secreting a dark, aromatic 8% ABV ethanolic liquid layer ('hooch'). Decanting the hooch and dosing with fresh wheat middlings quickly restored cellular vigor."
-  },
-  {
-    "id": "sourdough_mother_bacterial_phage_culture_collapse",
-    "starter_crock_id": "CENTRAL_COMMISSARY_BAKERY_BAY",
-    "microbial_consortium_type": "PHAGE_LYSED_LACTOBACILLI",
-    "culture_ph_level": 5.10,
-    "lactic_to_acetic_acid_ratio": 0.8,
-    "timestamp_relative": "YEAR_17_SOURDOUGH_02",
-    "tags": ["fermentation", "bacteriophage", "lysis", "culture_collapse", "acid_failure"],
-    "prose": "A virulent lytic bacteriophage epidemic destroyed the dominant *Lactobacillus* colony inside Bakery Bay 1. Without bacterial lactic acid production, culture pH stalled at 5.10, allowing putrefactive bacteria to produce foul, sulfurous off-odors."
-  },
-  {
-    "id": "sourdough_mother_desiccated_starter_flake_preservation",
-    "starter_crock_id": "ARCHIVAL_SEED_PRESERVE_CHEST",
-    "microbial_consortium_type": "ANHYDROBIOTIC_DRIED_CULTURE",
-    "culture_ph_level": 3.90,
-    "lactic_to_acetic_acid_ratio": 3.0,
-    "timestamp_relative": "YEAR_20_SOURDOUGH_01",
-    "tags": ["fermentation", "desiccated_flakes", "parchment_drying", "long_term_backup", "anhydrobiosis"],
-    "prose": "Spreading ripe sourdough starter into paper-thin sheets across linen cloth and air-drying with sterile 22°C dehumidified air yielded brittle dried flakes. Sealed inside airtight glass vials with desiccant, the flakes remained 100% viable for over a decade."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "sourdough_mother_ph_titration_lactic_acetic_ratio",
+      "starter_crock_id": "COMMISSARY_BAKERY_MOTHER_01",
+      "microbial_consortium_type": "LACTOBACILLUS_SANFRANCISCENSIS_CANDIDA",
+      "culture_ph_level": 3.85,
+      "lactic_to_acetic_acid_ratio": 3.2,
+      "timestamp_relative": "YEAR_02_SOURDOUGH_01",
+      "tags": [
+        "fermentation",
+        "sourdough",
+        "mother_culture",
+        "ph_titration",
+        "lactic_acid"
+      ],
+      "prose": "Daily pH titration of the bunker mother culture registered a steady pH 3.85. The symbiotic 100:1 population ratio of *Lactobacillus sanfranciscensis* to *Candida humilis* wild yeast produced a balanced 3.2:1 lactic-to-acetic acid profile, giving bread its characteristic tangy aroma."
+    },
+    {
+      "id": "sourdough_mother_flour_refreshment_schedule_hydration",
+      "starter_crock_id": "PRIMARY_RYE_STARTER_VAT_02",
+      "microbial_consortium_type": "WHOLE_GRAIN_RYE_SYMBIOSIS",
+      "culture_ph_level": 3.92,
+      "lactic_to_acetic_acid_ratio": 2.8,
+      "timestamp_relative": "YEAR_04_SOURDOUGH_03",
+      "tags": [
+        "fermentation",
+        "refreshment_schedule",
+        "hydration",
+        "rye_flour",
+        "gas_production"
+      ],
+      "prose": "Executing a strict 12-hour feeding cycle with equal parts stone-ground whole rye flour and de-chlorinated well water (100% hydration) doubled starter volume within four hours. Robust carbon dioxide bubbles lifted the dense stoneware lid."
+    },
+    {
+      "id": "sourdough_mother_kahm_yeast_pellicle_surface_scrape",
+      "starter_crock_id": "RESERVE_EMMER_STARTER_03",
+      "microbial_consortium_type": "PICHIA_CONTAMINATED_WILD_YEAST",
+      "culture_ph_level": 4.25,
+      "lactic_to_acetic_acid_ratio": 1.5,
+      "timestamp_relative": "YEAR_07_SOURDOUGH_02",
+      "tags": [
+        "fermentation",
+        "kahm_yeast",
+        "pellicle",
+        "aerobic_surface",
+        "contamination"
+      ],
+      "prose": "Oxygen exposure inside a loosely sealed crock allowed aerobic *Pichia membranifaciens* (kahm yeast) to establish a wrinkled white film across the starter. Scraping the surface pellicle and acidifying with pure mother starter salvaged the underlying yeast core."
+    },
+    {
+      "id": "sourdough_mother_proteolytic_gluten_breakdown_overferment",
+      "starter_crock_id": "WARM_FERMENT_TEST_CELL_04",
+      "microbial_consortium_type": "OVER_ACIDIFIED_BACILLI",
+      "culture_ph_level": 3.45,
+      "lactic_to_acetic_acid_ratio": 4.5,
+      "timestamp_relative": "YEAR_09_SOURDOUGH_04",
+      "tags": [
+        "fermentation",
+        "overfermentation",
+        "proteolysis",
+        "gluten_degradation",
+        "acid_damage"
+      ],
+      "prose": "Allowing fermentation temperatures to linger at 32°C drove pH down to 3.45. Extreme acidity activated flour aspartic proteinases, which digested the gluten network and liquefied fifty kilograms of bread dough into a sticky, un-kneadable puddle."
+    },
+    {
+      "id": "sourdough_mother_sub_ambient_dormancy_chilling_vault",
+      "starter_crock_id": "COLD_VAULT_DORMANCY_CROCK_05",
+      "microbial_consortium_type": "CRYOTOLERANT_YEAST_BLEND",
+      "culture_ph_level": 4.1,
+      "lactic_to_acetic_acid_ratio": 2.2,
+      "timestamp_relative": "YEAR_12_SOURDOUGH_01",
+      "tags": [
+        "fermentation",
+        "dormancy",
+        "cold_vault",
+        "chilled_storage",
+        "rationing"
+      ],
+      "prose": "During winter grain rationing, bakers placed mother culture jars into the 4°C potato cellar. After forty-five days of dormant chilling without feeding, a single warm refreshment restored active bubbling within eight hours."
+    },
+    {
+      "id": "sourdough_mother_hooch_alcohol_layer_decanting",
+      "starter_crock_id": "NEGLECTED_BATCH_JAR_06",
+      "microbial_consortium_type": "ETHANOL_PRODUCING_YEAST",
+      "culture_ph_level": 3.7,
+      "lactic_to_acetic_acid_ratio": 2.0,
+      "timestamp_relative": "YEAR_15_SOURDOUGH_03",
+      "tags": [
+        "fermentation",
+        "hooch",
+        "ethanol_layer",
+        "decanting",
+        "starvation"
+      ],
+      "prose": "Starved yeast cells exhausted available maltose sugars and entered stationary phase, secreting a dark, aromatic 8% ABV ethanolic liquid layer ('hooch'). Decanting the hooch and dosing with fresh wheat middlings quickly restored cellular vigor."
+    },
+    {
+      "id": "sourdough_mother_bacterial_phage_culture_collapse",
+      "starter_crock_id": "CENTRAL_COMMISSARY_BAKERY_BAY",
+      "microbial_consortium_type": "PHAGE_LYSED_LACTOBACILLI",
+      "culture_ph_level": 5.1,
+      "lactic_to_acetic_acid_ratio": 0.8,
+      "timestamp_relative": "YEAR_17_SOURDOUGH_02",
+      "tags": [
+        "fermentation",
+        "bacteriophage",
+        "lysis",
+        "culture_collapse",
+        "acid_failure"
+      ],
+      "prose": "A virulent lytic bacteriophage epidemic destroyed the dominant *Lactobacillus* colony inside Bakery Bay 1. Without bacterial lactic acid production, culture pH stalled at 5.10, allowing putrefactive bacteria to produce foul, sulfurous off-odors."
+    },
+    {
+      "id": "sourdough_mother_desiccated_starter_flake_preservation",
+      "starter_crock_id": "ARCHIVAL_SEED_PRESERVE_CHEST",
+      "microbial_consortium_type": "ANHYDROBIOTIC_DRIED_CULTURE",
+      "culture_ph_level": 3.9,
+      "lactic_to_acetic_acid_ratio": 3.0,
+      "timestamp_relative": "YEAR_20_SOURDOUGH_01",
+      "tags": [
+        "fermentation",
+        "desiccated_flakes",
+        "parchment_drying",
+        "long_term_backup",
+        "anhydrobiosis"
+      ],
+      "prose": "Spreading ripe sourdough starter into paper-thin sheets across linen cloth and air-drying with sterile 22°C dehumidified air yielded brittle dried flakes. Sealed inside airtight glass vials with desiccant, the flakes remained 100% viable for over a decade."
+    }
+  ]
+}

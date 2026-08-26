@@ -1,0 +1,256 @@
+{
+    "schema_version": 1,
+    "journal_entries": [
+        {
+            "id": "journal_day_32_rationing_decision",
+            "title": "Day 32: The Rationing Debate",
+            "bodyText": "The bunker is running low on food. Elena proposed equal rationing for everyone, but Marcus argued we should prioritize those doing critical work. The debate got heated. I don't know what to believe anymore. Some say we're being too harsh, others say we're being too soft. I just want to make sure everyone gets enough to survive.",
+            "day": 32,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["food", "rationing", "morale"]
+        },
+        {
+            "id": "journal_day_45_scavenger_meeting",
+            "title": "Day 45: The Scavenger Meeting",
+            "bodyText": "Today, the scavengers came to the perimeter. They offered an alliance, but I don't trust them. They've been raiding settlements for weeks. Marcus wants to accept their offer, but I think it's a trap. We need to be careful. If we make a deal with them, we might regret it later.",
+            "day": 45,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["scavengers", "alliance", "trust"]
+        },
+        {
+            "id": "journal_day_58_radiation_storm",
+            "title": "Day 58: The Storm Approaches",
+            "bodyText": "Meteorologists say a radiation storm is coming in 72 hours. We're preparing the bunker, sealing the air filters, and stocking supplies. I've never seen a storm like this before. The survivors are scared, but we have to stay strong. If we survive this, we'll be stronger than ever.",
+            "day": 58,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["radiation", "storm", "preparation"]
+        },
+        {
+            "id": "journal_day_67_storm_survival",
+            "title": "Day 67: Surviving the Storm",
+            "bodyText": "The storm hit hard. We sealed the bunker and waited it out. The air filters held, but radiation levels spiked outside. We lost power for 12 hours, but we made it through. The survivors are shaken but grateful. We need to repair the filters and stock more supplies for next time.",
+            "day": 67,
+            "type": "personal",
+            "author": "marcus_olejnik",
+            "tags": ["radiation", "storm", "survival"]
+        },
+        {
+            "id": "journal_day_72_medical_crisis",
+            "title": "Day 72: Medical Crisis",
+            "bodyText": "Alex is sick. High fever, coughing, weakness. We don't know what it is. Elena is doing everything she can, but the supplies are running low. I'm scared. If this is contagious, we're all in danger. We need to quarantine Alex and find more medicine.",
+            "day": 72,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["medical", "quarantine", "fear"]
+        },
+        {
+            "id": "journal_day_85_alex_recovery",
+            "title": "Day 85: Alex's Recovery",
+            "bodyText": "Alex is better. The quarantine worked, and Elena found some medicine. We're all relieved, but the scare has left its mark. Survivors are more cautious now. We need to improve our medical supplies and quarantine protocols.",
+            "day": 85,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["medical", "recovery", "lessons"]
+        },
+        {
+            "id": "journal_day_95_leadership_vote",
+            "title": "Day 95: The Leadership Vote",
+            "bodyText": "The survivors proposed a vote for bunker leadership. I never wanted this responsibility, but Marcus convinced me to run. The vote is tomorrow. I'm nervous. If I win, I'll have to make tough decisions. If I lose, I'll have to accept someone else's leadership. Either way, the bunker needs stability.",
+            "day": 95,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["leadership", "vote", "politics"]
+        },
+        {
+            "id": "journal_day_102_victory",
+            "title": "Day 102: Victory",
+            "bodyText": "I won the vote. Marcus is disappointed, but he congratulated me. The survivors seem relieved. Now I have to prove I can lead. The bunker is stable, but we still face challenges. Food is running low, and morale is fragile. I need to make the right decisions.",
+            "day": 102,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["leadership", "victory", "responsibility"]
+        },
+        {
+            "id": "journal_day_115_food_theft",
+            "title": "Day 115: Food Theft",
+            "bodyText": "Someone is stealing food from the storage. We don't know who it is, but the theft is causing tension. Survivors are suspicious of each other. I need to find out who's responsible and stop them before it causes a bigger problem.",
+            "day": 115,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["theft", "trust", "community"]
+        },
+        {
+            "id": "journal_day_128_thief_found",
+            "title": "Day 128: The Thief is Found",
+            "bodyText": "We found the thief. It was Jamie, trying to feed their sick child. The community is divided. Some want to punish them, others want to help. I don't know what to do. We need food, but stealing is wrong. Maybe we can find a compromise.",
+            "day": 128,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["theft", "compassion", "community"]
+        },
+        {
+            "id": "journal_day_135_medical_training",
+            "title": "Day 135: Medical Training Begins",
+            "bodyText": "Elena proposed a medical training program to improve our healthcare. I agreed. The survivors are excited, but some are skeptical. They don't believe we can learn anything new. I hope this works. If it does, we can save more lives and improve morale.",
+            "day": 135,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["medical", "training", "hope"]
+        },
+        {
+            "id": "journal_day_148_training_success",
+            "bodyText": "The medical training is a success. Survivors are learning new skills, and our healthcare is improving. Elena is proud, and the survivors respect her more. This is what the bunker needs: hope and progress.",
+            "day": 148,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["medical", "success", "progress"]
+        },
+        {
+            "id": "journal_day_155_raider_ambush",
+            "title": "Day 155: Raider Ambush",
+            "bodyText": "Our expedition to Sector 4 was ambushed by raiders. We fought them off, but one of our survivors was injured. The raiders took some of our supplies. I'm angry. We need to be more careful. Maybe we should hire guards for future expeditions.",
+            "day": 155,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["raiders", "combat", "loss"]
+        },
+        {
+            "id": "journal_day_168_black_flotilla_trade",
+            "title": "Day 168: Black Flotilla Trade",
+            "bodyText": "The Black Flotilla offered a trade deal. We accepted, and they delivered pre-war technology. It's risky dealing with them, but the technology could save lives. I hope we made the right decision. If they betray us, we'll regret it.",
+            "day": 168,
+            "type": "personal",
+            "author": "marcus_olejnik",
+            "tags": ["trade", "technology", "risk"]
+        },
+        {
+            "id": "journal_day_175_technology_dangers",
+            "title": "Day 175: The Dangers of Technology",
+            "bodyText": "The technology from the Black Flotilla is working, but it's unstable. We've had power surges and equipment failures. I'm worried. If we're not careful, the technology could cause more harm than good. We need to find a way to stabilize it.",
+            "day": 175,
+            "type": "personal",
+            "author": "marcus_olejnik",
+            "tags": ["technology", "danger", "stability"]
+        },
+        {
+            "id": "journal_day_182_survivor_exile",
+            "title": "Day 182: Survivor Exile",
+            "bodyText": "Jamie was stealing food to feed their sick child. The community voted to exile them. I argued against it, but the majority decided. Jamie left with nothing. I hope they find help elsewhere. The bunker is quieter now, but I feel guilty.",
+            "day": 182,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["exile", "guilt", "community"]
+        },
+        {
+            "id": "journal_day_195_memory_loss",
+            "title": "Day 195: Memory Loss Crisis",
+            "bodyText": "Alex is experiencing severe memory loss. They forget their own name and can't perform basic tasks. The community is divided. Some want to help, others want to exile them. I don't know what to do. Alex was always kind to me. I can't abandon them.",
+            "day": 195,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["memory", "medical", "compassion"]
+        },
+        {
+            "id": "journal_day_208_alex_quarantine",
+            "title": "Day 208: Alex is Quarantined",
+            "bodyText": "We quarantined Alex to prevent the spread of whatever is affecting their memory. The quarantine seems to be working, but Alex is deteriorating. Elena is doing everything she can, but we're running out of options. I hope we made the right decision.",
+            "day": 208,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["quarantine", "memory", "medical"]
+        },
+        {
+            "id": "journal_day_215_art_project",
+            "title": "Day 215: The Art Project",
+            "bodyText": "A group of survivors started an art project to boost morale. I thought it was a waste of time, but it's actually helping. Survivors are expressing themselves creatively, and the bunker feels more alive. Maybe we need more of this.",
+            "day": 215,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["art", "morale", "creativity"]
+        },
+        {
+            "id": "journal_day_228_technology_sharing",
+            "title": "Day 228: Technology Sharing Agreement",
+            "bodyText": "The Meridian Compact offered a technology sharing agreement. We accepted, and they provided blueprints for pre-war devices. This could change everything. If we can replicate this technology, we can improve our bunker and save lives. I'm excited for the first time in months.",
+            "day": 228,
+            "type": "personal",
+            "author": "marcus_olejnik",
+            "tags": ["technology", "trade", "hope"]
+        },
+        {
+            "id": "journal_day_235_technology_breakthrough",
+            "title": "Day 235: Technology Breakthrough",
+            "bodyText": "We replicated the first device from the Meridian Compact's blueprints. It's a water purifier, and it works! We can now provide clean water to the bunker without relying on the filtration system. This is a game-changer. The survivors are celebrating.",
+            "day": 235,
+            "type": "personal",
+            "author": "marcus_olejnik",
+            "tags": ["technology", "breakthrough", "celebration"]
+        },
+        {
+            "id": "journal_day_242_raider_siege",
+            "title": "Day 242: Raider Siege",
+            "bodyText": "The raiders of Sector 5 surrounded the bunker today. They demanded tribute, and if we refused, they would attack. We decided to negotiate. It's humiliating, but we can't afford a fight right now. The raiders took some of our food, but we survived. I hope this buys us some time.",
+            "day": 242,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["raiders", "siege", "negotiation"]
+        },
+        {
+            "id": "journal_day_255_survivor_romance",
+            "title": "Day 255: Survivor Romance",
+            "bodyText": "Alex and Jamie have developed feelings for each other. The community is divided. Some are supportive, others think it's inappropriate. I don't care. If they make each other happy, that's what matters. Love is rare in this world. We should cherish it.",
+            "day": 255,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["romance", "love", "community"]
+        },
+        {
+            "id": "journal_day_268_fuel_crisis",
+            "title": "Day 268: Fuel Crisis",
+            "bodyText": "Fuel reserves are critically low. We need to send an expedition to scavenge, but the territory is dangerous. Marcus wants to go, but I'm scared. If something happens to him, we'll lose our best engineer. We need to find a solution, but I don't know what it is.",
+            "day": 268,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["fuel", "scavenge", "fear"]
+        },
+        {
+            "id": "journal_day_275_fuel_expedition_success",
+            "title": "Day 275: Fuel Expedition Success",
+            "bodyText": "The fuel expedition returned with enough fuel to last us months. Marcus is a hero. The bunker is celebrating, and morale is high. We can finally relax and focus on other problems. I'm so relieved.",
+            "day": 275,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["fuel", "success", "celebration"]
+        },
+        {
+            "id": "journal_day_285_power_crisis",
+            "title": "Day 285: Power Crisis",
+            "bodyText": "The bunker's power generator is failing. We're at risk of losing power and heat. Marcus is working on repairs, but we need more time. If the generator fails, we'll be in serious trouble. I'm scared of what winter will bring if we lose power.",
+            "day": 285,
+            "type": "personal",
+            "author": "marcus_olejnik",
+            "tags": ["power", "generator", "winter"]
+        },
+        {
+            "id": "journal_day_292_power_restored",
+            "title": "Day 292: Power Restored",
+            "bodyText": "Marcus repaired the generator. The bunker has power again, and we can heat the living quarters. Survivors are relieved, but the scare has left its mark. We need to find a more reliable power source before winter.",
+            "day": 292,
+            "type": "personal",
+            "author": "marcus_olejnik",
+            "tags": ["power", "relief", "preparation"]
+        },
+        {
+            "id": "journal_day_305_winter_preparations",
+            "title": "Day 305: Winter Preparations",
+            "bodyText": "Winter is coming, and we're preparing the bunker. We're stocking food, repairing the generator, and sealing the air filters. The survivors are working hard, but I'm worried. If we're not ready, we won't survive the cold. I hope we did enough.",
+            "day": 305,
+            "type": "personal",
+            "author": "elena_vasquez",
+            "tags": ["winter", "preparation", "hope"]
+        }
+    ]
+}

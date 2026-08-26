@@ -1,82 +1,133 @@
-[
-  {
-    "id": "biota_cave_eyeless_albino_trout",
-    "species_designation": "SALVELINUS_SUBTERRANEUS_ALBA",
-    "cavern_location": "ABYSSAL_SIPHON_POOL_03",
-    "bioluminescence_type": "NONE_LATERAL_LINE_SENSORY",
-    "ecological_niche": "APEX_HYDRO_PREDATOR",
-    "timestamp_relative": "YEAR_03_BIO_SURVEY_01",
-    "tags": ["hydrogeology", "blind_fish", "troglobite", "cavern", "evolution"],
-    "prose": "Translucent, unpigmented fish fifteen centimeters long inhabiting total darkness in the deep siphon pool. The eyes are completely regressed beneath skin, but the lateral line system is hypertrophied into thousands of sensitive vibration pits capable of detecting a single water strider six meters away."
-  },
-  {
-    "id": "biota_cave_bioluminescent_blue_amphipod",
-    "species_designation": "NIPHARGUS_LUCENS_AZUREA",
-    "cavern_location": "CALCITE_CASCADE_TERRACE_B",
-    "bioluminescence_type": "LUCIFERIN_PULSED_BLUE",
-    "ecological_niche": "DETRITIVORE_SWARM_GRAZER",
-    "timestamp_relative": "YEAR_05_BIO_SURVEY_04",
-    "tags": ["hydrogeology", "amphipod", "bioluminescence", "blue_light", "cave"],
-    "prose": "Millions of blind amphipods swarming across the shallow rimstone pools. When water turbulence increases or footsteps approach the gravel edge, the swarm flashes in cascading waves of cold 470nm blue light, illuminating the stalactite ceiling like a field of submerged stars."
-  },
-  {
-    "id": "biota_cave_sulfur_oxidizing_mucilage_veil",
-    "species_designation": "THIOBACILLUS_SNOTTITA_ACIDICA",
-    "cavern_location": "SULFUR_VENT_GROTTO_SECTOR_5",
-    "bioluminescence_type": "NONE_ACIDIC_MUCILAGE",
-    "ecological_niche": "CHEMOLITHOAUTOTROPH_MAT",
-    "timestamp_relative": "YEAR_07_BIO_SURVEY_02",
-    "tags": ["hydrogeology", "snottite", "sulfur", "acid_drips", "extremophile"],
-    "prose": "Gelatinous microbial draperies resembling dangling stalactites of mucus hanging from the grotto ceiling. The bacteria oxidize hydrogen sulfide gas into pure sulfuric acid; droplets falling from the mucus tips have a pH of 0.8 and eat holes through cotton work shirts in two minutes."
-  },
-  {
-    "id": "biota_cave_blind_troglobitic_crayfish",
-    "species_designation": "ORCONECTES_SUBTERRANEUS_GHOST",
-    "cavern_location": "GRAVEL_BED_RUNOFF_CHUTE_01",
-    "bioluminescence_type": "NONE_TACTILE_ELONGATION",
-    "ecological_niche": "BENTHIC_SCAVENGER",
-    "timestamp_relative": "YEAR_09_BIO_SURVEY_03",
-    "tags": ["hydrogeology", "crayfish", "scavenger", "cave_fauna", "troglobite"],
-    "prose": "Pure white, semi-transparent crayfish with twenty-centimeter antennae that sweep the gravel bed in wide arcs. They feed on drowned cave crickets and organic soot washed down from surface ventilation shafts, living for up to sixty years in steady 10°C water."
-  },
-  {
-    "id": "biota_cave_methanotrophic_algal_mat",
-    "species_designation": "METHYLOCOCCUS_ROSEUS_TROGLO",
-    "cavern_location": "COAL_SEAM_SEEP_BASIN_04",
-    "bioluminescence_type": "WEAK_INFRARED_EMISSION",
-    "ecological_niche": "METHANE_OXIDIZING_BIO_TRAP",
-    "timestamp_relative": "YEAR_12_BIO_SURVEY_01",
-    "tags": ["hydrogeology", "methane", "bacterial_mat", "mine_gas", "protein_source"],
-    "prose": "Thick, leathery pink microbial mats floating across pools bubbling with explosive firedamp gas. The bacteria consume dissolved methane as their sole carbon source. Agronomists harvest the mats, boil them in salt water, and press them into high-protein feed cakes for bunker rabbit hutches."
-  },
-  {
-    "id": "biota_cave_phosphorescent_cave_sponge",
-    "species_designation": "SPONGILLA_RADIOACTIVA_AMBER",
-    "cavern_location": "LOWER_AQUIFER_SIPHON_PASS",
-    "bioluminescence_type": "SUSTAINED_AMBER_PHOSPHORESCENCE",
-    "ecological_niche": "MINERAL_BIO_ACCUMULATOR",
-    "timestamp_relative": "YEAR_15_BIO_SURVEY_02",
-    "tags": ["hydrogeology", "sponge", "phosphorescence", "lead_sponge", "isotopes"],
-    "prose": "Encrusting freshwater sponges that coat submerged limestone boulders in ten-millimeter velvety pads. The sponge tissue bio-sequesters heavy metals and dissolved radium, emitting a steady, eerie amber glow that stays visible for twenty minutes after torches are extinguished."
-  },
-  {
-    "id": "biota_cave_giant_segmented_leech",
-    "species_designation": "HAEMOPIS_GIGAS_CAVERNICOLA",
-    "cavern_location": "WARM_SUMP_DRAINAGE_CANAL_06",
-    "bioluminescence_type": "NONE_THERMAL_SEEKING",
-    "ecological_niche": "OPPORTUNISTIC_PARASITE",
-    "timestamp_relative": "YEAR_17_BIO_SURVEY_03",
-    "tags": ["hydrogeology", "leech", "parasite", "thermal", "drainage_canal"],
-    "prose": "Thirty-centimeter black segmented leeches inhabiting the 30°C cooling water discharge canal. They possess infrared pit sensors along their anterior sucker that detect the body heat of wading technicians from eight feet away, swimming with swift sinusoidal ribbons."
-  },
-  {
-    "id": "biota_cave_sub_glacial_ice_worm_cluster",
-    "species_designation": "MESENCHYTRAEUS_SOLIFUGUS_SUB",
-    "cavern_location": "FROZEN_SUMMIT_DAM_CREVASSE",
-    "bioluminescence_type": "NONE_CRYOPROTECTIVE",
-    "ecological_niche": "PSYCHROPHILE_CRYOPREDATOR",
-    "timestamp_relative": "YEAR_20_BIO_SURVEY_01",
-    "tags": ["hydrogeology", "ice_worm", "sub_glacial", "glacier", "cryobiology"],
-    "prose": "Millions of jet-black, thread-like worms wriggling through micro-channels inside solid sub-glacial blue ice at -3°C. Their bodies contain high concentrations of glycerol antifreeze proteins; when touched by a human hand, the heat melts their cellular membranes instantly into a puddle of black slime."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "biota_cave_eyeless_albino_trout",
+      "species_designation": "SALVELINUS_SUBTERRANEUS_ALBA",
+      "cavern_location": "ABYSSAL_SIPHON_POOL_03",
+      "bioluminescence_type": "NONE_LATERAL_LINE_SENSORY",
+      "ecological_niche": "APEX_HYDRO_PREDATOR",
+      "timestamp_relative": "YEAR_03_BIO_SURVEY_01",
+      "tags": [
+        "hydrogeology",
+        "blind_fish",
+        "troglobite",
+        "cavern",
+        "evolution"
+      ],
+      "prose": "Translucent, unpigmented fish fifteen centimeters long inhabiting total darkness in the deep siphon pool. The eyes are completely regressed beneath skin, but the lateral line system is hypertrophied into thousands of sensitive vibration pits capable of detecting a single water strider six meters away."
+    },
+    {
+      "id": "biota_cave_bioluminescent_blue_amphipod",
+      "species_designation": "NIPHARGUS_LUCENS_AZUREA",
+      "cavern_location": "CALCITE_CASCADE_TERRACE_B",
+      "bioluminescence_type": "LUCIFERIN_PULSED_BLUE",
+      "ecological_niche": "DETRITIVORE_SWARM_GRAZER",
+      "timestamp_relative": "YEAR_05_BIO_SURVEY_04",
+      "tags": [
+        "hydrogeology",
+        "amphipod",
+        "bioluminescence",
+        "blue_light",
+        "cave"
+      ],
+      "prose": "Millions of blind amphipods swarming across the shallow rimstone pools. When water turbulence increases or footsteps approach the gravel edge, the swarm flashes in cascading waves of cold 470nm blue light, illuminating the stalactite ceiling like a field of submerged stars."
+    },
+    {
+      "id": "biota_cave_sulfur_oxidizing_mucilage_veil",
+      "species_designation": "THIOBACILLUS_SNOTTITA_ACIDICA",
+      "cavern_location": "SULFUR_VENT_GROTTO_SECTOR_5",
+      "bioluminescence_type": "NONE_ACIDIC_MUCILAGE",
+      "ecological_niche": "CHEMOLITHOAUTOTROPH_MAT",
+      "timestamp_relative": "YEAR_07_BIO_SURVEY_02",
+      "tags": [
+        "hydrogeology",
+        "snottite",
+        "sulfur",
+        "acid_drips",
+        "extremophile"
+      ],
+      "prose": "Gelatinous microbial draperies resembling dangling stalactites of mucus hanging from the grotto ceiling. The bacteria oxidize hydrogen sulfide gas into pure sulfuric acid; droplets falling from the mucus tips have a pH of 0.8 and eat holes through cotton work shirts in two minutes."
+    },
+    {
+      "id": "biota_cave_blind_troglobitic_crayfish",
+      "species_designation": "ORCONECTES_SUBTERRANEUS_GHOST",
+      "cavern_location": "GRAVEL_BED_RUNOFF_CHUTE_01",
+      "bioluminescence_type": "NONE_TACTILE_ELONGATION",
+      "ecological_niche": "BENTHIC_SCAVENGER",
+      "timestamp_relative": "YEAR_09_BIO_SURVEY_03",
+      "tags": [
+        "hydrogeology",
+        "crayfish",
+        "scavenger",
+        "cave_fauna",
+        "troglobite"
+      ],
+      "prose": "Pure white, semi-transparent crayfish with twenty-centimeter antennae that sweep the gravel bed in wide arcs. They feed on drowned cave crickets and organic soot washed down from surface ventilation shafts, living for up to sixty years in steady 10°C water."
+    },
+    {
+      "id": "biota_cave_methanotrophic_algal_mat",
+      "species_designation": "METHYLOCOCCUS_ROSEUS_TROGLO",
+      "cavern_location": "COAL_SEAM_SEEP_BASIN_04",
+      "bioluminescence_type": "WEAK_INFRARED_EMISSION",
+      "ecological_niche": "METHANE_OXIDIZING_BIO_TRAP",
+      "timestamp_relative": "YEAR_12_BIO_SURVEY_01",
+      "tags": [
+        "hydrogeology",
+        "methane",
+        "bacterial_mat",
+        "mine_gas",
+        "protein_source"
+      ],
+      "prose": "Thick, leathery pink microbial mats floating across pools bubbling with explosive firedamp gas. The bacteria consume dissolved methane as their sole carbon source. Agronomists harvest the mats, boil them in salt water, and press them into high-protein feed cakes for bunker rabbit hutches."
+    },
+    {
+      "id": "biota_cave_phosphorescent_cave_sponge",
+      "species_designation": "SPONGILLA_RADIOACTIVA_AMBER",
+      "cavern_location": "LOWER_AQUIFER_SIPHON_PASS",
+      "bioluminescence_type": "SUSTAINED_AMBER_PHOSPHORESCENCE",
+      "ecological_niche": "MINERAL_BIO_ACCUMULATOR",
+      "timestamp_relative": "YEAR_15_BIO_SURVEY_02",
+      "tags": [
+        "hydrogeology",
+        "sponge",
+        "phosphorescence",
+        "lead_sponge",
+        "isotopes"
+      ],
+      "prose": "Encrusting freshwater sponges that coat submerged limestone boulders in ten-millimeter velvety pads. The sponge tissue bio-sequesters heavy metals and dissolved radium, emitting a steady, eerie amber glow that stays visible for twenty minutes after torches are extinguished."
+    },
+    {
+      "id": "biota_cave_giant_segmented_leech",
+      "species_designation": "HAEMOPIS_GIGAS_CAVERNICOLA",
+      "cavern_location": "WARM_SUMP_DRAINAGE_CANAL_06",
+      "bioluminescence_type": "NONE_THERMAL_SEEKING",
+      "ecological_niche": "OPPORTUNISTIC_PARASITE",
+      "timestamp_relative": "YEAR_17_BIO_SURVEY_03",
+      "tags": [
+        "hydrogeology",
+        "leech",
+        "parasite",
+        "thermal",
+        "drainage_canal"
+      ],
+      "prose": "Thirty-centimeter black segmented leeches inhabiting the 30°C cooling water discharge canal. They possess infrared pit sensors along their anterior sucker that detect the body heat of wading technicians from eight feet away, swimming with swift sinusoidal ribbons."
+    },
+    {
+      "id": "biota_cave_sub_glacial_ice_worm_cluster",
+      "species_designation": "MESENCHYTRAEUS_SOLIFUGUS_SUB",
+      "cavern_location": "FROZEN_SUMMIT_DAM_CREVASSE",
+      "bioluminescence_type": "NONE_CRYOPROTECTIVE",
+      "ecological_niche": "PSYCHROPHILE_CRYOPREDATOR",
+      "timestamp_relative": "YEAR_20_BIO_SURVEY_01",
+      "tags": [
+        "hydrogeology",
+        "ice_worm",
+        "sub_glacial",
+        "glacier",
+        "cryobiology"
+      ],
+      "prose": "Millions of jet-black, thread-like worms wriggling through micro-channels inside solid sub-glacial blue ice at -3°C. Their bodies contain high concentrations of glycerol antifreeze proteins; when touched by a human hand, the heat melts their cellular membranes instantly into a puddle of black slime."
+    }
+  ]
+}

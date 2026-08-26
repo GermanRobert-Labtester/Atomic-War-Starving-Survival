@@ -1,82 +1,133 @@
-[
-  {
-    "id": "journal_psych_insomnia_vent_hum",
-    "author_designation": "WATCHMAN_ELIAS_SECTOR_3",
-    "quiet_hour_time": "03:14",
-    "psychological_marker": "ACOUSTIC_AUDITORY_PAREIDOLIA",
-    "morale_impact": -4,
-    "timestamp_relative": "YEAR_02_MONTH_07_NIGHT",
-    "tags": ["journal", "psychology", "insomnia", "ventilation", "quiet_hours"],
-    "prose": "At 03:14, the main air intake blower drops half an octave as the grid load shifts to battery trickle. If you press your forehead to the galvanized duct, the air sounds exactly like a church organ holding a low B-flat. By 03:30, you start hearing women singing in Latin over the fan blades. I know it is only turbulent air across sheet metal rivets, but I stayed there listening until my skin bruised."
-  },
-  {
-    "id": "journal_psych_fluorescent_shadow_creep",
-    "author_designation": "HYDRO_TECHNICIAN_MIRA",
-    "quiet_hour_time": "03:45",
-    "psychological_marker": "CLAUSTROPHOBIC_SPATIAL_DISTORTION",
-    "morale_impact": -6,
-    "timestamp_relative": "YEAR_04_MONTH_02_NIGHT",
-    "tags": ["journal", "psychology", "claustrophobia", "lighting", "quiet_hours"],
-    "prose": "The ballast in the corridor lamp is dying; it clicks twice every six seconds and casts a violet twitch against the raw concrete. When the tube flickers, the corridor appears six inches narrower. I measured the ceiling twice with a folding wooden rule. The height is unchanged: two meters, forty centimeters. Yet my chest feels like someone placed a sack of wet sand across my sternum."
-  },
-  {
-    "id": "journal_psych_phantom_rain_memory",
-    "author_designation": "COMMISSARY_CLERK_ARTHUR",
-    "quiet_hour_time": "04:02",
-    "psychological_marker": "OLFACTORY_PHANTOM_RECALL",
-    "morale_impact": -3,
-    "timestamp_relative": "YEAR_05_MONTH_11_NIGHT",
-    "tags": ["journal", "psychology", "phantom_memory", "grief", "quiet_hours"],
-    "prose": "A condensation leak dripped onto the warm motor casing of the bakery mixer, creating a sharp puff of damp, ozone-scented steam. For four seconds, I was eight years old standing under the porch awning in Vermont while summer rain hit dry cedar shingles. When I opened my eyes, it was just grey water pooling in the grease trap."
-  },
-  {
-    "id": "journal_psych_teeth_grinding_dorm_audit",
-    "author_designation": "NIGHT_WARDEN_CALLUM",
-    "quiet_hour_time": "03:30",
-    "psychological_marker": "SHARED_TRAUMA_SOMNAMBULISM",
-    "morale_impact": -5,
-    "timestamp_relative": "YEAR_07_MONTH_04_NIGHT",
-    "tags": ["journal", "psychology", "dormitory", "insomnia", "night_watch"],
-    "prose": "Walked the aisle of Dormitory B with the red-lens torch. Out of twenty-eight sleepers, eleven were grinding their molars in dry, chalky rhythms. Two were weeping silently with their eyes rolled back. In the middle row, old Miller was whispering the coordinates of his former house over and over like a radio callsign."
-  },
-  {
-    "id": "journal_psych_caloric_math_paranoia",
-    "author_designation": "MACHINIST_JON_GREY",
-    "quiet_hour_time": "04:20",
-    "psychological_marker": "OBSESSIVE_RESOURCE_COMPULSION",
-    "morale_impact": -4,
-    "timestamp_relative": "YEAR_09_MONTH_09_NIGHT",
-    "tags": ["journal", "psychology", "starvation_anxiety", "math", "quiet_hours"],
-    "prose": "I have calculated that walking from Bunk 14 to the machine shop and back consumes 82 kilocalories. The noon turnip broth provides approximately 110 kilocalories. My daily net margin of survival is 28 calories—less than the energy contained in half a lump of sugar. Every unnecessary footstep is a slow form of suicide."
-  },
-  {
-    "id": "journal_psych_mirror_shaving_disconnect",
-    "author_designation": "MEDIC_HELEN_VOSS",
-    "quiet_hour_time": "04:40",
-    "psychological_marker": "DEPERSONALIZATION_SYNDROME",
-    "morale_impact": -5,
-    "timestamp_relative": "YEAR_12_MONTH_01_NIGHT",
-    "tags": ["journal", "psychology", "depersonalization", "mirror", "quiet_hours"],
-    "prose": "Looked into the polished tin shaving mirror under the yellow sodium tube in the washroom. The skin under my cheekbones is the color of wet river slate. I stared at my own pupils for two minutes without feeling any connection to the person in the metal. It was like inspecting a biological specimen preserved in brine."
-  },
-  {
-    "id": "journal_psych_airlock_knocking_illusion",
-    "author_designation": "SENTRY_BORIS_LEVEL_1",
-    "quiet_hour_time": "03:50",
-    "psychological_marker": "ACOUSTIC_HALLUCINATION_GATE",
-    "morale_impact": -7,
-    "timestamp_relative": "YEAR_14_MONTH_06_NIGHT",
-    "tags": ["journal", "psychology", "hallucination", "airlock", "quiet_hours"],
-    "prose": "Three sharp, deliberate knuckles on the outer hatch steel: *clack-clack-clack*. I checked the hydro-acoustic monitors and the perimeter seismic loop; both channels are flat zero. Yet my own ears heard the ring of the steel. I stood with my hand on the release dog for ten minutes, sweating into my wool collar."
-  },
-  {
-    "id": "journal_psych_morning_muster_dread",
-    "author_designation": "DORM_SUPERVISOR_CLARA",
-    "quiet_hour_time": "04:55",
-    "psychological_marker": "CHRONIC_EXHAUSTION_ANTICIPATION",
-    "morale_impact": -4,
-    "timestamp_relative": "YEAR_16_MONTH_10_NIGHT",
-    "tags": ["journal", "psychology", "morning_muster", "exhaustion", "quiet_hours"],
-    "prose": "Sitting on the edge of the steel bunk frame with my boots laced, staring at the brass hand of the dial clock at 04:55. In five minutes, the master solenoid will hammer the emergency gong three times. Everyone will groan, the air will fill with the smell of unwashed wool and damp chicory, and another endless grey day will begin."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "journal_psych_insomnia_vent_hum",
+      "author_designation": "WATCHMAN_ELIAS_SECTOR_3",
+      "quiet_hour_time": "03:14",
+      "psychological_marker": "ACOUSTIC_AUDITORY_PAREIDOLIA",
+      "morale_impact": -4,
+      "timestamp_relative": "YEAR_02_MONTH_07_NIGHT",
+      "tags": [
+        "journal",
+        "psychology",
+        "insomnia",
+        "ventilation",
+        "quiet_hours"
+      ],
+      "prose": "At 03:14, the main air intake blower drops half an octave as the grid load shifts to battery trickle. If you press your forehead to the galvanized duct, the air sounds exactly like a church organ holding a low B-flat. By 03:30, you start hearing women singing in Latin over the fan blades. I know it is only turbulent air across sheet metal rivets, but I stayed there listening until my skin bruised."
+    },
+    {
+      "id": "journal_psych_fluorescent_shadow_creep",
+      "author_designation": "HYDRO_TECHNICIAN_MIRA",
+      "quiet_hour_time": "03:45",
+      "psychological_marker": "CLAUSTROPHOBIC_SPATIAL_DISTORTION",
+      "morale_impact": -6,
+      "timestamp_relative": "YEAR_04_MONTH_02_NIGHT",
+      "tags": [
+        "journal",
+        "psychology",
+        "claustrophobia",
+        "lighting",
+        "quiet_hours"
+      ],
+      "prose": "The ballast in the corridor lamp is dying; it clicks twice every six seconds and casts a violet twitch against the raw concrete. When the tube flickers, the corridor appears six inches narrower. I measured the ceiling twice with a folding wooden rule. The height is unchanged: two meters, forty centimeters. Yet my chest feels like someone placed a sack of wet sand across my sternum."
+    },
+    {
+      "id": "journal_psych_phantom_rain_memory",
+      "author_designation": "COMMISSARY_CLERK_ARTHUR",
+      "quiet_hour_time": "04:02",
+      "psychological_marker": "OLFACTORY_PHANTOM_RECALL",
+      "morale_impact": -3,
+      "timestamp_relative": "YEAR_05_MONTH_11_NIGHT",
+      "tags": [
+        "journal",
+        "psychology",
+        "phantom_memory",
+        "grief",
+        "quiet_hours"
+      ],
+      "prose": "A condensation leak dripped onto the warm motor casing of the bakery mixer, creating a sharp puff of damp, ozone-scented steam. For four seconds, I was eight years old standing under the porch awning in Vermont while summer rain hit dry cedar shingles. When I opened my eyes, it was just grey water pooling in the grease trap."
+    },
+    {
+      "id": "journal_psych_teeth_grinding_dorm_audit",
+      "author_designation": "NIGHT_WARDEN_CALLUM",
+      "quiet_hour_time": "03:30",
+      "psychological_marker": "SHARED_TRAUMA_SOMNAMBULISM",
+      "morale_impact": -5,
+      "timestamp_relative": "YEAR_07_MONTH_04_NIGHT",
+      "tags": [
+        "journal",
+        "psychology",
+        "dormitory",
+        "insomnia",
+        "night_watch"
+      ],
+      "prose": "Walked the aisle of Dormitory B with the red-lens torch. Out of twenty-eight sleepers, eleven were grinding their molars in dry, chalky rhythms. Two were weeping silently with their eyes rolled back. In the middle row, old Miller was whispering the coordinates of his former house over and over like a radio callsign."
+    },
+    {
+      "id": "journal_psych_caloric_math_paranoia",
+      "author_designation": "MACHINIST_JON_GREY",
+      "quiet_hour_time": "04:20",
+      "psychological_marker": "OBSESSIVE_RESOURCE_COMPULSION",
+      "morale_impact": -4,
+      "timestamp_relative": "YEAR_09_MONTH_09_NIGHT",
+      "tags": [
+        "journal",
+        "psychology",
+        "starvation_anxiety",
+        "math",
+        "quiet_hours"
+      ],
+      "prose": "I have calculated that walking from Bunk 14 to the machine shop and back consumes 82 kilocalories. The noon turnip broth provides approximately 110 kilocalories. My daily net margin of survival is 28 calories—less than the energy contained in half a lump of sugar. Every unnecessary footstep is a slow form of suicide."
+    },
+    {
+      "id": "journal_psych_mirror_shaving_disconnect",
+      "author_designation": "MEDIC_HELEN_VOSS",
+      "quiet_hour_time": "04:40",
+      "psychological_marker": "DEPERSONALIZATION_SYNDROME",
+      "morale_impact": -5,
+      "timestamp_relative": "YEAR_12_MONTH_01_NIGHT",
+      "tags": [
+        "journal",
+        "psychology",
+        "depersonalization",
+        "mirror",
+        "quiet_hours"
+      ],
+      "prose": "Looked into the polished tin shaving mirror under the yellow sodium tube in the washroom. The skin under my cheekbones is the color of wet river slate. I stared at my own pupils for two minutes without feeling any connection to the person in the metal. It was like inspecting a biological specimen preserved in brine."
+    },
+    {
+      "id": "journal_psych_airlock_knocking_illusion",
+      "author_designation": "SENTRY_BORIS_LEVEL_1",
+      "quiet_hour_time": "03:50",
+      "psychological_marker": "ACOUSTIC_HALLUCINATION_GATE",
+      "morale_impact": -7,
+      "timestamp_relative": "YEAR_14_MONTH_06_NIGHT",
+      "tags": [
+        "journal",
+        "psychology",
+        "hallucination",
+        "airlock",
+        "quiet_hours"
+      ],
+      "prose": "Three sharp, deliberate knuckles on the outer hatch steel: *clack-clack-clack*. I checked the hydro-acoustic monitors and the perimeter seismic loop; both channels are flat zero. Yet my own ears heard the ring of the steel. I stood with my hand on the release dog for ten minutes, sweating into my wool collar."
+    },
+    {
+      "id": "journal_psych_morning_muster_dread",
+      "author_designation": "DORM_SUPERVISOR_CLARA",
+      "quiet_hour_time": "04:55",
+      "psychological_marker": "CHRONIC_EXHAUSTION_ANTICIPATION",
+      "morale_impact": -4,
+      "timestamp_relative": "YEAR_16_MONTH_10_NIGHT",
+      "tags": [
+        "journal",
+        "psychology",
+        "morning_muster",
+        "exhaustion",
+        "quiet_hours"
+      ],
+      "prose": "Sitting on the edge of the steel bunk frame with my boots laced, staring at the brass hand of the dial clock at 04:55. In five minutes, the master solenoid will hammer the emergency gong three times. Everyone will groan, the air will fill with the smell of unwashed wool and damp chicory, and another endless grey day will begin."
+    }
+  ]
+}

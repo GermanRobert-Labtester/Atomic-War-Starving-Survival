@@ -1,72 +1,117 @@
-[
-  {
-    "id": "wiretap_office_cartridge_allocation_quarrel",
-    "intercept_channel": "HARDWIRE_TAP_JUNCTION_B7",
-    "target_faction": "THE_OFFICE",
-    "audio_clarity_score": 0.88,
-    "speaker_identities": "CLERK_VANCE_AND_SERGEANT_KLINE",
-    "timestamp_relative": "YEAR_04_MONTH_06_INTERCEPT",
-    "tags": ["wiretap", "the_office", "ammunition", "bureaucracy", "sigint"],
-    "prose": "[VANCE]: 'The audit shows twenty-four hundred rounds missing from Box 12, Kline. I cannot stamp your muster slip without the brass chits.' / [KLINE]: 'The perimeter snipers didn't fire blanks at the ghouls in Sector 3, Vance. You want brass chits? Go out into the ash with a broom and pick them up.'"
-  },
-  {
-    "id": "wiretap_tempest_scavenger_ambush_orders",
-    "intercept_channel": "INDUCTION_LOOP_NORTH_RAIL",
-    "target_faction": "THE_TEMPEST",
-    "audio_clarity_score": 0.72,
-    "speaker_identities": "RAIDER_CAPTAIN_SCAR_AND_SCOUT",
-    "timestamp_relative": "YEAR_06_MONTH_10_INTERCEPT",
-    "tags": ["wiretap", "the_tempest", "ambush", "raiders", "sigint"],
-    "prose": "[SCAR]: 'Wait until the water tanker hits the culvert bend. The ice is thin over the creek; when the front axle drops through, hit the driver with the grease gun. Take the filter pump intact. If you puncture the tank, I'll hang you from the signal gantry.'"
-  },
-  {
-    "id": "wiretap_rebuilders_hydroponic_crop_failure",
-    "intercept_channel": "LEAKY_COAX_CABLE_SECTOR_4",
-    "target_faction": "THE_REBUILDERS",
-    "audio_clarity_score": 0.94,
-    "speaker_identities": "AGRONOMIST_MIRA_AND_DIRECTOR_HOLT",
-    "timestamp_relative": "YEAR_08_MONTH_02_INTERCEPT",
-    "tags": ["wiretap", "rebuilders", "crop_failure", "starvation", "sigint"],
-    "prose": "[MIRA]: 'The root-rot is inside the recirculating nutrient loops, Director. We lost seventy percent of the Tier 2 seed potatoes in forty-eight hours.' / [HOLT]: 'Not a single word of this outside this room, Mira. If the dormitories hear about this, they will storm the flour silos before midnight.'"
-  },
-  {
-    "id": "wiretap_blind_monks_geophone_betrayal",
-    "intercept_channel": "EARTH_RETURN_ELECTRODE_WEST",
-    "target_faction": "ORDER_OF_THE_BEDROCK_EAR",
-    "audio_clarity_score": 0.65,
-    "speaker_identities": "BROTHER_LUKAS_AND_CONTRABAND_TRADER",
-    "timestamp_relative": "YEAR_11_MONTH_05_INTERCEPT",
-    "tags": ["wiretap", "geophone_monks", "black_market", "betrayal", "sigint"],
-    "prose": "[LUKAS]: 'The 18 Hz P-wave harmonic is building along the South Ridge fault. In forty-eight hours, the old highway tunnel will collapse under forty meters of shale.' / [TRADER]: 'Here is your box of morphine ampoules, Brother. The caravan will take the valley pass instead. The earth speaks, and we profit.'"
-  },
-  {
-    "id": "wiretap_iron_synod_clandestine_forge_heist",
-    "intercept_channel": "REBAR_GROUND_CARRIER_TAP_09",
-    "target_faction": "THE_IRON_SYNOD",
-    "audio_clarity_score": 0.81,
-    "speaker_identities": "SMITH_APPRENTICE_ELI_AND_ACOLYTE",
-    "timestamp_relative": "YEAR_13_MONTH_08_INTERCEPT",
-    "tags": ["wiretap", "iron_synod", "heist", "lathe_tools", "sigint"],
-    "prose": "[ELI]: 'The Office machine shop has twelve tungsten-carbide lathe cutting bits locked in the master tool cabinet. When the night watch switches posts at 03:00, we slip the latch with a tempered hacksaw blade. The Synod crucible needs hard metal, not bureaucratic dust.'"
-  },
-  {
-    "id": "wiretap_courier_guild_route_collapse_briefing",
-    "intercept_channel": "COPPER_TELEPHONE_OVERHEAD_LINE",
-    "target_faction": "COURIER_GUILD",
-    "audio_clarity_score": 0.91,
-    "speaker_identities": "DISPATCHER_ROSS_AND_RUNNER_TANYA",
-    "timestamp_relative": "YEAR_15_MONTH_12_INTERCEPT",
-    "tags": ["wiretap", "couriers", "route_collapse", "mudslide", "sigint"],
-    "prose": "[ROSS]: 'The Eastern Pass is gone, Tanya. The mudslide brought down two thousand tons of irradiated shale across Mile 14.' / [TANYA]: 'I have seventeen sealed letters for Bunker 08, Ross. If the pass is blocked, I'll climb the railway trestle on foot. People paid three months of salt chits for these words.'"
-  },
-  {
-    "id": "wiretap_neutral_trader_black_market_scrip_rate",
-    "intercept_channel": "LOW_POWER_UHF_SNIFFER_03",
-    "target_faction": "WASTELAND_MERCHANTS",
-    "audio_clarity_score": 0.85,
-    "speaker_identities": "TRADER_SILAS_AND_OUTPOST_BUYER",
-    "timestamp_relative": "YEAR_18_MONTH_04_INTERCEPT",
-    "tags": ["wiretap", "trade", "scrip_exchange", "black_market", "sigint"],
-    "prose": "[SILAS]: 'Tell the refugees in Sector 5 that the well in the north dried up. Double the price of distilled water to eight scrip per liter. By Friday, they'll trade their wedding rings and gold teeth for a single gallon of clean runoff.'"
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "wiretap_office_cartridge_allocation_quarrel",
+      "intercept_channel": "HARDWIRE_TAP_JUNCTION_B7",
+      "target_faction": "THE_OFFICE",
+      "audio_clarity_score": 0.88,
+      "speaker_identities": "CLERK_VANCE_AND_SERGEANT_KLINE",
+      "timestamp_relative": "YEAR_04_MONTH_06_INTERCEPT",
+      "tags": [
+        "wiretap",
+        "the_office",
+        "ammunition",
+        "bureaucracy",
+        "sigint"
+      ],
+      "prose": "[VANCE]: 'The audit shows twenty-four hundred rounds missing from Box 12, Kline. I cannot stamp your muster slip without the brass chits.' / [KLINE]: 'The perimeter snipers didn't fire blanks at the ghouls in Sector 3, Vance. You want brass chits? Go out into the ash with a broom and pick them up.'"
+    },
+    {
+      "id": "wiretap_tempest_scavenger_ambush_orders",
+      "intercept_channel": "INDUCTION_LOOP_NORTH_RAIL",
+      "target_faction": "THE_TEMPEST",
+      "audio_clarity_score": 0.72,
+      "speaker_identities": "RAIDER_CAPTAIN_SCAR_AND_SCOUT",
+      "timestamp_relative": "YEAR_06_MONTH_10_INTERCEPT",
+      "tags": [
+        "wiretap",
+        "the_tempest",
+        "ambush",
+        "raiders",
+        "sigint"
+      ],
+      "prose": "[SCAR]: 'Wait until the water tanker hits the culvert bend. The ice is thin over the creek; when the front axle drops through, hit the driver with the grease gun. Take the filter pump intact. If you puncture the tank, I'll hang you from the signal gantry.'"
+    },
+    {
+      "id": "wiretap_rebuilders_hydroponic_crop_failure",
+      "intercept_channel": "LEAKY_COAX_CABLE_SECTOR_4",
+      "target_faction": "THE_REBUILDERS",
+      "audio_clarity_score": 0.94,
+      "speaker_identities": "AGRONOMIST_MIRA_AND_DIRECTOR_HOLT",
+      "timestamp_relative": "YEAR_08_MONTH_02_INTERCEPT",
+      "tags": [
+        "wiretap",
+        "rebuilders",
+        "crop_failure",
+        "starvation",
+        "sigint"
+      ],
+      "prose": "[MIRA]: 'The root-rot is inside the recirculating nutrient loops, Director. We lost seventy percent of the Tier 2 seed potatoes in forty-eight hours.' / [HOLT]: 'Not a single word of this outside this room, Mira. If the dormitories hear about this, they will storm the flour silos before midnight.'"
+    },
+    {
+      "id": "wiretap_blind_monks_geophone_betrayal",
+      "intercept_channel": "EARTH_RETURN_ELECTRODE_WEST",
+      "target_faction": "ORDER_OF_THE_BEDROCK_EAR",
+      "audio_clarity_score": 0.65,
+      "speaker_identities": "BROTHER_LUKAS_AND_CONTRABAND_TRADER",
+      "timestamp_relative": "YEAR_11_MONTH_05_INTERCEPT",
+      "tags": [
+        "wiretap",
+        "geophone_monks",
+        "black_market",
+        "betrayal",
+        "sigint"
+      ],
+      "prose": "[LUKAS]: 'The 18 Hz P-wave harmonic is building along the South Ridge fault. In forty-eight hours, the old highway tunnel will collapse under forty meters of shale.' / [TRADER]: 'Here is your box of morphine ampoules, Brother. The caravan will take the valley pass instead. The earth speaks, and we profit.'"
+    },
+    {
+      "id": "wiretap_iron_synod_clandestine_forge_heist",
+      "intercept_channel": "REBAR_GROUND_CARRIER_TAP_09",
+      "target_faction": "THE_IRON_SYNOD",
+      "audio_clarity_score": 0.81,
+      "speaker_identities": "SMITH_APPRENTICE_ELI_AND_ACOLYTE",
+      "timestamp_relative": "YEAR_13_MONTH_08_INTERCEPT",
+      "tags": [
+        "wiretap",
+        "iron_synod",
+        "heist",
+        "lathe_tools",
+        "sigint"
+      ],
+      "prose": "[ELI]: 'The Office machine shop has twelve tungsten-carbide lathe cutting bits locked in the master tool cabinet. When the night watch switches posts at 03:00, we slip the latch with a tempered hacksaw blade. The Synod crucible needs hard metal, not bureaucratic dust.'"
+    },
+    {
+      "id": "wiretap_courier_guild_route_collapse_briefing",
+      "intercept_channel": "COPPER_TELEPHONE_OVERHEAD_LINE",
+      "target_faction": "COURIER_GUILD",
+      "audio_clarity_score": 0.91,
+      "speaker_identities": "DISPATCHER_ROSS_AND_RUNNER_TANYA",
+      "timestamp_relative": "YEAR_15_MONTH_12_INTERCEPT",
+      "tags": [
+        "wiretap",
+        "couriers",
+        "route_collapse",
+        "mudslide",
+        "sigint"
+      ],
+      "prose": "[ROSS]: 'The Eastern Pass is gone, Tanya. The mudslide brought down two thousand tons of irradiated shale across Mile 14.' / [TANYA]: 'I have seventeen sealed letters for Bunker 08, Ross. If the pass is blocked, I'll climb the railway trestle on foot. People paid three months of salt chits for these words.'"
+    },
+    {
+      "id": "wiretap_neutral_trader_black_market_scrip_rate",
+      "intercept_channel": "LOW_POWER_UHF_SNIFFER_03",
+      "target_faction": "WASTELAND_MERCHANTS",
+      "audio_clarity_score": 0.85,
+      "speaker_identities": "TRADER_SILAS_AND_OUTPOST_BUYER",
+      "timestamp_relative": "YEAR_18_MONTH_04_INTERCEPT",
+      "tags": [
+        "wiretap",
+        "trade",
+        "scrip_exchange",
+        "black_market",
+        "sigint"
+      ],
+      "prose": "[SILAS]: 'Tell the refugees in Sector 5 that the well in the north dried up. Double the price of distilled water to eight scrip per liter. By Friday, they'll trade their wedding rings and gold teeth for a single gallon of clean runoff.'"
+    }
+  ]
+}

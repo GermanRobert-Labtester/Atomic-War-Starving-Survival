@@ -327,6 +327,24 @@
     },
     {
       "era": "late_survival",
+      "year_month": "Exchange+2Y",
+      "title": "The Quiet Convoy",
+      "body": "In the second year, a caravan out of the eastern flats came back with a story instead of goods: a convoy of six trucks, running dark, no faction markings, no radio chatter on any band the caravan's scanner could find, moving in a straight line through territory the Garrison patrolled and the Rebuilders farmed without either side reporting it. The caravan filed the sighting as a curiosity. The garrison filed it as nothing, because nothing had asked. The rebuilders filed it as weather. Two more convoys were logged before the year was out, always straight lines, always silent, always gone by the time anyone thought to follow. No one gave them a name yet. Something was already moving through the wasteland that did not need the Garrison's permission or the Rebuilders' roads.",
+      "discovery_location_id": "loc_grain_silo",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_quiet_convoy"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+2Y4M",
+      "title": "The Checkpoint That Wasn't Theirs",
+      "body": "A Garrison supply run found a checkpoint on the old toll road that neither the Garrison nor the Rebuilders had built: a gate, a barrier, a sightline cut clean through the brush, and no one manning it when the runner passed, only a chalk mark on the barrier post that matched nothing in the Garrison's own signal codex. The runner reported it. The report was filed under unassigned infrastructure, a category the duty clerk invented for it, because there was no field for a checkpoint that belonged to neither side and was better built than either side's own. The gate is still there. The chalk mark has been repainted twice since, always the same mark, always by no one anyone has caught.",
+      "discovery_location_id": "loc_garrison_checkpoint_gamma",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_unclaimed_checkpoint"
+    },
+    {
+      "era": "late_survival",
       "year_month": "Exchange+3Y",
       "title": "The Third Winter",
       "body": "The third winter was the winter the spring came back. The spring came late and the spring was short and the spring was grey, but the spring came. The spring was the reason the farmer planted again. The spring was the reason the children grew, a little. The spring was the reason the flour was not the only food, again. The third winter was the winter the wall remembered, and the wall was right. The third winter was the last winter that was only winter. The spring came back. The spring is still grey. The spring is still the spring.",

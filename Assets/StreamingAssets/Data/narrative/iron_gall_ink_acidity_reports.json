@@ -1,82 +1,133 @@
-[
-  {
-    "id": "ink_assay_oak_gall_tannic_acid_maceration",
-    "ink_formulation_code": "FORMULA_OAK_GALL_TANNIN_01",
-    "tannin_source": "CRUSHED_OAK_WASP_GALL_NUTS",
-    "measured_ph_level": 2.4,
-    "pigment_complex": "FERRIC_PYROGALLATE_BLACK",
-    "timestamp_relative": "YEAR_02_INK_LOG_01",
-    "tags": ["ink", "iron_gall", "tannin", "oak_gall", "acidity"],
-    "prose": "Crushed oak gall nuts macerated in sour ale for fourteen days hydrolyzed gallotannins into pure gallic acid. Mixing with green vitriol produced an intense purple-black ink that bonds chemically to cellulose fibers upon atmospheric oxidation."
-  },
-  {
-    "id": "ink_assay_copperas_ferrous_sulfate_ratio",
-    "ink_formulation_code": "FORMULA_COPPERAS_RATIO_03",
-    "tannin_source": "HEMLOCK_BARK_EXTRACT",
-    "measured_ph_level": 1.9,
-    "pigment_complex": "FERROUS_SULFATE_EXCESS_COMPLEX",
-    "timestamp_relative": "YEAR_04_INK_LOG_03",
-    "tags": ["ink", "iron_gall", "copperas", "ferrous_sulfate", "corrosion"],
-    "prose": "Excess ferrous sulfate (copperas) added to accelerate blackening lowered batch pH to an acidic 1.9. Free sulfuric acid began attacking steel dip pens within three days, eating through nib tines and rusting brass inkwell lids."
-  },
-  {
-    "id": "ink_assay_gum_arabic_suspension_viscosity",
-    "ink_formulation_code": "FORMULA_GUM_SUSPENSION_02",
-    "tannin_source": "SUMAC_LEAF_TANNIN_BROTH",
-    "measured_ph_level": 2.8,
-    "pigment_complex": "ACACIA_COLLOIDAL_SUSPENSION",
-    "timestamp_relative": "YEAR_07_INK_LOG_02",
-    "tags": ["ink", "gum_arabic", "viscosity", "suspension", "writing"],
-    "prose": "Adding 4% scavenged gum arabic binder kept insoluble iron gallate particles suspended in colloidal equilibrium. The ink flows smoothly from steel nibs without clogging the slit or settling into gritty black sludge at the bottom of the bottle."
-  },
-  {
-    "id": "ink_assay_vinegar_preservative_mold_inhibition",
-    "ink_formulation_code": "FORMULA_CIDER_ACETIC_GUARD",
-    "tannin_source": "CHESTNUT_WOOD_SAWDUST",
-    "measured_ph_level": 2.2,
-    "pigment_complex": "ACETIC_INHIBITED_IRON_GALLATE",
-    "timestamp_relative": "YEAR_09_INK_LOG_04",
-    "tags": ["ink", "preservative", "vinegar", "mold_inhibition", "acetic_acid"],
-    "prose": "Blending 10% crude cider vinegar into the ink base suppressed fungal pellicle growth in open classroom inkwells. The sharp acetic odor lingers during writing, but inkwells remain free of surface mold even in warm, humid bunk corridors."
-  },
-  {
-    "id": "ink_assay_logwood_hematoxylin_shading",
-    "ink_formulation_code": "FORMULA_LOGWOOD_HEMATOXYLIN",
-    "tannin_source": "PRE_WAR_LOGWOOD_DYE_EXTRACT",
-    "measured_ph_level": 3.1,
-    "pigment_complex": "HEMATOXYLIN_CHROMIUM_LAKE",
-    "timestamp_relative": "YEAR_12_INK_LOG_01",
-    "tags": ["ink", "logwood", "hematoxylin", "blue_black", "dossiers"],
-    "prose": "Boiling chips of pre-war logwood dye (*Haematoxylum campechianum*) with potassium dichromate yielded a deep violet-black ink. Documents written with this ink display rich tonal contrast, making legal ledger entries unmistakable."
-  },
-  {
-    "id": "ink_assay_rust_scraping_ferrous_substitute",
-    "ink_formulation_code": "FORMULA_SCRAP_IRON_ACETATE",
-    "tannin_source": "WILLOW_BARK_LEACHATE",
-    "measured_ph_level": 2.6,
-    "pigment_complex": "FERROUS_ACETATE_ORGANIC_BLACK",
-    "timestamp_relative": "YEAR_15_INK_LOG_03",
-    "tags": ["ink", "iron_acetate", "rust", "substitute", "improvised"],
-    "prose": "Lacking commercial copperas crystals, the station chemist dissolved iron lathe shavings in boiling vinegar to generate ferrous acetate. The improvised formulation produced a serviceable dark grey ink that darkens to deep jet black over forty-eight hours."
-  },
-  {
-    "id": "ink_assay_paper_acid_burnthrough_corrosion",
-    "ink_formulation_code": "FORMULA_LEGACY_CORROSIVE_01",
-    "tannin_source": "HIGH_PURITY_GALLIC_ACID",
-    "measured_ph_level": 1.6,
-    "pigment_complex": "FREE_SULFURIC_DESTRUCTIVE_ACID",
-    "timestamp_relative": "YEAR_17_INK_LOG_02",
-    "tags": ["ink", "iron_gall", "paper_corrosion", "acid_burn", "archives"],
-    "prose": "Historical logbooks written in Year 01 with unbuffered high-iron ink suffered severe acid burnthrough. The sulfuric acid byproduct of the ink reaction completely charred through the paper fibers along every pen stroke, creating stencils where text once stood."
-  },
-  {
-    "id": "ink_assay_soot_lampblack_carbon_ink_dispersion",
-    "ink_formulation_code": "FORMULA_LAMPBLACK_CARBON_INDIA",
-    "tannin_source": "PINE_RESIN_LAMPBLACK_SOOT",
-    "measured_ph_level": 6.8,
-    "pigment_complex": "ELEMENTAL_CARBON_EGG_ALBUMEN",
-    "timestamp_relative": "YEAR_20_INK_LOG_01",
-    "tags": ["ink", "carbon_ink", "india_ink", "lampblack", "indelible"],
-    "prose": "Scraped pine turpentine soot ground with dehydrated egg albumen yielded an inert, non-acidic India ink (pH 6.8). Completely immune to acid fade and chemical bleaching, this carbon ink is exclusively reserved for permanent bunker birth and death registries."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "ink_assay_oak_gall_tannic_acid_maceration",
+      "ink_formulation_code": "FORMULA_OAK_GALL_TANNIN_01",
+      "tannin_source": "CRUSHED_OAK_WASP_GALL_NUTS",
+      "measured_ph_level": 2.4,
+      "pigment_complex": "FERRIC_PYROGALLATE_BLACK",
+      "timestamp_relative": "YEAR_02_INK_LOG_01",
+      "tags": [
+        "ink",
+        "iron_gall",
+        "tannin",
+        "oak_gall",
+        "acidity"
+      ],
+      "prose": "Crushed oak gall nuts macerated in sour ale for fourteen days hydrolyzed gallotannins into pure gallic acid. Mixing with green vitriol produced an intense purple-black ink that bonds chemically to cellulose fibers upon atmospheric oxidation."
+    },
+    {
+      "id": "ink_assay_copperas_ferrous_sulfate_ratio",
+      "ink_formulation_code": "FORMULA_COPPERAS_RATIO_03",
+      "tannin_source": "HEMLOCK_BARK_EXTRACT",
+      "measured_ph_level": 1.9,
+      "pigment_complex": "FERROUS_SULFATE_EXCESS_COMPLEX",
+      "timestamp_relative": "YEAR_04_INK_LOG_03",
+      "tags": [
+        "ink",
+        "iron_gall",
+        "copperas",
+        "ferrous_sulfate",
+        "corrosion"
+      ],
+      "prose": "Excess ferrous sulfate (copperas) added to accelerate blackening lowered batch pH to an acidic 1.9. Free sulfuric acid began attacking steel dip pens within three days, eating through nib tines and rusting brass inkwell lids."
+    },
+    {
+      "id": "ink_assay_gum_arabic_suspension_viscosity",
+      "ink_formulation_code": "FORMULA_GUM_SUSPENSION_02",
+      "tannin_source": "SUMAC_LEAF_TANNIN_BROTH",
+      "measured_ph_level": 2.8,
+      "pigment_complex": "ACACIA_COLLOIDAL_SUSPENSION",
+      "timestamp_relative": "YEAR_07_INK_LOG_02",
+      "tags": [
+        "ink",
+        "gum_arabic",
+        "viscosity",
+        "suspension",
+        "writing"
+      ],
+      "prose": "Adding 4% scavenged gum arabic binder kept insoluble iron gallate particles suspended in colloidal equilibrium. The ink flows smoothly from steel nibs without clogging the slit or settling into gritty black sludge at the bottom of the bottle."
+    },
+    {
+      "id": "ink_assay_vinegar_preservative_mold_inhibition",
+      "ink_formulation_code": "FORMULA_CIDER_ACETIC_GUARD",
+      "tannin_source": "CHESTNUT_WOOD_SAWDUST",
+      "measured_ph_level": 2.2,
+      "pigment_complex": "ACETIC_INHIBITED_IRON_GALLATE",
+      "timestamp_relative": "YEAR_09_INK_LOG_04",
+      "tags": [
+        "ink",
+        "preservative",
+        "vinegar",
+        "mold_inhibition",
+        "acetic_acid"
+      ],
+      "prose": "Blending 10% crude cider vinegar into the ink base suppressed fungal pellicle growth in open classroom inkwells. The sharp acetic odor lingers during writing, but inkwells remain free of surface mold even in warm, humid bunk corridors."
+    },
+    {
+      "id": "ink_assay_logwood_hematoxylin_shading",
+      "ink_formulation_code": "FORMULA_LOGWOOD_HEMATOXYLIN",
+      "tannin_source": "PRE_WAR_LOGWOOD_DYE_EXTRACT",
+      "measured_ph_level": 3.1,
+      "pigment_complex": "HEMATOXYLIN_CHROMIUM_LAKE",
+      "timestamp_relative": "YEAR_12_INK_LOG_01",
+      "tags": [
+        "ink",
+        "logwood",
+        "hematoxylin",
+        "blue_black",
+        "dossiers"
+      ],
+      "prose": "Boiling chips of pre-war logwood dye (*Haematoxylum campechianum*) with potassium dichromate yielded a deep violet-black ink. Documents written with this ink display rich tonal contrast, making legal ledger entries unmistakable."
+    },
+    {
+      "id": "ink_assay_rust_scraping_ferrous_substitute",
+      "ink_formulation_code": "FORMULA_SCRAP_IRON_ACETATE",
+      "tannin_source": "WILLOW_BARK_LEACHATE",
+      "measured_ph_level": 2.6,
+      "pigment_complex": "FERROUS_ACETATE_ORGANIC_BLACK",
+      "timestamp_relative": "YEAR_15_INK_LOG_03",
+      "tags": [
+        "ink",
+        "iron_acetate",
+        "rust",
+        "substitute",
+        "improvised"
+      ],
+      "prose": "Lacking commercial copperas crystals, the station chemist dissolved iron lathe shavings in boiling vinegar to generate ferrous acetate. The improvised formulation produced a serviceable dark grey ink that darkens to deep jet black over forty-eight hours."
+    },
+    {
+      "id": "ink_assay_paper_acid_burnthrough_corrosion",
+      "ink_formulation_code": "FORMULA_LEGACY_CORROSIVE_01",
+      "tannin_source": "HIGH_PURITY_GALLIC_ACID",
+      "measured_ph_level": 1.6,
+      "pigment_complex": "FREE_SULFURIC_DESTRUCTIVE_ACID",
+      "timestamp_relative": "YEAR_17_INK_LOG_02",
+      "tags": [
+        "ink",
+        "iron_gall",
+        "paper_corrosion",
+        "acid_burn",
+        "archives"
+      ],
+      "prose": "Historical logbooks written in Year 01 with unbuffered high-iron ink suffered severe acid burnthrough. The sulfuric acid byproduct of the ink reaction completely charred through the paper fibers along every pen stroke, creating stencils where text once stood."
+    },
+    {
+      "id": "ink_assay_soot_lampblack_carbon_ink_dispersion",
+      "ink_formulation_code": "FORMULA_LAMPBLACK_CARBON_INDIA",
+      "tannin_source": "PINE_RESIN_LAMPBLACK_SOOT",
+      "measured_ph_level": 6.8,
+      "pigment_complex": "ELEMENTAL_CARBON_EGG_ALBUMEN",
+      "timestamp_relative": "YEAR_20_INK_LOG_01",
+      "tags": [
+        "ink",
+        "carbon_ink",
+        "india_ink",
+        "lampblack",
+        "indelible"
+      ],
+      "prose": "Scraped pine turpentine soot ground with dehydrated egg albumen yielded an inert, non-acidic India ink (pH 6.8). Completely immune to acid fade and chemical bleaching, this carbon ink is exclusively reserved for permanent bunker birth and death registries."
+    }
+  ]
+}

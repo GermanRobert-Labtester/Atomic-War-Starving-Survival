@@ -719,6 +719,66 @@
         { "label": "Keep it", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The packet goes into your pack and stays there, heavier than its weight, gathering the dust of unfinished business.", "epitaph": "The packet's still in my pack. Heavier than its weight." },
         { "label": "Sell the contents", "moral_delta": -15, "empathy_delta": 0, "outcome_text": "It buys something good at the waystation. You will not remember what, and neither will the record.", "epitaph": "Sold the packet's contents at the waystation. Bought something good. Can't recall what." }
       ]
+    },
+    {
+      "id": "quest_moral_env_scavenger_child", "display_name": "The Scavenger's Child", "category": "share",
+      "trigger": "A child too young to scavenge searches through rubble alone.",
+      "discovery": "She can't be more than six. She pulls at a collapsed wall with bare hands, nails torn, looking for cans. She doesn't look up when you approach. 'Go away. I found this spot first.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give her your food and help her search", "moral_delta": 12, "empathy_delta": 2, "outcome_text": "She eats without stopping work. You pull cans from the rubble together. At the end she gives you a bent bottle cap. 'For luck,' she says, and runs.", "epitaph": "Fed a scavenger child and helped her search. She gave me a bottle cap for luck." },
+        { "label": "Give her a little food", "moral_delta": 5, "empathy_delta": 1, "outcome_text": "She takes the crust and keeps digging. Doesn't say thank you. Doesn't need to.", "epitaph": "Gave a crust to a scavenger child. She kept digging." },
+        { "label": "Tell her to go home", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "'I don't have a home,' she says, and goes back to the rubble. You stand there a moment too long.", "epitaph": "Told a scavenger child to go home. She said she didn't have one." },
+        { "label": "Take what she's found", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "Three cans and a water bottle. She watches you take them with eyes that have already learned this lesson.", "epitaph": "Took a scavenger child's finds. Three cans. Her eyes already knew this." }
+      ]
+    },
+    {
+      "id": "quest_moral_env_buried_letters", "display_name": "The Buried Letters", "category": "listen",
+      "trigger": "A survivor finds a bundle of pre-war letters and offers to share them.",
+      "discovery": "An old man sits against a wall, holding a bundle of letters tied with ribbon. 'Found these in a house,' he says. 'Can't read them myself. Eyes are gone. But I'd like to know what they say.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Read all the letters to him", "moral_delta": 10, "empathy_delta": 2, "outcome_text": "Love letters, mostly. A woman writing to her husband overseas. The old man listens with his eyes closed. When you finish he says, 'That's how it was. That's exactly how it was.'", "epitaph": "Read love letters to a blind old man. He said 'that's how it was.' I think he knew the couple." },
+        { "label": "Read a few, then move on", "moral_delta": 4, "empathy_delta": 1, "outcome_text": "Two letters. He nods and thanks you. 'Enough,' he says. 'Enough to remember by.'", "epitaph": "Read two letters to the old man. He said it was enough to remember by." },
+        { "label": "Refuse", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "He tucks the bundle back inside his coat. 'Someone else will read them,' he says, to no one.", "epitaph": "Refused to read the letters. He put them back in his coat." },
+        { "label": "Take the letters", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "He doesn't fight you. 'They're just paper now,' he says. But his hands shake after you take them.", "epitaph": "Took the old man's letters. He said they're just paper. His hands shook." }
+      ]
+    },
+    {
+      "id": "quest_moral_env_shelter_refugee", "display_name": "The Shelter Seeker", "category": "trust",
+      "trigger": "A stranger asks to share your shelter for one night.",
+      "discovery": "Rain is coming. A woman stands at the edge of your camp, soaked through. 'One night,' she says. 'I'll be gone before light. I don't want trouble.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Share your shelter and fire", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "She dries her clothes and sleeps sitting up. Before dawn she leaves a bundle of kindling by the fire and is gone. You never learn her name.", "epitaph": "Shared my shelter with a stranger. She left kindling at dawn. Never got her name." },
+        { "label": "Let her stay outside the camp", "moral_delta": 3, "empathy_delta": 1, "outcome_text": "She huddles under the overhang, out of the worst of it. In the morning she nods once and walks into the rain.", "epitaph": "Let a stranger shelter at the edge. She nodded once and left in the rain." },
+        { "label": "Refuse", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "She doesn't argue. Just turns and walks into the weather. You hear her coughing long after she's gone.", "epitaph": "Refused shelter to a stranger in the rain. Heard her cough for a long time after." },
+        { "label": "Refuse and threaten her", "moral_delta": -7, "empathy_delta": 0, "outcome_text": "She raises her hands and backs away. 'I'm sorry,' she says, like it's her fault. It isn't.", "epitaph": "Threatened a soaked stranger asking for shelter. She apologized. It wasn't her fault." }
+      ]
+    },
+    {
+      "id": "quest_moral_env_dead_explorer", "display_name": "The Dead Explorer", "category": "dead",
+      "trigger": "A corpse found with a journal and personal effects.",
+      "discovery": "They died sitting up, back against a wall, journal open on their lap. The last entry is dated three months ago. 'Day 47. Ran out of water. The map was wrong. If anyone finds this, tell my daughter I tried.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Bury them and keep the journal", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You dig with your hands in the soft earth. The journal goes into your pack. If you ever find the daughter, you'll have something to give her.", "epitaph": "Buried the explorer and kept their journal. Looking for their daughter." },
+        { "label": "Say a few words and move on", "moral_delta": 4, "empathy_delta": 1, "outcome_text": "You stand there a moment. 'I'll look for her,' you say, knowing you probably won't. The words matter anyway.", "epitaph": "Said words over the explorer's body. Promised to find their daughter. Probably won't." },
+        { "label": "Take the map and leave them", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The map is detailed, even if it was wrong for them. You fold it into your pack and leave the journal on their lap.", "epitaph": "Took the explorer's map. Left the journal. The map might be wrong for me too." },
+        { "label": "Take everything", "moral_delta": -4, "empathy_delta": 0, "outcome_text": "Map, journal, boots, coat. You strip them efficient and leave the bones to the weather.", "epitaph": "Stripped a dead explorer. Map, journal, boots, coat. Left the bones." }
+      ]
+    },
+    {
+      "id": "quest_moral_env_wounded_scavenger", "display_name": "The Wounded Scavenger", "category": "comfort",
+      "trigger": "A scavenger with a fresh wound sits alone, refusing to move.",
+      "discovery": "He sits in the rubble, hand wrapped in a bloody rag. 'Don't,' he says when you approach. 'I'm done. Just let me sit here.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Treat his wound and stay with him", "moral_delta": 10, "empathy_delta": 2, "outcome_text": "You clean the cut and bind it proper. He doesn't thank you, but when you stand to leave he says, 'Wait. I know a route through the east block. Safer than the main road.'", "epitaph": "Treated a wounded scavenger. He told me a safe route through the east block." },
+        { "label": "Give him bandages and move on", "moral_delta": 5, "empathy_delta": 1, "outcome_text": "You toss him clean bandages. He catches them one-handed and starts unwrapping the rag. That's something.", "epitaph": "Gave bandages to a wounded scavenger. He started wrapping his own hand." },
+        { "label": "Walk past", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "He said don't. You don't. You wonder about him for the rest of the day.", "epitaph": "Walked past a wounded scavenger who said don't. Wondered about him all day." },
+        { "label": "Take his pack while he sits", "moral_delta": -6, "empathy_delta": 0, "outcome_text": "He watches you take it. 'Figures,' he says, and goes back to staring at his hand.", "epitaph": "Took a wounded scavenger's pack. He said 'figures' and stared at his hand." }
+      ]
     }
   ]
 }

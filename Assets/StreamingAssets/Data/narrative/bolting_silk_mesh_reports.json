@@ -1,82 +1,133 @@
-[
-  {
-    "id": "bolting_silk_gauze_number_mesh_selection",
-    "sifter_reel_id": "PRIMARY_PATENT_FLOUR_BOLTER_01",
-    "silk_gauze_grade": "NO_10_XX_SWISS_BOLTING_SILK",
-    "mesh_aperture_microns": 129.0,
-    "flour_extraction_yield_pct": 72.5,
-    "timestamp_relative": "YEAR_02_BOLTING_01",
-    "tags": ["grain_milling", "bolting_silk", "mesh_aperture", "flour_extraction", "sifting"],
-    "prose": "Stretching No. 10 XX Dufour Swiss bolting silk across the hexagonal cedar reel achieved a precise 129-micron sieve cutoff. The fine silk gauze separated velvety endosperm patent flour from coarse sharps and golden semolina flakes."
-  },
-  {
-    "id": "bolting_silk_centrifugal_reel_beater_tear",
-    "sifter_reel_id": "CENTRIFUGAL_FORCE_REEL_02",
-    "silk_gauze_grade": "HEAVY_DUTY_DUTCH_SILK_12XX",
-    "mesh_aperture_microns": 105.0,
-    "flour_extraction_yield_pct": 68.0,
-    "timestamp_relative": "YEAR_04_BOLTING_03",
-    "tags": ["grain_milling", "centrifugal_reel", "beater_tear", "flour_contamination", "sieve_repair"],
-    "prose": "Centrifugal beaters spinning at 220 RPM flung a stray piece of calcified dough against the cylinder wall, ripping a four-inch gash through the No. 12XX silk. Un-sifted coarse bran flakes flooded the patent flour collection bin before operators could trip the bypass."
-  },
-  {
-    "id": "bolting_silk_flour_mite_infestation_pore_clog",
-    "sifter_reel_id": "STORED_FLOUR_SIFTER_UNIT_03",
-    "silk_gauze_grade": "STANDARD_BOLTING_CLOTH_8X",
-    "mesh_aperture_microns": 180.0,
-    "flour_extraction_yield_pct": 55.0,
-    "timestamp_relative": "YEAR_07_BOLTING_02",
-    "tags": ["grain_milling", "flour_mite", "pore_clog", "biological_fouling", "sifter_capacity"],
-    "prose": "High humidity (75% RH) triggered an outbreak of *Acarus siro* flour mites across the wooden reel frames. Microscopic cast skins and silk webbing clogged over 40% of the 180-micron pores, reducing bolter throughput from 400 kg/hr to a trickle."
-  },
-  {
-    "id": "bolting_silk_static_electricity_brush_grounding",
-    "sifter_reel_id": "DRY_CLIMATE_PLANSIFTER_01",
-    "silk_gauze_grade": "TRIPLE_EXTRA_SILK_11XXX",
-    "mesh_aperture_microns": 118.0,
-    "flour_extraction_yield_pct": 74.0,
-    "timestamp_relative": "YEAR_09_BOLTING_04",
-    "tags": ["grain_milling", "static_electricity", "grounding_brush", "flour_clinging", "electrostatic"],
-    "prose": "Subterranean winter air (18% RH) generated severe electrostatic charges as flour granules cascaded over dry silk cloth. Flour clung stubbornly to the charged silk; installing grounded copper tinsel wiper brushes dissipated the charge and cleared the sieve mesh."
-  },
-  {
-    "id": "bolting_silk_plansifter_gyratory_counterweight_wobble",
-    "sifter_reel_id": "FREE_SWINGING_PLANSIFTER_BAY",
-    "silk_gauze_grade": "HIGH_TENSION_SILK_NO_9",
-    "mesh_aperture_microns": 150.0,
-    "flour_extraction_yield_pct": 78.0,
-    "timestamp_relative": "YEAR_12_BOLTING_01",
-    "tags": ["grain_milling", "plansifter", "gyratory_motion", "counterweight", "sieve_tear"],
-    "prose": "A thrown lead counterweight on the central vertical crank shaft threw the suspended twelve-sieve plansifter stack into violent elliptic wobble. The harmonic shaking tore the stapled silk edges away from four internal pine sieve frames."
-  },
-  {
-    "id": "bolting_silk_middlings_purifier_air_current_aspiration",
-    "sifter_reel_id": "MIDDLINGS_PURIFIER_DECK_04",
-    "silk_gauze_grade": "GRADUATED_APERTURE_PURIFIER_SILK",
-    "mesh_aperture_microns": 220.0,
-    "flour_extraction_yield_pct": 82.0,
-    "timestamp_relative": "YEAR_15_BOLTING_03",
-    "tags": ["grain_milling", "purifier", "aspiration", "middlings", "bee_wing_bran"],
-    "prose": "Calibrating upward air aspiration currents through an oscillating silk sieve deck lifted papery 'bee-wing' bran particles into the dust collector. Dense, pure vitreous endosperm chunks fell through the graded silk, producing pristine semolina for pasta production."
-  },
-  {
-    "id": "bolting_silk_nylon_synthetic_monofilament_upgrade",
-    "sifter_reel_id": "MODERNIZED_SIFTING_CHEST_01",
-    "silk_gauze_grade": "POLYAMIDE_MONOFILAMENT_120T",
-    "mesh_aperture_microns": 120.0,
-    "flour_extraction_yield_pct": 76.5,
-    "timestamp_relative": "YEAR_17_BOLTING_02",
-    "tags": ["grain_milling", "polyamide", "monofilament", "synthetic_mesh", "abrasion_resistance"],
-    "prose": "Replacing fragile natural multifilament silk with precision woven polyamide (nylon) monofilament screen tripled operating life. The smooth synthetic fibers resisted fungal decay, eliminated thread shifting, and tolerated high-pressure steam sanitization."
-  },
-  {
-    "id": "bolting_silk_bran_duster_wire_gauze_scour",
-    "sifter_reel_id": "TERMINAL_BRAN_DUSTER_UNIT",
-    "silk_gauze_grade": "PHOSPHOR_BRONZE_WIRE_GAUZE_40M",
-    "mesh_aperture_microns": 380.0,
-    "flour_extraction_yield_pct": 86.0,
-    "timestamp_relative": "YEAR_20_BOLTING_01",
-    "tags": ["grain_milling", "bran_duster", "wire_gauze", "phosphor_bronze", "yield_recovery"],
-    "prose": "Passing coarse bran flakes through a high-velocity rotating brush duster lined with 40-mesh phosphor-bronze wire cloth scoured off adherent flour dust. The mechanical scouring recovered an extra 3.5% flour yield that would otherwise have been lost to animal feed."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "bolting_silk_gauze_number_mesh_selection",
+      "sifter_reel_id": "PRIMARY_PATENT_FLOUR_BOLTER_01",
+      "silk_gauze_grade": "NO_10_XX_SWISS_BOLTING_SILK",
+      "mesh_aperture_microns": 129.0,
+      "flour_extraction_yield_pct": 72.5,
+      "timestamp_relative": "YEAR_02_BOLTING_01",
+      "tags": [
+        "grain_milling",
+        "bolting_silk",
+        "mesh_aperture",
+        "flour_extraction",
+        "sifting"
+      ],
+      "prose": "Stretching No. 10 XX Dufour Swiss bolting silk across the hexagonal cedar reel achieved a precise 129-micron sieve cutoff. The fine silk gauze separated velvety endosperm patent flour from coarse sharps and golden semolina flakes."
+    },
+    {
+      "id": "bolting_silk_centrifugal_reel_beater_tear",
+      "sifter_reel_id": "CENTRIFUGAL_FORCE_REEL_02",
+      "silk_gauze_grade": "HEAVY_DUTY_DUTCH_SILK_12XX",
+      "mesh_aperture_microns": 105.0,
+      "flour_extraction_yield_pct": 68.0,
+      "timestamp_relative": "YEAR_04_BOLTING_03",
+      "tags": [
+        "grain_milling",
+        "centrifugal_reel",
+        "beater_tear",
+        "flour_contamination",
+        "sieve_repair"
+      ],
+      "prose": "Centrifugal beaters spinning at 220 RPM flung a stray piece of calcified dough against the cylinder wall, ripping a four-inch gash through the No. 12XX silk. Un-sifted coarse bran flakes flooded the patent flour collection bin before operators could trip the bypass."
+    },
+    {
+      "id": "bolting_silk_flour_mite_infestation_pore_clog",
+      "sifter_reel_id": "STORED_FLOUR_SIFTER_UNIT_03",
+      "silk_gauze_grade": "STANDARD_BOLTING_CLOTH_8X",
+      "mesh_aperture_microns": 180.0,
+      "flour_extraction_yield_pct": 55.0,
+      "timestamp_relative": "YEAR_07_BOLTING_02",
+      "tags": [
+        "grain_milling",
+        "flour_mite",
+        "pore_clog",
+        "biological_fouling",
+        "sifter_capacity"
+      ],
+      "prose": "High humidity (75% RH) triggered an outbreak of *Acarus siro* flour mites across the wooden reel frames. Microscopic cast skins and silk webbing clogged over 40% of the 180-micron pores, reducing bolter throughput from 400 kg/hr to a trickle."
+    },
+    {
+      "id": "bolting_silk_static_electricity_brush_grounding",
+      "sifter_reel_id": "DRY_CLIMATE_PLANSIFTER_01",
+      "silk_gauze_grade": "TRIPLE_EXTRA_SILK_11XXX",
+      "mesh_aperture_microns": 118.0,
+      "flour_extraction_yield_pct": 74.0,
+      "timestamp_relative": "YEAR_09_BOLTING_04",
+      "tags": [
+        "grain_milling",
+        "static_electricity",
+        "grounding_brush",
+        "flour_clinging",
+        "electrostatic"
+      ],
+      "prose": "Subterranean winter air (18% RH) generated severe electrostatic charges as flour granules cascaded over dry silk cloth. Flour clung stubbornly to the charged silk; installing grounded copper tinsel wiper brushes dissipated the charge and cleared the sieve mesh."
+    },
+    {
+      "id": "bolting_silk_plansifter_gyratory_counterweight_wobble",
+      "sifter_reel_id": "FREE_SWINGING_PLANSIFTER_BAY",
+      "silk_gauze_grade": "HIGH_TENSION_SILK_NO_9",
+      "mesh_aperture_microns": 150.0,
+      "flour_extraction_yield_pct": 78.0,
+      "timestamp_relative": "YEAR_12_BOLTING_01",
+      "tags": [
+        "grain_milling",
+        "plansifter",
+        "gyratory_motion",
+        "counterweight",
+        "sieve_tear"
+      ],
+      "prose": "A thrown lead counterweight on the central vertical crank shaft threw the suspended twelve-sieve plansifter stack into violent elliptic wobble. The harmonic shaking tore the stapled silk edges away from four internal pine sieve frames."
+    },
+    {
+      "id": "bolting_silk_middlings_purifier_air_current_aspiration",
+      "sifter_reel_id": "MIDDLINGS_PURIFIER_DECK_04",
+      "silk_gauze_grade": "GRADUATED_APERTURE_PURIFIER_SILK",
+      "mesh_aperture_microns": 220.0,
+      "flour_extraction_yield_pct": 82.0,
+      "timestamp_relative": "YEAR_15_BOLTING_03",
+      "tags": [
+        "grain_milling",
+        "purifier",
+        "aspiration",
+        "middlings",
+        "bee_wing_bran"
+      ],
+      "prose": "Calibrating upward air aspiration currents through an oscillating silk sieve deck lifted papery 'bee-wing' bran particles into the dust collector. Dense, pure vitreous endosperm chunks fell through the graded silk, producing pristine semolina for pasta production."
+    },
+    {
+      "id": "bolting_silk_nylon_synthetic_monofilament_upgrade",
+      "sifter_reel_id": "MODERNIZED_SIFTING_CHEST_01",
+      "silk_gauze_grade": "POLYAMIDE_MONOFILAMENT_120T",
+      "mesh_aperture_microns": 120.0,
+      "flour_extraction_yield_pct": 76.5,
+      "timestamp_relative": "YEAR_17_BOLTING_02",
+      "tags": [
+        "grain_milling",
+        "polyamide",
+        "monofilament",
+        "synthetic_mesh",
+        "abrasion_resistance"
+      ],
+      "prose": "Replacing fragile natural multifilament silk with precision woven polyamide (nylon) monofilament screen tripled operating life. The smooth synthetic fibers resisted fungal decay, eliminated thread shifting, and tolerated high-pressure steam sanitization."
+    },
+    {
+      "id": "bolting_silk_bran_duster_wire_gauze_scour",
+      "sifter_reel_id": "TERMINAL_BRAN_DUSTER_UNIT",
+      "silk_gauze_grade": "PHOSPHOR_BRONZE_WIRE_GAUZE_40M",
+      "mesh_aperture_microns": 380.0,
+      "flour_extraction_yield_pct": 86.0,
+      "timestamp_relative": "YEAR_20_BOLTING_01",
+      "tags": [
+        "grain_milling",
+        "bran_duster",
+        "wire_gauze",
+        "phosphor_bronze",
+        "yield_recovery"
+      ],
+      "prose": "Passing coarse bran flakes through a high-velocity rotating brush duster lined with 40-mesh phosphor-bronze wire cloth scoured off adherent flour dust. The mechanical scouring recovered an extra 3.5% flour yield that would otherwise have been lost to animal feed."
+    }
+  ]
+}

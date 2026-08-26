@@ -1,7 +1,1876 @@
-[
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "minutes_id": "council_minutes_001",
+      "day": 38,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "ration review",
+        "surface patrol schedule",
+        "radio broadcast protocol"
+      ],
+      "decisions": [
+        {
+          "item": "ration review",
+          "outcome": "the_quartermaster reported rice reserves at 75 days. No change to current ration allocation. Next review day 50.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "surface patrol schedule",
+          "outcome": "the_general proposed daily perimeter patrol plus one long-range expedition per week. Approved. the_cop to lead perimeter, the_hunter to lead expeditions.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "radio broadcast protocol",
+          "outcome": "the_radio_host proposed twice-daily broadcasts at 0600 and 1800. the_general approved with content review for security-sensitive information. the_therapist suggested a community request segment.",
+          "vote": "5_for_2_abstain (the_electrician and the_architect abstained citing no opinion on media)"
+        }
+      ],
+      "action_items": [
+        "the_quartermaster: ration review day 50",
+        "the_general: finalise patrol roster by day 40",
+        "the_radio_host: first broadcast day 38 at 1800"
+      ],
+      "notes": "First formal council meeting. the_general established the council as the governing body. Membership: 7 permanent seats. Decisions by majority. the_general has veto on security matters only.",
+      "cross_refs": [
+        "radio_broadcast_rundowns",
+        "bunker_shift_schedules_and_notices"
+      ],
+      "tags": [
+        "founding_meeting",
+        "rations",
+        "patrols",
+        "radio"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_002",
+      "day": 42,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "new arrival policy",
+        "water pump status",
+        "medical supply inventory"
+      ],
+      "decisions": [
+        {
+          "item": "new arrival policy",
+          "outcome": "the_general proposed a 7-day quarantine for all new arrivals. Medical screening by the_surgeon. Security assessment by the_general. the_therapist to conduct psychological evaluation. Council approved unanimously.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "water pump status",
+          "outcome": "the_electrician reported the water pump impeller seal failure. Repaired with improvised gasket. the_plumber has fabricated spare seals. No further action required.",
+          "vote": "noted"
+        },
+        {
+          "item": "medical supply inventory",
+          "outcome": "the_surgeon reported antibiotics at zero. Painkillers at 30 doses. Bandages at 200 units. the_quartermaster to prioritise medical supply recovery on next expedition.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_general: draft new arrival intake protocol",
+        "the_surgeon: medical supply priority list for expeditions",
+        "the_plumber: quarterly seal replacement schedule"
+      ],
+      "notes": "the_therapist raised the question of what happens if a new arrival is refused. the_general said the bunker cannot afford to turn away useful people but also cannot afford to accept security risks. The council did not resolve this tension.",
+      "cross_refs": [
+        "new_arrival_intake_interviews",
+        "equipment_failure_logs"
+      ],
+      "tags": [
+        "new_arrival_policy",
+        "water_pump",
+        "medical_supplies"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_003",
+      "day": 47,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "Kilo-1 refusal aftermath",
+        "greenhouse expansion",
+        "generator fuel status"
+      ],
+      "decisions": [
+        {
+          "item": "Kilo-1 refusal aftermath",
+          "outcome": "the_therapist formally objected to the Kilo-1 refusal on humanitarian grounds. the_general defended the decision on resource grounds. The council voted to uphold the refusal policy but allocated one emergency ration pack to leave at the bunker entrance for future refused applicants. Vote: 4_for (uphold with ration), 2_against (the_therapist and the_priest wanted to reverse the refusal), 1_abstain.",
+          "vote": "4_for_2_against_1_abstain"
+        },
+        {
+          "item": "greenhouse expansion",
+          "outcome": "the_botanist (invited for this item) proposed doubling greenhouse capacity using salvaged glass from surface expeditions. the_architect confirmed structural feasibility. the_electrician confirmed grow light capacity for 50 percent expansion. Approved.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "generator fuel status",
+          "outcome": "the_electrician reported fuel reserves at 40 days. Consumption rate stable. the_quartermaster proposed fuel rationing to extend to 50 days. the_general opposed, saying fuel rationing would reduce generator runtime and affect the water pump. Status quo maintained.",
+          "vote": "4_for_status_quo_3_for_rationing"
+        }
+      ],
+      "action_items": [
+        "the_quartermaster: place emergency ration pack at bunker entrance",
+        "the_botanist: greenhouse expansion plan by day 55",
+        "the_electrician: fuel consumption optimisation study"
+      ],
+      "notes": "The Kilo-1 debate was the most contentious council meeting to date. the_therapist and the_general are not speaking outside of council sessions. the_priest offered pastoral support to both. The emergency ration pack compromise was the_chemist idea.",
+      "cross_refs": [
+        "undertaker_burial_records",
+        "conflict_mediation_records",
+        "greenhouse_cultivation_logs"
+      ],
+      "tags": [
+        "kilo_1_aftermath",
+        "greenhouse_expansion",
+        "fuel_debate",
+        "contentious"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_004",
+      "day": 52,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "dysentery outbreak response",
+        "court establishment",
+        "trade protocol"
+      ],
+      "decisions": [
+        {
+          "item": "dysentery outbreak response",
+          "outcome": "the_surgeon reported 7 dysentery cases. Source identified as contaminated water from a pipe cross-connection. the_plumber has isolated and repaired the cross-connection. the_quartermaster ordered full water system flush and re-test. Kitchen quarantine until water quality confirmed.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "court establishment",
+          "outcome": "the_general proposed a formal court for dispute resolution and rule enforcement. the_therapist proposed mediation as the first step before court. Compromise: the_therapist mediates interpersonal disputes; the_general adjudicates security and resource violations. Court sessions weekly.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "trade protocol",
+          "outcome": "the_quartermaster proposed a formal internal barter recording system. All trades to be logged with the_quartermaster for inventory tracking. No currency. Pure barter with quartermaster oversight. Approved.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_plumber: water system flush complete by day 53",
+        "the_general: court protocol document by day 55",
+        "the_quartermaster: barter recording system operational by day 54"
+      ],
+      "notes": "The dysentery outbreak was the first public health crisis. The response was swift and effective. the_surgeon credit to the_plumber for rapid identification of the cross-connection. The court establishment fills a governance gap that has been growing since day 1.",
+      "cross_refs": [
+        "surgeons_casebook_batch_2",
+        "water_quality_test_reports_batch_2",
+        "bunker_trade_ledger_batch_2"
+      ],
+      "tags": [
+        "dysentery",
+        "court_establishment",
+        "trade_protocol",
+        "crisis_response"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_005",
+      "day": 57,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "court first cases",
+        "surface radiation trend",
+        "children education"
+      ],
+      "decisions": [
+        {
+          "item": "court first cases",
+          "outcome": "the_general reported two cases adjudicated: unauthorised medical bay access (reprimand plus kitchen duty) and ration dispute (mediated by the_therapist, both parties accepted terms). the_therapist reported three additional mediations completed. Court and mediation are functioning.",
+          "vote": "noted"
+        },
+        {
+          "item": "surface radiation trend",
+          "outcome": "the_hazmat_tech (invited) reported quarterly average 0.9 uSv/h bunker internal, 35 uSv/h surface. Trend is slowly declining. the_meteorologist projects safe surface work (under 50 uSv/h with PPE) for the next 6 months.",
+          "vote": "noted"
+        },
+        {
+          "item": "children education",
+          "outcome": "the_teacher (invited) proposed a formal education programme for the 6 children in the bunker. Reading, mathematics, and survival skills. the_quartermaster allocated paper and charcoal pencils from inventory. Approved.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_general: court schedule weekly on day 72",
+        "the_hazmat_tech: quarterly radiation report",
+        "the_teacher: education programme operational by day 60"
+      ],
+      "notes": "The council is settling into a rhythm. Formal agenda, recorded decisions, action items. the_general says this is how governance works in a functioning society. the_therapist says it is also how people feel heard.",
+      "cross_refs": [
+        "bunker_court_verdicts_batch_2",
+        "radiation_survey_readings_batch_2"
+      ],
+      "tags": [
+        "court_cases",
+        "radiation_trend",
+        "children_education",
+        "governance_rhythm"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_006",
+      "day": 62,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "Delta-1 emissary protocol",
+        "generator voltage issue",
+        "anniversary planning"
+      ],
+      "decisions": [
+        {
+          "item": "Delta-1 emissary protocol",
+          "outcome": "the_general reported that Delta-1, the Salt Freeholder emissary, is expected day 65. the_general proposed a controlled introduction: Delta-1 to be met at the airlock, escorted to the meeting room, and not given unsupervised access to the bunker. the_therapist objected to the hostile framing. Compromise: Delta-1 to be treated as a guest but the_general will accompany at all times.",
+          "vote": "5_for_compromise_2_for_open_access (the_therapist and the_priest)"
+        },
+        {
+          "item": "generator voltage issue",
+          "outcome": "the_electrician reported the Variac bypass is holding. Voltage stable at 220V plus/minus 2V. Fuel consumption down 8 percent. The bypass has extended fuel reserves from 40 to 45 days. the_quartermaster is pleased.",
+          "vote": "noted"
+        },
+        {
+          "item": "anniversary planning",
+          "outcome": "the_priest proposed a memorial service for day 95, marking 95 days since the event. the_council approved. the_radio_host will broadcast the service. the_chef will prepare a special meal. the_undertaker will read the names of the dead.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_general: Delta-1 reception protocol by day 64",
+        "the_electrician: Variac bypass performance report day 70",
+        "the_priest: anniversary service plan by day 85"
+      ],
+      "notes": "Delta-1 is the first external visitor. The council is divided between openness and security. the_general default is containment; the_therapist default is trust. The compromise satisfies neither fully but both can live with it.",
+      "cross_refs": [
+        "new_arrival_intake_interviews",
+        "equipment_failure_logs",
+        "radio_broadcast_rundowns"
+      ],
+      "tags": [
+        "delta_1_protocol",
+        "generator_voltage",
+        "anniversary_planning",
+        "openness_vs_security"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_007",
+      "day": 67,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "Delta-1 visit assessment",
+        "salt trade terms",
+        "security review"
+      ],
+      "decisions": [
+        {
+          "item": "Delta-1 visit assessment",
+          "outcome": "Delta-1 visited day 65. the_general reported the visit was productive. Delta-1 proposed salt-for-goods trade: 2kg salt per 1kg dried goods. the_quartermaster counter-proposed 2kg salt per 1kg smoked fish or dried mushrooms. Delta-1 accepted provisionally. Final terms to be confirmed by the_Freeholder.",
+          "vote": "unanimous_approve_terms"
+        },
+        {
+          "item": "salt trade terms",
+          "outcome": "the_quartermaster presented the trade terms. Salt is the highest-priority import for the bunker. the_chef and the_chemist both confirmed salt is critical for food preservation and chemical processes. the_quartermaster to prepare first trade shipment: 10kg dried mushrooms and 5kg dried herbs for 30kg salt.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "security review",
+          "outcome": "the_general reported the generator sabotage investigation is ongoing. No suspects identified. the_cop has increased lock changes. the_general proposed a bunker-wide security audit. the_architect to assess physical vulnerabilities. the_electrician to assess electronic access points.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_quartermaster: prepare first salt trade shipment by day 75",
+        "the_architect: physical security audit by day 75",
+        "the_electrician: electronic access audit by day 75",
+        "the_general: security review report day 80"
+      ],
+      "notes": "Delta-1 impressed the council. the_therapist said the emissary was genuine. the_general said the emissary was professional. Both are true. The salt trade is the first external economic relationship. It changes the bunker from isolated to connected.",
+      "cross_refs": [
+        "bunker_trade_ledger_batch_2",
+        "new_arrival_intake_interviews",
+        "security_incident_reports_batch_2"
+      ],
+      "tags": [
+        "delta_1_assessment",
+        "salt_trade",
+        "security_review",
+        "external_relations"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_008",
+      "day": 72,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "court session 2 results",
+        "security audit results",
+        "expedition planning"
+      ],
+      "decisions": [
+        {
+          "item": "court session 2 results",
+          "outcome": "the_general reported four cases: two mediations (the_therapist) and two adjudications. All resolved. the_therapist proposed that mediation outcomes be confidential unless both parties agree to disclosure. Approved.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "security audit results",
+          "outcome": "the_architect and the_electrician presented joint audit findings. Three physical vulnerabilities identified: eastern periscope blind spot, ventilation shaft access point in corridor D, and the drainage sump external connection. the_architect has remediation plans for all three. Estimated completion: day 85.",
+          "vote": "unanimous_approve_remediation"
+        },
+        {
+          "item": "expedition planning",
+          "outcome": "the_general proposed the seed vault expedition for day 61 window. the_hazmat_tech to lead radiation safety. the_courier to lead navigation. the_hunter to provide security. the_quartermaster to prepare extraction equipment.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_architect: security remediation by day 85",
+        "the_general: seed vault expedition briefing day 59",
+        "the_quartermaster: extraction equipment ready by day 60"
+      ],
+      "notes": "The security audit was thorough. The eastern blind spot is the highest priority. the_architect says a periscope extension can cover it. The drainage sump connection is the most concerning because it is an unmonitored physical access point.",
+      "cross_refs": [
+        "bunker_court_verdicts_batch_2",
+        "bunker_blueprints_codex",
+        "patrol_debriefs"
+      ],
+      "tags": [
+        "court_results",
+        "security_audit",
+        "expedition_planning",
+        "remediation"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_009",
+      "day": 77,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "seed vault expedition results",
+        "Shallows Market trade",
+        "mental health status"
+      ],
+      "decisions": [
+        {
+          "item": "seed vault expedition results",
+          "outcome": "the_courier reported 17 total seed ampoules recovered across two missions. the_botanist reports 12 viable, 3 uncertain, 2 failed. the_quartermaster says the viable seeds could increase bunker food production by 40 percent within one growing season. the_council expressed gratitude for the expedition team and noted the loss of the_hazmat_tech on the second mission.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "Shallows Market trade",
+          "outcome": "the_quartermaster reported the first salt trade completed. 15kg dried goods exchanged for 30kg salt. the_chef says the salt quality is high. the_chemist is already using it for preservation. Monthly trade schedule established.",
+          "vote": "noted"
+        },
+        {
+          "item": "mental health status",
+          "outcome": "the_therapist reported 18 active therapy cases. 12 resolved or improving. 3 stable. 3 requiring increased attention. the_therapist requested an additional counselling space. the_architect identified the laundry alcove annex as available after the_widow relocation. Approved.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_botanist: seed planting schedule by day 80",
+        "the_quartermaster: monthly salt trade shipment by day 85",
+        "the_architect: counselling space conversion by day 82"
+      ],
+      "notes": "The seed vault recovery is the most significant material gain since the bunker was sealed. 17 ampoules represent genetic diversity that the greenhouse desperately needs. The_hazmat_tech death was acknowledged with a moment of silence.",
+      "cross_refs": [
+        "patrol_debriefs",
+        "greenhouse_cultivation_logs",
+        "bunker_trade_ledger_batch_2",
+        "undertaker_burial_records"
+      ],
+      "tags": [
+        "seed_vault_results",
+        "salt_trade",
+        "mental_health",
+        "expedition_loss"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_010",
+      "day": 82,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "settlement survey intelligence",
+        "spring preparation",
+        "bunker population review"
+      ],
+      "decisions": [
+        {
+          "item": "settlement survey intelligence",
+          "outcome": "the_general reported the Juliet-1 settlement survey. 3 of 12 settlements assessed: 1 abandoned, 1 active (Settlement 2, Salt Freeholders), 1 burned out. the_general recommends approaching 3 more settlements for potential trade or alliance. the_council approved continued survey missions.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "spring preparation",
+          "outcome": "the_meteorologist (invited) reported temperature trending above seasonal average. Ice melt beginning on the frozen river. Spring thaw expected within 3 weeks. the_quartermaster proposed spring preparation: surface route assessment, meltwater radiation monitoring, greenhouse planting schedule acceleration.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "bunker population review",
+          "outcome": "the_quartermaster reported current population: 47 adults, 3 children, 1 infant (Asha). Food reserves: 58 days at current ration. With greenhouse production and trade: 72 days effective. Fuel: 43 days. Medical supplies: 35 days. the_quartermaster says the bunker is stable but not comfortable.",
+          "vote": "noted"
+        }
+      ],
+      "action_items": [
+        "the_general: next settlement survey by day 90",
+        "the_meteorologist: weekly spring thaw updates",
+        "the_quartermaster: spring resource projection by day 85"
+      ],
+      "notes": "The bunker is approaching its first spring. Everything changes when the surface thaws. New routes open, new risks emerge. the_general says spring is both opportunity and vulnerability. the_quartermaster says the numbers are better than expected but not good enough to relax.",
+      "cross_refs": [
+        "patrol_debriefs",
+        "radiation_survey_readings_batch_2"
+      ],
+      "tags": [
+        "settlement_intel",
+        "spring_preparation",
+        "population_review",
+        "seasonal_transition"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_011",
+      "day": 87,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "security remediation status",
+        "radio signal anomaly",
+        "trade expansion"
+      ],
+      "decisions": [
+        {
+          "item": "security remediation status",
+          "outcome": "the_architect reported: eastern periscope blind spot fixed with extension mirror. Ventilation shaft access point secured with grate and motion sensor. Drainage sump connection: grate installed but external access still possible. the_architect recommends surface-side barrier. the_general approved.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "radio signal anomaly",
+          "outcome": "the_radio_host (invited) reported a fragment broadcast on 7.2 MHz at 0340. Male voice, English, partial content. the_electrician confirmed the signal was real, not atmospheric. the_general ordered continued monitoring at the same time daily. the_radio_host to log all receptions.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "trade expansion",
+          "outcome": "the_quartermaster proposed expanding trade beyond salt. Target items: medical supplies, tools, information. the_general says information about other settlements is the highest-value trade commodity. the_quartermaster to develop a trade priority list.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_architect: drainage sump surface barrier by day 95",
+        "the_radio_host: 7.2 MHz monitoring log",
+        "the_quartermaster: trade priority list by day 90"
+      ],
+      "notes": "The radio signal is the most intriguing item. A voice on 7.2 MHz means someone else is broadcasting. the_electrician says the signal origin is approximately 80km north. the_general is cautious. the_radio_host is excited. The council is watching.",
+      "cross_refs": [
+        "radio_broadcast_rundowns",
+        "equipment_failure_logs"
+      ],
+      "tags": [
+        "security_remediation",
+        "radio_anomaly",
+        "trade_expansion",
+        "mysterious_signal"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_012",
+      "day": 92,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "anniversary service final plan",
+        "Salt Freeholder emissary visit",
+        "Asha health report"
+      ],
+      "decisions": [
+        {
+          "item": "anniversary service final plan",
+          "outcome": "the_priest presented the day 95 memorial plan: roll call of the dead by the_undertaker, survivor testimonies (8 volunteers), music by the_radio_host, special meal by the_chef. the_council approved. the_general ordered a security stand-down for the duration of the service. All personnel welcome.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "Salt Freeholder emissary visit",
+          "outcome": "the_general reported that the_Freeholder will send a second emissary on day 100 to formalise the trade agreement. the_quartermaster has prepared the trade goods. the_general will host the emissary in the meeting room. the_therapist offered to attend as observer. Approved.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "Asha health report",
+          "outcome": "the_surgeon reported Asha (the first bunker-born infant) is developing normally. Weight gain on track. Motor skills age-appropriate. the_surgeon says the child is the healthest person in the bunker because she has never been on the surface. the_council noted this with mixed emotions.",
+          "vote": "noted"
+        }
+      ],
+      "action_items": [
+        "the_priest: finalise anniversary programme by day 94",
+        "the_general: emissary reception protocol by day 99",
+        "the_surgeon: monthly infant health reports"
+      ],
+      "notes": "The anniversary is approaching. 95 days. The bunker has changed in that time. We have trade, a court, a school, a garden, and a cemetery. the_therapist said that is either a lot or very little depending on how you measure it. the_general said they measure it in survival. We are still here.",
+      "cross_refs": [
+        "radio_broadcast_rundowns",
+        "undertaker_burial_records",
+        "new_arrival_intake_interviews"
+      ],
+      "tags": [
+        "anniversary_plan",
+        "salt_freeholder_emissary",
+        "infant_health",
+        "95_days"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_013",
+      "day": 97,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "anniversary aftermath",
+        "spring route assessment",
+        "long-term planning"
+      ],
+      "decisions": [
+        {
+          "item": "anniversary aftermath",
+          "outcome": "the_general reported the day 95 memorial service was successful. 47 attendees. 8 testimonies. No incidents. the_therapist said the service served an important communal function. the_radio_host broadcast the service. External signal bounce suggests at least 3 listeners received the broadcast.",
+          "vote": "noted"
+        },
+        {
+          "item": "spring route assessment",
+          "outcome": "the_hunter (invited) reported spring surface routes. Frozen river ice unsafe. Northern overland routes thawing. Southern routes passable. the_courier recommends shifting to southern routes for expeditions. the_general approved route change.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "long-term planning",
+          "outcome": "the_general proposed a 6-month strategic plan. Targets: formalise trade with 3 external settlements, achieve 50 percent food self-sufficiency from greenhouse, reduce fuel consumption by 15 percent, complete all security remediation. the_council approved the framework. Quarterly review scheduled.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_general: 6-month strategic plan document by day 100",
+        "the_hunter: southern route survey by day 102",
+        "the_quartermaster: food self-sufficiency projection by day 100"
+      ],
+      "notes": "The council is thinking beyond survival now. The 6-month plan is the first time the bunker has planned for a future that extends beyond the next crisis. the_therapist says this is the difference between existing and living. the_general says it is the difference between a bunker and a community.",
+      "cross_refs": [
+        "patrol_debriefs",
+        "radio_broadcast_rundowns",
+        "greenhouse_cultivation_logs"
+      ],
+      "tags": [
+        "anniversary_aftermath",
+        "spring_routes",
+        "long_term_planning",
+        "strategic_framework"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_014",
+      "day": 102,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "6-month plan progress",
+        "seed vault fatality follow-up",
+        "children art exhibition"
+      ],
+      "decisions": [
+        {
+          "item": "6-month plan progress",
+          "outcome": "the_general reported initial progress: trade contact with Salt Freeholders established, Shallows Market contact established. Greenhouse production at 7 percent of caloric needs, projected to reach 15 percent by month 3. Fuel consumption down 8 percent from Variac bypass. Security remediation 75 percent complete.",
+          "vote": "noted"
+        },
+        {
+          "item": "seed vault fatality follow-up",
+          "outcome": "the_architect reported the seed vault access tunnel is permanently collapsed. No alternative access route identified. the_general ordered the tunnel entrance sealed and marked as hazardous. the_undertaker burial of the_hazmat_tech completed day 90.",
+          "vote": "unanimous_approve_sealing"
+        },
+        {
+          "item": "children art exhibition",
+          "outcome": "the_teacher (invited) proposed a children art exhibition in corridor A on day 104. 12 pieces from 6 children. the_council approved. the_radio_host will announce on the broadcast. the_chef will provide refreshments.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_architect: seal seed vault tunnel entrance by day 105",
+        "the_teacher: art exhibition setup day 103",
+        "the_quartermaster: monthly 6-month plan progress report"
+      ],
+      "notes": "The 6-month plan is on track. The seed vault is sealed. The children are making art. These three things can be true at the same time. the_council is learning to hold multiple truths.",
+      "cross_refs": [
+        "patrol_debriefs",
+        "undertaker_burial_records",
+        "childrens_artwork_batch_2"
+      ],
+      "tags": [
+        "plan_progress",
+        "seed_vault_sealed",
+        "art_exhibition",
+        "multiple_truths"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_015",
+      "day": 107,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest"
+      ],
+      "agenda": [
+        "Salt Freeholder formal agreement",
+        "radio signal follow-up",
+        "greenhouse first major harvest"
+      ],
+      "decisions": [
+        {
+          "item": "Salt Freeholder formal agreement",
+          "outcome": "the_Freeholder emissary visited day 100. Formal trade agreement signed (verbal, witnessed by council). Terms: 2kg salt per 1kg dried goods or smoked fish. Monthly exchanges. Information exchange encouraged. the_Freeholder also offered intelligence about 4 additional settlements. the_general accepted.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "radio signal follow-up",
+          "outcome": "the_radio_host reported 7.2 MHz monitoring over 15 days. No repeat of the fragment broadcast. the_electrician analysed the signal characteristics. Conclusion: the transmission was real, from a fixed location approximately 80km north. the_signal may have been automated or the operator may have moved on. Continued monitoring at reduced priority.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "greenhouse first major harvest",
+          "outcome": "the_botanist (invited) reported the first major greenhouse harvest: 45kg turnips, 12kg barley, 8kg potatoes, 3kg mushrooms, 2kg herbs. Total caloric value: approximately 44,000 kcal. This represents 7 percent of bunker monthly caloric needs. the_botanist projects 15 percent by month 4 with the seed vault ampoules planted.",
+          "vote": "noted"
+        }
+      ],
+      "action_items": [
+        "the_quartermaster: first formal salt trade shipment by day 115",
+        "the_radio_host: 7.2 MHz monitoring weekly",
+        "the_botanist: seed vault ampoule planting schedule by day 110"
+      ],
+      "notes": "The Salt Freeholder agreement is the bunker first formal external treaty. the_general says it is the beginning of diplomacy. the_quartermaster says it is the beginning of economics. Both are correct. The greenhouse harvest is small but it is real food from real soil grown by real hands. It is the future.",
+      "cross_refs": [
+        "bunker_trade_ledger_batch_2",
+        "radio_broadcast_rundowns",
+        "greenhouse_cultivation_logs",
+        "patrol_debriefs"
+      ],
+      "tags": [
+        "formal_trade_agreement",
+        "radio_signal",
+        "greenhouse_harvest",
+        "diplomacy",
+        "economics"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_016",
+      "day": 165,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_courier"
+      ],
+      "agenda": [
+        "the choice: fuel expedition, antibiotic expedition, or Kilo water rescue",
+        "Settlement 2 intelligence on Kilo",
+        "mission dispatch"
+      ],
+      "decisions": [
+        {
+          "item": "the choice: fuel expedition, antibiotic expedition, or Kilo water rescue",
+          "outcome": "the_general presented the three-way choice prepared by the_quartermaster (supply_audit_b3_010). Fuel at 15 days. Antibiotics at zero. Kilo settlement at 2 days of water, 12 souls, 2 children. the_quartermaster stated the bunker cannot do all three and may be able to do one. the_surgeon spoke for antibiotics: one infection, one funeral. the_electrician spoke for fuel: without power, ventilation and cold storage fail, and the antibiotic question becomes moot. the_priest spoke for Kilo: a well that fails is a death sentence and a death sentence is everyone's business. the_therapist did not speak for an option; she said the decision will cost the decider regardless of which is chosen, and the council should know that. the_courier, invited for the first time, said: if we go to Kilo, I will go. If we do not go, I will listen for them until the radio stops. the_hunter said the Freeholder's free water guide removes half the return risk. the vote was not unanimous. The council chose Kilo.",
+          "vote": "6_for_1_against_2_abstain (the_electrician against; the_surgeon and the_architect abstained)"
+        },
+        {
+          "item": "Settlement 2 intelligence on Kilo",
+          "outcome": "the_general reported the_courier's Day 163 mission (courier_mission_b2_010). the_Freeholder confirmed Kilo at 18km east of Settlement 2, beyond Freeholder patrol range. the_Freeholder offered a free water guide for the return route. the council accepted the guide offer. the_cop raised the security risk of an external guide knowing the bunker-to-Kilo route. the_general said the guide knows Settlement 2 to Kilo, not the bunker; the bunker team meets the guide at Settlement 2. the_cop accepted.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "mission dispatch",
+          "outcome": "the_general ordered a Kilo water assistance mission departing Day 167, returning Day 170 (est.). Team: the_courier, the_hunter, the_plumber (well assessment), the_quartermaster (water ration allocation). Route: bunker to Settlement 2 (10km, Day 1), Settlement 2 to Kilo with guide (18km, Day 2), Kilo water delivery and well assessment (Day 3), return via Settlement 2 (Day 4). Load: 4 water containers (80L treated cistern water), water filtration kit, well tools, 5kg dried mushrooms (goodwill), 2kg salt (goodwill). the_hunter carries the rifle. the_courier carries the hand-crank radio. Fuel cost: 0 litres (foot mission, no vehicle). the_quartermaster confirmed the bunker can spare 80L without dropping below 50 days cistern supply.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_quartermaster: prepare 80L water load + filtration kit by Day 166",
+        "the_plumber: assemble well tools + assess Kilo well for repair feasibility",
+        "the_courier: confirm Settlement 2 guide rendezvous via 149.0 MHz relay",
+        "the_hunter: wolf pack briefing for the eastern route",
+        "the_electrician: load-shed plan to conserve fuel during the 4-day mission absence (no expedition fuel draw, but reduced surface team means reduced generator top-up need)"
+      ],
+      "notes": "The first council decision that was not unanimous. the_electrician voted against — not against Kilo, against the fuel arithmetic. He said: 'I am not voting against children. I am voting for the generator. If the generator stops, the children in this bunker are also at risk.' His vote was recorded and respected. the_surgeon and the_architect abstained because they could not rank the three options and chose not to pretend. the_general said after the vote: 'A non-unanimous council is a council that is doing its work. A unanimous council is a council that has stopped thinking.' the_therapist, who did not speak for an option, watched the_general during the vote. She has a session with him on Day 172. This is the first decision the bunker has made that costs something to someone inside it in order to help someone outside it. the_priest said a prayer after the vote. No one objected. No one joined him. He said it anyway.",
+      "cross_refs": [
+        "supply_audit_records_batch_2",
+        "courier_mission_logs_batch_2",
+        "radio_transcripts_batch_3",
+        "therapist_session_notes_batch_2",
+        "journal_entries_batch_3"
+      ],
+      "tags": [
+        "the_choice",
+        "kilo_rescue",
+        "non_unanimous",
+        "moral_branch",
+        "mission_dispatch",
+        "fuel_arithmetic"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_017",
+      "day": 172,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist"
+      ],
+      "agenda": [
+        "fuel constraint — 17 days, the operational ceiling",
+        "antibiotic constraint — zero doses, the silent second constraint",
+        "expedition options and the order of risk"
+      ],
+      "decisions": [
+        {
+          "item": "fuel constraint — 17 days, the operational ceiling",
+          "outcome": "the_quartermaster reported fuel at 175 litres, 17 days at current consumption (10L/day). the_electrician confirmed the voltage regulator is on its final channel; the next channel failure forces permanent load-shedding. the_electrician stated: if we do nothing, the generator stops in 17 days. When the generator stops, ventilation stops, cold storage stops, the radio stops, the grow lights stop. the_botanist confirmed the grow lights stopping ends the barley cycle and the wheat cycle — the greenhouse reverts to ambient winter light, which is insufficient. the_courier mission to Kilo cost zero fuel because it was on foot. the_quartermaster stated: foot missions buy time but do not buy fuel. Fuel is the one resource we cannot produce and cannot trade for. the_council agreed fuel is the binding constraint and must be addressed before the antibiotic constraint, because without power the antibiotic question is academic.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "antibiotic constraint — zero doses, the silent second constraint",
+          "outcome": "the_surgeon reported antibiotics remain at zero. Painkillers at 22 doses. Bandages at 140. Antiseptic at 1.5 litres. the_chemist reported the iodide stock is improved (supply_audit_b3_003) but iodide is not antibiotics and does not address bacterial infection. the_surgeon stated: the bunker has been lucky. Seven dysentery cases, no deaths. One wound infection on Day 88, treated with antiseptic and hope, resolved. The luck is not a strategy. the_next infection that does not resolve on its own is a death the bunker has chosen to accept by inaction. the_quartermaster noted the hospital pharmacy (exp_report_abandoned_hospital_01) was high-radiation and partially looted; the agri supply depot second store is unconfirmed. the_council agreed antibiotics are the second priority, immediately after fuel, and the expedition must target a confirmed pharmaceutical source.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "expedition options and the order of risk",
+          "outcome": "the_general presented two fuel expedition options and one antibiotic expedition option. (1) Train yard diesel residue recovery — the locomotive tank was siphoned by another party, but the Veteran reported a frozen diesel pool under the locomotive; the Chemist believes 20-40 litres of contaminated diesel may be recoverable and filterable. Risk: other party may return. Fuel cost: 2 days. (2) Signal lamp oil — 12 tins recovered (exp_report_train_yard_01), pending Chemist suitability test; if suitable, extends lamp oil reserve but is not generator fuel. (3) Antibiotic expedition — the Chemist identified a pre-war pharmaceutical distribution warehouse on the Cartographer's map, 14km southwest, radiation unconfirmed. Risk: unknown dose, possible looting. Fuel cost: 3 days. the_council debated the order. the_electrician argued for fuel first — without power the antibiotic expedition cannot be planned (radio, lights, cold storage). the_surgeon argued for antibiotics first — the fuel buys days, the antibiotics buy lives, and a life lost to infection while the fuel burns down is the worst outcome. the_general broke the deadlock: fuel first, antibiotics second, because the fuel expedition is lower-risk and higher-certainty, and a dead generator makes the antibiotic expedition a suicide run. the_council accepted.",
+          "vote": "7_for_2_abstain (the_surgeon and the_priest abstained — the_priest said he could not rank fuel above medicine and could not rank medicine above fuel and would not pretend)"
+        }
+      ],
+      "action_items": [
+        "the_chemist: complete signal lamp oil suitability test by Day 174 — if suitable, allocate to lamp reserve; if not, report",
+        "the_chemist: assess train yard diesel residue filterability — can contaminated diesel be cleaned to generator-grade? Report by Day 175",
+        "the_veteran: plan the train yard return — diesel residue recovery + night observation of the other party's pattern. Brief the_general by Day 176",
+        "the_chemist: cross-reference the Cartographer's map for the pharmaceutical distribution warehouse — confirm location, estimate radiation, plan approach. Report by Day 178",
+        "the_electrician: prepare the load-shed schedule for the fuel crisis — what runs, what does not, in 5-day decrements from Day 180",
+        "the_quartermaster: maintain the fuel ledger daily — no expedition departs without the_quartermaster's fuel accounting"
+      ],
+      "notes": "The first council meeting since the Kilo decision (council_minutes_016) that returned to unanimous on the constraints and split only on the order. The split is honest. the_surgeon abstained because he will not rank fuel above lives. the_priest abstained because he will not rank anything above anything. the_general said after the vote: 'We are not choosing between fuel and antibiotics. We are choosing the order in which we fail at both, and hoping we do not fail at either.' the_therapist watched the_general. She had a session with him at 14:00 before this meeting (therapy_session_b3_008). She noted he went to the airlock yesterday without deciding to. She did not tell the council. the_hunter asked, after the meeting, whether the wolf pack would be a problem on the train yard return. the_general said carry two rifles. the_hunter said he has one. the_general said he knows. The meeting did not resolve the rifle question. It resolved the order. The order is fuel, then antibiotics, then whatever comes after, if anything does.",
+      "cross_refs": [
+        "supply_audit_records_batch_2",
+        "expedition_field_reports_batch_2",
+        "therapist_session_notes_batch_2",
+        "radio_transcripts_batch_3",
+        "journal_entries_batch_3"
+      ],
+      "tags": [
+        "fuel_crisis",
+        "antibiotic_crisis",
+        "expedition_order",
+        "train_yard_return",
+        "pharmaceutical_warehouse",
+        "split_vote",
+        "load_shed"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_018",
+      "day": 181,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_veteran"
+      ],
+      "agenda": [
+        "diesel confirmation — 30 litres approved, fuel ceiling Day 195",
+        "antibiotic expedition — pharmaceutical distribution warehouse, 14km southwest",
+        "grow light bulb crisis — greenhouse at risk",
+        "the other salvage party — train yard assessment"
+      ],
+      "decisions": [
+        {
+          "item": "diesel confirmation — 30 litres approved, fuel ceiling Day 195",
+          "outcome": "the_chemist confirmed the recovered diesel is generator-grade (chem_lab_003). 30 litres approved for generator use. Fuel reserve now 205 litres, 20 days at current consumption (10L/day). Fuel ceiling extended from Day 192 to Day 195. the_electrician reported the generator accepted the blend without alarm. the_quartermaster logged the fuel. the_general stated: this is three days. It is not a solution. It is the time we have to solve the antibiotic question.",
+          "vote": "noted"
+        },
+        {
+          "item": "antibiotic expedition — pharmaceutical distribution warehouse, 14km southwest",
+          "outcome": "the_chemist presented the warehouse reconnaissance: the Cartographer's map marks a pre-war pharmaceutical distribution warehouse at 14km southwest, grid reference confirmed. Radiation unconfirmed — no prior visit. the_chemist estimates the warehouse, if intact, may contain antibiotic stock (amoxicillin, doxycycline, ciprofloxacin) in sealed manufacturer packaging. the_surgeon provided the target list: broad-spectrum antibiotics first, then analgesics, then suture material, then IV fluids if present. the_veteran assessed the route: 14km southwest via the ridge, 2-day outbound, 1 day on site, 2-day return — 5-day mission. the_hunter assessed the wolf risk: the southwestern ridge is outside the current pack range but not guaranteed. the_general ordered the expedition. Team: the_veteran (leader), the_courier, the_mechanic, the_hunter. the_surgeon did not volunteer — single-provider logic accepted (therapy_session_b3_010). the_chemist stays with the lab. Departure Day 183.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "grow light bulb crisis — greenhouse at risk",
+          "outcome": "the_mechanic (invited) reported grow light bed A is now on a single bulb at extended hours (maint_log_b3_010). No spare bulbs. If the last bulb fails, the greenhouse reverts to ambient winter light — insufficient for barley and wheat cycles. the_botanist (reported by the_mechanic) states the wheat cycle is the priority and the wheat is on bed B. the_electrician proposed an LED retrofit from the fire lookout hand-crank radio indicator circuit — speculative, low output, may extend one bed by 10-20 percent. the_council approved the LED retrofit as a research priority and authorised a grow-light-bulb search on the next expedition. the_quartermaster noted no known source. the_general stated: the greenhouse is the long-term food solution. If the grow lights fail, the long term becomes the short term.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the other salvage party — train yard assessment",
+          "outcome": "the_veteran reported the train yard was empty during the diesel recovery (courier_mission_b2_015, b2_016). No new boot prints. The other party has not returned in 12 days. the_veteran assessment: the party has either moved on, exhausted the site, or is observing from a distance. the_cop raised the possibility the party is monitoring the bunker's expedition pattern. the_general stated: we do not have evidence of surveillance. We have evidence of absence. Absence is not safety. the_council agreed to vary expedition departure times and routes where possible. the_cop to brief the perimeter team.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_chemist: prepare the warehouse target list and radiation assessment protocol by Day 182",
+        "the_veteran: finalise the warehouse expedition brief by Day 182",
+        "the_surgeon: provide the medical target priority list (antibiotics, analgesics, sutures, IV fluids)",
+        "the_electrician: begin LED retrofit research for grow lights — report by Day 188",
+        "the_cop: brief perimeter team on route and departure-time variation",
+        "the_quartermaster: prepare 5-day expedition rations for 4-person warehouse team"
+      ],
+      "notes": "The council returned to unanimous on the warehouse expedition. the_surgeon spoke for the first time in council since the abstention (council_minutes_017). He provided the medical target list and did not speak about the abstention. the_therapist, who had a session with the_surgeon on Day 184 (therapy_session_b3_010, scheduled after this meeting), watched him. She did not speak. the_general noted the grow light crisis is the third constraint — fuel, antibiotics, and now light. He said: 'We are juggling three things and we have two hands.' the_quartermaster said, 'Then we catch one and let the other two fall and pick them up after.' the_general said, 'Which one do we catch first.' the_quartermaster said, 'The one that is closest to the ground.' No one specified which one that was. The meeting ended with the order: warehouse expedition Day 183, LED research Day 188, and the understanding that the fuel ceiling is Day 195 and everything must be resolved or extended by then.",
+      "cross_refs": [
+        "chem_lab_003_recovered_diesel_grade_confirmation",
+        "therapy_session_b3_010",
+        "council_minutes_017",
+        "maint_log_b3_010",
+        "courier_mission_b2_015",
+        "courier_mission_b2_016"
+      ],
+      "tags": [
+        "diesel_confirmed",
+        "antibiotic_expedition",
+        "pharmaceutical_warehouse",
+        "grow_light_crisis",
+        "other_party_absent",
+        "three_constraints",
+        "fuel_ceiling_day_195"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_019",
+      "day": 189,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic"
+      ],
+      "agenda": [
+        "antibiotic viability confirmed — 304 doses approved",
+        "grow light crisis — the third constraint, now the primary",
+        "agri supply depot return — grow light bulb search",
+        "fuel countdown — Day 195 ceiling, 6 days remaining"
+      ],
+      "decisions": [
+        {
+          "item": "antibiotic viability confirmed — 304 doses approved",
+          "outcome": "the_chemist confirmed all 304 antibiotic doses are viable (chem_lab_004). All within labelled shelf life (14-22 months future). Packaging intact. Storage conditions pharmaceutical-grade. the_surgeon has logged the medical reserve (supply_audit_b3_017). Estimated coverage 6-12 months at current infection rate. the_surgeon stated: the silent second constraint is addressed. It is not solved. It is addressed. The reserve is finite. The reserve must be conserved. The reserve is not a license to be reckless. the_council accepted the report.",
+          "vote": "noted"
+        },
+        {
+          "item": "grow light crisis — the third constraint, now the primary",
+          "outcome": "the_electrician reported the LED retrofit (maint_log_b3_012) is complete but provides only 5 percent of a single grow light bulb's output. the_botanist (invited) reported the last functional bulb on bed B (barley) began flickering on Day 188 (journal_raw_b3_23). the_botanist estimates the bulb has 3-7 days of life. When it fails, the greenhouse reverts to LED-only at 5 percent output. the_botanist stated: at 5 percent output, the wheat seedlings (the Tomas wheat, journal_raw_b3_12) will survive but not thrive. The barley cycle will fail. The turnip cycle will slow. Greenhouse production drops from 14 percent to an estimated 3-4 percent of caloric need. the_quartermaster stated: 3-4 percent is not a food supply. It is a garnish. the_general stated: the grow light is now the primary constraint. Fuel is Day 195 (6 days). Antibiotics are addressed. The grow light is the thing that determines whether the bunker eats in 90 days.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "agri supply depot return — grow light bulb search",
+          "outcome": "the_mechanic proposed a return to the agri supply depot (exp_report_agri_supply_depot_01) to search the unsearched second store behind the heaved wall (the first visit recovered potassium chloride, lime, fleece, and seeders but did not breach the second store). The second store may contain grow light bulbs — the depot was an agricultural supply depot and grow lights are a plausible stock item. the_chemist concurs: the depot's inventory is unknown and the second store is the highest-probability source of grow light bulbs within walking distance. the_veteran assessed the route: 12km northwest, 2-day mission, low risk (the first visit was uneventful). the_general ordered the expedition. Team: the_mechanic (leader, breaching), the_courier (carry, rear security), the_hunter (overwatch), the_electrician (grow light bulb identification and electrical assessment). Departure Day 191.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "fuel countdown — Day 195 ceiling, 6 days remaining",
+          "outcome": "the_quartermaster reported fuel at 205 litres, 20 days supply, but the agri depot return is a foot mission (0 fuel cost). the_electrician reported the generator is running on the recovered diesel blend without alarm. the_general stated: the fuel ceiling is Day 195. The agri depot mission returns Day 193. The bunker has 2 days of margin between the mission return and the fuel ceiling. If the grow light bulbs are recovered, the greenhouse continues. If they are not, the greenhouse drops to 3-4 percent and the bunker's food trajectory reverses. the_council acknowledged the fuel ceiling is unchanged and the grow light expedition is the priority within it.",
+          "vote": "noted"
+        }
+      ],
+      "action_items": [
+        "the_electrician: prepare grow light bulb identification guide for the_courier and the_mechanic by Day 190",
+        "the_mechanic: prepare breaching tools for the agri depot second store wall by Day 190",
+        "the_quartermaster: prepare 2-day expedition rations for 4-person agri depot team",
+        "the_botanist: document the current greenhouse crop status and the 5-percent-output survival plan for the wheat seedlings",
+        "the_surgeon: begin the antibiotic conservation protocol — no dose dispensed without the_surgeon's direct authorisation"
+      ],
+      "notes": "The council meeting where the constraints reordered. Fuel is Day 195 (6 days). Antibiotics are 304 doses (addressed). The grow light is the primary. the_botanist spoke for the first time in council since the greenhouse first harvest (council_minutes_015). She said the word 'garnish' was the_quartermaster's, not hers. She said her word is 'proof.' The wheat is the proof. The barley is the practice. If the bulb fails, the proof survives at 5 percent. The practice does not. She said she can accept that. She said she does not accept it gracefully. the_therapist watched the_botanist. She has scheduled a session with the_botanist on Day 192 (therapy_session_b3_011). the_general said after the vote: 'We have three constraints. One is addressed. One is counting down. One is flickering. The flickering one is the one we can do something about tomorrow.' The meeting ended with the order: agri depot return Day 191, grow light bulbs are the target, the fuel ceiling is Day 195, and the wheat is the proof that outlives the practice.",
+      "cross_refs": [
+        "chem_lab_004_antibiotic_viability_assessment",
+        "maint_log_b3_012",
+        "journal_raw_b3_23",
+        "exp_report_agri_supply_depot_01",
+        "council_minutes_018",
+        "supply_audit_b3_017"
+      ],
+      "tags": [
+        "antibiotics_confirmed",
+        "grow_light_primary",
+        "agri_depot_return",
+        "fuel_ceiling_day_195",
+        "three_constraints_reordered",
+        "wheat_is_proof",
+        "barley_is_practice"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_020",
+      "day": 195,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_plumber"
+      ],
+      "agenda": [
+        "grow light resolved — the third constraint is addressed",
+        "fuel countdown — Day 208 ceiling, 13 days remaining, now the primary and only unresolved constraint",
+        "load-shed schedule — the Electrician's document",
+        "fuel expedition options — the geo-thermal plant and beyond"
+      ],
+      "decisions": [
+        {
+          "item": "grow light resolved — the third constraint is addressed",
+          "outcome": "the_botanist confirmed the greenhouse is running on a new T8 tube (courier_mission_b2_022). 12 tubes and 5 ballasts in reserve (exp_report_agri_supply_depot_02). Estimated 18-24 months of grow light capacity. The barley cycle continues. The wheat cycle continues. The greenhouse is at 15 percent of caloric need and climbing. the_quartermaster stated: the cliff has been moved. It is no longer the cliff. It is a shelf. The shelf holds for 18-24 months. the_council acknowledged the resolution.",
+          "vote": "noted"
+        },
+        {
+          "item": "fuel countdown — Day 208 ceiling, 13 days remaining, now the primary and only unresolved constraint",
+          "outcome": "the_quartermaster reported fuel at 135 litres, 13 days at current consumption (10L/day). Ceiling Day 208. The antibiotics are a reserve (holding). The grow lights are a shelf (holding). The fuel is a countdown (running). The fuel is now the only constraint that is not addressed. the_electrician reported the generator is running on the recovered diesel blend without alarm but the voltage regulator is on its final channel (maint_log_b3_002). the_general stated: the fuel is the last countdown. If it reaches zero, the generator stops, the ventilation stops, the cold storage stops, the radio stops, the grow lights stop. The grow light shelf becomes irrelevant if the generator stops. The antibiotic reserve becomes harder to use without power. The fuel is the constraint that holds all other constraints. the_council agreed the fuel is the primary and the fuel expedition is the priority.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "load-shed schedule — the Electrician's document",
+          "outcome": "the_electrician presented the load-shed schedule (load_shed_schedule_001, to be filed separately). The schedule defines, in 2-day decrements from Day 208, what runs and what does not when the generator fuel reaches zero. Priority 1 (last to shed): medical bay cold storage, ventilation. Priority 2: comms (radio). Priority 3: greenhouse grow lights. Priority 4: corridor heat. Priority 5: mess hall, laundry. The schedule also defines the manual fallback for each system: ventilation (manual air-handling, 4-person rotation), water (gravity feed from the cistern, no pump), cold storage (insulated, passive — 2-day window), grow lights (LED array at 5 percent, battery). the_council accepted the schedule as the governing document for the final days. the_electrician stated: the schedule is not a plan to survive without fuel. It is a plan to extend the fuel we have by choosing what we do without.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "fuel expedition options — the geo-thermal plant and beyond",
+          "outcome": "the_mechanic proposed a return to the geo-thermal plant (exp_report_geo_thermal_plant_01, first visit Day 50). The first visit recovered pipe, gaskets, and a technical manual but did not assess the plant's fuel or lubricant stock — the visit focused on the steam system. the_mechanic believes the plant's maintenance shed may contain diesel or lubricant stock for the turbine system. the_chemist concurs: a geo-thermal plant requires backup diesel for the startup cycle and maintenance fuel; the shed is a plausible source. the_veteran assessed the route: 8km south-southwest, 2-day mission, moderate radiation (45 uSv/h at the turbine hall, 3-hour max exposure). the_general ordered the expedition. Team: the_mechanic (leader), the_courier, the_hunter, the_chemist (fuel assessment on site — the_chemist overcomes the fear of the sky for the fuel, therapy_session_b3_010 context). Departure Day 197. the_general also ordered the_chemist and the_quartermaster to identify a second fuel source beyond the geo-thermal plant — the train yard is exhausted, the geo-thermal plant is a single visit. The bunker needs a fuel source that is not a single visit.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_electrician: file the load-shed schedule (load_shed_schedule_001) and post the priority list in the generator housing",
+        "the_mechanic: prepare the geo-thermal plant fuel expedition brief by Day 196",
+        "the_chemist: prepare the fuel assessment kit for on-site testing; overcome the field reluctance (the General is aware of the_chemist's difficulty and has authorised the_chemist to remain at the plant perimeter if the_chemist chooses — the_mechanic can bring samples to the perimeter)",
+        "the_quartermaster: identify a second fuel source beyond the geo-thermal plant — report by Day 200",
+        "the_plumber: prepare the manual ventilation rotation roster (4-person, 2-hour shifts) as the fallback for when the generator stops"
+      ],
+      "notes": "The council meeting where the constraints reduced to one. The antibiotics are a reserve. The grow lights are a shelf. The fuel is a countdown. The countdown is the one. the_quartermaster said: 'We have a reserve, a countdown, and a cliff, and the cliff has been moved. The cliff is a shelf. The shelf holds. The reserve holds. The countdown runs. The countdown is the only one that moves.' the_general said: 'Then the countdown is the one we move.' the_therapist watched the_general. She has a session with him after this meeting (therapy_session_b3_012). She noted he said 'we move' not 'I move.' That is new. the_priest said a short prayer at the end. No one joined him. No one objected. He said it anyway. The meeting ended with the order: geo-thermal plant fuel expedition Day 197, load-shed schedule filed, second fuel source identified by Day 200, and the understanding that Day 208 is the ceiling and the ceiling is 13 days and 13 days is the time the bunker has to find fuel or learn to live without it.",
+      "cross_refs": [
+        "courier_mission_b2_022",
+        "exp_report_agri_supply_depot_02",
+        "exp_report_geo_thermal_plant_01",
+        "maint_log_b3_002",
+        "maint_log_b3_016",
+        "therapy_session_b3_010",
+        "supply_audit_b3_019"
+      ],
+      "tags": [
+        "grow_light_resolved",
+        "fuel_primary",
+        "load_shed_schedule",
+        "geo_thermal_fuel_expedition",
+        "one_constraint_remaining",
+        "ceiling_day_208"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_021",
+      "day": 203,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_plumber",
+        "the_cop"
+      ],
+      "agenda": [
+        "geo-thermal plant fuel recovery — results",
+        "second fuel source — the_quartermaster report",
+        "the fuel decision — what happens at Day 208",
+        "the Bouncer observation — the thing that watches the wolves"
+      ],
+      "decisions": [
+        {
+          "item": "geo-thermal plant fuel recovery — results",
+          "outcome": "the_mechanic reported the geo-thermal plant expedition (courier_mission_b2_023, b2_024) recovered 45 litres of diesel from the maintenance shed backup tank and 8 litres of lubricant. the_chemist confirmed the diesel is generator-grade (chem_lab_005). Fuel reserve now 95 litres (post-consumption), 9 days at current consumption. Ceiling extended from Day 208 to Day 212. the_quartermaster logged the fuel. the_general stated: 45 litres is 4 days. It is another breath. The ceiling moves. The countdown does not stop.",
+          "vote": "noted"
+        },
+        {
+          "item": "second fuel source — the_quartermaster report",
+          "outcome": "the_quartermaster reported the second fuel source search. The Cartographer's map and the fire finder map (exp_report_fire_lookout_01) were cross-referenced. Two candidates identified: (1) a municipal fuel depot 18km southeast, marked on the fire finder map as a 'fuel storage' site — radiation unknown, distance is at the edge of the walkable range. (2) a pre-war hospital backup generator fuel tank (the hospital was visited exp_report_abandoned_hospital_01, but the basement generator room was not accessed due to high radiation — 120 uSv/h). the_chemist assessed: the hospital tank is too hot (120 uSv/h, lethal exposure in under 4 hours). The municipal fuel depot is the only viable candidate. the_veteran assessed: 18km, 3-day mission, moderate-high risk (distance, unknown radiation, unknown structural condition). the_general stated: the municipal fuel depot is the next expedition. It is the last identified fuel source within walkable range. If it is empty or too hot, the bunker has no further fuel source and the load-shed schedule becomes the survival plan.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the fuel decision — what happens at Day 208",
+          "outcome": "the_electrician presented the load-shed schedule implementation status (maint_log_b3_017). The schedule is posted. The manual ventilation rotation is trained (the_plumber, 4-person roster). The manual water fallback (gravity feed) is tested. The cold storage passive window (2 days) is documented. the_general asked the question the council has been avoiding: what happens at Day 212 (the new ceiling) if the municipal fuel depot yields nothing. the_electrician stated: at Day 212, the generator stops. The load-shed schedule has already shed corridors, laundry, mess hall. At Day 212, the grow lights go off. The medical cold storage goes passive (2-day window). The radio goes to hand-crank only. The ventilation goes manual. the_surgeon stated: the medical cold storage passive window is 2 days. After 2 days, the antibiotic reserve must be stored in the coldest part of the bunker (the lower corridor, estimated 8C) and the viability may degrade. the_botanist stated: the grow lights going off means the greenhouse drops to LED-only at 5 percent. The wheat survives. The barley does not. The food trajectory reverses. the_general stated: the bunker has been living on breaths. The breaths are running out. The municipal fuel depot is the last breath. If it is not there, the bunker learns to live without the generator. the_council agreed: the municipal fuel depot expedition is the priority. The load-shed schedule is the fallback. The fallback is not a plan. It is a way of dying slowly. The expedition is the plan.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the Bouncer observation — the thing that watches the wolves",
+          "outcome": "the_cop reported the investigation of the Bouncer's statement (patrol_debrief_024, 'I am afraid of the thing that watches the wolves'). the_cop and the_veteran conducted a dawn observation of the southwestern ridge on Day 201 (patrol_debrief_026). the_veteran observed, at 600m, a figure on the ridge watching the wolf pack. The figure was stationary, did not move, did not approach. the_veteran could not confirm if the figure was human or a trick of the light. the_hunter, on a separate observation Day 202, confirmed: a stationary figure, human-shaped, at 700m, watching the wolves. The figure withdrew when the wolves moved. the_cop stated: the Bouncer was right. There is something watching the wolves. The something is human or human-shaped. It does not approach. It watches. the_general stated: a human who watches wolves and does not approach is a human who is assessing. Assessing is preparation. Preparation is either hunting or scouting. the_council agreed: the southwestern ridge is now a restricted approach. No solo patrols. No expedition routes via the southwest. the_cop and the_veteran to continue dawn observation. the_therapist to assess the Bouncer — the statement was not paranoia. It was perception.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_veteran: prepare the municipal fuel depot expedition brief by Day 204",
+        "the_chemist: prepare the fuel assessment kit for the depot expedition",
+        "the_quartermaster: prepare 3-day expedition rations for the depot team",
+        "the_cop and the_veteran: continue dawn observation of the southwestern ridge — report any change in the figure's pattern",
+        "the_therapist: session with the Bouncer (therapy_session_b3_014) — the statement was perception, not paranoia",
+        "the_surgeon: prepare the lower corridor cold storage for the antibiotic reserve transfer if the generator stops"
+      ],
+      "notes": "The council meeting where the bunker acknowledged it is living on breaths and the breaths are running out. the_quartermaster said: 'We have extended the ceiling four times. Day 192 to 195 to 208 to 212. Each extension is a breath. Each breath is shorter. The breaths are not a strategy. The breaths are a habit. A habit is a thing that does not ask permission. I am grateful for the habit. I am afraid of the day the habit runs out.' the_general said: 'The municipal fuel depot is the last breath. If it is not there, we stop breathing and we start living without the generator. Living without the generator is possible. It is harder. It is colder. It is quieter. The bunker has done harder things.' the_priest said: 'The bunker has done harder things.' He said it as a statement, not a prayer. The meeting ended with the order: municipal fuel depot expedition Day 205, the southwestern ridge restricted, the Bouncer vindicated, and the understanding that Day 212 is the ceiling and the ceiling is 9 days and 9 days is the time the bunker has to find the last breath or learn to live without breathing.",
+      "cross_refs": [
+        "courier_mission_b2_023",
+        "courier_mission_b2_024",
+        "chem_lab_005",
+        "patrol_debrief_024",
+        "patrol_debrief_026",
+        "maint_log_b3_017",
+        "load_shed_schedule_001",
+        "council_minutes_020"
+      ],
+      "tags": [
+        "geo_thermal_fuel_recovered",
+        "municipal_fuel_depot",
+        "last_breath",
+        "the_figure_on_the_ridge",
+        "bouncer_vindicated",
+        "ceiling_day_212",
+        "living_without_generator"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_022",
+      "day": 211,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_plumber",
+        "the_veteran",
+        "the_cop"
+      ],
+      "agenda": [
+        "municipal fuel depot success — 900 litres, the fuel ceiling lifted",
+        "the depot as a source — standing monthly recovery trips",
+        "the Cartographer — the Day 220 meeting",
+        "the spring — the Cartographer's report, the ash thinning"
+      ],
+      "decisions": [
+        {
+          "item": "municipal fuel depot success — 900 litres, the fuel ceiling lifted",
+          "outcome": "the_veteran reported the municipal fuel depot expedition (courier_mission_b2_025, b2_026, exp_report_municipal_fuel_depot_01). The depot is intact, 4 uSv/h, 2 underground tanks, 900 litres total (80 recovered, 820 remaining). the_chemist confirmed the recovered diesel is generator-grade (chem_lab_006, pending). the_quartermaster logged the 80 litres. Fuel reserve now 155 litres (75 remaining + 80 recovered), 15 days at current consumption, but the 820 litres in the depot represent 82 days of additional fuel. The fuel ceiling is no longer a countdown. The fuel ceiling is the depot's exhaustion, which is months away at monthly recovery trips. the_general stated: the last breath was not the last. The last breath was the first of many. The fuel is no longer the constraint. The fuel is a source.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the depot as a source — standing monthly recovery trips",
+          "outcome": "the_quartermaster proposed a standing monthly fuel recovery trip to the municipal depot. Each trip: 4-person team, 3 days, 80 litres recovered (the carry capacity). At 10L/day consumption, each trip is 8 days of fuel, and the depot holds 10 more trips. The depot is the fuel source for the next 10 months. the_veteran confirmed the route is known, the dose is low, and the depot is intact. the_general approved the standing trip. the_quartermaster to schedule the next depot trip for Day 240. the_council agreed the fuel constraint is resolved for the foreseeable future, contingent on the depot remaining intact and unlooted.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the Cartographer — the Day 220 meeting",
+          "outcome": "the_cop reported the Cartographer contact (patrol_debrief_027, letter_b2_26). The Cartographer confirmed the depot has fuel, the wolves are not a threat, the ash is thinning, and the spring is coming. The Cartographer will meet a bunker person at the cache on Day 220. the_general stated: the Cartographer is the first external person to offer the bunker a relationship since the Freeholder on Day 100. The Cartographer has maps, knowledge of the wasteland, and knowledge of the spring. The meeting is the priority. the_council discussed who goes. the_general proposed the_courier — the Courier is the bunker's walker, the youngest, the least threatening, and the one who carried the note to the cache. the_therapist concurred — the Courier has the relational capacity for a first contact. the_hunter offered to provide overwatch from a distance. the_general approved: the_courier meets the Cartographer at the cache on Day 220, the_hunter on overwatch at 300m, no one else. The meeting is a diplomatic contact, not a patrol.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the spring — the Cartographer's report, the ash thinning",
+          "outcome": "the_meteorologist (invited, reported by the_quartermaster) confirmed the Cartographer's claim: barometric pressure has been rising for 14 days, the wind has shifted to the southwest, and the ash particulate density has dropped 30 percent since Day 180. the_meteorologist estimates the surface dose in the low-dose zones will be plantable by Day 250-260. the_botanist (invited) confirmed the greenhouse wheat is 30 days from harvest and the barley is 45 days. If the spring permits outdoor planting, the bunker's food production moves from the greenhouse to the surface. the_quartermaster stated: the spring is the thing that changes everything. The fuel is a source. The antibiotics are a reserve. The grow lights are a shelf. The spring is the thing that makes the greenhouse a bridge instead of a destination. the_general stated: the bunker has been surviving for 210 days. The spring is when the bunker begins to live.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_chemist: complete the depot diesel confirmation (chem_lab_006) by Day 212",
+        "the_quartermaster: schedule the standing monthly depot trip — next trip Day 240",
+        "the_courier: prepare for the Day 220 Cartographer meeting — the questions, the gifts, the protocol",
+        "the_hunter: prepare overwatch positions for the Day 220 meeting",
+        "the_meteorologist: begin daily spring tracking — barometric pressure, wind direction, particulate density, surface dose. Report weekly to council.",
+        "the_botanist: prepare the spring planting plan — what crops, what zones, what soil preparation. Report by Day 230."
+      ],
+      "notes": "The council meeting where the constraints ended. The fuel is a source. The antibiotics are a reserve. The grow lights are a shelf. The spring is coming. the_quartermaster said: 'I have been keeping the ledger for 176 days and the ledger has been a document of things going down. Today the ledger has a thing that goes up. The fuel is a source. The source is the thing that does not go down. The source is the thing that stays.' the_general said: 'The bunker has been surviving. The spring is when the bunker begins to live.' the_priest said: 'The spring is when the chapel fills.' He said it as a statement. The meeting ended with the order: Cartographer meeting Day 220, depot trip Day 240, spring tracking weekly, and the understanding that the bunker's second winter is ending and the thing that comes after survival is the thing the bunker has not yet named.",
+      "cross_refs": [
+        "courier_mission_b2_026",
+        "exp_report_municipal_fuel_depot_01",
+        "chem_lab_006",
+        "patrol_debrief_027",
+        "letter_b2_26",
+        "council_minutes_021"
+      ],
+      "tags": [
+        "fuel_source_found",
+        "ceiling_lifted",
+        "cartographer_meeting",
+        "the_spring",
+        "ash_thinning",
+        "constraints_ended",
+        "survival_to_living"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_023",
+      "day": 218,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_courier",
+        "the_historian"
+      ],
+      "agenda": [
+        "Day 220 Cartographer meeting — final preparation",
+        "the questions — what the bunker asks",
+        "the gifts — what the bunker brings",
+        "the protocol — how the meeting is conducted"
+      ],
+      "decisions": [
+        {
+          "item": "Day 220 Cartographer meeting — final preparation",
+          "outcome": "the_general confirmed the meeting: the_courier at the Cartographer's cache on Day 220, the_hunter on overwatch at 300m. the_courier departs Day 219, arrives at the cache Day 220 morning. the_hunter departs Day 219, positions at the overwatch before dawn. the_courier carries the hand-crank radio for emergency broadcast only — no transmission during the meeting. the meeting is face-to-face. the_courier is the bunker's voice. the_hunter is the bunker's eye. No one else.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the questions — what the bunker asks",
+          "outcome": "the_council compiled the question list for the Cartographer. (1) The maps — can the Cartographer share the maps of the fuel, water, low-dose zones, and the spring? (2) The spring — when will the surface be plantable, and which zones? (3) The wolves — will the pack return, or is the southwest migration permanent? (4) The other settlements — the Cartographer walks the wasteland; what settlements exist, and what are their relations? (5) The Verge — the Lineman reported the Verge has lost power (rad_lineman_04); does the Cartographer know the Verge, and can the bunker help? (6) The Cartographer's needs — what does the Cartographer need that the bunker can offer? the_therapist added: the last question is the one that makes the meeting a relationship instead of an interrogation. the_general accepted.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the gifts — what the bunker brings",
+          "outcome": "the_quartermaster proposed the gift list. (1) 2kg dried mushrooms (the bunker's trade surplus). (2) 1kg salt (the bunker has 260 days supply). (3) 5 doses of amoxicillin (the Cartographer said they do not have antibiotics — the_surgeon approved 5 doses from the reserve as a gift, not a trade, with the conservation protocol noted). (4) 1 grow light tube T5 (the bunker has 12; the Cartographer may have a use). (5) 1 hand-drawn map of the bunker's known zone (the Historian drew it — the bunker offers its knowledge in return for the Cartographer's). the_surgeon stated the 5 antibiotic doses are a gift that costs the bunker nothing it cannot spare and the Cartographer something it cannot make. the_council accepted the gifts.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the protocol — how the meeting is conducted",
+          "outcome": "the_therapist proposed the meeting protocol. (1) the_courier arrives first, waits at the cache, does not approach. (2) the Cartographer arrives — the_courier does not stand, does not approach, remains seated. (3) the Cartographer sets the distance. (4) the_courier speaks first only if the Cartographer does not. (5) the_courier offers the gifts before asking the questions. (6) the meeting lasts as long as the Cartographer chooses. (7) the_courier does not invite the Cartographer to the bunker — the Cartographer offers or does not. the_therapist stated: the protocol is the thing that makes the meeting safe for both. The safety is the thing that makes the meeting possible. the_council accepted the protocol.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_quartermaster: assemble the gift package by Day 219",
+        "the_surgeon: select and package 5 amoxicillin doses with dosing instructions by Day 219",
+        "the_historian: complete the hand-drawn map of the bunker's known zone by Day 219",
+        "the_courier: memorise the question list and the protocol by Day 219",
+        "the_hunter: select and prepare the overwatch position by Day 219"
+      ],
+      "notes": "The council meeting that was a preparation for a meeting. the_therapist said the protocol is the thing that makes the meeting safe. the_courier said the protocol is the thing that makes the meeting scary because the protocol means the meeting is real and the real is the thing you cannot rehearse. the_general said the real is the thing the bunker has been doing for 218 days. the_courier said the bunker is the thing he knows and the Cartographer is the thing he does not and the not-knowing is the scary part. the_therapist said the not-knowing is the part the Courier is best at — the Courier has walked to the unknown 4 times (Kilo, the warehouse, the agri depot, the municipal depot) and come back 4 times. the_courier said the coming back is the part he cannot promise. the_general said the coming back is the part the bunker cannot promise. the meeting ended with the understanding that the Day 220 meeting is the bunker's first diplomatic contact with a person who is not a trader, not a settler, and not a known quantity — the Cartographer is a walker, a mapper, a watcher, and the bunker's first neighbour who chose to come near.",
+      "cross_refs": [
+        "council_minutes_022",
+        "letter_b2_26",
+        "patrol_debrief_027",
+        "rad_lineman_04",
+        "therapy_session_b3_016"
+      ],
+      "tags": [
+        "cartographer_meeting",
+        "preparation",
+        "questions",
+        "gifts",
+        "protocol",
+        "diplomatic_contact",
+        "first_neighbour"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_024",
+      "day": 222,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_courier",
+        "the_historian",
+        "the_meteorologist"
+      ],
+      "agenda": [
+        "the Cartographer meeting — debrief",
+        "the maps — what the Cartographer shared",
+        "the spring — the Cartographer's timeline confirmed",
+        "the Verge — the Cartographer's knowledge",
+        "the relationship — what comes next"
+      ],
+      "decisions": [
+        {
+          "item": "the Cartographer meeting — debrief",
+          "outcome": "the_courier debriefed the council on the Day 220 meeting (diplomatic_contact_001). The meeting lasted 3 hours. The Cartographer is male, 50s, walks alone, maps the wasteland, maintains caches for other survivors, and studies the wolves as a ecological indicator. The Cartographer accepted the gifts, shared the maps, answered the questions, and asked for nothing except the bunker's continued willingness to leave notes at the cache. The Cartographer did not request entry to the bunker. The Cartographer offered to return to the cache on Day 250 with the spring planting maps. the_courier stated: the Cartographer is the most careful person I have met. He is careful the way the Hunter is careful. He watches before he moves. He does not move until he has watched. the_council accepted the debrief.",
+          "vote": "noted"
+        },
+        {
+          "item": "the maps — what the Cartographer shared",
+          "outcome": "the_historian reported the maps the Cartographer shared (diplomatic_contact_001). The Cartographer gave the_courier 3 hand-drawn maps: (1) the fuel and water sources within 30km — the municipal depot (confirmed), 2 additional water sources, and 1 additional fuel source (a heating oil depot 22km north). (2) the low-dose zones — 4 zones within 20km where the surface dose is below 2 uSv/h, suitable for outdoor planting by Day 250-260. (3) the settlement map — 6 settlements within 50km, including the Verge (40 people, dark), Settlement 2 (the Freeholders, 60 people), the Shallows Market (3 merchants, transient), and 3 unknown settlements. the_historian stated: the maps are the most valuable intelligence the bunker has received. The Cartographer's maps are more detailed than the fire finder map (exp_report_fire_lookout_01) and cover the areas the bunker has not explored. the_council accepted the maps and authorised the_historian to cross-reference with the bunker's existing maps.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the spring — the Cartographer's timeline confirmed",
+          "outcome": "the_meteorologist confirmed the Cartographer's spring timeline. The Cartographer estimates the surface will be plantable in the low-dose zones by Day 250-260. the_meteorologist's data (council_minutes_022 action item) confirms: particulate density down 30 percent, barometric pressure rising, wind southwest. the_meteorologist concurs with the Day 250-260 estimate. the_botanist stated: if the spring permits outdoor planting in the 4 low-dose zones, the bunker's food production moves from the greenhouse (15 percent of caloric need) to the surface (projected 40-60 percent within 90 days of planting). the_quartermaster stated: 40-60 percent is not survival. 40-60 percent is living. the_general stated: the spring is the thing the bunker has been waiting for without knowing it was waiting. The waiting is over. The spring is coming. The bunker must be ready to plant.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the Verge — the Cartographer's knowledge",
+          "outcome": "the_courier reported the Cartographer's knowledge of the Verge (rad_lineman_04). The Cartographer knows the Verge — 40 people, 6 shelters, micro-hydro on the river, the river froze, the battery is dead. The Cartographer has been to the Verge. The Verge is 30km east of the Cartographer's range. The Cartographer stated the Verge will not survive the winter without power. The Cartographer asked the bunker if the bunker can help. the_general stated: the Verge is the Kilo question again. 40 people, no power, winter. the_quartermaster stated: the bunker has fuel, antibiotics, and grow lights. The bunker can share. the_surgeon stated: the bunker has 5 doses to spare, not 40 people's worth. the_therapist stated: the Verge is not a medical question. The Verge is a fuel and light question. the_general stated: the council will decide on the Verge after the spring planting plan. The Verge is a question. The spring is the answer. The Verge waits for the spring with the bunker.",
+          "vote": "deferred to Day 230"
+        },
+        {
+          "item": "the relationship — what comes next",
+          "outcome": "the_general proposed the relationship with the Cartographer. (1) The bunker leaves notes at the cache monthly. (2) The Cartographer returns to the cache on Day 250 with the spring planting maps. (3) The bunker offers the Cartographer standing access to the bunker's medical reserve (5 doses per visit, the_surgeon's conservation protocol) and the bunker's trade surplus (dried mushrooms, salt). (4) The Cartographer offers the bunker maps, intelligence, and the spring planting knowledge. (5) The relationship is a mutual aid agreement, not a trade agreement. The aid is given, not exchanged. the_council accepted the relationship framework. the_therapist stated: the relationship is the thing the bunker has been building since the Kilo mission. The Kilo mission was the bunker learning to give. The Cartographer is the bunker learning to receive. Both are the relationship. the_council concurred.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_historian: cross-reference the Cartographer's maps with the bunker's existing maps by Day 230",
+        "the_botanist: finalise the spring planting plan using the 4 low-dose zones by Day 230",
+        "the_meteorologist: continue daily spring tracking — report the Day 250-260 planting window confirmation by Day 245",
+        "the_quartermaster: prepare the monthly cache note and the standing gift package for the Cartographer's Day 250 return",
+        "the_general: the Verge decision — deferred to Day 230, after the spring planting plan"
+      ],
+      "notes": "The council meeting where the bunker's horizon expanded. The Cartographer gave the bunker maps of the world it has not seen. The spring is confirmed. The Verge is a question the bunker will answer. The relationship is a mutual aid agreement — the bunker gives medical and trade surplus, the Cartographer gives maps and knowledge. the_therapist said the Kilo mission was the bunker learning to give and the Cartographer is the bunker learning to receive. the_general said the bunker has been a closed door for 222 days. The Cartographer is the first person the bunker has opened the door to. The door is not open. The door is a cache and a note and a meeting at a distance. But the door is ajar. the_priest said: 'The door is ajar. That is enough for today.' The meeting ended with the order: spring planting plan Day 230, Verge decision Day 230, Cartographer return Day 250, and the understanding that the bunker's second winter is ending and the spring is the thing that comes after the winter and the thing that comes after the spring is the thing the bunker has not yet named and does not need to name yet.",
+      "cross_refs": [
+        "diplomatic_contact_001",
+        "council_minutes_023",
+        "council_minutes_022",
+        "rad_lineman_04",
+        "exp_report_fire_lookout_01"
+      ],
+      "tags": [
+        "cartographer_debrief",
+        "maps_received",
+        "spring_confirmed",
+        "the_verge",
+        "mutual_aid",
+        "door_ajar",
+        "second_winter_ending"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_025",
+      "day": 250,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_plumber",
+        "the_courier",
+        "the_historian",
+        "the_meteorologist",
+        "the_cop",
+        "the_veteran"
+      ],
+      "agenda": [
+        "the spring planting — Day 250",
+        "the Cartographer's return — Day 250, the spring planting maps",
+        "the Verge decision — the council answers"
+      ],
+      "decisions": [
+        {
+          "item": "the spring planting — Day 250",
+          "outcome": "the_botanist reported the spring planting is today. Low-dose zone 1 (patrol_debrief_029, 2km northwest, 1.6 uSv/h, south-facing loamy slope, moss confirmed) is the first planting site. 8 viable seed varieties (maint_log_b3_021): wheat (2), barley, rye, oats, peas, beans, lentils, radish. The planting method: the Botanist and 4 volunteers (the_courier, the_naive_son, the_child_soldier, the_feral_orphan) plant the germinated seedlings from the greenhouse trays into the prepared soil. The planting is the thing that turns the greenhouse from the destination to the bridge. the_general stated: this is the day the bunker becomes a place. The planting is the thing that makes the bunker a place. The planting is today.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the Cartographer's return — Day 250, the spring planting maps",
+          "outcome": "the_courier reported the Cartographer returned to the cache on Day 250 (diplomatic_contact_002, courier_mission_b2_030). The Cartographer brought the spring planting maps: detailed maps of the 4 low-dose zones with soil types, water access, and planting recommendations. The Cartographer also brought a gift: 1 packet of wildflower seeds (10 varieties, for the bees — the Cartographer said the bees will come when the flowers bloom, and the bees are the thing that pollinates the crops, and the crops need the bees). The_courier left the letter (letter_b2_27) and the monthly gift package (2kg mushrooms, 1kg salt, 5 doses amoxicillin). The Cartographer read the letter at the cache. The Cartographer did not speak for a long time. The Cartographer said, 'I am not alone.' The_courier says the Cartographer said it the way a man says a thing he has just learned. the_council accepted the spring planting maps and the wildflower seeds.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the Verge decision — the council answers",
+          "outcome": "the_general presented the Verge decision (council_minutes_024, deferred from Day 222). The Verge: 40 people, 6 shelters, micro-hydro frozen, battery dead, 2 weeks of fuel if any. The Cartographer's intelligence (diplomatic_contact_001): the depot is 22km from the Verge; the bunker is 18km from the depot. The Cartographer said the bunker can carry fuel from the depot to the Verge, not from the bunker to the Verge. The depot-to-Verge route is 22km. the_quartermaster stated: the bunker has 975 litres of fuel (reserve + source). The bunker can spare 80 litres for the Verge. 80 litres is 8 days of the bunker's generator, but 80 litres is 40 days of the Verge's survival (the Verge has lower consumption — fewer systems). the_surgeon stated: the Verge is a fuel and light question, not a medical question. The bunker can help. the_therapist stated: the Verge is the Kilo question again, and the Kilo answer was the thing that made the bunker a bunker that gives. the_general stated: the Verge is the second giving. The Kilo was the first. The giving is the thing the bunker does. The council decides. the_cop raised the security risk: 40 strangers, unknown intentions. the_veteran stated: the Cartographer vouches for the Verge (the Cartographer has been there). The Cartographer is the thing the bunker trusts. the_council voted: the bunker carries 80 litres from the depot to the Verge, via the depot-to-Verge route, with the Cartographer's map. The expedition is a fuel assistance, not a trade. The fuel is a gift.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_botanist: lead the spring planting in zone 1 today — report germination in 7-14 days",
+        "the_courier: deliver the letter and the gift package to the Cartographer at the cache (completed Day 250)",
+        "the_veteran: plan the Verge fuel assistance expedition — depot to Verge, 22km, 80 litres. Brief by Day 253",
+        "the_quartermaster: allocate 80 litres from the depot source for the Verge gift",
+        "the_historian: cross-reference the Cartographer's spring planting maps with the low-dose zone survey data"
+      ],
+      "notes": "The council meeting where the bunker planted and gave. The spring planting is today. The Cartographer returned and said 'I am not alone.' The Verge decision is the second giving. the_general said: 'The Kilo was the first giving. The Verge is the second. The giving is the thing the bunker does. The bunker was a bunker that survived. The bunker is a place that gives.' the_priest said: 'A place that gives is a place that lives.' the_therapist watched the_general. She has a session with him on Day 257 (therapy_session_b3_018). She noted he said 'the bunker is a place' without qualification for the first time. The meeting ended with the order: plant today, Verge expedition Day 255, Cartographer return Day 280, and the understanding that the spring is here and the spring is the thing the bunker has been waiting for and the waiting is over.",
+      "cross_refs": [
+        "patrol_debrief_029",
+        "maint_log_b3_021",
+        "diplomatic_contact_002",
+        "courier_mission_b2_030",
+        "letter_b2_27",
+        "council_minutes_024",
+        "diplomatic_contact_001"
+      ],
+      "tags": [
+        "spring_planting",
+        "cartographer_return",
+        "i_am_not_alone",
+        "verge_decision",
+        "second_giving",
+        "bunker_is_a_place",
+        "wildflower_seeds"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_026",
+      "day": 262,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_plumber",
+        "the_courier",
+        "the_historian",
+        "the_meteorologist",
+        "the_cop",
+        "the_veteran",
+        "the_teacher"
+      ],
+      "agenda": [
+        "the spring planting — germination confirmed",
+        "the Verge fuel assistance — results",
+        "the first green on the surface — the moss and the radish",
+        "the bunker's third season — what comes after survival"
+      ],
+      "decisions": [
+        {
+          "item": "the spring planting — germination confirmed",
+          "outcome": "the_botanist reported the spring planting germination (maint_log_b3_022). Day 257: the radish broke the surface. Day 260: the wheat (variety 1) broke the surface. Day 262: the barley and the peas are showing. 4 of 8 varieties have germinated in zone 1. The Botanist estimates the remaining 4 (rye, oats, beans, lentils) will show in 3-7 days. The germination rate is above the greenhouse rate — the surface soil is warmer than the greenhouse trays (the sun, not the grow lights). the_botanist stated: the surface is the destination. The greenhouse is the bridge. The bridge is crossed. The destination is growing. the_council accepted the report.",
+          "vote": "noted"
+        },
+        {
+          "item": "the Verge fuel assistance — results",
+          "outcome": "the_veteran reported the Verge fuel assistance expedition (courier_mission_b2_031, b2_032, b2_033, exp_report_verge_fuel_assistance_01). 80 litres delivered from the depot to the Verge via the depot-to-Verge route (22km). The Verge is 40 people, 6 shelters. The Verge accepted the fuel. The Verge's leader (a woman named Wren) offered the bunker a standing trade agreement: the Verge has preserved fish (smoked and salted) and the Verge has a blacksmith. The bunker offered dried mushrooms and salt. The trade is the first trade with a settlement that is not the Freeholders. the_quartermaster stated: the Verge trade extends the bunker's food diversity (fish) and tool repair capacity (blacksmith). the_general stated: the Verge is the second giving and the first trade that began as a gift. The gift became a trade. The trade began as a gift. That is the relationship.",
+          "vote": "noted"
+        },
+        {
+          "item": "the first green on the surface — the moss and the radish",
+          "outcome": "the_cop reported the first green on the surface (patrol_debrief_031). The moss on the south rocks of zone 1 is spreading. The radish seedlings are visible. The surface is green. Not the sickly yellow-green of the hydroponic trays. Green. the_cop stated: the surface is the thing the bunker has not seen in 262 days. The surface is green. The green is the thing the Cartographer said would come. The green is here. the_council accepted the report.",
+          "vote": "noted"
+        },
+        {
+          "item": "the bunker's third season — what comes after survival",
+          "outcome": "the_general presented the question: what comes after survival. The bunker has resolved the fuel (source), the antibiotics (reserve), the grow lights (shelf), and the spring (planting). The bunker is at the crossover (supply_audit_b3_026). The bunker is becoming a place. The question is: what does the place do? the_quartermaster stated: the place grows food. the_surgeon stated: the place cares for the 47. the_therapist stated: the place grieves and grows. the_priest stated: the place prays. the_teacher stated: the place teaches. the_botanist stated: the place plants. the_historian stated: the place remembers. the_courier stated: the place walks. the_general stated: the place is the 47. The 47 are the place. The question is not what the place does. The question is what the 47 do in the place. The 47 have been surviving. The 47 are now living. The living is the thing the 47 do. The living is the thing the place is for. the_council agreed: the bunker's third season is the season of living. The survival is over. The living begins.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_botanist: continue zone 1 monitoring — report the remaining 4 varieties' germination by Day 270",
+        "the_quartermaster: formalise the Verge trade agreement — standing monthly trade, fish for mushrooms",
+        "the_teacher: begin the outdoor classroom — the children learn on the surface in zone 1 (the Teacher's request)",
+        "the_historian: begin the bunker's record of the third season — the season of living",
+        "the_general: address the bunker on Day 263 — the end of survival, the beginning of living"
+      ],
+      "notes": "The council meeting where the bunker declared the end of survival. The spring is here. The green is on the surface. The Verge is a trade partner. The planting is growing. The bunker is a place. the_general said: 'The survival is over. The living begins.' the_priest said: 'The living is the thing the chapel has been waiting for.' the_teacher said: 'The living is the thing the classroom has been waiting for.' the_therapist said: 'The living is the thing the sessions have been waiting for.' They said it together. They did not plan to say it together. The meeting ended with the order: the bunker addresses Day 263, the outdoor classroom begins Day 265, the third season record begins, and the understanding that the bunker has survived and the bunker is now living and the living is the thing the 47 do and the 47 are the place and the place is the thing the spring made.",
+      "cross_refs": [
+        "maint_log_b3_022",
+        "courier_mission_b2_033",
+        "exp_report_verge_fuel_assistance_01",
+        "patrol_debrief_031",
+        "supply_audit_b3_026",
+        "council_minutes_025"
+      ],
+      "tags": [
+        "germination_confirmed",
+        "verge_trade",
+        "first_green",
+        "end_of_survival",
+        "beginning_of_living",
+        "third_season",
+        "the_47_are_the_place"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_027",
+      "day": 285,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_plumber",
+        "the_courier",
+        "the_historian",
+        "the_meteorologist",
+        "the_cop",
+        "the_veteran",
+        "the_teacher",
+        "the_chef",
+        "the_watchmaker"
+      ],
+      "agenda": [
+        "the Cartographer's summer return — the bees, the herbs, the summer maps",
+        "the third-season identity — what the bunker is now",
+        "the first harvest — the radish, Day 285",
+        "the outdoor classroom — formalised"
+      ],
+      "decisions": [
+        {
+          "item": "the Cartographer's summer return — the bees, the herbs, the summer maps",
+          "outcome": "the_courier reported the Cartographer's summer return (diplomatic_contact_003, courier_mission_b2_034). The Cartographer brought the summer maps, the bee report (bees 12km southwest, coming in 10-20 days), the medicinal herb seeds (echinacea, chamomile, yarrow — for the Chemist), and a carved wooden bee (for the Bouncer, companion to the wolf). The bunker gave the Cartographer the first barley flour from the surface grain — the first food the bunker has grown and given away. the_chemist accepted the medicinal herb seeds and will plant a herb garden adjacent to zone 1. the_council accepted the report.",
+          "vote": "noted"
+        },
+        {
+          "item": "the third-season identity — what the bunker is now",
+          "outcome": "the_general presented the question: what is the bunker now. The bunker has been a survival shelter (Day 35-210), a place (Day 210-270), and is now in the third season. the_historian proposed the bunker's third-season identity: the bunker is a community. A shelter is a thing you survive in. A place is a thing that grows. A community is a thing that grows and gives and teaches and remembers. the_quartermaster stated: a community has a source, a reserve, a shelf, and a farm. the_surgeon stated: a community has a clinic and a reserve and a garden. the_teacher stated: a community has a classroom on the surface. the_priest stated: a community has a chapel on the surface. the_therapist stated: a community has sessions and relationships. the_courier stated: a community walks and gives. the_botanist stated: a community plants and grows. the_historian stated: a community remembers. the_general stated: a community is the 47. The 47 are the community. The community is the thing the 47 are. the_council voted to adopt the third-season identity: the bunker is a community. The community is the thing that grows and gives and teaches and remembers.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the first harvest — the radish, Day 285",
+          "outcome": "the_botanist reported the first harvest from the surface. The radish. Day 285. 35 days after planting. 4kg of radishes from zone 1, row 4. The first food the bunker has harvested from the ground it did not make. the_chef (invited) stated: the radish is the first vegetable from the surface. The Chef prepared the radish in three ways: raw with salt, roasted with the barley flour, and pickled with the Verge salt. The Chef says the pickled radish is the thing that will keep. The pickled radish is the first preserved food from the surface. the_quartermaster logged the 4kg. the_general stated: the first harvest is the thing that confirms the bunker is a community. A community harvests. A shelter stores. A place plants. A community harvests. The harvesting is the thing the community does.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the outdoor classroom — formalised",
+          "outcome": "the_teacher proposed the formalisation of the outdoor classroom. The outdoor classroom began on Day 265 (journal_raw_b3_53) in zone 1. 6 students and the Bouncer. The Teacher requests the outdoor classroom be the primary classroom for the spring and summer. The bunker classroom is the fallback for bad weather. the_council approved. the_teacher stated: the outdoor classroom is the thing that teaches the present. The bunker classroom is the thing that teaches the past. The children need both. The present is the surface. The past is the bunker. The future is the community. The community is the thing the children are. the_council concurred.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_chemist: plant the medicinal herb garden adjacent to zone 1 — echinacea, chamomile, yarrow. Report germination by Day 295.",
+        "the_botanist: continue zone 1 monitoring — the wheat and barley are 30 days from harvest. Report by Day 310.",
+        "the_chef: develop the surface-harvest recipe book — the radish, the wheat, the barley. The first recipes from the surface.",
+        "the_teacher: formalise the outdoor classroom schedule — daily, weather permitting, zone 1.",
+        "the_historian: begin the third-season record — the season of the community. The record begins Day 285.",
+        "the_general: address the community on Day 286 — the bunker is a community."
+      ],
+      "notes": "The council meeting where the bunker became a community. The Cartographer brought the bees and the herbs. The first radish was harvested. The outdoor classroom was formalised. The third-season identity was adopted: the bunker is a community. the_general said: 'A shelter is a thing you survive in. A place is a thing that grows. A community is a thing that grows and gives and teaches and remembers. The bunker is a community. The community is the 47. The 47 are the thing that grows and gives and teaches and remembers.' the_priest said: 'The community is the thing the chapel has been waiting for.' the_teacher said: 'The community is the thing the classroom has been waiting for.' the_therapist said: 'The community is the thing the sessions have been waiting for.' They said it together. They did not plan to say it together. The meeting ended with the order: the community address Day 286, the herb garden Day 286, the outdoor classroom daily, and the understanding that the bunker is a community and the community is the 47 and the 47 are the thing that the spring made and the spring is the thing that made the 47 a community.",
+      "cross_refs": [
+        "diplomatic_contact_003",
+        "courier_mission_b2_034",
+        "council_minutes_026",
+        "journal_raw_b3_53",
+        "maint_log_b3_022"
+      ],
+      "tags": [
+        "third_season_identity",
+        "bunker_is_a_community",
+        "first_harvest_radish",
+        "outdoor_classroom_formalised",
+        "the_bees_coming",
+        "herb_garden",
+        "the_47_are_the_community"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_028",
+      "day": 295,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_plumber",
+        "the_courier",
+        "the_historian",
+        "the_meteorologist",
+        "the_cop",
+        "the_veteran",
+        "the_teacher",
+        "the_chef"
+      ],
+      "agenda": [
+        "the first bee sighting — Day 290",
+        "the herb garden germination — Day 295",
+        "zone 2 planting — Day 295",
+        "the community's first month — the report"
+      ],
+      "decisions": [
+        {
+          "item": "the first bee sighting — Day 290",
+          "outcome": "the_botanist reported the first bee sighting in zone 1. Day 290, 11:00. A single bee on the wildflower border. The bee is the thing the Cartographer said would come (diplomatic_contact_003). The bee is the thing that finds the flowers and the flowers are the thing that finds the bee. The bee is the pollination. The pollination is the thing that makes the food the seed. The bee is here. the_council accepted the report. the_botanist stated: the bee is the thing that confirms the community is a community. A community has bees. A shelter does not have bees. The bee is the thing that came from outside. The bee is the thing that chose the community.",
+          "vote": "noted"
+        },
+        {
+          "item": "the herb garden germination — Day 295",
+          "outcome": "the_chemist reported the medicinal herb garden germination. Day 295. Echinacea: 7/10 germinated. Chamomile: 8/10. Yarrow: 6/10. 3 of 3 varieties viable. The herb garden is the thing that grows where the antibiotics do not. The herbs are the bridge between the garden and the clinic. The Chemist is the bridge. the_surgeon stated: the herb garden is the thing that extends the clinic. The antibiotics are the reserve. The herbs are the garden. The reserve is the thing that holds. The garden is the thing that grows. The clinic is the thing that uses both. the_council accepted the report.",
+          "vote": "noted"
+        },
+        {
+          "item": "zone 2 planting — Day 295",
+          "outcome": "the_botanist reported the zone 2 planting (patrol_debrief_033). Zone 2 is the valley, 4km north, 1.4 uSv/h, silty soil, spring-melt stream at the east edge. 4 varieties planted (wheat variety 2, oats, beans, lentils — the varieties that benefit from the wetter soil). The planting team: the_botanist, the_courier, the_naive_son, the_feral_orphan. The planting is the thing that expands the community. Zone 1 is the first farm. Zone 2 is the second farm. The community has 2 farms. the_council accepted the report.",
+          "vote": "noted"
+        },
+        {
+          "item": "the community's first month — the report",
+          "outcome": "the_quartermaster reported the community's first month (supply_audit_b3_029). The community has: a source (fuel, 89 days), a reserve (antibiotics, 294 doses), a shelf (grow lights, 11 tubes), a farm (zone 1, 8 varieties, first harvest 4kg radish; zone 2, 4 varieties, planted), a herb garden (3 varieties, germinating), a trade network (Freeholders, Verge, Cartographer), a classroom (outdoor, zone 1), a chapel (outdoor, zone 1), and 47 people. the_quartermaster stated: the ledger has 4 words that stay (source, reserve, shelf, growing) and 4 words that are new (farm, herb, trade, community). The 8 words are the thing the community has. The 8 words are the thing the spring made. the_general stated: the community's first month is the thing that confirms the bunker is a community. The community is the 47. The 47 are the thing that grows and gives and teaches and remembers. The community is the thing that the spring made. The spring is the thing that made the community. the_council accepted the report.",
+          "vote": "noted"
+        }
+      ],
+      "action_items": [
+        "the_botanist: monitor the bee activity in zone 1 — report the pollination progress by Day 305",
+        "the_chemist: continue the herb garden monitoring — report the first harvest by Day 320",
+        "the_chef: begin the pickled radish production — the first preserved food from the surface",
+        "the_historian: continue the third-season record — the community's first month",
+        "the_quartermaster: prepare the monthly standing depot trip for Day 300"
+      ],
+      "notes": "The council meeting where the community's first month was reported. The bee is here. The herbs are growing. Zone 2 is planted. The community has 2 farms, a herb garden, a trade network, an outdoor classroom, an outdoor chapel, and 47 people. the_quartermaster said: 'The ledger has 8 words. The 8 words are the thing the community has. The 8 words are the thing the spring made.' the_general said: 'The community is the thing the spring made. The spring is the thing that made the community. The community is the 47. The 47 are the thing that grows and gives and teaches and remembers.' The meeting ended with the order: depot trip Day 300, bee monitoring, herb harvest Day 320, and the understanding that the community is one month old and the community is the thing that the spring made and the spring is the thing that made the community and the community is the 47 and the 47 are the thing that the third season is for.",
+      "cross_refs": [
+        "diplomatic_contact_003",
+        "patrol_debrief_033",
+        "supply_audit_b3_029",
+        "council_minutes_027"
+      ],
+      "tags": [
+        "first_bee",
+        "herb_germination",
+        "zone_2_planted",
+        "community_first_month",
+        "8_words",
+        "2_farms",
+        "the_47"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_029",
+      "day": 315,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_plumber",
+        "the_courier",
+        "the_historian",
+        "the_meteorologist",
+        "the_cop",
+        "the_veteran",
+        "the_teacher",
+        "the_chef",
+        "the_watchmaker"
+      ],
+      "agenda": [
+        "the Cartographer's autumn return — the harvest report, the winter rye, the autumn maps",
+        "the trade network — formalised (Freeholders, Verge, Cartographer)",
+        "the first winter as a community — what the community does differently",
+        "the winter rye planting — before the first frost"
+      ],
+      "decisions": [
+        {
+          "item": "the Cartographer's autumn return — the harvest report, the winter rye, the autumn maps",
+          "outcome": "the_courier reported the Cartographer's autumn return (diplomatic_contact_004, courier_mission_b2_036). The Cartographer brought the autumn maps, the harvest report (his observations of the community's farms from the ridge), the winter rye seeds, and a carved wooden wheat stalk. The Cartographer confirmed the community is a home from his ridge observations. The Cartographer estimates the first frost at Day 340-350. the_council accepted the report.",
+          "vote": "noted"
+        },
+        {
+          "item": "the trade network — formalised (Freeholders, Verge, Cartographer)",
+          "outcome": "the_quartermaster presented the formalised trade network. (1) The Freeholders (Settlement 2): monthly trade, dried mushrooms and salt for smoked fish and salt, established Day 100. (2) The Verge: monthly trade, dried mushrooms and salt for smoked fish and blacksmith services, established Day 258 (gift-then-trade). (3) The Cartographer: monthly mutual aid, dried mushrooms, salt, and 5 doses amoxicillin for maps, intelligence, and seeds, established Day 220. The trade network is the thing that connects the community to the outside. The outside is the thing the community is part of. The shelter was not part of the outside. The community is part of the outside. The trade network is the thing that makes the community part of the outside. the_council voted to formalise the trade network as the community's standing external relationship framework.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the first winter as a community — what the community does differently",
+          "outcome": "the_general presented the question: what does the community do differently in the winter. The shelter survived the winter. The community lives the winter. The living is the thing the community does differently. The living is: the community eats the harvest (the pickled radish, the barley flour, the wheat, the greenhouse produce). The community runs the generator on the source (the depot, standing monthly trips). The community runs the grow lights on the shelf (11 tubes). The community runs the clinic on the reserve (294 doses) and the garden (the herbs). The community runs the classroom on the surface (weather permitting) and in the bunker (bad weather). The community runs the chapel on the surface and in the bunker. The community runs the trade network (monthly trips, weather permitting). The community does the things the shelter did not do. The community eats the harvest. The community trades. The community teaches on the surface. The community prays on the surface. The community lives. the_council voted to adopt the first-winter-as-a-community plan.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the winter rye planting — before the first frost",
+          "outcome": "the_botanist reported the winter rye planting plan. The winter rye (the Cartographer's gift, diplomatic_contact_004) is planted in zone 1, in the rows where the radish was (the radish is done, the rows are empty). The planting is before the first frost (Day 340-350). The winter rye grows in the cold. The winter rye is the bridge between the autumn and the spring. the_council approved the planting. the_botanist to lead the planting on Day 335.",
+          "vote": "unanimous"
+        }
+      ],
+      "action_items": [
+        "the_quartermaster: formalise the trade network schedule — monthly trips to the Freeholders, the Verge, the Cartographer, and the depot",
+        "the_botanist: plant the winter rye in zone 1 on Day 335, before the first frost",
+        "the_chef: begin the winter food preparation — the pickled radish, the barley flour, the wheat bread, the preserved fish",
+        "the_meteorologist: monitor the first frost — report by Day 335",
+        "the_historian: continue the third-season record — the first winter as a community"
+      ],
+      "notes": "The council meeting where the community formalised its trade network and planned its first winter as a community. The trade network is the thing that connects the community to the outside. The first winter as a community is the thing the community does differently. The shelter survived the winter. The community lives the winter. The living is the thing the community does. the_general said: 'The shelter survived the winter. The community lives the winter. The living is the thing the community does. The living is the eating of the harvest and the trading with the outside and the teaching on the surface and the praying on the surface. The living is the thing the community does. The winter is the thing the community lives through. The living through is the thing the community does.' the_priest said: 'The living through is the thing the chapel has been waiting for.' the_teacher said: 'The living through is the thing the classroom has been waiting for.' the_therapist said: 'The living through is the thing the sessions have been waiting for.' They said it together. They did not plan to say it together. The meeting ended with the order: winter rye Day 335, trade network formalised, first winter as a community planned, and the understanding that the community is the thing that lives the winter and the winter is the thing the community lives through and the living through is the thing the community does.",
+      "cross_refs": [
+        "diplomatic_contact_004",
+        "courier_mission_b2_036",
+        "council_minutes_028",
+        "supply_audit_b3_030"
+      ],
+      "tags": [
+        "trade_network_formalised",
+        "first_winter_as_community",
+        "winter_rye_planting",
+        "the_living_through",
+        "freeholders_verge_cartographer",
+        "first_frost_estimated"
+      ]
+    },
+    {
+      "minutes_id": "council_minutes_030",
+      "day": 330,
+      "attendees": [
+        "the_general",
+        "the_quartermaster",
+        "the_surgeon",
+        "the_therapist",
+        "the_architect",
+        "the_electrician",
+        "the_priest",
+        "the_hunter",
+        "the_chemist",
+        "the_botanist",
+        "the_mechanic",
+        "the_plumber",
+        "the_courier",
+        "the_historian",
+        "the_meteorologist",
+        "the_cop",
+        "the_veteran",
+        "the_teacher",
+        "the_chef",
+        "the_watchmaker",
+        "the_historian"
+      ],
+      "agenda": [
+        "the first year — Day 35 to Day 365",
+        "the community's first year — the Historian's report",
+        "the first-year address — the General's address to the 47",
+        "the winter rye planted — the bridge to the spring"
+      ],
+      "decisions": [
+        {
+          "item": "the first year — Day 35 to Day 365",
+          "outcome": "the_general stated: the first year is ending. The first year was Day 35 to Day 365. The first year was the survival, the place, and the community. The first year was the Kilo and the warehouse and the agri depot and the municipal depot and the Cartographer and the Verge and the spring and the radish and the bee and the harvest. The first year was the 47. The 47 are the thing the first year made. The first year is ending. The second year is beginning. The second year is the year the community lives. the_council acknowledged the first year is ending.",
+          "vote": "noted"
+        },
+        {
+          "item": "the community's first year — the Historian's report",
+          "outcome": "the_historian presented the first-year record (journal_raw_b3_69). The record is the list of the 47 and the things the 47 did. The things the 47 did: survived (Day 35-210), became a place (Day 210-270), became a community (Day 270-365), gave fuel to Kilo (Day 167-170), recovered antibiotics (Day 183-187), recovered grow lights (Day 191-193), recovered fuel (Day 197-210), met the Cartographer (Day 220), gave fuel to the Verge (Day 255-258), planted the spring (Day 250), saw the bee (Day 290), harvested the radish (Day 285), harvested the wheat (Day 300), planted the winter rye (Day 335). The record is the home. The home is the 47. The 47 are the record. the_council accepted the report.",
+          "vote": "noted"
+        },
+        {
+          "item": "the first-year address — the General's address to the 47",
+          "outcome": "the_general proposed the first-year address to the 47, to be delivered on Day 365. The address is the thing the General says to the 47 on the day the first year ends. The address is the thing the General has been preparing for 330 days. The address is the thing the General says when the survival is over and the place is made and the community is the home and the first year is ending and the second year is beginning. the_council approved the address. the_general to deliver the first-year address on Day 365.",
+          "vote": "unanimous"
+        },
+        {
+          "item": "the winter rye planted — the bridge to the spring",
+          "outcome": "the_botanist reported the winter rye is planted (maint_log_b3_024, Day 335). The winter rye is in zone 1, in the rows where the radish was. The winter rye is the bridge between the autumn and the spring. The bridge is planted. The spring is the thing the bridge goes to. The spring is the thing the second year begins with. the_council accepted the report.",
+          "vote": "noted"
+        }
+      ],
+      "action_items": [
+        "the_general: deliver the first-year address on Day 365",
+        "the_historian: complete the first-year record by Day 365",
+        "the_quartermaster: prepare the first-year ledger summary for Day 365",
+        "the_chef: prepare the first-year meal for Day 365 — the meal is the thing the community eats on the day the first year ends",
+        "the_priest: prepare the first-year chapel service for Day 365 — the service is the thing the community prays on the day the first year ends"
+      ],
+      "notes": "The council meeting where the community acknowledged the first year is ending. The first year was Day 35 to Day 365. The first year was the survival, the place, and the community. The first year was the 47. The 47 are the thing the first year made. the_historian said: 'The record is the home. The home is the 47. The 47 are the record.' the_general said: 'The first year is ending. The second year is beginning. The second year is the year the community lives.' the_priest said: 'The second year is the year the chapel lives.' the_teacher said: 'The second year is the year the classroom lives.' the_therapist said: 'The second year is the year the sessions live.' They said it together. They did not plan to say it together. The meeting ended with the order: first-year address Day 365, first-year record Day 365, first-year meal Day 365, first-year chapel Day 365, and the understanding that the first year is ending and the second year is beginning and the second year is the year the community lives and the living is the thing the community does and the community is the 47 and the 47 are the thing the second year is for.",
+      "cross_refs": [
+        "journal_raw_b3_69",
+        "maint_log_b3_024",
+        "council_minutes_029",
+        "diplomatic_contact_004"
+      ],
+      "tags": [
+        "first_year_ending",
+        "second_year_beginning",
+        "first_year_address",
+        "first_year_record",
+        "first_year_meal",
+        "first_year_chapel",
+        "the_47_are_the_record",
+        "the_year_the_community_lives"
+      ]
+    },
   {
-    "minutes_id": "council_minutes_001",
-    "day": 38,
+    "minutes_id": "council_minutes_031",
+    "day": 366,
     "attendees": [
       "the_general",
       "the_quartermaster",
@@ -9,255 +1878,80 @@
       "the_therapist",
       "the_architect",
       "the_electrician",
-      "the_priest"
+      "the_priest",
+      "the_hunter",
+      "the_chemist",
+      "the_botanist",
+      "the_mechanic",
+      "the_plumber",
+      "the_courier",
+      "the_historian",
+      "the_meteorologist",
+      "the_cop",
+      "the_veteran",
+      "the_teacher",
+      "the_chef",
+      "the_watchmaker",
+      "the_bouncer",
+      "the_widow",
+      "the_naive_son",
+      "the_feral_orphan",
+      "the_child_soldier"
     ],
     "agenda": [
-      "ration review",
-      "surface patrol schedule",
-      "radio broadcast protocol"
+      "the second year begins — Day 366",
+      "the General's morning address — the second year is the year the family lives",
+      "the winter rye under the snow — the Cartographer's report",
+      "the second winter — the first winter as a family"
     ],
     "decisions": [
       {
-        "item": "ration review",
-        "outcome": "the_quartermaster reported rice reserves at 75 days. No change to current ration allocation. Next review day 50.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "surface patrol schedule",
-        "outcome": "the_general proposed daily perimeter patrol plus one long-range expedition per week. Approved. the_cop to lead perimeter, the_hunter to lead expeditions.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "radio broadcast protocol",
-        "outcome": "the_radio_host proposed twice-daily broadcasts at 0600 and 1800. the_general approved with content review for security-sensitive information. the_therapist suggested a community request segment.",
-        "vote": "5_for_2_abstain (the_electrician and the_architect abstained citing no opinion on media)"
-      }
-    ],
-    "action_items": [
-      "the_quartermaster: ration review day 50",
-      "the_general: finalise patrol roster by day 40",
-      "the_radio_host: first broadcast day 38 at 1800"
-    ],
-    "notes": "First formal council meeting. the_general established the council as the governing body. Membership: 7 permanent seats. Decisions by majority. the_general has veto on security matters only.",
-    "cross_refs": [
-      "radio_broadcast_rundowns",
-      "bunker_shift_schedules_and_notices"
-    ],
-    "tags": [
-      "founding_meeting",
-      "rations",
-      "patrols",
-      "radio"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_002",
-    "day": 42,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "new arrival policy",
-      "water pump status",
-      "medical supply inventory"
-    ],
-    "decisions": [
-      {
-        "item": "new arrival policy",
-        "outcome": "the_general proposed a 7-day quarantine for all new arrivals. Medical screening by the_surgeon. Security assessment by the_general. the_therapist to conduct psychological evaluation. Council approved unanimously.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "water pump status",
-        "outcome": "the_electrician reported the water pump impeller seal failure. Repaired with improvised gasket. the_plumber has fabricated spare seals. No further action required.",
+        "item": "the second year begins — Day 366",
+        "outcome": "the_general stated: the second year begins. The first year was the surviving, the growing, the knowing, and the loving. The second year is the living. The living is the thing the family does. The family is the 47. The 47 are the thing the second year is for. The second year is the year the family lives. the_council acknowledged the second year begins.",
         "vote": "noted"
       },
       {
-        "item": "medical supply inventory",
-        "outcome": "the_surgeon reported antibiotics at zero. Painkillers at 30 doses. Bandages at 200 units. the_quartermaster to prioritise medical supply recovery on next expedition.",
-        "vote": "unanimous"
-      }
-    ],
-    "action_items": [
-      "the_general: draft new arrival intake protocol",
-      "the_surgeon: medical supply priority list for expeditions",
-      "the_plumber: quarterly seal replacement schedule"
-    ],
-    "notes": "the_therapist raised the question of what happens if a new arrival is refused. the_general said the bunker cannot afford to turn away useful people but also cannot afford to accept security risks. The council did not resolve this tension.",
-    "cross_refs": [
-      "new_arrival_intake_interviews",
-      "equipment_failure_logs"
-    ],
-    "tags": [
-      "new_arrival_policy",
-      "water_pump",
-      "medical_supplies"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_003",
-    "day": 47,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "Kilo-1 refusal aftermath",
-      "greenhouse expansion",
-      "generator fuel status"
-    ],
-    "decisions": [
-      {
-        "item": "Kilo-1 refusal aftermath",
-        "outcome": "the_therapist formally objected to the Kilo-1 refusal on humanitarian grounds. the_general defended the decision on resource grounds. The council voted to uphold the refusal policy but allocated one emergency ration pack to leave at the bunker entrance for future refused applicants. Vote: 4_for (uphold with ration), 2_against (the_therapist and the_priest wanted to reverse the refusal), 1_abstain.",
-        "vote": "4_for_2_against_1_abstain"
-      },
-      {
-        "item": "greenhouse expansion",
-        "outcome": "the_botanist (invited for this item) proposed doubling greenhouse capacity using salvaged glass from surface expeditions. the_architect confirmed structural feasibility. the_electrician confirmed grow light capacity for 50 percent expansion. Approved.",
+        "item": "the General's morning address — the second year is the year the family lives",
+        "outcome": "the_general delivered the morning address to the 47 at 07:00. The address: 'The second year begins. The first year was the surviving and the growing and the knowing and the loving. The second year is the living. The living is the thing the family does. The family is the 47. The 47 are the thing the living is for. We are the 47. We are the family. We are the living. The second year is the year we live. The living is the growing and the giving and the teaching and the remembering and the loving. The living is the thing we do. The second year is the year we do it. Good morning. Good year.' the_council accepted the address. The 47 stood in the mess hall and the greenhouse and the corridor and the clinic and the chapel and the classroom and the surface. The 47 stood. The standing is the thing the family does at the beginning. The standing is the thing the second year begins with.",
         "vote": "unanimous"
       },
       {
-        "item": "generator fuel status",
-        "outcome": "the_electrician reported fuel reserves at 40 days. Consumption rate stable. the_quartermaster proposed fuel rationing to extend to 50 days. the_general opposed, saying fuel rationing would reduce generator runtime and affect the water pump. Status quo maintained.",
-        "vote": "4_for_status_quo_3_for_rationing"
-      }
-    ],
-    "action_items": [
-      "the_quartermaster: place emergency ration pack at bunker entrance",
-      "the_botanist: greenhouse expansion plan by day 55",
-      "the_electrician: fuel consumption optimisation study"
-    ],
-    "notes": "The Kilo-1 debate was the most contentious council meeting to date. the_therapist and the_general are not speaking outside of council sessions. the_priest offered pastoral support to both. The emergency ration pack compromise was the_chemist idea.",
-    "cross_refs": [
-      "undertaker_burial_records",
-      "conflict_mediation_records",
-      "greenhouse_cultivation_logs"
-    ],
-    "tags": [
-      "kilo_1_aftermath",
-      "greenhouse_expansion",
-      "fuel_debate",
-      "contentious"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_004",
-    "day": 52,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "dysentery outbreak response",
-      "court establishment",
-      "trade protocol"
-    ],
-    "decisions": [
-      {
-        "item": "dysentery outbreak response",
-        "outcome": "the_surgeon reported 7 dysentery cases. Source identified as contaminated water from a pipe cross-connection. the_plumber has isolated and repaired the cross-connection. the_quartermaster ordered full water system flush and re-test. Kitchen quarantine until water quality confirmed.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "court establishment",
-        "outcome": "the_general proposed a formal court for dispute resolution and rule enforcement. the_therapist proposed mediation as the first step before court. Compromise: the_therapist mediates interpersonal disputes; the_general adjudicates security and resource violations. Court sessions weekly.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "trade protocol",
-        "outcome": "the_quartermaster proposed a formal internal barter recording system. All trades to be logged with the_quartermaster for inventory tracking. No currency. Pure barter with quartermaster oversight. Approved.",
-        "vote": "unanimous"
-      }
-    ],
-    "action_items": [
-      "the_plumber: water system flush complete by day 53",
-      "the_general: court protocol document by day 55",
-      "the_quartermaster: barter recording system operational by day 54"
-    ],
-    "notes": "The dysentery outbreak was the first public health crisis. The response was swift and effective. the_surgeon credit to the_plumber for rapid identification of the cross-connection. The court establishment fills a governance gap that has been growing since day 1.",
-    "cross_refs": [
-      "surgeons_casebook_batch_2",
-      "water_quality_test_reports_batch_2",
-      "bunker_trade_ledger_batch_2"
-    ],
-    "tags": [
-      "dysentery",
-      "court_establishment",
-      "trade_protocol",
-      "crisis_response"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_005",
-    "day": 57,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "court first cases",
-      "surface radiation trend",
-      "children education"
-    ],
-    "decisions": [
-      {
-        "item": "court first cases",
-        "outcome": "the_general reported two cases adjudicated: unauthorised medical bay access (reprimand plus kitchen duty) and ration dispute (mediated by the_therapist, both parties accepted terms). the_therapist reported three additional mediations completed. Court and mediation are functioning.",
+        "item": "the winter rye under the snow — the Cartographer's report",
+        "outcome": "the_courier reported the Cartographer's winter return (diplomatic_contact_005, courier_mission_b2_037). The Cartographer confirmed the winter rye is growing under the snow. The snow is the blanket. The winter rye is the bridge. The bridge holds. The Cartographer brought the winter maps, the first-frost report (Day 348, accurate), the clover seeds (for the bees in the spring), and the carved snowflake (the fourth carving, for the Bouncer). The Cartographer brought a report on the Verge — the Verge is well, has power, has children outside. the_council accepted the report.",
         "vote": "noted"
       },
       {
-        "item": "surface radiation trend",
-        "outcome": "the_hazmat_tech (invited) reported quarterly average 0.9 uSv/h bunker internal, 35 uSv/h surface. Trend is slowly declining. the_meteorologist projects safe surface work (under 50 uSv/h with PPE) for the next 6 months.",
-        "vote": "noted"
-      },
-      {
-        "item": "children education",
-        "outcome": "the_teacher (invited) proposed a formal education programme for the 6 children in the bunker. Reading, mathematics, and survival skills. the_quartermaster allocated paper and charcoal pencils from inventory. Approved.",
+        "item": "the second winter — the first winter as a family",
+        "outcome": "the_general stated: the second winter is the first winter as a family. The first winter was the winter the shelter survived. The second winter is the winter the family lives. The living is the thing the family does in the winter. The living is: the family eats the harvest (the pickled radish, the barley, the wheat, the greenhouse, the smoked fish), the family runs the generator on the source (the depot, standing monthly trips), the family runs the clinic on the reserve (289 doses) and the herbs (the first community medicine), the family runs the classroom in the bunker (bad weather) and on the surface (good weather), the family runs the chapel in the bunker and on the surface, the family runs the trade network (monthly trips, weather permitting), the family does the things the shelter did not do. The family lives. the_council voted to adopt the second-winter-as-a-family plan.",
         "vote": "unanimous"
       }
     ],
     "action_items": [
-      "the_general: court schedule weekly on day 72",
-      "the_hazmat_tech: quarterly radiation report",
-      "the_teacher: education programme operational by day 60"
+      "the_botanist: check the winter rye under the snow — confirm the green. Report by Day 370.",
+      "the_chemist: prepare the clover seeds for spring planting in zone 1 (Day 370-380)",
+      "the_quartermaster: prepare the second-year ledger — the 12 words and the new words the second year will add",
+      "the_historian: begin the second-year record — the year the family lives",
+      "the_general: the morning address is delivered. The second year begins."
     ],
-    "notes": "The council is settling into a rhythm. Formal agenda, recorded decisions, action items. the_general says this is how governance works in a functioning society. the_therapist says it is also how people feel heard.",
+    "notes": "The council meeting where the second year begins. The General addressed the 47. The 47 stood. The standing is the thing the family does at the beginning. The Cartographer confirmed the winter rye is growing under the snow. The Verge is well. The second winter is the first winter as a family. the_general said: 'The first winter was the winter the shelter survived. The second winter is the winter the family lives. The living is the thing the family does. The family is the 47. The 47 are the thing the living is for.' The meeting ended with the order: winter rye check Day 370, clover planting Day 370-380, second-year ledger, second-year record, and the understanding that the second year begins and the second year is the year the family lives and the living is the thing the family does and the family is the 47 and the 47 are the thing the second year is for.",
     "cross_refs": [
-      "bunker_court_verdicts_batch_2",
-      "radiation_survey_readings_batch_2"
+      "diplomatic_contact_005",
+      "courier_mission_b2_037",
+      "council_minutes_030",
+      "journal_raw_b3_79"
     ],
     "tags": [
-      "court_cases",
-      "radiation_trend",
-      "children_education",
-      "governance_rhythm"
+      "second_year_begins",
+      "general_morning_address",
+      "winter_rye_under_snow",
+      "second_winter_as_family",
+      "the_47_stood",
+      "the_living"
     ]
   },
   {
-    "minutes_id": "council_minutes_006",
-    "day": 62,
+    "minutes_id": "council_minutes_032",
+    "day": 380,
     "attendees": [
       "the_general",
       "the_quartermaster",
@@ -265,516 +1959,71 @@
       "the_therapist",
       "the_architect",
       "the_electrician",
-      "the_priest"
+      "the_priest",
+      "the_hunter",
+      "the_chemist",
+      "the_botanist",
+      "the_mechanic",
+      "the_plumber",
+      "the_courier",
+      "the_historian",
+      "the_meteorologist",
+      "the_cop",
+      "the_veteran",
+      "the_teacher",
+      "the_chef",
+      "the_watchmaker"
     ],
     "agenda": [
-      "Delta-1 emissary protocol",
-      "generator voltage issue",
-      "anniversary planning"
+      "the second spring — zones 3 and 4 planting",
+      "the bee colony expansion — the clover and the hollow oak",
+      "the outdoor classroom — the second-year schedule",
+      "the second-year ledger — the new words"
     ],
     "decisions": [
       {
-        "item": "Delta-1 emissary protocol",
-        "outcome": "the_general reported that Delta-1, the Salt Freeholder emissary, is expected day 65. the_general proposed a controlled introduction: Delta-1 to be met at the airlock, escorted to the meeting room, and not given unsupervised access to the bunker. the_therapist objected to the hostile framing. Compromise: Delta-1 to be treated as a guest but the_general will accompany at all times.",
-        "vote": "5_for_compromise_2_for_open_access (the_therapist and the_priest)"
-      },
-      {
-        "item": "generator voltage issue",
-        "outcome": "the_electrician reported the Variac bypass is holding. Voltage stable at 220V plus/minus 2V. Fuel consumption down 8 percent. The bypass has extended fuel reserves from 40 to 45 days. the_quartermaster is pleased.",
-        "vote": "noted"
-      },
-      {
-        "item": "anniversary planning",
-        "outcome": "the_priest proposed a memorial service for day 95, marking 95 days since the event. the_council approved. the_radio_host will broadcast the service. the_chef will prepare a special meal. the_undertaker will read the names of the dead.",
-        "vote": "unanimous"
-      }
-    ],
-    "action_items": [
-      "the_general: Delta-1 reception protocol by day 64",
-      "the_electrician: Variac bypass performance report day 70",
-      "the_priest: anniversary service plan by day 85"
-    ],
-    "notes": "Delta-1 is the first external visitor. The council is divided between openness and security. the_general default is containment; the_therapist default is trust. The compromise satisfies neither fully but both can live with it.",
-    "cross_refs": [
-      "new_arrival_intake_interviews",
-      "equipment_failure_logs",
-      "radio_broadcast_rundowns"
-    ],
-    "tags": [
-      "delta_1_protocol",
-      "generator_voltage",
-      "anniversary_planning",
-      "openness_vs_security"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_007",
-    "day": 67,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "Delta-1 visit assessment",
-      "salt trade terms",
-      "security review"
-    ],
-    "decisions": [
-      {
-        "item": "Delta-1 visit assessment",
-        "outcome": "Delta-1 visited day 65. the_general reported the visit was productive. Delta-1 proposed salt-for-goods trade: 2kg salt per 1kg dried goods. the_quartermaster counter-proposed 2kg salt per 1kg smoked fish or dried mushrooms. Delta-1 accepted provisionally. Final terms to be confirmed by the_Freeholder.",
-        "vote": "unanimous_approve_terms"
-      },
-      {
-        "item": "salt trade terms",
-        "outcome": "the_quartermaster presented the trade terms. Salt is the highest-priority import for the bunker. the_chef and the_chemist both confirmed salt is critical for food preservation and chemical processes. the_quartermaster to prepare first trade shipment: 10kg dried mushrooms and 5kg dried herbs for 30kg salt.",
+        "item": "the second spring — zones 3 and 4 planting",
+        "outcome": "the_botanist presented the second spring planting plan. Zone 3 (east ridge, surveyed patrol_debrief_035, 1.2 uSv/h, rocky soil) and zone 4 (north flat, surveyed patrol_debrief_035, 1.0 uSv/h, clay soil) are the second-year planting sites. Zone 3 will be planted with the clover (the Cartographer's gift, diplomatic_contact_005 — the clover feeds the bees) and the radish (the fastest crop, the first crop of the second spring). Zone 4 will be planted with the wheat (variety 2, the wetter-soil variety) and the oats. The winter rye in zone 1 will be the first harvest of the second spring (Day 370-380, the bridge). the_council approved the plan.",
         "vote": "unanimous"
       },
       {
-        "item": "security review",
-        "outcome": "the_general reported the generator sabotage investigation is ongoing. No suspects identified. the_cop has increased lock changes. the_general proposed a bunker-wide security audit. the_architect to assess physical vulnerabilities. the_electrician to assess electronic access points.",
-        "vote": "unanimous"
-      }
-    ],
-    "action_items": [
-      "the_quartermaster: prepare first salt trade shipment by day 75",
-      "the_architect: physical security audit by day 75",
-      "the_electrician: electronic access audit by day 75",
-      "the_general: security review report day 80"
-    ],
-    "notes": "Delta-1 impressed the council. the_therapist said the emissary was genuine. the_general said the emissary was professional. Both are true. The salt trade is the first external economic relationship. It changes the bunker from isolated to connected.",
-    "cross_refs": [
-      "bunker_trade_ledger_batch_2",
-      "new_arrival_intake_interviews",
-      "security_incident_reports_batch_2"
-    ],
-    "tags": [
-      "delta_1_assessment",
-      "salt_trade",
-      "security_review",
-      "external_relations"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_008",
-    "day": 72,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "court session 2 results",
-      "security audit results",
-      "expedition planning"
-    ],
-    "decisions": [
-      {
-        "item": "court session 2 results",
-        "outcome": "the_general reported four cases: two mediations (the_therapist) and two adjudications. All resolved. the_therapist proposed that mediation outcomes be confidential unless both parties agree to disclosure. Approved.",
+        "item": "the bee colony expansion — the clover and the hollow oak",
+        "outcome": "the_botanist presented the bee colony expansion plan. The bees are wintering in the hollow oak 3km southwest (diplomatic_contact_005). The bees will come out in the spring. The clover in zone 3 will feed the bees. The wildflowers in zone 1 will continue. The bees will expand — the_botanist estimates the colony will double in the second spring. The double is the thing the second spring does. The bees are the thing that doubles. the_council approved the plan.",
         "vote": "unanimous"
       },
       {
-        "item": "security audit results",
-        "outcome": "the_architect and the_electrician presented joint audit findings. Three physical vulnerabilities identified: eastern periscope blind spot, ventilation shaft access point in corridor D, and the drainage sump external connection. the_architect has remediation plans for all three. Estimated completion: day 85.",
-        "vote": "unanimous_approve_remediation"
-      },
-      {
-        "item": "expedition planning",
-        "outcome": "the_general proposed the seed vault expedition for day 61 window. the_hazmat_tech to lead radiation safety. the_courier to lead navigation. the_hunter to provide security. the_quartermaster to prepare extraction equipment.",
-        "vote": "unanimous"
-      }
-    ],
-    "action_items": [
-      "the_architect: security remediation by day 85",
-      "the_general: seed vault expedition briefing day 59",
-      "the_quartermaster: extraction equipment ready by day 60"
-    ],
-    "notes": "The security audit was thorough. The eastern blind spot is the highest priority. the_architect says a periscope extension can cover it. The drainage sump connection is the most concerning because it is an unmonitored physical access point.",
-    "cross_refs": [
-      "bunker_court_verdicts_batch_2",
-      "bunker_blueprints_codex",
-      "patrol_debriefs"
-    ],
-    "tags": [
-      "court_results",
-      "security_audit",
-      "expedition_planning",
-      "remediation"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_009",
-    "day": 77,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "seed vault expedition results",
-      "Shallows Market trade",
-      "mental health status"
-    ],
-    "decisions": [
-      {
-        "item": "seed vault expedition results",
-        "outcome": "the_courier reported 17 total seed ampoules recovered across two missions. the_botanist reports 12 viable, 3 uncertain, 2 failed. the_quartermaster says the viable seeds could increase bunker food production by 40 percent within one growing season. the_council expressed gratitude for the expedition team and noted the loss of the_hazmat_tech on the second mission.",
+        "item": "the outdoor classroom — the second-year schedule",
+        "outcome": "the_teacher presented the outdoor classroom schedule for the second year. The outdoor classroom will be daily, weather permitting, in zone 1 (the primary classroom) and zone 3 (the second classroom, for the clover and the bees). The outdoor classroom will teach: the water cycle (the first lesson, always), the soil (the ground), the bees (the pollination), the clover (the bee food), the winter rye (the bridge), and the word for year (the Child Soldier's first word of the second year, journal_raw_b3_80). The outdoor classroom is the thing that teaches the living. The living is the thing the second year is for. the_council approved the schedule.",
         "vote": "unanimous"
       },
       {
-        "item": "Shallows Market trade",
-        "outcome": "the_quartermaster reported the first salt trade completed. 15kg dried goods exchanged for 30kg salt. the_chef says the salt quality is high. the_chemist is already using it for preservation. Monthly trade schedule established.",
-        "vote": "noted"
-      },
-      {
-        "item": "mental health status",
-        "outcome": "the_therapist reported 18 active therapy cases. 12 resolved or improving. 3 stable. 3 requiring increased attention. the_therapist requested an additional counselling space. the_architect identified the laundry alcove annex as available after the_widow relocation. Approved.",
-        "vote": "unanimous"
-      }
-    ],
-    "action_items": [
-      "the_botanist: seed planting schedule by day 80",
-      "the_quartermaster: monthly salt trade shipment by day 85",
-      "the_architect: counselling space conversion by day 82"
-    ],
-    "notes": "The seed vault recovery is the most significant material gain since the bunker was sealed. 17 ampoules represent genetic diversity that the greenhouse desperately needs. The_hazmat_tech death was acknowledged with a moment of silence.",
-    "cross_refs": [
-      "patrol_debriefs",
-      "greenhouse_cultivation_logs",
-      "bunker_trade_ledger_batch_2",
-      "undertaker_burial_records"
-    ],
-    "tags": [
-      "seed_vault_results",
-      "salt_trade",
-      "mental_health",
-      "expedition_loss"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_010",
-    "day": 82,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "settlement survey intelligence",
-      "spring preparation",
-      "bunker population review"
-    ],
-    "decisions": [
-      {
-        "item": "settlement survey intelligence",
-        "outcome": "the_general reported the Juliet-1 settlement survey. 3 of 12 settlements assessed: 1 abandoned, 1 active (Settlement 2, Salt Freeholders), 1 burned out. the_general recommends approaching 3 more settlements for potential trade or alliance. the_council approved continued survey missions.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "spring preparation",
-        "outcome": "the_meteorologist (invited) reported temperature trending above seasonal average. Ice melt beginning on the frozen river. Spring thaw expected within 3 weeks. the_quartermaster proposed spring preparation: surface route assessment, meltwater radiation monitoring, greenhouse planting schedule acceleration.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "bunker population review",
-        "outcome": "the_quartermaster reported current population: 47 adults, 3 children, 1 infant (Asha). Food reserves: 58 days at current ration. With greenhouse production and trade: 72 days effective. Fuel: 43 days. Medical supplies: 35 days. the_quartermaster says the bunker is stable but not comfortable.",
+        "item": "the second-year ledger — the new words",
+        "outcome": "the_quartermaster presented the second-year ledger. The first-year ledger had 12 words (source, reserve, shelf, growing, farm, herb, trade, community, bees, medicine, pollination, bridge). The second-year ledger adds 4 new words: clover (the bee food), hollow (the oak, the bees' winter home), snowflake (the second winter), and living (the thing the family does). The 16 words are the thing the family has. The 16 words are the thing the second year has. the_council accepted the ledger.",
         "vote": "noted"
       }
     ],
     "action_items": [
-      "the_general: next settlement survey by day 90",
-      "the_meteorologist: weekly spring thaw updates",
-      "the_quartermaster: spring resource projection by day 85"
+      "the_botanist: lead the zone 3 and zone 4 planting — Day 380-390",
+      "the_botanist: monitor the bee colony — report the spring emergence by Day 390",
+      "the_teacher: begin the outdoor classroom in zone 1 and zone 3 — Day 366 (ongoing)",
+      "the_quartermaster: maintain the second-year ledger — the 16 words",
+      "the_historian: continue the second-year record — the year the family lives"
     ],
-    "notes": "The bunker is approaching its first spring. Everything changes when the surface thaws. New routes open, new risks emerge. the_general says spring is both opportunity and vulnerability. the_quartermaster says the numbers are better than expected but not good enough to relax.",
+    "notes": "The council meeting where the second spring is planned. Zones 3 and 4 will be planted. The bee colony will expand. The outdoor classroom continues. The ledger has 16 words. the_general said: 'The second spring is the spring the family plants. The first spring was the spring the community planted. The planting is the same. The thing that plants is different. The community planted. The family plants. The planting is the same. The thing that plants is the family.' The meeting ended with the order: zones 3 and 4 planted Day 380-390, bee monitoring, outdoor classroom, 16 words, and the understanding that the second spring is the spring the family plants and the planting is the same and the thing that plants is the family.",
     "cross_refs": [
-      "patrol_debriefs",
-      "radiation_survey_readings_batch_2"
+      "council_minutes_031",
+      "diplomatic_contact_005",
+      "patrol_debrief_035",
+      "maint_log_b3_025"
     ],
     "tags": [
-      "settlement_intel",
-      "spring_preparation",
-      "population_review",
-      "seasonal_transition"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_011",
-    "day": 87,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "security remediation status",
-      "radio signal anomaly",
-      "trade expansion"
-    ],
-    "decisions": [
-      {
-        "item": "security remediation status",
-        "outcome": "the_architect reported: eastern periscope blind spot fixed with extension mirror. Ventilation shaft access point secured with grate and motion sensor. Drainage sump connection: grate installed but external access still possible. the_architect recommends surface-side barrier. the_general approved.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "radio signal anomaly",
-        "outcome": "the_radio_host (invited) reported a fragment broadcast on 7.2 MHz at 0340. Male voice, English, partial content. the_electrician confirmed the signal was real, not atmospheric. the_general ordered continued monitoring at the same time daily. the_radio_host to log all receptions.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "trade expansion",
-        "outcome": "the_quartermaster proposed expanding trade beyond salt. Target items: medical supplies, tools, information. the_general says information about other settlements is the highest-value trade commodity. the_quartermaster to develop a trade priority list.",
-        "vote": "unanimous"
-      }
-    ],
-    "action_items": [
-      "the_architect: drainage sump surface barrier by day 95",
-      "the_radio_host: 7.2 MHz monitoring log",
-      "the_quartermaster: trade priority list by day 90"
-    ],
-    "notes": "The radio signal is the most intriguing item. A voice on 7.2 MHz means someone else is broadcasting. the_electrician says the signal origin is approximately 80km north. the_general is cautious. the_radio_host is excited. The council is watching.",
-    "cross_refs": [
-      "radio_broadcast_rundowns",
-      "equipment_failure_logs"
-    ],
-    "tags": [
-      "security_remediation",
-      "radio_anomaly",
-      "trade_expansion",
-      "mysterious_signal"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_012",
-    "day": 92,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "anniversary service final plan",
-      "Salt Freeholder emissary visit",
-      "Asha health report"
-    ],
-    "decisions": [
-      {
-        "item": "anniversary service final plan",
-        "outcome": "the_priest presented the day 95 memorial plan: roll call of the dead by the_undertaker, survivor testimonies (8 volunteers), music by the_radio_host, special meal by the_chef. the_council approved. the_general ordered a security stand-down for the duration of the service. All personnel welcome.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "Salt Freeholder emissary visit",
-        "outcome": "the_general reported that the_Freeholder will send a second emissary on day 100 to formalise the trade agreement. the_quartermaster has prepared the trade goods. the_general will host the emissary in the meeting room. the_therapist offered to attend as observer. Approved.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "Asha health report",
-        "outcome": "the_surgeon reported Asha (the first bunker-born infant) is developing normally. Weight gain on track. Motor skills age-appropriate. the_surgeon says the child is the healthest person in the bunker because she has never been on the surface. the_council noted this with mixed emotions.",
-        "vote": "noted"
-      }
-    ],
-    "action_items": [
-      "the_priest: finalise anniversary programme by day 94",
-      "the_general: emissary reception protocol by day 99",
-      "the_surgeon: monthly infant health reports"
-    ],
-    "notes": "The anniversary is approaching. 95 days. The bunker has changed in that time. We have trade, a court, a school, a garden, and a cemetery. the_therapist said that is either a lot or very little depending on how you measure it. the_general said they measure it in survival. We are still here.",
-    "cross_refs": [
-      "radio_broadcast_rundowns",
-      "undertaker_burial_records",
-      "new_arrival_intake_interviews"
-    ],
-    "tags": [
-      "anniversary_plan",
-      "salt_freeholder_emissary",
-      "infant_health",
-      "95_days"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_013",
-    "day": 97,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "anniversary aftermath",
-      "spring route assessment",
-      "long-term planning"
-    ],
-    "decisions": [
-      {
-        "item": "anniversary aftermath",
-        "outcome": "the_general reported the day 95 memorial service was successful. 47 attendees. 8 testimonies. No incidents. the_therapist said the service served an important communal function. the_radio_host broadcast the service. External signal bounce suggests at least 3 listeners received the broadcast.",
-        "vote": "noted"
-      },
-      {
-        "item": "spring route assessment",
-        "outcome": "the_hunter (invited) reported spring surface routes. Frozen river ice unsafe. Northern overland routes thawing. Southern routes passable. the_courier recommends shifting to southern routes for expeditions. the_general approved route change.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "long-term planning",
-        "outcome": "the_general proposed a 6-month strategic plan. Targets: formalise trade with 3 external settlements, achieve 50 percent food self-sufficiency from greenhouse, reduce fuel consumption by 15 percent, complete all security remediation. the_council approved the framework. Quarterly review scheduled.",
-        "vote": "unanimous"
-      }
-    ],
-    "action_items": [
-      "the_general: 6-month strategic plan document by day 100",
-      "the_hunter: southern route survey by day 102",
-      "the_quartermaster: food self-sufficiency projection by day 100"
-    ],
-    "notes": "The council is thinking beyond survival now. The 6-month plan is the first time the bunker has planned for a future that extends beyond the next crisis. the_therapist says this is the difference between existing and living. the_general says it is the difference between a bunker and a community.",
-    "cross_refs": [
-      "patrol_debriefs",
-      "radio_broadcast_rundowns",
-      "greenhouse_cultivation_logs"
-    ],
-    "tags": [
-      "anniversary_aftermath",
-      "spring_routes",
-      "long_term_planning",
-      "strategic_framework"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_014",
-    "day": 102,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "6-month plan progress",
-      "seed vault fatality follow-up",
-      "children art exhibition"
-    ],
-    "decisions": [
-      {
-        "item": "6-month plan progress",
-        "outcome": "the_general reported initial progress: trade contact with Salt Freeholders established, Shallows Market contact established. Greenhouse production at 7 percent of caloric needs, projected to reach 15 percent by month 3. Fuel consumption down 8 percent from Variac bypass. Security remediation 75 percent complete.",
-        "vote": "noted"
-      },
-      {
-        "item": "seed vault fatality follow-up",
-        "outcome": "the_architect reported the seed vault access tunnel is permanently collapsed. No alternative access route identified. the_general ordered the tunnel entrance sealed and marked as hazardous. the_undertaker burial of the_hazmat_tech completed day 90.",
-        "vote": "unanimous_approve_sealing"
-      },
-      {
-        "item": "children art exhibition",
-        "outcome": "the_teacher (invited) proposed a children art exhibition in corridor A on day 104. 12 pieces from 6 children. the_council approved. the_radio_host will announce on the broadcast. the_chef will provide refreshments.",
-        "vote": "unanimous"
-      }
-    ],
-    "action_items": [
-      "the_architect: seal seed vault tunnel entrance by day 105",
-      "the_teacher: art exhibition setup day 103",
-      "the_quartermaster: monthly 6-month plan progress report"
-    ],
-    "notes": "The 6-month plan is on track. The seed vault is sealed. The children are making art. These three things can be true at the same time. the_council is learning to hold multiple truths.",
-    "cross_refs": [
-      "patrol_debriefs",
-      "undertaker_burial_records",
-      "childrens_artwork_batch_2"
-    ],
-    "tags": [
-      "plan_progress",
-      "seed_vault_sealed",
-      "art_exhibition",
-      "multiple_truths"
-    ]
-  },
-  {
-    "minutes_id": "council_minutes_015",
-    "day": 107,
-    "attendees": [
-      "the_general",
-      "the_quartermaster",
-      "the_surgeon",
-      "the_therapist",
-      "the_architect",
-      "the_electrician",
-      "the_priest"
-    ],
-    "agenda": [
-      "Salt Freeholder formal agreement",
-      "radio signal follow-up",
-      "greenhouse first major harvest"
-    ],
-    "decisions": [
-      {
-        "item": "Salt Freeholder formal agreement",
-        "outcome": "the_Freeholder emissary visited day 100. Formal trade agreement signed (verbal, witnessed by council). Terms: 2kg salt per 1kg dried goods or smoked fish. Monthly exchanges. Information exchange encouraged. the_Freeholder also offered intelligence about 4 additional settlements. the_general accepted.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "radio signal follow-up",
-        "outcome": "the_radio_host reported 7.2 MHz monitoring over 15 days. No repeat of the fragment broadcast. the_electrician analysed the signal characteristics. Conclusion: the transmission was real, from a fixed location approximately 80km north. the_signal may have been automated or the operator may have moved on. Continued monitoring at reduced priority.",
-        "vote": "unanimous"
-      },
-      {
-        "item": "greenhouse first major harvest",
-        "outcome": "the_botanist (invited) reported the first major greenhouse harvest: 45kg turnips, 12kg barley, 8kg potatoes, 3kg mushrooms, 2kg herbs. Total caloric value: approximately 44,000 kcal. This represents 7 percent of bunker monthly caloric needs. the_botanist projects 15 percent by month 4 with the seed vault ampoules planted.",
-        "vote": "noted"
-      }
-    ],
-    "action_items": [
-      "the_quartermaster: first formal salt trade shipment by day 115",
-      "the_radio_host: 7.2 MHz monitoring weekly",
-      "the_botanist: seed vault ampoule planting schedule by day 110"
-    ],
-    "notes": "The Salt Freeholder agreement is the bunker first formal external treaty. the_general says it is the beginning of diplomacy. the_quartermaster says it is the beginning of economics. Both are correct. The greenhouse harvest is small but it is real food from real soil grown by real hands. It is the future.",
-    "cross_refs": [
-      "bunker_trade_ledger_batch_2",
-      "radio_broadcast_rundowns",
-      "greenhouse_cultivation_logs",
-      "patrol_debriefs"
-    ],
-    "tags": [
-      "formal_trade_agreement",
-      "radio_signal",
-      "greenhouse_harvest",
-      "diplomacy",
-      "economics"
+      "second_spring",
+      "zones_3_4",
+      "bee_expansion",
+      "clover",
+      "outdoor_classroom_second_year",
+      "16_words",
+      "the_family_plants"
     ]
   }
-]
+]}

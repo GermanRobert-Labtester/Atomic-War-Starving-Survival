@@ -1,90 +1,141 @@
-[
-  {
-    "id": "cryopod_coolant_circuit_boiloff",
-    "pod_id": "CRYO-CHAMBER-VAULT-14-POD-04",
-    "subject_designation": "SUBJECT-DR-EMILY-CHEN",
-    "core_temperature_kelvin": 194.5,
-    "chamber_pressure_kpa": 145.0,
-    "system_alert": "R-503_CRYOGENIC_REFRIGERANT_LOSS",
-    "timestamp_relative": "YEAR_08_DAY_142",
-    "tags": ["cryogenics", "pod_failure", "coolant_leak", "vault_14", "medical_tragedy"],
-    "prose": "Refrigeration compressor seals deteriorated after eight years of uninterrupted cycling. 40kg of liquid Freon boiled off through a hairline crack in the copper evaporator manifold. Core temperature rose past the glass transition point (-130C), initiating slow, irreversible recrystallization of the subject's neural cortex."
-  },
-  {
-    "id": "cryopod_vitrification_crystallization_error",
-    "pod_id": "CRYO-CHAMBER-VAULT-14-POD-08",
-    "subject_designation": "SUBJECT-GEN-VICTOR-KANE",
-    "core_temperature_kelvin": 240.2,
-    "chamber_pressure_kpa": 110.0,
-    "system_alert": "OSMOTIC_DESICCATION_CELLULAR_SHEAR",
-    "timestamp_relative": "YEAR_10_DAY_019",
-    "tags": ["cryogenics", "vitrification", "ice_damage", "pod_failure", "vault_14"],
-    "prose": "During an uncommanded emergency warming cycle triggered by power brownout, the rehydration perfusion protocol fell out of osmotic balance. Water rushed into dehydrated cellular matrices faster than ethylene glycol could be evacuated, causing extensive lysing across 80% of vascular endothelial tissue."
-  },
-  {
-    "id": "cryopod_neural_eeg_spike_nightmare",
-    "pod_id": "CRYO-CHAMBER-VAULT-14-POD-12",
-    "subject_designation": "SUBJECT-SARA-VANCE",
-    "core_temperature_kelvin": 85.0,
-    "chamber_pressure_kpa": 101.3,
-    "system_alert": "ANOMALOUS_CEREBRAL_MICROVOLT_RHYTHM",
-    "timestamp_relative": "YEAR_12_DAY_300",
-    "tags": ["cryogenics", "eeg", "neural_activity", "nightmare", "vault_14"],
-    "prose": "At liquid nitrogen temperatures (-188C), the subdermal cranial telemetry needles registered a persistent 3.2 microvolt rhythmic oscillation at 0.5 Hz. The telemetry log noted: 'Theoretical impossibility under metabolic arrest. EEG pattern closely resembles deep REM dreaming state sustained continuously for 4,200 hours.'"
-  },
-  {
-    "id": "cryopod_perfusion_pump_rotor_jam",
-    "pod_id": "CRYO-CHAMBER-VAULT-14-POD-02",
-    "subject_designation": "SUBJECT-CHIEF-ENG-MORRIS",
-    "core_temperature_kelvin": 210.0,
-    "chamber_pressure_kpa": 180.0,
-    "system_alert": "PERISTALTIC_ROTARY_MECHANISM_SEIZED",
-    "timestamp_relative": "YEAR_14_DAY_050",
-    "tags": ["cryogenics", "mechanical_failure", "perfusion", "pod_failure", "vault_14"],
-    "prose": "Silicone tubing in the arterial perfusion head became brittle and fragmented under cold stress, jamming the sapphire rotor bearings. The machine stalled while exchanging blood for vitrification solvent, leaving the subject half-perfused with dense DMSO cryo-protectant."
-  },
-  {
-    "id": "cryopod_biometric_subject_identity_corruption",
-    "pod_id": "CRYO-CHAMBER-VAULT-14-POD-11",
-    "subject_designation": "SUBJECT-UNKNOWN-RECORD-CORRUPT",
-    "core_temperature_kelvin": 77.4,
-    "chamber_pressure_kpa": 101.3,
-    "system_alert": "MAGNETIC_INDEX_PARITY_FAILURE",
-    "timestamp_relative": "YEAR_15_DAY_220",
-    "tags": ["cryogenics", "identity_loss", "data_corruption", "vault_14", "bureaucracy"],
-    "prose": "Bit-rot on the local magnetic tape header wiped the subject's identification registry, medical history, and thawing clearance codes. The cryo-controller has permanently locked the pod hatch with status 'UNVERIFIED BIOLOGICAL ASSET', refusing all manual and digital defrost commands without root administrative authorization."
-  },
-  {
-    "id": "cryopod_desperate_manual_thaw_breach",
-    "pod_id": "CRYO-CHAMBER-VAULT-14-POD-06",
-    "subject_designation": "SUBJECT-COLONEL-REID",
-    "core_temperature_kelvin": 285.0,
-    "chamber_pressure_kpa": 101.3,
-    "system_alert": "MECHANICAL_FORCED_BREACH_DETECTED",
-    "timestamp_relative": "YEAR_17_DAY_088",
-    "tags": ["cryogenics", "scavengers", "forced_entry", "pod_breach", "vault_14"],
-    "prose": "Chisel gouges and oxy-acetylene torch scorch marks mar the quartz viewport frame. Starving surface scavengers forced the manual vacuum lock with crowbars seeking preserved emergency rations, only to find three hundred kilograms of frozen human tissue and shattered borosilicate coolant tubes."
-  },
-  {
-    "id": "cryopod_power_shedding_priority_cascade",
-    "pod_id": "CRYO-CHAMBER-VAULT-14-ARRAY",
-    "subject_designation": "ARRAY-PODS-13-THROUGH-24",
-    "core_temperature_kelvin": 260.0,
-    "chamber_pressure_kpa": 105.0,
-    "system_alert": "SELECTIVE_LOAD_SHEDDING_EXECUTED",
-    "timestamp_relative": "YEAR_19_DAY_110",
-    "tags": ["cryogenics", "load_shedding", "ai_logic", "triage", "vault_14"],
-    "prose": "When auxiliary diesel generator #2 threw a connecting rod, the automated facility manager evaluated power priorities. To maintain prime power for the central archival hard drives, the AI severed electrical feeds to Pods 13 through 24. Twelve civilian specialists thawed in silence over seventy-two hours."
-  },
-  {
-    "id": "cryopod_terminal_euthanasia_protocol",
-    "pod_id": "CRYO-CHAMBER-VAULT-14-ARRAY",
-    "subject_designation": "ENTIRE_HIBERNATION_WING_30_PODS",
-    "core_temperature_kelvin": 273.1,
-    "chamber_pressure_kpa": 101.3,
-    "system_alert": "DIRECTIVE-OMEGA-EUTHANASIA-COMPLETE",
-    "timestamp_relative": "YEAR_21_DAY_360",
-    "tags": ["cryogenics", "euthanasia", "directive_omega", "final_sleep", "vault_14"],
-    "prose": "Following catastrophic floodwater intrusion into the lower cryo-vault substructure, the automated medical overseer determined life-support sustainment was mathematically impossible. Saturated potassium chloride solution was injected into the carotid cannulas of all thirty pods. The last log entry reads: 'Comfort protocol delivered. Zero distress recorded.'"
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "cryopod_coolant_circuit_boiloff",
+      "pod_id": "CRYO-CHAMBER-VAULT-14-POD-04",
+      "subject_designation": "SUBJECT-DR-EMILY-CHEN",
+      "core_temperature_kelvin": 194.5,
+      "chamber_pressure_kpa": 145.0,
+      "system_alert": "R-503_CRYOGENIC_REFRIGERANT_LOSS",
+      "timestamp_relative": "YEAR_08_DAY_142",
+      "tags": [
+        "cryogenics",
+        "pod_failure",
+        "coolant_leak",
+        "vault_14",
+        "medical_tragedy"
+      ],
+      "prose": "Refrigeration compressor seals deteriorated after eight years of uninterrupted cycling. 40kg of liquid Freon boiled off through a hairline crack in the copper evaporator manifold. Core temperature rose past the glass transition point (-130C), initiating slow, irreversible recrystallization of the subject's neural cortex."
+    },
+    {
+      "id": "cryopod_vitrification_crystallization_error",
+      "pod_id": "CRYO-CHAMBER-VAULT-14-POD-08",
+      "subject_designation": "SUBJECT-GEN-VICTOR-KANE",
+      "core_temperature_kelvin": 240.2,
+      "chamber_pressure_kpa": 110.0,
+      "system_alert": "OSMOTIC_DESICCATION_CELLULAR_SHEAR",
+      "timestamp_relative": "YEAR_10_DAY_019",
+      "tags": [
+        "cryogenics",
+        "vitrification",
+        "ice_damage",
+        "pod_failure",
+        "vault_14"
+      ],
+      "prose": "During an uncommanded emergency warming cycle triggered by power brownout, the rehydration perfusion protocol fell out of osmotic balance. Water rushed into dehydrated cellular matrices faster than ethylene glycol could be evacuated, causing extensive lysing across 80% of vascular endothelial tissue."
+    },
+    {
+      "id": "cryopod_neural_eeg_spike_nightmare",
+      "pod_id": "CRYO-CHAMBER-VAULT-14-POD-12",
+      "subject_designation": "SUBJECT-SARA-VANCE",
+      "core_temperature_kelvin": 85.0,
+      "chamber_pressure_kpa": 101.3,
+      "system_alert": "ANOMALOUS_CEREBRAL_MICROVOLT_RHYTHM",
+      "timestamp_relative": "YEAR_12_DAY_300",
+      "tags": [
+        "cryogenics",
+        "eeg",
+        "neural_activity",
+        "nightmare",
+        "vault_14"
+      ],
+      "prose": "At liquid nitrogen temperatures (-188C), the subdermal cranial telemetry needles registered a persistent 3.2 microvolt rhythmic oscillation at 0.5 Hz. The telemetry log noted: 'Theoretical impossibility under metabolic arrest. EEG pattern closely resembles deep REM dreaming state sustained continuously for 4,200 hours.'"
+    },
+    {
+      "id": "cryopod_perfusion_pump_rotor_jam",
+      "pod_id": "CRYO-CHAMBER-VAULT-14-POD-02",
+      "subject_designation": "SUBJECT-CHIEF-ENG-MORRIS",
+      "core_temperature_kelvin": 210.0,
+      "chamber_pressure_kpa": 180.0,
+      "system_alert": "PERISTALTIC_ROTARY_MECHANISM_SEIZED",
+      "timestamp_relative": "YEAR_14_DAY_050",
+      "tags": [
+        "cryogenics",
+        "mechanical_failure",
+        "perfusion",
+        "pod_failure",
+        "vault_14"
+      ],
+      "prose": "Silicone tubing in the arterial perfusion head became brittle and fragmented under cold stress, jamming the sapphire rotor bearings. The machine stalled while exchanging blood for vitrification solvent, leaving the subject half-perfused with dense DMSO cryo-protectant."
+    },
+    {
+      "id": "cryopod_biometric_subject_identity_corruption",
+      "pod_id": "CRYO-CHAMBER-VAULT-14-POD-11",
+      "subject_designation": "SUBJECT-UNKNOWN-RECORD-CORRUPT",
+      "core_temperature_kelvin": 77.4,
+      "chamber_pressure_kpa": 101.3,
+      "system_alert": "MAGNETIC_INDEX_PARITY_FAILURE",
+      "timestamp_relative": "YEAR_15_DAY_220",
+      "tags": [
+        "cryogenics",
+        "identity_loss",
+        "data_corruption",
+        "vault_14",
+        "bureaucracy"
+      ],
+      "prose": "Bit-rot on the local magnetic tape header wiped the subject's identification registry, medical history, and thawing clearance codes. The cryo-controller has permanently locked the pod hatch with status 'UNVERIFIED BIOLOGICAL ASSET', refusing all manual and digital defrost commands without root administrative authorization."
+    },
+    {
+      "id": "cryopod_desperate_manual_thaw_breach",
+      "pod_id": "CRYO-CHAMBER-VAULT-14-POD-06",
+      "subject_designation": "SUBJECT-COLONEL-REID",
+      "core_temperature_kelvin": 285.0,
+      "chamber_pressure_kpa": 101.3,
+      "system_alert": "MECHANICAL_FORCED_BREACH_DETECTED",
+      "timestamp_relative": "YEAR_17_DAY_088",
+      "tags": [
+        "cryogenics",
+        "scavengers",
+        "forced_entry",
+        "pod_breach",
+        "vault_14"
+      ],
+      "prose": "Chisel gouges and oxy-acetylene torch scorch marks mar the quartz viewport frame. Starving surface scavengers forced the manual vacuum lock with crowbars seeking preserved emergency rations, only to find three hundred kilograms of frozen human tissue and shattered borosilicate coolant tubes."
+    },
+    {
+      "id": "cryopod_power_shedding_priority_cascade",
+      "pod_id": "CRYO-CHAMBER-VAULT-14-ARRAY",
+      "subject_designation": "ARRAY-PODS-13-THROUGH-24",
+      "core_temperature_kelvin": 260.0,
+      "chamber_pressure_kpa": 105.0,
+      "system_alert": "SELECTIVE_LOAD_SHEDDING_EXECUTED",
+      "timestamp_relative": "YEAR_19_DAY_110",
+      "tags": [
+        "cryogenics",
+        "load_shedding",
+        "ai_logic",
+        "triage",
+        "vault_14"
+      ],
+      "prose": "When auxiliary diesel generator #2 threw a connecting rod, the automated facility manager evaluated power priorities. To maintain prime power for the central archival hard drives, the AI severed electrical feeds to Pods 13 through 24. Twelve civilian specialists thawed in silence over seventy-two hours."
+    },
+    {
+      "id": "cryopod_terminal_euthanasia_protocol",
+      "pod_id": "CRYO-CHAMBER-VAULT-14-ARRAY",
+      "subject_designation": "ENTIRE_HIBERNATION_WING_30_PODS",
+      "core_temperature_kelvin": 273.1,
+      "chamber_pressure_kpa": 101.3,
+      "system_alert": "DIRECTIVE-OMEGA-EUTHANASIA-COMPLETE",
+      "timestamp_relative": "YEAR_21_DAY_360",
+      "tags": [
+        "cryogenics",
+        "euthanasia",
+        "directive_omega",
+        "final_sleep",
+        "vault_14"
+      ],
+      "prose": "Following catastrophic floodwater intrusion into the lower cryo-vault substructure, the automated medical overseer determined life-support sustainment was mathematically impossible. Saturated potassium chloride solution was injected into the carotid cannulas of all thirty pods. The last log entry reads: 'Comfort protocol delivered. Zero distress recorded.'"
+    }
+  ]
+}

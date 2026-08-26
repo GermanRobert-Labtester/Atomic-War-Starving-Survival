@@ -1,30 +1,200 @@
-[
-  {"quest_id":"quest_the_cracked_floor","survivor_id":"aris_thorne","title":"The Cracked Floor","target_location_id":"loc_civil_defense_bunker","stages":[
-    {"stage":0,"name":"Discovery","description":"A hairline crack appears in the bunker's concrete sub-floor. Water is seeping through — contaminated water. Aris identifies the damage with professional precision but haunted eyes. He designed shelters like this before the war. He knows exactly how bad this can get.","objective_items":["structural_report"]},
-    {"stage":1,"name":"Investigation","description":"The crack is spreading. Aris insists on working 24-hour shifts to reinforce it. His hands shake from exhaustion but his work is flawless. Other survivors notice he hasn't slept in three days.","objective_items":["concrete_mix","steel_rebar"]},
-    {"stage":2,"name":"Crisis","description":"Aris collapses at the work site from exhaustion. The crack is 70% repaired but he needs rest. He's begging to continue — 'I can fix this. I have to fix this.' The choice: force him to rest and accept the repair is good enough, or let him push through.","branch_a":{"id":"pragmatic_acceptance","label":"Force Rest","description":"Order Aris to rest. The repair holds. He learns to accept imperfect work — gains Resilient Builder trait, reduces fatigue from emergency shifts.","trait_granted":"trait_resilient_builder","morale_delta":-5},
-      "branch_b":{"id":"obsessive_strain","label":"Let Him Continue","description":"Let Aris push through. He completes the repair perfectly but develops Severe Tremors from chronic exhaustion. Work speed increases, health deteriorates.","trait_granted":"trait_severe_tremors","morale_delta":-15}},
-    {"stage":3,"name":"Resolution","description":"Aris's story concludes. With the Resilient Builder trait, he constructs the Deep Aquifer — securing clean water permanently. Or with Severe Tremors, he dies during a desperate repair during a siege, leaving behind detailed engineering blueprints that grant permanent crafting bonuses to the crew."}
-  ]},
-  {"quest_id":"quest_the_dying_signal","survivor_id":"maya_lin","title":"The Dying Signal","target_location_id":"loc_comm_array","stages":[
-    {"stage":0,"name":"Discovery","description":"Maya intercepts a repeating 142.5 MHz distress beacon. The signal pattern is military — standard Emergency Action Message format. But the voice reading the coordinates is young, scared, and keeps saying a name Maya recognizes. It's her younger brother, Jakob. He was stationed at Checkpoint Kilo.","objective_items":["radio_transcript_142_5"]},
-    {"stage":1,"name":"Investigation","description":"Maya's hands are shaking as she traces the signal to the Regional Communications Array. She needs to know if Jakob is still alive. Send an expedition to repair the antenna and find the source room.","objective_items":["antenna_coil","signal_source_report"]},
-    {"stage":2,"name":"Crisis","description":"The signal is an automated death loop. Jakob recorded it three years ago on a failing battery. He's been dead since Year 1. Maya sits in silence. The choice: channel her grief into saving others through the radio network, or withdraw into catatonic depression.","branch_a":{"id":"the_beacon","label":"The Beacon","description":"Maya channels her grief into purpose. She gains the Voice of Hope trait, boosting shelter-wide morale recovery during radio broadcasts and unlocking unique diplomatic options with local factions.","trait_granted":"trait_voice_of_hope","morale_delta":10},
-      "branch_b":{"id":"static_collapse","label":"Static Collapse","description":"Maya withdraws into silence. She refuses to operate the radio unless accompanied by another survivor, but gains hyper-focused perception when searching radio logs — finding signals others miss.","trait_granted":"trait_catatonic_depression","morale_delta":-20}},
-    {"stage":3,"name":"Resolution","description":"With Voice of Hope, Maya leads the Unification Protocol, using the high-altitude radio tower to unite fragmented survivor enclaves across the region. Her brother's death gave thousands a voice."}
-  ]},
-  {"quest_id":"quest_the_refugee_mass_influx","survivor_id":"victor_vance","title":"The Refugee Mass Influx","target_location_id":"loc_evacuation_bus_depot","stages":[
-    {"stage":0,"name":"Discovery","description":"A family of desperate civilians — a mother and two children — pounds on the hatch during a fallout storm. Their dosimeter readings are critical. They have 20 minutes of safe exposure left. Vance recommends turning them away to preserve rations.","objective_items":["refugee_screening_report"]},
-    {"stage":1,"name":"Investigation","description":"Vance's tactical assessment is correct: accepting the refugees will strain food supplies by 15%. But the bunker has room. The question isn't logistics — it's whether the bunker's humanity can survive the same cold math that Vance learned in the Garrison.","objective_items":["supply_inventory_report"]},
-    {"stage":2,"name":"Crisis","description":"The mother is begging. The children are crying from the cold. Vance stands at the hatch, waiting for your decision. Override his recommendation and admit the refugees, or follow his cold tactical logic?","branch_a":{"id":"restored_humanity","label":"Admit the Refugees","description":"Override Vance. Admit the family. As Vance watches the youngest child recover from ARS through careful care, he softens — gains Guardian Captain trait. Boosts morale when protecting vulnerable survivors.","trait_granted":"trait_guardian_captain","morale_delta":15},
-      "branch_b":{"id":"cold_efficiency","label":"Turn Them Away","description":"Follow Vance's recommendation. Turn the family away. Vance solidifies into a ruthless tactician — gains Iron Sentinel trait. Defenders get +20% damage resistance during sieges, but morale gains from shared meals are halved.","trait_granted":"trait_iron_sentinel","morale_delta":-25}},
-    {"stage":3,"name":"Resolution","description":"Vance's arc concludes. As Guardian Captain, he uses his military knowledge to negotiate a Peace Treaty between the Garrison and Militia. As Iron Sentinel, he leads a preemptive strike against the Sector 4 Warlords to secure the perimeter permanently."}
-  ]},
-  {"quest_id":"quest_the_ars_crisis","survivor_id":"elena_rostov","title":"The ARS Crisis","target_location_id":"loc_regional_hospital","stages":[
-    {"stage":0,"name":"Discovery","description":"A survivor — someone Elena has treated, someone she knows by name — is diagnosed with terminal Acute Radiation Syndrome. The prognosis: twelve days. Elena's clinical assessment is immediate and cold.","objective_items":["ars_diagnosis_report"]},
-    {"stage":1,"name":"Investigation","description":"Elena calculates the treatment cost: 80% of the bunker's remaining medical supplies. Antibiotics, morphine, iodine, surgical kits — almost everything. 'The mathematics is clear,' she says. Her voice doesn't shake. Her hands do.","objective_items":["medical_inventory_report","treatment_protocol"]},
-    {"stage":2,"name":"Crisis","description":"The patient is conscious. They know the odds. They're asking Elena what she would do if the roles were reversed. Elena can't answer. The choice: save the patient at enormous cost, or let them pass peacefully with sedatives.","branch_a":{"id":"oath_restored","label":"Save the Patient","description":"Override Elena's triage logic. Save the patient regardless of cost. Elena spends 3 days by their bedside. She gains the Healer's Soul trait — bed rest health recovery speed increased by 50% for all bunker residents.","trait_granted":"trait_healers_soul","morale_delta":10},
-      "branch_b":{"id":"triage_logic","label":"Trust Her Judgment","description":"Let the patient pass peacefully with sedatives. Elena's clinical detachment holds — she gains the Cold Triage trait. Medical crafting costs reduced by 30%, but patient death morale penalties are increased.","trait_granted":"trait_cold_triage","morale_delta":-15}},
-    {"stage":3,"name":"Resolution","description":"Elena's arc concludes. With Healer's Soul, she synthesizes the Ash Rot Remedy — a permanent cure for chronic fallout lung rot — using botanical spores from the Overgrown Nursery. With Cold Triage, she sacrifices her own safety during a biological containment breach to save the shelter's population."}
-  ]}
-]
+{
+  "schema_version": 1,
+  "questlines": [
+    {
+      "quest_id": "quest_the_cracked_floor",
+      "survivor_id": "aris_thorne",
+      "title": "The Cracked Floor",
+      "target_location_id": "loc_civil_defense_bunker",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "A hairline crack appears in the bunker's concrete sub-floor. Water is seeping through — contaminated water. Aris identifies the damage with professional precision but haunted eyes. He designed shelters like this before the war. He knows exactly how bad this can get.",
+          "objective_items": [
+            "structural_report"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "The crack is spreading. Aris insists on working 24-hour shifts to reinforce it. His hands shake from exhaustion but his work is flawless. Other survivors notice he hasn't slept in three days.",
+          "objective_items": [
+            "concrete_mix",
+            "steel_rebar"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "Aris collapses at the work site from exhaustion. The crack is 70% repaired but he needs rest. He's begging to continue — 'I can fix this. I have to fix this.' The choice: force him to rest and accept the repair is good enough, or let him push through.",
+          "branch_a": {
+            "id": "pragmatic_acceptance",
+            "label": "Force Rest",
+            "description": "Order Aris to rest. The repair holds. He learns to accept imperfect work — gains Resilient Builder trait, reduces fatigue from emergency shifts.",
+            "trait_granted": "trait_resilient_builder",
+            "morale_delta": -5
+          },
+          "branch_b": {
+            "id": "obsessive_strain",
+            "label": "Let Him Continue",
+            "description": "Let Aris push through. He completes the repair perfectly but develops Severe Tremors from chronic exhaustion. Work speed increases, health deteriorates.",
+            "trait_granted": "trait_severe_tremors",
+            "morale_delta": -15
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "Aris's story concludes. With the Resilient Builder trait, he constructs the Deep Aquifer — securing clean water permanently. Or with Severe Tremors, he dies during a desperate repair during a siege, leaving behind detailed engineering blueprints that grant permanent crafting bonuses to the crew."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_the_dying_signal",
+      "survivor_id": "maya_lin",
+      "title": "The Dying Signal",
+      "target_location_id": "loc_comm_array",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "Maya intercepts a repeating 142.5 MHz distress beacon. The signal pattern is military — standard Emergency Action Message format. But the voice reading the coordinates is young, scared, and keeps saying a name Maya recognizes. It's her younger brother, Jakob. He was stationed at Checkpoint Kilo.",
+          "objective_items": [
+            "radio_transcript_142_5"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "Maya's hands are shaking as she traces the signal to the Regional Communications Array. She needs to know if Jakob is still alive. Send an expedition to repair the antenna and find the source room.",
+          "objective_items": [
+            "antenna_coil",
+            "signal_source_report"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "The signal is an automated death loop. Jakob recorded it three years ago on a failing battery. He's been dead since Year 1. Maya sits in silence. The choice: channel her grief into saving others through the radio network, or withdraw into catatonic depression.",
+          "branch_a": {
+            "id": "the_beacon",
+            "label": "The Beacon",
+            "description": "Maya channels her grief into purpose. She gains the Voice of Hope trait, boosting shelter-wide morale recovery during radio broadcasts and unlocking unique diplomatic options with local factions.",
+            "trait_granted": "trait_voice_of_hope",
+            "morale_delta": 10
+          },
+          "branch_b": {
+            "id": "static_collapse",
+            "label": "Static Collapse",
+            "description": "Maya withdraws into silence. She refuses to operate the radio unless accompanied by another survivor, but gains hyper-focused perception when searching radio logs — finding signals others miss.",
+            "trait_granted": "trait_catatonic_depression",
+            "morale_delta": -20
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "With Voice of Hope, Maya leads the Unification Protocol, using the high-altitude radio tower to unite fragmented survivor enclaves across the region. Her brother's death gave thousands a voice."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_the_refugee_mass_influx",
+      "survivor_id": "victor_vance",
+      "title": "The Refugee Mass Influx",
+      "target_location_id": "loc_evacuation_bus_depot",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "A family of desperate civilians — a mother and two children — pounds on the hatch during a fallout storm. Their dosimeter readings are critical. They have 20 minutes of safe exposure left. Vance recommends turning them away to preserve rations.",
+          "objective_items": [
+            "refugee_screening_report"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "Vance's tactical assessment is correct: accepting the refugees will strain food supplies by 15%. But the bunker has room. The question isn't logistics — it's whether the bunker's humanity can survive the same cold math that Vance learned in the Garrison.",
+          "objective_items": [
+            "supply_inventory_report"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "The mother is begging. The children are crying from the cold. Vance stands at the hatch, waiting for your decision. Override his recommendation and admit the refugees, or follow his cold tactical logic?",
+          "branch_a": {
+            "id": "restored_humanity",
+            "label": "Admit the Refugees",
+            "description": "Override Vance. Admit the family. As Vance watches the youngest child recover from ARS through careful care, he softens — gains Guardian Captain trait. Boosts morale when protecting vulnerable survivors.",
+            "trait_granted": "trait_guardian_captain",
+            "morale_delta": 15
+          },
+          "branch_b": {
+            "id": "cold_efficiency",
+            "label": "Turn Them Away",
+            "description": "Follow Vance's recommendation. Turn the family away. Vance solidifies into a ruthless tactician — gains Iron Sentinel trait. Defenders get +20% damage resistance during sieges, but morale gains from shared meals are halved.",
+            "trait_granted": "trait_iron_sentinel",
+            "morale_delta": -25
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "Vance's arc concludes. As Guardian Captain, he uses his military knowledge to negotiate a Peace Treaty between the Garrison and Militia. As Iron Sentinel, he leads a preemptive strike against the Sector 4 Warlords to secure the perimeter permanently."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_the_ars_crisis",
+      "survivor_id": "elena_rostov",
+      "title": "The ARS Crisis",
+      "target_location_id": "loc_regional_hospital",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "A survivor — someone Elena has treated, someone she knows by name — is diagnosed with terminal Acute Radiation Syndrome. The prognosis: twelve days. Elena's clinical assessment is immediate and cold.",
+          "objective_items": [
+            "ars_diagnosis_report"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "Elena calculates the treatment cost: 80% of the bunker's remaining medical supplies. Antibiotics, morphine, iodine, surgical kits — almost everything. 'The mathematics is clear,' she says. Her voice doesn't shake. Her hands do.",
+          "objective_items": [
+            "medical_inventory_report",
+            "treatment_protocol"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "The patient is conscious. They know the odds. They're asking Elena what she would do if the roles were reversed. Elena can't answer. The choice: save the patient at enormous cost, or let them pass peacefully with sedatives.",
+          "branch_a": {
+            "id": "oath_restored",
+            "label": "Save the Patient",
+            "description": "Override Elena's triage logic. Save the patient regardless of cost. Elena spends 3 days by their bedside. She gains the Healer's Soul trait — bed rest health recovery speed increased by 50% for all bunker residents.",
+            "trait_granted": "trait_healers_soul",
+            "morale_delta": 10
+          },
+          "branch_b": {
+            "id": "triage_logic",
+            "label": "Trust Her Judgment",
+            "description": "Let the patient pass peacefully with sedatives. Elena's clinical detachment holds — she gains the Cold Triage trait. Medical crafting costs reduced by 30%, but patient death morale penalties are increased.",
+            "trait_granted": "trait_cold_triage",
+            "morale_delta": -15
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "Elena's arc concludes. With Healer's Soul, she synthesizes the Ash Rot Remedy — a permanent cure for chronic fallout lung rot — using botanical spores from the Overgrown Nursery. With Cold Triage, she sacrifices her own safety during a biological containment breach to save the shelter's population."
+        }
+      ]
+    }
+  ]
+}

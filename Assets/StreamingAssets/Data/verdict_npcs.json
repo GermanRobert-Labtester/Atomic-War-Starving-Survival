@@ -1,80 +1,83 @@
-[
-  {
-    "id": "npc_eden_vale",
-    "name": "Eden Vale",
-    "role": "Amateur radio operator, comm-array bleed",
-    "kind": "tape_echo",
-    "gating_flag": "flag_verdict_eden_log_recovered",
-    "location_id": "loc_comm_array",
-    "phase_min": 1,
-    "dialogue": [
-      "Still here. Static's thinning. That's not good news, that's a storm on the way.",
-      "The array's drawing again. I don't know what it's drawing for. I don't think it draws for us."
-    ]
-  },
-  {
-    "id": "npc_ferris_voss",
-    "name": "Ferris Voss",
-    "role": "Fire-control acceptance engineer, last human in the fuse world",
-    "kind": "paper_ghost",
-    "gating_flag": "flag_verdict_fuse_world_read",
-    "location_id": "loc_network_fuse_bunker",
-    "phase_min": 1,
-    "dialogue": [
-      "The archive keeps its own count. It does not require a reader.",
-      "An order can be paused, and a pause is not a cancellation. That is the whole Standard."
-    ]
-  },
-  {
-    "id": "npc_iran_bell",
-    "name": "Iaran Bell",
-    "role": "Tempest maintenance supervisor, the valve-touch hand",
-    "kind": "paper_ghost",
-    "gating_flag": "flag_verdict_shift_charter_restored",
-    "location_id": "loc_network_fuse_bunker",
-    "phase_min": 2,
-    "dialogue": [
-      "Shift 36 closed out per procedure. The valve reads per 36; the record is complete.",
-      "Nobody swept that floor. It sweeps itself, the way the schedule requires."
-    ]
-  },
-  {
-    "id": "npc_selya_saltmarsh",
-    "name": "Selya Saltmarsh",
-    "role": "Census clerk, the only human with an opinion about the count",
-    "kind": "living",
-    "gating_flag": "flag_verdict_clerk_met",
-    "location_id": "loc_twelve_gauge_array",
-    "phase_min": 2,
-    "dialogue": [
-      "Persons shall not be counted twice. Persons shall not be counted once. The footnotes do not say which clause won.",
-      "The count column is blank, and it has been since Year One, when I ran out of households to sight."
-    ]
-  },
-  {
-    "id": "npc_maro_veen",
-    "name": "Maro Veen",
-    "role": "The machine's own voice — the census-window tape loop",
-    "kind": "tape_echo",
-    "gating_flag": "flag_verdict_call_resolved",
-    "location_id": "loc_archive_tape_silo",
-    "phase_min": 3,
-    "dialogue": [
-      "This is the Office of Censuses. The count is open. All persons having custody of persons must present them.",
-      "Off-count is a penalty assessed against the holder. This message will repeat."
-    ]
-  },
-  {
-    "id": "npc_whisper_cipher",
-    "name": "Whisper Cipher",
-    "role": "The relay network's aggregate readings — univocal, procedural",
-    "kind": "readings",
-    "gating_flag": "flag_verdict_relay_read",
-    "location_id": "loc_radio_relay_mast",
-    "phase_min": 1,
-    "dialogue": [
-      "Readings follow. No meaning is assigned by this facility.",
-      "The meter is the meter. Access is granted by maintenance, withdrawn by nobody."
-    ]
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "npc_eden_vale",
+      "name": "Eden Vale",
+      "role": "Amateur radio operator, comm-array bleed",
+      "kind": "tape_echo",
+      "gating_flag": "flag_verdict_eden_log_recovered",
+      "location_id": "loc_comm_array",
+      "phase_min": 1,
+      "dialogue": [
+        "Still here. Static's thinning. That's not good news, that's a storm on the way.",
+        "The array's drawing again. I don't know what it's drawing for. I don't think it draws for us."
+      ]
+    },
+    {
+      "id": "npc_ferris_voss",
+      "name": "Ferris Voss",
+      "role": "Fire-control acceptance engineer, last human in the fuse world",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_fuse_world_read",
+      "location_id": "loc_network_fuse_bunker",
+      "phase_min": 1,
+      "dialogue": [
+        "The archive keeps its own count. It does not require a reader.",
+        "An order can be paused, and a pause is not a cancellation. That is the whole Standard."
+      ]
+    },
+    {
+      "id": "npc_iran_bell",
+      "name": "Iaran Bell",
+      "role": "Tempest maintenance supervisor, the valve-touch hand",
+      "kind": "paper_ghost",
+      "gating_flag": "flag_verdict_shift_charter_restored",
+      "location_id": "loc_network_fuse_bunker",
+      "phase_min": 2,
+      "dialogue": [
+        "Shift 36 closed out per procedure. The valve reads per 36; the record is complete.",
+        "Nobody swept that floor. It sweeps itself, the way the schedule requires."
+      ]
+    },
+    {
+      "id": "npc_selya_saltmarsh",
+      "name": "Selya Saltmarsh",
+      "role": "Census clerk, the only human with an opinion about the count",
+      "kind": "living",
+      "gating_flag": "flag_verdict_clerk_met",
+      "location_id": "loc_twelve_gauge_array",
+      "phase_min": 2,
+      "dialogue": [
+        "Persons shall not be counted twice. Persons shall not be counted once. The footnotes do not say which clause won.",
+        "The count column is blank, and it has been since Year One, when I ran out of households to sight."
+      ]
+    },
+    {
+      "id": "npc_maro_veen",
+      "name": "Maro Veen",
+      "role": "The machine's own voice — the census-window tape loop",
+      "kind": "tape_echo",
+      "gating_flag": "flag_verdict_call_resolved",
+      "location_id": "loc_archive_tape_silo",
+      "phase_min": 3,
+      "dialogue": [
+        "This is the Office of Censuses. The count is open. All persons having custody of persons must present them.",
+        "Off-count is a penalty assessed against the holder. This message will repeat."
+      ]
+    },
+    {
+      "id": "npc_whisper_cipher",
+      "name": "Whisper Cipher",
+      "role": "The relay network's aggregate readings — univocal, procedural",
+      "kind": "readings",
+      "gating_flag": "flag_verdict_relay_read",
+      "location_id": "loc_radio_relay_mast",
+      "phase_min": 1,
+      "dialogue": [
+        "Readings follow. No meaning is assigned by this facility.",
+        "The meter is the meter. Access is granted by maintenance, withdrawn by nobody."
+      ]
+    }
+  ]
+}

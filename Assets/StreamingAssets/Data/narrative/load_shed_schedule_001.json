@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "collection_id": "load_shed_schedule_001",
+  "description": "The Electrician's load-shed schedule, presented to the council on Day 195 (council_minutes_020) and posted in the generator housing. Defines, in 2-day decrements from the fuel ceiling, what runs and what does not when the generator fuel reaches zero. Includes manual fallback for each system. This is the governing document for the final days of generator operation.",
+  "author": "the_electrician",
+  "day_created": 195,
+  "fuel_ceiling_day": 212,
+  "fuel_at_creation_litres": 135,
+  "consumption_rate_litres_per_day": 10,
+  "priority_order": [
+    {
+      "priority": 1,
+      "system": "medical bay cold storage",
+      "load_kw": 0.4,
+      "shed_at_day": "never (last to shed)",
+      "manual_fallback": "insulated passive cold box — 2-day window at 4-8C. After 2 days, transfer antibiotic reserve to lower corridor (estimated 8C). the_surgeon manages the transfer.",
+      "notes": "The antibiotic reserve (304 doses, chem_lab_004) requires cool storage. The passive window is 2 days. The lower corridor is the long-term fallback. Viability may degrade at 8C but remains within tolerance for 3-6 months (the_chemist estimate)."
+    },
+    {
+      "priority": 2,
+      "system": "ventilation (air handling)",
+      "load_kw": 0.6,
+      "shed_at_day": "Day 210 (2 days before ceiling)",
+      "manual_fallback": "manual air-handling — 4-person rotation, 2-hour shifts, 24-hour coverage. the_plumber has trained the roster. Manual cranks at the north and south vents. Air exchange rate: 60 percent of powered ventilation. CO2 monitoring required (the_chemist).",
+      "notes": "Ventilation is the system that keeps the air breathable. Manual air-handling is exhausting — 4 persons, 2-hour shifts, continuous. The bunker has 47 people. The rotation is sustainable if the bunker commits 4 people per day to ventilation. That is 8.5 percent of the population. The_plumber says it is the most important manual labour in the bunker."
+    },
+    {
+      "priority": 3,
+      "system": "comms (radio transmitter)",
+      "load_kw": 0.3,
+      "shed_at_day": "Day 208 (ceiling day)",
+      "manual_fallback": "hand-crank emergency radio (maint_log_b3_009) — receive only, 20 minutes per 5 minutes cranking. The Radio Host monitors 149.0 MHz (Kilo), 155.8 (Apothecary), 142.5 (Lineman), 98.4 (bunker). No transmit capability on the hand-crank.",
+      "notes": "The radio is the bunker's connection to the outside. Losing transmit means the bunker can listen but cannot call. The Apothecary's Hour (155.8) and the Lineman's Loop (142.5) continue to broadcast. The bunker becomes a listener. The Radio Host says listening is also a thing a radio can do."
+    },
+    {
+      "priority": 4,
+      "system": "greenhouse grow lights",
+      "load_kw": 0.8,
+      "shed_at_day": "Day 208 (ceiling day, simultaneous with comms)",
+      "manual_fallback": "LED array (maint_log_b3_015) at 5 percent output on the wheat seedlings only. Battery-powered, 40 hours per 9V battery, 2 spare batteries (80 hours). The barley reverts to ambient light. the_botanist's proof-and-practice hierarchy: the wheat (proof) survives, the barley (practice) does not.",
+      "notes": "The grow lights are the highest load after ventilation. Shedding them drops the greenhouse to 5 percent. The wheat survives. The barley does not. The food trajectory reverses within 90 days. The LED batteries are the new consumable — 120 hours total (3 batteries). After that, the wheat is on ambient winter light, which is insufficient."
+    },
+    {
+      "priority": 5,
+      "system": "corridor heat (lower levels)",
+      "load_kw": 1.2,
+      "shed_at_day": "Day 206 (2 days before ceiling)",
+      "manual_fallback": "body heat, insulation, the cast-iron wood stove (forester's cabin, exp_report_foresters_cabin_01) installed in the lower corridor by the_mechanic. Wood fuel from the bunker carpentry stock and the forester's cabin supply. Estimated 15C in the lower corridor with the stove, 8C without.",
+      "notes": "Corridor heat is the comfort system. Shedding it drops the lower corridor to 8C (ambient bunker temperature). The mess hall and dormitory are on the upper level, which retains heat better. The wood stove is the fallback. The Chef has requested the stove for the baking hearth (letter_b2_19); the council allocated it to the lower corridor for heat. The Chef accepted. The bread will bake on the upper level. The lower level will be cold."
+    },
+    {
+      "priority": 6,
+      "system": "mess hall and laundry",
+      "load_kw": 0.5,
+      "shed_at_day": "Day 204 (already shed — load-shed began Day 194 per maint_log_b3_016)",
+      "manual_fallback": "mess hall: cold meals from the kitchen (the Chef adapts). Laundry: suspended (council_minutes_015 precedent — 'You can suspend laundry on paper. Come smell Ward B.'). The Widow's towels in the laundry alcove become the communal washing point.",
+      "notes": "Already shed. The mess hall runs on the kitchen's cast-iron stove (not generator-powered). Laundry is suspended. The bunker has accepted this since Day 194."
+    }
+  ],
+  "total_generator_load_kw": 3.8,
+  "post_shed_load_kw": 1.0,
+  "fuel_consumption_post_shed_litres_per_day": 3.0,
+  "fuel_ceiling_post_shed_day": "Day 248 (if all shed except medical cold storage and ventilation at manual-assist)",
+  "notes": "The schedule is not a plan to survive without fuel. It is a plan to extend the fuel we have by choosing what we do without. If the bunker sheds everything except medical cold storage and runs ventilation on manual, the generator fuel lasts to Day 248 — 43 days beyond the Day 208 ceiling. But manual ventilation is 4 persons per day, and the grow lights are off, and the food trajectory reverses, and the radio is receive-only. The schedule buys time. It does not buy comfort. It does not buy food. It does not buy connection. It buys time. the_electrician says: time is the thing the bunker has been buying since Day 35. The price is going up.",
+  "cross_refs": ["council_minutes_020", "council_minutes_021", "maint_log_b3_009", "maint_log_b3_015", "maint_log_b3_016", "chem_lab_004", "exp_report_foresters_cabin_01"],
+  "tags": ["load_shed", "fuel_crisis", "priority_order", "manual_fallback", "generator", "the_final_days"]
+}

@@ -1,82 +1,133 @@
-[
-  {
-    "id": "rag_pulp_hollander_beater_linen_fibrillation",
-    "beater_station_id": "HOLLANDER_BEATER_MILL_01",
-    "raw_fiber_source": "SHREDDED_HOSPITAL_LINEN_BEDSHEETS",
-    "freeness_canadian_ml": 380.0,
-    "pulp_hydration_hours": 6.5,
-    "timestamp_relative": "YEAR_02_PAPER_LOG_01",
-    "tags": ["paper", "pulp", "hollander_beater", "linen", "cellulose"],
-    "prose": "Six hours of continuous beating between bronze bedplate knives fibrillated 100% linen bedsheets into a rich, creamy cellulose slurry. The resulting waterleaf sheets demonstrate exceptional folding endurance for bunker ration passbooks."
-  },
-  {
-    "id": "rag_pulp_wood_ash_caustic_delignification",
-    "beater_station_id": "KRAFT_COOKING_DIGESTER_VAT",
-    "raw_fiber_source": "BLACK_SPRUCE_SAWMILL_SHAVINGS",
-    "freeness_canadian_ml": 420.0,
-    "pulp_hydration_hours": 12.0,
-    "timestamp_relative": "YEAR_04_PAPER_LOG_03",
-    "tags": ["paper", "pulp", "delignification", "caustic_soda", "wood_pulp"],
-    "prose": "Cooking softwood sawdust in saturated potassium hydroxide lye boiled from boiler grate ash dissolved brown lignin binders. The dark brown pulp required eight fresh-water rinses to lower pH from 13.0 down to a neutral 7.2."
-  },
-  {
-    "id": "rag_pulp_gelatin_sizing_feathering_bleed",
-    "beater_station_id": "GELATIN_SIZING_TROUGH_BAY",
-    "raw_fiber_source": "COTTON_RAG_DENIM_SCRAPS",
-    "freeness_canadian_ml": 310.0,
-    "pulp_hydration_hours": 4.0,
-    "timestamp_relative": "YEAR_07_PAPER_LOG_02",
-    "tags": ["paper", "sizing", "gelatin", "ink_feathering", "stationery"],
-    "prose": "Dipping unsized waterleaf paper sheets into a 3% warm gelatin solution rendered from butchered livestock bones and hooves sealed the surface pores. Pen ink applied to the dried sheets writes crisp hairline strokes without capillary bleeding."
-  },
-  {
-    "id": "rag_pulp_deckle_screen_wire_clogging_algae",
-    "beater_station_id": "VATMAN_DIP_TANK_STATION_03",
-    "raw_fiber_source": "HEMP_ROPE_AND_TWINE_RECLAIM",
-    "freeness_canadian_ml": 490.0,
-    "pulp_hydration_hours": 5.0,
-    "timestamp_relative": "YEAR_09_PAPER_LOG_04",
-    "tags": ["paper", "mould", "deckle", "algae", "drainage_failure"],
-    "prose": "Bacterial slime in the recycled sump water clogged the fine eighty-mesh bronze wire cloth of the papermaker's hand mould. Water failed to drain through the wire during the vatman's stroke, producing lumpy sheets with irregular 3mm thick edges."
-  },
-  {
-    "id": "rag_pulp_cotton_uniform_shredder_dust_hazard",
-    "beater_station_id": "ROTARY_RAG_CUTTER_STATION",
-    "raw_fiber_source": "DISCARDED_MILITARY_FATIGUES",
-    "freeness_canadian_ml": 340.0,
-    "pulp_hydration_hours": 3.5,
-    "timestamp_relative": "YEAR_12_PAPER_LOG_01",
-    "tags": ["paper", "rag_cutter", "cotton_dust", "fire_hazard", "respirator"],
-    "prose": "High-speed rotary chopping of canvas combat uniforms filled the poorly ventilated preparation room with explosive clouds of dry cotton flock. Workers were required to operate with half-mask dust filters and brass anti-spark shovels."
-  },
-  {
-    "id": "rag_pulp_screw_press_felt_water_extraction",
-    "beater_station_id": "HYDRAULIC_POST_PRESS_BAY",
-    "raw_fiber_source": "FLAX_HARVEST_RETTED_STALKS",
-    "freeness_canadian_ml": 290.0,
-    "pulp_hydration_hours": 8.0,
-    "timestamp_relative": "YEAR_15_PAPER_LOG_03",
-    "tags": ["paper", "screw_press", "felt", "dewatering", "post_press"],
-    "prose": "A post of one hundred wet paper sheets interleaved between wool felts was subjected to twelve tons of screw pressure. Forty gallons of clear water squeezed from the stack, consolidating the wet web to 45% solids before loft drying."
-  },
-  {
-    "id": "rag_pulp_calcium_carbonate_alkaline_buffering",
-    "beater_station_id": "ALKALINE_ADDITIVE_HOPPER_02",
-    "raw_fiber_source": "RECYCLED_PRE_WAR_TECHNICAL_MANUALS",
-    "freeness_canadian_ml": 360.0,
-    "pulp_hydration_hours": 4.5,
-    "timestamp_relative": "YEAR_17_PAPER_LOG_02",
-    "tags": ["paper", "calcium_carbonate", "alkaline_reserve", "acid_free", "archival"],
-    "prose": "Adding 5% micro-pulverized limestone (calcium carbonate) into the beater chest provided an alkaline chemical reserve. The buffer neutralizes sulfurous atmospheric acids, guaranteeing archival paper lifespan exceeding three hundred years."
-  },
-  {
-    "id": "rag_pulp_drying_loft_mold_spoilage",
-    "beater_station_id": "ROOF_VENTILATION_DRYING_LOFT",
-    "raw_fiber_source": "STUBBLE_WHEAT_STRAW_CELLULOSE",
-    "freeness_canadian_ml": 450.0,
-    "pulp_hydration_hours": 7.0,
-    "timestamp_relative": "YEAR_20_PAPER_LOG_01",
-    "tags": ["paper", "drying_loft", "mold_spoilage", "humidity", "foxing"],
-    "prose": "Prolonged surface rainstorms kept drying loft humidity above 90% for two weeks. *Penicillium* mold colonized the damp sheets hanging on horsehair ropes, producing unsightly olive-green foxing spots that ruined an entire batch of census paper."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "rag_pulp_hollander_beater_linen_fibrillation",
+      "beater_station_id": "HOLLANDER_BEATER_MILL_01",
+      "raw_fiber_source": "SHREDDED_HOSPITAL_LINEN_BEDSHEETS",
+      "freeness_canadian_ml": 380.0,
+      "pulp_hydration_hours": 6.5,
+      "timestamp_relative": "YEAR_02_PAPER_LOG_01",
+      "tags": [
+        "paper",
+        "pulp",
+        "hollander_beater",
+        "linen",
+        "cellulose"
+      ],
+      "prose": "Six hours of continuous beating between bronze bedplate knives fibrillated 100% linen bedsheets into a rich, creamy cellulose slurry. The resulting waterleaf sheets demonstrate exceptional folding endurance for bunker ration passbooks."
+    },
+    {
+      "id": "rag_pulp_wood_ash_caustic_delignification",
+      "beater_station_id": "KRAFT_COOKING_DIGESTER_VAT",
+      "raw_fiber_source": "BLACK_SPRUCE_SAWMILL_SHAVINGS",
+      "freeness_canadian_ml": 420.0,
+      "pulp_hydration_hours": 12.0,
+      "timestamp_relative": "YEAR_04_PAPER_LOG_03",
+      "tags": [
+        "paper",
+        "pulp",
+        "delignification",
+        "caustic_soda",
+        "wood_pulp"
+      ],
+      "prose": "Cooking softwood sawdust in saturated potassium hydroxide lye boiled from boiler grate ash dissolved brown lignin binders. The dark brown pulp required eight fresh-water rinses to lower pH from 13.0 down to a neutral 7.2."
+    },
+    {
+      "id": "rag_pulp_gelatin_sizing_feathering_bleed",
+      "beater_station_id": "GELATIN_SIZING_TROUGH_BAY",
+      "raw_fiber_source": "COTTON_RAG_DENIM_SCRAPS",
+      "freeness_canadian_ml": 310.0,
+      "pulp_hydration_hours": 4.0,
+      "timestamp_relative": "YEAR_07_PAPER_LOG_02",
+      "tags": [
+        "paper",
+        "sizing",
+        "gelatin",
+        "ink_feathering",
+        "stationery"
+      ],
+      "prose": "Dipping unsized waterleaf paper sheets into a 3% warm gelatin solution rendered from butchered livestock bones and hooves sealed the surface pores. Pen ink applied to the dried sheets writes crisp hairline strokes without capillary bleeding."
+    },
+    {
+      "id": "rag_pulp_deckle_screen_wire_clogging_algae",
+      "beater_station_id": "VATMAN_DIP_TANK_STATION_03",
+      "raw_fiber_source": "HEMP_ROPE_AND_TWINE_RECLAIM",
+      "freeness_canadian_ml": 490.0,
+      "pulp_hydration_hours": 5.0,
+      "timestamp_relative": "YEAR_09_PAPER_LOG_04",
+      "tags": [
+        "paper",
+        "mould",
+        "deckle",
+        "algae",
+        "drainage_failure"
+      ],
+      "prose": "Bacterial slime in the recycled sump water clogged the fine eighty-mesh bronze wire cloth of the papermaker's hand mould. Water failed to drain through the wire during the vatman's stroke, producing lumpy sheets with irregular 3mm thick edges."
+    },
+    {
+      "id": "rag_pulp_cotton_uniform_shredder_dust_hazard",
+      "beater_station_id": "ROTARY_RAG_CUTTER_STATION",
+      "raw_fiber_source": "DISCARDED_MILITARY_FATIGUES",
+      "freeness_canadian_ml": 340.0,
+      "pulp_hydration_hours": 3.5,
+      "timestamp_relative": "YEAR_12_PAPER_LOG_01",
+      "tags": [
+        "paper",
+        "rag_cutter",
+        "cotton_dust",
+        "fire_hazard",
+        "respirator"
+      ],
+      "prose": "High-speed rotary chopping of canvas combat uniforms filled the poorly ventilated preparation room with explosive clouds of dry cotton flock. Workers were required to operate with half-mask dust filters and brass anti-spark shovels."
+    },
+    {
+      "id": "rag_pulp_screw_press_felt_water_extraction",
+      "beater_station_id": "HYDRAULIC_POST_PRESS_BAY",
+      "raw_fiber_source": "FLAX_HARVEST_RETTED_STALKS",
+      "freeness_canadian_ml": 290.0,
+      "pulp_hydration_hours": 8.0,
+      "timestamp_relative": "YEAR_15_PAPER_LOG_03",
+      "tags": [
+        "paper",
+        "screw_press",
+        "felt",
+        "dewatering",
+        "post_press"
+      ],
+      "prose": "A post of one hundred wet paper sheets interleaved between wool felts was subjected to twelve tons of screw pressure. Forty gallons of clear water squeezed from the stack, consolidating the wet web to 45% solids before loft drying."
+    },
+    {
+      "id": "rag_pulp_calcium_carbonate_alkaline_buffering",
+      "beater_station_id": "ALKALINE_ADDITIVE_HOPPER_02",
+      "raw_fiber_source": "RECYCLED_PRE_WAR_TECHNICAL_MANUALS",
+      "freeness_canadian_ml": 360.0,
+      "pulp_hydration_hours": 4.5,
+      "timestamp_relative": "YEAR_17_PAPER_LOG_02",
+      "tags": [
+        "paper",
+        "calcium_carbonate",
+        "alkaline_reserve",
+        "acid_free",
+        "archival"
+      ],
+      "prose": "Adding 5% micro-pulverized limestone (calcium carbonate) into the beater chest provided an alkaline chemical reserve. The buffer neutralizes sulfurous atmospheric acids, guaranteeing archival paper lifespan exceeding three hundred years."
+    },
+    {
+      "id": "rag_pulp_drying_loft_mold_spoilage",
+      "beater_station_id": "ROOF_VENTILATION_DRYING_LOFT",
+      "raw_fiber_source": "STUBBLE_WHEAT_STRAW_CELLULOSE",
+      "freeness_canadian_ml": 450.0,
+      "pulp_hydration_hours": 7.0,
+      "timestamp_relative": "YEAR_20_PAPER_LOG_01",
+      "tags": [
+        "paper",
+        "drying_loft",
+        "mold_spoilage",
+        "humidity",
+        "foxing"
+      ],
+      "prose": "Prolonged surface rainstorms kept drying loft humidity above 90% for two weeks. *Penicillium* mold colonized the damp sheets hanging on horsehair ropes, producing unsightly olive-green foxing spots that ruined an entire batch of census paper."
+    }
+  ]
+}

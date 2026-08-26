@@ -1,0 +1,40 @@
+{
+    "schema_version": 1,
+    "incidents": [
+        {
+            "id": "incident_radiation_spike",
+            "title": "Radiation Spike",
+            "bodyText": "Radiation spike — Sector 4 elevated (1.2 mSv/hr)",
+            "weight": 1.0,
+            "minDay": 20
+        },
+        {
+            "id": "incident_bunker_breach",
+            "title": "Bunker Breach Attempt",
+            "bodyText": "Bunker breach attempt — repelled by perimeter guard",
+            "weight": 1.0,
+            "minDay": 18
+        },
+        {
+            "id": "incident_water_contamination",
+            "title": "Water Contamination",
+            "bodyText": "Water contamination — filtration system damaged",
+            "weight": 1.0,
+            "minDay": 15
+        },
+        {
+            "id": "incident_ambush_sector_4",
+            "title": "Ambush in Sector 4",
+            "bodyText": "Ambush in Sector 4 — 1 casualty, supplies lost",
+            "weight": 1.0,
+            "minDay": 12
+        },
+        {
+            "id": "incident_radio_interference",
+            "title": "Radio Interference",
+            "bodyText": "Radio interference — unknown signal detected",
+            "weight": 1.0,
+            "minDay": 8
+        }
+    ]
+}

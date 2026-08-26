@@ -1,637 +1,1157 @@
-[
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "debrief_id": "patrol_debrief_001",
+      "day": 40,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_hunter",
+        "the_courier"
+      ],
+      "route": "perimeter patrol",
+      "distance_km": 1.5,
+      "duration_hours": 3,
+      "weather": "overcast, light ashfall, -14C",
+      "surface_dose_uSv_h": 28,
+      "observations": "Perimeter intact. No signs of external approach. Snow covering the ash to a depth of 5cm. Frozen river audible to the north. No movement detected.",
+      "threats_encountered": [],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "Continue daily perimeter patrol. Consider extending to the frozen river bank for ice thickness monitoring.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "radiation_survey_readings_batch_2"
+      ],
+      "tags": [
+        "perimeter",
+        "routine",
+        "clear"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_002",
+      "day": 43,
+      "patrol_leader": "the_hunter",
+      "team": [
+        "the_courier"
+      ],
+      "route": "frozen river cache",
+      "distance_km": 3.2,
+      "duration_hours": 5,
+      "weather": "clear, cold, -18C",
+      "surface_dose_uSv_h": 32,
+      "observations": "Reached the frozen river barge cache. Ice thickness 40cm, safe for foot traffic. Recovered 15kg of frozen venison from the barge hold. No signs of other human activity. Animal tracks: deer, 3 individuals, heading north.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "frozen venison 15kg"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Ice is stable. Return weekly for additional meat recovery. Bring sled for larger loads.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "location_frozen_river_barge"
+      ],
+      "tags": [
+        "frozen_river",
+        "meat_recovery",
+        "ice_stable",
+        "productive"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_003",
+      "day": 46,
+      "patrol_leader": "the_general",
+      "team": [
+        "the_cop",
+        "the_hunter",
+        "the_hazmat_tech"
+      ],
+      "route": "geo-thermal plant exclusion zone approach",
+      "distance_km": 2.0,
+      "duration_hours": 4,
+      "weather": "overcast, wind NW 15km/h, -10C",
+      "surface_dose_uSv_h": 85,
+      "observations": "Approached the geo-thermal plant exclusion zone to verify perimeter markers. Dose rate at 200m from the plant boundary: 85 uSv/h. Steam visible from multiple vent points. No safe approach possible. Perimeter markers intact. Confirmed exclusion zone is lethal.",
+      "threats_encountered": [
+        "radiation_hazard"
+      ],
+      "items_recovered": [],
+      "team_status": "all_clear_no_injuries",
+      "recommendations": "Exclusion zone perimeter is adequate at 300m. No approach closer than 200m recommended. the_hazmat_tech to install additional dosimeter posts at 250m.",
+      "cross_refs": [
+        "radiation_survey_readings_batch_2",
+        "location_geo_thermal_plant_ruins"
+      ],
+      "tags": [
+        "exclusion_zone",
+        "radiation_hazard",
+        "lethal",
+        "perimeter_verification"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_004",
+      "day": 49,
+      "patrol_leader": "the_courier",
+      "team": [
+        "the_hunter"
+      ],
+      "route": "dead oak cache",
+      "distance_km": 2.1,
+      "duration_hours": 4,
+      "weather": "clear, cold, -16C",
+      "surface_dose_uSv_h": 30,
+      "observations": "Reached the dead oak cache without incident. Cache intact. Recovered 8kg of dried herbs, 3 lengths of rope, and a sealed container of unknown origin. the_quartermaster is examining the container. Animal tracks: rabbit, 2 individuals.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "dried herbs 8kg",
+        "rope 3 lengths",
+        "sealed container unknown"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Dead oak cache is reliable. Monthly resupply runs recommended. The sealed container may contain pre-war documents.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2"
+      ],
+      "tags": [
+        "dead_oak",
+        "cache_recovery",
+        "sealed_container",
+        "routine"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_005",
+      "day": 52,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_courier",
+        "the_veteran"
+      ],
+      "route": "highway pileup reconnaissance",
+      "distance_km": 4.0,
+      "duration_hours": 6,
+      "weather": "overcast, light snow, -12C",
+      "surface_dose_uSv_h": 35,
+      "observations": "Reached the highway pileup at 3.5km. Observed the wreckage from a safe distance. No signs of recent human activity. Vehicle wreckage is stable but some units have shifted since the last survey. Potential salvage: fuel tanks, metal, glass. Risk: structural instability of stacked vehicles.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "salvaged metal sheet 2kg",
+        "glass panels 3"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Highway pileup has salvage value but requires careful approach. the_architect to assess structural stability before sending a salvage team. Do not enter the stack without overhead protection.",
+      "cross_refs": [
+        "highway_pileup",
+        "expedition_route_waypoint_notes_batch_2"
+      ],
+      "tags": [
+        "highway_pileup",
+        "reconnaissance",
+        "salvage_potential",
+        "structural_risk"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_006",
+      "day": 55,
+      "patrol_leader": "the_hunter",
+      "team": [
+        "the_courier"
+      ],
+      "route": "frozen river cache (weekly)",
+      "distance_km": 3.2,
+      "duration_hours": 5,
+      "weather": "clear, very cold, -22C",
+      "surface_dose_uSv_h": 28,
+      "observations": "Weekly meat recovery run. Ice thickness now 55cm. Recovered 20kg of frozen venison. Additional animal tracks: wolf pack, estimated 5 individuals, heading east. They crossed our route 2 hours before we arrived.",
+      "threats_encountered": [
+        "wolf_tracks"
+      ],
+      "items_recovered": [
+        "frozen venison 20kg"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Wolf pack is new. Monitor on future patrols. Carry deterrent. the_hunter says wolves avoid humans but the pack is large. Do not approach the river bank at dusk.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "location_frozen_river_barge"
+      ],
+      "tags": [
+        "frozen_river",
+        "meat_recovery",
+        "wolf_tracks",
+        "wildlife_monitoring"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_007",
+      "day": 58,
+      "patrol_leader": "the_general",
+      "team": [
+        "the_cop",
+        "the_hazmat_tech"
+      ],
+      "route": "post-storm radiation survey",
+      "distance_km": 2.5,
+      "duration_hours": 5,
+      "weather": "clear post-storm, cold, -15C",
+      "surface_dose_uSv_h": 42,
+      "observations": "Post-storm survey of the perimeter and approach routes. Storm deposited fresh ash to a depth of 12cm. Dose rate peaked at 85 uSv/h during the storm, now declining to 42 uSv/h. Fresh ash is more radioactive than the underlying layer. Perimeter markers still in place. Some markers shifted by wind.",
+      "threats_encountered": [
+        "residual_radiation"
+      ],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "Reset displaced perimeter markers. Fresh ash layer will decay within 2 weeks. Resume normal patrol schedule. Surface teams to wear full PPE for the next 7 days.",
+      "cross_refs": [
+        "radiation_survey_readings_batch_2"
+      ],
+      "tags": [
+        "post_storm",
+        "radiation_survey",
+        "ash_deposition",
+        "marker_reset"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_008",
+      "day": 61,
+      "patrol_leader": "the_courier",
+      "team": [
+        "the_hunter",
+        "the_hazmat_tech"
+      ],
+      "route": "seed vault approach",
+      "distance_km": 4.5,
+      "duration_hours": 7,
+      "weather": "overcast, light wind, -13C",
+      "surface_dose_uSv_h": 30,
+      "observations": "Reached the seed vault antechamber. Entrance accessible. Cryo-system partially operational. the_hazmat_tech measured internal dose at 12 uSv/h, well within safe limits for timed work. Recovered 14 seed ampoules from the cryo-units. The vault has more ampoules but the cryo-system is failing. Future recovery will require faster extraction.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "seed ampoules 14 (turnip, barley, potato, beans x2, cabbage, carrot, onion, radish, pea, lentil, squash, unidentified)"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Seed vault is a high-value target. Return with a larger team for additional extraction. the_botanist needs to assess viability of recovered ampoules. Cryo-system failure is accelerating; next recovery window may be the last.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "location_subterranean_seed_vault",
+        "greenhouse_cultivation_logs"
+      ],
+      "tags": [
+        "seed_vault",
+        "high_value",
+        "cryo_failing",
+        "time_critical",
+        "14_ampoules"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_009",
+      "day": 64,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_courier"
+      ],
+      "route": "perimeter patrol (expanded)",
+      "distance_km": 2.0,
+      "duration_hours": 4,
+      "weather": "clear, cold, -17C",
+      "surface_dose_uSv_h": 30,
+      "observations": "Expanded perimeter patrol to include the new dosimeter posts installed by the_hazmat_tech. All posts reading within expected range. Fresh animal tracks: deer, 5 individuals now. The herd is growing. Wolf tracks from day 55 have not reappeared.",
+      "threats_encountered": [],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "Deer herd expansion is positive for the_hunter trapping programme. Wolf absence is noted but not explained. Continue monitoring.",
+      "cross_refs": [
+        "radiation_survey_readings_batch_2"
+      ],
+      "tags": [
+        "perimeter",
+        "expanded",
+        "wildlife_monitoring",
+        "deer_herd",
+        "wolf_absence"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_010",
+      "day": 67,
+      "patrol_leader": "the_hunter",
+      "team": [
+        "the_courier",
+        "the_veteran"
+      ],
+      "route": "The Allotments approach",
+      "distance_km": 8.5,
+      "duration_hours": 10,
+      "weather": "overcast, wind SW 10km/h, -8C",
+      "surface_dose_uSv_h": 35,
+      "observations": "Full-day patrol to The Allotments settlement site. Reached the location at hour 6. Settlement is abandoned. Structures intact but stripped of useful materials. Found a collapsed root cellar with 5kg of preserved turnips. Radiation-safe for the duration. Animal tracks: fox, 1 individual.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "preserved turnips 5kg",
+        "salvaged nails handful",
+        "cloth scraps"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "The Allotments is a viable half-day resource target. Root cellars may contain additional preserved food. the_quartermaster to evaluate the turnips for edibility. Return with sled for larger recovery.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "loc_the_allotments"
+      ],
+      "tags": [
+        "the_allotments",
+        "abandoned_settlement",
+        "root_cellar",
+        "full_day",
+        "food_recovery"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_011",
+      "day": 70,
+      "patrol_leader": "the_courier",
+      "team": [
+        "the_hunter"
+      ],
+      "route": "underground transit tunnel (Golf-1 route)",
+      "distance_km": 5.0,
+      "duration_hours": 8,
+      "weather": "N/A (underground)",
+      "surface_dose_uSv_h": 8,
+      "observations": "Escorted by Golf-1 through the underground transit tunnel. Surface dose rate underground is 8 uSv/h, significantly lower than surface. Tunnel is stable. Golf-1 identified three structural weak points that have been shored up since his last traversal. Found Golf-1 former living area: a bedroll, empty food containers, and scratch marks on the wall counting 730 days.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "Golf-1 cache: 2 water containers",
+        "salvaged electrical wire 10m"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Transit tunnel is a viable low-radiation surface route. Golf-1 knowledge is essential for navigation. Mark the three weak points for the_architect assessment. The tunnel could serve as an emergency evacuation route.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "location_sub_level_4_transit"
+      ],
+      "tags": [
+        "transit_tunnel",
+        "underground",
+        "low_radiation",
+        "golf_1_guide",
+        "evacuation_route"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_012",
+      "day": 73,
+      "patrol_leader": "the_general",
+      "team": [
+        "the_cop",
+        "the_hunter",
+        "the_hazmat_tech"
+      ],
+      "route": "Shallows Market approach",
+      "distance_km": 12.0,
+      "duration_hours": 14,
+      "weather": "clear, cold, -10C, wind N 20km/h",
+      "surface_dose_uSv_h": 38,
+      "observations": "Two-day patrol to Shallows Market. Reached the location at hour 10. Market is active. Traded with 3 merchants. Exchanged dried mushrooms for smoked fish and salt. Market operator is cautious but not hostile. They know about the bunker. They asked about trade frequency.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "smoked fish 3kg",
+        "salt 2kg",
+        "information: 3 other settlements within 20km"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Shallows Market is a viable trade partner. Return monthly with trade goods. the_quartermaster to establish a trade goods production schedule. the_general to assess the intelligence about other settlements.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "loc_the_shallows_market",
+        "bunker_trade_ledger_batch_2"
+      ],
+      "tags": [
+        "shallows_market",
+        "trade_contact",
+        "two_day",
+        "intelligence",
+        "first_external_trade"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_013",
+      "day": 76,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_courier"
+      ],
+      "route": "perimeter patrol (wolf check)",
+      "distance_km": 2.5,
+      "duration_hours": 4,
+      "weather": "overcast, -15C",
+      "surface_dose_uSv_h": 30,
+      "observations": "Wolf tracks reappeared on the northern perimeter. Pack size appears to have increased to 7 individuals. Tracks are fresh, approximately 12 hours old. The pack is following the deer herd migration pattern. No direct encounter.",
+      "threats_encountered": [
+        "wolf_pack_tracks"
+      ],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "Wolf pack is now 7 individuals. the_hunter recommends deterrent measures: noise makers on the perimeter, no solo patrols after dusk. The pack is not currently threatening but the size is increasing.",
+      "cross_refs": [
+        "radiation_survey_readings_batch_2"
+      ],
+      "tags": [
+        "perimeter",
+        "wolf_pack",
+        "increasing_size",
+        "deterrent_recommended"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_014",
+      "day": 79,
+      "patrol_leader": "the_courier",
+      "team": [
+        "the_hunter",
+        "the_hazmat_tech"
+      ],
+      "route": "seed vault second recovery",
+      "distance_km": 4.5,
+      "duration_hours": 8,
+      "weather": "overcast, light ashfall, -11C",
+      "surface_dose_uSv_h": 32,
+      "observations": "Return to the seed vault for additional extraction. Cryo-system has degraded further. Only 3 additional ampoules were accessible before the system failed completely. The vault is now sealed. Total recovered across both missions: 17 ampoules. the_hazmat_tech measured internal dose at 15 uSv/h, slightly higher than the first visit.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "seed ampoules 3 (wheat, rye, sunflower)"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Seed vault cryo-system has failed completely. No further recovery possible. The 17 recovered ampoules are the total yield. the_botanist to prioritise viability assessment. The vault is now a sealed time capsule.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "location_subterranean_seed_vault",
+        "greenhouse_cultivation_logs"
+      ],
+      "tags": [
+        "seed_vault",
+        "final_recovery",
+        "cryo_failed",
+        "17_total_ampoules",
+        "sealed"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_015",
+      "day": 82,
+      "patrol_leader": "the_hunter",
+      "team": [
+        "the_courier"
+      ],
+      "route": "frozen river cache (weekly)",
+      "distance_km": 3.2,
+      "duration_hours": 5,
+      "weather": "clear, cold, -20C",
+      "surface_dose_uSv_h": 28,
+      "observations": "Weekly meat recovery. Ice thickness 65cm. Recovered 18kg of frozen venison. The barge hold still has significant meat remaining. Wolf tracks observed at 500m distance. The pack was moving parallel to our route but did not approach. the_hunter fired a warning shot. The wolves retreated.",
+      "threats_encountered": [
+        "wolf_pack_visual"
+      ],
+      "items_recovered": [
+        "frozen venison 18kg"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Wolf pack is now actively shadowing patrol routes. Warning shots are effective. the_hunter recommends carrying deterrent flares. Do not approach the river bank if wolves are visible. The pack is habituating to human presence.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "location_frozen_river_barge"
+      ],
+      "tags": [
+        "frozen_river",
+        "meat_recovery",
+        "wolf_visual",
+        "warning_shot",
+        "habituation_concern"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_016",
+      "day": 85,
+      "patrol_leader": "the_general",
+      "team": [
+        "the_cop",
+        "the_hunter",
+        "the_hazmat_tech",
+        "the_courier"
+      ],
+      "route": "Juliet-1 settlement survey",
+      "distance_km": 10.0,
+      "duration_hours": 12,
+      "weather": "clear, cold, -9C, wind W 12km/h",
+      "surface_dose_uSv_h": 35,
+      "observations": "Two-day patrol to survey 3 of the 12 settlements identified by Juliet-1. Settlement 1 (8km NW): abandoned, structural collapse. Settlement 2 (10km N): active, 6-8 occupants, fortified. They observed us from 200m but did not make contact. Settlement 3 (9km NE): burned out, no salvage. the_general recommends approaching Settlement 2 for trade contact on the next mission.",
+      "threats_encountered": [
+        "observed_by_settlement_2"
+      ],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "Settlement 2 is the priority contact target. Approach with trade goods, not weapons. the_general to plan a diplomatic contact mission. Juliet-1 intelligence is partially validated: 1 of 3 settlements is active.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "new_arrival_intake_interviews"
+      ],
+      "tags": [
+        "settlement_survey",
+        "juliet_1_intel",
+        "diplomatic_contact",
+        "two_day",
+        "3_settlements"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_017",
+      "day": 88,
+      "patrol_leader": "the_courier",
+      "team": [
+        "the_hunter",
+        "the_hazmat_tech"
+      ],
+      "route": "seed vault expedition (fatal)",
+      "distance_km": 4.5,
+      "duration_hours": 10,
+      "weather": "overcast, -12C",
+      "surface_dose_uSv_h": 30,
+      "observations": "Expedition to the seed vault access tunnel for structural assessment by the_architect. Ceiling collapse at the 200m mark. the_hazmat_tech struck by falling concrete. the_courier and the_hunter extracted the casualty. the_surgeon confirmed death at the scene. Tunnel is now unstable beyond the collapse point. No further access to the vault is possible via this route.",
+      "threats_encountered": [
+        "structural_collapse"
+      ],
+      "items_recovered": [],
+      "team_status": "one_killed_the_hazmat_tech",
+      "recommendations": "Seed vault access tunnel is collapsed and unstable. No further recovery possible. the_architect to assess alternative access routes. the_hazmat_tech casualty is a significant loss. the_undertaker burial scheduled day 90.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "location_subterranean_seed_vault",
+        "undertaker_burial_records"
+      ],
+      "tags": [
+        "seed_vault",
+        "structural_collapse",
+        "fatality",
+        "tunnel_unstable",
+        "mission_failure"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_018",
+      "day": 91,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_courier",
+        "the_veteran"
+      ],
+      "route": "perimeter patrol (full circuit)",
+      "distance_km": 2.5,
+      "duration_hours": 5,
+      "weather": "clear, cold, -16C",
+      "surface_dose_uSv_h": 28,
+      "observations": "Full perimeter circuit. All markers intact. Wolf tracks present but fading. Deer herd has moved north. Fresh rabbit tracks. No signs of human approach. the_veteran identified a potential observation blind spot on the eastern perimeter. the_general is evaluating.",
+      "threats_encountered": [],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "Eastern perimeter blind spot needs addressing. the_architect to evaluate whether a periscope extension can cover the gap. Wolf activity decreasing. Perimeter is stable.",
+      "cross_refs": [
+        "radiation_survey_readings_batch_2",
+        "bunker_blueprints_codex"
+      ],
+      "tags": [
+        "perimeter",
+        "full_circuit",
+        "blind_spot",
+        "wolf_declining",
+        "stable"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_019",
+      "day": 94,
+      "patrol_leader": "the_general",
+      "team": [
+        "the_cop",
+        "the_hunter"
+      ],
+      "route": "Settlement 2 diplomatic contact",
+      "distance_km": 10.0,
+      "duration_hours": 14,
+      "weather": "clear, cold, -8C",
+      "surface_dose_uSv_h": 35,
+      "observations": "Two-day diplomatic contact mission to Settlement 2. Made contact at 100m. They are cautious. Exchanged greetings. Offered dried mushrooms as a gesture. They accepted. Their leader identified as a woman calling herself the_Freeholder. She proposed a salt-for-goods trade arrangement. the_general accepted provisional terms. She will send an emissary (Delta-1) to the bunker on day 100.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "salt trade agreement (verbal)",
+        "information: Salt Freeholder territory extends 15km north"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Salt Freeholder trade contact is established. Delta-1 emissary expected day 100. the_general to prepare trade goods and security protocol for the visit. This is the first formal trade relationship.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "new_arrival_intake_interviews",
+        "bunker_trade_ledger_batch_2"
+      ],
+      "tags": [
+        "diplomatic_contact",
+        "salt_freeholder",
+        "trade_agreement",
+        "emissary_expected",
+        "formal_trade"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_020",
+      "day": 97,
+      "patrol_leader": "the_hunter",
+      "team": [
+        "the_courier"
+      ],
+      "route": "frozen river cache (final)",
+      "distance_km": 3.2,
+      "duration_hours": 5,
+      "weather": "overcast, warming, -4C",
+      "surface_dose_uSv_h": 30,
+      "observations": "Ice thickness now 35cm and thinning. Spring approach. The ice is no longer safe for loaded foot traffic. Recovered the final 8kg of venison before the ice became unsafe. The barge hold is now empty. The frozen river cache is exhausted. the_hunter says the spring thaw will open new foraging opportunities but surface radiation may increase with meltwater runoff.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "frozen venison 8kg (final)"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Frozen river cache is exhausted and ice is unsafe. Shift to foraging and greenhouse reliance. the_hunter to scout spring surface routes. Monitor radiation in meltwater. the_meteorologist to track temperature and ice conditions.",
+      "cross_refs": [
+        "expedition_route_waypoint_notes_batch_2",
+        "location_frozen_river_barge"
+      ],
+      "tags": [
+        "frozen_river",
+        "final_recovery",
+        "ice_thinning",
+        "cache_exhausted",
+        "seasonal_transition"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_021",
+      "day": 180,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_veteran"
+      ],
+      "route": "full perimeter circuit + eastern blind spot check",
+      "distance_km": 2.8,
+      "duration_hours": 5,
+      "weather": "overcast, light snow, -16C",
+      "surface_dose_uSv_h": 26,
+      "observations": "Perimeter intact. All dosimeter posts within range. The eastern blind spot identified by the_veteran on Day 91 (courier_mission_018) remains — the_architect has not yet evaluated the periscope extension. Wolf tracks: 9 animals, same route as Day 145 (journal_raw_b3_10). The pack is following the deer herd, which has moved to the eastern ridge. No direct encounter. the_veteran says the pack is not hunting us. He says the pack is hunting the deer and we are in the way. He says there is a difference.",
+      "threats_encountered": [],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "The wolf pack is habituated but not aggressive. Continue the no-solo-patrol-after-dusk rule. the_veteran recommends the periscope extension for the eastern blind spot be prioritised — the pack uses the blind spot as a transit corridor. the_cop concurs.",
+      "cross_refs": [
+        "journal_raw_b3_10",
+        "courier_mission_018"
+      ],
+      "tags": [
+        "perimeter",
+        "wolf_pack",
+        "nine_animals",
+        "blind_spot",
+        "routine"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_022",
+      "day": 184,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_bouncer"
+      ],
+      "route": "perimeter + southern approach (warehouse team route check)",
+      "distance_km": 3.0,
+      "duration_hours": 5,
+      "weather": "clear, cold, -19C",
+      "surface_dose_uSv_h": 24,
+      "observations": "Perimeter intact. Southern approach clear — no wolf tracks, no human tracks. The warehouse team (courier_mission_b2_017) departed Day 183 via the ridge route. the_cop confirmed the departure was not observed from the southern approach — the route variation ordered by the council (council_minutes_018) is effective. the_bouncer performed well — steady, alert, did not flinch at the wind. This is his first surface patrol since the hypervigilance assessment (therapy_session_001).",
+      "threats_encountered": [],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "the_bouncer is cleared for continued surface patrol. the_cop recommends rotating the_bouncer to the perimeter team permanently. The southern approach is the safest route — no wolf activity. The warehouse team's return (Day 187) should be monitored from the perimeter.",
+      "cross_refs": [
+        "council_minutes_018",
+        "courier_mission_b2_017",
+        "therapy_session_001"
+      ],
+      "tags": [
+        "perimeter",
+        "southern_approach",
+        "bouncer_first_surface",
+        "route_variation",
+        "clear"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_023",
+      "day": 190,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_veteran"
+      ],
+      "route": "perimeter + southwestern ridge approach (warehouse return route check)",
+      "distance_km": 3.5,
+      "duration_hours": 5,
+      "weather": "overcast, light ashfall, -15C",
+      "surface_dose_uSv_h": 25,
+      "observations": "Perimeter intact. The southwestern ridge approach — the route the warehouse team used on Day 183 (courier_mission_b2_017) — was checked. the_veteran found wolf tracks. 9 animals. The tracks are on the ridge, heading southwest. This is the first wolf sign on the southwestern approach. The pack has expanded its range. the_veteran estimates the tracks are 6-8 hours old — the pack passed through at dawn. The tracks do not approach the bunker perimeter. They follow the ridge toward the industrial zone. the_veteran says the pack is following the deer, and the deer have moved southwest because the eastern forage is exhausted. The wolves are not hunting us. They are hunting the deer and the deer have moved.",
+      "threats_encountered": [
+        "wolf pack (9 animals) — tracks only, no visual, no encounter. Pack has expanded range to the southwest."
+      ],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "The agri depot return team (courier_mission_b2_020, departing Day 191) uses the northwestern route, not the southwestern. The wolf pack is not on the northwestern route. the_cop recommends the northwestern route be confirmed clear on the morning of Day 191 before departure. the_veteran recommends the southwestern ridge be added to the regular perimeter patrol — the pack's range expansion means the southern approach is no longer the safe route it was on Day 184 (patrol_debrief_022).",
+      "cross_refs": [
+        "courier_mission_b2_017",
+        "patrol_debrief_022",
+        "journal_raw_b3_10"
+      ],
+      "tags": [
+        "perimeter",
+        "wolf_pack",
+        "southwest_ridge",
+        "range_expansion",
+        "first_sign",
+        "deer_migration"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_024",
+      "day": 193,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_bouncer"
+      ],
+      "route": "perimeter + northwestern approach (agri depot return route check)",
+      "distance_km": 3.2,
+      "duration_hours": 4,
+      "weather": "clear, cold, -21C",
+      "surface_dose_uSv_h": 23,
+      "observations": "Perimeter intact. Northwestern approach clear — no wolf tracks, no human tracks. The agri depot return team (courier_mission_b2_020, b2_021) is due back today. the_cop confirmed the northwestern route is clear for their return. the_bouncer performed his second surface patrol — steady, alert, no flinching. He asked the_cop about the wolf pack. the_cop told him about the southwestern ridge sighting (patrol_debrief_023). the_bouncer said, 'I am not afraid of the wolves. I am afraid of the thing that watches the wolves.' the_cop did not understand. the_bouncer did not explain. the_cop logged it.",
+      "threats_encountered": [],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "Northwestern route clear for the agri depot team return. the_bouncer is performing well — recommend continued perimeter rotation. the_cop notes the_bouncer's statement about 'the thing that watches the wolves' for the Therapist's awareness. It may be nothing. It may be the hypervigilance finding a new shape. The Therapist should assess.",
+      "cross_refs": [
+        "patrol_debrief_023",
+        "courier_mission_b2_020",
+        "therapy_session_001"
+      ],
+      "tags": [
+        "perimeter",
+        "northwest_clear",
+        "bouncer_second_patrol",
+        "the_thing_that_watches",
+        "route_check"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_025",
+      "day": 196,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_bouncer"
+      ],
+      "route": "perimeter + southwestern ridge observation (dawn)",
+      "distance_km": 3.5,
+      "duration_hours": 5,
+      "weather": "clear, cold, -22C",
+      "surface_dose_uSv_h": 22,
+      "observations": "Perimeter intact. Dawn observation of the southwestern ridge (council_minutes_021 order). the_bouncer was on the observation. He was steady. He did not flinch. He scanned the ridge for 90 minutes. He said, 'I do not see the thing. The thing may see me.' the_cop asked what he meant. the_bouncer said, 'The thing that watches the wolves watches from a distance. I am watching for the thing from a distance. We are both watching. I do not know which of us is the thing to the other.' No figure observed on Day 196. Wolf tracks on the ridge, 9 animals, heading southwest. The pack is moving away from the bunker. The figure was not observed.",
+      "threats_encountered": [],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "Continue dawn observation. the_bouncer is performing well — the hypervigilance is the asset (therapy_session_b3_014). the_cop notes the_bouncer's philosophical observation ('I do not know which of us is the thing to the other') for the Therapist. It is not a symptom. It is a perception.",
+      "cross_refs": [
+        "council_minutes_021",
+        "therapy_session_b3_014"
+      ],
+      "tags": [
+        "perimeter",
+        "dawn_observation",
+        "figure_not_seen",
+        "wolf_pack_moving_southwest",
+        "bouncer_steady"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_026",
+      "day": 201,
+      "patrol_leader": "the_veteran",
+      "team": [
+        "the_cop"
+      ],
+      "route": "southwestern ridge — extended dawn observation (figure investigation)",
+      "distance_km": 5.0,
+      "duration_hours": 6,
+      "weather": "overcast, light snow, -18C",
+      "surface_dose_uSv_h": 24,
+      "observations": "Extended dawn observation of the southwestern ridge. the_veteran observed a figure at 600 metres on the ridge at 06:40. The figure was stationary, human-shaped, facing the wolf pack's known transit route. The figure did not move for 25 minutes. At 07:05, the wolf pack (9 animals) transited the ridge below the figure. The figure watched the pack. When the pack moved southwest, the figure withdrew to the north. the_veteran could not confirm the figure was human — the distance and the light were marginal — but the figure moved with a human gait when it withdrew. the_cop observed the same figure from a different position. the_cop estimates the figure was 170-180cm tall, moved upright, and carried something on its back. No approach was made. The observation was passive.",
+      "threats_encountered": [
+        "human-shaped figure on the southwestern ridge, 600m, stationary, watching the wolf pack, withdrew north. Armed or carrying (backpack). Identity unknown. Intent unknown."
+      ],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "The figure is real. The Bouncer's perception (patrol_debrief_024) is confirmed. The figure is human or human-shaped, carries equipment, and watches the wolves. The withdrawal to the north is significant — the north is the direction of the Cartographer's cache (exp_report_stranger_cache_01) and the fire lookout (exp_report_fire_lookout_01). The figure may be the Cartographer. the_veteran recommends a dawn observation from the fire lookout tower (exp_report_fire_lookout_01) — the tower provides a 15-metre vantage and the binoculars (recovered) would confirm the figure's identity at 600m. the_cop concurs. Request the council authorise a 2-day observation mission to the fire lookout.",
+      "cross_refs": [
+        "patrol_debrief_024",
+        "exp_report_stranger_cache_01",
+        "exp_report_fire_lookout_01",
+        "council_minutes_021"
+      ],
+      "tags": [
+        "figure_confirmed",
+        "southwest_ridge",
+        "watches_wolves",
+        "withdrew_north",
+        "cartographer_theory",
+        "fire_lookout_observation"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_027",
+      "day": 204,
+      "patrol_leader": "the_veteran",
+      "team": [
+        "the_hunter"
+      ],
+      "route": "fire lookout tower — 2-day observation of the southwestern ridge",
+      "distance_km": 5.0,
+      "duration_hours": 48,
+      "weather": "clear, cold, -20C to -24C",
+      "surface_dose_uSv_h": 8,
+      "observations": "2-day observation from the fire lookout tower (exp_report_fire_lookout_01). the_veteran and the_hunter occupied the cab for 48 hours, rotating 4-hour watches. The binoculars (10x50, recovered) provided clear observation of the southwestern ridge at 2-4km range. Day 203, 06:20: figure observed on the ridge at 3.2km. The binoculars confirmed: human. Male, estimated 40-60 years, wearing layered cold-weather clothing, carrying a framed backpack. The figure carried no visible weapon. The figure watched the wolf pack for 40 minutes, then withdrew north-northwest, toward the Cartographer's cache area. Day 204, 06:35: the figure returned to the same position. Same behaviour. Watched the wolves. Withdrew north. the_hunter says the figure is the same person both days. The gait is consistent. The pack is consistent. The figure is studying the pack's pattern. the_hunter says a person who studies a wolf pack's pattern is a person who is deciding whether the pack is a threat, a resource, or a tool. A person who decides a wolf pack is a tool is a person the bunker needs to know.",
+      "threats_encountered": [
+        "human figure confirmed (male, 40-60, backpack, no visible weapon, studies wolf pack, withdraws north toward the Cartographer's cache). Identity: probably the Cartographer. Intent: unknown."
+      ],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "The figure is almost certainly the Cartographer (the cache-keeper, exp_report_stranger_cache_01). The Cartographer is a person who maintains caches for other survivors, maps the wasteland, and watches the wolves. The Cartographer is not hostile — the cache was a gift, the note said 'take only what you need, leave the rest for the next walker.' The Cartographer is studying the wolves for the same reason the Hunter studies the deer: to understand the resource. the_veteran recommends the bunker attempt contact with the Cartographer — the Cartographer knows the wasteland, the wolf pack, and the fuel sources. The Cartographer may know the municipal fuel depot. the_hunter concurs. Request the council authorise a contact expedition — leave a note at the Cartographer's cache, not at the figure's position. Do not approach the figure. Let the Cartographer come to the cache and find the note.",
+      "cross_refs": [
+        "patrol_debrief_026",
+        "exp_report_stranger_cache_01",
+        "exp_report_fire_lookout_01",
+        "council_minutes_021"
+      ],
+      "tags": [
+        "figure_identified",
+        "the_cartographer",
+        "wolf_study",
+        "contact_recommended",
+        "cache_note",
+        "no_approach"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_028",
+      "day": 215,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_bouncer"
+      ],
+      "route": "perimeter + southwestern ridge (post-Cartographer-contact)",
+      "distance_km": 3.5,
+      "duration_hours": 5,
+      "weather": "clear, warming, -12C",
+      "surface_dose_uSv_h": 20,
+      "observations": "Perimeter intact. The southwestern ridge was checked. Wolf tracks: 9 animals, heading southwest, the tracks are 12-18 hours old and they are the last tracks heading southwest — the tracks do not loop back. the_bouncer observed the ridge for 90 minutes. No figure. The Cartographer is at the cache (the Day 220 meeting is in 5 days). the_bouncer said, 'The wolves are leaving. The thing that watched the wolves is at the cache. The thing that watched the thing that watched the wolves is me. I am the last watcher. The watchers are leaving. The wolves go southwest. The Cartographer goes to the cache. I go to the perimeter. The watching is the thing that is left to me.' the_cop logged it. The temperature is warming. -12C is the warmest patrol in 6 weeks.",
+      "threats_encountered": [],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "The wolf pack is heading southwest and not returning. The southwestern ridge is no longer the wolf transit corridor. The perimeter is clear. The warming trend is confirmed (the_meteorologist data). the_bouncer's observation about being 'the last watcher' is noted for the Therapist — it is not a symptom. It is the perception of a role.",
+      "cross_refs": [
+        "patrol_debrief_027",
+        "council_minutes_022"
+      ],
+      "tags": [
+        "perimeter",
+        "wolves_leaving_southwest",
+        "warming",
+        "bouncer_last_watcher",
+        "no_figure"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_029",
+      "day": 228,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_veteran"
+      ],
+      "route": "perimeter + low-dose zone 1 (spring survey)",
+      "distance_km": 4.0,
+      "duration_hours": 5,
+      "weather": "clear, warming, -8C",
+      "surface_dose_uSv_h": 18,
+      "observations": "Perimeter intact. The first survey of low-dose zone 1 (the Cartographer's map, diplomatic_contact_001). Zone 1 is 2km northwest, within the perimeter patrol range. Surface dose: 1.6 uSv/h (down from the_meteorologist's estimate of 1.8). The zone is a south-facing slope with loamy soil — the Botanist's requested soil type. the_veteran observed moss on the south rocks — the first sign the Cartographer described. The moss is green. Not the sickly yellow-green of the hydroponic trays. Green. the_veteran said, 'The ground is remembering.' the_cop said, 'The ground is remembering.' They said it together. They did not plan to say it together.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "1 x soil sample (zone 1, south slope, the_botanist to test)"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Zone 1 is the first planting candidate. The soil is loamy, south-facing, low-dose. The moss is present. the_botanist to test the soil sample for pH, contaminants, and radiation. If the soil passes, zone 1 is the first outdoor planting site. The spring is confirmed on the ground. The moss is the first. The moss is always the first.",
+      "cross_refs": [
+        "diplomatic_contact_001",
+        "council_minutes_024",
+        "journal_raw_b3_42"
+      ],
+      "tags": [
+        "perimeter",
+        "low_dose_zone_1",
+        "spring_survey",
+        "moss_green",
+        "soil_sample",
+        "planting_candidate"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_030",
+      "day": 230,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_bouncer"
+      ],
+      "route": "perimeter + southwestern ridge (final wolf check)",
+      "distance_km": 3.5,
+      "duration_hours": 4,
+      "weather": "clear, warming, -6C",
+      "surface_dose_uSv_h": 16,
+      "observations": "Perimeter intact. The southwestern ridge was checked for the final wolf observation. No wolf tracks. No wolf sign. The pack has moved southwest and has not returned. The ridge is empty. The deer tracks are also gone — the deer have followed the forage southwest. The ridge is quiet. the_bouncer said, 'The thing that watched the wolves is gone. The wolves are gone. The watching is done. I am the watcher and the watching is done. I do not know what I watch now.' the_cop said, 'You watch the spring.' the_bouncer said, 'I do not know how to watch the spring.' the_cop said, 'You watch the moss. The moss is the first.' the_bouncer said, 'The moss is the first.' He said it the way the Cartographer said it (diplomatic_contact_001). He did not know he said it the way the Cartographer said it. The temperature is -6C. The warmest patrol of the winter. The winter is ending.",
+      "threats_encountered": [],
+      "items_recovered": [],
+      "team_status": "all_clear",
+      "recommendations": "The wolf pack has left the southwestern ridge. The ridge is no longer a restricted approach. The perimeter is clear. The winter is ending. the_bouncer's question — 'I do not know what I watch now' — is noted for the Therapist. The_cop's answer — 'You watch the spring' — is the reframing. The_bouncer is the watcher. The thing he watches has changed. The watching has not.",
+      "cross_refs": [
+        "patrol_debrief_028",
+        "diplomatic_contact_001",
+        "therapy_session_b3_014"
+      ],
+      "tags": [
+        "perimeter",
+        "wolves_gone",
+        "winter_ending",
+        "warming",
+        "bouncer_watches_the_spring",
+        "moss_is_first"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_031",
+      "day": 257,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_bouncer",
+        "the_botanist"
+      ],
+      "route": "low-dose zone 1 (spring planting site — first germination check)",
+      "distance_km": 4.0,
+      "duration_hours": 4,
+      "weather": "clear, warming, -4C",
+      "surface_dose_uSv_h": 15,
+      "observations": "Zone 1 planting site checked. THE RADISH BROKE THE SURFACE. Day 257, 07:30. The radish seedlings are visible — small, green, two-leaf, in the fourth row. the_botanist knelt and looked and did not speak for a long time. She said, 'The surface is the destination. The destination is growing.' the_bouncer watched the radish. He said, 'The slow thing.' He said it the way he said it on Day 230 (patrol_debrief_030). The slow thing is the spring. The slow thing is the growing. The slow thing is the radish. The radish is the first. The moss is the first on the rocks. The radish is the first in the soil. The moss and the radish are the first. the_cop logged the first green on the surface. The surface is green. Not the sickly yellow-green of the hydroponic trays. Green.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "1 x radish seedling sample (the_botanist, for the greenhouse reference log)"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "The first green on the surface is confirmed. The radish is the first. The spring is here. The planting is growing. the_botanist to continue daily zone 1 checks. the_bouncer is the watcher of the slow thing. The slow thing is the spring. The watching is the thing the Bouncer does. The thing he watches has changed. The watching has not.",
+      "cross_refs": [
+        "maint_log_b3_022",
+        "patrol_debrief_030",
+        "council_minutes_026"
+      ],
+      "tags": [
+        "first_green",
+        "radish_broke_surface",
+        "the_slow_thing",
+        "spring_here",
+        "bouncer_watches",
+        "zone_1"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_032",
+      "day": 270,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_bouncer",
+        "the_child_soldier"
+      ],
+      "route": "low-dose zone 1 (spring planting site — full germination check) + zone 2 (second planting site survey)",
+      "distance_km": 8.0,
+      "duration_hours": 6,
+      "weather": "clear, warm, +2C",
+      "surface_dose_uSv_h": 12,
+      "observations": "Zone 1: 8 of 8 varieties have germinated. The radish (Day 257), the wheat variety 1 (Day 260), the barley and peas (Day 262), the rye and oats (Day 265), the beans and lentils (Day 268). The full planting is growing. The wildflower border is showing. The surface is green — rows of green on the south slope. the_child_soldier came on the patrol. He knelt by the radish row and he wrote in his book. He wrote the word for seed. He wrote the word for green. He wrote the word for grow. The Teacher taught him the words. The pencil is yellow. The radish is green. The pencil and the radish are the things that grow. Zone 2: the valley, 4km north. Surveyed for the second planting (Day 260, the Cartographer's recommendation). Zone 2 is a flat valley floor with silty soil, 1.4 uSv/h, a stream at the east edge (the spring melt, running). Zone 2 is the second planting site. the_bouncer watched zone 2. He said, 'The slow thing is everywhere now.' the_cop said, 'The slow thing is the spring.' the_bouncer said, 'The slow thing is the spring.' the_child_soldier said, 'The slow thing is the grow.' They said it together. They did not plan to say it together.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "1 x soil sample (zone 2, valley floor, the_botanist to test)",
+        "1 x child_soldier journal entry (the word for green, written in the field)"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Zone 1 is fully germinated. Zone 2 is the second planting site — the_botanist to prepare for Day 260 planting. The outdoor classroom (council_minutes_026 action item) should begin in zone 1 — the children learn on the surface. the_child_soldier is the first child to write on the surface. the_bouncer is the watcher of the slow thing. The slow thing is everywhere. The spring is everywhere.",
+      "cross_refs": [
+        "patrol_debrief_031",
+        "maint_log_b3_022",
+        "council_minutes_026"
+      ],
+      "tags": [
+        "full_germination",
+        "zone_2_survey",
+        "outdoor_classroom",
+        "child_soldier_writes_on_surface",
+        "the_slow_thing_everywhere",
+        "spring_everywhere"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_033",
+      "day": 295,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_botanist",
+        "the_courier",
+        "the_naive_son",
+        "the_feral_orphan"
+      ],
+      "route": "low-dose zone 2 (second planting site — valley, 4km north)",
+      "distance_km": 8.0,
+      "duration_hours": 8,
+      "weather": "clear, warm, +8C",
+      "surface_dose_uSv_h": 12,
+      "observations": "Zone 2 planting. The valley, 4km north, 1.4 uSv/h, silty soil, spring-melt stream at the east edge (running, clear, cold). The soil is wetter than zone 1 — the valley holds the snowmelt. the_botanist planted 4 varieties (wheat variety 2, oats, beans, lentils — the varieties that benefit from the wetter soil). The planting team: the_botanist (lead), the_courier (carry, water), the_naive_son (digging), the_feral_orphan (seedling placement). the_naive_son dug the rows. He did not speak. He dug. The digging is the thing the Naive Son does when the past is too heavy. The past is heavy. The digging is the thing that puts the hands in the ground. The hands in the ground are the thing that is the present. the_feral_orphan placed the seedlings. He did not speak. He placed. The placing is the thing the Feral Orphan does when the not-having is too heavy. The not-having is heavy. The placing is the thing that puts the seed in the ground. The seed in the ground is the thing that is the having. Zone 2 is planted. The community has 2 farms.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "1 x soil sample (zone 2, valley floor, post-planting, the_botanist)"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "Zone 2 is planted. The community has 2 farms. Zone 1 (south slope, 8 varieties) and zone 2 (valley, 4 varieties). the_botanist to monitor zone 2 germination in 7-14 days. The Naive Son's digging is noted — the digging is the present-tense practice the Teacher described (journal_raw_b3_53). The Feral Orphan's placing is noted — the placing is the having that answers the not-having. The community is the thing that gives the digging and the placing to the people who need them.",
+      "cross_refs": [
+        "patrol_debrief_032",
+        "maint_log_b3_022",
+        "council_minutes_028"
+      ],
+      "tags": [
+        "zone_2_planting",
+        "valley",
+        "2_farms",
+        "naive_son_digs",
+        "feral_orphan_places",
+        "the_present",
+        "the_having"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_034",
+      "day": 290,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_bouncer",
+        "the_botanist",
+        "the_child_soldier"
+      ],
+      "route": "low-dose zone 1 (bee sighting + first harvest check)",
+      "distance_km": 4.0,
+      "duration_hours": 5,
+      "weather": "clear, warm, +10C",
+      "surface_dose_uSv_h": 11,
+      "observations": "THE BEE. Day 290, 11:00. A single bee on the wildflower border of zone 1. The bee is the thing the Cartographer said would come (diplomatic_contact_003). The bee is small, dark, moving from flower to flower. the_botanist knelt and watched the bee and did not speak for a long time. She said, 'The bee is the pollination. The pollination is the thing that makes the food the seed. The bee is here. The food will be the seed.' the_bouncer watched the bee. He held the carved wolf in one hand and the carved bee in the other (the Cartographer's gifts, diplomatic_contact_002, diplomatic_contact_003). He said, 'The wolf was the winter. The bee is the summer. The watching is the same.' the_child_soldier wrote the word for bee in his book. The word for bee is the new word. The Teacher taught him the word this morning. The pencil is yellow. The bee is dark. The word and the bee are the things that are on the surface. The surface is the place. The bee is the thing that chose the place. THE FIRST HARVEST: the radish. Day 290 (the_cop confirms the botanist's Day 285 report, council_minutes_027). 4kg of radishes from row 4. The Chef is preparing the radish today. The first harvest from the surface. The first food from the ground the community did not make.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "4kg radishes (first harvest, row 4, zone 1)",
+        "1 x child_soldier journal entry (the word for bee)"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "The bee is here. The pollination is beginning. The first harvest is in. The community is the thing that has a bee and a harvest. The bee is the thing that came from outside. The harvest is the thing that came from the ground. The outside and the ground are the things the community has. The shelter did not have the outside or the ground. The community has both. The Bouncer holds the wolf and the bee. The watching is the same. The Child Soldier writes the word for bee. The word is the new word. The new word is the thing the community makes.",
+      "cross_refs": [
+        "diplomatic_contact_003",
+        "patrol_debrief_032",
+        "council_minutes_027",
+        "council_minutes_028"
+      ],
+      "tags": [
+        "first_bee",
+        "first_harvest_radish",
+        "bouncer_wolf_and_bee",
+        "child_soldier_word_for_bee",
+        "the_outside_and_the_ground",
+        "community"
+      ]
+    },
+    {
+      "debrief_id": "patrol_debrief_035",
+      "day": 350,
+      "patrol_leader": "the_cop",
+      "team": [
+        "the_bouncer",
+        "the_veteran",
+        "the_child_soldier"
+      ],
+      "route": "the 4 low-dose zones (the community's perimeter is no longer the bunker door)",
+      "distance_km": 12.0,
+      "duration_hours": 8,
+      "weather": "overcast, cold, -2C (first frost approaching)",
+      "surface_dose_uSv_h": 10,
+      "observations": "The community's perimeter is the 4 low-dose zones. The perimeter is no longer the bunker door. The perimeter is the thing the community farms. The perimeter is zone 1 (south slope, 8 varieties, radish harvested, wheat harvested, winter rye planted), zone 2 (valley, 4 varieties, growing), zone 3 (east ridge, surveyed, not yet planted), and zone 4 (north flat, surveyed, not yet planted). The perimeter is the thing the community walks. The walking is the thing the community does. the_bouncer held the three carvings (wolf, bee, wheat). He said, 'The watching is the same. The thing I watch is the community. The community is the 4 zones. The 4 zones are the thing I watch.' the_veteran said, 'The perimeter was the bunker door. The perimeter is the 4 zones. The perimeter is the thing the community is. The community is the 4 zones.' the_child_soldier wrote the word for perimeter in his book. The word for perimeter is the new word. The Teacher taught him the word. The word and the perimeter are the things that are on the surface. The perimeter is the thing the community walks. The walking is the thing the community does. The perimeter is the 4 zones. The 4 zones are the community.",
+      "threats_encountered": [],
+      "items_recovered": [
+        "1 x soil sample (zone 3, east ridge, the_botanist to test)",
+        "1 x child_soldier journal entry (the word for perimeter)"
+      ],
+      "team_status": "all_clear",
+      "recommendations": "The community's perimeter is the 4 low-dose zones. The bunker door is no longer the perimeter. The bunker door is the entrance to the home. The 4 zones are the perimeter. The perimeter is the thing the community farms and walks and watches. the_bouncer is the watcher of the perimeter. the_veteran is the walker of the perimeter. the_child_soldier is the writer of the perimeter. The perimeter is the community. The community is the 47. The 47 are the thing the perimeter is for.",
+      "cross_refs": [
+        "council_minutes_029",
+        "patrol_debrief_034",
+        "diplomatic_contact_004"
+      ],
+      "tags": [
+        "perimeter_is_the_4_zones",
+        "bunker_door_is_entrance",
+        "bouncer_three_carvings",
+        "child_soldier_word_for_perimeter",
+        "community_perimeter",
+        "the_walking"
+      ]
+    },
   {
-    "debrief_id": "patrol_debrief_001",
-    "day": 40,
+    "debrief_id": "patrol_debrief_036",
+    "day": 385,
     "patrol_leader": "the_cop",
     "team": [
-      "the_hunter",
-      "the_courier"
+      "the_bouncer",
+      "the_veteran",
+      "the_child_soldier",
+      "the_naive_son"
     ],
-    "route": "perimeter patrol",
-    "distance_km": 1.5,
-    "duration_hours": 3,
-    "weather": "overcast, light ashfall, -14C",
-    "surface_dose_uSv_h": 28,
-    "observations": "Perimeter intact. No signs of external approach. Snow covering the ash to a depth of 5cm. Frozen river audible to the north. No movement detected.",
-    "threats_encountered": [],
-    "items_recovered": [],
-    "team_status": "all_clear",
-    "recommendations": "Continue daily perimeter patrol. Consider extending to the frozen river bank for ice thickness monitoring.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "radiation_survey_readings_batch_2"
-    ],
-    "tags": [
-      "perimeter",
-      "routine",
-      "clear"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_002",
-    "day": 43,
-    "patrol_leader": "the_hunter",
-    "team": [
-      "the_courier"
-    ],
-    "route": "frozen river cache",
-    "distance_km": 3.2,
-    "duration_hours": 5,
-    "weather": "clear, cold, -18C",
-    "surface_dose_uSv_h": 32,
-    "observations": "Reached the frozen river barge cache. Ice thickness 40cm, safe for foot traffic. Recovered 15kg of frozen venison from the barge hold. No signs of other human activity. Animal tracks: deer, 3 individuals, heading north.",
-    "threats_encountered": [],
-    "items_recovered": [
-      "frozen venison 15kg"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Ice is stable. Return weekly for additional meat recovery. Bring sled for larger loads.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "location_frozen_river_barge"
-    ],
-    "tags": [
-      "frozen_river",
-      "meat_recovery",
-      "ice_stable",
-      "productive"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_003",
-    "day": 46,
-    "patrol_leader": "the_general",
-    "team": [
-      "the_cop",
-      "the_hunter",
-      "the_hazmat_tech"
-    ],
-    "route": "geo-thermal plant exclusion zone approach",
-    "distance_km": 2.0,
-    "duration_hours": 4,
-    "weather": "overcast, wind NW 15km/h, -10C",
-    "surface_dose_uSv_h": 85,
-    "observations": "Approached the geo-thermal plant exclusion zone to verify perimeter markers. Dose rate at 200m from the plant boundary: 85 uSv/h. Steam visible from multiple vent points. No safe approach possible. Perimeter markers intact. Confirmed exclusion zone is lethal.",
-    "threats_encountered": [
-      "radiation_hazard"
-    ],
-    "items_recovered": [],
-    "team_status": "all_clear_no_injuries",
-    "recommendations": "Exclusion zone perimeter is adequate at 300m. No approach closer than 200m recommended. the_hazmat_tech to install additional dosimeter posts at 250m.",
-    "cross_refs": [
-      "radiation_survey_readings_batch_2",
-      "location_geo_thermal_plant_ruins"
-    ],
-    "tags": [
-      "exclusion_zone",
-      "radiation_hazard",
-      "lethal",
-      "perimeter_verification"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_004",
-    "day": 49,
-    "patrol_leader": "the_courier",
-    "team": [
-      "the_hunter"
-    ],
-    "route": "dead oak cache",
-    "distance_km": 2.1,
-    "duration_hours": 4,
-    "weather": "clear, cold, -16C",
-    "surface_dose_uSv_h": 30,
-    "observations": "Reached the dead oak cache without incident. Cache intact. Recovered 8kg of dried herbs, 3 lengths of rope, and a sealed container of unknown origin. the_quartermaster is examining the container. Animal tracks: rabbit, 2 individuals.",
-    "threats_encountered": [],
-    "items_recovered": [
-      "dried herbs 8kg",
-      "rope 3 lengths",
-      "sealed container unknown"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Dead oak cache is reliable. Monthly resupply runs recommended. The sealed container may contain pre-war documents.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2"
-    ],
-    "tags": [
-      "dead_oak",
-      "cache_recovery",
-      "sealed_container",
-      "routine"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_005",
-    "day": 52,
-    "patrol_leader": "the_cop",
-    "team": [
-      "the_courier",
-      "the_veteran"
-    ],
-    "route": "highway pileup reconnaissance",
-    "distance_km": 4.0,
-    "duration_hours": 6,
-    "weather": "overcast, light snow, -12C",
-    "surface_dose_uSv_h": 35,
-    "observations": "Reached the highway pileup at 3.5km. Observed the wreckage from a safe distance. No signs of recent human activity. Vehicle wreckage is stable but some units have shifted since the last survey. Potential salvage: fuel tanks, metal, glass. Risk: structural instability of stacked vehicles.",
-    "threats_encountered": [],
-    "items_recovered": [
-      "salvaged metal sheet 2kg",
-      "glass panels 3"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Highway pileup has salvage value but requires careful approach. the_architect to assess structural stability before sending a salvage team. Do not enter the stack without overhead protection.",
-    "cross_refs": [
-      "highway_pileup",
-      "expedition_route_waypoint_notes_batch_2"
-    ],
-    "tags": [
-      "highway_pileup",
-      "reconnaissance",
-      "salvage_potential",
-      "structural_risk"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_006",
-    "day": 55,
-    "patrol_leader": "the_hunter",
-    "team": [
-      "the_courier"
-    ],
-    "route": "frozen river cache (weekly)",
-    "distance_km": 3.2,
-    "duration_hours": 5,
-    "weather": "clear, very cold, -22C",
-    "surface_dose_uSv_h": 28,
-    "observations": "Weekly meat recovery run. Ice thickness now 55cm. Recovered 20kg of frozen venison. Additional animal tracks: wolf pack, estimated 5 individuals, heading east. They crossed our route 2 hours before we arrived.",
-    "threats_encountered": [
-      "wolf_tracks"
-    ],
-    "items_recovered": [
-      "frozen venison 20kg"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Wolf pack is new. Monitor on future patrols. Carry deterrent. the_hunter says wolves avoid humans but the pack is large. Do not approach the river bank at dusk.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "location_frozen_river_barge"
-    ],
-    "tags": [
-      "frozen_river",
-      "meat_recovery",
-      "wolf_tracks",
-      "wildlife_monitoring"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_007",
-    "day": 58,
-    "patrol_leader": "the_general",
-    "team": [
-      "the_cop",
-      "the_hazmat_tech"
-    ],
-    "route": "post-storm radiation survey",
-    "distance_km": 2.5,
-    "duration_hours": 5,
-    "weather": "clear post-storm, cold, -15C",
-    "surface_dose_uSv_h": 42,
-    "observations": "Post-storm survey of the perimeter and approach routes. Storm deposited fresh ash to a depth of 12cm. Dose rate peaked at 85 uSv/h during the storm, now declining to 42 uSv/h. Fresh ash is more radioactive than the underlying layer. Perimeter markers still in place. Some markers shifted by wind.",
-    "threats_encountered": [
-      "residual_radiation"
-    ],
-    "items_recovered": [],
-    "team_status": "all_clear",
-    "recommendations": "Reset displaced perimeter markers. Fresh ash layer will decay within 2 weeks. Resume normal patrol schedule. Surface teams to wear full PPE for the next 7 days.",
-    "cross_refs": [
-      "radiation_survey_readings_batch_2"
-    ],
-    "tags": [
-      "post_storm",
-      "radiation_survey",
-      "ash_deposition",
-      "marker_reset"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_008",
-    "day": 61,
-    "patrol_leader": "the_courier",
-    "team": [
-      "the_hunter",
-      "the_hazmat_tech"
-    ],
-    "route": "seed vault approach",
-    "distance_km": 4.5,
-    "duration_hours": 7,
-    "weather": "overcast, light wind, -13C",
-    "surface_dose_uSv_h": 30,
-    "observations": "Reached the seed vault antechamber. Entrance accessible. Cryo-system partially operational. the_hazmat_tech measured internal dose at 12 uSv/h, well within safe limits for timed work. Recovered 14 seed ampoules from the cryo-units. The vault has more ampoules but the cryo-system is failing. Future recovery will require faster extraction.",
-    "threats_encountered": [],
-    "items_recovered": [
-      "seed ampoules 14 (turnip, barley, potato, beans x2, cabbage, carrot, onion, radish, pea, lentil, squash, unidentified)"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Seed vault is a high-value target. Return with a larger team for additional extraction. the_botanist needs to assess viability of recovered ampoules. Cryo-system failure is accelerating; next recovery window may be the last.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "location_subterranean_seed_vault",
-      "greenhouse_cultivation_logs"
-    ],
-    "tags": [
-      "seed_vault",
-      "high_value",
-      "cryo_failing",
-      "time_critical",
-      "14_ampoules"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_009",
-    "day": 64,
-    "patrol_leader": "the_cop",
-    "team": [
-      "the_courier"
-    ],
-    "route": "perimeter patrol (expanded)",
-    "distance_km": 2.0,
-    "duration_hours": 4,
-    "weather": "clear, cold, -17C",
-    "surface_dose_uSv_h": 30,
-    "observations": "Expanded perimeter patrol to include the new dosimeter posts installed by the_hazmat_tech. All posts reading within expected range. Fresh animal tracks: deer, 5 individuals now. The herd is growing. Wolf tracks from day 55 have not reappeared.",
-    "threats_encountered": [],
-    "items_recovered": [],
-    "team_status": "all_clear",
-    "recommendations": "Deer herd expansion is positive for the_hunter trapping programme. Wolf absence is noted but not explained. Continue monitoring.",
-    "cross_refs": [
-      "radiation_survey_readings_batch_2"
-    ],
-    "tags": [
-      "perimeter",
-      "expanded",
-      "wildlife_monitoring",
-      "deer_herd",
-      "wolf_absence"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_010",
-    "day": 67,
-    "patrol_leader": "the_hunter",
-    "team": [
-      "the_courier",
-      "the_veteran"
-    ],
-    "route": "The Allotments approach",
-    "distance_km": 8.5,
+    "route": "the 4 low-dose zones — perimeter expansion (zones 3 and 4 planted, the second spring)",
+    "distance_km": 16.0,
     "duration_hours": 10,
-    "weather": "overcast, wind SW 10km/h, -8C",
-    "surface_dose_uSv_h": 35,
-    "observations": "Full-day patrol to The Allotments settlement site. Reached the location at hour 6. Settlement is abandoned. Structures intact but stripped of useful materials. Found a collapsed root cellar with 5kg of preserved turnips. Radiation-safe for the duration. Animal tracks: fox, 1 individual.",
+    "weather": "clear, cold, -1C (the second winter, warming)",
+    "surface_dose_uSv_h": 9,
+    "observations": "The perimeter is the 4 low-dose zones. The perimeter expanded. Zone 1 (south slope, winter rye under snow, the bridge). Zone 2 (valley, oats/beans/lentils harvested, the second-year planting planned). Zone 3 (east ridge, planted Day 380-385 — clover and radish, the second spring). Zone 4 (north flat, planted Day 385 — wheat variety 2 and oats, the second spring). The perimeter is the 4 zones. The 4 zones are the thing the family farms. The family farms the 4 zones. The farming is the thing the family does. the_bouncer held the four carvings (wolf, bee, wheat, snowflake). He said, 'The watching is the same. The thing I watch is the 4 zones. The 4 zones are the thing I watch. The watching is the living. The living is the thing I watch.' the_child_soldier wrote the word for zone in his book. The word for zone is the new word. The Teacher taught him the word. the_naive_son dug the rows in zone 4. He did not speak. He dug. The digging is the present-tense practice. The present is the thing the Naive Son is in. The present is the thing the second year is in. the_veteran walked the perimeter of the 4 zones. He said, 'The perimeter was the bunker door. The perimeter is the 4 zones. The perimeter is the thing the family is. The family is the 4 zones.' The 4 zones are the family. The family is the 47. The 47 are the 4 zones. The 4 zones are the thing the second spring is for.",
     "threats_encountered": [],
     "items_recovered": [
-      "preserved turnips 5kg",
-      "salvaged nails handful",
-      "cloth scraps"
+      "1 x soil sample (zone 4, north flat, clay, the_botanist to test)",
+      "1 x child_soldier journal entry (the word for zone)"
     ],
     "team_status": "all_clear",
-    "recommendations": "The Allotments is a viable half-day resource target. Root cellars may contain additional preserved food. the_quartermaster to evaluate the turnips for edibility. Return with sled for larger recovery.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "loc_the_allotments"
-    ],
-    "tags": [
-      "the_allotments",
-      "abandoned_settlement",
-      "root_cellar",
-      "full_day",
-      "food_recovery"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_011",
-    "day": 70,
-    "patrol_leader": "the_courier",
-    "team": [
-      "the_hunter"
-    ],
-    "route": "underground transit tunnel (Golf-1 route)",
-    "distance_km": 5.0,
-    "duration_hours": 8,
-    "weather": "N/A (underground)",
-    "surface_dose_uSv_h": 8,
-    "observations": "Escorted by Golf-1 through the underground transit tunnel. Surface dose rate underground is 8 uSv/h, significantly lower than surface. Tunnel is stable. Golf-1 identified three structural weak points that have been shored up since his last traversal. Found Golf-1 former living area: a bedroll, empty food containers, and scratch marks on the wall counting 730 days.",
-    "threats_encountered": [],
-    "items_recovered": [
-      "Golf-1 cache: 2 water containers",
-      "salvaged electrical wire 10m"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Transit tunnel is a viable low-radiation surface route. Golf-1 knowledge is essential for navigation. Mark the three weak points for the_architect assessment. The tunnel could serve as an emergency evacuation route.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "location_sub_level_4_transit"
-    ],
-    "tags": [
-      "transit_tunnel",
-      "underground",
-      "low_radiation",
-      "golf_1_guide",
-      "evacuation_route"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_012",
-    "day": 73,
-    "patrol_leader": "the_general",
-    "team": [
-      "the_cop",
-      "the_hunter",
-      "the_hazmat_tech"
-    ],
-    "route": "Shallows Market approach",
-    "distance_km": 12.0,
-    "duration_hours": 14,
-    "weather": "clear, cold, -10C, wind N 20km/h",
-    "surface_dose_uSv_h": 38,
-    "observations": "Two-day patrol to Shallows Market. Reached the location at hour 10. Market is active. Traded with 3 merchants. Exchanged dried mushrooms for smoked fish and salt. Market operator is cautious but not hostile. They know about the bunker. They asked about trade frequency.",
-    "threats_encountered": [],
-    "items_recovered": [
-      "smoked fish 3kg",
-      "salt 2kg",
-      "information: 3 other settlements within 20km"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Shallows Market is a viable trade partner. Return monthly with trade goods. the_quartermaster to establish a trade goods production schedule. the_general to assess the intelligence about other settlements.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "loc_the_shallows_market",
-      "bunker_trade_ledger_batch_2"
-    ],
-    "tags": [
-      "shallows_market",
-      "trade_contact",
-      "two_day",
-      "intelligence",
-      "first_external_trade"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_013",
-    "day": 76,
-    "patrol_leader": "the_cop",
-    "team": [
-      "the_courier"
-    ],
-    "route": "perimeter patrol (wolf check)",
-    "distance_km": 2.5,
-    "duration_hours": 4,
-    "weather": "overcast, -15C",
-    "surface_dose_uSv_h": 30,
-    "observations": "Wolf tracks reappeared on the northern perimeter. Pack size appears to have increased to 7 individuals. Tracks are fresh, approximately 12 hours old. The pack is following the deer herd migration pattern. No direct encounter.",
-    "threats_encountered": [
-      "wolf_pack_tracks"
-    ],
-    "items_recovered": [],
-    "team_status": "all_clear",
-    "recommendations": "Wolf pack is now 7 individuals. the_hunter recommends deterrent measures: noise makers on the perimeter, no solo patrols after dusk. The pack is not currently threatening but the size is increasing.",
-    "cross_refs": [
-      "radiation_survey_readings_batch_2"
-    ],
-    "tags": [
-      "perimeter",
-      "wolf_pack",
-      "increasing_size",
-      "deterrent_recommended"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_014",
-    "day": 79,
-    "patrol_leader": "the_courier",
-    "team": [
-      "the_hunter",
-      "the_hazmat_tech"
-    ],
-    "route": "seed vault second recovery",
-    "distance_km": 4.5,
-    "duration_hours": 8,
-    "weather": "overcast, light ashfall, -11C",
-    "surface_dose_uSv_h": 32,
-    "observations": "Return to the seed vault for additional extraction. Cryo-system has degraded further. Only 3 additional ampoules were accessible before the system failed completely. The vault is now sealed. Total recovered across both missions: 17 ampoules. the_hazmat_tech measured internal dose at 15 uSv/h, slightly higher than the first visit.",
-    "threats_encountered": [],
-    "items_recovered": [
-      "seed ampoules 3 (wheat, rye, sunflower)"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Seed vault cryo-system has failed completely. No further recovery possible. The 17 recovered ampoules are the total yield. the_botanist to prioritise viability assessment. The vault is now a sealed time capsule.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "location_subterranean_seed_vault",
-      "greenhouse_cultivation_logs"
-    ],
-    "tags": [
-      "seed_vault",
-      "final_recovery",
-      "cryo_failed",
-      "17_total_ampoules",
-      "sealed"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_015",
-    "day": 82,
-    "patrol_leader": "the_hunter",
-    "team": [
-      "the_courier"
-    ],
-    "route": "frozen river cache (weekly)",
-    "distance_km": 3.2,
-    "duration_hours": 5,
-    "weather": "clear, cold, -20C",
-    "surface_dose_uSv_h": 28,
-    "observations": "Weekly meat recovery. Ice thickness 65cm. Recovered 18kg of frozen venison. The barge hold still has significant meat remaining. Wolf tracks observed at 500m distance. The pack was moving parallel to our route but did not approach. the_hunter fired a warning shot. The wolves retreated.",
-    "threats_encountered": [
-      "wolf_pack_visual"
-    ],
-    "items_recovered": [
-      "frozen venison 18kg"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Wolf pack is now actively shadowing patrol routes. Warning shots are effective. the_hunter recommends carrying deterrent flares. Do not approach the river bank if wolves are visible. The pack is habituating to human presence.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "location_frozen_river_barge"
-    ],
-    "tags": [
-      "frozen_river",
-      "meat_recovery",
-      "wolf_visual",
-      "warning_shot",
-      "habituation_concern"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_016",
-    "day": 85,
-    "patrol_leader": "the_general",
-    "team": [
-      "the_cop",
-      "the_hunter",
-      "the_hazmat_tech",
-      "the_courier"
-    ],
-    "route": "Juliet-1 settlement survey",
-    "distance_km": 10.0,
-    "duration_hours": 12,
-    "weather": "clear, cold, -9C, wind W 12km/h",
-    "surface_dose_uSv_h": 35,
-    "observations": "Two-day patrol to survey 3 of the 12 settlements identified by Juliet-1. Settlement 1 (8km NW): abandoned, structural collapse. Settlement 2 (10km N): active, 6-8 occupants, fortified. They observed us from 200m but did not make contact. Settlement 3 (9km NE): burned out, no salvage. the_general recommends approaching Settlement 2 for trade contact on the next mission.",
-    "threats_encountered": [
-      "observed_by_settlement_2"
-    ],
-    "items_recovered": [],
-    "team_status": "all_clear",
-    "recommendations": "Settlement 2 is the priority contact target. Approach with trade goods, not weapons. the_general to plan a diplomatic contact mission. Juliet-1 intelligence is partially validated: 1 of 3 settlements is active.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "new_arrival_intake_interviews"
-    ],
-    "tags": [
-      "settlement_survey",
-      "juliet_1_intel",
-      "diplomatic_contact",
-      "two_day",
-      "3_settlements"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_017",
-    "day": 88,
-    "patrol_leader": "the_courier",
-    "team": [
-      "the_hunter",
-      "the_hazmat_tech"
-    ],
-    "route": "seed vault expedition (fatal)",
-    "distance_km": 4.5,
-    "duration_hours": 10,
-    "weather": "overcast, -12C",
-    "surface_dose_uSv_h": 30,
-    "observations": "Expedition to the seed vault access tunnel for structural assessment by the_architect. Ceiling collapse at the 200m mark. the_hazmat_tech struck by falling concrete. the_courier and the_hunter extracted the casualty. the_surgeon confirmed death at the scene. Tunnel is now unstable beyond the collapse point. No further access to the vault is possible via this route.",
-    "threats_encountered": [
-      "structural_collapse"
-    ],
-    "items_recovered": [],
-    "team_status": "one_killed_the_hazmat_tech",
-    "recommendations": "Seed vault access tunnel is collapsed and unstable. No further recovery possible. the_architect to assess alternative access routes. the_hazmat_tech casualty is a significant loss. the_undertaker burial scheduled day 90.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "location_subterranean_seed_vault",
-      "undertaker_burial_records"
-    ],
-    "tags": [
-      "seed_vault",
-      "structural_collapse",
-      "fatality",
-      "tunnel_unstable",
-      "mission_failure"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_018",
-    "day": 91,
-    "patrol_leader": "the_cop",
-    "team": [
-      "the_courier",
-      "the_veteran"
-    ],
-    "route": "perimeter patrol (full circuit)",
-    "distance_km": 2.5,
-    "duration_hours": 5,
-    "weather": "clear, cold, -16C",
-    "surface_dose_uSv_h": 28,
-    "observations": "Full perimeter circuit. All markers intact. Wolf tracks present but fading. Deer herd has moved north. Fresh rabbit tracks. No signs of human approach. the_veteran identified a potential observation blind spot on the eastern perimeter. the_general is evaluating.",
-    "threats_encountered": [],
-    "items_recovered": [],
-    "team_status": "all_clear",
-    "recommendations": "Eastern perimeter blind spot needs addressing. the_architect to evaluate whether a periscope extension can cover the gap. Wolf activity decreasing. Perimeter is stable.",
-    "cross_refs": [
-      "radiation_survey_readings_batch_2",
-      "bunker_blueprints_codex"
-    ],
-    "tags": [
-      "perimeter",
-      "full_circuit",
-      "blind_spot",
-      "wolf_declining",
-      "stable"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_019",
-    "day": 94,
-    "patrol_leader": "the_general",
-    "team": [
-      "the_cop",
-      "the_hunter"
-    ],
-    "route": "Settlement 2 diplomatic contact",
-    "distance_km": 10.0,
-    "duration_hours": 14,
-    "weather": "clear, cold, -8C",
-    "surface_dose_uSv_h": 35,
-    "observations": "Two-day diplomatic contact mission to Settlement 2. Made contact at 100m. They are cautious. Exchanged greetings. Offered dried mushrooms as a gesture. They accepted. Their leader identified as a woman calling herself the_Freeholder. She proposed a salt-for-goods trade arrangement. the_general accepted provisional terms. She will send an emissary (Delta-1) to the bunker on day 100.",
-    "threats_encountered": [],
-    "items_recovered": [
-      "salt trade agreement (verbal)",
-      "information: Salt Freeholder territory extends 15km north"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Salt Freeholder trade contact is established. Delta-1 emissary expected day 100. the_general to prepare trade goods and security protocol for the visit. This is the first formal trade relationship.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "new_arrival_intake_interviews",
-      "bunker_trade_ledger_batch_2"
-    ],
-    "tags": [
-      "diplomatic_contact",
-      "salt_freeholder",
-      "trade_agreement",
-      "emissary_expected",
-      "formal_trade"
-    ]
-  },
-  {
-    "debrief_id": "patrol_debrief_020",
-    "day": 97,
-    "patrol_leader": "the_hunter",
-    "team": [
-      "the_courier"
-    ],
-    "route": "frozen river cache (final)",
-    "distance_km": 3.2,
-    "duration_hours": 5,
-    "weather": "overcast, warming, -4C",
-    "surface_dose_uSv_h": 30,
-    "observations": "Ice thickness now 35cm and thinning. Spring approach. The ice is no longer safe for loaded foot traffic. Recovered the final 8kg of venison before the ice became unsafe. The barge hold is now empty. The frozen river cache is exhausted. the_hunter says the spring thaw will open new foraging opportunities but surface radiation may increase with meltwater runoff.",
-    "threats_encountered": [],
-    "items_recovered": [
-      "frozen venison 8kg (final)"
-    ],
-    "team_status": "all_clear",
-    "recommendations": "Frozen river cache is exhausted and ice is unsafe. Shift to foraging and greenhouse reliance. the_hunter to scout spring surface routes. Monitor radiation in meltwater. the_meteorologist to track temperature and ice conditions.",
-    "cross_refs": [
-      "expedition_route_waypoint_notes_batch_2",
-      "location_frozen_river_barge"
-    ],
-    "tags": [
-      "frozen_river",
-      "final_recovery",
-      "ice_thinning",
-      "cache_exhausted",
-      "seasonal_transition"
-    ]
+    "recommendations": "The perimeter is the 4 low-dose zones. The 4 zones are planted. The second spring is planted. The family farms the 4 zones. the_bouncer is the watcher of the 4 zones. the_veteran is the walker of the 4 zones. the_child_soldier is the writer of the 4 zones. the_naive_son is the digger of the 4 zones. The 4 zones are the family. The family is the 47. The 47 are the thing the 4 zones are for.",
+    "cross_refs": ["council_minutes_032", "patrol_debrief_035", "maint_log_b3_025"],
+    "tags": ["perimeter_4_zones", "zone_3_planted", "zone_4_planted", "second_spring", "bouncer_four_carvings", "child_soldier_word_for_zone", "naive_son_digs", "the_4_zones_are_the_family"]
   }
 ]
+}

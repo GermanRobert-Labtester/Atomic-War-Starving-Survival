@@ -1,0 +1,194 @@
+{
+    "schema_version": 1,
+    "memorials": [
+        {
+            "id": "memorial_marcus_olejnik",
+            "name": "Marcus Olejnik",
+            "text": "Marcus Olejnik - Mechanical Engineer. Kept the water flowing when no one else could. Died fixing the generator during the great blackout. 'The pipes never leaked on my watch.'",
+            "type": "survivor",
+            "tags": ["hero", "engineer", "sacrifice"]
+        },
+        {
+            "id": "memorial_elena_vasquez",
+            "name": "Elena Vasquez",
+            "text": "Dr. Elena Vasquez - Chief Medical Officer. Saved countless lives with her skill and compassion. Died treating a radiation victim. 'We don't leave anyone behind.'",
+            "type": "survivor",
+            "tags": ["hero", "medic", "compassion"]
+        },
+        {
+            "id": "memorial_suki_tanaka",
+            "name": "Suki Tanaka",
+            "text": "Suki Tanaka - Farmer. Grew food when the earth was poisoned. Died protecting her greenhouse from raiders. 'The seeds must survive.'",
+            "type": "survivor",
+            "tags": ["hero", "farmer", "sacrifice"]
+        },
+        {
+            "id": "memorial_unknown_scavenger",
+            "name": "Unknown Scavenger",
+            "text": "Here lies a scavenger who gave their life for the bunker. We never knew their name, but we knew their courage. They died so we could live.",
+            "type": "survivor",
+            "tags": ["courage", "sacrifice", "unknown"]
+        },
+        {
+            "id": "memorial_black_flotilla_victim",
+            "name": "Black Flotilla Victim",
+            "text": "A survivor who fell victim to the Black Flotilla's treachery. They trusted, they traded, they died. Remember: trust is a luxury we cannot afford.",
+            "type": "warning",
+            "tags": ["caution", "betrayal", "warning"]
+        },
+        {
+            "id": "memorial_radiation_storm",
+            "name": "Radiation Storm Victims",
+            "text": "They sought shelter too late. The storm came and took them. Their names are lost to the wind, but their sacrifice reminds us: never hesitate when the alarms sound.",
+            "type": "tragedy",
+            "tags": ["radiation", "tragedy", "sacrifice"]
+        },
+        {
+            "id": "memorial_raider_attack",
+            "name": "Raider Attack Victims",
+            "text": "They fought to the last. Raiders came in the night, and these brave souls stood between us and annihilation. We remember their names in the dark.",
+            "type": "tragedy",
+            "tags": ["raiders", "defense", "sacrifice"]
+        },
+        {
+            "id": "memorial_food_shortage",
+            "name": "Food Shortage Victims",
+            "text": "They starved so others could eat. When the rations ran out, these survivors gave up their share. We will never forget their sacrifice.",
+            "type": "tragedy",
+            "tags": ["hunger", "sacrifice", "memory"]
+        },
+        {
+            "id": "memorial_disease_outbreak",
+            "name": "Disease Outbreak Victims",
+            "text": "The sickness came and took them. We tried to save them, but the disease was too strong. Their memory lives on in our vigilance.",
+            "type": "tragedy",
+            "tags": ["disease", "tragedy", "memory"]
+        },
+        {
+            "id": "memorial_power_failure",
+            "name": "Power Failure Victims",
+            "text": "The generator failed, and the cold took them. We tried to repair it, but it was too late. Their deaths remind us: never neglect the machines that keep us alive.",
+            "type": "tragedy",
+            "tags": ["power", "cold", "sacrifice"]
+        },
+        {
+            "id": "memorial_first_leader",
+            "name": "First Leader",
+            "text": "The one who first opened these doors to us. Without their leadership, we would have perished in the wasteland. Their vision lives on in these walls.",
+            "type": "leader",
+            "tags": ["leadership", "vision", "legacy"]
+        },
+        {
+            "id": "memorial_meridian_compact",
+            "name": "Meridian Compact Ally",
+            "text": "A friend from the Meridian Compact who stood with us in our darkest hour. Their alliance brought us hope when we had none. We will not forget.",
+            "type": "ally",
+            "tags": ["alliance", "friendship", "gratitude"]
+        },
+        {
+            "id": "memorial_scavenger_alliance",
+            "name": "Scavenger Alliance Member",
+            "text": "Once an enemy, they became a friend. Their knowledge of the wasteland saved us from starvation. A testament to redemption.",
+            "type": "ally",
+            "tags": ["redemption", "alliance", "friendship"]
+        },
+        {
+            "id": "memorial_teacher",
+            "name": "The Teacher",
+            "text": "They taught our children when the world burned. Gave them knowledge when we had nothing else. Died passing on the last lesson. 'The future is in their hands.'",
+            "type": "hero",
+            "tags": ["education", "hope", "future"]
+        },
+        {
+            "id": "memorial_storyteller",
+            "name": "The Storyteller",
+            "text": "They kept our spirits alive with tales of the old world. When we forgot who we were, they reminded us. Their stories live on in our hearts.",
+            "type": "cultural",
+            "tags": ["stories", "culture", "memory"]
+        },
+        {
+            "id": "memorial_guard",
+            "name": "The Faithful Guard",
+            "text": "They stood watch every night, never sleeping, never faltering. Died at their post, eyes still scanning the horizon. 'The bunker is safe.'",
+            "type": "hero",
+            "tags": ["duty", "protection", "sacrifice"]
+        },
+        {
+            "id": "memorial_explorer",
+            "name": "The Explorer",
+            "text": "They ventured into the unknown to find what we needed. Their maps led us to safety, to food, to hope. Died beyond the horizon. 'There's always more to find.'",
+            "type": "hero",
+            "tags": ["exploration", "courage", "sacrifice"]
+        },
+        {
+            "id": "memorial_medic",
+            "name": "The Medic",
+            "text": "Their hands healed countless wounds. They worked tirelessly, never resting. Died from exhaustion, but not before saving us all. 'Every life matters.'",
+            "type": "hero",
+            "tags": ["healing", "sacrifice", "compassion"]
+        },
+        {
+            "id": "memorial_builder",
+            "name": "The Builder",
+            "text": "They turned our crumbling shelter into a fortress. Their hands built the walls that kept us safe. Died with a hammer in their hand. 'We build to last.'",
+            "type": "hero",
+            "tags": ["construction", "safety", "sacrifice"]
+        },
+        {
+            "id": "memorial_farmer",
+            "name": "The Farmer",
+            "text": "They coaxed life from poisoned earth. Their crops fed us when we had nothing. Died defending their fields. 'The land gives, we must give back.'",
+            "type": "hero",
+            "tags": ["agriculture", "sacrifice", "sustainability"]
+        },
+        {
+            "id": "memorial_scientist",
+            "name": "The Scientist",
+            "text": "Their mind solved problems we couldn't even understand. Their inventions saved us. Died in an experiment gone wrong. 'Knowledge is survival.'",
+            "type": "hero",
+            "tags": ["science", "innovation", "sacrifice"]
+        },
+        {
+            "id": "memorial_child",
+            "name": "The Child",
+            "text": "Too young to understand the world they were born into. Their laughter reminded us of what we were fighting for. Taken by the wasteland's cruelty. 'We must protect the innocent.'",
+            "type": "tragedy",
+            "tags": ["innocence", "tragedy", "future"]
+        },
+        {
+            "id": "memorial_courier",
+            "name": "The Courier",
+            "text": "They carried messages between settlements when no one else would. Their journeys connected us to the world. Died delivering hope. 'The message must get through.'",
+            "type": "hero",
+            "tags": ["communication", "courage", "sacrifice"]
+        },
+        {
+            "id": "memorial_cook",
+            "name": "The Cook",
+            "text": "They turned our meager rations into feasts. Their meals gave us strength. Died from starvation, having given their share to others. 'Food is love.'",
+            "type": "hero",
+            "tags": ["nourishment", "sacrifice", "community"]
+        },
+        {
+            "id": "memorial_musician",
+            "name": "The Musician",
+            "text": "Their songs reminded us of beauty in this broken world. Their music gave us comfort in the dark. Died playing their last note. 'The song never ends.'",
+            "type": "cultural",
+            "tags": ["music", "beauty", "memory"]
+        },
+        {
+            "id": "memorial_leader",
+            "name": "The Leader",
+            "text": "They guided us through the darkest times. Their decisions saved us from destruction. Died leading the defense. 'The bunker comes first.'",
+            "type": "leader",
+            "tags": ["leadership", "sacrifice", "legacy"]
+        },
+        {
+            "id": "memorial_unknown_hero",
+            "name": "Unknown Hero",
+            "text": "We don't know their name, but we know their courage. They died saving a child from raiders. Their identity is lost, but their heroism is not.",
+            "type": "hero",
+            "tags": ["courage", "sacrifice", "unknown"]
+        }
+    ]
+}

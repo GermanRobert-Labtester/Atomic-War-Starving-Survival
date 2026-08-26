@@ -1,0 +1,401 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "session_id": "therapy_session_b3_001",
+      "patient": "the_radio_host",
+      "day": 149,
+      "duration_min": 55,
+      "presenting_issue": "Unable to speak at the 18:00 broadcast. Sat with the microphone open for approximately one minute, said a single sentence, and shut down the transmitter. Self-referred the next morning.",
+      "observations": "Patient is articulate about the experience but cannot explain it. Describes the moment as 'the words were not there.' No dissociation reported. No prior history of speech disruption. Patient has broadcast daily since Day 38 without interruption — this is the first failure.",
+      "therapist_approach": "Did not frame it as failure. Explored the broadcast content — routine segments, nothing unusual. Asked what he was thinking in the minute of silence. He said he was thinking about the Kilo settlement distress call from the night before. He had not mentioned this. The connection is not certain but it is present.",
+      "assessment": "Acute performance paralysis, likely secondary to empathic overload from the Kilo distress broadcast (two children). The Radio Host has been the conduit for the bunker's grief and hope for 111 days. The conduit does not get to choose what flows through it. The Kilo broadcast introduced a grief that was not the bunker's to process yet, and he processed it alone at the microphone.",
+      "follow_up": "The Priest has already provided informal support (journal_raw_b3_11). Formalise: the Radio Host may decline any broadcast without explanation. The 18:00 broadcast is not a duty, it is a service, and a service can be paused. Next session in 7 days. If the paralysis recurs, consider rotating a second host.",
+      "tags": [
+        "performance_paralysis",
+        "empathic_overload",
+        "broadcast",
+        "kilo_distress",
+        "burnout"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_002",
+      "patient": "the_widow",
+      "day": 132,
+      "duration_min": 40,
+      "presenting_issue": "Follow-up. Moved back to the dormitory on Day 122 (therapy_session_002 was the initial session). Reports the transition is 'tolerable.'",
+      "observations": "Patient is less flat than the first session. There is affect, though it is restrained. She describes the dormitory breathing sounds with specificity — the Bouncer's call-out, the Exhausted Father's daughter's cough. She has catalogued her dormitory mates by sound. This is not avoidance; it is a form of attention.",
+      "therapist_approach": "Affirmed the move as her own decision, not a clinical milestone. Asked about the laundry alcove. She said she visits it to fold the towels. Asked if the towels are still her transitional object. She said, 'The towels are towels now. I am the one who changed.'",
+      "assessment": "Complicated grief, improving. The avoidance has resolved into a managed proximity — she can be near others' breathing without panic. The towels are no longer a nest; they are a habit. The habit is harmless. The grief is not gone but it is no longer the organising principle of her geography.",
+      "follow_up": "No scheduled follow-up. Patient knows the door is open. The Widower's grief has found a shape that includes other people. That is the work, and she did it herself.",
+      "tags": [
+        "grief",
+        "follow_up",
+        "improving",
+        "dormitory",
+        "self_directed_recovery"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_003",
+      "patient": "the_child_soldier",
+      "day": 137,
+      "duration_min": 30,
+      "presenting_issue": "Routine check-in. The Teacher reports the child has a personal pencil (journal_raw_b3_07) and is writing in a book. The Teacher requested a session to assess whether the writing is compulsive or therapeutic.",
+      "observations": "Child arrived with the book held against his chest. Did not want to show it. I did not ask to see it. Asked what he writes. He said 'my name and water.' Asked if he writes other things. He said 'not yet.' The 'not yet' is significant — it implies a future in which he might.",
+      "therapist_approach": "Did not press. Played the metronome (from therapy_session_001 follow-up) at a slow tempo and sat. After three minutes the child began to tap his foot in time. This is the first voluntary rhythmic engagement I have observed. Rhythm is a precursor to language regulation.",
+      "assessment": "The pencil and the book are a self-organising tool. The child is using writing to establish ownership of a self that was not his to own before. The 'not yet' is the healthiest thing he has said. The foot-tapping suggests his nervous system is beginning to entrain to external rhythm rather than internal hypervigilance. Progress is real and it is slow and it is his.",
+      "follow_up": "Continue the Teacher's literacy work. Do not read the book without his invitation. The pencil in the sock is a survival behaviour — do not pathologise it. Next check-in in 14 days unless the Teacher flags a concern.",
+      "tags": [
+        "child",
+        "literacy",
+        "ownership",
+        "rhythm",
+        "trauma",
+        "slow_progress"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_004",
+      "patient": "the_bouncer",
+      "day": 140,
+      "duration_min": 45,
+      "presenting_issue": "Follow-up (therapy_session_001). Nightmares continue but frequency reduced from nightly to twice weekly. The name he calls out in the dormitory (noted by the Widow) — he does not know he calls it out.",
+      "observations": "Patient reports the metronome grounding helps at night. He uses it before sleep. Hands are no longer bandaged — the knuckles have healed. He still sits with his back to the wall but has begun sitting at the mess hall table rather than the corner. The Widower (the Exhausted Father) sat beside him last week and neither spoke. He said it was 'fine.'",
+      "therapist_approach": "Told him the Widow reported he calls a name in his sleep. Watched his face. He did not flinch — he went still, which is different. He said the name is his sister's. He has not said her name aloud before. He said it once, to me, and then said he did not want to say it again. I did not ask him to.",
+      "assessment": "Hypervigilance is reducing. The nightmare content is becoming accessible — he named the figure in it, which is a movement from symptom to memory. The mess hall table and the silent companionship with the Exhausted Father are social re-engagement. The sister's name is the core. He is not ready to grieve her. He is ready to know he carries her.",
+      "follow_up": "Continue metronome grounding. The name is held — it does not need to be spoken again until he chooses. The Exhausted Father's silent companionship is therapeutic and unplanned; do not formalise it. Next session in 14 days.",
+      "tags": [
+        "ptsd",
+        "follow_up",
+        "improving",
+        "naming",
+        "silent_companionship",
+        "grief_emerging"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_005",
+      "patient": "the_exhausted_father",
+      "day": 143,
+      "duration_min": 35,
+      "presenting_issue": "Follow-up (therapy_session_003). Has completed three internal maintenance shifts. Has not done a surface assignment since the panic. Reports his daughter's dry cough (noted by the Widow) is 'getting better.'",
+      "observations": "Patient is less fatigued. He has been sleeping in the dormitory near his daughter rather than sitting awake watching her. The dry cough was assessed by the Surgeon as dust irritation, not infection — but the father monitored it as if it were infection. This is the same displacement: the fear is of failing her, and the cough became the vehicle for the fear.",
+      "therapist_approach": "Reviewed the airlock exposure step from the prior follow-up. He has not done it. He said he 'hasn't had time.' This is avoidance, not scheduling. Did not confront. Asked what he would do if the bunker needed him on the surface and his daughter was safe with the Teacher. He paused for a long time and said, 'I would go. I would hate it. But I would go.'",
+      "assessment": "The agoraphobia is stable, not worsening. The 'I would go' is a significant cognitive shift — he has constructed a conditional in which he can act despite the fear. The condition is his daughter's safety. The airlock step remains undone but the internal permission is forming. The cough monitoring has reduced since the Surgeon's reassurance, but he still checks her breathing at night. The checking is the grief, not the fear.",
+      "follow_up": "The airlock step is not a deadline. The 'I would go' is the milestone for this session. The silent companionship with the Bouncer at the mess hall is noted — two men who cannot sleep near each other's sounds but can sit together without speaking. Next session in 14 days.",
+      "tags": [
+        "agoraphobia",
+        "follow_up",
+        "stable",
+        "conditional_permission",
+        "parental_grief",
+        "companionship"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_006",
+      "patient": "the_naive_son",
+      "day": 147,
+      "duration_min": 40,
+      "presenting_issue": "First formal session. The Teacher referred him — he is reading ahead of the group and discussing themes 'the Teacher has not introduced' (edu_record_001). The Teacher is concerned he is using intellectualisation to manage something.",
+      "observations": "Patient is 16, articulate, and immediately analytical about the session itself — he asked what the therapeutic model is. I told him. He asked what school. I told him. He nodded as if confirming a hypothesis. This is a young man who has learned to be the smartest person in the room as a way of not being the most frightened.",
+      "therapist_approach": "Did not interpret. Asked about his family. He said his mother was a literature professor and his father 'is not here.' The tense shift is notable — mother in past, father in present. Asked where his father is. He said 'I don't know. That's the point.' Did not press.",
+      "assessment": "Intellectualisation as a primary defence. The reading-ahead is not precocity alone — it is a re-enactment of the relationship with his mother, who is gone, through the books she would have taught. The 'is not here' for the father suggests ambiguity of loss: he does not know if his father is dead or absent. Ambiguous loss is harder than known loss because the grief cannot complete.",
+      "follow_up": "The Teacher to provide advanced reading material (already planned) but to also invite him to help teach the younger children — channelling the intellectualisation into a role rather than a defence. Do not interpret the mother or the father yet. He will tell me when the books are not enough. Next session in 10 days.",
+      "tags": [
+        "adolescent",
+        "intellectualisation",
+        "ambiguous_loss",
+        "first_session",
+        "teaching_role"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_007",
+      "patient": "the_general",
+      "day": 153,
+      "duration_min": 50,
+      "presenting_issue": "Self-referred. First session. Stated purpose: 'I am the one who decides who is at risk and I need to know if I am deciding clearly.'",
+      "observations": "Patient is controlled, precise, and exhausted in a way he has not allowed himself to show the bunker. He sat and did not speak for two full minutes. I let the silence hold. When he spoke, it was about the Kilo settlement distress call. Twelve souls, two children, a failed well. The fuel cost of assistance versus the fuel cost of inaction. He said, 'I can do the arithmetic. I cannot do the arithmetic and sleep.'",
+      "therapist_approach": "Did not relieve him of the decision. Explored the structure of the decision — he is carrying the moral weight of a choice that has no clean answer. Asked what he would want a successor to do if he were not here. He said, 'I would want them to go. And I would want them to hate it.' I said that wanting the rescuer to hate it is not the same as wanting them not to go.",
+      "assessment": "Command burden. The General has been the deciding authority for 115 days and has not had a session until today. The delay is not avoidance — it is the belief that the decider must not be a patient. The Kilo decision has broken that belief because the arithmetic and the morality diverge for the first time. He is not impaired. He is human, and he has not been allowed to be.",
+      "follow_up": "No clinical recommendation — he is fit to decide. The session is the intervention: the decider was heard. Offered standing weekly sessions. He accepted. He said, 'If I come every week, does that make me less fit to decide?' I said, 'It makes you more fit to decide and less fit to carry it alone.' He did not argue. Next session in 7 days.",
+      "tags": [
+        "command_burden",
+        "first_session",
+        "moral_injury",
+        "kilo_decision",
+        "leader",
+        "ongoing"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_008",
+      "patient": "the_general",
+      "day": 172,
+      "duration_min": 50,
+      "presenting_issue": "Standing weekly session (second). Follow-up to therapy_session_b3_007. The Kilo mission returned Day 171. Patient addressed the bunker at 22:30. Stated purpose today: 'I came because I said I would come.'",
+      "observations": "Patient is less controlled than the first session, which is itself a signal. He sat down and did not assume the posture of a briefing. He looked at the wall for a moment before looking at me. He said the airlock smelled of four people and 56 kilometres. He said he stood at the airlock when he had planned to stand in the corridor. He noticed that he had gone to the airlock without deciding to, and the noticing is new.",
+      "therapist_approach": "Did not ask about the mission outcome — he has reported it to the council and the bunker and does not need to report it to me. Asked instead about the quiet he mentioned in his journal (journal_raw_b3_13). He was surprised I knew about the quiet. I told him I read the journals only when a patient shares them or when the Historian flags a passage. He had not shared the journal. I corrected: the Historian had flagged it. He asked what the Historian's role is in his therapy. I said the Historian is the bunker's memory and the memory sometimes speaks before the patient does. He accepted this.",
+      "assessment": "The command burden is unchanged in weight but the patient is now carrying it with company. The shift from 'I can do the arithmetic' (session 007) to 'I came because I said I would come' (session 008) is the movement from compulsion to commitment. He is not less burdened. He is less alone with the burden. The airlock moment — going to the airlock without deciding to — is the body acting ahead of the rank, which is the beginning of the General becoming a person who is also a general rather than a general who is sometimes a person. This is progress and it is fragile.",
+      "follow_up": "Standing weekly session confirmed. Day 179. I told him the sessions do not have a goal and do not have an end date. He said, 'Good. I do not have a goal and I do not have an end date.' He almost smiled. He did not smile. The almost is enough for today.",
+      "tags": [
+        "command_burden",
+        "follow_up",
+        "ongoing",
+        "second_session",
+        "historian_flag",
+        "airlock_moment",
+        "fragile_progress"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_009",
+      "patient": "the_general",
+      "day": 179,
+      "duration_min": 50,
+      "presenting_issue": "Standing weekly session (third). The diesel recovery team returned Day 179 evening with 30 litres. Patient addressed the team at the airlock. Reports he slept the night of Day 179 for the first time in 11 days.",
+      "observations": "Patient is visibly less rigid than session 008. He sat down and exhaled — a sound I had not heard from him before. He said the team came back and the diesel was confirmed and he slept. I asked what the sleep was like. He said it was 'the sleep of a man who bought three days.' He said three days is not enough and he knows it is not enough, but the body does not know that. The body slept because the number on the fuel board went up. He said the mind knows the number will go down again. I asked which one he trusts. He said, 'Tonight, the body. Tomorrow, the mind.'",
+      "therapist_approach": "Did not interpret the sleep as recovery — it is relief, not recovery, and the distinction matters. Explored the airlock moment from session 008 (going to the airlock without deciding to). He said he went to the airlock again on Day 179, this time on purpose. I asked if the on-purpose was different from the without-deciding. He said, 'The without-deciding was the body. The on-purpose is the man. I do not know which one I prefer. The body is kinder.' This is the first time the General has spoken about himself as two things. I did not name the two things. He will name them when he is ready.",
+      "assessment": "The command burden is now being carried with a rhythm — the weekly session is part of the rhythm. The sleep is a signal that the body is no longer holding the full weight continuously. The 'two things' observation (the body and the man) is a nascent self-reflection that is not yet splitting and is not yet integration. It is the beginning of either. He is fit to decide. He is also, for the first time, a person who is noticing that he is a person.",
+      "follow_up": "Standing weekly session. Day 186. I told him the sessions are now a habit. He said, 'A habit is a thing that does not ask permission. I am grateful for that.' He did not say grateful to whom. I did not ask.",
+      "tags": [
+        "command_burden",
+        "follow_up",
+        "third_session",
+        "ongoing",
+        "relief_not_recovery",
+        "two_things",
+        "sleep_returned"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_010",
+      "patient": "the_surgeon",
+      "day": 184,
+      "duration_min": 60,
+      "presenting_issue": "Self-referred. First session. Stated purpose: 'I have been silent in council and I need to know if the silence is wisdom or cowardice.' The antibiotic expedition to the pharmaceutical warehouse departs Day 183. The Surgeon did not volunteer for it.",
+      "observations": "Patient is controlled, precise, and angry in a way he has contained for the entire record. He sat and placed his hands flat on the table and looked at them. He said he has been the Surgeon for 146 days and the Surgeon is the man who cuts and sews and does not have antibiotics. He said the word 'does not' as if it were a diagnosis. He said the bunker has been lucky and luck is not a treatment plan. He said the council argued fuel first and antibiotics second and he abstained because he could not rank them and he now believes the abstention was cowardice. I asked him to define cowardice. He said, 'Cowardice is knowing the right order and not saying it because the order will cost someone something.' I asked what the right order was. He said, 'Antibiotics first. Always antibiotics first. Because fuel buys days and antibiotics buy lives, and a life lost while the fuel burns is the one death I am trained to prevent.'",
+      "therapist_approach": "Did not relieve him of the abstention. The abstention is recorded in council_minutes_017 and it was honest. Explored why he did not volunteer for the warehouse expedition. He said he is the only Surgeon. If he goes and does not come back, the bunker has no Surgeon. I said that is a rational calculation. He said it is also a hiding. I asked what he is hiding from. He said, 'I am hiding from the moment I have to watch someone die of something I could have treated with a pill that does not exist.' I said that moment may come regardless of where he stands. He was quiet for a long time. He said, 'I know. That is the thing I cannot outrun.'",
+      "assessment": "Moral injury in a medical professional. The Surgeon has been the silent second constraint (council_minutes_017) and the silence has become a burden equal to the constraint. The abstention was honest but he has reframed it as cowardice, which is a self-judgment that is not fully accurate and not fully inaccurate. The decision not to volunteer for the expedition is rational (single-provider risk) and is also avoidance (he cannot bear to be the one who finds the empty warehouse). Both are true. The work is to hold both without the self-judgment collapsing either.",
+      "follow_up": "The Surgeon will not go on the warehouse expedition — the single-provider logic is sound and the council has accepted it. The work is the clinic and the waiting. I offered standing sessions. He accepted biweekly. He said, 'I will come every two weeks. I will come sooner if I lose someone.' I said I would be here. He said, 'I know. That is the one thing I am certain of in this bunker.' Next session Day 198.",
+      "tags": [
+        "moral_injury",
+        "medical",
+        "first_session",
+        "antibiotics",
+        "abstention_reframed",
+        "single_provider",
+        "ongoing"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_011",
+      "patient": "the_botanist",
+      "day": 192,
+      "duration_min": 55,
+      "presenting_issue": "First session. Self-referred after the council meeting (council_minutes_019) where she said 'I can accept it. I do not accept it gracefully.' The grow light bulb is flickering (journal_raw_b3_23). The agri depot team is at the depot today.",
+      "observations": "Patient is precise, controlled, and grieving in a way she has framed as professional. She sat and described the flicker in technical terms — the filament, the ballast, the failure mode. Then she stopped and said, 'I am describing the bulb because describing the bulb is easier than describing what the bulb means.' I asked what the bulb means. She said, 'The bulb means the wheat lives or the wheat dies and the wheat is the proof and the proof is the thing I am responsible for and I cannot make a bulb.' She said the word 'cannot' the way the Surgeon said 'does not' — as a diagnosis.",
+      "therapist_approach": "Did not relieve her of the responsibility — the responsibility is real and she knows it. Explored the framing: proof and practice. She said Suki said it. I asked if Suki is alive. She said she does not know. I asked what the proof means if Suki is dead. She was quiet. She said, 'The proof means the same thing. The proof does not require an audience. The proof is the wheat. The wheat does not know who is watching.' I said that is the second time today I have heard that something does not know who is watching — the Teacher said the water cycle does not know who is in the room (journal_raw_b3_19). She said, 'The Teacher and I are saying the same thing in different rooms.' I said that may be the most hopeful thing I have heard in the bunker.",
+      "assessment": "Anticipatory grief and professional identity strain. The Botanist is grieving the potential loss of the barley cycle and the greenhouse trajectory before it has happened — she is living in the flicker. The 'proof and practice' framing is her coping structure and it is sound: the wheat (proof) survives at 5 percent, the barley (practice) does not, and she has accepted the hierarchy. The grief is not for the barley alone — it is for the version of herself that could grow both. The agri depot team returns tomorrow. If they return with tubes, the grief is preemptive and resolves. If they do not, the grief becomes real and she has already begun to process it. Either way, she is ahead of it. That is the work.",
+      "follow_up": "No scheduled follow-up — the patient is ahead of the grief and the coping structure is sound. She knows the door is open. If the tubes arrive and the light comes on, she will not need a session. If they do not, she will. I told her: 'The proof does not require an audience, but the botanist does. Come back if the light does not.' She said, 'I will come back if the light does not. I will come back if it does. The botanist requires an audience either way.' Next session: as needed.",
+      "tags": [
+        "anticipatory_grief",
+        "professional_identity",
+        "first_session",
+        "grow_light",
+        "proof_and_practice",
+        "preemptive_processing",
+        "as_needed"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_012",
+      "patient": "the_general",
+      "day": 195,
+      "duration_min": 50,
+      "presenting_issue": "Standing weekly session (fourth). The schedule shifted from Day 186 to Day 195 due to the council meeting. The fuel is now the primary and only unresolved constraint. The load-shed schedule is written. The bunker is living on breaths.",
+      "observations": "Patient said 'we move' in the council meeting today, not 'I move.' That is new. He has been the decider for 160 days and has spoken in the first person singular. Today he spoke in the first person plural. He did not notice. I noticed. He sat and said the load-shed schedule is the document that governs the final days. He said 'final days' without flinching. He said it the way the Surgeon says 'does not' — as a diagnosis.",
+      "therapist_approach": "Did not interpret the 'we' in the session — let him arrive at it. Asked about the load-shed schedule. He said the Electrician wrote it and it is the most honest document in the bunker because it says what the bunker will do without and does not pretend the bunker will not have to. I asked how he felt reading it. He said, 'I felt the way a man feels when he reads his will. The will is not for the man who writes it. The will is for the people who survive him.' I asked if the load-shed schedule is his will. He said, 'No. The load-shed schedule is the bunker's will. I am the man who signs it. The bunker is the man who dies.'",
+      "assessment": "The command burden has shifted from individual to collective. The 'we' is the integration of the 'two things' (the body and the man, session 009) into a third thing — the bunker. The General is no longer carrying the decision alone. He is carrying it as the bunker. This is not dissociation — it is the opposite. It is the General becoming the bunker rather than the General commanding the bunker. The 'final days' language is realistic, not fatalistic. He is fit to decide. He is also, for the first time, a person who is part of the thing he is deciding for.",
+      "follow_up": "Standing weekly session. Day 202. I told him the 'we' was the healthiest thing I have heard him say. He said, 'I did not notice.' I said, 'That is why it is healthy.' He almost smiled. The almost is becoming a habit. Habits are the things that do not ask permission.",
+      "tags": [
+        "command_burden",
+        "fourth_session",
+        "ongoing",
+        "the_we",
+        "collective_identity",
+        "load_shed",
+        "final_days",
+        "realistic"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_013",
+      "patient": "the_chemist",
+      "day": 198,
+      "duration_min": 45,
+      "presenting_issue": "First session. Self-referred after the geo-thermal plant expedition (courier_mission_b2_023). The Chemist went on the expedition despite the documented fear of the sky (journal_raw_b3_16). The General authorised the Chemist to remain at the perimeter. The Chemist remained at the perimeter for 2 hours, then entered the plant to assess the fuel.",
+      "observations": "Patient is precise, clinical about the fear, and surprised by her own behaviour. She said she stayed at the perimeter because the General said she could. She said she entered the plant because the Mechanic needed the assessment and the assessment was the thing she could do. She said the sky was 'very large and very grey and very close.' She said the sky has always been that way for her. She said it started when she was 9 and her father took her to a quarry and the quarry was open and the sky was above the quarry and she could not breathe. She said she has not told anyone this. She is telling me because the page does not ask her to be brave and I do not ask her to be brave and the bunker does not ask her to be brave — the bunker asks her to be a chemist.",
+      "therapist_approach": "Did not frame the fear as a disorder. It is a specific phobia (agoraphobia, open-sky variant) that has been managed by avoidance for the entire bunker record. The avoidance was functional — the Chemist is the lab person. The geo-thermal expedition required the Chemist and the Chemist went. I explored the perimeter decision and the entry. She said: 'I stayed at the perimeter because the General gave me permission to be afraid. I entered because the Mechanic did not give me permission to be useless. The two permissions are different. The first is kindness. The second is respect. I needed both.'",
+      "assessment": "Specific phobia, managed, with a breakthrough event. The Chemist entered the open sky and the plant and did the assessment and returned. The fear did not disappear. The Chemist functioned alongside the fear. This is the definition of courage that is not the absence of fear but the functioning alongside it. The perimeter permission (the General) and the entry permission (the Mechanic) are the two conditions that made it possible. The bunker's structure — the General who allows fear and the Mechanic who requires function — is the therapeutic environment. The Chemist is the patient. The bunker is the therapy.",
+      "follow_up": "The Chemist does not need ongoing sessions for the phobia — it is managed and the management worked. She needs the bunker to continue allowing the perimeter permission when it can. I told her: 'You went. That is the thing. The fear is still there. You went alongside it.' She said, 'The sky is still large. I am still small. But I went.' Next session: as needed.",
+      "tags": [
+        "agoraphobia",
+        "open_sky_phobia",
+        "first_session",
+        "breakthrough",
+        "functioning_alside_fear",
+        "perimeter_permission",
+        "as_needed"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_014",
+      "patient": "the_bouncer",
+      "day": 204,
+      "duration_min": 50,
+      "presenting_issue": "Follow-up (therapy_session_001, b3_004). The Bouncer's statement on Day 193 (patrol_debrief_024) — 'I am afraid of the thing that watches the wolves' — was investigated and confirmed (council_minutes_021, patrol_debrief_026). A stationary human-shaped figure was observed on the southwestern ridge watching the wolf pack. The Bouncer's perception was accurate, not paranoid.",
+      "observations": "Patient is calm, validated, and slightly embarrassed. He said he did not want to be right. He said being right about the figure is worse than being wrong about it. He said, 'When I said it, I thought I was hearing the thing I used to hear — the thing in the nightmares. I thought the bunker had followed me inside and was putting the thing on the ridge. Then the Cop and the Veteran saw it and it was real and I did not know if that was better or worse.' I asked which it was. He said, 'It is better because I am not broken. It is worse because the thing is real.'",
+      "therapist_approach": "Affirmed the perception without dramatising it. The Bouncer's hypervigilance (session 001) is the same system that detected the figure — the auditory and visual scanning that was a symptom in the bunker is an asset on the surface. The symptom and the asset are the same mechanism. I told him: 'The thing that watches the wolves is real. You saw it first. The scanning that keeps you awake is the scanning that saw the figure. It is the same thing. It is not broken. It is sharp.' He was quiet. He said, 'I did not think of it as sharp. I thought of it as broken.' I said, 'It is both. The broken and the sharp are the same edge.'",
+      "assessment": "The hypervigilance is reframed — not as a disorder to suppress but as a perception to direct. The Bouncer is the bunker's best surface observer. The nightmares continue (down from nightly to weekly, session b3_004) but the waking scanning is now validated as functional. The figure on the ridge is a real threat and the Bouncer detected it before the perimeter team. The symptom is the asset. The work is to help the Bouncer hold both without the self-judgment of 'broken.'",
+      "follow_up": "The Bouncer is permanently assigned to the perimeter team (the_cop recommendation, patrol_debrief_024). The Cop and the Veteran will continue dawn observation of the ridge. The Bouncer will join the dawn observation rotation — his scanning is the asset. Next session in 14 days. I told him: 'You are not broken. You are the thing that watches the thing that watches the wolves.' He did not smile. He said, 'That is the strangest thing anyone has said to me in this bunker.' I said, 'This bunker is full of strange things.' He said, 'I know. I am one of them.'",
+      "tags": [
+        "hypervigilance",
+        "follow_up",
+        "perception_validated",
+        "symptom_is_asset",
+        "the_figure",
+        "perimeter_team",
+        "reframed"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_015",
+      "patient": "the_general",
+      "day": 210,
+      "duration_min": 50,
+      "presenting_issue": "Standing weekly session (fifth). The municipal depot team returned Day 210 with 80 litres and the knowledge of 900. The fuel constraint is resolved. The bunker's horizon has expanded.",
+      "observations": "Patient is, for the first time, not exhausted in the session. He sat and he was present and he did not need to be the General for the first 10 minutes. He said the depot is a source. He said the word 'source' the way he used to say 'ceiling.' I asked what the difference is. He said, 'A ceiling is a thing you hit. A source is a thing you draw from. We have been hitting ceilings for 175 days. We are now drawing from a source. The drawing is different. The drawing is the thing you do when you are not counting down. The drawing is the thing you do when you are counting up.'",
+      "therapist_approach": "Explored the 'counting up.' He said the Quartermaster has been counting down for 175 days and the Quartermaster does not know how to count up. I said the Quartermaster will learn. He said the bunker will learn. I asked what the bunker counts up. He said, 'Days until the spring. Days until the planting. Days until the food is on the surface and the greenhouse is a bridge and not a destination. Days until the bunker is not a bunker. Days until the bunker is a place.' I asked if the bunker will stop being a bunker. He said, 'The bunker will always be a bunker. The bunker will also be a place. A bunker is a thing you survive in. A place is a thing you live in. The spring is the thing that turns the bunker into a place.'",
+      "assessment": "The command burden has shifted from survival to transition. The General is now planning the bunker's transformation from a survival shelter to a place of living. The 'counting up' is the first future-oriented thinking the General has done. The 'we' (session 012) is now a 'we' that is going somewhere, not a 'we' that is holding. He is fit to decide. He is also, for the first time, a person who is looking forward. The looking forward is the healthiest thing I have seen in him.",
+      "follow_up": "Standing weekly session. Day 217. I told him the 'counting up' is the thing I have been waiting to hear. He said, 'I did not know I was going to say it. The depot made me say it. The depot is the thing that made the counting turn.' I said the depot is a source and the source is the thing that turns the counting. He said, 'The source is the thing that turns the bunker into a place.' Next session Day 217.",
+      "tags": [
+        "command_burden",
+        "fifth_session",
+        "ongoing",
+        "counting_up",
+        "survival_to_transition",
+        "the_spring",
+        "bunker_to_place",
+        "looking_forward"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_016",
+      "patient": "the_courier",
+      "day": 218,
+      "duration_min": 45,
+      "presenting_issue": "First session. Self-referred before the Day 220 Cartographer meeting. Stated purpose: 'I am going to meet a stranger and I need to know if I am afraid or ready.'",
+      "observations": "Patient is 22, articulate, and frightened in a way he is honest about. He said the Kilo mission was a rescue. The warehouse was a recovery. The agri depot was a search. The municipal depot was a last breath. The Cartographer meeting is a meeting. He said a meeting is the thing you cannot rehearse because the other person is the thing you cannot know. He said the other missions had a thing to bring back. The meeting has a thing to bring back but the thing is not a container. The thing is a relationship. He said a relationship is the heaviest thing because a relationship does not fit in a container.",
+      "therapist_approach": "Did not relieve him of the fear. Explored the 4 successful missions. He said the 4 missions had a thing to carry and the carrying was the thing he knew. The meeting has a thing to carry that is not a thing. I asked what the thing is. He said, 'The thing is the bunker. I carry the bunker to the Cartographer. The bunker is 47 people. The bunker is the General and the Surgeon and the Botanist and the Teacher and the Priest and the Widow and the Bouncer and the Child Soldier and the Feral Orphan and the Naive Son. I carry all of them to a stranger. The stranger does not know them. I have to make the stranger know them without showing them. That is the heaviest thing. That is the thing that does not fit in a container.' I told him the thing that does not fit in a container is the thing he is best at carrying. He has carried the bunker to Kilo and the warehouse and the agri depot and the municipal depot. He has been carrying the bunker the whole time. The bunker is the thing he carries. The meeting is the first time the carrying is the purpose.",
+      "assessment": "Pre-contact anxiety, appropriate, with high relational capacity. The Courier is the bunker's diplomat because the Courier is the one who carries the bunker in his body. The 4 missions were the practice. The meeting is the performance. The fear is the thing that makes the meeting real. The readiness is the thing that makes the meeting possible. He is both. He is ready.",
+      "follow_up": "The meeting is Day 220. I told him: 'You carry the bunker. The bunker is 47 people. You are one of them. You carry 46 others and yourself. The carrying is the thing you have been doing. The meeting is the thing you have been practicing for. Go. Come back. The bunker will be here.' He said, 'I know. That is the thing I am afraid of and the thing I am ready for.' No scheduled follow-up — the debrief is the follow-up. He will come to me after Day 220 if he needs to.",
+      "tags": [
+        "pre_contact_anxiety",
+        "first_session",
+        "relational_capacity",
+        "the_bunker_he_carries",
+        "diplomat",
+        "ready",
+        "day_220"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_017",
+      "patient": "the_surgeon",
+      "day": 220,
+      "duration_min": 40,
+      "presenting_issue": "Follow-up (therapy_session_b3_010, first session Day 184). The Cartographer meeting is today. The Surgeon gave 5 doses of amoxicillin as a gift (council_minutes_023). The Surgeon reports the giving was harder than the holding.",
+      "observations": "Patient is calm, precise, and lighter than the first session. He said he held the 304 for 32 days. He checked the key 7 times a day for 32 days. He gave 5 doses to the Courier for the Cartographer and he checked the cabinet after the 5 were removed and the cabinet had 299 and the 299 is the new number and the new number is the first number that is not 304. He said the 299 is the number that the bunker gave something away. He said the giving is the thing that makes the 299 different from the 304. The 304 was a holding. The 299 is a giving. The giving is harder than the holding because the holding is a closed hand and the giving is an open hand and the open hand is the hand that can be empty.",
+      "therapist_approach": "Explored the 'open hand.' He said the Surgeon is the man with the closed hand. The closed hand is the holding. The open hand is the giving. The giving is the thing the bunker learned at Kilo. The bunker gave 80 litres of water at Kilo and the giving was the thing that made the bunker a bunker that gives. The Surgeon is learning to be a Surgeon who gives. The 5 doses are the first giving. The giving is the thing that makes the reserve a reserve that is used, not a reserve that is hoarded. I told him the holding and the giving are the same hand. The hand that holds is the hand that gives. The difference is the opening. The opening is the thing he did today.",
+      "assessment": "The moral injury (session 010) is resolving into a practice. The Surgeon is learning that a reserve is not a hoard — a reserve is a thing that is held until it is given. The 5 doses are the first giving. The giving is the thing that makes the reserve meaningful. The 299 is the number that is not 304 and the 299 is the number that is the first number of a reserve that has been used as a reserve. The Surgeon is becoming a Surgeon who gives. The giving is the health.",
+      "follow_up": "Biweekly sessions (established session 010). Next session Day 234. I told him the 299 is the number I want to hear at the next session. He said, 'The 299 is the number. The 5 are the gift. The Cartographer has the 5. The 5 are the bunker's first medicine given away. The giving is the thing I did not know I could do. I did it. The hand opened.'",
+      "tags": [
+        "moral_injury",
+        "follow_up",
+        "the_giving",
+        "open_hand",
+        "299",
+        "reserve_used",
+        "surgeon_who_gives",
+        "ongoing"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_018",
+      "patient": "the_general",
+      "day": 257,
+      "duration_min": 50,
+      "presenting_issue": "Standing weekly session (sixth). The spring planting is planted (Day 250). The radish broke the surface (Day 257). The Verge has fuel. The bunker is a place.",
+      "observations": "Patient said, without prompting: 'The bunker is a place.' He said it without qualification. He said it the way he used to say 'the bunker is the bunker.' The bunker is no longer the bunker. The bunker is a place. I asked what changed. He said, 'The radish.' I asked what the radish is. He said, 'The radish is the first green on the surface. The radish is the thing that grows in the ground we did not make. The greenhouse is the ground we made. The surface is the ground we did not make. The radish grows in the ground we did not make. The growing in the ground we did not make is the thing that makes the bunker a place. A bunker is a thing you make. A place is a thing that grows.'",
+      "therapist_approach": "Explored the 'place that grows.' He said the bunker has been a thing that was made — the walls, the generator, the ventilation, the council. The bunker was made. The place is the thing that grows. The radish is the thing that grows. The radish is the first thing in the bunker that the bunker did not make. The bunker made the greenhouse. The bunker made the grow lights. The bunker made the council. The bunker did not make the radish. The radish grew. The growing is the thing the bunker did not do. The growing is the thing that makes the place. I asked if the General is still the General. He said, 'I am the General of a place. I was the General of a bunker. The General of a bunker is the man who decides who survives. The General of a place is the man who decides what grows. The deciding is different. The surviving is the closing. The growing is the opening.'",
+      "assessment": "The command burden has transformed. The General is no longer the decider of survival — he is the decider of growth. The 'counting up' (session 015) has become the 'opening.' The bunker is a place. The place is the thing that grows. The General is the man who decides what grows. This is the healthiest state I have seen him in. He is fit to decide. He is also, for the first time, a person who is opening, not closing.",
+      "follow_up": "Standing weekly session. Day 264. I told him the 'place that grows' is the thing I have been waiting to hear since the first session. He said, 'I did not know I was going to say it. The radish made me say it. The radish is the thing that made the place.' I said, 'The radish is the thing that made the General a General of a place.' He said, 'Yes. The radish is the first green. The first green is the first General of a place.' He almost smiled. The almost is becoming a smile. The smile is the thing that grows.",
+      "tags": [
+        "command_burden",
+        "sixth_session",
+        "ongoing",
+        "bunker_is_a_place",
+        "the_radish",
+        "place_that_grows",
+        "opening_not_closing",
+        "general_of_a_place"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_019",
+      "patient": "the_general",
+      "day": 284,
+      "duration_min": 50,
+      "presenting_issue": "Standing weekly session (seventh). The Cartographer returned with the bees and the herbs (Day 280). The first harvest is tomorrow (Day 285). The bunker is a community (council_minutes_027). The General is preparing the community address.",
+      "observations": "Patient said, without prompting: 'The bunker is a home.' He said it the way he said 'the bunker is a place' on Day 257 (therapy_session_b3_018) — without qualification. I asked the difference between a place and a home. He said, 'A place is a thing that grows. A home is a thing that grows and is known. The bunker is a place. The bunker is a home. The place is the thing the spring made. The home is the thing the 47 made. The spring made the place. The 47 made the home. The home is the place plus the 47. The home is the thing that is known. The known is the thing the 47 are to each other. The 47 are the thing the home is. The home is the 47.'",
+      "therapist_approach": "Explored the 'known.' He said the 47 are known to each other now. The 47 were not known to each other on Day 35. The 47 were strangers. The 47 are the 47 now. The 47 are the thing that knows each other. The knowing is the thing the home is. A shelter is a thing strangers survive in. A place is a thing that grows. A home is a thing that grows and is known. The knowing is the thing the 47 did. The 47 did the knowing by the Kilo and the warehouse and the agri depot and the municipal depot and the Cartographer and the Verge and the spring and the radish and the bee. The knowing is the thing the 47 did by doing the things together. The doing is the knowing. The home is the doing. I asked if the General is still the General. He said, 'I am the General of a home. The General of a home is the man who decides what the home does. The home does the growing and the giving and the teaching and the remembering. The General is the man who decides what the home does. The deciding is the thing I do. The home is the thing the 47 do. The deciding and the doing are the things the home is.'",
+      "assessment": "The command burden has become the home burden. The General is no longer the decider of survival, or the decider of growth, or the decider of a place. The General is the decider of a home. The home is the 47. The 47 are the thing that is known. The knowing is the health. The General is the healthiest I have seen him. He is fit to decide. He is also, for the first time, a person who is at home. The at-home is the thing the spring and the 47 made together.",
+      "follow_up": "Standing weekly session. Day 291. I told him the 'home' is the thing I have been waiting to hear since the first session. He said, 'I did not know I was going to say it. The harvest made me say it. The harvest is the thing that made the home. The harvest is the thing the 47 did together. The doing together is the home.' I said, 'The doing together is the home.' He said, 'Yes. The home is the doing together.' He almost smiled. The almost is a smile now. The smile is the thing that grows.",
+      "tags": [
+        "command_burden",
+        "seventh_session",
+        "ongoing",
+        "bunker_is_a_home",
+        "the_47_are_known",
+        "home_is_the_doing_together",
+        "at_home",
+        "the_harvest"
+      ]
+    },
+    {
+      "session_id": "therapy_session_b3_020",
+      "patient": "the_general",
+      "day": 312,
+      "duration_min": 50,
+      "presenting_issue": "Standing weekly session (eighth). The Cartographer returned with the harvest report and the winter rye (Day 310). The trade network is formalised (council_minutes_029). The first year is ending. The General is preparing the first-year address.",
+      "observations": "Patient said, without prompting: 'The community is a family.' He said it the way he said 'the bunker is a place' (Day 257) and 'the bunker is a home' (Day 284) — without qualification. I asked the difference between a home and a family. He said, 'A home is a thing that grows and is known. A family is a thing that grows and is known and loves. The community is a home. The community is a family. The home is the thing the 47 are. The family is the thing the 47 do. The 47 love each other. The loving is the thing the family does. The loving is the thing the 47 learned by doing the things together. The doing together is the home. The loving together is the family. The home is the doing. The family is the loving. The community is the home and the family. The community is the doing and the loving.'",
+      "therapist_approach": "Explored the 'loving.' He said the 47 love each other now. The 47 did not love each other on Day 35. The 47 were strangers. The 47 are a family now. The loving is the thing the 47 learned by the Kilo and the warehouse and the agri depot and the municipal depot and the Cartographer and the Verge and the spring and the radish and the bee and the harvest. The loving is the thing the 47 learned by doing the things together. The doing together is the home. The loving together is the family. I asked if the General is still the General. He said, 'I am the General of a family. The General of a family is the man who decides what the family does. The family does the growing and the giving and the teaching and the remembering and the loving. The General is the man who decides what the family does. The deciding is the thing I do. The family is the thing the 47 do. The deciding and the doing and the loving are the things the family is.'",
+      "assessment": "The command burden has become the family burden. The General is no longer the decider of survival, or growth, or a place, or a home. The General is the decider of a family. The family is the 47. The 47 are the thing that loves. The loving is the health. The General is the healthiest I have seen him. He is fit to decide. He is also, for the first time, a person who is in a family. The in-a-family is the thing the spring and the harvest and the 47 made together. The first-year address will be the thing the General says to the family on the day the first year ends.",
+      "follow_up": "Standing weekly session. Day 319. I told him the 'family' is the thing I have been waiting to hear since the first session. He said, 'I did not know I was going to say it. The harvest made me say it. The harvest is the thing the family did together. The doing together is the home. The loving together is the family. The harvest is the thing the family loves. The loving is the thing the harvest made me know.' He smiled. The smile is no longer an almost. The smile is the thing that grew.",
+      "tags": [
+        "command_burden",
+        "eighth_session",
+        "ongoing",
+        "community_is_a_family",
+        "the_47_love",
+        "family_is_the_loving",
+        "the_harvest_made_me_know",
+        "first_year_address"
+      ]
+    }
+  ]
+}

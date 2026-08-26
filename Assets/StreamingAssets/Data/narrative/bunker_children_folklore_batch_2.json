@@ -1,92 +1,155 @@
-[
-  {
-    "id": "folklore_b2_the_water_drops_lullaby",
-    "tradition_type": "BEDTIME_LULLABY",
-    "origin_sector": "CHILDRENS_DORMITORY",
-    "folk_theme": "CONDENSATION_PIPE_COMFORT",
-    "timestamp_relative": "YEAR_05_OBSERVED",
-    "tags": ["folklore", "children", "lullaby", "water", "sleep"],
-    "prose": "Sung by the Therapist to the children at bedtime, accompanied by the rhythm of the condensation pipe dripping in the corridor. 'Drip, drop, the water finds its way. / Drip, drop, it will be a better day. / The pipe is tired, the tank is full, / The water rests in its concrete pool. / Close your eyes, the drip goes on. / You'll be warm until the dawn.' Sonya insists the pipe has a name — 'Mr. Drip' — and that he gets lonely if no one sings to him."
-  },
-  {
-    "id": "folklore_b2_the_dosimeter_hide_and_seek",
-    "tradition_type": "PLAYGROUND_GAME",
-    "origin_sector": "GYMNASIUM_CORRIDOR",
-    "folk_theme": "RADIATION_AWARENESS_THROUGH_PLAY",
-    "timestamp_relative": "YEAR_07_OBSERVED",
-    "tags": ["folklore", "children", "game", "dosimeter", "hide_and_seek"],
-    "prose": "A game invented by Petr (age 10) that combines hide-and-seek with radiation awareness. One child is 'the Geiger' and stands in the centre with their eyes closed. The other children hide. The Geiger counts to twenty, then walks the corridors calling 'Click-click-click.' When the Geiger points at a hiding spot and says 'Hot!' the hidden child must come out and say their dosimeter reading (a number they make up). If the reading is above fifty, the child is 'contaminated' and must walk slowly back to base. If below fifty, they are 'clean' and can run. No actual dosimeters are used. The children have memorised the safety thresholds from the poster in the mess hall."
-  },
-  {
-    "id": "folklore_b2_the_bunker_is_a_body",
-    "tradition_type": "SCHOOLROOM_ANALOGY_STORY",
-    "origin_sector": "EDUCATION_ROOM",
-    "folk_theme": "INFRASTRUCTURE_AS_ORGANISM",
-    "timestamp_relative": "YEAR_09_OBSERVED",
-    "tags": ["folklore", "children", "education", "bunker", "body_metaphor"],
-    "prose": "The Teacher's analogy, repeated so many times the children have turned it into a story they tell each other: 'The bunker is a body. The air ducts are its lungs, breathing in and out. The water pipes are its veins, carrying blood to every room. The generator is its heart — when it stops, everything stops. The walls are its skin, keeping the cold out. The hatch is its mouth — it opens to eat and speak, and closes to keep the poison out. We are the bacteria that live inside the body. But we are the good bacteria. The kind that keeps the body alive.' The children have extended the metaphor on their own: the compost toilet is 'the stomach,' the graveyard is 'where the body remembers,' and the radio antenna is 'the hair that feels the wind.'"
-  },
-  {
-    "id": "folklore_b2_the_counting_out_ash_rhyme",
-    "tradition_type": "COUNTING_OUT_RHYME",
-    "origin_sector": "MESS_HALL_QUEUE",
-    "folk_theme": "RATION_QUEUE_ORDER",
-    "timestamp_relative": "YEAR_06_OBSERVED",
-    "tags": ["folklore", "children", "counting", "rations", "queue"],
-    "prose": "Chanted by children lining up for meals to decide who gets to go first through the mess hall door: 'One, two, buckle the hatch. / Three, four, check the latch. / Five, six, the filter's fixed. / Seven, eight, the dose is right. / Nine, ten, the ash falls again.' The last child pointed to on 'again' is the one who goes first. The rhyme has been observed to exactly match the bunker's emergency drill sequence, suggesting the children learned it from overhearing the adult safety briefings and turned it into a game."
-  },
-  {
-    "id": "folklore_b2_the_surface_is_a_myth",
-    "tradition_type": "PLAYGROUND_DEBATE_TRADITION",
-    "origin_sector": "COMMON_ROOM",
-    "folk_theme": "SURFACE_REALITY_DENIAL_GAME",
-    "timestamp_relative": "YEAR_11_OBSERVED",
-    "tags": ["folklore", "children", "surface", "myth", "debate"],
-    "prose": "A game where one child claims the surface is real — sky, wind, rain, trees — and the others must argue that it is a myth invented by the adults to keep children obedient. The 'believer' must describe the surface using only things they have heard from adults or read in pre-war books. The 'sceptics' counter with bunker reality: 'If the sky is so big, why haven't we seen it? If trees are real, why do we only have the greenhouse? If rain is water falling from above, why doesn't the ceiling leak?' The game always ends the same way: a long silence, and then the believer says, quietly, 'But the Teacher says it's real.' And the sceptics say, 'The Teacher says a lot of things.' No one has ever won."
-  },
-  {
-    "id": "folklore_b2_the_three_legged_dog_tale",
-    "tradition_type": "BEDTIME_STORY",
-    "origin_sector": "NURSERY",
-    "folk_theme": "THERAPY_DOG_MYTHOLOGY",
-    "timestamp_relative": "YEAR_10_OBSERVED",
-    "tags": ["folklore", "children", "dog", "three_legged", "comfort"],
-    "prose": "The story of Masha, the three-legged therapy dog, told to children who cannot sleep. In the story, Masha lost her leg protecting the bunker from the ash — she stood at the hatch and held it closed with her body while the storm tried to get in. The children know the real story (Masha was born with a deformity, her leg was amputated when she was a pup) but they prefer the heroic version. In the story, Masha can understand every word spoken in the bunker. She reports the children's dreams to the Therapist. She guards the dormitory at night. When she presses her cold nose against a child's hand, she is checking their dosimeter with her mind. Sonya tells this story to the younger children. She always adds: 'And Masha is listening right now. So be good.'"
-  },
-  {
-    "id": "folklore_b2_the_filter_change_chant",
-    "tradition_type": "WORK_SONG",
-    "origin_sector": "VENTILATION_CHAMBER",
-    "folk_theme": "MAINTENANCE_RHYTHM",
-    "timestamp_relative": "YEAR_08_OBSERVED",
-    "tags": ["folklore", "children", "work_song", "filter", "maintenance"],
-    "prose": "Sung by children assigned to help the Electrician carry filter elements to the ventilation chamber. The rhythm matches the pace of walking down the corridor stairs: 'Pull the old one, push the new. / Check the gasket, make it true. / Screw it tight and seal it fast. / Breathe the air that's meant to last.' The Electrician says the children are better at the job than most adults because they don't complain about the dust. The chant has spread to the adult maintenance crews, who sing it during filter changes on the lower levels."
-  },
-  {
-    "id": "folklore_b2_the_graveyard_dare",
-    "tradition_type": "DARE_GAME",
-    "origin_sector": "EASTERN_FIELD_CEMETERY",
-    "folk_theme": "DEATH_FAMILIARITY_RITUAL",
-    "timestamp_relative": "YEAR_12_OBSERVED",
-    "tags": ["folklore", "children", "graveyard", "dare", "death"],
-    "prose": "Children dare each other to walk through the cemetery at the eastern field and touch every gravestone without running. The rule is: you must say the name on each stone as you touch it. If you skip a name, you go back to the start. Petr holds the record — all 31 stones in 4 minutes, 12 seconds. He says the Undertaker was watching from the workshop window the entire time and did not stop him. When asked why, the Undertaker said: 'They know the names. That's more than most adults can say. Let them walk.' Sonya refuses to play the game. She says the dead don't mind being touched but they mind being rushed."
-  },
-  {
-    "id": "folklore_b2_the_seed_wish",
-    "tradition_type": "PLANTING_RITUAL",
-    "origin_sector": "GREENHOUSE",
-    "folk_theme": "AGRICULTURAL_SUPERSTITION",
-    "timestamp_relative": "YEAR_09_OBSERVED",
-    "tags": ["folklore", "children", "seeds", "wishing", "greenhouse"],
-    "prose": "When the Botanist plants a new batch of seeds, the children are allowed to help. Each child is given one seed and told to whisper a wish into their palm before pressing it into the soil. The wishes are never spoken aloud — that would break the spell. But the Botanist has observed the children's lips moving and has learned to read them. Common wishes include: 'I wish it rains clean,' 'I wish Dad comes home,' 'I wish the lights never go out,' and, from Sonya, every time: 'I wish Masha lives forever.' The Botanist does not correct the children. She has learned that a seed planted with a wish grows at the same rate as a seed planted without one. But the child who planted it checks on it more often."
-  },
-  {
-    "id": "folklore_b2_the_siren_game",
-    "tradition_type": "EMERGENCY_DRILL_GAME",
-    "origin_sector": "ALL_SECTORS",
-    "folk_theme": "ALARM_RESPONSE_DESENSITISATION",
-    "timestamp_relative": "YEAR_07_OBSERVED",
-    "tags": ["folklore", "children", "siren", "emergency", "drill"],
-    "prose": "When the bunker's emergency siren sounds for a drill, the children race to their designated safe positions. The game is to see who arrives first without pushing, shouting, or crying. The oldest children act as 'monitors' — they count the arrivals and report to the General. The youngest children are carried by the older ones. No one has ever been injured in the siren game. The General says the children are better at emergency response than half the adults because they treat it as a game rather than a terror. Sonya says: 'The siren is just the bunker telling us to play hide-and-seek. We're very good at hide-and-seek.'"
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "folklore_b2_the_water_drops_lullaby",
+      "tradition_type": "BEDTIME_LULLABY",
+      "origin_sector": "CHILDRENS_DORMITORY",
+      "folk_theme": "CONDENSATION_PIPE_COMFORT",
+      "timestamp_relative": "YEAR_05_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "lullaby",
+        "water",
+        "sleep"
+      ],
+      "prose": "Sung by the Therapist to the children at bedtime, accompanied by the rhythm of the condensation pipe dripping in the corridor. 'Drip, drop, the water finds its way. / Drip, drop, it will be a better day. / The pipe is tired, the tank is full, / The water rests in its concrete pool. / Close your eyes, the drip goes on. / You'll be warm until the dawn.' Sonya insists the pipe has a name — 'Mr. Drip' — and that he gets lonely if no one sings to him."
+    },
+    {
+      "id": "folklore_b2_the_dosimeter_hide_and_seek",
+      "tradition_type": "PLAYGROUND_GAME",
+      "origin_sector": "GYMNASIUM_CORRIDOR",
+      "folk_theme": "RADIATION_AWARENESS_THROUGH_PLAY",
+      "timestamp_relative": "YEAR_07_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "dosimeter",
+        "hide_and_seek"
+      ],
+      "prose": "A game invented by Petr (age 10) that combines hide-and-seek with radiation awareness. One child is 'the Geiger' and stands in the centre with their eyes closed. The other children hide. The Geiger counts to twenty, then walks the corridors calling 'Click-click-click.' When the Geiger points at a hiding spot and says 'Hot!' the hidden child must come out and say their dosimeter reading (a number they make up). If the reading is above fifty, the child is 'contaminated' and must walk slowly back to base. If below fifty, they are 'clean' and can run. No actual dosimeters are used. The children have memorised the safety thresholds from the poster in the mess hall."
+    },
+    {
+      "id": "folklore_b2_the_bunker_is_a_body",
+      "tradition_type": "SCHOOLROOM_ANALOGY_STORY",
+      "origin_sector": "EDUCATION_ROOM",
+      "folk_theme": "INFRASTRUCTURE_AS_ORGANISM",
+      "timestamp_relative": "YEAR_09_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "education",
+        "bunker",
+        "body_metaphor"
+      ],
+      "prose": "The Teacher's analogy, repeated so many times the children have turned it into a story they tell each other: 'The bunker is a body. The air ducts are its lungs, breathing in and out. The water pipes are its veins, carrying blood to every room. The generator is its heart — when it stops, everything stops. The walls are its skin, keeping the cold out. The hatch is its mouth — it opens to eat and speak, and closes to keep the poison out. We are the bacteria that live inside the body. But we are the good bacteria. The kind that keeps the body alive.' The children have extended the metaphor on their own: the compost toilet is 'the stomach,' the graveyard is 'where the body remembers,' and the radio antenna is 'the hair that feels the wind.'"
+    },
+    {
+      "id": "folklore_b2_the_counting_out_ash_rhyme",
+      "tradition_type": "COUNTING_OUT_RHYME",
+      "origin_sector": "MESS_HALL_QUEUE",
+      "folk_theme": "RATION_QUEUE_ORDER",
+      "timestamp_relative": "YEAR_06_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "counting",
+        "rations",
+        "queue"
+      ],
+      "prose": "Chanted by children lining up for meals to decide who gets to go first through the mess hall door: 'One, two, buckle the hatch. / Three, four, check the latch. / Five, six, the filter's fixed. / Seven, eight, the dose is right. / Nine, ten, the ash falls again.' The last child pointed to on 'again' is the one who goes first. The rhyme has been observed to exactly match the bunker's emergency drill sequence, suggesting the children learned it from overhearing the adult safety briefings and turned it into a game."
+    },
+    {
+      "id": "folklore_b2_the_surface_is_a_myth",
+      "tradition_type": "PLAYGROUND_DEBATE_TRADITION",
+      "origin_sector": "COMMON_ROOM",
+      "folk_theme": "SURFACE_REALITY_DENIAL_GAME",
+      "timestamp_relative": "YEAR_11_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "surface",
+        "myth",
+        "debate"
+      ],
+      "prose": "A game where one child claims the surface is real — sky, wind, rain, trees — and the others must argue that it is a myth invented by the adults to keep children obedient. The 'believer' must describe the surface using only things they have heard from adults or read in pre-war books. The 'sceptics' counter with bunker reality: 'If the sky is so big, why haven't we seen it? If trees are real, why do we only have the greenhouse? If rain is water falling from above, why doesn't the ceiling leak?' The game always ends the same way: a long silence, and then the believer says, quietly, 'But the Teacher says it's real.' And the sceptics say, 'The Teacher says a lot of things.' No one has ever won."
+    },
+    {
+      "id": "folklore_b2_the_three_legged_dog_tale",
+      "tradition_type": "BEDTIME_STORY",
+      "origin_sector": "NURSERY",
+      "folk_theme": "THERAPY_DOG_MYTHOLOGY",
+      "timestamp_relative": "YEAR_10_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "dog",
+        "three_legged",
+        "comfort"
+      ],
+      "prose": "The story of Masha, the three-legged therapy dog, told to children who cannot sleep. In the story, Masha lost her leg protecting the bunker from the ash — she stood at the hatch and held it closed with her body while the storm tried to get in. The children know the real story (Masha was born with a deformity, her leg was amputated when she was a pup) but they prefer the heroic version. In the story, Masha can understand every word spoken in the bunker. She reports the children's dreams to the Therapist. She guards the dormitory at night. When she presses her cold nose against a child's hand, she is checking their dosimeter with her mind. Sonya tells this story to the younger children. She always adds: 'And Masha is listening right now. So be good.'"
+    },
+    {
+      "id": "folklore_b2_the_filter_change_chant",
+      "tradition_type": "WORK_SONG",
+      "origin_sector": "VENTILATION_CHAMBER",
+      "folk_theme": "MAINTENANCE_RHYTHM",
+      "timestamp_relative": "YEAR_08_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "work_song",
+        "filter",
+        "maintenance"
+      ],
+      "prose": "Sung by children assigned to help the Electrician carry filter elements to the ventilation chamber. The rhythm matches the pace of walking down the corridor stairs: 'Pull the old one, push the new. / Check the gasket, make it true. / Screw it tight and seal it fast. / Breathe the air that's meant to last.' The Electrician says the children are better at the job than most adults because they don't complain about the dust. The chant has spread to the adult maintenance crews, who sing it during filter changes on the lower levels."
+    },
+    {
+      "id": "folklore_b2_the_graveyard_dare",
+      "tradition_type": "DARE_GAME",
+      "origin_sector": "EASTERN_FIELD_CEMETERY",
+      "folk_theme": "DEATH_FAMILIARITY_RITUAL",
+      "timestamp_relative": "YEAR_12_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "graveyard",
+        "dare",
+        "death"
+      ],
+      "prose": "Children dare each other to walk through the cemetery at the eastern field and touch every gravestone without running. The rule is: you must say the name on each stone as you touch it. If you skip a name, you go back to the start. Petr holds the record — all 31 stones in 4 minutes, 12 seconds. He says the Undertaker was watching from the workshop window the entire time and did not stop him. When asked why, the Undertaker said: 'They know the names. That's more than most adults can say. Let them walk.' Sonya refuses to play the game. She says the dead don't mind being touched but they mind being rushed."
+    },
+    {
+      "id": "folklore_b2_the_seed_wish",
+      "tradition_type": "PLANTING_RITUAL",
+      "origin_sector": "GREENHOUSE",
+      "folk_theme": "AGRICULTURAL_SUPERSTITION",
+      "timestamp_relative": "YEAR_09_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "seeds",
+        "wishing",
+        "greenhouse"
+      ],
+      "prose": "When the Botanist plants a new batch of seeds, the children are allowed to help. Each child is given one seed and told to whisper a wish into their palm before pressing it into the soil. The wishes are never spoken aloud — that would break the spell. But the Botanist has observed the children's lips moving and has learned to read them. Common wishes include: 'I wish it rains clean,' 'I wish Dad comes home,' 'I wish the lights never go out,' and, from Sonya, every time: 'I wish Masha lives forever.' The Botanist does not correct the children. She has learned that a seed planted with a wish grows at the same rate as a seed planted without one. But the child who planted it checks on it more often."
+    },
+    {
+      "id": "folklore_b2_the_siren_game",
+      "tradition_type": "EMERGENCY_DRILL_GAME",
+      "origin_sector": "ALL_SECTORS",
+      "folk_theme": "ALARM_RESPONSE_DESENSITISATION",
+      "timestamp_relative": "YEAR_07_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "siren",
+        "emergency",
+        "drill"
+      ],
+      "prose": "When the bunker's emergency siren sounds for a drill, the children race to their designated safe positions. The game is to see who arrives first without pushing, shouting, or crying. The oldest children act as 'monitors' — they count the arrivals and report to the General. The youngest children are carried by the older ones. No one has ever been injured in the siren game. The General says the children are better at emergency response than half the adults because they treat it as a game rather than a terror. Sonya says: 'The siren is just the bunker telling us to play hide-and-seek. We're very good at hide-and-seek.'"
+    }
+  ]
+}

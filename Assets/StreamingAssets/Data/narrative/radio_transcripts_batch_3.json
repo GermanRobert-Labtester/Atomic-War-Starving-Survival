@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "collection_id": "radio_transcripts_batch_3_the_long_static",
+  "description": "Third batch of radio broadcast transcripts. New stations emerge as the spectrum slowly repopulates. Includes a medical frequency broadcasting dosing advice, a numbers station variant, a children's story hour, a dead-hand repeater still cycling, and a distress call from a settlement the bunker has not contacted. Transcripts span Days 116 through 160.",
+  "broadcasts": [
+    {
+      "broadcast_id": "rad_apothecary_01_iodine_dosing",
+      "frequency_mhz": 155.8,
+      "station_name": "The Apothecary's Hour",
+      "voice_profile": "Quiet female voice, precise, mid-40s. A clock ticks steadily in the background. She speaks slowly, as if reading to someone writing it down.",
+      "day_trigger": 116,
+      "title": "Potassium Iodide — What It Is and What It Is Not",
+      "transcript": "155.8. This is the Apothecary's Hour. Today, and every third day at this time, I will broadcast what I know about potassium iodide, because I am asked and because the asking has become urgent. Potassium iodide protects the thyroid. It does not protect the rest of you. It saturates the thyroid with stable iodine so that radioactive iodine cannot enter. It is not a general radiation defence. It will not save you from a fallout storm. It will not undo a dose you have already received. The adult dose is 130 milligrams, once per day, for the duration of the exposure and seven days after. Children under twelve take half. Do not take it continuously. Continuous dosing damages the thyroid in a different way than radiation does. If you are compounding your own, the tablet must dissolve in water and the water must be drunk immediately. If your tablet crumbles, the dose is inconsistent. Inconsistent dosing is worse than no dosing. If you have no potassium iodide, do not substitute. Do not drink iodine tincture. Tincture iodine is not the same compound and it will poison you. I will repeat this in three days. If you have questions, broadcast them on 155.8 between my transmissions. I am listening.",
+      "tags": ["apothecary", "medical", "iodine", "dosing", "education"]
+    },
+    {
+      "broadcast_id": "rad_apothecary_02_chelation_warning",
+      "frequency_mhz": 155.8,
+      "station_name": "The Apothecary's Hour",
+      "voice_profile": "Same quiet voice, tighter today. The clock in the background has stopped ticking partway through — she does not acknowledge it.",
+      "day_trigger": 140,
+      "title": "Chelation — Do Not Improvise",
+      "transcript": "155.8. Apothecary's Hour. I have received a broadcast asking whether the Prussian blue used in pottery glaze can be used for chelation. The answer is no. Prussian blue the pigment and Prussian blue the pharmaceutical share a name and a colour and almost nothing else. The pharmaceutical is a specific compound, dosed, and monitored. The pigment is not. If you take pottery Prussian blue you will not chelate the caesium from your body. You will poison yourself with the iron and the binder. I do not know who is broadcasting this question. I know they are frightened because they are asking. To the broadcaster: do not take the pigment. If you have caesium burden, the only treatment is the pharmaceutical and the only thing the pharmaceutical does is reduce the burden. It does not remove it. There is no home remedy for internal contamination. There is patience, clean food, clean water, and time. I am sorry. I will broadcast the iodine repeat in three days. The clock has stopped. I will wind it after the broadcast.",
+      "tags": ["apothecary", "medical", "chelation", "warning", "poisoning_risk"]
+    },
+    {
+      "broadcast_id": "rad_storyteller_01_the_woman_and_the_well",
+      "frequency_mhz": 88.7,
+      "station_name": "The Story Lantern",
+      "voice_profile": "Older male voice, warm, unhurried, with the cadence of someone who has told stories to children for many years. A candle is audibly guttering nearby. Occasionally a child's voice asks a question and he answers it.",
+      "day_trigger": 122,
+      "title": "The Woman Who Drew Water from a Stone",
+      "transcript": "88.7. Good evening. The Story Lantern is lit. Tonight, a story for anyone who is thirsty, which is everyone, which is why it is the right story. There was a woman who lived where the river had been, and the river had gone away and taken the rain with it. She had a cup and she had a stone and she had nothing else. She put the cup on the stone and she waited. The cup did not fill. She turned the cup over and she waited. The cup did not fill. She put the cup in her lap and she said to the stone, 'I have asked you politely.' The stone said nothing, because stones do not speak, and this is the part of the story you must remember. Stones do not speak. But the woman had a neighbour, and the neighbour had a well, and the well had water, and the water was there because the neighbour had dug. The woman went to the neighbour and she said, 'I have a cup and a stone and nothing else.' The neighbour said, 'You have me.' And she gave her water. The story is not about the stone. The story is about asking. Good night. The Lantern is dimmed.",
+      "tags": ["storyteller", "children", "water", "community", "parable"]
+    },
+    {
+      "broadcast_id": "rad_storyteller_02_the_wolf_who_counted",
+      "frequency_mhz": 88.7,
+      "station_name": "The Story Lantern",
+      "voice_profile": "Same warm voice, quieter. A child asks 'are the wolves real?' and he pauses before answering.",
+      "day_trigger": 146,
+      "title": "The Wolf Who Counted to Nine",
+      "transcript": "88.7. The Story Lantern. A child asks if the wolves are real. They are real. But tonight's story is about a wolf who counted, and counting is a thing wolves do not do, which is why this is a story and not a report. There was a wolf who learned to count to nine. She counted her pack. She counted the deer. She counted the people who came to the frozen river. She did not count to hunt. She counted to know. Knowing is what wolves do when they are not hungry. When they are hungry, they do something else. The wolf counted the people and the people counted the wolf and they were both afraid, because counting someone is a way of saying you have noticed them, and being noticed is the beginning of every story that has an ending. The child asks what happened to the wolf. The wolf is still counting. The story is not over. The Lantern is dimmed. Stay where you are.",
+      "tags": ["storyteller", "children", "wolves", "counting", "parable"]
+    },
+    {
+      "broadcast_id": "rad_numbers_station_variant_03",
+      "frequency_mhz": 7.622,
+      "station_name": "Unidentified — Shortwave Repeater",
+      "voice_profile": "Synthesised female voice, flat affect, no background. The cadence is metronomic. The broadcast repeats on a 6-hour cycle.",
+      "day_trigger": 130,
+      "title": "Sequence — Cedar / Nine / Cedar",
+      "transcript": "Seven. Six. Two. Two. Cedar. Nine. Cedar. Four. Four. One. Ash. Eight. Ash. Zero. Two. Seven. Cedar. Nine. Cedar. Message follows. The river takes the road. The river takes the road. The river takes the road. End message. Seven. Six. Two. Two. Cedar. Nine. Cedar. Four. Four. One. Ash. Eight. Ash. Zero. Two. Seven. Cedar. Nine. Cedar. [cycle repeats]",
+      "tags": ["numbers_station", "shortwave", "repeater", "cipher", "unknown_origin"]
+    },
+    {
+      "broadcast_id": "rad_dead_hand_repeater_01",
+      "frequency_mhz": 3.745,
+      "station_name": "Automated Civil Defence Repeater — Site Unknown",
+      "voice_profile": "Pre-recorded male voice, official cadence, with audible tape flutter. The recording is degrading — sibilants are beginning to distort.",
+      "day_trigger": 118,
+      "title": "All-Clear Notice — Regional Sector 4",
+      "transcript": "Attention. This is an automated civil defence message. Regional Sector 4. All-clear status: confirmed. Return to your homes. Municipal water is safe. Municipal power is restored. Report to your assigned assembly point for re-registration. Repeat. Return to your homes. Municipal water is safe. Municipal power is restored. [The message loops. It has been looping, by the Historian's estimate, since Day 6. The all-clear was never true. The repeater does not know that. The repeater will not stop until its battery does, and its battery is charged by a solar panel that the sun still reaches. The sun does not know either.]",
+      "tags": ["dead_hand", "automated", "civil_defence", "false_all_clear", "repeater_loop"]
+    },
+    {
+      "broadcast_id": "rad_distress_kilo_settlement_01",
+      "frequency_mhz": 149.0,
+      "station_name": "Unidentified — Kilo Settlement (designation unconfirmed)",
+      "voice_profile": "Male voice, young, frightened, speaking fast. Wind and an engine are audible. The signal is weak and breaks frequently.",
+      "day_trigger": 152,
+      "title": "Distress Call — Water Failure, Twelve Souls",
+      "transcript": "149.0. This is— we don't have a callsign. We are twelve. Our well has failed. The well has failed. We are at— the map says Kilo. We are at Kilo. We have water for two days. We have children. Two children. If anyone— if the bunker to the west hears this, we met your man at the Shallows. The one with the mushrooms. We traded fair. We traded fair. We are not— we are not raiders. We have children. Our well has failed. 149.0. Please. [signal lost] [The Radio Host brought this to the General at 19:40. The General did not speak for a long time. The Quartermaster was present. The Quartermaster said: we have water for fifty-seven days and they have water for two. The General said: and we have fuel for twenty-two and an expedition costs fuel. The Quartermaster said: two children. The General said: I heard. The meeting continues.]",
+      "tags": ["distress", "kilo_settlement", "water_failure", "children", "moral_branch", "unknown_origin"]
+    },
+    {
+      "broadcast_id": "rad_lineman_03_the_eastern_spur_holds",
+      "frequency_mhz": 142.5,
+      "station_name": "The Lineman's Loop",
+      "voice_profile": "Gravelly male voice, lighter than previous broadcasts. He sounds like a man who has slept. The generator hum is steadier.",
+      "day_trigger": 134,
+      "title": "Eastern Spur — Temporary Repair Holds",
+      "transcript": "142.5. Lineman's Loop. The eastern spur holds. I could not get the 10mm cable. I got 8mm. I doubled it. Two 8mm cables in parallel carry the tension of one 10mm, if you ask the physics, and the physics does not lie, it only approximates. The three towers are re-tensioned. The guy anchors are the weak point now, not the wire. I will go back in the spring and pour new anchors if I can find concrete. If anyone has Portland cement — not the agricultural lime, the grey stuff — I am at the Ridge Junction signal box. I have vacuum tubes. I have the multimeter. I have a pot of coffee that is mostly chicory but I stand by it. The eastern spur holds. Three shelters keep their heat monitoring. No one gets burned today. That is the job. The job is done for today.",
+      "tags": ["lineman", "infrastructure", "repair", "trade_request", "eastern_spur"]
+    },
+    {
+      "broadcast_id": "rad_bunker_host_kilo_return_address",
+      "frequency_mhz": 98.4,
+      "station_name": "The Bunker — Evening Address",
+      "voice_profile": "The bunker's own radio host. The voice is steadier than it has been in weeks but there is a thickness to it, the kind that comes after crying or after not crying for a long time. The microphone is close. The hum of the bunker generator is the only background.",
+      "day_trigger": 172,
+      "title": "Evening Address — The Kilo Mission Returns",
+      "transcript": "98.4. This is the bunker. The evening address. I have something to tell you and I am going to tell it plainly because I have learned that plain is the only way I can do this now. Four of ours came back last night. The Courier, the Hunter, the Plumber, the Quartermaster. They went to a place called Kilo, which some of you heard on the radio two weeks ago. A settlement. Twelve people. Two children. A well that failed. They went because we heard them and because hearing someone and not going is a thing this bunker has decided it will not do. I will not tell you it was the right decision. I do not know if it was the right decision. I know it was our decision, and I know they came back, and I know twelve people have water now who did not have water before. The Quartermaster told me a thing I am going to pass on because it should not stay with me. He said the man at Kilo — the one who called us on the radio — had been holding the radio for sixteen days. He had not put it down. When our people arrived, he put the radio down. He put it down to dig. I have been at this microphone for a hundred and thirty-four days. There have been days I could not speak. There was a day I sat with the microphone open and the words were not there and I turned it off and I sat in the chapel with the Priest and he said, 'You do not have to have words.' He was right. You do not have to have words. But sometimes the words come back. And when they come back, the thing to do is say them. So I am saying them. Twelve people have water. Four of ours came back. The bunker did not lose anything it cannot replace. I will be here tomorrow at eighteen hundred. If I have words, I will use them. If I do not, I will sit with you in the quiet, which is also a thing a radio can do. 98.4. This is the bunker. Good night.",
+      "tags": ["bunker_host", "return_broadcast", "kilo_mission", "honest", "post_paralysis", "community"]
+    },
+    {
+      "broadcast_id": "rad_bunker_host_fuel_breath_address",
+      "frequency_mhz": 98.4,
+      "station_name": "The Bunker — Evening Address",
+      "voice_profile": "The bunker's radio host. The voice is steady, with the careful pacing of someone reading numbers they have checked twice. The generator hum is present. There is a faint sound of a clock ticking in the background — the newly serviced bunker clock (journal_raw_b3_20).",
+      "day_trigger": 180,
+      "title": "Evening Address — Three Days of Breath",
+      "transcript": "98.4. This is the bunker. The evening address. I have a number for you. The number is three. Three days. That is what the team brought back from the train yard — three days of generator fuel. I will not tell you three days is a lot. It is not a lot. It is three days. The generator will run for three more days than it would have. The lights will stay on for three more days. The ventilation will breathe for three more days. The cold storage will keep the food for three more days. Three days is not a solution. Three days is a breath. I am telling you this because I have learned that the honest number is the only number that lets you sleep. The honest number is: we have twenty days of fuel, and the warehouse team leaves the day after tomorrow to look for antibiotics, and the fuel they do not spend is the fuel we keep, and the fuel they do spend is zero because they walk. They walk because walking is the one thing we can afford. I will tell you something else. The clock in the corridor is ticking. The Watchmaker fixed it today. It is within one second of the right time. I do not know what the right time is. I know what the clock says, and we agree to believe it, and that is enough. The clock is ticking and the generator is humming and the team is walking and the number is three and the breath is three and the bunker is still here. 98.4. This is the bunker. Good night.",
+      "tags": ["bunker_host", "fuel_address", "honest_number", "three_days", "breath", "clock_ticking", "community"]
+    },
+    {
+      "broadcast_id": "rad_apothecary_03_antibiotic_recovery_announcement",
+      "frequency_mhz": 155.8,
+      "station_name": "The Apothecary's Hour",
+      "voice_profile": "The same quiet precise female voice. Today there is something in it that was not there before — a steadiness that comes from having news. The clock in the background is ticking again. She does not speak slowly this time. She speaks at the pace of someone who has waited to say a thing.",
+      "day_trigger": 190,
+      "title": "Antibiotics — The Number Is Three Hundred and Four",
+      "transcript": "155.8. This is the Apothecary's Hour. I have news and I am going to say it plainly because I have learned that plain is the only way I can do this now. A team from the bunker to the west recovered a pharmaceutical warehouse. The warehouse was sealed. The stock was intact. The number is three hundred and four. Three hundred and four doses of antibiotics. Amoxicillin, doxycycline, ciprofloxacin, metronidazole. All within their labelled shelf life. All in sealed manufacturer packaging. The storage conditions were pharmaceutical-grade. The Chemist — I will not say which bunker, but the Chemist knows who she is — confirmed viability by solubility proxy and packaging integrity. The antibiotics are real. I will say that again because it is the sentence that matters. The antibiotics are real. If you are listening and you have an infection and you have been waiting for a number that is not zero, the number is three hundred and four. I cannot give you the doses. The doses are in the bunker. The bunker is not my bunker. But the number is on this frequency because the number belongs to everyone who is listening and who is frightened and who has been told, correctly, that without antibiotics an infection is a death. The number is three hundred and four. It is not infinite. It is not zero. It is the number we have. To the broadcaster who asked me on Day 140 whether pottery Prussian blue could be used for chelation — the answer is still no. But the question was the question of a person who is frightened and who is looking for a number. The number for chelation is still not here. The number for antibiotics is three hundred and four. I will repeat the iodine dosing protocol in three days. I will repeat this announcement tomorrow. The number is three hundred and four. The clock is ticking. The number is real. 155.8. This is the Apothecary's Hour.",
+      "tags": ["apothecary", "antibiotics", "recovery_announcement", "the_number_304", "medical", "hope", "wider_spectrum"]
+    },
+    {
+      "broadcast_id": "rad_lineman_04_settlement_loses_power",
+      "frequency_mhz": 142.5,
+      "station_name": "The Lineman's Loop",
+      "voice_profile": "Gravelly male voice, urgent but controlled. The generator hum is gone — he is broadcasting on a battery. The wind is loud. He sounds like a man who is cold and is telling you about it because the telling is the thing he can do.",
+      "day_trigger": 198,
+      "title": "The Verge Has Gone Dark",
+      "transcript": "142.5. Lineman's Loop. The Verge has gone dark. The Verge is a settlement, 30 kilometres east of me, 6 shelters, maybe 40 people. They had a micro-hydro setup on the river. The river froze. The hydro stopped. They ran on battery for 4 days. The battery is dead. The Verge is dark. I know because I walked there yesterday. I walked 30 kilometres to tell them I have vacuum tubes and a multimeter and I cannot help them because I do not have a river that is not frozen. They asked me if the bunker to the west has power. I said I do not know the bunker. They said the bunker has a generator. I said all bunkers have generators. They said the bunker has fuel. I said all bunkers have fuel until they do not. They asked me to ask. So I am asking. If the bunker to the west is listening — the bunker that traded salt with the Freeholders, the bunker that sent a man to the Shallows with mushrooms — if you are listening, the Verge is dark and the Verge is cold and the Verge has 40 people and the river will not thaw until spring. I do not know what you can do. I know you can hear this. The Verge cannot hear this. The Verge is dark. I am the Lineman and I am asking for the Verge because the Verge cannot ask. 142.5. The Lineman's Loop. The wind is cold. The Verge is colder.",
+      "tags": ["lineman", "the_verge", "settlement_dark", "micro_hydro_frozen", "request_for_bunker", "cold", "community"]
+    },
+    {
+      "broadcast_id": "rad_apothecary_04_antibiotic_protocol",
+      "frequency_mhz": 155.8,
+      "station_name": "The Apothecary's Hour",
+      "voice_profile": "The same quiet precise voice. The clock is ticking. She is calmer than the first broadcasts — the announcement of the 304 has been made and the repeat is the protocol.",
+      "day_trigger": 200,
+      "title": "Antibiotic Conservation — The Protocol for Anyone Listening",
+      "transcript": "155.8. Apothecary's Hour. This is the conservation protocol for anyone who has recovered antibiotics and is listening. The protocol is: do not use the antibiotics for viral infections. Antibiotics do not work on viruses. The common cold is a virus. The ash cough is a virus. Most sore throats are viruses. If you use the antibiotics on viruses, you waste the reserve and you breed resistance in the bacteria that are present. The reserve is finite. The resistance is forever. Use the antibiotics for bacterial infections only: wound infections, dysentery with blood, pneumonia with fever and productive cough, sepsis. The signs of sepsis are: high fever, rapid heart, confusion, and the skin that is warm and then cold. If you see these signs, use the antibiotic. If you do not, do not. The reserve is the thing you hold. The holding is the thing you do. The holding is harder than the not-having. I said this before. I am saying it again because the saying is the protocol. Hold the reserve. Use it when you must. Document every dose. The number is 304 in the bunker I know of. Your number may be different. Your number is also finite. Hold it. 155.8. Apothecary's Hour. The clock is ticking. The reserve is holding.",
+      "tags": ["apothecary", "antibiotics", "conservation_protocol", "viral_vs_bacterial", "sepsis_signs", "medical", "hold_the_reserve"]
+    },
+    {
+      "broadcast_id": "rad_storyteller_03_the_generator_and_the_seed",
+      "frequency_mhz": 88.7,
+      "station_name": "The Story Lantern",
+      "voice_profile": "The older male voice, quieter than usual. A child is not present tonight. The candle is guttering. He sounds like a man telling a story to himself because the telling is the thing he can do.",
+      "day_trigger": 205,
+      "title": "The Generator and the Seed",
+      "transcript": "88.7. The Story Lantern. Tonight, a story for anyone who is counting. There was a bunker that had a generator and a seed. The generator was the thing that ran. The seed was the thing that grew. The generator ran on fuel and the fuel ran out. The seed grew on light and the light ran on the generator. When the generator stopped, the light stopped, and the seed grew on the light that was left, which was the light from a small lamp that a man had built from a radio. The small lamp was not enough for the seed but the seed grew anyway because the seed does not know the lamp is small. The seed knows only the light. The generator was the thing that ran out. The seed was the thing that did not. The bunker learned to live without the generator. The bunker did not learn to live without the seed. The seed is the thing that outlives the generator. The seed is the thing that outlives the practice. The seed is the proof. The Lantern is dimmed. The story is for the counters. The count is the thing that runs out. The seed is the thing that does not. Good night.",
+      "tags": ["storyteller", "parable", "generator", "seed", "the_proof", "counting", "children_or_not"]
+    },
+    {
+      "broadcast_id": "rad_storyteller_04_the_spring",
+      "frequency_mhz": 88.7,
+      "station_name": "The Story Lantern",
+      "voice_profile": "The older male voice, warmer than it has been in months. The candle is steady. A child is present tonight — one child, quiet, listening. The voice has the cadence of a man who is telling a story he believes.",
+      "day_trigger": 225,
+      "title": "The Spring — For Anyone Who Has Been Counting Down",
+      "transcript": "88.7. The Story Lantern. Tonight, a story for anyone who has been counting down. There was a bunker that counted down. The bunker counted the fuel and the food and the days and the ceiling. The bunker counted down because the counting down is the thing you do when you are surviving. One day, the bunker found a source. The source was a thing that did not go down. The source was a thing that stayed. The bunker did not know how to count a thing that stayed. The bunker had been counting down for so long that the counting down was the only counting the bunker knew. Then the bunker met a walker. The walker walked the wasteland and the walker said the spring is coming. The spring is the thing that makes the ground remember how to grow. The ground remembers. The moss comes first. The moss is the first. The bunker did not know what to do with a spring. The bunker had been counting down. The spring is a thing you count up to. The bunker learned to count up. The counting up is the thing you do when you are not surviving. The counting up is the thing you do when you are living. The spring is the thing that turns the counting. The spring is the thing that turns the bunker into a place. A bunker is a thing you survive in. A place is a thing you live in. The spring is the thing that turns. The moss is the first. The seeds are the next. The growing is the thing after. The Lantern is lit. The spring is coming. The counting is turning. Good night.",
+      "tags": ["storyteller", "the_spring", "counting_up", "moss_first", "bunker_to_place", "hope", "parable"]
+    },
+    {
+      "broadcast_id": "rad_bunker_host_the_spring_address",
+      "frequency_mhz": 98.4,
+      "station_name": "The Bunker — Evening Address",
+      "voice_profile": "The bunker's radio host. The voice is lighter than it has been since the first broadcast. The generator hum is steady. The clock is ticking. There is a sound in the background that was not there before — the faint crackle of a wood stove. The corridor is cold. The voice is warm.",
+      "day_trigger": 222,
+      "title": "Evening Address — The Counting Turns",
+      "transcript": "98.4. This is the bunker. The evening address. I have a thing to tell you and the thing is not a number. The thing is a word. The word is 'spring.' The Cartographer came. The Cartographer is a man who walks the wasteland and maps it and leaves caches for the walkers who come after. The Cartographer met the Courier at the cache on Day 220. The Cartographer brought maps. The maps show the fuel and the water and the low-dose zones and the settlements. The maps show the spring. The spring is coming. The Meteorologist says the data confirms it. The Botanist has seeds. The seeds are the thing the Cartographer gave. The seeds are the thing the bunker will plant when the ground says yes. The ground will say yes by Day 250. I am not telling you the spring is here. I am telling you the spring is coming. The coming is the thing that changes the counting. We have been counting down. The fuel was a countdown. The food was a countdown. The grow lights were a countdown. The countdown is the thing you do when you are surviving. The spring is the thing you count up to. The counting up is the thing you do when you are living. We are not living yet. We are surviving. But the surviving is turning. The counting is turning. The spring is coming. The clock is ticking. The stove is warm. The corridor is cold. The seeds are in the greenhouse. The spring is the thing that turns the bunker into a place. We are the bunker. We are becoming the place. 98.4. This is the bunker. Good night.",
+      "tags": ["bunker_host", "spring_address", "counting_turns", "cartographer", "seeds", "bunker_to_place", "community"]
+    },
+    {
+      "broadcast_id": "rad_apothecary_05_the_299",
+      "frequency_mhz": 155.8,
+      "station_name": "The Apothecary's Hour",
+      "voice_profile": "The same quiet precise voice. The clock is ticking. She sounds like a person who has given something away and is telling the story of the giving.",
+      "day_trigger": 224,
+      "title": "The 299 — A Reserve That Was Used",
+      "transcript": "155.8. Apothecary's Hour. I have a number for you. The number is 299. The number was 304. The number is now 299 because the bunker gave 5 doses to a walker who walks the wasteland and maps it and does not have antibiotics. The 5 doses are the first doses the bunker has given away. The giving is the thing that makes the 299 different from the 304. The 304 was a holding. The 299 is a giving. A reserve that is held is a hoard. A reserve that is given is a reserve. The difference is the opening of the hand. The hand opened. The 5 doses went to the walker. The walker's hands shook when he took them. The shaking is the thing that means the 5 are not a number. The 5 are a thing that makes hands shake. The shaking is the thing that means the antibiotics are precious and the precious is the thing that is given. The giving is the health. I said this before. I am saying it again because the saying is the protocol. The reserve is 299. The reserve is a reserve that was used. The reserve is a reserve that was given. The 299 is the number of a reserve that is alive. A reserve that is alive is a reserve that is used. Hold the reserve. Use it when you must. Give it when you can. The 299 is the number. The clock is ticking. The reserve is alive. 155.8. Apothecary's Hour.",
+      "tags": ["apothecary", "the_299", "reserve_used", "giving", "open_hand", "medical", "hope"]
+    },
+    {
+      "broadcast_id": "rad_storyteller_05_the_moss_and_the_name",
+      "frequency_mhz": 88.7,
+      "station_name": "The Story Lantern",
+      "voice_profile": "The older male voice, the warmest it has been. The candle is steady. A child is present. The voice has the cadence of a man who is telling a story about a thing he has seen.",
+      "day_trigger": 260,
+      "title": "The Moss and the Name — For Anyone Who Has Been Watching",
+      "transcript": "88.7. The Story Lantern. Tonight, a story for anyone who has been watching. There was a man who watched the wolves. He watched the wolves because the watching was the thing he did. The watching was the thing that kept him awake and the watching was the thing that saw the thing that watched the wolves. The thing that watched the wolves was a man who walked and carved and left things for the walkers who came after. The watcher and the walker were the same thing in different bodies. The watcher watched. The walker walked. The walker carved a wolf from pine and gave the wolf to the watcher. The wolf was the watching in wood. The watcher held the wolf and the holding was the watching and the watching was the holding. Then the wolves went away. The watcher did not know what to watch. A man said to the watcher: you watch the spring. The spring is the thing that grows. The growing is the slow thing. The slow thing is the moss. The moss is the first. The moss is the thing that grows on the rocks when the ground remembers how to grow. The watcher learned to watch the moss. The watching of the moss is the same as the watching of the wolves. The watching is the thing that does not change. The thing that is watched changes. The wolves were the fast thing. The moss is the slow thing. The watching is the same. There was a boy who wrote. The boy wrote the word for green. The word for green is the thing that grows in the book. The radish is the thing that grows in the soil. The word and the radish are the same thing. The growing is the same. There was a woman who said a name in her sleep. The name was the name of a person who was not there. The name was the slow thing. The name was the thing she carried. The name was the moss. The moss is the first. The name is the first. The watching and the writing and the naming are the same thing. They are the things that grow. The spring is the thing that makes them grow. The moss and the name and the word and the radish are the things that grow. The growing is the spring. The spring is here. The Lantern is lit. The spring is here. Good night.",
+      "tags": ["storyteller", "the_moss", "the_name", "watching", "growing", "spring_here", "parable", "bouncer", "child_soldier", "widow"]
+    },
+    {
+      "broadcast_id": "rad_lineman_05_the_verge_has_power",
+      "frequency_mhz": 142.5,
+      "station_name": "The Lineman's Loop",
+      "voice_profile": "Gravelly male voice, the lightest it has been. The generator hum is back. The wind is warm. He sounds like a man who has heard good news and is passing it on because the passing is the thing he can do.",
+      "day_trigger": 285,
+      "title": "The Verge Has Power",
+      "transcript": "142.5. Lineman's Loop. The Verge has power. I walked there again. 30 kilometres. The river is melting. The micro-hydro is not running yet but the Verge has a generator and the generator has fuel. The fuel came from somewhere. I did not ask where. The Verge did not say. The Verge has lights. The Verge has children outside. The children are outside because the lights are on. The lights are on because the generator has fuel. The fuel came from somewhere. I did not ask. I am the Lineman. I do not ask where the fuel comes from. I ask if the towers are standing. The towers at the Verge are standing. The micro-hydro will run when the river melts. The river is melting. The micro-hydro will run. The generator is the bridge. The micro-hydro is the destination. The bridge is the thing the Verge has now. The destination is the thing the Verge will have. I am the Lineman. I fix the bridges. The Verge has a bridge. The Verge has lights. The Verge has children outside. The wind is warm. The river is melting. The towers are standing. The Verge has power. That is the news. 142.5. Lineman's Loop. The wind is warm.",
+      "tags": ["lineman", "the_verge", "has_power", "lights_on", "children_outside", "the_bridge", "good_news", "community"]
+    },
+    {
+      "broadcast_id": "rad_storyteller_06_the_bee_and_the_word",
+      "frequency_mhz": 88.7,
+      "station_name": "The Story Lantern",
+      "voice_profile": "The older male voice, warm, with the cadence of a man telling a story about a thing he has seen on the surface. A child is present. The candle is steady. The wind is audible — the Story Lantern is broadcasting from near a window.",
+      "day_trigger": 295,
+      "title": "The Bee and the Word — For Anyone Who Is Learning",
+      "transcript": "88.7. The Story Lantern. Tonight, a story for anyone who is learning. There was a boy who wrote. The boy wrote the word for green. The boy wrote the word for bee. The word for green is the thing that grows in the book. The word for bee is the thing that flies in the book. The bee is the thing that flies on the surface. The word and the bee are the things that do not know each other. The word does not know the bee. The bee does not know the word. The word and the bee are the things that are together on the surface. The surface is the thing that holds the things that do not know each other. The surface is the thing that holds the not-knowing. The not-knowing is the thing that is the surface. The bunker is the thing that holds the knowing. The knowing is the thing that is the bunker. The community is the thing that holds both. The community is the bunker and the surface. The community is the knowing and the not-knowing. The community is the thing that holds both. The boy is the thing that writes the words. The bee is the thing that flies. The writing and the flying are the things the community holds. The community is the thing that holds. The boy writes. The bee flies. The community holds both. The Lantern is lit. The bee is on the flower. The word is in the book. The community holds both. Good night.",
+      "tags": ["storyteller", "the_bee", "the_word", "the_not_knowing", "community", "child_soldier", "parable", "learning"]
+    },
+    {
+      "broadcast_id": "rad_bunker_host_the_community_address",
+      "frequency_mhz": 98.4,
+      "station_name": "The Bunker — Evening Address",
+      "voice_profile": "The bunker's radio host. The voice is warm, steady, and at home. The generator hums. The clock ticks. The wood stove crackles. The sounds of the bunker are the sounds of a home.",
+      "day_trigger": 286,
+      "title": "Evening Address — The Bunker Is a Community",
+      "transcript": "98.4. This is the bunker. The evening address. I have a word for you. The word is 'community.' The General addressed the community today. The General said the bunker is a community. A shelter is a thing you survive in. A place is a thing that grows. A community is a thing that grows and gives and teaches and remembers. The bunker is a community. The community is the 47. The 47 are the thing that grows and gives and teaches and remembers. I will tell you what the community did today. The community harvested the first radish from the surface. The community planted the medicinal herbs. The community saw the first bee. The community is the thing that does these things. The community is the 47. The 47 are the thing I speak to. The 47 are the thing I speak for. I am the Radio Host. I speak. The community listens. The listening is the thing the community does. The speaking and the listening are the things the community does together. The doing together is the community. The community is the doing together. 98.4. This is the community. Good night.",
+      "tags": ["bunker_host", "community_address", "the_47", "doing_together", "first_harvest", "first_bee", "home", "community"]
+    },
+    {
+      "broadcast_id": "rad_apothecary_06_the_herb_harvest",
+      "frequency_mhz": 155.8,
+      "station_name": "The Apothecary's Hour",
+      "voice_profile": "The same quiet precise voice. The clock is ticking. She sounds like a person who has harvested a thing she grew and is telling the story of the growing and the harvesting.",
+      "day_trigger": 320,
+      "title": "The Herb Harvest — The First Community Medicine",
+      "transcript": "155.8. Apothecary's Hour. I have a thing to tell you. The thing is the herb harvest. The herbs are the thing the community grew. The herbs are echinacea, chamomile, yarrow. The Chemist planted them (maint_log_b3_023). The Chemist is the bridge between the garden and the clinic. The herbs are the bridge. The bridge is the thing that connects the garden and the clinic. The garden is the thing that grows. The clinic is the thing that uses. The herbs are the thing that is grown and used. The growing and the using are the things the bridge does. The herbs are the first community medicine. The antibiotics are the reserve (294 doses, the thing the bunker found). The herbs are the garden (the thing the community grew). The reserve is the thing from the warehouse (exp_report_pharmaceutical_warehouse_01). The herbs are the thing from the Cartographer (diplomatic_contact_003). The warehouse and the Cartographer are the things the clinic is from. The clinic is the thing that uses the warehouse and the Cartographer. The reserve is the warehouse. The herbs are the Cartographer. The clinic is the thing that uses both. The herb harvest is the thing the community did. The harvest is the thing the community does. The herbs are the thing the community grew. The growing is the thing the community does. The community is the thing that grows. The shelter did not grow. The shelter stored. The community grows. The community is the thing that grows. The herbs are the first community medicine. The herbs are the thing the community grew and the thing the clinic will use. The using is the thing the clinic does. The growing is the thing the community does. The growing and the using are the bridge. The Chemist is the bridge. The herbs are the bridge. The clinic is the bridge. The bridge is the thing that connects. The connecting is the thing the community does. The first community medicine is the herbs. The first community medicine is the thing the community grew. 155.8. Apothecary's Hour. The clock is ticking. The herbs are growing. The community is growing.",
+      "tags": ["apothecary", "herb_harvest", "first_community_medicine", "the_bridge", "chemist", "echinacea", "chamomile", "yarrow", "community_grows"]
+    },
+    {
+      "broadcast_id": "rad_bunker_host_the_first_year_address",
+      "frequency_mhz": 98.4,
+      "station_name": "The Bunker — Evening Address",
+      "voice_profile": "The bunker's radio host. The voice is full, warm, and steady — the voice of a person who has been at the microphone for 330 days and is saying the thing the family needs to hear on the day the first year ends. The generator hums. The clock ticks. The wood stove crackles. The sounds of the home are the sounds of the broadcast.",
+      "day_trigger": 365,
+      "title": "The First-Year Address — The Community Is a Family",
+      "transcript": "98.4. This is the community. The first-year address. The General addressed the family today. The General said the community is a family. A shelter is a thing you survive in. A place is a thing that grows. A home is a thing that grows and is known. A family is a thing that grows and is known and loves. The community is a family. The family is the 47. The 47 are the thing that grows and gives and teaches and remembers and loves. I will tell you what the family did in the first year. The family survived. The family became a place. The family became a community. The family became a home. The family became a family. The family gave fuel to Kilo. The family recovered antibiotics. The family recovered grow lights. The family recovered fuel. The family met the Cartographer. The family gave fuel to the Verge. The family planted the spring. The family saw the bee. The family harvested the radish. The family harvested the wheat. The family planted the winter rye. The family did these things together. The doing together is the home. The loving together is the family. The first year is ending. The second year is beginning. The second year is the year the family lives. The living is the thing the family does. The living is the growing and the giving and the teaching and the remembering and the loving. The living is the thing the second year is for. I am the Radio Host. I speak. The family listens. The listening is the thing the family does. The speaking and the listening are the things the family does together. The doing together is the home. The loving together is the family. The first year is ending. The second year is beginning. The family is the 47. The 47 are the family. 98.4. This is the family. Good night. Good year.",
+      "tags": ["bunker_host", "first_year_address", "community_is_a_family", "the_47", "the_first_year", "the_second_year", "the_living", "good_year"]
+    },
+    {
+      "broadcast_id": "rad_storyteller_07_the_first_year",
+      "frequency_mhz": 88.7,
+      "station_name": "The Story Lantern",
+      "voice_profile": "The older male voice, the warmest it has ever been. The candle is steady. A child is present — the Child Soldier, with his yellow pencil. The voice has the cadence of a man telling the story of the whole thing.",
+      "day_trigger": 365,
+      "title": "The First Year — For Anyone Who Has Been Listening",
+      "transcript": "88.7. The Story Lantern. Tonight, the story of the first year. There was a bunker. The bunker had 47 people. The 47 were strangers. The strangers survived. The surviving was the first thing the 47 did together. The surviving made the 47 a shelter. The shelter was the thing the 47 survived in. Then the 47 found a source. The source was the thing that did not go down. The 47 planted. The planting was the thing that grew. The growing made the 47 a place. The place was the thing that grew. Then the 47 met a walker. The walker was the thing that walked. The walker said the spring is coming. The spring came. The spring made the 47 a home. The home was the thing that grew and was known. Then the 47 harvested. The harvesting was the thing the 47 did together. The doing together made the 47 a family. The family was the thing that grew and was known and loved. The shelter was the surviving. The place was the growing. The home was the knowing. The family was the loving. The first year was the shelter, the place, the home, and the family. The first year was the 47. The 47 were the thing the first year made. The first year is ending. The second year is beginning. The second year is the year the family lives. The living is the thing the family does. The family is the 47. The 47 are the thing the second year is for. The Lantern is lit. The first year is ending. The second year is beginning. The family is the 47. The 47 are the story. Good night. Good year.",
+      "tags": ["storyteller", "the_first_year", "shelter_place_home_family", "the_47", "the_story", "good_year", "parable", "child_soldier_present"]
+    },
+    {
+      "broadcast_id": "rad_storyteller_08_the_second_year",
+      "frequency_mhz": 88.7,
+      "station_name": "The Story Lantern",
+      "voice_profile": "The older male voice, warm, with the cadence of a man telling a story about a beginning. The candle is steady. The Child Soldier is present with his yellow pencil. The wind is cold — the second winter.",
+      "day_trigger": 366,
+      "title": "The Second Year — For Anyone Who Is Beginning",
+      "transcript": "88.7. The Story Lantern. Tonight, a story for anyone who is beginning. There was a family that began a second year. The first year was the surviving and the growing and the knowing and the loving. The second year is the living. The living is the thing the family does. The family is the 47. The 47 are the thing the second year is for. The second year begins with the standing. The 47 stood. The standing is the thing the family does at the beginning. The first year the 47 sat. The second year the 47 stood. The sitting was the surviving. The standing is the living. The living is the thing the second year is. The second year is the year the family lives. The living is the growing and the giving and the teaching and the remembering and the loving. The living is the thing the family does. The family is the 47. The 47 are the living. The second year is the living. The Lantern is lit. The second year begins. Good night. Good year. The second year.",
+      "tags": ["storyteller", "the_second_year", "the_living", "the_47_stood", "beginning", "parable", "child_soldier_present"]
+    },
+    {
+      "broadcast_id": "rad_bunker_host_the_second_year_address",
+      "frequency_mhz": 98.4,
+      "station_name": "The Bunker — Evening Address",
+      "voice_profile": "The bunker's radio host. The voice is full and warm — the voice of a person who has been at the microphone for 331 days and is saying the thing the family needs to hear on the first day of the second year. The generator hums. The clock ticks. The wood stove crackles. The sounds of the home are the sounds of the second year.",
+      "day_trigger": 366,
+      "title": "Evening Address — The Second Year Begins",
+      "transcript": "98.4. This is the family. The evening address. The second year begins. The General addressed the 47 this morning. The General said the second year is the year the family lives. The 47 stood. The standing is the thing the family does at the beginning. The first year the 47 sat. The second year the 47 stood. The sitting was the surviving. The standing is the living. The living is the thing the second year is. The second year is the year the family lives. The living is the growing and the giving and the teaching and the remembering and the loving. The living is the thing the family does. The family is the 47. The 47 are the living. I will tell you what the family did on the first day of the second year. The family stood. The family checked the winter rye under the snow. The family began the second-year record. The family wrote the word for year. The family held the four carvings — the wolf, the bee, the wheat, the snowflake. The family did these things together. The doing together is the home. The loving together is the family. The second year is the year the family lives. The living is the thing the family does. 98.4. This is the family. Good night. Good year. The second year.",
+      "tags": ["bunker_host", "second_year_address", "the_47_stood", "the_living", "good_year", "family"]
+    },
+    {
+      "broadcast_id": "rad_apothecary_07_the_second_year_medicine",
+      "frequency_mhz": 155.8,
+      "station_name": "The Apothecary's Hour",
+      "voice_profile": "The same quiet precise voice. The clock is ticking. She sounds like a person who has a reserve and a garden and is beginning a second year of both.",
+      "day_trigger": 370,
+      "title": "The Second-Year Medicine — The Reserve and the Garden",
+      "transcript": "155.8. Apothecary's Hour. The second year begins. The medicine in the second year is the reserve and the garden. The reserve is the antibiotics (289 doses, the thing the bunker found). The garden is the herbs (echinacea, chamomile, yarrow, the thing the community grew). The reserve is the thing that holds. The garden is the thing that grows. The clinic is the thing that uses both. The Chemist is the bridge. The bridge is the thing that connects. The second year is the year the medicine is both. The first year the medicine was the finding (the warehouse, exp_report_pharmaceutical_warehouse_01). The second year the medicine is the holding and the growing. The holding is the reserve. The growing is the garden. The holding and the growing are the things the second-year medicine is. The reserve holds. The garden grows. The clinic uses. The Chemist bridges. The second year is the year the medicine is the holding and the growing. The holding and the growing are the things the family does. The family is the 47. The 47 are the thing the medicine is for. The medicine is for the 47. The 47 are the living. The living is the thing the medicine is for. 155.8. Apothecary's Hour. The clock is ticking. The reserve holds. The garden grows. The second year begins.",
+      "tags": ["apothecary", "second_year_medicine", "reserve_and_garden", "holding_and_growing", "chemist_bridge", "the_47", "the_living"]
+    }
+  ]
+}

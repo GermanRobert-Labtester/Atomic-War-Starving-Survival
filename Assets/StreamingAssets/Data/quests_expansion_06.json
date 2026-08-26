@@ -1,0 +1,692 @@
+{
+    "schema_version": 1,
+    "quests": [
+        {
+            "id": "quest_caravan_escort",
+            "title": "Caravan Escort Mission",
+            "description": "A trading caravan requests an armed escort through dangerous territory.",
+            "type": "combat",
+            "minDay": 50,
+            "maxDay": 180,
+            "factionTag": "traders",
+            "synopsis": "The Black Flotilla's trading caravan is traveling through Sector 6, a known raider territory. They offer payment in exchange for armed escort.",
+            "prerequisites": [
+                "survivors_15",
+                "combat_experience_5"
+            ],
+            "choices": [
+                {
+                    "id": "caravan_escort_accept",
+                    "text": "Accept the escort mission",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "target": "food",
+                            "value": 25
+                        },
+                        {
+                            "type": "resource",
+                            "target": "fuel",
+                            "value": 15
+                        }
+                    ],
+                    "consequences": "The caravan reaches its destination safely, and you receive payment. However, the raiders may seek revenge."
+                },
+                {
+                    "id": "caravan_escort_refuse",
+                    "text": "Refuse the mission",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "target": "black_flotilla",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "The caravan is ambushed, and the Black Flotilla blames you for the loss. Your reputation suffers."
+                },
+                {
+                    "id": "caravan_escort_ambush",
+                    "text": "Ambush the caravan and steal their goods",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "target": "food",
+                            "value": 30
+                        },
+                        {
+                            "type": "faction_relation",
+                            "target": "black_flotilla",
+                            "value": -30
+                        }
+                    ],
+                    "consequences": "The caravan is robbed, but the Black Flotilla vows revenge. Raiders may now target your bunker."
+                }
+            ]
+        },
+        {
+            "id": "quest_medical_trial_drug",
+            "title": "Experimental Drug Trial",
+            "description": "Dr. Vasquez proposes testing an experimental drug on a terminally ill survivor.",
+            "type": "medical",
+            "minDay": 80,
+            "maxDay": 250,
+            "factionTag": "neutral",
+            "synopsis": "Dr. Elena Vasquez has developed an experimental drug that could cure radiation sickness. She proposes testing it on Marcus Olejnik, who is terminally ill.",
+            "prerequisites": [
+                "survivors_15",
+                "radiation_sickness_cases_2"
+            ],
+            "choices": [
+                {
+                    "id": "drug_trial_allow",
+                    "text": "Allow the trial",
+                    "effects": [
+                        {
+                            "type": "survivor_health",
+                            "target": "radiation",
+                            "value": 40
+                        }
+                    ],
+                    "consequences": "The drug works! Marcus recovers, and Dr. Vasquez gains prestige. However, the drug has unknown long-term side effects."
+                },
+                {
+                    "id": "drug_trial_refuse",
+                    "text": "Refuse the trial",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "Marcus dies, and Dr. Vasquez is devastated. Survivors question the ethics of refusing to try new treatments."
+                },
+                {
+                    "id": "drug_trial_force",
+                    "text": "Force Marcus to take the drug",
+                    "effects": [
+                        {
+                            "type": "survivor_health",
+                            "target": "radiation",
+                            "value": 40
+                        },
+                        {
+                            "type": "morale",
+                            "value": -20
+                        }
+                    ],
+                    "consequences": "Marcus recovers, but survivors are horrified by the forced treatment. Trust in leadership erodes."
+                }
+            ]
+        },
+        {
+            "id": "quest_survivor_exile",
+            "title": "Survivor Exile Decision",
+            "description": "A survivor has broken a critical rule and must be exiled for the safety of the group.",
+            "type": "politics",
+            "minDay": 90,
+            "maxDay": 270,
+            "factionTag": "neutral",
+            "synopsis": "Jamie has been stealing food from the bunker's storage. The survivors must decide whether to exile them or give them a second chance.",
+            "prerequisites": [
+                "survivors_20"
+            ],
+            "choices": [
+                {
+                    "id": "exile_decision_exile",
+                    "text": "Exile Jamie",
+                    "effects": [
+                        {
+                            "type": "survivor_count",
+                            "value": -1
+                        },
+                        {
+                            "type": "morale",
+                            "value": -15
+                        }
+                    ],
+                    "consequences": "Jamie is exiled, but survivors are divided. Some may leave in protest, while others feel justice has been served."
+                },
+                {
+                    "id": "exile_decision_forgive",
+                    "text": "Forgive Jamie and assign community service",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "Jamie is forgiven and assigned community service. Survivors respect the decision, and morale improves."
+                },
+                {
+                    "id": "exile_decision_ignore",
+                    "text": "Ignore the theft",
+                    "effects": [],
+                    "consequences": "The theft continues, and survivors grow resentful. Some may start stealing for themselves."
+                }
+            ]
+        },
+        {
+            "id": "quest_radiation_storm_shelter",
+            "title": "Radiation Storm Shelter Plan",
+            "description": "Prepare the bunker for an impending radiation storm.",
+            "type": "defense",
+            "minDay": 70,
+            "maxDay": 220,
+            "factionTag": "neutral",
+            "synopsis": "Meteorologists predict a severe radiation storm in 72 hours. The bunker must prepare by sealing the air filters, stocking supplies, and assigning shelter duties.",
+            "prerequisites": [
+                "survivors_25"
+            ],
+            "choices": [
+                {
+                    "id": "radiation_storm_full_prep",
+                    "text": "Prepare fully for the storm",
+                    "effects": [
+                        {
+                            "type": "bunker_defense_rating",
+                            "value": 20
+                        },
+                        {
+                            "type": "morale",
+                            "value": 10
+                        }
+                    ],
+                    "consequences": "The bunker survives the storm with minimal casualties. Survivors are relieved and grateful."
+                },
+                {
+                    "id": "radiation_storm_partial_prep",
+                    "text": "Prepare partially",
+                    "effects": [
+                        {
+                            "type": "bunker_defense_rating",
+                            "value": 10
+                        }
+                    ],
+                    "consequences": "The bunker suffers some radiation exposure, but no one is critically injured. Survivors are uneasy about the bunker's readiness."
+                },
+                {
+                    "id": "radiation_storm_ignore",
+                    "text": "Ignore the warning",
+                    "effects": [
+                        {
+                            "type": "survivor_health",
+                            "value": -25
+                        },
+                        {
+                            "type": "morale",
+                            "value": -20
+                        }
+                    ],
+                    "consequences": "The storm hits, and survivors suffer radiation exposure. Some may not survive."
+                }
+            ]
+        },
+        {
+            "id": "quest_survivor_leadership_election",
+            "title": "Survivor Leadership Election",
+            "description": "Hold an election to determine the bunker's new leader.",
+            "type": "politics",
+            "minDay": 100,
+            "maxDay": 300,
+            "factionTag": "neutral",
+            "synopsis": "With your leadership in question, the survivors propose holding an election to determine the bunker's new leader.",
+            "prerequisites": [
+                "survivors_30"
+            ],
+            "choices": [
+                {
+                    "id": "election_accept",
+                    "text": "Accept the election",
+                    "effects": [],
+                    "consequences": "You lose the election and step down as leader. The survivors elect Marcus Olejnik as the new leader."
+                },
+                {
+                    "id": "election_refuse",
+                    "text": "Refuse the election",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -20
+                        }
+                    ],
+                    "consequences": "The survivors are divided. Some may leave the bunker, while others stage a coup."
+                },
+                {
+                    "id": "election_rig",
+                    "text": "Rig the election to ensure your victory",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -30
+                        }
+                    ],
+                    "consequences": "You win the election, but survivors resent the rigged result. Trust in leadership erodes."
+                }
+            ]
+        },
+        {
+            "id": "quest_food_storage_reorganization",
+            "title": "Food Storage Reorganization",
+            "description": "Reorganize the bunker's food storage to reduce waste and improve efficiency.",
+            "type": "management",
+            "minDay": 40,
+            "maxDay": 140,
+            "factionTag": "neutral",
+            "synopsis": "The survivors propose reorganizing the food storage to reduce waste and improve efficiency. This will require labor and time but could save resources in the long run.",
+            "prerequisites": [
+                "survivors_15",
+                "food_50"
+            ],
+            "choices": [
+                {
+                    "id": "storage_reorg_full",
+                    "text": "Conduct a full reorganization",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "target": "food",
+                            "value": 10
+                        },
+                        {
+                            "type": "morale",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "The reorganization is successful. Food waste is reduced, and the bunker's food supply lasts longer."
+                },
+                {
+                    "id": "storage_reorg_partial",
+                    "text": "Reorganize only the most critical areas",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "target": "food",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "The reorganization is partially successful. Some food is saved, but much is still wasted."
+                },
+                {
+                    "id": "storage_reorg_refuse",
+                    "text": "Refuse to reorganize",
+                    "effects": [],
+                    "consequences": "The survivors are disappointed. Food waste continues, and morale drops as resources dwindle."
+                }
+            ]
+        },
+        {
+            "id": "quest_survivor_skill_training",
+            "title": "Survivor Skill Training Program",
+            "description": "Establish a comprehensive training program to improve survivors' skills and efficiency.",
+            "type": "training",
+            "minDay": 60,
+            "maxDay": 200,
+            "factionTag": "neutral",
+            "synopsis": "The survivors propose a comprehensive training program to improve everyone's skills and efficiency. This will require time and resources but could greatly benefit the bunker in the long run.",
+            "prerequisites": [
+                "survivors_20"
+            ],
+            "choices": [
+                {
+                    "id": "skill_training_full",
+                    "text": "Implement full training program",
+                    "effects": [
+                        {
+                            "type": "labor_efficiency",
+                            "value": 25
+                        },
+                        {
+                            "type": "morale",
+                            "value": 10
+                        }
+                    ],
+                    "consequences": "The training program is successful. Survivors' skills improve, and the bunker operates more efficiently."
+                },
+                {
+                    "id": "skill_training_partial",
+                    "text": "Train only critical roles",
+                    "effects": [
+                        {
+                            "type": "labor_efficiency",
+                            "value": 15
+                        }
+                    ],
+                    "consequences": "The program is partially successful. Critical roles improve, but many survivors remain untrained."
+                },
+                {
+                    "id": "skill_training_cancel",
+                    "text": "Cancel the program",
+                    "effects": [],
+                    "consequences": "The survivors are disappointed. Survivors' skills remain stagnant, and morale drops."
+                }
+            ]
+        },
+        {
+            "id": "quest_raider_siege",
+            "title": "Raider Siege Defense",
+            "description": "Your bunker is under siege by a raider faction. Defend or negotiate?",
+            "type": "combat",
+            "minDay": 85,
+            "maxDay": 260,
+            "factionTag": "raiders",
+            "synopsis": "The raiders of Sector 5 have surrounded your bunker and are demanding tribute. If you refuse, they will attack. The bunker must decide whether to defend or negotiate.",
+            "prerequisites": [
+                "survivors_25",
+                "bunker_defense_rating_10"
+            ],
+            "choices": [
+                {
+                    "id": "siege_defend",
+                    "text": "Defend the bunker",
+                    "effects": [
+                        {
+                            "type": "survivor_health",
+                            "value": -30
+                        },
+                        {
+                            "type": "resource",
+                            "target": "food",
+                            "value": -15
+                        }
+                    ],
+                    "consequences": "The raiders are repelled, but the bunker suffers damage and casualties. Survivors are shaken but proud."
+                },
+                {
+                    "id": "siege_negotiate",
+                    "text": "Negotiate with the raiders",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "target": "food",
+                            "value": -25
+                        },
+                        {
+                            "type": "faction_relation",
+                            "target": "raiders",
+                            "value": 20
+                        }
+                    ],
+                    "consequences": "The raiders accept the tribute and leave. Survivors are relieved but resentful of the payment."
+                },
+                {
+                    "id": "siege_surrender",
+                    "text": "Surrender to the raiders",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "target": "raiders",
+                            "value": 30
+                        },
+                        {
+                            "type": "survivor_count",
+                            "value": -5
+                        }
+                    ],
+                    "consequences": "The raiders take control of the bunker. Survivors are enslaved or killed. Your bunker is lost."
+                }
+            ]
+        },
+        {
+            "id": "quest_medical_quarantine",
+            "title": "Medical Quarantine Decision",
+            "description": "A survivor has contracted a mysterious illness. Do you quarantine them or risk spreading the disease?",
+            "type": "medical",
+            "minDay": 55,
+            "maxDay": 170,
+            "factionTag": "neutral",
+            "synopsis": "Alex has contracted a mysterious illness. Symptoms include fever, coughing, and weakness. The bunker must decide whether to quarantine Alex or risk spreading the disease.",
+            "prerequisites": [
+                "survivors_15"
+            ],
+            "choices": [
+                {
+                    "id": "quarantine_yes",
+                    "text": "Quarantine Alex",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 5
+                        }
+                    ],
+                    "consequences": "Alex is quarantined, and the disease does not spread. Survivors respect the decision, and morale improves."
+                },
+                {
+                    "id": "quarantine_no",
+                    "text": "Do not quarantine Alex",
+                    "effects": [
+                        {
+                            "type": "survivor_health",
+                            "value": -20
+                        },
+                        {
+                            "type": "morale",
+                            "value": -15
+                        }
+                    ],
+                    "consequences": "The disease spreads. Several survivors fall ill, and one dies. Survivors question the leadership's decision."
+                },
+                {
+                    "id": "quarantine_exile",
+                    "text": "Exile Alex to prevent spreading the disease",
+                    "effects": [
+                        {
+                            "type": "survivor_count",
+                            "value": -1
+                        },
+                        {
+                            "type": "morale",
+                            "value": -20
+                        }
+                    ],
+                    "consequences": "Alex is exiled, but survivors are horrified by the decision. Trust in leadership erodes."
+                }
+            ]
+        },
+        {
+            "id": "quest_survivor_memory_loss",
+            "title": "Survivor Memory Loss Crisis",
+            "description": "A survivor is experiencing severe memory loss. Do you help them or exile them?",
+            "type": "medical",
+            "minDay": 70,
+            "maxDay": 210,
+            "factionTag": "neutral",
+            "synopsis": "Jamie has begun experiencing severe memory loss. They forget their own name and cannot perform basic tasks. The bunker must decide whether to help them or exile them.",
+            "prerequisites": [
+                "survivors_20"
+            ],
+            "choices": [
+                {
+                    "id": "memory_loss_help",
+                    "text": "Help Jamie with their memory loss",
+                    "effects": [
+                        {
+                            "type": "survivor_health",
+                            "target": "mental",
+                            "value": 20
+                        },
+                        {
+                            "type": "morale",
+                            "value": 10
+                        }
+                    ],
+                    "consequences": "Jamie's memory improves slightly, but they are never the same. Survivors respect the effort, and morale improves."
+                },
+                {
+                    "id": "memory_loss_exile",
+                    "text": "Exile Jamie for the safety of the group",
+                    "effects": [
+                        {
+                            "type": "survivor_count",
+                            "value": -1
+                        },
+                        {
+                            "type": "morale",
+                            "value": -25
+                        }
+                    ],
+                    "consequences": "Jamie is exiled, but survivors are horrified by the decision. Trust in leadership erodes, and some may leave."
+                },
+                {
+                    "id": "memory_loss_ignore",
+                    "text": "Ignore Jamie's condition",
+                    "effects": [],
+                    "consequences": "Jamie's condition worsens. They become a burden on the group, and morale drops as survivors grow resentful."
+                }
+            ]
+        },
+        {
+            "id": "quest_bunker_air_filter_upgrade",
+            "title": "Air Filter Upgrade",
+            "description": "Upgrade the bunker's air filtration system to improve air quality and reduce radiation exposure.",
+            "type": "construction",
+            "minDay": 90,
+            "maxDay": 280,
+            "factionTag": "neutral",
+            "synopsis": "The survivors propose upgrading the bunker's air filtration system to improve air quality and reduce radiation exposure. This will require time and resources but could save lives in the long run.",
+            "prerequisites": [
+                "survivors_25",
+                "construction_materials_200"
+            ],
+            "choices": [
+                {
+                    "id": "air_filter_upgrade_full",
+                    "text": "Upgrade the air filtration system",
+                    "effects": [
+                        {
+                            "type": "air_quality",
+                            "value": 20
+                        },
+                        {
+                            "type": "morale",
+                            "value": 10
+                        }
+                    ],
+                    "consequences": "The upgrade is successful. Air quality improves, and radiation exposure is reduced. Survivors are grateful."
+                },
+                {
+                    "id": "air_filter_upgrade_partial",
+                    "text": "Upgrade only critical components",
+                    "effects": [
+                        {
+                            "type": "air_quality",
+                            "value": 10
+                        }
+                    ],
+                    "consequences": "The upgrade is partially successful. Air quality improves slightly, but radiation exposure remains a concern."
+                },
+                {
+                    "id": "air_filter_upgrade_refuse",
+                    "text": "Refuse the upgrade",
+                    "effects": [],
+                    "consequences": "The survivors are disappointed. Air quality remains poor, and morale drops as survivors suffer from respiratory issues."
+                }
+            ]
+        },
+        {
+            "id": "quest_survivor_art_project",
+            "title": "Survivor Art Project",
+            "description": "A group of survivors wants to start an art project to boost morale and creativity.",
+            "type": "community",
+            "minDay": 110,
+            "maxDay": 320,
+            "factionTag": "neutral",
+            "synopsis": "A group of survivors, led by Alex, proposes starting an art project to boost morale and creativity. The project will require resources and time but could greatly improve the bunker's atmosphere.",
+            "prerequisites": [
+                "survivors_20"
+            ],
+            "choices": [
+                {
+                    "id": "art_project_allow",
+                    "text": "Allow the art project",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": 15
+                        },
+                        {
+                            "type": "resource",
+                            "target": "scrap_metal",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "The art project is a success. Morale improves, and survivors feel a renewed sense of creativity and hope."
+                },
+                {
+                    "id": "art_project_refuse",
+                    "text": "Refuse the art project",
+                    "effects": [],
+                    "consequences": "The survivors are disappointed. Morale drops as survivors feel their creative needs are unappreciated."
+                },
+                {
+                    "id": "art_project_force",
+                    "text": "Force everyone to participate",
+                    "effects": [
+                        {
+                            "type": "morale",
+                            "value": -10
+                        }
+                    ],
+                    "consequences": "The art project is completed, but survivors resent the forced participation. Morale drops, and some may leave."
+                }
+            ]
+        },
+        {
+            "id": "quest_technology_sharing",
+            "title": "Technology Sharing Agreement",
+            "description": "A nearby settlement offers a technology sharing agreement in exchange for food and medicine.",
+            "type": "trade",
+            "minDay": 60,
+            "maxDay": 200,
+            "factionTag": "meridian_compact",
+            "synopsis": "The Meridian Compact offers a technology sharing agreement. In exchange for food and medicine, they will provide pre-war technology and blueprints.",
+            "prerequisites": [
+                "survivors_15",
+                "food_40",
+                "medical_supplies_10"
+            ],
+            "choices": [
+                {
+                    "id": "tech_sharing_accept",
+                    "text": "Accept the agreement",
+                    "effects": [
+                        {
+                            "type": "resource",
+                            "target": "technology",
+                            "value": 20
+                        },
+                        {
+                            "type": "faction_relation",
+                            "target": "meridian_compact",
+                            "value": 25
+                        }
+                    ],
+                    "consequences": "The agreement is successful. The bunker gains access to valuable technology, and relations with the Meridian Compact improve."
+                },
+                {
+                    "id": "tech_sharing_refuse",
+                    "text": "Refuse the agreement",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "target": "meridian_compact",
+                            "value": -15
+                        }
+                    ],
+                    "consequences": "The Meridian Compact is disappointed but understand. Future collaborations may be difficult."
+                },
+                {
+                    "id": "tech_sharing_cheat",
+                    "text": "Try to cheat the agreement",
+                    "effects": [
+                        {
+                            "type": "faction_relation",
+                            "target": "meridian_compact",
+                            "value": -40
+                        }
+                    ],
+                    "consequences": "The Meridian Compact discovers your deception and cuts off all future trade. Your reputation suffers greatly."
+                }
+            ]
+        }
+    ]
+}

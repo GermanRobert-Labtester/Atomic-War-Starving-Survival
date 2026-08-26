@@ -1,72 +1,117 @@
-[
-  {
-    "id": "steam_trap_inverted_bucket_prime_loss",
-    "steam_distribution_bay_id": "MAIN_DISTRIBUTION_GALLERY_EAST",
-    "trap_mechanism_type": "INVERTED_BUCKET_MECHANICAL_TRAP",
-    "condensate_load_kg_hr": 450.0,
-    "system_line_pressure_bar": 16.0,
-    "timestamp_relative": "YEAR_02_TRAP_LOG_01",
-    "tags": ["steam_power", "steam_trap", "inverted_bucket", "prime_loss", "steam_waste"],
-    "prose": "A sudden steam line pressure drop flashed the water seal inside the inverted bucket body, causing the bucket to lose its prime and sink. The discharge orifice stayed wide open, blowing 450 kg/hour of live steam straight into the atmospheric condensate receiver."
-  },
-  {
-    "id": "steam_trap_thermodynamic_disc_rapid_cycle",
-    "steam_distribution_bay_id": "HIGH_PRESSURE_HEADER_SOUTH",
-    "trap_mechanism_type": "THERMODYNAMIC_DISC_TRAP",
-    "condensate_load_kg_hr": 120.0,
-    "system_line_pressure_bar": 28.0,
-    "timestamp_relative": "YEAR_05_TRAP_LOG_03",
-    "tags": ["steam_power", "steam_trap", "thermodynamic_disc", "chatter", "seat_wire_drawing"],
-    "prose": "Rain drips from a leaking vault ceiling chilled the uninsulated cap of the thermodynamic disc trap. Rapid condensation in the control chamber induced high-frequency disc chatter (60 cycles/min), wire-drawing deep erosion grooves into the hardened stainless steel seat."
-  },
-  {
-    "id": "steam_trap_water_hammer_condensate_slug_rupture",
-    "steam_distribution_bay_id": "INTER_BUNKER_MAIN_HEATING_CONDUIT",
-    "trap_mechanism_type": "FLOAT_AND_THERMOSTATIC_TRAP",
-    "condensate_load_kg_hr": 1800.0,
-    "system_line_pressure_bar": 12.0,
-    "timestamp_relative": "YEAR_08_TRAP_LOG_02",
-    "tags": ["steam_power", "water_hammer", "condensate_slug", "pipe_rupture", "hydraulic_shock"],
-    "prose": "A failed float trap allowed cold condensate to pond in a three-meter sagging section of the 8-inch main. When high-velocity steam was admitted, it swept a solid 50-liter slug of water down the pipe at 40 m/s; the hydraulic impact shattered a heavy cast-iron elbow."
-  },
-  {
-    "id": "steam_trap_bimetallic_element_hysteresis_drift",
-    "steam_distribution_bay_id": "RESIDENTIAL_HEAT_EXCHANGER_ROOM",
-    "trap_mechanism_type": "BIMETALLIC_THERMOSTATIC_TRAP",
-    "condensate_load_kg_hr": 85.0,
-    "system_line_pressure_bar": 4.5,
-    "timestamp_relative": "YEAR_11_TRAP_LOG_04",
-    "tags": ["steam_power", "steam_trap", "bimetal_plate", "hysteresis", "waterlogging"],
-    "prose": "Thermal fatigue in the stacked bimetallic washer element shifted its calibration curve. The trap held condensate until it cooled to 60°C instead of the designed 90°C subcooling, severely waterlogging the hot water heating calandria."
-  },
-  {
-    "id": "steam_trap_expansion_bellows_corrosion_fatigue",
-    "steam_distribution_bay_id": "LONG_RUN_TUNNEL_STEAM_HEADER",
-    "trap_mechanism_type": "CORRUGATED_EXPANSION_BELLOWS",
-    "condensate_load_kg_hr": 0.0,
-    "system_line_pressure_bar": 20.0,
-    "timestamp_relative": "YEAR_14_TRAP_LOG_01",
-    "tags": ["steam_power", "expansion_joint", "bellows", "stress_corrosion", "steam_burst"],
-    "prose": "Chloride ions leaching from damp glass wool insulation attacked the thin 321-stainless multi-ply corrugated expansion bellows. Transgranular stress corrosion cracking unzipped two convolutions under 20 bar pressure, filling the transit tunnel with deafening white steam."
-  },
-  {
-    "id": "steam_trap_dirt_pocket_strainer_mesh_collapse",
-    "steam_distribution_bay_id": "FOUNDRY_FORGE_STEAM_HAMMER_LINE",
-    "trap_mechanism_type": "Y_STRAINER_DIRT_POCKET",
-    "condensate_load_kg_hr": 600.0,
-    "system_line_pressure_bar": 15.0,
-    "timestamp_relative": "YEAR_17_TRAP_LOG_03",
-    "tags": ["steam_power", "y_strainer", "dirt_pocket", "mill_scale", "mesh_collapse"],
-    "prose": "Accumulation of hard magnetic mill scale and welding slag in the unblown Y-strainer pocket built excessive differential pressure. The 100-mesh stainless screen collapsed inwards, blowing jagged metal shards into the pilot valve seat of the steam hammer."
-  },
-  {
-    "id": "steam_trap_vacuum_breaker_check_valve_seize",
-    "steam_distribution_bay_id": "HYDROHYDROPONIC_WARMING_COILS",
-    "trap_mechanism_type": "VACUUM_BREAKER_BALL_CHECK",
-    "condensate_load_kg_hr": 220.0,
-    "system_line_pressure_bar": 2.0,
-    "timestamp_relative": "YEAR_20_TRAP_LOG_01",
-    "tags": ["steam_power", "vacuum_breaker", "implosion_crush", "heating_coil", "condensation"],
-    "prose": "Corrosion scale seized the brass ball check valve shut on the atmospheric vacuum breaker. When the steam supply was isolated, rapid condensation of residual steam pulled a 28-inch Hg vacuum, collapsing thin-wall copper greenhouse heating coils flat."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "steam_trap_inverted_bucket_prime_loss",
+      "steam_distribution_bay_id": "MAIN_DISTRIBUTION_GALLERY_EAST",
+      "trap_mechanism_type": "INVERTED_BUCKET_MECHANICAL_TRAP",
+      "condensate_load_kg_hr": 450.0,
+      "system_line_pressure_bar": 16.0,
+      "timestamp_relative": "YEAR_02_TRAP_LOG_01",
+      "tags": [
+        "steam_power",
+        "steam_trap",
+        "inverted_bucket",
+        "prime_loss",
+        "steam_waste"
+      ],
+      "prose": "A sudden steam line pressure drop flashed the water seal inside the inverted bucket body, causing the bucket to lose its prime and sink. The discharge orifice stayed wide open, blowing 450 kg/hour of live steam straight into the atmospheric condensate receiver."
+    },
+    {
+      "id": "steam_trap_thermodynamic_disc_rapid_cycle",
+      "steam_distribution_bay_id": "HIGH_PRESSURE_HEADER_SOUTH",
+      "trap_mechanism_type": "THERMODYNAMIC_DISC_TRAP",
+      "condensate_load_kg_hr": 120.0,
+      "system_line_pressure_bar": 28.0,
+      "timestamp_relative": "YEAR_05_TRAP_LOG_03",
+      "tags": [
+        "steam_power",
+        "steam_trap",
+        "thermodynamic_disc",
+        "chatter",
+        "seat_wire_drawing"
+      ],
+      "prose": "Rain drips from a leaking vault ceiling chilled the uninsulated cap of the thermodynamic disc trap. Rapid condensation in the control chamber induced high-frequency disc chatter (60 cycles/min), wire-drawing deep erosion grooves into the hardened stainless steel seat."
+    },
+    {
+      "id": "steam_trap_water_hammer_condensate_slug_rupture",
+      "steam_distribution_bay_id": "INTER_BUNKER_MAIN_HEATING_CONDUIT",
+      "trap_mechanism_type": "FLOAT_AND_THERMOSTATIC_TRAP",
+      "condensate_load_kg_hr": 1800.0,
+      "system_line_pressure_bar": 12.0,
+      "timestamp_relative": "YEAR_08_TRAP_LOG_02",
+      "tags": [
+        "steam_power",
+        "water_hammer",
+        "condensate_slug",
+        "pipe_rupture",
+        "hydraulic_shock"
+      ],
+      "prose": "A failed float trap allowed cold condensate to pond in a three-meter sagging section of the 8-inch main. When high-velocity steam was admitted, it swept a solid 50-liter slug of water down the pipe at 40 m/s; the hydraulic impact shattered a heavy cast-iron elbow."
+    },
+    {
+      "id": "steam_trap_bimetallic_element_hysteresis_drift",
+      "steam_distribution_bay_id": "RESIDENTIAL_HEAT_EXCHANGER_ROOM",
+      "trap_mechanism_type": "BIMETALLIC_THERMOSTATIC_TRAP",
+      "condensate_load_kg_hr": 85.0,
+      "system_line_pressure_bar": 4.5,
+      "timestamp_relative": "YEAR_11_TRAP_LOG_04",
+      "tags": [
+        "steam_power",
+        "steam_trap",
+        "bimetal_plate",
+        "hysteresis",
+        "waterlogging"
+      ],
+      "prose": "Thermal fatigue in the stacked bimetallic washer element shifted its calibration curve. The trap held condensate until it cooled to 60°C instead of the designed 90°C subcooling, severely waterlogging the hot water heating calandria."
+    },
+    {
+      "id": "steam_trap_expansion_bellows_corrosion_fatigue",
+      "steam_distribution_bay_id": "LONG_RUN_TUNNEL_STEAM_HEADER",
+      "trap_mechanism_type": "CORRUGATED_EXPANSION_BELLOWS",
+      "condensate_load_kg_hr": 0.0,
+      "system_line_pressure_bar": 20.0,
+      "timestamp_relative": "YEAR_14_TRAP_LOG_01",
+      "tags": [
+        "steam_power",
+        "expansion_joint",
+        "bellows",
+        "stress_corrosion",
+        "steam_burst"
+      ],
+      "prose": "Chloride ions leaching from damp glass wool insulation attacked the thin 321-stainless multi-ply corrugated expansion bellows. Transgranular stress corrosion cracking unzipped two convolutions under 20 bar pressure, filling the transit tunnel with deafening white steam."
+    },
+    {
+      "id": "steam_trap_dirt_pocket_strainer_mesh_collapse",
+      "steam_distribution_bay_id": "FOUNDRY_FORGE_STEAM_HAMMER_LINE",
+      "trap_mechanism_type": "Y_STRAINER_DIRT_POCKET",
+      "condensate_load_kg_hr": 600.0,
+      "system_line_pressure_bar": 15.0,
+      "timestamp_relative": "YEAR_17_TRAP_LOG_03",
+      "tags": [
+        "steam_power",
+        "y_strainer",
+        "dirt_pocket",
+        "mill_scale",
+        "mesh_collapse"
+      ],
+      "prose": "Accumulation of hard magnetic mill scale and welding slag in the unblown Y-strainer pocket built excessive differential pressure. The 100-mesh stainless screen collapsed inwards, blowing jagged metal shards into the pilot valve seat of the steam hammer."
+    },
+    {
+      "id": "steam_trap_vacuum_breaker_check_valve_seize",
+      "steam_distribution_bay_id": "HYDROHYDROPONIC_WARMING_COILS",
+      "trap_mechanism_type": "VACUUM_BREAKER_BALL_CHECK",
+      "condensate_load_kg_hr": 220.0,
+      "system_line_pressure_bar": 2.0,
+      "timestamp_relative": "YEAR_20_TRAP_LOG_01",
+      "tags": [
+        "steam_power",
+        "vacuum_breaker",
+        "implosion_crush",
+        "heating_coil",
+        "condensation"
+      ],
+      "prose": "Corrosion scale seized the brass ball check valve shut on the atmospheric vacuum breaker. When the steam supply was isolated, rapid condensation of residual steam pulled a 28-inch Hg vacuum, collapsing thin-wall copper greenhouse heating coils flat."
+    }
+  ]
+}

@@ -1,82 +1,133 @@
-[
-  {
-    "id": "ragdoll_germination_blotter_paper_radicle_emergence",
-    "germination_tray_id": "INCUBATOR_BENCH_RAGDOLL_01",
-    "crop_cultivar_name": "RED_FIFE_HERITAGE_WHEAT",
-    "seeds_tested_count": 100.0,
-    "germination_viability_pct": 94.0,
-    "timestamp_relative": "YEAR_02_GERM_LOG_01",
-    "tags": ["seed_banking", "ragdoll_test", "radicle_emergence", "viability", "blotter_paper"],
-    "prose": "Rolling one hundred wheat seeds inside moist unbleached cellulose blotter paper and incubating at 20°C produced 94 vigorous radicle emergences within 96 hours. Root hairs showed strong geotropic anchoring with zero fungal halos."
-  },
-  {
-    "id": "ragdoll_germination_tetrazolium_chloride_dehydrogenase_stain",
-    "germination_tray_id": "RAPID_VITALITY_STAIN_BENCH",
-    "crop_cultivar_name": "GOLDEN_BANTAM_SWEET_CORN",
-    "seeds_tested_count": 50.0,
-    "germination_viability_pct": 88.0,
-    "timestamp_relative": "YEAR_04_GERM_LOG_03",
-    "tags": ["seed_banking", "tetrazolium", "vital_stain", "dehydrogenase", "embryo_viability"],
-    "prose": "Bisecting dry maize kernels and soaking them in 1.0% 2,3,5-triphenyltetrazolium chloride (TTC) solution revealed cellular respiration. Active dehydrogenase enzymes reduced TTC to insoluble red formazan, staining 88% of embryonic axes deep carmine."
-  },
-  {
-    "id": "ragdoll_germination_abnormal_seedling_coleoptile_split",
-    "germination_tray_id": "DEFECT_EVALUATION_RACK_02",
-    "crop_cultivar_name": "CRIMSON_CLOVER_FORAGE",
-    "seeds_tested_count": 100.0,
-    "germination_viability_pct": 62.0,
-    "timestamp_relative": "YEAR_07_GERM_LOG_02",
-    "tags": ["seed_banking", "abnormal_seedling", "coleoptile_split", "seed_vigor", "defect"],
-    "prose": "Microscopic inspection of clover sprouts revealed that 22 out of 84 emerging seedlings suffered longitudinal splits along the hypocotyl. These damaged abnormal seedlings were classified as non-viable due to inability to breach bunker soil crusts."
-  },
-  {
-    "id": "ragdoll_germination_gibberellic_acid_dormancy_break",
-    "germination_tray_id": "DORMANCY_CHEMISTRY_CELL_04",
-    "crop_cultivar_name": "WILD_EMMER_ANCESTRAL_GRAIN",
-    "seeds_tested_count": 80.0,
-    "germination_viability_pct": 91.0,
-    "timestamp_relative": "YEAR_09_GERM_LOG_04",
-    "tags": ["seed_banking", "gibberellic_acid", "dormancy_break", "ga3", "phytohormone"],
-    "prose": "Ancestral wild emmer exhibited profound physiological seed coat dormancy, yielding only 8% sprout rate in plain water. Soaking seeds in a 250 ppm gibberellic acid (GA3) solution for twelve hours triggered alpha-amylase synthesis, boosting germination to 91%."
-  },
-  {
-    "id": "ragdoll_germination_rhizopus_fungal_fuzz_damping_off",
-    "germination_tray_id": "HUMIDITY_CHAMBER_TRAY_03",
-    "crop_cultivar_name": "RIVER_BANK_SOYBEAN",
-    "seeds_tested_count": 100.0,
-    "germination_viability_pct": 34.0,
-    "timestamp_relative": "YEAR_12_GERM_LOG_01",
-    "tags": ["seed_banking", "rhizopus", "damping_off", "fungal_contamination", "seed_rot"],
-    "prose": "Excessive humidity (98% RH) without pre-soak bleach sanitation allowed *Rhizopus stolonifer* black bread mold to proliferate across the petri dish blotters. Fungal hyphae collapsed tender radicles, rotting 66% of the soybean seedlings."
-  },
-  {
-    "id": "ragdoll_germination_accelerated_aging_test_chamber",
-    "germination_tray_id": "VIGOR_STRESS_CHAMBER_01",
-    "crop_cultivar_name": "MAMMOTH_SUNFLOWER_OILSEED",
-    "seeds_tested_count": 100.0,
-    "germination_viability_pct": 79.0,
-    "timestamp_relative": "YEAR_15_GERM_LOG_03",
-    "tags": ["seed_banking", "accelerated_aging", "vigor_index", "thermal_stress", "shelf_life"],
-    "prose": "Exposing sunflower seed lots to 41°C and 100% relative humidity for 72 hours prior to ragdoll germination simulated five years of subterranean storage. Retaining 79% germination under harsh accelerated aging confirmed exceptional membrane integrity."
-  },
-  {
-    "id": "ragdoll_germination_chilled_stratification_vernalization",
-    "germination_tray_id": "COLD_STRATIFICATION_VAULT_05",
-    "crop_cultivar_name": "ANTONOVKA_HARDY_APPLE_PIPS",
-    "seeds_tested_count": 50.0,
-    "germination_viability_pct": 86.0,
-    "timestamp_relative": "YEAR_17_GERM_LOG_02",
-    "tags": ["seed_banking", "stratification", "vernalization", "chilling_requirement", "apple_pips"],
-    "prose": "Cold-moist stratification of hardy apple pips inside sterile peat moss at 3°C for ninety days successfully degraded abscisic acid growth inhibitors. Transfer to 20°C light benches triggered synchronized radicle emergence across 43 out of 50 pips."
-  },
-  {
-    "id": "ragdoll_germination_saline_imbibition_osmotic_stress",
-    "germination_tray_id": "SALT_TOLERANCE_TEST_BENCH",
-    "crop_cultivar_name": "ALFALFA_DEEP_ROOT_FORAGE",
-    "seeds_tested_count": 100.0,
-    "germination_viability_pct": 74.0,
-    "timestamp_relative": "YEAR_20_GERM_LOG_01",
-    "tags": ["seed_banking", "saline_stress", "osmotic_tolerance", "mineral_water", "forage"],
-    "prose": "Imbibing alfalfa seeds in 150 mM sodium chloride saline solution tested crop survivability under mineralized bunker sump irrigation. Seedlings developed thick, cutinized roots capable of water uptake against severe osmotic backpressure."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "ragdoll_germination_blotter_paper_radicle_emergence",
+      "germination_tray_id": "INCUBATOR_BENCH_RAGDOLL_01",
+      "crop_cultivar_name": "RED_FIFE_HERITAGE_WHEAT",
+      "seeds_tested_count": 100.0,
+      "germination_viability_pct": 94.0,
+      "timestamp_relative": "YEAR_02_GERM_LOG_01",
+      "tags": [
+        "seed_banking",
+        "ragdoll_test",
+        "radicle_emergence",
+        "viability",
+        "blotter_paper"
+      ],
+      "prose": "Rolling one hundred wheat seeds inside moist unbleached cellulose blotter paper and incubating at 20°C produced 94 vigorous radicle emergences within 96 hours. Root hairs showed strong geotropic anchoring with zero fungal halos."
+    },
+    {
+      "id": "ragdoll_germination_tetrazolium_chloride_dehydrogenase_stain",
+      "germination_tray_id": "RAPID_VITALITY_STAIN_BENCH",
+      "crop_cultivar_name": "GOLDEN_BANTAM_SWEET_CORN",
+      "seeds_tested_count": 50.0,
+      "germination_viability_pct": 88.0,
+      "timestamp_relative": "YEAR_04_GERM_LOG_03",
+      "tags": [
+        "seed_banking",
+        "tetrazolium",
+        "vital_stain",
+        "dehydrogenase",
+        "embryo_viability"
+      ],
+      "prose": "Bisecting dry maize kernels and soaking them in 1.0% 2,3,5-triphenyltetrazolium chloride (TTC) solution revealed cellular respiration. Active dehydrogenase enzymes reduced TTC to insoluble red formazan, staining 88% of embryonic axes deep carmine."
+    },
+    {
+      "id": "ragdoll_germination_abnormal_seedling_coleoptile_split",
+      "germination_tray_id": "DEFECT_EVALUATION_RACK_02",
+      "crop_cultivar_name": "CRIMSON_CLOVER_FORAGE",
+      "seeds_tested_count": 100.0,
+      "germination_viability_pct": 62.0,
+      "timestamp_relative": "YEAR_07_GERM_LOG_02",
+      "tags": [
+        "seed_banking",
+        "abnormal_seedling",
+        "coleoptile_split",
+        "seed_vigor",
+        "defect"
+      ],
+      "prose": "Microscopic inspection of clover sprouts revealed that 22 out of 84 emerging seedlings suffered longitudinal splits along the hypocotyl. These damaged abnormal seedlings were classified as non-viable due to inability to breach bunker soil crusts."
+    },
+    {
+      "id": "ragdoll_germination_gibberellic_acid_dormancy_break",
+      "germination_tray_id": "DORMANCY_CHEMISTRY_CELL_04",
+      "crop_cultivar_name": "WILD_EMMER_ANCESTRAL_GRAIN",
+      "seeds_tested_count": 80.0,
+      "germination_viability_pct": 91.0,
+      "timestamp_relative": "YEAR_09_GERM_LOG_04",
+      "tags": [
+        "seed_banking",
+        "gibberellic_acid",
+        "dormancy_break",
+        "ga3",
+        "phytohormone"
+      ],
+      "prose": "Ancestral wild emmer exhibited profound physiological seed coat dormancy, yielding only 8% sprout rate in plain water. Soaking seeds in a 250 ppm gibberellic acid (GA3) solution for twelve hours triggered alpha-amylase synthesis, boosting germination to 91%."
+    },
+    {
+      "id": "ragdoll_germination_rhizopus_fungal_fuzz_damping_off",
+      "germination_tray_id": "HUMIDITY_CHAMBER_TRAY_03",
+      "crop_cultivar_name": "RIVER_BANK_SOYBEAN",
+      "seeds_tested_count": 100.0,
+      "germination_viability_pct": 34.0,
+      "timestamp_relative": "YEAR_12_GERM_LOG_01",
+      "tags": [
+        "seed_banking",
+        "rhizopus",
+        "damping_off",
+        "fungal_contamination",
+        "seed_rot"
+      ],
+      "prose": "Excessive humidity (98% RH) without pre-soak bleach sanitation allowed *Rhizopus stolonifer* black bread mold to proliferate across the petri dish blotters. Fungal hyphae collapsed tender radicles, rotting 66% of the soybean seedlings."
+    },
+    {
+      "id": "ragdoll_germination_accelerated_aging_test_chamber",
+      "germination_tray_id": "VIGOR_STRESS_CHAMBER_01",
+      "crop_cultivar_name": "MAMMOTH_SUNFLOWER_OILSEED",
+      "seeds_tested_count": 100.0,
+      "germination_viability_pct": 79.0,
+      "timestamp_relative": "YEAR_15_GERM_LOG_03",
+      "tags": [
+        "seed_banking",
+        "accelerated_aging",
+        "vigor_index",
+        "thermal_stress",
+        "shelf_life"
+      ],
+      "prose": "Exposing sunflower seed lots to 41°C and 100% relative humidity for 72 hours prior to ragdoll germination simulated five years of subterranean storage. Retaining 79% germination under harsh accelerated aging confirmed exceptional membrane integrity."
+    },
+    {
+      "id": "ragdoll_germination_chilled_stratification_vernalization",
+      "germination_tray_id": "COLD_STRATIFICATION_VAULT_05",
+      "crop_cultivar_name": "ANTONOVKA_HARDY_APPLE_PIPS",
+      "seeds_tested_count": 50.0,
+      "germination_viability_pct": 86.0,
+      "timestamp_relative": "YEAR_17_GERM_LOG_02",
+      "tags": [
+        "seed_banking",
+        "stratification",
+        "vernalization",
+        "chilling_requirement",
+        "apple_pips"
+      ],
+      "prose": "Cold-moist stratification of hardy apple pips inside sterile peat moss at 3°C for ninety days successfully degraded abscisic acid growth inhibitors. Transfer to 20°C light benches triggered synchronized radicle emergence across 43 out of 50 pips."
+    },
+    {
+      "id": "ragdoll_germination_saline_imbibition_osmotic_stress",
+      "germination_tray_id": "SALT_TOLERANCE_TEST_BENCH",
+      "crop_cultivar_name": "ALFALFA_DEEP_ROOT_FORAGE",
+      "seeds_tested_count": 100.0,
+      "germination_viability_pct": 74.0,
+      "timestamp_relative": "YEAR_20_GERM_LOG_01",
+      "tags": [
+        "seed_banking",
+        "saline_stress",
+        "osmotic_tolerance",
+        "mineral_water",
+        "forage"
+      ],
+      "prose": "Imbibing alfalfa seeds in 150 mM sodium chloride saline solution tested crop survivability under mineralized bunker sump irrigation. Seedlings developed thick, cutinized roots capable of water uptake against severe osmotic backpressure."
+    }
+  ]
+}

@@ -1,1329 +1,1332 @@
-[
- {
-  "id": "fallout_storm",
-  "title": "Fallout Storm",
-  "bodyText": "The sky turns a sickly amber, the colour of an old bruise, and the ash begins to fall like grey snow. It settles on the sandbags, the barrel tops, the metal of the outer hatch. By the time the wind picks up, the Geiger counter is screaming, needle pinned against the glass. The storm front is moving in from the west and it will sit on the ridge for hours. Filters will choke on the load, the intake will need watching, and no one goes out in this. You stand at the hatch window and watch the grey world disappear. The counter does not stop. You have time to decide what you are willing to spend to wait this one out: the spare filters, the fuel, or someone's life in the open.",
-  "weight": 3.0,
-  "minDay": 1
- },
- {
-  "id": "scavenger_arrival",
-  "title": "Scavenger at the Door",
-  "bodyText": "A gaunt figure stands twenty metres from the outer hatch, hands raised and empty. The coat is patched in three different colours, the pack hangs crooked on one shoulder, and the rifle slung across their back has tape wound around the stock and a cracked receiver that may or may not fire. They shout over the wind that they want to trade, nothing more: cloth, batteries, maybe news from the valley road. Their boots are mismatched and one sole flaps when they walk. They have not lowered their hands. The bunker has its own ration count and its own strangers policy. Whatever you decide, it happens through the slot or through the hatch, and there is no way to know which one it should be until it is too late.",
-  "weight": 2.0,
-  "minDay": 3
- },
- {
-  "id": "filter_failure",
-  "title": "Air Filter Failure",
-  "bodyText": "The grinding starts in the ventilation shaft at 4 AM, a slow metal-on-metal complaint that wakes everyone in the sleeping quarters. By the time you reach the maintenance alcove, the air filter has seized: the motor hums against a jammed impeller, and grey dust already coats the nearest ducts. The dosimeter in the alcove reads a few points higher than it did last night. Not much. Enough. Somewhere outside, the air is not clean, and the only thing standing between that air and the bunker is a seized cylinder of paper and wire. Shut the duct down and the room gets stale. Leave it running and it burns the motor out. Either way, you are working against the clock with what you have on hand.",
-  "weight": 1.5,
-  "minDay": 5
- },
- {
-  "id": "radio_static",
-  "title": "Radio Transmission",
-  "bodyText": "The radio wakes you at dawn, spitting layers of static, and then a voice cuts through: thin, tired, repeating a set of coordinates three times. A supply cache, they say. Sealed container, pre-war, buried in the collapsed general store east of the rail bridge. Then the warning: something is in there with it. They do not say what. The signal dies mid-sentence and the static returns. You write the coordinates on the wall in chalk. The rail bridge is a half-day walk through open country, and open country has its own residents now. The cache could be real. The warning could be the honest part. The only way to know is to send someone, and everyone you have is already stretched thin.",
-  "weight": 1.0,
-  "minDay": 7
- },
- {
-  "id": "water_contamination",
-  "title": "Water Contamination",
-  "bodyText": "The water barrel in the stores tastes metallic this morning, a flat copper note that clings to the back of the tongue. The dosimeter confirms it within seconds: the reading climbs as the wand nears the barrel, and the needle settles into the red. The supply is hot. Not a little, not borderline, hot. Someone filled this barrel before the last rain, or from a source nobody checked, and now the bunker's clean water is a quantity you can count in single bottles. Boiling will not help. Pouring it out is the only safe move, and pouring it out means thirst tonight. You stand over the barrel with the wand still clicking, and the decision is simple and ruinous either way.",
-  "weight": 2.0,
-  "minDay": 2
- },
- {
-  "id": "stranger_sickness",
-  "title": "Sick Stranger",
-  "bodyText": "A cough echoes off the airlock walls, then a body crumples against the inner door. The figure is wearing a civilian coat under a cracked gas mask, and the skin of their hands is mottled with radiation burns, dark patches that have not healed properly. They try to speak through the cough and fail. The mask lens is fogged from the inside. They came in through the outer hatch, so whatever they carried on their clothes is now on the floor of the airlock. The bunker has no quarantine space, no spare beds, and the med kit is already thin. What they have might be simple exhaustion. What they have might be a dose that finishes the job in a week. Either way, the door between you and them is the only real decision you get to make.",
-  "weight": 1.5,
-  "minDay": 4
- },
- {
-  "id": "generator_sputter",
-  "title": "Generator Failure",
-  "bodyText": "The lights flicker twice, hold, and die. The generator coughs once, a hard mechanical bark, and then the bunker goes silent in a way that has weight. Cold seeps in immediately, the way it does when the heaters are gone, and the only light left is the red glow of the emergency strip. Fuel gauge shows a quarter tank. The spark plug is fouled and the air filter on the generator is clogged with the same grey dust that gets into everything. You can rebuild the spark with wire and patience, or you can spend the fuel keeping the battery topped up, or you can let it sit and freeze the pipes. People are already pulling blankets off the bunks. The dark is not the problem. The cold is.",
-  "weight": 2.0,
-  "minDay": 3
- },
- {
-  "id": "rat_infestation",
-  "title": "Rats in the Stores",
-  "bodyText": "Droppings in the food crate this morning, black and dry, pressed into the corner where the flour bags lean. Something has gnawed through two ration packs and left the torn foil where anyone can step on it. The scratching comes from the walls at night, a light relentless sound that moves in short bursts. Rats carry things in their fur, and things in their fur live on in the food. The traps you have are two, and the poison is one tin, and the stores are the only thing between the bunker and hunger. Set the poison and you risk the water. Use the traps and you risk missing the nest. Seal the stores and the rats stay in the walls, breeding, patient, waiting for the day you open the crates again.",
-  "weight": 1.5,
-  "minDay": 6
- },
- {
-  "id": "morale_crisis",
-  "title": "Shouting in the Dark",
-  "bodyText": "Voices carry through the bunker like they own it. Two of your people, the ones who rationed the water together last winter, are standing over the medical tin arguing about the last iodine pill. The tin is empty after this. Both of them have been in the open since the storm, both have the headaches that mean a dose, and both are right. The argument is loud enough that nobody in the sleeping quarters pretends to sleep. Whatever you do now will be remembered. Take the pill and you choose a side. Split it and you insult both. Order them apart and the question just waits in the tin, unanswered, until someone decides to answer it with their hands.",
-  "weight": 1.0,
-  "minDay": 8
- },
- {
-  "id": "supply_drop_rumor",
-  "title": "Supply Drop Rumor",
-  "bodyText": "A crackling radio message repeats itself on the old military frequency: supply drop, three miles north, grid marker on the burnt-out water tower. The voice is flat, recorded, possibly automated. It has been looping for two days. Three miles north is the flats, open ground with no cover except the dry riverbed, and the water tower has been a landmark for raiders since the first winter. The drop could be real: the broadcasts started the same week the garrison pulled back. It could also be a bell rung over a snare. You have one team fit enough to make the walk, and the walk itself costs a day of water. Somebody wants people to come north. The question is whether they are handing out food or collecting packs.",
-  "weight": 1.0,
-  "minDay": 10
- },
- {
-  "id": "hatch_breach",
-  "title": "Hatch Seal Breach",
-  "bodyText": "A high-pitched whistle cuts through the bunker, thin and constant, like air escaping a punctured tire. It is coming from the outer hatch. The rubber gasket has cracked along its length, a dry split that flexes when you press it, and through the gap you can feel the faint movement of air moving inward. The dosimeter near the hatch reads a little higher every time you look. The air outside is not clean, and now it has a way in. Replacing the gasket means using the spare seal, the only one you have, and spending an hour in the cold with the hatch open. Patching it means tape and rubber from the stores, a repair that will hold for a week and then ask the question again. The whistle keeps going, steady, patient.",
-  "weight": 2.0,
-  "minDay": 4
- },
- {
-  "id": "water_shortage",
-  "title": "Dry Pipes",
-  "bodyText": "The water barrel is down to the last few centimetres, a dark circle in the bottom that reflects the light when you lean over. Rationing began nine days ago, a cup per person per day, and the cups have gotten smaller twice. Thirst is setting in: lips crack, the arguments come faster, and the children have stopped asking for more. The nearest clean source is the creek two hours east, and the last person who walked that road came back empty and limping. Melted snow is a gamble, the rain barrels are half ash, and every option costs either distance or risk or both. People are watching you measure the cups now. The barrel does not care about the count. It is just empty.",
-  "weight": 2.5,
-  "minDay": 5
- },
- {
-  "id": "heater_malfunction",
-  "title": "Heater Overheat",
-  "bodyText": "The heater unit in the main room glows red at the seams, and the metal skin is warm enough to blister a hand. An acrid smell fills the shelter, hot dust and scorched wiring, the smell of something burning from the inside. The thermostat is stuck, the fan is grinding against a warped blade, and the unit has been pushing heat it was never meant to push for the better part of an hour. Shut it down and the bunker cools fast, the kind of cold that settles into the concrete and stays. Open the panel and you risk the wiring or your fingers. The smell is getting worse. Whatever you decide, it has to happen before the unit decides for you, and the unit is not patient.",
-  "weight": 1.5,
-  "minDay": 6
- },
- {
-  "id": "dead_animal",
-  "title": "Dead Dog Outside",
-  "bodyText": "A stray dog lies at the edge of the airlock approach, on its side, legs stiff. The fur is patchy, bald in streaks where it has been scratching, and the ribs show through like a ladder. It was somebody's dog once, maybe, before the exchange, and now it is a small grey shape in the ash with its teeth showing. Fallout got it. It walked in from somewhere contaminated and died close to shelter, the way things do. The body is a radiation hazard now, and it will not be the last one. Bury it and you spend an hour in the open with a shovel. Leave it and the ash keeps falling on it, and the birds start circling, and the lesson sits at the door for everyone to see.",
-  "weight": 0.8,
-  "minDay": 3
- },
- {
-  "id": "cramped_quarters",
-  "title": "Cabin Fever",
-  "bodyText": "The walls feel closer every day. There are fifteen of you in a shelter built for eight, and the bunks run in shifts, and the corridor is never empty. One of the newcomers has not spoken in three days. Another walks the length of the main room at night, back and forth, counting steps, and no one has told them to stop because everyone is doing something similar in their own head. The bunker was not built for this many people. It was built for a family and a stockroom, not for a community, and the air is heavy with the smell of too many bodies in too little space. The walls do not move. It is the people who move, and they are starting to move against each other.",
-  "weight": 1.0,
-  "minDay": 12
- },
- {
-  "id": "found_diary",
-  "title": "Old Diary",
-  "bodyText": "Behind a loose panel in the storage room, pushed back behind the shelving, a diary. It belonged to the bunker's original occupant, a man who kept records like they mattered: fuel levels, water usage, the date the power lines went dead. The entries are calm for the first two weeks. Then the handwriting changes, shorter sentences, wider spacing. The last entry is dated three weeks after the bombs. It ends mid-sentence, with a pen stroke that dragged off the page. You have read it twice. It is not a happy document, and it tells you something about this bunker that no one who built it intended you to know. What it means for how you run things, what you tell the others, that part is yours.",
-  "weight": 0.5,
-  "minDay": 8
- },
- {
-  "id": "ash_pileup",
-  "title": "Ash Accumulation",
-  "bodyText": "Radioactive ash has drifted against the air intake, a grey dune that leans up the wall and presses into the louver. The wind keeps feeding it. If it is not cleared, the filters will clog within hours, and a clogged filter is a seized filter, and a seized filter is the air problem you cannot fix at midnight. Clearing it means sending someone out in the gear, half an hour in the open with a shovel and a mask, ash working its way into every seam. Waiting means watching the airflow gauge drop and doing nothing about it. The intake is not decorative. It is the difference between air you can breathe and air that gets into you one cough at a time.",
-  "weight": 2.0,
-  "minDay": 7
- },
- {
-  "id": "trader_offers_medicine",
-  "title": "Medicine Trade",
-  "bodyText": "A trader at the gate claims to have anti-rad medication, real decorporation pills from a pre-war pharmacy, and holds up a strip of foil to prove it. They want food in return, a specific list: two tins of meat and a bag of flour. The deal feels too good. Anti-rad is scarce enough that people kill for it, and this trader is offering it at market price with a smile that does not reach their eyes. The foil could hold real pills. It could hold chalk dust and aspirin. The food is yours either way, and it is food you need. You have seen too many good deals in the wasteland, and every one of them cost somebody something. The question is whether this one costs you your stock or just your pride.",
-  "weight": 1.0,
-  "minDay": 10
- },
- {
-  "id": "power_cell_discovery",
-  "title": "Hidden Power Cell",
-  "bodyText": "While clearing debris from the collapsed storage alcove, your hand closes on something solid: a sealed power cell, military markings, still showing a full charge on the test strip. It has been sitting behind the wall panel since before the exchange, untouched, waiting. It could power the radio for weeks, and the radio is your only window on the world outside the bunker: the broadcasts, the band channels, the weather. Or it could run the air filtration at night, or keep the store lights on when the generator sleeps. The cell is one. The needs are many. Everyone has an opinion about where it should go, and they are all reasonable, and they are all wrong about each other's priorities.",
-  "weight": 0.7,
-  "minDay": 15
- },
- {
-  "id": "night_terrors",
-  "title": "Night Terrors",
-  "bodyText": "At 2 AM someone in the sleeping quarters starts screaming, a raw sound that cuts through the concrete. They dreamed of the flash: the light through the window, the heat arriving before the sound, the silence after, when the birds stopped and the sky went wrong. They are awake now, breathing hard, staring at the ceiling. Nobody says anything. The bunker listens to the breathing slow and pretends to go back to sleep. Everyone here has that dream. It lives in the same place in every head, the same light, the same wrong silence, and it is not going anywhere. The only question is whether you talk about it in the morning, or let the dream keep doing what it does in the dark.",
-  "weight": 1.0,
-  "minDay": 5
- },
- {
-  "id": "filter_degradation",
-  "title": "Filter Wear",
-  "bodyText": "The air filter indicator has dropped into the yellow, a small window with the needle resting at the edge of the green zone. The numbers have been falling for a week, slowly, the way everything degrades in the wasteland. The spare is in the stores, one unit, wrapped in plastic and oiled paper, and it represents a trade decision you have been putting off. Replace the filter now and you spend the spare with months of winter ahead. Wait and the air gets heavier, the smell of dust and bodies comes back, and the next storm will finish the job this filter started. The indicator does not blink and does not hurry. It just waits, yellow, patient, while the bunker breathes through a clogging lung.",
-  "weight": 2.0,
-  "minDay": 10
- },
- {
-  "id": "lucky_find",
-  "title": "Lucky Find",
-  "bodyText": "A sealed crate in the corner of the store room, behind the empty racks, overlooked for years. The lid comes off with a groan: canned food, the labels faded but the tins bright, a water filter still in its box, and a flashlight that works on the first press. The beam is solid and steady, the first new light this bunker has seen in a long time. It is a small fortune and it asks a question: distribute it now and the bunker eats well for a week and sees the morale lift; hold it in reserve and it stays a floorboard under everyone's feet, a secret with a weight. The tins are dated. The filter is dry. Nothing here keeps forever, and the wasteland does not care about luck.",
-  "weight": 0.5,
-  "minDay": 3
- },
- {
-  "id": "radiation_leak",
-  "title": "Radiation Spike",
-  "bodyText": "The dosimeter alarm triggers at 7 AM, a shrill note that brings everyone to the corridor. Radiation levels inside the bunker have spiked: the wall-mounted unit reads three times what it read yesterday. Something is leaking. The airlock. The hatch seal. A contaminated item brought in with the last salvage. The source is somewhere in this building, and every hour it leaks, it leaks into the people you are responsible for. You can sweep the bunker room by room with the wand, you can seal off the sections you suspect, or you can move everyone into the smallest room and let the bunker stay open to whatever is bleeding. The alarm keeps sounding until you acknowledge it.",
-  "weight": 2.0,
-  "minDay": 8
- },
- {
-  "id": "morale_boost",
-  "title": "Old Music",
-  "bodyText": "Someone finds a working music player in a bag of salvage, a battered plastic box with a single disc scratched across one side. It plays. The first notes come out thin and warped, but they are music, and the bunker goes quiet in a way it has not gone quiet in months. For a few minutes the room is not concrete and ration tins; it is the kitchen in somebody's old life, a song from a radio in a car on a road that still existed. The battery on the player is half full and it will not last. Nobody says what to do when the song ends. They are all looking at the disc like it is made of something more than plastic.",
-  "weight": 0.5,
-  "minDay": 14
- },
- {
-  "id": "structural_damage",
-  "title": "Wall Crack",
-  "bodyText": "A hairline crack has appeared in the bunker wall, running from the floor to the ceiling in the storage corridor. It is thin as a fingernail now, but water seeps through it when it rains, a dark line that grows after every storm. Concrete does not crack for no reason: the ground is moving, or the wall is carrying weight it was not designed to carry, or the frame is tired. If the crack widens, the shelter is compromised, and a compromised shelter is a different kind of problem entirely, one that no rationing can solve. The stores have cement and rod, enough for one patch job. The crack is patient. You have to decide whether to patch it now or wait until it decides for you, and the rain is not done yet.",
-  "weight": 1.5,
-  "minDay": 12
- },
- {
-  "id": "flashpoint_buildup_radio_dead_air",
-  "title": "Dead Air",
-  "bodyText": "The civilian broadcast cut out mid-sentence, right in the middle of a word, like someone unplugged the world. Since then: no carrier, no static, no weather, no voices. Just a thin repeating tone for the first hour, then silence, the kind of silence that makes you check the volume knob on the radio twice. We tried every frequency. Nothing. The band is empty in a way it has never been empty, not even in the worst weeks. Some of the others think the transmitter finally died, that its batteries ran out like everything else runs out. You have heard the difference between a dead transmitter and a dead broadcast. This is not a dead transmitter. This is a station that stopped existing, and you are not sure what to tell the others.",
-  "weight": 1.0,
-  "minDay": 25
- },
- {
-  "id": "flashpoint_buildup_trader_panic",
-  "title": "Trader in a Hurry",
-  "bodyText": "The trader took the iodine without haggling. No counter-offer, no complaint about the price, no long look at the tin. Just took it, dropped it in their pack, and turned to leave. They did not look at the food we offered, did not even glance at the flour. Said they would be back in two days, maybe less. Then they packed lighter than usual going out, left the spare blanket behind, took the water but not the heavy tarp. Nobody leaves gear behind. Gear is everything out there. You stood at the hatch watching them walk into the ash and you could not say what they were running from, only that they were running, and that the bunker is now on whatever road they are taking.",
-  "weight": 1.0,
-  "minDay": 26
- },
- {
-  "id": "flashpoint_buildup_military_codes",
-  "title": "Numbers Station",
-  "bodyText": "An automated military frequency is cycling through cipher blocks, the same four tones repeated in fixed intervals, hour after hour. No operator, no preamble, no callsign. Just the beeps, exact and identical, like a machine going through a checklist nobody is reading. Marcus sat and listened for an hour, counting intervals, writing numbers on the wall with chalk. Then he said it: it means nobody's left to talk. The automated stations keep transmitting because nothing switched them off. A dead hand on a dial somewhere. The beeps will keep going until the power fails or the antenna rusts, and neither of those things is going to happen this week. It is the sound of a system waiting for people who are not coming back.",
-  "weight": 1.0,
-  "minDay": 27
- },
- {
-  "id": "flashpoint_buildup_news_anchor_panic",
-  "title": "Static, Then a Voice",
-  "bodyText": "An international station cut in over the interference, breaking through for maybe thirty seconds. The anchor's voice was shaking, the kind of shaking that does not come from a cold studio. 'Do not' is all they got out before the signal collapsed into noise. Do not what. Do not go outside. Do not drink the water. Do not believe what you hear next. We never found out. The station never came back, and the frequency has been dead since, and you have replayed those two words in your head a hundred times. The radio sits in the corner with its dials in the wrong place. A warning with no warning in it is just a sound, but you cannot stop hearing it.",
-  "weight": 1.0,
-  "minDay": 28
- },
- {
-  "id": "flashpoint_buildup_war_silence",
-  "title": "The Shelling Stopped",
-  "bodyText": "Last night the artillery reached a fever pitch, shells falling close enough to feel in the floor, close enough that the cups on the shelf trembled in their places. The bunker spent the night counting the gaps between impacts the way you count seconds in a storm. By morning: nothing. No gunfire at all, no motors, no distant crump of shells. Just the wind against the hatch and the ash drifting past the window slit. Nobody slept through it. The silence is a different weight than the shelling. The shelling meant somebody was fighting. The silence means either the fight is over or the fighters have made other arrangements, and you do not know which one is worse.",
-  "weight": 1.0,
-  "minDay": 29
- },
- {
-  "id": "silent_knock_part1",
-  "title": "A Knock in the Ash",
-  "bodyText": "Three slow knocks on the outer hatch. Deliberate, spaced, not the loose rattle of debris and not the wind working the metal. Someone is out there, and the fallout is high, the ash coming down like grey snow, thick enough that the hatch window shows nothing but moving grey. Whoever it is cannot see you and you cannot see them, and the only thing between you is a sheet of metal and a choice. The knocks do not repeat. The figure does not call out. It is waiting, the way people wait when they have decided that knocking is all they have left. The dosimeter by the door reads high, and it has been climbing all day, and it does not care about whoever is out there.",
-  "weight": 1.5,
-  "minDay": 35,
-  "conditions": {
-   "MinDay": 35,
-   "RequireFalloutStorm": true
-  },
-  "choices": [
-   {
-    "choiceId": "open_hatch",
-    "text": "Open the hatch. Pull them in.",
-    "moraleDelta": 5.0,
-    "effects": [
-     {
-      "targetNeed": "radiation",
-      "needDelta": 12.0
-     },
-     {
-      "setWorldFlag": "stranger_inside",
-      "worldFlagValue": true
-     },
-     {
-      "scheduleEventId": "silent_knock_part2a_wakes",
-      "scheduleOnDay": 37
-     }
-    ]
-   },
-   {
-    "choiceId": "ignore_hatch",
-    "text": "Say nothing. Step away from the hatch.",
-    "moraleDelta": -15.0,
-    "effects": [
-     {
-      "setWorldFlag": "stranger_ignored",
-      "worldFlagValue": true
-     },
-     {
-      "scheduleEventId": "silent_knock_part2b_scraping",
-      "scheduleOnDay": 38
-     }
-    ]
-   }
+{
+  "schema_version": 1,
+  "events": [
+    {
+      "id": "fallout_storm",
+      "title": "Fallout Storm",
+      "bodyText": "The sky turns a sickly amber, the colour of an old bruise, and the ash begins to fall like grey snow. It settles on the sandbags, the barrel tops, the metal of the outer hatch. By the time the wind picks up, the Geiger counter is screaming, needle pinned against the glass. The storm front is moving in from the west and it will sit on the ridge for hours. Filters will choke on the load, the intake will need watching, and no one goes out in this. You stand at the hatch window and watch the grey world disappear. The counter does not stop. You have time to decide what you are willing to spend to wait this one out: the spare filters, the fuel, or someone's life in the open.",
+      "weight": 3.0,
+      "minDay": 1
+    },
+    {
+      "id": "scavenger_arrival",
+      "title": "Scavenger at the Door",
+      "bodyText": "A gaunt figure stands twenty metres from the outer hatch, hands raised and empty. The coat is patched in three different colours, the pack hangs crooked on one shoulder, and the rifle slung across their back has tape wound around the stock and a cracked receiver that may or may not fire. They shout over the wind that they want to trade, nothing more: cloth, batteries, maybe news from the valley road. Their boots are mismatched and one sole flaps when they walk. They have not lowered their hands. The bunker has its own ration count and its own strangers policy. Whatever you decide, it happens through the slot or through the hatch, and there is no way to know which one it should be until it is too late.",
+      "weight": 2.0,
+      "minDay": 3
+    },
+    {
+      "id": "filter_failure",
+      "title": "Air Filter Failure",
+      "bodyText": "The grinding starts in the ventilation shaft at 4 AM, a slow metal-on-metal complaint that wakes everyone in the sleeping quarters. By the time you reach the maintenance alcove, the air filter has seized: the motor hums against a jammed impeller, and grey dust already coats the nearest ducts. The dosimeter in the alcove reads a few points higher than it did last night. Not much. Enough. Somewhere outside, the air is not clean, and the only thing standing between that air and the bunker is a seized cylinder of paper and wire. Shut the duct down and the room gets stale. Leave it running and it burns the motor out. Either way, you are working against the clock with what you have on hand.",
+      "weight": 1.5,
+      "minDay": 5
+    },
+    {
+      "id": "radio_static",
+      "title": "Radio Transmission",
+      "bodyText": "The radio wakes you at dawn, spitting layers of static, and then a voice cuts through: thin, tired, repeating a set of coordinates three times. A supply cache, they say. Sealed container, pre-war, buried in the collapsed general store east of the rail bridge. Then the warning: something is in there with it. They do not say what. The signal dies mid-sentence and the static returns. You write the coordinates on the wall in chalk. The rail bridge is a half-day walk through open country, and open country has its own residents now. The cache could be real. The warning could be the honest part. The only way to know is to send someone, and everyone you have is already stretched thin.",
+      "weight": 1.0,
+      "minDay": 7
+    },
+    {
+      "id": "water_contamination",
+      "title": "Water Contamination",
+      "bodyText": "The water barrel in the stores tastes metallic this morning, a flat copper note that clings to the back of the tongue. The dosimeter confirms it within seconds: the reading climbs as the wand nears the barrel, and the needle settles into the red. The supply is hot. Not a little, not borderline, hot. Someone filled this barrel before the last rain, or from a source nobody checked, and now the bunker's clean water is a quantity you can count in single bottles. Boiling will not help. Pouring it out is the only safe move, and pouring it out means thirst tonight. You stand over the barrel with the wand still clicking, and the decision is simple and ruinous either way.",
+      "weight": 2.0,
+      "minDay": 2
+    },
+    {
+      "id": "stranger_sickness",
+      "title": "Sick Stranger",
+      "bodyText": "A cough echoes off the airlock walls, then a body crumples against the inner door. The figure is wearing a civilian coat under a cracked gas mask, and the skin of their hands is mottled with radiation burns, dark patches that have not healed properly. They try to speak through the cough and fail. The mask lens is fogged from the inside. They came in through the outer hatch, so whatever they carried on their clothes is now on the floor of the airlock. The bunker has no quarantine space, no spare beds, and the med kit is already thin. What they have might be simple exhaustion. What they have might be a dose that finishes the job in a week. Either way, the door between you and them is the only real decision you get to make.",
+      "weight": 1.5,
+      "minDay": 4
+    },
+    {
+      "id": "generator_sputter",
+      "title": "Generator Failure",
+      "bodyText": "The lights flicker twice, hold, and die. The generator coughs once, a hard mechanical bark, and then the bunker goes silent in a way that has weight. Cold seeps in immediately, the way it does when the heaters are gone, and the only light left is the red glow of the emergency strip. Fuel gauge shows a quarter tank. The spark plug is fouled and the air filter on the generator is clogged with the same grey dust that gets into everything. You can rebuild the spark with wire and patience, or you can spend the fuel keeping the battery topped up, or you can let it sit and freeze the pipes. People are already pulling blankets off the bunks. The dark is not the problem. The cold is.",
+      "weight": 2.0,
+      "minDay": 3
+    },
+    {
+      "id": "rat_infestation",
+      "title": "Rats in the Stores",
+      "bodyText": "Droppings in the food crate this morning, black and dry, pressed into the corner where the flour bags lean. Something has gnawed through two ration packs and left the torn foil where anyone can step on it. The scratching comes from the walls at night, a light relentless sound that moves in short bursts. Rats carry things in their fur, and things in their fur live on in the food. The traps you have are two, and the poison is one tin, and the stores are the only thing between the bunker and hunger. Set the poison and you risk the water. Use the traps and you risk missing the nest. Seal the stores and the rats stay in the walls, breeding, patient, waiting for the day you open the crates again.",
+      "weight": 1.5,
+      "minDay": 6
+    },
+    {
+      "id": "morale_crisis",
+      "title": "Shouting in the Dark",
+      "bodyText": "Voices carry through the bunker like they own it. Two of your people, the ones who rationed the water together last winter, are standing over the medical tin arguing about the last iodine pill. The tin is empty after this. Both of them have been in the open since the storm, both have the headaches that mean a dose, and both are right. The argument is loud enough that nobody in the sleeping quarters pretends to sleep. Whatever you do now will be remembered. Take the pill and you choose a side. Split it and you insult both. Order them apart and the question just waits in the tin, unanswered, until someone decides to answer it with their hands.",
+      "weight": 1.0,
+      "minDay": 8
+    },
+    {
+      "id": "supply_drop_rumor",
+      "title": "Supply Drop Rumor",
+      "bodyText": "A crackling radio message repeats itself on the old military frequency: supply drop, three miles north, grid marker on the burnt-out water tower. The voice is flat, recorded, possibly automated. It has been looping for two days. Three miles north is the flats, open ground with no cover except the dry riverbed, and the water tower has been a landmark for raiders since the first winter. The drop could be real: the broadcasts started the same week the garrison pulled back. It could also be a bell rung over a snare. You have one team fit enough to make the walk, and the walk itself costs a day of water. Somebody wants people to come north. The question is whether they are handing out food or collecting packs.",
+      "weight": 1.0,
+      "minDay": 10
+    },
+    {
+      "id": "hatch_breach",
+      "title": "Hatch Seal Breach",
+      "bodyText": "A high-pitched whistle cuts through the bunker, thin and constant, like air escaping a punctured tire. It is coming from the outer hatch. The rubber gasket has cracked along its length, a dry split that flexes when you press it, and through the gap you can feel the faint movement of air moving inward. The dosimeter near the hatch reads a little higher every time you look. The air outside is not clean, and now it has a way in. Replacing the gasket means using the spare seal, the only one you have, and spending an hour in the cold with the hatch open. Patching it means tape and rubber from the stores, a repair that will hold for a week and then ask the question again. The whistle keeps going, steady, patient.",
+      "weight": 2.0,
+      "minDay": 4
+    },
+    {
+      "id": "water_shortage",
+      "title": "Dry Pipes",
+      "bodyText": "The water barrel is down to the last few centimetres, a dark circle in the bottom that reflects the light when you lean over. Rationing began nine days ago, a cup per person per day, and the cups have gotten smaller twice. Thirst is setting in: lips crack, the arguments come faster, and the children have stopped asking for more. The nearest clean source is the creek two hours east, and the last person who walked that road came back empty and limping. Melted snow is a gamble, the rain barrels are half ash, and every option costs either distance or risk or both. People are watching you measure the cups now. The barrel does not care about the count. It is just empty.",
+      "weight": 2.5,
+      "minDay": 5
+    },
+    {
+      "id": "heater_malfunction",
+      "title": "Heater Overheat",
+      "bodyText": "The heater unit in the main room glows red at the seams, and the metal skin is warm enough to blister a hand. An acrid smell fills the shelter, hot dust and scorched wiring, the smell of something burning from the inside. The thermostat is stuck, the fan is grinding against a warped blade, and the unit has been pushing heat it was never meant to push for the better part of an hour. Shut it down and the bunker cools fast, the kind of cold that settles into the concrete and stays. Open the panel and you risk the wiring or your fingers. The smell is getting worse. Whatever you decide, it has to happen before the unit decides for you, and the unit is not patient.",
+      "weight": 1.5,
+      "minDay": 6
+    },
+    {
+      "id": "dead_animal",
+      "title": "Dead Dog Outside",
+      "bodyText": "A stray dog lies at the edge of the airlock approach, on its side, legs stiff. The fur is patchy, bald in streaks where it has been scratching, and the ribs show through like a ladder. It was somebody's dog once, maybe, before the exchange, and now it is a small grey shape in the ash with its teeth showing. Fallout got it. It walked in from somewhere contaminated and died close to shelter, the way things do. The body is a radiation hazard now, and it will not be the last one. Bury it and you spend an hour in the open with a shovel. Leave it and the ash keeps falling on it, and the birds start circling, and the lesson sits at the door for everyone to see.",
+      "weight": 0.8,
+      "minDay": 3
+    },
+    {
+      "id": "cramped_quarters",
+      "title": "Cabin Fever",
+      "bodyText": "The walls feel closer every day. There are fifteen of you in a shelter built for eight, and the bunks run in shifts, and the corridor is never empty. One of the newcomers has not spoken in three days. Another walks the length of the main room at night, back and forth, counting steps, and no one has told them to stop because everyone is doing something similar in their own head. The bunker was not built for this many people. It was built for a family and a stockroom, not for a community, and the air is heavy with the smell of too many bodies in too little space. The walls do not move. It is the people who move, and they are starting to move against each other.",
+      "weight": 1.0,
+      "minDay": 12
+    },
+    {
+      "id": "found_diary",
+      "title": "Old Diary",
+      "bodyText": "Behind a loose panel in the storage room, pushed back behind the shelving, a diary. It belonged to the bunker's original occupant, a man who kept records like they mattered: fuel levels, water usage, the date the power lines went dead. The entries are calm for the first two weeks. Then the handwriting changes, shorter sentences, wider spacing. The last entry is dated three weeks after the bombs. It ends mid-sentence, with a pen stroke that dragged off the page. You have read it twice. It is not a happy document, and it tells you something about this bunker that no one who built it intended you to know. What it means for how you run things, what you tell the others, that part is yours.",
+      "weight": 0.5,
+      "minDay": 8
+    },
+    {
+      "id": "ash_pileup",
+      "title": "Ash Accumulation",
+      "bodyText": "Radioactive ash has drifted against the air intake, a grey dune that leans up the wall and presses into the louver. The wind keeps feeding it. If it is not cleared, the filters will clog within hours, and a clogged filter is a seized filter, and a seized filter is the air problem you cannot fix at midnight. Clearing it means sending someone out in the gear, half an hour in the open with a shovel and a mask, ash working its way into every seam. Waiting means watching the airflow gauge drop and doing nothing about it. The intake is not decorative. It is the difference between air you can breathe and air that gets into you one cough at a time.",
+      "weight": 2.0,
+      "minDay": 7
+    },
+    {
+      "id": "trader_offers_medicine",
+      "title": "Medicine Trade",
+      "bodyText": "A trader at the gate claims to have anti-rad medication, real decorporation pills from a pre-war pharmacy, and holds up a strip of foil to prove it. They want food in return, a specific list: two tins of meat and a bag of flour. The deal feels too good. Anti-rad is scarce enough that people kill for it, and this trader is offering it at market price with a smile that does not reach their eyes. The foil could hold real pills. It could hold chalk dust and aspirin. The food is yours either way, and it is food you need. You have seen too many good deals in the wasteland, and every one of them cost somebody something. The question is whether this one costs you your stock or just your pride.",
+      "weight": 1.0,
+      "minDay": 10
+    },
+    {
+      "id": "power_cell_discovery",
+      "title": "Hidden Power Cell",
+      "bodyText": "While clearing debris from the collapsed storage alcove, your hand closes on something solid: a sealed power cell, military markings, still showing a full charge on the test strip. It has been sitting behind the wall panel since before the exchange, untouched, waiting. It could power the radio for weeks, and the radio is your only window on the world outside the bunker: the broadcasts, the band channels, the weather. Or it could run the air filtration at night, or keep the store lights on when the generator sleeps. The cell is one. The needs are many. Everyone has an opinion about where it should go, and they are all reasonable, and they are all wrong about each other's priorities.",
+      "weight": 0.7,
+      "minDay": 15
+    },
+    {
+      "id": "night_terrors",
+      "title": "Night Terrors",
+      "bodyText": "At 2 AM someone in the sleeping quarters starts screaming, a raw sound that cuts through the concrete. They dreamed of the flash: the light through the window, the heat arriving before the sound, the silence after, when the birds stopped and the sky went wrong. They are awake now, breathing hard, staring at the ceiling. Nobody says anything. The bunker listens to the breathing slow and pretends to go back to sleep. Everyone here has that dream. It lives in the same place in every head, the same light, the same wrong silence, and it is not going anywhere. The only question is whether you talk about it in the morning, or let the dream keep doing what it does in the dark.",
+      "weight": 1.0,
+      "minDay": 5
+    },
+    {
+      "id": "filter_degradation",
+      "title": "Filter Wear",
+      "bodyText": "The air filter indicator has dropped into the yellow, a small window with the needle resting at the edge of the green zone. The numbers have been falling for a week, slowly, the way everything degrades in the wasteland. The spare is in the stores, one unit, wrapped in plastic and oiled paper, and it represents a trade decision you have been putting off. Replace the filter now and you spend the spare with months of winter ahead. Wait and the air gets heavier, the smell of dust and bodies comes back, and the next storm will finish the job this filter started. The indicator does not blink and does not hurry. It just waits, yellow, patient, while the bunker breathes through a clogging lung.",
+      "weight": 2.0,
+      "minDay": 10
+    },
+    {
+      "id": "lucky_find",
+      "title": "Lucky Find",
+      "bodyText": "A sealed crate in the corner of the store room, behind the empty racks, overlooked for years. The lid comes off with a groan: canned food, the labels faded but the tins bright, a water filter still in its box, and a flashlight that works on the first press. The beam is solid and steady, the first new light this bunker has seen in a long time. It is a small fortune and it asks a question: distribute it now and the bunker eats well for a week and sees the morale lift; hold it in reserve and it stays a floorboard under everyone's feet, a secret with a weight. The tins are dated. The filter is dry. Nothing here keeps forever, and the wasteland does not care about luck.",
+      "weight": 0.5,
+      "minDay": 3
+    },
+    {
+      "id": "radiation_leak",
+      "title": "Radiation Spike",
+      "bodyText": "The dosimeter alarm triggers at 7 AM, a shrill note that brings everyone to the corridor. Radiation levels inside the bunker have spiked: the wall-mounted unit reads three times what it read yesterday. Something is leaking. The airlock. The hatch seal. A contaminated item brought in with the last salvage. The source is somewhere in this building, and every hour it leaks, it leaks into the people you are responsible for. You can sweep the bunker room by room with the wand, you can seal off the sections you suspect, or you can move everyone into the smallest room and let the bunker stay open to whatever is bleeding. The alarm keeps sounding until you acknowledge it.",
+      "weight": 2.0,
+      "minDay": 8
+    },
+    {
+      "id": "morale_boost",
+      "title": "Old Music",
+      "bodyText": "Someone finds a working music player in a bag of salvage, a battered plastic box with a single disc scratched across one side. It plays. The first notes come out thin and warped, but they are music, and the bunker goes quiet in a way it has not gone quiet in months. For a few minutes the room is not concrete and ration tins; it is the kitchen in somebody's old life, a song from a radio in a car on a road that still existed. The battery on the player is half full and it will not last. Nobody says what to do when the song ends. They are all looking at the disc like it is made of something more than plastic.",
+      "weight": 0.5,
+      "minDay": 14
+    },
+    {
+      "id": "structural_damage",
+      "title": "Wall Crack",
+      "bodyText": "A hairline crack has appeared in the bunker wall, running from the floor to the ceiling in the storage corridor. It is thin as a fingernail now, but water seeps through it when it rains, a dark line that grows after every storm. Concrete does not crack for no reason: the ground is moving, or the wall is carrying weight it was not designed to carry, or the frame is tired. If the crack widens, the shelter is compromised, and a compromised shelter is a different kind of problem entirely, one that no rationing can solve. The stores have cement and rod, enough for one patch job. The crack is patient. You have to decide whether to patch it now or wait until it decides for you, and the rain is not done yet.",
+      "weight": 1.5,
+      "minDay": 12
+    },
+    {
+      "id": "flashpoint_buildup_radio_dead_air",
+      "title": "Dead Air",
+      "bodyText": "The civilian broadcast cut out mid-sentence, right in the middle of a word, like someone unplugged the world. Since then: no carrier, no static, no weather, no voices. Just a thin repeating tone for the first hour, then silence, the kind of silence that makes you check the volume knob on the radio twice. We tried every frequency. Nothing. The band is empty in a way it has never been empty, not even in the worst weeks. Some of the others think the transmitter finally died, that its batteries ran out like everything else runs out. You have heard the difference between a dead transmitter and a dead broadcast. This is not a dead transmitter. This is a station that stopped existing, and you are not sure what to tell the others.",
+      "weight": 1.0,
+      "minDay": 25
+    },
+    {
+      "id": "flashpoint_buildup_trader_panic",
+      "title": "Trader in a Hurry",
+      "bodyText": "The trader took the iodine without haggling. No counter-offer, no complaint about the price, no long look at the tin. Just took it, dropped it in their pack, and turned to leave. They did not look at the food we offered, did not even glance at the flour. Said they would be back in two days, maybe less. Then they packed lighter than usual going out, left the spare blanket behind, took the water but not the heavy tarp. Nobody leaves gear behind. Gear is everything out there. You stood at the hatch watching them walk into the ash and you could not say what they were running from, only that they were running, and that the bunker is now on whatever road they are taking.",
+      "weight": 1.0,
+      "minDay": 26
+    },
+    {
+      "id": "flashpoint_buildup_military_codes",
+      "title": "Numbers Station",
+      "bodyText": "An automated military frequency is cycling through cipher blocks, the same four tones repeated in fixed intervals, hour after hour. No operator, no preamble, no callsign. Just the beeps, exact and identical, like a machine going through a checklist nobody is reading. Marcus sat and listened for an hour, counting intervals, writing numbers on the wall with chalk. Then he said it: it means nobody's left to talk. The automated stations keep transmitting because nothing switched them off. A dead hand on a dial somewhere. The beeps will keep going until the power fails or the antenna rusts, and neither of those things is going to happen this week. It is the sound of a system waiting for people who are not coming back.",
+      "weight": 1.0,
+      "minDay": 27
+    },
+    {
+      "id": "flashpoint_buildup_news_anchor_panic",
+      "title": "Static, Then a Voice",
+      "bodyText": "An international station cut in over the interference, breaking through for maybe thirty seconds. The anchor's voice was shaking, the kind of shaking that does not come from a cold studio. 'Do not' is all they got out before the signal collapsed into noise. Do not what. Do not go outside. Do not drink the water. Do not believe what you hear next. We never found out. The station never came back, and the frequency has been dead since, and you have replayed those two words in your head a hundred times. The radio sits in the corner with its dials in the wrong place. A warning with no warning in it is just a sound, but you cannot stop hearing it.",
+      "weight": 1.0,
+      "minDay": 28
+    },
+    {
+      "id": "flashpoint_buildup_war_silence",
+      "title": "The Shelling Stopped",
+      "bodyText": "Last night the artillery reached a fever pitch, shells falling close enough to feel in the floor, close enough that the cups on the shelf trembled in their places. The bunker spent the night counting the gaps between impacts the way you count seconds in a storm. By morning: nothing. No gunfire at all, no motors, no distant crump of shells. Just the wind against the hatch and the ash drifting past the window slit. Nobody slept through it. The silence is a different weight than the shelling. The shelling meant somebody was fighting. The silence means either the fight is over or the fighters have made other arrangements, and you do not know which one is worse.",
+      "weight": 1.0,
+      "minDay": 29
+    },
+    {
+      "id": "silent_knock_part1",
+      "title": "A Knock in the Ash",
+      "bodyText": "Three slow knocks on the outer hatch. Deliberate, spaced, not the loose rattle of debris and not the wind working the metal. Someone is out there, and the fallout is high, the ash coming down like grey snow, thick enough that the hatch window shows nothing but moving grey. Whoever it is cannot see you and you cannot see them, and the only thing between you is a sheet of metal and a choice. The knocks do not repeat. The figure does not call out. It is waiting, the way people wait when they have decided that knocking is all they have left. The dosimeter by the door reads high, and it has been climbing all day, and it does not care about whoever is out there.",
+      "weight": 1.5,
+      "minDay": 35,
+      "conditions": {
+        "MinDay": 35,
+        "RequireFalloutStorm": true
+      },
+      "choices": [
+        {
+          "choiceId": "open_hatch",
+          "text": "Open the hatch. Pull them in.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "targetNeed": "radiation",
+              "needDelta": 12.0
+            },
+            {
+              "setWorldFlag": "stranger_inside",
+              "worldFlagValue": true
+            },
+            {
+              "scheduleEventId": "silent_knock_part2a_wakes",
+              "scheduleOnDay": 37
+            }
+          ]
+        },
+        {
+          "choiceId": "ignore_hatch",
+          "text": "Say nothing. Step away from the hatch.",
+          "moraleDelta": -15.0,
+          "effects": [
+            {
+              "setWorldFlag": "stranger_ignored",
+              "worldFlagValue": true
+            },
+            {
+              "scheduleEventId": "silent_knock_part2b_scraping",
+              "scheduleOnDay": 38
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "silent_knock_part2a_wakes",
+      "title": "The Stranger Wakes",
+      "bodyText": "He opens his eyes on Day 37, after four days of fever, and the radiation burns across his neck are the colour of old leather. He was a cartographer, he says, before. He worked maps, the ones that mattered, the ones that survived. He says he knows a pre-war cache: sealed, untouched, the kind of place no one reached before the ground went wrong. Grid coordinates. He writes them on a strip of packaging, the pencil line thin and steady, and holds it out. He needs water. He is barely holding on. The paper is real, the handwriting is steady, and the map was always his trade. Whether the place is real is another question entirely, and the water is a short list of cups.",
+      "weight": 0.0,
+      "minDay": 37,
+      "conditions": {
+        "MinDay": 37,
+        "RequiredFlagId": "stranger_inside"
+      },
+      "choices": [
+        {
+          "choiceId": "give_clean_water",
+          "text": "Give him the clean water.",
+          "moraleDelta": 8.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -1
+            },
+            {
+              "setWorldFlag": "stranger_given_clean_water",
+              "worldFlagValue": true
+            },
+            {
+              "setWorldFlag": "stranger_has_coordinates",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "give_irradiated_water",
+          "text": "Give him the irradiated water. He won't know the difference.",
+          "moraleDelta": -20.0,
+          "effects": [
+            {
+              "itemId": "irradiated_water",
+              "itemAmount": -1
+            },
+            {
+              "setWorldFlag": "stranger_given_irradiated_water",
+              "worldFlagValue": true
+            },
+            {
+              "setWorldFlag": "stranger_has_coordinates",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "silent_knock_part2b_scraping",
+      "title": "The Scraping",
+      "bodyText": "On Day 38 it starts again, but this time it is not knocking. A long, slow scraping against the outer hatch seal, metal on metal, dragged in one direction and then back. Methodical. It stops for six hours. It starts again. Two days of it, the sound of something patient working at the door, and then nothing. The seal holds. You check it twice, three times a day, and each time the scrape resumes you find yourself listening to the direction of the sound, trying to read intent into the rhythm of it. Whoever it is has decided not to knock anymore. That is a decision in itself. The door is still whole. The question of what comes next is not.",
+      "weight": 0.0,
+      "minDay": 38,
+      "conditions": {
+        "MinDay": 38,
+        "RequiredFlagId": "stranger_ignored"
+      },
+      "choices": [
+        {
+          "choiceId": "scraping_accept",
+          "text": "You made your choice. Keep the hatch sealed.",
+          "moraleDelta": -10.0,
+          "effects": [
+            {
+              "setWorldFlag": "stranger_died_outside",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "silent_knock_part3_coordinates",
+      "title": "The Coordinates",
+      "bodyText": "The address the stranger wrote down is a grid reference, neat and specific, for what he called a pristine pre-war cache. Sealed food, he said. Medicine. Batteries. The kind of stock that outlasted the exchange because nobody found it first. It could be exactly what it says on the paper: three months of supply in a concrete room with a locked door. It could also be a hole in the ground, or a held position, or a story a dying man told because telling it was the only coin he had left. You have his word, and the memory of the water you gave him, and a strip of packaging with numbers in pencil. The numbers are all the map you are going to get.",
+      "weight": 0.0,
+      "minDay": 39,
+      "conditions": {
+        "MinDay": 39,
+        "RequiredFlagId": "stranger_has_coordinates"
+      },
+      "choices": [
+        {
+          "choiceId": "send_expedition",
+          "text": "Send someone to the coordinates.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "setWorldFlag": "stranger_cache_expedition_launched",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "discard_coordinates",
+          "text": "Burn the paper. Don't risk it.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "setWorldFlag": "stranger_cache_abandoned",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "the_emissary",
+      "title": "The Emissary",
+      "bodyText": "Someone from the scavenger camp stands at the hatch, in the open, hands empty and raised to show it. Their voice is dry, the voice of a person who has been rationing water and thinking about it. They want water, enough for three, they say. Not for a group, not for trade, for three. The canteen at their hip is dented and light, and you can see from here that it does not have the weight of a full canteen, and they do not try to hide it. The camp is half a day's walk west. The bunker's own barrels are down. The request is small and specific and honest, and honest requests are the hardest kind to refuse, because they are the ones that come back to you at night.",
+      "threateningBodyText": "The same voice at the hatch, but the tone has changed. Not asking. They know what you have. The words are short: open up, or they come back with friends.",
+      "threateningFactionId": "faction_scavengers",
+      "threateningTrustBelow": -20.0,
+      "weight": 1.5,
+      "minDay": 5,
+      "conditions": {
+        "MinDay": 5
+      },
+      "choices": [
+        {
+          "choiceId": "share_water",
+          "text": "Pass a jug of clean water through the hatch.",
+          "moraleDelta": 4.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": 15.0,
+          "setEventFlags": [
+            "shared_water_with_emissary"
+          ],
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -1
+            },
+            {
+              "scheduleEventId": "emissary_return_favor",
+              "scheduleDelayDays": 2,
+              "setWorldFlag": "shared_water_with_emissary",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "refuse_water",
+          "text": "Keep the seal. Tell them we have nothing to spare.",
+          "moraleDelta": -3.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": -12.0,
+          "setEventFlags": [
+            "refused_emissary_water"
+          ],
+          "effects": [
+            {
+              "scheduleEventId": "emissary_return_grudge",
+              "scheduleDelayDays": 3,
+              "setWorldFlag": "refused_emissary_water",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "lie_purifier_broken",
+          "text": "Lie and say the purifier is broken.",
+          "moraleDelta": -1.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": 0.0,
+          "requiredTrait": "Paranoid",
+          "requiredTrustFactionId": "faction_scavengers",
+          "requiredTrustMin": -20.0,
+          "hideIfGatesFail": true,
+          "setEventFlags": [
+            "lied_purifier_broken"
+          ],
+          "effects": [
+            {
+              "scheduleEventId": "emissary_return_caught",
+              "scheduleDelayDays": 2,
+              "setWorldFlag": "lied_purifier_broken",
+              "worldFlagValue": true
+            }
+          ]
+        },
+        {
+          "choiceId": "preemptive_fire_hatch",
+          "text": "Preemptively open fire through the hatch.",
+          "moraleDelta": -12.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": -40.0,
+          "requiredTrait": "Paranoid",
+          "requiredTrustFactionId": "faction_scavengers",
+          "requiredTrustMaxExclusive": -20.0,
+          "hideIfGatesFail": true,
+          "setEventFlags": [
+            "fired_on_emissary_hatch"
+          ],
+          "effects": [
+            {
+              "scheduleEventId": "emissary_return_raid_warning",
+              "scheduleDelayDays": 1,
+              "setWorldFlag": "fired_on_emissary_hatch",
+              "worldFlagValue": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "emissary_return_favor",
+      "title": "The Favor",
+      "bodyText": "Two days later, the same voice at the hatch, softer this time. They did not come to ask. A half-crate of canned goods sits on the threshold, tins with the labels worn off but the seams bright, a good haul from wherever the camp digs. Payment for the water, they say, and they say it like a person who has been thinking about the word payment and has decided to use it. No weapons in sight, no second figure in the ash, just one person and a crate that was heavier on the way here than it is now. It is a gift with a receipt. It says the camp trades square, that favors have weight, and that the door between your bunker and theirs is a little more open than it was.",
+      "weight": 0.0,
+      "minDay": 1,
+      "conditions": {
+        "MinDay": 1,
+        "RequiredEventFlags": [
+          "shared_water_with_emissary"
+        ]
+      },
+      "choices": [
+        {
+          "choiceId": "accept_gift",
+          "text": "Take the crate. Nod once. Close the hatch.",
+          "moraleDelta": 6.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": 8.0,
+          "setEventFlags": [
+            "accepted_emissary_gift"
+          ],
+          "effects": [
+            {
+              "itemId": "canned_food",
+              "itemAmount": 2
+            }
+          ]
+        },
+        {
+          "choiceId": "refuse_gift",
+          "text": "Leave it. We don't take debts we can't see.",
+          "moraleDelta": -2.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": -4.0
+        },
+        {
+          "choiceId": "search_first",
+          "text": "Search them for weapons before anything comes in.",
+          "moraleDelta": -1.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": -6.0,
+          "requiredTrait": "Paranoid",
+          "hideIfGatesFail": true
+        }
+      ]
+    },
+    {
+      "id": "emissary_return_caught",
+      "title": "The Mechanic",
+      "bodyText": "They came back with a thin man who smells of solder, who stands close to the hatch and listens, head tilted, at the purifier's hum. The lie is thin now. This is not a water call and not a favor call; this is someone counting the bunker's machines through a closed door, judging the age of the pumps by their sound. The mechanic says nothing, just listens, and the emissary waits with the patience of someone who has already asked what they came to ask and is waiting for the answer to catch up. They are measuring you. What you have, what it is worth, what you might be convinced to part with. The hum of the purifier fills the silence, and you are the one who has to decide how much of it to let them hear.",
+      "weight": 0.0,
+      "minDay": 1,
+      "conditions": {
+        "MinDay": 1,
+        "RequiredEventFlags": [
+          "lied_purifier_broken"
+        ]
+      },
+      "choices": [
+        {
+          "choiceId": "admit_and_share",
+          "text": "Admit it. Pass a jug through and call it a misunderstanding.",
+          "moraleDelta": -4.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": 5.0,
+          "setEventFlags": [
+            "admitted_purifier_lie"
+          ],
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "double_down_lie",
+          "text": "Double down. Blame the filters. Blame the weather. Blame anything.",
+          "moraleDelta": -6.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": -18.0,
+          "requiredTrait": "Paranoid",
+          "hideIfGatesFail": true,
+          "setEventFlags": [
+            "doubled_down_purifier_lie"
+          ]
+        },
+        {
+          "choiceId": "offer_filter_help",
+          "text": "Offer to check their canteen filter — real help, no water lost.",
+          "moraleDelta": 3.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": 10.0,
+          "requiredTrait": "triage_orderly",
+          "hideIfGatesFail": true
+        },
+        {
+          "choiceId": "seal_and_wait",
+          "text": "Say nothing. Seal the hatch. Wait them out.",
+          "moraleDelta": -2.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": -10.0
+        }
+      ]
+    },
+    {
+      "id": "emissary_return_grudge",
+      "title": "The Grudge",
+      "bodyText": "Three days. Same hatch, same figure, fewer words. The greeting is shorter now, the hands not quite as open, and the canteen at their hip has been refilled somewhere, which means they have another source, which means they are not coming back because they need the water. They want water, or they want a reason to stop asking politely. The question hangs between you and the hatch. Every refusal has been a small stone, and the pile is getting high enough to see over. Out here, debts are collected and slights are remembered, and a person who has stopped asking is a person who has started planning. The door is still shut. You can see in their stance that they are counting the days like everyone else counts the days.",
+      "weight": 0.0,
+      "minDay": 1,
+      "conditions": {
+        "MinDay": 1,
+        "RequiredEventFlags": [
+          "refused_emissary_water"
+        ]
+      },
+      "choices": [
+        {
+          "choiceId": "pay_up_late",
+          "text": "Pay up late. One jug, no apology.",
+          "moraleDelta": -2.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": 6.0,
+          "effects": [
+            {
+              "itemId": "clean_water",
+              "itemAmount": -1
+            }
+          ]
+        },
+        {
+          "choiceId": "keep_sealed",
+          "text": "Keep it sealed. Let the grudge sit.",
+          "moraleDelta": 0.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": -15.0
+        }
+      ]
+    },
+    {
+      "id": "emissary_return_raid_warning",
+      "title": "After the Hatch",
+      "bodyText": "No knock this time. Just bootprints in the ash leading away from the hatch, pressed deep, the marks of someone walking with weight and purpose. Then, an hour later, a radio burst on the scavenger band that cuts off mid-word, as if the hand on the key was pulled away. Silence after. The bootprints do not return to the camp road; they angle east along the ridge, the direction the watchers always said a group would come from. Someone will come back heavier. It is not a question of if, only of when and with what, and the bunker has its stores and its people and its one hatch. The ash is still settling into the prints. You have a little time, and a little time is a thing you have learned to spend carefully.",
+      "weight": 0.0,
+      "minDay": 1,
+      "conditions": {
+        "MinDay": 1,
+        "RequiredEventFlags": [
+          "fired_on_emissary_hatch"
+        ]
+      },
+      "choices": [
+        {
+          "choiceId": "brace_hatch",
+          "text": "Brace the hatch. Double the watch.",
+          "moraleDelta": -3.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": -5.0
+        },
+        {
+          "choiceId": "leave_it",
+          "text": "Leave it. Hope the ash covers the prints.",
+          "moraleDelta": -8.0,
+          "factionId": "faction_scavengers",
+          "trustDelta": -8.0
+        }
+      ]
+    },
+    {
+      "id": "contaminated_water_trade",
+      "title": "The Contaminated Water Trade",
+      "bodyText": "A gaunt woman pounds on the hatch with both fists, and behind her a child coughs, a wet rattling sound that goes on longer than a cough should. 'Please,' she begs, the word worn flat from repeating. 'Clean water. Just enough for my daughter.' She holds up ammunition in both hands, military-grade rounds, boxed and sealed, the kind of stock that does not walk around loose. It's yours, she says, all of it, for one canteen. The bunker's water reserves are already low, measured in cups, and the barrels are at the bottom. The ammo is real, the rounds are bright, and the cough is real too, and the daughter is small enough to be hidden behind her mother's hip.",
+      "weight": 2.5,
+      "minDay": 10,
+      "choices": [
+        {
+          "choiceId": "trade_water",
+          "text": "Trade the water. A child's life is worth it.",
+          "moraleDelta": 15.0,
+          "effects": [
+            {
+              "type": "remove_water",
+              "amount": 10
+            },
+            {
+              "type": "add_item",
+              "itemId": "ammo_556",
+              "amount": 30
+            }
+          ]
+        },
+        {
+          "choiceId": "refuse_trade",
+          "text": "We can't spare it. Every drop counts.",
+          "moraleDelta": -15.0,
+          "effects": [
+            {
+              "type": "add_trait",
+              "traitId": "guilt_water_trade"
+            }
+          ]
+        },
+        {
+          "choiceId": "offer_half",
+          "text": "Half now. Half if she brings more ammunition.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "type": "remove_water",
+              "amount": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "infected_refugee_isolation",
+      "title": "The Infected Refugee",
+      "bodyText": "A survivor stumbles into the airlock and collapses against the inner door. The skin of their face and hands is mottled, but not with radiation burns, not the patches you know. This is something else, a rash spreading up the neck in red streaks, hot to look at. They are burning with fever, sweating through their coat. 'I just need to rest,' they whisper. 'Please don't send me back out.' The bunker has no quarantine room, no spare space, nothing but a corridor and a stores room and people who have spent three years learning not to touch strangers. What they have could be contagious. What they have could be a fever and a bad day. The door is still open between you and them, and it stays open until you close it.",
+      "weight": 2.0,
+      "minDay": 5,
+      "choices": [
+        {
+          "choiceId": "admit_and_quarantine",
+          "text": "Confine them to the stores room. Everyone stays clear.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "type": "add_survivor",
+              "survivorId": "infected_refugee"
+            },
+            {
+              "type": "set_quarantine",
+              "roomId": "stores"
+            }
+          ]
+        },
+        {
+          "choiceId": "admit_openly",
+          "text": "Welcome them in. We don't abandon the sick.",
+          "moraleDelta": 10.0,
+          "effects": [
+            {
+              "type": "add_survivor",
+              "survivorId": "infected_refugee"
+            },
+            {
+              "type": "infection_risk",
+              "chance": 0.4
+            }
+          ]
+        },
+        {
+          "choiceId": "turn_away",
+          "text": "Close the hatch. The risk is too great.",
+          "moraleDelta": -10.0,
+          "effects": [
+            {
+              "type": "add_trait",
+              "traitId": "guilt_refugee_turned"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sabotaged_air_filter",
+      "title": "The Sabotaged Filter",
+      "bodyText": "The air filtration unit failed overnight, and the bunker woke to the smell of dust and the first dry scratch in everyone's throat. But the filter is not just worn. It has been cut: a clean, deliberate slice through the mesh, straight as a ruler line, the kind of cut that does not happen by accident. Someone inside this bunker did this. Not a failure, not wear, not the ash. A person with a blade and a reason. The cut is a message and a question, and the room goes quiet when you hold the filter up to the light, because everyone understands what a clean cut means. Paranoia spreads faster than radiation, and you can feel it starting, the sideways looks, the careful questions. Somewhere in this bunker, someone knows exactly who did this.",
+      "weight": 1.5,
+      "minDay": 15,
+      "choices": [
+        {
+          "choiceId": "investigate",
+          "text": "Search every room. Question everyone.",
+          "moraleDelta": -10.0,
+          "effects": [
+            {
+              "type": "suspicion_increase",
+              "amount": 30
+            },
+            {
+              "type": "discover_saboteur",
+              "chance": 0.6
+            }
+          ]
+        },
+        {
+          "choiceId": "replace_quietly",
+          "text": "Replace the filter. Say nothing. Watch from the shadows.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "type": "remove_item",
+              "itemId": "air_filter",
+              "amount": 1
+            },
+            {
+              "type": "suspicion_increase",
+              "amount": 10
+            }
+          ]
+        },
+        {
+          "choiceId": "public_address",
+          "text": "Call a meeting. Whoever did this, come forward. No punishment.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "type": "confession_chance",
+              "chance": 0.35
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "faction_deserter_asylum",
+      "title": "The Faction Deserter",
+      "bodyText": "A Garrison officer in full uniform stands at the hatch, hands raised, cap under one arm. The uniform is clean, pressed in the way military uniforms get pressed, and that is its own kind of wrong out here. 'I'm deserting,' they say flatly, like a person reading a statement. 'I have schematics. Patrol routes, supply caches, artillery positions. Everything they'd rather you didn't know.' Then the rest: 'But the Garrison will come looking for me. They always do.' The officer waits, hands still raised, and the schematics are folded inside the jacket. Take them in and you buy the information and the price that comes with it. Turn them away and the knowledge walks off into the ash with them, and the Garrison comes anyway.",
+      "weight": 2.0,
+      "minDay": 20,
+      "choices": [
+        {
+          "choiceId": "grant_asylum",
+          "text": "Welcome them in. The intel is worth the risk.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "type": "add_survivor",
+              "survivorId": "garrison_deserter"
+            },
+            {
+              "type": "add_map_intel",
+              "amount": 3
+            },
+            {
+              "type": "faction_standing",
+              "factionId": "iron_garrison",
+              "delta": -30
+            }
+          ]
+        },
+        {
+          "choiceId": "take_intel_only",
+          "text": "Give us the schematics and we'll give you supplies. Then go.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "type": "add_map_intel",
+              "amount": 2
+            },
+            {
+              "type": "remove_food",
+              "amount": 5
+            }
+          ]
+        },
+        {
+          "choiceId": "turn_away_deserter",
+          "text": "We can't afford a Garrison manhunt. Leave.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "type": "faction_standing",
+              "factionId": "iron_garrison",
+              "delta": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stranded_expedition_rescue",
+      "title": "The Stranded Expedition",
+      "bodyText": "The radio crackles and a voice breaks through: 'This is Scavenger Team Three. We're trapped. The building collapsed. Mika is pinned. The radiation is climbing.' The transmission is rough, cut with static, but the coordinates come through twice, and you write them down. The site is deep in a high-radiation zone, the kind of ground nobody walks without gear and a clock. Sending a rescue team means two or three people in the open for hours, spending masks and potassium iodide and fuel, to reach one person pinned under rubble. The odds are what they are. The other option is the radio going quiet, and the silence on that channel, and the knowledge of what you decided when it mattered. The radio waits, hissing.",
+      "weight": 1.5,
+      "minDay": 10,
+      "choices": [
+        {
+          "choiceId": "send_rescue",
+          "text": "Send a rescue team. No one gets left behind.",
+          "moraleDelta": 10.0,
+          "effects": [
+            {
+              "type": "start_rescue_expedition",
+              "locationId": "collapsed_building"
+            }
+          ]
+        },
+        {
+          "choiceId": "talk_them_through",
+          "text": "Guide them over the radio. Talk Mika through freeing herself.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "type": "rescue_survival_chance",
+              "chance": 0.4
+            }
+          ]
+        },
+        {
+          "choiceId": "cannot_risk",
+          "text": "We can't risk more lives. I'm sorry.",
+          "moraleDelta": -20.0,
+          "effects": [
+            {
+              "type": "add_trait",
+              "traitId": "guilt_stranded_rescue"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stolen_medication",
+      "title": "The Stolen Iodine",
+      "bodyText": "The iodine pill count does not match the log. Ten pills missing, and the tin has been opened with care, the sort of care that leaves no crumbs and no fingerprints and no doubt. Marcus stands in the corridor, jaw set, pointing: 'She was in the stores alone yesterday.' Suki denies it, voice cracking at the edges, hands out, pale. 'I would never. Someone is framing me.' Both of them have been in the open this month. Both of them have a reason to want the pills. Both of them are watching you, and the rest of the bunker is watching you too, and the pills are still missing. The tin sits open on the table. Every hour the decision waits, the trust in this room bleeds a little more, and nobody is volunteering to look through anyone's pack.",
+      "weight": 1.8,
+      "minDay": 8,
+      "choices": [
+        {
+          "choiceId": "search_quarters",
+          "text": "Search everyone's quarters. Find the truth.",
+          "moraleDelta": -10.0,
+          "effects": [
+            {
+              "type": "discover_truth_chance",
+              "chance": 0.7
+            },
+            {
+              "type": "trust_penalty_all",
+              "amount": -10.0
+            }
+          ]
+        },
+        {
+          "choiceId": "mediate_dispute",
+          "text": "Sit them down together. Work this out.",
+          "moraleDelta": 5.0,
+          "effects": [
+            {
+              "type": "resolve_dispute_chance",
+              "chance": 0.5
+            }
+          ]
+        },
+        {
+          "choiceId": "ration_penalty",
+          "text": "Both lose rations for a week. That's fair.",
+          "moraleDelta": -15.0,
+          "effects": [
+            {
+              "type": "morale_penalty_targets",
+              "targetIds": [
+                "marcus_olejnik",
+                "suki_tanaka"
+              ],
+              "delta": -10.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dying_trader_bargain",
+      "title": "The Dying Trader's Bargain",
+      "bodyText": "A trader collapses at the hatch, one arm dragging a locked military crate across the ash. Their skin is grey, eyes sunken, breath coming in short pulls. 'Terminal,' they rasp. 'Got maybe two days.' They tap the crate. 'This is worth more than you can imagine. Food, medicine, ordnance, whatever's inside. Just let me die somewhere warm. Somewhere with walls.' The lock is military-grade, a heavy mechanism with no key in sight, and the crate is heavy enough to have left a furrow in the ash. The deal is simple and the terms are strange: a locked box they cannot open, in exchange for a warm place to die. The box could be treasure. It could be nothing. The warmth is the only part that is certain.",
+      "weight": 2.0,
+      "minDay": 12,
+      "choices": [
+        {
+          "choiceId": "grant_last_wish",
+          "text": "Bring them inside. Make them comfortable.",
+          "moraleDelta": 10.0,
+          "effects": [
+            {
+              "type": "add_locked_crate",
+              "itemId": "military_supply_crate"
+            },
+            {
+              "type": "terminal_guest",
+              "survivorId": "dying_trader"
+            }
+          ]
+        },
+        {
+          "choiceId": "take_crate_only",
+          "text": "Take the crate. They can die outside like everyone else.",
+          "moraleDelta": -15.0,
+          "effects": [
+            {
+              "type": "add_locked_crate",
+              "itemId": "military_supply_crate"
+            },
+            {
+              "type": "add_trait",
+              "traitId": "cruel_trader_death"
+            }
+          ]
+        },
+        {
+          "choiceId": "refuse_both",
+          "text": "We don't need a corpse in the bunker. Move on.",
+          "moraleDelta": -8.0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "broken_generator_dilemma",
+      "title": "The Broken Generator",
+      "bodyText": "The generator seizes at 3 AM with a sound like a breaking arm, and the bunker wakes into cold and dark. Outside, the gauge reads minus fifteen. The remaining battery holds one hour of charge, and the meter on the wall marks it down in silence. You can route it to the air filtration system, and the bunker breathes clean for an hour. You can route it to the room heaters, and the bunker stays alive-warm for an hour, and the pipes do not freeze. You cannot do both. In the dark, people are pulling blankets closer, and the first shivers have started. In the silence, the filter has stopped humming, and you can hear the difference. The meter is dropping. Choose with your eyes open.",
+      "weight": 1.5,
+      "minDay": 20,
+      "choices": [
+        {
+          "choiceId": "route_to_heaters",
+          "text": "Route to heaters. We'll breathe unfiltered air but we won't freeze.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "type": "heat_active",
+              "durationHours": 12
+            },
+            {
+              "type": "radiation_exposure_all",
+              "amount": 5.0
+            }
+          ]
+        },
+        {
+          "choiceId": "route_to_filter",
+          "text": "Route to filtration. The air stays clean — bundle up.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "type": "filter_active",
+              "durationHours": 12
+            },
+            {
+              "type": "cold_damage_all",
+              "amount": 10.0
+            }
+          ]
+        },
+        {
+          "choiceId": "split_power",
+          "text": "Split it. Half to each. Neither will be enough, but it's fair.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "type": "partial_heat",
+              "durationHours": 6
+            },
+            {
+              "type": "partial_filter",
+              "durationHours": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unwanted_bounty",
+      "title": "The Unwanted Bounty",
+      "bodyText": "A warlord's messenger arrives at the hatch with a photograph in a plastic sleeve. It shows one of your survivors, a younger face, taken before the exchange, clear as anything. Wanted, the messenger says, for crimes against the free market. The bounty: three months of food, delivered, no questions. 'Just tell us where they are,' the messenger says. 'No one has to know it was you.' The accused survivor watches from the shadows of the corridor, and you can feel them not breathing. Three months of food is a real number, enough to carry the bunker through the worst of winter. The photograph is real. The hand it came from is the part that should worry you: a messenger who knows exactly which hatch to knock on.",
+      "weight": 1.5,
+      "minDay": 15,
+      "choices": [
+        {
+          "choiceId": "refuse_bounty",
+          "text": "Tell the messenger to leave. Our people are not for sale.",
+          "moraleDelta": 10.0,
+          "effects": [
+            {
+              "type": "faction_standing",
+              "factionId": "warlords_sector_4",
+              "delta": -40
+            },
+            {
+              "type": "loyalty_bonus_all",
+              "amount": 10.0
+            }
+          ]
+        },
+        {
+          "choiceId": "negotiate_bounty",
+          "text": "The bounty is too low. Double it or walk.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "type": "faction_standing",
+              "factionId": "warlords_sector_4",
+              "delta": -10
+            }
+          ]
+        },
+        {
+          "choiceId": "accept_bounty",
+          "text": "Hand them over. Three months of food saves everyone else.",
+          "moraleDelta": -30.0,
+          "effects": [
+            {
+              "type": "remove_survivor",
+              "survivorId": "bounty_target"
+            },
+            {
+              "type": "add_food",
+              "amount": 90
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "false_distress_signal",
+      "title": "The False Distress Signal",
+      "bodyText": "A repeating radio distress signal leads your scavenger team to a quiet building on the edge of the burnt district. Too quiet: no birds, no wind in the windows, no sign that anything has lived here in years. The survivors are mannequins, propped in the doorway with coats and hats. The supplies are empty crates, arranged in neat rows like a shop display. The door slams shut behind them, and the tripwire pulls taut with a sound like a snapped string. A raider ambush, carefully staged, built like a trap laid for something specific: people who still come when the radio cries. Your team is inside the building, and the voices outside are getting closer, and the radio that led them here is still transmitting.",
+      "weight": 1.5,
+      "minDay": 10,
+      "choices": [
+        {
+          "choiceId": "fight_through",
+          "text": "Fight your way out. Use whatever cover you can find.",
+          "moraleDelta": -5.0,
+          "effects": [
+            {
+              "type": "combat_encounter",
+              "encounterId": "raider_ambush"
+            },
+            {
+              "type": "survival_chance",
+              "chance": 0.55
+            }
+          ]
+        },
+        {
+          "choiceId": "negotiate_surrender",
+          "text": "Offer a surrender. Trade half your gear for safe passage.",
+          "moraleDelta": -10.0,
+          "effects": [
+            {
+              "type": "remove_half_inventory"
+            },
+            {
+              "type": "safe_retreat"
+            }
+          ]
+        },
+        {
+          "choiceId": "signal_backup",
+          "text": "Radio for backup. Hold position until help arrives.",
+          "moraleDelta": 0.0,
+          "effects": [
+            {
+              "type": "start_rescue_expedition",
+              "locationId": "raider_trap_location"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "narrative_gramophone_restored",
+      "title": "The Gramophone Plays",
+      "bodyText": "The gramophone crackles to life and a scratchy recording of a string quartet fills the bunker. For three minutes and forty seconds nobody moves, and the dust motes hang still in the lamp light, and the wasteland is somewhere else.",
+      "weight": 1,
+      "minDay": 15
+    },
+    {
+      "id": "narrative_projector_restored",
+      "title": "Moving Pictures Return",
+      "bodyText": "The old projector throws light at a sheet, and grain and smoke and a city that still stands move across it. Half the bunker has never seen a film. They watch the reel to the end and then watch it again.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_ham_radio_restored",
+      "title": "A Voice in the Static",
+      "bodyText": "The repaired radio pulls in a distant carrier wave, faint and slow, almost a voice. Nobody can make out the words. The operator logs the frequency and the time, and writes in the margin: still there.",
+      "weight": 1,
+      "minDay": 25
+    },
+    {
+      "id": "narrative_music_box_restored",
+      "title": "The Music Box Turns",
+      "bodyText": "The music box plays its little tune to the end without skipping. Somebody is crying quietly in the corner, and nobody pretends it is the dust. The tune is three minutes long; it will be played again.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_typewriter_restored",
+      "title": "The Record Resumes",
+      "bodyText": "The typewriter carriage returns with a sound the corridor has not heard in years. The clerk types the date, the weather, the ration count, and then, after a pause, a sentence about the snow. The record resumes.",
+      "weight": 1,
+      "minDay": 12
+    },
+    {
+      "id": "narrative_camera_restored",
+      "title": "The Camera Sees",
+      "bodyText": "The old camera is wound, focused, and pointed at the bunker. The first photograph is of the doorway, the second of the children, the third of the person who fixed it. There is film left for a handful more.",
+      "weight": 1,
+      "minDay": 14
+    },
+    {
+      "id": "narrative_cassette_checkpoint_kilo_complete",
+      "title": "Checkpoint Kilo: Full Tape",
+      "bodyText": "The full tape from Checkpoint Kilo plays out to its end. A corporal's voice logs the sealing of the checkpoint, twelve personnel, air filtration nominal, and then, quietly, a count of who was not inside. The tape ends there.",
+      "weight": 1,
+      "minDay": 18
+    },
+    {
+      "id": "narrative_cassette_saint_maren_complete",
+      "title": "Saint Maren: Full Tape",
+      "bodyText": "The tape from Saint Maren plays through. A woman's voice describes the clinic before the exchange: beds, names, a harvest festival. Then the ash came, and the voice says only that the clinic held until it could not.",
+      "weight": 1,
+      "minDay": 18
+    },
+    {
+      "id": "narrative_cassette_family_bunker_complete",
+      "title": "Family Bunker: Full Tape",
+      "bodyText": "The family bunker tape plays in full. A father narrates the building of the shelter, the fitting of the door, the stocking of the shelves, explaining it all to a child too young to understand. At the end he says: if you are hearing this, we made it out.",
+      "weight": 1,
+      "minDay": 18
+    },
+    {
+      "id": "narrative_cassette_free_radio_complete",
+      "title": "Free Radio: Full Tape",
+      "bodyText": "The free radio tape plays to its end. A pirate broadcaster reads the news of the last week before the exchange: weather, a football result, a recipe, a joke. The signal signs off with the station's name, said proudly, into a world about to change.",
+      "weight": 1,
+      "minDay": 18
+    },
+    {
+      "id": "narrative_electrician_milestone_1",
+      "title": "First Circuit Restored",
+      "bodyText": "The first repaired circuit lights a single bulb in the workshop. It is not much: one bulb, one switch, one length of wire made whole. The electrician stands under it with their hands in their pockets, not moving.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_electrician_milestone_2",
+      "title": "The Grid Wakes",
+      "bodyText": "A second circuit comes up, then a third. The workshop fills with the hum of working machines, and the electrician walks the lines tapping connections, listening, nodding. The grid wakes in the only room that matters.",
+      "weight": 1,
+      "minDay": 45
+    },
+    {
+      "id": "narrative_electrician_mastery",
+      "title": "Power For The Whole Floor",
+      "bodyText": "The lights come on down the whole corridor for the first time in years. People stand in doorways squinting. Somewhere a pump turns, a radio warms, a child asks why the dark went away. The electrician, exhausted, says: it will hold.",
+      "weight": 1,
+      "minDay": 60
+    },
+    {
+      "id": "frequency_decoder_reset",
+      "title": "Decoder Back Online",
+      "bodyText": "The frequency decoder hums back to life at the communications array. The tuning dial finds its marks again and the signal ladder climbs. Whatever the wasteland is saying on its hidden frequencies, someone is listening again.",
+      "weight": 1,
+      "minDay": 25
+    },
+    {
+      "id": "toll_gate",
+      "title": "The Toll Gate",
+      "bodyText": "A barricade across the road with a flag and a tin box. The toll keeper sits behind it with a ledger and a shotgun, and quotes a price in goods or labour. The box is heavy with what the road has cost.",
+      "weight": 1,
+      "minDay": 5
+    },
+    {
+      "id": "narrative_nurse_milestone_1",
+      "title": "Field Dressing",
+      "bodyText": "The nurse works through their first full field dressing since the exchange: clean the wound, pack it, bind it. The hands remember faster than the head. The patient stops shaking by the time the last knot is tied.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_nurse_milestone_2",
+      "title": "The Second Shift",
+      "bodyText": "The nurse runs a second shift on the sickbeds without being asked. They move between the bunks checking pulses, adjusting bandages, speaking quietly. Somebody says the clinic feels like a clinic again.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_nurse_mastery",
+      "title": "The Clinic Holds",
+      "bodyText": "The nurse has mastered the pre-war trade of nursing. The bunker's clinic runs on their schedule, their stock, their calm. When the door opens for the next casualty, the bed is already made.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_machinist_milestone_1",
+      "title": "First Turn",
+      "bodyText": "The machinist turns a seized thread free with tools they made themselves. It is a small thing: one bolt, one fitting, one part of the bunker working again. They keep the tool in their pocket.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_machinist_milestone_2",
+      "title": "The Bench Works",
+      "bodyText": "The machinist's bench produces its first run of serviceable parts: washers, pins, a coupling for the pump. The bunker stops asking where things come from and starts asking what else the bench can make.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_machinist_mastery",
+      "title": "Nothing Seized Stays Seized",
+      "bodyText": "The machinist has mastered the pre-war trade of machining. Every seized thread, every worn bearing in the bunker eventually passes over their bench, and leaves it moving.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_teacher_milestone_1",
+      "title": "The First Lesson",
+      "bodyText": "The teacher holds the first lesson: numbers on a slate, letters on the wall. Three children and one adult sit in the circle. Nobody interrupts. It is the quietest hour the corridor has had in months.",
+      "weight": 1,
+      "minDay": 10
+    },
+    {
+      "id": "narrative_teacher_milestone_2",
+      "title": "A Second Class",
+      "bodyText": "The teacher opens a second class for the adults, evenings, after the shifts. The subjects are practical: rations math, map reading, medicine names. The children attend the first one, the adults the second, and both sessions end with homework.",
+      "weight": 1,
+      "minDay": 20
+    },
+    {
+      "id": "narrative_teacher_mastery",
+      "title": "The School Holds",
+      "bodyText": "The teacher has mastered the pre-war trade of teaching. The bunker keeps school hours now, rain or ash or siege. Somewhere in the back row a child is learning to read the word for \"shelter\", and it means the word, and it means the thing.",
+      "weight": 1,
+      "minDay": 30
+    },
+    {
+      "id": "narrative_trade_mastery_electrician",
+      "title": "Master Electrician",
+      "bodyText": "The electrician has mastered the pre-war trade of their profession. Their hands find the right wire by instinct. The bunker's lights flicker less often now, and the hum of the generators sounds almost confident.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_trade_mastery_nurse",
+      "title": "Master Nurse",
+      "bodyText": "The nurse has mastered the pre-war trade of their profession. The clinic runs on their calm and their stock. When the door opens for the next casualty, the bed is already made, and so is the plan.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_trade_mastery_machinist",
+      "title": "Master Machinist",
+      "bodyText": "The machinist has mastered the pre-war trade of their profession. Every seized thread, every worn bearing in the bunker eventually passes over their bench, and leaves it moving.",
+      "weight": 1,
+      "minDay": 40
+    },
+    {
+      "id": "narrative_trade_mastery_teacher",
+      "title": "Master Teacher",
+      "bodyText": "The teacher has mastered the pre-war trade of their profession. The bunker keeps school hours now, and the children keep them too. In the ledger of what the bunker preserves, there is a page for that.",
+      "weight": 1,
+      "minDay": 40
+    }
   ]
- },
- {
-  "id": "silent_knock_part2a_wakes",
-  "title": "The Stranger Wakes",
-  "bodyText": "He opens his eyes on Day 37, after four days of fever, and the radiation burns across his neck are the colour of old leather. He was a cartographer, he says, before. He worked maps, the ones that mattered, the ones that survived. He says he knows a pre-war cache: sealed, untouched, the kind of place no one reached before the ground went wrong. Grid coordinates. He writes them on a strip of packaging, the pencil line thin and steady, and holds it out. He needs water. He is barely holding on. The paper is real, the handwriting is steady, and the map was always his trade. Whether the place is real is another question entirely, and the water is a short list of cups.",
-  "weight": 0.0,
-  "minDay": 37,
-  "conditions": {
-   "MinDay": 37,
-   "RequiredFlagId": "stranger_inside"
-  },
-  "choices": [
-   {
-    "choiceId": "give_clean_water",
-    "text": "Give him the clean water.",
-    "moraleDelta": 8.0,
-    "effects": [
-     {
-      "itemId": "clean_water",
-      "itemAmount": -1
-     },
-     {
-      "setWorldFlag": "stranger_given_clean_water",
-      "worldFlagValue": true
-     },
-     {
-      "setWorldFlag": "stranger_has_coordinates",
-      "worldFlagValue": true
-     }
-    ]
-   },
-   {
-    "choiceId": "give_irradiated_water",
-    "text": "Give him the irradiated water. He won't know the difference.",
-    "moraleDelta": -20.0,
-    "effects": [
-     {
-      "itemId": "irradiated_water",
-      "itemAmount": -1
-     },
-     {
-      "setWorldFlag": "stranger_given_irradiated_water",
-      "worldFlagValue": true
-     },
-     {
-      "setWorldFlag": "stranger_has_coordinates",
-      "worldFlagValue": true
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "silent_knock_part2b_scraping",
-  "title": "The Scraping",
-  "bodyText": "On Day 38 it starts again, but this time it is not knocking. A long, slow scraping against the outer hatch seal, metal on metal, dragged in one direction and then back. Methodical. It stops for six hours. It starts again. Two days of it, the sound of something patient working at the door, and then nothing. The seal holds. You check it twice, three times a day, and each time the scrape resumes you find yourself listening to the direction of the sound, trying to read intent into the rhythm of it. Whoever it is has decided not to knock anymore. That is a decision in itself. The door is still whole. The question of what comes next is not.",
-  "weight": 0.0,
-  "minDay": 38,
-  "conditions": {
-   "MinDay": 38,
-   "RequiredFlagId": "stranger_ignored"
-  },
-  "choices": [
-   {
-    "choiceId": "scraping_accept",
-    "text": "You made your choice. Keep the hatch sealed.",
-    "moraleDelta": -10.0,
-    "effects": [
-     {
-      "setWorldFlag": "stranger_died_outside",
-      "worldFlagValue": true
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "silent_knock_part3_coordinates",
-  "title": "The Coordinates",
-  "bodyText": "The address the stranger wrote down is a grid reference, neat and specific, for what he called a pristine pre-war cache. Sealed food, he said. Medicine. Batteries. The kind of stock that outlasted the exchange because nobody found it first. It could be exactly what it says on the paper: three months of supply in a concrete room with a locked door. It could also be a hole in the ground, or a held position, or a story a dying man told because telling it was the only coin he had left. You have his word, and the memory of the water you gave him, and a strip of packaging with numbers in pencil. The numbers are all the map you are going to get.",
-  "weight": 0.0,
-  "minDay": 39,
-  "conditions": {
-   "MinDay": 39,
-   "RequiredFlagId": "stranger_has_coordinates"
-  },
-  "choices": [
-   {
-    "choiceId": "send_expedition",
-    "text": "Send someone to the coordinates.",
-    "moraleDelta": 0.0,
-    "effects": [
-     {
-      "setWorldFlag": "stranger_cache_expedition_launched",
-      "worldFlagValue": true
-     }
-    ]
-   },
-   {
-    "choiceId": "discard_coordinates",
-    "text": "Burn the paper. Don't risk it.",
-    "moraleDelta": -5.0,
-    "effects": [
-     {
-      "setWorldFlag": "stranger_cache_abandoned",
-      "worldFlagValue": true
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "the_emissary",
-  "title": "The Emissary",
-  "bodyText": "Someone from the scavenger camp stands at the hatch, in the open, hands empty and raised to show it. Their voice is dry, the voice of a person who has been rationing water and thinking about it. They want water, enough for three, they say. Not for a group, not for trade, for three. The canteen at their hip is dented and light, and you can see from here that it does not have the weight of a full canteen, and they do not try to hide it. The camp is half a day's walk west. The bunker's own barrels are down. The request is small and specific and honest, and honest requests are the hardest kind to refuse, because they are the ones that come back to you at night.",
-  "threateningBodyText": "The same voice at the hatch, but the tone has changed. Not asking. They know what you have. The words are short: open up, or they come back with friends.",
-  "threateningFactionId": "faction_scavengers",
-  "threateningTrustBelow": -20.0,
-  "weight": 1.5,
-  "minDay": 5,
-  "conditions": {
-   "MinDay": 5
-  },
-  "choices": [
-   {
-    "choiceId": "share_water",
-    "text": "Pass a jug of clean water through the hatch.",
-    "moraleDelta": 4.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": 15.0,
-    "setEventFlags": [
-     "shared_water_with_emissary"
-    ],
-    "effects": [
-     {
-      "itemId": "clean_water",
-      "itemAmount": -1
-     },
-     {
-      "scheduleEventId": "emissary_return_favor",
-      "scheduleDelayDays": 2,
-      "setWorldFlag": "shared_water_with_emissary",
-      "worldFlagValue": true
-     }
-    ]
-   },
-   {
-    "choiceId": "refuse_water",
-    "text": "Keep the seal. Tell them we have nothing to spare.",
-    "moraleDelta": -3.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": -12.0,
-    "setEventFlags": [
-     "refused_emissary_water"
-    ],
-    "effects": [
-     {
-      "scheduleEventId": "emissary_return_grudge",
-      "scheduleDelayDays": 3,
-      "setWorldFlag": "refused_emissary_water",
-      "worldFlagValue": true
-     }
-    ]
-   },
-   {
-    "choiceId": "lie_purifier_broken",
-    "text": "Lie and say the purifier is broken.",
-    "moraleDelta": -1.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": 0.0,
-    "requiredTrait": "Paranoid",
-    "requiredTrustFactionId": "faction_scavengers",
-    "requiredTrustMin": -20.0,
-    "hideIfGatesFail": true,
-    "setEventFlags": [
-     "lied_purifier_broken"
-    ],
-    "effects": [
-     {
-      "scheduleEventId": "emissary_return_caught",
-      "scheduleDelayDays": 2,
-      "setWorldFlag": "lied_purifier_broken",
-      "worldFlagValue": true
-     }
-    ]
-   },
-   {
-    "choiceId": "preemptive_fire_hatch",
-    "text": "Preemptively open fire through the hatch.",
-    "moraleDelta": -12.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": -40.0,
-    "requiredTrait": "Paranoid",
-    "requiredTrustFactionId": "faction_scavengers",
-    "requiredTrustMaxExclusive": -20.0,
-    "hideIfGatesFail": true,
-    "setEventFlags": [
-     "fired_on_emissary_hatch"
-    ],
-    "effects": [
-     {
-      "scheduleEventId": "emissary_return_raid_warning",
-      "scheduleDelayDays": 1,
-      "setWorldFlag": "fired_on_emissary_hatch",
-      "worldFlagValue": true
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "emissary_return_favor",
-  "title": "The Favor",
-  "bodyText": "Two days later, the same voice at the hatch, softer this time. They did not come to ask. A half-crate of canned goods sits on the threshold, tins with the labels worn off but the seams bright, a good haul from wherever the camp digs. Payment for the water, they say, and they say it like a person who has been thinking about the word payment and has decided to use it. No weapons in sight, no second figure in the ash, just one person and a crate that was heavier on the way here than it is now. It is a gift with a receipt. It says the camp trades square, that favors have weight, and that the door between your bunker and theirs is a little more open than it was.",
-  "weight": 0.0,
-  "minDay": 1,
-  "conditions": {
-   "MinDay": 1,
-   "RequiredEventFlags": [
-    "shared_water_with_emissary"
-   ]
-  },
-  "choices": [
-   {
-    "choiceId": "accept_gift",
-    "text": "Take the crate. Nod once. Close the hatch.",
-    "moraleDelta": 6.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": 8.0,
-    "setEventFlags": [
-     "accepted_emissary_gift"
-    ],
-    "effects": [
-     {
-      "itemId": "canned_food",
-      "itemAmount": 2
-     }
-    ]
-   },
-   {
-    "choiceId": "refuse_gift",
-    "text": "Leave it. We don't take debts we can't see.",
-    "moraleDelta": -2.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": -4.0
-   },
-   {
-    "choiceId": "search_first",
-    "text": "Search them for weapons before anything comes in.",
-    "moraleDelta": -1.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": -6.0,
-    "requiredTrait": "Paranoid",
-    "hideIfGatesFail": true
-   }
-  ]
- },
- {
-  "id": "emissary_return_caught",
-  "title": "The Mechanic",
-  "bodyText": "They came back with a thin man who smells of solder, who stands close to the hatch and listens, head tilted, at the purifier's hum. The lie is thin now. This is not a water call and not a favor call; this is someone counting the bunker's machines through a closed door, judging the age of the pumps by their sound. The mechanic says nothing, just listens, and the emissary waits with the patience of someone who has already asked what they came to ask and is waiting for the answer to catch up. They are measuring you. What you have, what it is worth, what you might be convinced to part with. The hum of the purifier fills the silence, and you are the one who has to decide how much of it to let them hear.",
-  "weight": 0.0,
-  "minDay": 1,
-  "conditions": {
-   "MinDay": 1,
-   "RequiredEventFlags": [
-    "lied_purifier_broken"
-   ]
-  },
-  "choices": [
-   {
-    "choiceId": "admit_and_share",
-    "text": "Admit it. Pass a jug through and call it a misunderstanding.",
-    "moraleDelta": -4.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": 5.0,
-    "setEventFlags": [
-     "admitted_purifier_lie"
-    ],
-    "effects": [
-     {
-      "itemId": "clean_water",
-      "itemAmount": -1
-     }
-    ]
-   },
-   {
-    "choiceId": "double_down_lie",
-    "text": "Double down. Blame the filters. Blame the weather. Blame anything.",
-    "moraleDelta": -6.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": -18.0,
-    "requiredTrait": "Paranoid",
-    "hideIfGatesFail": true,
-    "setEventFlags": [
-     "doubled_down_purifier_lie"
-    ]
-   },
-   {
-    "choiceId": "offer_filter_help",
-    "text": "Offer to check their canteen filter \u2014 real help, no water lost.",
-    "moraleDelta": 3.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": 10.0,
-    "requiredTrait": "triage_orderly",
-    "hideIfGatesFail": true
-   },
-   {
-    "choiceId": "seal_and_wait",
-    "text": "Say nothing. Seal the hatch. Wait them out.",
-    "moraleDelta": -2.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": -10.0
-   }
-  ]
- },
- {
-  "id": "emissary_return_grudge",
-  "title": "The Grudge",
-  "bodyText": "Three days. Same hatch, same figure, fewer words. The greeting is shorter now, the hands not quite as open, and the canteen at their hip has been refilled somewhere, which means they have another source, which means they are not coming back because they need the water. They want water, or they want a reason to stop asking politely. The question hangs between you and the hatch. Every refusal has been a small stone, and the pile is getting high enough to see over. Out here, debts are collected and slights are remembered, and a person who has stopped asking is a person who has started planning. The door is still shut. You can see in their stance that they are counting the days like everyone else counts the days.",
-  "weight": 0.0,
-  "minDay": 1,
-  "conditions": {
-   "MinDay": 1,
-   "RequiredEventFlags": [
-    "refused_emissary_water"
-   ]
-  },
-  "choices": [
-   {
-    "choiceId": "pay_up_late",
-    "text": "Pay up late. One jug, no apology.",
-    "moraleDelta": -2.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": 6.0,
-    "effects": [
-     {
-      "itemId": "clean_water",
-      "itemAmount": -1
-     }
-    ]
-   },
-   {
-    "choiceId": "keep_sealed",
-    "text": "Keep it sealed. Let the grudge sit.",
-    "moraleDelta": 0.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": -15.0
-   }
-  ]
- },
- {
-  "id": "emissary_return_raid_warning",
-  "title": "After the Hatch",
-  "bodyText": "No knock this time. Just bootprints in the ash leading away from the hatch, pressed deep, the marks of someone walking with weight and purpose. Then, an hour later, a radio burst on the scavenger band that cuts off mid-word, as if the hand on the key was pulled away. Silence after. The bootprints do not return to the camp road; they angle east along the ridge, the direction the watchers always said a group would come from. Someone will come back heavier. It is not a question of if, only of when and with what, and the bunker has its stores and its people and its one hatch. The ash is still settling into the prints. You have a little time, and a little time is a thing you have learned to spend carefully.",
-  "weight": 0.0,
-  "minDay": 1,
-  "conditions": {
-   "MinDay": 1,
-   "RequiredEventFlags": [
-    "fired_on_emissary_hatch"
-   ]
-  },
-  "choices": [
-   {
-    "choiceId": "brace_hatch",
-    "text": "Brace the hatch. Double the watch.",
-    "moraleDelta": -3.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": -5.0
-   },
-   {
-    "choiceId": "leave_it",
-    "text": "Leave it. Hope the ash covers the prints.",
-    "moraleDelta": -8.0,
-    "factionId": "faction_scavengers",
-    "trustDelta": -8.0
-   }
-  ]
- },
- {
-  "id": "contaminated_water_trade",
-  "title": "The Contaminated Water Trade",
-  "bodyText": "A gaunt woman pounds on the hatch with both fists, and behind her a child coughs, a wet rattling sound that goes on longer than a cough should. 'Please,' she begs, the word worn flat from repeating. 'Clean water. Just enough for my daughter.' She holds up ammunition in both hands, military-grade rounds, boxed and sealed, the kind of stock that does not walk around loose. It's yours, she says, all of it, for one canteen. The bunker's water reserves are already low, measured in cups, and the barrels are at the bottom. The ammo is real, the rounds are bright, and the cough is real too, and the daughter is small enough to be hidden behind her mother's hip.",
-  "weight": 2.5,
-  "minDay": 10,
-  "choices": [
-   {
-    "choiceId": "trade_water",
-    "text": "Trade the water. A child's life is worth it.",
-    "moraleDelta": 15.0,
-    "effects": [
-     {
-      "type": "remove_water",
-      "amount": 10
-     },
-     {
-      "type": "add_item",
-      "itemId": "ammo_556",
-      "amount": 30
-     }
-    ]
-   },
-   {
-    "choiceId": "refuse_trade",
-    "text": "We can't spare it. Every drop counts.",
-    "moraleDelta": -15.0,
-    "effects": [
-     {
-      "type": "add_trait",
-      "traitId": "guilt_water_trade"
-     }
-    ]
-   },
-   {
-    "choiceId": "offer_half",
-    "text": "Half now. Half if she brings more ammunition.",
-    "moraleDelta": 5.0,
-    "effects": [
-     {
-      "type": "remove_water",
-      "amount": 5
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "infected_refugee_isolation",
-  "title": "The Infected Refugee",
-  "bodyText": "A survivor stumbles into the airlock and collapses against the inner door. The skin of their face and hands is mottled, but not with radiation burns, not the patches you know. This is something else, a rash spreading up the neck in red streaks, hot to look at. They are burning with fever, sweating through their coat. 'I just need to rest,' they whisper. 'Please don't send me back out.' The bunker has no quarantine room, no spare space, nothing but a corridor and a stores room and people who have spent three years learning not to touch strangers. What they have could be contagious. What they have could be a fever and a bad day. The door is still open between you and them, and it stays open until you close it.",
-  "weight": 2.0,
-  "minDay": 5,
-  "choices": [
-   {
-    "choiceId": "admit_and_quarantine",
-    "text": "Confine them to the stores room. Everyone stays clear.",
-    "moraleDelta": 5.0,
-    "effects": [
-     {
-      "type": "add_survivor",
-      "survivorId": "infected_refugee"
-     },
-     {
-      "type": "set_quarantine",
-      "roomId": "stores"
-     }
-    ]
-   },
-   {
-    "choiceId": "admit_openly",
-    "text": "Welcome them in. We don't abandon the sick.",
-    "moraleDelta": 10.0,
-    "effects": [
-     {
-      "type": "add_survivor",
-      "survivorId": "infected_refugee"
-     },
-     {
-      "type": "infection_risk",
-      "chance": 0.4
-     }
-    ]
-   },
-   {
-    "choiceId": "turn_away",
-    "text": "Close the hatch. The risk is too great.",
-    "moraleDelta": -10.0,
-    "effects": [
-     {
-      "type": "add_trait",
-      "traitId": "guilt_refugee_turned"
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "sabotaged_air_filter",
-  "title": "The Sabotaged Filter",
-  "bodyText": "The air filtration unit failed overnight, and the bunker woke to the smell of dust and the first dry scratch in everyone's throat. But the filter is not just worn. It has been cut: a clean, deliberate slice through the mesh, straight as a ruler line, the kind of cut that does not happen by accident. Someone inside this bunker did this. Not a failure, not wear, not the ash. A person with a blade and a reason. The cut is a message and a question, and the room goes quiet when you hold the filter up to the light, because everyone understands what a clean cut means. Paranoia spreads faster than radiation, and you can feel it starting, the sideways looks, the careful questions. Somewhere in this bunker, someone knows exactly who did this.",
-  "weight": 1.5,
-  "minDay": 15,
-  "choices": [
-   {
-    "choiceId": "investigate",
-    "text": "Search every room. Question everyone.",
-    "moraleDelta": -10.0,
-    "effects": [
-     {
-      "type": "suspicion_increase",
-      "amount": 30
-     },
-     {
-      "type": "discover_saboteur",
-      "chance": 0.6
-     }
-    ]
-   },
-   {
-    "choiceId": "replace_quietly",
-    "text": "Replace the filter. Say nothing. Watch from the shadows.",
-    "moraleDelta": 0.0,
-    "effects": [
-     {
-      "type": "remove_item",
-      "itemId": "air_filter",
-      "amount": 1
-     },
-     {
-      "type": "suspicion_increase",
-      "amount": 10
-     }
-    ]
-   },
-   {
-    "choiceId": "public_address",
-    "text": "Call a meeting. Whoever did this, come forward. No punishment.",
-    "moraleDelta": 5.0,
-    "effects": [
-     {
-      "type": "confession_chance",
-      "chance": 0.35
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "faction_deserter_asylum",
-  "title": "The Faction Deserter",
-  "bodyText": "A Garrison officer in full uniform stands at the hatch, hands raised, cap under one arm. The uniform is clean, pressed in the way military uniforms get pressed, and that is its own kind of wrong out here. 'I'm deserting,' they say flatly, like a person reading a statement. 'I have schematics. Patrol routes, supply caches, artillery positions. Everything they'd rather you didn't know.' Then the rest: 'But the Garrison will come looking for me. They always do.' The officer waits, hands still raised, and the schematics are folded inside the jacket. Take them in and you buy the information and the price that comes with it. Turn them away and the knowledge walks off into the ash with them, and the Garrison comes anyway.",
-  "weight": 2.0,
-  "minDay": 20,
-  "choices": [
-   {
-    "choiceId": "grant_asylum",
-    "text": "Welcome them in. The intel is worth the risk.",
-    "moraleDelta": 5.0,
-    "effects": [
-     {
-      "type": "add_survivor",
-      "survivorId": "garrison_deserter"
-     },
-     {
-      "type": "add_map_intel",
-      "amount": 3
-     },
-     {
-      "type": "faction_standing",
-      "factionId": "iron_garrison",
-      "delta": -30
-     }
-    ]
-   },
-   {
-    "choiceId": "take_intel_only",
-    "text": "Give us the schematics and we'll give you supplies. Then go.",
-    "moraleDelta": -5.0,
-    "effects": [
-     {
-      "type": "add_map_intel",
-      "amount": 2
-     },
-     {
-      "type": "remove_food",
-      "amount": 5
-     }
-    ]
-   },
-   {
-    "choiceId": "turn_away_deserter",
-    "text": "We can't afford a Garrison manhunt. Leave.",
-    "moraleDelta": -5.0,
-    "effects": [
-     {
-      "type": "faction_standing",
-      "factionId": "iron_garrison",
-      "delta": 10
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "stranded_expedition_rescue",
-  "title": "The Stranded Expedition",
-  "bodyText": "The radio crackles and a voice breaks through: 'This is Scavenger Team Three. We're trapped. The building collapsed. Mika is pinned. The radiation is climbing.' The transmission is rough, cut with static, but the coordinates come through twice, and you write them down. The site is deep in a high-radiation zone, the kind of ground nobody walks without gear and a clock. Sending a rescue team means two or three people in the open for hours, spending masks and potassium iodide and fuel, to reach one person pinned under rubble. The odds are what they are. The other option is the radio going quiet, and the silence on that channel, and the knowledge of what you decided when it mattered. The radio waits, hissing.",
-  "weight": 1.5,
-  "minDay": 10,
-  "choices": [
-   {
-    "choiceId": "send_rescue",
-    "text": "Send a rescue team. No one gets left behind.",
-    "moraleDelta": 10.0,
-    "effects": [
-     {
-      "type": "start_rescue_expedition",
-      "locationId": "collapsed_building"
-     }
-    ]
-   },
-   {
-    "choiceId": "talk_them_through",
-    "text": "Guide them over the radio. Talk Mika through freeing herself.",
-    "moraleDelta": 5.0,
-    "effects": [
-     {
-      "type": "rescue_survival_chance",
-      "chance": 0.4
-     }
-    ]
-   },
-   {
-    "choiceId": "cannot_risk",
-    "text": "We can't risk more lives. I'm sorry.",
-    "moraleDelta": -20.0,
-    "effects": [
-     {
-      "type": "add_trait",
-      "traitId": "guilt_stranded_rescue"
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "stolen_medication",
-  "title": "The Stolen Iodine",
-  "bodyText": "The iodine pill count does not match the log. Ten pills missing, and the tin has been opened with care, the sort of care that leaves no crumbs and no fingerprints and no doubt. Marcus stands in the corridor, jaw set, pointing: 'She was in the stores alone yesterday.' Suki denies it, voice cracking at the edges, hands out, pale. 'I would never. Someone is framing me.' Both of them have been in the open this month. Both of them have a reason to want the pills. Both of them are watching you, and the rest of the bunker is watching you too, and the pills are still missing. The tin sits open on the table. Every hour the decision waits, the trust in this room bleeds a little more, and nobody is volunteering to look through anyone's pack.",
-  "weight": 1.8,
-  "minDay": 8,
-  "choices": [
-   {
-    "choiceId": "search_quarters",
-    "text": "Search everyone's quarters. Find the truth.",
-    "moraleDelta": -10.0,
-    "effects": [
-     {
-      "type": "discover_truth_chance",
-      "chance": 0.7
-     },
-     {
-      "type": "trust_penalty_all",
-      "amount": -10.0
-     }
-    ]
-   },
-   {
-    "choiceId": "mediate_dispute",
-    "text": "Sit them down together. Work this out.",
-    "moraleDelta": 5.0,
-    "effects": [
-     {
-      "type": "resolve_dispute_chance",
-      "chance": 0.5
-     }
-    ]
-   },
-   {
-    "choiceId": "ration_penalty",
-    "text": "Both lose rations for a week. That's fair.",
-    "moraleDelta": -15.0,
-    "effects": [
-     {
-      "type": "morale_penalty_targets",
-      "targetIds": [
-       "marcus_olejnik",
-       "suki_tanaka"
-      ],
-      "delta": -10.0
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "dying_trader_bargain",
-  "title": "The Dying Trader's Bargain",
-  "bodyText": "A trader collapses at the hatch, one arm dragging a locked military crate across the ash. Their skin is grey, eyes sunken, breath coming in short pulls. 'Terminal,' they rasp. 'Got maybe two days.' They tap the crate. 'This is worth more than you can imagine. Food, medicine, ordnance, whatever's inside. Just let me die somewhere warm. Somewhere with walls.' The lock is military-grade, a heavy mechanism with no key in sight, and the crate is heavy enough to have left a furrow in the ash. The deal is simple and the terms are strange: a locked box they cannot open, in exchange for a warm place to die. The box could be treasure. It could be nothing. The warmth is the only part that is certain.",
-  "weight": 2.0,
-  "minDay": 12,
-  "choices": [
-   {
-    "choiceId": "grant_last_wish",
-    "text": "Bring them inside. Make them comfortable.",
-    "moraleDelta": 10.0,
-    "effects": [
-     {
-      "type": "add_locked_crate",
-      "itemId": "military_supply_crate"
-     },
-     {
-      "type": "terminal_guest",
-      "survivorId": "dying_trader"
-     }
-    ]
-   },
-   {
-    "choiceId": "take_crate_only",
-    "text": "Take the crate. They can die outside like everyone else.",
-    "moraleDelta": -15.0,
-    "effects": [
-     {
-      "type": "add_locked_crate",
-      "itemId": "military_supply_crate"
-     },
-     {
-      "type": "add_trait",
-      "traitId": "cruel_trader_death"
-     }
-    ]
-   },
-   {
-    "choiceId": "refuse_both",
-    "text": "We don't need a corpse in the bunker. Move on.",
-    "moraleDelta": -8.0,
-    "effects": []
-   }
-  ]
- },
- {
-  "id": "broken_generator_dilemma",
-  "title": "The Broken Generator",
-  "bodyText": "The generator seizes at 3 AM with a sound like a breaking arm, and the bunker wakes into cold and dark. Outside, the gauge reads minus fifteen. The remaining battery holds one hour of charge, and the meter on the wall marks it down in silence. You can route it to the air filtration system, and the bunker breathes clean for an hour. You can route it to the room heaters, and the bunker stays alive-warm for an hour, and the pipes do not freeze. You cannot do both. In the dark, people are pulling blankets closer, and the first shivers have started. In the silence, the filter has stopped humming, and you can hear the difference. The meter is dropping. Choose with your eyes open.",
-  "weight": 1.5,
-  "minDay": 20,
-  "choices": [
-   {
-    "choiceId": "route_to_heaters",
-    "text": "Route to heaters. We'll breathe unfiltered air but we won't freeze.",
-    "moraleDelta": -5.0,
-    "effects": [
-     {
-      "type": "heat_active",
-      "durationHours": 12
-     },
-     {
-      "type": "radiation_exposure_all",
-      "amount": 5.0
-     }
-    ]
-   },
-   {
-    "choiceId": "route_to_filter",
-    "text": "Route to filtration. The air stays clean \u2014 bundle up.",
-    "moraleDelta": -5.0,
-    "effects": [
-     {
-      "type": "filter_active",
-      "durationHours": 12
-     },
-     {
-      "type": "cold_damage_all",
-      "amount": 10.0
-     }
-    ]
-   },
-   {
-    "choiceId": "split_power",
-    "text": "Split it. Half to each. Neither will be enough, but it's fair.",
-    "moraleDelta": 0.0,
-    "effects": [
-     {
-      "type": "partial_heat",
-      "durationHours": 6
-     },
-     {
-      "type": "partial_filter",
-      "durationHours": 6
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "unwanted_bounty",
-  "title": "The Unwanted Bounty",
-  "bodyText": "A warlord's messenger arrives at the hatch with a photograph in a plastic sleeve. It shows one of your survivors, a younger face, taken before the exchange, clear as anything. Wanted, the messenger says, for crimes against the free market. The bounty: three months of food, delivered, no questions. 'Just tell us where they are,' the messenger says. 'No one has to know it was you.' The accused survivor watches from the shadows of the corridor, and you can feel them not breathing. Three months of food is a real number, enough to carry the bunker through the worst of winter. The photograph is real. The hand it came from is the part that should worry you: a messenger who knows exactly which hatch to knock on.",
-  "weight": 1.5,
-  "minDay": 15,
-  "choices": [
-   {
-    "choiceId": "refuse_bounty",
-    "text": "Tell the messenger to leave. Our people are not for sale.",
-    "moraleDelta": 10.0,
-    "effects": [
-     {
-      "type": "faction_standing",
-      "factionId": "warlords_sector_4",
-      "delta": -40
-     },
-     {
-      "type": "loyalty_bonus_all",
-      "amount": 10.0
-     }
-    ]
-   },
-   {
-    "choiceId": "negotiate_bounty",
-    "text": "The bounty is too low. Double it or walk.",
-    "moraleDelta": -5.0,
-    "effects": [
-     {
-      "type": "faction_standing",
-      "factionId": "warlords_sector_4",
-      "delta": -10
-     }
-    ]
-   },
-   {
-    "choiceId": "accept_bounty",
-    "text": "Hand them over. Three months of food saves everyone else.",
-    "moraleDelta": -30.0,
-    "effects": [
-     {
-      "type": "remove_survivor",
-      "survivorId": "bounty_target"
-     },
-     {
-      "type": "add_food",
-      "amount": 90
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "false_distress_signal",
-  "title": "The False Distress Signal",
-  "bodyText": "A repeating radio distress signal leads your scavenger team to a quiet building on the edge of the burnt district. Too quiet: no birds, no wind in the windows, no sign that anything has lived here in years. The survivors are mannequins, propped in the doorway with coats and hats. The supplies are empty crates, arranged in neat rows like a shop display. The door slams shut behind them, and the tripwire pulls taut with a sound like a snapped string. A raider ambush, carefully staged, built like a trap laid for something specific: people who still come when the radio cries. Your team is inside the building, and the voices outside are getting closer, and the radio that led them here is still transmitting.",
-  "weight": 1.5,
-  "minDay": 10,
-  "choices": [
-   {
-    "choiceId": "fight_through",
-    "text": "Fight your way out. Use whatever cover you can find.",
-    "moraleDelta": -5.0,
-    "effects": [
-     {
-      "type": "combat_encounter",
-      "encounterId": "raider_ambush"
-     },
-     {
-      "type": "survival_chance",
-      "chance": 0.55
-     }
-    ]
-   },
-   {
-    "choiceId": "negotiate_surrender",
-    "text": "Offer a surrender. Trade half your gear for safe passage.",
-    "moraleDelta": -10.0,
-    "effects": [
-     {
-      "type": "remove_half_inventory"
-     },
-     {
-      "type": "safe_retreat"
-     }
-    ]
-   },
-   {
-    "choiceId": "signal_backup",
-    "text": "Radio for backup. Hold position until help arrives.",
-    "moraleDelta": 0.0,
-    "effects": [
-     {
-      "type": "start_rescue_expedition",
-      "locationId": "raider_trap_location"
-     }
-    ]
-   }
-  ]
- },
- {
-  "id": "narrative_gramophone_restored",
-  "title": "The Gramophone Plays",
-  "bodyText": "The gramophone crackles to life and a scratchy recording of a string quartet fills the bunker. For three minutes and forty seconds nobody moves, and the dust motes hang still in the lamp light, and the wasteland is somewhere else.",
-  "weight": 1,
-  "minDay": 15
- },
- {
-  "id": "narrative_projector_restored",
-  "title": "Moving Pictures Return",
-  "bodyText": "The old projector throws light at a sheet, and grain and smoke and a city that still stands move across it. Half the bunker has never seen a film. They watch the reel to the end and then watch it again.",
-  "weight": 1,
-  "minDay": 20
- },
- {
-  "id": "narrative_ham_radio_restored",
-  "title": "A Voice in the Static",
-  "bodyText": "The repaired radio pulls in a distant carrier wave, faint and slow, almost a voice. Nobody can make out the words. The operator logs the frequency and the time, and writes in the margin: still there.",
-  "weight": 1,
-  "minDay": 25
- },
- {
-  "id": "narrative_music_box_restored",
-  "title": "The Music Box Turns",
-  "bodyText": "The music box plays its little tune to the end without skipping. Somebody is crying quietly in the corner, and nobody pretends it is the dust. The tune is three minutes long; it will be played again.",
-  "weight": 1,
-  "minDay": 10
- },
- {
-  "id": "narrative_typewriter_restored",
-  "title": "The Record Resumes",
-  "bodyText": "The typewriter carriage returns with a sound the corridor has not heard in years. The clerk types the date, the weather, the ration count, and then, after a pause, a sentence about the snow. The record resumes.",
-  "weight": 1,
-  "minDay": 12
- },
- {
-  "id": "narrative_camera_restored",
-  "title": "The Camera Sees",
-  "bodyText": "The old camera is wound, focused, and pointed at the bunker. The first photograph is of the doorway, the second of the children, the third of the person who fixed it. There is film left for a handful more.",
-  "weight": 1,
-  "minDay": 14
- },
- {
-  "id": "narrative_cassette_checkpoint_kilo_complete",
-  "title": "Checkpoint Kilo: Full Tape",
-  "bodyText": "The full tape from Checkpoint Kilo plays out to its end. A corporal's voice logs the sealing of the checkpoint, twelve personnel, air filtration nominal, and then, quietly, a count of who was not inside. The tape ends there.",
-  "weight": 1,
-  "minDay": 18
- },
- {
-  "id": "narrative_cassette_saint_maren_complete",
-  "title": "Saint Maren: Full Tape",
-  "bodyText": "The tape from Saint Maren plays through. A woman's voice describes the clinic before the exchange: beds, names, a harvest festival. Then the ash came, and the voice says only that the clinic held until it could not.",
-  "weight": 1,
-  "minDay": 18
- },
- {
-  "id": "narrative_cassette_family_bunker_complete",
-  "title": "Family Bunker: Full Tape",
-  "bodyText": "The family bunker tape plays in full. A father narrates the building of the shelter, the fitting of the door, the stocking of the shelves, explaining it all to a child too young to understand. At the end he says: if you are hearing this, we made it out.",
-  "weight": 1,
-  "minDay": 18
- },
- {
-  "id": "narrative_cassette_free_radio_complete",
-  "title": "Free Radio: Full Tape",
-  "bodyText": "The free radio tape plays to its end. A pirate broadcaster reads the news of the last week before the exchange: weather, a football result, a recipe, a joke. The signal signs off with the station's name, said proudly, into a world about to change.",
-  "weight": 1,
-  "minDay": 18
- },
- {
-  "id": "narrative_electrician_milestone_1",
-  "title": "First Circuit Restored",
-  "bodyText": "The first repaired circuit lights a single bulb in the workshop. It is not much: one bulb, one switch, one length of wire made whole. The electrician stands under it with their hands in their pockets, not moving.",
-  "weight": 1,
-  "minDay": 30
- },
- {
-  "id": "narrative_electrician_milestone_2",
-  "title": "The Grid Wakes",
-  "bodyText": "A second circuit comes up, then a third. The workshop fills with the hum of working machines, and the electrician walks the lines tapping connections, listening, nodding. The grid wakes in the only room that matters.",
-  "weight": 1,
-  "minDay": 45
- },
- {
-  "id": "narrative_electrician_mastery",
-  "title": "Power For The Whole Floor",
-  "bodyText": "The lights come on down the whole corridor for the first time in years. People stand in doorways squinting. Somewhere a pump turns, a radio warms, a child asks why the dark went away. The electrician, exhausted, says: it will hold.",
-  "weight": 1,
-  "minDay": 60
- },
- {
-  "id": "frequency_decoder_reset",
-  "title": "Decoder Back Online",
-  "bodyText": "The frequency decoder hums back to life at the communications array. The tuning dial finds its marks again and the signal ladder climbs. Whatever the wasteland is saying on its hidden frequencies, someone is listening again.",
-  "weight": 1,
-  "minDay": 25
- },
- {
-  "id": "toll_gate",
-  "title": "The Toll Gate",
-  "bodyText": "A barricade across the road with a flag and a tin box. The toll keeper sits behind it with a ledger and a shotgun, and quotes a price in goods or labour. The box is heavy with what the road has cost.",
-  "weight": 1,
-  "minDay": 5
- },
- {
-  "id": "narrative_nurse_milestone_1",
-  "title": "Field Dressing",
-  "bodyText": "The nurse works through their first full field dressing since the exchange: clean the wound, pack it, bind it. The hands remember faster than the head. The patient stops shaking by the time the last knot is tied.",
-  "weight": 1,
-  "minDay": 10
- },
- {
-  "id": "narrative_nurse_milestone_2",
-  "title": "The Second Shift",
-  "bodyText": "The nurse runs a second shift on the sickbeds without being asked. They move between the bunks checking pulses, adjusting bandages, speaking quietly. Somebody says the clinic feels like a clinic again.",
-  "weight": 1,
-  "minDay": 20
- },
- {
-  "id": "narrative_nurse_mastery",
-  "title": "The Clinic Holds",
-  "bodyText": "The nurse has mastered the pre-war trade of nursing. The bunker's clinic runs on their schedule, their stock, their calm. When the door opens for the next casualty, the bed is already made.",
-  "weight": 1,
-  "minDay": 30
- },
- {
-  "id": "narrative_machinist_milestone_1",
-  "title": "First Turn",
-  "bodyText": "The machinist turns a seized thread free with tools they made themselves. It is a small thing: one bolt, one fitting, one part of the bunker working again. They keep the tool in their pocket.",
-  "weight": 1,
-  "minDay": 10
- },
- {
-  "id": "narrative_machinist_milestone_2",
-  "title": "The Bench Works",
-  "bodyText": "The machinist's bench produces its first run of serviceable parts: washers, pins, a coupling for the pump. The bunker stops asking where things come from and starts asking what else the bench can make.",
-  "weight": 1,
-  "minDay": 20
- },
- {
-  "id": "narrative_machinist_mastery",
-  "title": "Nothing Seized Stays Seized",
-  "bodyText": "The machinist has mastered the pre-war trade of machining. Every seized thread, every worn bearing in the bunker eventually passes over their bench, and leaves it moving.",
-  "weight": 1,
-  "minDay": 30
- },
- {
-  "id": "narrative_teacher_milestone_1",
-  "title": "The First Lesson",
-  "bodyText": "The teacher holds the first lesson: numbers on a slate, letters on the wall. Three children and one adult sit in the circle. Nobody interrupts. It is the quietest hour the corridor has had in months.",
-  "weight": 1,
-  "minDay": 10
- },
- {
-  "id": "narrative_teacher_milestone_2",
-  "title": "A Second Class",
-  "bodyText": "The teacher opens a second class for the adults, evenings, after the shifts. The subjects are practical: rations math, map reading, medicine names. The children attend the first one, the adults the second, and both sessions end with homework.",
-  "weight": 1,
-  "minDay": 20
- },
- {
-  "id": "narrative_teacher_mastery",
-  "title": "The School Holds",
-  "bodyText": "The teacher has mastered the pre-war trade of teaching. The bunker keeps school hours now, rain or ash or siege. Somewhere in the back row a child is learning to read the word for \"shelter\", and it means the word, and it means the thing.",
-  "weight": 1,
-  "minDay": 30
- },
- {
-  "id": "narrative_trade_mastery_electrician",
-  "title": "Master Electrician",
-  "bodyText": "The electrician has mastered the pre-war trade of their profession. Their hands find the right wire by instinct. The bunker's lights flicker less often now, and the hum of the generators sounds almost confident.",
-  "weight": 1,
-  "minDay": 40
- },
- {
-  "id": "narrative_trade_mastery_nurse",
-  "title": "Master Nurse",
-  "bodyText": "The nurse has mastered the pre-war trade of their profession. The clinic runs on their calm and their stock. When the door opens for the next casualty, the bed is already made, and so is the plan.",
-  "weight": 1,
-  "minDay": 40
- },
- {
-  "id": "narrative_trade_mastery_machinist",
-  "title": "Master Machinist",
-  "bodyText": "The machinist has mastered the pre-war trade of their profession. Every seized thread, every worn bearing in the bunker eventually passes over their bench, and leaves it moving.",
-  "weight": 1,
-  "minDay": 40
- },
- {
-  "id": "narrative_trade_mastery_teacher",
-  "title": "Master Teacher",
-  "bodyText": "The teacher has mastered the pre-war trade of their profession. The bunker keeps school hours now, and the children keep them too. In the ledger of what the bunker preserves, there is a page for that.",
-  "weight": 1,
-  "minDay": 40
- }
-]
+}

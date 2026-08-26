@@ -1,23 +1,404 @@
-[
-  {"id":"loc_civil_defense_bunker","displayName":"Ruined Civil Defense Bunker","description":"A pre-war public shelter, now half-collapsed. CO2 buildup and unstable tunnels make exploration dangerous, but the medical caches may still be sealed.","dangerLevel":4,"travelHours":3,"baseRadsPerHour":26,"collapseRisk":0.6,"primaryFaction":"none","lootCategories":["medical","filters","rations"],"specialEvents":["sealed_vault_door","trapped_survivors"]},
-  {"id":"loc_water_treatment_plant","displayName":"Flooded Water Treatment Plant","description":"Knee-deep irradiated sludge fills the lower levels. Electrical faults spark in the darkness. The intake valves and chemical stores are somewhere in the flooded basement.","dangerLevel":6,"travelHours":5,"baseRadsPerHour":42,"collapseRisk":0.4,"primaryFaction":"warlords_sector_4","lootCategories":["water_filters","valves","chemicals"],"specialEvents":["aquifer_pump_repair","toxic_leak"]},
-  {"id":"loc_highway_checkpoint","displayName":"Decayed Highway Checkpoint","description":"An abandoned military checkpoint on the main highway. Sniper positions overlook the approach. Ammo crates and fuel drums are stacked behind sandbags.","dangerLevel":7,"travelHours":4,"baseRadsPerHour":34,"collapseRisk":0.2,"primaryFaction":"iron_garrison","lootCategories":["ammo","fuel","military_gear"],"specialEvents":["garrison_patrol_ambush","toll_gate"]},
-  {"id":"loc_grain_silo","displayName":"Collapse-Prone Grain Silo","description":"A towering grain silo leaning at a dangerous angle. Dust explosions and structural collapse are constant threats, but tons of wheat and rodent scraps remain inside.","dangerLevel":5,"travelHours":6,"baseRadsPerHour":17,"collapseRisk":0.8,"primaryFaction":"ash_militia","lootCategories":["wheat","rodent_scraps","sacks"],"specialEvents":["grain_exchange_trade","silo_cave_in"]},
-  {"id":"loc_substation_yard","displayName":"Substation Switching Yard","description":"Residual EMP signatures still crackle through the transformers. High voltage lines dangle. Copper wire, capacitors, and intact electronics are scattered among the debris.","dangerLevel":6,"travelHours":3,"baseRadsPerHour":26,"collapseRisk":0.3,"primaryFaction":"none","lootCategories":["copper_wire","capacitors","electronics"],"specialEvents":["blackout_core_recovery","transformer_fire"]},
-  {"id":"loc_regional_hospital","displayName":"Abandoned Regional Hospital","description":"Biohazard warnings still flash on battery power. The pharmacy is locked. The quarantine wing was sealed from the inside — something may still be alive in there.","dangerLevel":8,"travelHours":4,"baseRadsPerHour":59,"collapseRisk":0.5,"primaryFaction":"none","lootCategories":["antibiotics","surgical_kits","iodine"],"specialEvents":["quarantine_breach","pharmacist_stash"]},
-  {"id":"loc_suburban_district","displayName":"Burned-Out Suburban District","description":"Rows of identical houses, roofs caved in, floors unstable. Mimic crates — carefully staged by raiders — sit in living rooms. Hidden cellars may still hold canned food.","dangerLevel":5,"travelHours":2,"baseRadsPerHour":26,"collapseRisk":0.4,"primaryFaction":"raiders","lootCategories":["cloth","scrap_metal","canned_food"],"specialEvents":["feral_pack_attack","hidden_cellar"]},
-  {"id":"loc_train_yard","displayName":"Irradiated Train Yard","description":"Freight cars sit rusting on the tracks, some still sealed. Black rain has pooled in the low sections. Steel rails, tools, and diesel fuel tanks are scattered throughout.","dangerLevel":6,"travelHours":5,"baseRadsPerHour":51,"collapseRisk":0.3,"primaryFaction":"warlords_sector_4","lootCategories":["steel_rails","tools","diesel_fuel"],"specialEvents":["armored_boxcar_lock","signal_relay"]},
-  {"id":"loc_comm_array","displayName":"Old Military Communications Array","description":"A high-altitude antenna farm with a hardened bunker beneath. Lightning storms are frequent. Vacuum tubes, wiring, and radio parts fill the maintenance rooms.","dangerLevel":4,"travelHours":7,"baseRadsPerHour":17,"collapseRisk":0.1,"primaryFaction":"iron_garrison","lootCategories":["vacuum_tubes","wiring","radio_parts"],"specialEvents":["frequency_decoder_reset","cult_jammer"]},
-  {"id":"loc_ash_woodland","displayName":"Deforested Ash Woodland","description":"Once a pine forest, now a graveyard of blackened trunks. Mud slides are common. Game trails suggest something still lives here. Firewood and resin are abundant.","dangerLevel":5,"travelHours":4,"baseRadsPerHour":34,"collapseRisk":0.3,"primaryFaction":"none","lootCategories":["firewood","game_scraps","resin"],"specialEvents":["wild_animal_den","stranded_scout"]},
-  {"id":"loc_urban_pharmacy","displayName":"Shell-Shocked Urban Pharmacy","description":"Glass crunches under every step. Chemical fumes rise from spilled bottles. The pharmacy safe is still intact — and someone is already here, watching from the shadows.","dangerLevel":4,"travelHours":2,"baseRadsPerHour":26,"collapseRisk":0.2,"primaryFaction":"raiders","lootCategories":["bandages","sedatives","antiseptic"],"specialEvents":["preserved_safe","loot_squatters"]},
-  {"id":"loc_missile_silo","displayName":"Cratered Missile Silo Complex","description":"Lethal fallout (800+ mSv/hr) blankets the site. The silo doors are jammed open. Alloy plates, rocket fuel, and heavy armor plating are worth the risk — if you can survive the exposure.","dangerLevel":9,"travelHours":8,"baseRadsPerHour":76,"collapseRisk":0.7,"primaryFaction":"iron_garrison","lootCategories":["alloy_plates","rocket_fuel","heavy_armor"],"specialEvents":["missile_fuel_leak","automated_defense"]},
-  {"id":"loc_fuel_depot","displayName":"Desolate Fuel Depot","description":"Underground tanks still hold thousands of litres. Methane gas seeps from cracked pipes. The militia guards the main entrance — but the back fence is unguarded.","dangerLevel":7,"travelHours":4,"baseRadsPerHour":34,"collapseRisk":0.5,"primaryFaction":"ash_militia","lootCategories":["gasoline","kerosene","rubber_hose"],"specialEvents":["tanker_explosion_risk","militia_guard"]},
-  {"id":"loc_metro_tunnel","displayName":"Underground Metro Tunnel","description":"Absolute darkness. The only sounds are dripping water and distant scratching — rat swarms, or something larger. Clean water pools in the lower sections. Wiring hangs from the ceiling.","dangerLevel":6,"travelHours":3,"baseRadsPerHour":26,"collapseRisk":0.6,"primaryFaction":"none","lootCategories":["scrap_metal","clean_water","wiring"],"specialEvents":["lost_metro_community","gas_pocket"]},
-  {"id":"loc_agricultural_coop","displayName":"Razed Agricultural Co-op","description":"The fields are dead — irradiated soil, invasive mold. But the storage shed still holds fertilizer, heirloom seeds, and hand tools. Some seeds may still be viable.","dangerLevel":4,"travelHours":5,"baseRadsPerHour":42,"collapseRisk":0.3,"primaryFaction":"ash_militia","lootCategories":["fertilizer","seeds","hand_tools"],"specialEvents":["hydroponic_rig_restoration","poison_seed"]},
-  {"id":"loc_basement_vault","displayName":"Flooded Basement Vault","description":"A bank vault, submerged in freezing water. Hypothermia is the immediate threat. But sealed cans, waterproof gear, and safety deposit keys are somewhere below the surface.","dangerLevel":5,"travelHours":2,"baseRadsPerHour":17,"collapseRisk":0.4,"primaryFaction":"none","lootCategories":["sealed_cans","waterproof_gear","keys"],"specialEvents":["submerged_safe","broken_sump_pump"]},
-  {"id":"loc_police_precinct","displayName":"Abandoned Police Precinct","description":"Armored doors still hold. Riot traps litter the hallways. The evidence locker, the armory, and the holding cells all hold valuable supplies — if you can get past the security systems.","dangerLevel":6,"travelHours":3,"baseRadsPerHour":17,"collapseRisk":0.3,"primaryFaction":"iron_garrison","lootCategories":["riot_shields","shotgun_shells","badges"],"specialEvents":["evidence_locker_keyhole","siege_survivors"]},
-  {"id":"loc_botanical_nursery","displayName":"Overgrown Botanical Nursery","description":"The greenhouse glass shattered years ago, but something still grows here. Spore mists drift between the rows. Rare medicinal herbs and clean water make it worth the risk of toxic botanical exposure.","dangerLevel":5,"travelHours":4,"baseRadsPerHour":26,"collapseRisk":0.2,"primaryFaction":"cult_of_ash_sign","lootCategories":["medicinal_herbs","seeds","clean_water"],"specialEvents":["rare_medicinal_flora","spore_cloud"]},
-  {"id":"loc_evacuation_bus_depot","displayName":"Wrecked Evacuation Bus Depot","description":"Rows of buses that never left. Glass splinters everywhere. Fuel spills stain the concrete. Spare tires, batteries, and refugee journals are scattered among the frozen bodies.","dangerLevel":3,"travelHours":3,"baseRadsPerHour":26,"collapseRisk":0.3,"primaryFaction":"none","lootCategories":["spare_tires","batteries","scrap_cloth"],"specialEvents":["refugee_journals","frozen_bodies"]},
-  {"id":"loc_coal_mine","displayName":"Subterranean Coal Mine","description":"The main shaft descends 200 meters. Methane pockets and tunnel collapses have killed many. But coal, drill bits, and miner helmets are still down there — and maybe a mine cart full of ore.","dangerLevel":7,"travelHours":6,"baseRadsPerHour":17,"collapseRisk":0.8,"primaryFaction":"none","lootCategories":["coal","drill_bits","miner_helmets"],"specialEvents":["structural_cave_in_rescue","mine_cart"]},
-  {"id":"loc_toll_house","displayName":"The Tollman's Bridge","description":"A river crossing controlled by the Warlords since the Tollman learned its demolition codes. A fortified toll house guards the near bank. Every trader who crosses pays in blood or bullets — the Warlords' price is negotiable only to a point.","dangerLevel":5,"travelHours":3,"baseRadsPerHour":17,"collapseRisk":0.2,"primaryFaction":"warlords_sector_4","lootCategories":["scrap_metal","fuel","trade_goods"],"specialEvents":["tollman_negotiation","bridge_ambush"]}
-]
+{
+  "schema_version": 1,
+  "locations": [
+    {
+      "id": "loc_civil_defense_bunker",
+      "displayName": "Ruined Civil Defense Bunker",
+      "description": "A pre-war public shelter, now half-collapsed. CO2 buildup and unstable tunnels make exploration dangerous, but the medical caches may still be sealed.",
+      "dangerLevel": 4,
+      "travelHours": 3,
+      "baseRadsPerHour": 26,
+      "collapseRisk": 0.6,
+      "primaryFaction": "none",
+      "lootCategories": [
+        "medical",
+        "filters",
+        "rations"
+      ],
+      "specialEvents": [
+        "sealed_vault_door",
+        "trapped_survivors"
+      ]
+    },
+    {
+      "id": "loc_water_treatment_plant",
+      "displayName": "Flooded Water Treatment Plant",
+      "description": "Knee-deep irradiated sludge fills the lower levels. Electrical faults spark in the darkness. The intake valves and chemical stores are somewhere in the flooded basement.",
+      "dangerLevel": 6,
+      "travelHours": 5,
+      "baseRadsPerHour": 42,
+      "collapseRisk": 0.4,
+      "primaryFaction": "warlords_sector_4",
+      "lootCategories": [
+        "water_filters",
+        "valves",
+        "chemicals"
+      ],
+      "specialEvents": [
+        "aquifer_pump_repair",
+        "toxic_leak"
+      ]
+    },
+    {
+      "id": "loc_highway_checkpoint",
+      "displayName": "Decayed Highway Checkpoint",
+      "description": "An abandoned military checkpoint on the main highway. Sniper positions overlook the approach. Ammo crates and fuel drums are stacked behind sandbags.",
+      "dangerLevel": 7,
+      "travelHours": 4,
+      "baseRadsPerHour": 34,
+      "collapseRisk": 0.2,
+      "primaryFaction": "iron_garrison",
+      "lootCategories": [
+        "ammo",
+        "fuel",
+        "military_gear"
+      ],
+      "specialEvents": [
+        "garrison_patrol_ambush",
+        "toll_gate"
+      ]
+    },
+    {
+      "id": "loc_grain_silo",
+      "displayName": "Collapse-Prone Grain Silo",
+      "description": "A towering grain silo leaning at a dangerous angle. Dust explosions and structural collapse are constant threats, but tons of wheat and rodent scraps remain inside.",
+      "dangerLevel": 5,
+      "travelHours": 6,
+      "baseRadsPerHour": 17,
+      "collapseRisk": 0.8,
+      "primaryFaction": "ash_militia",
+      "lootCategories": [
+        "wheat",
+        "rodent_scraps",
+        "sacks"
+      ],
+      "specialEvents": [
+        "grain_exchange_trade",
+        "silo_cave_in"
+      ]
+    },
+    {
+      "id": "loc_substation_yard",
+      "displayName": "Substation Switching Yard",
+      "description": "Residual EMP signatures still crackle through the transformers. High voltage lines dangle. Copper wire, capacitors, and intact electronics are scattered among the debris.",
+      "dangerLevel": 6,
+      "travelHours": 3,
+      "baseRadsPerHour": 26,
+      "collapseRisk": 0.3,
+      "primaryFaction": "none",
+      "lootCategories": [
+        "copper_wire",
+        "capacitors",
+        "electronics"
+      ],
+      "specialEvents": [
+        "blackout_core_recovery",
+        "transformer_fire"
+      ]
+    },
+    {
+      "id": "loc_regional_hospital",
+      "displayName": "Abandoned Regional Hospital",
+      "description": "Biohazard warnings still flash on battery power. The pharmacy is locked. The quarantine wing was sealed from the inside — something may still be alive in there.",
+      "dangerLevel": 8,
+      "travelHours": 4,
+      "baseRadsPerHour": 59,
+      "collapseRisk": 0.5,
+      "primaryFaction": "none",
+      "lootCategories": [
+        "antibiotics",
+        "surgical_kits",
+        "iodine"
+      ],
+      "specialEvents": [
+        "quarantine_breach",
+        "pharmacist_stash"
+      ]
+    },
+    {
+      "id": "loc_suburban_district",
+      "displayName": "Burned-Out Suburban District",
+      "description": "Rows of identical houses, roofs caved in, floors unstable. Mimic crates — carefully staged by raiders — sit in living rooms. Hidden cellars may still hold canned food.",
+      "dangerLevel": 5,
+      "travelHours": 2,
+      "baseRadsPerHour": 26,
+      "collapseRisk": 0.4,
+      "primaryFaction": "raiders",
+      "lootCategories": [
+        "cloth",
+        "scrap_metal",
+        "canned_food"
+      ],
+      "specialEvents": [
+        "feral_pack_attack",
+        "hidden_cellar"
+      ]
+    },
+    {
+      "id": "loc_train_yard",
+      "displayName": "Irradiated Train Yard",
+      "description": "Freight cars sit rusting on the tracks, some still sealed. Black rain has pooled in the low sections. Steel rails, tools, and diesel fuel tanks are scattered throughout.",
+      "dangerLevel": 6,
+      "travelHours": 5,
+      "baseRadsPerHour": 51,
+      "collapseRisk": 0.3,
+      "primaryFaction": "warlords_sector_4",
+      "lootCategories": [
+        "steel_rails",
+        "tools",
+        "diesel_fuel"
+      ],
+      "specialEvents": [
+        "armored_boxcar_lock",
+        "signal_relay"
+      ]
+    },
+    {
+      "id": "loc_comm_array",
+      "displayName": "Old Military Communications Array",
+      "description": "A high-altitude antenna farm with a hardened bunker beneath. Lightning storms are frequent. Vacuum tubes, wiring, and radio parts fill the maintenance rooms.",
+      "dangerLevel": 4,
+      "travelHours": 7,
+      "baseRadsPerHour": 17,
+      "collapseRisk": 0.1,
+      "primaryFaction": "iron_garrison",
+      "lootCategories": [
+        "vacuum_tubes",
+        "wiring",
+        "radio_parts"
+      ],
+      "specialEvents": [
+        "frequency_decoder_reset",
+        "cult_jammer"
+      ]
+    },
+    {
+      "id": "loc_ash_woodland",
+      "displayName": "Deforested Ash Woodland",
+      "description": "Once a pine forest, now a graveyard of blackened trunks. Mud slides are common. Game trails suggest something still lives here. Firewood and resin are abundant.",
+      "dangerLevel": 5,
+      "travelHours": 4,
+      "baseRadsPerHour": 34,
+      "collapseRisk": 0.3,
+      "primaryFaction": "none",
+      "lootCategories": [
+        "firewood",
+        "game_scraps",
+        "resin"
+      ],
+      "specialEvents": [
+        "wild_animal_den",
+        "stranded_scout"
+      ]
+    },
+    {
+      "id": "loc_urban_pharmacy",
+      "displayName": "Shell-Shocked Urban Pharmacy",
+      "description": "Glass crunches under every step. Chemical fumes rise from spilled bottles. The pharmacy safe is still intact — and someone is already here, watching from the shadows.",
+      "dangerLevel": 4,
+      "travelHours": 2,
+      "baseRadsPerHour": 26,
+      "collapseRisk": 0.2,
+      "primaryFaction": "raiders",
+      "lootCategories": [
+        "bandages",
+        "sedatives",
+        "antiseptic"
+      ],
+      "specialEvents": [
+        "preserved_safe",
+        "loot_squatters"
+      ]
+    },
+    {
+      "id": "loc_missile_silo",
+      "displayName": "Cratered Missile Silo Complex",
+      "description": "Lethal fallout (800+ mSv/hr) blankets the site. The silo doors are jammed open. Alloy plates, rocket fuel, and heavy armor plating are worth the risk — if you can survive the exposure.",
+      "dangerLevel": 9,
+      "travelHours": 8,
+      "baseRadsPerHour": 76,
+      "collapseRisk": 0.7,
+      "primaryFaction": "iron_garrison",
+      "lootCategories": [
+        "alloy_plates",
+        "rocket_fuel",
+        "heavy_armor"
+      ],
+      "specialEvents": [
+        "missile_fuel_leak",
+        "automated_defense"
+      ]
+    },
+    {
+      "id": "loc_fuel_depot",
+      "displayName": "Desolate Fuel Depot",
+      "description": "Underground tanks still hold thousands of litres. Methane gas seeps from cracked pipes. The militia guards the main entrance — but the back fence is unguarded.",
+      "dangerLevel": 7,
+      "travelHours": 4,
+      "baseRadsPerHour": 34,
+      "collapseRisk": 0.5,
+      "primaryFaction": "ash_militia",
+      "lootCategories": [
+        "gasoline",
+        "kerosene",
+        "rubber_hose"
+      ],
+      "specialEvents": [
+        "tanker_explosion_risk",
+        "militia_guard"
+      ]
+    },
+    {
+      "id": "loc_metro_tunnel",
+      "displayName": "Underground Metro Tunnel",
+      "description": "Absolute darkness. The only sounds are dripping water and distant scratching — rat swarms, or something larger. Clean water pools in the lower sections. Wiring hangs from the ceiling.",
+      "dangerLevel": 6,
+      "travelHours": 3,
+      "baseRadsPerHour": 26,
+      "collapseRisk": 0.6,
+      "primaryFaction": "none",
+      "lootCategories": [
+        "scrap_metal",
+        "clean_water",
+        "wiring"
+      ],
+      "specialEvents": [
+        "lost_metro_community",
+        "gas_pocket"
+      ]
+    },
+    {
+      "id": "loc_agricultural_coop",
+      "displayName": "Razed Agricultural Co-op",
+      "description": "The fields are dead — irradiated soil, invasive mold. But the storage shed still holds fertilizer, heirloom seeds, and hand tools. Some seeds may still be viable.",
+      "dangerLevel": 4,
+      "travelHours": 5,
+      "baseRadsPerHour": 42,
+      "collapseRisk": 0.3,
+      "primaryFaction": "ash_militia",
+      "lootCategories": [
+        "fertilizer",
+        "seeds",
+        "hand_tools"
+      ],
+      "specialEvents": [
+        "hydroponic_rig_restoration",
+        "poison_seed"
+      ]
+    },
+    {
+      "id": "loc_basement_vault",
+      "displayName": "Flooded Basement Vault",
+      "description": "A bank vault, submerged in freezing water. Hypothermia is the immediate threat. But sealed cans, waterproof gear, and safety deposit keys are somewhere below the surface.",
+      "dangerLevel": 5,
+      "travelHours": 2,
+      "baseRadsPerHour": 17,
+      "collapseRisk": 0.4,
+      "primaryFaction": "none",
+      "lootCategories": [
+        "sealed_cans",
+        "waterproof_gear",
+        "keys"
+      ],
+      "specialEvents": [
+        "submerged_safe",
+        "broken_sump_pump"
+      ]
+    },
+    {
+      "id": "loc_police_precinct",
+      "displayName": "Abandoned Police Precinct",
+      "description": "Armored doors still hold. Riot traps litter the hallways. The evidence locker, the armory, and the holding cells all hold valuable supplies — if you can get past the security systems.",
+      "dangerLevel": 6,
+      "travelHours": 3,
+      "baseRadsPerHour": 17,
+      "collapseRisk": 0.3,
+      "primaryFaction": "iron_garrison",
+      "lootCategories": [
+        "riot_shields",
+        "shotgun_shells",
+        "badges"
+      ],
+      "specialEvents": [
+        "evidence_locker_keyhole",
+        "siege_survivors"
+      ]
+    },
+    {
+      "id": "loc_botanical_nursery",
+      "displayName": "Overgrown Botanical Nursery",
+      "description": "The greenhouse glass shattered years ago, but something still grows here. Spore mists drift between the rows. Rare medicinal herbs and clean water make it worth the risk of toxic botanical exposure.",
+      "dangerLevel": 5,
+      "travelHours": 4,
+      "baseRadsPerHour": 26,
+      "collapseRisk": 0.2,
+      "primaryFaction": "cult_of_ash_sign",
+      "lootCategories": [
+        "medicinal_herbs",
+        "seeds",
+        "clean_water"
+      ],
+      "specialEvents": [
+        "rare_medicinal_flora",
+        "spore_cloud"
+      ]
+    },
+    {
+      "id": "loc_evacuation_bus_depot",
+      "displayName": "Wrecked Evacuation Bus Depot",
+      "description": "Rows of buses that never left. Glass splinters everywhere. Fuel spills stain the concrete. Spare tires, batteries, and refugee journals are scattered among the frozen bodies.",
+      "dangerLevel": 3,
+      "travelHours": 3,
+      "baseRadsPerHour": 26,
+      "collapseRisk": 0.3,
+      "primaryFaction": "none",
+      "lootCategories": [
+        "spare_tires",
+        "batteries",
+        "scrap_cloth"
+      ],
+      "specialEvents": [
+        "refugee_journals",
+        "frozen_bodies"
+      ]
+    },
+    {
+      "id": "loc_coal_mine",
+      "displayName": "Subterranean Coal Mine",
+      "description": "The main shaft descends 200 meters. Methane pockets and tunnel collapses have killed many. But coal, drill bits, and miner helmets are still down there — and maybe a mine cart full of ore.",
+      "dangerLevel": 7,
+      "travelHours": 6,
+      "baseRadsPerHour": 17,
+      "collapseRisk": 0.8,
+      "primaryFaction": "none",
+      "lootCategories": [
+        "coal",
+        "drill_bits",
+        "miner_helmets"
+      ],
+      "specialEvents": [
+        "structural_cave_in_rescue",
+        "mine_cart"
+      ]
+    },
+    {
+      "id": "loc_toll_house",
+      "displayName": "The Tollman's Bridge",
+      "description": "A river crossing controlled by the Warlords since the Tollman learned its demolition codes. A fortified toll house guards the near bank. Every trader who crosses pays in blood or bullets — the Warlords' price is negotiable only to a point.",
+      "dangerLevel": 5,
+      "travelHours": 3,
+      "baseRadsPerHour": 17,
+      "collapseRisk": 0.2,
+      "primaryFaction": "warlords_sector_4",
+      "lootCategories": [
+        "scrap_metal",
+        "fuel",
+        "trade_goods"
+      ],
+      "specialEvents": [
+        "tollman_negotiation",
+        "bridge_ambush"
+      ]
+    }
+  ]
+}

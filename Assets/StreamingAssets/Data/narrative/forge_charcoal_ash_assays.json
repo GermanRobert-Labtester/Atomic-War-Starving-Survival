@@ -1,72 +1,117 @@
-[
-  {
-    "id": "forge_charcoal_fixed_carbon_proximate_analysis",
-    "carbon_assay_batch_id": "HEAVY_FORGE_LUMP_BATCH_01",
-    "fixed_carbon_pct": 84.5,
-    "ash_content_pct": 2.2,
-    "forge_hearth_peak_temp_celsius": 1380.0,
-    "timestamp_relative": "YEAR_02_FORGE_01",
-    "tags": ["pyrolysis", "forge_charcoal", "proximate_analysis", "fixed_carbon", "blacksmithing"],
-    "prose": "Muffle furnace proximate analysis of seasoned white oak forge lump measured 84.5% fixed carbon and only 2.2% ash. The high carbon density generated intense, concentrated heat without suffocating the firepot in fine ash."
-  },
-  {
-    "id": "forge_charcoal_clinker_fusion_silica_ash",
-    "carbon_assay_batch_id": "METALLURGY_TEST_SAMPLE_02",
-    "fixed_carbon_pct": 88.0,
-    "ash_content_pct": 1.4,
-    "forge_hearth_peak_temp_celsius": 1420.0,
-    "timestamp_relative": "YEAR_04_FORGE_03",
-    "tags": ["pyrolysis", "forge_charcoal", "clinker_prevention", "silica_ash", "tuyere_protection"],
-    "prose": "Low-ash birch and beech charcoal produced virtually zero molten silicate slag clinkers during twelve hours of continuous forging. The tuyere air blast nozzle remained completely open without glassy slag crusting."
-  },
-  {
-    "id": "forge_charcoal_sulfur_free_metallurgical_purity",
-    "carbon_assay_batch_id": "CRUCIBLE_STEEL_FUEL_LOT_03",
-    "fixed_carbon_pct": 86.5,
-    "ash_content_pct": 1.8,
-    "forge_hearth_peak_temp_celsius": 1450.0,
-    "timestamp_relative": "YEAR_07_FORGE_02",
-    "tags": ["pyrolysis", "forge_charcoal", "sulfur_free", "crucible_steel", "red_shortness"],
-    "prose": "Total sulfur assay measured less than 0.015% in sugar maple charcoal, compared to 1.8% in mineral coke. Forging tool steel in sulfur-free charcoal fire prevented intergranular iron sulfide hot-shortness cracking."
-  },
-  {
-    "id": "forge_charcoal_spark_shower_explosive_popping",
-    "carbon_assay_batch_id": "UNSEASONED_PINE_CHAR_04",
-    "fixed_carbon_pct": 72.0,
-    "ash_content_pct": 4.5,
-    "forge_hearth_peak_temp_celsius": 1150.0,
-    "timestamp_relative": "YEAR_09_FORGE_04",
-    "tags": ["pyrolysis", "forge_charcoal", "softwood_char", "spark_hazard", "popping"],
-    "prose": "Charcoal made from resinous scrap pine contained trapped moisture and unpyrolyzed rosin pockets. Under air blast, expanding steam pockets popped violently, showering the blacksmith shop with blinding sparks and hot embers."
-  },
-  {
-    "id": "forge_charcoal_bulk_density_shatter_index",
-    "carbon_assay_batch_id": "HICKORY_LUMP_STOCKPILE_05",
-    "fixed_carbon_pct": 85.0,
-    "ash_content_pct": 2.6,
-    "forge_hearth_peak_temp_celsius": 1390.0,
-    "timestamp_relative": "YEAR_12_FORGE_01",
-    "tags": ["pyrolysis", "forge_charcoal", "shatter_index", "bulk_density", "hardness"],
-    "prose": "Standardized drop shatter tests dropping twenty kilograms of hickory lump from a height of two meters onto a steel plate showed an 88% retention of size. The exceptional compressive strength resisted crushing under heavy iron billets."
-  },
-  {
-    "id": "forge_charcoal_tuyere_hotspot_temperature_blast",
-    "carbon_assay_batch_id": "BLACKSMITH_SHOP_SUPPLY_06",
-    "fixed_carbon_pct": 83.0,
-    "ash_content_pct": 2.0,
-    "forge_hearth_peak_temp_celsius": 1460.0,
-    "timestamp_relative": "YEAR_15_FORGE_03",
-    "tags": ["pyrolysis", "forge_charcoal", "forge_welding", "tuyere_blast", "pyrometry"],
-    "prose": "Double-chamber leather bellows delivering 0.15 bar continuous blast drove hearth core temperatures past 1,460°C. Heavy wrought iron bloomery plates reached white welding heat in under four minutes with zero oxidation scaling."
-  },
-  {
-    "id": "forge_charcoal_gas_adsorption_activated_carbon_steam",
-    "carbon_assay_batch_id": "ACTIVATION_RETORT_CELL_07",
-    "fixed_carbon_pct": 92.5,
-    "ash_content_pct": 3.0,
-    "forge_hearth_peak_temp_celsius": 920.0,
-    "timestamp_relative": "YEAR_20_FORGE_01",
-    "tags": ["pyrolysis", "activated_carbon", "steam_activation", "gas_adsorption", "canister_filter"],
-    "prose": "Injecting dry 850°C superheated steam through a glowing bed of granular oak charcoal etched millions of sub-nanometer pores. The resulting activated carbon achieved an iodine adsorption rating of 950 mg/g, replenishing bunker gas mask filters."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "forge_charcoal_fixed_carbon_proximate_analysis",
+      "carbon_assay_batch_id": "HEAVY_FORGE_LUMP_BATCH_01",
+      "fixed_carbon_pct": 84.5,
+      "ash_content_pct": 2.2,
+      "forge_hearth_peak_temp_celsius": 1380.0,
+      "timestamp_relative": "YEAR_02_FORGE_01",
+      "tags": [
+        "pyrolysis",
+        "forge_charcoal",
+        "proximate_analysis",
+        "fixed_carbon",
+        "blacksmithing"
+      ],
+      "prose": "Muffle furnace proximate analysis of seasoned white oak forge lump measured 84.5% fixed carbon and only 2.2% ash. The high carbon density generated intense, concentrated heat without suffocating the firepot in fine ash."
+    },
+    {
+      "id": "forge_charcoal_clinker_fusion_silica_ash",
+      "carbon_assay_batch_id": "METALLURGY_TEST_SAMPLE_02",
+      "fixed_carbon_pct": 88.0,
+      "ash_content_pct": 1.4,
+      "forge_hearth_peak_temp_celsius": 1420.0,
+      "timestamp_relative": "YEAR_04_FORGE_03",
+      "tags": [
+        "pyrolysis",
+        "forge_charcoal",
+        "clinker_prevention",
+        "silica_ash",
+        "tuyere_protection"
+      ],
+      "prose": "Low-ash birch and beech charcoal produced virtually zero molten silicate slag clinkers during twelve hours of continuous forging. The tuyere air blast nozzle remained completely open without glassy slag crusting."
+    },
+    {
+      "id": "forge_charcoal_sulfur_free_metallurgical_purity",
+      "carbon_assay_batch_id": "CRUCIBLE_STEEL_FUEL_LOT_03",
+      "fixed_carbon_pct": 86.5,
+      "ash_content_pct": 1.8,
+      "forge_hearth_peak_temp_celsius": 1450.0,
+      "timestamp_relative": "YEAR_07_FORGE_02",
+      "tags": [
+        "pyrolysis",
+        "forge_charcoal",
+        "sulfur_free",
+        "crucible_steel",
+        "red_shortness"
+      ],
+      "prose": "Total sulfur assay measured less than 0.015% in sugar maple charcoal, compared to 1.8% in mineral coke. Forging tool steel in sulfur-free charcoal fire prevented intergranular iron sulfide hot-shortness cracking."
+    },
+    {
+      "id": "forge_charcoal_spark_shower_explosive_popping",
+      "carbon_assay_batch_id": "UNSEASONED_PINE_CHAR_04",
+      "fixed_carbon_pct": 72.0,
+      "ash_content_pct": 4.5,
+      "forge_hearth_peak_temp_celsius": 1150.0,
+      "timestamp_relative": "YEAR_09_FORGE_04",
+      "tags": [
+        "pyrolysis",
+        "forge_charcoal",
+        "softwood_char",
+        "spark_hazard",
+        "popping"
+      ],
+      "prose": "Charcoal made from resinous scrap pine contained trapped moisture and unpyrolyzed rosin pockets. Under air blast, expanding steam pockets popped violently, showering the blacksmith shop with blinding sparks and hot embers."
+    },
+    {
+      "id": "forge_charcoal_bulk_density_shatter_index",
+      "carbon_assay_batch_id": "HICKORY_LUMP_STOCKPILE_05",
+      "fixed_carbon_pct": 85.0,
+      "ash_content_pct": 2.6,
+      "forge_hearth_peak_temp_celsius": 1390.0,
+      "timestamp_relative": "YEAR_12_FORGE_01",
+      "tags": [
+        "pyrolysis",
+        "forge_charcoal",
+        "shatter_index",
+        "bulk_density",
+        "hardness"
+      ],
+      "prose": "Standardized drop shatter tests dropping twenty kilograms of hickory lump from a height of two meters onto a steel plate showed an 88% retention of size. The exceptional compressive strength resisted crushing under heavy iron billets."
+    },
+    {
+      "id": "forge_charcoal_tuyere_hotspot_temperature_blast",
+      "carbon_assay_batch_id": "BLACKSMITH_SHOP_SUPPLY_06",
+      "fixed_carbon_pct": 83.0,
+      "ash_content_pct": 2.0,
+      "forge_hearth_peak_temp_celsius": 1460.0,
+      "timestamp_relative": "YEAR_15_FORGE_03",
+      "tags": [
+        "pyrolysis",
+        "forge_charcoal",
+        "forge_welding",
+        "tuyere_blast",
+        "pyrometry"
+      ],
+      "prose": "Double-chamber leather bellows delivering 0.15 bar continuous blast drove hearth core temperatures past 1,460°C. Heavy wrought iron bloomery plates reached white welding heat in under four minutes with zero oxidation scaling."
+    },
+    {
+      "id": "forge_charcoal_gas_adsorption_activated_carbon_steam",
+      "carbon_assay_batch_id": "ACTIVATION_RETORT_CELL_07",
+      "fixed_carbon_pct": 92.5,
+      "ash_content_pct": 3.0,
+      "forge_hearth_peak_temp_celsius": 920.0,
+      "timestamp_relative": "YEAR_20_FORGE_01",
+      "tags": [
+        "pyrolysis",
+        "activated_carbon",
+        "steam_activation",
+        "gas_adsorption",
+        "canister_filter"
+      ],
+      "prose": "Injecting dry 850°C superheated steam through a glowing bed of granular oak charcoal etched millions of sub-nanometer pores. The resulting activated carbon achieved an iodine adsorption rating of 950 mg/g, replenishing bunker gas mask filters."
+    }
+  ]
+}

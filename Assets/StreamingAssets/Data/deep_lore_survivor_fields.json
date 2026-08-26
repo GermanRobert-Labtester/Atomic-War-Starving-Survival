@@ -1,6 +1,37 @@
-[
-  {"survivor_id":"aris_thorne","phantom_background_id":"machinist","pre_war_profession_id":"machinist","belief_profile_id":"atheist_rationalist","personal_keepsake_item_id":"blueprint_roll","philosophical_stance":"material_rationalism"},
-  {"survivor_id":"maya_lin","phantom_background_id":"generic","pre_war_profession_id":"","belief_profile_id":"collectivist_solidarity","personal_keepsake_item_id":"radio_headset","philosophical_stance":"stoicism"},
-  {"survivor_id":"victor_vance","phantom_background_id":"former_soldier","pre_war_profession_id":"","belief_profile_id":"military_discipline","personal_keepsake_item_id":"service_pistol","philosophical_stance":"stoicism"},
-  {"survivor_id":"elena_rostov","phantom_background_id":"nurse","pre_war_profession_id":"nurse","belief_profile_id":"atheist_rationalist","personal_keepsake_item_id":"surgical_mask","philosophical_stance":"material_rationalism"}
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "survivor_id": "aris_thorne",
+      "phantom_background_id": "machinist",
+      "pre_war_profession_id": "machinist",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "blueprint_roll",
+      "philosophical_stance": "material_rationalism"
+    },
+    {
+      "survivor_id": "maya_lin",
+      "phantom_background_id": "generic",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "collectivist_solidarity",
+      "personal_keepsake_item_id": "radio_headset",
+      "philosophical_stance": "stoicism"
+    },
+    {
+      "survivor_id": "victor_vance",
+      "phantom_background_id": "former_soldier",
+      "pre_war_profession_id": "",
+      "belief_profile_id": "military_discipline",
+      "personal_keepsake_item_id": "service_pistol",
+      "philosophical_stance": "stoicism"
+    },
+    {
+      "survivor_id": "elena_rostov",
+      "phantom_background_id": "nurse",
+      "pre_war_profession_id": "nurse",
+      "belief_profile_id": "atheist_rationalist",
+      "personal_keepsake_item_id": "surgical_mask",
+      "philosophical_stance": "material_rationalism"
+    }
+  ]
+}

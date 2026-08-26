@@ -1,51 +1,54 @@
-[
-  {
-    "id": "awl_stitch_001",
-    "leather_panel_id": "lp_dog_oak_01",
-    "thread_material": "waxed_hemp",
-    "stitch_length_mm": 4.5,
-    "log_text": "Bone awl punched through two layers of oak-tanned dog leather. Thread is two-ply hemp drawn through tallow. Two needles — one each end of a long thread. Saddle-stitched a shoulder bag seam. Forty centimetres. The stitch is even; it locked at the end without knotting."
-  },
-  {
-    "id": "awl_stitch_002",
-    "leather_panel_id": "lp_dog_brain_01",
-    "thread_material": "sinew",
-    "stitch_length_mm": 3.8,
-    "log_text": "Sinew thread from split dog leg tendons. Finer than hemp. Pre-waxed with tallow before stitching. Brain-tanned leather punches cleanly — no drag. Seam is tighter at 3.8 millimetres per stitch. Good for boot uppers where the stitching takes direct wear."
-  },
-  {
-    "id": "awl_stitch_003",
-    "leather_panel_id": "lp_rabbit_alder_01",
-    "thread_material": "waxed_linen",
-    "stitch_length_mm": 3.0,
-    "log_text": "Thin alder-tanned rabbit leather, glove panels. Iron awl — thinner than bone, leaves a cleaner hole. Waxed linen thread. Stitch length kept short to hold the thin leather. Two pairs of gloves from this panel. Fingers are still awkward at the tips but they will break in."
-  },
-  {
-    "id": "awl_stitch_004",
-    "leather_panel_id": "lp_dog_oak_02",
-    "thread_material": "waxed_hemp",
-    "stitch_length_mm": 5.0,
-    "log_text": "Water carrier bag — double-layered oak-tanned leather for the body, single layer flap. Bone awl, heavy gauge. Five millimetre stitches: coarser but faster. Backstitched the bottom seam once for water resistance. Holds water when the seam is tallowed. Carries about two litres."
-  },
-  {
-    "id": "awl_stitch_005",
-    "leather_panel_id": "lp_dog_oak_03",
-    "thread_material": "sinew",
-    "stitch_length_mm": 4.0,
-    "log_text": "Boot uppers. Cut from the best section of the third oak-tanned batch. Sinew thread, double strand, each end needled. Stitched the counter and the vamp seam first. Four millimetre pitch felt right — firm but not pulling the leather. Two boots completed. They will do."
-  },
-  {
-    "id": "awl_stitch_006",
-    "leather_panel_id": "lp_composite_rat_01",
-    "thread_material": "waxed_hemp",
-    "stitch_length_mm": 3.5,
-    "log_text": "Stitching the composite rat-hide panel into a small pouch. The seams run through the stitched joins — tricky to punch through the overlapping sections. Hemp thread, tight stitches. Small, ugly pouch. Holds dried tinder without spilling. That was the requirement."
-  },
-  {
-    "id": "awl_stitch_007",
-    "leather_panel_id": "lp_dog_brain_02",
-    "thread_material": "sinew",
-    "stitch_length_mm": 4.2,
-    "log_text": "Harness strap — brain-tanned dog leather, one centimetre wide, doubled at the buckle loop. Punched using a scratch awl rather than bone — the iron tip holds a finer point. Sinew stitching through the loop, cross-stitch pattern. Has held a ten-kilogram load in testing."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "awl_stitch_001",
+      "leather_panel_id": "lp_dog_oak_01",
+      "thread_material": "waxed_hemp",
+      "stitch_length_mm": 4.5,
+      "log_text": "Bone awl punched through two layers of oak-tanned dog leather. Thread is two-ply hemp drawn through tallow. Two needles — one each end of a long thread. Saddle-stitched a shoulder bag seam. Forty centimetres. The stitch is even; it locked at the end without knotting."
+    },
+    {
+      "id": "awl_stitch_002",
+      "leather_panel_id": "lp_dog_brain_01",
+      "thread_material": "sinew",
+      "stitch_length_mm": 3.8,
+      "log_text": "Sinew thread from split dog leg tendons. Finer than hemp. Pre-waxed with tallow before stitching. Brain-tanned leather punches cleanly — no drag. Seam is tighter at 3.8 millimetres per stitch. Good for boot uppers where the stitching takes direct wear."
+    },
+    {
+      "id": "awl_stitch_003",
+      "leather_panel_id": "lp_rabbit_alder_01",
+      "thread_material": "waxed_linen",
+      "stitch_length_mm": 3.0,
+      "log_text": "Thin alder-tanned rabbit leather, glove panels. Iron awl — thinner than bone, leaves a cleaner hole. Waxed linen thread. Stitch length kept short to hold the thin leather. Two pairs of gloves from this panel. Fingers are still awkward at the tips but they will break in."
+    },
+    {
+      "id": "awl_stitch_004",
+      "leather_panel_id": "lp_dog_oak_02",
+      "thread_material": "waxed_hemp",
+      "stitch_length_mm": 5.0,
+      "log_text": "Water carrier bag — double-layered oak-tanned leather for the body, single layer flap. Bone awl, heavy gauge. Five millimetre stitches: coarser but faster. Backstitched the bottom seam once for water resistance. Holds water when the seam is tallowed. Carries about two litres."
+    },
+    {
+      "id": "awl_stitch_005",
+      "leather_panel_id": "lp_dog_oak_03",
+      "thread_material": "sinew",
+      "stitch_length_mm": 4.0,
+      "log_text": "Boot uppers. Cut from the best section of the third oak-tanned batch. Sinew thread, double strand, each end needled. Stitched the counter and the vamp seam first. Four millimetre pitch felt right — firm but not pulling the leather. Two boots completed. They will do."
+    },
+    {
+      "id": "awl_stitch_006",
+      "leather_panel_id": "lp_composite_rat_01",
+      "thread_material": "waxed_hemp",
+      "stitch_length_mm": 3.5,
+      "log_text": "Stitching the composite rat-hide panel into a small pouch. The seams run through the stitched joins — tricky to punch through the overlapping sections. Hemp thread, tight stitches. Small, ugly pouch. Holds dried tinder without spilling. That was the requirement."
+    },
+    {
+      "id": "awl_stitch_007",
+      "leather_panel_id": "lp_dog_brain_02",
+      "thread_material": "sinew",
+      "stitch_length_mm": 4.2,
+      "log_text": "Harness strap — brain-tanned dog leather, one centimetre wide, doubled at the buckle loop. Punched using a scratch awl rather than bone — the iron tip holds a finer point. Sinew stitching through the loop, cross-stitch pattern. Has held a ten-kilogram load in testing."
+    }
+  ]
+}

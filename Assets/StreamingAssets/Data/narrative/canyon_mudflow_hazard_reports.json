@@ -1,72 +1,117 @@
-[
-  {
-    "id": "mudflow_report_ash_slurry_debris_torrent",
-    "canyon_location_id": "BLIND_GULCH_UPPER_CHUTE",
-    "estimated_slurry_volume_m3": 95000.0,
-    "flow_velocity_kmh": 45.0,
-    "structural_impact_severity": "COMPLETE_VALLEY_ROAD_SCOUR",
-    "timestamp_relative": "YEAR_03_MUDFLOW_LOG_01",
-    "tags": ["cartography", "mudflow", "flash_flood", "debris_flow", "ash_slurry"],
-    "prose": "A sudden cloudburst washed forty thousand tons of loose volcanic ash from the summit slopes into Blind Gulch. The thirty-foot-high debris wall traveled at forty-five kilometers per hour, scouring five hundred meters of paved roadbed down to bare bedrock."
-  },
-  {
-    "id": "mudflow_report_culvert_logjam_backwater_inundation",
-    "canyon_location_id": "HIGHWAY_CULVERT_MILE_18",
-    "estimated_slurry_volume_m3": 35000.0,
-    "flow_velocity_kmh": 20.0,
-    "structural_impact_severity": "ADIT_PORTAL_SILT_INUNDATION",
-    "timestamp_relative": "YEAR_05_MUDFLOW_LOG_03",
-    "tags": ["cartography", "mudflow", "logjam", "culvert", "flooding"],
-    "prose": "Charred timber trunks from the burn zone jammed the mouth of the three-meter corrugated steel culvert. Backwater pooled twenty feet deep against the railway embankment before spilling into the lower ventilation adit, leaving four feet of dense grey mud in the airlock."
-  },
-  {
-    "id": "mudflow_report_boulder_impact_portal_blast_gate",
-    "canyon_location_id": "WEST_PORTAL_TALUS_SLOPE",
-    "estimated_slurry_volume_m3": 60000.0,
-    "flow_velocity_kmh": 35.0,
-    "structural_impact_severity": "BLAST_GATE_STEEL_PANEL_DENT",
-    "timestamp_relative": "YEAR_08_MUDFLOW_LOG_02",
-    "tags": ["cartography", "mudflow", "boulder", "blast_gate", "impact"],
-    "prose": "A fifteen-ton granite boulder carried within the hyper-concentrated mudflow slammed directly into the closed steel outer blast gate. The forty-millimeter armor plate bowed inward six inches, cracking the reinforced concrete lintel."
-  },
-  {
-    "id": "mudflow_report_bentonite_clay_liquefaction_choke",
-    "canyon_location_id": "DRAINAGE_CANAL_SECTOR_5",
-    "estimated_slurry_volume_m3": 28000.0,
-    "flow_velocity_kmh": 12.0,
-    "structural_impact_severity": "SUMP_CANAL_CLAY_CHOKING",
-    "timestamp_relative": "YEAR_11_MUDFLOW_LOG_04",
-    "tags": ["cartography", "mudflow", "bentonite", "liquefaction", "canal"],
-    "prose": "Saturated montmorillonite clay in the upper ravine underwent spontaneous thixotropic liquefaction during a minor earthquake. The viscous mud poured like cold molasses down the drainage ditch, choking the open canal for three hundred yards."
-  },
-  {
-    "id": "mudflow_report_thermal_steam_vent_lahar_trigger",
-    "canyon_location_id": "SUMMIT_CRATER_SOUTH_GULLY",
-    "estimated_slurry_volume_m3": 120000.0,
-    "flow_velocity_kmh": 55.0,
-    "structural_impact_severity": "CATASTROPHIC_LAHAR_SURGE",
-    "timestamp_relative": "YEAR_14_MUDFLOW_LOG_01",
-    "tags": ["cartography", "mudflow", "lahar", "geothermal", "snowmelt"],
-    "prose": "Sub-surface volcanic steam blowouts melted twenty thousand cubic meters of dirty snowpack on the summit within ninety minutes. The resulting boiling lahar carried mud, shattered pine trees, and scalding water straight through the lower scout camp."
-  },
-  {
-    "id": "mudflow_report_acid_tailings_mudflow_inrush",
-    "canyon_location_id": "MINE_SLURRY_POND_CANAL",
-    "estimated_slurry_volume_m3": 45000.0,
-    "flow_velocity_kmh": 25.0,
-    "structural_impact_severity": "CORROSIVE_ACID_SLIME_FLOOD",
-    "timestamp_relative": "YEAR_17_MUDFLOW_LOG_03",
-    "tags": ["cartography", "mudflow", "acid_tailings", "pyrite", "corrosion"],
-    "prose": "Failure of the earthen retaining berm at the coal washing plant released a torrent of pyrite-rich acidic slurry (pH 2.2). The corrosive mud flooded the lower generator cooling intake trench, dissolving copper heat exchanger tubing in two weeks."
-  },
-  {
-    "id": "mudflow_report_alluvial_debris_dam_outburst_flood",
-    "canyon_location_id": "NARROWS_ROCKFALL_GORGE",
-    "estimated_slurry_volume_m3": 85000.0,
-    "flow_velocity_kmh": 50.0,
-    "structural_impact_severity": "DEBRIS_DAM_OUTBURST_WAVE",
-    "timestamp_relative": "YEAR_20_MUDFLOW_LOG_01",
-    "tags": ["cartography", "mudflow", "outburst_flood", "debris_dam", "gorge"],
-    "prose": "A landslide dam that impounded five million gallons of storm runoff collapsed after seventy-two hours of rain. A twenty-foot-high wall of water, boulders, and silt tore through the gorge, destroying two scout rope bridges and depositing four feet of mud over the valley road."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "mudflow_report_ash_slurry_debris_torrent",
+      "canyon_location_id": "BLIND_GULCH_UPPER_CHUTE",
+      "estimated_slurry_volume_m3": 95000.0,
+      "flow_velocity_kmh": 45.0,
+      "structural_impact_severity": "COMPLETE_VALLEY_ROAD_SCOUR",
+      "timestamp_relative": "YEAR_03_MUDFLOW_LOG_01",
+      "tags": [
+        "cartography",
+        "mudflow",
+        "flash_flood",
+        "debris_flow",
+        "ash_slurry"
+      ],
+      "prose": "A sudden cloudburst washed forty thousand tons of loose volcanic ash from the summit slopes into Blind Gulch. The thirty-foot-high debris wall traveled at forty-five kilometers per hour, scouring five hundred meters of paved roadbed down to bare bedrock."
+    },
+    {
+      "id": "mudflow_report_culvert_logjam_backwater_inundation",
+      "canyon_location_id": "HIGHWAY_CULVERT_MILE_18",
+      "estimated_slurry_volume_m3": 35000.0,
+      "flow_velocity_kmh": 20.0,
+      "structural_impact_severity": "ADIT_PORTAL_SILT_INUNDATION",
+      "timestamp_relative": "YEAR_05_MUDFLOW_LOG_03",
+      "tags": [
+        "cartography",
+        "mudflow",
+        "logjam",
+        "culvert",
+        "flooding"
+      ],
+      "prose": "Charred timber trunks from the burn zone jammed the mouth of the three-meter corrugated steel culvert. Backwater pooled twenty feet deep against the railway embankment before spilling into the lower ventilation adit, leaving four feet of dense grey mud in the airlock."
+    },
+    {
+      "id": "mudflow_report_boulder_impact_portal_blast_gate",
+      "canyon_location_id": "WEST_PORTAL_TALUS_SLOPE",
+      "estimated_slurry_volume_m3": 60000.0,
+      "flow_velocity_kmh": 35.0,
+      "structural_impact_severity": "BLAST_GATE_STEEL_PANEL_DENT",
+      "timestamp_relative": "YEAR_08_MUDFLOW_LOG_02",
+      "tags": [
+        "cartography",
+        "mudflow",
+        "boulder",
+        "blast_gate",
+        "impact"
+      ],
+      "prose": "A fifteen-ton granite boulder carried within the hyper-concentrated mudflow slammed directly into the closed steel outer blast gate. The forty-millimeter armor plate bowed inward six inches, cracking the reinforced concrete lintel."
+    },
+    {
+      "id": "mudflow_report_bentonite_clay_liquefaction_choke",
+      "canyon_location_id": "DRAINAGE_CANAL_SECTOR_5",
+      "estimated_slurry_volume_m3": 28000.0,
+      "flow_velocity_kmh": 12.0,
+      "structural_impact_severity": "SUMP_CANAL_CLAY_CHOKING",
+      "timestamp_relative": "YEAR_11_MUDFLOW_LOG_04",
+      "tags": [
+        "cartography",
+        "mudflow",
+        "bentonite",
+        "liquefaction",
+        "canal"
+      ],
+      "prose": "Saturated montmorillonite clay in the upper ravine underwent spontaneous thixotropic liquefaction during a minor earthquake. The viscous mud poured like cold molasses down the drainage ditch, choking the open canal for three hundred yards."
+    },
+    {
+      "id": "mudflow_report_thermal_steam_vent_lahar_trigger",
+      "canyon_location_id": "SUMMIT_CRATER_SOUTH_GULLY",
+      "estimated_slurry_volume_m3": 120000.0,
+      "flow_velocity_kmh": 55.0,
+      "structural_impact_severity": "CATASTROPHIC_LAHAR_SURGE",
+      "timestamp_relative": "YEAR_14_MUDFLOW_LOG_01",
+      "tags": [
+        "cartography",
+        "mudflow",
+        "lahar",
+        "geothermal",
+        "snowmelt"
+      ],
+      "prose": "Sub-surface volcanic steam blowouts melted twenty thousand cubic meters of dirty snowpack on the summit within ninety minutes. The resulting boiling lahar carried mud, shattered pine trees, and scalding water straight through the lower scout camp."
+    },
+    {
+      "id": "mudflow_report_acid_tailings_mudflow_inrush",
+      "canyon_location_id": "MINE_SLURRY_POND_CANAL",
+      "estimated_slurry_volume_m3": 45000.0,
+      "flow_velocity_kmh": 25.0,
+      "structural_impact_severity": "CORROSIVE_ACID_SLIME_FLOOD",
+      "timestamp_relative": "YEAR_17_MUDFLOW_LOG_03",
+      "tags": [
+        "cartography",
+        "mudflow",
+        "acid_tailings",
+        "pyrite",
+        "corrosion"
+      ],
+      "prose": "Failure of the earthen retaining berm at the coal washing plant released a torrent of pyrite-rich acidic slurry (pH 2.2). The corrosive mud flooded the lower generator cooling intake trench, dissolving copper heat exchanger tubing in two weeks."
+    },
+    {
+      "id": "mudflow_report_alluvial_debris_dam_outburst_flood",
+      "canyon_location_id": "NARROWS_ROCKFALL_GORGE",
+      "estimated_slurry_volume_m3": 85000.0,
+      "flow_velocity_kmh": 50.0,
+      "structural_impact_severity": "DEBRIS_DAM_OUTBURST_WAVE",
+      "timestamp_relative": "YEAR_20_MUDFLOW_LOG_01",
+      "tags": [
+        "cartography",
+        "mudflow",
+        "outburst_flood",
+        "debris_dam",
+        "gorge"
+      ],
+      "prose": "A landslide dam that impounded five million gallons of storm runoff collapsed after seventy-two hours of rain. A twenty-foot-high wall of water, boulders, and silt tore through the gorge, destroying two scout rope bridges and depositing four feet of mud over the valley road."
+    }
+  ]
+}

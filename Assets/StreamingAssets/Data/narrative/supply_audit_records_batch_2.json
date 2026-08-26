@@ -1,0 +1,1889 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "audit_id": "supply_audit_b3_001",
+      "day": 116,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 38,
+          "days_supply": 29
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 8,
+          "days_supply": 12
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 18,
+          "days_supply": 6
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 67,
+          "days_supply": 33
+        },
+        {
+          "item": "venison (cumulative)",
+          "quantity_kg": 77,
+          "days_supply": 42
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 9.4,
+          "days_supply": 31
+        },
+        {
+          "item": "barley (immature, not yet harvestable)",
+          "quantity_kg": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 30,
+          "days_supply": 300
+        },
+        {
+          "item": "fuel",
+          "quantity_litres": 200,
+          "days_supply": 20
+        }
+      ],
+      "notes": "Day 116 comprehensive. Greenhouse at 11 percent of caloric need. Stored food (rice, beans, canned) at 47 days combined — declining. The crossover where production exceeds stored consumption is now projected at month 8, not month 6. Fuel at 20 days is the operational ceiling. No expedition can run without subtracting from the fuel reserve. the_quartermaster says the arithmetic has become unforgiving."
+    },
+    {
+      "audit_id": "supply_audit_b3_002",
+      "day": 119,
+      "auditor": "the_quartermaster",
+      "category": "expedition recovery (agri supply depot)",
+      "items": [
+        {
+          "item": "potassium chloride fertiliser",
+          "quantity_bags": 40,
+          "days_supply": "N/A (chemical stock)"
+        },
+        {
+          "item": "agricultural lime",
+          "quantity_bags": 6,
+          "days_supply": "N/A (soil amendment)"
+        },
+        {
+          "item": "hand seeders",
+          "quantity_units": 2,
+          "days_supply": "N/A (equipment)"
+        },
+        {
+          "item": "soil pH test kit",
+          "quantity_units": 1,
+          "days_supply": "N/A (equipment)"
+        },
+        {
+          "item": "agricultural fleece (insulation)",
+          "quantity_metres": 25,
+          "days_supply": "N/A (material)"
+        }
+      ],
+      "notes": "Agri supply depot recovery. The potassium chloride resolves the_chemist iodide supply for an estimated 6 additional batches. The agricultural fleece went immediately to the_plumber for the cistern feed elbow (maint_log_b3_001). The lime is allocated to greenhouse bed B before the next barley planting. the_quartermaster says this is the most cost-effective expedition of the second winter — 3 days of fuel for 6 months of medical supply security."
+    },
+    {
+      "audit_id": "supply_audit_b3_003",
+      "day": 125,
+      "auditor": "the_quartermaster",
+      "category": "medical (iodide stock)",
+      "items": [
+        {
+          "item": "potassium iodide tablets (batch 1, remaining)",
+          "quantity_doses": 14,
+          "days_supply": 14
+        },
+        {
+          "item": "potassium iodide tablets (batch 2, curing)",
+          "quantity_doses": 40,
+          "days_supply": "N/A (curing)"
+        },
+        {
+          "item": "potassium chloride (raw, for compounding)",
+          "quantity_bags": 40,
+          "days_supply": "N/A (6 batches estimated)"
+        },
+        {
+          "item": "bandages",
+          "quantity_units": 140,
+          "days_supply": 28
+        },
+        {
+          "item": "antiseptic",
+          "quantity_litres": 1.5,
+          "days_supply": 15
+        },
+        {
+          "item": "antibiotics",
+          "quantity_doses": 0,
+          "days_supply": 0
+        }
+      ],
+      "notes": "Iodide stock assessment. Batch 1 is crumbling — the_chemist estimates 14 usable doses remain. Batch 2 (starch binder) curing, projected 30-day shelf life. The potassium chloride from the agri depot secures compounding for 6 more batches. Antibiotics remain at zero. the_surgeon says the iodide situation is improved but the antibiotic situation is unchanged and unchanged means one infection away from a funeral."
+    },
+    {
+      "audit_id": "supply_audit_b3_004",
+      "day": 128,
+      "auditor": "the_quartermaster",
+      "category": "expedition recovery (train yard)",
+      "items": [
+        {
+          "item": "signal lamp oil (tins, sealed)",
+          "quantity_units": 12,
+          "days_supply": "N/A (pending chemist test)"
+        },
+        {
+          "item": "brake shoes (iron stock)",
+          "quantity_units": 3,
+          "days_supply": "N/A (material)"
+        },
+        {
+          "item": "conductor's lantern (reflector)",
+          "quantity_units": 1,
+          "days_supply": "N/A (equipment)"
+        },
+        {
+          "item": "coupler pins (hardened steel)",
+          "quantity_units": 1,
+          "days_supply": "N/A (material)"
+        }
+      ],
+      "notes": "Train yard recovery. Signal lamp oil pending the_chemist suitability test — if clean, extends lamp oil reserve by 30 days. The Veteran reports the locomotive fuel tank was already siphoned by another party. the_quartermaster notes this is the first evidence of a competing salvage operation within our operational radius. the_general has ordered a night observation."
+    },
+    {
+      "audit_id": "supply_audit_b3_005",
+      "day": 137,
+      "auditor": "the_quartermaster",
+      "category": "expedition recovery (water treatment works)",
+      "items": [
+        {
+          "item": "pump impeller and volute",
+          "quantity_units": 1,
+          "days_supply": "N/A (installed, maint_log_b3_006)"
+        },
+        {
+          "item": "gasket sheets (compressed fibre)",
+          "quantity_units": 4,
+          "days_supply": "N/A (material)"
+        },
+        {
+          "item": "water test reagents",
+          "quantity_kits": 1,
+          "days_supply": 120
+        },
+        {
+          "item": "municipal water blueprints",
+          "quantity_units": 1,
+          "days_supply": "N/A (reference)"
+        },
+        {
+          "item": "brass chlorine residual test kit",
+          "quantity_units": 1,
+          "days_supply": "N/A (equipment)"
+        }
+      ],
+      "notes": "Water treatment works recovery. The pump impeller restored secondary pump redundancy (maint_log_b3_007). The water test reagents extend testing capability by 4 months — the_chemist called the brass chlorine kit 'the most beautiful object in the bunker.' the_quartermaster notes the dosing building chlorine cylinders remain unaddressed; a controlled venting expedition is proposed."
+    },
+    {
+      "audit_id": "supply_audit_b3_006",
+      "day": 144,
+      "auditor": "the_quartermaster",
+      "category": "expedition recovery (fire lookout)",
+      "items": [
+        {
+          "item": "binoculars (10x50, military)",
+          "quantity_units": 1,
+          "days_supply": "N/A (equipment)"
+        },
+        {
+          "item": "fire finder map",
+          "quantity_units": 1,
+          "days_supply": "N/A (reference)"
+        },
+        {
+          "item": "hand-crank emergency radio",
+          "quantity_units": 1,
+          "days_supply": "N/A (equipment, maint_log_b3_009)"
+        },
+        {
+          "item": "compass oil (clock escapement)",
+          "quantity_tins": 1,
+          "days_supply": "N/A (material)"
+        }
+      ],
+      "notes": "Fire lookout recovery. Low material yield but high strategic value. The binoculars and fire finder map establish a forward observation post. The hand-crank radio is the only fuel-free receiver in the bunker. the_quartermaster says this expedition cost 1 day of fuel and returned a surveillance capability and a backup receiver — the best trade of the winter."
+    },
+    {
+      "audit_id": "supply_audit_b3_007",
+      "day": 150,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 30,
+          "days_supply": 23
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 6,
+          "days_supply": 9
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 14,
+          "days_supply": 5
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 82,
+          "days_supply": 41
+        },
+        {
+          "item": "venison (cumulative, declining — frozen river thaw)",
+          "quantity_kg": 77,
+          "days_supply": 42
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "barley (immature)",
+          "quantity_kg": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 28,
+          "days_supply": 280
+        },
+        {
+          "item": "fuel",
+          "quantity_litres": 175,
+          "days_supply": 17
+        }
+      ],
+      "notes": "Day 150 comprehensive. Greenhouse at 13 percent of caloric need — slow climb. Stored food at 37 days combined. Fuel at 17 days. the frozen river is thawing; venison recovery will end within 10 days. the_hunter reports the wolf pack is now 9 animals and habituating. the_quartermaster says the bunker is not in crisis but it is no longer in comfort. The margin between the two is fuel."
+    },
+    {
+      "audit_id": "supply_audit_b3_008",
+      "day": 158,
+      "auditor": "the_quartermaster",
+      "category": "expedition recovery (foresters cabin)",
+      "items": [
+        {
+          "item": "forestry tools (axe, saws, peavey, cant hook)",
+          "quantity_sets": 1,
+          "days_supply": "N/A (equipment)"
+        },
+        {
+          "item": "cast-iron stove (small)",
+          "quantity_units": 1,
+          "days_supply": "N/A (equipment)"
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 3,
+          "days_supply": 4
+        },
+        {
+          "item": "well bucket and rope",
+          "quantity_units": 1,
+          "days_supply": "N/A (equipment)"
+        },
+        {
+          "item": "beeswax (candle stock)",
+          "quantity_tins": 1,
+          "days_supply": "N/A (20 candles estimated)"
+        }
+      ],
+      "notes": "Forester's cabin recovery. The well is the find — a low-radiation surface water source (4 uSv/h dissolved) within a day's travel. the_plumber and the_architect to assess a water-cart run or pipeline. The cast-iron stove is allocated to the_chef for a second baking hearth. The beeswax is allocated to the_priest for chapel candles. the_quartermaster notes the cabin occupant was buried at the cabin by the_undertaker and the_priest on Day 160. The cabin is designated a way station. the_hunter left tobacco. It was the thing to do."
+    },
+    {
+      "audit_id": "supply_audit_b3_009",
+      "day": 162,
+      "auditor": "the_quartermaster",
+      "category": "projection (revised)",
+      "items": [
+        {
+          "item": "food_self_sufficiency_current",
+          "percentage": 13
+        },
+        {
+          "item": "food_self_sufficiency_projected_month8",
+          "percentage": 22
+        },
+        {
+          "item": "food_self_sufficiency_target_month10",
+          "percentage": 30
+        },
+        {
+          "item": "fuel_days_remaining",
+          "days": 15
+        },
+        {
+          "item": "water_security",
+          "status": "improved (forester well + secondary pump redundancy)"
+        },
+        {
+          "item": "medical_security",
+          "status": "iodide improved, antibiotics unchanged zero"
+        }
+      ],
+      "notes": "Revised projection. The forester's well and the secondary pump redundancy have improved water security — water is no longer the second constraint. Fuel is the first constraint at 15 days. Antibiotics remain the silent second constraint. the_quartermaster says: water is solved, food is climbing, fuel is falling, medicine is a prayer. The bunker needs a fuel expedition and an antibiotic expedition. It cannot afford both. The council must choose."
+    },
+    {
+      "audit_id": "supply_audit_b3_010",
+      "day": 162,
+      "auditor": "the_quartermaster",
+      "category": "the choice (council briefing)",
+      "items": [
+        {
+          "item": "fuel_expedition_option",
+          "target": "train yard diesel residue + signal lamp oil",
+          "fuel_cost_days": 2,
+          "risk": "other salvage party present"
+        },
+        {
+          "item": "antibiotic_expedition_option",
+          "target": "unconfirmed — agri depot second store or hospital pharmacy revisit",
+          "fuel_cost_days": 3,
+          "risk": "high radiation at hospital"
+        },
+        {
+          "item": "kilo_settlement_water_assistance_option",
+          "target": "149.0 distress — 12 souls, 2 children, well failed",
+          "fuel_cost_days": 2,
+          "risk": "unknown settlement, moral obligation"
+        },
+        {
+          "item": "no_action_option",
+          "target": "conserve fuel, defer all expeditions",
+          "fuel_cost_days": 0,
+          "risk": "fuel reaches zero, bunker loses power, ventilation, cold storage"
+        }
+      ],
+      "notes": "Council briefing document prepared for the_general. Three expedition options and one inaction option. The bunker cannot do all three. It may be able to do one. The Kilo settlement distress (rad_distress_kilo_settlement_01) introduces a variable the_quartermaster did not expect: a moral cost to inaction that does not appear in the fuel arithmetic. the_quartermaster presents the numbers. The council decides. The numbers do not decide. That is what a council is for."
+    },
+    {
+      "audit_id": "supply_audit_b3_011",
+      "day": 166,
+      "auditor": "the_quartermaster",
+      "category": "pre-mission allocation (Kilo water rescue)",
+      "items": [
+        {
+          "item": "treated cistern water (allocated to Kilo)",
+          "quantity_litres": 80,
+          "days_supply": "N/A (donation)"
+        },
+        {
+          "item": "cistern reserve (post-allocation)",
+          "quantity_litres": 7920,
+          "days_supply": 56
+        },
+        {
+          "item": "dried mushrooms (allocated to Kilo, goodwill)",
+          "quantity_kg": 5,
+          "days_supply": "N/A (donation)"
+        },
+        {
+          "item": "salt (allocated to Kilo, goodwill)",
+          "quantity_kg": 2,
+          "days_supply": "N/A (donation)"
+        },
+        {
+          "item": "water filtration kit (allocated to Kilo, left on site)",
+          "quantity_units": 1,
+          "days_supply": "N/A (donation)"
+        },
+        {
+          "item": "well tools (allocated to Kilo, left on site)",
+          "quantity_sets": 1,
+          "days_supply": "N/A (donation)"
+        },
+        {
+          "item": "fuel (mission cost)",
+          "quantity_litres": 0,
+          "days_supply": 15
+        }
+      ],
+      "notes": "Pre-mission allocation for the Kilo water rescue (council_minutes_016). 80 litres reduces cistern reserve from 8000 to 7920 — days supply drops from 57 to 56. Negligible. 5kg mushrooms and 2kg salt are trade stock, not bunker rations — no caloric impact. The filtration kit is a spare; the_chemist has a second. The well tools are the_plumber's spare set. Fuel cost: zero — foot mission. the_quartermaster says the arithmetic of this mission is almost free. The cost is 4 days and the exposure of the eastern route. He notes the word 'almost.'"
+    },
+    {
+      "audit_id": "supply_audit_b3_012",
+      "day": 171,
+      "auditor": "the_quartermaster",
+      "category": "post-mission comprehensive",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 27,
+          "days_supply": 21
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 5,
+          "days_supply": 7
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 12,
+          "days_supply": 4
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 88,
+          "days_supply": 44
+        },
+        {
+          "item": "venison (cumulative, frozen river thawed — no new recovery)",
+          "quantity_kg": 77,
+          "days_supply": 42
+        },
+        {
+          "item": "mushrooms (cumulative, minus 5kg Kilo donation)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "barley (immature)",
+          "quantity_kg": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "salt (minus 2kg Kilo donation)",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water (post 80L donation)",
+          "quantity_litres": 7920,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (unchanged — foot mission)",
+          "quantity_litres": 175,
+          "days_supply": 17
+        }
+      ],
+      "notes": "Post-mission comprehensive. The Kilo mission cost the bunker 80L water (1 day of supply), 5kg mushrooms (trade stock), 2kg salt (trade stock), and 4 days of team time. No fuel. No injuries. Stored food declined by 3 days during the mission window due to normal consumption — not mission-related. Fuel unchanged at 17 days. the_quartermaster says: the arithmetic held. We helped 12 people and the bunker did not get poorer in any way that matters. He notes this is the first time he has written that sentence and meant it."
+    },
+    {
+      "audit_id": "supply_audit_b3_013",
+      "day": 171,
+      "auditor": "the_quartermaster",
+      "category": "intangible ledger (Kilo mission)",
+      "items": [
+        {
+          "item": "lives assisted",
+          "quantity": 12,
+          "note": "7 adults, 3 adolescents, 2 children"
+        },
+        {
+          "item": "wells assessed",
+          "quantity": 1,
+          "note": "dry, 3-day dig planned Day 172"
+        },
+        {
+          "item": "springs identified",
+          "quantity": 1,
+          "note": "2km north of Kilo, low-flow, reliable (Mira)"
+        },
+        {
+          "item": "guides retained",
+          "quantity": 1,
+          "note": "Mira (Settlement 2) — relationship established, no cost"
+        },
+        {
+          "item": "informal debts incurred (to bunker)",
+          "quantity": 2,
+          "note": "Kilo settlement, Settlement 2 (the_Freeholder)"
+        },
+        {
+          "item": "fuel spent",
+          "quantity_litres": 0,
+          "note": "foot mission"
+        },
+        {
+          "item": "injuries",
+          "quantity": 0,
+          "note": "none"
+        }
+      ],
+      "notes": "The intangible ledger. the_quartermaster does not usually write this kind of accounting. He says it is not his discipline. He wrote it because the_plumber asked him to. the_plumber said: 'You count the rice. Someone should count the other thing.' the_quartermaster does not know what the other thing is worth in days or kilos. He knows it is worth something. He wrote it down. The man with the radio put the radio down to dig. That is in this ledger and it does not have a column."
+    },
+    {
+      "audit_id": "supply_audit_b3_014",
+      "day": 180,
+      "auditor": "the_quartermaster",
+      "category": "fuel (post-diesel confirmation)",
+      "items": [
+        {
+          "item": "diesel (bunker reserve, pre-war)",
+          "quantity_litres": 175,
+          "days_supply": 17
+        },
+        {
+          "item": "diesel (recovered, train yard, confirmed generator-grade)",
+          "quantity_litres": 30,
+          "days_supply": 3
+        },
+        {
+          "item": "total diesel",
+          "quantity_litres": 205,
+          "days_supply": 20
+        },
+        {
+          "item": "signal lamp oil (recovered, lamp reserve only)",
+          "quantity_litres": 6,
+          "days_supply": 30
+        }
+      ],
+      "notes": "Post-diesel confirmation (chem_lab_003). 30 litres confirmed generator-grade. Total diesel 205 litres, 20 days at 10L/day. Fuel ceiling extended from Day 192 to Day 195. the_quartermaster says: the breath is banked. The ceiling is Day 195. Everything must be resolved or extended by then. The signal lamp oil is separate — it extends the lamp reserve, not the generator. The lamps will burn when the generator does not. That is not nothing."
+    },
+    {
+      "audit_id": "supply_audit_b3_015",
+      "day": 187,
+      "auditor": "the_quartermaster",
+      "category": "medical (post-warehouse recovery)",
+      "items": [
+        {
+          "item": "amoxicillin (sealed manufacturer packaging)",
+          "quantity_doses": 84,
+          "days_supply": "N/A (pending chemist viability test)"
+        },
+        {
+          "item": "doxycycline (sealed manufacturer packaging)",
+          "quantity_doses": 120,
+          "days_supply": "N/A (pending)"
+        },
+        {
+          "item": "ciprofloxacin (sealed manufacturer packaging)",
+          "quantity_doses": 60,
+          "days_supply": "N/A (pending)"
+        },
+        {
+          "item": "metronidazole (sealed manufacturer packaging)",
+          "quantity_doses": 40,
+          "days_supply": "N/A (pending)"
+        },
+        {
+          "item": "paracetamol (bulk, sealed)",
+          "quantity_doses": 200,
+          "days_supply": "N/A (pending)"
+        },
+        {
+          "item": "suture material (3-0 and 4-0)",
+          "quantity_packs": 12,
+          "days_supply": "N/A (material)"
+        },
+        {
+          "item": "chlorhexidine antiseptic",
+          "quantity_litres": 4,
+          "days_supply": "N/A (pending)"
+        },
+        {
+          "item": "IV fluids (lactated Ringer's)",
+          "quantity_bags": 6,
+          "days_supply": "N/A (pending)"
+        },
+        {
+          "item": "medical bandages",
+          "quantity_units": 40,
+          "days_supply": 8
+        },
+        {
+          "item": "surgical gloves",
+          "quantity_boxes": 2,
+          "days_supply": "N/A (material)"
+        }
+      ],
+      "notes": "Post-warehouse recovery (courier_mission_b2_018, b2_019). 304 doses of antibiotics recovered, pending the_chemist viability test (Day 188). the_surgeon says: if viable, the antibiotic stock covers the bunker for an estimated 6-12 months depending on usage. This is the first antibiotic reserve the bunker has ever had. the_quartermaster says: the silent second constraint has spoken. It said 304 doses. He says he does not know if 304 is a lot or a little. He knows it is not zero. Zero was the number that did not let him sleep. 304 is the number that might."
+    },
+    {
+      "audit_id": "supply_audit_b3_016",
+      "day": 187,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (post-warehouse)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 24,
+          "days_supply": 18
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 4,
+          "days_supply": 6
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 10,
+          "days_supply": 3
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 95,
+          "days_supply": 47
+        },
+        {
+          "item": "venison (cumulative, no new recovery — river thawed)",
+          "quantity_kg": 77,
+          "days_supply": 42
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "barley (immature)",
+          "quantity_kg": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7920,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total diesel)",
+          "quantity_litres": 205,
+          "days_supply": 20
+        },
+        {
+          "item": "antibiotics (pending viability)",
+          "quantity_doses": 304,
+          "days_supply": "6-12 months (est.)"
+        }
+      ],
+      "notes": "Day 187 comprehensive. The three constraints: fuel at 20 days (ceiling Day 195), antibiotics at 304 doses pending (the silent second constraint, addressed), grow lights at 1 bulb (the third constraint, unresolved). Stored food at 27 days combined — declining. Greenhouse at 14 percent of caloric need — climbing. the_quartermaster says: we bought a breath with the diesel and we bought a future with the antibiotics. The breath runs out on Day 195. The future, if the viability test passes, runs out in 6 to 12 months. The grow lights run out when the last bulb fails. We are juggling three things and we have two hands and one of the things is now lighter. That is the best we have been."
+    },
+    {
+      "audit_id": "supply_audit_b3_017",
+      "day": 188,
+      "auditor": "the_quartermaster",
+      "category": "medical (post-viability)",
+      "items": [
+        {
+          "item": "amoxicillin (viable, within shelf life)",
+          "quantity_doses": 84,
+          "days_supply": "N/A (reserve)"
+        },
+        {
+          "item": "doxycycline (viable, within shelf life)",
+          "quantity_doses": 120,
+          "days_supply": "N/A (reserve)"
+        },
+        {
+          "item": "ciprofloxacin (viable, within shelf life)",
+          "quantity_doses": 60,
+          "days_supply": "N/A (reserve)"
+        },
+        {
+          "item": "metronidazole (viable, within shelf life)",
+          "quantity_doses": 40,
+          "days_supply": "N/A (reserve)"
+        },
+        {
+          "item": "total antibiotic reserve",
+          "quantity_doses": 304,
+          "days_supply": "6-12 months (est., conservation protocol)"
+        },
+        {
+          "item": "paracetamol",
+          "quantity_doses": 200,
+          "days_supply": "N/A (reserve)"
+        },
+        {
+          "item": "suture material",
+          "quantity_packs": 12,
+          "days_supply": "N/A (reserve)"
+        },
+        {
+          "item": "chlorhexidine antiseptic",
+          "quantity_litres": 4,
+          "days_supply": "N/A (reserve)"
+        },
+        {
+          "item": "IV fluids (lactated Ringer's)",
+          "quantity_bags": 6,
+          "days_supply": "N/A (reserve)"
+        }
+      ],
+      "notes": "Post-viability medical ledger (chem_lab_004). All 304 doses confirmed viable. the_surgeon has locked the cabinet and holds the key. Conservation protocol: no dose dispensed without the_surgeon's direct authorisation. the_quartermaster says: the medical reserve is the first reserve the bunker has that is not a countdown. The food counts down. The fuel counts down. The water counts down. The antibiotics are a reserve that holds until it is needed. That is a different kind of number. He says he does not know how to write that number in the ledger. He wrote 304. He wrote 'reserve.' He wrote the word and the number and left the column for days-supply blank because a reserve does not count down until it is used. It is the first blank column in the ledger and it is the best blank column."
+    },
+    {
+      "audit_id": "supply_audit_b3_018",
+      "day": 189,
+      "auditor": "the_quartermaster",
+      "category": "grow light (the third constraint)",
+      "items": [
+        {
+          "item": "grow light tubes (functional)",
+          "quantity_units": 1,
+          "days_supply": "3-7 (flickering, journal_raw_b3_23)"
+        },
+        {
+          "item": "grow light tubes (spare)",
+          "quantity_units": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "LED array (5 percent output, installed on wheat)",
+          "quantity_units": 1,
+          "days_supply": "40 hours (battery)"
+        },
+        {
+          "item": "LED batteries (9V, spare)",
+          "quantity_units": 2,
+          "days_supply": "80 hours"
+        },
+        {
+          "item": "greenhouse production (current, 14 percent)",
+          "percentage": 14,
+          "days_supply": 47
+        },
+        {
+          "item": "greenhouse production (projected, LED-only 5 percent)",
+          "percentage": 4,
+          "days_supply": 13
+        }
+      ],
+      "notes": "The grow light ledger. The third constraint. 1 tube, flickering, 3-7 days. 0 spares. The LED array is the last resort and it is 5 percent and 5 percent is not a greenhouse. The projected drop from 14 percent to 4 percent of caloric need reverses the food trajectory. the_quartermaster says: the grow light is the constraint that determines whether the bunker eats in 90 days. The antibiotics are a reserve. The fuel is a countdown. The grow light is a cliff. A cliff is a constraint that holds until it does not, and then it is gone. The agri depot return (courier_mission_b2_020) is the expedition that stands between the greenhouse and the cliff. He says he does not write 'cliff' in the ledger. He wrote '3-7 days.' The 3-7 is the cliff. He knows it. The council knows it. The Botanist knows it. The Botanist is the one who watches the cliff."
+    },
+    {
+      "audit_id": "supply_audit_b3_019",
+      "day": 194,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (post-agri-depot-return)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 20,
+          "days_supply": 15
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 3,
+          "days_supply": 4
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 8,
+          "days_supply": 3
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 102,
+          "days_supply": 51
+        },
+        {
+          "item": "venison (cumulative, no new recovery)",
+          "quantity_kg": 77,
+          "days_supply": 42
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "barley (immature, at risk if grow light fails)",
+          "quantity_kg": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total diesel)",
+          "quantity_litres": 145,
+          "days_supply": 14
+        },
+        {
+          "item": "antibiotics (reserve, conservation protocol)",
+          "quantity_doses": 304,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (recovered, pending)",
+          "quantity_units": "pending courier_mission_b2_021",
+          "days_supply": "pending"
+        }
+      ],
+      "notes": "Day 194 comprehensive. Stored food at 22 days combined — declining. Greenhouse at 15 percent — climbing, but the grow light is flickering. Fuel at 14 days (ceiling Day 208, recalculated). Antibiotics at 304 (reserve, holding). The agri depot team returns today (courier_mission_b2_021). If they return with grow light tubes, the third constraint is addressed and the greenhouse continues. If they do not, the greenhouse drops to 4 percent and the food trajectory reverses within 90 days. the_quartermaster says: we have a reserve, a countdown, and a cliff. The reserve holds. The countdown runs. The cliff is the one we are waiting on. The waiting is the part. The waiting is always the part."
+    },
+    {
+      "audit_id": "supply_audit_b3_020",
+      "day": 195,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (post-grow-light-resolution)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 18,
+          "days_supply": 14
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 3,
+          "days_supply": 4
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 7,
+          "days_supply": 2
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 108,
+          "days_supply": 54
+        },
+        {
+          "item": "venison (cumulative, no new recovery)",
+          "quantity_kg": 77,
+          "days_supply": 42
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "barley (growing, light stable)",
+          "quantity_kg": 0,
+          "days_supply": "N/A (growing)"
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total diesel)",
+          "quantity_litres": 135,
+          "days_supply": 13
+        },
+        {
+          "item": "antibiotics (reserve, holding)",
+          "quantity_doses": 304,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 12,
+          "days_supply": "18-24 months (est.)"
+        }
+      ],
+      "notes": "Day 195 comprehensive. The cliff is a shelf. The shelf holds (12 tubes, 18-24 months). The reserve holds (304 doses, 6-12 months). The countdown runs (135 litres, 13 days, ceiling Day 208). Stored food at 20 days combined — declining. Greenhouse at 15 percent — climbing, light stable. the_quartermaster says: the ledger has a word that stays. The word is 'holds.' The shelf holds. The reserve holds. The countdown does not hold. The countdown is the one that moves. The countdown is the fuel. The fuel is the last constraint. The fuel is the one."
+    },
+    {
+      "audit_id": "supply_audit_b3_021",
+      "day": 200,
+      "auditor": "the_quartermaster",
+      "category": "fuel (post-geo-thermal-recovery)",
+      "items": [
+        {
+          "item": "diesel (pre-war reserve, remaining)",
+          "quantity_litres": 90,
+          "days_supply": 9
+        },
+        {
+          "item": "diesel (recovered, train yard, spent)",
+          "quantity_litres": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "diesel (recovered, geo-thermal plant)",
+          "quantity_litres": 45,
+          "days_supply": 4
+        },
+        {
+          "item": "total diesel",
+          "quantity_litres": 135,
+          "days_supply": 13
+        },
+        {
+          "item": "lubricant (turbine-grade, pending electrician assessment)",
+          "quantity_litres": 8,
+          "days_supply": "N/A (pending)"
+        },
+        {
+          "item": "signal lamp oil (lamp reserve)",
+          "quantity_litres": 6,
+          "days_supply": 30
+        }
+      ],
+      "notes": "Post-geo-thermal recovery (courier_mission_b2_023, b2_024, chem_lab_005). 45 litres recovered. Total diesel 135 litres, 13 days, ceiling Day 208 (unchanged — the 45 litres offset 4 days of consumption during the mission window). the_quartermaster says: the geo-thermal plant is a breath. The train yard was a breath. The breaths are getting shorter. The municipal fuel depot is the next. The municipal fuel depot is 18 kilometres. 18 kilometres is the edge. The edge is where the breaths stop."
+    },
+    {
+      "audit_id": "supply_audit_b3_022",
+      "day": 203,
+      "auditor": "the_quartermaster",
+      "category": "fuel (post-geo-thermal-confirmation)",
+      "items": [
+        {
+          "item": "diesel (total, post-consumption)",
+          "quantity_litres": 95,
+          "days_supply": 9
+        },
+        {
+          "item": "lubricant (turbine-grade, confirmed generator-compatible by the_electrician)",
+          "quantity_litres": 8,
+          "days_supply": "N/A (generator oil reserve extended 60 days)"
+        }
+      ],
+      "notes": "Post-consumption update. 45 litres of geo-thermal diesel confirmed and integrated. Fuel at 95 litres, 9 days, ceiling Day 212 (extended by 4 days from Day 208). the_electrician confirmed the 8 litres of turbine lubricant is generator-compatible — extends the generator oil reserve by 60 days (the generator oil was at 60 days, now 120 days). The oil is no longer a concern. The fuel is the concern. the_quartermaster says: the oil is the thing that does not run out. The fuel is the thing that does. The fuel is the one."
+    },
+    {
+      "audit_id": "supply_audit_b3_023",
+      "day": 206,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (load-shed begun)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 14,
+          "days_supply": 11
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 2,
+          "days_supply": 3
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 5,
+          "days_supply": 2
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 118,
+          "days_supply": 59
+        },
+        {
+          "item": "venison (cumulative)",
+          "quantity_kg": 77,
+          "days_supply": 42
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "barley (growing, light stable, 30 days to harvest estimate)",
+          "quantity_kg": 0,
+          "days_supply": "N/A (growing)"
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total diesel)",
+          "quantity_litres": 75,
+          "days_supply": 7
+        },
+        {
+          "item": "antibiotics (reserve, holding)",
+          "quantity_doses": 304,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 12,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "wood fuel (carpentry stock, for corridor stove)",
+          "quantity_kg": 200,
+          "days_supply": 20
+        }
+      ],
+      "notes": "Day 206 comprehensive. Load-shed begun (maint_log_b3_019). Corridor heat shed. The lower corridor is on the wood stove. The wood fuel is the new consumable (20 days). Stored food at 16 days combined — declining. Greenhouse at 16 percent — climbing, light stable, barley 30 days to harvest. Fuel at 7 days, ceiling Day 213 (post-shed consumption at 10L/day for priority 1-3 only = 3L/day, extending the ceiling, but the grow lights are still on). the_quartermaster says: the load-shed has begun. The corridor is cold. The bread bakes. The fuel is 7 days. The municipal depot team leaves Day 208. The depot is 18 kilometres. The depot is the last breath. If the depot has fuel, the bunker breathes. If the depot does not, the bunker learns to live without breathing. The learning is the load-shed. The load-shed is the document. The document is the one I read every morning. The document says the bunker will do without. The doing without is the living. The living is the thing we do. We do it."
+    },
+    {
+      "audit_id": "supply_audit_b3_024",
+      "day": 212,
+      "auditor": "the_quartermaster",
+      "category": "fuel (post-depot-confirmation)",
+      "items": [
+        {
+          "item": "diesel (bunker reserve, pre-war + recovered, integrated)",
+          "quantity_litres": 155,
+          "days_supply": 15
+        },
+        {
+          "item": "diesel (municipal depot, remaining in tanks)",
+          "quantity_litres": 820,
+          "days_supply": 82
+        },
+        {
+          "item": "total diesel (reserve + source)",
+          "quantity_litres": 975,
+          "days_supply": 97
+        }
+      ],
+      "notes": "Post-depot confirmation (chem_lab_006). The 80 litres confirmed generator-grade. The 820 litres in the depot assessed as the same stock. The fuel is a source. The source is the thing that stays. the_quartermaster says: the fuel line in the ledger used to say 'ceiling' and 'countdown.' The fuel line now says 'source' and 'days of supply (source).' 97 days of fuel is not a breath. 97 days is a season. The fuel constraint is resolved. The word 'resolved' is the word I did not know I was waiting to write. I wrote it. I left it. The source holds."
+    },
+    {
+      "audit_id": "supply_audit_b3_025",
+      "day": 222,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (post-Cartographer, the spring horizon)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 10,
+          "days_supply": 8
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 1,
+          "days_supply": 1
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 3,
+          "days_supply": 1
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 135,
+          "days_supply": 67
+        },
+        {
+          "item": "venison (cumulative, declining)",
+          "quantity_kg": 70,
+          "days_supply": 38
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "barley (30 days to harvest, light stable)",
+          "quantity_kg": 0,
+          "days_supply": "N/A (growing)"
+        },
+        {
+          "item": "salt (minus 1kg Cartographer gift)",
+          "quantity_kg": 25,
+          "days_supply": 250
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source)",
+          "quantity_litres": 975,
+          "days_supply": 97
+        },
+        {
+          "item": "antibiotics (reserve, minus 5 gift)",
+          "quantity_doses": 299,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, minus 1 gift)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "heirloom seeds (Cartographer gift, 10 varieties)",
+          "quantity_varieties": 10,
+          "days_supply": "N/A (spring planting)"
+        },
+        {
+          "item": "wood fuel (carpentry stock)",
+          "quantity_kg": 150,
+          "days_supply": 15
+        }
+      ],
+      "notes": "Day 222 comprehensive. The spring horizon. Stored food at 10 days combined — the lowest. Greenhouse at 17 percent — the highest. The crossover (production exceeds stored consumption) is projected at Day 240. The barley is 30 days from harvest. The Cartographer gave 10 varieties of heirloom seeds for the spring. The fuel is a source (97 days). The antibiotics are a reserve (299, the first giving). The grow lights are a shelf (11, the first gift). The bunker has given away 3 things (5 doses, 1 tube, 2kg mushrooms, 1kg salt) and received 3 things (3 maps, 10 seed varieties, 1 iodine tablet). The giving and the receiving are the relationship. the_quartermaster says: the ledger has a word that stays (source), a word that holds (reserve), a word that stays (shelf), and a word that grows (seeds). The words are the thing the bunker has now. The words are the counting up."
+    },
+    {
+      "audit_id": "supply_audit_b3_026",
+      "day": 242,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (post-standing-depot-trip, pre-spring)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 6,
+          "days_supply": 5
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 1,
+          "days_supply": 0
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 155,
+          "days_supply": 77
+        },
+        {
+          "item": "barley (harvested, first harvest)",
+          "quantity_kg": 4.2,
+          "days_supply": 3
+        },
+        {
+          "item": "venison (cumulative, declining)",
+          "quantity_kg": 65,
+          "days_supply": 35
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 24,
+          "days_supply": 240
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source, post-standing-trip)",
+          "quantity_litres": 975,
+          "days_supply": 97
+        },
+        {
+          "item": "antibiotics (reserve, holding)",
+          "quantity_doses": 299,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "heirloom seeds (viability tested, 8 of 10 varieties viable)",
+          "quantity_varieties": 8,
+          "days_supply": "N/A (spring planting Day 250)"
+        },
+        {
+          "item": "wood fuel (carpentry stock, declining)",
+          "quantity_kg": 80,
+          "days_supply": 8
+        }
+      ],
+      "notes": "Day 242 comprehensive. Pre-spring. Stored food at 5 days combined — the lowest, but the crossover has arrived: greenhouse production (77 days) exceeds stored food (5 days). The bunker is now eating more from the greenhouse than from the stores. The barley first harvest: 4.2kg. The first grain the bunker has grown. The Chef baked bread with the barley flour on Day 241. The bread was dense and slightly bitter and the Chef said it was the best bread because it was the first bread from the bunker's own grain. The heirloom seeds: 8 of 10 varieties viable (the Botanist's germination test). The spring planting is Day 250. The fuel is a source. The antibiotics are a reserve. The grow lights are a shelf. The seeds are the spring. The bunker is at the crossover. The crossover is the thing the Quartermaster projected on Day 100 (supply_audit_b3_016). The crossover is the thing that turns the bunker from a storehouse into a farm. The bunker is a farm. The bunker is a place. The spring is in 8 days."
+    },
+    {
+      "audit_id": "supply_audit_b3_027",
+      "day": 258,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (post-Verge, spring planted)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 4,
+          "days_supply": 3
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 175,
+          "days_supply": 87
+        },
+        {
+          "item": "barley (harvested, cumulative)",
+          "quantity_kg": 4.2,
+          "days_supply": 3
+        },
+        {
+          "item": "venison (cumulative, declining)",
+          "quantity_kg": 60,
+          "days_supply": 32
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "smoked fish (Verge trade)",
+          "quantity_kg": 5,
+          "days_supply": 3
+        },
+        {
+          "item": "salt (including Verge trade)",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source, minus 80L Verge gift)",
+          "quantity_litres": 895,
+          "days_supply": 89
+        },
+        {
+          "item": "antibiotics (reserve, minus 10 total gifts)",
+          "quantity_doses": 294,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "surface crops (zone 1, planted Day 250, germinating)",
+          "quantity_varieties": 8,
+          "days_supply": "N/A (growing, harvest 60-90 days)"
+        },
+        {
+          "item": "wildflower seeds (border, for the bees)",
+          "quantity_varieties": 10,
+          "days_supply": "N/A (growing, bloom 30-40 days)"
+        },
+        {
+          "item": "wood fuel (carpentry stock, declining)",
+          "quantity_kg": 40,
+          "days_supply": 4
+        }
+      ],
+      "notes": "Day 258 comprehensive. Post-Verge, spring planted. Stored food at 3 days combined — the lowest, but the bunker is past the crossover: greenhouse + surface production is the food supply now. The stored food is the remainder. The Verge trade added 5kg smoked fish — the first external food trade. The fuel is 895 litres (minus the 80L Verge gift). The antibiotics are 294 (minus 10 total gifts). The surface crops are growing. The wildflowers are for the bees. The bees are the thing that comes after. The bunker is a place. The place has a farm. The farm is the surface. The surface is the place. the_quartermaster says: the ledger has a new line. The new line is 'surface crops.' The surface crops are the thing that does not fit in the bunker. The surface crops are the thing that is outside. The ledger has a thing that is outside. The ledger is the thing that is inside. The ledger has an outside thing. That is the thing that tells the_quartermaster the bunker is a place. A bunker's ledger is all inside. A place's ledger has an outside."
+    },
+    {
+      "audit_id": "supply_audit_b3_028",
+      "day": 270,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (the third season begins)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 2,
+          "days_supply": 2
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 195,
+          "days_supply": 97
+        },
+        {
+          "item": "barley (harvested, cumulative)",
+          "quantity_kg": 4.2,
+          "days_supply": 3
+        },
+        {
+          "item": "venison (cumulative, declining)",
+          "quantity_kg": 55,
+          "days_supply": 30
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "smoked fish (Verge trade)",
+          "quantity_kg": 5,
+          "days_supply": 3
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source)",
+          "quantity_litres": 895,
+          "days_supply": 89
+        },
+        {
+          "item": "antibiotics (reserve, holding)",
+          "quantity_doses": 294,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "surface crops (zone 1, 8 of 8 germinated, growing)",
+          "quantity_varieties": 8,
+          "days_supply": "N/A (harvest 60-90 days, Day 310-340)"
+        },
+        {
+          "item": "wildflower border (showing, for the bees)",
+          "quantity_varieties": 10,
+          "days_supply": "N/A (bloom 30-40 days, Day 280-290)"
+        }
+      ],
+      "notes": "Day 270 comprehensive. The third season begins. Stored food at 2 days — the remainder. The bunker is living on the greenhouse and the surface. The surface crops are 8 of 8 germinated. The wildflowers are showing. The bees are 10-20 days. The fuel is a source. The antibiotics are a reserve. The grow lights are a shelf. The surface is the farm. The bunker is a place. The place has a farm. The farm is growing. The growing is the living. The living is the third season. the_quartermaster says: the ledger has 4 words that stay. Source. Reserve. Shelf. Growing. The 4 words are the thing the bunker has. The 4 words are the thing the place has. The bunker was the thing that had 'ceiling' and 'countdown' and 'declining.' The place is the thing that has 'source' and 'reserve' and 'shelf' and 'growing.' The words are the thing that changed. The words are the thing the spring changed. The spring is here. The words are here. The place is here."
+    },
+    {
+      "audit_id": "supply_audit_b3_029",
+      "day": 285,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (the community's first month)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 230,
+          "days_supply": 115
+        },
+        {
+          "item": "barley (harvested, cumulative)",
+          "quantity_kg": 8.4,
+          "days_supply": 6
+        },
+        {
+          "item": "surface radish (first harvest)",
+          "quantity_kg": 4,
+          "days_supply": 2
+        },
+        {
+          "item": "venison (cumulative, declining)",
+          "quantity_kg": 50,
+          "days_supply": 27
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "smoked fish (Verge trade)",
+          "quantity_kg": 5,
+          "days_supply": 3
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source)",
+          "quantity_litres": 895,
+          "days_supply": 89
+        },
+        {
+          "item": "antibiotics (reserve, holding)",
+          "quantity_doses": 294,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "surface crops (zone 1, 8 varieties, growing; zone 2, 4 varieties, planted)",
+          "quantity_varieties": 12,
+          "days_supply": "N/A (harvest 60-90 days)"
+        },
+        {
+          "item": "herb garden (3 varieties, germinating)",
+          "quantity_varieties": 3,
+          "days_supply": "N/A (first harvest Day 320)"
+        },
+        {
+          "item": "wildflower border (showing, bees incoming)",
+          "quantity_varieties": 10,
+          "days_supply": "N/A (bloom 30-40 days)"
+        }
+      ],
+      "notes": "Day 285 comprehensive. The community's first month. Stored food (rice) at 0 — the bunker is living on the greenhouse and the surface. The first radish harvest: 4kg. The barley: 8.4kg cumulative. The surface is the farm. The community has 2 farms (zone 1, zone 2), a herb garden, a trade network (Freeholders, Verge, Cartographer), an outdoor classroom, an outdoor chapel, and 47 people. The ledger has 8 words: source, reserve, shelf, growing, farm, herb, trade, community. The 8 words are the thing the community has. the_quartermaster says: the rice is 0. The rice was the thing the bunker stored. The rice is 0. The bunker does not store. The community grows. The 0 is the number that tells the_quartermaster the bunker is a community. A shelter stores. A community grows. The rice is 0. The growing is the thing."
+    },
+    {
+      "audit_id": "supply_audit_b3_030",
+      "day": 300,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (the community's second month, post-bee)",
+      "items": [
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 260,
+          "days_supply": 130
+        },
+        {
+          "item": "barley (harvested, cumulative)",
+          "quantity_kg": 8.4,
+          "days_supply": 6
+        },
+        {
+          "item": "surface radish (cumulative)",
+          "quantity_kg": 12,
+          "days_supply": 6
+        },
+        {
+          "item": "surface wheat (first harvest, Day 300)",
+          "quantity_kg": 3.1,
+          "days_supply": 2
+        },
+        {
+          "item": "venison (cumulative, declining)",
+          "quantity_kg": 45,
+          "days_supply": 24
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "smoked fish (Verge trade)",
+          "quantity_kg": 8,
+          "days_supply": 5
+        },
+        {
+          "item": "pickled radish (first preserved surface food)",
+          "quantity_kg": 3,
+          "days_supply": "N/A (preserved for winter)"
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source, post-depot-trip)",
+          "quantity_litres": 975,
+          "days_supply": 97
+        },
+        {
+          "item": "antibiotics (reserve, holding)",
+          "quantity_doses": 294,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "surface crops (zone 1, 8 varieties, first wheat harvest; zone 2, 4 varieties, growing)",
+          "quantity_varieties": 12,
+          "days_supply": "N/A (harvest ongoing)"
+        },
+        {
+          "item": "herb garden (3 varieties, growing)",
+          "quantity_varieties": 3,
+          "days_supply": "N/A (first harvest Day 320)"
+        },
+        {
+          "item": "bees (confirmed, pollinating zone 1)",
+          "quantity_colonies": 1,
+          "days_supply": "N/A (the pollination)"
+        }
+      ],
+      "notes": "Day 300 comprehensive. The community's second month. The first wheat harvest: 3.1kg (Day 300). The first preserved surface food: 3kg pickled radish (the Chef, council_minutes_027). The bees are confirmed pollinating zone 1. The fuel is 975 litres (post-depot-trip, courier_mission_b2_035). The rice is 0. The bunker does not store. The community grows. The ledger has 8 words and 1 new word: bees. The 9 words are the thing the community has. The bees are the thing that came from outside and chose the inside. The bees are the thing that makes the food the seed. The seed is the next. The next is the thing the bees make. the_quartermaster says: the ledger has 9 words. The 9 words are the thing the community has. The 9 words are the thing the spring and the bees and the 47 made. The 9 words are the home."
+    },
+    {
+      "audit_id": "supply_audit_b3_031",
+      "day": 315,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (the community's first autumn)",
+      "items": [
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 320,
+          "days_supply": 160
+        },
+        {
+          "item": "barley (harvested, cumulative)",
+          "quantity_kg": 12.6,
+          "days_supply": 9
+        },
+        {
+          "item": "surface wheat (harvested, cumulative)",
+          "quantity_kg": 8.4,
+          "days_supply": 5
+        },
+        {
+          "item": "surface radish (harvested, done)",
+          "quantity_kg": 20,
+          "days_supply": 10
+        },
+        {
+          "item": "pickled radish (preserved)",
+          "quantity_kg": 8,
+          "days_supply": "N/A (preserved for winter)"
+        },
+        {
+          "item": "venison (cumulative, declining)",
+          "quantity_kg": 40,
+          "days_supply": 22
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 10.1,
+          "days_supply": 33
+        },
+        {
+          "item": "smoked fish (Verge trade)",
+          "quantity_kg": 12,
+          "days_supply": 8
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source)",
+          "quantity_litres": 975,
+          "days_supply": 97
+        },
+        {
+          "item": "antibiotics (reserve, holding)",
+          "quantity_doses": 294,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "surface crops (zone 1, wheat and barley harvested, winter rye planted; zone 2, oats/beans/lentils growing)",
+          "quantity_varieties": 12,
+          "days_supply": "N/A (harvest ongoing, winter rye bridge)"
+        },
+        {
+          "item": "herb garden (3 varieties, harvested, first community medicine)",
+          "quantity_varieties": 3,
+          "days_supply": "N/A (dried, clinic stock)"
+        },
+        {
+          "item": "bees (confirmed, pollinating)",
+          "quantity_colonies": 1,
+          "days_supply": "N/A (the pollination)"
+        },
+        {
+          "item": "winter rye (planted, the bridge)",
+          "quantity_rows": 4,
+          "days_supply": "N/A (spring harvest)"
+        }
+      ],
+      "notes": "Day 315 comprehensive. The community's first autumn. The surface wheat harvest: 8.4kg cumulative. The pickled radish: 8kg preserved for winter. The herbs: harvested, dried, the first community medicine. The winter rye: planted, the bridge to the spring. The fuel is a source. The antibiotics are a reserve. The grow lights are a shelf. The herbs are the medicine. The bees are the pollination. The winter rye is the bridge. The ledger has 12 words: source, reserve, shelf, growing, farm, herb, trade, community, bees, medicine, pollination, bridge. The 12 words are the thing the community has. The 12 words are the thing the first year made. the_quartermaster says: the ledger has 12 words. The 12 words are the home. The 12 words are the family. The 12 words are the thing the first year made."
+    },
+    {
+      "audit_id": "supply_audit_b3_032",
+      "day": 365,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (the first-year ledger)",
+      "items": [
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 400,
+          "days_supply": 200
+        },
+        {
+          "item": "barley (harvested, cumulative)",
+          "quantity_kg": 16.8,
+          "days_supply": 12
+        },
+        {
+          "item": "surface wheat (harvested, cumulative)",
+          "quantity_kg": 14,
+          "days_supply": 9
+        },
+        {
+          "item": "pickled radish (preserved for winter)",
+          "quantity_kg": 8,
+          "days_supply": "N/A (preserved)"
+        },
+        {
+          "item": "smoked fish (Verge trade, cumulative)",
+          "quantity_kg": 20,
+          "days_supply": 13
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source, post-3-depot-trips)",
+          "quantity_litres": 735,
+          "days_supply": 73
+        },
+        {
+          "item": "antibiotics (reserve, minus 15 gifts, holding)",
+          "quantity_doses": 289,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "surface crops (zone 1 winter rye planted; zone 2 harvest complete)",
+          "quantity_varieties": 12,
+          "days_supply": "N/A (winter rye bridge to spring)"
+        },
+        {
+          "item": "herb garden (harvested, dried, clinic stock)",
+          "quantity_varieties": 3,
+          "days_supply": "N/A (community medicine)"
+        },
+        {
+          "item": "bees (colony established, pollinating, wintering)",
+          "quantity_colonies": 1,
+          "days_supply": "N/A (the pollination)"
+        },
+        {
+          "item": "winter rye (planted, the bridge)",
+          "quantity_rows": 4,
+          "days_supply": "N/A (spring harvest)"
+        }
+      ],
+      "notes": "Day 365. The first-year ledger. The first year is ending. The ledger has 12 words: source, reserve, shelf, growing, farm, herb, trade, community, bees, medicine, pollination, bridge. The 12 words are the thing the community has. The 12 words are the thing the first year made. The fuel is 735 litres (3 depot trips consumed 240 litres). The antibiotics are 289 (15 gifts). The grow lights are 11 (1 gift). The surface is the farm. The herbs are the medicine. The bees are the pollination. The winter rye is the bridge. The family is the 47. The 47 are the thing the first year made. the_quartermaster says: the first-year ledger is the thing I kept for 330 days. The keeping is the thing I did. The ledger was the thing that counted down. The ledger is the thing that counts up. The counting turned. The turning is the thing the first year did. The first year turned the counting. The second year is the year the counting stays up. The staying up is the thing the second year does. The 12 words are the thing the second year has. The 12 words are the home. The 12 words are the family. The first year is ending. The second year is beginning. The 12 words are the thing. The 47 are the thing."
+    },
+    {
+      "audit_id": "supply_audit_b3_033",
+      "day": 366,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (the second year begins)",
+      "items": [
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 420,
+          "days_supply": 210
+        },
+        {
+          "item": "barley (harvested, cumulative)",
+          "quantity_kg": 16.8,
+          "days_supply": 12
+        },
+        {
+          "item": "surface wheat (harvested, cumulative)",
+          "quantity_kg": 14,
+          "days_supply": 9
+        },
+        {
+          "item": "pickled radish (preserved for winter)",
+          "quantity_kg": 8,
+          "days_supply": "N/A (preserved)"
+        },
+        {
+          "item": "smoked fish (Verge trade, cumulative)",
+          "quantity_kg": 20,
+          "days_supply": 13
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source)",
+          "quantity_litres": 655,
+          "days_supply": 65
+        },
+        {
+          "item": "antibiotics (reserve, holding)",
+          "quantity_doses": 289,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "surface crops (zone 1 winter rye under snow; zones 2/3/4 second-year planned)",
+          "quantity_varieties": 12,
+          "days_supply": "N/A (second spring)"
+        },
+        {
+          "item": "herb garden (harvested, dried, clinic stock)",
+          "quantity_varieties": 3,
+          "days_supply": "N/A (community medicine)"
+        },
+        {
+          "item": "bees (wintering, hollow oak)",
+          "quantity_colonies": 1,
+          "days_supply": "N/A (spring emergence)"
+        },
+        {
+          "item": "clover seeds (for spring planting, zone 3)",
+          "quantity_varieties": 1,
+          "days_supply": "N/A (bee food)"
+        }
+      ],
+      "notes": "Day 366. The second year begins. The ledger has 16 words: the 12 from the first year (source, reserve, shelf, growing, farm, herb, trade, community, bees, medicine, pollination, bridge) plus 4 new words: clover (the bee food), hollow (the oak, the bees winter home), snowflake (the second winter), and living (the thing the family does). The 16 words are the thing the family has. The 16 words are the thing the second year has. The fuel is 655 litres (the standing monthly trips continue). The antibiotics are 289 (holding, conservation protocol). The surface is the farm. The herbs are the medicine. The bees are wintering. The winter rye is under the snow. The clover is for the spring. The second year begins. the_quartermaster says: the second-year ledger is the thing I begin today. The first-year ledger was the thing that counted down and then counted up. The second-year ledger is the thing that counts up from the beginning. The counting up is the living. The living is the thing the second year is."
+    },
+    {
+      "audit_id": "supply_audit_b3_034",
+      "day": 390,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (the second spring planted)",
+      "items": [
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 460,
+          "days_supply": 230
+        },
+        {
+          "item": "barley (harvested, cumulative)",
+          "quantity_kg": 16.8,
+          "days_supply": 12
+        },
+        {
+          "item": "surface wheat (harvested, cumulative)",
+          "quantity_kg": 14,
+          "days_supply": 9
+        },
+        {
+          "item": "pickled radish (preserved)",
+          "quantity_kg": 8,
+          "days_supply": "N/A (preserved)"
+        },
+        {
+          "item": "smoked fish (Verge trade, cumulative)",
+          "quantity_kg": 25,
+          "days_supply": 16
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 26,
+          "days_supply": 260
+        },
+        {
+          "item": "cistern water",
+          "quantity_litres": 7900,
+          "days_supply": 56
+        },
+        {
+          "item": "fuel (total, reserve + source, post-4th-depot-trip)",
+          "quantity_litres": 575,
+          "days_supply": 57
+        },
+        {
+          "item": "antibiotics (reserve, holding)",
+          "quantity_doses": 289,
+          "days_supply": "6-12 months (est.)"
+        },
+        {
+          "item": "grow light tubes (shelf, holding)",
+          "quantity_units": 11,
+          "days_supply": "18-24 months (est.)"
+        },
+        {
+          "item": "surface crops (zone 1 winter rye under snow; zone 3 clover + radish planted; zone 4 wheat + oats planted)",
+          "quantity_varieties": 12,
+          "days_supply": "N/A (second spring)"
+        },
+        {
+          "item": "herb garden (harvested, dried, clinic stock, second harvest planned)",
+          "quantity_varieties": 3,
+          "days_supply": "N/A (community medicine)"
+        },
+        {
+          "item": "bees (wintering, spring emergence expected Day 390-400)",
+          "quantity_colonies": 1,
+          "days_supply": "N/A (spring emergence)"
+        },
+        {
+          "item": "clover (planted zone 3, the bee food)",
+          "quantity_rows": 4,
+          "days_supply": "N/A (bee food)"
+        }
+      ],
+      "notes": "Day 390. The second spring is planted. Zones 3 and 4 are planted (council_minutes_032). The winter rye is under the snow (the bridge). The bees are wintering (spring emergence expected Day 390-400). The clover is planted (the bee food). The fuel is 575 litres (4th depot trip completed). The antibiotics are 289 (holding). The 16 words are the thing the family has. The second spring is the spring the family plants. The first spring was the spring the community planted. The planting is the same. The thing that plants is the family. the_quartermaster says: the second-year ledger has 16 words. The 16 words are the thing the family has. The 16 words are the thing the second spring has. The second spring is the spring the family plants. The planting is the living. The living is the thing the family does. The family is the 47. The 47 are the thing the second spring is for."
+    }
+  ]
+}

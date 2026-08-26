@@ -1,72 +1,117 @@
-[
-  {
-    "id": "stalactite_assay_uranophane_canary_crust",
-    "sample_specimen_id": "SPELEO-MINERAL-ASSAY-009",
-    "mineral_species": "URANOPHANE_CALCIUM_URANYL_SILICATE",
-    "primary_metal_assay_pct": 52.4,
-    "radiation_emission_ur_hr": 8400.0,
-    "timestamp_relative": "YEAR_04_MINERAL_ASSAY",
-    "tags": ["hydrogeology", "stalactite", "uranium", "uranophane", "mineralogy"],
-    "prose": "Needle-like radiant clusters of bright canary-yellow uranophane crystals encrusting limestone fracture ceilings above the sump. Formed by groundwater leaching oxidized uranium from surface bomb craters. The crystal mats emit 8.4 mR/hr and glow yellow-green under shortwave ultraviolet light."
-  },
-  {
-    "id": "stalactite_assay_malachite_copper_dripstone",
-    "sample_specimen_id": "SPELEO-MINERAL-ASSAY-023",
-    "mineral_species": "MALACHITE_BASIC_COPPER_CARBONATE",
-    "primary_metal_assay_pct": 57.5,
-    "radiation_emission_ur_hr": 12.0,
-    "timestamp_relative": "YEAR_07_MINERAL_ASSAY",
-    "tags": ["hydrogeology", "malachite", "copper", "dripstone", "ore"],
-    "prose": "Massive banded dark green botryoidal flowstone draperies covering forty square meters of the abandoned cable vault. Water percolating through melted bronze busbars and copper communications conduit precipitated pure malachite; machinists chip off chunks to smelt into bronze bushings."
-  },
-  {
-    "id": "stalactite_assay_galena_lead_soda_straw",
-    "sample_specimen_id": "SPELEO-MINERAL-ASSAY-041",
-    "mineral_species": "GALENA_LEAD_SULFIDE_CONCRETION",
-    "primary_metal_assay_pct": 86.6,
-    "radiation_emission_ur_hr": 45.0,
-    "timestamp_relative": "YEAR_10_MINERAL_ASSAY",
-    "tags": ["hydrogeology", "galena", "lead", "soda_straw", "stalactite"],
-    "prose": "Delicate, hollow tubular 'soda straw' stalactites up to one meter in length composed of metallic lead and galena crystals. Growing at an unprecedented rate of four millimeters per year beneath the battery acid drainage adit."
-  },
-  {
-    "id": "stalactite_assay_cinnabar_mercury_globule_seep",
-    "sample_specimen_id": "SPELEO-MINERAL-ASSAY-058",
-    "mineral_species": "CINNABAR_WITH_NATIVE_MERCURY",
-    "primary_metal_assay_pct": 82.0,
-    "radiation_emission_ur_hr": 8.0,
-    "timestamp_relative": "YEAR_13_MINERAL_ASSAY",
-    "tags": ["hydrogeology", "cinnabar", "mercury", "toxic_seep", "mineralogy"],
-    "prose": "Bright cochineal-red crystalline cinnabar crusts weeping microscopic droplets of silvery metallic elemental mercury. The liquid mercury pools in rimstone depressions along the cavern floor; breathing cave air in this passage causes rapid mercury vapor intoxication and tremors."
-  },
-  {
-    "id": "stalactite_assay_arsenopyrite_garlic_exhalation",
-    "sample_specimen_id": "SPELEO-MINERAL-ASSAY-076",
-    "mineral_species": "ARSENOPYRITE_IRON_ARSENIC_SULFIDE",
-    "primary_metal_assay_pct": 46.0,
-    "radiation_emission_ur_hr": 25.0,
-    "timestamp_relative": "YEAR_16_MINERAL_ASSAY",
-    "tags": ["hydrogeology", "arsenopyrite", "arsenic", "garlic_odor", "toxicity"],
-    "prose": "Silver-white metallic crystal blades growing along shale joint planes. When struck with an iron hammer or exposed to warm condensing steam, the mineral releases a strong garlic odor of poisonous arsine gas that causes acute hemolysis and kidney failure in unmasked scouts."
-  },
-  {
-    "id": "stalactite_assay_fluorite_purple_cubic_drusy",
-    "sample_specimen_id": "SPELEO-MINERAL-ASSAY-092",
-    "mineral_species": "FLUORITE_CALCIUM_DIFLUORIDE",
-    "primary_metal_assay_pct": 51.3,
-    "radiation_emission_ur_hr": 180.0,
-    "timestamp_relative": "YEAR_18_MINERAL_ASSAY",
-    "tags": ["hydrogeology", "fluorite", "crystals", "hydrofluoric", "drusy"],
-    "prose": "Deep royal-purple cubic crystals up to thirty millimeters across lining the hydrothermal vugs of Lower Level 6. The intense color is caused by color-center lattice defects from prolonged alpha irradiation. Chemists harvest the crystals to synthesize hydrofluoric acid for glass etching."
-  },
-  {
-    "id": "stalactite_assay_autunite_green_fluorescent_blade",
-    "sample_specimen_id": "SPELEO-MINERAL-ASSAY-110",
-    "mineral_species": "AUTUNITE_HYDRATED_CALCIUM_URANYL",
-    "primary_metal_assay_pct": 48.2,
-    "radiation_emission_ur_hr": 14200.0,
-    "timestamp_relative": "YEAR_20_MINERAL_ASSAY",
-    "tags": ["hydrogeology", "autunite", "fluorescence", "uranium", "hot_zone"],
-    "prose": "Square tabular, lime-green crystal plates forming tiered 'pagoda' stalagmites in the deepest drainage sump. The mineral exhibits brilliant, blinding yellowish-green fluorescence under 365nm UV light; radiation field at one meter is 14.2 mR/hr, requiring lead tongs and shielded boxes for collection."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "stalactite_assay_uranophane_canary_crust",
+      "sample_specimen_id": "SPELEO-MINERAL-ASSAY-009",
+      "mineral_species": "URANOPHANE_CALCIUM_URANYL_SILICATE",
+      "primary_metal_assay_pct": 52.4,
+      "radiation_emission_ur_hr": 8400.0,
+      "timestamp_relative": "YEAR_04_MINERAL_ASSAY",
+      "tags": [
+        "hydrogeology",
+        "stalactite",
+        "uranium",
+        "uranophane",
+        "mineralogy"
+      ],
+      "prose": "Needle-like radiant clusters of bright canary-yellow uranophane crystals encrusting limestone fracture ceilings above the sump. Formed by groundwater leaching oxidized uranium from surface bomb craters. The crystal mats emit 8.4 mR/hr and glow yellow-green under shortwave ultraviolet light."
+    },
+    {
+      "id": "stalactite_assay_malachite_copper_dripstone",
+      "sample_specimen_id": "SPELEO-MINERAL-ASSAY-023",
+      "mineral_species": "MALACHITE_BASIC_COPPER_CARBONATE",
+      "primary_metal_assay_pct": 57.5,
+      "radiation_emission_ur_hr": 12.0,
+      "timestamp_relative": "YEAR_07_MINERAL_ASSAY",
+      "tags": [
+        "hydrogeology",
+        "malachite",
+        "copper",
+        "dripstone",
+        "ore"
+      ],
+      "prose": "Massive banded dark green botryoidal flowstone draperies covering forty square meters of the abandoned cable vault. Water percolating through melted bronze busbars and copper communications conduit precipitated pure malachite; machinists chip off chunks to smelt into bronze bushings."
+    },
+    {
+      "id": "stalactite_assay_galena_lead_soda_straw",
+      "sample_specimen_id": "SPELEO-MINERAL-ASSAY-041",
+      "mineral_species": "GALENA_LEAD_SULFIDE_CONCRETION",
+      "primary_metal_assay_pct": 86.6,
+      "radiation_emission_ur_hr": 45.0,
+      "timestamp_relative": "YEAR_10_MINERAL_ASSAY",
+      "tags": [
+        "hydrogeology",
+        "galena",
+        "lead",
+        "soda_straw",
+        "stalactite"
+      ],
+      "prose": "Delicate, hollow tubular 'soda straw' stalactites up to one meter in length composed of metallic lead and galena crystals. Growing at an unprecedented rate of four millimeters per year beneath the battery acid drainage adit."
+    },
+    {
+      "id": "stalactite_assay_cinnabar_mercury_globule_seep",
+      "sample_specimen_id": "SPELEO-MINERAL-ASSAY-058",
+      "mineral_species": "CINNABAR_WITH_NATIVE_MERCURY",
+      "primary_metal_assay_pct": 82.0,
+      "radiation_emission_ur_hr": 8.0,
+      "timestamp_relative": "YEAR_13_MINERAL_ASSAY",
+      "tags": [
+        "hydrogeology",
+        "cinnabar",
+        "mercury",
+        "toxic_seep",
+        "mineralogy"
+      ],
+      "prose": "Bright cochineal-red crystalline cinnabar crusts weeping microscopic droplets of silvery metallic elemental mercury. The liquid mercury pools in rimstone depressions along the cavern floor; breathing cave air in this passage causes rapid mercury vapor intoxication and tremors."
+    },
+    {
+      "id": "stalactite_assay_arsenopyrite_garlic_exhalation",
+      "sample_specimen_id": "SPELEO-MINERAL-ASSAY-076",
+      "mineral_species": "ARSENOPYRITE_IRON_ARSENIC_SULFIDE",
+      "primary_metal_assay_pct": 46.0,
+      "radiation_emission_ur_hr": 25.0,
+      "timestamp_relative": "YEAR_16_MINERAL_ASSAY",
+      "tags": [
+        "hydrogeology",
+        "arsenopyrite",
+        "arsenic",
+        "garlic_odor",
+        "toxicity"
+      ],
+      "prose": "Silver-white metallic crystal blades growing along shale joint planes. When struck with an iron hammer or exposed to warm condensing steam, the mineral releases a strong garlic odor of poisonous arsine gas that causes acute hemolysis and kidney failure in unmasked scouts."
+    },
+    {
+      "id": "stalactite_assay_fluorite_purple_cubic_drusy",
+      "sample_specimen_id": "SPELEO-MINERAL-ASSAY-092",
+      "mineral_species": "FLUORITE_CALCIUM_DIFLUORIDE",
+      "primary_metal_assay_pct": 51.3,
+      "radiation_emission_ur_hr": 180.0,
+      "timestamp_relative": "YEAR_18_MINERAL_ASSAY",
+      "tags": [
+        "hydrogeology",
+        "fluorite",
+        "crystals",
+        "hydrofluoric",
+        "drusy"
+      ],
+      "prose": "Deep royal-purple cubic crystals up to thirty millimeters across lining the hydrothermal vugs of Lower Level 6. The intense color is caused by color-center lattice defects from prolonged alpha irradiation. Chemists harvest the crystals to synthesize hydrofluoric acid for glass etching."
+    },
+    {
+      "id": "stalactite_assay_autunite_green_fluorescent_blade",
+      "sample_specimen_id": "SPELEO-MINERAL-ASSAY-110",
+      "mineral_species": "AUTUNITE_HYDRATED_CALCIUM_URANYL",
+      "primary_metal_assay_pct": 48.2,
+      "radiation_emission_ur_hr": 14200.0,
+      "timestamp_relative": "YEAR_20_MINERAL_ASSAY",
+      "tags": [
+        "hydrogeology",
+        "autunite",
+        "fluorescence",
+        "uranium",
+        "hot_zone"
+      ],
+      "prose": "Square tabular, lime-green crystal plates forming tiered 'pagoda' stalagmites in the deepest drainage sump. The mineral exhibits brilliant, blinding yellowish-green fluorescence under 365nm UV light; radiation field at one meter is 14.2 mR/hr, requiring lead tongs and shielded boxes for collection."
+    }
+  ]
+}

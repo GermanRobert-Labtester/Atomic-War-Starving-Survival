@@ -1,0 +1,2825 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_third_hidden_stash",
+      "display_name": "The Hidden Stash",
+      "category": "environmental",
+      "trigger": "A disturbed debris pile with signs of recent activity.",
+      "discovery": "The ground is trampled around this pile. A scrap of cloth peeks from under a broken pallet. Someone hid something here — recently.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "dig_up",
+          "label": "Dig it up",
+          "outcome_text": "Under the pallet: a dented tin of beans, a roll of bandages, and a child's shoe. You take what you can use.",
+          "epitaph": "Found a stash under a debris pile. Took the food and medicine. Left the shoe.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "leave_it",
+          "label": "Leave it for someone who needs it more",
+          "outcome_text": "You push the pallet back. Whoever hid this might come back for it. Or not.",
+          "epitaph": "Left a hidden stash untouched. Someone else might need it worse.",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_landmark",
+      "display_name": "The Landmark",
+      "category": "environmental",
+      "trigger": "A distinctive structure visible from a distance.",
+      "discovery": "A water tower stands against the gray sky, its legs bent but holding. From up there, you could see for miles — if the climb doesn't kill you.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "climb_up",
+          "label": "Climb the tower",
+          "outcome_text": "The rungs are rusted but solid. From the top: ruins in every direction, a plume of smoke to the east, and nothing moving. You note the landmarks.",
+          "epitaph": "Climbed a water tower. Saw the wasteland laid out flat. Nothing moving anywhere.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "mark_it",
+          "label": "Mark it on your map and move on",
+          "outcome_text": "You scratch the tower's position into your notebook. A reference point. Something to navigate by.",
+          "epitaph": "Marked a water tower on my map. A fixed point in a broken world.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_graffiti_message",
+      "display_name": "The Graffiti",
+      "category": "environmental",
+      "trigger": "Wall markings that form a pattern or message.",
+      "discovery": "The wall is layered with spray paint and scratches. Most is noise — names, dates, curses. But one section is different. Symbols repeated in a sequence. Someone was trying to say something.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "decode_it",
+          "label": "Try to decode the symbols",
+          "outcome_text": "Arrows pointing north. A circle with a cross — medical? A number: 7. Directions to something, maybe. Or a warning.",
+          "epitaph": "Decoded graffiti on a wall. Arrows, a medical symbol, the number 7. Means something to someone.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "ignore_it",
+          "label": "It's just wall scratches. Move on.",
+          "outcome_text": "You walk past. The symbols mean nothing to you. Maybe they meant nothing at all.",
+          "epitaph": "Ignored some graffiti. Probably nothing.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_safe_route",
+      "display_name": "The Blocked Path",
+      "category": "environmental",
+      "trigger": "A road blocked by collapsed debris.",
+      "discovery": "The road ahead is gone. A building folded into the street, cars crushed underneath. Going around means hours through unfamiliar ruins. But there — a gap between the concrete slabs.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "clear_path",
+          "label": "Try to clear a path through the debris",
+          "outcome_text": "You lever a slab aside with a pipe. The gap widens. Dust and plaster rain down, but the structure holds. You squeeze through.",
+          "epitaph": "Cleared a path through a collapsed building. The dust hasn't settled yet.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "go_around",
+          "label": "Go around the long way",
+          "outcome_text": "You backtrack and take the side streets. It costs you an hour, but the ground stays solid under your feet.",
+          "epitaph": "Took the long way around a collapse. Lost time, kept my bones intact.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_resource_spot",
+      "display_name": "The Resource Spot",
+      "category": "environmental",
+      "trigger": "Disturbed ground suggesting buried supplies.",
+      "discovery": "The dirt here is loose — freshly turned. A corner of plastic sheeting pokes out. Someone buried something and didn't come back for it.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "dig_it_up",
+          "label": "Dig it up",
+          "outcome_text": "Two bottles of water, sealed tight. A plastic bag of rice. Not much, but not nothing.",
+          "epitaph": "Dug up buried supplies. Water and rice. Someone's emergency cache.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "leave_cache",
+          "label": "Leave it. Whoever buried it might come back.",
+          "outcome_text": "You pat the dirt back down. It's their lifeline, not yours.",
+          "epitaph": "Left a buried cache untouched. Someone's emergency supply.",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_water_source",
+      "display_name": "The Water Source",
+      "category": "environmental",
+      "trigger": "A potential water source in a contaminated area.",
+      "discovery": "Water drips from a cracked pipe into a shallow basin. It's brown, but it's wet. The question is whether it's safe — and whether you care.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 2,
+      "difficulty": "medium",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "purify_and_drink",
+          "label": "Filter it through cloth and boil it",
+          "outcome_text": "The cloth catches the worst of it. After boiling, it tastes like rust but stays down. You fill your bottle.",
+          "epitaph": "Purified water from a broken pipe. Tasted like iron. Kept me alive.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "drink_raw",
+          "label": "Drink it as is. You're too thirsty to care.",
+          "outcome_text": "It goes down rough. Your stomach clenches an hour later. Worth it, maybe.",
+          "epitaph": "Drank unfiltered water. Paid for it later. Thirst is worse than sickness.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "mark_for_others",
+          "label": "Mark the location for other survivors",
+          "outcome_text": "You scratch an arrow into the wall pointing here. Someone else might need it more than you.",
+          "epitaph": "Marked a water source for others. Left it cleaner than I found it.",
+          "moral_delta": 5,
+          "empathy_delta": 1,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_collapsed_structure",
+      "display_name": "The Collapsed Structure",
+      "category": "environmental",
+      "trigger": "A partially collapsed building with potential salvage.",
+      "discovery": "The building leans at an angle that shouldn't be possible. One wall is gone, exposing rooms like a dollhouse. Something glints inside — metal, maybe glass.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "hard",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "enter_carefully",
+          "label": "Enter carefully, testing each step",
+          "outcome_text": "The floor groans but holds. Inside: a kitchen with canned food still in the cupboard, and a mirror that somehow survived intact. You take what fits in your pack.",
+          "epitaph": "Entered a collapsed building. Found canned food and an intact mirror. The floor held.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "too_dangerous",
+          "label": "Too dangerous. Not worth it.",
+          "outcome_text": "You look at the angle of the lean and do the math. Not today.",
+          "epitaph": "Walked away from a collapsed building. The angle was wrong.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_abandoned_vehicle",
+      "display_name": "The Abandoned Vehicle",
+      "category": "environmental",
+      "trigger": "A vehicle with salvageable parts.",
+      "discovery": "A sedan sits on flat tires, windows blown out. The engine is toast, but the trunk might have something. The glove box is hanging open.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "search_vehicle",
+          "label": "Search the car thoroughly",
+          "outcome_text": "The trunk has a spare tire and a jack. The glove box: registration papers, a pen, and half a pack of gum. Under the seat: a screwdriver.",
+          "epitaph": "Searched an abandoned car. Found tools and old gum. The registration had someone's name on it.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "strip_parts",
+          "label": "Strip it for useful parts",
+          "outcome_text": "You pull the alternator, the battery cables, the side mirrors. Heavy, but useful for someone with the right tools.",
+          "epitaph": "Stripped a car for parts. Alternator, cables, mirrors. Heavy pack today.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "check_registration",
+          "label": "Check the registration for the owner's name",
+          "outcome_text": "Maria Gonzalez. 42 Elm Street. The address doesn't exist anymore. You fold the paper and put it back.",
+          "epitaph": "Read a car registration. Maria Gonzalez. The address is gone now.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_dead_drop",
+      "display_name": "The Dead Drop",
+      "category": "environmental",
+      "trigger": "A hidden message or supply cache marked by scavengers.",
+      "discovery": "Three stones stacked on a wall — a signal. Behind the loose brick: a plastic bag with a note and a small package.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "take_contents",
+          "label": "Take what's inside",
+          "outcome_text": "The note reads: 'For J. — If you're reading this, I didn't make it. Take what you need. — K.' Inside: two iodine pills and a map fragment.",
+          "epitaph": "Took supplies from a dead drop. The note was from someone who didn't make it.",
+          "moral_delta": -1,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "leave_drop",
+          "label": "Leave it. It's not yours.",
+          "outcome_text": "You replace the brick and restack the stones. J. might still be looking for it.",
+          "epitaph": "Left a dead drop for its intended recipient. J. might still come.",
+          "moral_delta": 4,
+          "empathy_delta": 1,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_radio_signal",
+      "display_name": "The Faint Signal",
+      "category": "environmental",
+      "trigger": "Radio static that forms a pattern.",
+      "discovery": "Your radio crackles — not random static, but a pattern. Three short, three long, three short. SOS. Then a voice, barely audible: '...anyone...coordinates...'",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "medium",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "track_signal",
+          "label": "Try to track the signal source",
+          "outcome_text": "You turn slowly, antenna extended. The signal strengthens to the northwest. Someone is broadcasting. Whether they're still alive is another question.",
+          "epitaph": "Tracked an SOS signal. Northwest direction. Someone is out there.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "respond",
+          "label": "Try to respond on the same frequency",
+          "outcome_text": "You key the mic. 'Copy your signal. What's your position?' Static. Then: '...building...water tower...' The signal dies.",
+          "epitaph": "Responded to an SOS. Got fragments. Building near a water tower.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "ignore_signal",
+          "label": "Turn off the radio. You can't help everyone.",
+          "outcome_text": "The static cuts to silence. You sit with the quiet for a long time.",
+          "epitaph": "Turned off an SOS signal. The silence was louder.",
+          "moral_delta": -3,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_overgrown_garden",
+      "display_name": "The Overgrown Garden",
+      "category": "environmental",
+      "trigger": "Green growth in an unexpected place.",
+      "discovery": "Behind a collapsed fence, something green pushes through the ash. A garden — untended, wild, but alive. Tomato vines缠绕 a rusted trellis. Herbs gone to seed.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "harvest",
+          "label": "Harvest what you can",
+          "outcome_text": "The tomatoes are small and cracked, but they're food. The herbs smell like a memory of kitchens that still had roofs.",
+          "epitaph": "Harvested from an overgrown garden. Small tomatoes and wild herbs. Life finds a way.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "tend_garden",
+          "label": "Pull the weeds and tend the plants",
+          "outcome_text": "You spend an hour clearing weeds and straightening vines. The garden looks better. Maybe it'll produce more next time you come through.",
+          "epitaph": "Tended an abandoned garden. Pulled weeds. Left it better than I found it.",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_scorched_earth",
+      "display_name": "The Scorched Earth",
+      "category": "environmental",
+      "trigger": "A blast zone with residual radiation.",
+      "discovery": "The ground is glass in places — fused sand and ash. Nothing grows here. The air tastes like metal. Your dosimeter clicks faster as you step forward.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "search_crater",
+          "label": "Search the edge of the crater",
+          "outcome_text": "At the rim: a fused lump that might have been a car. Inside it, somehow, a sealed metal box. Inside that: a watch that stopped at 8:15.",
+          "epitaph": "Searched a blast crater. Found a watch stopped at 8:15. The time the world ended, for someone.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "turn_back",
+          "label": "Turn back. The radiation is too high.",
+          "outcome_text": "Your dosimeter screams. You back away slowly, watching the glass ground shimmer in the light.",
+          "epitaph": "Turned back from a blast zone. The dosimeter was right.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_hidden_bunker",
+      "display_name": "The Hidden Bunker",
+      "category": "environmental",
+      "trigger": "A partially concealed bunker entrance.",
+      "discovery": "A metal hatch, half-buried under rubble and ash. The lock is broken. Cold air seeps from the gap — something is down there, and it's been sealed since the bombs.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "hard",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "enter_bunker",
+          "label": "Open the hatch and descend",
+          "outcome_text": "Stairs lead down into dark. Your flashlight catches shelves — canned food, water jugs, a cot with a skeleton on it. They lasted longer than most. Not long enough.",
+          "epitaph": "Entered a sealed bunker. Found supplies and a skeleton. They were prepared. It wasn't enough.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "seal_bunker",
+          "label": "Seal it again. Some doors should stay closed.",
+          "outcome_text": "You push the hatch shut and pile rubble back on top. Whatever's down there can stay there.",
+          "epitaph": "Sealed a bunker entrance. Decided some things are better left buried.",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_supply_cache",
+      "display_name": "The Supply Cache",
+      "category": "environmental",
+      "trigger": "A marked cache left by a faction or scavenger group.",
+      "discovery": "A painted symbol on the wall — a circle with three dots. Below it, a vent cover that's been removed and replaced. Someone's supply cache, marked for their own.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "medium",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "take_cache",
+          "label": "Take the supplies",
+          "outcome_text": "Inside the vent: bandages, water purification tablets, and a note that says 'For the Circle.' You don't know what the Circle is. You take the supplies anyway.",
+          "epitaph": "Took supplies from a marked cache. 'For the Circle.' I hope they don't find out.",
+          "moral_delta": -3,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "leave_cache",
+          "label": "Leave it. It belongs to someone.",
+          "outcome_text": "You replace the vent cover. The Circle's supplies are the Circle's. You have your own path.",
+          "epitaph": "Left a faction cache untouched. The Circle can keep their supplies.",
+          "moral_delta": 4,
+          "empathy_delta": 1,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_memorial",
+      "display_name": "The Memorial",
+      "category": "environmental",
+      "trigger": "A memorial or plaque honoring the dead.",
+      "discovery": "A wall of names, scratched into plaster with knives and nails. Hundreds of them. At the top, in paint that's barely legible: 'We were here.'",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "read_names",
+          "label": "Read the names",
+          "outcome_text": "You trace the letters with your finger. Some names are familiar — people you knew, people you passed on the street. You stand there until the light changes.",
+          "epitaph": "Read the names on a memorial wall. Recognized some. Stood there a long time.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "add_name",
+          "label": "Add a name you know",
+          "outcome_text": "You find a clear spot and scratch a name into the plaster. It's not much. But it's something.",
+          "epitaph": "Added a name to a memorial wall. They were here. Now the wall knows too.",
+          "moral_delta": 5,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "walk_past",
+          "label": "Walk past. You've seen enough death.",
+          "outcome_text": "You don't stop. The names blur as you pass. You have your own to carry.",
+          "epitaph": "Walked past a memorial. Couldn't stop. Not today.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_repair_tool",
+      "display_name": "The Broken Crowbar",
+      "category": "crafting",
+      "trigger": "A damaged tool that could be salvaged.",
+      "discovery": "A crowbar lies on the ground, its handle cracked and splintered. It's still usable, but barely. Someone must have dropped it in a hurry.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "repair_it",
+          "label": "Wrap the handle with tape and wire",
+          "outcome_text": "The tape holds the splinters together. The wire keeps the crack from spreading. It won't last forever, but it'll last today.",
+          "epitaph": "Repaired a broken crowbar with tape and wire. Good enough for today.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "leave_it",
+          "label": "Not worth the materials. Leave it.",
+          "outcome_text": "You step over it. Someone else might have the tape to spare.",
+          "epitaph": "Left a broken crowbar. Didn't have the materials to fix it.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_improvise_lockpick",
+      "display_name": "The Locked Door",
+      "category": "crafting",
+      "trigger": "A locked door with no key in sight.",
+      "discovery": "The door is solid — steel frame, deadbolt, no windows. Someone locked this on purpose. You don't have a key, but you have a bobby pin and patience.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "pick_lock",
+          "label": "Bend the pin and work the tumblers",
+          "outcome_text": "Your hands shake. The pin bends wrong twice. On the third try, something clicks. The door opens onto a supply closet — cleaning chemicals and a mop bucket.",
+          "epitaph": "Picked a lock with a bobby pin. Found cleaning supplies. The world's worst treasure.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "force_it",
+          "label": "Kick the door near the latch",
+          "outcome_text": "Three kicks. The frame splinters. The door swings open. Your foot throbs, but you're in.",
+          "epitaph": "Kicked in a locked door. My foot hurts. Worth it.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "walk_away",
+          "label": "Not worth the noise. Move on.",
+          "outcome_text": "Kicking doors draws attention. Picking locks takes time. Neither is worth it today.",
+          "epitaph": "Left a locked door shut. Some things stay locked.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_upgrade_flashlight",
+      "display_name": "The Dim Flashlight",
+      "category": "crafting",
+      "trigger": "A flashlight that barely works.",
+      "discovery": "Your flashlight flickers — the beam is weak, the batteries dying. But you have a piece of reflective tape and a screwdriver. With some work, you could make it brighter.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 10,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "improve_beam",
+          "label": "Line the inside with reflective tape",
+          "outcome_text": "The tape catches and redirects the weak light. The beam is tighter, brighter. Not new, but better.",
+          "epitaph": "Improved my flashlight with reflective tape. The beam is tighter now.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "save_batteries",
+          "label": "Conserve what's left. Use it only when needed.",
+          "outcome_text": "You click it off and pocket it. The dark is manageable if you move slow.",
+          "epitaph": "Conserve flashlight batteries. Use it only when the dark gets thick.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_shelter_patch",
+      "display_name": "The Leaking Roof",
+      "category": "crafting",
+      "trigger": "Your shelter has a leak that needs patching.",
+      "discovery": "Drip. Drip. Drip. The tarp over your shelter has a new tear — wind or debris, doesn't matter. Water pools on the floor. If you don't fix it now, everything gets wet.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "patch_tarp",
+          "label": "Patch the tear with duct tape and plastic",
+          "outcome_text": "The tape sticks to the wet tarp — barely. The plastic covers the hole. The dripping stops. For now.",
+          "epitaph": "Patched the shelter roof. Duct tape and plastic. The dripping stopped.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "move_bucket",
+          "label": "Put a bucket under the drip and deal with it later",
+          "outcome_text": "The bucket catches the water. At least you can drink it. The leak stays.",
+          "epitaph": "Put a bucket under the leak. Collected rainwater. The roof is still broken.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_salvage_wiring",
+      "display_name": "The Dead Outlet",
+      "category": "crafting",
+      "trigger": "A wall outlet that could be rewired.",
+      "discovery": "The outlet is dead — no power since the bombs. But behind the plate, the wiring might be salvageable. Copper is copper.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "strip_wire",
+          "label": "Pull the wiring for the copper",
+          "outcome_text": "Three feet of copper wire, insulation cracked but intact. Useful for repairs, traps, or trade.",
+          "epitaph": "Stripped copper wire from a dead outlet. Three feet of useful metal.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "leave_wiring",
+          "label": "Leave it. Someone might need the outlet later.",
+          "outcome_text": "If the power ever comes back, the outlet works. Probably not. But maybe.",
+          "epitaph": "Left wiring in a dead outlet. Optimistic, maybe.",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_water_filter",
+      "display_name": "The Clogged Filter",
+      "category": "crafting",
+      "trigger": "A water filter that needs maintenance.",
+      "discovery": "The water comes out slow — the filter is clogged with sediment. You could clean it, or replace the media. Sand, charcoal, cloth — the old ways still work.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "clean_filter",
+          "label": "Backflush the filter and replace the charcoal",
+          "outcome_text": "Black water runs out, then clear. The flow improves. The charcoal is spent, but you have more baking in the fire.",
+          "epitaph": "Cleaned the water filter. Backflushed and replaced charcoal. Water flows clear again.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "boil_instead",
+          "label": "Skip the filter. Just boil everything.",
+          "outcome_text": "Boiling kills the bugs but not the taste. The filter stays clogged. You'll deal with it tomorrow.",
+          "epitaph": "Boiled water instead of fixing the filter. Tastes like iron. Safe enough.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_sharpen_blade",
+      "display_name": "The Dull Knife",
+      "category": "crafting",
+      "trigger": "A knife that won't hold an edge.",
+      "discovery": "The knife drags instead of cutting. The edge is gone — rolled and chipped from use. You have a flat stone and patience. That's all sharpening ever was.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "sharpen_stone",
+          "label": "Wet the stone and work the edge",
+          "outcome_text": "Twenty strokes per side. The steel sings against the stone. The edge comes back — not factory sharp, but sharp enough to cut rope and open cans.",
+          "epitaph": "Sharpened my knife on a flat stone. Twenty strokes per side. The edge came back.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "use_dull",
+          "label": "It still cuts. Just slower.",
+          "outcome_text": "You saw at the rope instead of slicing it. It works. It's ugly. It's survival.",
+          "epitaph": "Used a dull knife. Sawed instead of sliced. It worked.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_clothing_mend",
+      "display_name": "The Torn Jacket",
+      "category": "crafting",
+      "trigger": "Clothing that needs mending.",
+      "discovery": "The seam along your shoulder has split — wind cuts through it. The thread is weak, the fabric thin. But you have a needle and some dental floss. It'll hold.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "sew_it",
+          "label": "Stitch the seam with dental floss",
+          "outcome_text": "The floss is waxed — it slides through the fabric easy. The stitches are ugly but tight. The wind stays outside.",
+          "epitaph": "Mended my jacket with dental floss. Ugly stitches. Tight seam. Wind stays out.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "tape_it",
+          "label": "Slap duct tape over the tear",
+          "outcome_text": "The tape holds. It'll peel in the rain, but it's not raining.",
+          "epitaph": "Taped a torn jacket. It'll peel in the rain. It's not raining.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_trap_repair",
+      "display_name": "The Snapped Snare",
+      "category": "crafting",
+      "trigger": "A small-game trap that needs resetting.",
+      "discovery": "The snare is sprung — the wire bent, the trigger mechanism jammed. Something hit it hard. Maybe a rabbit. Maybe the wind. Either way, it won't catch anything now.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "reset_trap",
+          "label": "Rebend the wire and reset the trigger",
+          "outcome_text": "The wire straightens with pliers. The trigger clicks back into place. You bait it with a scrap and walk away. Tomorrow, maybe.",
+          "epitaph": "Reset a snare trap. Baited it with a scrap. Tomorrow, maybe.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "scrap_trap",
+          "label": "Salvage the wire for other uses",
+          "outcome_text": "The wire is still good — springy, strong. You coil it and pocket it. The trap is done, but the wire lives on.",
+          "epitaph": "Salvaged wire from a broken snare. The trap is done. The wire isn't.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_stove_fix",
+      "display_name": "The Sputtering Stove",
+      "category": "crafting",
+      "trigger": "A cooking stove that isn't burning right.",
+      "discovery": "The flame sputters — yellow instead of blue. The fuel line is clogged, or the air intake is blocked. Smoke fills the shelter. You need to fix this before you suffocate.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "clean_intake",
+          "label": "Clear the air intake and adjust the fuel",
+          "outcome_text": "Ash and debris packed the intake. You blow it clear. The flame steadies — blue, hot, clean. The smoke thins.",
+          "epitaph": "Fixed the stove. Cleared the air intake. Blue flame. No more smoke.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "open_window",
+          "label": "Open a vent and live with the smoke",
+          "outcome_text": "The vent lets cold air in and some smoke out. The stove still sputters, but you can breathe.",
+          "epitaph": "Opened a vent for the smoky stove. Cold air in, smoke out. Breathing is easier.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_battery_swap",
+      "display_name": "The Dead Radio",
+      "category": "crafting",
+      "trigger": "A radio with dead batteries.",
+      "discovery": "The radio won't turn on. The batteries are corroded — white crust on the terminals. But the contacts might still be good if you clean them. Or you could scavenge batteries from something else.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "clean_contacts",
+          "label": "Scrape the corrosion off the terminals",
+          "outcome_text": "A knife blade and some patience. The white crust flakes away. The batteries go back in. Static. Then a voice — faint, distant, but there.",
+          "epitaph": "Cleaned corroded battery terminals. The radio crackled to life. A voice in the static.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "scavenge_batteries",
+          "label": "Find batteries from another device",
+          "outcome_text": "A remote control, a child's toy, a smoke detector — all dead, but their batteries might have a little left. You swap them in. The radio hums.",
+          "epitaph": "Scavenged batteries from a child's toy. The radio works. The toy doesn't.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_boot_sole",
+      "display_name": "The Worn Sole",
+      "category": "crafting",
+      "trigger": "A boot with a separating sole.",
+      "discovery": "Your boot flaps when you walk — the sole is peeling away from the upper. Wet feet, blisters, infection. You need to fix this before you walk another mile.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "glue_sole",
+          "label": "Reattach the sole with adhesive",
+          "outcome_text": "The glue stinks — some industrial epoxy from a hardware store. You clamp the sole with rope and wait. An hour later, it holds. Your foot stays dry.",
+          "epitaph": "Glued my boot sole back on. Industrial epoxy. Clamped with rope. Foot stays dry.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "wire_stitch",
+          "label": "Stitch the sole back with wire",
+          "outcome_text": "Copper wire through the leather — painful to do, painful to wear. But the sole stays. You walk with a slight click now.",
+          "epitaph": "Wire-stitched a boot sole. Clicks when I walk. But it holds.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_window_board",
+      "display_name": "The Broken Window",
+      "category": "crafting",
+      "trigger": "A window that needs boarding up.",
+      "discovery": "The window is gone — blown out or broken by debris. Wind and rain come through freely. You have plywood scraps and nails. It's not pretty, but it's shelter.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "board_window",
+          "label": "Nail plywood over the opening",
+          "outcome_text": "The plywood covers the gap. Nails hold it to the frame. The wind drops to a whisper. The room darkens, but it's warm.",
+          "epitaph": "Boarded up a broken window. Plywood and nails. Dark but warm.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "hang_plastic",
+          "label": "Hang plastic sheeting instead",
+          "outcome_text": "The plastic billows but holds. Light comes through. It won't stop a fist, but it stops the wind.",
+          "epitaph": "Hung plastic over a broken window. Light comes through. Wind stays out.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_door_hinge",
+      "display_name": "The Sagging Door",
+      "category": "crafting",
+      "trigger": "A door that won't close properly.",
+      "discovery": "The door sags on its hinges — it drags the floor and won't latch. The screws are stripped, the wood soft. You could rehang it, or just prop it shut.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "rehang_door",
+          "label": "Fill the screw holes with wood and rehang",
+          "outcome_text": "Toothpicks and glue in the stripped holes. New screws bite deep. The door swings true and latches with a click.",
+          "epitaph": "Rehung a sagging door. Toothpicks and glue in the stripped holes. It latches now.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "prop_shut",
+          "label": "Prop a chair under the handle",
+          "outcome_text": "The chair holds the door shut. It's not a lock, but it's something. You'll fix the hinges when you have time. Maybe.",
+          "epitaph": "Propped a door shut with a chair. Not a lock. Something.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_craft_can_opener",
+      "display_name": "The Can Without a Key",
+      "category": "crafting",
+      "trigger": "A sealed can with no opener.",
+      "discovery": "The can is intact — no rust, no dents, label gone. But there's no pull tab, no opener, nothing. You could smash it open and lose half the contents, or you could be patient.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "grind_open",
+          "label": "Grind the lid on concrete until it opens",
+          "outcome_text": "The concrete eats through the lid seam. Slow, steady, messy. The lid pops off. The food inside is intact — beans, thick and brown.",
+          "epitaph": "Ground a can open on concrete. Slow work. Beans inside. Worth the effort.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "stab_open",
+          "label": "Puncture the lid with a knife and pry",
+          "outcome_text": "The knife goes through easy. You work the lid open like a tin can. Some metal shavings fall in. You pick them out. Mostly.",
+          "epitaph": "Stabbed a can open with a knife. Some metal shavings. Mostly picked them out.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_bandage_wound",
+      "display_name": "The Bleeding Cut",
+      "category": "medical",
+      "trigger": "A fresh wound that needs bandaging.",
+      "discovery": "The cut isn't deep, but it won't stop bleeding. Blood runs down your arm and drips from your fingers. You need to clean it and wrap it before it gets infected.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "clean_and_wrap",
+          "label": "Clean the wound and wrap it with cloth",
+          "outcome_text": "Water stings. The cloth wraps tight. The bleeding slows, then stops. You tie it off with your teeth and one hand.",
+          "epitaph": "Bandaged a bleeding cut. Clean water and cloth. The bleeding stopped.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "pressure_only",
+          "label": "Apply pressure and wait",
+          "outcome_text": "You press hard with your palm. Ten minutes. The blood thickens and clots. It'll scar, but it'll hold.",
+          "epitaph": "Stopped bleeding with pressure alone. It'll scar. It'll hold.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_boil_water",
+      "display_name": "The Contaminated Puddle",
+      "category": "medical",
+      "trigger": "A water source that needs purification.",
+      "discovery": "The puddle sits in a crater — brown, still, reflecting the gray sky. Your throat aches looking at it. But drinking it raw is a gamble your stomach might not win.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 2,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "boil_it",
+          "label": "Fill your pot and boil it over a fire",
+          "outcome_text": "The water bubbles and steams. After ten minutes, it's clear enough. It tastes like smoke and metal, but it's safe. Mostly.",
+          "epitaph": "Boiled contaminated water. Tastes like smoke. Safe enough.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "drink_raw",
+          "label": "Drink it. Thirst wins.",
+          "outcome_text": "It goes down warm and gritty. Your stomach clenches an hour later. You knew the risk.",
+          "epitaph": "Drank contaminated water. Thirst won. Stomach lost.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "skip_it",
+          "label": "Not worth the risk. Keep moving.",
+          "outcome_text": "You walk past. The thirst stays. So does your health. For now.",
+          "epitaph": "Skipped contaminated water. Thirst stays. Health holds.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_find_painkillers",
+      "display_name": "The Aching Head",
+      "category": "medical",
+      "trigger": "A headache that won't quit.",
+      "discovery": "The headache has been behind your eyes for three days. Every sound is too loud, every light too bright. You need painkillers, or you need to sleep. Neither is easy to find.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "search_pharmacy",
+          "label": "Search the nearest pharmacy for painkillers",
+          "outcome_text": "The shelves are empty — picked clean months ago. But behind the counter, in a locked drawer: a bottle of aspirin, half full. You shake two out and swallow them dry.",
+          "epitaph": "Found aspirin in a pharmacy drawer. Two pills. The headache dulled.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "rest_in_dark",
+          "label": "Find a dark, quiet place and rest",
+          "outcome_text": "You curl up in a closet, jacket over your head. The dark helps. The quiet helps more. After an hour, the pain retreats to a manageable throb.",
+          "epitaph": "Rested in a dark closet. The headache retreated. Manageable now.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_treat_burn",
+      "display_name": "The Burn",
+      "category": "medical",
+      "trigger": "A burn that needs treatment.",
+      "discovery": "The stove caught your forearm — a red welt, skin peeling, pain sharp and constant. Burns get infected fast in the wasteland. You need to treat it now.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "cool_and_cover",
+          "label": "Cool it with water and cover with clean cloth",
+          "outcome_text": "The water stings, then soothes. The cloth keeps the air off it. The pain drops from screaming to a steady ache.",
+          "epitaph": "Treated a burn with cool water and cloth. The pain eased.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "ignore_burn",
+          "label": "It's just a burn. Walk it off.",
+          "outcome_text": "The pain follows you for days. The skin blisters and weeps. You learn to keep your sleeve down.",
+          "epitaph": "Ignored a burn. It blistered. I learned to keep my sleeve down.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_splint_break",
+      "display_name": "The Sprained Ankle",
+      "category": "medical",
+      "trigger": "A joint injury that needs support.",
+      "discovery": "Your ankle turned on the rubble — a sharp pain, then a dull ache, then the swelling. It's not broken, but walking on it is a gamble. You need a splint or a cane.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "improvise_splint",
+          "label": "Splint it with sticks and cloth",
+          "outcome_text": "Two sticks, one on each side, wrapped tight with cloth. The ankle doesn't bend anymore. You walk with a limp, but you walk.",
+          "epitaph": "Splinted a sprained ankle with sticks and cloth. I limp, but I walk.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "find_cane",
+          "label": "Find a sturdy branch to use as a cane",
+          "outcome_text": "A branch, shoulder-height, thick enough to lean on. The weight shifts off your ankle. You move slower, but you move.",
+          "epitaph": "Found a branch to use as a cane. Slower, but moving.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_iodine_pill",
+      "display_name": "The Radiation Warning",
+      "category": "medical",
+      "trigger": "Exposure to elevated radiation.",
+      "discovery": "Your dosimeter clicks faster than it should. The air tastes like metal. You've been in the open too long, or too close to the blast zone. Iodine now, or sickness later.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "take_iodine",
+          "label": "Take an iodine pill",
+          "outcome_text": "The pill is bitter and chalky. It sits in your stomach like a stone. But your thyroid is protected. For today.",
+          "epitaph": "Took an iodine pill. Bitter and chalky. Thyroid protected for today.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "save_pill",
+          "label": "Save the pill for a worse exposure",
+          "outcome_text": "You pocket the pill. The dosimeter keeps clicking. You'll take it when it's worse. If you remember.",
+          "epitaph": "Saved an iodine pill for later. The dosimeter keeps clicking.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_clean_infection",
+      "display_name": "The Infected Wound",
+      "category": "medical",
+      "trigger": "An old wound showing signs of infection.",
+      "discovery": "The wound is hot to the touch, the skin around it red and swollen. Pus seeps from the edges. The smell is sweet and wrong. Infection. You need to clean it before it spreads.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "drain_and_clean",
+          "label": "Drain the pus and clean with antiseptic",
+          "outcome_text": "The pus runs yellow-green. The antiseptic burns. You pack the wound with clean cloth and wrap it tight. The heat fades by evening.",
+          "epitaph": "Drained an infected wound. Antiseptic and clean cloth. The fever broke.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "heat_poultice",
+          "label": "Apply a hot poultice to draw out the infection",
+          "outcome_text": "Hot cloth and herbs pressed against the wound. The heat draws the infection to the surface. It weeps, then drains, then calms.",
+          "epitaph": "Treated infection with a hot poultice. It wept, then drained, then calmed.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_find_antibiotics",
+      "display_name": "The Fever",
+      "category": "medical",
+      "trigger": "A fever that won't break.",
+      "discovery": "The fever came on fast — shaking, sweating, skin burning to the touch. Your body is fighting something. Without antibiotics, it might not win.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "hard",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "search_clinic",
+          "label": "Search the abandoned clinic for antibiotics",
+          "outcome_text": "The clinic is stripped bare. But in the basement, behind a locked cabinet: a bottle of amoxicillin, expired six months ago. Expired is better than nothing.",
+          "epitaph": "Found expired antibiotics in a clinic basement. Better than nothing.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "sweat_it_out",
+          "label": "Bundle up and try to sweat the fever out",
+          "outcome_text": "You wrap in every blanket you have. The sweat comes — soaking, stinking. The fever breaks at dawn. You're weak, but alive.",
+          "epitaph": "Sweat out a fever. Four blankets. The fever broke at dawn.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "trade_for_medicine",
+          "label": "Trade your supplies for medicine",
+          "outcome_text": "A scavenger has pills. You trade food for them. The exchange is fair, but your stomach will miss the food more than the fever missed the pills.",
+          "epitaph": "Traded food for antibiotics. Fair exchange. My stomach disagrees.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_rest_exhaustion",
+      "display_name": "The Exhaustion",
+      "category": "medical",
+      "trigger": "Physical exhaustion that demands rest.",
+      "discovery": "Your legs give out. One moment you're walking, the next you're on your knees, vision tunneling, breath ragged. You've pushed too hard for too long. Rest, or collapse.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "find_shelter_rest",
+          "label": "Find shelter and sleep",
+          "outcome_text": "A doorway, a corner, a pile of rubble — anywhere out of the wind. You curl up and sleep for twelve hours. Your body thanks you with pain.",
+          "epitaph": "Slept in a doorway for twelve hours. Body aches. But it works again.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "push_through",
+          "label": "Push through. You can't stop here.",
+          "outcome_text": "You force your legs to move. Each step is a negotiation with your body. You make it another mile before you fall again.",
+          "epitaph": "Pushed through exhaustion. Made it another mile before falling.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_water_ration",
+      "display_name": "The Last Swallow",
+      "category": "medical",
+      "trigger": "Running dangerously low on water.",
+      "discovery": "The bottle is almost empty — one swallow left. The sun is high, the air dry, and the next water source is unknown. One swallow. When do you take it?",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 2,
+      "difficulty": "easy",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "drink_now",
+          "label": "Drink it now. You need it now.",
+          "outcome_text": "The water is warm and tastes like plastic. It's gone in one gulp. Your throat is wet for thirty seconds. Then dry again.",
+          "epitaph": "Drank the last swallow of water. Gone in one gulp. Throat dry again.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "save_for_later",
+          "label": "Save it for when you really need it",
+          "outcome_text": "You cap the bottle and pocket it. The thirst gnaws, but the water waits. Emergency is coming. You'll be ready.",
+          "epitaph": "Saved the last swallow. Emergency is coming. I'll be ready.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_treat_blister",
+      "display_name": "The Blister",
+      "category": "medical",
+      "trigger": "A blister that needs attention.",
+      "discovery": "The blister is the size of a coin, tight and full of fluid. Walking pops it — raw skin, burning pain, infection waiting. You need to drain it clean or protect it.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "drain_clean",
+          "label": "Sterilize a needle and drain it carefully",
+          "outcome_text": "The needle slides in easy. The fluid runs clear. You leave the skin intact as a bandage and wrap it with cloth. It hurts less now.",
+          "epitaph": "Drained a blister with a sterile needle. Left the skin as a bandage.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "pad_and_walk",
+          "label": "Pad around it and keep walking",
+          "outcome_text": "You wrap cloth around the blister, cushioning it from your boot. It throbs with each step, but it doesn't pop. Not yet.",
+          "epitaph": "Padded a blister and kept walking. It throbs. It holds.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_sunburn_treat",
+      "display_name": "The Sunburn",
+      "category": "medical",
+      "trigger": "Severe sunburn from exposure.",
+      "discovery": "Your skin is red, tight, hot to the touch. The sun burned through the ash layer today — rare, brutal. Your arms and face feel like they're on fire.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "cool_cloth",
+          "label": "Apply cool, wet cloths to the burns",
+          "outcome_text": "The cloth soothes on contact. You rewet it every hour. By evening, the red fades to pink. The tightness loosens.",
+          "epitaph": "Treated sunburn with cool cloths. Rewet every hour. The red faded.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "cover_up",
+          "label": "Cover up and stay out of the sun",
+          "outcome_text": "Long sleeves, hat, shade. The burn heals slow, but it heals. You learn to watch the sky for breaks in the ash.",
+          "epitaph": "Covered up against sunburn. Long sleeves and shade. The burn healed slow.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_food_safety",
+      "display_name": "The Suspicious Can",
+      "category": "medical",
+      "trigger": "Food that might be unsafe to eat.",
+      "discovery": "The can is bulging at the seams. The label is gone. When you shake it, something sloshes inside. Bulging cans mean botulism. But you haven't eaten in two days.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "medium",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "open_and_smell",
+          "label": "Open it and check the smell",
+          "outcome_text": "The lid pops. The smell hits you — sour, wrong, chemical. You dump it out. Your stomach growls, but your brain says no.",
+          "epitaph": "Opened a bulging can. The smell was wrong. Dumped it out.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "eat_it_anyway",
+          "label": "Eat it. Hunger wins.",
+          "outcome_text": "It tastes metallic and warm. You eat half before your body rebels. The vomiting starts an hour later.",
+          "epitaph": "Ate from a bulging can. Vomited for an hour. Hunger lost.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "toss_it",
+          "label": "Throw it away. Not worth the risk.",
+          "outcome_text": "The can clatters into the rubble. Your stomach protests. Your brain thanks you.",
+          "epitaph": "Tossed a bulging can. Stomach protested. Brain thanked me.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_breathe_exercise",
+      "display_name": "The Panic",
+      "category": "medical",
+      "trigger": "A panic attack or anxiety episode.",
+      "discovery": "Your chest tightens. Your breath comes fast and shallow. The world narrows to a tunnel. You know this feeling — panic, cold and sharp. You need to breathe or you'll pass out.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "breathe_slow",
+          "label": "Count your breaths. Four in, four out.",
+          "outcome_text": "One. Two. Three. Four. Hold. One. Two. Three. Four. The tunnel widens. The tightness loosens. You're still here.",
+          "epitaph": "Counted through a panic attack. Four in, four out. The tunnel widened.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "ground_yourself",
+          "label": "Name five things you can see, four you can touch",
+          "outcome_text": "A wall. A crack. A bird. Your hands. The ground. The world comes back into focus. The panic recedes.",
+          "epitaph": "Grounded through a panic attack. Named what I could see. The world came back.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_med_sleep_hygiene",
+      "display_name": "The Insomnia",
+      "category": "medical",
+      "trigger": "Inability to sleep despite exhaustion.",
+      "discovery": "Three days without real sleep. Your eyes burn, your thoughts blur, your hands shake. You're tired — bone tired — but every time you close your eyes, they open again.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "warm_drink",
+          "label": "Heat water and drink something warm",
+          "outcome_text": "The warmth spreads from your stomach to your limbs. Your eyelids droop. You don't fight it. The sleep comes — shallow, broken, but real.",
+          "epitaph": "Drank something warm. Sleep came after three days. Shallow but real.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "exhaust_yourself",
+          "label": "Do push-ups until your body gives out",
+          "outcome_text": "Twenty. Thirty. Forty. Your arms buckle. You collapse on the floor. The sleep takes you before you hit the ground.",
+          "epitaph": "Did push-ups until I collapsed. Sleep took me on the floor.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_raider_patrol",
+      "display_name": "The Raider Patrol",
+      "category": "combat",
+      "trigger": "A raider patrol spotted in the distance.",
+      "discovery": "Three figures on the ridge — armed, moving slow, scanning the ruins. Raiders. They haven't seen you yet. You have seconds to decide.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "hide_and_wait",
+          "label": "Press into the shadows and wait them out",
+          "outcome_text": "You hold your breath. They pass within ten feet. One stops, looks your way. Then moves on. You stay still for another hour.",
+          "epitaph": "Hid from a raider patrol. They passed within ten feet. I didn't breathe.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "retreat_slowly",
+          "label": "Back away slowly, keeping cover between you",
+          "outcome_text": "Wall to car to rubble. You move like water — slow, silent, gone. By the time they look your way, you're already two blocks away.",
+          "epitaph": "Retreated from a raider patrol. Wall to car to rubble. Gone before they saw.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "create_diversion",
+          "label": "Throw a rock to draw them the other way",
+          "outcome_text": "The rock clatters against metal fifty yards east. They turn, weapons up. You slip west while they investigate.",
+          "epitaph": "Drew raiders away with a rock. They went east. I went west.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_mutant_scare",
+      "display_name": "The Growling Dark",
+      "category": "combat",
+      "trigger": "A mutant creature blocking your path.",
+      "discovery": "A low growl from the shadows. Something moves — large, wrong-shaped, eyes catching the light. It's between you and where you need to go.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "loud_noise",
+          "label": "Bang metal and shout to scare it off",
+          "outcome_text": "You slam a pipe against the wall. The sound echoes. The creature flinches, snarls, then backs into the dark. You wait ten minutes before moving.",
+          "epitaph": "Scared off a mutant with noise. Bang of metal. It backed into the dark.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "go_around",
+          "label": "Find another route. Not worth the risk.",
+          "outcome_text": "You backtrack three blocks and cut through a building. The detour costs you an hour. Your heart rate takes longer to settle.",
+          "epitaph": "Went around a mutant. Three blocks back. An hour lost. Heart still racing.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "fire_torch",
+          "label": "Light a torch and advance slowly",
+          "outcome_text": "The flame pushes back the dark. The creature hisses at the light and slinks away. Fire still works. Everything fears something.",
+          "epitaph": "Drove off a mutant with fire. Everything fears something.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_ambush_avoid",
+      "display_name": "The Chokepoint",
+      "category": "combat",
+      "trigger": "A narrow passage that could be an ambush site.",
+      "discovery": "The alley narrows — walls on both sides, debris blocking the far end. Perfect ambush spot. Footprints in the dust. Someone's been here. Recently.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "hard",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "turn_back",
+          "label": "Turn back. Not worth the gamble.",
+          "outcome_text": "You back out the way you came. The alley stays empty. Maybe it was nothing. Maybe it wasn't. You'll never know.",
+          "epitaph": "Turned back from a chokepoint. Maybe it was nothing. Maybe it wasn't.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "check_rooftops",
+          "label": "Scan the rooftops before entering",
+          "outcome_text": "Nothing on the roofs. Nothing in the windows. You move through fast, pressed against the wall, every nerve firing. You make it through.",
+          "epitaph": "Checked rooftops before entering a chokepoint. Nothing there. Made it through.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "climb_over",
+          "label": "Climb the wall and go over the buildings",
+          "outcome_text": "The wall is rough — handholds everywhere. You pull yourself up and cross the rooftops. The alley passes beneath you, empty. Or not.",
+          "epitaph": "Climbed over a chokepoint. The alley was empty below. Or wasn't.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_escape_pursuit",
+      "display_name": "The Footsteps Behind",
+      "category": "combat",
+      "trigger": "Someone is following you.",
+      "discovery": "Footsteps behind you — matching your pace, stopping when you stop. You speed up. They speed up. You're being followed.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "hard",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "break_line_of_sight",
+          "label": "Turn a corner and run",
+          "outcome_text": "You sprint around the corner, vault a wall, and press flat behind it. The footsteps come, then stop. Then recede. You wait twenty minutes.",
+          "epitaph": "Lost a tail by vaulting a wall. They walked past. I waited twenty minutes.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "confront",
+          "label": "Turn around and face them",
+          "outcome_text": "You stop. Turn. A figure stands thirty feet back. They raise their hands. 'I just want to talk,' they say. Maybe. Maybe not.",
+          "epitaph": "Confronted a tail. They raised their hands. 'I just want to talk.' Maybe.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "lead_them_wrong",
+          "label": "Lead them somewhere dangerous, then double back",
+          "outcome_text": "You walk past the collapsed building, the flooded basement, the raider territory. They follow. You double back through a window. They don't.",
+          "epitaph": "Led a tail through dangerous ground. Doubled back through a window. They didn't.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_defend_camp",
+      "display_name": "The Night Visitors",
+      "category": "combat",
+      "trigger": "Noises outside your shelter at night.",
+      "discovery": "Something scrapes against the wall. A shadow passes the window. Your hand finds the knife under your pillow. Someone is outside.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "stay_quiet",
+          "label": "Stay still and quiet. Don't reveal you're here.",
+          "outcome_text": "You hold your breath. The scraping stops. Footsteps move away. You don't sleep until dawn.",
+          "epitaph": "Stayed quiet during a night visit. They left. I didn't sleep until dawn.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "make_noise",
+          "label": "Bang on the wall and shout",
+          "outcome_text": "You slam your hand against the metal. 'GET OUT!' The shadow runs. You hear footsteps fade into the dark.",
+          "epitaph": "Scared off night visitors with noise. They ran. I stayed awake.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "investigate",
+          "label": "Grab your weapon and check outside",
+          "outcome_text": "You step into the dark. Nothing. Wind. Rats. Your imagination. Or something that left before you opened the door.",
+          "epitaph": "Checked outside during a night scare. Nothing there. Or something that left.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_scavenge_threat",
+      "display_name": "The Claimed Building",
+      "category": "combat",
+      "trigger": "A building marked as claimed territory.",
+      "discovery": "The spray paint is fresh: 'OURS. KEEP OUT.' The building looks intact — windows whole, door reinforced. Someone lives here. And they don't want company.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "medium",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "respect_claim",
+          "label": "Respect the claim. Move on.",
+          "outcome_text": "You read the sign and walk. Their building. Their rules. There are other ruins.",
+          "epitaph": "Respected a claimed building. Theirs. Not mine.",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "sneak_around",
+          "label": "Check the back for unclaimed entrances",
+          "outcome_text": "The back door is boarded but loose. You could get in. But the sign said 'OURS.' You back away.",
+          "epitaph": "Checked the back of a claimed building. Could have gotten in. Didn't.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "force_entry",
+          "label": "Break in. You need supplies more than they need privacy.",
+          "outcome_text": "The board comes loose. Inside: canned food, water, a mattress. You take what you can carry. You don't look at the photos on the wall.",
+          "epitaph": "Broke into a claimed building. Took supplies. Didn't look at the photos.",
+          "moral_delta": -5,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_dog_encounter",
+      "display_name": "The Stray Dog",
+      "category": "combat",
+      "trigger": "A feral dog in your path.",
+      "discovery": "The dog is thin — ribs showing, fur matted, teeth bared. It growls low, blocking the road. Feral, hungry, desperate. Like everything else.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "easy",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "share_food",
+          "label": "Toss it some food and walk wide",
+          "outcome_text": "The scrap hits the ground. The dog sniffs, then eats. You walk wide around it. It watches you go but doesn't follow.",
+          "epitaph": "Fed a feral dog. It watched me go. Didn't follow.",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "stand_ground",
+          "label": "Stand tall, make yourself big, back it down",
+          "outcome_text": "You raise your arms, shout, stomp. The dog flinches, snarls, then slinks away. Dominion is still a language they understand.",
+          "epitaph": "Stared down a feral dog. It slinked away. Dominion still works.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "find_another_route",
+          "label": "Go around. Not your fight.",
+          "outcome_text": "You backtrack and take the long way. The dog stays in the road, guarding nothing.",
+          "epitaph": "Went around a feral dog. It guarded the road. I took the long way.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_sniper_awareness",
+      "display_name": "The Whistle",
+      "category": "combat",
+      "trigger": "A bullet crack or near-miss.",
+      "discovery": "A crack — sharp, close, wrong. Something chips the wall inches from your head. You drop flat. Someone is shooting at you.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "hard",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "stay_low",
+          "label": "Stay flat and crawl to cover",
+          "outcome_text": "Elbows and knees. The rubble scrapes your skin. You make it behind a wall. The shots stop. They lost sight of you.",
+          "epitaph": "Crawled to cover under fire. Elbows and knees. The shots stopped.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "run_zigzag",
+          "label": "Run in a zigzag pattern to the nearest building",
+          "outcome_text": "You sprint — left, right, left. The shots come fast but miss. You crash through a door and press against the wall. Breathing hard. Alive.",
+          "epitaph": "Zigzagged under fire. Crashed through a door. Alive.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "play_dead",
+          "label": "Drop and don't move",
+          "outcome_text": "You fall face-down and hold still. The shots stop. Footsteps approach, then recede. They think you're dead. You let them.",
+          "epitaph": "Played dead under fire. They walked away. I didn't move for an hour.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_trap_detect",
+      "display_name": "The Tripwire",
+      "category": "combat",
+      "trigger": "A booby trap in your path.",
+      "discovery": "A wire, thin as thread, stretched across the doorway at ankle height. You almost walked into it. Connected to what — a bell? A grenade? You don't want to find out.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "step_over",
+          "label": "Step carefully over the wire",
+          "outcome_text": "You lift your foot high and clear it. The wire stays taut. Whatever it's connected to stays quiet. You move on, checking every doorway after.",
+          "epitaph": "Stepped over a tripwire. Didn't trigger it. Check every doorway now.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "disarm_it",
+          "label": "Follow the wire and disarm the trap",
+          "outcome_text": "The wire leads to a tin can full of rocks — an alarm, not a weapon. You cut the wire. The can falls silent. Someone's perimeter, broken.",
+          "epitaph": "Disarmed a tripwire trap. Just an alarm. Cut the wire.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "find_another_way",
+          "label": "Find another entrance. Not your trap, not your problem.",
+          "outcome_text": "You circle the building. A window on the far side is open. You climb through. The tripwire stays armed for whoever set it.",
+          "epitaph": "Went around a tripwire. Climbed through a window. Their trap, their problem.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_group_encounter",
+      "display_name": "The Group at the Bridge",
+      "category": "combat",
+      "trigger": "A group of strangers blocking a crossing.",
+      "discovery": "Five people on the bridge — armed with pipes and boards, not guns. They watch you approach. One steps forward. 'Toll,' they say. 'Or turn back.'",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "hard",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "pay_toll",
+          "label": "Give them something small to pass",
+          "outcome_text": "A tin of food. They take it and step aside. The bridge is yours. The cost was low. The principle stings.",
+          "epitaph": "Paid a toll to cross a bridge. A tin of food. The principle stings.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "negotiate",
+          "label": "Offer information instead of goods",
+          "outcome_text": "'There's a supply cache two blocks east. Untouched.' They look at each other. Step aside. You cross. Whether the cache exists is their problem.",
+          "epitaph": "Traded information for passage across a bridge. The cache may or may not exist.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "find_crossing",
+          "label": "Find another way across the river",
+          "outcome_text": "You follow the bank downstream. An hour later, a collapsed building spans the gap. You cross on the rubble. The bridge stays behind you.",
+          "epitaph": "Found another crossing. Collapsed building downstream. The bridge stays behind.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_weapon_find",
+      "display_name": "The Pipe",
+      "category": "combat",
+      "trigger": "An improvised weapon on the ground.",
+      "discovery": "A length of steel pipe, heavy, rusted at one end. It fits your hand like it was made for it. In the wasteland, it was.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "take_pipe",
+          "label": "Pick it up and test the weight",
+          "outcome_text": "You swing it once. The air whistles. It'll do. You slide it through your belt loop. Heavy, but reassuring.",
+          "epitaph": "Picked up a steel pipe. Heavy. Reassuring. Slid it through my belt.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "leave_pipe",
+          "label": "You don't need a weapon. Leave it.",
+          "outcome_text": "You step over it. Your hands are empty. Your conscience is lighter. Your chances are lower.",
+          "epitaph": "Left a pipe on the ground. Hands empty. Conscience lighter. Chances lower.",
+          "moral_delta": 2,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_noise_discipline",
+      "display_name": "The Loud Step",
+      "category": "combat",
+      "trigger": "Your movement is making too much noise.",
+      "discovery": "Every step crunches — glass, gravel, dry leaves. In the quiet wasteland, you might as well be shouting. You need to move quieter or not at all.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "slow_step",
+          "label": "Slow down and test each step before committing",
+          "outcome_text": "One step. Test. Another step. Test. Slow as a funeral. But silent. You make it through the debris field without a sound.",
+          "epitaph": "Moved through debris in silence. Slow as a funeral. Silent as one.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "find_quiet_path",
+          "label": "Circle around to find paved ground",
+          "outcome_text": "The pavement is cracked but solid. Your steps are muffled. You add ten minutes to your walk but subtract all the noise.",
+          "epitaph": "Found paved ground to walk quietly. Ten minutes longer. Silent.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_shelter_fortify",
+      "display_name": "The Weak Point",
+      "category": "combat",
+      "trigger": "A vulnerability in your shelter's defenses.",
+      "discovery": "The window latch is broken. The door frame is cracked. One good kick and anyone is inside. You need to fortify before nightfall.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "barricade",
+          "label": "Stack furniture against the weak points",
+          "outcome_text": "Table against the door. Bookshelf against the window. It won't stop a determined attacker, but it'll slow them down. And the noise will wake you.",
+          "epitaph": "Barricaded the weak points. Furniture against door and window. It'll slow them down.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "set_alarm",
+          "label": "Set up cans on a string as an early warning",
+          "outcome_text": "Cans on a wire, stretched across the entrance. Anyone trips it, you'll hear. It's not a lock. It's a warning system.",
+          "epitaph": "Set up can alarms on the entrance. Not a lock. A warning.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "relocate",
+          "label": "Find a more defensible spot for the night",
+          "outcome_text": "You move to a room with one door, no windows, solid walls. Smaller, but safer. You sleep with the knife in your hand.",
+          "epitaph": "Relocated to a more defensible room. One door. No windows. Knife in hand.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_negotiate_passage",
+      "display_name": "The Checkpoint",
+      "category": "combat",
+      "trigger": "An improvised checkpoint on the road.",
+      "discovery": "Two people with a makeshift barrier — shopping carts and plywood. They don't look hostile. They look tired. 'We're checking everyone,' one says. 'Just looking for someone.'",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 5,
+      "difficulty": "medium",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "cooperate",
+          "label": "Let them check you and answer their questions",
+          "outcome_text": "They search your pack — gently, apologetically. 'Sorry,' one says. 'Lost our kid in the blast.' You answer their questions. They let you pass.",
+          "epitaph": "Cooperated at a checkpoint. They were looking for their kid. I hope they find them.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "refuse_and_wait",
+          "label": "Refuse the search and wait for them to let you pass",
+          "outcome_text": "You sit down. They watch you. An hour passes. They move the barrier. 'Go,' one says. 'We're tired too.'",
+          "epitaph": "Refused a checkpoint search. Waited an hour. They let me pass.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "find_detour",
+          "label": "Find a way around the checkpoint",
+          "outcome_text": "You cut through a building and emerge on the other side of the barrier. They don't see you. The road ahead is clear.",
+          "epitaph": "Went around a checkpoint. Through a building. They didn't see me.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_combat_darkness_move",
+      "display_name": "The Dark Corridor",
+      "category": "combat",
+      "trigger": "Moving through a pitch-black space.",
+      "discovery": "The corridor is pitch black — no light, no windows, nothing. You can hear your own breathing. Something drips in the distance. You need to get through, or turn back.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 3,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "feel_walls",
+          "label": "Keep one hand on the wall and move slowly",
+          "outcome_text": "Your fingers trace the rough concrete. Step by step. The dripping gets louder, then softer. A door handle. You push through into light.",
+          "epitaph": "Moved through a dark corridor by touch. Found the door. Found the light.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "light_improvised",
+          "label": "Tear cloth and make a torch",
+          "outcome_text": "The cloth catches from your lighter. The flame pushes back the dark. The corridor is short — twenty feet to the door. You make it.",
+          "epitaph": "Lit a cloth torch in a dark corridor. Twenty feet to the door. Made it.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "turn_back_dark",
+          "label": "Turn back. Not in the dark.",
+          "outcome_text": "You back out the way you came. The light returns. Your heart slows. Some corridors stay dark.",
+          "epitaph": "Turned back from a dark corridor. Some corridors stay dark.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_inscription",
+      "display_name": "The Faded Plaque",
+      "category": "lore",
+      "trigger": "A memorial plaque or inscription on a wall.",
+      "discovery": "A brass plaque, green with age, bolted to a wall. The letters are barely legible — 'In memory of...' A date: March 2024. A list of names. Someone wanted these people remembered.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "read_carefully",
+          "label": "Wipe the plaque clean and read every name",
+          "outcome_text": "Twelve names. Ages ranging from 4 to 81. You read them all. You won't remember them all. But you read them.",
+          "epitaph": "Read a memorial plaque. Twelve names. Ages 4 to 81. I read them all.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "skim_names",
+          "label": "Glance at it and move on",
+          "outcome_text": "Names. Dates. A memorial. You've seen hundreds. They blur together after a while.",
+          "epitaph": "Glanced at a memorial plaque. Names blur together after a while.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_recording",
+      "display_name": "The Tape Recorder",
+      "category": "lore",
+      "trigger": "A working audio recording device.",
+      "discovery": "A portable recorder sits on a desk, its tape still threaded. The play button is worn smooth. Someone listened to this many times. The batteries might still have life.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "play_tape",
+          "label": "Press play and listen",
+          "outcome_text": "Static. Then a voice — female, tired, reading from something. 'Day 47. The water is gone. The children are sleeping. If anyone finds this, we were at the school on Elm Street. We tried.' The tape ends.",
+          "epitaph": "Listened to a recording. A woman at a school on Elm Street. Day 47. They tried.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "take_tape",
+          "label": "Take the tape. Listen later.",
+          "outcome_text": "You pocket the cassette. The weight is nothing. The voice stays in your head anyway.",
+          "epitaph": "Took a tape recording. Haven't listened yet. The voice is already there.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "leave_recorder",
+          "label": "Leave it. Some voices don't need to be heard.",
+          "outcome_text": "You press stop. The recorder stays on the desk. The tape stays wound. Some messages are for someone else.",
+          "epitaph": "Left a tape recorder. Some messages are for someone else.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_photograph",
+      "display_name": "The Family Photo",
+      "category": "lore",
+      "trigger": "A photograph found in rubble or on a body.",
+      "discovery": "A photograph, half-buried in dust. A family of four — mother, father, two kids — standing in front of a Christmas tree. On the back, in pencil: 'Christmas 2022. The last good one.'",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "keep_photo",
+          "label": "Pocket the photo carefully",
+          "outcome_text": "You slide it into your jacket, against your chest. You don't know them. But someone did.",
+          "epitaph": "Kept a family photo. Christmas 2022. The last good one.",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "place_upright",
+          "label": "Prop it up where someone might see it",
+          "outcome_text": "You lean the photo against a wall, face out. If the family comes back, they'll find it. If not, someone else will see their faces.",
+          "epitaph": "Propped up a family photo. Face out. For whoever comes back.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "leave_photo",
+          "label": "Leave it in the dust",
+          "outcome_text": "You brush the dust back over it. The family disappears under the gray. Like everything else.",
+          "epitaph": "Left a family photo in the dust. Like everything else.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_coded_message",
+      "display_name": "The Coded Note",
+      "category": "lore",
+      "trigger": "A piece of paper with symbols or a cipher.",
+      "discovery": "A note, folded small, tucked into a crack in the wall. The writing is symbols — not letters, not numbers. A code. Someone was hiding a message.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 7,
+      "difficulty": "hard",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "try_decode",
+          "label": "Study the symbols and try to find a pattern",
+          "outcome_text": "An hour of staring. The symbols repeat — A appears where E should, B where T should. A substitution cipher. The message reads: 'SUPPLIES UNDER THE FLOOR OF THE CHAPEL.'",
+          "epitaph": "Decoded a cipher. 'Supplies under the floor of the chapel.' A lead.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "save_for_later",
+          "label": "Pocket the note. Maybe someone else can read it.",
+          "outcome_text": "The note goes into your pack. You'll find someone who knows codes. Or you won't.",
+          "epitaph": "Took a coded note. Can't read it yet. Maybe someone can.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "discard_code",
+          "label": "It's probably nothing. Leave it.",
+          "outcome_text": "You put the note back in the crack. Secrets stay secret. Sometimes that's for the best.",
+          "epitaph": "Left a coded note in the wall. Secrets stay secret.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_folk_song",
+      "display_name": "The Humming",
+      "category": "lore",
+      "trigger": "Someone humming or singing a pre-war song.",
+      "discovery": "An old woman sits by a fire, humming. The tune is familiar — something from before. She doesn't notice you at first. The melody is sad and sweet and gone too soon.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "listen_song",
+          "label": "Sit down and listen until she finishes",
+          "outcome_text": "She finishes. Opens her eyes. 'You know that one?' she asks. You shake your head. 'My mother used to sing it.' She hums another verse. You listen.",
+          "epitaph": "Listened to an old woman sing. Her mother's song. I didn't know it before.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "ask_about_song",
+          "label": "Ask her what the song is called",
+          "outcome_text": "'Moonlight Bay,' she says. 'They used to play it on the radio.' She smiles — the first smile you've seen in weeks. 'Nobody remembers anymore.'",
+          "epitaph": "Asked about the song. 'Moonlight Bay.' She smiled. Nobody remembers anymore.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "walk_past_song",
+          "label": "Keep walking. Music is a luxury.",
+          "outcome_text": "The melody fades behind you. You have places to be. Music doesn't fill stomachs.",
+          "epitaph": "Walked past a singing woman. Music doesn't fill stomachs.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_graffiti_story",
+      "display_name": "The Wall Journal",
+      "category": "lore",
+      "trigger": "Graffiti that tells a story over multiple entries.",
+      "discovery": "The wall is covered in writing — not random, but dated entries. 'Day 12: Found water.' 'Day 15: Lost Maria.' 'Day 20: Moving south.' Someone kept a journal on the wall.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "read_journal",
+          "label": "Read the entire wall from start to finish",
+          "outcome_text": "Thirty entries. Sixty days. They found water, lost people, moved south, found shelter, lost shelter. The last entry: 'Day 60: We made it to the river. Good luck to whoever reads this.'",
+          "epitaph": "Read a wall journal. Sixty days of survival. 'Good luck to whoever reads this.'",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "add_entry",
+          "label": "Add your own entry to the wall",
+          "outcome_text": "You find a clear spot and write: 'Day [X]. Still here. Still moving.' It's not much. But the wall grows.",
+          "epitaph": "Added to a wall journal. 'Still here. Still moving.' The wall grows.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_children_drawing",
+      "display_name": "The Crayon Drawing",
+      "category": "lore",
+      "trigger": "A child's drawing found in rubble.",
+      "discovery": "A piece of paper, torn at the edges. A crayon drawing — a house, a sun, four stick figures holding hands. 'OUR FAMILY' written in wobbly letters at the top.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "keep_drawing",
+          "label": "Fold it carefully and keep it",
+          "outcome_text": "The crayon is waxy against your fingers. You fold it once, twice, and slide it into your pocket. A child drew this. A child who believed in families.",
+          "epitaph": "Kept a child's drawing. 'OUR FAMILY.' A child who believed in families.",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "pin_up",
+          "label": "Pin it to the wall where it won't get trampled",
+          "outcome_text": "You push a tack through the corner and step back. The drawing hangs crooked. The sun is yellow. The family is smiling.",
+          "epitaph": "Pinned a child's drawing to the wall. The sun is yellow. The family smiles.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "leave_drawing",
+          "label": "Leave it. It's just paper.",
+          "outcome_text": "You step over it. The crayon bleeds into the dust. Just paper. Just a drawing. Just a family.",
+          "epitaph": "Left a child's drawing in the dust. Just paper. Just a family.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_newspaper",
+      "display_name": "The Old Newspaper",
+      "category": "lore",
+      "trigger": "A pre-war newspaper preserved in rubble.",
+      "discovery": "A newspaper, yellowed but intact. The headline reads: 'LEADERS MEET FOR EMERGENCY SUMMIT.' The date is three days before the bombs. The article is about peace talks. They failed.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "read_paper",
+          "label": "Read the entire newspaper",
+          "outcome_text": "Sports scores. Weather forecast. Movie listings. A world that didn't know it was ending. The peace talks failed on page 3. The bombs fell on page 1 the next day.",
+          "epitaph": "Read a pre-war newspaper. Sports scores and peace talks. The world didn't know.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "take_paper",
+          "label": "Take the newspaper. History is worth keeping.",
+          "outcome_text": "You roll it carefully and slide it into your pack. A record of the last normal day. Weather forecast: sunny. It was.",
+          "epitaph": "Kept a pre-war newspaper. The last normal day. Weather: sunny.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "use_kindling",
+          "label": "Use it for kindling. History burns.",
+          "outcome_text": "The paper catches easy. The headlines curl and blacken. The peace talks become ash. Like everything else.",
+          "epitaph": "Burned a pre-war newspaper for kindling. History burns like everything else.",
+          "moral_delta": -2,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_map_fragment",
+      "display_name": "The Torn Map",
+      "category": "lore",
+      "trigger": "A fragment of a hand-drawn map.",
+      "discovery": "A piece of paper, torn at the edges. A hand-drawn map — streets, buildings, X marks. The ink is faded but the lines are clear. Someone mapped this area.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "study_map",
+          "label": "Study the map and compare to what you know",
+          "outcome_text": "The streets match — mostly. But the X marks are in places you haven't explored. Caches? Danger? The map doesn't say. But it's more than you had.",
+          "epitaph": "Studied a hand-drawn map. X marks in places I haven't explored. More than I had.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "add_to_map",
+          "label": "Add what you know to the map",
+          "outcome_text": "You pencil in the roads you've walked, the buildings you've searched. The map grows. Knowledge compounds.",
+          "epitaph": "Added to a hand-drawn map. The roads I've walked. Knowledge compounds.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_letter_fragment",
+      "display_name": "The Unfinished Letter",
+      "category": "lore",
+      "trigger": "A letter that was never finished or sent.",
+      "discovery": "A piece of paper, half-written. 'Dear Sarah, I don't know if you'll ever read this, but I need to tell you—' The writing stops mid-sentence. The pen lies beside it, ink dried.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "read_letter",
+          "label": "Read the unfinished letter",
+          "outcome_text": "'I need to tell you that I'm sorry. For everything. For not being there. For the things I said. I hope you're safe. I hope the kids are safe. I—' It stops. The pen ran out. Or they did.",
+          "epitaph": "Read an unfinished letter. 'I hope you're safe.' The pen ran out. Or they did.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "finish_letter",
+          "label": "Finish the letter for them",
+          "outcome_text": "You pick up the pen. '—I love you. Always.' You don't know if Sarah exists. You don't know if the kids are real. But the words needed to be finished.",
+          "epitaph": "Finished an unfinished letter. 'I love you. Always.' The words needed finishing.",
+          "moral_delta": 5,
+          "empathy_delta": 2,
+          "effects": []
+        },
+        {
+          "id": "leave_letter",
+          "label": "Leave it unfinished. Some things can't be completed.",
+          "outcome_text": "You put the pen down. The letter stays half-written. Some conversations end mid-sentence.",
+          "epitaph": "Left an unfinished letter. Some conversations end mid-sentence.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_school_exercise",
+      "display_name": "The Homework",
+      "category": "lore",
+      "trigger": "A child's schoolwork found in a classroom.",
+      "discovery": "A notebook, open to a page of math problems. The handwriting is neat, the answers mostly correct. At the top: 'Grade 4 — Ms. Patterson's class.' The last problem is unfinished.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "finish_homework",
+          "label": "Finish the last math problem",
+          "outcome_text": "The answer is 47. You write it in the margin. The handwriting doesn't match. But the problem is solved.",
+          "epitaph": "Finished a child's homework. The answer was 47. The problem is solved.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "keep_notebook",
+          "label": "Take the notebook. Education matters.",
+          "outcome_text": "The notebook is heavy with knowledge — math, spelling, science. A child's education, preserved in pencil. You carry it forward.",
+          "epitaph": "Kept a child's notebook. Math, spelling, science. Education preserved in pencil.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "close_notebook",
+          "label": "Close the notebook and leave it",
+          "outcome_text": "You shut the cover. The notebook stays on the desk. Ms. Patterson's class. Grade 4. The last lesson.",
+          "epitaph": "Closed a child's notebook. Ms. Patterson's class. The last lesson.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_radio_archive",
+      "display_name": "The Radio Log",
+      "category": "lore",
+      "trigger": "A handwritten log of radio frequencies and broadcasts.",
+      "discovery": "A notebook filled with frequencies, dates, and notes. '98.7 — Music until 14:00. 101.3 — Emergency broadcast. 107.9 — Static.' Someone tracked the radio after the bombs.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "medium",
+      "moral_weight": "none",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "read_log",
+          "label": "Read through the entire log",
+          "outcome_text": "Sixty days of broadcasts. Music stopped on day 3. Emergency broadcasts stopped on day 14. Static took over on day 21. The last entry: 'Day 60. Nothing. Turning off.'",
+          "epitaph": "Read a radio log. Sixty days. Music, emergency, static, nothing. 'Turning off.'",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "test_frequencies",
+          "label": "Test the frequencies listed in the log",
+          "outcome_text": "98.7 — static. 101.3 — static. 107.9 — static. But 104.2 — a faint signal. Music. Someone is broadcasting. The log missed it.",
+          "epitaph": "Tested radio frequencies from a log. Found music on 104.2. Someone is broadcasting.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_medical_record",
+      "display_name": "The Patient File",
+      "category": "lore",
+      "trigger": "A medical record or patient file.",
+      "discovery": "A manila folder, thick with papers. Patient name: 'Doe, John.' Diagnosis: 'Radiation exposure, Stage 2.' Treatment notes. A photo. The file ends mid-sentence.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "medium",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "read_file",
+          "label": "Read the medical file",
+          "outcome_text": "John Doe. Age 34. Radiation exposure from the initial blast. Treatment: iodine, anti-nausea, rest. Prognosis: guarded. The file ends on day 12. No further notes.",
+          "epitaph": "Read a medical file. John Doe, 34. Radiation exposure. File ends on day 12.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "take_medications",
+          "label": "Check if there are medications with the file",
+          "outcome_text": "Behind the folder: two iodine pills and a bottle of anti-nausea tablets. Expired, but present. You pocket them.",
+          "epitaph": "Found medications with a patient file. Iodine and anti-nausea. Expired but present.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_memorial_wall",
+      "display_name": "The Missing Persons Board",
+      "category": "lore",
+      "trigger": "A bulletin board with missing persons flyers.",
+      "discovery": "A corkboard, covered in flyers. Photos, names, descriptions. 'HAVE YOU SEEN THIS PERSON?' The paper is faded, the pins rusted. Nobody is looking anymore.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "medium",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "read_flyers",
+          "label": "Read every flyer on the board",
+          "outcome_text": "Twenty-three faces. Ages 2 to 78. Last seen at schools, offices, homes. The dates are all the same — the day the bombs fell. Nobody found them.",
+          "epitaph": "Read a missing persons board. Twenty-three faces. The day the bombs fell. Nobody found them.",
+          "moral_delta": 2,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "add_note",
+          "label": "Add a note: 'Still looking. Haven't found anyone yet.'",
+          "outcome_text": "You pin the note to the board. It's honest. It's not hopeful. But it's there.",
+          "epitaph": "Added a note to a missing persons board. 'Still looking. Haven't found anyone yet.'",
+          "moral_delta": 3,
+          "empathy_delta": 1,
+          "effects": []
+        },
+        {
+          "id": "walk_past_board",
+          "label": "Walk past. You can't help the missing.",
+          "outcome_text": "The faces blur as you pass. Twenty-three people. You can't help them. You can barely help yourself.",
+          "epitaph": "Walked past a missing persons board. Twenty-three people. I can't help them.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        }
+      ]
+    },
+    {
+      "id": "quest_third_lore_clock_tower",
+      "display_name": "The Stopped Clock",
+      "category": "lore",
+      "trigger": "A clock tower or public clock frozen at a specific time.",
+      "discovery": "The clock tower still stands — hands frozen at 8:15. The glass is blown out, the mechanism dead. But the time is right. 8:15. The moment the world stopped.",
+      "min_day": 0,
+      "max_day": 0,
+      "cooldown_days": 0,
+      "difficulty": "easy",
+      "moral_weight": "low",
+      "location_id": "",
+      "trigger_flags": [],
+      "choices": [
+        {
+          "id": "note_time",
+          "label": "Note the time and what it means",
+          "outcome_text": "8:15. You write it down. The exact moment. Every clock in the city stopped at 8:15. You know because you've checked.",
+          "epitaph": "Noted a stopped clock. 8:15. The exact moment the world stopped.",
+          "moral_delta": 0,
+          "empathy_delta": 0,
+          "effects": []
+        },
+        {
+          "id": "sit_beneath",
+          "label": "Sit beneath the tower and think about 8:15",
+          "outcome_text": "You sit in the shadow of the tower. 8:15. Breakfast time. School time. Commute time. The last normal minute. You sit with it for a while.",
+          "epitaph": "Sat beneath a stopped clock. 8:15. The last normal minute.",
+          "moral_delta": 0,
+          "empathy_delta": 1,
+          "effects": []
+        }
+      ]
+    }
+  ]
+}

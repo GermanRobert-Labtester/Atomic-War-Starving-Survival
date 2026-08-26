@@ -1,72 +1,117 @@
-[
-  {
-    "id": "beeswax_solar_wax_extractor_slumgum_press",
-    "rendering_vat_id": "SOLAR_MELTER_RETORT_01",
-    "beeswax_melting_point_celsius": 63.8,
-    "unadulterated_purity_pct": 99.2,
-    "candle_burn_rate_grams_per_hour": 6.8,
-    "timestamp_relative": "YEAR_02_BEESWAX_01",
-    "tags": ["apiculture", "beeswax", "slumgum_press", "solar_melter", "cappings_rendering"],
-    "prose": "Melting dark brood comb inside an insulated radiant heat melter separated pure golden beeswax from black slumgum residue. Squeezing the hot dross through a coarse burlap sack recovered four kilograms of aromatic, honey-scented wax."
-  },
-  {
-    "id": "beeswax_candle_dipping_continuous_wick_carousel",
-    "rendering_vat_id": "CANDLE_DIPPING_CAROUSEL_02",
-    "beeswax_melting_point_celsius": 63.5,
-    "unadulterated_purity_pct": 98.5,
-    "candle_burn_rate_grams_per_hour": 7.2,
-    "timestamp_relative": "YEAR_04_BEESWAX_03",
-    "tags": ["apiculture", "beeswax", "candle_dipping", "wick_carousel", "illumination"],
-    "prose": "A rotating overhead timber carousel dipped twenty-four pairs of square-braided cotton wicks into a 70°C water-jacketed wax vat. Thirty-two successive dips built thick, tapered emergency illumination tapers that burn cleanly without soot."
-  },
-  {
-    "id": "beeswax_melting_point_capillary_tube_purity",
-    "rendering_vat_id": "PURITY_ASSAY_BENCH_03",
-    "beeswax_melting_point_celsius": 64.0,
-    "unadulterated_purity_pct": 99.5,
-    "candle_burn_rate_grams_per_hour": 6.5,
-    "timestamp_relative": "YEAR_07_BEESWAX_02",
-    "tags": ["apiculture", "beeswax", "melting_point", "capillary_tube", "purity_test"],
-    "prose": "Melting point determination inside glass capillary tubes yielded a sharp phase transition at exactly 64.0°C. The elevated melting point confirmed zero adulteration with cheap low-melting paraffin or microcrystalline petroleum waxes."
-  },
-  {
-    "id": "beeswax_hydrocarbon_saponification_cloud_test",
-    "rendering_vat_id": "SAPONIFICATION_TEST_RIG_04",
-    "beeswax_melting_point_celsius": 63.2,
-    "unadulterated_purity_pct": 97.8,
-    "candle_burn_rate_grams_per_hour": 7.5,
-    "timestamp_relative": "YEAR_09_BEESWAX_04",
-    "tags": ["apiculture", "beeswax", "saponification", "cloud_point", "adulteration_test"],
-    "prose": "Refluxing wax shavings in ethanolic potassium hydroxide saponified natural esters completely. The resulting clear amber soap solution showed zero turbidity upon dilution with water, proving the complete absence of insoluble mineral hydrocarbons."
-  },
-  {
-    "id": "beeswax_lead_free_braided_cotton_wick_smoke",
-    "rendering_vat_id": "COMMISSARY_LIGHTING_WORKSHOP",
-    "beeswax_melting_point_celsius": 63.6,
-    "unadulterated_purity_pct": 99.0,
-    "candle_burn_rate_grams_per_hour": 6.9,
-    "timestamp_relative": "YEAR_12_BEESWAX_01",
-    "tags": ["apiculture", "beeswax", "braided_wick", "smokeless_burn", "bunker_air_quality"],
-    "prose": "Soaking braided unbleached cotton wicks in a 2% boric acid and potassium chloride solution eliminated wick smoldering and carbon mushrooming. Candles burned with a steady, self-trimming flame that released zero toxic heavy-metal smoke into bunker sleeping quarters."
-  },
-  {
-    "id": "beeswax_tallow_lubricant_leather_waterproofing",
-    "rendering_vat_id": "CURRYING_COMPOUND_KETTLE_06",
-    "beeswax_melting_point_celsius": 58.0,
-    "unadulterated_purity_pct": 95.0,
-    "candle_burn_rate_grams_per_hour": 0.0,
-    "timestamp_relative": "YEAR_15_BEESWAX_03",
-    "tags": ["apiculture", "beeswax", "dubbin", "leather_waterproofing", "boot_seal"],
-    "prose": "Melting six parts virgin beeswax with three parts mutton tallow and one part pine pitch yielded a resilient leather dubbin. Rubbing the warm grease into heavy work boots sealed stitched seams against corrosive bunker sump drainage."
-  },
-  {
-    "id": "beeswax_grafting_wax_rosin_linseed_sealant",
-    "rendering_vat_id": "HORTICULTURE_SUPPLY_POT_07",
-    "beeswax_melting_point_celsius": 61.5,
-    "unadulterated_purity_pct": 96.5,
-    "candle_burn_rate_grams_per_hour": 0.0,
-    "timestamp_relative": "YEAR_20_BEESWAX_01",
-    "tags": ["apiculture", "beeswax", "grafting_wax", "linseed_oil", "tree_sealant"],
-    "prose": "Formulating pliable horticultural grafting wax from four parts rosin, two parts yellow beeswax, and one part raw linseed oil sealed scion grafts on dwarf apple rootstocks. The pliable wax excluded air and bacterial rot while retaining cambium moisture."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "beeswax_solar_wax_extractor_slumgum_press",
+      "rendering_vat_id": "SOLAR_MELTER_RETORT_01",
+      "beeswax_melting_point_celsius": 63.8,
+      "unadulterated_purity_pct": 99.2,
+      "candle_burn_rate_grams_per_hour": 6.8,
+      "timestamp_relative": "YEAR_02_BEESWAX_01",
+      "tags": [
+        "apiculture",
+        "beeswax",
+        "slumgum_press",
+        "solar_melter",
+        "cappings_rendering"
+      ],
+      "prose": "Melting dark brood comb inside an insulated radiant heat melter separated pure golden beeswax from black slumgum residue. Squeezing the hot dross through a coarse burlap sack recovered four kilograms of aromatic, honey-scented wax."
+    },
+    {
+      "id": "beeswax_candle_dipping_continuous_wick_carousel",
+      "rendering_vat_id": "CANDLE_DIPPING_CAROUSEL_02",
+      "beeswax_melting_point_celsius": 63.5,
+      "unadulterated_purity_pct": 98.5,
+      "candle_burn_rate_grams_per_hour": 7.2,
+      "timestamp_relative": "YEAR_04_BEESWAX_03",
+      "tags": [
+        "apiculture",
+        "beeswax",
+        "candle_dipping",
+        "wick_carousel",
+        "illumination"
+      ],
+      "prose": "A rotating overhead timber carousel dipped twenty-four pairs of square-braided cotton wicks into a 70°C water-jacketed wax vat. Thirty-two successive dips built thick, tapered emergency illumination tapers that burn cleanly without soot."
+    },
+    {
+      "id": "beeswax_melting_point_capillary_tube_purity",
+      "rendering_vat_id": "PURITY_ASSAY_BENCH_03",
+      "beeswax_melting_point_celsius": 64.0,
+      "unadulterated_purity_pct": 99.5,
+      "candle_burn_rate_grams_per_hour": 6.5,
+      "timestamp_relative": "YEAR_07_BEESWAX_02",
+      "tags": [
+        "apiculture",
+        "beeswax",
+        "melting_point",
+        "capillary_tube",
+        "purity_test"
+      ],
+      "prose": "Melting point determination inside glass capillary tubes yielded a sharp phase transition at exactly 64.0°C. The elevated melting point confirmed zero adulteration with cheap low-melting paraffin or microcrystalline petroleum waxes."
+    },
+    {
+      "id": "beeswax_hydrocarbon_saponification_cloud_test",
+      "rendering_vat_id": "SAPONIFICATION_TEST_RIG_04",
+      "beeswax_melting_point_celsius": 63.2,
+      "unadulterated_purity_pct": 97.8,
+      "candle_burn_rate_grams_per_hour": 7.5,
+      "timestamp_relative": "YEAR_09_BEESWAX_04",
+      "tags": [
+        "apiculture",
+        "beeswax",
+        "saponification",
+        "cloud_point",
+        "adulteration_test"
+      ],
+      "prose": "Refluxing wax shavings in ethanolic potassium hydroxide saponified natural esters completely. The resulting clear amber soap solution showed zero turbidity upon dilution with water, proving the complete absence of insoluble mineral hydrocarbons."
+    },
+    {
+      "id": "beeswax_lead_free_braided_cotton_wick_smoke",
+      "rendering_vat_id": "COMMISSARY_LIGHTING_WORKSHOP",
+      "beeswax_melting_point_celsius": 63.6,
+      "unadulterated_purity_pct": 99.0,
+      "candle_burn_rate_grams_per_hour": 6.9,
+      "timestamp_relative": "YEAR_12_BEESWAX_01",
+      "tags": [
+        "apiculture",
+        "beeswax",
+        "braided_wick",
+        "smokeless_burn",
+        "bunker_air_quality"
+      ],
+      "prose": "Soaking braided unbleached cotton wicks in a 2% boric acid and potassium chloride solution eliminated wick smoldering and carbon mushrooming. Candles burned with a steady, self-trimming flame that released zero toxic heavy-metal smoke into bunker sleeping quarters."
+    },
+    {
+      "id": "beeswax_tallow_lubricant_leather_waterproofing",
+      "rendering_vat_id": "CURRYING_COMPOUND_KETTLE_06",
+      "beeswax_melting_point_celsius": 58.0,
+      "unadulterated_purity_pct": 95.0,
+      "candle_burn_rate_grams_per_hour": 0.0,
+      "timestamp_relative": "YEAR_15_BEESWAX_03",
+      "tags": [
+        "apiculture",
+        "beeswax",
+        "dubbin",
+        "leather_waterproofing",
+        "boot_seal"
+      ],
+      "prose": "Melting six parts virgin beeswax with three parts mutton tallow and one part pine pitch yielded a resilient leather dubbin. Rubbing the warm grease into heavy work boots sealed stitched seams against corrosive bunker sump drainage."
+    },
+    {
+      "id": "beeswax_grafting_wax_rosin_linseed_sealant",
+      "rendering_vat_id": "HORTICULTURE_SUPPLY_POT_07",
+      "beeswax_melting_point_celsius": 61.5,
+      "unadulterated_purity_pct": 96.5,
+      "candle_burn_rate_grams_per_hour": 0.0,
+      "timestamp_relative": "YEAR_20_BEESWAX_01",
+      "tags": [
+        "apiculture",
+        "beeswax",
+        "grafting_wax",
+        "linseed_oil",
+        "tree_sealant"
+      ],
+      "prose": "Formulating pliable horticultural grafting wax from four parts rosin, two parts yellow beeswax, and one part raw linseed oil sealed scion grafts on dwarf apple rootstocks. The pliable wax excluded air and bacterial rot while retaining cambium moisture."
+    }
+  ]
+}

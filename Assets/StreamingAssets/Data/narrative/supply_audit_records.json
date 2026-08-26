@@ -1,718 +1,721 @@
-[
-  {
-    "audit_id": "supply_audit_001",
-    "day": 38,
-    "auditor": "the_quartermaster",
-    "category": "food",
-    "items": [
-      {
-        "item": "rice",
-        "quantity_kg": 95,
-        "days_supply": 75
-      },
-      {
-        "item": "dried beans",
-        "quantity_kg": 20,
-        "days_supply": 30
-      },
-      {
-        "item": "canned goods (mixed)",
-        "quantity_units": 48,
-        "days_supply": 16
-      },
-      {
-        "item": "salt",
-        "quantity_kg": 5,
-        "days_supply": 50
-      },
-      {
-        "item": "cooking oil",
-        "quantity_litres": 8,
-        "days_supply": 40
-      }
-    ],
-    "total_caloric_days": 62,
-    "notes": "Initial audit. Rationing at 80 percent of pre-war recommended intake. No one is hungry but no one is full either. the_chef says the rice is the backbone of every meal."
-  },
-  {
-    "audit_id": "supply_audit_002",
-    "day": 38,
-    "auditor": "the_quartermaster",
-    "category": "medical",
-    "items": [
-      {
-        "item": "bandages",
-        "quantity_units": 200,
-        "days_supply": 40
-      },
-      {
-        "item": "painkillers",
-        "quantity_doses": 30,
-        "days_supply": 15
-      },
-      {
-        "item": "antiseptic",
-        "quantity_litres": 3,
-        "days_supply": 30
-      },
-      {
-        "item": "antibiotics",
-        "quantity_doses": 0,
-        "days_supply": 0
-      },
-      {
-        "item": "surgical thread",
-        "quantity_spools": 5,
-        "days_supply": 25
-      }
-    ],
-    "notes": "CRITICAL: Zero antibiotics. the_surgeon says any infection is a death sentence without antibiotics. Painkillers adequate for minor procedures only. the_quartermaster has placed medical supplies at top priority for expedition recovery."
-  },
-  {
-    "audit_id": "supply_audit_003",
-    "day": 38,
-    "auditor": "the_quartermaster",
-    "category": "fuel",
-    "items": [
-      {
-        "item": "diesel fuel",
-        "quantity_litres": 420,
-        "days_supply": 42
-      },
-      {
-        "item": "generator oil",
-        "quantity_litres": 15,
-        "days_supply": 60
-      },
-      {
-        "item": "lamp oil",
-        "quantity_litres": 10,
-        "days_supply": 30
-      }
-    ],
-    "notes": "Fuel is the limiting factor. At current consumption (10 litres per day), reserves last 42 days. the_electrician Variac bypass may reduce consumption by 8 percent, extending to 45 days. Expedition recovery of fuel is essential."
-  },
-  {
-    "audit_id": "supply_audit_004",
-    "day": 45,
-    "auditor": "the_quartermaster",
-    "category": "food (post-storm)",
-    "items": [
-      {
-        "item": "rice",
-        "quantity_kg": 88,
-        "days_supply": 68
-      },
-      {
-        "item": "dried beans",
-        "quantity_kg": 19,
-        "days_supply": 28
-      },
-      {
-        "item": "canned goods",
-        "quantity_units": 45,
-        "days_supply": 15
-      },
-      {
-        "item": "salt",
-        "quantity_kg": 4.5,
-        "days_supply": 45
-      },
-      {
-        "item": "mushrooms (fresh)",
-        "quantity_kg": 2.3,
-        "days_supply": 2
-      }
-    ],
-    "notes": "Post-storm audit. First mushroom harvest from the_botanist adds fresh food to the inventory. 2.3 kg is small but it is the first non-stored food produced in the bunker. the_chef is developing recipes."
-  },
-  {
-    "audit_id": "supply_audit_005",
-    "day": 50,
-    "auditor": "the_quartermaster",
-    "category": "food (post-harvest)",
-    "items": [
-      {
-        "item": "rice",
-        "quantity_kg": 82,
-        "days_supply": 63
-      },
-      {
-        "item": "dried beans",
-        "quantity_kg": 18,
-        "days_supply": 27
-      },
-      {
-        "item": "canned goods",
-        "quantity_units": 42,
-        "days_supply": 14
-      },
-      {
-        "item": "turnips (fresh)",
-        "quantity_kg": 3.8,
-        "days_supply": 2
-      },
-      {
-        "item": "mushrooms (dried)",
-        "quantity_kg": 1.5,
-        "days_supply": 8
-      }
-    ],
-    "notes": "First turnip harvest from the greenhouse. 3.8 kg fresh vegetables added to inventory. Dried mushroom powder is now a standing ingredient. the_chef says the bunker is eating better than last week."
-  },
-  {
-    "audit_id": "supply_audit_006",
-    "day": 55,
-    "auditor": "the_quartermaster",
-    "category": "expedition recovery",
-    "items": [
-      {
-        "item": "frozen venison",
-        "quantity_kg": 15,
-        "days_supply": 8
-      },
-      {
-        "item": "dried herbs",
-        "quantity_kg": 8,
-        "days_supply": 40
-      },
-      {
-        "item": "rope",
-        "quantity_lengths": 3,
-        "days_supply": "N/A (material)"
-      },
-      {
-        "item": "sealed container",
-        "quantity_units": 1,
-        "days_supply": "N/A (unidentified)"
-      }
-    ],
-    "notes": "Dead oak cache recovery. the_hunter venison from the frozen river adds protein. Dried herbs extend the_chef flavour palette. the_quartermaster is examining the sealed container."
-  },
-  {
-    "audit_id": "supply_audit_007",
-    "day": 60,
-    "auditor": "the_quartermaster",
-    "category": "comprehensive",
-    "items": [
-      {
-        "item": "rice",
-        "quantity_kg": 75,
-        "days_supply": 57
-      },
-      {
-        "item": "dried beans",
-        "quantity_kg": 16,
-        "days_supply": 24
-      },
-      {
-        "item": "canned goods",
-        "quantity_units": 38,
-        "days_supply": 13
-      },
-      {
-        "item": "turnips (cumulative)",
-        "quantity_kg": 8,
-        "days_supply": 4
-      },
-      {
-        "item": "mushrooms (cumulative)",
-        "quantity_kg": 5.1,
-        "days_supply": 17
-      },
-      {
-        "item": "venison (frozen)",
-        "quantity_kg": 35,
-        "days_supply": 19
-      },
-      {
-        "item": "salt",
-        "quantity_kg": 4,
-        "days_supply": 40
-      },
-      {
-        "item": "fuel",
-        "quantity_litres": 380,
-        "days_supply": 38
-      }
-    ],
-    "notes": "Day 60 comprehensive audit. Food reserves declining but greenhouse production offsetting. 7 days of fresh vegetables produced so far. Venison from the frozen river is the primary protein source. Fuel at 38 days. the_quartermaster says the bunker is stable but the margin is thin."
-  },
-  {
-    "audit_id": "supply_audit_008",
-    "day": 65,
-    "auditor": "the_quartermaster",
-    "category": "seed vault recovery",
-    "items": [
-      {
-        "item": "seed ampoules (viable)",
-        "quantity_units": 12,
-        "days_supply": "N/A (planting stock)"
-      },
-      {
-        "item": "seed ampoules (uncertain)",
-        "quantity_units": 3,
-        "days_supply": "N/A (testing)"
-      },
-      {
-        "item": "seed ampoules (failed)",
-        "quantity_units": 2,
-        "days_supply": "N/A (discarded)"
-      }
-    ],
-    "notes": "Seed vault first recovery. 12 viable ampoules represent genetic diversity that the greenhouse desperately needs. the_botanist is assessing viability. If all 12 produce, the bunker will have 11 new crop types within 90 days."
-  },
-  {
-    "audit_id": "supply_audit_009",
-    "day": 70,
-    "auditor": "the_quartermaster",
-    "category": "trade (Shallows Market)",
-    "items": [
-      {
-        "item": "smoked fish",
-        "quantity_kg": 3,
-        "days_supply": 2
-      },
-      {
-        "item": "salt",
-        "quantity_kg": 2,
-        "days_supply": 20
-      }
-    ],
-    "notes": "First external trade. Exchanged 5 kg dried mushrooms for 3 kg smoked fish and 2 kg salt. the_chef says the fish is acceptable quality. Salt is the highest-value import. the_quartermaster is establishing monthly trade schedule."
-  },
-  {
-    "audit_id": "supply_audit_010",
-    "day": 75,
-    "auditor": "the_quartermaster",
-    "category": "comprehensive",
-    "items": [
-      {
-        "item": "rice",
-        "quantity_kg": 68,
-        "days_supply": 52
-      },
-      {
-        "item": "dried beans",
-        "quantity_kg": 15,
-        "days_supply": 22
-      },
-      {
-        "item": "canned goods",
-        "quantity_units": 34,
-        "days_supply": 11
-      },
-      {
-        "item": "greenhouse produce (cumulative)",
-        "quantity_kg": 15,
-        "days_supply": 7
-      },
-      {
-        "item": "venison (cumulative)",
-        "quantity_kg": 53,
-        "days_supply": 29
-      },
-      {
-        "item": "mushrooms (cumulative)",
-        "quantity_kg": 6.9,
-        "days_supply": 23
-      },
-      {
-        "item": "salt (including trade)",
-        "quantity_kg": 4,
-        "days_supply": 40
-      },
-      {
-        "item": "fuel",
-        "quantity_litres": 340,
-        "days_supply": 34
-      }
-    ],
-    "notes": "Day 75 comprehensive. Greenhouse now producing approximately 2 kg per week of mixed produce. Venison from frozen river is the reliable protein. Fuel declining at 10 litres per day. the_quartermaster says the bunker needs the seed vault ampoules to start producing."
-  },
-  {
-    "audit_id": "supply_audit_011",
-    "day": 80,
-    "auditor": "the_quartermaster",
-    "category": "medical (post-dysentery)",
-    "items": [
-      {
-        "item": "bandages",
-        "quantity_units": 160,
-        "days_supply": 32
-      },
-      {
-        "item": "painkillers",
-        "quantity_doses": 22,
-        "days_supply": 11
-      },
-      {
-        "item": "antiseptic",
-        "quantity_litres": 2,
-        "days_supply": 20
-      },
-      {
-        "item": "antibiotics",
-        "quantity_doses": 0,
-        "days_supply": 0
-      },
-      {
-        "item": "calcium hypochlorite (water treatment)",
-        "quantity_kg": 2,
-        "days_supply": 45
-      }
-    ],
-    "notes": "Post-dysentery medical audit. Consumables depleted during the outbreak. the_surgeon says the bunker got lucky: 7 cases, no deaths. Next outbreak without antibiotics could be catastrophic. Calcium hypochlorite for water treatment is adequate for 45 days."
-  },
-  {
-    "audit_id": "supply_audit_012",
-    "day": 85,
-    "auditor": "the_quartermaster",
-    "category": "seed vault second recovery",
-    "items": [
-      {
-        "item": "seed ampoules (additional viable)",
-        "quantity_units": 3,
-        "days_supply": "N/A (planting stock)"
-      }
-    ],
-    "notes": "Seed vault second recovery. 3 additional ampoules: wheat, rye, sunflower. Cryo-system failed completely after extraction. Total recovered: 17 ampoules (15 viable). The vault is sealed. This is the total yield."
-  },
-  {
-    "audit_id": "supply_audit_013",
-    "day": 90,
-    "auditor": "the_quartermaster",
-    "category": "comprehensive",
-    "items": [
-      {
-        "item": "rice",
-        "quantity_kg": 60,
-        "days_supply": 46
-      },
-      {
-        "item": "dried beans",
-        "quantity_kg": 14,
-        "days_supply": 21
-      },
-      {
-        "item": "canned goods",
-        "quantity_units": 30,
-        "days_supply": 10
-      },
-      {
-        "item": "greenhouse produce (cumulative)",
-        "quantity_kg": 24,
-        "days_supply": 12
-      },
-      {
-        "item": "venison (cumulative)",
-        "quantity_kg": 61,
-        "days_supply": 33
-      },
-      {
-        "item": "mushrooms (cumulative)",
-        "quantity_kg": 6.9,
-        "days_supply": 23
-      },
-      {
-        "item": "lentils",
-        "quantity_kg": 1.2,
-        "days_supply": 4
-      },
-      {
-        "item": "radishes",
-        "quantity_kg": 2.1,
-        "days_supply": 3
-      },
-      {
-        "item": "honey",
-        "quantity_kg": 0.5,
-        "days_supply": 2
-      },
-      {
-        "item": "salt (including trade)",
-        "quantity_kg": 6,
-        "days_supply": 60
-      },
-      {
-        "item": "fuel",
-        "quantity_litres": 300,
-        "days_supply": 30
-      }
-    ],
-    "notes": "Day 90 comprehensive. Greenhouse production now includes lentils, radishes, and honey in addition to turnips and mushrooms. Salt trade with Salt Freeholders extending salt supply. Fuel at 30 days is the critical concern. the_quartermaster says the bunker is approaching a tipping point: either greenhouse production scales up or fuel runs out."
-  },
-  {
-    "audit_id": "supply_audit_014",
-    "day": 95,
-    "auditor": "the_quartermaster",
-    "category": "trade (Salt Freeholder formal)",
-    "items": [
-      {
-        "item": "salt",
-        "quantity_kg": 30,
-        "days_supply": 300
-      }
-    ],
-    "notes": "Formal Salt Freeholder trade agreement. First shipment: 15 kg dried goods exchanged for 30 kg salt. Salt supply now extends to 300 days. This is transformative. Salt is used for preservation, cooking, and the_chemist processes. the_quartermaster says salt security is achieved."
-  },
-  {
-    "audit_id": "supply_audit_015",
-    "day": 100,
-    "auditor": "the_quartermaster",
-    "category": "comprehensive (quarterly)",
-    "items": [
-      {
-        "item": "rice",
-        "quantity_kg": 52,
-        "days_supply": 40
-      },
-      {
-        "item": "dried beans",
-        "quantity_kg": 12,
-        "days_supply": 18
-      },
-      {
-        "item": "canned goods",
-        "quantity_units": 26,
-        "days_supply": 9
-      },
-      {
-        "item": "greenhouse produce (cumulative)",
-        "quantity_kg": 44.6,
-        "days_supply": 22
-      },
-      {
-        "item": "venison (cumulative)",
-        "quantity_kg": 69,
-        "days_supply": 38
-      },
-      {
-        "item": "mushrooms (cumulative)",
-        "quantity_kg": 6.9,
-        "days_supply": 23
-      },
-      {
-        "item": "lentils",
-        "quantity_kg": 2.4,
-        "days_supply": 8
-      },
-      {
-        "item": "radishes",
-        "quantity_kg": 4.2,
-        "days_supply": 6
-      },
-      {
-        "item": "beans (seed vault)",
-        "quantity_kg": 3.2,
-        "days_supply": 10
-      },
-      {
-        "item": "cabbage",
-        "quantity_kg": 2.8,
-        "days_supply": 5
-      },
-      {
-        "item": "honey",
-        "quantity_kg": 0.5,
-        "days_supply": 2
-      },
-      {
-        "item": "salt",
-        "quantity_kg": 34,
-        "days_supply": 340
-      },
-      {
-        "item": "fuel",
-        "quantity_litres": 260,
-        "days_supply": 26
-      }
-    ],
-    "notes": "Day 100 quarterly audit. Greenhouse now producing 7 percent of bunker caloric needs. 6 crop types active. Salt supply secured for 300 days via trade. Fuel at 26 days is critical. the_quartermaster says the bunker is transitioning from stored food to produced food. The trajectory is positive but fuel is the bottleneck."
-  },
-  {
-    "audit_id": "supply_audit_016",
-    "day": 100,
-    "auditor": "the_quartermaster",
-    "category": "projection",
-    "items": [
-      {
-        "item": "food_self_sufficiency_current",
-        "percentage": 7
-      },
-      {
-        "item": "food_self_sufficiency_projected_month4",
-        "percentage": 15
-      },
-      {
-        "item": "food_self_sufficiency_target_month6",
-        "percentage": 20
-      },
-      {
-        "item": "fuel_days_remaining",
-        "days": 26
-      },
-      {
-        "item": "fuel_expedition_priority",
-        "priority": "CRITICAL"
-      }
-    ],
-    "notes": "the_quartermaster projection: at current greenhouse expansion rate and seed vault integration, the bunker reaches 15 percent caloric self-sufficiency by month 4 and 20 percent by month 6. This reduces stored food dependency from 100 percent to 80 percent. Fuel remains the critical constraint. the_general has authorised fuel recovery expeditions."
-  },
-  {
-    "audit_id": "supply_audit_017",
-    "day": 105,
-    "auditor": "the_quartermaster",
-    "category": "expedition supplies",
-    "items": [
-      {
-        "item": "expedition rations (barley biscuits)",
-        "quantity_units": 20,
-        "days_supply": 5
-      },
-      {
-        "item": "expedition rations (smoked venison)",
-        "quantity_units": 15,
-        "days_supply": 5
-      },
-      {
-        "item": "water containers",
-        "quantity_units": 6,
-        "days_supply": 3
-      },
-      {
-        "item": "dosimeters",
-        "quantity_units": 3,
-        "days_supply": "N/A (equipment)"
-      },
-      {
-        "item": "first aid kits",
-        "quantity_units": 2,
-        "days_supply": "N/A (equipment)"
-      }
-    ],
-    "notes": "Expedition supply kit prepared for the next surface mission. Barley biscuits and smoked venison are the standard ration pack. 5 days of food per person. the_quartermaster says expedition rations are now a standing production item for the_chef."
-  },
-  {
-    "audit_id": "supply_audit_018",
-    "day": 108,
-    "auditor": "the_quartermaster",
-    "category": "trade goods production",
-    "items": [
-      {
-        "item": "dried mushrooms (for trade)",
-        "quantity_kg": 10,
-        "days_supply": "N/A (trade stock)"
-      },
-      {
-        "item": "dried herbs (for trade)",
-        "quantity_kg": 5,
-        "days_supply": "N/A (trade stock)"
-      },
-      {
-        "item": "smoked venison (for trade)",
-        "quantity_kg": 3,
-        "days_supply": "N/A (trade stock)"
-      }
-    ],
-    "notes": "Trade goods production schedule established. the_chef and the_botanist produce dried mushrooms and herbs specifically for external trade. the_hunter provides venison for smoking. the_quartermaster says the bunker now produces trade surplus for the first time."
-  },
-  {
-    "audit_id": "supply_audit_019",
-    "day": 111,
-    "auditor": "the_quartermaster",
-    "category": "water",
-    "items": [
-      {
-        "item": "cistern stored water",
-        "quantity_litres": 8000,
-        "days_supply": 57
-      },
-      {
-        "item": "daily consumption",
-        "quantity_litres": 140,
-        "days_supply": "N/A"
-      },
-      {
-        "item": "water treatment capacity",
-        "quantity_litres_per_day": 200,
-        "days_supply": "N/A"
-      }
-    ],
-    "notes": "Water supply is adequate. Cistern at 8000 litres provides 57 days at current consumption. Water treatment system (chemical method since UV lamp failure) processes 200 litres per day. the_plumber says water is the one resource the bunker is not short on."
-  },
-  {
-    "audit_id": "supply_audit_020",
-    "day": 114,
-    "auditor": "the_quartermaster",
-    "category": "comprehensive (final)",
-    "items": [
-      {
-        "item": "rice",
-        "quantity_kg": 45,
-        "days_supply": 35
-      },
-      {
-        "item": "dried beans",
-        "quantity_kg": 10,
-        "days_supply": 15
-      },
-      {
-        "item": "canned goods",
-        "quantity_units": 22,
-        "days_supply": 7
-      },
-      {
-        "item": "greenhouse produce (cumulative)",
-        "quantity_kg": 55,
-        "days_supply": 27
-      },
-      {
-        "item": "venison (cumulative)",
-        "quantity_kg": 77,
-        "days_supply": 42
-      },
-      {
-        "item": "mushrooms (cumulative)",
-        "quantity_kg": 8.5,
-        "days_supply": 28
-      },
-      {
-        "item": "lentils",
-        "quantity_kg": 3.6,
-        "days_supply": 12
-      },
-      {
-        "item": "radishes",
-        "quantity_kg": 6.3,
-        "days_supply": 9
-      },
-      {
-        "item": "beans (seed vault)",
-        "quantity_kg": 4.8,
-        "days_supply": 15
-      },
-      {
-        "item": "cabbage",
-        "quantity_kg": 5.6,
-        "days_supply": 10
-      },
-      {
-        "item": "honey",
-        "quantity_kg": 0.8,
-        "days_supply": 3
-      },
-      {
-        "item": "salt",
-        "quantity_kg": 32,
-        "days_supply": 320
-      },
-      {
-        "item": "fuel",
-        "quantity_litres": 220,
-        "days_supply": 22
-      }
-    ],
-    "notes": "Day 114 comprehensive. Greenhouse now producing 10 percent of bunker caloric needs. Stored food declining but production increasing. The crossover point where production exceeds stored food consumption is projected at month 8. Fuel at 22 days remains critical. the_quartermaster says the bunker is surviving. Whether it thrives depends on the next 90 days."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "audit_id": "supply_audit_001",
+      "day": 38,
+      "auditor": "the_quartermaster",
+      "category": "food",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 95,
+          "days_supply": 75
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 20,
+          "days_supply": 30
+        },
+        {
+          "item": "canned goods (mixed)",
+          "quantity_units": 48,
+          "days_supply": 16
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 5,
+          "days_supply": 50
+        },
+        {
+          "item": "cooking oil",
+          "quantity_litres": 8,
+          "days_supply": 40
+        }
+      ],
+      "total_caloric_days": 62,
+      "notes": "Initial audit. Rationing at 80 percent of pre-war recommended intake. No one is hungry but no one is full either. the_chef says the rice is the backbone of every meal."
+    },
+    {
+      "audit_id": "supply_audit_002",
+      "day": 38,
+      "auditor": "the_quartermaster",
+      "category": "medical",
+      "items": [
+        {
+          "item": "bandages",
+          "quantity_units": 200,
+          "days_supply": 40
+        },
+        {
+          "item": "painkillers",
+          "quantity_doses": 30,
+          "days_supply": 15
+        },
+        {
+          "item": "antiseptic",
+          "quantity_litres": 3,
+          "days_supply": 30
+        },
+        {
+          "item": "antibiotics",
+          "quantity_doses": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "surgical thread",
+          "quantity_spools": 5,
+          "days_supply": 25
+        }
+      ],
+      "notes": "CRITICAL: Zero antibiotics. the_surgeon says any infection is a death sentence without antibiotics. Painkillers adequate for minor procedures only. the_quartermaster has placed medical supplies at top priority for expedition recovery."
+    },
+    {
+      "audit_id": "supply_audit_003",
+      "day": 38,
+      "auditor": "the_quartermaster",
+      "category": "fuel",
+      "items": [
+        {
+          "item": "diesel fuel",
+          "quantity_litres": 420,
+          "days_supply": 42
+        },
+        {
+          "item": "generator oil",
+          "quantity_litres": 15,
+          "days_supply": 60
+        },
+        {
+          "item": "lamp oil",
+          "quantity_litres": 10,
+          "days_supply": 30
+        }
+      ],
+      "notes": "Fuel is the limiting factor. At current consumption (10 litres per day), reserves last 42 days. the_electrician Variac bypass may reduce consumption by 8 percent, extending to 45 days. Expedition recovery of fuel is essential."
+    },
+    {
+      "audit_id": "supply_audit_004",
+      "day": 45,
+      "auditor": "the_quartermaster",
+      "category": "food (post-storm)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 88,
+          "days_supply": 68
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 19,
+          "days_supply": 28
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 45,
+          "days_supply": 15
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 4.5,
+          "days_supply": 45
+        },
+        {
+          "item": "mushrooms (fresh)",
+          "quantity_kg": 2.3,
+          "days_supply": 2
+        }
+      ],
+      "notes": "Post-storm audit. First mushroom harvest from the_botanist adds fresh food to the inventory. 2.3 kg is small but it is the first non-stored food produced in the bunker. the_chef is developing recipes."
+    },
+    {
+      "audit_id": "supply_audit_005",
+      "day": 50,
+      "auditor": "the_quartermaster",
+      "category": "food (post-harvest)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 82,
+          "days_supply": 63
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 18,
+          "days_supply": 27
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 42,
+          "days_supply": 14
+        },
+        {
+          "item": "turnips (fresh)",
+          "quantity_kg": 3.8,
+          "days_supply": 2
+        },
+        {
+          "item": "mushrooms (dried)",
+          "quantity_kg": 1.5,
+          "days_supply": 8
+        }
+      ],
+      "notes": "First turnip harvest from the greenhouse. 3.8 kg fresh vegetables added to inventory. Dried mushroom powder is now a standing ingredient. the_chef says the bunker is eating better than last week."
+    },
+    {
+      "audit_id": "supply_audit_006",
+      "day": 55,
+      "auditor": "the_quartermaster",
+      "category": "expedition recovery",
+      "items": [
+        {
+          "item": "frozen venison",
+          "quantity_kg": 15,
+          "days_supply": 8
+        },
+        {
+          "item": "dried herbs",
+          "quantity_kg": 8,
+          "days_supply": 40
+        },
+        {
+          "item": "rope",
+          "quantity_lengths": 3,
+          "days_supply": "N/A (material)"
+        },
+        {
+          "item": "sealed container",
+          "quantity_units": 1,
+          "days_supply": "N/A (unidentified)"
+        }
+      ],
+      "notes": "Dead oak cache recovery. the_hunter venison from the frozen river adds protein. Dried herbs extend the_chef flavour palette. the_quartermaster is examining the sealed container."
+    },
+    {
+      "audit_id": "supply_audit_007",
+      "day": 60,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 75,
+          "days_supply": 57
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 16,
+          "days_supply": 24
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 38,
+          "days_supply": 13
+        },
+        {
+          "item": "turnips (cumulative)",
+          "quantity_kg": 8,
+          "days_supply": 4
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 5.1,
+          "days_supply": 17
+        },
+        {
+          "item": "venison (frozen)",
+          "quantity_kg": 35,
+          "days_supply": 19
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 4,
+          "days_supply": 40
+        },
+        {
+          "item": "fuel",
+          "quantity_litres": 380,
+          "days_supply": 38
+        }
+      ],
+      "notes": "Day 60 comprehensive audit. Food reserves declining but greenhouse production offsetting. 7 days of fresh vegetables produced so far. Venison from the frozen river is the primary protein source. Fuel at 38 days. the_quartermaster says the bunker is stable but the margin is thin."
+    },
+    {
+      "audit_id": "supply_audit_008",
+      "day": 65,
+      "auditor": "the_quartermaster",
+      "category": "seed vault recovery",
+      "items": [
+        {
+          "item": "seed ampoules (viable)",
+          "quantity_units": 12,
+          "days_supply": "N/A (planting stock)"
+        },
+        {
+          "item": "seed ampoules (uncertain)",
+          "quantity_units": 3,
+          "days_supply": "N/A (testing)"
+        },
+        {
+          "item": "seed ampoules (failed)",
+          "quantity_units": 2,
+          "days_supply": "N/A (discarded)"
+        }
+      ],
+      "notes": "Seed vault first recovery. 12 viable ampoules represent genetic diversity that the greenhouse desperately needs. the_botanist is assessing viability. If all 12 produce, the bunker will have 11 new crop types within 90 days."
+    },
+    {
+      "audit_id": "supply_audit_009",
+      "day": 70,
+      "auditor": "the_quartermaster",
+      "category": "trade (Shallows Market)",
+      "items": [
+        {
+          "item": "smoked fish",
+          "quantity_kg": 3,
+          "days_supply": 2
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 2,
+          "days_supply": 20
+        }
+      ],
+      "notes": "First external trade. Exchanged 5 kg dried mushrooms for 3 kg smoked fish and 2 kg salt. the_chef says the fish is acceptable quality. Salt is the highest-value import. the_quartermaster is establishing monthly trade schedule."
+    },
+    {
+      "audit_id": "supply_audit_010",
+      "day": 75,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 68,
+          "days_supply": 52
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 15,
+          "days_supply": 22
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 34,
+          "days_supply": 11
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 15,
+          "days_supply": 7
+        },
+        {
+          "item": "venison (cumulative)",
+          "quantity_kg": 53,
+          "days_supply": 29
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 6.9,
+          "days_supply": 23
+        },
+        {
+          "item": "salt (including trade)",
+          "quantity_kg": 4,
+          "days_supply": 40
+        },
+        {
+          "item": "fuel",
+          "quantity_litres": 340,
+          "days_supply": 34
+        }
+      ],
+      "notes": "Day 75 comprehensive. Greenhouse now producing approximately 2 kg per week of mixed produce. Venison from frozen river is the reliable protein. Fuel declining at 10 litres per day. the_quartermaster says the bunker needs the seed vault ampoules to start producing."
+    },
+    {
+      "audit_id": "supply_audit_011",
+      "day": 80,
+      "auditor": "the_quartermaster",
+      "category": "medical (post-dysentery)",
+      "items": [
+        {
+          "item": "bandages",
+          "quantity_units": 160,
+          "days_supply": 32
+        },
+        {
+          "item": "painkillers",
+          "quantity_doses": 22,
+          "days_supply": 11
+        },
+        {
+          "item": "antiseptic",
+          "quantity_litres": 2,
+          "days_supply": 20
+        },
+        {
+          "item": "antibiotics",
+          "quantity_doses": 0,
+          "days_supply": 0
+        },
+        {
+          "item": "calcium hypochlorite (water treatment)",
+          "quantity_kg": 2,
+          "days_supply": 45
+        }
+      ],
+      "notes": "Post-dysentery medical audit. Consumables depleted during the outbreak. the_surgeon says the bunker got lucky: 7 cases, no deaths. Next outbreak without antibiotics could be catastrophic. Calcium hypochlorite for water treatment is adequate for 45 days."
+    },
+    {
+      "audit_id": "supply_audit_012",
+      "day": 85,
+      "auditor": "the_quartermaster",
+      "category": "seed vault second recovery",
+      "items": [
+        {
+          "item": "seed ampoules (additional viable)",
+          "quantity_units": 3,
+          "days_supply": "N/A (planting stock)"
+        }
+      ],
+      "notes": "Seed vault second recovery. 3 additional ampoules: wheat, rye, sunflower. Cryo-system failed completely after extraction. Total recovered: 17 ampoules (15 viable). The vault is sealed. This is the total yield."
+    },
+    {
+      "audit_id": "supply_audit_013",
+      "day": 90,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 60,
+          "days_supply": 46
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 14,
+          "days_supply": 21
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 30,
+          "days_supply": 10
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 24,
+          "days_supply": 12
+        },
+        {
+          "item": "venison (cumulative)",
+          "quantity_kg": 61,
+          "days_supply": 33
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 6.9,
+          "days_supply": 23
+        },
+        {
+          "item": "lentils",
+          "quantity_kg": 1.2,
+          "days_supply": 4
+        },
+        {
+          "item": "radishes",
+          "quantity_kg": 2.1,
+          "days_supply": 3
+        },
+        {
+          "item": "honey",
+          "quantity_kg": 0.5,
+          "days_supply": 2
+        },
+        {
+          "item": "salt (including trade)",
+          "quantity_kg": 6,
+          "days_supply": 60
+        },
+        {
+          "item": "fuel",
+          "quantity_litres": 300,
+          "days_supply": 30
+        }
+      ],
+      "notes": "Day 90 comprehensive. Greenhouse production now includes lentils, radishes, and honey in addition to turnips and mushrooms. Salt trade with Salt Freeholders extending salt supply. Fuel at 30 days is the critical concern. the_quartermaster says the bunker is approaching a tipping point: either greenhouse production scales up or fuel runs out."
+    },
+    {
+      "audit_id": "supply_audit_014",
+      "day": 95,
+      "auditor": "the_quartermaster",
+      "category": "trade (Salt Freeholder formal)",
+      "items": [
+        {
+          "item": "salt",
+          "quantity_kg": 30,
+          "days_supply": 300
+        }
+      ],
+      "notes": "Formal Salt Freeholder trade agreement. First shipment: 15 kg dried goods exchanged for 30 kg salt. Salt supply now extends to 300 days. This is transformative. Salt is used for preservation, cooking, and the_chemist processes. the_quartermaster says salt security is achieved."
+    },
+    {
+      "audit_id": "supply_audit_015",
+      "day": 100,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (quarterly)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 52,
+          "days_supply": 40
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 12,
+          "days_supply": 18
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 26,
+          "days_supply": 9
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 44.6,
+          "days_supply": 22
+        },
+        {
+          "item": "venison (cumulative)",
+          "quantity_kg": 69,
+          "days_supply": 38
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 6.9,
+          "days_supply": 23
+        },
+        {
+          "item": "lentils",
+          "quantity_kg": 2.4,
+          "days_supply": 8
+        },
+        {
+          "item": "radishes",
+          "quantity_kg": 4.2,
+          "days_supply": 6
+        },
+        {
+          "item": "beans (seed vault)",
+          "quantity_kg": 3.2,
+          "days_supply": 10
+        },
+        {
+          "item": "cabbage",
+          "quantity_kg": 2.8,
+          "days_supply": 5
+        },
+        {
+          "item": "honey",
+          "quantity_kg": 0.5,
+          "days_supply": 2
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 34,
+          "days_supply": 340
+        },
+        {
+          "item": "fuel",
+          "quantity_litres": 260,
+          "days_supply": 26
+        }
+      ],
+      "notes": "Day 100 quarterly audit. Greenhouse now producing 7 percent of bunker caloric needs. 6 crop types active. Salt supply secured for 300 days via trade. Fuel at 26 days is critical. the_quartermaster says the bunker is transitioning from stored food to produced food. The trajectory is positive but fuel is the bottleneck."
+    },
+    {
+      "audit_id": "supply_audit_016",
+      "day": 100,
+      "auditor": "the_quartermaster",
+      "category": "projection",
+      "items": [
+        {
+          "item": "food_self_sufficiency_current",
+          "percentage": 7
+        },
+        {
+          "item": "food_self_sufficiency_projected_month4",
+          "percentage": 15
+        },
+        {
+          "item": "food_self_sufficiency_target_month6",
+          "percentage": 20
+        },
+        {
+          "item": "fuel_days_remaining",
+          "days": 26
+        },
+        {
+          "item": "fuel_expedition_priority",
+          "priority": "CRITICAL"
+        }
+      ],
+      "notes": "the_quartermaster projection: at current greenhouse expansion rate and seed vault integration, the bunker reaches 15 percent caloric self-sufficiency by month 4 and 20 percent by month 6. This reduces stored food dependency from 100 percent to 80 percent. Fuel remains the critical constraint. the_general has authorised fuel recovery expeditions."
+    },
+    {
+      "audit_id": "supply_audit_017",
+      "day": 105,
+      "auditor": "the_quartermaster",
+      "category": "expedition supplies",
+      "items": [
+        {
+          "item": "expedition rations (barley biscuits)",
+          "quantity_units": 20,
+          "days_supply": 5
+        },
+        {
+          "item": "expedition rations (smoked venison)",
+          "quantity_units": 15,
+          "days_supply": 5
+        },
+        {
+          "item": "water containers",
+          "quantity_units": 6,
+          "days_supply": 3
+        },
+        {
+          "item": "dosimeters",
+          "quantity_units": 3,
+          "days_supply": "N/A (equipment)"
+        },
+        {
+          "item": "first aid kits",
+          "quantity_units": 2,
+          "days_supply": "N/A (equipment)"
+        }
+      ],
+      "notes": "Expedition supply kit prepared for the next surface mission. Barley biscuits and smoked venison are the standard ration pack. 5 days of food per person. the_quartermaster says expedition rations are now a standing production item for the_chef."
+    },
+    {
+      "audit_id": "supply_audit_018",
+      "day": 108,
+      "auditor": "the_quartermaster",
+      "category": "trade goods production",
+      "items": [
+        {
+          "item": "dried mushrooms (for trade)",
+          "quantity_kg": 10,
+          "days_supply": "N/A (trade stock)"
+        },
+        {
+          "item": "dried herbs (for trade)",
+          "quantity_kg": 5,
+          "days_supply": "N/A (trade stock)"
+        },
+        {
+          "item": "smoked venison (for trade)",
+          "quantity_kg": 3,
+          "days_supply": "N/A (trade stock)"
+        }
+      ],
+      "notes": "Trade goods production schedule established. the_chef and the_botanist produce dried mushrooms and herbs specifically for external trade. the_hunter provides venison for smoking. the_quartermaster says the bunker now produces trade surplus for the first time."
+    },
+    {
+      "audit_id": "supply_audit_019",
+      "day": 111,
+      "auditor": "the_quartermaster",
+      "category": "water",
+      "items": [
+        {
+          "item": "cistern stored water",
+          "quantity_litres": 8000,
+          "days_supply": 57
+        },
+        {
+          "item": "daily consumption",
+          "quantity_litres": 140,
+          "days_supply": "N/A"
+        },
+        {
+          "item": "water treatment capacity",
+          "quantity_litres_per_day": 200,
+          "days_supply": "N/A"
+        }
+      ],
+      "notes": "Water supply is adequate. Cistern at 8000 litres provides 57 days at current consumption. Water treatment system (chemical method since UV lamp failure) processes 200 litres per day. the_plumber says water is the one resource the bunker is not short on."
+    },
+    {
+      "audit_id": "supply_audit_020",
+      "day": 114,
+      "auditor": "the_quartermaster",
+      "category": "comprehensive (final)",
+      "items": [
+        {
+          "item": "rice",
+          "quantity_kg": 45,
+          "days_supply": 35
+        },
+        {
+          "item": "dried beans",
+          "quantity_kg": 10,
+          "days_supply": 15
+        },
+        {
+          "item": "canned goods",
+          "quantity_units": 22,
+          "days_supply": 7
+        },
+        {
+          "item": "greenhouse produce (cumulative)",
+          "quantity_kg": 55,
+          "days_supply": 27
+        },
+        {
+          "item": "venison (cumulative)",
+          "quantity_kg": 77,
+          "days_supply": 42
+        },
+        {
+          "item": "mushrooms (cumulative)",
+          "quantity_kg": 8.5,
+          "days_supply": 28
+        },
+        {
+          "item": "lentils",
+          "quantity_kg": 3.6,
+          "days_supply": 12
+        },
+        {
+          "item": "radishes",
+          "quantity_kg": 6.3,
+          "days_supply": 9
+        },
+        {
+          "item": "beans (seed vault)",
+          "quantity_kg": 4.8,
+          "days_supply": 15
+        },
+        {
+          "item": "cabbage",
+          "quantity_kg": 5.6,
+          "days_supply": 10
+        },
+        {
+          "item": "honey",
+          "quantity_kg": 0.8,
+          "days_supply": 3
+        },
+        {
+          "item": "salt",
+          "quantity_kg": 32,
+          "days_supply": 320
+        },
+        {
+          "item": "fuel",
+          "quantity_litres": 220,
+          "days_supply": 22
+        }
+      ],
+      "notes": "Day 114 comprehensive. Greenhouse now producing 10 percent of bunker caloric needs. Stored food declining but production increasing. The crossover point where production exceeds stored food consumption is projected at month 8. Fuel at 22 days remains critical. the_quartermaster says the bunker is surviving. Whether it thrives depends on the next 90 days."
+    }
+  ]
+}

@@ -1,82 +1,133 @@
-[
-  {
-    "id": "hemp_fiber_dew_retting_pectin_breakdown",
-    "retting_floor_id": "MUSHROOM_CAVERN_RETTING_BED_01",
-    "raw_stalk_crop_origin": "BUNKER_GREENHOUSE_CANNABIS_SATIVA",
-    "retting_duration_days": 21.0,
-    "fiber_tensile_tenacity_cn_tex": 34.5,
-    "timestamp_relative": "YEAR_02_CORDAGE_01",
-    "tags": ["cordage", "hemp", "dew_retting", "pectin_breakdown", "bast_fiber"],
-    "prose": "Spreading mature hemp stalks across the damp limestone floor of the mushroom cavern allowed indigenous *Clostridium* bacteria to hydrolyze intercellular pectins. In three weeks, the woody core separated cleanly from long, silky bast fibers without fiber degradation."
-  },
-  {
-    "id": "hemp_fiber_steel_pin_hackling_line_tow",
-    "retting_floor_id": "MANUAL_HACKLE_COMB_STATION_B",
-    "raw_stalk_crop_origin": "OUTPOST_DELTA_TERRACE_HARVEST",
-    "retting_duration_days": 18.0,
-    "fiber_tensile_tenacity_cn_tex": 31.0,
-    "timestamp_relative": "YEAR_04_CORDAGE_03",
-    "tags": ["cordage", "hackling", "steel_pins", "line_fiber", "tow"],
-    "prose": "Drawing retted hemp stricks through a graduated coarse-to-fine bed of 1,200 needle-sharp steel pins split the coarse fibers into fine threads. The operation yielded 60% premium long line fiber for hawser yarns and 40% short tow for caulk oakum."
-  },
-  {
-    "id": "hemp_fiber_pine_tar_batching_oil_penetration",
-    "retting_floor_id": "SPINNING_PREPARATION_TROUGH_02",
-    "raw_stalk_crop_origin": "HYDROHYDROPONIC_FIBER_BAY_04",
-    "retting_duration_days": 0.0,
-    "fiber_tensile_tenacity_cn_tex": 28.0,
-    "timestamp_relative": "YEAR_07_CORDAGE_02",
-    "tags": ["cordage", "batching_oil", "pine_tar", "lubrication", "yarn_spinning"],
-    "prose": "Spraying a warm emulsion of 80% Stockholm pine tar and 20% whale oil onto dry hemp slivers softened the harsh lignin sheath. The batching oil lubricated high-speed drawing rollers and imparted deep rot resistance to the spun yarn."
-  },
-  {
-    "id": "hemp_fiber_bast_fiber_tensile_micronaire",
-    "retting_floor_id": "FIBER_TESTING_LABORATORY_BENCH",
-    "raw_stalk_crop_origin": "IRRADIATED_SURFACE_VALLEY_PLOT",
-    "retting_duration_days": 14.0,
-    "fiber_tensile_tenacity_cn_tex": 42.0,
-    "timestamp_relative": "YEAR_09_CORDAGE_04",
-    "tags": ["cordage", "micronaire", "tenacity", "tensile_test", "hemp_fiber"],
-    "prose": "Tensile assays on heavy irradiated surface hemp strains revealed an exceptional tenacity of 42 cN/tex. The extra-thick secondary cell walls resisted abrasion, though the increased fiber stiffness required double oiling to pass through spinning flyer eyes."
-  },
-  {
-    "id": "hemp_fiber_scutching_wooden_blade_shive_eject",
-    "retting_floor_id": "ROTARY_SCUTCHING_MILL_01",
-    "raw_stalk_crop_origin": "CENTRAL_COMMISSARY_FARM_LOT",
-    "retting_duration_days": 25.0,
-    "fiber_tensile_tenacity_cn_tex": 29.5,
-    "timestamp_relative": "YEAR_12_CORDAGE_01",
-    "tags": ["cordage", "scutching", "wooden_blade", "shive", "chaff"],
-    "prose": "Oak scutching blades rotating at 240 RPM struck the broken hemp stalks, knocking away brittle woody shive fragments. The separated shives were bagged and fed directly into the gasifier generator as dry biomass fuel."
-  },
-  {
-    "id": "hemp_fiber_cavern_mold_cellulose_rot",
-    "retting_floor_id": "RAW_BALE_STORAGE_VAULT_03",
-    "raw_stalk_crop_origin": "SUMP_TERRACE_EMERGENCY_CROP",
-    "retting_duration_days": 30.0,
-    "fiber_tensile_tenacity_cn_tex": 11.0,
-    "timestamp_relative": "YEAR_15_CORDAGE_03",
-    "tags": ["cordage", "cellulose_rot", "aspergillus", "storage_spoilage", "moisture"],
-    "prose": "High relative humidity (96%) in the raw bale storage cellar triggered an aggressive *Aspergillus* mold infestation. The fungal enzymes digested the structural cellulose chains, reducing raw fiber tensile strength from 32 cN/tex down to 11 cN/tex."
-  },
-  {
-    "id": "hemp_fiber_spinning_jenny_draft_roller_twist",
-    "retting_floor_id": "CORDAGE_SPINNING_LOFT_ALPHA",
-    "raw_stalk_crop_origin": "STANDARD_BUNKER_FIBER_BLEND",
-    "retting_duration_days": 20.0,
-    "fiber_tensile_tenacity_cn_tex": 35.0,
-    "timestamp_relative": "YEAR_17_CORDAGE_02",
-    "tags": ["cordage", "spinning_jenny", "draft_roller", "twist_multiplier", "yarn"],
-    "prose": "A treadle-powered 12-spindle spinning frame drew lubricated slivers through fluted steel rollers, inserting 14 Z-twists per inch. The resulting single-ply rope yarn demonstrated zero thick-and-thin diameter variation across five-hundred-meter spools."
-  },
-  {
-    "id": "hemp_fiber_flax_blend_high_tensile_cord",
-    "retting_floor_id": "PRECISION_RIGGING_WORKSHOP",
-    "raw_stalk_crop_origin": "LINEN_FLAX_AND_HEMP_CO_CROP",
-    "retting_duration_days": 16.0,
-    "fiber_tensile_tenacity_cn_tex": 48.0,
-    "timestamp_relative": "YEAR_20_CORDAGE_01",
-    "tags": ["cordage", "flax_hemp_blend", "rigging_line", "low_stretch", "cord"],
-    "prose": "Co-spinning 35% Belgian line flax with 65% bunker hemp produced an ultra-dense, low-elongation cordage yarn. Ropes laid from this blend exhibited less than 2% stretch under working loads, ideal for radio mast guy wires and elevator governor lines."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "hemp_fiber_dew_retting_pectin_breakdown",
+      "retting_floor_id": "MUSHROOM_CAVERN_RETTING_BED_01",
+      "raw_stalk_crop_origin": "BUNKER_GREENHOUSE_CANNABIS_SATIVA",
+      "retting_duration_days": 21.0,
+      "fiber_tensile_tenacity_cn_tex": 34.5,
+      "timestamp_relative": "YEAR_02_CORDAGE_01",
+      "tags": [
+        "cordage",
+        "hemp",
+        "dew_retting",
+        "pectin_breakdown",
+        "bast_fiber"
+      ],
+      "prose": "Spreading mature hemp stalks across the damp limestone floor of the mushroom cavern allowed indigenous *Clostridium* bacteria to hydrolyze intercellular pectins. In three weeks, the woody core separated cleanly from long, silky bast fibers without fiber degradation."
+    },
+    {
+      "id": "hemp_fiber_steel_pin_hackling_line_tow",
+      "retting_floor_id": "MANUAL_HACKLE_COMB_STATION_B",
+      "raw_stalk_crop_origin": "OUTPOST_DELTA_TERRACE_HARVEST",
+      "retting_duration_days": 18.0,
+      "fiber_tensile_tenacity_cn_tex": 31.0,
+      "timestamp_relative": "YEAR_04_CORDAGE_03",
+      "tags": [
+        "cordage",
+        "hackling",
+        "steel_pins",
+        "line_fiber",
+        "tow"
+      ],
+      "prose": "Drawing retted hemp stricks through a graduated coarse-to-fine bed of 1,200 needle-sharp steel pins split the coarse fibers into fine threads. The operation yielded 60% premium long line fiber for hawser yarns and 40% short tow for caulk oakum."
+    },
+    {
+      "id": "hemp_fiber_pine_tar_batching_oil_penetration",
+      "retting_floor_id": "SPINNING_PREPARATION_TROUGH_02",
+      "raw_stalk_crop_origin": "HYDROHYDROPONIC_FIBER_BAY_04",
+      "retting_duration_days": 0.0,
+      "fiber_tensile_tenacity_cn_tex": 28.0,
+      "timestamp_relative": "YEAR_07_CORDAGE_02",
+      "tags": [
+        "cordage",
+        "batching_oil",
+        "pine_tar",
+        "lubrication",
+        "yarn_spinning"
+      ],
+      "prose": "Spraying a warm emulsion of 80% Stockholm pine tar and 20% whale oil onto dry hemp slivers softened the harsh lignin sheath. The batching oil lubricated high-speed drawing rollers and imparted deep rot resistance to the spun yarn."
+    },
+    {
+      "id": "hemp_fiber_bast_fiber_tensile_micronaire",
+      "retting_floor_id": "FIBER_TESTING_LABORATORY_BENCH",
+      "raw_stalk_crop_origin": "IRRADIATED_SURFACE_VALLEY_PLOT",
+      "retting_duration_days": 14.0,
+      "fiber_tensile_tenacity_cn_tex": 42.0,
+      "timestamp_relative": "YEAR_09_CORDAGE_04",
+      "tags": [
+        "cordage",
+        "micronaire",
+        "tenacity",
+        "tensile_test",
+        "hemp_fiber"
+      ],
+      "prose": "Tensile assays on heavy irradiated surface hemp strains revealed an exceptional tenacity of 42 cN/tex. The extra-thick secondary cell walls resisted abrasion, though the increased fiber stiffness required double oiling to pass through spinning flyer eyes."
+    },
+    {
+      "id": "hemp_fiber_scutching_wooden_blade_shive_eject",
+      "retting_floor_id": "ROTARY_SCUTCHING_MILL_01",
+      "raw_stalk_crop_origin": "CENTRAL_COMMISSARY_FARM_LOT",
+      "retting_duration_days": 25.0,
+      "fiber_tensile_tenacity_cn_tex": 29.5,
+      "timestamp_relative": "YEAR_12_CORDAGE_01",
+      "tags": [
+        "cordage",
+        "scutching",
+        "wooden_blade",
+        "shive",
+        "chaff"
+      ],
+      "prose": "Oak scutching blades rotating at 240 RPM struck the broken hemp stalks, knocking away brittle woody shive fragments. The separated shives were bagged and fed directly into the gasifier generator as dry biomass fuel."
+    },
+    {
+      "id": "hemp_fiber_cavern_mold_cellulose_rot",
+      "retting_floor_id": "RAW_BALE_STORAGE_VAULT_03",
+      "raw_stalk_crop_origin": "SUMP_TERRACE_EMERGENCY_CROP",
+      "retting_duration_days": 30.0,
+      "fiber_tensile_tenacity_cn_tex": 11.0,
+      "timestamp_relative": "YEAR_15_CORDAGE_03",
+      "tags": [
+        "cordage",
+        "cellulose_rot",
+        "aspergillus",
+        "storage_spoilage",
+        "moisture"
+      ],
+      "prose": "High relative humidity (96%) in the raw bale storage cellar triggered an aggressive *Aspergillus* mold infestation. The fungal enzymes digested the structural cellulose chains, reducing raw fiber tensile strength from 32 cN/tex down to 11 cN/tex."
+    },
+    {
+      "id": "hemp_fiber_spinning_jenny_draft_roller_twist",
+      "retting_floor_id": "CORDAGE_SPINNING_LOFT_ALPHA",
+      "raw_stalk_crop_origin": "STANDARD_BUNKER_FIBER_BLEND",
+      "retting_duration_days": 20.0,
+      "fiber_tensile_tenacity_cn_tex": 35.0,
+      "timestamp_relative": "YEAR_17_CORDAGE_02",
+      "tags": [
+        "cordage",
+        "spinning_jenny",
+        "draft_roller",
+        "twist_multiplier",
+        "yarn"
+      ],
+      "prose": "A treadle-powered 12-spindle spinning frame drew lubricated slivers through fluted steel rollers, inserting 14 Z-twists per inch. The resulting single-ply rope yarn demonstrated zero thick-and-thin diameter variation across five-hundred-meter spools."
+    },
+    {
+      "id": "hemp_fiber_flax_blend_high_tensile_cord",
+      "retting_floor_id": "PRECISION_RIGGING_WORKSHOP",
+      "raw_stalk_crop_origin": "LINEN_FLAX_AND_HEMP_CO_CROP",
+      "retting_duration_days": 16.0,
+      "fiber_tensile_tenacity_cn_tex": 48.0,
+      "timestamp_relative": "YEAR_20_CORDAGE_01",
+      "tags": [
+        "cordage",
+        "flax_hemp_blend",
+        "rigging_line",
+        "low_stretch",
+        "cord"
+      ],
+      "prose": "Co-spinning 35% Belgian line flax with 65% bunker hemp produced an ultra-dense, low-elongation cordage yarn. Ropes laid from this blend exhibited less than 2% stretch under working loads, ideal for radio mast guy wires and elevator governor lines."
+    }
+  ]
+}

@@ -1,82 +1,133 @@
-[
-  {
-    "id": "condenser_fracture_cold_water_inlet_thermal_shock",
-    "distillation_rig_id": "NITRIC_ACID_RETORT_APPARATUS_01",
-    "glassware_component": "STRAIGHT_TUBE_LIEBIG_CONDENSER_500MM",
-    "vapor_temperature_celsius": 122.0,
-    "failure_phenomenon": "WATER_INLET_RING_THERMAL_SHOCK_SNAP",
-    "timestamp_relative": "YEAR_02_DISTILL_LOG_01",
-    "tags": ["distillation", "condenser", "thermal_shock", "nitric_acid", "glassware"],
-    "prose": "Turning on icy 4°C well water while the inner tube carried 122°C concentrated nitric acid vapor induced severe localized contraction. The outer cooling jacket snapped with a loud crack around the water inlet barb, spraying water into the acid collection flask."
-  },
-  {
-    "id": "condenser_fracture_vapor_stall_steam_hammer",
-    "distillation_rig_id": "ESSENTIAL_OIL_STEAM_STILL_02",
-    "glassware_component": "ALLIHN_BULB_CONDENSER_600MM",
-    "vapor_temperature_celsius": 100.0,
-    "failure_phenomenon": "VAPOR_COLLAPSE_WATER_HAMMER_IMPLOSION",
-    "timestamp_relative": "YEAR_04_DISTILL_LOG_03",
-    "tags": ["distillation", "condenser", "water_hammer", "allihn_bulb", "implosion"],
-    "prose": "A momentary kink in the cooling water hose allowed the condenser bulbs to overheat. When cold flow resumed, sudden condensation of trapped steam created an instant vacuum; the resulting water hammer imploded three glass bulbs into the distillate."
-  },
-  {
-    "id": "condenser_fracture_acid_distillation_joint_etch",
-    "distillation_rig_id": "ETHER_SOLVENT_RECLAIM_UNIT",
-    "glassware_component": "GROUND_GLASS_CONICAL_JOINT_24_40",
-    "vapor_temperature_celsius": 35.0,
-    "failure_phenomenon": "HYDROFLUORIC_TRACE_JOINT_FREEZE",
-    "timestamp_relative": "YEAR_07_DISTILL_LOG_02",
-    "tags": ["distillation", "ground_glass", "joint_freeze", "acid_etch", "solvents"],
-    "prose": "Distilling scavenged technical solvents containing trace fluoride etched the frosted standard-taper ground glass joint. The female joint fused solid to the condenser neck; attempts to separate with a heat gun shattered the adapter."
-  },
-  {
-    "id": "condenser_fracture_allihn_bulb_constriction_choke",
-    "distillation_rig_id": "KEROSENE_FRACTIONATION_STILL",
-    "glassware_component": "MULTI_BULB_ALLIHN_REFLUX_COLUMN",
-    "vapor_temperature_celsius": 185.0,
-    "failure_phenomenon": "LIQUID_FLOODING_HYDROSTATIC_BURST",
-    "timestamp_relative": "YEAR_09_DISTILL_LOG_04",
-    "tags": ["distillation", "reflux", "flooding", "hydrostatic_burst", "fractionation"],
-    "prose": "Heavy kerosene fractions condensed faster than they could drain through the narrow bulb necks. Liquid flooded the column until hydrostatic pressure and vapor surging blew the top expansion bulb off, showering the lab in hot oil vapor."
-  },
-  {
-    "id": "condenser_fracture_dewar_vacuum_flask_implosion",
-    "distillation_rig_id": "CRYO_GAS_SAMPLING_TRAP_04",
-    "glassware_component": "DOUBLE_WALL_SILVERED_DEWAR_FLASK",
-    "vapor_temperature_celsius": -78.0,
-    "failure_phenomenon": "SCRATCH_TRIGGERED_VACUUM_IMPLOSION",
-    "timestamp_relative": "YEAR_12_DISTILL_LOG_01",
-    "tags": ["distillation", "dewar", "vacuum_flask", "implosion", "cryogenics"],
-    "prose": "A scratch on the inner silvered glass wall of the two-liter vacuum Dewar flask concentrated mechanical stress under atmospheric load. When dry ice and acetone were poured in, the flask imploded catastrophically, propelling razor-sharp glass shards ten feet."
-  },
-  {
-    "id": "condenser_fracture_graham_spiral_coil_calcification",
-    "distillation_rig_id": "ALCOHOL_PURIFICATION_STILL_01",
-    "glassware_component": "GRAHAM_SPIRAL_COIL_CONDENSER_400MM",
-    "vapor_temperature_celsius": 78.5,
-    "failure_phenomenon": "CALCIUM_SCALE_THERMAL_EXPANSION_CRACK",
-    "timestamp_relative": "YEAR_15_DISTILL_LOG_03",
-    "tags": ["distillation", "graham_condenser", "spiral_coil", "calcification", "alcohol"],
-    "prose": "Hard aquifer cooling water deposited a heavy crust of limestone scale inside the tight spiral coil. Differential thermal expansion between the rigid calcium core and borosilicate glass tube cracked the coil in four places during ethanol distillation."
-  },
-  {
-    "id": "condenser_fracture_claisen_distillation_adapter_snap",
-    "distillation_rig_id": "VACUUM_DISTILLATION_MANIFOLD_B",
-    "glassware_component": "THREE_WAY_CLAISEN_DISTILLATION_HEAD",
-    "vapor_temperature_celsius": 160.0,
-    "failure_phenomenon": "CANTILEVER_BENDING_MOMENT_SHEAR",
-    "timestamp_relative": "YEAR_17_DISTILL_LOG_02",
-    "tags": ["distillation", "claisen_adapter", "cantilever", "weight_snap", "vacuum"],
-    "prose": "An un-clamped three-liter receiving flask hung from the vacuum takeoff arm exerted severe bending leverage. The 24/40 sidearm of the Claisen head sheared off under full 15mm Hg vacuum, imploding the receiving apparatus."
-  },
-  {
-    "id": "condenser_fracture_fractionating_column_packing_pressure",
-    "distillation_rig_id": "SOLVENT_SEPARATION_VIGREUX_STILL",
-    "glassware_component": "PACKED_COLUMN_WITH_RASCHIG_RINGS",
-    "vapor_temperature_celsius": 110.0,
-    "failure_phenomenon": "PACKING_THERMAL_EXPANSION_SPLIT",
-    "timestamp_relative": "YEAR_20_DISTILL_LOG_01",
-    "tags": ["distillation", "fractionating_column", "raschig_rings", "expansion_split", "packing"],
-    "prose": "Tightly packing ceramic Raschig rings into a narrow borosilicate column without expansion clearance proved fatal. When the column reached operating temperature, the higher thermal expansion of the ceramic rings split the outer glass tube lengthwise."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "condenser_fracture_cold_water_inlet_thermal_shock",
+      "distillation_rig_id": "NITRIC_ACID_RETORT_APPARATUS_01",
+      "glassware_component": "STRAIGHT_TUBE_LIEBIG_CONDENSER_500MM",
+      "vapor_temperature_celsius": 122.0,
+      "failure_phenomenon": "WATER_INLET_RING_THERMAL_SHOCK_SNAP",
+      "timestamp_relative": "YEAR_02_DISTILL_LOG_01",
+      "tags": [
+        "distillation",
+        "condenser",
+        "thermal_shock",
+        "nitric_acid",
+        "glassware"
+      ],
+      "prose": "Turning on icy 4°C well water while the inner tube carried 122°C concentrated nitric acid vapor induced severe localized contraction. The outer cooling jacket snapped with a loud crack around the water inlet barb, spraying water into the acid collection flask."
+    },
+    {
+      "id": "condenser_fracture_vapor_stall_steam_hammer",
+      "distillation_rig_id": "ESSENTIAL_OIL_STEAM_STILL_02",
+      "glassware_component": "ALLIHN_BULB_CONDENSER_600MM",
+      "vapor_temperature_celsius": 100.0,
+      "failure_phenomenon": "VAPOR_COLLAPSE_WATER_HAMMER_IMPLOSION",
+      "timestamp_relative": "YEAR_04_DISTILL_LOG_03",
+      "tags": [
+        "distillation",
+        "condenser",
+        "water_hammer",
+        "allihn_bulb",
+        "implosion"
+      ],
+      "prose": "A momentary kink in the cooling water hose allowed the condenser bulbs to overheat. When cold flow resumed, sudden condensation of trapped steam created an instant vacuum; the resulting water hammer imploded three glass bulbs into the distillate."
+    },
+    {
+      "id": "condenser_fracture_acid_distillation_joint_etch",
+      "distillation_rig_id": "ETHER_SOLVENT_RECLAIM_UNIT",
+      "glassware_component": "GROUND_GLASS_CONICAL_JOINT_24_40",
+      "vapor_temperature_celsius": 35.0,
+      "failure_phenomenon": "HYDROFLUORIC_TRACE_JOINT_FREEZE",
+      "timestamp_relative": "YEAR_07_DISTILL_LOG_02",
+      "tags": [
+        "distillation",
+        "ground_glass",
+        "joint_freeze",
+        "acid_etch",
+        "solvents"
+      ],
+      "prose": "Distilling scavenged technical solvents containing trace fluoride etched the frosted standard-taper ground glass joint. The female joint fused solid to the condenser neck; attempts to separate with a heat gun shattered the adapter."
+    },
+    {
+      "id": "condenser_fracture_allihn_bulb_constriction_choke",
+      "distillation_rig_id": "KEROSENE_FRACTIONATION_STILL",
+      "glassware_component": "MULTI_BULB_ALLIHN_REFLUX_COLUMN",
+      "vapor_temperature_celsius": 185.0,
+      "failure_phenomenon": "LIQUID_FLOODING_HYDROSTATIC_BURST",
+      "timestamp_relative": "YEAR_09_DISTILL_LOG_04",
+      "tags": [
+        "distillation",
+        "reflux",
+        "flooding",
+        "hydrostatic_burst",
+        "fractionation"
+      ],
+      "prose": "Heavy kerosene fractions condensed faster than they could drain through the narrow bulb necks. Liquid flooded the column until hydrostatic pressure and vapor surging blew the top expansion bulb off, showering the lab in hot oil vapor."
+    },
+    {
+      "id": "condenser_fracture_dewar_vacuum_flask_implosion",
+      "distillation_rig_id": "CRYO_GAS_SAMPLING_TRAP_04",
+      "glassware_component": "DOUBLE_WALL_SILVERED_DEWAR_FLASK",
+      "vapor_temperature_celsius": -78.0,
+      "failure_phenomenon": "SCRATCH_TRIGGERED_VACUUM_IMPLOSION",
+      "timestamp_relative": "YEAR_12_DISTILL_LOG_01",
+      "tags": [
+        "distillation",
+        "dewar",
+        "vacuum_flask",
+        "implosion",
+        "cryogenics"
+      ],
+      "prose": "A scratch on the inner silvered glass wall of the two-liter vacuum Dewar flask concentrated mechanical stress under atmospheric load. When dry ice and acetone were poured in, the flask imploded catastrophically, propelling razor-sharp glass shards ten feet."
+    },
+    {
+      "id": "condenser_fracture_graham_spiral_coil_calcification",
+      "distillation_rig_id": "ALCOHOL_PURIFICATION_STILL_01",
+      "glassware_component": "GRAHAM_SPIRAL_COIL_CONDENSER_400MM",
+      "vapor_temperature_celsius": 78.5,
+      "failure_phenomenon": "CALCIUM_SCALE_THERMAL_EXPANSION_CRACK",
+      "timestamp_relative": "YEAR_15_DISTILL_LOG_03",
+      "tags": [
+        "distillation",
+        "graham_condenser",
+        "spiral_coil",
+        "calcification",
+        "alcohol"
+      ],
+      "prose": "Hard aquifer cooling water deposited a heavy crust of limestone scale inside the tight spiral coil. Differential thermal expansion between the rigid calcium core and borosilicate glass tube cracked the coil in four places during ethanol distillation."
+    },
+    {
+      "id": "condenser_fracture_claisen_distillation_adapter_snap",
+      "distillation_rig_id": "VACUUM_DISTILLATION_MANIFOLD_B",
+      "glassware_component": "THREE_WAY_CLAISEN_DISTILLATION_HEAD",
+      "vapor_temperature_celsius": 160.0,
+      "failure_phenomenon": "CANTILEVER_BENDING_MOMENT_SHEAR",
+      "timestamp_relative": "YEAR_17_DISTILL_LOG_02",
+      "tags": [
+        "distillation",
+        "claisen_adapter",
+        "cantilever",
+        "weight_snap",
+        "vacuum"
+      ],
+      "prose": "An un-clamped three-liter receiving flask hung from the vacuum takeoff arm exerted severe bending leverage. The 24/40 sidearm of the Claisen head sheared off under full 15mm Hg vacuum, imploding the receiving apparatus."
+    },
+    {
+      "id": "condenser_fracture_fractionating_column_packing_pressure",
+      "distillation_rig_id": "SOLVENT_SEPARATION_VIGREUX_STILL",
+      "glassware_component": "PACKED_COLUMN_WITH_RASCHIG_RINGS",
+      "vapor_temperature_celsius": 110.0,
+      "failure_phenomenon": "PACKING_THERMAL_EXPANSION_SPLIT",
+      "timestamp_relative": "YEAR_20_DISTILL_LOG_01",
+      "tags": [
+        "distillation",
+        "fractionating_column",
+        "raschig_rings",
+        "expansion_split",
+        "packing"
+      ],
+      "prose": "Tightly packing ceramic Raschig rings into a narrow borosilicate column without expansion clearance proved fatal. When the column reached operating temperature, the higher thermal expansion of the ceramic rings split the outer glass tube lengthwise."
+    }
+  ]
+}
