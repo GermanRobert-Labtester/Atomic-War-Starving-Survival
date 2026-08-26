@@ -388,17 +388,22 @@ namespace AtomicWar.GodotApp.UI
             content.AddChild(AshfallUiHelpers.MakeSeparator());
 
             AddNavButton(content, "OVERVIEW", "overview", true);
+            AddNavButton(content, "STATUS", "status");
             AddNavButton(content, "SURVIVORS", "survivors");
+            AddNavButton(content, "SURVIVAL", "survival_detail");
             AddNavButton(content, "INVENTORY", "inventory");
             AddNavButton(content, "CRAFTING", "crafting");
             AddNavButton(content, "MEDICAL", "medical");
+            AddNavButton(content, "AFFLICTIONS", "afflictions");
             AddNavButton(content, "EXPEDITIONS", "expeditions");
             AddNavButton(content, "WEATHER", "weather");
+            AddNavButton(content, "WEATHER DETAIL", "weather_detail");
             AddNavButton(content, "RADIO", "radio");
             AddNavButton(content, "MAP", "map");
             AddNavButton(content, "SHELTER", "shelter");
             AddNavButton(content, "TRADE", "trade");
-            AddNavButton(content, "EXPANSIONS", "expansions");
+            AddNavButton(content, "ECONOMY", "economy_detail");
+            AddNavButton(content, "RESEARCH", "research");
             AddNavButton(content, "GREENHOUSE", "greenhouse");
             AddNavButton(content, "FACTIONS", "factions");
             AddNavButton(content, "MUSTER", "muster");
@@ -406,6 +411,12 @@ namespace AtomicWar.GodotApp.UI
             AddNavButton(content, "MARITIME", "maritime");
             AddNavButton(content, "DUTY ROSTER", "duty_roster");
             AddNavButton(content, "QUESTS", "quests");
+            AddNavButton(content, "EVENTS", "event_detail");
+            AddNavButton(content, "JOURNAL", "journal_detail");
+            AddNavButton(content, "RADIATION", "radiation_detail");
+            AddNavButton(content, "RAD HISTORY", "radiation_history");
+            AddNavButton(content, "ACHIEVEMENTS", "achievements");
+            AddNavButton(content, "HELP", "help");
 
             content.AddChild(new Control { SizeFlagsVertical = SizeFlags.ExpandFill });
             content.AddChild(AshfallUiHelpers.MakeSeparator());
