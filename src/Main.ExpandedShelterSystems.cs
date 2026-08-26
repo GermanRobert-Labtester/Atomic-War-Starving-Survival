@@ -71,6 +71,7 @@ namespace AtomicWar.GodotApp
             SetupAutopsy(sharedResearch);
             SetupWaystation();
             SetupSumpFlooding();
+            WireWaterTreatmentSumpBridge();
             SetupDecontamination();
             SetupKitchenNutrition();
             SetupEquipmentCondition();
@@ -79,6 +80,18 @@ namespace AtomicWar.GodotApp
             SetupContractorRoster();
             SetupMentalHealthCrisis();
             SetupShelterAssignment();   // last — post-wiring to Thermal + Phase0
+        }
+
+        private void WireWaterTreatmentSumpBridge()
+        {
+            if (_sumpFlooding == null || _waterTreatment == null) return;
+            _sumpFlooding.System.OnIncident += incident =>
+            {
+                if (incident.kind == FloodIncidentKind.FloodStart || incident.kind == FloodIncidentKind.Contamination)
+                {
+                    _waterTreatment.SetIncomingContamination(0.8f);
+                }
+            };
         }
 
 

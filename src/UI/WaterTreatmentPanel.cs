@@ -45,6 +45,7 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.AddCard("clean", "Clean Potable", "0.0 L", AshfallMetricCard.Criticality.Normal, minWidth: 120);
             _statusRail.AddCard("raw", "Raw Intake", "0.0 L", AshfallMetricCard.Criticality.Warn, minWidth: 120);
             _statusRail.AddCard("filter_health", "Filter Integrity", "100%", AshfallMetricCard.Criticality.Normal, minWidth: 120);
+            _statusRail.AddCard("contamination", "Flood Contam.", "0%", AshfallMetricCard.Criticality.Normal, minWidth: 130);
             _statusRail.AddCard("status", "Active Mode", "IDLE", AshfallMetricCard.Criticality.Normal, minWidth: 120);
 
             _contentStack = new VBoxContainer();
@@ -96,14 +97,25 @@ namespace AtomicWar.GodotApp.UI
             _statusRail.Set("clean", $"{s.cleanWater:F1} L", s.cleanWater < 10f ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("raw", $"{s.rawWater:F1} L", s.rawWater > 50f ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("filter_health", $"{s.filterIntegrity:F0}%", s.filterIntegrity < 25f ? AshfallMetricCard.Criticality.Critical : AshfallMetricCard.Criticality.Normal);
+            _statusRail.Set("contamination", $"{s.incomingContaminationLevel*100f:F0}%", s.incomingContaminationLevel > 0.5f ? AshfallMetricCard.Criticality.Critical : s.incomingContaminationLevel > 0.01f ? AshfallMetricCard.Criticality.Warn : AshfallMetricCard.Criticality.Normal);
             _statusRail.Set("status", s.isProcessing ? s.activeMode.ToString().ToUpperInvariant() : "IDLE", s.isProcessing ? AshfallMetricCard.Criticality.Caution : AshfallMetricCard.Criticality.Normal);
 
             if (_detailText != null)
             {
+                string floodWarn = s.incomingContaminationLevel > 0.5f ? " ⚠ FLOOD CONTAMINATION" : s.incomingContaminationLevel > 0.01f ? " (settling)" : "";
                 _detailText.Text = $"Clean Water: {s.cleanWater:F1} L | Raw: {s.rawWater:F1} L | Brackish: {s.brackishWater:F1} L | Irradiated: {s.irradiatedWater:F1} L\n" +
-                                   $"Filter Integrity: {s.filterIntegrity:F0}% | Charcoal Supply: {s.charcoalSupply:F1} units | Fuel: {s.distillationFuel:F1} units\n" +
-                                   $"Processed Total: {s.totalWaterProcessed:F1} L | Last Event: {_host.LastEvent}";
+                                   $"Filter Integrity: {s.filterIntegrity:F0}% | Charcoal Supply: {s.charcoalSupply:F1} units | Fuel: {s.distillationFuel:F1} units{floodWarn}\n" +
+                                   $"Incoming Contamination: {s.incomingContaminationLevel*100f:F0}% | Processed Total: {s.totalWaterProcessed:F1} L | Last Event: {_host.LastEvent}";
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_host != null)
+            {
+                _host.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
         }
     }
 }

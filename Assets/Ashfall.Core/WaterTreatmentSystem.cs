@@ -42,6 +42,7 @@ namespace Ashfall.Core
         public int filterReplacements;
         public List<WaterTreatmentJob> completedJobs = new List<WaterTreatmentJob>();
         public float filterMaxIntegrity = 100f;
+        public float incomingContaminationLevel; // 0-1, set by SumpFlooding flood events via host bridge
     }
 
     public enum TreatmentMode
@@ -101,7 +102,7 @@ namespace Ashfall.Core
         public event Action<float> OnRadiationExposure;    // parameter = dose
         public event Action<float> OnPathogenExposure;     // parameter = dose
 
-        public WaterTreatmentSystem(ILog log = null!)
+        public WaterTreatmentSystem(ILog? log = null)
         {
             _log = log ?? NullLog.Instance;
         }
@@ -453,12 +454,36 @@ namespace Ashfall.Core
                 new Dictionary<string, double> { { "integrity", _state.filterIntegrity } });
         }
 
+        /// <summary>Host bridge: SumpFlooding flood → water treatment contamination.</summary>
+        public void SetIncomingContamination(float level)
+        {
+            _state.incomingContaminationLevel = Math.Clamp(level, 0f, 1f);
+            if (_state.incomingContaminationLevel > 0.5f)
+                _log.Warn($"[WaterTreatment] incoming contamination elevated ({_state.incomingContaminationLevel:F2}) — flood source");
+            OnWaterStateChanged?.Invoke();
+        }
+
         // ── Daily Tick ──────────────────────────────────────────────────────
 
         /// <summary>Daily tick. Advances active treatment and applies passive effects.</summary>
         public void TickDay(int day)
         {
             _currentDay = day;
+
+            // Incoming flood contamination accelerates filter clogging and exposure
+            if (_state.incomingContaminationLevel > 0.01f)
+            {
+                float floodDegrade = _state.incomingContaminationLevel * 5f;
+                _state.filterIntegrity = Math.Max(0, _state.filterIntegrity - floodDegrade);
+                // Slowly decay the incoming level as water is processed/settled
+                _state.incomingContaminationLevel = Math.Max(0, _state.incomingContaminationLevel - 0.15f);
+                if (_state.incomingContaminationLevel > 0.3f)
+                {
+                    _state.totalContaminationExposure += _state.incomingContaminationLevel * 0.5f;
+                    OnPathogenExposure?.Invoke(_state.incomingContaminationLevel * 0.3f);
+                }
+                OnWaterStateChanged?.Invoke();
+            }
 
             // Advance active treatment by one day's worth
             if (_state.isProcessing)

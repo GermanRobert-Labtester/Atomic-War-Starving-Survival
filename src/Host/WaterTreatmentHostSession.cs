@@ -10,13 +10,10 @@ namespace AtomicWar.GodotApp
     /// and routes exposure events to Disease, Needs, and Dose systems.
     /// </summary>
     public sealed class WaterTreatmentHostSession
-    {
+    : HostSessionBase{
         public WaterTreatmentSystem System { get; }
         public InventoryHostSession? InventoryHost { get; set; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public WaterTreatmentHostSession(WaterTreatmentSystem system, InventoryHostSession? inventoryHost = null)
         {
             System = system ?? new WaterTreatmentSystem(new GodotLog());
@@ -27,24 +24,24 @@ namespace AtomicWar.GodotApp
                 LastEvent = result.IsSuccess
                     ? $"[WaterTreatment] Batch complete: {result.MessageKey}"
                     : $"[WaterTreatment] Batch failed: {result.MessageKey}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnWaterStateChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnHeavyMetalExposure += dose =>
             {
                 LastEvent = $"[WaterTreatment] WARNING: Heavy metal exposure ({dose:F1} ppm) detected in water output!";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnPathogenExposure += dose =>
             {
                 LastEvent = $"[WaterTreatment] WARNING: Pathogen contamination ({dose:F1} CFU) detected in water output!";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -54,7 +51,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Started {mode} processing {amount:F1}L water.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -65,7 +62,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = "Replaced sediment/charcoal filter membrane.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -75,7 +72,7 @@ namespace AtomicWar.GodotApp
             var res = System.AddWater(type, amount);
             if (res.IsSuccess)
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -83,7 +80,15 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
+        }
+
+        public void SetIncomingContamination(float level)
+        {
+            System.SetIncomingContamination(level);
+            if (level > 0.5f)
+                LastEvent = $"[WaterTreatment] External contamination influx ({level:F2}) — flood source";
+            RaiseStateChanged();
         }
     }
 }
