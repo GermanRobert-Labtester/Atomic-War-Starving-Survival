@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -28,12 +29,26 @@ namespace Ashfall.Core
 
         public string Combine(params string[] parts) => Path.Combine(parts);
 
+        public string[] EnumerateFiles(string directory, string searchPattern, SearchOption searchOption)
+        {
+            if (string.IsNullOrEmpty(directory)) return new string[0];
+            if (!Directory.Exists(directory)) return new string[0];
+            try
+            {
+                return Directory.GetFiles(directory, searchPattern, searchOption);
+            }
+            catch
+            {
+                return new string[0];
+            }
+        }
+
         /// <summary>
         /// BCL implementation of JSON catalog enumeration.
         /// </summary>
         public string[] EnumerateJsonFiles(string dataDirectory, SearchOption searchOption)
         {
-            return Directory.GetFiles(dataDirectory, "*.json", searchOption);
+            return EnumerateFiles(dataDirectory, "*.json", searchOption);
         }
     }
 
@@ -148,11 +163,67 @@ namespace Ashfall.Core
     {
         public const string RelativeDataPath = "Assets/StreamingAssets/Data";
 
+        /// <summary>
+        /// Loads a JSON catalog that may be either a bare array or a wrapped object
+        /// with <c>schema_version</c> plus an array property (e.g. <c>{"schema_version":1,
+        /// "items":[...]}</c>). Returns the array as <c>List&lt;T&gt;</c>.
+        /// </summary>
+        public static List<T> LoadWrappedList<T>(string jsonText, System.Text.Json.JsonSerializerOptions options)
+        {
+            using var doc = System.Text.Json.JsonDocument.Parse(jsonText);
+            System.Text.Json.JsonElement array = doc.RootElement;
+            if (array.ValueKind == System.Text.Json.JsonValueKind.Object)
+            {
+                foreach (var prop in array.EnumerateObject())
+                {
+                    if (prop.Name.Equals("schema_version", System.StringComparison.OrdinalIgnoreCase))
+                        continue;
+                    if (prop.Value.ValueKind == System.Text.Json.JsonValueKind.Array)
+                    {
+                        array = prop.Value;
+                        break;
+                    }
+                }
+            }
+            if (array.ValueKind != System.Text.Json.JsonValueKind.Array)
+                throw new System.InvalidOperationException("Expected JSON array or wrapped array");
+            var list = JsonSerializer.Deserialize<List<T>>(array.GetRawText(), options);
+            return list ?? throw new InvalidOperationException("Failed to deserialize wrapped catalog");
+        }
+
         public static bool TryFindDataDirectory(string startDirectory, out string dataDirectory)
         {
             dataDirectory = null!;
             if (string.IsNullOrEmpty(startDirectory))
                 return false;
+
+            // Handle res:// virtual FS: check via DirAccess-like fallback (Directory.Exists will fail for res://, so also try string prefix check)
+            if (startDirectory.StartsWith("res://", StringComparison.Ordinal))
+            {
+                // For res://, try both capital and lowercase assets
+                string[] resCandidates = { "res://Assets/StreamingAssets/Data", "res://assets/StreamingAssets/Data" };
+                foreach (var cand in resCandidates)
+                {
+                    // Use Directory.Exists for loose, but for res:// we need to check via FileSystemIO's DirectoryExists which handles res://
+                    // Here we fallback to checking via System.IO for loose + simple existence for res:// via File.Exists on a known file
+                    // Instead, just return the first candidate that would be checked via IFileIO later — let caller handle existence
+                    // For TryFind, we check both filesystem and virtual via simple heuristic: if startDirectory is res://, check if any file exists
+                    if (cand == startDirectory || startDirectory.StartsWith(cand, StringComparison.Ordinal))
+                    {
+                        dataDirectory = cand;
+                        return true;
+                    }
+                }
+                // Also try to see if the res path itself contains Data
+                string resData = "res://Assets/StreamingAssets/Data";
+                string resDataLower = "res://assets/StreamingAssets/Data";
+                // We cannot use DirAccess here (Core), so just check if startDirectory is a parent of resData
+                if (startDirectory == "res://" || startDirectory == "res://Assets" || startDirectory == "res://Assets/StreamingAssets")
+                {
+                    dataDirectory = resData;
+                    return true;
+                }
+            }
 
             DirectoryInfo dir;
             try
@@ -170,6 +241,12 @@ namespace Ashfall.Core
                 if (Directory.Exists(candidate))
                 {
                     dataDirectory = candidate;
+                    return true;
+                }
+                string candidateLower = Path.Combine(dir.FullName, "assets", "StreamingAssets", "Data");
+                if (Directory.Exists(candidateLower))
+                {
+                    dataDirectory = candidateLower;
                     return true;
                 }
                 dir = dir.Parent;

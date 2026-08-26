@@ -60,5 +60,12 @@ namespace AtomicWar.GodotApp
             string fallback = ProjectSettings.GlobalizePath(resData);
             return fallback;
         }
+
+        public static IFileIO CreateFileIOForDataDir(string dataDir)
+        {
+            if (!string.IsNullOrEmpty(dataDir) && dataDir.StartsWith("res://", StringComparison.Ordinal))
+                return new Host.GodotFileIO();
+            return new FileSystemIO();
+        }
     }
 }

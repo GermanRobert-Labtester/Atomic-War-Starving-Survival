@@ -24,11 +24,15 @@ namespace Ashfall.Core
         {
             if (files == null) return new string[0];
             if (!files.DirectoryExists(dataDirectory)) return new string[0];
-            // BCL adapter: use the concrete enumeration to avoid reflection.
-            if (files is FileSystemIO bcl) return bcl.EnumerateJsonFiles(dataDirectory, searchOption);
-            // Fallback for any host adapter that does not override: read
-            // every json path under the directory via the BCL file system.
-            return Directory.GetFiles(dataDirectory, "*.json", searchOption);
+            // Use the host's enumeration (FileSystemIO or GodotFileIO) — handles res:// PCK via DirAccess.
+            try
+            {
+                return files.EnumerateFiles(dataDirectory, "*.json", searchOption);
+            }
+            catch
+            {
+                return new string[0];
+            }
         }
     }
 }
