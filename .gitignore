@@ -221,3 +221,21 @@ audit/
 test-results-*.xml
 codex_alt_*.png
 .aider*
+
+# Rust build output (tools/agent-skill-manager)
+/tools/agent-skill-manager/target/
+
+# Scratch env-gate probe project (session artifact)
+/_envgate/
+
+# Session scratch scripts & notes at repo root
+/fix_*.py
+/fix_*.sh
+/safe_fix.py
+/test_parse.py
+/files_to_check.txt
+/summaries.md
+/summaries/
+
+# Other agent harness local state
+/.commandcode/
