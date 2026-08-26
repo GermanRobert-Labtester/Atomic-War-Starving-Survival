@@ -625,6 +625,30 @@
       ]
     },
     {
+      "snapshot_id": "quests_atlas_default",
+      "runtime_surface": "src/UI/QuestsAtlasPanel.cs",
+      "runtime_state": "Bound: QuestsHostSession null. Renders 8-row active quests grid + 6-row completed grid + 4-row action bar. Status rail returns dashes.",
+      "fixture_source": "DETERMINISTIC_TEST_FIXTURE (BuildFixtureRows)",
+      "viewport_width": 1280,
+      "viewport_height": 800,
+      "ui_scale": 1.0,
+      "seed": 1401,
+      "locale": "en_US",
+      "theme": "Ashfall.Core.UI.DesignTheme",
+      "expected_asset_family": "None — text-only tile grids.",
+      "stitch_reference_id": "(no Stitch; Phase 26 Tier-3 sub-card)",
+      "visual_status": "MATCH — DESIGN_INTENT",
+      "phase_origin": "Phase 26",
+      "baseline_path": "snapshots/quests_atlas_default.png",
+      "baseline_bytes": 55189,
+      "consumers": [
+        "AshfallDashboardShell",
+        "AshfallSidebar",
+        "AshfallStatusRail",
+        "AshfallDataGrid (3 instances)"
+      ]
+    },
+    {
       "snapshot_id": "standing_record_atlas_default",
       "runtime_surface": "src/UI/StandingRecordAtlasPanel.cs",
       "runtime_state": "Bound: StandingRecordHostSession null. Renders 10-row fixture layout grid + 10-row fixture strata grid + 4-row action bar. Status rail returns dashes.",
@@ -686,7 +710,6 @@
       "verdict_dashboard_default",
       "weather_dashboard_default",
       "greenhouse_default",
-      "greenhouse_default",
       "silent_foundry_default",
       "expedition_radar_default",
       "skill_matrix_default",
@@ -695,7 +718,10 @@
       "combat_hud_default",
       "map_atlas_default",
       "maritime_atlas_default",
-      "muster_atlas_default"
+      "muster_atlas_default",
+      "quests_atlas_default",
+      "standing_record_atlas_default",
+      "research_atlas_default"
     ],
     "STATE_VARIANT": [],
     "EMPTY_STATE": [

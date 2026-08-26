@@ -147,7 +147,9 @@ namespace Ashfall.Core.Tests
                 "assets/ui/Icons/icon_shock_winter.png",
                 "assets/ui/Icons/faction_icon_military_remnants.png",
                 "assets/ui/Icons/faction_icon_scavenger_camp.png",
-                "assets/ui/Icons/faction_icon_cult_of_the_glow.png"
+                "assets/ui/Icons/faction_icon_cult_of_the_glow.png",
+                "assets/sprites/Characters/placeholder_survivor.png",
+                "assets/ui/Icons/icon_placeholder.png"
             };
 
             foreach (var relPath in expectedAssets)

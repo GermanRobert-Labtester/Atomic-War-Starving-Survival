@@ -1,5 +1,17 @@
 # Atomic War: Starving Survival — Comprehensive Codebase Exploration Report
 
+> [!WARNING]
+> **HISTORICAL ARCHITECTURAL REPORT — DO NOT USE FOR CURRENT IMPLEMENTATION**
+> This exploration report records the state of the repository on **2026-08-22** (Git SHA `04b1f465`) during the active strangler migration.
+> It describes legacy architecture and components that have since been **completely retired and removed** from the codebase, including the legacy Unity gameplay host (`Assets/_Game/`), the Unity compatibility bridge shim (`src/Bridge/`), and legacy Unity build workflows.
+> **Current Project Authority:**
+> - Master directives: [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md)
+> - Domain logic (single source of truth): [`Assets/Ashfall.Core/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/)
+> - Data authority: [`Assets/StreamingAssets/Data/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/StreamingAssets/Data/) (129 JSON catalogs)
+> - Active runtime host: **Godot 4.7+ (.NET / C#)** (`src/`, `project.godot`)
+> - Verification gate: `dotnet test` (3,244 tests) + `godot --headless` only.
+> Do not restore or reintroduce Unity dependencies or compatibility shim layers described in this historical document.
+
 **Repository:** `GermanRobert-Labtester/Atomic-War-Starving-Survival`  
 **Branch audited:** `main`  
 **Snapshot commit:** `04b1f465914b18d3b9c4bb8cd254802e2a3b6f30`  

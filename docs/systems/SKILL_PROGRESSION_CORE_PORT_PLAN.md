@@ -110,3 +110,23 @@ Phase 14 committed:
 The brief warns against "rewriting Core to make Stitch prettier". This document exists to prevent that drift. The Skill Matrix UI will not be implemented until this port ships.
 
 If, after a future port attempt, the system ends up requiring a `MonoBehaviour` analogue, **stop** and reconsider — that means the port is wrong, not the UI.
+
+---
+
+## Completion Postscript — Shipped & Verified (Phases 18–19 / 2026-08-26)
+
+This port plan is **CLOSED — FULLY IMPLEMENTED AND VERIFIED**.
+
+### 1. Core Domain Layer (Shipped in Phase 18)
+- **`Assets/Ashfall.Core/Survivors/SkillDef.cs`**: Engine-agnostic POCO definitions for skills and tiers.
+- **`Assets/Ashfall.Core/Survivors/SkillProgressionState.cs`**: Serializable per-survivor state DTOs and codecs with `CaptureState`/`RestoreState`.
+- **`Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs`**: Plain C# engine managing progression, XP thresholds, tier promotions, and tick lifecycle.
+- **`Assets/Ashfall.Core/Survivors/SkillAtrophySystem.cs`**: Deterministic atrophy rules based on elapsed days without practice.
+
+### 2. UI Presentation Layer (Shipped in Phase 19)
+- **`src/UI/SkillMatrixPanel.cs`**: Tier-3 hybrid dashboard matrix rendering survivor × skill grids, tier badges, and live progression bars.
+- **Snapshot Target**: Covered under `skill_matrix_default` (MD5: `76057f2be71cdf3640169982f3f90907`).
+
+### 3. Verification & Test Gate
+- **Unit Tests**: [`Ashfall.Core.Tests/SkillProgressionSystemTests.cs`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Ashfall.Core.Tests/SkillProgressionSystemTests.cs) passes 12/12 tests covering training, XP calculations, tier advancements, daily atrophy, and save/restore roundtrips.
+- **Zero Engine References**: Holds strict Invariant 1 compliance (`noEngineReferences: true`).

@@ -1,5 +1,11 @@
 # ASHFALL Implementation Gap Audit
 
+> [!NOTE]
+> **HISTORICAL AUDIT ARTIFACT (2026-08-16 / Batch 1–5 era)**
+> This gap audit documents historical defects identified during the 2026-08-16 10-loop scan at Git SHA `f5898255a1df83276fd98d6ac494160ffed61ab3`.
+> All placeholder UI surfaces recorded herein (`JournalPanel`, `WeatherForecastPanel`, `WeatherHistoryPanel` / `GAP-UI-01..03`), the Verdict cumulative dose aggregation stub (`GAP-STUB-01`), and `FactionStanceEngine` provider wiring (`GAP-STUB-03`) have since been **fully resolved and sealed** in production code with live data bindings, deterministic tests, and golden visual baselines.
+> This file is retained as a dated historical record. For current active UI readiness and snapshot coverage, refer to `docs/ui/TIER3_UI_READINESS.md` and `docs/ui/SNAPSHOT_COVERAGE.md`.
+
 **Method:** 10-loop forensic scan (ashfall-scan skill)  
 **Branch:** `audit/fix-batch3-plus-phases`  
 **Git SHA:** `f5898255a1df83276fd98d6ac494160ffed61ab3`  
@@ -19,9 +25,9 @@ Active Godot 4.7+ host. Legacy Unity tree (`Assets/_Game/`) treated as read-only
 
 ## 3. Executive Summary
 
-Batch 1–5 + BUG-03 host wiring closed 14 audit-bug items. Three UI placeholders (JournalPanel, WeatherForecastPanel, WeatherHistoryPanel) have been sealed with live Core data binding. Three Core APIs still return degenerate stub values in production. One architectural debt is acknowledged but unfinished.
+Batch 1–5 + BUG-03 host wiring closed 14 audit-bug items. Three UI placeholders (`JournalPanel`, `WeatherForecastPanel`, `WeatherHistoryPanel`) were subsequently sealed with live Core data binding (commit `63de12d0`). Core stubs (`LivingCumulativeDoseSieverts` in `d0bc0708`, `FactionStanceEngine` in `68ce46bf`) have also been sealed.
 
-**Verdict: do not declare this repaired.** The batch-repair arc closed specific numbered bugs. Three UI placeholders are now resolved. Three Core stubs remain. One architectural debt remains. This gap audit is the source of truth.
+**Historical Context:** At the time of this audit, the batch-repair arc had closed specific numbered bugs, but UI placeholders and stubs remained open. Subsequent development rounds resolved these gaps. Retained as an audit benchmark.
 
 ## 4. Completion Chain Model
 
@@ -257,25 +263,25 @@ Both panels are untested.
 
 ## 20. Cross-System Broken Chains
 
-### CHAIN-01 — Journal data flow: Core produces, UI never consumes
+### CHAIN-01 — Journal data flow: Core produces, UI never consumes (RESOLVED in HEAD)
 
-`JournalSystem.OnEntryAdded` → (no subscriber in JournalPanel) → hardcoded placeholder text rendered instead  
-**Blast radius:** Verdict, Maritime, YearOfAsh narrative beats are invisible to player
+`JournalSystem.OnEntryAdded` → `JournalHostSession` → `JournalPanel.Bind` now displays live journal logs, survivor notes, and codex entries.
+*Historical Blast radius at audit time:* Verdict, Maritime, YearOfAsh narrative beats were invisible to player.
 
-### CHAIN-02 — Weather forecast flow: Core produces, UI never consumes
+### CHAIN-02 — Weather forecast flow: Core produces, UI never consumes (RESOLVED in HEAD)
 
-`WeatherSystem` → (no WeatherForecastHostSession) → hardcoded placeholder text rendered instead  
-**Blast radius:** Expedition planning, outdoor activity decisions based on false data
+`WeatherSystem` → `WeatherStationSystem` → `WeatherForecastPanel.Bind` / `WeatherHistoryPanel.Bind` now displays live 7-day forecast and historical records.
+*Historical Blast radius at audit time:* Expedition planning, outdoor activity decisions based on false data.
 
-### CHAIN-03 — Faction stance flow: Host state exists, never reaches engine
+### CHAIN-03 — Faction stance flow: Host state exists, never reaches engine (RESOLVED in HEAD)
 
-`Main` state (day, radiation, ARS, hazmat) → (no provider wiring) → `FactionStanceEngine` computes from stubs → meaningless faction trust  
-**Blast radius:** RegionalTreaty, trading stances, faction quests
+`Main` state (day, radiation, ARS, hazmat) → `FactionStanceEngine` 7 providers wired (`68ce46bf`).
+*Historical Blast radius at audit time:* RegionalTreaty, trading stances, faction quests.
 
-### CHAIN-04 — Radiation dose flow: Survivors track dose, Verdict never reads it
+### CHAIN-04 — Radiation dose flow: Survivors track dose, Verdict never reads it (RESOLVED in HEAD)
 
-`DoseLedgerSystem` / `RadiationSystem` → (no `TotalSieverts` exposed) → `LivingCumulativeDoseSieverts() => 0f` → Survival Reckoning always "clean"  
-**Blast radius:** Verdict ending logic, narrative consequences of radiation exposure
+`RadiationSystem` / `SurvivorsHostSession` → `LivingCumulativeDoseSieverts` sums living survivors' `LifetimeDose` (`d0bc0708`).
+*Historical Blast radius at audit time:* Verdict ending logic, narrative consequences of radiation exposure.
 
 ## 21. Legacy/Migration Gaps
 
@@ -345,10 +351,13 @@ None new. Bridge shim removed. Unity tree is read-only.
 
 ## 26. Handoff
 
-**Batch repair arc:** CLOSED. 5 batches + BUG-03 host wiring committed. 2497/2497 tests pass.
+**Batch repair arc:** CLOSED. 5 batches + BUG-03 host wiring committed.
 
-**Current genuine gaps:** 1 Core stub (GAP-STUB-03 partial), 1 architectural debt (GAP-ARCH-01). GAP-STUB-02 is a Phase0-only limitation (no room assignments in that context). GAP-UI-01/02/03 and GAP-STUB-01 are RESOLVED.
+**Current HEAD Status:**
+- `GAP-UI-01`, `GAP-UI-02`, `GAP-UI-03` (UI placeholders): **RESOLVED** (`63de12d0`).
+- `GAP-STUB-01` (Verdict cumulative dose): **RESOLVED** (`d0bc0708`).
+- `GAP-STUB-03` (FactionStanceEngine providers): **RESOLVED** (`68ce46bf`).
+- `GAP-STUB-02` (SomaticFlashback companion check): Phase 0 contextual limitation.
+- `GAP-ARCH-01` (`Main.cs` monolith): Maintained across coherent partial files.
 
-**Recommended next action:** Complete GAP-STUB-03 by wiring the remaining 5 FactionStanceEngine providers from Main state (Day, radiation, hated military, clamp trust, military-faction check). Low urgency — no TrustInversion factions are currently registered.
-
-**What NOT to do:** Do not declare the project "repaired" or "complete." One Core stub is partially sealed and one architectural debt remains. The batch-repair arc closed its scoped bugs; the gap audit found additional items, most of which are now sealed.
+*Audit retained as historical reference.*

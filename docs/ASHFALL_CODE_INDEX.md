@@ -1,5 +1,13 @@
 # ASHFALL — ENGINEERING CODE INDEX (cheap-context reference)
 
+> [!IMPORTANT]
+> **CURRENT PROJECT AUTHORITY**
+> 1. **Master Directives:** [`AGENTS.md`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/AGENTS.md) is the authoritative architectural and workflow rulebook. All AI agents and contributors must follow its non-negotiable rules.
+> 2. **Core Domain Logic (Truth):** [`Assets/Ashfall.Core/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/Ashfall.Core/) is the single source of truth for simulation logic — 100% engine-agnostic C# with zero engine references.
+> 3. **Data Authority:** [`Assets/StreamingAssets/Data/`](file:///home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic%20War/Assets/StreamingAssets/Data/) (JSON catalogs) is the absolute authority for definitions, balancing, quests, and economy.
+> 4. **Authoritative Host & Runtime:** **Godot 4.7+ (.NET / C#)** (`src/`, `scenes/Main.tscn`, `project.godot`). The legacy Unity host (`Assets/_Game/`) and shim (`src/Bridge/`) have been fully retired and deleted.
+> 5. **Verification Pipeline:** `dotnet test` (3,244 tests) + `godot --headless` only.
+
 > Load this file first. It is a distilled, dense map of the whole codebase so a
 > fresh agent/session working on ASHFALL does not need to re-scan ~250K LOC.
 > It records **where things live**, **what the key APIs are**, **the data
@@ -10,33 +18,27 @@ Path: `home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War`
 
 ---
 
-## 1. The one thing to understand (strangler migration)
+## 1. Project Architecture & Authority
 
 | Path | Role |
 |---|---|
-| `Assets/_Game/` | **Unity legacy** gameplay (1,337 `.cs`, ~232K LOC, 24 subsystems). `UnityEngine`-coupled. |
-| `Assets/Ashfall.Core/` | **Migration target.** Engine-agnostic plain C# (70 files). Compiled by BOTH hosts + tests. |
-| `src/` + `scenes/` | **Godot host.** Thin nodes/UI + CLI. `scenes/Main.tscn` boots `src/Main.cs`. |
-| `Ashfall.Core/` | Stub `.csproj` that globs `../Assets/Ashfall.Core/**/*.cs`. No sources here. |
-| `Assets/StreamingAssets/Data/*.json` | **Single authority** for data. Both engines read these (Godot via `res://Assets/StreamingAssets/Data`). |
-| `src/Bridge/` | Unity shim — lets `Assets/_Game` be **compiled** (not run) under Godot. |
+| `Assets/Ashfall.Core/` | **Domain Logic (Truth).** Engine-agnostic plain C# domain systems, state DTOs, codecs, and validators. |
+| `src/` + `scenes/` | **Godot Host (Active).** Thin presentation nodes, UI panels, input handling, and CLI dispatch. `scenes/Main.tscn` boots `src/Main.cs`. |
+| `Assets/StreamingAssets/Data/*.json` | **Single Authority for Data.** 129 JSON catalogs loaded via Core serializers. |
+| `Ashfall.Core.Tests/` | **xUnit Test Suite.** 3,244 unit, integration, determinism, and contract tests under net9.0. |
+| `Assets/_Game/` & `src/Bridge/` | **REMOVED / RETIRED.** Unity host and shim migration is complete; legacy files deleted. |
 
-`Ashfall.csproj` (Godot build, `Godot.NET.Sdk/4.7.1`) compiles:
-`src/**` + `Assets/Ashfall.Core/**` + `Assets/_Game/**` together. That's why
-`dotnet build Ashfall.csproj` works without Unity.
+`Ashfall.csproj` (Godot build, `Godot.NET.Sdk/4.7.1`) compiles `src/**` and `Assets/Ashfall.Core/**`.
+Verification uses `dotnet build Ashfall.csproj` and `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`.
 
-**Migration = moving logic from `Assets/_Game/` into `Assets/Ashfall.Core/`.** A
-Godot-only rewrite of existing logic is a REGRESSION (forks source of truth).
-Currently only **Journal** is fully ported (1/24 subsystems; Godot share ~2.4%).
-18.7% of Unity files are already `UnityEngine`-free (portable as-is).
-See `docs/GODOT_MIGRATION_STATUS.md`.
+**Migration to Godot is complete.** All active simulation logic lives in `Assets/Ashfall.Core/` (engine-agnostic C#), presented through the Godot 4.7+ host (`src/`).
 
 **Engine policy (hard rules):**
 - NEVER run/invoke Unity (batchmode/editor/playmode) unless the user explicitly asks.
 - Verify with `dotnet test`, `dotnet build Ashfall.csproj`, `godot --headless`.
 - `JsonUtility` is BANNED from core; serialize via `IJsonSerializer` port.
-- Same seed ⇒ same sim both engines: invariant culture, ordinal-sorted collections.
-- A save written by one host MUST load in the other.
+- Same seed ⇒ same sim: invariant culture, ordinal-sorted collections, `ISeededRng`.
+- Versioned saves with checksum envelopes required on all save stores.
 - One system per task; small reviewable changes.
 - snake_case ids always; never invent an id not in the JSON master lists.
 
@@ -45,7 +47,7 @@ See `docs/GODOT_MIGRATION_STATUS.md`.
 ## 2. Verification (the gates)
 
 ```bash
-dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # core unit tests, ~333 pass, no Unity
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # core unit tests, 3,244 pass, net9.0
 dotnet build Ashfall.csproj                                 # Godot host compile (0 errors target)
 godot --headless --path "<root>" --quit-after 2             # boots, prints banner
 # Per-subsystem selftest gates (exit != 0 = FAIL):

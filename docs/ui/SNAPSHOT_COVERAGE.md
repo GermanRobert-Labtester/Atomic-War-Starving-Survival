@@ -1,6 +1,6 @@
 # Snapshot Coverage — Post-Audit State
 
-**Generated:** Phase 26 close (2026-08-18). Refreshed after `SURFACE_GAP_REPORT.md` audit.
+**Generated:** Phase 26 close (2026-08-18). Refreshed after `SURFACE_GAP_REPORT.md` audit; reconciled post-Phase 28.
 
 This file lists every **player-facing runtime UI surface** the audit admits as
 meaningful — drill-down, brief-modal, and dev-only surfaces are not tracked.
@@ -17,16 +17,16 @@ For full audit reasoning, see
 ## State header
 
 ```
-COVERED:           24 surfaces (29 targets)   ← +1 since Phase 28   ← +1 since Phase 27
+COVERED:           26 surfaces (29 targets)   ← +1 Phase 28 (Research)   ← +1 Phase 27 (Standing Record)
 PARTIAL:            1 surface  (TradeScreen, INTENTIONAL_CHILD)
 REGRESSION_ONLY:    1 surface  (CraftingPanel drill-down)
 MISSING:            0 surfaces  (ALL SURFACES COVERED)
 DELETED:           17 surfaces (drill-downs, brief modals, dev-only)
-Total tracked:     27 player-facing runtime surfaces (ALL COVERED)
+Total tracked:     28 player-facing runtime surfaces (ALL COVERED)
 ```
 
-**Snapshot fixtures on disk:** 27 distinct byte-distinct PNGs, 0 duplicate
-MD5 groups, 0 blank captures — verified by direct RGBA8 pixel-decode check
+**Snapshot fixtures on disk:** 29 distinct byte-distinct target PNGs (+ 5 gallery baselines = 34 total),
+0 duplicate MD5 groups, 0 blank captures — verified by direct RGBA8 pixel-decode check
 after the Phase 26 SubViewport pipeline fix.
 
 ---
@@ -75,7 +75,7 @@ after the Phase 26 SubViewport pipeline fix.
 | `StandingRecordPanel` | `standing_record_atlas_default` (via `StandingRecordAtlasPanel` sub-card) | ✔ | (Expansion 03) | COVERED (Phase 27 Tier-3 sub-card sibling) |
 | `ResearchPanel` | `research_atlas_default` (via `ResearchAtlasPanel` sub-card) | ✔ | (R&D / Library) | COVERED (Phase 28 Tier-3 sub-card sibling) |
 
-26 tracked surfaces total. 22 COVERED + 1 PARTIAL + 1 REGRESSION_ONLY + 2 MISSING.
+28 tracked surfaces total: 26 COVERED + 1 PARTIAL + 1 REGRESSION_ONLY + 0 MISSING.
 
 ---
 
@@ -106,9 +106,13 @@ section A. Brief reasons:
 
 ---
 
-## Coverage holes worth filling in Phase 27+ (`MISSING` only)
+## Coverage holes (`MISSING`) — All Resolved
 
-| Surface | Reason missing | Closing plan |
-|---|---|---|
+All former `MISSING` surfaces have been fully resolved with dedicated Core engines, host sessions, Tier-3 atlas panels, and snapshot targets:
 
-| `ResearchPanel` | No Core engine. Closest sidecar is `Journal/KnowledgeBase.cs` (read-only journal knowledge ledger, not the same as a Research / R&D / Breakthrough tree). | Phase 28 candidate: write `docs/systems/RESEARCH_CORE_PORT_PLAN.md` first (mirrors `SKILL_PROGRESSION_CORE_PORT_PLAN.md`); then write `Assets/Ashfall.Core/Research/ResearchSystem.cs` (engine + CaptureState + tick), host adapter, sidebar of disciplines, then a Tier-3 dashboard. Total: four-file scope. |
+| Surface | Resolved Phase | Core Engine & Host Adapter | Snapshot Target | Status |
+|---|---|---|---|---|
+| `StandingRecordPanel` | Phase 27 | `StandingRecordEngine.cs`, `StandingRecordHostSession.cs`, `StandingRecordAtlasPanel.cs` | `standing_record_atlas_default` | COVERED |
+| `ResearchPanel` | Phase 28 | `ResearchSystem.cs`, `ResearchHostSession.cs`, `ResearchAtlasPanel.cs` | `research_atlas_default` | COVERED |
+
+**0 MISSING surfaces remain.** All 28 tracked player-facing runtime surfaces are fully covered across 29 snapshot targets (26 COVERED + 1 PARTIAL + 1 REGRESSION_ONLY).

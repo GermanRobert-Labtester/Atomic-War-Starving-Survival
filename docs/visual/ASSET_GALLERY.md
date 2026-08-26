@@ -27,13 +27,13 @@ The gallery is **Dictionary-shaped** but **probe-shaped**: each category lists t
 
 ```text
 Category: Item
-├── id                       exists?  resolved-via                MD5
-├── iodine_pills             ✔        items/iodine_pills.png      a81c..
-├── geiger_counter           ✔        items/geiger_counter.png    3ebe..
-├── mercury_vials_main       ❌                                              → queue  ┐
-├── sterling_pen             ❌                                              → queue  │ pipeline
-├── encrypted_drive          ✔        art/item_encrypted_drive    0caf..       │ work
-└── cigarette_pack_sealed    ❌ (asset still missing — Phase 13 trusted the runtime fallback)  ┘
+├── id                       exists?  resolved-via                     MD5
+├── iodine_pills             ✔        art/iodine_pills.jpg             a81c..
+├── geiger_counter           ✔        art/geiger_counter.jpg           3ebe..
+├── mercury_vials_main       ❌        (procedural MakeItemIcon)        → queue  ┐
+├── sterling_pen             ❌        (procedural MakeItemIcon)        → queue  │ pipeline
+├── encrypted_drive          ✔        art/item_encrypted_drive.jpg     0caf..   │ work
+└── cigarette_pack_sealed    ✔        art/cigarette_pack_sealed.jpg    81d9..   ┘
 ```
 
 ## Per-category snapshots
