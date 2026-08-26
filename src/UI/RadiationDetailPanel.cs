@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
@@ -8,7 +9,9 @@ namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Radiation Detail panel.
-    /// Shows detailed radiation data, dosimeter readings, protection levels, and radiation events.
+    /// Shows per-survivor dosimetry, dosimeter calibration state, protection
+    /// levels, and the dose-reading event log — bound to the live DoseLedger
+    /// and Survivors sessions. Unbound systems render "NOT MONITORED".
     /// </summary>
     public partial class RadiationDetailPanel : Control
     {
@@ -24,99 +27,144 @@ namespace AtomicWar.GodotApp.UI
         private Label _lblEventsTitle;
         private VBoxContainer _eventsList;
 
-        // Placeholder radiation data
-        private readonly string[] _placeholderCurrent = {
-            "Current Level: 0.8 mSv/hr (Elevated)",
-            "Total Exposure: 12.4 mSv (Low)",
-            "Peak Today: 1.2 mSv/hr (Hour 14)",
-            "Baseline: 0.1 mSv/hr (Normal)",
-            "Danger Threshold: 100 mSv/hr",
-            "Chronic Risk: Low (below 10 mSv/yr)"
-        };
+        private DoseLedgerHostSession? _dose;
+        private SurvivorsHostSession? _survivors;
 
-        private readonly string[] _placeholderDosimeter = {
-            "Device: Digital Dosimeter (Brand X)",
-            "Battery: 85% (Good)",
-            "Calibration: Last calibrated Day 10",
-            "Accuracy: ±5% (Standard)",
-            "Reading Method: Real-time + cumulative",
-            "Alarm Threshold: 50 mSv/hr (Warning)",
-            "Emergency Threshold: 100 mSv/hr (Danger)"
-        };
+        public bool IsBound => _dose != null || _survivors != null;
+        public int RenderedCurrentCount { get; private set; }
 
-        private readonly string[] _placeholderProtection = {
-            "Current Protection: 40% (Basic Gas Mask)",
-            "Max Protection: 75% (Full Hazmat Suit)",
-            "Shelter Reduction: 65% (Bunker Shielding)",
-            "Time in Shelter: 18 hours (Today)",
-            "Time Outdoors: 6 hours (Today)",
-            "Effective Exposure: 4.2 mSv (Adjusted)"
-        };
-
-        private readonly string[] _placeholderEvents = {
-            "[Day 5] Fallout storm passed — +2.5 mSv cumulative",
-            "[Day 12] Radiation spike detected — Sector 4 elevated",
-            "[Day 18] Dosimeter recalibrated — accuracy improved",
-            "[Day 22] Fallout warning issued — Seek shelter immediately",
-            "[Day 25] Radiation levels stabilizing — Normal operations"
-        };
-
-        // Real data from host session
-        // private RadiationHostSession? _radiationHost;
-
-        public void Bind(object radiation) // placeholder for RadiationHostSession
+        public void Bind(DoseLedgerHostSession? dose = null, SurvivorsHostSession? survivors = null)
         {
-            // _radiationHost = (RadiationHostSession)radiation;
-            // RefreshView();
+            _dose = dose;
+            _survivors = survivors;
+            RefreshView();
         }
 
         public void RefreshView()
         {
             if (_currentData == null || _dosimeterData == null || _protectionData == null || _eventsList == null) return;
 
-            // Clear existing lists
             AshfallUiHelpers.EmptyChildren(_currentData);
             AshfallUiHelpers.EmptyChildren(_dosimeterData);
             AshfallUiHelpers.EmptyChildren(_protectionData);
             AshfallUiHelpers.EmptyChildren(_eventsList);
 
-            // Display placeholder current radiation
-            foreach (string data in _placeholderCurrent)
+            RenderedCurrentCount = 0;
+            RenderCurrent();
+            RenderDosimeter();
+            RenderProtection();
+            RenderEvents();
+        }
+
+        private void RenderCurrent()
+        {
+            if (_dose?.Ledger == null || _dose.Ledger.Entries.Count == 0)
             {
-                var label = new Label { Text = data };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _currentData.AddChild(label);
+                _currentData.AddChild(MakeDimLine("No dose ledger bound."));
+                return;
             }
 
-            // Display placeholder dosimeter data
-            foreach (string data in _placeholderDosimeter)
+            foreach (var entry in _dose.Ledger.Entries)
             {
-                var label = new Label { Text = data };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                _dosimeterData.AddChild(label);
+                if (entry == null) continue;
+                var row = AshfallUiHelpers.MakeDataRow(Name(entry.survivorId),
+                    $"{entry.cumulativeMsv:0.0} mSv cumulative · baseline {entry.baselineMsv:0.0}",
+                    AshfallUiHelpers.ToColor(entry.cumulativeMsv >= 50f
+                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe));
+                _currentData.AddChild(row);
+                RenderedCurrentCount++;
+            }
+        }
+
+        private void RenderDosimeter()
+        {
+            if (_dose?.Calibration == null || _dose.Calibration.Devices.Count == 0)
+            {
+                _dosimeterData.AddChild(MakeDimLine("No dosimeters registered."));
+                return;
             }
 
-            // Display placeholder protection data
-            foreach (string data in _placeholderProtection)
+            foreach (var dev in _dose.Calibration.Devices.Values)
             {
-                var label = new Label { Text = data };
-                label.CustomMinimumSize = new Vector2(350, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _protectionData.AddChild(label);
+                if (dev == null) continue;
+                string assigned = string.IsNullOrEmpty(dev.assignedSurvivorId)
+                    ? "unassigned" : Name(dev.assignedSurvivorId);
+                _dosimeterData.AddChild(AshfallUiHelpers.MakeDataRow(
+                    $"{dev.deviceTag} ({assigned})",
+                    $"Battery {dev.batteryLevel * 100f:0}% · Cal {dev.calibrationQuality * 100f:0}% · ±{dev.errorBandMsv:0.0} mSv{(dev.isOverdue ? " · OVERDUE" : "")}",
+                    AshfallUiHelpers.ToColor(dev.isOverdue
+                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+            }
+        }
+
+        private void RenderProtection()
+        {
+            if (_survivors?.Shelter != null)
+            {
+                float weakest = _survivors.Shelter.GetWeakestCeilingAttenuation();
+                _protectionData.AddChild(AshfallUiHelpers.MakeDataRow("Shelter Shielding",
+                    $"Weakest ceiling {weakest * 100f:0}% attenuation",
+                    AshfallUiHelpers.ToColor(weakest >= 0.5f
+                        ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Warm)));
+            }
+            else
+            {
+                _protectionData.AddChild(MakeDimLine("Shelter shielding not monitored."));
             }
 
-            // Display placeholder radiation events
-            foreach (string radiationEvent in _placeholderEvents)
+            if (_dose?.Ledger != null)
             {
-                var label = new Label { Text = radiationEvent };
-                label.CustomMinimumSize = new Vector2(350, 30);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
-                _eventsList.AddChild(label);
+                foreach (var entry in _dose.Ledger.Entries)
+                {
+                    if (entry == null || entry.shieldingFactor >= 1f) continue;
+                    _protectionData.AddChild(AshfallUiHelpers.MakeDataRow(
+                        $"{Name(entry.survivorId)} shielding",
+                        $"{entry.shieldingFactor * 100f:0}% of outdoor dose",
+                        AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+                }
             }
+        }
+
+        private void RenderEvents()
+        {
+            if (_dose?.Ledger == null || _dose.Ledger.Entries.Count == 0)
+            {
+                _eventsList.AddChild(MakeDimLine("No dose readings logged."));
+                return;
+            }
+
+            int shown = 0;
+            foreach (var entry in _dose.Ledger.Entries)
+            {
+                if (entry == null) continue;
+                foreach (var reading in entry.readingsHistory)
+                {
+                    if (reading == null || shown >= 20) continue;
+                    _eventsList.AddChild(AshfallUiHelpers.MakeDataRow(
+                        $"[Day {reading.day}] {Name(entry.survivorId)}",
+                        $"{reading.bookedMsv:0.0} mSv booked ({reading.source})",
+                        AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical)));
+                    shown++;
+                }
+            }
+
+            if (shown == 0)
+                _eventsList.AddChild(MakeDimLine("No reading events yet."));
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
+        }
+
+        private static string Name(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return "Unknown";
+            int us = id.IndexOf('_');
+            return us >= 0 ? id.Substring(us + 1).Replace('_', ' ') : id;
         }
 
         public override void _Ready()

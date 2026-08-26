@@ -134,6 +134,8 @@ public partial class ShelterHudPanel : Control
             new AshfallSidebar.Item { Id = "factions",    Label = "Factions",            Hint = "STANCES" },
             new AshfallSidebar.Item { Id = "verdict",     Label = "Verdict",             Hint = "EVALUATION" },
             new AshfallSidebar.Item { Id = "help",       Label = "Help & Controls",     Hint = "TUTORIAL" },
+            new AshfallSidebar.Item { Id = "afflictions", Label = "Afflictions",          Hint = "MEDICAL TRIAGE" },
+            new AshfallSidebar.Item { Id = "radiation_detail", Label = "Radiation",       Hint = "DOSIMETRY" },
         }, "BUNKER OPS", "overview");
 
         if (_sidebar != null)

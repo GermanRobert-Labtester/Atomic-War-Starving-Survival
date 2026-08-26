@@ -1,14 +1,19 @@
 using System;
+using System.Linq;
 #pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.UI;
+using Ashfall.Core.Medical;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
     /// ASHFALL — Afflictions panel.
-    /// Shows current afflictions, chronic conditions, and medical treatments.
+    /// Shows current afflictions, chronic conditions, and available treatments,
+    /// bound to the live Medical / Survivors / Respiratory / Inventory sessions.
+    /// Unbound systems render an honest "not monitored" row instead of
+    /// fabricated affliction strings.
     /// </summary>
     public partial class AfflictionsPanel : Control
     {
@@ -22,74 +27,194 @@ namespace AtomicWar.GodotApp.UI
         private Label _lblTreatmentTitle;
         private VBoxContainer _treatmentList;
 
-        // Placeholder affliction data
-        private readonly string[] _placeholderActive = {
-            "Radiation Sickness — Mild (Day 12-15) — Recovering",
-            "Minor Wound — Right forearm (Day 18) — Healed",
-            "Mild Infection — Left leg (Day 20) — Treating with antibiotics"
-        };
+        private MedicalHostSession? _medical;
+        private SurvivorsHostSession? _survivors;
+        private InventoryHostSession? _inventory;
+        private RespiratoryDegenerationSystem? _respiratory;
 
-        private readonly string[] _placeholderChronic = {
-            "Chronic Radiation Exposure — Low level (Day 1-25) — Monitoring",
-            "Respiratory Degeneration — Mild (Day 15-25) — Managing with inhalers",
-            "Psychological Trauma — Moderate (Day 5-25) — Counseling sessions"
-        };
+        public bool IsBound => _medical != null || _survivors != null;
+        public int RenderedActiveCount { get; private set; }
 
-        private readonly string[] _placeholderTreatment = {
-            "Iodine Pills — Reduce radiation exposure by 20%",
-            "Antibiotics — Treat bacterial infections",
-            "Inhalers — Manage respiratory symptoms",
-            "Counseling — Address psychological trauma",
-            "Rest — Allow natural healing and recovery"
-        };
-
-        // Real data from host session
-        // private MedicalHostSession? _medicalHost;
-
-        public void Bind(object medical) // placeholder for MedicalHostSession
+        public void Bind(
+            MedicalHostSession? medical = null,
+            SurvivorsHostSession? survivors = null,
+            InventoryHostSession? inventory = null,
+            RespiratoryDegenerationSystem? respiratory = null)
         {
-            // _medicalHost = (MedicalHostSession)medical;
-            // RefreshView();
+            _medical = medical;
+            _survivors = survivors;
+            _inventory = inventory;
+            _respiratory = respiratory;
+            RefreshView();
         }
 
         public void RefreshView()
         {
             if (_activeList == null || _chronicList == null || _treatmentList == null) return;
 
-            // Clear existing lists
             AshfallUiHelpers.EmptyChildren(_activeList);
             AshfallUiHelpers.EmptyChildren(_chronicList);
             AshfallUiHelpers.EmptyChildren(_treatmentList);
 
-            // Display placeholder active afflictions
-            foreach (string affliction in _placeholderActive)
+            RenderedActiveCount = 0;
+            RenderActive();
+            RenderChronic();
+            RenderTreatments();
+        }
+
+        private void RenderActive()
+        {
+            if (_survivors?.RosterState == null || _survivors.RosterState.Count == 0)
             {
-                var label = new Label { Text = affliction };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical));
-                _activeList.AddChild(label);
+                _activeList.AddChild(MakeDimLine("No survivor roster bound."));
+                return;
             }
 
-            // Display placeholder chronic conditions
-            foreach (string condition in _placeholderChronic)
+            foreach (var s in _survivors.RosterState)
             {
-                var label = new Label { Text = condition };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy));
-                _chronicList.AddChild(label);
+                if (s == null || !s.IsAlive) continue;
+                var rad = _survivors.RadStateFor(s.Id);
+                float respDeg = _respiratory?.RespiratoryDegradation(s.Id) ?? 0f;
+
+                if (s.Health < 30f)
+                {
+                    AddAffliction(_activeList, $"{Name(s.Id)} — Critical health ({s.Health:0}/100)",
+                        Ashfall.Core.UI.Theme.Critical);
+                    RenderedActiveCount++;
+                }
+                if (rad is { HasAcuteRadiationSickness: true })
+                {
+                    AddAffliction(_activeList, $"{Name(s.Id)} — Acute radiation sickness (dose {rad.RadiationDose:0} mSv)",
+                        Ashfall.Core.UI.Theme.Critical);
+                    RenderedActiveCount++;
+                }
+                if (respDeg >= RespiratoryDegenerationSystem.SevereCoughThreshold)
+                {
+                    AddAffliction(_activeList, $"{Name(s.Id)} — Severe respiratory degeneration ({respDeg:0}%)",
+                        Ashfall.Core.UI.Theme.Critical);
+                    RenderedActiveCount++;
+                }
+                else if (respDeg > 0f)
+                {
+                    AddAffliction(_activeList, $"{Name(s.Id)} — Respiratory irritation ({respDeg:0}%)",
+                        Ashfall.Core.UI.Theme.Warm);
+                    RenderedActiveCount++;
+                }
             }
 
-            // Display placeholder treatments
-            foreach (string treatment in _placeholderTreatment)
+            if (RenderedActiveCount == 0)
+                _activeList.AddChild(MakeDimLine("No active afflictions."));
+        }
+
+        private void RenderChronic()
+        {
+            if (_survivors?.RosterState == null || _survivors.RosterState.Count == 0)
             {
-                var label = new Label { Text = treatment };
-                label.CustomMinimumSize = new Vector2(400, 35);
-                label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
-                label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
-                _treatmentList.AddChild(label);
+                _chronicList.AddChild(MakeDimLine("No survivor roster bound."));
+                return;
             }
+
+            int chronicCount = 0;
+            foreach (var s in _survivors.RosterState)
+            {
+                if (s == null || !s.IsAlive) continue;
+                var rad = _survivors.RadStateFor(s.Id);
+
+                if (rad is { HasChronicIllness: true })
+                {
+                    AddAffliction(_chronicList, $"{Name(s.Id)} — Chronic radiation illness (lifetime {rad.LifetimeRadiationExposure:0} mSv)",
+                        Ashfall.Core.UI.Theme.Entropy);
+                    chronicCount++;
+                }
+                if (_respiratory is { } r && r.HasPermanentLungDamage(s.Id))
+                {
+                    AddAffliction(_chronicList, $"{Name(s.Id)} — Permanent lung damage", Ashfall.Core.UI.Theme.Entropy);
+                    chronicCount++;
+                }
+            }
+
+            // Chemical dependencies (chronic substance conditions)
+            if (_medical?.Engine != null)
+            {
+                foreach (var kv in _medical.Engine.Ledger)
+                {
+                    foreach (var dep in kv.Value)
+                    {
+                        if (dep.dependencyLevel >= ChemicalDependencySystem.DependencyThreshold)
+                        {
+                            AddAffliction(_chronicList, $"{Name(kv.Key)} — {dep.kind} dependency ({dep.dependencyLevel:P0})",
+                                Ashfall.Core.UI.Theme.Entropy);
+                            chronicCount++;
+                        }
+                    }
+                }
+            }
+
+            if (chronicCount == 0)
+                _chronicList.AddChild(MakeDimLine("No chronic conditions."));
+        }
+
+        private void RenderTreatments()
+        {
+            if (_inventory?.Inventory == null)
+            {
+                _treatmentList.AddChild(MakeDimLine("No inventory session bound."));
+                return;
+            }
+
+            var rows = new (string label, int count)[]
+            {
+                ("Bandage (+25 HP)", CountItem("bandage", "item_bandage")),
+                ("Iodine Pills (rad resistance)", CountItem("iodine_pills", "item_potassium_iodide")),
+                ("Anti-Rad / Chelation (−40 mSv)", CountItem("rad_away", "item_rad_away")),
+                ("Inhaler (respiratory relief)", CountItem("inhaler")),
+                ("Herbal Tea (respiratory soothe)", CountItem("herbal_tea")),
+                ("Antibiotics (infection)", CountItem("antibiotics", "item_antibiotics")),
+            };
+
+            bool any = false;
+            foreach (var (label, count) in rows)
+            {
+                if (count <= 0) continue;
+                AddAffliction(_treatmentList, $"{label} — {count} in stock", Ashfall.Core.UI.Theme.Warm);
+                any = true;
+            }
+
+            if (!any)
+                _treatmentList.AddChild(MakeDimLine("No treatment supplies in stock."));
+        }
+
+        private void AddAffliction(VBoxContainer parent, string text, (float r, float g, float b, float a) col)
+        {
+            var label = new Label { Text = text };
+            label.CustomMinimumSize = new Vector2(400, 0);
+            label.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(col));
+            parent.AddChild(label);
+        }
+
+        private Label MakeDimLine(string text)
+        {
+            var l = new Label { Text = text };
+            l.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            l.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+            return l;
+        }
+
+        private static string Name(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return "Unknown";
+            int us = id.IndexOf('_');
+            return us >= 0 ? id.Substring(us + 1).Replace('_', ' ') : id;
+        }
+
+        private int CountItem(string primaryId, string fallbackId = null!)
+        {
+            if (_inventory?.Inventory == null) return 0;
+            int count = _inventory.Inventory.CountById(primaryId);
+            if (count == 0 && fallbackId != null)
+                count = _inventory.Inventory.CountById(fallbackId);
+            return count;
         }
 
         public override void _Ready()

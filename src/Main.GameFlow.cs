@@ -178,6 +178,20 @@ namespace AtomicWar.GodotApp
                     _tutorialPanel.Bind(_simDay);
                     _tutorialPanel.Open();
                     break;
+                case "afflictions":
+                    SetupSurvivors();
+                    SetupInventory();
+                    SetupMedical();
+                    SetupPhase0();
+                    _afflictionsPanel.Bind(_medical, _survivors, _inventory, _phase0?.Respiratory);
+                    _afflictionsPanel.Open();
+                    break;
+                case "radiation_detail":
+                    SetupSurvivors();
+                    SetupPhase0();
+                    _radiationDetailPanel.Bind(_doseLedger, _survivors);
+                    _radiationDetailPanel.Open();
+                    break;
                 case "survivors":
                     SetupSurvivors();
                     _survivorsOverlay.Bind(_survivors);
