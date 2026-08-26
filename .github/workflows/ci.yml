@@ -1,5 +1,13 @@
-# ASHFALL primary CI gate — Unity 6000.5.5f1 (AUDIT-001 / AUDIT-006)
-# Pins editor version explicitly so package resolve matches ProjectVersion.txt.
+# ASHFALL CI — Godot 4.7 .NET (canonical)
+# Replaces Unity 6000.5.5f1 game-ci pipeline.
+# Verification checklist per AGENTS.md:
+#   1. dotnet build Ashfall.Core.Tests
+#   2. dotnet test Ashfall.Core.Tests
+#   3. dotnet build Ashfall.csproj (Godot host: 0 errors, 0 warnings)
+#   4. godot --headless -- --data-integrity-selftest
+#   5. godot --headless -- --bridge-selftest
+# No Unity batchmode; no JsonUtility; Core stays engine-agnostic.
+
 name: ASHFALL CI
 
 on:
@@ -8,21 +16,17 @@ on:
   pull_request:
     branches: [main, master]
 
-env:
-  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-  UNITY_VERSION: 6000.5.5f1
-
 jobs:
-  validate:
-    name: Data Validation Gate
+  ci:
+    name: CI Gate (dotnet + godot headless)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
-      - name: Validate StreamingAssets JSON syntax
+      - name: Validate StreamingAssets JSON syntax (fast-fail)
         run: |
           python3 - <<'PY'
           import json, pathlib, sys
@@ -43,162 +47,37 @@ jobs:
           print(f"OK: validated {sum(1 for _ in root.rglob('*.json'))} JSON file(s) under {root}")
           PY
 
-      - name: Assert ProjectVersion is 6000.5.5f1
-        run: |
-          grep -q 'm_EditorVersion: 6000.5.5f1' ProjectSettings/ProjectVersion.txt
-          echo "ProjectVersion pin OK: 6000.5.5f1"
-
-  # The generators are the source of truth for Assets/_Game/Data/Generated and
-  # Gameplay.unity. Without this gate they quietly become decoration: someone
-  # hand-edits a catalog or the scene, the next regeneration silently reverts it,
-  # and nothing ever says so.
-  #
-  # The two halves are gated differently, because only one of them is byte-stable:
-  #
-  #   Data assets  -> compared byte-for-byte. Re-running GenerateAll over an
-  #                   unchanged project produces an identical tree (verified: a
-  #                   full EditMode run, which calls GenerateAll in SetUp, leaves
-  #                   the working tree clean).
-  #   Gameplay.unity -> NOT compared. Unity assigns fresh local fileIDs every time
-  #                   it saves a scene built from scratch, so two consecutive
-  #                   builds of identical input differ by ~480 lines (measured).
-  #                   A byte-diff here would fail on every single run. The real
-  #                   gate is that BuildGameplayScene throws SceneBuildException
-  #                   on any unassigned reference, so the build step below failing
-  #                   IS the check.
-  regenerate:
-    name: Generated Assets Are Current
-    needs: validate
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+      - name: Setup .NET SDKs (8.0 for Godot host, 9.0 for tests)
+        uses: actions/setup-dotnet@v4
         with:
-          lfs: true
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
-      - uses: actions/cache@v4
+      - name: Setup Godot 4.7.1 mono
+        uses: chickensoft-games/setup-godot@v2
         with:
-          path: Library
-          key: Library-regen-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-regen-${{ env.UNITY_VERSION }}-
+          version: 4.7.1
+          use-dotnet: true
+          include-templates: true
 
-      # targetPlatform is required by unity-builder even when buildMethod does
-      # no building; Linux is the one target installed on this image.
-      - uses: game-ci/unity-builder@v4
-        with:
-          projectPath: .
-          unityVersion: 6000.5.5f1
-          targetPlatform: StandaloneLinux64
-          buildMethod: AtomicWar._Game.Editor.CatalogGenerator.GenerateAll
-          allowDirtyBuild: true
+      - name: 1) dotnet build Ashfall.Core.Tests
+        run: dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
 
-      - uses: game-ci/unity-builder@v4
-        with:
-          projectPath: .
-          unityVersion: 6000.5.5f1
-          targetPlatform: StandaloneLinux64
-          buildMethod: AtomicWar._Game.Editor.GameplaySceneBuilder.BuildGameplayScene
-          allowDirtyBuild: true
+      - name: 2) dotnet test Ashfall.Core.Tests
+        run: dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
 
-      - name: Fail if regenerated data differs from committed
-        run: |
-          # Scene excluded on purpose -- see the comment on this job.
-          if ! git diff --quiet -- Assets/_Game/Data/Generated; then
-            echo "Regenerated data assets differ from what is committed."
-            echo "Re-run Tools/ASHFALL/Generate Catalogs, then commit the result."
-            git diff --stat -- Assets/_Game/Data/Generated
-            exit 1
-          fi
-          echo "OK: generated data assets are current."
+      - name: 3) dotnet build Godot host (Ashfall.csproj)
+        run: dotnet build Ashfall.csproj --nologo
 
-  test:
-    name: EditMode Tests
-    needs: validate
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          lfs: true
+      - name: godot --import (build .godot/ cache)
+        run: godot --headless --path . --import 2>&1 | tail -n 20
 
-      - uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-${{ env.UNITY_VERSION }}-
+      - name: 4) godot --headless -- --data-integrity-selftest
+        run: godot --headless --path . -- --data-integrity-selftest
 
-      - uses: game-ci/unity-test-runner@v4
-        id: tests
-        with:
-          projectPath: .
-          unityVersion: 6000.5.5f1
-          testMode: EditMode
-          artifactsPath: test-results
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: EditMode Test Results
+      - name: 5) godot --headless -- --bridge-selftest
+        run: godot --headless --path . -- --bridge-selftest
 
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results-editmode
-          path: test-results
-
-  test-playmode:
-    name: PlayMode Tests
-    needs: validate
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-play-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-play-${{ env.UNITY_VERSION }}-
-
-      - uses: game-ci/unity-test-runner@v4
-        id: tests
-        with:
-          projectPath: .
-          unityVersion: 6000.5.5f1
-          testMode: PlayMode
-          artifactsPath: test-results-playmode
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: PlayMode Test Results
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results-playmode
-          path: test-results-playmode
-
-  build-linux:
-    name: Build Linux64
-    needs: [test, test-playmode]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-Linux-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
-          restore-keys: |
-            Library-Linux-${{ env.UNITY_VERSION }}-
-
-      - uses: game-ci/unity-builder@v4
-        with:
-          projectPath: .
-          buildTarget: StandaloneLinux64
-          buildsPath: builds
-          unityVersion: 6000.5.5f1
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: build-Linux64
-          path: builds/StandaloneLinux64
+      - name: 6) godot --headless -- --expansions-selftest
+        run: godot --headless --path . -- --expansions-selftest

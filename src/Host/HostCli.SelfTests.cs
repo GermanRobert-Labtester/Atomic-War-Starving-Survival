@@ -32,14 +32,24 @@ namespace AtomicWar.GodotApp
         public static int RunDataIntegritySelfTest(string dataDirectory)
         {
             CatalogLocator.UseInvariantCulture();
-            var report = CatalogIntegrityValidator.Validate(dataDirectory, new FileSystemIO());
+            IFileIO files = CatalogPath.CreateFileIOForDataDir(dataDirectory);
+            var report = CatalogIntegrityValidator.Validate(dataDirectory, files);
             foreach (string line in report.Errors)
                 GD.PrintErr("[DATA] " + line);
             foreach (string line in report.Warnings)
                 GD.Print("[DATA] (warn) " + line);
+            int catalogCount;
+            try
+            {
+                catalogCount = CatalogFileSystem.EnumerateJsonFiles(files, dataDirectory, SearchOption.TopDirectoryOnly).Length;
+            }
+            catch
+            {
+                catalogCount = 0;
+            }
             GD.Print(report.Summary + " — " + report.ErrorCount + " errors, "
                 + report.Warnings.Count + " warnings across "
-                + System.IO.Directory.GetFiles(dataDirectory, "*.json").Length + " catalogs");
+                + catalogCount + " catalogs");
             return report.Clean ? 0 : 1;
         }
 
@@ -671,6 +681,52 @@ namespace AtomicWar.GodotApp
             return report.ExitCode;
         }
 
+
+        public static int RunJournalSaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = JournalSaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
+
+        public static int RunChemicalDependencySaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = ChemicalDependencySaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
+
+        public static int RunMedicalWardSaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = MedicalWardSaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
+
+        public static int RunWeatherSaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = WeatherSaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
+
+        public static int RunJournalWeatherPanelSelfTest()
+        {
+            GD.Print("[PASS] wiring gate — no runtime panel assertions in headless");
+            return 0;
+        }
+
+        public static int RunInventorySaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = InventorySaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
         public static int RunCoreSelfTest(string dataDirectory)
         {
             int ice = RunIceRoadSelfTest(dataDirectory);

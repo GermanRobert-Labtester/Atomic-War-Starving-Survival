@@ -37,6 +37,9 @@ namespace AtomicWar.GodotApp
         private ApprenticeshipHostSession _apprenticeship = null!;
         private ApprenticeshipPanel _apprenticeshipPanel = null!;
         private bool _apprenticeshipDirty;
+        private CaregivingHostSession _caregiving = null!;
+        private CaregivingPanel _caregivingPanel = null!;
+        private bool _caregivingDirty;
 
         private void SetupSurvivorRelations()
         {
@@ -146,6 +149,24 @@ namespace AtomicWar.GodotApp
         private void SaveApprenticeship()
         {
             _apprenticeship?.Save();
+        }
+
+        private void SetupCaregiving()
+        {
+            var cgState = CaregivingSaveStore.TryLoad() ?? new CaregivingSaveState();
+            var cgSys = new CaregivingSystem();
+            cgSys.RestoreState(cgState);
+            _caregiving = new CaregivingHostSession(cgSys);
+            _caregiving.StateChanged += () => _caregiving.MarkDirty();
+            _caregivingPanel = new CaregivingPanel();
+            _caregivingPanel.Bind(_caregiving);
+            _caregivingPanel.Visible = false;
+            AddChild(_caregivingPanel);
+        }
+
+        private void SaveCaregiving()
+        {
+            _caregiving?.Save();
         }
     }
 }

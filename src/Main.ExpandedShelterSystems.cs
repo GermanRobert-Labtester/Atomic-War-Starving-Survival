@@ -65,6 +65,7 @@ namespace AtomicWar.GodotApp
             SetupWildlifeTrapping();
             SetupExcavation();
             SetupApprenticeship();
+            SetupCaregiving();
             SetupShelterThermal();
             SetupShelterSchedule();
             SetupAutopsy(sharedResearch);
@@ -102,6 +103,7 @@ namespace AtomicWar.GodotApp
             SaveWildlifeTrapping();
             SaveExcavation();
             SaveApprenticeship();
+            SaveCaregiving();
             SaveShelterThermal();
             SaveShelterSchedule();
             SaveAutopsy();
@@ -140,6 +142,7 @@ namespace AtomicWar.GodotApp
             _wildlifeTrapping?.TickDay(day);
             _excavation?.TickDay();
             _apprenticeship?.TickDay(day);
+            _caregiving?.TickDay(day);
             _shelterThermal?.TickDay(day);
             _shelterSchedule?.TickDay(day);
             _autopsy?.TickDay(day);
@@ -181,6 +184,9 @@ namespace AtomicWar.GodotApp
                     break;
                 case "apprenticeship":
                     if (_apprenticeshipPanel != null) { _apprenticeshipPanel.Visible = true; _apprenticeshipPanel.RefreshView(); }
+                    break;
+                case "caregiving":
+                    if (_caregivingPanel != null) { _caregivingPanel.Visible = true; _caregivingPanel.RefreshView(); }
                     break;
                 case "shelter_thermal":
                     if (_shelterThermalPanel != null) { _shelterThermalPanel.Visible = true; _shelterThermalPanel.RefreshView(); }

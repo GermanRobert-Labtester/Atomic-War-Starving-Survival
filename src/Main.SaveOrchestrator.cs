@@ -37,6 +37,7 @@ namespace AtomicWar.GodotApp
             "duty_roster",
             "expansion_hub",
             "expansion_quest",
+            "thirdonary",
             "phantom_memory",
             "dose_ledger",
             "muster",
@@ -52,10 +53,12 @@ namespace AtomicWar.GodotApp
             "world",
             "crafting",
             "caravan",
+            "campaign_day",
             "year_of_ash",
             "phase0",
             "starting_level",
             "greenhouse",
+            "host_event",
             "radio",
             "daily_briefing",
             "power_grid",
@@ -68,6 +71,7 @@ namespace AtomicWar.GodotApp
             "water_treatment",
             "airlock_security",
             "apprenticeship",
+            "caregiving",
             "autopsy",
             "chemical_dependency",
             "equipment_condition",
@@ -107,31 +111,49 @@ namespace AtomicWar.GodotApp
             if (_holdfastTerminal != null && _holdfastTerminal.IsInsideTree())
                 RemoveChild(_holdfastTerminal);
             _holdfastTerminal = null!;
+            _dutyRoster?.Dispose();
             _dutyRoster = null!;
+            _expansions?.Dispose();
             _expansions = null!;
+            _phantomMemory?.Dispose();
             _phantomMemory = null!;
+            _phase0?.Dispose();
             _phase0 = null!;
+            _doseLedger?.Dispose();
             _doseLedger = null!;
             _inventory = null!;
             _survivors = null!;
+            _economy?.Dispose();
             _economy = null!;
             _utilityAi = null!;
             _journal = null!;
+            _muster?.Dispose();
             _muster = null!;
+            _verdict?.Dispose();
             _verdict = null!;
+            _maritime?.Dispose();
             _maritime = null!;
             if (_expeditions != null)
                 _expeditions.OnEncounterSurfaced -= OnExpeditionEncounterSurfaced;
+            _expeditions?.Dispose();
             _expeditions = null!;
+            _combat?.Dispose();
             _combat = null!;
             _combatDirty = false;
+            _narrative?.Dispose();
             _narrative = null!;
+            _medical?.Dispose();
             _medical = null!;
+            _world?.Dispose();
             _world = null!;
+            _crafting?.Dispose();
             _crafting = null!;
+            _caravans?.Dispose();
             _caravans = null!;
             _yearOfAsh = null!;
+            _startingLevel?.Dispose();
             _startingLevel = null!;
+            _greenhouse?.Dispose();
             _greenhouse = null!;
             // The Year of Ash panel holds widgets bound to the old session; drop it
             // so BuildYearOfAshPanel re-creates and rebinds to the fresh session.
@@ -142,6 +164,7 @@ namespace AtomicWar.GodotApp
             _geothermalWidget = null!;
             _radonWidget = null!;
             _radioTerminal = null!;
+            _radio?.Dispose();
             _radio = null!;
 
             // Journal: drop the codex + book so they re-create and re-bind once;
@@ -155,11 +178,13 @@ namespace AtomicWar.GodotApp
             _maritimeDirty = false;
             _expeditionDirty = false;
             _narrativeDirty = false;
+            _hostEventAdapterDirty = false;
             _medicalDirty = false;
             _worldDirty = false;
             _craftingDirty = false;
             _caravansDirty = false;
             _phase0Dirty = false;
+            _campaignDayDirty = false;
             _startingLevelDirty = false;
             _greenhouseDirty = false;
 
@@ -171,8 +196,8 @@ namespace AtomicWar.GodotApp
                 "economy_save.json", "muster_save.json", "verdict_save.json",
                 "maritime_save.json", "expedition_save.json", "narrative_save.json",
                 "medical_save.json", "world_save.json", "crafting_save.json",
-                "caravan_save.json", "journal_save.json", "year_of_ash_save.json",
-                "starting_level_save.json", "greenhouse_save.json", "radio_save.json"
+                "caravan_save.json", "campaign_day_save.json", "journal_save.json", "year_of_ash_save.json",
+                "starting_level_save.json", "greenhouse_save.json", "host_event_save.json", "radio_save.json"
             })
             {
                 string p = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), file);
@@ -258,6 +283,8 @@ namespace AtomicWar.GodotApp
             SaveHoldfastRuntime();
             SaveDutyRoster();
             SaveExpansionHub();
+            SaveExpansionQuests();
+            SaveThirdonary();
             SavePhantomMemory();
             SaveDoseLedger();
             SaveMuster();
@@ -269,6 +296,7 @@ namespace AtomicWar.GodotApp
             SaveExpeditions();
             SaveCombat();
             SaveNarrative();
+            SaveEventAdapter();
             SaveMedical();
             SaveWorld();
             SaveCrafting();
@@ -289,6 +317,7 @@ namespace AtomicWar.GodotApp
             SaveEncounterChoice();
             // ─────────────────────────────────────────────────────────────
             SaveAllExpandedShelterSystems();
+            SaveCampaignDay();
             _audio?.PlayCue(AtomicWar.GodotApp.Audio.AudioCueCatalog.SaveSuccess);
 
             // Aggregate-first save: pack all subsystem payloads into the canonical envelope.

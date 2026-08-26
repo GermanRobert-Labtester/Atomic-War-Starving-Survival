@@ -128,7 +128,9 @@ namespace Ashfall.Core
             "clay_wedging_", "bisque_firing_", "slip_glaze_", "kiln_draw_",
             "fibre_heckling_", "strand_twisting_", "rope_closing_", "rope_break_",
             "tallow_rendering_", "beeswax_clarif_", "wick_braiding_", "candle_dip_",
-            "bone_degreasing_", "antler_horn_", "bone_scraping_", "bone_tool_"
+            "bone_degreasing_", "antler_horn_", "bone_scraping_", "bone_tool_",
+            // The Weight of Choices — faction branching system (Military slice).
+            "branch_", "ending_"
         };
 
         /// <summary>
@@ -148,7 +150,9 @@ namespace Ashfall.Core
             "fail_mutation", "world_flag", "traits", "baseTraits",
             "manifesto_law_code", "zone_id", "encounterId", "set_flag",
             "setWorldFlag", "trait_granted", "latentExpertTrait", "inspectKey",
-            "questlineId", "stageId", "firstStageId"
+            "questlineId", "stageId", "firstStageId",
+            // The Weight of Choices — faction branching system (Military slice).
+            "ponr_flag", "ending_id"
         };
 
         /// <summary>
@@ -311,7 +315,12 @@ namespace Ashfall.Core
             "bone_source_animal", "degreasing_method", "prep_duration_days",
             "material_type", "saw_tool_id", "blank_shape_cut",
             "blank_material", "abrasive_used", "surface_finish",
-            "tool_type", "bone_blank_id", "point_angle_degrees"
+            "tool_type", "bone_blank_id", "point_angle_degrees",
+            // Wasteland bestiary — narrative flavor vocabulary, not inventory refs.
+            // The harvestable_materials list names creature yields for lore; the
+            // WastelandBestiaryCatalog stores them as opaque strings and never
+            // resolves them against items.json.
+            "harvestable_materials"
         };
 
         /// <summary>
@@ -339,6 +348,10 @@ namespace Ashfall.Core
             "flag_verdict_shift_charter_restored", "flag_verdict_clerk_met",
             "flag_verdict_call_resolved", "flag_verdict_relay_read",
             "flag_verdict_fuse_advanced", "flag_verdict_wing_slept",
+            // Expansion 12 (Vel/Vigil) orphan-knock gating flag — set at runtime by
+            // future exp-12 code; registered in whitelists/orphan_knocks.json as a
+            // deliberate, canonically-tracked orphan door event.
+            "flag_exp07_vel_vigil_knock",
             "paper_scrap", "item_teddy_bear", "crayon", "ammo_9x19", "blood_bag",
             "item_suitcase_locked", "fat_rendered", "industrial_bleach", "bone_saw",
             "ammonia_tank", "cardboard_box", "cigarette_pack_sealed",
@@ -397,8 +410,12 @@ namespace Ashfall.Core
             var ctx = new Ctx { Report = report };
             foreach (string file in jsonFiles)
             {
-                ctx.File = Path.GetFileName(file);
-                if (TryParse(file, out JsonDocument doc))
+                // Path.GetFileName handles both filesystem and res:// paths; trim res:// prefix first for consistent leaf.
+                string leaf = file.StartsWith("res://", StringComparison.Ordinal)
+                    ? file.Substring(file.LastIndexOf('/') + 1)
+                    : Path.GetFileName(file);
+                ctx.File = leaf;
+                if (TryParse(file, files, out JsonDocument doc))
                 {
                     using (doc)
                     {
@@ -428,12 +445,12 @@ namespace Ashfall.Core
             return report;
         }
 
-        private static bool TryParse(string path, out JsonDocument doc)
+        private static bool TryParse(string path, IFileIO files, out JsonDocument doc)
         {
             doc = null!;
             try
             {
-                string text = File.ReadAllText(path);
+                string text = files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(text)) return false;
                 doc = JsonDocument.Parse(text);
                 return true;
