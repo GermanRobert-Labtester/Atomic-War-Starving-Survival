@@ -32,7 +32,6 @@ namespace AtomicWar.GodotApp
         // ── Expedition fields (GAP-ARCH-01 Phase 1) ──
         private ExpeditionHostSession _expeditions = null!;
         private bool _expeditionDirty;
-        private Ashfall.Core.World.WastelandMapSystem _wastelandMap = null!;
         private Ashfall.Core.Expeditions.EncounterChoiceResolver _encounterChoice = null!;
         private bool _encounterChoiceDirty;
         private CombatHostSession _combat = null!;
@@ -184,10 +183,10 @@ namespace AtomicWar.GodotApp
 
         private void SaveWastelandMap()
         {
-            if (_wastelandMap == null) return;
+            if (_world?.WastelandMap == null) return;
             try
             {
-                WastelandMapSaveStore.TrySave(_wastelandMap.CaptureState());
+                WastelandMapSaveStore.TrySave(_world.WastelandMap.CaptureState());
             }
             catch (Exception e)
             {
@@ -209,29 +208,6 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        private void SetupWastelandMap()
-        {
-            if (_wastelandMap != null) return;
-            var nodes = new List<Ashfall.Core.World.MapNode>
-            {
-                new Ashfall.Core.World.MapNode { Id = "loc_holdfast", DisplayName = "Holdfast",
-                    PositionX = 500, PositionY = 300, StartingUnlocked = true },
-                new Ashfall.Core.World.MapNode { Id = "loc_cut_abandoned_depot", DisplayName = "Abandoned Depot",
-                    PositionX = 700, PositionY = 200, Discoverable = true },
-                new Ashfall.Core.World.MapNode { Id = "loc_cut_merchant_caravanserai", DisplayName = "Merchant Caravanserai",
-                    PositionX = 400, PositionY = 200, Discoverable = true, StartingUnlocked = true },
-                new Ashfall.Core.World.MapNode { Id = "loc_black_flotilla_outpost", DisplayName = "Black Flotilla Outpost",
-                    PositionX = 600, PositionY = 500, Discoverable = true }
-            };
-            var routes = new List<Ashfall.Core.World.MapRoute>
-            {
-                new Ashfall.Core.World.MapRoute { From = "loc_holdfast", To = "loc_cut_abandoned_depot", DistanceKm = 12 },
-                new Ashfall.Core.World.MapRoute { From = "loc_holdfast", To = "loc_cut_merchant_caravanserai", DistanceKm = 8 },
-                new Ashfall.Core.World.MapRoute { From = "loc_cut_merchant_caravanserai", To = "loc_black_flotilla_outpost", DistanceKm = 22 }
-            };
-            _wastelandMap = new Ashfall.Core.World.WastelandMapSystem(
-                new Ashfall.Core.World.WastelandMapState(), nodes, routes);
-        }
 
         private void SetupEncounterChoiceResolver()
         {

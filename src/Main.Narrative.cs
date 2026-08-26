@@ -42,7 +42,7 @@ namespace AtomicWar.GodotApp
         {
             if (_journal != null) return;
 
-            var catalogs = CatalogJsonLoader.Load(_dataDir);
+            var catalogs = CatalogJsonLoader.Load(new FileSystemIO(), _dataDir);
             _journal = new JournalSystem();
             // Mark dirty rather than writing the whole save file per entry; the
             // _Process tick flushes it. Seeding adds many entries in one frame and
@@ -193,7 +193,6 @@ namespace AtomicWar.GodotApp
             }
 
             SetupJournal();
-            SetupWastelandMap();
             _radio = RadioHostSession.Create(_dataDir, _core != null ? _core.Clock.Day : _simDay);
             _radio.StateChanged += () => _radioPanel?.RefreshView();
             _radio.Triangulation.OnLocationRevealed += locId =>

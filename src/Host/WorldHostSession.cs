@@ -20,6 +20,7 @@ namespace AtomicWar.GodotApp
         public LocationEvolutionSystem LocationEvolution { get; }
         public WildlifeMigrationSystem Wildlife { get; }
         public LandmarkDegradationSystem Landmarks { get; }
+        public WastelandMapSystem WastelandMap { get; }
         public SeasonProfileDef Profile { get; private set; }
 
         public string LastEvent { get; private set; } = string.Empty;
@@ -28,13 +29,15 @@ namespace AtomicWar.GodotApp
             SkyLayerArmorSystem skyArmor = null!,
             LocationEvolutionSystem locationEvolution = null!,
             WildlifeMigrationSystem wildlife = null!,
-            LandmarkDegradationSystem landmarks = null!)
+            LandmarkDegradationSystem landmarks = null!,
+            WastelandMapSystem wastelandMap = null!)
         {
             Weather = weather ?? new WeatherSystem();
             SkyArmor = skyArmor ?? new SkyLayerArmorSystem();
             LocationEvolution = locationEvolution ?? new LocationEvolutionSystem();
             Wildlife = wildlife ?? new WildlifeMigrationSystem();
             Landmarks = landmarks ?? new LandmarkDegradationSystem();
+            WastelandMap = wastelandMap ?? WastelandMapCatalogLoader.CreateSystem(string.Empty);
             Weather.OnWeatherChanged += kind =>
             {
                 LastEvent = $"Weather: {kind}";
@@ -47,7 +50,10 @@ namespace AtomicWar.GodotApp
 
         public static WorldHostSession Create(string dataDir)
         {
-            var session = new WorldHostSession();
+            var mapSystem = !string.IsNullOrEmpty(dataDir)
+                ? WastelandMapCatalogLoader.CreateSystem(dataDir)
+                : null!;
+            var session = new WorldHostSession(wastelandMap: mapSystem);
             var profile = !string.IsNullOrEmpty(dataDir)
                 ? WeatherProfileLoader.Load(dataDir, new FileSystemIO(), new SystemTextJsonSerializer())
                 : null;
@@ -66,6 +72,9 @@ namespace AtomicWar.GodotApp
                 if (env.Landmark != null) session.Landmarks.RestoreState(env.Landmark);
                 session.LastEvent = "World state restored from save.";
             }
+            var mapSave = WastelandMapSaveStore.TryLoad();
+            if (mapSave != null)
+                session.WastelandMap.RestoreState(mapSave);
             return session;
         }
 

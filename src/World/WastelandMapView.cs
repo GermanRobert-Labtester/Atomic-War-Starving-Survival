@@ -1,17 +1,15 @@
 using AtomicWar.GodotApp.UI;
 using Godot;
 using System;
-using System.Linq;
-using Ashfall.Core;
-using Ashfall.Core.UI;
-using System.Text.Json;
 using System.Collections.Generic;
+using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp.World
 {
     /// <summary>
     /// ASHFALL — Wasteland Map View Controller.
-    /// Manages the wasteland map scene, loads node data from JSON, and handles interactions.
+    /// Manages the wasteland map scene, renders node markers with live discovered/available/locked/completed/unavailable
+    /// status from authoritative <see cref="WastelandMapSystem"/> read model, and handles interactions.
     /// </summary>
     public partial class WastelandMapView : Node2D
     {
@@ -21,14 +19,11 @@ namespace AtomicWar.GodotApp.World
         private PackedScene _markerScene = null!;
         private Node2D _mapNodesContainer = null!;
         private WorldHostSession? _worldHost;
-
-        private static WastelandMapData? s_cachedMapData;
+        private WastelandMapSystem? _mapSystem;
 
         public override void _Ready()
         {
             _mapNodesContainer = GetNode<Node2D>("MapNodes");
-            
-            // Load the marker scene
             _markerScene = GD.Load<PackedScene>("res://src/World/MapLocationMarkerView.tscn");
             
             Initialize();
@@ -37,67 +32,95 @@ namespace AtomicWar.GodotApp.World
         public void Bind(WorldHostSession? worldHost)
         {
             _worldHost = worldHost;
+            _mapSystem = worldHost?.WastelandMap;
+            if (_mapNodesContainer != null)
+            {
+                Initialize();
+            }
+        }
+
+        public void Bind(WastelandMapSystem? mapSystem)
+        {
+            _mapSystem = mapSystem;
+            if (_mapNodesContainer != null)
+            {
+                Initialize();
+            }
         }
 
         public void Initialize()
         {
-            GD.Print("WastelandMapView: Initializing map nodes...");
+            GD.Print("[Ashfall Godot][World] Initializing map nodes...");
             
             try
             {
-                // Clear existing markers if any
                 ClearMarkers();
 
-                // Load the wasteland map data
-                var mapData = LoadWastelandMapData();
-                
-                if (mapData != null && mapData.Nodes != null)
+                var nodes = GetMapNodes();
+                if (nodes != null && nodes.Count > 0)
                 {
-                    GD.Print($"WastelandMapView: Loaded {mapData.Nodes.Count} nodes");
-                    
-                    // Create markers for each node
-                    foreach (var node in mapData.Nodes)
+                    GD.Print($"[Ashfall Godot][World] Loaded {nodes.Count} map nodes");
+                    foreach (var node in nodes)
                     {
                         CreateLocationMarker(node);
                     }
                 }
                 else
                 {
-                    GD.PrintErr("WastelandMapView: Failed to load map data or no nodes found");
+                    GD.PrintErr("[Ashfall Godot][World] Failed to load map data or no nodes found");
                 }
             }
             catch (Exception ex)
             {
-                GD.PrintErr($"WastelandMapView: Error initializing: {ex.Message}");
+                GD.PrintErr($"[Ashfall Godot][World] Error initializing: {ex.Message}");
             }
         }
 
-        private static WastelandMapData? LoadWastelandMapData()
+        public MapLocationMarkerStatus ResolveNodeStatus(MapNode node)
         {
-            if (s_cachedMapData != null)
-                return s_cachedMapData;
+            if (node == null) return MapLocationMarkerStatus.Unavailable;
 
-            // Try to load from StreamingAssets first
-            string jsonPath = "res://Assets/StreamingAssets/Data/wasteland_map_v1.json";
-            
-            try
+            if (node.Danger == MapNodeDanger.Locked)
+                return MapLocationMarkerStatus.Locked;
+
+            if (_mapSystem != null)
             {
-                var file = FileAccess.Open(jsonPath, FileAccess.ModeFlags.Read);
-                if (file == null) return null;
-                string json = file.GetAsText();
-                file.Close();
-                
-                s_cachedMapData = JsonSerializer.Deserialize<WastelandMapData>(json, new JsonSerializerOptions
+                if (_mapSystem.IsDiscovered(node.Id))
                 {
-                    PropertyNameCaseInsensitive = true
-                });
-                return s_cachedMapData;
+                    return MapLocationMarkerStatus.Discovered;
+                }
+
+                // Check if any route connects from an already discovered node to this node
+                foreach (var route in _mapSystem.Routes)
+                {
+                    if ((route.To == node.Id && _mapSystem.IsDiscovered(route.From)) ||
+                        (route.From == node.Id && _mapSystem.IsDiscovered(route.To)))
+                    {
+                        return MapLocationMarkerStatus.Available;
+                    }
+                }
+
+                return MapLocationMarkerStatus.Unavailable;
             }
-            catch (Exception ex)
-            {
-                GD.PrintErr($"WastelandMapView: Failed to load map data from {jsonPath}: {ex.Message}");
-                return null;
-            }
+
+            // Fallback when no active system: starting unlocked are discovered, discoverable are available
+            if (node.StartingUnlocked)
+                return MapLocationMarkerStatus.Discovered;
+            if (node.Discoverable)
+                return MapLocationMarkerStatus.Available;
+
+            return MapLocationMarkerStatus.Unavailable;
+        }
+
+        private IReadOnlyList<MapNode> GetMapNodes()
+        {
+            if (_mapSystem != null)
+                return _mapSystem.Nodes;
+
+            if (_worldHost?.WastelandMap != null)
+                return _worldHost.WastelandMap.Nodes;
+
+            return Array.Empty<MapNode>();
         }
 
         private void ClearMarkers()
@@ -113,35 +136,41 @@ namespace AtomicWar.GodotApp.World
             AshfallUiHelpers.EmptyChildren(_mapNodesContainer);
         }
 
-        private void CreateLocationMarker(WastelandMapNode node)
+        private void CreateLocationMarker(MapNode node)
         {
             try
             {
-                // Instantiate the marker scene
                 var marker = _markerScene.Instantiate<MapLocationMarkerView>();
                 marker.NodeId = node.Id;
                 marker.DisplayName = node.DisplayName;
-                marker.DangerLevel = node.Danger;
-                marker.PositionOffset = new Vector2(0, -30); // Position label above marker
+                marker.DangerLevel = DangerToString(node.Danger);
+                marker.Status = ResolveNodeStatus(node);
+                marker.PositionOffset = new Vector2(0, -30);
                 marker.SetPosition(new Vector2(node.PositionX, node.PositionY));
                 
-                // Connect the signal
                 marker.NodeSelected += OnNodeSelected;
-                
-                // Add to container
                 _mapNodesContainer.AddChild(marker);
                 
-                GD.Print($"WastelandMapView: Created marker for {node.DisplayName} at ({node.PositionX}, {node.PositionY})");
+                GD.Print($"[Ashfall Godot][World] Created marker for {node.DisplayName} (status={marker.Status}) at ({node.PositionX}, {node.PositionY})");
             }
             catch (Exception ex)
             {
-                GD.PrintErr($"WastelandMapView: Failed to create marker for {node.Id}: {ex.Message}");
+                GD.PrintErr($"[Ashfall Godot][World] Failed to create marker for {node.Id}: {ex.Message}");
             }
         }
 
+        private static string DangerToString(MapNodeDanger danger) => danger switch
+        {
+            MapNodeDanger.Low => "low",
+            MapNodeDanger.Medium => "medium",
+            MapNodeDanger.High => "high",
+            MapNodeDanger.Locked => "locked",
+            _ => "none"
+        };
+
         private void OnNodeSelected(string nodeId)
         {
-            GD.Print($"WastelandMapView: Node selected: {nodeId}");
+            GD.Print($"[Ashfall Godot][World] Node selected: {nodeId}");
             EmitSignal(SignalName.NodeSelected, nodeId);
         }
 
@@ -150,28 +179,5 @@ namespace AtomicWar.GodotApp.World
             ClearMarkers();
             base._ExitTree();
         }
-    }
-
-    /// <summary>
-    /// Data structure for wasteland map nodes
-    /// </summary>
-    public class WastelandMapNode
-    {
-        public string Id { get; set; } = string.Empty;
-        public string DisplayName { get; set; } = string.Empty;
-        public string Danger { get; set; } = "none"; // none, low, high, locked
-        public string? Faction { get; set; }
-        public string? LootTable { get; set; }
-        public int PositionX { get; set; }
-        public int PositionY { get; set; }
-    }
-
-    /// <summary>
-    /// Root data structure for wasteland map
-    /// </summary>
-    public class WastelandMapData
-    {
-        public int SchemaVersion { get; set; }
-        public List<WastelandMapNode> Nodes { get; set; } = new List<WastelandMapNode>();
     }
 }
