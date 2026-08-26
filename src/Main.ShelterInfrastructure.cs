@@ -45,6 +45,8 @@ namespace AtomicWar.GodotApp
             wtSys.RestoreState(wtState);
             _waterTreatment = new WaterTreatmentHostSession(wtSys);
             _waterTreatment.StateChanged += () => _waterTreatment.MarkDirty();
+            if (_waterTreatmentPanel != null && _waterTreatmentPanel.IsInsideTree())
+                RemoveChild(_waterTreatmentPanel);
             _waterTreatmentPanel = new WaterTreatmentPanel();
             _waterTreatmentPanel.Bind(_waterTreatment);
             _waterTreatmentPanel.Visible = false;
@@ -63,6 +65,8 @@ namespace AtomicWar.GodotApp
             asSys.RestoreState(asState);
             _airlockSecurity = new AirlockSecurityHostSession(asSys);
             _airlockSecurity.StateChanged += () => _airlockSecurity.MarkDirty();
+            if (_airlockSecurityPanel != null && _airlockSecurityPanel.IsInsideTree())
+                RemoveChild(_airlockSecurityPanel);
             _airlockSecurityPanel = new AirlockSecurityPanel();
             _airlockSecurityPanel.Bind(_airlockSecurity);
             _airlockSecurityPanel.Visible = false;
@@ -84,6 +88,8 @@ namespace AtomicWar.GodotApp
             stSys.RestoreState(stState);
             _shelterThermal = new ShelterThermalHostSession(stSys);
             _shelterThermal.StateChanged += () => _shelterThermal.MarkDirty();
+            if (_shelterThermalPanel != null && _shelterThermalPanel.IsInsideTree())
+                RemoveChild(_shelterThermalPanel);
             _shelterThermalPanel = new ShelterThermalPanel();
             _shelterThermalPanel.Bind(_shelterThermal);
             _shelterThermalPanel.Visible = false;
@@ -104,6 +110,8 @@ namespace AtomicWar.GodotApp
             _shelterSchedule = new ShelterScheduleHostSession(ssSys);
             _shelterSchedule.LoadCatalog(_dataDir);
             _shelterSchedule.StateChanged += () => _shelterSchedule.MarkDirty();
+            if (_shelterSchedulePanel != null && _shelterSchedulePanel.IsInsideTree())
+                RemoveChild(_shelterSchedulePanel);
             _shelterSchedulePanel = new ShelterSchedulePanel();
             _shelterSchedulePanel.Bind(_shelterSchedule);
             _shelterSchedulePanel.Visible = false;
@@ -129,6 +137,8 @@ namespace AtomicWar.GodotApp
             _autopsy = new AutopsyHostSession(auSys);
             _autopsy.LoadCatalog(_dataDir);
             _autopsy.StateChanged += () => _autopsy.MarkDirty();
+            if (_autopsyReportPanel != null && _autopsyReportPanel.IsInsideTree())
+                RemoveChild(_autopsyReportPanel);
             _autopsyReportPanel = new AutopsyReportPanel();
             _autopsyReportPanel.Bind(_autopsy);
             _autopsyReportPanel.Visible = false;
@@ -147,6 +157,8 @@ namespace AtomicWar.GodotApp
             wsSys.RestoreState(wsState);
             _waystation = new WaystationHostSession(wsSys);
             _waystation.StateChanged += () => _waystation.MarkDirty();
+            if (_waystationPanel != null && _waystationPanel.IsInsideTree())
+                RemoveChild(_waystationPanel);
             _waystationPanel = new WaystationNetworkPanel();
             _waystationPanel.Bind(_waystation);
             _waystationPanel.Visible = false;

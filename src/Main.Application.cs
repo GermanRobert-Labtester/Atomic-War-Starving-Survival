@@ -284,7 +284,16 @@ namespace AtomicWar.GodotApp
             }
 
             AtomicWar.GodotApp.Settings.UserSettingsStore.Apply(AtomicWar.GodotApp.Settings.UserSettingsStore.Current);
+
+            // ── Save/Load host session ───────────────────────────────────────
+            _saveLoadHost = new SaveLoadHostSession();
+            _saveLoadHost.Initialize(ProjectSettings.GlobalizePath("user://"));
+            AddChild(_saveLoadHost);
+
             BuildUserInterface();
+            _saveLoadPanel.Bind(_saveLoadHost);
+            _saveLoadHost.SlotsChanged += UpdateContinueButton;
+
             SetupJournal();
             SetupIceRoad();
             SetupDutyRoster();
@@ -300,13 +309,6 @@ namespace AtomicWar.GodotApp
             // Moral choice ledger ("The Weight of Survival"): constructed at boot so
             // its save restores before any encounter can resolve against a blank ledger.
             SetupMoralChoice();
-
-            // ── Save/Load host session ───────────────────────────────────────
-            _saveLoadHost = new SaveLoadHostSession();
-            _saveLoadHost.Initialize(ProjectSettings.GlobalizePath("user://"));
-            AddChild(_saveLoadHost);
-            _saveLoadPanel.Bind(_saveLoadHost);
-            // ─────────────────────────────────────────────────────────────────
         }
 
         public override void _Process(double delta)

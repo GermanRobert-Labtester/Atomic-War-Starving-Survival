@@ -331,5 +331,109 @@ namespace AtomicWar.GodotApp
                     break;
             }
         }
+
+        private void ResetExpandedShelterSessions()
+        {
+            // Remove instantiated panels from scene tree
+            void RemovePanel(Control? panel)
+            {
+                if (panel != null && panel.IsInsideTree())
+                    RemoveChild(panel);
+            }
+
+            RemovePanel(_waterTreatmentPanel); _waterTreatmentPanel = null!;
+            RemovePanel(_airlockSecurityPanel); _airlockSecurityPanel = null!;
+            RemovePanel(_shelterThermalPanel); _shelterThermalPanel = null!;
+            RemovePanel(_shelterSchedulePanel); _shelterSchedulePanel = null!;
+            RemovePanel(_autopsyReportPanel); _autopsyReportPanel = null!;
+            RemovePanel(_waystationPanel); _waystationPanel = null!;
+            RemovePanel(_survivorRelationsPanel); _survivorRelationsPanel = null!;
+            RemovePanel(_regionalTreatyPanel); _regionalTreatyPanel = null!;
+            RemovePanel(_vinylMoralePanel); _vinylMoralePanel = null!;
+            RemovePanel(_wildlifeTrappingPanel); _wildlifeTrappingPanel = null!;
+            RemovePanel(_excavationPanel); _excavationPanel = null!;
+            RemovePanel(_apprenticeshipPanel); _apprenticeshipPanel = null!;
+            RemovePanel(_caregivingPanel); _caregivingPanel = null!;
+            RemovePanel(_sumpFloodingPanel); _sumpFloodingPanel = null!;
+            RemovePanel(_decontaminationPanel); _decontaminationPanel = null!;
+            RemovePanel(_kitchenNutritionPanel); _kitchenNutritionPanel = null!;
+            RemovePanel(_equipmentConditionPanel); _equipmentConditionPanel = null!;
+            RemovePanel(_libraryStudyPanel); _libraryStudyPanel = null!;
+            RemovePanel(_archiveDeskPanel); _archiveDeskPanel = null!;
+            RemovePanel(_contractorRosterPanel); _contractorRosterPanel = null!;
+            RemovePanel(_mentalHealthCrisisPanel); _mentalHealthCrisisPanel = null!;
+            RemovePanel(_chemicalDependencyPanel); _chemicalDependencyPanel = null!;
+            RemovePanel(_phantomMemoryPanel); _phantomMemoryPanel = null!;
+            RemovePanel(_travelingCaravanPanel); _travelingCaravanPanel = null!;
+
+            // Dispose / null host sessions
+            _waterTreatment?.Dispose(); _waterTreatment = null!;
+            _airlockSecurity?.Dispose(); _airlockSecurity = null!;
+            _shelterThermal?.Dispose(); _shelterThermal = null!;
+            _shelterSchedule?.Dispose(); _shelterSchedule = null!;
+            _autopsy?.Dispose(); _autopsy = null!;
+            _waystation?.Dispose(); _waystation = null!;
+            _survivorRelations?.Dispose(); _survivorRelations = null!;
+            _survivorRelationsCore = null!;
+            _regionalTreaty?.Dispose(); _regionalTreaty = null!;
+            _vinylMorale?.Dispose(); _vinylMorale = null!;
+            _wildlifeTrapping?.Dispose(); _wildlifeTrapping = null!;
+            _excavation?.Dispose(); _excavation = null!;
+            _apprenticeship?.Dispose(); _apprenticeship = null!;
+            _caregiving?.Dispose(); _caregiving = null!;
+            _sumpFlooding?.Dispose(); _sumpFlooding = null!;
+            _decontamination?.Dispose(); _decontamination = null!;
+            _kitchenNutrition?.Dispose(); _kitchenNutrition = null!;
+            _equipmentCondition?.Dispose(); _equipmentCondition = null!;
+            _libraryStudy?.Dispose(); _libraryStudy = null!;
+            _archiveDesk?.Dispose(); _archiveDesk = null!;
+            _contractorRoster?.Dispose(); _contractorRoster = null!;
+            _mentalHealthCrisis?.Dispose(); _mentalHealthCrisis = null!;
+            _chemicalDependency?.Dispose(); _chemicalDependency = null!;
+            _shelterAssignment?.Dispose(); _shelterAssignment = null!;
+            _travelingCaravan?.Dispose(); _travelingCaravan = null!;
+
+            _airlockSecurityDirty = false;
+            _shelterThermalDirty = false;
+            _shelterScheduleDirty = false;
+            _autopsyDirty = false;
+            _waystationDirty = false;
+            _survivorRelationsDirty = false;
+            _regionalTreatyDirty = false;
+            _vinylMoraleDirty = false;
+            _wildlifeTrappingDirty = false;
+            _excavationDirty = false;
+            _apprenticeshipDirty = false;
+            _caregivingDirty = false;
+            _sumpFloodingDirty = false;
+            _decontaminationDirty = false;
+            _kitchenNutritionDirty = false;
+            _equipmentConditionDirty = false;
+            _libraryStudyDirty = false;
+            _archiveDeskDirty = false;
+            _contractorRosterDirty = false;
+            _mentalHealthCrisisDirty = false;
+
+            // Delete slot and global save files for expanded shelter systems
+            foreach (var file in new[]
+            {
+                "water_treatment_save.json", "airlock_security_save.json", "shelter_thermal_save.json",
+                "shelter_schedule_save.json", "autopsy_save.json", "waystation_save.json",
+                "survivor_relations_save.json", "regional_treaty_save.json", "vinyl_morale_save.json",
+                "wildlife_trapping_save.json", "excavation_save.json", "apprenticeship_save.json",
+                "caregiving_save.json", "sump_flooding_save.json", "decontamination_save.json",
+                "kitchen_nutrition_save.json", "equipment_condition_save.json", "library_study_save.json",
+                "archive_desk_save.json", "contractor_roster_save.json", "mental_health_crisis_save.json",
+                "chemical_dependency_save.json", "shelter_assignment_save.json", "traveling_caravan_save.json"
+            })
+            {
+                string p = SaveSlotRoot.Resolve(file);
+                if (System.IO.File.Exists(p))
+                    System.IO.File.Delete(p);
+                string globalP = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), file);
+                if (System.IO.File.Exists(globalP))
+                    System.IO.File.Delete(globalP);
+            }
+        }
     }
 }

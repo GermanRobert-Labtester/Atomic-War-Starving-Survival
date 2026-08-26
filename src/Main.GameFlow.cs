@@ -107,6 +107,7 @@ namespace AtomicWar.GodotApp
             SetupEventsHost();
             SetupExpansionQuests();
             SetupThirdonary();
+            SetupExpandedShelterSystems();
             _openingProtocolModal.Bind(_startingLevel);
             _openingProtocolModal.Open();
 
@@ -140,8 +141,7 @@ namespace AtomicWar.GodotApp
             SaveAll();
 
             // Check for existing save
-            bool hasSave = System.IO.File.Exists(HoldfastSaveStore.SavePath);
-            _mainMenu.EnableContinue(hasSave);
+            UpdateContinueButton();
         }
 
         private void ToggleDeveloperConsole()

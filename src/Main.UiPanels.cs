@@ -396,6 +396,42 @@ namespace AtomicWar.GodotApp
             // ── Save/Load panel (overlay) ──
             _saveLoadPanel = new SaveLoadPanel();
             _saveLoadPanel.OnClose += CloseSaveLoadPanel;
+            _saveLoadPanel.OnSlotSelected += slotId =>
+            {
+                _saveLoadHost?.SelectSlot(slotId);
+                UpdateContinueButton();
+            };
+            _saveLoadPanel.OnSaveRequested += () =>
+            {
+                SaveAll();
+                _saveLoadPanel.RefreshView();
+                UpdateContinueButton();
+            };
+            _saveLoadPanel.OnDeleteRequested += slotId =>
+            {
+                _saveLoadHost?.DeleteSlot(slotId);
+                UpdateContinueButton();
+            };
+            _saveLoadPanel.OnImportRequested += profileId =>
+            {
+                string basePath = ProjectSettings.GlobalizePath("user://");
+                string[] candidateFiles = {
+                    System.IO.Path.Combine(basePath, "holdfast_s1_save.json"),
+                    System.IO.Path.Combine(basePath, "inventory_save.json"),
+                    HoldfastSaveStore.SavePath,
+                    InventorySaveStore.SavePath
+                };
+                foreach (var candidate in candidateFiles)
+                {
+                    if (System.IO.File.Exists(candidate))
+                    {
+                        _saveLoadHost?.ImportLegacySave(candidate);
+                        break;
+                    }
+                }
+                _saveLoadPanel.RefreshView();
+                UpdateContinueButton();
+            };
             AddChild(_saveLoadPanel);
 
             // ── Tutorial panel (overlay) ──
@@ -749,26 +785,31 @@ namespace AtomicWar.GodotApp
             AddChild(_gameOver);
 
             // ── Check for existing save ──
-            bool hasSave = false;
-            if (_saveLoadHost != null)
-            {
-                var slots = _saveLoadHost.GetSlots();
-                hasSave = slots.Count > 0;
-                if (!hasSave)
-                {
-                    // Fall back to legacy global save files.
-                    hasSave = System.IO.File.Exists(HoldfastSaveStore.SavePath) ||
-                              System.IO.File.Exists(InventorySaveStore.SavePath) ||
-                              System.IO.File.Exists(SurvivorsSaveStore.SavePath);
-                }
-            }
-            _mainMenu.EnableContinue(hasSave);
+            UpdateContinueButton();
 
             // ── Setup Expanded Shelter Systems (Water, Airlock, Relations, Treaties, etc.) ──
             SetupExpandedShelterSystems();
 
             // ── Start in menu state ──
             _state = GameState.Menu;
+        }
+
+        private void UpdateContinueButton()
+        {
+            bool hasSave = false;
+            if (_saveLoadHost != null)
+            {
+                var slots = _saveLoadHost.GetSlots();
+                hasSave = slots.Count > 0;
+            }
+            if (!hasSave)
+            {
+                // Fall back to legacy global save files.
+                hasSave = System.IO.File.Exists(HoldfastSaveStore.SavePath) ||
+                          System.IO.File.Exists(InventorySaveStore.SavePath) ||
+                          System.IO.File.Exists(SurvivorsSaveStore.SavePath);
+            }
+            _mainMenu?.EnableContinue(hasSave);
         }
 
         private void AddMenuButton(string text, Action callback)

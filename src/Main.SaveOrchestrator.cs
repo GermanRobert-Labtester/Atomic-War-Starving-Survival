@@ -196,6 +196,8 @@ namespace AtomicWar.GodotApp
             _startingLevelDirty = false;
             _greenhouseDirty = false;
 
+            ResetExpandedShelterSessions();
+
             foreach (var file in new[]
             {
                 "holdfast_s1_save.json", "holdfast_trade_save.json", "holdfast_trade_save.json.bak",
@@ -264,6 +266,7 @@ namespace AtomicWar.GodotApp
             SetupYearOfAsh();
             SetupExpansions();
             SetupGreenhouse();
+            SetupExpandedShelterSystems();
 
             // Update HUD after everything is restored/bound.
             UpdateHud();

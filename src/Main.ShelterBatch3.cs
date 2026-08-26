@@ -65,6 +65,8 @@ namespace AtomicWar.GodotApp
             sfSys.RestoreState(sfState);
             _sumpFlooding = new SumpFloodingHostSession(sfSys, sfWeather, sfPower, sfDeepFreeze);
             _sumpFlooding.StateChanged += () => _sumpFlooding.MarkDirty();
+            if (_sumpFloodingPanel != null && _sumpFloodingPanel.IsInsideTree())
+                RemoveChild(_sumpFloodingPanel);
             _sumpFloodingPanel = new SumpFloodingPanel();
             _sumpFloodingPanel.Bind(_sumpFlooding);
             _sumpFloodingPanel.Visible = false;
@@ -82,6 +84,8 @@ namespace AtomicWar.GodotApp
             dcSys.RestoreState(dcState);
             _decontamination = new DecontaminationHostSession(dcSys, dcRad, dcInv, dcAirlock, dcStarting);
             _decontamination.StateChanged += () => _decontamination.MarkDirty();
+            if (_decontaminationPanel != null && _decontaminationPanel.IsInsideTree())
+                RemoveChild(_decontaminationPanel);
             _decontaminationPanel = new DecontaminationPanel();
             _decontaminationPanel.Bind(_decontamination);
             _decontaminationPanel.Visible = false;
@@ -97,6 +101,8 @@ namespace AtomicWar.GodotApp
             knSys.RestoreState(knState);
             _kitchenNutrition = new KitchenNutritionHostSession(knSys, knInv, knNeeds);
             _kitchenNutrition.StateChanged += () => _kitchenNutrition.MarkDirty();
+            if (_kitchenNutritionPanel != null && _kitchenNutritionPanel.IsInsideTree())
+                RemoveChild(_kitchenNutritionPanel);
             _kitchenNutritionPanel = new KitchenNutritionPanel();
             _kitchenNutritionPanel.Bind(_kitchenNutrition);
             _kitchenNutritionPanel.Visible = false;
@@ -112,6 +118,8 @@ namespace AtomicWar.GodotApp
             ecSys.RestoreState(ecState);
             _equipmentCondition = new EquipmentConditionHostSession(ecSys, ecInv, ecCrafting);
             _equipmentCondition.StateChanged += () => _equipmentCondition.MarkDirty();
+            if (_equipmentConditionPanel != null && _equipmentConditionPanel.IsInsideTree())
+                RemoveChild(_equipmentConditionPanel);
             _equipmentConditionPanel = new EquipmentConditionPanel();
             _equipmentConditionPanel.Bind(_equipmentCondition);
             _equipmentConditionPanel.Visible = false;
@@ -129,6 +137,8 @@ namespace AtomicWar.GodotApp
             _libraryStudy = new LibraryStudyHostSession(lsSys, lsSkills, lsResearch, lsJournal, _expandedShelterRoster);
             _libraryStudy.LoadCatalog(_dataDir);
             _libraryStudy.StateChanged += () => _libraryStudy.MarkDirty();
+            if (_libraryStudyPanel != null && _libraryStudyPanel.IsInsideTree())
+                RemoveChild(_libraryStudyPanel);
             _libraryStudyPanel = new LibraryStudyPanel();
             _libraryStudyPanel.Bind(_libraryStudy);
             _libraryStudyPanel.Visible = false;
@@ -146,6 +156,8 @@ namespace AtomicWar.GodotApp
             _archiveDesk = new ArchiveDeskHostSession(adSys, adJournal, adKnowledge, adInv, _expandedShelterRoster);
             _archiveDesk.LoadInkCatalog(_dataDir);
             _archiveDesk.StateChanged += () => _archiveDesk.MarkDirty();
+            if (_archiveDeskPanel != null && _archiveDeskPanel.IsInsideTree())
+                RemoveChild(_archiveDeskPanel);
             _archiveDeskPanel = new ArchiveDeskPanel();
             _archiveDeskPanel.Bind(_archiveDesk);
             _archiveDeskPanel.Visible = false;
@@ -161,6 +173,8 @@ namespace AtomicWar.GodotApp
             crSys.RestoreState(crState);
             _contractorRoster = new ContractorRosterHostSession(crSys, crInv, _expandedShelterRoster, crExpedition);
             _contractorRoster.StateChanged += () => _contractorRoster.MarkDirty();
+            if (_contractorRosterPanel != null && _contractorRosterPanel.IsInsideTree())
+                RemoveChild(_contractorRosterPanel);
             _contractorRosterPanel = new ContractorRosterPanel();
             _contractorRosterPanel.Bind(_contractorRoster);
             _contractorRosterPanel.Visible = false;
@@ -177,6 +191,8 @@ namespace AtomicWar.GodotApp
             mhSys.RestoreState(mhState);
             _mentalHealthCrisis = new MentalHealthCrisisHostSession(mhSys, mhNeeds, mhMedical, _chemicalDependency.System, _expandedShelterRoster);
             _mentalHealthCrisis.StateChanged += () => _mentalHealthCrisis.MarkDirty();
+            if (_mentalHealthCrisisPanel != null && _mentalHealthCrisisPanel.IsInsideTree())
+                RemoveChild(_mentalHealthCrisisPanel);
             _mentalHealthCrisisPanel = new MentalHealthCrisisPanel();
             _mentalHealthCrisisPanel.Bind(_mentalHealthCrisis);
             _mentalHealthCrisisPanel.Visible = false;
@@ -185,18 +201,24 @@ namespace AtomicWar.GodotApp
             _chemicalDependency.StateChanged += () => _chemicalDependency.MarkDirty();
             var depLoaded = ChemicalDependencySaveStore.TryLoad();
             if (depLoaded != null) _chemicalDependency.RestoreSave(depLoaded);
+            if (_chemicalDependencyPanel != null && _chemicalDependencyPanel.IsInsideTree())
+                RemoveChild(_chemicalDependencyPanel);
             _chemicalDependencyPanel = new ChemicalDependencyPanel();
             _chemicalDependencyPanel.Bind(_chemicalDependency);
             _chemicalDependencyPanel.Visible = false;
             AddChild(_chemicalDependencyPanel);
 
             if (_phantomMemory == null) SetupPhantom();
+            if (_phantomMemoryPanel != null && _phantomMemoryPanel.IsInsideTree())
+                RemoveChild(_phantomMemoryPanel);
             _phantomMemoryPanel = new PhantomMemoryPanel();
             if (_phantomMemory != null) _phantomMemoryPanel.Bind(_phantomMemory);
             _phantomMemoryPanel.Visible = false;
             AddChild(_phantomMemoryPanel);
 
             _travelingCaravan = TravelingCaravanHostSession.Create(_dataDir);
+            if (_travelingCaravanPanel != null && _travelingCaravanPanel.IsInsideTree())
+                RemoveChild(_travelingCaravanPanel);
             _travelingCaravanPanel = new TravelingCaravanPanel();
             _travelingCaravanPanel.Bind(_travelingCaravan);
             _travelingCaravanPanel.Visible = false;
