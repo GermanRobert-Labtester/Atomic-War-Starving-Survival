@@ -58,6 +58,69 @@ for gate in --asset-registry-selftest --data-integrity-selftest --disease-selfte
     fi
 done
 
+# ── Isolated Linux export regression gate (P0) ─────────────────────────
+# Verifies that a fresh Linux export is self-contained: authoritative Data
+# beside the executable + .NET runtime must allow isolated data-integrity.
+# Skipped only when export templates are absent (CI without templates).
+echo; echo "── gate: isolated-linux-export ──"
+TEMPLATE="$HOME/.local/share/godot/export_templates/4.7.1.stable.mono/linux_release.x86_64"
+if [[ ! -f "$TEMPLATE" ]]; then
+    echo "SKIP: export template $TEMPLATE not found — skipping isolated export gate" >&2
+else
+    if ! ./scripts/ci/godot-export-linux.sh; then
+        echo "GATE FAIL: godot-export-linux.sh" >&2
+        fail=1
+    else
+        echo "GATE PASS: godot-export-linux.sh"
+        # Isolated proof: copy only runtime artifacts to /tmp and run self-tests without source Assets/.
+        TMP_ISO=$(mktemp -d)
+        echo "Isolated export test in $TMP_ISO"
+        cp builds/linux/ashfall.x86_64 builds/linux/ashfall.pck "$TMP_ISO/"
+        cp -r builds/linux/data_Ashfall_linuxbsd_x86_64 "$TMP_ISO/"
+        # Data is now at builds/linux/Assets/StreamingAssets/Data — copy the deployed layout
+        if [[ -d builds/linux/Assets/StreamingAssets/Data ]]; then
+            mkdir -p "$TMP_ISO/Assets/StreamingAssets"
+            cp -r builds/linux/Assets/StreamingAssets/Data "$TMP_ISO/Assets/StreamingAssets/"
+        fi
+        # Representative catalogs must exist in the deployed copy
+        for rep in items.json economy_goods.json; do
+            if [[ ! -f "$TMP_ISO/Assets/StreamingAssets/Data/$rep" ]]; then
+                echo "GATE FAIL: $TMP_ISO/Assets/StreamingAssets/Data/$rep missing" >&2
+                fail=1
+            fi
+        done
+        echo "── isolated: $TMP_ISO/ashfall.x86_64 -- --data-integrity-selftest ──"
+        if "$TMP_ISO/ashfall.x86_64" -- --data-integrity-selftest 2>&1 | tee /tmp/isolated-data-integrity.log; then
+            if grep -q "DATA_INTEGRITY_SELFTEST PASS" /tmp/isolated-data-integrity.log; then
+                echo "GATE PASS: isolated data-integrity-selftest"
+            else
+                echo "GATE FAIL: isolated data-integrity log missing PASS" >&2
+                fail=1
+            fi
+        else
+            # Godot headless may exit 0 even with our error handling; check log
+            if grep -q "DATA_INTEGRITY_SELFTEST PASS" /tmp/isolated-data-integrity.log; then
+                echo "GATE PASS: isolated data-integrity-selftest (exit code check)"
+            else
+                echo "GATE FAIL: isolated data-integrity-selftest" >&2
+                fail=1
+            fi
+        fi
+        # Also smoke the exported binary for other self-tests
+        for iso_gate in --bridge-selftest --survivors-selftest --world-selftest --economy-selftest --asset-registry-selftest; do
+            echo "── isolated: $iso_gate ──"
+            if "$TMP_ISO/ashfall.x86_64" -- "$iso_gate" >/tmp/isolated-"$(echo $iso_gate | tr -d '-')".log 2>&1; then
+                echo "GATE PASS: isolated $iso_gate"
+            else
+                echo "GATE FAIL: isolated $iso_gate" >&2
+                cat /tmp/isolated-"$(echo $iso_gate | tr -d '-')".log | tail -n 20 >&2
+                fail=1
+            fi
+        done
+        rm -rf "$TMP_ISO"
+    fi
+fi
+
 echo
 if [[ $fail -eq 0 ]]; then
     echo "godot-asset-gate: ALL GATES GREEN"
