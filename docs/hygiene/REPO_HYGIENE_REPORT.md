@@ -209,3 +209,15 @@ All 3 stashes are safe to drop (`git stash drop stash@{N}`), but remain untouche
 ### Concurrent-Session Note
 
 A second agent session was actively editing `src/Host/*HostSession.cs` + `Main.ShelterBatch3.cs` during this pass (file count grew 5→25 mid-task). All its changes were left unstaged; this pass committed only hygiene-scoped files via explicit paths.
+
+### Stash Drops — Executed (owner-approved, 2026-08-23)
+
+All 3 stashes dropped after owner approval ("Drop all stashes"). Recovery SHAs (valid until `git gc` prunes dangling commits — `git stash apply <sha>` restores):
+
+| Former stash | Recovery SHA |
+|---|---|
+| stash@{0} — stale 3,883-file WIP on `eeff1f79` | `04d0c2360cccb694c23a42e5ebc35ee8229b0809` |
+| stash@{1} — superseded broken visual-bridge WIP | `c9c6d80d5a7503eb2ac0f653bf2d1934f415b4fc` |
+| stash@{2} — stale monolithic Main.cs WIP | `1817739f2d18a89044004d69ab1ce4b3b827ee07` |
+
+`git stash list` is now empty. Working tree unaffected (stash drops touch only reflog entries).
