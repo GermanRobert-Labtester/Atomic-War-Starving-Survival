@@ -226,7 +226,8 @@ namespace Ashfall.Core.Greenhouse
                 OnProductionTick?.Invoke(hive.hiveId, honey, wax);
             }
 
-            RaiseChanged();
+            if (_hives.Count > 0)
+                RaiseChanged();
         }
 
         // ── Pollination ──────────────────────────────────────────────

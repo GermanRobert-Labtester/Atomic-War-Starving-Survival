@@ -107,16 +107,62 @@ namespace AtomicWar.GodotApp
             bool radiation = _radiationDetailPanel.IsBound && _radiationDetailPanel.Visible;
             CloseAllOverlayPanels();
 
+            // ── Per-Panel Bind/Unbind Lifecycle Verification (Research, Journal, Weather, Expedition) ──
+            SetupExpeditions();
+            SetupJournal();
+
+            // 1. ResearchPanel: Open -> Bind -> Close -> Reopen
             _sharedResearch = new ResearchSystem(log: new GodotLog());
+            _sharedResearch.RegisterDefaults();
+            _sharedResearch.UnlockManual("res_rad_mapping");
             _researchPanel.Bind(_sharedResearch);
             _researchPanel.Open();
-            bool research = _researchPanel.IsBound && _researchPanel.Visible;
+            int r1Count = _researchPanel.RenderedRowCount;
+            _researchPanel.Close();
+            _researchPanel.Unbind();
+            _researchPanel.Bind(_sharedResearch);
+            _researchPanel.Open();
+            int r2Count = _researchPanel.RenderedRowCount;
+            bool researchLifecycle = _researchPanel.IsBound && _researchPanel.Visible && r1Count == r2Count;
             CloseAllOverlayPanels();
 
-            bool pass = survivors && medical && weather && radio && shelter && status && tutorial && afflictions && radiation && research;
+            // 2. JournalPanel: Open -> Bind -> Close -> Reopen
+            _journalPanel.Bind(_journal);
+            _journalPanel.Open();
+            _journalPanel.Close();
+            _journalPanel.Unbind();
+            _journalPanel.Bind(_journal);
+            _journalPanel.Open();
+            bool journalLifecycle = _journalPanel.Visible;
+            CloseAllOverlayPanels();
+
+            // 3. WeatherPanel: Open -> Bind -> Close -> Reopen
+            _weatherPanel.Bind(_world);
+            _weatherPanel.Open();
+            _weatherPanel.Close();
+            _weatherPanel.Unbind();
+            _weatherPanel.Bind(_world);
+            _weatherPanel.Open();
+            bool weatherLifecycle = _weatherPanel.IsBound && _weatherPanel.Visible;
+            CloseAllOverlayPanels();
+
+            // 4. ExpeditionPanel: Open -> Bind -> Close -> Reopen
+            _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+            _expeditionPanel.Open();
+            _expeditionPanel.Close();
+            _expeditionPanel.Unbind();
+            _expeditionPanel.Bind(_expeditions, _survivors, _inventory);
+            _expeditionPanel.Open();
+            bool expeditionLifecycle = _expeditionPanel.IsBound && _expeditionPanel.Visible;
+            CloseAllOverlayPanels();
+
+            bool lifecyclePass = researchLifecycle && journalLifecycle && weatherLifecycle && expeditionLifecycle;
+
+            bool pass = survivors && medical && weather && radio && shelter && status && tutorial && afflictions && radiation && researchLifecycle && lifecyclePass;
             GD.Print($"[PlayerPanelsUiTest] survivors={survivors} medical={medical} weather={weather} " +
                      $"radio={radio} shelter={shelter} status={status} tutorial={tutorial} " +
-                     $"afflictions={afflictions} radiation={radiation} research={research}");
+                     $"afflictions={afflictions} radiation={radiation} " +
+                     $"lifecycle=(res={researchLifecycle}, jrn={journalLifecycle}, wtr={weatherLifecycle}, exp={expeditionLifecycle})");
             GD.Print(pass ? "PLAYER_PANELS_UITEST PASS" : "PLAYER_PANELS_UITEST FAIL");
             QuitUiTestAfterFrame(pass ? 0 : 1);
         }

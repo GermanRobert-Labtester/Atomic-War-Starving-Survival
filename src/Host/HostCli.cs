@@ -112,6 +112,7 @@ namespace AtomicWar.GodotApp
         MedicalWardSaveSelfTest,
         ChemicalDependencySaveSelfTest,
         WeatherSaveSelfTest,
+        SaveLoadUiFailureSelfTest,
         UiSnapshotSelfTest,
         UiSnapshotRegenerate
     }
@@ -293,63 +294,98 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ChemicalDependencySaveSelfTest;
             if (Has(args, "--weather-save-selftest"))
                 return HostCliAction.WeatherSaveSelfTest;
+            if (Has(args, "--save-load-ui-failure-selftest") || Has(args, "--save-load-failure-selftest") || Has(args, "--save-load-failure-uitest") || Has(args, "--save-load-selftest"))
+                return HostCliAction.SaveLoadUiFailureSelfTest;
             return HostCliAction.Interactive;
         }
 
         public static void PrintHelp()
         {
             GD.Print("ASHFALL Godot host flags (after --):");
-            GD.Print("  --expansions-selftest    Run full 7-expansion verification suite (Holdfast, Duty Roster, Standing Record, Crossing, Arbitration, LedgerDebt, Glass Orchard)");
+            GD.Print("  --expansions-selftest / --all-expansions-selftest    Run full 7-expansion verification suite (Holdfast, Duty Roster, Standing Record, Crossing, Arbitration, LedgerDebt, Glass Orchard)");
             GD.Print("  --duty-roster-selftest   DutyRosterHeadlessDemo (Exp 02)");
+            GD.Print("  --duty-roster-uitest     Duty Roster panel UI construction, role assignments, and shift scheduling");
+            GD.Print("  --duty-roster-save-selftest Duty Roster save write → reload → restore → checksum/tamper checks");
             GD.Print("  --standing-record-selftest StandingRecordHeadlessDemo (Exp 03)");
             GD.Print("  --crossing-selftest      CrossingHeadlessDemo (Exp 04)");
             GD.Print("  --arbitration-selftest   CrossingArbitrationHeadlessDemo");
             GD.Print("  --ledger-debt-selftest   LedgerDebtHeadlessDemo");
-            GD.Print("  --greenhouse-selftest    GreenhouseHeadlessDemo (Exp 05)");
+            GD.Print("  --greenhouse-selftest / --glass-orchard-selftest    GreenhouseHeadlessDemo (Exp 05)");
+            GD.Print("  --silent-foundry-selftest Silent Foundry (Exp 10): trade stance, trust momentum, recipes, and save round-trip");
+            GD.Print("  --silent-foundry-uitest   Silent Foundry trade panel UI construction, binding, and trade loop");
             GD.Print("  --ice-road-selftest      IceRoadHeadlessDemo (Exp 01)");
+            GD.Print("  --ice-road-tick-demo     Unlock, clerk, 30 day ticks, print catalog + briefing");
             GD.Print("  --census-selftest        CensusHeadlessDemo");
             GD.Print("  --core-selftest          Ice road + census headless demos");
-            GD.Print("  --ice-road-tick-demo     Unlock, clerk, 30 day ticks, print catalog + briefing");
+            GD.Print("  --holdfast-selftest      Holdfast S1 survival loop, ice road, and trade verification");
             GD.Print("  --holdfast-save-selftest S1 save write → reload → restore → checksum/tamper checks");
-            GD.Print("  --holdfast-runtime-uitest        Godot Holdfast terminal browse → trade → failed trade → save → reload\n" +
-                      "  --holdfast-runtime-ui-test        alias for --holdfast-runtime-uitest\n" +
-                      "  --holdfast-runtime-selftest        alias for --holdfast-runtime-uitest");
-            GD.Print("  --brine-selftest         BrineWaterHeadlessDemo (S2 salt & steam)");
-            GD.Print("  --muster-selftest        MusterHeadlessDemo (Exp 06 the Muster)");
-            GD.Print("  --cluster-selftest       Cluster12CHeadlessDemo (S3 order 12-C + quest snapshot)");
-            GD.Print("  --endings-selftest       EndingsHeadlessDemo (S4 endings exclusive + roundtrip)");
+            GD.Print("  --holdfast-trade-save-selftest Holdfast trade ledger and save store round-trip and tamper checks");
             GD.Print("  --holdfast-briefing      Print location count and every Holdfast quest briefing");
+            GD.Print("  --holdfast-runtime-uitest / --holdfast-runtime-ui-test / --holdfast-runtime-selftest  Godot Holdfast terminal browse → trade → failed trade → save → reload");
+            GD.Print("  --brine-selftest / --salt-steam-selftest         BrineWaterHeadlessDemo (S2 salt & steam)");
+            GD.Print("  --muster-selftest / --expansion-06-selftest        MusterHeadlessDemo (Exp 06 the Muster)");
+            GD.Print("  --muster-uitest          The Muster panel UI construction, faction stance cards, and vote tally");
+            GD.Print("  --cluster-selftest / --order-12c-selftest       Cluster12CHeadlessDemo (S3 order 12-C + quest snapshot)");
+            GD.Print("  --endings-selftest / --shelf-selftest       EndingsHeadlessDemo (S4 endings exclusive + roundtrip)");
             GD.Print("  --journal-selftest       Journal domain + save roundtrip");
-            GD.Print("  --moral-choice-selftest  Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks");
+            GD.Print("  --journal-save-selftest  Journal system save store round-trip, entry ordering, and tamper checks");
             GD.Print("  --journal-uitest         Build ledger UI, cycle tabs, quit");
-            GD.Print("  --player-panels-uitest  Bind and render Survivors, Medical, Weather, Radio, Shelter panels");
-            GD.Print("  --ui-snapshot-uitest     Capture all snapshot targets, DIFF against snapshots/ goldens (needs real display, not --headless)");
-            GD.Print("  --ui-snapshot-regenerate Recapture all snapshot targets and OVERWRITE snapshots/ goldens (needs real display)");
-            GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
+            GD.Print("  --journal-weather-panel-selftest  Journal and Weather forecast panel integration and live data binding");
+            GD.Print("  --moral-choice-selftest  Moral choice: catalog + scripted arc + bands + reconcile events + journal hook + save/tamper checks");
+            GD.Print("  --player-panels-uitest / --player-panels-ui-test  Bind and render Survivors, Medical, Weather, Radio, Shelter panels");
+            GD.Print("  --dashboard-uitest       Game Dashboard panel UI construction, HUD binding, and metrics display");
+            GD.Print("  --inventory-uitest / --inventory-selftest       Inventory panel UI construction, item grid, and slot binding");
+            GD.Print("  --inventory-save-selftest Inventory system save store round-trip, item serialization, and checksum verification");
+            GD.Print("  --survivors-selftest     Survivors domain: needs decay, skill progression, trauma, and morale");
+            GD.Print("  --survivors-uitest       Survivors panel UI construction, roster cards, and affliction badges");
+            GD.Print("  --medical-selftest       Medical domain: patient triage, treatment protocols, affliction progression, and save round-trip");
+            GD.Print("  --medical-ward-save-selftest Medical ward save store round-trip, bed allocation, and affliction persistence");
+            GD.Print("  --expedition-selftest    Expedition domain: sorties, encounter resolution, loot drops, and save round-trip");
+            GD.Print("  --expedition-panel-uitest / --expedition-panel-lifecycle Expedition panel encounter-notice lifecycle: open→surface→close→reopen→surface");
             GD.Print("  --expedition-encounter-bridge-selftest  ExpeditionEncounterBridge bare-notice + resolved surface smoke test");
+            GD.Print("  --world-selftest         World domain: map nodes, sector navigation, hazard regions, and landmark states");
+            GD.Print("  --economy-selftest       Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip)");
+            GD.Print("  --economy-uitest         Economy market panel UI construction, price shock display, and barter grid");
+            GD.Print("  --caravan-selftest / --traveling-caravan-selftest Traveling caravan economy, inventory generation, and barter ticks");
+            GD.Print("  --utility-ai-selftest    Utility AI decision scoring, survivor behaviors, and action selection");
+            GD.Print("  --utility-ai-uitest      Utility AI debug view, consideration curves, and behavior trees");
+            GD.Print("  --disease-selftest / --disease-expansion-selftest Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip");
+            GD.Print("  --combat-selftest        Combat Expansion: catalog (JSON), ballistics, weapon condition, determinism, save round-trip");
+            GD.Print("  --chemical-dependency-save-selftest Chemical dependency system save store round-trip, tolerance, and withdrawal states");
+            GD.Print("  --weather-save-selftest  Weather system save store round-trip, forecast queue, and atmospheric condition persistence");
+            GD.Print("  --save-load-ui-failure-selftest / --save-load-failure-selftest / --save-load-failure-uitest / --save-load-selftest Save/load UI failure-path smoke test: missing, corrupt, and checksum-invalid saves show recoverable user messages and leave live session intact");
+            GD.Print("  --shelter-operations-selftest / --shelter-ops-selftest / --operations-selftest Medical triage, expedition sorties, radio network, crafting, and respiratory affliction verification");
+            GD.Print("  --shelter-hazard-loop-selftest / --shelter-hazard-selftest / --duty-roster-loop-selftest Shelter hazard loop and duty roster assignment verification");
+            GD.Print("  --playable-shell-selftest / --shell-selftest / --playable-loop-selftest Playable shell game loop, scene transitions, and day advancement");
+            GD.Print("  --day1-selftest / --day-1-selftest / --day1-playable-selftest Day 1 onboarding, needs depletion, and shelter survival verification");
+            GD.Print("  --day1-to-day2-selftest / --day1-to-day2 / --day1-to-day2-milestone-selftest Day 1 to Day 2 transition, overnight triage, and milestone progression");
+            GD.Print("  --ui-layout-selftest / --layout-selftest Verify fixed 1920x1080 UI layout bounds, responsive containers, and panel alignments");
+            GD.Print("  --settings-selftest / --settings-test SettingsManager state, resolution, audio buses, and keybindings save/load");
+            GD.Print("  --audio-selftest / --audio-test Audio cue catalog, AudioManager wiring, and sound event verification");
+            GD.Print("  --ui-snapshot-uitest / --ui-snapshots Capture all snapshot targets, DIFF against snapshots/ goldens (needs real display, not --headless)");
+            GD.Print("  --ui-snapshot-regenerate / --ui-snapshots-regen Recapture all snapshot targets and OVERWRITE snapshots/ goldens (needs real display)");
+            GD.Print("  --bridge-selftest        Report UnityEngine shim removal (shim is gone; always exits 0)");
             GD.Print("  --year-of-ash-save-selftest Year of Ash save write → reload → restore → checksum/tamper checks");
-            GD.Print("  --verdict-selftest         The Verdict (Exp 08): machine log, reckoning phases, evidence, census, save");
-            GD.Print("  --verdict-uitest          Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free");
-            GD.Print("  --duty-roster-save-selftest Duty Roster save write → reload → restore → checksum/tamper checks");
+            GD.Print("  --verdict-selftest / --expansion-08-selftest The Verdict (Exp 08): machine log, reckoning phases, evidence, census, save");
+            GD.Print("  --verdict-uitest         Build THE MACHINE'S REGISTER panel; assert 13 transmissions render + leak-free");
             GD.Print("  --expansion-hub-save-selftest Expansion hub save write → reload → restore → checksum/tamper checks");
-            GD.Print("  --dose-ledger-selftest       Dose Ledger save write → reload → restore → checksum/tamper checks");
-            GD.Print("  --data-integrity-selftest  Cross-reference every id in the 55 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
-            GD.Print("  --asset-registry-selftest  Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
-            GD.Print("  --asset-coverage-report    Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list");
-            GD.Print("  --standalone-selftest     SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance");
-            GD.Print("  --deep-coast-selftest    District 8 deep-coast route: stages, decisions, Ice Road gating, dive handoff, v5 save");
-            GD.Print("  --deep-coast-host-selftest Deep-coast host playthrough: survey → decision → dive → scavenge → save/restore");
-            GD.Print("  --warlord-selftest       Adaptive warlord AI: doctrines, territory, tribute, determinism, v3 save");
+            GD.Print("  --dose-ledger-selftest   Dose Ledger save write → reload → restore → checksum/tamper checks");
+            GD.Print("  --dose-uitest            Dose Ledger panel UI construction, radiation tiers, and dose history");
+            GD.Print("  --phase0-selftest        Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
+            GD.Print("  --phase0-uitest          Phase 0 expansion UI preview and workstation panels");
+            GD.Print("  --narrative-selftest     Narrative domain: dialog trees, echoes, flags, and story event resolution");
+            GD.Print("  --data-integrity-selftest Cross-reference every id in the 129 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
+            GD.Print("  --asset-registry-selftest Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
+            GD.Print("  --asset-coverage-report  Full non-gating sweep of every catalog id (core + expansions) vs loadable art; prints per-category coverage and the missing list");
+            GD.Print("  --standalone-selftest    SkyLayerArmor, VigilStateMachine, GenerationalSuccession, EpilogueMatrix, DiveInstance");
+            GD.Print("  --deep-coast-selftest / --deep-coast-route-selftest District 8 deep-coast route: stages, decisions, Ice Road gating, dive handoff, v5 save");
+            GD.Print("  --deep-coast-host-selftest / --deep-coast-playthrough Deep-coast host playthrough: survey → decision → dive → scavenge → save/restore");
+            GD.Print("  --warlord-selftest / --warlord-ai-selftest Adaptive warlord AI: doctrines, territory, tribute, determinism, v3 save");
             GD.Print("  --warlord-host-selftest  Warlord host playthrough: YearOfAsh wiring, standing, v3 save/tamper");
             GD.Print("  --warlord-ui-selftest    Warlord tribute payment loop + collector voice + FactionsPanel card");
-            GD.Print("  --black-flotilla-selftest The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip");
+            GD.Print("  --black-flotilla-selftest / --maritime-selftest / --expansion-09-selftest The Black Flotilla (Exp 09): catalog load, deterministic scavenge, dive rooms/air/noise, contamination, visit state, save round-trip");
             GD.Print("  --radio-selftest         Radio persistence: history/frequency/played-dedup survive save/load; tamper rejected");
-            GD.Print("  --expedition-panel-uitest Expedition panel encounter-notice lifecycle: open→surface→close→reopen→surface (no double-subscribe, no stale handler)");
-            GD.Print("  --phase0-selftest         Phase-0 effects: phantom work-eff/refusal, flashbacks, trade specialty, final-wish buff, respiratory stamina + save roundtrip");
-            GD.Print("  --disease-selftest       Disease Expansion: catalog, quarantine, protocols, determinism, save round-trip");
-            GD.Print("  --combat-selftest        Combat Expansion: catalog (JSON), ballistics, weapon condition, determinism, save round-trip");
-            GD.Print("  --economy-selftest        Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip)");
-            GD.Print("  --host-help              This list");
+            GD.Print("  --host-help / --help     This list");
         }
     }
 }

@@ -375,42 +375,95 @@ public class SaveSlotService
     }
 
     /// <summary>
+    /// Load and validate an aggregate envelope, returning a detailed SaveLoadResult
+    /// with a user-facing recoverable status message on failure.
+    /// Quarantines corrupt or checksum-invalid saves.
+    /// </summary>
+    public SaveLoadResult TryLoadAggregate(SaveProfileId profileId, SaveSlotId slotId)
+    {
+        if (IsIronManTerminal(profileId, slotId))
+        {
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.IronManBlocked,
+                $"Save slot '{slotId.Value}' is sealed (Iron Man terminal defeat). Manual restore blocked.");
+        }
+
+        string path = GetAggregatePath(profileId, slotId);
+        if (!_files.FileExists(path))
+        {
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.MissingFile,
+                $"Save file for slot '{slotId.Value}' was not found.");
+        }
+
+        string raw;
+        try
+        {
+            raw = _files.ReadAllText(path);
+        }
+        catch (Exception ex)
+        {
+            _log.Warn($"SaveSlotService: failed to read aggregate for slot '{slotId}': {ex.Message}");
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.CorruptData,
+                $"Save file for slot '{slotId.Value}' could not be read: {ex.Message}");
+        }
+
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            QuarantineCorruptSave(profileId, slotId, path, "Empty or whitespace save file");
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.CorruptData,
+                $"Save data for slot '{slotId.Value}' is empty or corrupt. Live session preserved.");
+        }
+
+        AggregateSaveEnvelope? envelope;
+        try
+        {
+            envelope = _json.Deserialize<AggregateSaveEnvelope>(raw);
+        }
+        catch (Exception ex)
+        {
+            _log.Warn($"SaveSlotService: JSON deserialize failed for slot '{slotId}': {ex.Message}");
+            QuarantineCorruptSave(profileId, slotId, path, $"JSON parse error: {ex.Message}");
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.CorruptData,
+                $"Save data for slot '{slotId.Value}' is corrupted (malformed JSON). Live session preserved.",
+                new[] { ex.Message });
+        }
+
+        if (envelope == null)
+        {
+            _log.Warn($"SaveSlotService: aggregate envelope for slot '{slotId}' deserialized as null.");
+            QuarantineCorruptSave(profileId, slotId, path, "Deserialized as null");
+            return SaveLoadResult.Fail(
+                SaveLoadStatus.CorruptData,
+                $"Save data for slot '{slotId.Value}' could not be parsed. Live session preserved.");
+        }
+
+        var validation = ValidateAggregate(envelope);
+        if (!validation.IsValid)
+        {
+            QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", validation.Errors));
+            bool isChecksumFailure = validation.Errors.Any(e => e.IndexOf("checksum", StringComparison.OrdinalIgnoreCase) >= 0);
+            var status = isChecksumFailure ? SaveLoadStatus.ChecksumMismatch : SaveLoadStatus.CorruptData;
+            string msg = isChecksumFailure
+                ? $"Save data for slot '{slotId.Value}' failed checksum validation (corrupted or modified). Live session preserved."
+                : $"Save data for slot '{slotId.Value}' failed validation ({string.Join(", ", validation.Errors)}). Live session preserved.";
+            return SaveLoadResult.Fail(status, msg, validation.Errors);
+        }
+
+        return SaveLoadResult.Ok(envelope, $"Save slot '{slotId.Value}' loaded successfully.");
+    }
+
+    /// <summary>
     /// Load and validate an aggregate envelope. Returns null if the slot does
     /// not exist or the envelope fails validation.
     /// </summary>
     public AggregateSaveEnvelope? LoadAggregate(SaveProfileId profileId, SaveSlotId slotId)
     {
-        string path = GetAggregatePath(profileId, slotId);
-        if (!_files.FileExists(path))
-            return null;
-
-        try
-        {
-            string raw = _files.ReadAllText(path);
-            if (string.IsNullOrWhiteSpace(raw))
-                return null;
-
-            var envelope = _json.Deserialize<AggregateSaveEnvelope>(raw);
-            if (envelope == null)
-            {
-                _log.Warn($"SaveSlotService: aggregate envelope for slot '{slotId}' deserialized as null.");
-                return null;
-            }
-
-            var validation = ValidateAggregate(envelope);
-            if (!validation.IsValid)
-            {
-                QuarantineCorruptSave(profileId, slotId, path, string.Join("; ", validation.Errors));
-                return null;
-            }
-
-            return envelope;
-        }
-        catch (Exception ex)
-        {
-            _log.Warn($"SaveSlotService: failed to load aggregate for slot '{slotId}': {ex.Message}");
-            return null;
-        }
+        var result = TryLoadAggregate(profileId, slotId);
+        return result.Envelope;
     }
 
     /// <summary>
@@ -563,7 +616,7 @@ public class SaveSlotService
         try
         {
             string quarantinePath = path + "." + slotId.Value + QuarantineExtension;
-            File.Move(path, quarantinePath);
+            File.Move(path, quarantinePath, overwrite: true);
             _log.Warn($"SaveSlotService: quarantined corrupt save for slot '{slotId}' to '{quarantinePath}'. Reason: {reason}");
         }
         catch (Exception ex)

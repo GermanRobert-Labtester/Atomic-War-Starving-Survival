@@ -20,6 +20,7 @@ using Ashfall.Core.Legacy;
 using Ashfall.Core.Endgame;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Settings;
+using Ashfall.Core.Settings;
 using AtomicWar.GodotApp.UI;
 using System;
 using System.IO;
@@ -2155,10 +2156,20 @@ namespace AtomicWar.GodotApp
                 Check(loaded.HighContrast, "reloaded HighContrast preserved");
                 Check(loaded.ResolutionWidth == 2560 && loaded.ResolutionHeight == 1440, "reloaded resolution preserved");
 
-                // 5. Corruption Recovery
+                // 5. Corruption Recovery & Diagnostic Preservation
                 File.WriteAllText(globalTestPath, "{ CORRUPT_UNCLOSED_JSON_DATA_!!!");
                 var recovered = UserSettingsStore.Load(testPath);
                 Check(recovered != null && recovered.MasterVolume == 1.0f && recovered.MaxFps == 60, "corrupted file gracefully recovered to defaults");
+                Check(UserSettingsStore.HasDiagnosticError && UserSettingsStore.LastDiagnosticMessage!.Contains("Invalid settings JSON"), "diagnostic message preserved upon corrupt load");
+
+                // 6. Out-of-bounds Sanitization Recovery
+                File.WriteAllText(globalTestPath, "{\n  \"master_volume\": -5.0,\n  \"resolution_width\": 99999,\n  \"max_fps\": -100,\n  \"ui_scale\": 99.0\n}");
+                var sanitized = UserSettingsStore.Load(testPath);
+                Check(sanitized.MasterVolume == 0.0f, "negative volume clamped to 0.0");
+                Check(sanitized.ResolutionWidth == 1920, "out-of-range resolution sanitized to 1920");
+                Check(sanitized.MaxFps == 60, "negative FPS sanitized to 60");
+                Check(sanitized.UiScale == 1.0f, "extreme ui_scale sanitized to 1.0");
+                Check(UserSettingsStore.HasDiagnosticError && UserSettingsStore.LastDiagnosticMessage!.Contains("Sanitized settings"), "sanitization diagnostic message preserved");
 
                 // Clean up test file
                 if (File.Exists(globalTestPath)) File.Delete(globalTestPath);

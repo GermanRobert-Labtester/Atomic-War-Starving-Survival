@@ -8,6 +8,7 @@ using AtomicWar.Journal;
 using Ashfall.Core;
 using Ashfall.Core.Campaign;
 using Ashfall.Core.Economy;
+using Ashfall.Core.Save;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Foundry;
 using Ashfall.Core.Inventory;
@@ -219,31 +220,45 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>
-        /// Restore every persisted subsystem and rebuild player-facing UI so a continued
-        /// campaign presents the same state that was saved — no silent resets, no fresh-state seeding.
+        /// Attempts to load and restore game state from a slot.
+        /// If the save is missing, corrupt, or checksum-invalid, reports the error
+        /// to the caller/UI and leaves live session state completely intact.
         /// </summary>
-        private void ContinueGame()
+        public bool TryLoadAndRestoreGame(SaveSlotId slotId, out string message)
         {
-            _state = GameState.Playing;
-            _mainMenu.Visible = false;
-            _gameOver.Visible = false;
-            _gameUiContainer.Visible = false;
-            _dashboard.Visible = true;
-            CloseAllOverlayPanels();
-
-            // Load-from-envelope: restore directly from aggregate envelope when available.
-            bool loadedFromEnvelope = _saveLoadHost?.LoadAllDirect() ?? false;
-            if (!loadedFromEnvelope)
+            if (_saveLoadHost == null)
             {
-                // Fallback: unpack aggregate back to individual files so
-                // dependency-safe SetupXxx() calls can restore from disk as before.
-                _saveLoadHost?.UnpackAggregateEnvelope();
+                message = "Save/load host service is not initialized.";
+                return false;
             }
 
-            // Restore sessions in dependency-safe order. Each SetupXxx calls its *SaveStore.TryLoad()
-            // when present; if no save exists it creates clean/default state so panels never see null.
+            bool loaded = _saveLoadHost.TryLoadSlot(slotId, out var result);
+            message = result.UserMessage;
+            if (!loaded || !result.IsSuccess)
+            {
+                GD.PrintErr($"[Ashfall Godot] Restore aborted for slot '{slotId}': {message}");
+                return false;
+            }
+
+            _state = GameState.Playing;
+            if (_mainMenu != null) _mainMenu.Visible = false;
+            if (_gameOver != null) _gameOver.Visible = false;
+            if (_gameUiContainer != null) _gameUiContainer.Visible = false;
+            if (_dashboard != null) _dashboard.Visible = true;
+            CloseAllOverlayPanels();
+
+            RestoreAllSubsystemsFromDisk();
+
+            if (_statusLabel != null)
+                _statusLabel.Text = message;
+
+            return true;
+        }
+
+        private void RestoreAllSubsystemsFromDisk()
+        {
             SetupHoldfastRuntime();
-            _holdfastTerminal.OpenTerminal();
+            _holdfastTerminal?.OpenTerminal();
 
             SetupStartingLevel();
             SetupSurvivors();
@@ -269,8 +284,39 @@ namespace AtomicWar.GodotApp
             SetupGreenhouse();
             SetupExpandedShelterSystems();
 
-            // Update HUD after everything is restored/bound.
             UpdateHud();
+        }
+
+        /// <summary>
+        /// Restore every persisted subsystem and rebuild player-facing UI so a continued
+        /// campaign presents the same state that was saved — no silent resets, no fresh-state seeding.
+        /// </summary>
+        private void ContinueGame()
+        {
+            if (_saveLoadHost?.ActiveSlotId != null)
+            {
+                if (TryLoadAndRestoreGame(_saveLoadHost.ActiveSlotId.Value, out string msg))
+                    return;
+                GD.PrintErr($"[Ashfall Godot] ContinueGame failed: {msg}");
+            }
+
+            _state = GameState.Playing;
+            _mainMenu.Visible = false;
+            _gameOver.Visible = false;
+            _gameUiContainer.Visible = false;
+            _dashboard.Visible = true;
+            CloseAllOverlayPanels();
+
+            // Load-from-envelope: restore directly from aggregate envelope when available.
+            bool loadedFromEnvelope = _saveLoadHost?.LoadAllDirect() ?? false;
+            if (!loadedFromEnvelope)
+            {
+                // Fallback: unpack aggregate back to individual files so
+                // dependency-safe SetupXxx() calls can restore from disk as before.
+                _saveLoadHost?.UnpackAggregateEnvelope();
+            }
+
+            RestoreAllSubsystemsFromDisk();
 
             _statusLabel.Text = "Save loaded. The ledger continues.";
         }

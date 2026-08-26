@@ -727,6 +727,13 @@ namespace AtomicWar.GodotApp
             GD.Print(report);
             return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
         }
+
+        public static int RunSaveLoadUiFailureSelfTest(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+            return SaveLoadUiFailureSelfTest.Run(dataDirectory);
+        }
+
         public static int RunCoreSelfTest(string dataDirectory)
         {
             int ice = RunIceRoadSelfTest(dataDirectory);

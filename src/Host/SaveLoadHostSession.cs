@@ -27,6 +27,15 @@ public partial class SaveLoadHostSession : Node
     /// <summary>Raised when the active slot changes.</summary>
     public event Action<SaveSlotId?>? ActiveSlotChanged;
 
+    /// <summary>Raised when a load operation finishes with its detailed result and user-facing message.</summary>
+    public event Action<SaveLoadResult>? OnLoadCompleted;
+
+    /// <summary>Last result from a TryLoadSlot invocation.</summary>
+    public SaveLoadResult? LastLoadResult { get; private set; }
+
+    /// <summary>User-facing message from the last save/load operation.</summary>
+    public string LastStatusMessage => LastLoadResult?.UserMessage ?? string.Empty;
+
     /// <summary>Sections that were successfully restored from the aggregate envelope during the last LoadAllDirect().</summary>
     public IReadOnlySet<string> RestoredSections => _restoredSections;
 
@@ -337,39 +346,88 @@ public partial class SaveLoadHostSession : Node
     }
 
     /// <summary>
+    /// Attempt to load and validate a specific slot. Returns true on success.
+    /// On failure, provides a recoverable user-facing message, preserves live session,
+    /// and fires OnLoadCompleted.
+    /// </summary>
+    public bool TryLoadSlot(SaveSlotId slotId, out SaveLoadResult result)
+    {
+        if (_slotService == null)
+        {
+            result = SaveLoadResult.Fail(SaveLoadStatus.MissingSlot, "Save slot service is not initialized.");
+            LastLoadResult = result;
+            OnLoadCompleted?.Invoke(result);
+            return false;
+        }
+
+        result = _slotService.TryLoadAggregate(_currentProfileId, slotId);
+        LastLoadResult = result;
+        OnLoadCompleted?.Invoke(result);
+
+        if (!result.IsSuccess)
+        {
+            GD.PrintErr($"[SaveLoad] Load failed for slot '{slotId}': {result.UserMessage}");
+            return false;
+        }
+
+        _activeSlotId = slotId;
+        ApplySlotRoot();
+
+        // Unpack aggregate envelope sections into individual subsystem files on disk.
+        if (result.Envelope?.sections != null)
+        {
+            string slotRoot = _slotService.GetSlotRoot(_currentProfileId, slotId);
+            if (!System.IO.Directory.Exists(slotRoot))
+                System.IO.Directory.CreateDirectory(slotRoot);
+
+            _restoredSections.Clear();
+            foreach (var section in result.Envelope.sections)
+            {
+                if (string.IsNullOrEmpty(section.sectionName) || string.IsNullOrEmpty(section.payloadJson))
+                    continue;
+
+                string filePath = System.IO.Path.Combine(slotRoot, section.sectionName + ".json");
+                try
+                {
+                    System.IO.File.WriteAllText(filePath, section.payloadJson);
+                    _restoredSections.Add(section.sectionName);
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"[SaveLoad] Failed to unpack section '{section.sectionName}': {ex.Message}");
+                }
+            }
+        }
+
+        ActiveSlotChanged?.Invoke(_activeSlotId);
+        GD.Print($"[SaveLoad] Unpacked and loaded slot: {slotId} ({_restoredSections.Count} sections)");
+        return true;
+    }
+
+    /// <summary>
+    /// Attempt to load and validate the currently active slot.
+    /// </summary>
+    public bool TryLoadActiveSlot(out SaveLoadResult result)
+    {
+        if (_activeSlotId == null)
+        {
+            result = SaveLoadResult.Fail(SaveLoadStatus.MissingSlot, "No active save slot selected.");
+            LastLoadResult = result;
+            OnLoadCompleted?.Invoke(result);
+            return false;
+        }
+
+        return TryLoadSlot(_activeSlotId.Value, out result);
+    }
+
+    /// <summary>
     /// Unpack the aggregate envelope for the active slot back into individual
     /// JSON save files. Returns true if the envelope was found and unpacked.
     /// </summary>
     public bool UnpackAggregateEnvelope()
     {
-        if (_activeSlotId == null || _slotService == null) return false;
-
-        var envelope = _slotService.LoadAggregate(_currentProfileId, _activeSlotId.Value);
-        if (envelope == null || envelope.sections == null || envelope.sections.Count == 0)
-            return false;
-
-        string slotRoot = _slotService.GetSlotRoot(_currentProfileId, _activeSlotId.Value);
-        if (!System.IO.Directory.Exists(slotRoot))
-            System.IO.Directory.CreateDirectory(slotRoot);
-
-        foreach (var section in envelope.sections)
-        {
-            if (string.IsNullOrEmpty(section.sectionName) || string.IsNullOrEmpty(section.payloadJson))
-                continue;
-
-            string filePath = System.IO.Path.Combine(slotRoot, section.sectionName + ".json");
-            try
-            {
-                System.IO.File.WriteAllText(filePath, section.payloadJson);
-            }
-            catch (Exception ex)
-            {
-                GD.PrintErr($"[SaveLoad] Failed to unpack section '{section.sectionName}': {ex.Message}");
-            }
-        }
-
-        GD.Print($"[SaveLoad] Unpacked aggregate envelope with {envelope.sections.Count} sections.");
-        return true;
+        if (_activeSlotId == null) return false;
+        return TryLoadSlot(_activeSlotId.Value, out _);
     }
 
     /// <summary>
