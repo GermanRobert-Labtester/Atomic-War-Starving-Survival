@@ -565,7 +565,7 @@ namespace Ashfall.Core.Tests
             Assert.True(roster.RegisterOverflowVisit(DutyRosterIds.LocOverflowAlloc11));
             Assert.False(roster.RegisterOverflowVisit(DutyRosterIds.LocOverflowAlloc11)); // dedupe
             Assert.False(roster.RegisterOverflowVisit("loc_overflow_made_up"));
-            Assert.Equal(1, roster.OverflowVisited.Count);
+            Assert.Single(roster.OverflowVisited);
             // Restore never blesses an unauthenticated node.
             var state = roster.CaptureOverflowState();
             state.visitedNodes.Add("loc_overflow_made_up");

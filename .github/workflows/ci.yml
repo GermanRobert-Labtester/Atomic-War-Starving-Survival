@@ -20,6 +20,7 @@ jobs:
   ci:
     name: CI Gate (dotnet + godot headless)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -29,22 +30,33 @@ jobs:
       - name: Validate StreamingAssets JSON syntax (fast-fail)
         run: |
           python3 - <<'PY'
-          import json, pathlib, sys
-          root = pathlib.Path("Assets/StreamingAssets")
+          import json
+          import pathlib
+          import sys
+
+          root = pathlib.Path("Assets/StreamingAssets/Data")
+          if not root.is_dir():
+              print(f"ERROR: authoritative data directory is missing: {root}")
+              sys.exit(1)
+
+          files = sorted(root.rglob("*.json"))
+          if not files:
+              print(f"ERROR: no JSON catalogs found under {root}")
+              sys.exit(1)
+
           errors = []
-          if not root.exists():
-              print(f"WARN: {root} missing — skipping JSON syntax scan")
-              sys.exit(0)
-          for p in sorted(root.rglob("*.json")):
+          for path in files:
               try:
-                  json.loads(p.read_text(encoding="utf-8"))
-              except Exception as e:
-                  errors.append(f"{p}: {e}")
+                  json.loads(path.read_text(encoding="utf-8"))
+              except Exception as exc:
+                  errors.append(f"{path}: {exc}")
+
           if errors:
               print("JSON validation FAILED:")
               print("\n".join(errors))
               sys.exit(1)
-          print(f"OK: validated {sum(1 for _ in root.rglob('*.json'))} JSON file(s) under {root}")
+
+          print(f"OK: validated {len(files)} JSON file(s) under {root}")
           PY
 
       - name: Setup .NET SDKs (8.0 for Godot host, 9.0 for tests)

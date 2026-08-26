@@ -39,6 +39,7 @@ namespace AtomicWar.GodotApp
         HoldfastBriefing,
         IceRoadTickDemo,
         HoldfastSaveSelfTest,
+        HoldfastTradeSaveSelfTest,
         HoldfastRuntimeUiTest,
         BrineSelfTest,
         CombatSelfTest,
@@ -145,6 +146,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.Day1ToDay2MilestoneSelfTest;
             if (Has(args, "--expansions-selftest") || Has(args, "--all-expansions-selftest"))
                 return HostCliAction.ExpansionsSelfTest;
+            if (Has(args, "--holdfast-trade-save-selftest"))
+                return HostCliAction.HoldfastTradeSaveSelfTest;
             if (Has(args, "--holdfast-selftest"))
                 return HostCliAction.HoldfastSelfTest;
             if (Has(args, "--duty-roster-selftest"))

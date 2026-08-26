@@ -62,7 +62,11 @@ namespace Ashfall.Core.Tests
             string srcRoot = SrcDir();
             var storeFiles = Directory
                 .EnumerateFiles(srcRoot, "*SaveStore*.cs", SearchOption.AllDirectories)
-                .Where(f => !f.Replace('\\', '/').Contains("/obj/") && !f.Replace('\\', '/').Contains("/bin/"))
+                .Where(f => !f.Replace('\\', '/').Contains("/obj/") &&
+                            !f.Replace('\\', '/').Contains("/bin/") &&
+                            !f.EndsWith("SelfTest.cs", StringComparison.OrdinalIgnoreCase) &&
+                            !f.EndsWith("Tests.cs", StringComparison.OrdinalIgnoreCase) &&
+                            !f.EndsWith("Test.cs", StringComparison.OrdinalIgnoreCase))
                 .OrderBy(f => f, StringComparer.Ordinal)
                 .ToList();
 

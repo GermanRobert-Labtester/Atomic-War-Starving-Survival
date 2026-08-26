@@ -12,7 +12,7 @@ import re
 from pathlib import Path
 from collections import Counter
 
-REPO = Path("/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War")
+REPO = Path(__file__).resolve().parent.parent
 DATA = REPO / "Assets/StreamingAssets/Data"
 
 WM = json.load(open(REPO / "docs/visual/WIRING_MATRIX.json"))
@@ -271,6 +271,11 @@ for e in missing_only:
         target_filename = f"faction_{cid_clean}.jpg"
     else:
         target_filename = f"{cid_clean}.jpg"
+
+    # If the target file already exists, mark it as skip
+    if (REPO / "assets/art" / target_filename).exists():
+        continue
+
     manifest.append({
         "content_id": e["content_id"],
         "canonical_name": e["content_id"].replace("_", " ").title(),

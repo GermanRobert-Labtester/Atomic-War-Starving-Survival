@@ -33,4 +33,8 @@
     -->
     <Compile Include="Assets/Ashfall.Core/**/*.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Sentry" Version="6.9.0" />
+  </ItemGroup>
 </Project>

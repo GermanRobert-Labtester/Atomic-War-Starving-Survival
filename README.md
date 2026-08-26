@@ -76,7 +76,7 @@ Checksummed save envelopes with explicit version migration; malformed current
 envelopes are rejected; writes go through the shared atomic writer; per-store
 SHA-256 records (`SaveLoadHostSession`, `SaveChecksum`).
 
-## Current state
+`Assets/StreamingAssets/Data/` is the authored JSON authority for shared gameplay/content data. Both hosts consume this data during the migration.
 
 The simulation systems are implemented against the Core and the host is a
 working shell: navigation between all panels, the multi-day gameplay loop,
@@ -96,7 +96,19 @@ rule. The shim under `src/Bridge/` (a `UnityEngine` compatibility namespace)
 exists to hold the compiled Unity tree in compatibility only and is in
 scope for removal with `Assets/_Game/`.
 
-## Verify
+## Active host
+
+The canonical development and verification host is Godot 4.7.1 .NET.
+
+`project.godot` currently boots:
+
+```text
+scenes/Main.tscn -> src/Main.cs
+```
+
+The Godot host contains interactive UI plus a large headless diagnostic/self-test surface exposed by `src/Host/HostCli.cs`.
+
+Examples:
 
 ```bash
 dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj

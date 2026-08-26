@@ -15,8 +15,12 @@ namespace Ashfall.Core.Tests
             for (int i = 0; i < n; i++)
                 list.Add(new CombatantState
                 {
-                    Id = "p" + i, Name = "Survivor " + i, SurvivorId = "sv" + i,
-                    IsPlayer = true, Health = 100, MaxHealth = 100
+                    Id = "p" + i,
+                    Name = "Survivor " + i,
+                    SurvivorId = "sv" + i,
+                    IsPlayer = true,
+                    Health = 100,
+                    MaxHealth = 100
                 });
             return list;
         }
@@ -27,8 +31,12 @@ namespace Ashfall.Core.Tests
             for (int i = 0; i < n; i++)
                 list.Add(new WeaponInstanceState
                 {
-                    InstanceId = "w" + i, WeaponId = "weapon_assault_rifle",
-                    OwnerSurvivorId = "sv" + i, ConditionPct = 0.9f, AmmoId = "ammo_556", AmmoRemaining = 50
+                    InstanceId = "w" + i,
+                    WeaponId = "weapon_assault_rifle",
+                    OwnerSurvivorId = "sv" + i,
+                    ConditionPct = 0.9f,
+                    AmmoId = "ammo_556",
+                    AmmoRemaining = 50
                 });
             return list;
         }
