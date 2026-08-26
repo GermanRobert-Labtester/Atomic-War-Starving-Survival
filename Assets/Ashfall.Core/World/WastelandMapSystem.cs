@@ -31,14 +31,30 @@ namespace Ashfall.Core.World
             if (nodes == null) throw new ArgumentNullException(nameof(nodes));
             if (routes == null) throw new ArgumentNullException(nameof(routes));
             _nodes = new List<MapNode>();
+            var validNodeIds = new HashSet<string>(StringComparer.Ordinal);
             foreach (var n in nodes)
             {
                 if (n == null || string.IsNullOrEmpty(n.Id)) continue;
                 _nodes.Add(n);
+                validNodeIds.Add(n.Id);
             }
             if (_nodes.Count == 0)
                 throw new InvalidOperationException("WastelandMapSystem: at least one node required.");
-            _routes = new List<MapRoute>(routes);
+
+            _routes = new List<MapRoute>();
+            var seenEdges = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var r in routes)
+            {
+                if (r == null) continue;
+                if (string.IsNullOrEmpty(r.From) || string.IsNullOrEmpty(r.To)) continue;
+                if (string.Equals(r.From, r.To, StringComparison.Ordinal)) continue; // ignore self-routes
+                if (!validNodeIds.Contains(r.From) || !validNodeIds.Contains(r.To)) continue; // ignore dangling endpoints
+                if (r.DistanceKm <= 0f || float.IsNaN(r.DistanceKm) || float.IsInfinity(r.DistanceKm)) continue; // ignore negative/zero distances
+                string edgeKey = $"{r.From}->{r.To}";
+                if (!seenEdges.Add(edgeKey)) continue; // ignore duplicate directed edges
+
+                _routes.Add(r);
+            }
             _state.NormalizeAndValidate(_nodes);
         }
 

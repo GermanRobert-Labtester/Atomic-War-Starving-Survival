@@ -175,7 +175,8 @@ namespace Ashfall.Core
             "ambushFlag", "cleanWaterRewardFlag", "trait_granted",
             "latentExpertTrait", "requiredTrait", "roomId", "itemId",
             "downstream_quest_trigger", "gating_flag", "nextStageId",
-            "countermeasure_item_id"
+            "countermeasure_item_id",
+            "from", "to"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -510,6 +511,48 @@ namespace Ashfall.Core
                                             Strict = true
                                         });
                                 }
+                            }
+                        }
+
+                        if (value.ValueKind == JsonValueKind.Array && property.Name == "routes")
+                        {
+                            var seenFileRoutes = new HashSet<string>(StringComparer.Ordinal);
+                            int routeIdx = 0;
+                            foreach (JsonElement routeElem in value.EnumerateArray())
+                            {
+                                string rPath = childPath + "[" + routeIdx + "]";
+                                if (routeElem.ValueKind == JsonValueKind.Object)
+                                {
+                                    string? rFrom = null;
+                                    string? rTo = null;
+                                    float? dist = null;
+
+                                    if (routeElem.TryGetProperty("from", out var fProp) && fProp.ValueKind == JsonValueKind.String)
+                                        rFrom = fProp.GetString();
+                                    if (routeElem.TryGetProperty("to", out var tProp) && tProp.ValueKind == JsonValueKind.String)
+                                        rTo = tProp.GetString();
+                                    if (routeElem.TryGetProperty("distanceKm", out var dProp) && dProp.TryGetSingle(out float dVal))
+                                        dist = dVal;
+
+                                    if (!string.IsNullOrEmpty(rFrom) && !string.IsNullOrEmpty(rTo))
+                                    {
+                                        if (string.Equals(rFrom, rTo, StringComparison.Ordinal))
+                                        {
+                                            ctx.Report.Error("self-route detected at " + rPath + ": '" + rFrom + "' -> '" + rTo + "'");
+                                        }
+                                        string rKey = rFrom + "->" + rTo;
+                                        if (!seenFileRoutes.Add(rKey))
+                                        {
+                                            ctx.Report.Error("duplicate route '" + rKey + "' at " + rPath);
+                                        }
+                                    }
+
+                                    if (dist.HasValue && dist.Value <= 0f)
+                                    {
+                                        ctx.Report.Error("negative or zero distance (" + dist.Value + ") at " + rPath);
+                                    }
+                                }
+                                routeIdx++;
                             }
                         }
 
