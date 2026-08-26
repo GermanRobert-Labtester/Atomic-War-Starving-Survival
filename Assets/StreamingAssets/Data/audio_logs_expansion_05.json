@@ -1,0 +1,275 @@
+{
+    "schema_version": 1,
+    "audio_logs": [
+        {
+            "id": "audio_log_radio_message_day_35",
+            "title": "Radio Message - Day 35",
+            "bodyText": "This is Station K-7, broadcasting from the Meridian Compact. We are still operational and accepting survivors. Our medical facilities are fully staffed, and we have food and shelter. If you can reach us, we will help. Repeat: This is Station K-7, broadcasting from the Meridian Compact...",
+            "day": 35,
+            "type": "radio_message",
+            "source": "meridian_compact",
+            "tags": ["radio", "broadcast", "help"]
+        },
+        {
+            "id": "audio_log_scavenger_radio_day_42",
+            "title": "Scavenger Radio Transmission - Day 42",
+            "bodyText": "This is Scavenger Group Delta. We've got a deal for you. We know where the fuel depot is. Meet us at the old highway overpass at dusk. Bring food, and we'll split the fuel. Don't tell anyone else. This is between us. Over.",
+            "day": 42,
+            "type": "scavenger_radio",
+            "source": "scavengers",
+            "tags": ["scavengers", "fuel", "deal"]
+        },
+        {
+            "id": "audio_log_survivor_diary_day_50",
+            "title": "Survivor Diary - Day 50",
+            "bodyText": "I found a working radio today. It's old, but it still picks up signals. I heard voices from a settlement 50 miles away. They're alive. They're surviving. Maybe there's hope after all. I'm going to try to make contact tomorrow.",
+            "day": 50,
+            "type": "diary",
+            "source": "marcus_olejnik",
+            "tags": ["radio", "hope", "contact"]
+        },
+        {
+            "id": "audio_log_medical_alert_day_58",
+            "title": "Medical Alert - Day 58",
+            "bodyText": "Attention all personnel. We have a radiation storm approaching in 72 hours. Seal the bunker, activate air filters, and stock supplies. This is not a drill. Repeat: Radiation storm approaching. All personnel report to shelter immediately. This is a mandatory evacuation of all non-essential areas.",
+            "day": 58,
+            "type": "alert",
+            "source": "elena_vasquez",
+            "tags": ["radiation", "storm", "alert"]
+        },
+        {
+            "id": "audio_log_scavenger_meeting_day_65",
+            "title": "Scavenger Meeting - Day 65",
+            "bodyText": "Listen up, people. We're forming an alliance with the bunker. They've got food, we've got protection. We scratch their backs, they scratch ours. No more raids, no more stealing. We share resources, and we all survive. Understood? Good. Let's make this work.",
+            "day": 65,
+            "type": "meeting",
+            "source": "scavenger_leader",
+            "tags": ["scavengers", "alliance", "meeting"]
+        },
+        {
+            "id": "audio_log_radio_signal_day_72",
+            "title": "Mysterious Radio Signal - Day 72",
+            "bodyText": "This is an automated distress signal. We are survivors of the initial exchange. We are located in the ruins of the old military outpost. We have medical supplies and food. If anyone can hear this, please respond. We need help. This is not a joke. We are real.",
+            "day": 72,
+            "type": "distress_signal",
+            "source": "unknown",
+            "tags": ["radio", "distress", "help"]
+        },
+        {
+            "id": "audio_log_black_flotilla_offer_day_80",
+            "title": "Black Flotilla Trade Offer - Day 80",
+            "bodyText": "This is Captain Vex of the Black Flotilla. We've got tech you'll want. Pre-war stuff. Blueprints, schematics, devices. We're willing to trade. Food, medicine, fuel. You name it. Meet us at the docks at midnight. Don't be late. We don't wait for anyone.",
+            "day": 80,
+            "type": "trade_offer",
+            "source": "black_flotilla",
+            "tags": ["black_flotilla", "trade", "tech"]
+        },
+        {
+            "id": "audio_log_survivor_confession_day_88",
+            "title": "Survivor Confession - Day 88",
+            "bodyText": "I stole food. Not for me. For Jamie. Their child is sick, and they're starving. I couldn't watch them suffer. I know it was wrong, but I did it anyway. If anyone finds out, I'll be exiled. But I don't regret it. No parent should watch their child starve.",
+            "day": 88,
+            "type": "confession",
+            "source": "marcus_olejnik",
+            "tags": ["theft", "compassion", "confession"]
+        },
+        {
+            "id": "audio_log_medical_update_day_95",
+            "title": "Medical Update - Day 95",
+            "bodyText": "Update on Alex's condition. The quarantine is working, but the illness is spreading slowly. We've isolated the infected and are treating them with available medicine. Elena is doing everything she can, but we need more supplies. If anyone has antibiotics or painkillers, bring them to the medical bay immediately.",
+            "day": 95,
+            "type": "medical_update",
+            "source": "elena_vasquez",
+            "tags": ["medical", "quarantine", "update"]
+        },
+        {
+            "id": "audio_log_leadership_vote_day_105",
+            "title": "Leadership Vote Announcement - Day 105",
+            "bodyText": "Attention all survivors. Due to recent events, we will hold a vote for bunker leadership. All survivors are eligible to vote. The vote will take place in the main hall tomorrow at noon. Be there or be square. This is your chance to have a say in our future.",
+            "day": 105,
+            "type": "announcement",
+            "source": "elena_vasquez",
+            "tags": ["leadership", "vote", "announcement"]
+        },
+        {
+            "id": "audio_log_scavenger_ambush_day_112",
+            "title": "Scavenger Ambush - Day 112",
+            "bodyText": "Ambush! They're everywhere! We came for the fuel, but they were waiting for us. Shots fired. We're pinned down. Send help! If anyone can hear this, we need backup at the old highway overpass. Now!",
+            "day": 112,
+            "type": "ambush",
+            "source": "scavenger_group",
+            "tags": ["scavengers", "ambush", "help"]
+        },
+        {
+            "id": "audio_log_radiation_storm_day_120",
+            "title": "Radiation Storm Update - Day 120",
+            "bodyText": "The storm has passed, but radiation levels are still elevated outside. We're safe inside the bunker, but we need to monitor our air filters closely. If any of you feel sick, report to the medical bay immediately. We'll get through this together.",
+            "day": 120,
+            "type": "update",
+            "source": "elena_vasquez",
+            "tags": ["radiation", "storm", "update"]
+        },
+        {
+            "id": "audio_log_black_flotilla_trade_day_130",
+            "title": "Black Flotilla Trade Completion - Day 130",
+            "bodyText": "The trade is complete. We've received the technology, and they've taken their payment. The devices are working, but unstable. Use with caution. We'll need to find a way to stabilize them before they cause more harm than good. Meet me in the workshop if you want to see the devices.",
+            "day": 130,
+            "type": "trade_completion",
+            "source": "marcus_olejnik",
+            "tags": ["black_flotilla", "trade", "tech"]
+        },
+        {
+            "id": "audio_log_survivor_disappearance_day_140",
+            "title": "Survivor Disappearance - Day 140",
+            "bodyText": "Maria is missing. She was last seen heading to the storage room. We've searched everywhere, but she's gone. If anyone has seen her or knows where she might be, please come forward. We need to find her before it's too late.",
+            "day": 140,
+            "type": "missing_person",
+            "source": "elena_vasquez",
+            "tags": ["missing", "search", "help"]
+        },
+        {
+            "id": "audio_log_food_storage_theft_day_150",
+            "title": "Food Storage Theft - Day 150",
+            "bodyText": "Someone is stealing food from the storage. We don't know who it is, but the theft is causing tension. Survivors are suspicious of each other. If you know anything, speak up. We need to put a stop to this before it causes a bigger problem.",
+            "day": 150,
+            "type": "theft",
+            "source": "marcus_olejnik",
+            "tags": ["theft", "food", "community"]
+        },
+        {
+            "id": "audio_log_medical_training_day_160",
+            "title": "Medical Training Begins - Day 160",
+            "bodyText": "Elena is starting a medical training program tomorrow. If you're interested in learning basic medical skills, meet in the medical bay at 8 AM. No experience necessary. This could save lives, including yours. Don't miss this opportunity.",
+            "day": 160,
+            "type": "training",
+            "source": "elena_vasquez",
+            "tags": ["medical", "training", "opportunity"]
+        },
+        {
+            "id": "audio_log_raider_attack_day_170",
+            "title": "Raider Attack - Day 170",
+            "bodyText": "Raiders attacked the bunker today. They demanded tribute, and when we refused, they attacked. We fought them off, but they took some of our supplies. We're safe now, but we need to be more careful. Raiders are getting bolder. We need to prepare for the next attack.",
+            "day": 170,
+            "type": "attack",
+            "source": "marcus_olejnik",
+            "tags": ["raiders", "attack", "preparation"]
+        },
+        {
+            "id": "audio_log_technology_experiment_day_180",
+            "title": "Technology Experiment - Day 180",
+            "bodyText": "We're testing the new technology from the Black Flotilla. It's unstable, but if it works, it could change everything. We're in the workshop now. If you want to see it in action, come join us. But be careful. We don't know what this thing can do.",
+            "day": 180,
+            "type": "experiment",
+            "source": "marcus_olejnik",
+            "tags": ["technology", "experiment", "risk"]
+        },
+        {
+            "id": "audio_log_survivor_exile_day_190",
+            "title": "Survivor Exile - Day 190",
+            "bodyText": "Jamie has been exiled. The community voted to banish them for stealing food. I argued against it, but the majority decided. Jamie left with nothing. I hope they find help elsewhere. The bunker is quieter now, but I feel guilty. We should have helped them.",
+            "day": 190,
+            "type": "exile",
+            "source": "marcus_olejnik",
+            "tags": ["exile", "guilt", "community"]
+        },
+        {
+            "id": "audio_log_memory_loss_day_200",
+            "title": "Memory Loss Crisis - Day 200",
+            "bodyText": "Alex is losing their memory. They forget things, people, even their own name. The community is divided. Some want to help, others want to exile them. I don't know what to do. Alex was always kind to me. I can't abandon them, but I don't know how to help either.",
+            "day": 200,
+            "type": "medical_crisis",
+            "source": "marcus_olejnik",
+            "tags": ["memory", "medical", "compassion"]
+        },
+        {
+            "id": "audio_log_art_project_day_210",
+            "title": "Art Project Begins - Day 210",
+            "bodyText": "The art project is starting tomorrow. If you want to participate, meet in the common area at 2 PM. We'll provide materials. No experience necessary. This is about expression, not skill. Let's bring some color back into our lives.",
+            "day": 210,
+            "type": "project",
+            "source": "alex",
+            "tags": ["art", "creativity", "expression"]
+        },
+        {
+            "id": "audio_log_technology_sharing_day_220",
+            "title": "Technology Sharing Agreement - Day 220",
+            "bodyText": "The Meridian Compact offered a technology sharing agreement. We accepted, and they provided blueprints for pre-war devices. This could change everything. If we can replicate this technology, we can improve our bunker and save lives. Meet me in the workshop if you want to see the blueprints.",
+            "day": 220,
+            "type": "agreement",
+            "source": "marcus_olejnik",
+            "tags": ["technology", "trade", "blueprints"]
+        },
+        {
+            "id": "audio_log_technology_breakthrough_day_230",
+            "title": "Technology Breakthrough - Day 230",
+            "bodyText": "We did it! We replicated the first device from the Meridian Compact's blueprints. It's a water purifier, and it works! We can now provide clean water to the bunker without relying on the filtration system. This is a game-changer. The survivors are celebrating. Come see it in the workshop.",
+            "day": 230,
+            "type": "breakthrough",
+            "source": "marcus_olejnik",
+            "tags": ["technology", "breakthrough", "celebration"]
+        },
+        {
+            "id": "audio_log_raider_siege_day_240",
+            "title": "Raider Siege - Day 240",
+            "bodyText": "The raiders of Sector 5 surrounded the bunker today. They demanded tribute, and if we refused, they would attack. We decided to negotiate. It's humiliating, but we can't afford a fight right now. The raiders took some of our food, but we survived. I hope this buys us some time. Stay alert. Raiders are still out there.",
+            "day": 240,
+            "type": "siege",
+            "source": "marcus_olejnik",
+            "tags": ["raiders", "siege", "negotiation"]
+        },
+        {
+            "id": "audio_log_survivor_romance_day_250",
+            "title": "Survivor Romance - Day 250",
+            "bodyText": "Alex and Jamie have developed feelings for each other. The community is divided. Some are supportive, others think it's inappropriate. I don't care. If they make each other happy, that's what matters. Love is rare in this world. We should cherish it. If you have any advice, meet me in the common area after dinner.",
+            "day": 250,
+            "type": "romance",
+            "source": "marcus_olejnik",
+            "tags": ["romance", "love", "community"]
+        },
+        {
+            "id": "audio_log_fuel_crisis_day_260",
+            "title": "Fuel Crisis - Day 260",
+            "bodyText": "Fuel reserves are critically low. We need to send an expedition to scavenge, but the territory is dangerous. Marcus wants to go, but I'm scared. If something happens to him, we'll lose our best engineer. We need to find a solution, but I don't know what it is. If anyone has ideas, meet me in the workshop tomorrow.",
+            "day": 260,
+            "type": "crisis",
+            "source": "marcus_olejnik",
+            "tags": ["fuel", "scavenge", "fear"]
+        },
+        {
+            "id": "audio_log_fuel_expedition_day_270",
+            "title": "Fuel Expedition Update - Day 270",
+            "bodyText": "The fuel expedition is underway. They left at dawn and should return in two days. Marcus is leading the team. We've given them supplies and weapons. Please keep the bunker secure while they're gone. If they don't return, we'll need to send a rescue team. Keep your fingers crossed.",
+            "day": 270,
+            "type": "expedition",
+            "source": "marcus_olejnik",
+            "tags": ["fuel", "expedition", "hope"]
+        },
+        {
+            "id": "audio_log_power_crisis_day_280",
+            "title": "Power Crisis - Day 280",
+            "bodyText": "The bunker's power generator is failing. We're at risk of losing power and heat. Marcus is working on repairs, but we need more time. If the generator fails, we'll be in serious trouble. I'm scared of what winter will bring if we lose power. If anyone has mechanical skills, meet me in the generator room immediately.",
+            "day": 280,
+            "type": "crisis",
+            "source": "marcus_olejnik",
+            "tags": ["power", "generator", "winter"]
+        },
+        {
+            "id": "audio_log_winter_preparations_day_290",
+            "title": "Winter Preparations - Day 290",
+            "bodyText": "Winter is coming, and we're preparing the bunker. We're stocking food, repairing the generator, and sealing the air filters. The survivors are working hard, but I'm worried. If we're not ready, we won't survive the cold. I hope we did enough. If you have skills in construction, medicine, or cooking, your help is needed. Meet in the common area tomorrow.",
+            "day": 290,
+            "type": "preparation",
+            "source": "marcus_olejnik",
+            "tags": ["winter", "preparation", "community"]
+        },
+        {
+            "id": "audio_log_new_year_day_300",
+            "title": "New Year's Message - Day 300",
+            "bodyText": "Today marks 300 days since the exchange. We've survived this long, but the future is uncertain. We've faced storms, raids, and shortages. But we've also found hope, love, and community. As we enter the new year, let's remember what we've accomplished and look forward to the future. We can make it through this together. Happy New Year, survivors.",
+            "day": 300,
+            "type": "message",
+            "source": "elena_vasquez",
+            "tags": ["new_year", "survival", "hope"]
+        }
+    ]
+}

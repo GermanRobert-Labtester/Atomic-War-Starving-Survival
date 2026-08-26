@@ -79,7 +79,7 @@ namespace Ashfall.Core
             ISeededRng rng,
             Inventory.Inventory inventory,
             NeedsSystem needs,
-            ILog log = null!)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
@@ -278,12 +278,20 @@ namespace Ashfall.Core
 
         public List<PrepJob> GetActiveJobs() => _state.activeJobs.FindAll(j => !j.isComplete && !j.isCancelled);
 
-        public KitchenNutritionState CaptureState() => _state;
+        public KitchenNutritionState CaptureState() => CloneState(_state);
+
         public void RestoreState(KitchenNutritionState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnKitchenChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static KitchenNutritionState CloneState(KitchenNutritionState src)
+        {
+            if (src == null) return new KitchenNutritionState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<KitchenNutritionState>(json) ?? new KitchenNutritionState();
         }
     }
 }

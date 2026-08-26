@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "collection_id": "bunker_daily_life_schedules_notices_and_administrative_documents",
+  "description": "Daily life documents from the bunker — shift schedules, meal rosters, maintenance notices, argument mediation records, and administrative postings. The texture of communal survival.",
+  "documents": [
+    {
+      "doc_id": "bunker_doc_sentry_rotation_week31",
+      "doc_type": "shift_schedule",
+      "title": "Sentry Rotation — Week 31",
+      "posted_day": 87,
+      "posted_by": "the_general",
+      "location": "Main airlock notice board",
+      "material": "Typed on recycled paper, pinned with four nails",
+      "transcript": "SENTRY ROTATION — WEEK 31\nAll times bunker standard (UTC+0)\n\nNORTH CUPOLA (24h watch, 2-person teams):\n06:00-14:00 — Veteran + Hunter\n14:00-22:00 — General + Cop\n22:00-06:00 — Bouncer + Prepper\n\nSOUTH PERIMETER (12h watch, 1-person):\n06:00-18:00 — Courier\n18:00-06:00 — Mechanic\n\nSUB-LEVEL PATROL (every 4h):\n02:00, 06:00, 10:00, 14:00, 18:00, 22:00 — Rotating (see attached roster)\n\nNOTES:\n- All sentries report to the General at shift change\n- Dosimeter readings logged every 2 hours\n- Any contact with unidentified persons: do not engage, radio immediately\n- North cupola: bring the thermos. It's cold up there.\n- South perimeter: the creek bed is slippery after rain. Watch your footing.",
+      "tags": ["sentry", "rotation", "schedule", "defence"]
+    },
+    {
+      "doc_id": "bunker_doc_meal_schedule_march",
+      "doc_type": "meal_schedule",
+      "title": "Mess Hall Meal Schedule — Month 7",
+      "posted_day": 80,
+      "posted_by": "the_chef",
+      "location": "Mess hall entrance",
+      "material": "Handwritten on the back of a pre-war menu card",
+      "transcript": "MESS HALL — MEAL SCHEDULE\nMonth 7\n\nBREAKFAST (06:30-07:30):\nMon/Wed/Fri — Turnip porridge with dried herb seasoning\nTue/Thu — Thin barley soup with salt\nSat/Sun — Porridge with one spoon of jam (if available)\n\nMIDDAY (12:00-13:00):\nMon — Mushroom and turnip stew\nTue — Barley bread with broth\nWed — Roasted root vegetables with salt\nThu — Thin soup with dried mushroom powder\nFri — Bread with lard and wild onion\nSat — Stew (whatever is left from the week)\nSun — The Chef's Special (see the board)\n\nEVENING (18:00-19:00):\nDaily — Leftover from midday, reheated. Tea if we have herbs.\n\nNOTICES:\n- Portions are fixed. Do not ask for more. The Chef knows.\n- If you are assigned to heavy labour, see the Chef for an extra half-ration at midday.\n- Children eat first. Always.\n- The water ration is 2 litres per person per day. Fill your canteen at the pump. Do not waste it.\n- Sunday dinner: the Chef will post the special on Friday. It depends on what the greenhouse produces.",
+      "tags": ["meals", "schedule", "rations", "mess_hall"]
+    },
+    {
+      "doc_id": "bunker_doc_water_rationing_notice",
+      "doc_type": "notice",
+      "title": "Water Rationing — Reduced Allocation",
+      "posted_day": 64,
+      "posted_by": "the_plumber",
+      "location": "All water pumps and the mess hall",
+      "material": "Printed on red paper (pre-war construction stock), hand-lettered",
+      "transcript": "WATER RATIONING NOTICE\nEFFECTIVE: Day 64\n\nThe water recycler membrane is degraded. Output has dropped by 20%. Until the replacement membrane is installed (estimated Day 67), daily water allocation is reduced:\n\nFROM: 3 litres per person per day\nTO: 2 litres per person per day\n\nTHIS INCLUDES:\n- Drinking water\n- Cooking water\n- Hygiene water (washing, teeth)\n\nTHIS DOES NOT INCLUDE:\n- Medical water (the infirmary has a separate reserve)\n- Greenhouse water (the plants get their allocation from the condensate collector)\n\nCONSERVATION TIPS:\n- Fill your canteen once in the morning. That's your water for the day.\n- Do not leave pumps running. Turn the handle off when your container is full.\n- Report any leaks to the Plumber immediately. A dripping pipe wastes 4 litres per hour.\n\nThe replacement membrane is being fabricated now. Normal allocation will resume when it is installed. Thank you for your cooperation.",
+      "tags": ["water", "rationing", "notice", "conservation"]
+    },
+    {
+      "doc_id": "bunker_doc_argument_mediation_record",
+      "doc_type": "mediation_record",
+      "title": "Mediation Record — Dispute Between Dormitory B Residents",
+      "recorded_day": 71,
+      "mediator": "the_therapist",
+      "location": "Sub-Level 1 common room",
+      "material": "Handwritten on standard form, filed in the mediation binder",
+      "transcript": "MEDIATION RECORD — DAY 71\nPARTIES: Resident M. (Bunk 14) and Resident K. (Bunk 15)\nMEDIATOR: The Therapist\n\nCOMPLAINT: Resident M. reports that Resident K. is grinding their teeth at night, which prevents M. from sleeping. Resident K. reports that they are unaware of the grinding and cannot control it. Resident M. has requested a bunk change. Resident K. feels accused of a deliberate disturbance.\n\nDISCUSSION:\n- M. has not slept more than 3 consecutive hours in 9 days. Sleep deprivation is affecting their work performance and mood.\n- K. grinds their teeth during stress-induced bruxism. This is a known symptom of chronic anxiety in enclosed environments. K. is not doing it on purpose.\n- The dormitory walls are concrete. Sound travels. There is no privacy and no silence.\n\nRESOLUTION:\n1. K. will wear a boiled leather mouth guard at night (fabricated by the Tailor) to reduce the grinding noise.\n2. M. will be offered ear plugs made from rolled cotton wool.\n3. If neither measure works within 7 days, M. will be moved to Bunk 22 (currently unoccupied).\n4. Both parties agree that this is not anyone's fault. The bunker is loud. The walls are thin. The stress is real.\n\nFOLLOW-UP: Check in 7 days.\n\nMEDIATOR'S NOTE: This is the fourth sleep-related dispute this month. The bunker needs a quiet room. I have proposed converting the sealed storage closet on Sub-Level 2 into a low-stimulus rest area. The Architect says it's possible. The Plumber says the ventilation can be isolated. Pending approval.",
+      "tags": ["mediation", "dispute", "sleep", "dormitory", "psychological"]
+    },
+    {
+      "doc_id": "bunker_doc_greenhouse_duty_roster",
+      "doc_type": "duty_roster",
+      "title": "Greenhouse Duty Roster — Week of Day 66",
+      "posted_day": 65,
+      "posted_by": "the_botanist",
+      "location": "Greenhouse entrance",
+      "material": "Written on a slate board with chalk",
+      "transcript": "GREENHOUSE DUTY ROSTER\nWeek of Day 66\n\nWATERING (daily, 07:00 and 17:00):\nMon — Suki\nTue — Botanist\nWed — Widow\nThu — Suki\nFri — Botanist\nSat — Teacher (children help)\nSun — Volunteer rotation\n\nHARVESTING (as needed):\nWheat: check every 3 days. Harvest when heads are dry and golden.\nHerbs: pick leaves, don't pull stems. Leave the root.\nTurnips: ready at Day 75. All hands for harvest.\n\nCOMPOST TURNING (every 14 days):\nNext due: Day 70 — Suki + Mechanic\n\nSEED SAVING:\nWheat: select the 5 strongest heads. Do not eat them. They are next year's crop.\nHerbs: let the flowers go to seed. Collect when dry.\n\nNOTES:\n- The greenhouse temperature must stay above 10°C at night. Check the stove.\n- If the water recycler is down, use the condensate collector only. Do not use drinking water for plants.\n- The children are not allowed to eat the wheat seedlings. This includes Petr. Yes, even Petr.\n- If you see aphids, tell the Botanist immediately. Do not try to pick them off yourself.",
+      "tags": ["greenhouse", "duty", "roster", "farming"]
+    },
+    {
+      "doc_id": "bunker_doc_medical_clinic_hours",
+      "doc_type": "notice",
+      "title": "Medical Clinic — Hours and Availability",
+      "posted_day": 50,
+      "posted_by": "the_surgeon",
+      "location": "Infirmary door",
+      "material": "Typed on recycled paper, laminated with salvaged plastic",
+      "transcript": "INFIRMARY — CLINIC HOURS\n\nROUTINE CONSULTATIONS:\nMon/Wed/Fri: 09:00-11:00 and 15:00-17:00\nTue/Thu: 09:00-11:00 only\n\nEMERGENCY CARE:\nAvailable 24 hours. Knock on the infirmary door. If no answer, knock on the Surgeon's bunk (Sub-Level 1, Bunk 3).\n\nMEDICATION DISPENSING:\nBy appointment only. The Pharmacist dispenses iodine, anti-rad, and antibiotics. Do not ask for more than your prescribed amount. The supply is finite.\n\nDOSIMETER CALIBRATION:\nAvailable Thu 14:00-16:00. Bring your dosimeter. Calibration takes 20 minutes.\n\nMEDICAL SCREENING FOR NEW ARRIVALS:\nAll new arrivals must be screened before entry. This includes dosimeter reading, visual inspection for lesions, and a 6-hour quarantine in the decon adit. No exceptions.\n\nTHE SURGEON'S NOTE:\nI am one person. I cannot fix everything. If you have a headache, drink water and rest. If you have a cut, clean it and bandage it. If you have chest pain, shortness of breath, blood in your urine, or a fever above 38.5°C — come to the infirmary immediately. These are not things you can wait out.",
+      "tags": ["medical", "clinic", "hours", "notice", "infirmary"]
+    },
+    {
+      "doc_id": "bunker_doc_childcare_arrangements",
+      "doc_type": "notice",
+      "title": "Childcare and Schooling Arrangements",
+      "posted_day": 58,
+      "posted_by": "the_teacher",
+      "location": "Schoolroom door and dormitory notice board",
+      "material": "Handwritten on lined paper with coloured pencil borders",
+      "transcript": "CHILDREN'S SCHEDULE — WEEK OF DAY 58\n\nSCHOOL (09:00-12:00):\nAll children ages 5-14 attend the schoolroom with the Teacher.\nSubjects this week: Mathematics (division), Natural Science (water cycle), Reading (pre-war primers), Art (free drawing).\n\nAFTERNOON ACTIVITIES (13:00-15:00):\nMon — Greenhouse helper (ages 8+)\nTue — Workshop apprentice (ages 10+) — learning to sort salvaged materials\nWed — Kitchen helper (ages 7+) — peeling, washing, stirring\nThu — Free play in the common room\nFri — Story time with the Historian (pre-war history for children)\n\nMEALS:\nChildren eat at 07:00 (before adults), 12:00 (with adults), and 17:00 (before adults).\nChildren's portions are the same as adults. This is non-negotiable.\n\nBEDTIME:\nLights out in the children's dormitory at 20:00.\nThe Therapist reads a story at 19:30. All children are welcome, including those who are not afraid of the dark.\n\nNOTE FROM THE TEACHER:\nIf your child is not attending school, please let me know why. Some children are struggling with the enclosed environment. Some are grieving. Some are simply bored. I can help with all of these. But I need them in the schoolroom. A child who is not learning is a child who is forgetting what the world looks like. I am trying to help them remember.",
+      "tags": ["children", "school", "childcare", "schedule", "education"]
+    },
+    {
+      "doc_id": "bunker_doc_radiation_safety_protocol",
+      "doc_type": "protocol",
+      "title": "Radiation Safety Protocol — Surface Operations",
+      "posted_day": 44,
+      "posted_by": "the_general",
+      "location": "Main airlock and all surface access points",
+      "material": "Printed on yellow paper, laminated",
+      "transcript": "RADIATION SAFETY PROTOCOL — SURFACE OPERATIONS\n\nBEFORE EXITING:\n1. Check dosimeter. Record starting dose.\n2. Put on gas mask. Check seal.\n3. Put on outer clothing (coveralls, gloves, boots).\n4. Note the time of exit.\n\nDURING SURFACE OPERATIONS:\n1. Check dosimeter every 30 minutes.\n2. If dose rate exceeds 25 uSv/h, return immediately.\n3. Maximum exposure time at 15 uSv/h: 4 hours.\n4. Maximum exposure time at 25 uSv/h: 2 hours.\n5. If ash storm begins, return immediately regardless of dose.\n\nUPON RETURN:\n1. Remove outer clothing in the airlock vestibule.\n2. Shake off ash. Do not bring ash into the bunker.\n3. Remove gas mask last.\n4. Wash hands and face with soap and water.\n5. Record final dosimeter reading.\n6. Report to the Surgeon if dose exceeds 50 uSv in a single day.\n\nWEEKLY DOSE LIMIT: 200 uSv. No exceptions.\nMONTHLY DOSE LIMIT: 500 uSv. No exceptions.\n\nIF YOU EXCEED A LIMIT:\n- Report to the infirmary immediately\n- Begin iodine protocol (1 pill immediately, 1 pill every 6 hours for 3 days)\n- No further surface operations for 14 days\n- The Surgeon will conduct a medical assessment\n\nTHE ASH DOES NOT CARE ABOUT YOUR SCHEDULE. RESPECT THE DOSE.",
+      "tags": ["radiation", "safety", "protocol", "surface_operations"]
+    }
+  ]
+}

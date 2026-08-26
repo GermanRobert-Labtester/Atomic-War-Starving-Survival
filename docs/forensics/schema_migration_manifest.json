@@ -1,0 +1,2024 @@
+{
+  "mode": "CHECK",
+  "target": "all",
+  "changed": 0,
+  "skipped": 403,
+  "errors": 0,
+  "entries": [
+    {
+      "path": "dive_sites.json",
+      "changed": false,
+      "message": "SKIP (already versioned v2): dive_sites.json"
+    },
+    {
+      "path": "expansion_item_tags.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): expansion_item_tags.json"
+    },
+    {
+      "path": "expansion_survivor_fields.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): expansion_survivor_fields.json"
+    },
+    {
+      "path": "holdfast_flavor.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): holdfast_flavor.json"
+    },
+    {
+      "path": "faction_war_communiques.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_war_communiques.json"
+    },
+    {
+      "path": "faction_war_dialogue.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_war_dialogue.json"
+    },
+    {
+      "path": "faction_war_events.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_war_events.json"
+    },
+    {
+      "path": "faction_war_journal.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_war_journal.json"
+    },
+    {
+      "path": "faction_war_radio.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_war_radio.json"
+    },
+    {
+      "path": "year_of_ash_events.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): year_of_ash_events.json"
+    },
+    {
+      "path": "year_of_ash_items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): year_of_ash_items.json"
+    },
+    {
+      "path": "year_of_ash_locations.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): year_of_ash_locations.json"
+    },
+    {
+      "path": "year_of_ash_quests.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): year_of_ash_quests.json"
+    },
+    {
+      "path": "year_of_ash_radio.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): year_of_ash_radio.json"
+    },
+    {
+      "path": "year_of_ash_survivors.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): year_of_ash_survivors.json"
+    },
+    {
+      "path": "foundry_accords.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): foundry_accords.json"
+    },
+    {
+      "path": "foundry_faction.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): foundry_faction.json"
+    },
+    {
+      "path": "foundry_production.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): foundry_production.json"
+    },
+    {
+      "path": "questline_master.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): questline_master.json"
+    },
+    {
+      "path": "verdict_questlines.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): verdict_questlines.json"
+    },
+    {
+      "path": "archive_inks.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): archive_inks.json"
+    },
+    {
+      "path": "autopsy_procedures.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): autopsy_procedures.json"
+    },
+    {
+      "path": "currents.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): currents.json"
+    },
+    {
+      "path": "deep_lore_locations.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): deep_lore_locations.json"
+    },
+    {
+      "path": "disease_catalog.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): disease_catalog.json"
+    },
+    {
+      "path": "door_encounters.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): door_encounters.json"
+    },
+    {
+      "path": "economy_goods.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): economy_goods.json"
+    },
+    {
+      "path": "epilogue_chronicle.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): epilogue_chronicle.json"
+    },
+    {
+      "path": "faction_radio_corpus.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_radio_corpus.json"
+    },
+    {
+      "path": "faction_war_location_overrides.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_war_location_overrides.json"
+    },
+    {
+      "path": "foundry_treaty_consequences.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): foundry_treaty_consequences.json"
+    },
+    {
+      "path": "library_manuals.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): library_manuals.json"
+    },
+    {
+      "path": "muster_epilogues.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): muster_epilogues.json"
+    },
+    {
+      "path": "muster_witnesses.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): muster_witnesses.json"
+    },
+    {
+      "path": "power_grid.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): power_grid.json"
+    },
+    {
+      "path": "shelter_schedules.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): shelter_schedules.json"
+    },
+    {
+      "path": "trade_screen_scenarios.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): trade_screen_scenarios.json"
+    },
+    {
+      "path": "trade_tell_lines.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): trade_tell_lines.json"
+    },
+    {
+      "path": "verdict_radio.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): verdict_radio.json"
+    },
+    {
+      "path": "weather_seasons.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): weather_seasons.json"
+    },
+    {
+      "path": "warlord_doctrines.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): warlord_doctrines.json"
+    },
+    {
+      "path": "antigravity_survivor_fields.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): antigravity_survivor_fields.json"
+    },
+    {
+      "path": "black_flotilla_items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): black_flotilla_items.json"
+    },
+    {
+      "path": "cassette_sets.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cassette_sets.json"
+    },
+    {
+      "path": "characters.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): characters.json"
+    },
+    {
+      "path": "chemical_dependency_items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): chemical_dependency_items.json"
+    },
+    {
+      "path": "combat_catalog.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): combat_catalog.json"
+    },
+    {
+      "path": "confession_secrets.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): confession_secrets.json"
+    },
+    {
+      "path": "crossing_encounters.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): crossing_encounters.json"
+    },
+    {
+      "path": "crossing_factions.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): crossing_factions.json"
+    },
+    {
+      "path": "crossing_items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): crossing_items.json"
+    },
+    {
+      "path": "crossing_locations.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): crossing_locations.json"
+    },
+    {
+      "path": "crossing_quests.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): crossing_quests.json"
+    },
+    {
+      "path": "damaged_map_zones.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): damaged_map_zones.json"
+    },
+    {
+      "path": "deep_lore_survivor_fields.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): deep_lore_survivor_fields.json"
+    },
+    {
+      "path": "dose_items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): dose_items.json"
+    },
+    {
+      "path": "dose_locations.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): dose_locations.json"
+    },
+    {
+      "path": "dose_quests.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): dose_quests.json"
+    },
+    {
+      "path": "dose_registers.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): dose_registers.json"
+    },
+    {
+      "path": "duty_roster_locations.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): duty_roster_locations.json"
+    },
+    {
+      "path": "duty_roster_marks.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): duty_roster_marks.json"
+    },
+    {
+      "path": "duty_roster_quests.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): duty_roster_quests.json"
+    },
+    {
+      "path": "duty_roster_seasons.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): duty_roster_seasons.json"
+    },
+    {
+      "path": "dynamic_questlines.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): dynamic_questlines.json"
+    },
+    {
+      "path": "echoes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): echoes.json"
+    },
+    {
+      "path": "events.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): events.json"
+    },
+    {
+      "path": "faction_lore.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_lore.json"
+    },
+    {
+      "path": "final_wishes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): final_wishes.json"
+    },
+    {
+      "path": "foundry_items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): foundry_items.json"
+    },
+    {
+      "path": "greenhouse_items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): greenhouse_items.json"
+    },
+    {
+      "path": "guilt_sources.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): guilt_sources.json"
+    },
+    {
+      "path": "hardcore_economy_tuning.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): hardcore_economy_tuning.json"
+    },
+    {
+      "path": "holdfast_factions.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): holdfast_factions.json"
+    },
+    {
+      "path": "holdfast_items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): holdfast_items.json"
+    },
+    {
+      "path": "holdfast_locations.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): holdfast_locations.json"
+    },
+    {
+      "path": "holdfast_quests.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): holdfast_quests.json"
+    },
+    {
+      "path": "items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): items.json"
+    },
+    {
+      "path": "locations.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): locations.json"
+    },
+    {
+      "path": "locations_expansion3.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): locations_expansion3.json"
+    },
+    {
+      "path": "narrative_arc_events.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): narrative_arc_events.json"
+    },
+    {
+      "path": "narrative_encounters.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): narrative_encounters.json"
+    },
+    {
+      "path": "narrative_questlines.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): narrative_questlines.json"
+    },
+    {
+      "path": "phantom_triggers.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): phantom_triggers.json"
+    },
+    {
+      "path": "radio.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): radio.json"
+    },
+    {
+      "path": "radio_distress_signals.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): radio_distress_signals.json"
+    },
+    {
+      "path": "recipes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): recipes.json"
+    },
+    {
+      "path": "relic_recipes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): relic_recipes.json"
+    },
+    {
+      "path": "standing_record_factions.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): standing_record_factions.json"
+    },
+    {
+      "path": "standing_record_layouts.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): standing_record_layouts.json"
+    },
+    {
+      "path": "standing_record_memory.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): standing_record_memory.json"
+    },
+    {
+      "path": "standing_record_quests.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): standing_record_quests.json"
+    },
+    {
+      "path": "survivors.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): survivors.json"
+    },
+    {
+      "path": "trade_specialties.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): trade_specialties.json"
+    },
+    {
+      "path": "utility_actions.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): utility_actions.json"
+    },
+    {
+      "path": "verdict_data.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): verdict_data.json"
+    },
+    {
+      "path": "verdict_items.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): verdict_items.json"
+    },
+    {
+      "path": "verdict_locations.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): verdict_locations.json"
+    },
+    {
+      "path": "verdict_npcs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): verdict_npcs.json"
+    },
+    {
+      "path": "wall_carving_templates.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wall_carving_templates.json"
+    },
+    {
+      "path": "wasteland_grave_epitaphs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wasteland_grave_epitaphs.json"
+    },
+    {
+      "path": "wasteland_map_v1.json",
+      "changed": false,
+      "message": "SKIP (already versioned v2): wasteland_map_v1.json"
+    },
+    {
+      "path": "world_history.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): world_history.json"
+    },
+    {
+      "path": "incidents.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): incidents.json"
+    },
+    {
+      "path": "narrative_progression.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): narrative_progression.json"
+    },
+    {
+      "path": "memorials_expansion_05.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): memorials_expansion_05.json"
+    },
+    {
+      "path": "journal_entries_expansion_05.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): journal_entries_expansion_05.json"
+    },
+    {
+      "path": "audio_logs_expansion_05.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): audio_logs_expansion_05.json"
+    },
+    {
+      "path": "environmental_texts_expansion_05.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): environmental_texts_expansion_05.json"
+    },
+    {
+      "path": "quests_expansion_05.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): quests_expansion_05.json"
+    },
+    {
+      "path": "quests_expansion_06.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): quests_expansion_06.json"
+    },
+    {
+      "path": "environmental_atmosphere_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): environmental_atmosphere_expansion.json"
+    },
+    {
+      "path": "radio_distress_signals_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): radio_distress_signals_expansion.json"
+    },
+    {
+      "path": "moral_choice_quests.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): moral_choice_quests.json"
+    },
+    {
+      "path": "narrative_encounters_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): narrative_encounters_expansion.json"
+    },
+    {
+      "path": "moral_choice_quests_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): moral_choice_quests_expansion.json"
+    },
+    {
+      "path": "thirdonary_quests.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): thirdonary_quests.json"
+    },
+    {
+      "path": "moral_choice_chains.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): moral_choice_chains.json"
+    },
+    {
+      "path": "moral_choice_gossip.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): moral_choice_gossip.json"
+    },
+    {
+      "path": "moral_choice_faction_reactions.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): moral_choice_faction_reactions.json"
+    },
+    {
+      "path": "moral_choice_quests_branching.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): moral_choice_quests_branching.json"
+    },
+    {
+      "path": "item_description_texts.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): item_description_texts.json"
+    },
+    {
+      "path": "medical_texts.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): medical_texts.json"
+    },
+    {
+      "path": "trade_texts.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): trade_texts.json"
+    },
+    {
+      "path": "moral_choice_flags.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): moral_choice_flags.json"
+    },
+    {
+      "path": "moral_choice_quest_stubs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): moral_choice_quest_stubs.json"
+    },
+    {
+      "path": "military_faction_branch.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): military_faction_branch.json"
+    },
+    {
+      "path": "rebel_faction_branch.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): rebel_faction_branch.json"
+    },
+    {
+      "path": "independent_faction_branch.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): independent_faction_branch.json"
+    },
+    {
+      "path": "pharma_recipes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): pharma_recipes.json"
+    },
+    {
+      "path": "documents/vel_triage_log_names.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): vel_triage_log_names.json"
+    },
+    {
+      "path": "narrative/currents_pamphlets.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): currents_pamphlets.json"
+    },
+    {
+      "path": "narrative/bunker_blueprints_codex.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_blueprints_codex.json"
+    },
+    {
+      "path": "narrative/bunker_court_verdicts_codex.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_court_verdicts_codex.json"
+    },
+    {
+      "path": "narrative/bunker_graffiti_postings.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_graffiti_postings.json"
+    },
+    {
+      "path": "narrative/bunker_maintenance_glitches.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_maintenance_glitches.json"
+    },
+    {
+      "path": "narrative/courier_dispatches_master.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): courier_dispatches_master.json"
+    },
+    {
+      "path": "narrative/culinary_ration_codex.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): culinary_ration_codex.json"
+    },
+    {
+      "path": "narrative/documents_batch_1.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): documents_batch_1.json"
+    },
+    {
+      "path": "narrative/documents_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): documents_batch_2.json"
+    },
+    {
+      "path": "narrative/dweller_heirlooms_master.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): dweller_heirlooms_master.json"
+    },
+    {
+      "path": "narrative/eulogy_corpus_batch_1.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): eulogy_corpus_batch_1.json"
+    },
+    {
+      "path": "narrative/geological_strata_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): geological_strata_logs.json"
+    },
+    {
+      "path": "narrative/jrnl_templates_cycle_c.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): jrnl_templates_cycle_c.json"
+    },
+    {
+      "path": "narrative/jrnl_templates_cycle_d.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): jrnl_templates_cycle_d.json"
+    },
+    {
+      "path": "narrative/regional_treaty_protocols.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): regional_treaty_protocols.json"
+    },
+    {
+      "path": "narrative/relic_provenance_dossiers.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): relic_provenance_dossiers.json"
+    },
+    {
+      "path": "narrative/survivor_letters_lost_kin.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): survivor_letters_lost_kin.json"
+    },
+    {
+      "path": "narrative/vinyl_record_archive.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): vinyl_record_archive.json"
+    },
+    {
+      "path": "narrative/wasteland_expeditions_master.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wasteland_expeditions_master.json"
+    },
+    {
+      "path": "narrative/wasteland_settlement_gazetteer.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wasteland_settlement_gazetteer.json"
+    },
+    {
+      "path": "narrative/wasteland_trade_caravan_routes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wasteland_trade_caravan_routes.json"
+    },
+    {
+      "path": "narrative/wasteland_wildlife_bestiary.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wasteland_wildlife_bestiary.json"
+    },
+    {
+      "path": "narrative/wire_confessions.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wire_confessions.json"
+    },
+    {
+      "path": "narrative/activated_carbon_adsorption_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): activated_carbon_adsorption_records.json"
+    },
+    {
+      "path": "narrative/ammo_hoist_jam_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): ammo_hoist_jam_reports.json"
+    },
+    {
+      "path": "narrative/ammonia_chiller_leak_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): ammonia_chiller_leak_logs.json"
+    },
+    {
+      "path": "narrative/annealing_lehr_birefringence_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): annealing_lehr_birefringence_records.json"
+    },
+    {
+      "path": "narrative/antler_horn_sawing_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): antler_horn_sawing_records.json"
+    },
+    {
+      "path": "narrative/apiculture_red_light_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): apiculture_red_light_audits.json"
+    },
+    {
+      "path": "narrative/aramid_fiber_rot_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): aramid_fiber_rot_reports.json"
+    },
+    {
+      "path": "narrative/architect_vault_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): architect_vault_audits.json"
+    },
+    {
+      "path": "narrative/armored_cockroach_hive_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): armored_cockroach_hive_logs.json"
+    },
+    {
+      "path": "narrative/armored_locomotive_manifests.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): armored_locomotive_manifests.json"
+    },
+    {
+      "path": "narrative/artesian_well_contamination_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): artesian_well_contamination_logs.json"
+    },
+    {
+      "path": "narrative/awl_saddle_stitch_journals.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): awl_saddle_stitch_journals.json"
+    },
+    {
+      "path": "narrative/bark_tanning_vat_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bark_tanning_vat_logs.json"
+    },
+    {
+      "path": "narrative/beeswax_clarification_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): beeswax_clarification_records.json"
+    },
+    {
+      "path": "narrative/beeswax_rendering_dipping_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): beeswax_rendering_dipping_assays.json"
+    },
+    {
+      "path": "narrative/biochar_cation_exchange_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): biochar_cation_exchange_reports.json"
+    },
+    {
+      "path": "narrative/bisque_firing_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bisque_firing_records.json"
+    },
+    {
+      "path": "narrative/blast_gate_mechanical_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): blast_gate_mechanical_audits.json"
+    },
+    {
+      "path": "narrative/blind_cave_molerat_studies.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): blind_cave_molerat_studies.json"
+    },
+    {
+      "path": "narrative/boiler_feedwater_deaerator_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): boiler_feedwater_deaerator_audits.json"
+    },
+    {
+      "path": "narrative/bolting_silk_mesh_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bolting_silk_mesh_reports.json"
+    },
+    {
+      "path": "narrative/bone_degreasing_prep_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bone_degreasing_prep_logs.json"
+    },
+    {
+      "path": "narrative/borosilicate_sight_glass_thermal_shock.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): borosilicate_sight_glass_thermal_shock.json"
+    },
+    {
+      "path": "narrative/brain_tanning_hide_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): brain_tanning_hide_reports.json"
+    },
+    {
+      "path": "narrative/brewers_yeast_krausen_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): brewers_yeast_krausen_audits.json"
+    },
+    {
+      "path": "narrative/brine_pickling_barrel_spoilage.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): brine_pickling_barrel_spoilage.json"
+    },
+    {
+      "path": "narrative/bullet_alloy_assay_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bullet_alloy_assay_reports.json"
+    },
+    {
+      "path": "narrative/bunker_children_folklore.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_children_folklore.json"
+    },
+    {
+      "path": "narrative/bunker_contraband_barter.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_contraband_barter.json"
+    },
+    {
+      "path": "narrative/bunker_herbalism_pharmacology.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_herbalism_pharmacology.json"
+    },
+    {
+      "path": "narrative/bunker_wiretap_transcripts.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_wiretap_transcripts.json"
+    },
+    {
+      "path": "narrative/burr_millstone_dressing_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): burr_millstone_dressing_logs.json"
+    },
+    {
+      "path": "narrative/calcium_hypochlorite_titration_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): calcium_hypochlorite_titration_reports.json"
+    },
+    {
+      "path": "narrative/candle_dip_mould_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): candle_dip_mould_assays.json"
+    },
+    {
+      "path": "narrative/canyon_mudflow_hazard_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): canyon_mudflow_hazard_reports.json"
+    },
+    {
+      "path": "narrative/carbide_tool_wear_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): carbide_tool_wear_audits.json"
+    },
+    {
+      "path": "narrative/carrion_vulture_sighting_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): carrion_vulture_sighting_logs.json"
+    },
+    {
+      "path": "narrative/cave_aquatic_biota_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cave_aquatic_biota_logs.json"
+    },
+    {
+      "path": "narrative/celluloid_film_decomposition_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): celluloid_film_decomposition_records.json"
+    },
+    {
+      "path": "narrative/charcoal_mound_pyrolysis_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): charcoal_mound_pyrolysis_logs.json"
+    },
+    {
+      "path": "narrative/chrome_alum_tanning_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): chrome_alum_tanning_assays.json"
+    },
+    {
+      "path": "narrative/clay_wedging_forming_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): clay_wedging_forming_logs.json"
+    },
+    {
+      "path": "narrative/cobalt_arming_directives.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cobalt_arming_directives.json"
+    },
+    {
+      "path": "narrative/cobalt_liturgies.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cobalt_liturgies.json"
+    },
+    {
+      "path": "narrative/cold_process_soap_curing_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cold_process_soap_curing_reports.json"
+    },
+    {
+      "path": "narrative/crater_lake_limnology_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): crater_lake_limnology_records.json"
+    },
+    {
+      "path": "narrative/crop_genome_degradation_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): crop_genome_degradation_reports.json"
+    },
+    {
+      "path": "narrative/crucible_clay_pot_slag_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): crucible_clay_pot_slag_logs.json"
+    },
+    {
+      "path": "narrative/cryo_germplasm_viability_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cryo_germplasm_viability_audits.json"
+    },
+    {
+      "path": "narrative/cryo_seed_ampoule_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cryo_seed_ampoule_logs.json"
+    },
+    {
+      "path": "narrative/cryopod_failure_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cryopod_failure_logs.json"
+    },
+    {
+      "path": "narrative/cupola_melting_ratio_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cupola_melting_ratio_audits.json"
+    },
+    {
+      "path": "narrative/cupola_slag_leaching_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cupola_slag_leaching_records.json"
+    },
+    {
+      "path": "narrative/currying_burnishing_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): currying_burnishing_assays.json"
+    },
+    {
+      "path": "narrative/dead_hand_directives.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): dead_hand_directives.json"
+    },
+    {
+      "path": "narrative/deadbeat_escapement_wear_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): deadbeat_escapement_wear_logs.json"
+    },
+    {
+      "path": "narrative/deckle_mould_watermark_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): deckle_mould_watermark_audits.json"
+    },
+    {
+      "path": "narrative/drone_carrier_blackboxes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): drone_carrier_blackboxes.json"
+    },
+    {
+      "path": "narrative/drop_spindle_fibre_drafting_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): drop_spindle_fibre_drafting_logs.json"
+    },
+    {
+      "path": "narrative/dweller_medical_casebook.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): dweller_medical_casebook.json"
+    },
+    {
+      "path": "narrative/dweller_psychological_journals.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): dweller_psychological_journals.json"
+    },
+    {
+      "path": "narrative/emp_atmospheric_sniffer_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): emp_atmospheric_sniffer_logs.json"
+    },
+    {
+      "path": "narrative/fallout_sensory_loss_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): fallout_sensory_loss_records.json"
+    },
+    {
+      "path": "narrative/fermentation_crock_airlock_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): fermentation_crock_airlock_assays.json"
+    },
+    {
+      "path": "narrative/fibre_heckling_prep_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): fibre_heckling_prep_logs.json"
+    },
+    {
+      "path": "narrative/forge_charcoal_ash_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): forge_charcoal_ash_assays.json"
+    },
+    {
+      "path": "narrative/fulling_trough_nap_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): fulling_trough_nap_assays.json"
+    },
+    {
+      "path": "narrative/gear_quenching_fault_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): gear_quenching_fault_logs.json"
+    },
+    {
+      "path": "narrative/geophone_hymnals.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): geophone_hymnals.json"
+    },
+    {
+      "path": "narrative/geothermal_borehole_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): geothermal_borehole_logs.json"
+    },
+    {
+      "path": "narrative/geothermal_steam_vent_diagnostics.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): geothermal_steam_vent_diagnostics.json"
+    },
+    {
+      "path": "narrative/geothermal_steam_well_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): geothermal_steam_well_logs.json"
+    },
+    {
+      "path": "narrative/ghost_transmissions.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): ghost_transmissions.json"
+    },
+    {
+      "path": "narrative/grain_silo_weevil_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): grain_silo_weevil_audits.json"
+    },
+    {
+      "path": "narrative/green_sand_bentonite_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): green_sand_bentonite_assays.json"
+    },
+    {
+      "path": "narrative/ground_glass_joint_greasing_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): ground_glass_joint_greasing_audits.json"
+    },
+    {
+      "path": "narrative/heirloom_seed_viability_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): heirloom_seed_viability_reports.json"
+    },
+    {
+      "path": "narrative/hemp_fiber_hackling_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): hemp_fiber_hackling_logs.json"
+    },
+    {
+      "path": "narrative/hollander_beater_pulping_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): hollander_beater_pulping_logs.json"
+    },
+    {
+      "path": "narrative/honey_extractor_balance_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): honey_extractor_balance_reports.json"
+    },
+    {
+      "path": "narrative/hydrophone_acoustic_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): hydrophone_acoustic_logs.json"
+    },
+    {
+      "path": "narrative/inkle_loom_warp_tally_sheets.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): inkle_loom_warp_tally_sheets.json"
+    },
+    {
+      "path": "narrative/intake_filter_clogging_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): intake_filter_clogging_logs.json"
+    },
+    {
+      "path": "narrative/invar_pendulum_thermal_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): invar_pendulum_thermal_expansion.json"
+    },
+    {
+      "path": "narrative/iron_gall_ink_acidity_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): iron_gall_ink_acidity_reports.json"
+    },
+    {
+      "path": "narrative/iron_synod_canons.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): iron_synod_canons.json"
+    },
+    {
+      "path": "narrative/kiln_draw_trial_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): kiln_draw_trial_assays.json"
+    },
+    {
+      "path": "narrative/langstroth_hive_foundation_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): langstroth_hive_foundation_logs.json"
+    },
+    {
+      "path": "narrative/lead_crystal_scintillator_aging_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): lead_crystal_scintillator_aging_logs.json"
+    },
+    {
+      "path": "narrative/lead_wall_degradation_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): lead_wall_degradation_logs.json"
+    },
+    {
+      "path": "narrative/leather_harness_conditioning_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): leather_harness_conditioning_audits.json"
+    },
+    {
+      "path": "narrative/liebig_condenser_fracture_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): liebig_condenser_fracture_logs.json"
+    },
+    {
+      "path": "narrative/lime_kiln_calcination_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): lime_kiln_calcination_logs.json"
+    },
+    {
+      "path": "narrative/liquid_nitrogen_compressor_failures.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): liquid_nitrogen_compressor_failures.json"
+    },
+    {
+      "path": "narrative/lost_tech_manuals.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): lost_tech_manuals.json"
+    },
+    {
+      "path": "narrative/mainspring_fatigue_rupture_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): mainspring_fatigue_rupture_audits.json"
+    },
+    {
+      "path": "narrative/manila_hawser_breakage_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): manila_hawser_breakage_reports.json"
+    },
+    {
+      "path": "narrative/mill_dampener_tempering_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): mill_dampener_tempering_assays.json"
+    },
+    {
+      "path": "narrative/mortise_tenon_failure_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): mortise_tenon_failure_reports.json"
+    },
+    {
+      "path": "narrative/mudbrick_weathering_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): mudbrick_weathering_assays.json"
+    },
+    {
+      "path": "narrative/munitions_leaching_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): munitions_leaching_records.json"
+    },
+    {
+      "path": "narrative/mutated_botanical_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): mutated_botanical_logs.json"
+    },
+    {
+      "path": "narrative/needle_awl_hook_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): needle_awl_hook_assays.json"
+    },
+    {
+      "path": "narrative/neoprene_gasket_degradation_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): neoprene_gasket_degradation_logs.json"
+    },
+    {
+      "path": "narrative/night_watch_logbook.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): night_watch_logbook.json"
+    },
+    {
+      "path": "narrative/numbers_station_ciphers.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): numbers_station_ciphers.json"
+    },
+    {
+      "path": "narrative/oak_bark_tanning_pit_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): oak_bark_tanning_pit_logs.json"
+    },
+    {
+      "path": "narrative/operating_theater_surgical_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): operating_theater_surgical_logs.json"
+    },
+    {
+      "path": "narrative/optical_coating_rad_browning_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): optical_coating_rad_browning_reports.json"
+    },
+    {
+      "path": "narrative/oral_lore_codex.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): oral_lore_codex.json"
+    },
+    {
+      "path": "narrative/orbital_kinetic_telemetry.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): orbital_kinetic_telemetry.json"
+    },
+    {
+      "path": "narrative/ozone_contact_tower_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): ozone_contact_tower_audits.json"
+    },
+    {
+      "path": "narrative/pattern_maker_shrinkage_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): pattern_maker_shrinkage_records.json"
+    },
+    {
+      "path": "narrative/periscope_prism_delamination_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): periscope_prism_delamination_logs.json"
+    },
+    {
+      "path": "narrative/permafrost_methane_eruption_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): permafrost_methane_eruption_logs.json"
+    },
+    {
+      "path": "narrative/pipeline_sabotage_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): pipeline_sabotage_records.json"
+    },
+    {
+      "path": "narrative/pneumatic_carrier_capsule_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): pneumatic_carrier_capsule_logs.json"
+    },
+    {
+      "path": "narrative/pneumatic_cylinder_leather_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): pneumatic_cylinder_leather_assays.json"
+    },
+    {
+      "path": "narrative/pneumatic_tube_diverter_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): pneumatic_tube_diverter_audits.json"
+    },
+    {
+      "path": "narrative/pot_furnace_glass_melts.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): pot_furnace_glass_melts.json"
+    },
+    {
+      "path": "narrative/pozzolan_mortar_formulations.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): pozzolan_mortar_formulations.json"
+    },
+    {
+      "path": "narrative/rad_pathology_autopsy_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): rad_pathology_autopsy_records.json"
+    },
+    {
+      "path": "narrative/radio_scriptbook.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): radio_scriptbook.json"
+    },
+    {
+      "path": "narrative/rag_pulp_beater_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): rag_pulp_beater_records.json"
+    },
+    {
+      "path": "narrative/ragdoll_germination_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): ragdoll_germination_assays.json"
+    },
+    {
+      "path": "narrative/ration_fraud_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): ration_fraud_records.json"
+    },
+    {
+      "path": "narrative/rawhide_bating_failure_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): rawhide_bating_failure_reports.json"
+    },
+    {
+      "path": "narrative/refractory_firebrick_spalling_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): refractory_firebrick_spalling_logs.json"
+    },
+    {
+      "path": "narrative/retort_wood_vinegar_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): retort_wood_vinegar_audits.json"
+    },
+    {
+      "path": "narrative/root_cellar_humidity_rot_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): root_cellar_humidity_rot_reports.json"
+    },
+    {
+      "path": "narrative/rootes_blower_vacuum_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): rootes_blower_vacuum_reports.json"
+    },
+    {
+      "path": "narrative/rope_break_load_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): rope_break_load_assays.json"
+    },
+    {
+      "path": "narrative/rope_transmission_splicing_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): rope_transmission_splicing_audits.json"
+    },
+    {
+      "path": "narrative/salt_mine_inscriptions.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): salt_mine_inscriptions.json"
+    },
+    {
+      "path": "narrative/scavenger_expedition_route_notes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): scavenger_expedition_route_notes.json"
+    },
+    {
+      "path": "narrative/scraping_polishing_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): scraping_polishing_reports.json"
+    },
+    {
+      "path": "narrative/screw_press_felt_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): screw_press_felt_reports.json"
+    },
+    {
+      "path": "narrative/seismic_array_fault_alarms.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): seismic_array_fault_alarms.json"
+    },
+    {
+      "path": "narrative/silage_lactic_pit_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): silage_lactic_pit_reports.json"
+    },
+    {
+      "path": "narrative/silica_gel_seed_desiccation_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): silica_gel_seed_desiccation_audits.json"
+    },
+    {
+      "path": "narrative/silo_mosquito_vector_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): silo_mosquito_vector_records.json"
+    },
+    {
+      "path": "narrative/slip_glaze_formulation_notes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): slip_glaze_formulation_notes.json"
+    },
+    {
+      "path": "narrative/slow_sand_schmutzdecke_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): slow_sand_schmutzdecke_logs.json"
+    },
+    {
+      "path": "narrative/smoked_meat_creosote_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): smoked_meat_creosote_assays.json"
+    },
+    {
+      "path": "narrative/sonar_array_fault_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): sonar_array_fault_logs.json"
+    },
+    {
+      "path": "narrative/sourdough_mother_acidity_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): sourdough_mother_acidity_logs.json"
+    },
+    {
+      "path": "narrative/square_set_shoring_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): square_set_shoring_audits.json"
+    },
+    {
+      "path": "narrative/stalactite_mineral_assay_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): stalactite_mineral_assay_reports.json"
+    },
+    {
+      "path": "narrative/steam_trap_water_hammer_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): steam_trap_water_hammer_logs.json"
+    },
+    {
+      "path": "narrative/stencil_propaganda_smear_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): stencil_propaganda_smear_logs.json"
+    },
+    {
+      "path": "narrative/strand_twisting_lay_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): strand_twisting_lay_reports.json"
+    },
+    {
+      "path": "narrative/substation_transformer_fires.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): substation_transformer_fires.json"
+    },
+    {
+      "path": "narrative/sump_drainage_silt_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): sump_drainage_silt_reports.json"
+    },
+    {
+      "path": "narrative/surface_dragline_ruins.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): surface_dragline_ruins.json"
+    },
+    {
+      "path": "narrative/surface_radiation_topo_sheets.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): surface_radiation_topo_sheets.json"
+    },
+    {
+      "path": "narrative/sweet_water_glycerin_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): sweet_water_glycerin_assays.json"
+    },
+    {
+      "path": "narrative/tallow_rendering_vat_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): tallow_rendering_vat_logs.json"
+    },
+    {
+      "path": "narrative/tallow_saponification_kettle_audits.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): tallow_saponification_kettle_audits.json"
+    },
+    {
+      "path": "narrative/three_strand_rope_closing_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): three_strand_rope_closing_logs.json"
+    },
+    {
+      "path": "narrative/timber_creosote_treatment_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): timber_creosote_treatment_logs.json"
+    },
+    {
+      "path": "narrative/timber_dry_rot_fruiting_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): timber_dry_rot_fruiting_records.json"
+    },
+    {
+      "path": "narrative/tire_retreading_compound_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): tire_retreading_compound_logs.json"
+    },
+    {
+      "path": "narrative/treadle_loom_heddle_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): treadle_loom_heddle_reports.json"
+    },
+    {
+      "path": "narrative/tub_sizing_gelatin_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): tub_sizing_gelatin_assays.json"
+    },
+    {
+      "path": "narrative/turbine_blade_erosion_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): turbine_blade_erosion_reports.json"
+    },
+    {
+      "path": "narrative/typographic_lead_wear_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): typographic_lead_wear_logs.json"
+    },
+    {
+      "path": "narrative/underground_fungi_flora.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): underground_fungi_flora.json"
+    },
+    {
+      "path": "narrative/vault_seal_breach_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): vault_seal_breach_logs.json"
+    },
+    {
+      "path": "narrative/wasteland_grave_epitaphs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wasteland_grave_epitaphs.json"
+    },
+    {
+      "path": "narrative/water_clock_orifice_silt_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): water_clock_orifice_silt_records.json"
+    },
+    {
+      "path": "narrative/wick_braiding_priming_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wick_braiding_priming_reports.json"
+    },
+    {
+      "path": "narrative/wire_rope_stranding_assays.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wire_rope_stranding_assays.json"
+    },
+    {
+      "path": "narrative/wood_ash_lye_hydrometer_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wood_ash_lye_hydrometer_logs.json"
+    },
+    {
+      "path": "narrative/journal_entries_batch_1.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): journal_entries_batch_1.json"
+    },
+    {
+      "path": "narrative/faction_field_documents.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_field_documents.json"
+    },
+    {
+      "path": "narrative/faction_directives_and_notices.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_directives_and_notices.json"
+    },
+    {
+      "path": "narrative/journal_entries_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): journal_entries_batch_2.json"
+    },
+    {
+      "path": "narrative/expedition_field_reports.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): expedition_field_reports.json"
+    },
+    {
+      "path": "narrative/quest_narrative_documents.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): quest_narrative_documents.json"
+    },
+    {
+      "path": "narrative/radio_transcripts_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): radio_transcripts_batch_2.json"
+    },
+    {
+      "path": "narrative/wasteland_grave_epitaphs_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wasteland_grave_epitaphs_batch_2.json"
+    },
+    {
+      "path": "narrative/bunker_maintenance_logs_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_maintenance_logs_batch_2.json"
+    },
+    {
+      "path": "narrative/wildlife_field_encounter_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): wildlife_field_encounter_logs.json"
+    },
+    {
+      "path": "narrative/unsent_letters_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): unsent_letters_batch_2.json"
+    },
+    {
+      "path": "narrative/bunker_shift_schedules_and_notices.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_shift_schedules_and_notices.json"
+    },
+    {
+      "path": "narrative/bunker_children_folklore_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_children_folklore_batch_2.json"
+    },
+    {
+      "path": "narrative/cobalt_liturgies_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): cobalt_liturgies_batch_2.json"
+    },
+    {
+      "path": "narrative/oral_lore_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): oral_lore_batch_2.json"
+    },
+    {
+      "path": "narrative/culinary_ration_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): culinary_ration_batch_2.json"
+    },
+    {
+      "path": "narrative/bunker_wiretap_transcripts_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_wiretap_transcripts_batch_2.json"
+    },
+    {
+      "path": "narrative/bunker_court_verdicts_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_court_verdicts_batch_2.json"
+    },
+    {
+      "path": "narrative/surgeons_casebook_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): surgeons_casebook_batch_2.json"
+    },
+    {
+      "path": "narrative/greenhouse_cultivation_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): greenhouse_cultivation_logs.json"
+    },
+    {
+      "path": "narrative/engineering_mod_notes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): engineering_mod_notes.json"
+    },
+    {
+      "path": "narrative/new_arrival_intake_interviews.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): new_arrival_intake_interviews.json"
+    },
+    {
+      "path": "narrative/bunker_trade_ledger_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_trade_ledger_batch_2.json"
+    },
+    {
+      "path": "narrative/security_incident_reports_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): security_incident_reports_batch_2.json"
+    },
+    {
+      "path": "narrative/childrens_artwork_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): childrens_artwork_batch_2.json"
+    },
+    {
+      "path": "narrative/radiation_survey_readings_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): radiation_survey_readings_batch_2.json"
+    },
+    {
+      "path": "narrative/personal_effects_inventory_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): personal_effects_inventory_batch_2.json"
+    },
+    {
+      "path": "narrative/water_quality_test_reports_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): water_quality_test_reports_batch_2.json"
+    },
+    {
+      "path": "narrative/expedition_route_waypoint_notes_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): expedition_route_waypoint_notes_batch_2.json"
+    },
+    {
+      "path": "narrative/improvised_repair_guides_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): improvised_repair_guides_batch_2.json"
+    },
+    {
+      "path": "narrative/therapist_session_notes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): therapist_session_notes.json"
+    },
+    {
+      "path": "narrative/radio_broadcast_rundowns.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): radio_broadcast_rundowns.json"
+    },
+    {
+      "path": "narrative/conflict_mediation_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): conflict_mediation_records.json"
+    },
+    {
+      "path": "narrative/undertaker_burial_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): undertaker_burial_records.json"
+    },
+    {
+      "path": "narrative/chef_recipe_development.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): chef_recipe_development.json"
+    },
+    {
+      "path": "narrative/equipment_failure_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): equipment_failure_logs.json"
+    },
+    {
+      "path": "narrative/patrol_debriefs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): patrol_debriefs.json"
+    },
+    {
+      "path": "narrative/council_meeting_minutes.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): council_meeting_minutes.json"
+    },
+    {
+      "path": "narrative/education_session_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): education_session_records.json"
+    },
+    {
+      "path": "narrative/crop_experiment_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): crop_experiment_logs.json"
+    },
+    {
+      "path": "narrative/power_grid_management_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): power_grid_management_logs.json"
+    },
+    {
+      "path": "narrative/supply_audit_records.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): supply_audit_records.json"
+    },
+    {
+      "path": "narrative/courier_mission_logs.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): courier_mission_logs.json"
+    },
+    {
+      "path": "narrative/journal_entries_batch_3.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): journal_entries_batch_3.json"
+    },
+    {
+      "path": "narrative/expedition_field_reports_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): expedition_field_reports_batch_2.json"
+    },
+    {
+      "path": "narrative/radio_transcripts_batch_3.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): radio_transcripts_batch_3.json"
+    },
+    {
+      "path": "narrative/bunker_maintenance_logs_batch_3.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bunker_maintenance_logs_batch_3.json"
+    },
+    {
+      "path": "narrative/supply_audit_records_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): supply_audit_records_batch_2.json"
+    },
+    {
+      "path": "narrative/therapist_session_notes_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): therapist_session_notes_batch_2.json"
+    },
+    {
+      "path": "narrative/courier_mission_logs_batch_2.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): courier_mission_logs_batch_2.json"
+    },
+    {
+      "path": "narrative/chemist_lab_notes_batch_1.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): chemist_lab_notes_batch_1.json"
+    },
+    {
+      "path": "narrative/expedition_planning_briefs_batch_1.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): expedition_planning_briefs_batch_1.json"
+    },
+    {
+      "path": "narrative/load_shed_schedule_001.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): load_shed_schedule_001.json"
+    },
+    {
+      "path": "narrative/diplomatic_contact_records_batch_1.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): diplomatic_contact_records_batch_1.json"
+    },
+    {
+      "path": "narrative/therapist_session_notes_batch_3.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): therapist_session_notes_batch_3.json"
+    },
+    {
+      "path": "narrative/journals_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): journals_expansion.json"
+    },
+    {
+      "path": "narrative/bureaucratic_documents_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): bureaucratic_documents_expansion.json"
+    },
+    {
+      "path": "narrative/letters_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): letters_expansion.json"
+    },
+    {
+      "path": "narrative/engineering_logs_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): engineering_logs_expansion.json"
+    },
+    {
+      "path": "narrative/graffiti_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): graffiti_expansion.json"
+    },
+    {
+      "path": "narrative/medical_documents_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): medical_documents_expansion.json"
+    },
+    {
+      "path": "narrative/world_history_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): world_history_expansion.json"
+    },
+    {
+      "path": "narrative/survivor_profiles_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): survivor_profiles_expansion.json"
+    },
+    {
+      "path": "narrative/faction_texts_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): faction_texts_expansion.json"
+    },
+    {
+      "path": "narrative/field_reports_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): field_reports_expansion.json"
+    },
+    {
+      "path": "narrative/night_watch_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): night_watch_expansion.json"
+    },
+    {
+      "path": "narrative/memorials_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): memorials_expansion.json"
+    },
+    {
+      "path": "narrative/found_objects_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): found_objects_expansion.json"
+    },
+    {
+      "path": "narrative/radio_scripts_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): radio_scripts_expansion.json"
+    },
+    {
+      "path": "narrative/expedition_briefs_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): expedition_briefs_expansion.json"
+    },
+    {
+      "path": "narrative/ration_records_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): ration_records_expansion.json"
+    },
+    {
+      "path": "narrative/childrens_folklore_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): childrens_folklore_expansion.json"
+    },
+    {
+      "path": "narrative/shelter_songs_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): shelter_songs_expansion.json"
+    },
+    {
+      "path": "narrative/weather_almanac_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): weather_almanac_expansion.json"
+    },
+    {
+      "path": "narrative/trade_ledgers_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): trade_ledgers_expansion.json"
+    },
+    {
+      "path": "narrative/shelter_notices_expansion.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): shelter_notices_expansion.json"
+    },
+    {
+      "path": "whitelists/orphan_knocks.json",
+      "changed": false,
+      "message": "SKIP (already versioned v1): orphan_knocks.json"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Radiation
 {
@@ -58,26 +59,15 @@ namespace Ashfall.Core.Radiation
     }
 
     /// <summary>
-    /// Runtime instance of worn protective gear (protection, durability, degrade).
-    /// Ported from Unity's WornGear.
+    /// Runtime instance of worn protective gear.
+    /// Consolidated into Ashfall.Core.Inventory.WornGear (H2 resolution).
     /// </summary>
-    public class WornGear
+    public class WornGear : Ashfall.Core.Inventory.WornGear
     {
-        public float RadProtection;
-        public float MaxDurability;
-        public float CurrentDurability;
-        public float DegradeRate;
-
-        /// <summary>
-        /// Maps an Inventory-namespace worn-gear record onto the Radiation
-        /// behavioral record. The two WornGear types are deliberately
-        /// namespace-scoped (AGENTS H2, recorded decision not to consolidate);
-        /// this is the single sanctioned conversion point so hosts can bridge
-        /// equipped inventory into exposure without forking the mapping.
-        /// </summary>
-        public static WornGear FromInventory(Ashfall.Core.Inventory.WornGear gear)
+        public static WornGear? FromInventory(Ashfall.Core.Inventory.WornGear gear)
         {
             if (gear == null) return null;
+            if (gear is WornGear wg) return wg;
             return new WornGear
             {
                 RadProtection = gear.RadProtection,
@@ -85,22 +75,6 @@ namespace Ashfall.Core.Radiation
                 CurrentDurability = gear.CurrentDurability,
                 DegradeRate = gear.DegradeRate
             };
-        }
-
-        public float DurabilityFraction()
-        {
-            return MaxDurability > 0f ? MathfCompat.Clamp01(CurrentDurability / MaxDurability) : 0f;
-        }
-
-        public float EffectiveProtection()
-        {
-            return MathfCompat.Max(0f, RadProtection) * DurabilityFraction();
-        }
-
-        public void Degrade(float gameHours)
-        {
-            if (gameHours <= 0f) return;
-            CurrentDurability = MathfCompat.Max(0f, CurrentDurability - DegradeRate * gameHours);
         }
     }
 
@@ -159,11 +133,11 @@ namespace Ashfall.Core.Radiation
         public event Action<SurvivorRadState, SurvivorStatus> OnStatusLost;
 
         public RadiationSystem(
-            Func<SurvivorRadState, ExposureContext> exposureContext = null,
-            Action<SurvivorRadState, string, float> applyNeed = null,
-            Action<SurvivorRadState, float> onExposed = null,
-            Func<SurvivorRadState, float> hazmatDegradeMultiplier = null,
-            Func<SurvivorRadState, bool> radiotrophic = null,
+Func<SurvivorRadState, ExposureContext>? exposureContext = null,
+Action<SurvivorRadState, string, float>? applyNeed = null,
+Action<SurvivorRadState, float>? onExposed = null,
+Func<SurvivorRadState, float>? hazmatDegradeMultiplier = null,
+Func<SurvivorRadState, bool>? radiotrophic = null,
             int seed = 1401)
         {
             _exposureContext = exposureContext;
@@ -197,7 +171,7 @@ namespace Ashfall.Core.Radiation
                 float zone = context != null ? context.ZoneRadLevel : 0f;
                 var worn = context != null ? context.WornGear : null;
 
-                float gearProtection = ComputeGearProtection(worn);
+                float gearProtection = ComputeGearProtection(worn!);
                 float exposurePerHour;
                 if (context != null && context.ShelterRadQuery != null)
                 {
@@ -213,7 +187,7 @@ namespace Ashfall.Core.Radiation
                 if (survivor.HasRadResistance)
                     exposurePerHour *= RadResistanceFactor;
 
-                DegradeWornGear(worn, gameHours);
+                DegradeWornGear(worn!, gameHours);
                 Expose(survivor, exposurePerHour, gameHours);
 
                 var dosimeter = GetDosimeter(survivor.Id);
@@ -352,7 +326,7 @@ namespace Ashfall.Core.Radiation
         private void DegradeWornGear(List<WornGear> worn, float gameHours)
         {
             if (worn == null) return;
-            float mult = _hazmatDegradeMultiplier != null ? _hazmatDegradeMultiplier(null) : 1f;
+            float mult = _hazmatDegradeMultiplier != null ? _hazmatDegradeMultiplier(null!) : 1f;
             for (int i = 0; i < worn.Count; i++)
                 worn[i]?.Degrade(gameHours * mult);
         }

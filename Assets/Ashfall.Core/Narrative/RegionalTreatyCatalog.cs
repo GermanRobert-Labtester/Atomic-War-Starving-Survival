@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -53,7 +54,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public RegionalTreatyEntry GetById(string treatyId)
+        public RegionalTreatyEntry? GetById(string treatyId)
         {
             if (string.IsNullOrEmpty(treatyId)) return null;
             _byId.TryGetValue(treatyId, out var entry);

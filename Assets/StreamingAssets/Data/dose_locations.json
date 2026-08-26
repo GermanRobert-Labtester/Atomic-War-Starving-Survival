@@ -1,26 +1,29 @@
-[
-  {
-    "id": "loc_the_dose_room",
-    "displayName": "Room Six, the Ledger Table",
-    "sector": "bunker",
-    "riskLevel": 0,
-    "radiationUsv": 0.02,
-    "description": "A bolted-down table, four chairs, a fan that turns by hand. One chair keeps the red pencil. The papers on the table are the reason anyone descends the corridor at all."
-  },
-  {
-    "id": "loc_the_calibration_bench",
-    "displayName": "The Calibration Bench",
-    "sector": "bunker",
-    "riskLevel": 0,
-    "radiationUsv": 0.02,
-    "description": "Dosimeters in a row on a felt-lined tray beside a brass clock on a leather hinge. The clockmaker works here. Every figure has a drift, and the drift is normal."
-  },
-  {
-    "id": "loc_the_childrens_baseline_board",
-    "displayName": "The Children's Baseline Board",
-    "sector": "bunker",
-    "riskLevel": 0,
-    "radiationUsv": 0.02,
-    "description": "A chalkboard in the children's corridor, numbers in children's chalk and adults' fingers, half-erased guesses and one date. The midwife writes in pencil so the truth can change its mind quietly."
-  }
-]
+{
+  "schema_version": 1,
+  "locations": [
+    {
+      "id": "loc_the_dose_room",
+      "displayName": "Room Six, the Ledger Table",
+      "sector": "bunker",
+      "riskLevel": 0,
+      "radiationUsv": 0.02,
+      "description": "A bolted-down table, four chairs, a fan that turns by hand. One chair keeps the red pencil. The papers on the table are the reason anyone descends the corridor at all."
+    },
+    {
+      "id": "loc_the_calibration_bench",
+      "displayName": "The Calibration Bench",
+      "sector": "bunker",
+      "riskLevel": 0,
+      "radiationUsv": 0.02,
+      "description": "Dosimeters in a row on a felt-lined tray beside a brass clock on a leather hinge. The clockmaker works here. Every figure has a drift, and the drift is normal."
+    },
+    {
+      "id": "loc_the_childrens_baseline_board",
+      "displayName": "The Children's Baseline Board",
+      "sector": "bunker",
+      "riskLevel": 0,
+      "radiationUsv": 0.02,
+      "description": "A chalkboard in the children's corridor, numbers in children's chalk and adults' fingers, half-erased guesses and one date. The midwife writes in pencil so the truth can change its mind quietly."
+    }
+  ]
+}

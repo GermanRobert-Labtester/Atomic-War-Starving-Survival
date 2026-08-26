@@ -35,6 +35,9 @@ namespace AtomicWar.GodotApp.UI
         public void RefreshView()
         {
             if (_combat == null || _combatHistory == null) return;
+            AshfallUiHelpers.EmptyChildren(_combatHistory);
+            AshfallUiHelpers.EmptyChildren(_battleOutcomes);
+            AshfallUiHelpers.EmptyChildren(_tacticalAnalysis);
             var snap = _combat.Snapshot();
 
             // Battle log (real combat history).
@@ -144,6 +147,15 @@ namespace AtomicWar.GodotApp.UI
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_combat != null)
+            {
+                _combat.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
         }
     }
 }

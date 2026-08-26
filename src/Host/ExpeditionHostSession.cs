@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Narrative;
@@ -13,7 +14,7 @@ namespace AtomicWar.GodotApp
     /// present and wire.
     /// </summary>
     public sealed class ExpeditionHostSession
-    {
+    : HostSessionBase{
         public const int DemoSeed = 7071;
 
         public ExpeditionSystem Engine { get; }
@@ -36,9 +37,6 @@ namespace AtomicWar.GodotApp
         public int CurrentDay { get; set; }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
         /// <summary>Fired when Core rolls an encounter and the bridge surfaces a DTO. Host UI subscribes here.</summary>
         public event Action<ExpeditionEncounterBridge.EncounterSurfaced>? OnEncounterSurfaced;
 
@@ -67,12 +65,12 @@ namespace AtomicWar.GodotApp
             _narrative?.State?.pending ?? NoPending;
 
         /// <summary>Resolve a pending entry's catalog definition, or null when the catalog has no record.</summary>
-        public EncounterDefinition FindEncounter(string encounterId) => _narrative?.Find(encounterId);
+        public EncounterDefinition? FindEncounter(string encounterId) => _narrative?.Find(encounterId);
 
         /// <summary>Drop the pending queue without resolving. No invented outcomes.</summary>
         public void ClearAllPending() => _narrative?.ClearAllPending();
 
-        public ExpeditionHostSession(ExpeditionSystem engine = null, NarrativeEncounterSystem narrative = null)
+        public ExpeditionHostSession(ExpeditionSystem engine = null!, NarrativeEncounterSystem narrative = null!)
         {
             Engine = engine ?? new ExpeditionSystem();
             _rng = new SeededRng(DemoSeed);
@@ -80,9 +78,9 @@ namespace AtomicWar.GodotApp
             _bridge = new ExpeditionEncounterBridge(_narrative, _rng);
             DemoDefinitions = new List<ExpeditionDefinition>();
             RegisterDemoDefinitions();
-            Engine.OnExpeditionStarted += s => { LastEvent = $"Expedition started: {s.survivorId} -> {s.displayName}."; StateChanged?.Invoke(); };
-            Engine.OnExpeditionCompleted += s => { LastEvent = $"Expedition completed: {s.survivorId} returned with {s.loot.Count} loot lines."; StateChanged?.Invoke(); };
-            Engine.OnExpeditionFailed += (s, r) => { LastEvent = $"Expedition failed: {s.survivorId} — {r}"; StateChanged?.Invoke(); };
+            Engine.OnExpeditionStarted += s => { LastEvent = $"Expedition started: {s.survivorId} -> {s.displayName}."; RaiseStateChanged(); };
+            Engine.OnExpeditionCompleted += s => { LastEvent = $"Expedition completed: {s.survivorId} returned with {s.loot.Count} loot lines."; RaiseStateChanged(); };
+            Engine.OnExpeditionFailed += (s, r) => { LastEvent = $"Expedition failed: {s.survivorId} — {r}"; RaiseStateChanged(); };
             _bridge.OnSurfaced += dto =>
             {
                 LastEvent = $"Encounter triggered: {dto.trigger.survivorId} at {dto.trigger.displayName} (#{dto.trigger.encounterCount}) -> {dto.encounter_id ?? "bare-notice"}.";
@@ -90,11 +88,11 @@ namespace AtomicWar.GodotApp
                 // never enter the pending list — only resolvable encounters do.
                 if (!string.IsNullOrEmpty(dto.encounter_id))
                     _narrative.EnqueuePending(dto.encounter_id, dto.trigger.locationId, dto.trigger.encounterCount, CurrentDay);
-                StateChanged?.Invoke();
+                RaiseStateChanged();
                 OnEncounterSurfaced?.Invoke(dto);
             };
             Engine.OnEncounterTriggered += s => _bridge.Surface(s);
-            Engine.OnStateChanged += _ => StateChanged?.Invoke();
+            Engine.OnStateChanged += _ => RaiseStateChanged();
         }
 
         private void RegisterDemoDefinitions()
@@ -125,9 +123,9 @@ namespace AtomicWar.GodotApp
             DemoDefinitions.Add(cut);
         }
 
-        public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null)
+        public static ExpeditionHostSession Create(string dataDir, NarrativeEncounterSystem narrative = null!)
         {
-            var session = new ExpeditionHostSession(null, narrative);
+            var session = new ExpeditionHostSession(null!, narrative);
             var save = ExpeditionSaveStore.TryLoad();
             if (save != null)
             {
@@ -174,7 +172,7 @@ namespace AtomicWar.GodotApp
         /// happened rather than wherever the newest encounter surfaced.
         /// </summary>
         public bool EncounterApplyChoice(string encounterId, string choiceId, int day)
-            => EncounterApplyChoice(encounterId, choiceId, day, null);
+            => EncounterApplyChoice(encounterId, choiceId, day, null!);
 
         /// <summary>
         /// Apply a player choice with an explicit locationId. Pass null to let the
@@ -184,8 +182,8 @@ namespace AtomicWar.GodotApp
         {
             if (_bridge == null || string.IsNullOrEmpty(encounterId)) return false;
 
-            string effectiveLocation = locationId ?? PendingLocationFor(encounterId);
-            bool ok = _bridge.ResolveChoice(encounterId, choiceId, day, effectiveLocation);
+            string effectiveLocation = locationId ?? PendingLocationFor(encounterId)!;
+            bool ok = _bridge.ResolveChoice(encounterId, choiceId, day, effectiveLocation!);
 
             // The player has acknowledged this one — shrink the pending list.
             if (ok) _narrative.ClearPending(encounterId);
@@ -193,7 +191,7 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>The pending entry's recorded location for this encounter, or null when it is not pending.</summary>
-        private string PendingLocationFor(string encounterId)
+        private string? PendingLocationFor(string encounterId)
         {
             var pending = _narrative?.State?.pending;
             if (pending == null) return null;
@@ -214,6 +212,62 @@ namespace AtomicWar.GodotApp
         {
             return Engine.Retreat(survivorId) ? $"{survivorId} is retreating." : "Cannot retreat (not looting).";
         }
+
+        // ── Camp actions ──────────────────────────────────────────────
+
+        /// <summary>Enter camp phase for an outbound expedition.</summary>
+        public string EnterCampDemo(
+            string survivorId,
+            float temperatureC = -10f,
+            string weatherCondition = "Clear",
+            float firewood = 8f,
+            float water = 4f,
+            float food = 4f,
+            bool hasTent = true,
+            bool hasBedroll = true,
+            string shelterType = "tent",
+            bool hasSentry = true)
+        {
+            bool ok = Engine.EnterCamp(
+                survivorId, CurrentDay, 18f,
+                temperatureC, weatherCondition,
+                firewood, water, food,
+                hasTent, hasBedroll, shelterType, hasSentry);
+            return ok
+                ? $"{survivorId} established camp. Night begins."
+                : "Cannot enter camp (not outbound or unknown expedition).";
+        }
+
+        /// <summary>Advance one night segment. Returns dawn message when complete.</summary>
+        public string CampTickDemo(string survivorId)
+        {
+            bool dawn = Engine.CampTick(survivorId, _rng);
+            var camp = Engine.GetCampState(survivorId);
+            if (camp == null) return "No active camp.";
+            if (dawn)
+                return $"Dawn. Night complete. Segments: {camp.nightSegmentsCompleted}/{camp.totalNightSegments}.";
+            return $"Night segment {camp.nightSegmentsCompleted}/{camp.totalNightSegments}. " +
+                   $"Firewood: {camp.firewoodRemaining:F1}. Temp: {camp.temperatureC + camp.heatOutput:F1}C.";
+        }
+
+        /// <summary>Resolve a camp encounter.</summary>
+        public string ResolveCampEncounterDemo(string survivorId, string outcome)
+        {
+            bool ok = Engine.ResolveCampEncounter(survivorId, outcome, outcome == "injury" ? 15f : 0f);
+            return ok ? $"Camp encounter resolved: {outcome}." : "No unresolved encounter.";
+        }
+
+        /// <summary>Break camp at dawn.</summary>
+        public string BreakCampDemo(string survivorId, bool retreat = false)
+        {
+            bool ok = Engine.BreakCamp(survivorId, retreat);
+            return ok
+                ? $"Camp broken. {(retreat ? "Retreating to shelter." : "Resuming travel.")}"
+                : "Cannot break camp (night not over or no camp).";
+        }
+
+        /// <summary>Get camp status for UI display.</summary>
+        public CampState? GetCampState(string survivorId) => Engine.GetCampState(survivorId);
 
         public string StatusLine()
         {

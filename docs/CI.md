@@ -107,7 +107,7 @@ Long-running dirty work is staged on:
 integration/audit-p1
 ```
 
-Prefer PRs from that branch (or stacked feature branches cut from it) rather than force-pushing `main`. See `docs/audit/ISSUE_REGISTER.md` AUDIT-002.
+Prefer PRs from that branch (or stacked feature branches cut from it) rather than force-pushing `main`. See deprecated `docs/deprecated_audits/ISSUE_REGISTER.md` AUDIT-002.
 
 ---
 

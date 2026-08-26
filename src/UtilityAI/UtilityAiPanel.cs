@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using Godot;
 using AtomicWar.GodotApp.UI;
 using Ashfall.Core.UI;
@@ -61,7 +62,7 @@ namespace AtomicWar.GodotApp.UtilityAI
         {
             if (_session == null) return;
             _session.StateChanged -= RefreshView;
-            _session = null;
+            _session = null!;
         }
 
         public override void _ExitTree()
@@ -74,10 +75,7 @@ namespace AtomicWar.GodotApp.UtilityAI
         {
             if (_session == null) return;
 
-            foreach (Node child in _actionList.GetChildren())
-                child.QueueFree();
-
-            _lblSelection.Text = string.IsNullOrEmpty(_session.LastEvent)
+            AshfallUiHelpers.EmptyChildren(_actionList);_lblSelection.Text = string.IsNullOrEmpty(_session.LastEvent)
                 ? "No selection yet."
                 : _session.LastEvent;
 

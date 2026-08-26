@@ -20,7 +20,7 @@ namespace Ashfall.Core.Warlords
     {
         public const int DefaultSeed = 7719;
 
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string? dataDirectory = null, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -167,7 +167,7 @@ namespace Ashfall.Core.Warlords
             var timeline = new YearOfAsh.YearOfAshTimelineSystem();
             var encounters = new YearOfAsh.DoorEncounterSystem();
             var factionWar = new YearOfAsh.FactionWarSystem();
-            var save = YearOfAsh.YearOfAshSaveCodec.Capture(timeline, encounters, factionWar, null, null, null, null, warlord);
+            var save = YearOfAsh.YearOfAshSaveCodec.Capture(timeline, encounters, factionWar, null!, null!, null!, null!, warlord);
             Check(save.saveVersion == YearOfAsh.YearOfAshSave.CurrentSaveVersion, "saveVersion is " + YearOfAsh.YearOfAshSave.CurrentSaveVersion);
             Check(save.warlord != null && save.warlord.doctrineId == warlord.DoctrineId, "warlord state captured");
             string encoded = YearOfAsh.YearOfAshSaveCodec.Encode(save, json);
@@ -194,7 +194,7 @@ namespace Ashfall.Core.Warlords
                 "migrated warlord has no territory list (system applies catalog defaults)");
 
             // Future-version rejection + tamper.
-            var future = json.Deserialize<YearOfAsh.YearOfAshSave>(encoded);
+            var future = json.Deserialize<YearOfAsh.YearOfAshSave>(encoded) ?? new YearOfAsh.YearOfAshSave();
             future.saveVersion = YearOfAsh.YearOfAshSave.CurrentSaveVersion + 1;
             future.Checksum = SaveChecksum.Compute(future);
             bool futureRejected = false;

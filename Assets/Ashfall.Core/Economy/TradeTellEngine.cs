@@ -51,8 +51,8 @@ namespace Ashfall.Core.Economy
     public sealed class TradeTellEngine : ITradeTellProvider
     {
         private readonly List<(string Id, float MinInclusive, float MaxInclusive)> _bands = new();
-        private readonly Dictionary<string, List<string>> _pools = new(StringComparer.OrdinalIgnoreCase);
-        private readonly Dictionary<string, TradeStance> _stances = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, List<string>> _pools = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, TradeStance> _stances = new(StringComparer.Ordinal);
 
         public int BandCount => _bands.Count;
         public int PoolCount => _pools.Count;
@@ -107,7 +107,7 @@ namespace Ashfall.Core.Economy
             string key = PoolKey(stance, band);
             if (!_pools.TryGetValue(key, out var pool) || pool.Count == 0)
             {
-                tell = null;
+                tell = null!;
                 return false;
             }
 
@@ -134,7 +134,7 @@ namespace Ashfall.Core.Economy
 
         private static string PoolKey(TradeStance stance, string bandId)
         {
-            return StanceKey(stance) + "/" + bandId;
+            return StanceKey(stance) + "/" + (bandId ?? string.Empty).Trim().ToLowerInvariant();
         }
 
         private static string StanceKey(TradeStance stance)
@@ -166,10 +166,10 @@ namespace Ashfall.Core.Economy
             {
                 foreach (var b in bandsProp.EnumerateArray())
                 {
-                    string id = b.TryGetProperty("id", out var idEl) ? idEl.GetString() : null;
-                    float min = b.TryGetProperty("min", out var minEl) ? (float)minEl.GetDouble() : -100f;
+                    string? id = b.TryGetProperty("id", out var idEl) ? idEl.GetString() : null;
+                    float min = b.TryGetProperty("min", out var minEl) ? (float)minEl.GetDouble()! : -100f;
                     float max = b.TryGetProperty("max", out var maxEl) ? (float)maxEl.GetDouble() : 100f;
-                    engine.RegisterBand(id, min, max);
+                    engine.RegisterBand(id!, min, max);
                 }
             }
 

@@ -1,49 +1,100 @@
-# ASHFALL: Atomic War — Starving Survival
+# ASHFALL: Atomic War – Starving Survival
 
-Post-nuclear survival strategy RPG written in C#, currently migrating from a Unity-first implementation to a Godot 4.7.1 .NET host through an engine-agnostic shared Core.
+2D post-nuclear survival-management game. Godot 4.7 .NET (C#) is the only
+runtime/editor target.
 
-The project is data-driven, deterministic by design, and built around plain-C# simulation systems with thin host/UI layers. No LLM is used at runtime.
+Engine-agnostic simulation lives in `Assets/Ashfall.Core/`; the Godot host and
+presentation live in `src/`; authored data lives in
+`Assets/StreamingAssets/Data/` (the sole data authority); Godot-native art,
+audio, fonts, and UI resources live in `assets/`.
 
-## Source authority
+A legacy-engine (Unity) tree is still present as a migration artifact and is
+being removed — see "Legacy migration surface" below. It is never the source
+of truth for architecture decisions.
 
-The most important repository rule is to modify the correct layer.
+## Stack
 
-| Concern | Authority |
-| --- | --- |
-| Engine-agnostic gameplay/simulation logic | `Assets/Ashfall.Core/` |
-| Active Godot host, composition and UI | `src/`, `scenes/`, `project.godot` |
-| Authored gameplay/content data | `Assets/StreamingAssets/Data/` |
-| Unity-coupled legacy gameplay awaiting migration | `Assets/_Game/` |
-| Unity compatibility project/build | `Assets/`, `Packages/`, `ProjectSettings/` |
-| Historical/generated/quarantined material | reference only; not runtime authority |
+- **Engine:** Godot 4.7.1 .NET (Mono). Compatibility renderer, `canvas_items`
+  stretch, 1920×1080 default viewport.
+- **Host:** `Ashfall.csproj` (net8.0) compiles `src/**/*.cs` +
+  `Assets/Ashfall.Core/**/*.cs` into the Godot assembly (`AtomicWar`).
+- **Core:** engine-agnostic `Ashfall.Core` (plumbed into host and tests from a
+  single source tree; do not copy files).
+- **Tests:** xUnit via `Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`.
 
-See [`docs/ENGINE_SUPPORT_POLICY.md`](docs/ENGINE_SUPPORT_POLICY.md) for the canonical engine and migration policy and [`docs/ASHFALL_CODE_INDEX.md`](docs/ASHFALL_CODE_INDEX.md) for the detailed engineering map.
+## Namespace scheme
 
-## Migration architecture
+- Gameplay systems: `Ashfall.Core.<Domain>` (e.g. `Ashfall.Core.Inventory`,
+  `Ashfall.Core.Economy`). No `Godot`, no `GodotSharp`, no `UnityEngine`.
+- Godot host: `AtomicWar.GodotApp.*` — `UI` panels, `Host` sessions, `Journal`,
+  `World`, `YearOfAsh` widgets.
+- Ids: `snake_case` everywhere (`item_clean_water`, `recipe_iodine`).
+- State changes: events via `IEventBus`; state captured and restored through
+  `CaptureState`/`RestoreState`; no `System.Random`/`Guid.NewGuid()` in
+  simulation — `ISeededRng` only.
 
-ASHFALL uses a strangler migration rather than a Godot rewrite.
+## Folder map
 
-- `Assets/_Game/` contains the large Unity-coupled implementation that is being migrated subsystem by subsystem.
-- `Assets/Ashfall.Core/` is the migration destination. It contains engine-agnostic domain logic, ports, deterministic RNG/clock infrastructure, save/checksum logic, and migrated gameplay systems.
-- `Ashfall.Core/Ashfall.Core.csproj` compiles the exact Core sources from `Assets/Ashfall.Core/` for xUnit tests.
-- `Ashfall.csproj` is the Godot .NET aggregate project. It compiles `src/`, `scripts/`, `Assets/Ashfall.Core/`, and the legacy `_Game` surface through the compatibility bridge.
-- `src/Bridge/` provides the Unity compatibility shim used to keep legacy code compilable while migration proceeds. Load-bearing semantic gaps fail loudly rather than silently returning plausible defaults.
-- `scenes/Main.tscn` boots `src/Main.cs`.
+### `Assets/Ashfall.Core/` — engine-agnostic core
 
-A migrated gameplay rule should have one domain authority in Core. Do not create a second Godot-only implementation of logic that already exists in `_Game` or Core.
+Every system (Disease, Dose Ledger, Duty Roster, Economy/Market, Crafting,
+Expeditions, Muster, Narrative catalogs, Radiation, Research, Survivors,
+UtilityAI, Verdict, Year of Ash, Weather, …) plus the shared ports
+(`IJsonSerializer`, `IFileIO`, `ISeededRng`, `ILog`), checksummed save
+envelope contracts (`SaveChecksum`, `SaveEnvelopeDetection`), and the
+`CatalogIntegrityValidator`. Depends on nothing outside this tree.
 
-## Data authority
+### `Assets/StreamingAssets/Data/` — authored JSON data
+
+One JSON file per catalog (plus the large `narrative/` corpus). `snake_case`
+ids, every file carries `schema_version`; loaded via `res://…` by host
+sessions and validated by the data-integrity selftest (cross-reference,
+range, uniqueness).
+
+### `src/` — Godot host
+
+Thin presentation/wiring only. `src/Host/` typed sessions per catalog/subsystem
+(Capture/Restore + per-store save codecs); `src/UI/` panels; `src/Main.cs`
+(`AtomicWar.GodotApp.Main`) builds all screens from the ASCII feel of Godot UI.
+The root `Main.tscn` bootstraps the host.
+
+### `assets/`, `scenes/`, `Ashfall.Core.Tests/`, `scripts/ci/`, `tools/`
+
+- `assets/` — Godot-native art/audio/fonts/sprites/ui (images/fonts are Git
+  LFS; runtime audio plain binary). Every importable file has a `.import`
+  sidecar (pre-commit hook enforces this).
+- `scenes/` — hand-written scenes (`Main.tscn` + world shells).
+- `Ashfall.Core.Tests/` — xUnit tests targeting net9.0 (host is net8.0).
+- `scripts/ci/` — gates: `godot-asset-gate.sh` (selftest battery),
+  `asset-orphan-sweep.sh`, `git-hooks/pre-commit`.
+- `tools/` — asset pipeline + dev utilities (`ui-preview`, manifest tools,
+  generation scripts).
+
+## Persistence
+
+Checksummed save envelopes with explicit version migration; malformed current
+envelopes are rejected; writes go through the shared atomic writer; per-store
+SHA-256 records (`SaveLoadHostSession`, `SaveChecksum`).
 
 `Assets/StreamingAssets/Data/` is the authored JSON authority for shared gameplay/content data. Both hosts consume this data during the migration.
 
-Important conventions:
+The simulation systems are implemented against the Core and the host is a
+working shell: navigation between all panels, the multi-day gameplay loop,
+save/continue, and settings overlay pass `--playable-shell-selftest`, and the
+catalog battery (`--data-integrity-selftest` etc.) stays green. Remaining
+presentation polish is tracked in the panel-level snapshots the selftests
+generate.
 
-- IDs are `snake_case`.
-- Do not invent IDs in host code when a catalog owns them.
-- Simulation state must be deterministic for the same seed and inputs.
-- Save integrity must not depend on serializer formatting.
-- Core code must not use Unity `JsonUtility`.
-- Simulation calendar/randomness belongs behind `IClock` / `ISeededRng` rather than wall-clock or process-randomized APIs.
+## Legacy migration surface (deprecated)
+
+`Assets/_Game/`, `Assets/UI/…`, `Assets/Resources/`, `Assets/Samples/` and
+the `.meta`/`.asmdef` sidecars alongside them are migration artifacts from
+the prior engine host, kept under version control only until the dependency
+map is exhausted. Prefer `Assets/Ashfall.Core/` and `src/` for new work.
+Do not add new code or assets here, and follow the "Godot is authoritative"
+rule. The shim under `src/Bridge/` (a `UnityEngine` compatibility namespace)
+exists to hold the compiled Unity tree in compatibility only and is in
+scope for removal with `Assets/_Game/`.
 
 ## Active host
 
@@ -60,72 +111,12 @@ The Godot host contains interactive UI plus a large headless diagnostic/self-tes
 Examples:
 
 ```bash
-godot --headless --path . -- --data-integrity-selftest
-godot --headless --path . -- --bridge-selftest
-godot --headless --path . -- --survivors-selftest
-godot --headless --path . -- --combat-selftest
-godot --headless --path . -- --expansions-selftest
-```
-
-Use `godot --headless --path . -- --host-help` for the current command list.
-
-## Build and test
-
-Canonical verification is .NET + Godot:
-
-```bash
-# Engine-agnostic Core tests
+dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
 dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
-
-# Compile the Godot host + Core + compatibility surface
 dotnet build Ashfall.csproj
-
-# Canonical asset/data/bridge/gameplay gates
+godot --headless --path . -- --data-integrity-selftest
+godot --headless --path . -- --asset-registry-selftest
+godot --headless --path . -- --playable-shell-selftest
+godot --headless --path . -- --ui-layout-selftest
 ./scripts/ci/godot-asset-gate.sh
 ```
-
-The primary GitHub Actions workflow, `.github/workflows/ci.yml`, performs JSON validation, Core tests, the Godot aggregate build/import, and canonical headless gates.
-
-## Unity compatibility
-
-The Unity project remains in the repository as a migration source and compatibility build surface. It is not the canonical gameplay verification host.
-
-`.github/workflows/build.yml` can still produce Unity Windows/WebGL compatibility artifacts on `main` when Unity credentials are available. Those builds do not replace the Godot/Core quality gate.
-
-Do not invoke Unity tooling for ordinary migration work unless the task explicitly requires Unity compatibility validation.
-
-## Repository map
-
-| Path | Responsibility |
-| --- | --- |
-| `Assets/Ashfall.Core/` | Shared engine-agnostic domain logic and migration target |
-| `Ashfall.Core/` | .NET project wrapper that globs the shared Core sources |
-| `Ashfall.Core.Tests/` | xUnit tests for shared Core behavior |
-| `Assets/_Game/` | Unity-coupled legacy gameplay implementation |
-| `Assets/StreamingAssets/Data/` | Authored JSON catalogs and shared data authority |
-| `src/` | Godot host, sessions, UI, bridge, CLI/self-test harness |
-| `scenes/` | Godot scenes; `Main.tscn` is the application entry scene |
-| `scripts/ci/` | Canonical repository/Godot validation scripts |
-| `.github/workflows/ci.yml` | Primary Godot/Core CI gate |
-| `.github/workflows/build.yml` | Unity compatibility artifact workflow |
-| `docs/` | Current engineering, migration and design documentation |
-| `sources.md` | Comprehensive repository audit/risk report dated 2026-08-22 |
-
-## Engineering principles
-
-Keep changes reviewable and preserve these invariants:
-
-1. One simulation/domain authority per system.
-2. Same seed + same inputs must produce the same simulation result.
-3. Validate all action preconditions before consuming resources.
-4. Save capture/restore must be symmetric and must not alias live state.
-5. Host wiring is part of correctness; a Core feature is incomplete until the active host supplies its required ports.
-6. Persisted queues/histories must remain bounded or explicitly compacted.
-7. Semantic compatibility-bridge gaps should fail loudly.
-
-## Additional references
-
-- `docs/ENGINE_SUPPORT_POLICY.md` — authoritative engine/support/migration policy.
-- `docs/ASHFALL_CODE_INDEX.md` — detailed codebase map and subsystem reference.
-- `sources.md` — current comprehensive architecture/codebase audit.
-- `10LOOP_AUDIT_REPORT.md` — historical deep-audit ledger and regression evidence; treat reported test results as historical snapshots, not current CI status.

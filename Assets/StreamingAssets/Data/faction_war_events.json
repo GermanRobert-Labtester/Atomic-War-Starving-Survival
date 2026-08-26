@@ -1,696 +1,1224 @@
 {
- "chains": [
-  {
-   "chainId": "evt_d480_grain_tally_dispute",
-   "band": "cold_war",
-   "title": "Tally Dispute at the Exchange",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_grain_silo",
-   "stages": [
+  "schema_version": 1,
+  "chains": [
     {
-     "stageId": "evt_d480_grain_tally_dispute_s1",
-     "minDay": 480,
-     "triggerCondition": "Fires automatically once the player has visited the Grain Exchange.",
-     "title": "A Thumb on the Scale",
-     "bodyText": "A Garrison quartermaster's runner sets a sack on the Exchange scale and the needle settles a half-kilo light of what his chit claims. The Rebuilders weigher calls it out loud enough for the whole line to hear. The runner doesn't reach for his sidearm, but his hand moves like it wants to. Everyone within earshot has stopped pretending to haggle.",
-     "choices": [
-      {"choiceId": "evt_d480_grain_tally_dispute_s1_c1", "text": "Back the weigher publicly — the scale is the scale", "moraleDelta": 2, "leadsToStageId": "evt_d480_grain_tally_dispute_s2"},
-      {"choiceId": "evt_d480_grain_tally_dispute_s1_c2", "text": "Stay out of it and let the Exchange's own rule handle it", "moraleDelta": 0, "leadsToStageId": "evt_d480_grain_tally_dispute_s2"},
-      {"choiceId": "evt_d480_grain_tally_dispute_s1_c3", "text": "Quietly tell the runner to walk away before it becomes a report", "moraleDelta": 1, "leadsToStageId": "evt_d480_grain_tally_dispute_s2"}
-     ]
+      "chainId": "evt_d480_grain_tally_dispute",
+      "band": "cold_war",
+      "title": "Tally Dispute at the Exchange",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_grain_silo",
+      "stages": [
+        {
+          "stageId": "evt_d480_grain_tally_dispute_s1",
+          "minDay": 480,
+          "triggerCondition": "Fires automatically once the player has visited the Grain Exchange.",
+          "title": "A Thumb on the Scale",
+          "bodyText": "A Garrison quartermaster's runner sets a sack on the Exchange scale and the needle settles a half-kilo light of what his chit claims. The Rebuilders weigher calls it out loud enough for the whole line to hear. The runner doesn't reach for his sidearm, but his hand moves like it wants to. Everyone within earshot has stopped pretending to haggle.",
+          "choices": [
+            {
+              "choiceId": "evt_d480_grain_tally_dispute_s1_c1",
+              "text": "Back the weigher publicly — the scale is the scale",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d480_grain_tally_dispute_s2"
+            },
+            {
+              "choiceId": "evt_d480_grain_tally_dispute_s1_c2",
+              "text": "Stay out of it and let the Exchange's own rule handle it",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d480_grain_tally_dispute_s2"
+            },
+            {
+              "choiceId": "evt_d480_grain_tally_dispute_s1_c3",
+              "text": "Quietly tell the runner to walk away before it becomes a report",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d480_grain_tally_dispute_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d480_grain_tally_dispute_s2",
+          "minDay": 483,
+          "triggerCondition": "Fires three days after evt_d480_grain_tally_dispute_s1.",
+          "title": "Fair Scales or Broken Fingers",
+          "bodyText": "The dispute resolves the old way: consensus, not command. Two Exchange regulars escort the runner out with his sack and his dignity both a little lighter, and nobody draws a weapon over it. Three days later a bulletin goes up at Checkpoint Gamma anyway, signed Harven, reminding the district that the Exchange operates at the Garrison's continued forbearance. Nobody at the Exchange has ever seen that word used as a threat before.",
+          "choices": [
+            {
+              "choiceId": "evt_d480_grain_tally_dispute_s2_c1",
+              "text": "Read the bulletin as exactly the warning it is",
+              "moraleDelta": -1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d480_grain_tally_dispute_s2_c2",
+              "text": "Dismiss it as routine chest-thumping",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
     },
     {
-     "stageId": "evt_d480_grain_tally_dispute_s2",
-     "minDay": 483,
-     "triggerCondition": "Fires three days after evt_d480_grain_tally_dispute_s1.",
-     "title": "Fair Scales or Broken Fingers",
-     "bodyText": "The dispute resolves the old way: consensus, not command. Two Exchange regulars escort the runner out with his sack and his dignity both a little lighter, and nobody draws a weapon over it. Three days later a bulletin goes up at Checkpoint Gamma anyway, signed Harven, reminding the district that the Exchange operates at the Garrison's continued forbearance. Nobody at the Exchange has ever seen that word used as a threat before.",
-     "choices": [
-      {"choiceId": "evt_d480_grain_tally_dispute_s2_c1", "text": "Read the bulletin as exactly the warning it is", "moraleDelta": -1, "leadsToStageId": ""},
-      {"choiceId": "evt_d480_grain_tally_dispute_s2_c2", "text": "Dismiss it as routine chest-thumping", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
+      "chainId": "evt_d485_checkpoint_notice_war",
+      "band": "cold_war",
+      "title": "The Bulletin Board War",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_garrison_checkpoint_gamma",
+      "stages": [
+        {
+          "stageId": "evt_d485_checkpoint_notice_war_s1",
+          "minDay": 485,
+          "triggerCondition": "Fires automatically once the player has visited Checkpoint Gamma.",
+          "title": "Dueling Notices",
+          "bodyText": "A fresh Garrison bulletin blames the season's grain shortfall on Exchange hoarding. By morning someone has pasted a Rebuilders rebuttal directly over half of it, citing the Exchange's own ledger totals down to the kilo. The corkboard underneath has been repapered so many times it shows through in patches, and off to one side, half under a supply tarp, an older sign nobody has thrown out still reads VOSS in a hard, pressing hand.",
+          "choices": [
+            {
+              "choiceId": "evt_d485_checkpoint_notice_war_s1_c1",
+              "text": "Copy down the disputed numbers for your own records",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d485_checkpoint_notice_war_s2"
+            },
+            {
+              "choiceId": "evt_d485_checkpoint_notice_war_s1_c2",
+              "text": "Ask the guard shack who keeps propping the old sign back up",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d485_checkpoint_notice_war_s2"
+            },
+            {
+              "choiceId": "evt_d485_checkpoint_notice_war_s1_c3",
+              "text": "Ignore the board and move on",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d485_checkpoint_notice_war_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d485_checkpoint_notice_war_s2",
+          "minDay": 489,
+          "triggerCondition": "Fires four days after evt_d485_checkpoint_notice_war_s1.",
+          "title": "A Third Hand",
+          "bodyText": "A new notice appears overnight, unsigned, tacked over both the Garrison bulletin and the Rebuilders rebuttal. It quotes supply figures neither faction has published, precise to the crate. By the time the guard shack notices, half the queue has already read it and nobody who copies the numbers down can find them printed anywhere official afterward.",
+          "choices": [
+            {
+              "choiceId": "evt_d485_checkpoint_notice_war_s2_c1",
+              "text": "Ask around the queue whether anyone saw who posted it",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d485_checkpoint_notice_war_s2_c2",
+              "text": "Let it go — bulletins come and go",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d488_manifest_holdup",
+      "band": "cold_war",
+      "title": "A Manifest That Doesn't Match",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_garrison_checkpoint_gamma",
+      "stages": [
+        {
+          "stageId": "evt_d488_manifest_holdup_s1",
+          "minDay": 488,
+          "triggerCondition": "Fires automatically once the player has visited Checkpoint Gamma.",
+          "title": "The Cart Doesn't Move",
+          "bodyText": "A Rebuilders grain cart bound for the Exchange stalls at the boom barrier because the manifest lists sacks the corporal counting them can't find under the tarp. The escort insists the count was right when the cart left the silo. The corporal's clipboard says otherwise, twice, in two colors of ink where he's gone over the tally a second time to be sure. Traffic backs up on both sides of the barrier. Nobody's raised a voice yet, but the corporal keeps one hand flat on the clipboard like it's the only thing keeping this civil, and the escort keeps checking the sun, counting how much of the day's distribution window she's about to lose to a paperwork argument.",
+          "choices": [
+            {
+              "choiceId": "evt_d488_manifest_holdup_s1_c1",
+              "text": "Help recount the sacks yourself, in front of both of them",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d488_manifest_holdup_s2"
+            },
+            {
+              "choiceId": "evt_d488_manifest_holdup_s1_c2",
+              "text": "Back the corporal's procedure and tell the escort to wait it out",
+              "moraleDelta": -1,
+              "leadsToStageId": "evt_d488_manifest_holdup_s2"
+            },
+            {
+              "choiceId": "evt_d488_manifest_holdup_s1_c3",
+              "text": "Suggest releasing half the load now and settling the rest by ledger",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d488_manifest_holdup_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d488_manifest_holdup_s2",
+          "minDay": 490,
+          "triggerCondition": "Fires two days after evt_d488_manifest_holdup_s1.",
+          "title": "Short By Three, On Paper",
+          "bodyText": "The recount settles it, mostly: three sacks short of the manifest, not the dozen the corporal's first pass implied, and not enough to prove anything beyond someone rounding wrong back at the silo before the cart left. The escort signs a correction chit and goes on her way. The corporal files an incident report anyway, because Checkpoint Gamma has quietly started keeping those on anything that touches the Exchange. Neither office calls it theft. Both offices, for the first time, now have a paper trail that could be read that way later, if anyone ever wanted to read it that way.",
+          "choices": [
+            {
+              "choiceId": "evt_d488_manifest_holdup_s2_c1",
+              "text": "File this away as the first of many incident reports to come",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d488_manifest_holdup_s2_c2",
+              "text": "Shrug it off as an honest rounding error, nothing more",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d491_toll_hike",
+      "band": "cold_war",
+      "title": "The Second Hike",
+      "factionsInvolved": [
+        "warlords_sector_4"
+      ],
+      "locationId": "loc_weighbridge",
+      "stages": [
+        {
+          "stageId": "evt_d491_toll_hike_s1",
+          "minDay": 491,
+          "triggerCondition": "Fires automatically once the player has visited the Weighbridge.",
+          "title": "The Rate Line, Struck Through Again",
+          "bodyText": "The chalk board by the Weighbridge booth shows the toll rate struck through and rewritten higher for the second time this month, in the Tollman's own hand, no explanation offered. The mechanical scale still settles true. The price of crossing does not.",
+          "choices": [
+            {
+              "choiceId": "evt_d491_toll_hike_s1_c1",
+              "text": "Pay the new rate without comment",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d491_toll_hike_s2"
+            },
+            {
+              "choiceId": "evt_d491_toll_hike_s1_c2",
+              "text": "Haggle — the ledger's fresh ink suggests it's negotiable",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d491_toll_hike_s2"
+            },
+            {
+              "choiceId": "evt_d491_toll_hike_s1_c3",
+              "text": "Ask the booth outright why the rate keeps climbing",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d491_toll_hike_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d491_toll_hike_s2",
+          "minDay": 494,
+          "triggerCondition": "Fires three days after evt_d491_toll_hike_s1.",
+          "title": "What the Hike Pays For",
+          "bodyText": "The rumor moving through the crossing queue is that the hike isn't greed, or isn't only greed — it's funding safe passage for shipments neither the Garrison nor the Rebuilders will publicly claim as theirs. Nobody at the booth confirms or denies it. The ledger just gets thicker.",
+          "choices": [
+            {
+              "choiceId": "evt_d491_toll_hike_s2_c1",
+              "text": "File the rumor away for later",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d491_toll_hike_s2_c2",
+              "text": "Decide it's none of your business and cross",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d495_the_clean_strike",
+      "band": "cold_war",
+      "title": "The Clean Strike",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_railway_span_44_alpha",
+      "stages": [
+        {
+          "stageId": "evt_d495_the_clean_strike_s1",
+          "minDay": 495,
+          "triggerCondition": "Fires automatically once the player has visited Railway Span 44-Alpha.",
+          "title": "A Crater With No Claim",
+          "bodyText": "Something hits the empty ground short of Railway Span 44-Alpha in the night — no warning, no follow-up, one clean crater in a field nobody was using. What's strange isn't the strike. It's the aftermath: the Geiger reading over the crater lip is lower than the surrounding ground, not higher, as if whatever fell there scoured more than it spread. Neither faction's patrols claim it happened on their orders.",
+          "choices": [
+            {
+              "choiceId": "evt_d495_the_clean_strike_s1_c1",
+              "text": "Climb down into the crater and look for fragments",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d495_the_clean_strike_s2"
+            },
+            {
+              "choiceId": "evt_d495_the_clean_strike_s1_c2",
+              "text": "Report it to the nearest Garrison patrol",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d495_the_clean_strike_s2"
+            },
+            {
+              "choiceId": "evt_d495_the_clean_strike_s1_c3",
+              "text": "Report it to the nearest Rebuilders runner instead",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d495_the_clean_strike_s2"
+            },
+            {
+              "choiceId": "evt_d495_the_clean_strike_s1_c4",
+              "text": "Say nothing and keep moving",
+              "moraleDelta": -1,
+              "leadsToStageId": "evt_d495_the_clean_strike_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d495_the_clean_strike_s2",
+          "minDay": 498,
+          "triggerCondition": "Fires three days after evt_d495_the_clean_strike_s1.",
+          "title": "Nobody's Ordnance",
+          "bodyText": "Word reaches both checkpoints and both deny it. The Garrison logs no fire mission for that grid on that night. The Rebuilders have no artillery to have fired it with in the first place. The D/9 demolition markers on the bridge itself are untouched. Whatever it was, it came from somewhere neither faction is willing to admit having, or from somewhere neither of them controls.",
+          "choices": [
+            {
+              "choiceId": "evt_d495_the_clean_strike_s2_c1",
+              "text": "Remember this the next time something doesn't add up",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d503_conscription_lists",
+      "band": "open_conflict",
+      "title": "The Quota Goes Up",
+      "factionsInvolved": [
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_conscription_office",
+      "stages": [
+        {
+          "stageId": "evt_d503_conscription_lists_s1",
+          "minDay": 503,
+          "triggerCondition": "Fires automatically once the player has visited the Conscription Office.",
+          "title": "A Name on the List",
+          "bodyText": "The month's conscription list goes up with a wider quota than last time, and a young clerk everyone calls Denner finds his own name on it between two strangers'. He has been filing other men's papers at that counter for a year and never once expected his own name typed in the same hand. He doesn't say anything. He just stops filing.",
+          "choices": [
+            {
+              "choiceId": "evt_d503_conscription_lists_s1_c1",
+              "text": "Help Denner petition for an exemption through channels",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d503_conscription_lists_s2"
+            },
+            {
+              "choiceId": "evt_d503_conscription_lists_s1_c2",
+              "text": "Help Denner disappear before the muster date",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d503_conscription_lists_s2"
+            },
+            {
+              "choiceId": "evt_d503_conscription_lists_s1_c3",
+              "text": "Stay out of it — it isn't your quota",
+              "moraleDelta": -1,
+              "leadsToStageId": "evt_d503_conscription_lists_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d503_conscription_lists_s2",
+          "minDay": 508,
+          "triggerCondition": "Fires five days after evt_d503_conscription_lists_s1.",
+          "title": "The Counter Stays Empty",
+          "bodyText": "Denner does not report to muster. The petition, if filed, goes nowhere before the deadline; the exemption, if sought, is denied without a reason given. Either way the clerk's counter sits empty for two shifts before someone else is rotated in to cover it. Nobody at the office says his name out loud after that.",
+          "choices": [
+            {
+              "choiceId": "evt_d503_conscription_lists_s2_c1",
+              "text": "Keep an ear out for where deserters go to ground",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d509_border_clash_span44",
+      "band": "open_conflict",
+      "title": "Standoff on the Span",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_railway_span_44_alpha",
+      "stages": [
+        {
+          "stageId": "evt_d509_border_clash_span44_s1",
+          "minDay": 509,
+          "triggerCondition": "Fires automatically once evt_d495_the_clean_strike has resolved.",
+          "title": "Two Patrols, One Bridge",
+          "bodyText": "A Garrison patrol and a Rebuilders escort converge on Railway Span 44-Alpha from opposite ends at the same hour, both there to inspect the same rumor of a supply train coming through. Neither backs off the deck. Rifles stay slung, but nobody's hands are far from them, and the automated loop keeps playing station null, target grid primed, remain in shelter to an audience that, for once, is actually standing on the grid in question.",
+          "choices": [
+            {
+              "choiceId": "evt_d509_border_clash_span44_s1_c1",
+              "text": "Step between the two patrols and talk them down",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d509_border_clash_span44_s2"
+            },
+            {
+              "choiceId": "evt_d509_border_clash_span44_s1_c2",
+              "text": "Stay hidden and watch how it resolves",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d509_border_clash_span44_s2"
+            },
+            {
+              "choiceId": "evt_d509_border_clash_span44_s1_c3",
+              "text": "Warn the weaker-looking patrol before the other arrives",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d509_border_clash_span44_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d509_border_clash_span44_s2",
+          "minDay": 512,
+          "triggerCondition": "Fires three days after evt_d509_border_clash_span44_s1.",
+          "title": "Charges Re-Armed",
+          "bodyText": "Nobody fires. Both patrols withdraw to their own ends of the bridge, and that should be the end of it, except three days later Garrison engineers are back on the span re-taping the D/9 charges to doctrine spec, which they have not bothered to maintain in over a year. The bridge is suddenly worth defending to someone. That is rarely good news for whoever is standing on it when the reason shows up.",
+          "choices": [
+            {
+              "choiceId": "evt_d509_border_clash_span44_s2_c1",
+              "text": "Note the bridge is now a live demolition again",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d517_almshouse_shelling",
+      "band": "open_conflict",
+      "title": "St Brigid's Falls Quiet Twice",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_st_brigids_almshouse",
+      "stages": [
+        {
+          "stageId": "evt_d517_almshouse_shelling_s1",
+          "minDay": 515,
+          "triggerCondition": "Fires automatically once the player has visited St Brigid's Almshouse.",
+          "title": "A District About to Get Noisy",
+          "bodyText": "A scavenger passing through mentions, almost as an aside, that the almshouse district is about to get noisy — she won't say how she knows, only that she isn't sleeping out that way this week. Nobody takes it seriously. The almshouse has been empty and respected for three years; there is nothing out there worth a shell.",
+          "choices": [
+            {
+              "choiceId": "evt_d517_almshouse_shelling_s1_c1",
+              "text": "Take the warning seriously and stay clear of the district",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d517_almshouse_shelling_s2"
+            },
+            {
+              "choiceId": "evt_d517_almshouse_shelling_s1_c2",
+              "text": "Dismiss it as scavenger superstition",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d517_almshouse_shelling_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d517_almshouse_shelling_s2",
+          "minDay": 517,
+          "triggerCondition": "Fires two days after evt_d517_almshouse_shelling_s1.",
+          "title": "The Made Beds Come Apart",
+          "bodyText": "The almshouse takes a hit at dusk. There is no one inside to count among the dead — the ward has been empty for years — but the roof is gone over the east wing, the tight-made beds are scattered with three years of undisturbed dust now blown open to the sky, and the charts that were filled in to a date and not after it are ash. Whoever ran this place kept it as a kind of monument. It is not a monument anymore.",
+          "choices": [
+            {
+              "choiceId": "evt_d517_almshouse_shelling_s2_c1",
+              "text": "Salvage what's left of the pantry stores before looters do",
+              "moraleDelta": -1,
+              "leadsToStageId": "evt_d517_almshouse_shelling_s3"
+            },
+            {
+              "choiceId": "evt_d517_almshouse_shelling_s2_c2",
+              "text": "Leave it as it fell",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d517_almshouse_shelling_s3"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d517_almshouse_shelling_s3",
+          "minDay": 519,
+          "triggerCondition": "Fires two days after evt_d517_almshouse_shelling_s2.",
+          "title": "Not the Same Hand",
+          "bodyText": "Whoever compares this crater to the clean one out by Railway Span 44-Alpha notices the difference immediately: this strike scattered wide, threw debris a hundred meters, spiked the surrounding rads instead of scouring them down. If the same party is responsible for both, they are either losing precision or were never trying for it here. The two strikes do not read like the same kind of intention.",
+          "choices": [
+            {
+              "choiceId": "evt_d517_almshouse_shelling_s3_c1",
+              "text": "Start keeping your own notes on the strikes",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d522_switchback_toll",
+      "band": "open_conflict",
+      "title": "The Patrol on the Switchbacks",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_ash_sign"
+      ],
+      "locationId": "loc_shrine_switchback_waystation",
+      "stages": [
+        {
+          "stageId": "evt_d522_switchback_toll_s1",
+          "minDay": 522,
+          "triggerCondition": "Fires automatically once the player has visited the Switchback Waystation.",
+          "title": "Papers, Then a Fee",
+          "bodyText": "A Garrison squad has planted itself at the Switchback Waystation for the first time since the shrine's cairn went up, checking pilgrim papers against a list nobody at the shrine has seen and charging a fee for escort the rest of the way, payable in the same coin the checkpoints take. The guestbook board over the lean-to logs three years of names and one line near the bottom that just says turned back. Toma Reyes, waiting on the last group up the trail, tells the corporal in charge, plainly, that the shrine takes tribute at the cairn, from whoever brings it, on its own terms, and has never once needed an escort to get there. The corporal says only that the order came down from the checkpoint and the fee stands until it's rescinded.",
+          "choices": [
+            {
+              "choiceId": "evt_d522_switchback_toll_s1_c1",
+              "text": "Pay the fee for a pilgrim who can't cover it",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d522_switchback_toll_s2"
+            },
+            {
+              "choiceId": "evt_d522_switchback_toll_s1_c2",
+              "text": "Ask the corporal to show the list he's checking names against",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d522_switchback_toll_s2"
+            },
+            {
+              "choiceId": "evt_d522_switchback_toll_s1_c3",
+              "text": "Pay your own fee and climb on without pressing it",
+              "moraleDelta": -1,
+              "leadsToStageId": "evt_d522_switchback_toll_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d522_switchback_toll_s2",
+          "minDay": 525,
+          "triggerCondition": "Fires three days after evt_d522_switchback_toll_s1.",
+          "title": "Rescinded, Not Apologized For",
+          "bodyText": "The order gets pulled within the week — Harven's office cites manpower, not principle, and the squad packs out without ceremony. Toma has the fee refunded to everyone who paid it, tracked down name by name off the guestbook board, which takes her longer than the whole occupation did. She doesn't call it a victory. The shrine has held its ground on tribute for three years without asking anyone's permission to do it, and for four days that stopped being entirely true, refund or not.",
+          "choices": [
+            {
+              "choiceId": "evt_d522_switchback_toll_s2_c1",
+              "text": "Note that the shrine's neutrality just survived its first real test",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d522_switchback_toll_s2_c2",
+              "text": "Wonder how long the next order will last",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d524_market_price_spike",
+      "band": "open_conflict",
+      "title": "The Exchange Arms a Detail",
+      "factionsInvolved": [
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_grain_silo",
+      "stages": [
+        {
+          "stageId": "evt_d524_market_price_spike_s1",
+          "minDay": 524,
+          "triggerCondition": "Fires automatically once evt_d517_almshouse_shelling has resolved.",
+          "title": "Grain Prices Climb",
+          "bodyText": "With a supply route disrupted by the almshouse strike, prices at the Exchange climb for the first time in a year. Adaeze Okonkwo holds the line on the fair-scales rule, but a knot of younger roster members corners her after the tables close, arguing the unweaponed honor system will not survive a real siege. She has run this roster since the rubble-clearing days. She has never had to overrule this many of them at once.",
+          "choices": [
+            {
+              "choiceId": "evt_d524_market_price_spike_s1_c1",
+              "text": "Back Adaeze's neutral, unarmed stance",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d524_market_price_spike_s2"
+            },
+            {
+              "choiceId": "evt_d524_market_price_spike_s1_c2",
+              "text": "Back the roster members who want a real guard detail",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d524_market_price_spike_s2"
+            },
+            {
+              "choiceId": "evt_d524_market_price_spike_s1_c3",
+              "text": "Suggest rationing sales instead of arming up",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d524_market_price_spike_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d524_market_price_spike_s2",
+          "minDay": 528,
+          "triggerCondition": "Fires four days after evt_d524_market_price_spike_s1.",
+          "title": "A Small Detail, Against Her Own Instinct",
+          "bodyText": "Adaeze compromises: a small armed detail, four people, rotating, keeping their weapons under coats unless the tables are actually threatened. It is a narrow concession and she frames it that way to the roster. It is still the first weapon the Exchange has ever fielded on purpose, and everyone who has traded there for three years under the no weapons past the rope sign notices exactly what has changed.",
+          "choices": [
+            {
+              "choiceId": "evt_d524_market_price_spike_s2_c1",
+              "text": "Trade at the Exchange as before and say nothing",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d533_garrison_offensive_grain_silo",
+      "band": "the_offensive",
+      "title": "Continuity of Distribution",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_grain_silo",
+      "stages": [
+        {
+          "stageId": "evt_d533_garrison_offensive_grain_silo_s1",
+          "minDay": 533,
+          "triggerCondition": "Fires automatically once evt_d524_market_price_spike has resolved.",
+          "title": "The Garrison Moves on the Exchange",
+          "bodyText": "Colonel Harven's office issues an order to install a permanent inspection post at the Exchange, citing the roster's own armed detail as proof neutrality has already collapsed. Garrison squads arrive at the leaning silo before the traders have finished setting up the trestle tables. This is not phrased as a seizure. Nobody at the Exchange believes it is anything else.",
+          "choices": [
+            {
+              "choiceId": "evt_d533_garrison_offensive_grain_silo_s1_c1",
+              "text": "Help the Exchange's detail hold the entrance",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d533_garrison_offensive_grain_silo_s2"
+            },
+            {
+              "choiceId": "evt_d533_garrison_offensive_grain_silo_s1_c2",
+              "text": "Help traders evacuate stock before the post goes up",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d533_garrison_offensive_grain_silo_s2"
+            },
+            {
+              "choiceId": "evt_d533_garrison_offensive_grain_silo_s1_c3",
+              "text": "Try to broker a delay with the squad commander",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d533_garrison_offensive_grain_silo_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d533_garrison_offensive_grain_silo_s2",
+          "minDay": 536,
+          "triggerCondition": "Fires three days after evt_d533_garrison_offensive_grain_silo_s1.",
+          "title": "A Checkpoint Under the Leaning Silo",
+          "bodyText": "The Garrison secures a foothold at the entrance rope but not the tables themselves — a tense, half-finished occupation that satisfies no one. Traders now clear both the Tollman's crossing fees and a Garrison inspection to sell grain that used to move through on the scale's word alone. The scale is still honest. Almost nothing else at the Exchange is simple anymore.",
+          "choices": [
+            {
+              "choiceId": "evt_d533_garrison_offensive_grain_silo_s2_c1",
+              "text": "Keep trading through the new checkpoint",
+              "moraleDelta": -1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d533_garrison_offensive_grain_silo_s2_c2",
+              "text": "Take your business elsewhere",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d541_evacuation_window_plaza",
+      "band": "the_offensive",
+      "title": "A Window Before the Horn",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_ration_queue_plaza",
+      "stages": [
+        {
+          "stageId": "evt_d541_evacuation_window_plaza_s1",
+          "minDay": 541,
+          "triggerCondition": "Fires automatically once evt_d533_garrison_offensive_grain_silo has resolved.",
+          "title": "Someone Knows Before It Happens",
+          "bodyText": "A source you trust — a runner rattled by an order she was told not to ask about, or a pilgrim who says the shrine's numbers pointed here days ago — tells you Ration Plaza is going to be hit, soon, maybe within the week. There is no proof, only the kind of certainty that has been right before. The plaza's queue lines are painted fresh and the horn has not sounded yet. You have a window, and no way to know how wide it is.",
+          "choices": [
+            {
+              "choiceId": "evt_d541_evacuation_window_plaza_s1_c1",
+              "text": "Warn the queue publicly, whatever it costs your source",
+              "moraleDelta": 4,
+              "leadsToStageId": "evt_d541_evacuation_window_plaza_s2_warned"
+            },
+            {
+              "choiceId": "evt_d541_evacuation_window_plaza_s1_c2",
+              "text": "Use the window to move stock out of the plaza's own stores first",
+              "moraleDelta": -3,
+              "leadsToStageId": "evt_d541_evacuation_window_plaza_s2_looted"
+            },
+            {
+              "choiceId": "evt_d541_evacuation_window_plaza_s1_c3",
+              "text": "Stay clear yourself and tell no one",
+              "moraleDelta": -1,
+              "leadsToStageId": "evt_d541_evacuation_window_plaza_s2_silent"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d541_evacuation_window_plaza_s2_warned",
+          "minDay": 543,
+          "triggerCondition": "Fires automatically after evt_d541_evacuation_window_plaza_s1 resolves on the warn-the-queue path.",
+          "title": "The Cost of Being Right",
+          "bodyText": "Half the queue thins out over two days, quietly, the way people leave when they've been told something they can't repeat the source of. A Garrison sergeant starts asking who's been talking, and your source stops answering the signal you used to reach her. You don't know yet whether she's just being careful or whether careful stopped being enough. The plaza is emptier than it should be for a ration day. Nobody in it knows why, except the ones who do, and they aren't saying either.",
+          "choices": []
+        },
+        {
+          "stageId": "evt_d541_evacuation_window_plaza_s2_looted",
+          "minDay": 543,
+          "triggerCondition": "Fires automatically after evt_d541_evacuation_window_plaza_s1 resolves on the move-the-stock path.",
+          "title": "The Stores Emptied Quiet",
+          "bodyText": "The plaza's own reserve comes out over two nights in handcarts, logged as routine rotation by whoever signs for it, and by the second morning the shelf that used to buffer a bad week is bare. You tell yourself the stock is safer wherever you put it. You do not tell yourself what it would have meant for the people still in that queue if the buffer had still been there afterward, because you already know, and saying it wouldn't move the carts back.",
+          "choices": []
+        },
+        {
+          "stageId": "evt_d541_evacuation_window_plaza_s2_silent",
+          "minDay": 543,
+          "triggerCondition": "Fires automatically after evt_d541_evacuation_window_plaza_s1 resolves on the stay-clear path.",
+          "title": "Alone With What You Knew",
+          "bodyText": "You keep your own distance from the plaza and say nothing to anyone, and the two days pass the way ordinary days pass for everyone who isn't carrying what you're carrying. There's no one to check your certainty against, no one to talk you either into speaking or out of it. Just you, counting down a window you gave yourself no way to use, and the ordinary noise of a plaza that doesn't know it's borrowed time.",
+          "choices": []
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d545_ration_plaza_strike",
+      "band": "the_offensive",
+      "title": "The Horn Doesn't Sound In Time",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_ration_queue_plaza",
+      "stages": [
+        {
+          "stageId": "evt_d545_ration_plaza_strike_s1",
+          "minDay": 545,
+          "triggerCondition": "Fires automatically 2 days after evt_d541_evacuation_window_plaza's s2 stage resolves, regardless of which of the three s2 variants (warned/looted/silent) the player reached — the strike is not preventable by that choice.",
+          "title": "Ration Plaza",
+          "bodyText": "The strike lands at 0600, exactly when the queue forms whether or not a distribution has been announced. The painted lines are still visible in the crater's ash shadow, one stroke half-finished where a hand was repainting them when it came. The dose math the scavengers used to quote — an hour in line, a lifetime of margin — never accounted for this. The square that waited for the first horn for three years finally got an answer, and it was the wrong one.",
+          "choices": [
+            {
+              "choiceId": "evt_d545_ration_plaza_strike_s1_c1",
+              "text": "Help pull the wounded clear",
+              "moraleDelta": 3,
+              "leadsToStageId": "evt_d545_ration_plaza_strike_s2"
+            },
+            {
+              "choiceId": "evt_d545_ration_plaza_strike_s1_c2",
+              "text": "Search the wreckage for anything salvageable",
+              "moraleDelta": -2,
+              "leadsToStageId": "evt_d545_ration_plaza_strike_s2"
+            },
+            {
+              "choiceId": "evt_d545_ration_plaza_strike_s1_c3",
+              "text": "Ask who knew this was coming and didn't say",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d545_ration_plaza_strike_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d545_ration_plaza_strike_s2",
+          "minDay": 548,
+          "triggerCondition": "Fires three days after evt_d545_ration_plaza_strike_s1.",
+          "title": "Two Stories, One Crater",
+          "bodyText": "By the third day the grief has curdled into blame, and the blame has two completely incompatible shapes. Garrison communiqués call it Rebuilders sabotage of a supply convoy that was never meant to route through the plaza. Rebuilders communiqués call it a strike on the Garrison inspection post that used to stand two streets over — a target that missed. Neither account explains why the strike was, by every measure the district has learned to take, cleaner and more precise than anything either faction's ordnance has managed all year.",
+          "choices": [
+            {
+              "choiceId": "evt_d545_ration_plaza_strike_s2_c1",
+              "text": "Believe the account that blames the faction you distrust more",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d545_ration_plaza_strike_s2_c2",
+              "text": "Believe neither and keep asking questions",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d552_rebuilders_fracture",
+      "band": "the_offensive",
+      "title": "The Roster Splits",
+      "factionsInvolved": [
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_grain_silo",
+      "stages": [
+        {
+          "stageId": "evt_d552_rebuilders_fracture_s1",
+          "minDay": 552,
+          "triggerCondition": "Fires automatically once evt_d545_ration_plaza_strike has resolved.",
+          "title": "The Guard Detail Walks",
+          "bodyText": "In the plaza strike's shadow, the roster members who pushed hardest to arm the Exchange back in the spring make it formal: they're done waiting on Adaeze's consensus for every decision that might matter to their survival. A dozen of them walk out of the evening meeting together, taking their share of the small guard detail with them. They don't have a name for themselves yet. They do have positions staked out near the Garrison's new checkpoint, close enough to watch it and be watched in turn.",
+          "choices": [
+            {
+              "choiceId": "evt_d552_rebuilders_fracture_s1_c1",
+              "text": "Side with Adaeze and the original roster",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d552_rebuilders_fracture_s2"
+            },
+            {
+              "choiceId": "evt_d552_rebuilders_fracture_s1_c2",
+              "text": "Side with the splinter's harder line",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d552_rebuilders_fracture_s2"
+            },
+            {
+              "choiceId": "evt_d552_rebuilders_fracture_s1_c3",
+              "text": "Try to keep a line of talk open between both",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d552_rebuilders_fracture_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d552_rebuilders_fracture_s2",
+          "minDay": 555,
+          "triggerCondition": "Fires three days after evt_d552_rebuilders_fracture_s1.",
+          "title": "A Wildcard at the Checkpoint",
+          "bodyText": "The split holds. Adaeze keeps the ledger, the scales, and most of the roster's trust. The splinter keeps their weapons and their new positions, answering to neither her nor the Garrison, an armed irritant sitting exactly where both major factions would rather it didn't. Everyone at the Exchange has an opinion about which side got the better end of the divorce. Nobody agrees which.",
+          "choices": [
+            {
+              "choiceId": "evt_d552_rebuilders_fracture_s2_c1",
+              "text": "Note the district now has a third armed party with no communiqué office",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d558_ln74_signal_intercept",
+      "band": "the_offensive",
+      "title": "A Frequency That Shouldn't Be Live",
+      "factionsInvolved": [
+        "faction_central_garrison"
+      ],
+      "locationId": "loc_railway_span_44_alpha",
+      "stages": [
+        {
+          "stageId": "evt_d558_ln74_signal_intercept_s1",
+          "minDay": 558,
+          "triggerCondition": "Fires automatically once evt_d509_border_clash_span44 has resolved.",
+          "title": "Under the Automated Loop",
+          "bodyText": "A radio scavenger camped near Railway Span 44-Alpha, listening past the speaker box's usual automated loop out of habit, catches something underneath it: a burst transmission, coded, gone in under four seconds. What she manages to write down before it cuts out is a header — LIMA-NOVEMBER-SEVEN-FOUR — the same callsign stamped on gear that's supposed to have been retired for three years.",
+          "choices": [
+            {
+              "choiceId": "evt_d558_ln74_signal_intercept_s1_c1",
+              "text": "Bring the intercept to the Garrison",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d558_ln74_signal_intercept_s2"
+            },
+            {
+              "choiceId": "evt_d558_ln74_signal_intercept_s1_c2",
+              "text": "Bring it to the Rebuilders instead",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d558_ln74_signal_intercept_s2"
+            },
+            {
+              "choiceId": "evt_d558_ln74_signal_intercept_s1_c3",
+              "text": "Keep it and try to work out the cipher yourself",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d558_ln74_signal_intercept_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d558_ln74_signal_intercept_s2",
+          "minDay": 560,
+          "triggerCondition": "Fires two days after evt_d558_ln74_signal_intercept_s1.",
+          "title": "A Pad That Should Be Empty",
+          "bodyText": "Whoever ends up holding the fragment eventually works out what it's part of: a one-time authentication pad, the exact system retired the same week Colonel Voss disappeared. A retired system does not transmit. Either someone has been sitting on a spare pad for three years out of habit, or LN-74 was never actually retired at all, and the Garrison's own records are simply wrong about which.",
+          "choices": [
+            {
+              "choiceId": "evt_d558_ln74_signal_intercept_s2_c1",
+              "text": "Add this to whatever theory is forming",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d565_hydro_leverage_break",
+      "band": "culmination",
+      "title": "The Pumphouse Deal",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_terrace_pumphouse",
+      "stages": [
+        {
+          "stageId": "evt_d565_hydro_leverage_break_s1",
+          "minDay": 565,
+          "triggerCondition": "Fires automatically once the player has visited the Terrace Pumphouse.",
+          "title": "A Ledger Line for Water",
+          "bodyText": "Squeezed from both sides for priority access, the pumphouse's independent keepers let Barrow Fennick broker a quiet arrangement: water for the south slope's irrigation season, informally guaranteed to the Garrison first, in exchange for the Garrison looking the other way on three of Fennick's outstanding debts. Fennick has never once been on the wrong side of a deal when the shooting started. This is why.",
+          "choices": [
+            {
+              "choiceId": "evt_d565_hydro_leverage_break_s1_c1",
+              "text": "Expose the arrangement to the Rebuilders",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d565_hydro_leverage_break_s2"
+            },
+            {
+              "choiceId": "evt_d565_hydro_leverage_break_s1_c2",
+              "text": "Let the deal stand and say nothing",
+              "moraleDelta": -1,
+              "leadsToStageId": "evt_d565_hydro_leverage_break_s2"
+            },
+            {
+              "choiceId": "evt_d565_hydro_leverage_break_s1_c3",
+              "text": "Try to broker the same terms for the Exchange",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d565_hydro_leverage_break_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d565_hydro_leverage_break_s2",
+          "minDay": 569,
+          "triggerCondition": "Fires four days after evt_d565_hydro_leverage_break_s1.",
+          "title": "A Season Without the Slope",
+          "bodyText": "The Rebuilders lose reliable access to the south slope's irrigation water for the season, whether or not the arrangement became public. It does not erupt into open reprisal — nobody has the strength left for a third front — but it hardens into the kind of resentment that outlasts the war that caused it. Fennick's ledger, meanwhile, gets exactly one line shorter.",
+          "choices": [
+            {
+              "choiceId": "evt_d565_hydro_leverage_break_s2_c1",
+              "text": "Remember who profited and who didn't",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d570_forward_roster_first_action",
+      "band": "culmination",
+      "title": "The Roster Picks a Fence",
+      "factionsInvolved": [
+        "faction_forward_roster",
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_forward_roster_camp",
+      "stages": [
+        {
+          "stageId": "evt_d570_forward_roster_first_action_s1",
+          "minDay": 570,
+          "triggerCondition": "Fires automatically once evt_d552_rebuilders_fracture has resolved and the player has visited the Forward Roster's camp.",
+          "title": "A Column Slows Down",
+          "bodyText": "Twelve people have become thirty, and thirty people have found a road worth standing on: the supply spur the Garrison uses to move grain-silo tribute back toward the checkpoints, unwatched because nobody thought a splinter of ex-Rebuilders had the nerve to watch it for them. The Roster stops a column here for the first time — not to loot it, not to burn it, just to stand in the road with rifles slung, not raised, and ask for a cut before it passes. It is the exact shape of the toll the Garrison itself would levy, offered by people the Garrison has no roster for.",
+          "choices": [
+            {
+              "choiceId": "evt_d570_forward_roster_first_action_s1_c1",
+              "text": "Help the Roster hold the checkpoint",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d570_forward_roster_first_action_s2"
+            },
+            {
+              "choiceId": "evt_d570_forward_roster_first_action_s1_c2",
+              "text": "Warn the Garrison column before it arrives",
+              "moraleDelta": -2,
+              "leadsToStageId": "evt_d570_forward_roster_first_action_s2"
+            },
+            {
+              "choiceId": "evt_d570_forward_roster_first_action_s1_c3",
+              "text": "Tell Adaeze what her old roster members are doing",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d570_forward_roster_first_action_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d570_forward_roster_first_action_s2",
+          "minDay": 572,
+          "triggerCondition": "Fires two days after evt_d570_forward_roster_first_action_s1.",
+          "title": "A Precedent, Logged By Both Sides",
+          "bodyText": "The column pays the toll, once, and word of it travels faster than the grain did. The Garrison logs the Roster as a local irregular, not yet worth a punitive column of their own — there is a war on, and a fence that takes a cut and lets the rest through is, grudgingly, cheaper than a fight. Adaeze says nothing publicly and updates her private ledger with a new heading she does not show the roster: people I used to trust with the scale. The Forward Roster has its first precedent. It did not need anyone's permission to get one.",
+          "choices": []
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d578_shrine_strike_anomaly",
+      "band": "culmination",
+      "title": "The Shrine Breaks Its Pattern",
+      "factionsInvolved": [
+        "faction_ash_sign"
+      ],
+      "locationId": "loc_ash_sign_shrine",
+      "stages": [
+        {
+          "stageId": "evt_d578_shrine_strike_anomaly_s1",
+          "minDay": 576,
+          "triggerCondition": "Fires automatically once evt_d558_ln74_signal_intercept has resolved.",
+          "title": "Restless Numbers",
+          "bodyText": "The shrine-keepers tending the survey cairn report the mounted dosimeter's readings have gone restless — not dangerous, just unsteady, climbing and dropping in a pattern their liturgy has no verse for. Toma Reyes, who wears her own dosimeter on a cord gone soft with three years of sweat, says the shrine has never behaved like this before. She does not sound like a woman reassuring herself.",
+          "choices": [
+            {
+              "choiceId": "evt_d578_shrine_strike_anomaly_s1_c1",
+              "text": "Ask Toma what the readings usually mean",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d578_shrine_strike_anomaly_s2"
+            },
+            {
+              "choiceId": "evt_d578_shrine_strike_anomaly_s1_c2",
+              "text": "Dismiss it as pilgrim nerves",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d578_shrine_strike_anomaly_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d578_shrine_strike_anomaly_s2",
+          "minDay": 578,
+          "triggerCondition": "Fires two days after evt_d578_shrine_strike_anomaly_s1.",
+          "title": "The Ground That Was Never Hit",
+          "bodyText": "For the first time in three years, the shrine takes a strike. It is not the almshouse's wide, careless scatter — it lands close, precise, cratering the packed earth where pilgrims have stood to read the mounted dosimeter, and it misses the cairn itself by a margin too narrow to be luck twice. Toma Reyes stands in the new crater with the shrine's oldest claim in ruins around her: the ash does not spare its own. Something else was doing the sparing, and today it stopped, or it lost the ability to keep doing it.",
+          "choices": [
+            {
+              "choiceId": "evt_d578_shrine_strike_anomaly_s2_c1",
+              "text": "Help the shrine-keepers clear the crater",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d578_shrine_strike_anomaly_s3"
+            },
+            {
+              "choiceId": "evt_d578_shrine_strike_anomaly_s2_c2",
+              "text": "Press Toma for what she actually believes now",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d578_shrine_strike_anomaly_s3"
+            },
+            {
+              "choiceId": "evt_d578_shrine_strike_anomaly_s2_c3",
+              "text": "Search the crater edge for markings like the ones found at the rail span",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d578_shrine_strike_anomaly_s3"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d578_shrine_strike_anomaly_s3",
+          "minDay": 582,
+          "triggerCondition": "Fires four days after evt_d578_shrine_strike_anomaly_s2.",
+          "title": "A Theory, Not Yet a Name",
+          "bodyText": "Put side by side — the clean strike that spared the empty ground near Railway Span 44-Alpha, the wide careless one that gutted St Brigid's, the live LN-74 transmission under an automated loop that was supposed to be talking to no one, and now a shrine that was never hit until it suddenly was — a handful of sharp-eyed people in different parts of the district start reaching for the same uncomfortable shape: someone has been choosing what the ash burns and what it spares, on purpose, for years, and something about that control just slipped.",
+          "choices": [
+            {
+              "choiceId": "evt_d578_shrine_strike_anomaly_s3_c1",
+              "text": "Start comparing notes with others who've noticed",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d583_d9_reassessment",
+      "band": "culmination",
+      "title": "Denial, Reconsidered",
+      "factionsInvolved": [
+        "faction_black_ops"
+      ],
+      "locationId": "loc_d9_cache_bunker_delta",
+      "stages": [
+        {
+          "stageId": "evt_d583_d9_reassessment_s1",
+          "minDay": 583,
+          "triggerCondition": "Fires automatically once evt_d570_forward_roster_first_action has resolved.",
+          "title": "The Doctrine Gets a Second Look",
+          "bodyText": "The Ninth Denial Detachment's standing order has held for three years without needing a second thought: what cannot be defended is destroyed before it can be taken. That order was written for raiders and Garrison patrols, not for a fenced-off pocket of ex-Rebuilders running organized tolls two districts over, and D/9's cell leader spends a full night going over the cache manifests deciding whether an outfit that hasn't yet raised a hand against anyone still counts as a threat to deny against. The manifest page you found weeks ago turns out to have been the least of what they've catalogued. Someone in that bunker is rewriting the list of things worth blowing up, and someone else is arguing with them about it.",
+          "choices": [
+            {
+              "choiceId": "evt_d583_d9_reassessment_s1_c1",
+              "text": "Try to get word to D/9 that the Roster isn't a target",
+              "moraleDelta": 2,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d583_d9_reassessment_s1_c2",
+              "text": "Leave the detachment to sort its own doctrine out",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d588_ceasefire_by_exhaustion",
+      "band": "culmination",
+      "title": "A Pause Shaped Like Exhaustion",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_grain_silo",
+      "stages": [
+        {
+          "stageId": "evt_d588_ceasefire_by_exhaustion_s1",
+          "minDay": 588,
+          "triggerCondition": "Fires automatically once evt_d578_shrine_strike_anomaly has resolved.",
+          "title": "Talks at the Leaning Silo",
+          "bodyText": "Bled thin by the offensive and rattled by a shrine that broke a pattern nobody could previously prove existed, Garrison and Rebuilders representatives meet under the leaning silo for the first direct talks since the checkpoint went up. Nobody calls it a treaty. Adaeze sits across from an officer she has not spoken to since he helped install the inspection post at her own front rope.",
+          "choices": [
+            {
+              "choiceId": "evt_d588_ceasefire_by_exhaustion_s1_c1",
+              "text": "Attend as a witness both sides trust",
+              "moraleDelta": 2,
+              "leadsToStageId": "evt_d588_ceasefire_by_exhaustion_s2"
+            },
+            {
+              "choiceId": "evt_d588_ceasefire_by_exhaustion_s1_c2",
+              "text": "Help broker specific terms",
+              "moraleDelta": 1,
+              "leadsToStageId": "evt_d588_ceasefire_by_exhaustion_s2"
+            },
+            {
+              "choiceId": "evt_d588_ceasefire_by_exhaustion_s1_c3",
+              "text": "Stay away and let them work it out themselves",
+              "moraleDelta": 0,
+              "leadsToStageId": "evt_d588_ceasefire_by_exhaustion_s2"
+            }
+          ]
+        },
+        {
+          "stageId": "evt_d588_ceasefire_by_exhaustion_s2",
+          "minDay": 592,
+          "triggerCondition": "Fires four days after evt_d588_ceasefire_by_exhaustion_s1.",
+          "title": "The New Ordinary",
+          "bodyText": "The pause holds, shaped less by trust than by both sides having nothing left to spend on this particular fight. The Garrison keeps its checkpoint at the Exchange entrance. The Rebuilders keep the scales, the tables, and the roster. The splinter faction near the checkpoint remains exactly what it was, an unresolved question nobody has the strength to answer yet. The shrine reopens to pilgrims, but its keepers have quietly stopped claiming the ash spares anyone.",
+          "choices": [
+            {
+              "choiceId": "evt_d588_ceasefire_by_exhaustion_s2_c1",
+              "text": "Take stock of what the district has become",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d600_theory_surfaces",
+      "band": "culmination",
+      "title": "What a Few People Now Believe",
+      "factionsInvolved": [
+        "faction_central_garrison",
+        "faction_rebuilders",
+        "faction_ash_sign"
+      ],
+      "locationId": "loc_railway_span_44_alpha",
+      "stages": [
+        {
+          "stageId": "evt_d600_theory_surfaces_s1",
+          "minDay": 600,
+          "triggerCondition": "Fires automatically once evt_d588_ceasefire_by_exhaustion has resolved.",
+          "title": "A Shape With No Name Yet",
+          "bodyText": "In different rooms, on the same afternoon, a radio scavenger, a shrine-keeper, and a signals-minded deserter each independently arrive at the same half-formed shape: someone with real authority over targeting once steered the district's worst strikes around specific ground, deliberately, for years, and that steering has been failing since the shrine took its hit. Nobody says a name that sticks. The evidence — a clean crater, a live callsign that should be dead, a broken pattern of mercy — points at a person, not providence, and stops just short of telling anyone who.",
+          "choices": [
+            {
+              "choiceId": "evt_d600_theory_surfaces_s1_c1",
+              "text": "Chase the theory further",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d600_theory_surfaces_s1_c2",
+              "text": "Let it go — the war is enough to carry",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d600_theory_surfaces_s1_c3",
+              "text": "Write down what you know for whoever comes after",
+              "moraleDelta": 2,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chainId": "evt_d605_post_ceasefire_forward_roster",
+      "band": "culmination",
+      "title": "The Fence Holds Its First Line After the Guns Stop",
+      "factionsInvolved": [
+        "faction_forward_roster",
+        "faction_central_garrison",
+        "faction_rebuilders"
+      ],
+      "locationId": "loc_forward_roster_camp",
+      "stages": [
+        {
+          "stageId": "evt_d605_post_ceasefire_forward_roster_s1",
+          "minDay": 605,
+          "triggerCondition": "Fires automatically once evt_d588_ceasefire_by_exhaustion has resolved and evt_d570_forward_roster_first_action has resolved.",
+          "title": "The First Test of the Quiet",
+          "bodyText": "Five days into a ceasefire nobody has put a name to yet, a Garrison patrol walks the supply spur out of habit and finds the Roster's checkpoint still standing, unbothered by the fact that there's no war left to justify it. The sergeant in charge has orders about raiders and irregulars and nothing at all about a toll line that predates the peace by a month. He stops. The Roster doesn't move. For a long moment neither side has a script for what happens between two forces that were never quite enemies and are no longer quite anything else. Someone is going to have to decide what the Forward Roster is now that the war that made room for them is over.",
+          "choices": [
+            {
+              "choiceId": "evt_d605_post_ceasefire_forward_roster_s1_c1",
+              "text": "Push for the Garrison to formally recognize the checkpoint",
+              "moraleDelta": 2,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d605_post_ceasefire_forward_roster_s1_c2",
+              "text": "Push the Roster to fold back into the Rebuilders now that the fighting's done",
+              "moraleDelta": 1,
+              "leadsToStageId": ""
+            },
+            {
+              "choiceId": "evt_d605_post_ceasefire_forward_roster_s1_c3",
+              "text": "Say nothing and see which side blinks first",
+              "moraleDelta": 0,
+              "leadsToStageId": ""
+            }
+          ]
+        }
+      ]
     }
-   ]
-  },
-  {
-   "chainId": "evt_d485_checkpoint_notice_war",
-   "band": "cold_war",
-   "title": "The Bulletin Board War",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_garrison_checkpoint_gamma",
-   "stages": [
-    {
-     "stageId": "evt_d485_checkpoint_notice_war_s1",
-     "minDay": 485,
-     "triggerCondition": "Fires automatically once the player has visited Checkpoint Gamma.",
-     "title": "Dueling Notices",
-     "bodyText": "A fresh Garrison bulletin blames the season's grain shortfall on Exchange hoarding. By morning someone has pasted a Rebuilders rebuttal directly over half of it, citing the Exchange's own ledger totals down to the kilo. The corkboard underneath has been repapered so many times it shows through in patches, and off to one side, half under a supply tarp, an older sign nobody has thrown out still reads VOSS in a hard, pressing hand.",
-     "choices": [
-      {"choiceId": "evt_d485_checkpoint_notice_war_s1_c1", "text": "Copy down the disputed numbers for your own records", "moraleDelta": 0, "leadsToStageId": "evt_d485_checkpoint_notice_war_s2"},
-      {"choiceId": "evt_d485_checkpoint_notice_war_s1_c2", "text": "Ask the guard shack who keeps propping the old sign back up", "moraleDelta": 1, "leadsToStageId": "evt_d485_checkpoint_notice_war_s2"},
-      {"choiceId": "evt_d485_checkpoint_notice_war_s1_c3", "text": "Ignore the board and move on", "moraleDelta": 0, "leadsToStageId": "evt_d485_checkpoint_notice_war_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d485_checkpoint_notice_war_s2",
-     "minDay": 489,
-     "triggerCondition": "Fires four days after evt_d485_checkpoint_notice_war_s1.",
-     "title": "A Third Hand",
-     "bodyText": "A new notice appears overnight, unsigned, tacked over both the Garrison bulletin and the Rebuilders rebuttal. It quotes supply figures neither faction has published, precise to the crate. By the time the guard shack notices, half the queue has already read it and nobody who copies the numbers down can find them printed anywhere official afterward.",
-     "choices": [
-      {"choiceId": "evt_d485_checkpoint_notice_war_s2_c1", "text": "Ask around the queue whether anyone saw who posted it", "moraleDelta": 0, "leadsToStageId": ""},
-      {"choiceId": "evt_d485_checkpoint_notice_war_s2_c2", "text": "Let it go — bulletins come and go", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d488_manifest_holdup",
-   "band": "cold_war",
-   "title": "A Manifest That Doesn't Match",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_garrison_checkpoint_gamma",
-   "stages": [
-    {
-     "stageId": "evt_d488_manifest_holdup_s1",
-     "minDay": 488,
-     "triggerCondition": "Fires automatically once the player has visited Checkpoint Gamma.",
-     "title": "The Cart Doesn't Move",
-     "bodyText": "A Rebuilders grain cart bound for the Exchange stalls at the boom barrier because the manifest lists sacks the corporal counting them can't find under the tarp. The escort insists the count was right when the cart left the silo. The corporal's clipboard says otherwise, twice, in two colors of ink where he's gone over the tally a second time to be sure. Traffic backs up on both sides of the barrier. Nobody's raised a voice yet, but the corporal keeps one hand flat on the clipboard like it's the only thing keeping this civil, and the escort keeps checking the sun, counting how much of the day's distribution window she's about to lose to a paperwork argument.",
-     "choices": [
-      {"choiceId": "evt_d488_manifest_holdup_s1_c1", "text": "Help recount the sacks yourself, in front of both of them", "moraleDelta": 2, "leadsToStageId": "evt_d488_manifest_holdup_s2"},
-      {"choiceId": "evt_d488_manifest_holdup_s1_c2", "text": "Back the corporal's procedure and tell the escort to wait it out", "moraleDelta": -1, "leadsToStageId": "evt_d488_manifest_holdup_s2"},
-      {"choiceId": "evt_d488_manifest_holdup_s1_c3", "text": "Suggest releasing half the load now and settling the rest by ledger", "moraleDelta": 1, "leadsToStageId": "evt_d488_manifest_holdup_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d488_manifest_holdup_s2",
-     "minDay": 490,
-     "triggerCondition": "Fires two days after evt_d488_manifest_holdup_s1.",
-     "title": "Short By Three, On Paper",
-     "bodyText": "The recount settles it, mostly: three sacks short of the manifest, not the dozen the corporal's first pass implied, and not enough to prove anything beyond someone rounding wrong back at the silo before the cart left. The escort signs a correction chit and goes on her way. The corporal files an incident report anyway, because Checkpoint Gamma has quietly started keeping those on anything that touches the Exchange. Neither office calls it theft. Both offices, for the first time, now have a paper trail that could be read that way later, if anyone ever wanted to read it that way.",
-     "choices": [
-      {"choiceId": "evt_d488_manifest_holdup_s2_c1", "text": "File this away as the first of many incident reports to come", "moraleDelta": 0, "leadsToStageId": ""},
-      {"choiceId": "evt_d488_manifest_holdup_s2_c2", "text": "Shrug it off as an honest rounding error, nothing more", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d491_toll_hike",
-   "band": "cold_war",
-   "title": "The Second Hike",
-   "factionsInvolved": ["warlords_sector_4"],
-   "locationId": "loc_weighbridge",
-   "stages": [
-    {
-     "stageId": "evt_d491_toll_hike_s1",
-     "minDay": 491,
-     "triggerCondition": "Fires automatically once the player has visited the Weighbridge.",
-     "title": "The Rate Line, Struck Through Again",
-     "bodyText": "The chalk board by the Weighbridge booth shows the toll rate struck through and rewritten higher for the second time this month, in the Tollman's own hand, no explanation offered. The mechanical scale still settles true. The price of crossing does not.",
-     "choices": [
-      {"choiceId": "evt_d491_toll_hike_s1_c1", "text": "Pay the new rate without comment", "moraleDelta": 0, "leadsToStageId": "evt_d491_toll_hike_s2"},
-      {"choiceId": "evt_d491_toll_hike_s1_c2", "text": "Haggle — the ledger's fresh ink suggests it's negotiable", "moraleDelta": 1, "leadsToStageId": "evt_d491_toll_hike_s2"},
-      {"choiceId": "evt_d491_toll_hike_s1_c3", "text": "Ask the booth outright why the rate keeps climbing", "moraleDelta": 0, "leadsToStageId": "evt_d491_toll_hike_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d491_toll_hike_s2",
-     "minDay": 494,
-     "triggerCondition": "Fires three days after evt_d491_toll_hike_s1.",
-     "title": "What the Hike Pays For",
-     "bodyText": "The rumor moving through the crossing queue is that the hike isn't greed, or isn't only greed — it's funding safe passage for shipments neither the Garrison nor the Rebuilders will publicly claim as theirs. Nobody at the booth confirms or denies it. The ledger just gets thicker.",
-     "choices": [
-      {"choiceId": "evt_d491_toll_hike_s2_c1", "text": "File the rumor away for later", "moraleDelta": 0, "leadsToStageId": ""},
-      {"choiceId": "evt_d491_toll_hike_s2_c2", "text": "Decide it's none of your business and cross", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d495_the_clean_strike",
-   "band": "cold_war",
-   "title": "The Clean Strike",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_railway_span_44_alpha",
-   "stages": [
-    {
-     "stageId": "evt_d495_the_clean_strike_s1",
-     "minDay": 495,
-     "triggerCondition": "Fires automatically once the player has visited Railway Span 44-Alpha.",
-     "title": "A Crater With No Claim",
-     "bodyText": "Something hits the empty ground short of Railway Span 44-Alpha in the night — no warning, no follow-up, one clean crater in a field nobody was using. What's strange isn't the strike. It's the aftermath: the Geiger reading over the crater lip is lower than the surrounding ground, not higher, as if whatever fell there scoured more than it spread. Neither faction's patrols claim it happened on their orders.",
-     "choices": [
-      {"choiceId": "evt_d495_the_clean_strike_s1_c1", "text": "Climb down into the crater and look for fragments", "moraleDelta": 0, "leadsToStageId": "evt_d495_the_clean_strike_s2"},
-      {"choiceId": "evt_d495_the_clean_strike_s1_c2", "text": "Report it to the nearest Garrison patrol", "moraleDelta": 0, "leadsToStageId": "evt_d495_the_clean_strike_s2"},
-      {"choiceId": "evt_d495_the_clean_strike_s1_c3", "text": "Report it to the nearest Rebuilders runner instead", "moraleDelta": 0, "leadsToStageId": "evt_d495_the_clean_strike_s2"},
-      {"choiceId": "evt_d495_the_clean_strike_s1_c4", "text": "Say nothing and keep moving", "moraleDelta": -1, "leadsToStageId": "evt_d495_the_clean_strike_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d495_the_clean_strike_s2",
-     "minDay": 498,
-     "triggerCondition": "Fires three days after evt_d495_the_clean_strike_s1.",
-     "title": "Nobody's Ordnance",
-     "bodyText": "Word reaches both checkpoints and both deny it. The Garrison logs no fire mission for that grid on that night. The Rebuilders have no artillery to have fired it with in the first place. The D/9 demolition markers on the bridge itself are untouched. Whatever it was, it came from somewhere neither faction is willing to admit having, or from somewhere neither of them controls.",
-     "choices": [
-      {"choiceId": "evt_d495_the_clean_strike_s2_c1", "text": "Remember this the next time something doesn't add up", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d503_conscription_lists",
-   "band": "open_conflict",
-   "title": "The Quota Goes Up",
-   "factionsInvolved": ["faction_central_garrison"],
-   "locationId": "loc_conscription_office",
-   "stages": [
-    {
-     "stageId": "evt_d503_conscription_lists_s1",
-     "minDay": 503,
-     "triggerCondition": "Fires automatically once the player has visited the Conscription Office.",
-     "title": "A Name on the List",
-     "bodyText": "The month's conscription list goes up with a wider quota than last time, and a young clerk everyone calls Denner finds his own name on it between two strangers'. He has been filing other men's papers at that counter for a year and never once expected his own name typed in the same hand. He doesn't say anything. He just stops filing.",
-     "choices": [
-      {"choiceId": "evt_d503_conscription_lists_s1_c1", "text": "Help Denner petition for an exemption through channels", "moraleDelta": 2, "leadsToStageId": "evt_d503_conscription_lists_s2"},
-      {"choiceId": "evt_d503_conscription_lists_s1_c2", "text": "Help Denner disappear before the muster date", "moraleDelta": 1, "leadsToStageId": "evt_d503_conscription_lists_s2"},
-      {"choiceId": "evt_d503_conscription_lists_s1_c3", "text": "Stay out of it — it isn't your quota", "moraleDelta": -1, "leadsToStageId": "evt_d503_conscription_lists_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d503_conscription_lists_s2",
-     "minDay": 508,
-     "triggerCondition": "Fires five days after evt_d503_conscription_lists_s1.",
-     "title": "The Counter Stays Empty",
-     "bodyText": "Denner does not report to muster. The petition, if filed, goes nowhere before the deadline; the exemption, if sought, is denied without a reason given. Either way the clerk's counter sits empty for two shifts before someone else is rotated in to cover it. Nobody at the office says his name out loud after that.",
-     "choices": [
-      {"choiceId": "evt_d503_conscription_lists_s2_c1", "text": "Keep an ear out for where deserters go to ground", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d509_border_clash_span44",
-   "band": "open_conflict",
-   "title": "Standoff on the Span",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_railway_span_44_alpha",
-   "stages": [
-    {
-     "stageId": "evt_d509_border_clash_span44_s1",
-     "minDay": 509,
-     "triggerCondition": "Fires automatically once evt_d495_the_clean_strike has resolved.",
-     "title": "Two Patrols, One Bridge",
-     "bodyText": "A Garrison patrol and a Rebuilders escort converge on Railway Span 44-Alpha from opposite ends at the same hour, both there to inspect the same rumor of a supply train coming through. Neither backs off the deck. Rifles stay slung, but nobody's hands are far from them, and the automated loop keeps playing station null, target grid primed, remain in shelter to an audience that, for once, is actually standing on the grid in question.",
-     "choices": [
-      {"choiceId": "evt_d509_border_clash_span44_s1_c1", "text": "Step between the two patrols and talk them down", "moraleDelta": 2, "leadsToStageId": "evt_d509_border_clash_span44_s2"},
-      {"choiceId": "evt_d509_border_clash_span44_s1_c2", "text": "Stay hidden and watch how it resolves", "moraleDelta": 0, "leadsToStageId": "evt_d509_border_clash_span44_s2"},
-      {"choiceId": "evt_d509_border_clash_span44_s1_c3", "text": "Warn the weaker-looking patrol before the other arrives", "moraleDelta": 1, "leadsToStageId": "evt_d509_border_clash_span44_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d509_border_clash_span44_s2",
-     "minDay": 512,
-     "triggerCondition": "Fires three days after evt_d509_border_clash_span44_s1.",
-     "title": "Charges Re-Armed",
-     "bodyText": "Nobody fires. Both patrols withdraw to their own ends of the bridge, and that should be the end of it, except three days later Garrison engineers are back on the span re-taping the D/9 charges to doctrine spec, which they have not bothered to maintain in over a year. The bridge is suddenly worth defending to someone. That is rarely good news for whoever is standing on it when the reason shows up.",
-     "choices": [
-      {"choiceId": "evt_d509_border_clash_span44_s2_c1", "text": "Note the bridge is now a live demolition again", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d517_almshouse_shelling",
-   "band": "open_conflict",
-   "title": "St Brigid's Falls Quiet Twice",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_st_brigids_almshouse",
-   "stages": [
-    {
-     "stageId": "evt_d517_almshouse_shelling_s1",
-     "minDay": 515,
-     "triggerCondition": "Fires automatically once the player has visited St Brigid's Almshouse.",
-     "title": "A District About to Get Noisy",
-     "bodyText": "A scavenger passing through mentions, almost as an aside, that the almshouse district is about to get noisy — she won't say how she knows, only that she isn't sleeping out that way this week. Nobody takes it seriously. The almshouse has been empty and respected for three years; there is nothing out there worth a shell.",
-     "choices": [
-      {"choiceId": "evt_d517_almshouse_shelling_s1_c1", "text": "Take the warning seriously and stay clear of the district", "moraleDelta": 0, "leadsToStageId": "evt_d517_almshouse_shelling_s2"},
-      {"choiceId": "evt_d517_almshouse_shelling_s1_c2", "text": "Dismiss it as scavenger superstition", "moraleDelta": 0, "leadsToStageId": "evt_d517_almshouse_shelling_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d517_almshouse_shelling_s2",
-     "minDay": 517,
-     "triggerCondition": "Fires two days after evt_d517_almshouse_shelling_s1.",
-     "title": "The Made Beds Come Apart",
-     "bodyText": "The almshouse takes a hit at dusk. There is no one inside to count among the dead — the ward has been empty for years — but the roof is gone over the east wing, the tight-made beds are scattered with three years of undisturbed dust now blown open to the sky, and the charts that were filled in to a date and not after it are ash. Whoever ran this place kept it as a kind of monument. It is not a monument anymore.",
-     "choices": [
-      {"choiceId": "evt_d517_almshouse_shelling_s2_c1", "text": "Salvage what's left of the pantry stores before looters do", "moraleDelta": -1, "leadsToStageId": "evt_d517_almshouse_shelling_s3"},
-      {"choiceId": "evt_d517_almshouse_shelling_s2_c2", "text": "Leave it as it fell", "moraleDelta": 1, "leadsToStageId": "evt_d517_almshouse_shelling_s3"}
-     ]
-    },
-    {
-     "stageId": "evt_d517_almshouse_shelling_s3",
-     "minDay": 519,
-     "triggerCondition": "Fires two days after evt_d517_almshouse_shelling_s2.",
-     "title": "Not the Same Hand",
-     "bodyText": "Whoever compares this crater to the clean one out by Railway Span 44-Alpha notices the difference immediately: this strike scattered wide, threw debris a hundred meters, spiked the surrounding rads instead of scouring them down. If the same party is responsible for both, they are either losing precision or were never trying for it here. The two strikes do not read like the same kind of intention.",
-     "choices": [
-      {"choiceId": "evt_d517_almshouse_shelling_s3_c1", "text": "Start keeping your own notes on the strikes", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d522_switchback_toll",
-   "band": "open_conflict",
-   "title": "The Patrol on the Switchbacks",
-   "factionsInvolved": ["faction_central_garrison", "faction_ash_sign"],
-   "locationId": "loc_shrine_switchback_waystation",
-   "stages": [
-    {
-     "stageId": "evt_d522_switchback_toll_s1",
-     "minDay": 522,
-     "triggerCondition": "Fires automatically once the player has visited the Switchback Waystation.",
-     "title": "Papers, Then a Fee",
-     "bodyText": "A Garrison squad has planted itself at the Switchback Waystation for the first time since the shrine's cairn went up, checking pilgrim papers against a list nobody at the shrine has seen and charging a fee for escort the rest of the way, payable in the same coin the checkpoints take. The guestbook board over the lean-to logs three years of names and one line near the bottom that just says turned back. Toma Reyes, waiting on the last group up the trail, tells the corporal in charge, plainly, that the shrine takes tribute at the cairn, from whoever brings it, on its own terms, and has never once needed an escort to get there. The corporal says only that the order came down from the checkpoint and the fee stands until it's rescinded.",
-     "choices": [
-      {"choiceId": "evt_d522_switchback_toll_s1_c1", "text": "Pay the fee for a pilgrim who can't cover it", "moraleDelta": 2, "leadsToStageId": "evt_d522_switchback_toll_s2"},
-      {"choiceId": "evt_d522_switchback_toll_s1_c2", "text": "Ask the corporal to show the list he's checking names against", "moraleDelta": 1, "leadsToStageId": "evt_d522_switchback_toll_s2"},
-      {"choiceId": "evt_d522_switchback_toll_s1_c3", "text": "Pay your own fee and climb on without pressing it", "moraleDelta": -1, "leadsToStageId": "evt_d522_switchback_toll_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d522_switchback_toll_s2",
-     "minDay": 525,
-     "triggerCondition": "Fires three days after evt_d522_switchback_toll_s1.",
-     "title": "Rescinded, Not Apologized For",
-     "bodyText": "The order gets pulled within the week — Harven's office cites manpower, not principle, and the squad packs out without ceremony. Toma has the fee refunded to everyone who paid it, tracked down name by name off the guestbook board, which takes her longer than the whole occupation did. She doesn't call it a victory. The shrine has held its ground on tribute for three years without asking anyone's permission to do it, and for four days that stopped being entirely true, refund or not.",
-     "choices": [
-      {"choiceId": "evt_d522_switchback_toll_s2_c1", "text": "Note that the shrine's neutrality just survived its first real test", "moraleDelta": 1, "leadsToStageId": ""},
-      {"choiceId": "evt_d522_switchback_toll_s2_c2", "text": "Wonder how long the next order will last", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d524_market_price_spike",
-   "band": "open_conflict",
-   "title": "The Exchange Arms a Detail",
-   "factionsInvolved": ["faction_rebuilders"],
-   "locationId": "loc_grain_silo",
-   "stages": [
-    {
-     "stageId": "evt_d524_market_price_spike_s1",
-     "minDay": 524,
-     "triggerCondition": "Fires automatically once evt_d517_almshouse_shelling has resolved.",
-     "title": "Grain Prices Climb",
-     "bodyText": "With a supply route disrupted by the almshouse strike, prices at the Exchange climb for the first time in a year. Adaeze Okonkwo holds the line on the fair-scales rule, but a knot of younger roster members corners her after the tables close, arguing the unweaponed honor system will not survive a real siege. She has run this roster since the rubble-clearing days. She has never had to overrule this many of them at once.",
-     "choices": [
-      {"choiceId": "evt_d524_market_price_spike_s1_c1", "text": "Back Adaeze's neutral, unarmed stance", "moraleDelta": 2, "leadsToStageId": "evt_d524_market_price_spike_s2"},
-      {"choiceId": "evt_d524_market_price_spike_s1_c2", "text": "Back the roster members who want a real guard detail", "moraleDelta": 0, "leadsToStageId": "evt_d524_market_price_spike_s2"},
-      {"choiceId": "evt_d524_market_price_spike_s1_c3", "text": "Suggest rationing sales instead of arming up", "moraleDelta": 1, "leadsToStageId": "evt_d524_market_price_spike_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d524_market_price_spike_s2",
-     "minDay": 528,
-     "triggerCondition": "Fires four days after evt_d524_market_price_spike_s1.",
-     "title": "A Small Detail, Against Her Own Instinct",
-     "bodyText": "Adaeze compromises: a small armed detail, four people, rotating, keeping their weapons under coats unless the tables are actually threatened. It is a narrow concession and she frames it that way to the roster. It is still the first weapon the Exchange has ever fielded on purpose, and everyone who has traded there for three years under the no weapons past the rope sign notices exactly what has changed.",
-     "choices": [
-      {"choiceId": "evt_d524_market_price_spike_s2_c1", "text": "Trade at the Exchange as before and say nothing", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d533_garrison_offensive_grain_silo",
-   "band": "the_offensive",
-   "title": "Continuity of Distribution",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_grain_silo",
-   "stages": [
-    {
-     "stageId": "evt_d533_garrison_offensive_grain_silo_s1",
-     "minDay": 533,
-     "triggerCondition": "Fires automatically once evt_d524_market_price_spike has resolved.",
-     "title": "The Garrison Moves on the Exchange",
-     "bodyText": "Colonel Harven's office issues an order to install a permanent inspection post at the Exchange, citing the roster's own armed detail as proof neutrality has already collapsed. Garrison squads arrive at the leaning silo before the traders have finished setting up the trestle tables. This is not phrased as a seizure. Nobody at the Exchange believes it is anything else.",
-     "choices": [
-      {"choiceId": "evt_d533_garrison_offensive_grain_silo_s1_c1", "text": "Help the Exchange's detail hold the entrance", "moraleDelta": 1, "leadsToStageId": "evt_d533_garrison_offensive_grain_silo_s2"},
-      {"choiceId": "evt_d533_garrison_offensive_grain_silo_s1_c2", "text": "Help traders evacuate stock before the post goes up", "moraleDelta": 2, "leadsToStageId": "evt_d533_garrison_offensive_grain_silo_s2"},
-      {"choiceId": "evt_d533_garrison_offensive_grain_silo_s1_c3", "text": "Try to broker a delay with the squad commander", "moraleDelta": 1, "leadsToStageId": "evt_d533_garrison_offensive_grain_silo_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d533_garrison_offensive_grain_silo_s2",
-     "minDay": 536,
-     "triggerCondition": "Fires three days after evt_d533_garrison_offensive_grain_silo_s1.",
-     "title": "A Checkpoint Under the Leaning Silo",
-     "bodyText": "The Garrison secures a foothold at the entrance rope but not the tables themselves — a tense, half-finished occupation that satisfies no one. Traders now clear both the Tollman's crossing fees and a Garrison inspection to sell grain that used to move through on the scale's word alone. The scale is still honest. Almost nothing else at the Exchange is simple anymore.",
-     "choices": [
-      {"choiceId": "evt_d533_garrison_offensive_grain_silo_s2_c1", "text": "Keep trading through the new checkpoint", "moraleDelta": -1, "leadsToStageId": ""},
-      {"choiceId": "evt_d533_garrison_offensive_grain_silo_s2_c2", "text": "Take your business elsewhere", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d541_evacuation_window_plaza",
-   "band": "the_offensive",
-   "title": "A Window Before the Horn",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_ration_queue_plaza",
-   "stages": [
-    {
-     "stageId": "evt_d541_evacuation_window_plaza_s1",
-     "minDay": 541,
-     "triggerCondition": "Fires automatically once evt_d533_garrison_offensive_grain_silo has resolved.",
-     "title": "Someone Knows Before It Happens",
-     "bodyText": "A source you trust — a runner rattled by an order she was told not to ask about, or a pilgrim who says the shrine's numbers pointed here days ago — tells you Ration Plaza is going to be hit, soon, maybe within the week. There is no proof, only the kind of certainty that has been right before. The plaza's queue lines are painted fresh and the horn has not sounded yet. You have a window, and no way to know how wide it is.",
-     "choices": [
-      {"choiceId": "evt_d541_evacuation_window_plaza_s1_c1", "text": "Warn the queue publicly, whatever it costs your source", "moraleDelta": 4, "leadsToStageId": "evt_d541_evacuation_window_plaza_s2_warned"},
-      {"choiceId": "evt_d541_evacuation_window_plaza_s1_c2", "text": "Use the window to move stock out of the plaza's own stores first", "moraleDelta": -3, "leadsToStageId": "evt_d541_evacuation_window_plaza_s2_looted"},
-      {"choiceId": "evt_d541_evacuation_window_plaza_s1_c3", "text": "Stay clear yourself and tell no one", "moraleDelta": -1, "leadsToStageId": "evt_d541_evacuation_window_plaza_s2_silent"}
-     ]
-    },
-    {
-     "stageId": "evt_d541_evacuation_window_plaza_s2_warned",
-     "minDay": 543,
-     "triggerCondition": "Fires automatically after evt_d541_evacuation_window_plaza_s1 resolves on the warn-the-queue path.",
-     "title": "The Cost of Being Right",
-     "bodyText": "Half the queue thins out over two days, quietly, the way people leave when they've been told something they can't repeat the source of. A Garrison sergeant starts asking who's been talking, and your source stops answering the signal you used to reach her. You don't know yet whether she's just being careful or whether careful stopped being enough. The plaza is emptier than it should be for a ration day. Nobody in it knows why, except the ones who do, and they aren't saying either.",
-     "choices": []
-    },
-    {
-     "stageId": "evt_d541_evacuation_window_plaza_s2_looted",
-     "minDay": 543,
-     "triggerCondition": "Fires automatically after evt_d541_evacuation_window_plaza_s1 resolves on the move-the-stock path.",
-     "title": "The Stores Emptied Quiet",
-     "bodyText": "The plaza's own reserve comes out over two nights in handcarts, logged as routine rotation by whoever signs for it, and by the second morning the shelf that used to buffer a bad week is bare. You tell yourself the stock is safer wherever you put it. You do not tell yourself what it would have meant for the people still in that queue if the buffer had still been there afterward, because you already know, and saying it wouldn't move the carts back.",
-     "choices": []
-    },
-    {
-     "stageId": "evt_d541_evacuation_window_plaza_s2_silent",
-     "minDay": 543,
-     "triggerCondition": "Fires automatically after evt_d541_evacuation_window_plaza_s1 resolves on the stay-clear path.",
-     "title": "Alone With What You Knew",
-     "bodyText": "You keep your own distance from the plaza and say nothing to anyone, and the two days pass the way ordinary days pass for everyone who isn't carrying what you're carrying. There's no one to check your certainty against, no one to talk you either into speaking or out of it. Just you, counting down a window you gave yourself no way to use, and the ordinary noise of a plaza that doesn't know it's borrowed time.",
-     "choices": []
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d545_ration_plaza_strike",
-   "band": "the_offensive",
-   "title": "The Horn Doesn't Sound In Time",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_ration_queue_plaza",
-   "stages": [
-    {
-     "stageId": "evt_d545_ration_plaza_strike_s1",
-     "minDay": 545,
-     "triggerCondition": "Fires automatically 2 days after evt_d541_evacuation_window_plaza's s2 stage resolves, regardless of which of the three s2 variants (warned/looted/silent) the player reached — the strike is not preventable by that choice.",
-     "title": "Ration Plaza",
-     "bodyText": "The strike lands at 0600, exactly when the queue forms whether or not a distribution has been announced. The painted lines are still visible in the crater's ash shadow, one stroke half-finished where a hand was repainting them when it came. The dose math the scavengers used to quote — an hour in line, a lifetime of margin — never accounted for this. The square that waited for the first horn for three years finally got an answer, and it was the wrong one.",
-     "choices": [
-      {"choiceId": "evt_d545_ration_plaza_strike_s1_c1", "text": "Help pull the wounded clear", "moraleDelta": 3, "leadsToStageId": "evt_d545_ration_plaza_strike_s2"},
-      {"choiceId": "evt_d545_ration_plaza_strike_s1_c2", "text": "Search the wreckage for anything salvageable", "moraleDelta": -2, "leadsToStageId": "evt_d545_ration_plaza_strike_s2"},
-      {"choiceId": "evt_d545_ration_plaza_strike_s1_c3", "text": "Ask who knew this was coming and didn't say", "moraleDelta": 0, "leadsToStageId": "evt_d545_ration_plaza_strike_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d545_ration_plaza_strike_s2",
-     "minDay": 548,
-     "triggerCondition": "Fires three days after evt_d545_ration_plaza_strike_s1.",
-     "title": "Two Stories, One Crater",
-     "bodyText": "By the third day the grief has curdled into blame, and the blame has two completely incompatible shapes. Garrison communiqués call it Rebuilders sabotage of a supply convoy that was never meant to route through the plaza. Rebuilders communiqués call it a strike on the Garrison inspection post that used to stand two streets over — a target that missed. Neither account explains why the strike was, by every measure the district has learned to take, cleaner and more precise than anything either faction's ordnance has managed all year.",
-     "choices": [
-      {"choiceId": "evt_d545_ration_plaza_strike_s2_c1", "text": "Believe the account that blames the faction you distrust more", "moraleDelta": 0, "leadsToStageId": ""},
-      {"choiceId": "evt_d545_ration_plaza_strike_s2_c2", "text": "Believe neither and keep asking questions", "moraleDelta": 1, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d552_rebuilders_fracture",
-   "band": "the_offensive",
-   "title": "The Roster Splits",
-   "factionsInvolved": ["faction_rebuilders"],
-   "locationId": "loc_grain_silo",
-   "stages": [
-    {
-     "stageId": "evt_d552_rebuilders_fracture_s1",
-     "minDay": 552,
-     "triggerCondition": "Fires automatically once evt_d545_ration_plaza_strike has resolved.",
-     "title": "The Guard Detail Walks",
-     "bodyText": "In the plaza strike's shadow, the roster members who pushed hardest to arm the Exchange back in the spring make it formal: they're done waiting on Adaeze's consensus for every decision that might matter to their survival. A dozen of them walk out of the evening meeting together, taking their share of the small guard detail with them. They don't have a name for themselves yet. They do have positions staked out near the Garrison's new checkpoint, close enough to watch it and be watched in turn.",
-     "choices": [
-      {"choiceId": "evt_d552_rebuilders_fracture_s1_c1", "text": "Side with Adaeze and the original roster", "moraleDelta": 1, "leadsToStageId": "evt_d552_rebuilders_fracture_s2"},
-      {"choiceId": "evt_d552_rebuilders_fracture_s1_c2", "text": "Side with the splinter's harder line", "moraleDelta": 0, "leadsToStageId": "evt_d552_rebuilders_fracture_s2"},
-      {"choiceId": "evt_d552_rebuilders_fracture_s1_c3", "text": "Try to keep a line of talk open between both", "moraleDelta": 2, "leadsToStageId": "evt_d552_rebuilders_fracture_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d552_rebuilders_fracture_s2",
-     "minDay": 555,
-     "triggerCondition": "Fires three days after evt_d552_rebuilders_fracture_s1.",
-     "title": "A Wildcard at the Checkpoint",
-     "bodyText": "The split holds. Adaeze keeps the ledger, the scales, and most of the roster's trust. The splinter keeps their weapons and their new positions, answering to neither her nor the Garrison, an armed irritant sitting exactly where both major factions would rather it didn't. Everyone at the Exchange has an opinion about which side got the better end of the divorce. Nobody agrees which.",
-     "choices": [
-      {"choiceId": "evt_d552_rebuilders_fracture_s2_c1", "text": "Note the district now has a third armed party with no communiqué office", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d558_ln74_signal_intercept",
-   "band": "the_offensive",
-   "title": "A Frequency That Shouldn't Be Live",
-   "factionsInvolved": ["faction_central_garrison"],
-   "locationId": "loc_railway_span_44_alpha",
-   "stages": [
-    {
-     "stageId": "evt_d558_ln74_signal_intercept_s1",
-     "minDay": 558,
-     "triggerCondition": "Fires automatically once evt_d509_border_clash_span44 has resolved.",
-     "title": "Under the Automated Loop",
-     "bodyText": "A radio scavenger camped near Railway Span 44-Alpha, listening past the speaker box's usual automated loop out of habit, catches something underneath it: a burst transmission, coded, gone in under four seconds. What she manages to write down before it cuts out is a header — LIMA-NOVEMBER-SEVEN-FOUR — the same callsign stamped on gear that's supposed to have been retired for three years.",
-     "choices": [
-      {"choiceId": "evt_d558_ln74_signal_intercept_s1_c1", "text": "Bring the intercept to the Garrison", "moraleDelta": 0, "leadsToStageId": "evt_d558_ln74_signal_intercept_s2"},
-      {"choiceId": "evt_d558_ln74_signal_intercept_s1_c2", "text": "Bring it to the Rebuilders instead", "moraleDelta": 0, "leadsToStageId": "evt_d558_ln74_signal_intercept_s2"},
-      {"choiceId": "evt_d558_ln74_signal_intercept_s1_c3", "text": "Keep it and try to work out the cipher yourself", "moraleDelta": 1, "leadsToStageId": "evt_d558_ln74_signal_intercept_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d558_ln74_signal_intercept_s2",
-     "minDay": 560,
-     "triggerCondition": "Fires two days after evt_d558_ln74_signal_intercept_s1.",
-     "title": "A Pad That Should Be Empty",
-     "bodyText": "Whoever ends up holding the fragment eventually works out what it's part of: a one-time authentication pad, the exact system retired the same week Colonel Voss disappeared. A retired system does not transmit. Either someone has been sitting on a spare pad for three years out of habit, or LN-74 was never actually retired at all, and the Garrison's own records are simply wrong about which.",
-     "choices": [
-      {"choiceId": "evt_d558_ln74_signal_intercept_s2_c1", "text": "Add this to whatever theory is forming", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d565_hydro_leverage_break",
-   "band": "culmination",
-   "title": "The Pumphouse Deal",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_terrace_pumphouse",
-   "stages": [
-    {
-     "stageId": "evt_d565_hydro_leverage_break_s1",
-     "minDay": 565,
-     "triggerCondition": "Fires automatically once the player has visited the Terrace Pumphouse.",
-     "title": "A Ledger Line for Water",
-     "bodyText": "Squeezed from both sides for priority access, the pumphouse's independent keepers let Barrow Fennick broker a quiet arrangement: water for the south slope's irrigation season, informally guaranteed to the Garrison first, in exchange for the Garrison looking the other way on three of Fennick's outstanding debts. Fennick has never once been on the wrong side of a deal when the shooting started. This is why.",
-     "choices": [
-      {"choiceId": "evt_d565_hydro_leverage_break_s1_c1", "text": "Expose the arrangement to the Rebuilders", "moraleDelta": 1, "leadsToStageId": "evt_d565_hydro_leverage_break_s2"},
-      {"choiceId": "evt_d565_hydro_leverage_break_s1_c2", "text": "Let the deal stand and say nothing", "moraleDelta": -1, "leadsToStageId": "evt_d565_hydro_leverage_break_s2"},
-      {"choiceId": "evt_d565_hydro_leverage_break_s1_c3", "text": "Try to broker the same terms for the Exchange", "moraleDelta": 1, "leadsToStageId": "evt_d565_hydro_leverage_break_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d565_hydro_leverage_break_s2",
-     "minDay": 569,
-     "triggerCondition": "Fires four days after evt_d565_hydro_leverage_break_s1.",
-     "title": "A Season Without the Slope",
-     "bodyText": "The Rebuilders lose reliable access to the south slope's irrigation water for the season, whether or not the arrangement became public. It does not erupt into open reprisal — nobody has the strength left for a third front — but it hardens into the kind of resentment that outlasts the war that caused it. Fennick's ledger, meanwhile, gets exactly one line shorter.",
-     "choices": [
-      {"choiceId": "evt_d565_hydro_leverage_break_s2_c1", "text": "Remember who profited and who didn't", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d570_forward_roster_first_action",
-   "band": "culmination",
-   "title": "The Roster Picks a Fence",
-   "factionsInvolved": ["faction_forward_roster", "faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_forward_roster_camp",
-   "stages": [
-    {
-     "stageId": "evt_d570_forward_roster_first_action_s1",
-     "minDay": 570,
-     "triggerCondition": "Fires automatically once evt_d552_rebuilders_fracture has resolved and the player has visited the Forward Roster's camp.",
-     "title": "A Column Slows Down",
-     "bodyText": "Twelve people have become thirty, and thirty people have found a road worth standing on: the supply spur the Garrison uses to move grain-silo tribute back toward the checkpoints, unwatched because nobody thought a splinter of ex-Rebuilders had the nerve to watch it for them. The Roster stops a column here for the first time — not to loot it, not to burn it, just to stand in the road with rifles slung, not raised, and ask for a cut before it passes. It is the exact shape of the toll the Garrison itself would levy, offered by people the Garrison has no roster for.",
-     "choices": [
-      {"choiceId": "evt_d570_forward_roster_first_action_s1_c1", "text": "Help the Roster hold the checkpoint", "moraleDelta": 2, "leadsToStageId": "evt_d570_forward_roster_first_action_s2"},
-      {"choiceId": "evt_d570_forward_roster_first_action_s1_c2", "text": "Warn the Garrison column before it arrives", "moraleDelta": -2, "leadsToStageId": "evt_d570_forward_roster_first_action_s2"},
-      {"choiceId": "evt_d570_forward_roster_first_action_s1_c3", "text": "Tell Adaeze what her old roster members are doing", "moraleDelta": 0, "leadsToStageId": "evt_d570_forward_roster_first_action_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d570_forward_roster_first_action_s2",
-     "minDay": 572,
-     "triggerCondition": "Fires two days after evt_d570_forward_roster_first_action_s1.",
-     "title": "A Precedent, Logged By Both Sides",
-     "bodyText": "The column pays the toll, once, and word of it travels faster than the grain did. The Garrison logs the Roster as a local irregular, not yet worth a punitive column of their own — there is a war on, and a fence that takes a cut and lets the rest through is, grudgingly, cheaper than a fight. Adaeze says nothing publicly and updates her private ledger with a new heading she does not show the roster: people I used to trust with the scale. The Forward Roster has its first precedent. It did not need anyone's permission to get one.",
-     "choices": []
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d578_shrine_strike_anomaly",
-   "band": "culmination",
-   "title": "The Shrine Breaks Its Pattern",
-   "factionsInvolved": ["faction_ash_sign"],
-   "locationId": "loc_ash_sign_shrine",
-   "stages": [
-    {
-     "stageId": "evt_d578_shrine_strike_anomaly_s1",
-     "minDay": 576,
-     "triggerCondition": "Fires automatically once evt_d558_ln74_signal_intercept has resolved.",
-     "title": "Restless Numbers",
-     "bodyText": "The shrine-keepers tending the survey cairn report the mounted dosimeter's readings have gone restless — not dangerous, just unsteady, climbing and dropping in a pattern their liturgy has no verse for. Toma Reyes, who wears her own dosimeter on a cord gone soft with three years of sweat, says the shrine has never behaved like this before. She does not sound like a woman reassuring herself.",
-     "choices": [
-      {"choiceId": "evt_d578_shrine_strike_anomaly_s1_c1", "text": "Ask Toma what the readings usually mean", "moraleDelta": 0, "leadsToStageId": "evt_d578_shrine_strike_anomaly_s2"},
-      {"choiceId": "evt_d578_shrine_strike_anomaly_s1_c2", "text": "Dismiss it as pilgrim nerves", "moraleDelta": 0, "leadsToStageId": "evt_d578_shrine_strike_anomaly_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d578_shrine_strike_anomaly_s2",
-     "minDay": 578,
-     "triggerCondition": "Fires two days after evt_d578_shrine_strike_anomaly_s1.",
-     "title": "The Ground That Was Never Hit",
-     "bodyText": "For the first time in three years, the shrine takes a strike. It is not the almshouse's wide, careless scatter — it lands close, precise, cratering the packed earth where pilgrims have stood to read the mounted dosimeter, and it misses the cairn itself by a margin too narrow to be luck twice. Toma Reyes stands in the new crater with the shrine's oldest claim in ruins around her: the ash does not spare its own. Something else was doing the sparing, and today it stopped, or it lost the ability to keep doing it.",
-     "choices": [
-      {"choiceId": "evt_d578_shrine_strike_anomaly_s2_c1", "text": "Help the shrine-keepers clear the crater", "moraleDelta": 2, "leadsToStageId": "evt_d578_shrine_strike_anomaly_s3"},
-      {"choiceId": "evt_d578_shrine_strike_anomaly_s2_c2", "text": "Press Toma for what she actually believes now", "moraleDelta": 0, "leadsToStageId": "evt_d578_shrine_strike_anomaly_s3"},
-      {"choiceId": "evt_d578_shrine_strike_anomaly_s2_c3", "text": "Search the crater edge for markings like the ones found at the rail span", "moraleDelta": 0, "leadsToStageId": "evt_d578_shrine_strike_anomaly_s3"}
-     ]
-    },
-    {
-     "stageId": "evt_d578_shrine_strike_anomaly_s3",
-     "minDay": 582,
-     "triggerCondition": "Fires four days after evt_d578_shrine_strike_anomaly_s2.",
-     "title": "A Theory, Not Yet a Name",
-     "bodyText": "Put side by side — the clean strike that spared the empty ground near Railway Span 44-Alpha, the wide careless one that gutted St Brigid's, the live LN-74 transmission under an automated loop that was supposed to be talking to no one, and now a shrine that was never hit until it suddenly was — a handful of sharp-eyed people in different parts of the district start reaching for the same uncomfortable shape: someone has been choosing what the ash burns and what it spares, on purpose, for years, and something about that control just slipped.",
-     "choices": [
-      {"choiceId": "evt_d578_shrine_strike_anomaly_s3_c1", "text": "Start comparing notes with others who've noticed", "moraleDelta": 1, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d583_d9_reassessment",
-   "band": "culmination",
-   "title": "Denial, Reconsidered",
-   "factionsInvolved": ["faction_black_ops"],
-   "locationId": "loc_d9_cache_bunker_delta",
-   "stages": [
-    {
-     "stageId": "evt_d583_d9_reassessment_s1",
-     "minDay": 583,
-     "triggerCondition": "Fires automatically once evt_d570_forward_roster_first_action has resolved.",
-     "title": "The Doctrine Gets a Second Look",
-     "bodyText": "The Ninth Denial Detachment's standing order has held for three years without needing a second thought: what cannot be defended is destroyed before it can be taken. That order was written for raiders and Garrison patrols, not for a fenced-off pocket of ex-Rebuilders running organized tolls two districts over, and D/9's cell leader spends a full night going over the cache manifests deciding whether an outfit that hasn't yet raised a hand against anyone still counts as a threat to deny against. The manifest page you found weeks ago turns out to have been the least of what they've catalogued. Someone in that bunker is rewriting the list of things worth blowing up, and someone else is arguing with them about it.",
-     "choices": [
-      {"choiceId": "evt_d583_d9_reassessment_s1_c1", "text": "Try to get word to D/9 that the Roster isn't a target", "moraleDelta": 2, "leadsToStageId": ""},
-      {"choiceId": "evt_d583_d9_reassessment_s1_c2", "text": "Leave the detachment to sort its own doctrine out", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d588_ceasefire_by_exhaustion",
-   "band": "culmination",
-   "title": "A Pause Shaped Like Exhaustion",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_grain_silo",
-   "stages": [
-    {
-     "stageId": "evt_d588_ceasefire_by_exhaustion_s1",
-     "minDay": 588,
-     "triggerCondition": "Fires automatically once evt_d578_shrine_strike_anomaly has resolved.",
-     "title": "Talks at the Leaning Silo",
-     "bodyText": "Bled thin by the offensive and rattled by a shrine that broke a pattern nobody could previously prove existed, Garrison and Rebuilders representatives meet under the leaning silo for the first direct talks since the checkpoint went up. Nobody calls it a treaty. Adaeze sits across from an officer she has not spoken to since he helped install the inspection post at her own front rope.",
-     "choices": [
-      {"choiceId": "evt_d588_ceasefire_by_exhaustion_s1_c1", "text": "Attend as a witness both sides trust", "moraleDelta": 2, "leadsToStageId": "evt_d588_ceasefire_by_exhaustion_s2"},
-      {"choiceId": "evt_d588_ceasefire_by_exhaustion_s1_c2", "text": "Help broker specific terms", "moraleDelta": 1, "leadsToStageId": "evt_d588_ceasefire_by_exhaustion_s2"},
-      {"choiceId": "evt_d588_ceasefire_by_exhaustion_s1_c3", "text": "Stay away and let them work it out themselves", "moraleDelta": 0, "leadsToStageId": "evt_d588_ceasefire_by_exhaustion_s2"}
-     ]
-    },
-    {
-     "stageId": "evt_d588_ceasefire_by_exhaustion_s2",
-     "minDay": 592,
-     "triggerCondition": "Fires four days after evt_d588_ceasefire_by_exhaustion_s1.",
-     "title": "The New Ordinary",
-     "bodyText": "The pause holds, shaped less by trust than by both sides having nothing left to spend on this particular fight. The Garrison keeps its checkpoint at the Exchange entrance. The Rebuilders keep the scales, the tables, and the roster. The splinter faction near the checkpoint remains exactly what it was, an unresolved question nobody has the strength to answer yet. The shrine reopens to pilgrims, but its keepers have quietly stopped claiming the ash spares anyone.",
-     "choices": [
-      {"choiceId": "evt_d588_ceasefire_by_exhaustion_s2_c1", "text": "Take stock of what the district has become", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d600_theory_surfaces",
-   "band": "culmination",
-   "title": "What a Few People Now Believe",
-   "factionsInvolved": ["faction_central_garrison", "faction_rebuilders", "faction_ash_sign"],
-   "locationId": "loc_railway_span_44_alpha",
-   "stages": [
-    {
-     "stageId": "evt_d600_theory_surfaces_s1",
-     "minDay": 600,
-     "triggerCondition": "Fires automatically once evt_d588_ceasefire_by_exhaustion has resolved.",
-     "title": "A Shape With No Name Yet",
-     "bodyText": "In different rooms, on the same afternoon, a radio scavenger, a shrine-keeper, and a signals-minded deserter each independently arrive at the same half-formed shape: someone with real authority over targeting once steered the district's worst strikes around specific ground, deliberately, for years, and that steering has been failing since the shrine took its hit. Nobody says a name that sticks. The evidence — a clean crater, a live callsign that should be dead, a broken pattern of mercy — points at a person, not providence, and stops just short of telling anyone who.",
-     "choices": [
-      {"choiceId": "evt_d600_theory_surfaces_s1_c1", "text": "Chase the theory further", "moraleDelta": 1, "leadsToStageId": ""},
-      {"choiceId": "evt_d600_theory_surfaces_s1_c2", "text": "Let it go — the war is enough to carry", "moraleDelta": 0, "leadsToStageId": ""},
-      {"choiceId": "evt_d600_theory_surfaces_s1_c3", "text": "Write down what you know for whoever comes after", "moraleDelta": 2, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  },
-  {
-   "chainId": "evt_d605_post_ceasefire_forward_roster",
-   "band": "culmination",
-   "title": "The Fence Holds Its First Line After the Guns Stop",
-   "factionsInvolved": ["faction_forward_roster", "faction_central_garrison", "faction_rebuilders"],
-   "locationId": "loc_forward_roster_camp",
-   "stages": [
-    {
-     "stageId": "evt_d605_post_ceasefire_forward_roster_s1",
-     "minDay": 605,
-     "triggerCondition": "Fires automatically once evt_d588_ceasefire_by_exhaustion has resolved and evt_d570_forward_roster_first_action has resolved.",
-     "title": "The First Test of the Quiet",
-     "bodyText": "Five days into a ceasefire nobody has put a name to yet, a Garrison patrol walks the supply spur out of habit and finds the Roster's checkpoint still standing, unbothered by the fact that there's no war left to justify it. The sergeant in charge has orders about raiders and irregulars and nothing at all about a toll line that predates the peace by a month. He stops. The Roster doesn't move. For a long moment neither side has a script for what happens between two forces that were never quite enemies and are no longer quite anything else. Someone is going to have to decide what the Forward Roster is now that the war that made room for them is over.",
-     "choices": [
-      {"choiceId": "evt_d605_post_ceasefire_forward_roster_s1_c1", "text": "Push for the Garrison to formally recognize the checkpoint", "moraleDelta": 2, "leadsToStageId": ""},
-      {"choiceId": "evt_d605_post_ceasefire_forward_roster_s1_c2", "text": "Push the Roster to fold back into the Rebuilders now that the fighting's done", "moraleDelta": 1, "leadsToStageId": ""},
-      {"choiceId": "evt_d605_post_ceasefire_forward_roster_s1_c3", "text": "Say nothing and see which side blinks first", "moraleDelta": 0, "leadsToStageId": ""}
-     ]
-    }
-   ]
-  }
- ]
+  ]
 }

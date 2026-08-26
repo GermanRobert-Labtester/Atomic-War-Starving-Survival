@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -31,7 +32,7 @@ namespace Ashfall.Core
         public bool yaraWithdrewPermanently;
         public int seedSalt;
 
-        public static IceRoadSystemStateV1toV3 From(IceRoadSystemState src)
+        public static IceRoadSystemStateV1toV3? From(IceRoadSystemState src)
         {
             if (src == null) return null;
             return new IceRoadSystemStateV1toV3

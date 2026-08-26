@@ -251,13 +251,7 @@ namespace AtomicWar.GodotApp.UI
 
         private static void ClearContainer(VBoxContainer container)
         {
-            if (container == null) return;
-            while (container.GetChildCount() > 0)
-            {
-                var child = container.GetChild(0);
-                container.RemoveChild(child);
-                child.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(container);
         }
     }
 }

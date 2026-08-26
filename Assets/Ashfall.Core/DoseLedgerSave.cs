@@ -61,7 +61,7 @@ namespace Ashfall.Core
             SickListSystem sickList,
             CohortSystem cohort,
             VoluntaryRegisterSystem voluntaryRegister,
-            QuestlineSystem quests = null)
+QuestlineSystem? quests = null)
         {
             var save = new DoseLedgerSave
             {
@@ -96,7 +96,7 @@ namespace Ashfall.Core
                 throw new InvalidOperationException("DoseLedgerSave: empty save payload.");
 
             DoseLedgerSave save;
-            try { save = json.Deserialize<DoseLedgerSave>(jsonText); }
+            try { save = json.Deserialize<DoseLedgerSave>(jsonText!); }
             catch (Exception e)
             {
                 throw new InvalidOperationException("DoseLedgerSave: malformed save payload: " + e.Message, e);
@@ -147,7 +147,7 @@ namespace Ashfall.Core
             SickListSystem sickList,
             CohortSystem cohort,
             VoluntaryRegisterSystem voluntaryRegister,
-            QuestlineSystem quests = null)
+QuestlineSystem? quests = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));

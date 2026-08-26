@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Economy;
 
@@ -10,6 +11,7 @@ namespace AtomicWar.GodotApp
     /// No rules here — hosts only wire and present.
     /// </summary>
     public sealed class EconomyHostSession
+    : HostSessionBase
     {
         public const int DemoSeed = 2026;
 
@@ -20,7 +22,7 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public EconomyHostSession(MarketSystem market = null)
+        public EconomyHostSession(MarketSystem market = null!)
         {
             Market = market ?? new MarketSystem();
             Market.OnDemandAdjusted += (itemId, delta) =>
@@ -37,7 +39,7 @@ namespace AtomicWar.GodotApp
             var session = new EconomyHostSession();
             if (!string.IsNullOrEmpty(dataDir))
             {
-                var fileIO = new FileSystemIO();
+                var fileIO = CatalogPath.CreateFileIOForDataDir(dataDir);
                 var serializer = new SystemTextJsonSerializer();
                 var load = GoodsCatalogLoader.Load(dataDir, fileIO, serializer);
                 if (!load.HasErrors)

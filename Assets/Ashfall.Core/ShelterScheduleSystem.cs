@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 using Ashfall.Core.Shelter;
 
@@ -65,7 +66,7 @@ namespace Ashfall.Core
         public event Action<SchedulePhase> OnPhaseChanged;
         public event Action OnScheduleChanged;
 
-        public ShelterScheduleSystem(PowerGridSystem powerGrid, ILog log = null)
+        public ShelterScheduleSystem(PowerGridSystem powerGrid, ILog? log = null)
         {
             _powerGrid = powerGrid ?? throw new ArgumentNullException(nameof(powerGrid));
             _log = log ?? NullLog.Instance;
@@ -173,22 +174,28 @@ namespace Ashfall.Core
                 assignment.restQuality = _state.emergencyOverride ? 0.5f : (_state.curfewActive ? 1.2f : 1f);
             }
 
-            // Power interaction: brownout reduces lighting demand effectiveness
-            if (_powerGrid.IsBrownout)
-            {
-                _state.lightingDemand *= 0.5f;
-            }
-
             // Fatigue recovery modifier
             if (_catalog.TryGetValue(_activeScheduleId, out var def))
             {
-                _state.fatigueRecoveryModifier = _state.emergencyOverride ? 0.5f : (_state.curfewActive ? def.fatigueRecoveryModifier : 1f);
+                // Bug-07: the schedule's modifier applies across all phases;
+                // emergency override is the only thing that overrides it.
+                _state.fatigueRecoveryModifier = _state.emergencyOverride ? 0.5f : def.fatigueRecoveryModifier;
                 _state.lightingDemand = _state.emergencyOverride ? def.lightingDemandCurfew * 0.5f :
                     (_state.curfewActive ? def.lightingDemandCurfew : def.lightingDemandDay);
+
+                // Bug-15: brownout halves the lighting demand *after* the
+                // base setting is assigned. Previously this multiplicative
+                // step ran first and was then unconditionally overwritten by
+                // the assignment above, so a brownout had no effect on the
+                // published lightingDemand value.
+                if (_powerGrid.IsBrownout)
+                {
+                    _state.lightingDemand *= 0.5f;
+                }
             }
         }
 
-        public ScheduleDefinition GetActiveSchedule()
+        public ScheduleDefinition? GetActiveSchedule()
         {
             _catalog.TryGetValue(_activeScheduleId, out var def);
             return def;
@@ -217,12 +224,20 @@ namespace Ashfall.Core
             }
         }
 
-        public ShelterScheduleState CaptureState() => _state;
+        public ShelterScheduleState CaptureState() => CloneState(_state);
+
         public void RestoreState(ShelterScheduleState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnScheduleChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static ShelterScheduleState CloneState(ShelterScheduleState src)
+        {
+            if (src == null) return new ShelterScheduleState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<ShelterScheduleState>(json) ?? new ShelterScheduleState();
         }
     }
 }

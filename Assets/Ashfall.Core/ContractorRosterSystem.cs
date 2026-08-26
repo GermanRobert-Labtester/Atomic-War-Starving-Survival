@@ -73,7 +73,7 @@ namespace Ashfall.Core
             Inventory.Inventory inventory,
             DutyRosterSystem roster,
             ExpeditionSystem expedition,
-            ILog log = null!)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
@@ -215,12 +215,20 @@ namespace Ashfall.Core
             return true;
         }
 
-        public ContractorRosterState CaptureState() => _state;
+        public ContractorRosterState CaptureState() => CloneState(_state);
+
         public void RestoreState(ContractorRosterState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnRosterChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static ContractorRosterState CloneState(ContractorRosterState src)
+        {
+            if (src == null) return new ContractorRosterState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<ContractorRosterState>(json) ?? new ContractorRosterState();
         }
     }
 }

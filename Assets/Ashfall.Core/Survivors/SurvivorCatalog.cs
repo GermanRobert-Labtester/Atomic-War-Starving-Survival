@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Survivors
 {
     /// <summary>One survivor definition from survivors.json (the authority).</summary>
@@ -12,6 +14,15 @@ namespace Ashfall.Core.Survivors
         public string profession = string.Empty;
         public string bio = string.Empty;
         public float baseHealth = 100f;
+    }
+
+    [Serializable]
+    internal sealed class SurvivorDefinitionsRoot
+    {
+#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
+        public int schema_version;
+#pragma warning restore CS0649
+        public List<SurvivorDefinition> survivors = new List<SurvivorDefinition>();
     }
 
     /// <summary>One roster entry: a definition instantiated into the bunker.</summary>
@@ -51,7 +62,7 @@ namespace Ashfall.Core.Survivors
         public event Action<SurvivorRosterEntry, string> OnSurvivorDied; // entry, reason
         public event Action<SurvivorRosterState> OnStateChanged;
 
-        public SurvivorRosterSystem(SurvivorRosterState state = null)
+        public SurvivorRosterSystem(SurvivorRosterState? state = null)
         {
             _state = state ?? new SurvivorRosterState();
             if (_state.entries == null) _state.entries = new List<SurvivorRosterEntry>();
@@ -77,7 +88,7 @@ namespace Ashfall.Core.Survivors
             foreach (var def in defs) RegisterDefinition(def);
         }
 
-        public SurvivorDefinition FindDefinition(string definitionId)
+        public SurvivorDefinition? FindDefinition(string definitionId)
         {
             for (int i = 0; i < _catalog.Count; i++)
                 if (_catalog[i].id == definitionId) return _catalog[i];
@@ -118,7 +129,7 @@ namespace Ashfall.Core.Survivors
             return true;
         }
 
-        public SurvivorRosterEntry Find(string survivorId)
+        public SurvivorRosterEntry? Find(string survivorId)
         {
             return _byId.TryGetValue(survivorId, out var e) ? e : null;
         }
@@ -220,9 +231,8 @@ namespace Ashfall.Core.Survivors
 
             try
             {
-                var parsed = json.Deserialize<SurvivorDefinition[]>(raw);
-                if (parsed == null) return result;
-                for (int i = 0; i < parsed.Length; i++)
+                var parsed = CatalogLocator.LoadWrappedList<SurvivorDefinition>(raw, SystemTextJsonSerializer.Options);
+                for (int i = 0; i < parsed.Count; i++)
                 {
                     var def = parsed[i];
                     if (def == null || string.IsNullOrEmpty(def.id)) continue;
@@ -230,10 +240,11 @@ namespace Ashfall.Core.Survivors
                     result.Add(def);
                 }
             }
-            catch
-            {
-                return result;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
     }

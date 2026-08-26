@@ -1,82 +1,133 @@
-[
-  {
-    "id": "brewers_yeast_krausen_head_top_cropping_skimming",
-    "fermentation_tun_id": "COMMISSARY_BREWHOUSE_TUN_01",
-    "yeast_strain_designation": "ALE_SACCHAROMYCES_TOP_CROPPER",
-    "apparent_attenuation_pct": 78.5,
-    "fermentation_temperature_celsius": 19.5,
-    "timestamp_relative": "YEAR_02_BREWING_01",
-    "tags": ["fermentation", "brewing", "krausen", "top_cropping", "yeast_harvest"],
-    "prose": "At the peak of high krausen, brewers skimmed three kilograms of dense, creamy yeast foam from the surface of the open copper tun. The top-cropped yeast exhibited 99% viability and zero bacterial contamination, ready for direct repitching into fresh malt wort."
-  },
-  {
-    "id": "brewers_yeast_fusel_alcohol_hot_ferment_ester",
-    "fermentation_tun_id": "UNCOOLED_SUMP_FERMENTER_02",
-    "yeast_strain_designation": "WARM_SEASON_ALE_STRAIN",
-    "apparent_attenuation_pct": 82.0,
-    "fermentation_temperature_celsius": 28.5,
-    "timestamp_relative": "YEAR_04_BREWING_03",
-    "tags": ["fermentation", "brewing", "fusel_alcohols", "esters", "thermal_stress"],
-    "prose": "Cooling coil glycol failure allowed exothermic fermentation heat to spike wort temperature to 28.5°C. Excessive amino acid deamination produced sharp, solvent-like fusel alcohols (propanol and isobutanol) that induced intense headaches among consumer work crews."
-  },
-  {
-    "id": "brewers_yeast_diacetyl_rest_temperature_ramp",
-    "fermentation_tun_id": "LAGER_CONDITIONING_TANK_03",
-    "yeast_strain_designation": "BOTTOM_FERMENTING_PASTORIANUS",
-    "apparent_attenuation_pct": 74.0,
-    "fermentation_temperature_celsius": 18.0,
-    "timestamp_relative": "YEAR_07_BREWING_02",
-    "tags": ["fermentation", "brewing", "diacetyl_rest", "vicinal_diketone", "flavor_maturation"],
-    "prose": "Ramping tank temperature from 10°C to 18°C for forty-eight hours triggered active yeast re-absorption of alpha-acetolactate. The diacetyl rest completely eradicated slippery, buttered-popcorn off-flavors before long-term lagering."
-  },
-  {
-    "id": "brewers_yeast_attenuation_plato_gravity_drop",
-    "fermentation_tun_id": "MALTED_BARLEY_FERMENTER_04",
-    "yeast_strain_designation": "HIGH_ATTENUATION_FARMHOUSE",
-    "apparent_attenuation_pct": 85.2,
-    "fermentation_temperature_celsius": 21.0,
-    "timestamp_relative": "YEAR_09_BREWING_04",
-    "tags": ["fermentation", "brewing", "attenuation", "hydrometer", "plato_gravity"],
-    "prose": "Hydrometer assays tracked wort density dropping from an original gravity of 13.2° Plato down to a terminal 1.95° Plato. The high 85.2% apparent attenuation yielded a crisp, dry 6.2% ABV survival ale with excellent microbial stability."
-  },
-  {
-    "id": "brewers_yeast_cold_crashing_flocculation_gelatin_fining",
-    "fermentation_tun_id": "BRIGHT_BEER_CLARIFIER_05",
-    "yeast_strain_designation": "FLOCCULENT_ENGLISH_ALE",
-    "apparent_attenuation_pct": 76.0,
-    "fermentation_temperature_celsius": 1.5,
-    "timestamp_relative": "YEAR_12_BREWING_01",
-    "tags": ["fermentation", "brewing", "cold_crashing", "flocculation", "gelatin_finings"],
-    "prose": "Dropping cellar brine temperature to 1.5°C caused flocculent yeast cells to clump into heavy agglomerates. Dosing with 50 ppm hydrolysed pork skin collagen finings bound remaining suspended tannins, clarifying forty hectoliters into brilliant amber liquid."
-  },
-  {
-    "id": "brewers_yeast_acetic_acid_acetobacter_airlock_infection",
-    "fermentation_tun_id": "WOODEN_CASING_VAT_06",
-    "yeast_strain_designation": "ACETOBACTER_INFECTED_BATCH",
-    "apparent_attenuation_pct": 91.0,
-    "fermentation_temperature_celsius": 22.0,
-    "timestamp_relative": "YEAR_15_BREWING_03",
-    "tags": ["fermentation", "brewing", "acetobacter", "vinegar_infection", "airlock_breach"],
-    "prose": "A dried-out water airlock permitted vinegar flies (*Drosophila*) to enter the secondary vessel. Inoculation by *Acetobacter aceti* oxidized six hundred liters of finished ale into sharp 4.5% acetic acid malt vinegar, promptly diverted to the food preservation cannery."
-  },
-  {
-    "id": "brewers_yeast_autolysis_yeasty_meaty_off_flavor",
-    "fermentation_tun_id": "STAGNANT_SETTLING_CONE_07",
-    "yeast_strain_designation": "AUTOLYZED_BREWERS_SLURRY",
-    "apparent_attenuation_pct": 77.0,
-    "fermentation_temperature_celsius": 24.0,
-    "timestamp_relative": "YEAR_17_BREWING_02",
-    "tags": ["fermentation", "brewing", "autolysis", "cell_rupture", "meaty_off_flavor"],
-    "prose": "Leaving spent yeast compressed under five meters of hydrostatic head pressure for six weeks caused extensive cell wall lysis. Ruptured vacuole enzymes released lipid rancidity and sulfurous broth flavors, ruining an entire batch of rations."
-  },
-  {
-    "id": "brewers_yeast_slurry_acid_washing_phosphoric_acid",
-    "fermentation_tun_id": "YEAST_PROPAGATION_BRINK",
-    "yeast_strain_designation": "ACID_CLEANSED_PITCHING_YEAST",
-    "apparent_attenuation_pct": 79.0,
-    "fermentation_temperature_celsius": 4.0,
-    "timestamp_relative": "YEAR_20_BREWING_01",
-    "tags": ["fermentation", "brewing", "acid_washing", "phosphoric_acid", "decontamination"],
-    "prose": "Suspending harvested yeast slurry in food-grade phosphoric acid diluted to pH 2.1 for ninety minutes at 3°C selectively destroyed contaminating *Pediococcus* and *Lactobacillus* bacteria. The hardy *Saccharomyces* yeast cells survived with 92% pitching viability."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "brewers_yeast_krausen_head_top_cropping_skimming",
+      "fermentation_tun_id": "COMMISSARY_BREWHOUSE_TUN_01",
+      "yeast_strain_designation": "ALE_SACCHAROMYCES_TOP_CROPPER",
+      "apparent_attenuation_pct": 78.5,
+      "fermentation_temperature_celsius": 19.5,
+      "timestamp_relative": "YEAR_02_BREWING_01",
+      "tags": [
+        "fermentation",
+        "brewing",
+        "krausen",
+        "top_cropping",
+        "yeast_harvest"
+      ],
+      "prose": "At the peak of high krausen, brewers skimmed three kilograms of dense, creamy yeast foam from the surface of the open copper tun. The top-cropped yeast exhibited 99% viability and zero bacterial contamination, ready for direct repitching into fresh malt wort."
+    },
+    {
+      "id": "brewers_yeast_fusel_alcohol_hot_ferment_ester",
+      "fermentation_tun_id": "UNCOOLED_SUMP_FERMENTER_02",
+      "yeast_strain_designation": "WARM_SEASON_ALE_STRAIN",
+      "apparent_attenuation_pct": 82.0,
+      "fermentation_temperature_celsius": 28.5,
+      "timestamp_relative": "YEAR_04_BREWING_03",
+      "tags": [
+        "fermentation",
+        "brewing",
+        "fusel_alcohols",
+        "esters",
+        "thermal_stress"
+      ],
+      "prose": "Cooling coil glycol failure allowed exothermic fermentation heat to spike wort temperature to 28.5°C. Excessive amino acid deamination produced sharp, solvent-like fusel alcohols (propanol and isobutanol) that induced intense headaches among consumer work crews."
+    },
+    {
+      "id": "brewers_yeast_diacetyl_rest_temperature_ramp",
+      "fermentation_tun_id": "LAGER_CONDITIONING_TANK_03",
+      "yeast_strain_designation": "BOTTOM_FERMENTING_PASTORIANUS",
+      "apparent_attenuation_pct": 74.0,
+      "fermentation_temperature_celsius": 18.0,
+      "timestamp_relative": "YEAR_07_BREWING_02",
+      "tags": [
+        "fermentation",
+        "brewing",
+        "diacetyl_rest",
+        "vicinal_diketone",
+        "flavor_maturation"
+      ],
+      "prose": "Ramping tank temperature from 10°C to 18°C for forty-eight hours triggered active yeast re-absorption of alpha-acetolactate. The diacetyl rest completely eradicated slippery, buttered-popcorn off-flavors before long-term lagering."
+    },
+    {
+      "id": "brewers_yeast_attenuation_plato_gravity_drop",
+      "fermentation_tun_id": "MALTED_BARLEY_FERMENTER_04",
+      "yeast_strain_designation": "HIGH_ATTENUATION_FARMHOUSE",
+      "apparent_attenuation_pct": 85.2,
+      "fermentation_temperature_celsius": 21.0,
+      "timestamp_relative": "YEAR_09_BREWING_04",
+      "tags": [
+        "fermentation",
+        "brewing",
+        "attenuation",
+        "hydrometer",
+        "plato_gravity"
+      ],
+      "prose": "Hydrometer assays tracked wort density dropping from an original gravity of 13.2° Plato down to a terminal 1.95° Plato. The high 85.2% apparent attenuation yielded a crisp, dry 6.2% ABV survival ale with excellent microbial stability."
+    },
+    {
+      "id": "brewers_yeast_cold_crashing_flocculation_gelatin_fining",
+      "fermentation_tun_id": "BRIGHT_BEER_CLARIFIER_05",
+      "yeast_strain_designation": "FLOCCULENT_ENGLISH_ALE",
+      "apparent_attenuation_pct": 76.0,
+      "fermentation_temperature_celsius": 1.5,
+      "timestamp_relative": "YEAR_12_BREWING_01",
+      "tags": [
+        "fermentation",
+        "brewing",
+        "cold_crashing",
+        "flocculation",
+        "gelatin_finings"
+      ],
+      "prose": "Dropping cellar brine temperature to 1.5°C caused flocculent yeast cells to clump into heavy agglomerates. Dosing with 50 ppm hydrolysed pork skin collagen finings bound remaining suspended tannins, clarifying forty hectoliters into brilliant amber liquid."
+    },
+    {
+      "id": "brewers_yeast_acetic_acid_acetobacter_airlock_infection",
+      "fermentation_tun_id": "WOODEN_CASING_VAT_06",
+      "yeast_strain_designation": "ACETOBACTER_INFECTED_BATCH",
+      "apparent_attenuation_pct": 91.0,
+      "fermentation_temperature_celsius": 22.0,
+      "timestamp_relative": "YEAR_15_BREWING_03",
+      "tags": [
+        "fermentation",
+        "brewing",
+        "acetobacter",
+        "vinegar_infection",
+        "airlock_breach"
+      ],
+      "prose": "A dried-out water airlock permitted vinegar flies (*Drosophila*) to enter the secondary vessel. Inoculation by *Acetobacter aceti* oxidized six hundred liters of finished ale into sharp 4.5% acetic acid malt vinegar, promptly diverted to the food preservation cannery."
+    },
+    {
+      "id": "brewers_yeast_autolysis_yeasty_meaty_off_flavor",
+      "fermentation_tun_id": "STAGNANT_SETTLING_CONE_07",
+      "yeast_strain_designation": "AUTOLYZED_BREWERS_SLURRY",
+      "apparent_attenuation_pct": 77.0,
+      "fermentation_temperature_celsius": 24.0,
+      "timestamp_relative": "YEAR_17_BREWING_02",
+      "tags": [
+        "fermentation",
+        "brewing",
+        "autolysis",
+        "cell_rupture",
+        "meaty_off_flavor"
+      ],
+      "prose": "Leaving spent yeast compressed under five meters of hydrostatic head pressure for six weeks caused extensive cell wall lysis. Ruptured vacuole enzymes released lipid rancidity and sulfurous broth flavors, ruining an entire batch of rations."
+    },
+    {
+      "id": "brewers_yeast_slurry_acid_washing_phosphoric_acid",
+      "fermentation_tun_id": "YEAST_PROPAGATION_BRINK",
+      "yeast_strain_designation": "ACID_CLEANSED_PITCHING_YEAST",
+      "apparent_attenuation_pct": 79.0,
+      "fermentation_temperature_celsius": 4.0,
+      "timestamp_relative": "YEAR_20_BREWING_01",
+      "tags": [
+        "fermentation",
+        "brewing",
+        "acid_washing",
+        "phosphoric_acid",
+        "decontamination"
+      ],
+      "prose": "Suspending harvested yeast slurry in food-grade phosphoric acid diluted to pH 2.1 for ninety minutes at 3°C selectively destroyed contaminating *Pediococcus* and *Lactobacillus* bacteria. The hardy *Saccharomyces* yeast cells survived with 92% pitching viability."
+    }
+  ]
+}

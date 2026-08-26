@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -82,7 +83,7 @@ namespace Ashfall.Core
         public bool IsUnlocked => _state.expansionUnlocked;
         public int StratumCount => _strata.Count;
 
-        public LocationMemorySystem(IFileIO files, IJsonSerializer json, ILog log = null)
+        public LocationMemorySystem(IFileIO files, IJsonSerializer json, ILog? log = null)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -109,7 +110,7 @@ namespace Ashfall.Core
             try
             {
                 string blob = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<LocationMemoryStratum>>(blob);
+                var items = CatalogLocator.LoadWrappedList<LocationMemoryStratum>(blob, SystemTextJsonSerializer.Options);
                 if (items == null) return;
                 for (int i = 0; i < items.Count; i++)
                 {
@@ -168,7 +169,7 @@ namespace Ashfall.Core
             // "now" strata first (they are the current lived layer), then "after".
             // No "pre" fallback: a recast exists only once a mutation re-wrote
             // the place. The unmutated baseline is GetStratumText(site, "pre").
-            LocationMemoryStratum match = null;
+            LocationMemoryStratum? match = null;
             for (int i = 0; i < list.Count; i++)
             {
                 LocationMemoryStratum s = list[i];
@@ -306,7 +307,7 @@ namespace Ashfall.Core
             for (int f = 0; f < flagsList.Count; f++)
             {
                 string siteId = flagsList[f].siteId;
-                string active = GetActiveRecast(siteId);
+                string active = GetActiveRecast(siteId)!;
                 if (string.IsNullOrEmpty(active)) continue;
                 if (_state.recastHistory.Contains(siteId)) continue;
                 _state.recastHistory.Add(siteId);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Journal;
@@ -18,7 +19,7 @@ namespace AtomicWar.GodotApp
     /// session (StealthDiveInstance + MaritimeSaveStore).
     /// </summary>
     public sealed class DeepCoastHostSession
-    {
+    : HostSessionBase{
         public const int DemoSeed = 4048;
 
         public District8DeepCoastSystem DeepCoast { get; }
@@ -32,15 +33,12 @@ namespace AtomicWar.GodotApp
         private readonly List<VariableLootNode> _dockLoot;
         private readonly DemoSurvivor _author;
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
         public DeepCoastHostSession(
-            District8DeepCoastSystem deepCoast = null,
-            JournalSystem journal = null,
-            FactionStanceEngine stances = null,
-            HoldfastTradeInventory inventory = null,
-            MaritimeHostSession maritime = null)
+            District8DeepCoastSystem deepCoast = null!,
+            JournalSystem journal = null!,
+            FactionStanceEngine stances = null!,
+            HoldfastTradeInventory inventory = null!,
+            MaritimeHostSession maritime = null!)
         {
             DeepCoast = deepCoast ?? new District8DeepCoastSystem(DemoSeed);
             Journal = journal ?? new JournalSystem();
@@ -54,16 +52,16 @@ namespace AtomicWar.GodotApp
             Maritime = maritime ?? new MaritimeHostSession();
             _author = new DemoSurvivor("dc8_survey_party", "The Survey Party", RiskBiasTrait.Realist);
 
-            DeepCoast.OnStateChanged += () => StateChanged?.Invoke();
-            Maritime.StateChanged += () => StateChanged?.Invoke();
+            DeepCoast.OnStateChanged += () => RaiseStateChanged();
+            Maritime.StateChanged += () => RaiseStateChanged();
         }
 
         public static DeepCoastHostSession Create(
-            District8DeepCoastSystem deepCoast = null,
-            JournalSystem journal = null,
-            FactionStanceEngine stances = null,
-            HoldfastTradeInventory inventory = null,
-            MaritimeHostSession maritime = null)
+            District8DeepCoastSystem deepCoast = null!,
+            JournalSystem journal = null!,
+            FactionStanceEngine stances = null!,
+            HoldfastTradeInventory inventory = null!,
+            MaritimeHostSession maritime = null!)
         {
             return new DeepCoastHostSession(deepCoast, journal, stances, inventory, maritime);
         }
@@ -106,7 +104,7 @@ namespace AtomicWar.GodotApp
 
             Note(outcome.NarrativeKey, DecisionText(outcome));
             LastEvent = DecisionSummary(outcome);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -160,7 +158,7 @@ namespace AtomicWar.GodotApp
             Maritime.Dive.StartDive(diverId, operatorId, 120f);
             Note(District8DeepCoastSystem.JournalDiveLaunched, "First dive from Berth 9. The water under the quay is black and cold and the ice does not want us in it. The winch clicks at the top of every crank. Whatever is down there has been waiting five years. It can wait through one more day of us being careful.");
             LastEvent = $"Dock dive launched from Berth 9: {diverId} down, {operatorId} on the compressor (site site_exp09_naval_patrol).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -169,7 +167,7 @@ namespace AtomicWar.GodotApp
             if (!Maritime.Dive.IsActive) return "No active dock dive.";
             Maritime.Dive.Tick(seconds);
             LastEvent = $"Dock dive: air {Maritime.Dive.AirSupplySeconds:F0}s · room {Maritime.Dive.CurrentRoomIndex + 1}/4.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -178,7 +176,7 @@ namespace AtomicWar.GodotApp
             if (!Maritime.Dive.IsActive) return "No active dock dive.";
             Maritime.Dive.CrankCompressor();
             LastEvent = $"Compressor cranked. Air {Maritime.Dive.AirSupplySeconds:F0}s.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -189,7 +187,7 @@ namespace AtomicWar.GodotApp
             LastEvent = ok
                 ? $"Diver advanced to room {Maritime.Dive.CurrentRoomIndex + 1} (noise {Maritime.Dive.NoiseLevel})."
                 : "Cannot advance further.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -201,7 +199,7 @@ namespace AtomicWar.GodotApp
         /// The Fleet levy (when fleet-controlled) is deducted here and the rest
         /// goes to the canonical inventory.
         /// </summary>
-        public string CompleteDockDive(bool success, List<SalvageEntry> rewards = null, int day = 1)
+        public string CompleteDockDive(bool success, List<SalvageEntry> rewards = null!, int day = 1)
         {
             if (!Maritime.Dive.IsActive) return "No active dock dive to complete.";
             Maritime.Dive.EndDive(success);
@@ -229,7 +227,7 @@ namespace AtomicWar.GodotApp
             {
                 LastEvent = "Dive aborted. The water keeps what it keeps.";
             }
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 

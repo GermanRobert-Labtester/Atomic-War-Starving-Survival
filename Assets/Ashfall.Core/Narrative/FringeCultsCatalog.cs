@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string cobaltPath = Path.Combine(directoryPath, "cobalt_liturgies.json");
             if (File.Exists(cobaltPath))
             {
-                var list = JsonSerializer.Deserialize<List<CobaltLiturgyEntry>>(File.ReadAllText(cobaltPath), options);
+                var list = CatalogLocator.LoadWrappedList<CobaltLiturgyEntry>(File.ReadAllText(cobaltPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string ironPath = Path.Combine(directoryPath, "iron_synod_canons.json");
             if (File.Exists(ironPath))
             {
-                var list = JsonSerializer.Deserialize<List<IronSynodCanonEntry>>(File.ReadAllText(ironPath), options);
+                var list = CatalogLocator.LoadWrappedList<IronSynodCanonEntry>(File.ReadAllText(ironPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string geophonePath = Path.Combine(directoryPath, "geophone_hymnals.json");
             if (File.Exists(geophonePath))
             {
-                var list = JsonSerializer.Deserialize<List<GeophoneHymnalEntry>>(File.ReadAllText(geophonePath), options);
+                var list = CatalogLocator.LoadWrappedList<GeophoneHymnalEntry>(File.ReadAllText(geophonePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string epitaphPath = Path.Combine(directoryPath, "wasteland_grave_epitaphs.json");
             if (File.Exists(epitaphPath))
             {
-                var list = JsonSerializer.Deserialize<List<WastelandEpitaphEntry>>(File.ReadAllText(epitaphPath), options);
+                var list = CatalogLocator.LoadWrappedList<WastelandEpitaphEntry>(File.ReadAllText(epitaphPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CobaltLiturgyEntry GetCobaltLiturgy(string id)
+        public CobaltLiturgyEntry? GetCobaltLiturgy(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CobaltLiturgyEntry e ? e : null;
         }
 
-        public IronSynodCanonEntry GetIronSynodCanon(string id)
+        public IronSynodCanonEntry? GetIronSynodCanon(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is IronSynodCanonEntry e ? e : null;
         }
 
-        public GeophoneHymnalEntry GetGeophoneHymnal(string id)
+        public GeophoneHymnalEntry? GetGeophoneHymnal(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GeophoneHymnalEntry e ? e : null;
         }
 
-        public WastelandEpitaphEntry GetWastelandEpitaph(string id)
+        public WastelandEpitaphEntry? GetWastelandEpitaph(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is WastelandEpitaphEntry e ? e : null;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using static Ashfall.Core.DutyRosterHoldfastBridge;
 
 namespace Ashfall.Core
@@ -65,7 +66,7 @@ namespace Ashfall.Core
             }
         }
 
-        public DutyRosterQuestRuntime(DutyRosterQuestState state = null)
+        public DutyRosterQuestRuntime(DutyRosterQuestState? state = null)
         {
             _state = state ?? new DutyRosterQuestState();
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
@@ -78,7 +79,7 @@ namespace Ashfall.Core
             _catalog = catalog ?? new DutyRosterCatalog();
         }
 
-        public DutyRosterQuestProgress GetProgress(string questId)
+        public DutyRosterQuestProgress? GetProgress(string questId)
         {
             if (string.IsNullOrEmpty(questId)) return null;
             return _byId.TryGetValue(questId, out var p) ? p : null;
@@ -220,36 +221,36 @@ namespace Ashfall.Core
             if (string.IsNullOrEmpty(flag)) return;
             switch (flag)
             {
-                case DutyRosterSystem.FlagWaitInk:
-                    roster?.ResolveChartChoice(DutyRosterSystem.ChoiceWaitInk, day);
+                case DutyRosterIds.FlagWaitInk:
+                    roster?.ResolveChartChoice(DutyRosterIds.ChoiceWaitInk, day);
                     break;
-                case DutyRosterSystem.MutationFactionBlankRowsAccess:
+                case DutyRosterIds.MutationFactionBlankRowsAccess:
                     roster?.WithdrawBlankRowsAccessPublic();
                     break;
                 case "flag_hadi_hidden":
-                    roster?.HideFromNorthCopy(DutyRosterSystem.NpcHadiMorrow);
-                    marks?.SetMark(MarkHadiHidden, null, day);
+                    roster?.HideFromNorthCopy(DutyRosterIds.NpcHadiMorrow);
+                    marks?.SetMark(MarkHadiHidden, null!, day);
                     break;
                 case "flag_hadi_listed":
-                    marks?.SetMark(MarkHadiListed, null, day);
+                    marks?.SetMark(MarkHadiListed, null!, day);
                     break;
                 case "flag_hadi_sent":
-                    marks?.SetMark(MarkHadiSent, null, day);
+                    marks?.SetMark(MarkHadiSent, null!, day);
                     break;
                 case "flag_tamsin_waystation":
-                    marks?.SetMark(MarkTamsinWatchShort, null, day);
+                    marks?.SetMark(MarkTamsinWatchShort, null!, day);
                     break;
                 default:
                     if (flag.StartsWith("mark_", StringComparison.Ordinal)
                         || flag.StartsWith("mmc_", StringComparison.Ordinal))
                     {
-                        marks?.SetMark(flag, null, day);
+                        marks?.SetMark(flag, null!, day);
                     }
                     else if (flag.StartsWith("mutation_", StringComparison.Ordinal))
                     {
                         RecordMutation(flag);
                     }
-                    else if (roster != null && flag == DutyRosterSystem.MutationFactionBlankRowsAccess)
+                    else if (roster != null && flag == DutyRosterIds.MutationFactionBlankRowsAccess)
                     {
                         // (blank-rows handled above)
                     }
@@ -285,7 +286,7 @@ namespace Ashfall.Core
         /// </summary>
         public bool IsCrisisQuestActive()
         {
-            var p = GetProgress(DutyRosterSystem.QuestWindow);
+            var p = GetProgress(DutyRosterIds.QuestWindow);
             return p != null && p.started && !p.completed && !p.failed;
         }
 
@@ -295,7 +296,7 @@ namespace Ashfall.Core
         /// Mutations without an owning field stay recorded flags read by the
         /// Holdfast bridge / epilogue; unknown ids are logged, never silent.
         /// </summary>
-        public void ApplyKnownEffects(DutyRosterSystem roster, MoraleMarkSystem marks, int day, ILog log = null)
+        public void ApplyKnownEffects(DutyRosterSystem roster, MoraleMarkSystem marks, int day, ILog? log = null)
         {
             log = log ?? NullLog.Instance;
             if (roster == null) return;
@@ -306,74 +307,74 @@ namespace Ashfall.Core
                 if (string.IsNullOrEmpty(m)) continue;
                 switch (m)
                 {
-                    case DutyRosterSystem.MutationRosterInUse:
+                    case DutyRosterIds.MutationRosterInUse:
                         roster.MarkRosterInUse();
                         break;
-                    case DutyRosterSystem.MutationRosterStillBlank:
+                    case DutyRosterIds.MutationRosterStillBlank:
                         roster.MarkRosterStillBlank();
                         break;
-                    case DutyRosterSystem.MutationRationProtocol:
+                    case DutyRosterIds.MutationRationProtocol:
                         roster.SetRationProtocol(true);
-                        if (marks != null) marks.SetMark(MarkRationProtocol, null, day);
+                        if (marks != null) marks.SetMark(MarkRationProtocol, null!, day);
                         break;
-                    case DutyRosterSystem.MutationRosterInk:
+                    case DutyRosterIds.MutationRosterInk:
                         roster.ResolveInkEnding(day);
-                        if (marks != null) marks.SetMark(MarkRosterInk, null, day);
+                        if (marks != null) marks.SetMark(MarkRosterInk, null!, day);
                         break;
-                    case DutyRosterSystem.MutationRosterBurned:
+                    case DutyRosterIds.MutationRosterBurned:
                         roster.BurnChart(day);
-                        if (marks != null) marks.SetMark(MarkRosterBurned, null, day);
+                        if (marks != null) marks.SetMark(MarkRosterBurned, null!, day);
                         break;
-                    case DutyRosterSystem.MutationRosterBlank:
-                        if (marks != null) marks.SetMark(MarkRosterBlank, null, day);
+                    case DutyRosterIds.MutationRosterBlank:
+                        if (marks != null) marks.SetMark(MarkRosterBlank, null!, day);
                         break;
-                    case DutyRosterSystem.MutationFactionBlankRowsAccess:
+                    case DutyRosterIds.MutationFactionBlankRowsAccess:
                         roster.WithdrawBlankRowsAccessPublic();
                         break;
                     // Bespoke quest outcomes -> authored morale marks (typed map,
                     // Appendix A / §4.1; the marks carry the later prose).
                     case "mutation_bunk_claimed":
-                        if (marks != null) marks.SetMark(MarkFourteenthClaimed, null, day);
+                        if (marks != null) marks.SetMark(MarkFourteenthClaimed, null!, day);
                         break;
                     case "mutation_fourteenth_in_ash":
-                        if (marks != null) marks.SetMark(MarkFourteenthDenied, null, day);
+                        if (marks != null) marks.SetMark(MarkFourteenthDenied, null!, day);
                         break;
                     case "mutation_hadi_status":
-                        if (marks != null) marks.SetMark(MarkHadiListed, null, day);
+                        if (marks != null) marks.SetMark(MarkHadiListed, null!, day);
                         break;
                     case "mutation_hadi_never_back":
-                        if (marks != null) marks.SetMark(MarkHadiNeverBack, null, day);
+                        if (marks != null) marks.SetMark(MarkHadiNeverBack, null!, day);
                         break;
                     case "mutation_schedule_living":
-                        if (marks != null) marks.SetMark(MarkScheduleLiving, null, day);
+                        if (marks != null) marks.SetMark(MarkScheduleLiving, null!, day);
                         break;
                     case "mutation_uncorroborated":
-                        if (marks != null) marks.SetMark(MarkUncorroborated, null, day);
+                        if (marks != null) marks.SetMark(MarkUncorroborated, null!, day);
                         break;
                     case "mutation_column_voss":
-                        if (marks != null) marks.SetMark(MarkColumnVoss, null, day);
+                        if (marks != null) marks.SetMark(MarkColumnVoss, null!, day);
                         break;
                     case "mutation_column_hidden":
-                        if (marks != null) marks.SetMark(MarkColumnHidden, null, day);
+                        if (marks != null) marks.SetMark(MarkColumnHidden, null!, day);
                         break;
                     case "mutation_brass_kept":
-                        if (marks != null) marks.SetMark(MarkBrassKept, null, day);
+                        if (marks != null) marks.SetMark(MarkBrassKept, null!, day);
                         break;
                     case "mutation_plate_on_wall":
-                        if (marks != null) marks.SetMark(MarkPlateOnWall, null, day);
+                        if (marks != null) marks.SetMark(MarkPlateOnWall, null!, day);
                         break;
                     case "mutation_house_thinned":
                     case "mutation_death_in_stack":
-                        if (marks != null) marks.SetMark(MarkHouseThinned, null, day);
+                        if (marks != null) marks.SetMark(MarkHouseThinned, null!, day);
                         break;
                     case "mutation_home_watch":
-                        if (marks != null) marks.SetMark(MarkHomeHeld, null, day);
+                        if (marks != null) marks.SetMark(MarkHomeHeld, null!, day);
                         break;
                     default:
                         if (m.StartsWith("mark_", StringComparison.Ordinal)
                             || m.StartsWith("mmc_", StringComparison.Ordinal))
                         {
-                            if (marks != null) marks.SetMark(m, null, day);
+                            if (marks != null) marks.SetMark(m, null!, day);
                         }
                         else
                         {

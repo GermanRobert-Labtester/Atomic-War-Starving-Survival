@@ -1,51 +1,54 @@
-[
-  {
-    "id": "currying_001",
-    "tanned_hide_lot_id": "lot_oak_01",
-    "fat_liquor_type": "tallow",
-    "burnishing_tool": "bone_slicker",
-    "log_text": "Bark-tanned dog hide, slightly damp. Worked tallow in with both palms, grain side first. Let it absorb for an hour. Then staked and slicked the grain with the bone slicker — an old rib bone, smoothed on sandstone. The surface firms up and takes a mild sheen."
-  },
-  {
-    "id": "currying_002",
-    "tanned_hide_lot_id": "lot_oak_02",
-    "fat_liquor_type": "rendered_fat",
-    "burnishing_tool": "bottle_glass_edge",
-    "log_text": "No tallow to spare. Used rendered cooking fat — less clean but the fat content is similar. A bottle shard for slicking. The glass edge burnishes finer than bone if kept moving. Leather came out close to the bone-slicked batch."
-  },
-  {
-    "id": "currying_003",
-    "tanned_hide_lot_id": "lot_willow_01",
-    "fat_liquor_type": "tallow",
-    "burnishing_tool": "bone_slicker",
-    "log_text": "Willow-tanned hide requires more fat liquor — the tannin is lighter and the leather drinks more. Applied two coats of tallow with a day between. Final slicking took the grain down flat and even. Softer hand than the oak-tanned batch."
-  },
-  {
-    "id": "currying_004",
-    "tanned_hide_lot_id": "lot_oak_01",
-    "fat_liquor_type": "bone_marrow_oil",
-    "burnishing_tool": "bone_slicker",
-    "log_text": "Tried bone marrow oil — rendered from cracked long bones. Smells strong. Works into the leather differently: faster penetration, slicker surface immediately. The bone slicker barely needed force. Finished leather is supple. Will use marrow oil when tallow is low."
-  },
-  {
-    "id": "currying_005",
-    "tanned_hide_lot_id": "lot_brain_tan_01",
-    "fat_liquor_type": "tallow",
-    "burnishing_tool": "smooth_river_stone",
-    "log_text": "Brain-tanned hide does not need heavy currying — the oils are already set. Light tallow rub and a smooth river stone for burnishing. The surface is already soft; the stone just brings up a faint gloss. More grooming than work."
-  },
-  {
-    "id": "currying_006",
-    "tanned_hide_lot_id": "lot_oak_03",
-    "fat_liquor_type": "tallow",
-    "burnishing_tool": "bone_slicker",
-    "log_text": "Thick oak-tanned panel — stiff even after fatiquoring. Needed repeated staking and slicking over two days, working it damp each time. Third pass it finally broke and draped. Heavy leather now; will cut sole blanks from the densest section."
-  },
-  {
-    "id": "currying_007",
-    "tanned_hide_lot_id": "lot_alder_01",
-    "fat_liquor_type": "rendered_fat",
-    "burnishing_tool": "bottle_glass_edge",
-    "log_text": "Alder-tanned rabbit-weight leather. Very thin. Fat liquor applied sparingly — too much and it goes floppy. Glass edge burnishing at light pressure only. Resulted in a fine, smooth panel. Cut into two glove blanks. Still need to punch and stitch them."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "currying_001",
+      "tanned_hide_lot_id": "lot_oak_01",
+      "fat_liquor_type": "tallow",
+      "burnishing_tool": "bone_slicker",
+      "log_text": "Bark-tanned dog hide, slightly damp. Worked tallow in with both palms, grain side first. Let it absorb for an hour. Then staked and slicked the grain with the bone slicker — an old rib bone, smoothed on sandstone. The surface firms up and takes a mild sheen."
+    },
+    {
+      "id": "currying_002",
+      "tanned_hide_lot_id": "lot_oak_02",
+      "fat_liquor_type": "rendered_fat",
+      "burnishing_tool": "bottle_glass_edge",
+      "log_text": "No tallow to spare. Used rendered cooking fat — less clean but the fat content is similar. A bottle shard for slicking. The glass edge burnishes finer than bone if kept moving. Leather came out close to the bone-slicked batch."
+    },
+    {
+      "id": "currying_003",
+      "tanned_hide_lot_id": "lot_willow_01",
+      "fat_liquor_type": "tallow",
+      "burnishing_tool": "bone_slicker",
+      "log_text": "Willow-tanned hide requires more fat liquor — the tannin is lighter and the leather drinks more. Applied two coats of tallow with a day between. Final slicking took the grain down flat and even. Softer hand than the oak-tanned batch."
+    },
+    {
+      "id": "currying_004",
+      "tanned_hide_lot_id": "lot_oak_01",
+      "fat_liquor_type": "bone_marrow_oil",
+      "burnishing_tool": "bone_slicker",
+      "log_text": "Tried bone marrow oil — rendered from cracked long bones. Smells strong. Works into the leather differently: faster penetration, slicker surface immediately. The bone slicker barely needed force. Finished leather is supple. Will use marrow oil when tallow is low."
+    },
+    {
+      "id": "currying_005",
+      "tanned_hide_lot_id": "lot_brain_tan_01",
+      "fat_liquor_type": "tallow",
+      "burnishing_tool": "smooth_river_stone",
+      "log_text": "Brain-tanned hide does not need heavy currying — the oils are already set. Light tallow rub and a smooth river stone for burnishing. The surface is already soft; the stone just brings up a faint gloss. More grooming than work."
+    },
+    {
+      "id": "currying_006",
+      "tanned_hide_lot_id": "lot_oak_03",
+      "fat_liquor_type": "tallow",
+      "burnishing_tool": "bone_slicker",
+      "log_text": "Thick oak-tanned panel — stiff even after fatiquoring. Needed repeated staking and slicking over two days, working it damp each time. Third pass it finally broke and draped. Heavy leather now; will cut sole blanks from the densest section."
+    },
+    {
+      "id": "currying_007",
+      "tanned_hide_lot_id": "lot_alder_01",
+      "fat_liquor_type": "rendered_fat",
+      "burnishing_tool": "bottle_glass_edge",
+      "log_text": "Alder-tanned rabbit-weight leather. Very thin. Fat liquor applied sparingly — too much and it goes floppy. Glass edge burnishing at light pressure only. Resulted in a fine, smooth panel. Cut into two glove blanks. Still need to punch and stitch them."
+    }
+  ]
+}

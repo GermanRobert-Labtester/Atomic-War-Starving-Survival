@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core
@@ -54,10 +55,10 @@ namespace Ashfall.Core
         public HoldfastItemsCatalog Items { get; set; } = HoldfastItemsCatalog.Empty();
         public HoldfastFactionsCatalog Factions { get; set; } = HoldfastFactionsCatalog.Empty();
 
-        public HoldfastItemDefinition GetItem(string id) => Items != null ? Items.GetById(id) : null;
-        public HoldfastFactionEntry GetFaction(string id) => Factions != null ? Factions.GetById(id) : null;
+        public HoldfastItemDefinition? GetItem(string id) => Items != null ? Items.GetById(id) : null;
+        public HoldfastFactionEntry? GetFaction(string id) => Factions != null ? Factions.GetById(id) : null;
 
-        public HoldfastLocationEntry GetLocation(string id)
+        public HoldfastLocationEntry? GetLocation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Locations.Count; i++)
@@ -66,7 +67,7 @@ namespace Ashfall.Core
             return null;
         }
 
-        public HoldfastQuestEntry GetQuest(string id)
+        public HoldfastQuestEntry? GetQuest(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Quests.Count; i++)
@@ -92,6 +93,15 @@ namespace Ashfall.Core
         public double thirstRestore { get; set; } = 0.0;
         public double hungerRestore { get; set; } = 0.0;
         public double moraleEffect { get; set; } = 0.0;
+    }
+
+    [Serializable]
+    internal sealed class HoldfastItemsRoot
+    {
+#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
+        public int schema_version;
+#pragma warning restore CS0649
+        public List<HoldfastItemDto> items = new List<HoldfastItemDto>();
     }
 
     /// <summary>
@@ -131,7 +141,7 @@ namespace Ashfall.Core
         private readonly IJsonSerializer _json;
         private readonly ILog _log;
 
-        public HoldfastCatalogLoader(IFileIO files, IJsonSerializer json, ILog log = null)
+        public HoldfastCatalogLoader(IFileIO files, IJsonSerializer json, ILog? log = null)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -187,8 +197,7 @@ namespace Ashfall.Core
             try
             {
                 string json = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<HoldfastLocationEntry>>(json);
-                if (items == null) return;
+                var items = CatalogLocator.LoadWrappedList<HoldfastLocationEntry>(json, SystemTextJsonSerializer.Options);
                 for (int i = 0; i < items.Count; i++)
                 {
                     var e = items[i];
@@ -215,8 +224,7 @@ namespace Ashfall.Core
             try
             {
                 string json = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<T>>(json);
-                if (items == null) return;
+                var items = CatalogLocator.LoadWrappedList<T>(json, SystemTextJsonSerializer.Options);
                 for (int i = 0; i < items.Count; i++)
                 {
                     if (items[i] != null)
@@ -244,8 +252,7 @@ namespace Ashfall.Core
             try
             {
                 string json = _files.ReadAllText(path);
-                var dtos = _json.Deserialize<List<HoldfastItemDto>>(json);
-                if (dtos == null) return;
+                var dtos = CatalogLocator.LoadWrappedList<HoldfastItemDto>(json, SystemTextJsonSerializer.Options);
                 for (int i = 0; i < dtos.Count; i++)
                 {
                     var dto = dtos[i];
@@ -277,8 +284,7 @@ namespace Ashfall.Core
             try
             {
                 string json = _files.ReadAllText(path);
-                var dtos = _json.Deserialize<List<HoldfastFactionDto>>(json);
-                if (dtos == null) return;
+                var dtos = CatalogLocator.LoadWrappedList<HoldfastFactionDto>(json, SystemTextJsonSerializer.Options);
                 for (int i = 0; i < dtos.Count; i++)
                 {
                     var dto = dtos[i];

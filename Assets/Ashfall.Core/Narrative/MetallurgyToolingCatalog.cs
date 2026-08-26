@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string slagPath = Path.Combine(directoryPath, "cupola_slag_leaching_records.json");
             if (File.Exists(slagPath))
             {
-                var list = JsonSerializer.Deserialize<List<CupolaSlagLeachingEntry>>(File.ReadAllText(slagPath), options);
+                var list = CatalogLocator.LoadWrappedList<CupolaSlagLeachingEntry>(File.ReadAllText(slagPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string toolPath = Path.Combine(directoryPath, "carbide_tool_wear_audits.json");
             if (File.Exists(toolPath))
             {
-                var list = JsonSerializer.Deserialize<List<CarbideToolWearEntry>>(File.ReadAllText(toolPath), options);
+                var list = CatalogLocator.LoadWrappedList<CarbideToolWearEntry>(File.ReadAllText(toolPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string gearPath = Path.Combine(directoryPath, "gear_quenching_fault_logs.json");
             if (File.Exists(gearPath))
             {
-                var list = JsonSerializer.Deserialize<List<GearQuenchingFaultEntry>>(File.ReadAllText(gearPath), options);
+                var list = CatalogLocator.LoadWrappedList<GearQuenchingFaultEntry>(File.ReadAllText(gearPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string bulletPath = Path.Combine(directoryPath, "bullet_alloy_assay_reports.json");
             if (File.Exists(bulletPath))
             {
-                var list = JsonSerializer.Deserialize<List<BulletAlloyAssayEntry>>(File.ReadAllText(bulletPath), options);
+                var list = CatalogLocator.LoadWrappedList<BulletAlloyAssayEntry>(File.ReadAllText(bulletPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CupolaSlagLeachingEntry GetSlag(string id)
+        public CupolaSlagLeachingEntry? GetSlag(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CupolaSlagLeachingEntry e ? e : null;
         }
 
-        public CarbideToolWearEntry GetTool(string id)
+        public CarbideToolWearEntry? GetTool(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CarbideToolWearEntry e ? e : null;
         }
 
-        public GearQuenchingFaultEntry GetGear(string id)
+        public GearQuenchingFaultEntry? GetGear(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GearQuenchingFaultEntry e ? e : null;
         }
 
-        public BulletAlloyAssayEntry GetBullet(string id)
+        public BulletAlloyAssayEntry? GetBullet(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BulletAlloyAssayEntry e ? e : null;

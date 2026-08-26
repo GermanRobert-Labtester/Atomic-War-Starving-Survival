@@ -1,82 +1,133 @@
-[
-  {
-    "id": "slag_leach_high_alumina_refractory_erosion",
-    "furnace_unit_id": "CUPOLA_STACK_FOUNDRY_01",
-    "melt_temperature_celsius": 1460.0,
-    "slag_basicity_ratio": 1.15,
-    "metallurgical_defect": "SILICA_FIRECLAY_SLAG_CORROSION",
-    "timestamp_relative": "YEAR_02_METALLURGY_01",
-    "tags": ["metallurgy", "foundry", "cupola", "refractory", "slag"],
-    "prose": "Superheated 1,460°C grey iron wash severely eroded the 45% alumina firebrick lining in the melt zone. Slag analysis showed 48% silica content, thinning the furnace shell to glowing red steel within twelve hours of continuous blast."
-  },
-  {
-    "id": "slag_leach_phosphorus_rephosphorization_embrittlement",
-    "furnace_unit_id": "ELECTRIC_ARC_FURNACE_03",
-    "melt_temperature_celsius": 1580.0,
-    "slag_basicity_ratio": 0.85,
-    "metallurgical_defect": "PHOSPHORUS_REVERSION_EMBRITTLEMENT",
-    "timestamp_relative": "YEAR_04_METALLURGY_03",
-    "tags": ["metallurgy", "foundry", "phosphorus", "cold_shortness", "steel"],
-    "prose": "Premature slag deoxidation in the arc furnace caused phosphorus pentoxide to revert from the slag blanket back into the molten steel bath (0.08% P). Cast lathe chucks broke under initial impact due to extreme cold-shortness."
-  },
-  {
-    "id": "slag_leach_calcium_fluoride_fluorspar_corrosion",
-    "furnace_unit_id": "REVERBERATORY_BRONZE_HEARTH",
-    "melt_temperature_celsius": 1220.0,
-    "slag_basicity_ratio": 1.40,
-    "metallurgical_defect": "TAPHOLE_CLAY_PLUG_WASHOUT",
-    "timestamp_relative": "YEAR_07_METALLURGY_02",
-    "tags": ["metallurgy", "foundry", "fluorspar", "taphole_breakout", "bronze"],
-    "prose": "Excess fluorspar flux added to fluidize dross chemically attacked the refractory clay taphole cone. The plug dissolved catastrophically mid-heat, spilling four hundred kilograms of molten bronze across the sand casting floor."
-  },
-  {
-    "id": "slag_leach_vanadium_titanium_slag_skimming",
-    "furnace_unit_id": "INDUCTION_MELTING_CRUCIBLE_02",
-    "melt_temperature_celsius": 1520.0,
-    "slag_basicity_ratio": 1.05,
-    "metallurgical_defect": "VISCOUS_TITANIA_SLAG_ENTRAPMENT",
-    "timestamp_relative": "YEAR_09_METALLURGY_04",
-    "tags": ["metallurgy", "foundry", "titanium_slag", "induction", "inclusions"],
-    "prose": "Melting scavenged diesel engine crankshafts introduced 0.6% titanium, forming high-melting-point perovskite and titanium carbonitride scum that resisted normal fluxing. The viscous crust fouled the crucible lip and produced inclusions in cast crankshafts."
-  },
-  {
-    "id": "slag_leach_dolomitic_magnesium_vapor_flash",
-    "furnace_unit_id": "DUCTILE_IRON_TREATMENT_LADLE",
-    "melt_temperature_celsius": 1410.0,
-    "slag_basicity_ratio": 1.60,
-    "metallurgical_defect": "PYROPHORIC_MAGNESIUM_FLAREOUT",
-    "timestamp_relative": "YEAR_12_METALLURGY_01",
-    "tags": ["metallurgy", "foundry", "ductile_iron", "magnesium_flash", "nodulizing"],
-    "prose": "Submerging a plunging bell of pure scrap magnesium alloy into the 1,410°C iron ladle produced an explosive violent magnesium vapor boiling flare. Blinding white 2,800K light illuminated the foundry bay and scorched overhead crane hoist ropes."
-  },
-  {
-    "id": "slag_leach_sulfur_manganese_ratio_chill_pitting",
-    "furnace_unit_id": "CUPOLA_STACK_FOUNDRY_02",
-    "melt_temperature_celsius": 1390.0,
-    "slag_basicity_ratio": 0.95,
-    "metallurgical_defect": "WHITE_IRON_CORNER_CHILL_DEFECT",
-    "timestamp_relative": "YEAR_15_METALLURGY_03",
-    "tags": ["metallurgy", "foundry", "chill_defect", "manganese_sulfide", "castings"],
-    "prose": "High sulfur content (0.18%) in scavenged scrap steel combined with a lack of ferromanganese caused the Mn:S ratio to drop to 1.2:1. Cast machine bed ways developed glass-hard white cementite chill corners that stripped milling cutters."
-  },
-  {
-    "id": "slag_leach_coke_ash_silica_basicity_shift",
-    "furnace_unit_id": "BLAST_FURNACE_PILOT_COLUMN",
-    "melt_temperature_celsius": 1500.0,
-    "slag_basicity_ratio": 0.72,
-    "metallurgical_defect": "ACID_SLAG_TUYERE_JACKET_CORROSION",
-    "timestamp_relative": "YEAR_18_METALLURGY_02",
-    "tags": ["metallurgy", "foundry", "acid_slag", "tuyere_burnout", "coke_ash"],
-    "prose": "Anthracite coal fines with 22% silica ash shifted slag basicity down to an acidic 0.72. The aggressive acidic slag dissolved the protective lime coating and burned through the water-cooled copper blast tuyere, blowing steam into the bosh."
-  },
-  {
-    "id": "slag_leach_water_quenched_vitrified_slag_wool",
-    "furnace_unit_id": "SLAG_GRANULATION_SUMP_POND",
-    "melt_temperature_celsius": 1350.0,
-    "slag_basicity_ratio": 1.20,
-    "metallurgical_defect": "FIBROUS_SLAG_WOOL_ACCUMULATION",
-    "timestamp_relative": "YEAR_20_METALLURGY_01",
-    "tags": ["metallurgy", "foundry", "slag_wool", "insulation", "byproduct"],
-    "prose": "Molten cupola slag stream tapped directly across a high-pressure 120 PSI steam nozzle spun forty tons of golden-grey vitreous mineral wool. The fibrous batting was bagged and used to thermally insulate steam heating mains and bakery ovens."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "slag_leach_high_alumina_refractory_erosion",
+      "furnace_unit_id": "CUPOLA_STACK_FOUNDRY_01",
+      "melt_temperature_celsius": 1460.0,
+      "slag_basicity_ratio": 1.15,
+      "metallurgical_defect": "SILICA_FIRECLAY_SLAG_CORROSION",
+      "timestamp_relative": "YEAR_02_METALLURGY_01",
+      "tags": [
+        "metallurgy",
+        "foundry",
+        "cupola",
+        "refractory",
+        "slag"
+      ],
+      "prose": "Superheated 1,460°C grey iron wash severely eroded the 45% alumina firebrick lining in the melt zone. Slag analysis showed 48% silica content, thinning the furnace shell to glowing red steel within twelve hours of continuous blast."
+    },
+    {
+      "id": "slag_leach_phosphorus_rephosphorization_embrittlement",
+      "furnace_unit_id": "ELECTRIC_ARC_FURNACE_03",
+      "melt_temperature_celsius": 1580.0,
+      "slag_basicity_ratio": 0.85,
+      "metallurgical_defect": "PHOSPHORUS_REVERSION_EMBRITTLEMENT",
+      "timestamp_relative": "YEAR_04_METALLURGY_03",
+      "tags": [
+        "metallurgy",
+        "foundry",
+        "phosphorus",
+        "cold_shortness",
+        "steel"
+      ],
+      "prose": "Premature slag deoxidation in the arc furnace caused phosphorus pentoxide to revert from the slag blanket back into the molten steel bath (0.08% P). Cast lathe chucks broke under initial impact due to extreme cold-shortness."
+    },
+    {
+      "id": "slag_leach_calcium_fluoride_fluorspar_corrosion",
+      "furnace_unit_id": "REVERBERATORY_BRONZE_HEARTH",
+      "melt_temperature_celsius": 1220.0,
+      "slag_basicity_ratio": 1.4,
+      "metallurgical_defect": "TAPHOLE_CLAY_PLUG_WASHOUT",
+      "timestamp_relative": "YEAR_07_METALLURGY_02",
+      "tags": [
+        "metallurgy",
+        "foundry",
+        "fluorspar",
+        "taphole_breakout",
+        "bronze"
+      ],
+      "prose": "Excess fluorspar flux added to fluidize dross chemically attacked the refractory clay taphole cone. The plug dissolved catastrophically mid-heat, spilling four hundred kilograms of molten bronze across the sand casting floor."
+    },
+    {
+      "id": "slag_leach_vanadium_titanium_slag_skimming",
+      "furnace_unit_id": "INDUCTION_MELTING_CRUCIBLE_02",
+      "melt_temperature_celsius": 1520.0,
+      "slag_basicity_ratio": 1.05,
+      "metallurgical_defect": "VISCOUS_TITANIA_SLAG_ENTRAPMENT",
+      "timestamp_relative": "YEAR_09_METALLURGY_04",
+      "tags": [
+        "metallurgy",
+        "foundry",
+        "titanium_slag",
+        "induction",
+        "inclusions"
+      ],
+      "prose": "Melting scavenged diesel engine crankshafts introduced 0.6% titanium, forming high-melting-point perovskite and titanium carbonitride scum that resisted normal fluxing. The viscous crust fouled the crucible lip and produced inclusions in cast crankshafts."
+    },
+    {
+      "id": "slag_leach_dolomitic_magnesium_vapor_flash",
+      "furnace_unit_id": "DUCTILE_IRON_TREATMENT_LADLE",
+      "melt_temperature_celsius": 1410.0,
+      "slag_basicity_ratio": 1.6,
+      "metallurgical_defect": "PYROPHORIC_MAGNESIUM_FLAREOUT",
+      "timestamp_relative": "YEAR_12_METALLURGY_01",
+      "tags": [
+        "metallurgy",
+        "foundry",
+        "ductile_iron",
+        "magnesium_flash",
+        "nodulizing"
+      ],
+      "prose": "Submerging a plunging bell of pure scrap magnesium alloy into the 1,410°C iron ladle produced an explosive violent magnesium vapor boiling flare. Blinding white 2,800K light illuminated the foundry bay and scorched overhead crane hoist ropes."
+    },
+    {
+      "id": "slag_leach_sulfur_manganese_ratio_chill_pitting",
+      "furnace_unit_id": "CUPOLA_STACK_FOUNDRY_02",
+      "melt_temperature_celsius": 1390.0,
+      "slag_basicity_ratio": 0.95,
+      "metallurgical_defect": "WHITE_IRON_CORNER_CHILL_DEFECT",
+      "timestamp_relative": "YEAR_15_METALLURGY_03",
+      "tags": [
+        "metallurgy",
+        "foundry",
+        "chill_defect",
+        "manganese_sulfide",
+        "castings"
+      ],
+      "prose": "High sulfur content (0.18%) in scavenged scrap steel combined with a lack of ferromanganese caused the Mn:S ratio to drop to 1.2:1. Cast machine bed ways developed glass-hard white cementite chill corners that stripped milling cutters."
+    },
+    {
+      "id": "slag_leach_coke_ash_silica_basicity_shift",
+      "furnace_unit_id": "BLAST_FURNACE_PILOT_COLUMN",
+      "melt_temperature_celsius": 1500.0,
+      "slag_basicity_ratio": 0.72,
+      "metallurgical_defect": "ACID_SLAG_TUYERE_JACKET_CORROSION",
+      "timestamp_relative": "YEAR_18_METALLURGY_02",
+      "tags": [
+        "metallurgy",
+        "foundry",
+        "acid_slag",
+        "tuyere_burnout",
+        "coke_ash"
+      ],
+      "prose": "Anthracite coal fines with 22% silica ash shifted slag basicity down to an acidic 0.72. The aggressive acidic slag dissolved the protective lime coating and burned through the water-cooled copper blast tuyere, blowing steam into the bosh."
+    },
+    {
+      "id": "slag_leach_water_quenched_vitrified_slag_wool",
+      "furnace_unit_id": "SLAG_GRANULATION_SUMP_POND",
+      "melt_temperature_celsius": 1350.0,
+      "slag_basicity_ratio": 1.2,
+      "metallurgical_defect": "FIBROUS_SLAG_WOOL_ACCUMULATION",
+      "timestamp_relative": "YEAR_20_METALLURGY_01",
+      "tags": [
+        "metallurgy",
+        "foundry",
+        "slag_wool",
+        "insulation",
+        "byproduct"
+      ],
+      "prose": "Molten cupola slag stream tapped directly across a high-pressure 120 PSI steam nozzle spun forty tons of golden-grey vitreous mineral wool. The fibrous batting was bagged and used to thermally insulate steam heating mains and bakery ovens."
+    }
+  ]
+}

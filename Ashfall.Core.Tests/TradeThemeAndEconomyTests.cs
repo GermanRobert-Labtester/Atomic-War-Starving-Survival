@@ -139,20 +139,12 @@ namespace Ashfall.Core.Tests
             string root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../.."));
             string[] expectedAssets = new[]
             {
-                "Assets/UI/Textures/panel_bg_9slice.png",
-                "Assets/UI/Textures/header_bar_9slice.png",
-                "Assets/UI/Icons/icon_bio_blood.png",
-                "Assets/UI/Icons/icon_bio_marrow.png",
-                "Assets/UI/Icons/icon_bio_plasma.png",
-                "Assets/UI/Icons/icon_bio_organ.png",
-                "Assets/UI/Icons/badge_scarcity_critical.png",
-                "Assets/UI/Icons/badge_scarcity_high.png",
-                "Assets/UI/Icons/badge_scarcity_moderate.png",
-                "Assets/UI/Icons/badge_scarcity_low.png",
-                "Assets/UI/Icons/icon_shock_plume.png",
-                "Assets/UI/Icons/icon_shock_convoy.png",
-                "Assets/UI/Icons/icon_shock_war.png",
-                "Assets/UI/Icons/icon_shock_winter.png",
+                "assets/ui/Textures/panel_bg_9slice.png",
+                "assets/ui/Textures/header_bar_9slice.png",
+                "assets/ui/Icons/icon_shock_plume.png",
+                "assets/ui/Icons/icon_shock_convoy.png",
+                "assets/ui/Icons/icon_shock_war.png",
+                "assets/ui/Icons/icon_shock_winter.png",
                 "assets/ui/Icons/faction_icon_military_remnants.png",
                 "assets/ui/Icons/faction_icon_scavenger_camp.png",
                 "assets/ui/Icons/faction_icon_cult_of_the_glow.png"

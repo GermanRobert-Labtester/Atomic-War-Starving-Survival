@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using System.IO;
 using Godot;
 using Ashfall.Core;
@@ -28,12 +29,55 @@ namespace AtomicWar.GodotApp
     public static class MusterSaveStore
     {
         public const string FileName = "muster_save.json";
+        public const string SectionName = "muster";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(MusterHostSave save)
+    {
+        return TryCapture(save);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static MusterHostSave? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(MusterHostSave save)
+    {
+        try
+        {
+            if (save == null) return string.Empty;
+            return s_json.Serialize(save);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[MusterSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static MusterHostSave? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return s_json.Deserialize<MusterHostSave>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[MusterSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 
@@ -43,7 +87,7 @@ namespace AtomicWar.GodotApp
             {
                 if (save == null) return false;
                 string path = SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 // Recompute so a mutated envelope cannot persist a stale hash.
@@ -58,7 +102,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static MusterHostSave TryLoad()
+        public static MusterHostSave? TryLoad()
         {
             try
             {

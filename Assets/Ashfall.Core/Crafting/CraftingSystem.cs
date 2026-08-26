@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core.Inventory;
 using InventoryContainer = Ashfall.Core.Inventory.Inventory;
 
@@ -21,7 +22,7 @@ namespace Ashfall.Core.Crafting
         private readonly List<ActiveCraft> _active = new List<ActiveCraft>();
         private Func<string, bool> _isCraftResultAllowed;
         private Func<int> _getDay;
-        private Func<string, Recipe> _recipeLookup;
+        private Func<string, Recipe?> _recipeLookup;
         private Func<string, float> _crafterCostMultiplier; // crafterId -> material cost mult
         private Func<string, float> _crafterCraftTimeMultiplier; // crafterId -> duration mult
         private Func<string, bool> _canCraftMoonshine;
@@ -57,7 +58,7 @@ namespace Ashfall.Core.Crafting
 
         public void RemoveStation(CraftingStation station) => _stations.Remove(station);
 
-        public CraftingStation GetStation(string id)
+        public CraftingStation? GetStation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < _stations.Count; i++)
@@ -65,7 +66,7 @@ namespace Ashfall.Core.Crafting
             return null;
         }
 
-        public bool CanCraft(Recipe recipe) => CanCraft(recipe, null);
+        public bool CanCraft(Recipe recipe) => CanCraft(recipe, null!);
 
         public bool CanCraft(Recipe recipe, string crafterId)
         {
@@ -103,7 +104,7 @@ namespace Ashfall.Core.Crafting
             return true;
         }
 
-        public bool StartCraft(Recipe recipe, string crafterId = null)
+        public bool StartCraft(Recipe recipe, string? crafterId = null)
         {
             if (!CanCraft(recipe, crafterId)) return false;
 
@@ -133,7 +134,7 @@ namespace Ashfall.Core.Crafting
             {
                 Recipe = recipe,
                 HoursRemaining = duration,
-                CrafterId = crafterId
+                CrafterId = crafterId ?? string.Empty
             });
             OnCraftStarted?.Invoke(recipe);
             return true;
@@ -251,7 +252,7 @@ namespace Ashfall.Core.Crafting
             return new CraftingSystemSave { ActiveCrafts = crafts };
         }
 
-        public void SetRecipeLookup(Func<string, Recipe> lookup) => _recipeLookup = lookup;
+        public void SetRecipeLookup(Func<string, Recipe?> lookup) => _recipeLookup = lookup;
 
         public void RestoreState(CraftingSystemSave save)
         {

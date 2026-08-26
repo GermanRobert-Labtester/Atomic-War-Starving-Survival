@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string kilnPath = Path.Combine(directoryPath, "lime_kiln_calcination_logs.json");
             if (File.Exists(kilnPath))
             {
-                var list = JsonSerializer.Deserialize<List<LimeKilnCalcinationEntry>>(File.ReadAllText(kilnPath), options);
+                var list = CatalogLocator.LoadWrappedList<LimeKilnCalcinationEntry>(File.ReadAllText(kilnPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string mortarPath = Path.Combine(directoryPath, "pozzolan_mortar_formulations.json");
             if (File.Exists(mortarPath))
             {
-                var list = JsonSerializer.Deserialize<List<PozzolanMortarRecipeEntry>>(File.ReadAllText(mortarPath), options);
+                var list = CatalogLocator.LoadWrappedList<PozzolanMortarRecipeEntry>(File.ReadAllText(mortarPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string refPath = Path.Combine(directoryPath, "refractory_firebrick_spalling_logs.json");
             if (File.Exists(refPath))
             {
-                var list = JsonSerializer.Deserialize<List<RefractoryFirebrickSpallEntry>>(File.ReadAllText(refPath), options);
+                var list = CatalogLocator.LoadWrappedList<RefractoryFirebrickSpallEntry>(File.ReadAllText(refPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string adobePath = Path.Combine(directoryPath, "mudbrick_weathering_assays.json");
             if (File.Exists(adobePath))
             {
-                var list = JsonSerializer.Deserialize<List<MudbrickWeatheringEntry>>(File.ReadAllText(adobePath), options);
+                var list = CatalogLocator.LoadWrappedList<MudbrickWeatheringEntry>(File.ReadAllText(adobePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public LimeKilnCalcinationEntry GetKiln(string id)
+        public LimeKilnCalcinationEntry? GetKiln(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LimeKilnCalcinationEntry e ? e : null;
         }
 
-        public PozzolanMortarRecipeEntry GetMortar(string id)
+        public PozzolanMortarRecipeEntry? GetMortar(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PozzolanMortarRecipeEntry e ? e : null;
         }
 
-        public RefractoryFirebrickSpallEntry GetRefractory(string id)
+        public RefractoryFirebrickSpallEntry? GetRefractory(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RefractoryFirebrickSpallEntry e ? e : null;
         }
 
-        public MudbrickWeatheringEntry GetAdobe(string id)
+        public MudbrickWeatheringEntry? GetAdobe(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MudbrickWeatheringEntry e ? e : null;

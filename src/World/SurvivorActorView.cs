@@ -2,6 +2,7 @@ using Godot;
 using Ashfall.Core.Radiation;
 using Ashfall.Core.Survivors;
 
+#pragma warning disable CS8618
 namespace AtomicWar.GodotApp.World
 {
     /// <summary>

@@ -492,4 +492,13 @@ public partial class SkillMatrixPanel : Control
             GetViewport().SetInputAsHandled();
         }
     }
+
+    public override void _ExitTree()
+    {
+        if (_skills != null)
+        {
+            _skills.OnSkillEarned -= HandleSkillChanged;
+        }
+        base._ExitTree();
+    }
 }

@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "collection_id": "radio_transcripts_batch_2_additional_frequencies",
+  "description": "Second batch of radio broadcast transcripts across multiple frequencies. New stations, new voices, expanding the audible world beyond the 15 existing broadcasts.",
+  "broadcasts": [
+    {
+      "broadcast_id": "rad_lineman_01_grid_status",
+      "frequency_mhz": 142.5,
+      "station_name": "The Lineman's Loop",
+      "voice_profile": "Gravelly male voice, mid-50s, speaking close to the microphone. Background hum of a hand-cranked generator. Occasional metallic clinking — tools on a workbench.",
+      "day_trigger": 14,
+      "title": "Grid Status Report — Southern Transmission Corridor",
+      "transcript": "142.5. This is the Lineman's Loop. Southern transmission corridor status: all towers between Checkpoint Echo and the Ridge Junction are down. Not fallen — cut. Someone took the copper from the lines. I walked the route yesterday. Thirty-seven towers, every one of them stripped to bare steel. The insulators are still hanging from the crossarms, tinkling in the wind like glass bells. If anyone is out there with copper wire to trade — real copper, not scavenged — I'm at the Ridge Junction signal box. I have vacuum tubes. I have a working multimeter. I don't have patience for people who steal from dead power lines. The grid is dead. Stop looting the corpse.",
+      "tags": ["lineman", "grid", "copper", "trade", "infrastructure"]
+    },
+    {
+      "broadcast_id": "rad_lineman_02_storm_damage_report",
+      "frequency_mhz": 142.5,
+      "station_name": "The Lineman's Loop",
+      "voice_profile": "Same gravelly voice, slower today, tired. Wind audible in background — the antenna is picking up surface weather.",
+      "day_trigger": 72,
+      "title": "Storm Damage — Three Towers Down on the Eastern Spur",
+      "transcript": "142.5. Lineman's Loop. The ash storm took out three towers on the eastern spur — the ones I spent last week re-tensioning. The guy wires snapped at the anchor bolts. Rust had eaten through the lower thirty centimetres. I could have replaced them if I had new wire. I don't. If anyone in the Cluster or the Verge has 10mm galvanised steel cable in lengths of 15 metres or more, I'll trade two car batteries and a box of fuses. The eastern spur is the last live line between the geo-thermal plant and the settlement grid. If it goes down, three shelters lose their heat monitoring. That means they won't know when the steam pressure drops. That means someone could get burned. Fix the wire. Please.",
+      "tags": ["lineman", "storm_damage", "infrastructure", "trade_request"]
+    },
+    {
+      "broadcast_id": "rad_schoolteacher_01_lessons_on_air",
+      "frequency_mhz": 91.3,
+      "station_name": "The Open Classroom",
+      "voice_profile": "Warm female voice, mid-30s, clear diction, teacher's cadence. A chalk-on-blackboard tap opens each broadcast. Background: children's voices, distant but present.",
+      "day_trigger": 21,
+      "title": "Lesson 4 — The Water Cycle (For Anyone Listening)",
+      "transcript": "91.3. Good morning, students. This is Lesson 4 from the Open Classroom. Today we're talking about water. Where it comes from, where it goes, and why it matters more than anything else in the world right now. Water evaporates from rivers, lakes, and oceans. It rises into the sky as invisible vapour. When it cools, it condenses around tiny particles — dust, ash, smoke — and falls back down as rain or snow. This is called the water cycle. It has been happening for four billion years. It did not stop because of the war. It is still happening right now. The rain that falls today carried water that a dinosaur drank 200 million years ago. You are drinking the same water. Everything is connected. Even the ash. Even us. Lesson 5 tomorrow at the same time. Bring a question if you can.",
+      "tags": ["schoolteacher", "education", "water_cycle", "children", "hope"]
+    },
+    {
+      "broadcast_id": "rad_schoolteacher_02_mathematics_of_rations",
+      "frequency_mhz": 91.3,
+      "station_name": "The Open Classroom",
+      "voice_profile": "Same warm voice, slightly strained today. The children's voices in the background are quieter — fewer of them.",
+      "day_trigger": 58,
+      "title": "Lesson 12 — Division and Fractions (Using Turnips)",
+      "transcript": "91.3. Good morning, students. Today we're doing mathematics. If you have twelve turnips and four people, how many turnips does each person get? That's division. Twelve divided by four is three. Each person gets three turnips. Now — if you have twelve turnips and seven people? That's a fraction. Twelve divided by seven is one and five-sevenths. Each person gets one whole turnip and five-sevenths of another. In the real world, five-sevenths of a turnip is a small pile of chopped root. It's not a full meal. Mathematics is not just numbers. Mathematics is how you figure out whether everyone eats. Tomorrow we'll do percentages. Bring a question if you can. Stay warm.",
+      "tags": ["schoolteacher", "education", "mathematics", "rations", "scarcity"]
+    },
+    {
+      "broadcast_id": "rad_preacher_01_ash_sermon_broadcast",
+      "frequency_mhz": 88.4,
+      "station_name": "The Ash Pulpit",
+      "voice_profile": "Deep male voice, resonant, measured. No background noise — the broadcast is being made from a sealed room. Each sentence ends with a half-second pause, as if waiting for an amen that doesn't come.",
+      "day_trigger": 33,
+      "title": "Sermon 7 — On the Virtue of Waiting",
+      "transcript": "88.4. Brothers and sisters of the frequency. Today I want to talk about waiting. Not the waiting you do when you're hungry. Not the waiting you do when you're afraid. The other waiting — the kind that has no end and no beginning. The kind that is just... there. Like the ash. Like the silence between broadcasts. Like the space between one breath and the next. We are taught that waiting is passive. That it is the absence of action. I tell you: waiting is the hardest action there is. To sit in a bunker and not open the hatch when the knocking comes. To watch the dosimeter and not go outside when the reading drops. To count the rations and not eat the extra half. That is waiting. And it is the bravest thing we do. The ash will settle. The rain will come. The seeds will grow. But only if we wait long enough to see it. 88.4 out.",
+      "tags": ["preacher", "sermon", "waiting", "philosophy", "patience"]
+    },
+    {
+      "broadcast_id": "rad_numbers_station_07_new_sequence",
+      "frequency_mhz": 7.325,
+      "station_name": "The Numbers Station (Unknown Origin)",
+      "voice_profile": "Synthesized female voice, flat monotone, no emotion. Reads five-digit groups at 4-second intervals. A single Morse-style tone marks the start and end of each sequence. No station identification.",
+      "day_trigger": 40,
+      "title": "Numbers Station — Sequence 7",
+      "transcript": "[TONE — 3 short bursts]\n4-7-2-1-9\n4-7-2-1-9\n4-7-2-1-9\n0-3-8-5-2\n0-3-8-5-2\n0-3-8-5-2\n9-1-6-0-4\n9-1-6-0-4\n9-1-6-0-4\n[TONE — 3 short bursts]\n[Silence]\n\n[NOTE from the bunker's radio log]: 'This station has been broadcasting on 7.325 MHz since Day 8. The sequences change every 48 hours. No one has decoded them. The pattern is not random — the intervals between digit changes follow a mathematical sequence. But what sequence, and what for, we don't know. Maya thinks it's a one-time pad encryption. The Veteran thinks it's military. The Historian thinks it's a dead man's switch — a signal that means something only if it stops.'",
+      "tags": ["numbers_station", "mystery", "cryptography", "unknown"]
+    },
+    {
+      "broadcast_id": "rad_trader_01_caravan_schedule",
+      "frequency_mhz": 156.8,
+      "station_name": "The Caravan Net",
+      "voice_profile": "Young female voice, early 20s, quick and practical. Background: wind, animal sounds (a horse or mule), the clink of trade goods shifting in packs.",
+      "day_trigger": 28,
+      "title": "Caravan Schedule — Week of Day 28",
+      "transcript": "156.8. Caravan Net, this is Wren at the Verge crossing. Schedule for the week: I'm heading south from the Verge on Day 29, arriving at the Cluster by Day 31. Carrying: dried herbs, rabbit pelts, one tin of preserved peaches (yes, real peaches, trade or auction). Looking for: copper wire, vacuum tubes, clean water, news from the south. If anyone at the Cluster has a message for the Salt Freeholders, I'll carry it for the standard rate — one favour, payable on delivery. I'll be at the Verge crossing until noon on Day 28. If you need to reach me after that, broadcast on this frequency and I'll pick up the message at the next relay. Safe walking. Wren out.",
+      "tags": ["trader", "caravan", "schedule", "trade", "wren"]
+    },
+    {
+      "broadcast_id": "rad_ghost_signal_03_submerged_organ",
+      "frequency_mhz": 3.850,
+      "station_name": "The Submerged Organ (Unknown Origin)",
+      "voice_profile": "No voice. A low, rhythmic mechanical sound — like a pump or a heart valve opening and closing. The sound is submerged in water; bubbles and fluid turbulence are audible between beats. The broadcast begins and ends without warning.",
+      "day_trigger": 66,
+      "title": "The Submerged Organ — Continuous Pump Signal",
+      "transcript": "[NO TRANSCRIPT — NON-VERBAL BROADCAST]\n\n[Audio description]: A deep, rhythmic mechanical pulse at approximately 0.8 Hz (one beat every 1.25 seconds). The sound is clearly mechanical — metal on metal, with the resonance of a large enclosed space filled with liquid. Between each pulse, a soft bubbling sound suggests gas escaping from a submerged pipe or valve. The signal has been broadcasting continuously since first detected on Day 51. No voice. No data. No identification. The sound does not vary — same rhythm, same amplitude, same frequency, every second of every day.\n\n[NOTE from the bunker's radio log]: 'The sound is coming from somewhere below the frozen river. We've triangulated the source to a point approximately 200 metres east of the icebreaker convoy wreckage. There is nothing on the surface at that location. There is nothing on any map at that location. But something down there is still pumping. We don't know what. We don't know why. We don't know if it will stop.'",
+      "tags": ["ghost_signal", "submerged_organ", "mystery", "mechanical", "unexplained"]
+    }
+  ]
+}

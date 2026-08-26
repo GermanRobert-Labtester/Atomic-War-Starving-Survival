@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -148,7 +149,7 @@ namespace Ashfall.Core
             return true;
         }
 
-        public string PeekVisitor()
+        public string? PeekVisitor()
         {
             return _visitorQueue.Count > 0 ? _visitorQueue[0] : null;
         }
@@ -168,7 +169,7 @@ namespace Ashfall.Core
         /// Start a shelter encounter. Max one per night unless crisis.
         /// Returns false if the cooldown/limit blocks it.
         /// </summary>
-        public bool StartEncounter(string id, string kind, int day, string visitorId = null, string payload = null)
+        public bool StartEncounter(string id, string kind, int day, string? visitorId = null, string? payload = null)
         {
             if (!_state.expansionUnlocked) return false;
             if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(kind)) return false;
@@ -199,7 +200,7 @@ namespace Ashfall.Core
         }
 
         /// <summary>Crisis mode: allow multiple encounters in one night (quest_roster_window).</summary>
-        public bool StartEncounterCrisis(string id, string kind, int day, string visitorId = null, string payload = null)
+        public bool StartEncounterCrisis(string id, string kind, int day, string? visitorId = null, string? payload = null)
         {
             if (!_state.expansionUnlocked) return false;
             if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(kind)) return false;
@@ -232,7 +233,7 @@ namespace Ashfall.Core
         /// dilemma are OWNED by ExpeditionSystem and are never read or changed
         /// here. One hatch-return scene per night unless crisis.
         /// </summary>
-        public bool BridgeHatchReturn(int day, string survivorId = null, string payload = null, bool crisis = false)
+        public bool BridgeHatchReturn(int day, string? survivorId = null, string? payload = null, bool crisis = false)
         {
             if (!_state.expansionUnlocked) return false;
             string id = "se_hatch_return_" + day;
@@ -264,7 +265,7 @@ namespace Ashfall.Core
             return !string.IsNullOrEmpty(id) && _resolved.Contains(id);
         }
 
-        public ShelterEncounterRecord GetActive(string id)
+        public ShelterEncounterRecord? GetActive(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < _state.history.Count; i++)

@@ -194,21 +194,9 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_activeContainer == null || _targetsContainer == null || _expeditionHost == null) return;
 
-            // Clear Active Container
-            while (_activeContainer.GetChildCount() > 0)
-            {
-                var child = _activeContainer.GetChild(0);
-                _activeContainer.RemoveChild(child);
-                child.QueueFree();
-            }
-
-            // Clear Targets Container
-            while (_targetsContainer.GetChildCount() > 0)
-            {
-                var child = _targetsContainer.GetChild(0);
-                _targetsContainer.RemoveChild(child);
-                child.QueueFree();
-            }
+            // Clear Containers
+            AshfallUiHelpers.EmptyChildren(_activeContainer);
+            AshfallUiHelpers.EmptyChildren(_targetsContainer);
 
             // 1. Render Active Expeditions
             if (_expeditionHost.Engine.ActiveCount == 0)
@@ -381,12 +369,7 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_pendingContainer == null || _expeditionHost == null) return;
 
-            while (_pendingContainer.GetChildCount() > 0)
-            {
-                var child = _pendingContainer.GetChild(0);
-                _pendingContainer.RemoveChild(child);
-                child.QueueFree();
-            }
+            AshfallUiHelpers.EmptyChildren(_pendingContainer);
 
             var pending = _expeditionHost.Pending;
             bool any = pending != null && pending.Count > 0;
@@ -468,7 +451,7 @@ namespace AtomicWar.GodotApp.UI
                 encounter_id = encounterId,
                 trigger = trigger,
                 resolved_at_lead = null,
-                encounter_record_resolution_id = null
+                encounter_record_resolution_id = null!
             };
 
             if (def == null)
@@ -534,8 +517,7 @@ namespace AtomicWar.GodotApp.UI
             TotalEncounterNotices++;
             if (!Visible)
             {
-                Ashfall.Bridge.BridgeGap.Cosmetic("ExpeditionPanel.ShowEncounterNotice (panel closed)");
-                return;
+                return; // headless/closed panel: diegetic notice surfaced but not shown
             }
 
             if (ExpeditionHostSession.UseEncounterModal)
@@ -607,24 +589,47 @@ namespace AtomicWar.GodotApp.UI
             if (card is not VBoxContainer vbox) return;
 
             _choicesContainer = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
+            _choicesContainer.AddChild(AshfallUiHelpers.MakeSeparator());
+            _choicesContainer.AddChild(AshfallUiHelpers.MakeSectionHeader("TACTICAL APPROACH SELECTION"));
+
             var choiceRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
             choiceRow.Alignment = BoxContainer.AlignmentMode.Center;
+
+            float danger = _lastSurfaced?.trigger?.dangerLevel ?? 5f;
+            string stance = _lastSurfaced?.trigger?.stance ?? "Balanced";
 
             foreach (var c in _lastSurfaced!.choices)
             {
                 string choiceId = c.choiceId;
                 string choiceText = c.text;
+
+                // Tactical assessment derivation
+                string riskTag = danger >= 8 ? "EXTREME RISK" : danger >= 5 ? "HIGH RISK" : danger >= 3 ? "MODERATE RISK" : "LOW RISK";
+                var riskColor = danger >= 8 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Critical)
+                    : danger >= 5 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy)
+                    : danger >= 3 ? AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.LetheAmber)
+                    : AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe);
+
+                var choiceCard = AshfallUiHelpers.MakeVBox(2);
+                choiceCard.CustomMinimumSize = new Vector2(210, 80);
+
+                var headerLabel = AshfallUiHelpers.MakeSmall($"{riskTag} · {stance.ToUpperInvariant()}");
+                headerLabel.Modulate = riskColor;
+                choiceCard.AddChild(headerLabel);
+
+                string previewText = c.moraleDelta != 0 ? $"Morale: {(c.moraleDelta > 0 ? "+" : "")}{c.moraleDelta}" : "Stamina: -15 · Ammo: 0";
+                if (c.guiltDelta > 0) previewText += $" · Guilt: +{c.guiltDelta}";
+                choiceCard.AddChild(AshfallUiHelpers.MakeMetadata(previewText));
+
                 var btn = AshfallUiHelpers.MakeButton(choiceText.ToUpperInvariant(), () =>
                 {
                     if (_expeditionHost != null && _lastSurfaced != null)
                     {
-                        // Location comes from this DTO's own trigger, which for a
-                        // backlog row is the pending entry's recorded location.
                         bool ok = _expeditionHost.EncounterApplyChoice(
                             _lastSurfaced!.encounter_id,
                             choiceId,
                             _expeditionHost.CurrentDay,
-                            _lastSurfaced!.trigger?.locationId);
+                            _lastSurfaced!.trigger?.locationId ?? string.Empty);
                         if (ok)
                         {
                             GD.Print($"[Expedition] Resolved {_lastSurfaced!.encounter_id} via {choiceId}.");
@@ -632,8 +637,10 @@ namespace AtomicWar.GodotApp.UI
                     }
                     DismissEncounter();
                 }, false);
-                btn.CustomMinimumSize = new Vector2(180, 34);
-                choiceRow.AddChild(btn);
+                btn.CustomMinimumSize = new Vector2(210, 32);
+                choiceCard.AddChild(btn);
+
+                choiceRow.AddChild(choiceCard);
             }
 
             _choicesContainer.AddChild(choiceRow);
@@ -779,6 +786,16 @@ namespace AtomicWar.GodotApp.UI
                 Close();
                 GetViewport().SetInputAsHandled();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_expeditionHost != null)
+            {
+                _expeditionHost.Engine.OnExpeditionCompleted -= OnExpeditionCompleted;
+                _expeditionHost.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Text;
 
+#pragma warning disable CS8618
 namespace Ashfall.Core
 {
     /// <summary>Headless-report extension for the BrineWater slice.</summary>
@@ -18,7 +19,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class BrineWaterHeadlessDemo
     {
-        public static BrineWaterHeadlessReport Run(ILog log = null)
+        public static BrineWaterHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -108,7 +109,7 @@ namespace Ashfall.Core
             var json = new SystemTextJsonSerializer();
             var blob = json.Serialize(brine.CaptureState());
             var restored = new BrineWaterSystem();
-            restored.RestoreState(json.Deserialize<BrineWaterSystemState>(blob));
+            restored.RestoreState(json.Deserialize<BrineWaterSystemState>(blob)!);
             Check(restored.SteamTripped == brine.SteamTripped, "roundtrip trip flag");
             Check(restored.State.hoursSinceTrip == brine.State.hoursSinceTrip, "roundtrip 48h clock");
             Check(restored.State.membraneSaved == brine.State.membraneSaved, "roundtrip membrane saved");

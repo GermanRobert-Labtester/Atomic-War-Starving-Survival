@@ -8,7 +8,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public class MusterContentCatalogTests
-    {
+    : CatalogTestBase{
         private static string FindDataDir()
         {
             string dataDir = string.Empty;
@@ -198,7 +198,7 @@ namespace Ashfall.Core.Tests
         {
             public string id = string.Empty;
             public string frequency = string.Empty;
-            public int dayTrigger;
+            public int dayTrigger = default;
             public string source = string.Empty;
             public string message = string.Empty;
         }

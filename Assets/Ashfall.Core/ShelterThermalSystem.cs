@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 #pragma warning disable CS8618
 
+using Ashfall.Core.Shelter;
 using Ashfall.Core.StartingLevel;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.YearOfAsh;
@@ -68,16 +69,27 @@ namespace Ashfall.Core
     {
         public const string SystemId = "shelter_thermal";
 
-        // BUG-04 thermal tunables. Previously inline magic literals (0.1, 1.5,
-        // 10, etc.). Now named so designers can tune without touching math.
-        // These are FIRST-PASS placeholders, not physics-grade constants:
-        // `PriorityRoomShare` and `HeatGainBaseRate` should be derived from
-        // room.volumeM3 * specific heat * delta-t for production tuning.
-        public const float KwPerFuelUnit = 10f;
+        // BUG-04 physics constants. First-pass placeholders (HeatGainBaseRate,
+        // HeatLossBaseRate, InsulationDivisionEpsilon, the magic-literal *0.1f
+        // in TickDay) replaced by an air-thermodynamics derivation. The
+        // per-room solve is the analytic form of dT/dt = (G - k·(T - T_out))/C
+        // (stable at any timestep; explicit Euler against 86400 s was the
+        // Batch 4 overshoot bug). Tuning: NewtonCoolingCoefficient in
+        // kW/(m³·K) sets the relaxation time constant τ = ρ·cp / h —
+        // independent of room volume.
         public const float PriorityRoomShare = 1.5f;
-        public const float HeatLossBaseRate = 0.1f;
-        public const float HeatGainBaseRate = 0.1f;
-        public const float InsulationDivisionEpsilon = 0.1f;
+        public const float AirDensityKgPerM3 = 1.225f;             // ISA sea-level
+        public const float AirSpecificHeatJPerKgK = 1005f;         // ISA dry air
+        public const float SecondsPerDay = 86400f;
+        public const float NewtonCoolingCoefficient = 0.001f;       // h in kW/(m³·K); τ ≈ 20 min at ISA air
+        public const float MinRoomVolumeM3 = 1f;                    // floor for mass math on degenerate inputs
+
+        // BUG-04 host-tuning constant: 0.05 kW/fuel gives 100 fuel × 0.05 =
+        // 5 kW sustained. In a 100 m³ room at insulation 1 the steady state
+        // is ~50 °C above ambient (k = 100 W/K), clamped by boiler target
+        // + 10 — enough to thaw a stock bunker in a day without the
+        // old instant-saturation. Tunable without touching the math.
+        public const float KwPerFuelUnit = 0.05f;
 
         private ShelterThermalState _state = new ShelterThermalState();
         private readonly ISeededRng _rng;
@@ -85,25 +97,54 @@ namespace Ashfall.Core
         private readonly NeedsSystem _needs;
         private readonly StartingLevelSystem _startingLevel;
         private readonly YearOfAshDeepFreezeSystem _deepFreeze;
+        private ShelterAssignmentSystem? _assignments;
         private int _currentDay;
 
         public ShelterThermalState State => _state;
         public event Action<ThermalIncident> OnIncident;
         public event Action OnThermalChanged;
+        public event Action<string, string> OnFrostbiteRisk; // roomId, survivorId — cold <5°C with occupant
+
+        public void SetAssignments(ShelterAssignmentSystem? assignments)
+        {
+            _assignments = assignments;
+        }
 
         public ShelterThermalSystem(
             ISeededRng rng,
             NeedsSystem needs,
             StartingLevelSystem startingLevel,
             YearOfAshDeepFreezeSystem deepFreeze,
-            ILog log = null!)
+ILog? log = null,
+ShelterAssignmentSystem? assignment = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _needs = needs ?? throw new ArgumentNullException(nameof(needs));
             _startingLevel = startingLevel ?? throw new ArgumentNullException(nameof(startingLevel));
             _deepFreeze = deepFreeze ?? throw new ArgumentNullException(nameof(deepFreeze));
+            _assignments = assignment;
             _log = log ?? NullLog.Instance;
         }
+
+        private readonly Dictionary<string, float> _auxiliaryHeatKw = new Dictionary<string, float>(StringComparer.Ordinal);
+
+        /// <summary>
+        /// Inject auxiliary waste heat (e.g. from active Silent Foundry heats, industrial smelting).
+        /// Applied to the specified room during the daily thermal update and cleared after the day tick.
+        /// </summary>
+        public void AddAuxiliaryHeat(string roomId, float heatKw)
+        {
+            if (string.IsNullOrEmpty(roomId) || heatKw <= 0f) return;
+            if (_auxiliaryHeatKw.TryGetValue(roomId, out float cur))
+                _auxiliaryHeatKw[roomId] = cur + heatKw;
+            else
+                _auxiliaryHeatKw[roomId] = heatKw;
+        }
+
+        public float GetAuxiliaryHeat(string roomId) =>
+            !string.IsNullOrEmpty(roomId) && _auxiliaryHeatKw.TryGetValue(roomId, out float val) ? val : 0f;
+
+        public void ClearAuxiliaryHeat() => _auxiliaryHeatKw.Clear();
 
         public ActionResult AddRoom(string roomId, string displayName, float volumeM3, float insulationFactor = 1f, bool hasRadiator = true)
         {
@@ -191,20 +232,36 @@ namespace Ashfall.Core
 
             foreach (var room in _state.rooms)
             {
-                float heatGain = 0f;
+                float volumeM3 = Math.Max(MinRoomVolumeM3, room.volumeM3);
+                float heatCapacityJ = volumeM3 * AirDensityKgPerM3 * AirSpecificHeatJPerKgK;
+
+                float outdoorTemp = _deepFreeze.IndoorTempCelsius;
+
+                float heatGainKw = GetAuxiliaryHeat(room.roomId);
                 if (_state.boilerActive && room.hasRadiator && room.radiatorValveOpen > 0 && !room.isFrozen)
                 {
+                    // Per-room allocation: valve × priority-share — independent of roomCount.
+                    // Boiler kW total is split by valve and priority share; each room's
+                    // ΔT is its own stable steady-state estimate.
                     float roomShare = room.isPriorityRoom ? PriorityRoomShare : 1f;
-                    heatGain = totalHeatKw * room.radiatorValveOpen * roomShare / Math.Max(1, _state.rooms.Count);
+                    heatGainKw += totalHeatKw * room.radiatorValveOpen * roomShare;
                 }
 
-                // Heat loss to environment (exponential decay toward outdoor temp)
-                float outdoorTemp = _deepFreeze.IndoorTempCelsius;
-                float heatLoss = (room.currentTempC - outdoorTemp) * HeatLossBaseRate / (room.insulationFactor + InsulationDivisionEpsilon);
-                heatLoss *= deepFreezeFactor;
+                // Analytic per-day solve of dT/dt = (G - k·(T - T_out)) / C:
+                //   T(t) = T_out + G/k + (T_0 - T_out - G/k) · exp(-k·t/C)
+                // This is stable at any timestep; the Batch 4 explicit-Euler step
+                // (T += gainC - lossC with t = 86400 s) overshot into the clamp
+                // (numerical instability, not physics).
+                float gainW = heatGainKw * 1000f;
+                float conductionWPerK = Math.Max(1f, NewtonCoolingCoefficient * volumeM3
+                                      / Math.Max(0.05f, room.insulationFactor) * 1000f)
+                                      * deepFreezeFactor;
+                float steadyC = outdoorTemp + gainW / conductionWPerK;
+                float relaxFactor = (float)Math.Exp(-conductionWPerK * SecondsPerDay / heatCapacityJ);
 
-                room.currentTempC += heatGain * HeatGainBaseRate - heatLoss;
-                room.currentTempC = Math.Clamp(room.currentTempC, outdoorTemp - 5f, _state.boilerTargetTempC + 10f);
+                float newTempC = steadyC + (room.currentTempC - steadyC) * relaxFactor;
+                newTempC = Math.Clamp(newTempC, outdoorTemp - 5f, _state.boilerTargetTempC + 10f);
+                room.currentTempC = newTempC;
 
                 // Freeze detection
                 if (room.currentTempC < -2f)
@@ -241,14 +298,53 @@ namespace Ashfall.Core
                 }
             }
 
-            // BUG-03: previously a dormant loop computed a per-room warmth
-            // delta and discarded it (heat-loss side-effect was settled by the
-            // room-loop above). Removed: the surviving observable surface is
-            // the per-room currentTempC. Survivor-warmth propagation into
-            // NeedsSystem is the host's responsibility (see BUG-03 in the
-            // audit report for the design-intent question). The Thermal API
-            // `GetRoomWarmthModifier(roomId)` is the canonical read interface
-            // for any future host wiring.
+            // BUG-03 warmth propagation: the room-level temperature loop above
+            // is where temperature rises; this loop is where that warmth
+            // reaches the survivors. Uses the optional ShelterAssignmentSystem
+            // reference to enumerate in-room survivors. The assignment
+            // system is optional at Core build — tests without a wired
+            // assignment system skip this block entirely.
+            //
+            // Warmth is 0..100 where LOW = worse. Room warmth modifier is
+            // positive above 15°C, so a warm room restores Warmth (positive
+            // delta = good); a cold room contributes 0 (no further drain
+            // here, natural decay still applies in NeedsSystem.Tick).
+            //
+            // gameHours per day = 24; GetRoomWarmthModifier is the per-day
+            // additive pull. NeedsSystem.Modify(survivor, Warmth, +x) restores
+            // warmth — including a healthy room capping at 100 via NeedsSystem
+            // clamp, plus Warmth-critical threshold checks inside NeedsSystem.
+            if (_assignments != null && _needs != null)
+                {
+                    foreach (var room in _state.rooms)
+                    {
+                        float warmth = GetRoomWarmthModifier(room.roomId);
+                        if (warmth <= 0f) continue;
+                        var inRoom = _assignments.GetAssignmentsForRoom(room.roomId);
+                        for (int i = 0; i < inRoom.Count; i++)
+                        {
+                            string survivorId = inRoom[i].SurvivorId;
+                            if (!string.IsNullOrEmpty(survivorId))
+                                _needs.Modify(survivorId, NeedKind.Warmth, warmth * 24f);
+                        }
+                    }
+                }
+
+            // Frostbite risk: cold rooms (<5°C) with occupants trigger host-handled affliction
+            if (_assignments != null)
+            {
+                foreach (var room in _state.rooms)
+                {
+                    if (room.currentTempC >= 5f) continue;
+                    var occupants = _assignments.GetAssignmentsForRoom(room.roomId);
+                    for (int i = 0; i < occupants.Count; i++)
+                    {
+                        string sid = occupants[i].SurvivorId;
+                        if (!string.IsNullOrEmpty(sid))
+                            OnFrostbiteRisk?.Invoke(room.roomId, sid);
+                    }
+                }
+            }
 
             OnThermalChanged?.Invoke();
         }
@@ -296,12 +392,20 @@ namespace Ashfall.Core
             return !room.isFrozen;
         }
 
-        public ShelterThermalState CaptureState() => _state;
+        public ShelterThermalState CaptureState() => CloneState(_state);
+
         public void RestoreState(ShelterThermalState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnThermalChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static ShelterThermalState CloneState(ShelterThermalState src)
+        {
+            if (src == null) return new ShelterThermalState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<ShelterThermalState>(json) ?? new ShelterThermalState();
         }
     }
 }

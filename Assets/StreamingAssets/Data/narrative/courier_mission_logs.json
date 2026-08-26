@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "mission_id": "courier_mission_001",
+      "day": 40,
+      "courier": "the_courier",
+      "destination": "perimeter patrol",
+      "distance_km": 1.5,
+      "duration_hours": 3,
+      "purpose": "Daily perimeter check",
+      "outcome": "success",
+      "findings": "Perimeter intact. No signs of approach. Snow covering ash. Frozen river audible.",
+      "items_delivered": [],
+      "items_collected": [],
+      "notes": "Routine patrol. the_cop led navigation. the_courier provided rear security. No incidents."
+    },
+    {
+      "mission_id": "courier_mission_002",
+      "day": 43,
+      "courier": "the_courier",
+      "destination": "frozen river barge cache",
+      "distance_km": 3.2,
+      "duration_hours": 5,
+      "purpose": "Meat recovery",
+      "outcome": "success",
+      "findings": "Ice thickness 40cm, safe. Barge hold accessible. 15kg venison recovered.",
+      "items_delivered": [],
+      "items_collected": [
+        "frozen venison 15kg"
+      ],
+      "notes": "the_hunter led the meat selection. the_courier carried the sled. Return trip was slow due to load. Ice is reliable."
+    },
+    {
+      "mission_id": "courier_mission_003",
+      "day": 46,
+      "courier": "the_courier",
+      "destination": "geo-thermal plant exclusion zone",
+      "distance_km": 2.0,
+      "duration_hours": 4,
+      "purpose": "Perimeter verification",
+      "outcome": "success",
+      "findings": "Dose rate 85 uSv/h at 200m. Lethal. Perimeter markers intact. No safe approach.",
+      "items_delivered": [
+        "dosimeter posts (2)"
+      ],
+      "items_collected": [],
+      "notes": "the_hazmat_tech led radiation monitoring. the_general made the call to not approach closer. the_courier planted the dosimeter posts at 250m."
+    },
+    {
+      "mission_id": "courier_mission_004",
+      "day": 49,
+      "courier": "the_courier",
+      "destination": "dead oak cache",
+      "distance_km": 2.1,
+      "duration_hours": 4,
+      "purpose": "Cache recovery",
+      "outcome": "success",
+      "findings": "Cache intact. 8kg dried herbs, 3 rope lengths, 1 sealed container recovered.",
+      "items_delivered": [],
+      "items_collected": [
+        "dried herbs 8kg",
+        "rope 3 lengths",
+        "sealed container unknown"
+      ],
+      "notes": "Easy route. the_hunter knows it by heart. The sealed container is being examined by the_quartermaster."
+    },
+    {
+      "mission_id": "courier_mission_005",
+      "day": 52,
+      "courier": "the_courier",
+      "destination": "highway pileup",
+      "distance_km": 4.0,
+      "duration_hours": 6,
+      "purpose": "Reconnaissance",
+      "outcome": "success",
+      "findings": "Wreckage stable. Salvage potential: fuel, metal, glass. Structural risk noted.",
+      "items_delivered": [],
+      "items_collected": [
+        "salvaged metal sheet 2kg",
+        "glass panels 3"
+      ],
+      "notes": "the_cop led the approach. the_veteran provided overwatch. the_courier stayed with the group. Do not enter the vehicle stack without overhead protection."
+    },
+    {
+      "mission_id": "courier_mission_006",
+      "day": 55,
+      "courier": "the_courier",
+      "destination": "frozen river barge (weekly)",
+      "distance_km": 3.2,
+      "duration_hours": 5,
+      "purpose": "Meat recovery + wildlife monitoring",
+      "outcome": "success",
+      "findings": "Ice 55cm. 20kg venison recovered. Wolf pack tracks: 5 individuals heading east.",
+      "items_delivered": [],
+      "items_collected": [
+        "frozen venison 20kg"
+      ],
+      "notes": "Wolf tracks are new. the_hunter says the pack is following the deer herd. No direct encounter. Carry deterrent on future missions."
+    },
+    {
+      "mission_id": "courier_mission_007",
+      "day": 58,
+      "courier": "the_courier",
+      "destination": "post-storm perimeter survey",
+      "distance_km": 2.5,
+      "duration_hours": 5,
+      "purpose": "Radiation survey after storm",
+      "outcome": "success",
+      "findings": "Fresh ash 12cm. Dose rate 42 uSv/h declining. Some markers displaced.",
+      "items_delivered": [],
+      "items_collected": [],
+      "notes": "the_hazmat_tech led the survey. the_courier reset displaced markers. Full PPE worn. Fresh ash more radioactive than underlying layer."
+    },
+    {
+      "mission_id": "courier_mission_008",
+      "day": 61,
+      "courier": "the_courier",
+      "destination": "seed vault",
+      "distance_km": 4.5,
+      "duration_hours": 7,
+      "purpose": "Seed recovery (first mission)",
+      "outcome": "success",
+      "findings": "Vault accessible. Cryo-system partially operational. 14 ampoules recovered.",
+      "items_delivered": [],
+      "items_collected": [
+        "seed ampoules 14"
+      ],
+      "notes": "the_hazmat_tech led radiation safety. the_courier led navigation. Internal dose 12 uSv/h. Cryo-system failing. Next mission may be the last chance."
+    },
+    {
+      "mission_id": "courier_mission_009",
+      "day": 64,
+      "courier": "the_courier",
+      "destination": "expanded perimeter",
+      "distance_km": 2.0,
+      "duration_hours": 4,
+      "purpose": "Dosimeter post check",
+      "outcome": "success",
+      "findings": "All posts within range. Deer herd now 5 individuals. Wolf tracks absent.",
+      "items_delivered": [],
+      "items_collected": [],
+      "notes": "Routine check. the_cop led. Deer herd expansion is positive for the_hunter. Wolf absence noted but unexplained."
+    },
+    {
+      "mission_id": "courier_mission_010",
+      "day": 67,
+      "courier": "the_courier",
+      "destination": "The Allotments",
+      "distance_km": 8.5,
+      "duration_hours": 10,
+      "purpose": "Settlement reconnaissance",
+      "outcome": "success",
+      "findings": "Abandoned settlement. Root cellar with 5kg preserved turnips. Fox tracks.",
+      "items_delivered": [],
+      "items_collected": [
+        "preserved turnips 5kg",
+        "salvaged nails",
+        "cloth scraps"
+      ],
+      "notes": "Full-day mission. the_hunter led. the_veteran provided overwatch. The settlement was stripped but the root cellar was missed by previous scavengers."
+    },
+    {
+      "mission_id": "courier_mission_011",
+      "day": 70,
+      "courier": "the_courier",
+      "destination": "underground transit tunnel",
+      "distance_km": 5.0,
+      "duration_hours": 8,
+      "purpose": "Route survey (Golf-1 guided)",
+      "outcome": "success",
+      "findings": "Tunnel stable. Dose rate 8 uSv/h (low). Three weak points shored by Golf-1. Former living area found.",
+      "items_delivered": [],
+      "items_collected": [
+        "Golf-1 cache: 2 water containers",
+        "electrical wire 10m"
+      ],
+      "notes": "Golf-1 guided the mission. Underground route is low-radiation. Could serve as emergency evacuation route. the_architect to assess weak points."
+    },
+    {
+      "mission_id": "courier_mission_012",
+      "day": 73,
+      "courier": "the_courier",
+      "destination": "Shallows Market",
+      "distance_km": 12.0,
+      "duration_hours": 14,
+      "purpose": "First external trade contact",
+      "outcome": "success",
+      "findings": "Market active. 3 merchants. Traded mushrooms for smoked fish and salt. They know about the bunker.",
+      "items_delivered": [
+        "dried mushrooms 5kg"
+      ],
+      "items_collected": [
+        "smoked fish 3kg",
+        "salt 2kg",
+        "intelligence: 3 settlements within 20km"
+      ],
+      "notes": "Two-day mission. the_general led. the_hazmat_tech monitored radiation. the_hunter provided security. First contact with external traders. Cautious but productive."
+    },
+    {
+      "mission_id": "courier_mission_013",
+      "day": 76,
+      "courier": "the_courier",
+      "destination": "perimeter (wolf check)",
+      "distance_km": 2.5,
+      "duration_hours": 4,
+      "purpose": "Wolf pack monitoring",
+      "outcome": "success",
+      "findings": "Wolf tracks fresh. Pack size increased to 7. Following deer migration. No encounter.",
+      "items_delivered": [],
+      "items_collected": [],
+      "notes": "the_cop led. Wolf pack growing. the_hunter recommends deterrent measures. No solo patrols after dusk."
+    },
+    {
+      "mission_id": "courier_mission_014",
+      "day": 79,
+      "courier": "the_courier",
+      "destination": "seed vault (second recovery)",
+      "distance_km": 4.5,
+      "duration_hours": 8,
+      "purpose": "Additional seed extraction",
+      "outcome": "success",
+      "findings": "Cryo-system degraded further. Only 3 additional ampoules accessible. System failed completely after extraction.",
+      "items_delivered": [],
+      "items_collected": [
+        "seed ampoules 3 (wheat, rye, sunflower)"
+      ],
+      "notes": "the_hazmat_tech led radiation safety. Total recovered: 17 ampoules. Vault sealed. This was the last chance. the_botanist assessing viability."
+    },
+    {
+      "mission_id": "courier_mission_015",
+      "day": 82,
+      "courier": "the_courier",
+      "destination": "frozen river barge (weekly)",
+      "distance_km": 3.2,
+      "duration_hours": 5,
+      "purpose": "Meat recovery + wolf deterrent",
+      "outcome": "success",
+      "findings": "Ice 65cm. 18kg venison. Wolf pack visual at 500m. Warning shot fired. Wolves retreated.",
+      "items_delivered": [],
+      "items_collected": [
+        "frozen venison 18kg"
+      ],
+      "notes": "the_hunter led. Wolf pack shadowing the route. Warning shot effective. the_hunter recommends deterrent flares. Pack habituating to human presence."
+    },
+    {
+      "mission_id": "courier_mission_016",
+      "day": 85,
+      "courier": "the_courier",
+      "destination": "Juliet-1 settlement survey",
+      "distance_km": 10.0,
+      "duration_hours": 12,
+      "purpose": "Settlement intelligence gathering",
+      "outcome": "success",
+      "findings": "3 of 12 settlements surveyed. 1 abandoned, 1 active (Settlement 2), 1 burned out. Settlement 2 observed us from 200m.",
+      "items_delivered": [],
+      "items_collected": [],
+      "notes": "Two-day mission. the_general led. Juliet-1 intelligence partially validated. Settlement 2 is the priority contact target. Approach with trade goods next time."
+    },
+    {
+      "mission_id": "courier_mission_017",
+      "day": 88,
+      "courier": "the_courier",
+      "destination": "seed vault (structural assessment)",
+      "distance_km": 4.5,
+      "duration_hours": 10,
+      "purpose": "Tunnel stability assessment",
+      "outcome": "failure",
+      "findings": "Ceiling collapse at 200m mark. the_hazmat_tech struck by concrete. the_courier and the_hunter extracted casualty. the_surgeon confirmed death at scene.",
+      "items_delivered": [],
+      "items_collected": [],
+      "notes": "CRITICAL: the_hazmat_tech killed. Tunnel unstable beyond collapse point. No further access possible. the_undertaker burial day 90. This is the first expedition casualty. The bunker is quieter today."
+    },
+    {
+      "mission_id": "courier_mission_018",
+      "day": 91,
+      "courier": "the_courier",
+      "destination": "full perimeter circuit",
+      "distance_km": 2.5,
+      "duration_hours": 5,
+      "purpose": "Perimeter assessment + blind spot check",
+      "outcome": "success",
+      "findings": "All markers intact. Wolf tracks fading. Deer herd moved north. Eastern blind spot identified by the_veteran.",
+      "items_delivered": [],
+      "items_collected": [],
+      "notes": "the_cop led. the_veteran identified the blind spot. the_architect to evaluate periscope extension. Wolf activity declining. Perimeter stable."
+    },
+    {
+      "mission_id": "courier_mission_019",
+      "day": 94,
+      "courier": "the_courier",
+      "destination": "Settlement 2 diplomatic contact",
+      "distance_km": 10.0,
+      "duration_hours": 14,
+      "purpose": "Formal trade negotiation",
+      "outcome": "success",
+      "findings": "Contact made at 100m. the_Freeholder proposed salt-for-goods trade. Provisional terms accepted. Emissary (Delta-1) to visit bunker day 100.",
+      "items_delivered": [
+        "dried mushrooms (gift)"
+      ],
+      "items_collected": [
+        "salt trade agreement (verbal)",
+        "territory intelligence"
+      ],
+      "notes": "Two-day mission. the_general led. the_cop and the_hunter accompanied. First formal trade agreement. the_Freeholder is professional and cautious. Delta-1 emissary expected day 100."
+    },
+    {
+      "mission_id": "courier_mission_020",
+      "day": 97,
+      "courier": "the_courier",
+      "destination": "frozen river barge (final)",
+      "distance_km": 3.2,
+      "duration_hours": 5,
+      "purpose": "Final meat recovery before ice thaw",
+      "outcome": "success",
+      "findings": "Ice 35cm and thinning. Final 8kg venison recovered. Barge hold empty. Ice unsafe for loaded traffic.",
+      "items_delivered": [],
+      "items_collected": [
+        "frozen venison 8kg (final)"
+      ],
+      "notes": "the_hunter led. Spring thaw approaching. Frozen river cache exhausted. Shift to foraging and greenhouse reliance. the_meteorologist tracking ice conditions."
+    }
+  ]
+}

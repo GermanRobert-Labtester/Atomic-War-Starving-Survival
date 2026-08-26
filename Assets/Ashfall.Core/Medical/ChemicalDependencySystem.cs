@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Medical
 {
@@ -246,7 +247,7 @@ namespace Ashfall.Core.Medical
             return 0.5f;
         }
 
-        private static ChemicalDependencyState Find(List<ChemicalDependencyState> deps, string itemId)
+        private static ChemicalDependencyState? Find(List<ChemicalDependencyState> deps, string itemId)
         {
             for (int i = 0; i < deps.Count; i++)
                 if (string.Equals(deps[i].itemId, itemId, StringComparison.Ordinal))
@@ -254,7 +255,7 @@ namespace Ashfall.Core.Medical
             return null;
         }
 
-        private ChemicalDependencyState Require(string survivorId, string itemId)
+        private ChemicalDependencyState? Require(string survivorId, string itemId)
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(itemId)) return null;
             if (!_ledger.TryGetValue(survivorId, out var deps)) return null;

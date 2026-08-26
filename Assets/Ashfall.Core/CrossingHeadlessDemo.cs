@@ -8,7 +8,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class CrossingHeadlessDemo
     {
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string? dataDirectory = null, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -87,7 +87,7 @@ namespace Ashfall.Core
             var json = new SystemTextJsonSerializer();
             string blob = json.Serialize(session.Vouch.CaptureState());
             var restored = new VouchAccessSystem();
-            restored.RestoreState(json.Deserialize<VouchAccessSystemState>(blob));
+            restored.RestoreState(json.Deserialize<VouchAccessSystemState>(blob)!);
             Check(restored.HasAccess && restored.VouchedBy == CrossingIds.NpcMattis, "vouch save roundtrip");
 
             report.Passed = report.FailedCount == 0;

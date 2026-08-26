@@ -1,0 +1,210 @@
+using System;
+using System.IO;
+using Xunit;
+using Ashfall.Core.Save;
+
+namespace Ashfall.Core.Tests;
+
+/// <summary>
+/// Aggregate save contract tests: round-trip, checksum integrity, mutation
+/// rejection, and section-level validation.
+/// </summary>
+public class SaveAggregateContractTests
+{
+    private const string TestBasePath = "/tmp/ashfall_aggregate_tests";
+
+    private SaveSlotService CreateService()
+    {
+        if (Directory.Exists(TestBasePath))
+            Directory.Delete(TestBasePath, recursive: true);
+        Directory.CreateDirectory(TestBasePath);
+        return new SaveSlotService(
+            new FileSystemIO(),
+            new SystemTextJsonSerializer(),
+            new ConsoleLog(),
+            TestBasePath);
+    }
+
+    private static SaveProfileId P(string id) => new(id);
+    private static SaveSlotId S(string id) => new(id);
+
+    private static AggregateSaveEnvelope BuildEnvelope(SaveProfileId profile, SaveSlotId slot, int day)
+    {
+        return new AggregateSaveEnvelope
+        {
+            manifest = new SaveManifest
+            {
+                profileId = profile,
+                slotId = slot,
+                campaignName = "Test",
+                currentDay = day,
+                seed = 1,
+                lastSaveTick = 1,
+                mode = CampaignMode.Normal,
+                ironManTerminalState = IronManTerminalState.Active
+            },
+            sections = new List<SaveSectionEnvelope>
+            {
+                new SaveSectionEnvelope
+                {
+                    sectionName = "world",
+                    schemaVersion = 1,
+                    payloadJson = $"{{\"day\":{day},\"weather\":\"clear\"}}"
+                },
+                new SaveSectionEnvelope
+                {
+                    sectionName = "inventory",
+                    schemaVersion = 1,
+                    payloadJson = $"{{\"day\":{day},\"items\":[]}}"
+                }
+            }
+        };
+    }
+
+    [Fact]
+    public void CleanRoundTrip_PreservesAllSections()
+    {
+        using var service = CreateService();
+        var profile = P("p1");
+        var slot = S("s1");
+        var envelope = BuildEnvelope(profile, slot, 5);
+
+        Assert.True(service.WriteAggregateAtomically(profile, slot, envelope));
+        var loaded = service.LoadAggregate(profile, slot);
+        Assert.NotNull(loaded);
+        Assert.Equal(5, loaded!.manifest.currentDay);
+        Assert.Equal(2, loaded.sections.Count);
+        Assert.Equal("world", loaded.sections[0].sectionName);
+        Assert.Equal("inventory", loaded.sections[1].sectionName);
+    }
+
+    [Fact]
+    public void MutatedSectionPayload_ChangesChecksum_RejectsLoad()
+    {
+        using var service = CreateService();
+        var profile = P("p1");
+        var slot = S("s1");
+        var envelope = BuildEnvelope(profile, slot, 5);
+
+        Assert.True(service.WriteAggregateAtomically(profile, slot, envelope));
+
+        // Tamper with the saved file directly.
+        string path = service.GetAggregatePath(profile, slot);
+        string raw = File.ReadAllText(path);
+        string tampered = raw.Replace("\"day\":5", "\"day\":99");
+        File.WriteAllText(path, tampered);
+
+        var loaded = service.LoadAggregate(profile, slot);
+        Assert.Null(loaded);
+    }
+
+    [Fact]
+    public void MissingChecksumField_RejectsNewFormatEnvelope()
+    {
+        using var service = CreateService();
+        var profile = P("p1");
+        var slot = S("s1");
+        var envelope = BuildEnvelope(profile, slot, 5);
+        Assert.True(service.WriteAggregateAtomically(profile, slot, envelope));
+
+        // Strip the aggregate checksum from the saved file.
+        string path = service.GetAggregatePath(profile, slot);
+        string raw = File.ReadAllText(path);
+        string stripped = raw.Replace(envelope.aggregateChecksum, string.Empty);
+        File.WriteAllText(path, stripped);
+
+        var loaded = service.LoadAggregate(profile, slot);
+        Assert.Null(loaded);
+    }
+
+    [Fact]
+    public void InterruptedWrite_RecoversFromBackup()
+    {
+        using var service = CreateService();
+        var profile = P("p1");
+        var slot = S("s1");
+
+        // Write a valid envelope first.
+        var envelope1 = BuildEnvelope(profile, slot, 1);
+        Assert.True(service.WriteAggregateAtomically(profile, slot, envelope1));
+
+        // Write a second envelope that will fail validation by making the temp file unreadable.
+        string path = service.GetAggregatePath(profile, slot);
+        string tempPath = path + ".tmp";
+        string backupPath = path + ".bak";
+
+        // Simulate interrupted write: create a bad temp file that validates as bad.
+        var badEnvelope = BuildEnvelope(profile, slot, 2);
+        badEnvelope.aggregateChecksum = "bad";
+        File.WriteAllText(tempPath, "not json");
+
+        // Now try to write the good envelope — the bad temp should be cleaned up and the
+        // previous valid envelope should remain accessible.
+        var envelope3 = BuildEnvelope(profile, slot, 3);
+        Assert.True(service.WriteAggregateAtomically(profile, slot, envelope3));
+
+        var loaded = service.LoadAggregate(profile, slot);
+        Assert.NotNull(loaded);
+        Assert.Equal(3, loaded!.manifest.currentDay);
+    }
+
+    [Fact]
+    public void TwoSlots_IndependentRoundTrips()
+    {
+        using var service = CreateService();
+        var profile = P("p1");
+        var slot1 = S("a");
+        var slot2 = S("b");
+
+        var env1 = BuildEnvelope(profile, slot1, 10);
+        var env2 = BuildEnvelope(profile, slot2, 20);
+
+        Assert.True(service.WriteAggregateAtomically(profile, slot1, env1));
+        Assert.True(service.WriteAggregateAtomically(profile, slot2, env2));
+
+        var loaded1 = service.LoadAggregate(profile, slot1);
+        var loaded2 = service.LoadAggregate(profile, slot2);
+
+        Assert.NotNull(loaded1);
+        Assert.NotNull(loaded2);
+        Assert.Equal(10, loaded1!.manifest.currentDay);
+        Assert.Equal(20, loaded2!.manifest.currentDay);
+    }
+
+    [Fact]
+    public void FutureManifestVersion_Rejected()
+    {
+        using var service = CreateService();
+        var profile = P("p1");
+        var slot = S("s1");
+
+        var envelope = BuildEnvelope(profile, slot, 1);
+        envelope.manifestVersion = 999;
+
+        // Write directly to bypass WriteAggregateAtomically validation.
+        string path = service.GetAggregatePath(profile, slot);
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, new SystemTextJsonSerializer().Serialize(envelope));
+
+        var loaded = service.LoadAggregate(profile, slot);
+        Assert.Null(loaded);
+    }
+
+    [Fact]
+    public void IronManTerminal_ManifestPreserved()
+    {
+        using var service = CreateService();
+        var profile = P("p1");
+        var slot = S("s1");
+
+        var envelope = BuildEnvelope(profile, slot, 50);
+        envelope.manifest.ironManTerminalState = IronManTerminalState.TerminalLoss;
+        envelope.manifest.mode = CampaignMode.IronMan;
+
+        Assert.True(service.WriteAggregateAtomically(profile, slot, envelope));
+        var loaded = service.LoadAggregate(profile, slot);
+        Assert.NotNull(loaded);
+        Assert.Equal(IronManTerminalState.TerminalLoss, loaded!.manifest.ironManTerminalState);
+        Assert.Equal(CampaignMode.IronMan, loaded.manifest.mode);
+    }
+}

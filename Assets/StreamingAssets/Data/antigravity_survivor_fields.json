@@ -1,13 +1,55 @@
-[
-  { "survivor_id": "the_veteran", "stance": "stoicism", "manifesto_law_code": "military_discipline_code" },
-  { "survivor_id": "the_priest", "stance": "faith", "manifesto_law_code": "moral_code" },
-  { "survivor_id": "the_surgeon", "stance": "material_rationalism", "manifesto_law_code": "medical_ethics_code" },
-  { "survivor_id": "the_cop", "stance": "stoicism", "manifesto_law_code": "justice_code" },
-  { "survivor_id": "the_pacifist", "stance": "faith" },
-  { "survivor_id": "the_chemist", "stance": "material_rationalism" },
-  { "survivor_id": "the_martyr", "stance": "faith" },
-  { "survivor_id": "the_misanthrope", "stance": "material_rationalism" },
-  { "survivor_id": "the_prepper", "stance": "stoicism" },
-  { "survivor_id": "the_general", "stance": "stoicism", "manifesto_law_code": "military_discipline_code" },
-  { "survivor_id": "the_sheriff", "stance": "stoicism", "manifesto_law_code": "justice_code" }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "survivor_id": "the_veteran",
+      "stance": "stoicism",
+      "manifesto_law_code": "military_discipline_code"
+    },
+    {
+      "survivor_id": "the_priest",
+      "stance": "faith",
+      "manifesto_law_code": "moral_code"
+    },
+    {
+      "survivor_id": "the_surgeon",
+      "stance": "material_rationalism",
+      "manifesto_law_code": "medical_ethics_code"
+    },
+    {
+      "survivor_id": "the_cop",
+      "stance": "stoicism",
+      "manifesto_law_code": "justice_code"
+    },
+    {
+      "survivor_id": "the_pacifist",
+      "stance": "faith"
+    },
+    {
+      "survivor_id": "the_chemist",
+      "stance": "material_rationalism"
+    },
+    {
+      "survivor_id": "the_martyr",
+      "stance": "faith"
+    },
+    {
+      "survivor_id": "the_misanthrope",
+      "stance": "material_rationalism"
+    },
+    {
+      "survivor_id": "the_prepper",
+      "stance": "stoicism"
+    },
+    {
+      "survivor_id": "the_general",
+      "stance": "stoicism",
+      "manifesto_law_code": "military_discipline_code"
+    },
+    {
+      "survivor_id": "the_sheriff",
+      "stance": "stoicism",
+      "manifesto_law_code": "justice_code"
+    }
+  ]
+}

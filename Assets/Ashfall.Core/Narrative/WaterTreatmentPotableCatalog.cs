@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string sandPath = Path.Combine(directoryPath, "slow_sand_schmutzdecke_logs.json");
             if (File.Exists(sandPath))
             {
-                var list = JsonSerializer.Deserialize<List<SlowSandSchmutzdeckeEntry>>(File.ReadAllText(sandPath), options);
+                var list = CatalogLocator.LoadWrappedList<SlowSandSchmutzdeckeEntry>(File.ReadAllText(sandPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string ozPath = Path.Combine(directoryPath, "ozone_contact_tower_audits.json");
             if (File.Exists(ozPath))
             {
-                var list = JsonSerializer.Deserialize<List<OzoneContactTowerEntry>>(File.ReadAllText(ozPath), options);
+                var list = CatalogLocator.LoadWrappedList<OzoneContactTowerEntry>(File.ReadAllText(ozPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string clPath = Path.Combine(directoryPath, "calcium_hypochlorite_titration_reports.json");
             if (File.Exists(clPath))
             {
-                var list = JsonSerializer.Deserialize<List<CalciumHypochloriteTitrationEntry>>(File.ReadAllText(clPath), options);
+                var list = CatalogLocator.LoadWrappedList<CalciumHypochloriteTitrationEntry>(File.ReadAllText(clPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string cPath = Path.Combine(directoryPath, "activated_carbon_adsorption_records.json");
             if (File.Exists(cPath))
             {
-                var list = JsonSerializer.Deserialize<List<ActivatedCarbonAdsorptionEntry>>(File.ReadAllText(cPath), options);
+                var list = CatalogLocator.LoadWrappedList<ActivatedCarbonAdsorptionEntry>(File.ReadAllText(cPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public SlowSandSchmutzdeckeEntry GetSand(string id)
+        public SlowSandSchmutzdeckeEntry? GetSand(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SlowSandSchmutzdeckeEntry e ? e : null;
         }
 
-        public OzoneContactTowerEntry GetOzone(string id)
+        public OzoneContactTowerEntry? GetOzone(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is OzoneContactTowerEntry e ? e : null;
         }
 
-        public CalciumHypochloriteTitrationEntry GetChlorine(string id)
+        public CalciumHypochloriteTitrationEntry? GetChlorine(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CalciumHypochloriteTitrationEntry e ? e : null;
         }
 
-        public ActivatedCarbonAdsorptionEntry GetCarbon(string id)
+        public ActivatedCarbonAdsorptionEntry? GetCarbon(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ActivatedCarbonAdsorptionEntry e ? e : null;

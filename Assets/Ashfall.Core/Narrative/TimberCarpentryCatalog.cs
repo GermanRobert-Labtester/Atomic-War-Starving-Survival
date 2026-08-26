@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string treatPath = Path.Combine(directoryPath, "timber_creosote_treatment_logs.json");
             if (File.Exists(treatPath))
             {
-                var list = JsonSerializer.Deserialize<List<TimberCreosoteTreatmentEntry>>(File.ReadAllText(treatPath), options);
+                var list = CatalogLocator.LoadWrappedList<TimberCreosoteTreatmentEntry>(File.ReadAllText(treatPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string shorePath = Path.Combine(directoryPath, "square_set_shoring_audits.json");
             if (File.Exists(shorePath))
             {
-                var list = JsonSerializer.Deserialize<List<SquareSetShoringEntry>>(File.ReadAllText(shorePath), options);
+                var list = CatalogLocator.LoadWrappedList<SquareSetShoringEntry>(File.ReadAllText(shorePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string rotPath = Path.Combine(directoryPath, "timber_dry_rot_fruiting_records.json");
             if (File.Exists(rotPath))
             {
-                var list = JsonSerializer.Deserialize<List<TimberDryRotFruitingEntry>>(File.ReadAllText(rotPath), options);
+                var list = CatalogLocator.LoadWrappedList<TimberDryRotFruitingEntry>(File.ReadAllText(rotPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string mortPath = Path.Combine(directoryPath, "mortise_tenon_failure_reports.json");
             if (File.Exists(mortPath))
             {
-                var list = JsonSerializer.Deserialize<List<MortiseTenonFailureEntry>>(File.ReadAllText(mortPath), options);
+                var list = CatalogLocator.LoadWrappedList<MortiseTenonFailureEntry>(File.ReadAllText(mortPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public TimberCreosoteTreatmentEntry GetTreatment(string id)
+        public TimberCreosoteTreatmentEntry? GetTreatment(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TimberCreosoteTreatmentEntry e ? e : null;
         }
 
-        public SquareSetShoringEntry GetShoring(string id)
+        public SquareSetShoringEntry? GetShoring(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SquareSetShoringEntry e ? e : null;
         }
 
-        public TimberDryRotFruitingEntry GetRot(string id)
+        public TimberDryRotFruitingEntry? GetRot(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TimberDryRotFruitingEntry e ? e : null;
         }
 
-        public MortiseTenonFailureEntry GetMortise(string id)
+        public MortiseTenonFailureEntry? GetMortise(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MortiseTenonFailureEntry e ? e : null;

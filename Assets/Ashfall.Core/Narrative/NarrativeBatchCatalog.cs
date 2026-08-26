@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -79,13 +80,13 @@ namespace Ashfall.Core.Narrative
     public sealed class NarrativeBatchCatalog
     {
         public Dictionary<string, JournalTemplateEntry> JournalTemplates { get; } =
-            new Dictionary<string, JournalTemplateEntry>(StringComparer.OrdinalIgnoreCase);
+            new Dictionary<string, JournalTemplateEntry>(StringComparer.Ordinal);
 
         public Dictionary<string, FoundDocumentEntry> Documents { get; } =
-            new Dictionary<string, FoundDocumentEntry>(StringComparer.OrdinalIgnoreCase);
+            new Dictionary<string, FoundDocumentEntry>(StringComparer.Ordinal);
 
         public Dictionary<string, EulogyArchetypeEntry> Eulogies { get; } =
-            new Dictionary<string, EulogyArchetypeEntry>(StringComparer.OrdinalIgnoreCase);
+            new Dictionary<string, EulogyArchetypeEntry>(StringComparer.Ordinal);
 
         public List<string> VelTriageNames { get; } = new List<string>();
 

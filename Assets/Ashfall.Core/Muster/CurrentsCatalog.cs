@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+#pragma warning disable CS0649
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Muster
 {
@@ -27,6 +29,7 @@ namespace Ashfall.Core.Muster
     public static class CurrentsCatalogLoader
     {
         public const string FileName = "currents.json";
+        public const int CurrentSchemaVersion = 1;
 
         public static List<CurrentDefinition> LoadCurrents(
             string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -45,11 +48,15 @@ namespace Ashfall.Core.Muster
 
             try
             {
-                var parsed = json.Deserialize<CurrentEntry[]>(raw);
-                if (parsed == null) return result;
-                for (int i = 0; i < parsed.Length; i++)
+                var root = json.Deserialize<CurrentsCatalogRoot>(raw);
+                if (root == null) return result;
+                if (root.schema_version > CurrentSchemaVersion)
+                    return result;
+                var entries = root.entries;
+                if (entries == null) return result;
+                for (int i = 0; i < entries.Count; i++)
                 {
-                    var e = parsed[i];
+                    var e = entries[i];
                     if (e == null || string.IsNullOrEmpty(e.id)) continue;
                     result.Add(new CurrentDefinition
                     {
@@ -67,8 +74,9 @@ namespace Ashfall.Core.Muster
                     });
                 }
             }
-            catch
+            catch (System.Exception ex_CATDIAG)
             {
+                Ashfall.Core.IO.CatalogDiagnostics.Warn(path, "CurrentsCatalogRoot", ex_CATDIAG);
                 return result;
             }
             return result;
@@ -81,6 +89,13 @@ namespace Ashfall.Core.Muster
             for (int i = 0; i < source.Length; i++)
                 if (!string.IsNullOrEmpty(source[i])) list.Add(source[i]);
             return list;
+        }
+
+        /// <summary>Schema-envelope root for currents.json.</summary>
+        private class CurrentsCatalogRoot
+        {
+            public int schema_version = 1;
+            public List<CurrentEntry> entries = new List<CurrentEntry>();
         }
 
         private class CurrentEntry

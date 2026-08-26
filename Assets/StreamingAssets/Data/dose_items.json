@@ -1,42 +1,45 @@
-[
-  {
-    "id": "item_dose_ledger",
-    "name": "The Dose Ledger",
-    "weightKg": 1.2,
-    "tradeValue": 0,
-    "category": "story",
-    "description": "A cloth-bound tally book begun by hand after the first reading, its pages ruled for dates, dials, and the names of who held them. Not a medical record. A kept document."
-  },
-  {
-    "id": "item_calibration_key",
-    "name": "Dosimeter Calibration Key",
-    "weightKg": 0.1,
-    "tradeValue": 40,
-    "category": "tool",
-    "description": "A brass socket-wrench key, hand-made by the clockmaker to fit the adjustment collar of every dosimeter in the bunker. It does not make the dial honest; it makes the dial honest again."
-  },
-  {
-    "id": "item_dosimeter_tag",
-    "name": "Dosimeter Tag",
-    "weightKg": 0.05,
-    "tradeValue": 15,
-    "category": "tool",
-    "description": "A stamped alloy tag lashed to a dosimeter's lanyard so the dial can be bound to one named survivor instead of to whoever happened to be nearest when the Geiger stopped screaming."
-  },
-  {
-    "id": "item_palliative_morphine",
-    "name": "Palliative Morphine Tray",
-    "weightKg": 0.4,
-    "tradeValue": 90,
-    "category": "medical",
-    "description": "A pre-Exchange hospital tray, three ampoules of morphine sulfate and one glass syringe, kept for the named sick and nothing else. The sick room has a schedule for it. The schedule is kept."
-  },
-  {
-    "id": "item_cohort_first_board",
-    "name": "The Children's Baseline Board",
-    "weightKg": 0.8,
-    "tradeValue": 0,
-    "category": "story",
-    "description": "A section of chalkboard carried out of the children's corridor, numbers and half-erased guesses still legible. A memory of a baseline that was argued over, never settled."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "item_dose_ledger",
+      "name": "The Dose Ledger",
+      "weightKg": 1.2,
+      "tradeValue": 0,
+      "category": "story",
+      "description": "A cloth-bound tally book begun by hand after the first reading, its pages ruled for dates, dials, and the names of who held them. Not a medical record. A kept document."
+    },
+    {
+      "id": "item_calibration_key",
+      "name": "Dosimeter Calibration Key",
+      "weightKg": 0.1,
+      "tradeValue": 40,
+      "category": "tool",
+      "description": "A brass socket-wrench key, hand-made by the clockmaker to fit the adjustment collar of every dosimeter in the bunker. It does not make the dial honest; it makes the dial honest again."
+    },
+    {
+      "id": "item_dosimeter_tag",
+      "name": "Dosimeter Tag",
+      "weightKg": 0.05,
+      "tradeValue": 15,
+      "category": "tool",
+      "description": "A stamped alloy tag lashed to a dosimeter's lanyard so the dial can be bound to one named survivor instead of to whoever happened to be nearest when the Geiger stopped screaming."
+    },
+    {
+      "id": "item_palliative_morphine",
+      "name": "Palliative Morphine Tray",
+      "weightKg": 0.4,
+      "tradeValue": 90,
+      "category": "medical",
+      "description": "A pre-Exchange hospital tray, three ampoules of morphine sulfate and one glass syringe, kept for the named sick and nothing else. The sick room has a schedule for it. The schedule is kept."
+    },
+    {
+      "id": "item_cohort_first_board",
+      "name": "The Children's Baseline Board",
+      "weightKg": 0.8,
+      "tradeValue": 0,
+      "category": "story",
+      "description": "A section of chalkboard carried out of the children's corridor, numbers and half-erased guesses still legible. A memory of a baseline that was argued over, never settled."
+    }
+  ]
+}

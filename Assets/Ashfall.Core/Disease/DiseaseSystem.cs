@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Disease
 {
@@ -171,10 +172,10 @@ namespace Ashfall.Core.Disease
         private readonly ILog _log;
 
         public DiseaseSystem(
-            DiseaseSystemState state = null,
-            ISeededRng rng = null,
-            Func<int, ISeededRng> rngFactory = null,
-            ILog log = null)
+DiseaseSystemState? state = null,
+ISeededRng? rng = null,
+Func<int, ISeededRng>? rngFactory = null,
+ILog? log = null)
         {
             _rngFactory = rngFactory ?? (seed => new SeededRng(seed));
             _state = state ?? new DiseaseSystemState();
@@ -304,7 +305,7 @@ namespace Ashfall.Core.Disease
         /// spread — the host can still call Infect() directly (legacy hook
         /// contract preserved).
         /// </param>
-        public void TickDaily(int day, IReadOnlyList<string> candidates = null)
+        public void TickDaily(int day, IReadOnlyList<string>? candidates = null)
         {
             for (int i = 0; i < _entries.Count; i++)
             {
@@ -440,7 +441,7 @@ namespace Ashfall.Core.Disease
                 var patient = entry.infected[i];
                 if (patient == null || patient.quarantined) continue;
                 var def = _catalog.GetById(entry.disease_id);
-                if (IsContagious(entry, patient, def))
+                if (IsContagious(entry!, patient, def!))
                 {
                     anyContagious = true;
                     break;
@@ -466,7 +467,7 @@ namespace Ashfall.Core.Disease
         public void Quarantine(string survivorId, string diseaseId)
         {
             if (!TryFindPatient(survivorId, diseaseId, out var entry, out var patient)) return;
-            if (patient.quarantined) return;
+            if (patient!.quarantined) return;
 
             patient.quarantined = true;
             Raise(OnQuarantineStarted, DiseaseIds.EventQuarantineStarted,
@@ -479,7 +480,7 @@ namespace Ashfall.Core.Disease
         public void EndQuarantine(string survivorId, string diseaseId)
         {
             if (!TryFindPatient(survivorId, diseaseId, out var entry, out var patient)) return;
-            if (!patient.quarantined) return;
+            if (!patient!.quarantined) return;
 
             patient.quarantined = false;
             Raise(OnQuarantineEnded, DiseaseIds.EventQuarantineEnded,
@@ -494,7 +495,7 @@ namespace Ashfall.Core.Disease
             if (!_byId.TryGetValue(diseaseId, out var entry)) return false;
             var patient = FindPatient(entry, survivorId);
             if (patient == null || patient.quarantined) return false;
-            return IsContagious(entry, patient, _catalog.GetById(diseaseId));
+            return IsContagious(entry!, patient!, _catalog.GetById(diseaseId)!);
         }
 
         /// <summary>True when the survivor carries an active infection of the disease.</summary>
@@ -523,17 +524,25 @@ namespace Ashfall.Core.Disease
         }
 
         private bool TryFindPatient(string survivorId, string diseaseId,
-            out DiseaseEntryState entry, out DiseaseInfectionState patient)
+            out DiseaseEntryState entry, out DiseaseInfectionState? patient)
         {
-            entry = null;
             patient = null;
-            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(diseaseId)) return false;
-            if (!_byId.TryGetValue(diseaseId, out entry)) return false;
-            patient = FindPatient(entry, survivorId);
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(diseaseId))
+            {
+                entry = null!;
+                return false;
+            }
+            if (!_byId.TryGetValue(diseaseId, out var foundEntry))
+            {
+                entry = null!;
+                return false;
+            }
+            entry = foundEntry;
+            patient = FindPatient(foundEntry, survivorId);
             return patient != null;
         }
 
-        private static DiseaseInfectionState FindPatient(DiseaseEntryState entry, string survivorId)
+        private static DiseaseInfectionState? FindPatient(DiseaseEntryState entry, string survivorId)
         {
             if (entry == null || entry.infected == null) return null;
             for (int i = 0; i < entry.infected.Count; i++)
@@ -648,7 +657,7 @@ namespace Ashfall.Core.Disease
 
         private void RaiseProtocol(string eventId, string detail)
         {
-            Raise(null, eventId, detail, (string)null, null);
+            Raise(null!, eventId, detail, (string)null!, null!);
             RaiseStateChanged();
         }
 
@@ -674,7 +683,7 @@ namespace Ashfall.Core.Disease
                     if (patient == null) continue;
                     snap.total_infected++;
                     if (patient.quarantined) snap.total_quarantined++;
-                    bool contagious = IsContagious(entry, patient, def);
+                    bool contagious = IsContagious(entry!, patient!, def!);
                     if (contagious) snap.total_contagious++;
 
                     snap.patients.Add(new DiseasePatientSnapshot
@@ -703,7 +712,7 @@ namespace Ashfall.Core.Disease
             }
         }
 
-        public DiseaseEntryState GetDiseaseState(string diseaseId)
+        public DiseaseEntryState? GetDiseaseState(string diseaseId)
         {
             return diseaseId != null && _byId.TryGetValue(diseaseId, out var e) ? e : null;
         }

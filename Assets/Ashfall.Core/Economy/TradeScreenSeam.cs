@@ -2,6 +2,7 @@ namespace Ashfall.Core.Economy
 {
     using System;
     using System.Collections.Generic;
+#pragma warning disable CS8618
 
     /// <summary>
     /// Verdict of the arbitrator's scale at the negotiation table.

@@ -150,7 +150,7 @@ namespace Ashfall.Core.Narrative
             string journalPath = Path.Combine(directoryPath, "dweller_psychological_journals.json");
             if (File.Exists(journalPath))
             {
-                var list = JsonSerializer.Deserialize<List<PsychologicalJournalEntry>>(File.ReadAllText(journalPath), options);
+                var list = CatalogLocator.LoadWrappedList<PsychologicalJournalEntry>(File.ReadAllText(journalPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -166,7 +166,7 @@ namespace Ashfall.Core.Narrative
             string botanyPath = Path.Combine(directoryPath, "mutated_botanical_logs.json");
             if (File.Exists(botanyPath))
             {
-                var list = JsonSerializer.Deserialize<List<MutatedBotanicalEntry>>(File.ReadAllText(botanyPath), options);
+                var list = CatalogLocator.LoadWrappedList<MutatedBotanicalEntry>(File.ReadAllText(botanyPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -182,7 +182,7 @@ namespace Ashfall.Core.Narrative
             string folklorePath = Path.Combine(directoryPath, "bunker_children_folklore.json");
             if (File.Exists(folklorePath))
             {
-                var list = JsonSerializer.Deserialize<List<ChildrenFolkloreEntry>>(File.ReadAllText(folklorePath), options);
+                var list = CatalogLocator.LoadWrappedList<ChildrenFolkloreEntry>(File.ReadAllText(folklorePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -198,7 +198,7 @@ namespace Ashfall.Core.Narrative
             string fraudPath = Path.Combine(directoryPath, "ration_fraud_records.json");
             if (File.Exists(fraudPath))
             {
-                var list = JsonSerializer.Deserialize<List<RationFraudEntry>>(File.ReadAllText(fraudPath), options);
+                var list = CatalogLocator.LoadWrappedList<RationFraudEntry>(File.ReadAllText(fraudPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -213,25 +213,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public PsychologicalJournalEntry GetJournal(string id)
+        public PsychologicalJournalEntry? GetJournal(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PsychologicalJournalEntry e ? e : null;
         }
 
-        public MutatedBotanicalEntry GetBotanical(string id)
+        public MutatedBotanicalEntry? GetBotanical(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MutatedBotanicalEntry e ? e : null;
         }
 
-        public ChildrenFolkloreEntry GetFolklore(string id)
+        public ChildrenFolkloreEntry? GetFolklore(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ChildrenFolkloreEntry e ? e : null;
         }
 
-        public RationFraudEntry GetFraud(string id)
+        public RationFraudEntry? GetFraud(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RationFraudEntry e ? e : null;

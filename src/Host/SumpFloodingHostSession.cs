@@ -16,12 +16,9 @@ namespace AtomicWar.GodotApp
     /// only adapts the OnIncident / StateChanged surface for Godot wiring.
     /// </summary>
     public sealed class SumpFloodingHostSession
-    {
+    : HostSessionBase{
         public SumpFloodingSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public SumpFloodingHostSession(
             SumpFloodingSystem system,
             WeatherSystem weather,
@@ -34,12 +31,12 @@ namespace AtomicWar.GodotApp
             System.OnIncident += inc =>
             {
                 LastEvent = $"[Sump] INCIDENT: {inc.kind} in {inc.nodeId} — {inc.description}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             System.OnFloodingChanged += () =>
             {
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 
@@ -49,7 +46,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump node registered: {displayName} (cap {maxWaterLevelCm}cm)";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -60,7 +57,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump pump installed at node {nodeId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -71,7 +68,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump pump power set: node {nodeId} -> {(powered ? "ON" : "OFF")}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -82,7 +79,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump mitigation added: {mitigationType} on node {nodeId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -93,7 +90,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Sump node drained: {nodeId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -101,7 +98,14 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
+        }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            SumpFloodingSaveStore.TrySave(System.CaptureState());
+            base.Save();
         }
     }
 
@@ -116,11 +120,54 @@ namespace AtomicWar.GodotApp
     public static class SumpFloodingSaveStore
     {
         public const string FileName = "sump_flooding_save.json";
+        public const string SectionName = "sump_flooding";
+
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(SumpFloodingState state)
+        {
+            return TryCapture(state);
+        }
+
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static SumpFloodingState? TryRestoreDirect(string json)
+        {
+            return TryRestore(json);
+        }
+
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(SumpFloodingState state)
+        {
+            try
+            {
+                if (state == null) return string.Empty;
+                return s_json.Serialize(state);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[SumpFloodingSaveStore] capture failed: " + e.Message);
+                return string.Empty;
+            }
+        }
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static SumpFloodingState? TryRestore(string json)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(json)) return null;
+                return s_json.Deserialize<SumpFloodingState>(json);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[SumpFloodingSaveStore] restore failed: " + e.Message);
+                return null;
+            }
+        }
+
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
-        public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+        public static string SavePath => SaveSlotRoot.Resolve(FileName);
         public static bool Exists => s_files.FileExists(SavePath);
 
         public static bool TrySave(SumpFloodingState state)

@@ -1,72 +1,117 @@
-[
-  {
-    "id": "rad_brown_lanthanum_dense_crown_color_centers",
-    "optic_system_id": "SNIPER_NIGHT_TELESCOPE_8X",
-    "substrate_material": "LANTHANUM_DENSE_CROWN_LAK9",
-    "accumulated_gamma_dose_rad": 45000.0,
-    "solarization_spectral_band": "BLUE_GREEN_400_500NM_ABSORPTION",
-    "timestamp_relative": "YEAR_02_OPTICAL_RAD_01",
-    "tags": ["optics", "radiation_browning", "lanthanum_glass", "color_centers", "telescope"],
-    "prose": "Gamma flux from surface fallout created intense F-center electron vacancies in the lanthanum crown objective lens. Spectral transmission at 450nm dropped by 88%, rendering green foliage and scout uniforms pitch-black through the optic."
-  },
-  {
-    "id": "rad_brown_uv_solarization_photobleaching_decay",
-    "optic_system_id": "METEOROLOGICAL_SKY_CAMERA_DOME",
-    "substrate_material": "BOROSILICATE_OPTICAL_DOME_B270",
-    "accumulated_gamma_dose_rad": 12000.0,
-    "solarization_spectral_band": "NEAR_ULTRAVIOLET_SOLARIZATION",
-    "timestamp_relative": "YEAR_05_OPTICAL_RAD_03",
-    "tags": ["optics", "solarization", "uv_damage", "camera_dome", "browning"],
-    "prose": "Direct exposure to unshielded solar UV radiation stripped iron impurities in the glass into Fe3+ color centers. The clear camera dome turned a deep honey-yellow, reducing daylight sensitivity and blinding cloud-cover monitoring sensors."
-  },
-  {
-    "id": "rad_brown_multicoating_hafnium_dielectric_peel",
-    "optic_system_id": "LASER_RANGEFINDER_BEAM_SPLITTER",
-    "substrate_material": "FUSED_SILICA_WITH_HFO2_SIO2_STACK",
-    "accumulated_gamma_dose_rad": 60000.0,
-    "solarization_spectral_band": "DIELECTRIC_INTERFACIAL_BLISTER",
-    "timestamp_relative": "YEAR_08_OPTICAL_RAD_02",
-    "tags": ["optics", "dielectric_coating", "hafnium_oxide", "laser_mirror", "delamination"],
-    "prose": "Intense beta particle bombardment created electrostatic charge accumulation at the interfaces between alternating hafnium oxide and silica thin films. Dielectric breakdown produced microscopic blisters that peeled the mirror coating off the fused silica substrate."
-  },
-  {
-    "id": "rad_brown_thorium_optical_element_self_irradiation",
-    "optic_system_id": "PRE_WAR_SURVEILLANCE_LENS_50MM_F1_4",
-    "substrate_material": "THORIUM_OXIDE_RADIOACTIVE_GLASS",
-    "accumulated_gamma_dose_rad": 95000.0,
-    "solarization_spectral_band": "SELF_ALPHA_INDUCED_AMBER_TINT",
-    "timestamp_relative": "YEAR_11_OPTICAL_RAD_04",
-    "tags": ["optics", "thorium_glass", "self_irradiation", "radioactive_lens", "amber"],
-    "prose": "Internal alpha and beta emissions from the 12% thorium oxide component self-irradiated the glass matrix over thirty years. The elements turned a dense cognac amber; while sharpness remained exceptional, the lens lost 2.5 stops of effective light transmission."
-  },
-  {
-    "id": "rad_brown_thermal_annealing_bleach_recovery",
-    "optic_system_id": "RECLAIMED_AERIAL_SURVEY_BARREL",
-    "substrate_material": "ANNEALED_CROWN_GLASS_DOUBLET",
-    "accumulated_gamma_dose_rad": 35000.0,
-    "solarization_spectral_band": "THERMAL_COLOR_CENTER_ANNEAL",
-    "timestamp_relative": "YEAR_14_OPTICAL_RAD_01",
-    "tags": ["optics", "annealing", "bleaching", "recovery", "heat_treatment"],
-    "prose": "An optical technician baked a severely browned aerial camera doublet in a laboratory furnace at 240°C for forty-eight hours. The thermal energy bleached 92% of the trapped color centers, restoring glass clarity without melting the lens mounting ring."
-  },
-  {
-    "id": "rad_brown_lead_shielded_borate_glass_solar_tint",
-    "optic_system_id": "HOT_CELL_LEAD_GLASS_VIEWING_WINDOW",
-    "substrate_material": "HEAVY_LEAD_BOROSILICATE_RS520",
-    "accumulated_gamma_dose_rad": 150000.0,
-    "solarization_spectral_band": "RED_LASER_EXTINCTION_GREEN_TINT",
-    "timestamp_relative": "YEAR_17_OPTICAL_RAD_03",
-    "tags": ["optics", "lead_glass", "hot_cell", "shielding_window", "laser_blocking"],
-    "prose": "The four-inch thick 75% lead glass window in the radioisotope glovebox darkened into an opaque olive drab under extreme gamma exposure. The discoloration completely extinguished 650nm red alignment laser beams passing through the viewing port."
-  },
-  {
-    "id": "rad_brown_photodiode_sapphire_window_trapping",
-    "optic_system_id": "OPTICAL_PYROMETER_SENSOR_HEAD",
-    "substrate_material": "SINGLE_CRYSTAL_SYNTHETIC_SAPPHIRE",
-    "accumulated_gamma_dose_rad": 80000.0,
-    "solarization_spectral_band": "INFRARED_LATTICE_DEFECT_SHIFT",
-    "timestamp_relative": "YEAR_20_OPTICAL_RAD_01",
-    "tags": ["optics", "sapphire_window", "pyrometer", "lattice_defect", "sensor_error"],
-    "prose": "Radiation-induced hole trapping in the synthetic sapphire window altered its mid-infrared transmission spectrum. The optical pyrometer misread furnace melt temperatures by -180°C, causing casting crews to overheat steel melts and boil crucible linings."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "rad_brown_lanthanum_dense_crown_color_centers",
+      "optic_system_id": "SNIPER_NIGHT_TELESCOPE_8X",
+      "substrate_material": "LANTHANUM_DENSE_CROWN_LAK9",
+      "accumulated_gamma_dose_rad": 45000.0,
+      "solarization_spectral_band": "BLUE_GREEN_400_500NM_ABSORPTION",
+      "timestamp_relative": "YEAR_02_OPTICAL_RAD_01",
+      "tags": [
+        "optics",
+        "radiation_browning",
+        "lanthanum_glass",
+        "color_centers",
+        "telescope"
+      ],
+      "prose": "Gamma flux from surface fallout created intense F-center electron vacancies in the lanthanum crown objective lens. Spectral transmission at 450nm dropped by 88%, rendering green foliage and scout uniforms pitch-black through the optic."
+    },
+    {
+      "id": "rad_brown_uv_solarization_photobleaching_decay",
+      "optic_system_id": "METEOROLOGICAL_SKY_CAMERA_DOME",
+      "substrate_material": "BOROSILICATE_OPTICAL_DOME_B270",
+      "accumulated_gamma_dose_rad": 12000.0,
+      "solarization_spectral_band": "NEAR_ULTRAVIOLET_SOLARIZATION",
+      "timestamp_relative": "YEAR_05_OPTICAL_RAD_03",
+      "tags": [
+        "optics",
+        "solarization",
+        "uv_damage",
+        "camera_dome",
+        "browning"
+      ],
+      "prose": "Direct exposure to unshielded solar UV radiation stripped iron impurities in the glass into Fe3+ color centers. The clear camera dome turned a deep honey-yellow, reducing daylight sensitivity and blinding cloud-cover monitoring sensors."
+    },
+    {
+      "id": "rad_brown_multicoating_hafnium_dielectric_peel",
+      "optic_system_id": "LASER_RANGEFINDER_BEAM_SPLITTER",
+      "substrate_material": "FUSED_SILICA_WITH_HFO2_SIO2_STACK",
+      "accumulated_gamma_dose_rad": 60000.0,
+      "solarization_spectral_band": "DIELECTRIC_INTERFACIAL_BLISTER",
+      "timestamp_relative": "YEAR_08_OPTICAL_RAD_02",
+      "tags": [
+        "optics",
+        "dielectric_coating",
+        "hafnium_oxide",
+        "laser_mirror",
+        "delamination"
+      ],
+      "prose": "Intense beta particle bombardment created electrostatic charge accumulation at the interfaces between alternating hafnium oxide and silica thin films. Dielectric breakdown produced microscopic blisters that peeled the mirror coating off the fused silica substrate."
+    },
+    {
+      "id": "rad_brown_thorium_optical_element_self_irradiation",
+      "optic_system_id": "PRE_WAR_SURVEILLANCE_LENS_50MM_F1_4",
+      "substrate_material": "THORIUM_OXIDE_RADIOACTIVE_GLASS",
+      "accumulated_gamma_dose_rad": 95000.0,
+      "solarization_spectral_band": "SELF_ALPHA_INDUCED_AMBER_TINT",
+      "timestamp_relative": "YEAR_11_OPTICAL_RAD_04",
+      "tags": [
+        "optics",
+        "thorium_glass",
+        "self_irradiation",
+        "radioactive_lens",
+        "amber"
+      ],
+      "prose": "Internal alpha and beta emissions from the 12% thorium oxide component self-irradiated the glass matrix over thirty years. The elements turned a dense cognac amber; while sharpness remained exceptional, the lens lost 2.5 stops of effective light transmission."
+    },
+    {
+      "id": "rad_brown_thermal_annealing_bleach_recovery",
+      "optic_system_id": "RECLAIMED_AERIAL_SURVEY_BARREL",
+      "substrate_material": "ANNEALED_CROWN_GLASS_DOUBLET",
+      "accumulated_gamma_dose_rad": 35000.0,
+      "solarization_spectral_band": "THERMAL_COLOR_CENTER_ANNEAL",
+      "timestamp_relative": "YEAR_14_OPTICAL_RAD_01",
+      "tags": [
+        "optics",
+        "annealing",
+        "bleaching",
+        "recovery",
+        "heat_treatment"
+      ],
+      "prose": "An optical technician baked a severely browned aerial camera doublet in a laboratory furnace at 240°C for forty-eight hours. The thermal energy bleached 92% of the trapped color centers, restoring glass clarity without melting the lens mounting ring."
+    },
+    {
+      "id": "rad_brown_lead_shielded_borate_glass_solar_tint",
+      "optic_system_id": "HOT_CELL_LEAD_GLASS_VIEWING_WINDOW",
+      "substrate_material": "HEAVY_LEAD_BOROSILICATE_RS520",
+      "accumulated_gamma_dose_rad": 150000.0,
+      "solarization_spectral_band": "RED_LASER_EXTINCTION_GREEN_TINT",
+      "timestamp_relative": "YEAR_17_OPTICAL_RAD_03",
+      "tags": [
+        "optics",
+        "lead_glass",
+        "hot_cell",
+        "shielding_window",
+        "laser_blocking"
+      ],
+      "prose": "The four-inch thick 75% lead glass window in the radioisotope glovebox darkened into an opaque olive drab under extreme gamma exposure. The discoloration completely extinguished 650nm red alignment laser beams passing through the viewing port."
+    },
+    {
+      "id": "rad_brown_photodiode_sapphire_window_trapping",
+      "optic_system_id": "OPTICAL_PYROMETER_SENSOR_HEAD",
+      "substrate_material": "SINGLE_CRYSTAL_SYNTHETIC_SAPPHIRE",
+      "accumulated_gamma_dose_rad": 80000.0,
+      "solarization_spectral_band": "INFRARED_LATTICE_DEFECT_SHIFT",
+      "timestamp_relative": "YEAR_20_OPTICAL_RAD_01",
+      "tags": [
+        "optics",
+        "sapphire_window",
+        "pyrometer",
+        "lattice_defect",
+        "sensor_error"
+      ],
+      "prose": "Radiation-induced hole trapping in the synthetic sapphire window altered its mid-infrared transmission spectrum. The optical pyrometer misread furnace melt temperatures by -180°C, causing casting crews to overheat steel melts and boil crucible linings."
+    }
+  ]
+}

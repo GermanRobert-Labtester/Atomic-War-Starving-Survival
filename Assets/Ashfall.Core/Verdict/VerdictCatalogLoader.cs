@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Verdict
 {
     /// <summary>
@@ -39,16 +41,19 @@ namespace Ashfall.Core.Verdict
             if (string.IsNullOrWhiteSpace(raw)) return result;
             try
             {
-                var parsed = json.Deserialize<VerdictLocationEntry[]>(raw);
-                if (parsed == null) return result;
-                for (int i = 0; i < parsed.Length; i++)
+                var list = CatalogLocator.LoadWrappedList<VerdictLocationEntry>(raw, SystemTextJsonSerializer.Options);
+                for (int i = 0; i < list.Count; i++)
                 {
-                    var e = parsed[i];
+                    var e = list[i];
                     if (e == null || string.IsNullOrEmpty(e.id)) continue;
                     result.Add(e);
                 }
             }
-            catch { return result; }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
 
@@ -76,10 +81,19 @@ namespace Ashfall.Core.Verdict
             public string category = "story_item";
             public string tier = string.Empty;
             public string description = string.Empty;
-            public VerdictItemEffects mechanical_effects = null;
+            public VerdictItemEffects mechanical_effects = null!;
             public string downstream_quest_trigger = string.Empty;
             public string faction_affinity = string.Empty;
             public string rarity = string.Empty;
+        }
+
+        [Serializable]
+        internal sealed class VerdictItemsRoot
+        {
+#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
+            public int schema_version;
+#pragma warning restore CS0649
+            public List<VerdictItemEntry> items = new List<VerdictItemEntry>();
         }
 
         public static List<VerdictItemEntry> LoadItems(
@@ -93,16 +107,19 @@ namespace Ashfall.Core.Verdict
             if (string.IsNullOrWhiteSpace(raw)) return result;
             try
             {
-                var parsed = json.Deserialize<VerdictItemEntry[]>(raw);
-                if (parsed == null) return result;
-                for (int i = 0; i < parsed.Length; i++)
+                var entries = CatalogLocator.LoadWrappedList<VerdictItemEntry>(raw, SystemTextJsonSerializer.Options);
+                for (int i = 0; i < entries.Count; i++)
                 {
-                    var e = parsed[i];
+                    var e = entries[i];
                     if (e == null || string.IsNullOrEmpty(e.id)) continue;
                     result.Add(e);
                 }
             }
-            catch { return result; }
+            catch (Exception ex_CATDIAG)
+            {
+                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                return result;
+            }
             return result;
         }
 
@@ -138,7 +155,11 @@ namespace Ashfall.Core.Verdict
                     result.Add(e);
                 }
             }
-            catch { return result; }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
 
@@ -163,7 +184,10 @@ namespace Ashfall.Core.Verdict
                 if (parsed?.corruption_corpus != null)
                     result.AddRange(parsed.corruption_corpus);
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
             return result;
         }
 

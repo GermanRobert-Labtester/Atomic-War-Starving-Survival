@@ -1,82 +1,133 @@
-[
-  {
-    "id": "ammonia_chiller_generator_coil_stress_corrosion",
-    "chiller_unit_id": "COLD_STORAGE_ABSORPTION_PLANT_01",
-    "refrigerant_charge_kg": 180.0,
-    "leak_rate_ppm_ambient": 340.0,
-    "system_failure_mode": "STRESS_CORROSION_CRACK_GENERATOR_COIL",
-    "timestamp_relative": "YEAR_02_COLD_LOG_01",
-    "tags": ["refrigeration", "ammonia", "absorption_chiller", "leak", "cold_store"],
-    "prose": "High thermal cycling in the aqua-ammonia steam generator cracked the welded steel heating coil. Pungent anhydrous ammonia gas (340 ppm) vented into Meat Locker 2, suffocating two warehouse workers and spoiling four tons of salt pork."
-  },
-  {
-    "id": "ammonia_chiller_hydrogen_bubble_bubble_lock",
-    "chiller_unit_id": "DAIRY_HOLDING_VAULT_CHILLER_03",
-    "refrigerant_charge_kg": 95.0,
-    "leak_rate_ppm_ambient": 15.0,
-    "system_failure_mode": "NON_CONDENSIBLE_HYDROGEN_VAPOR_LOCK",
-    "timestamp_relative": "YEAR_04_COLD_LOG_03",
-    "tags": ["refrigeration", "ammonia", "hydrogen_gas", "vapor_lock", "dairy"],
-    "prose": "Internal galvanic reaction between acidic ammonia solution and unpassivated steel generated non-condensible hydrogen gas. The gas pocket locked the thermosyphon condenser loop, causing vault temperature to rise from 2°C to 18°C and souring six hundred liters of goat milk."
-  },
-  {
-    "id": "ammonia_chiller_evaporator_ice_bridge_defrost",
-    "chiller_unit_id": "FROZEN_CARCASS_HANGAR_ALPHA",
-    "refrigerant_charge_kg": 240.0,
-    "leak_rate_ppm_ambient": 0.0,
-    "system_failure_mode": "EVAPORATOR_COIL_SOLID_ICE_BRIDGING",
-    "timestamp_relative": "YEAR_07_COLD_LOG_02",
-    "tags": ["refrigeration", "evaporator", "frost_buildup", "defrost", "air_choke"],
-    "prose": "Failure of the hot-gas defrost timer allowed rime frost to bridge across the finned evaporator coils into a solid six-inch block of glacial ice. Airflow ceased completely, dropping fan motor RPM and causing the ammonia expansion valve to flood liquid into the compressor."
-  },
-  {
-    "id": "ammonia_chiller_sodium_chromate_corrosion_inhibitor",
-    "chiller_unit_id": "COMMUNAL_SEED_BANK_CHILLER_02",
-    "refrigerant_charge_kg": 120.0,
-    "leak_rate_ppm_ambient": 5.0,
-    "system_failure_mode": "CHROMATE_SLUDGE_ABSORBER_SETTLING",
-    "timestamp_relative": "YEAR_09_COLD_LOG_04",
-    "tags": ["refrigeration", "corrosion_inhibitor", "sodium_chromate", "sludge", "toxic"],
-    "prose": "Over-concentration of sodium chromate corrosion inhibitor formed bright yellow crystalline sludge in the absorber sump. The toxic hexavalent chromium sludge plugged the solution pump impeller, requiring full hazmat gear to disassemble and flush the system."
-  },
-  {
-    "id": "ammonia_chiller_expansion_valve_hydrate_freeze",
-    "chiller_unit_id": "VACCINE_CRYO_LOCKER_SUB_LEVEL_4",
-    "refrigerant_charge_kg": 45.0,
-    "leak_rate_ppm_ambient": 0.0,
-    "system_failure_mode": "ORIFICE_AMMONIA_HYDRATE_ICE_PLUG",
-    "timestamp_relative": "YEAR_12_COLD_LOG_01",
-    "tags": ["refrigeration", "expansion_valve", "hydrate_plug", "vaccine", "cryo"],
-    "prose": "Trace moisture (0.4%) in scavenged ammonia condensed at the -30°C expansion valve orifice, freezing into solid ammonia hydrate ice needles. The clogged nozzle starved the evaporator, causing cryo-locker temperature to climb past the critical -15°C vaccine threshold."
-  },
-  {
-    "id": "ammonia_chiller_absorber_cooling_jacket_fouling",
-    "chiller_unit_id": "CENTRAL_PROVISION_DEPOT_UNIT_05",
-    "refrigerant_charge_kg": 310.0,
-    "leak_rate_ppm_ambient": 40.0,
-    "system_failure_mode": "CALCIUM_SCALE_ABSORBER_OVERPRESSURE",
-    "timestamp_relative": "YEAR_15_COLD_LOG_03",
-    "tags": ["refrigeration", "hard_water", "absorber", "overpressure", "scale"],
-    "prose": "Unfiltered limestone well water fed into the absorber water jacket deposited a 4mm crust of hard calcium carbonate scale. Absorber cooling efficiency fell 65%, driving internal pressure up to 24 bar and bursting the rupture disc."
-  },
-  {
-    "id": "ammonia_chiller_relief_valve_sulfur_dross_corrosion",
-    "chiller_unit_id": "VEGETABLE_STORAGE_CRU_04",
-    "refrigerant_charge_kg": 85.0,
-    "leak_rate_ppm_ambient": 120.0,
-    "system_failure_mode": "SAFETY_VALVE_SPRING_CORROSION_SEEPAGE",
-    "timestamp_relative": "YEAR_17_COLD_LOG_02",
-    "tags": ["refrigeration", "relief_valve", "spring_corrosion", "vegetables", "venting"],
-    "prose": "Sulfurous geothermal air corroded the steel spring inside the high-pressure safety relief valve. The weakened spring allowed continuous ammonia leakage (120 ppm) into the cabbage cellar, yellowing ten tons of stored sauerkraut heads."
-  },
-  {
-    "id": "ammonia_chiller_secondary_brine_glycol_dilution",
-    "chiller_unit_id": "ICE_MAKING_BRINE_TANK_01",
-    "refrigerant_charge_kg": 150.0,
-    "leak_rate_ppm_ambient": 0.0,
-    "system_failure_mode": "BRINE_DILUTION_INTERNAL_FREEZE_BURST",
-    "timestamp_relative": "YEAR_20_COLD_LOG_01",
-    "tags": ["refrigeration", "brine", "calcium_chloride", "freeze_burst", "ice_making"],
-    "prose": "Melting condensation continually diluted the calcium chloride secondary brine solution from 24% down to 11% salt. The weakened brine froze solid inside the shell-and-tube heat exchanger, bursting four seamless steel refrigerant tubes."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "ammonia_chiller_generator_coil_stress_corrosion",
+      "chiller_unit_id": "COLD_STORAGE_ABSORPTION_PLANT_01",
+      "refrigerant_charge_kg": 180.0,
+      "leak_rate_ppm_ambient": 340.0,
+      "system_failure_mode": "STRESS_CORROSION_CRACK_GENERATOR_COIL",
+      "timestamp_relative": "YEAR_02_COLD_LOG_01",
+      "tags": [
+        "refrigeration",
+        "ammonia",
+        "absorption_chiller",
+        "leak",
+        "cold_store"
+      ],
+      "prose": "High thermal cycling in the aqua-ammonia steam generator cracked the welded steel heating coil. Pungent anhydrous ammonia gas (340 ppm) vented into Meat Locker 2, suffocating two warehouse workers and spoiling four tons of salt pork."
+    },
+    {
+      "id": "ammonia_chiller_hydrogen_bubble_bubble_lock",
+      "chiller_unit_id": "DAIRY_HOLDING_VAULT_CHILLER_03",
+      "refrigerant_charge_kg": 95.0,
+      "leak_rate_ppm_ambient": 15.0,
+      "system_failure_mode": "NON_CONDENSIBLE_HYDROGEN_VAPOR_LOCK",
+      "timestamp_relative": "YEAR_04_COLD_LOG_03",
+      "tags": [
+        "refrigeration",
+        "ammonia",
+        "hydrogen_gas",
+        "vapor_lock",
+        "dairy"
+      ],
+      "prose": "Internal galvanic reaction between acidic ammonia solution and unpassivated steel generated non-condensible hydrogen gas. The gas pocket locked the thermosyphon condenser loop, causing vault temperature to rise from 2°C to 18°C and souring six hundred liters of goat milk."
+    },
+    {
+      "id": "ammonia_chiller_evaporator_ice_bridge_defrost",
+      "chiller_unit_id": "FROZEN_CARCASS_HANGAR_ALPHA",
+      "refrigerant_charge_kg": 240.0,
+      "leak_rate_ppm_ambient": 0.0,
+      "system_failure_mode": "EVAPORATOR_COIL_SOLID_ICE_BRIDGING",
+      "timestamp_relative": "YEAR_07_COLD_LOG_02",
+      "tags": [
+        "refrigeration",
+        "evaporator",
+        "frost_buildup",
+        "defrost",
+        "air_choke"
+      ],
+      "prose": "Failure of the hot-gas defrost timer allowed rime frost to bridge across the finned evaporator coils into a solid six-inch block of glacial ice. Airflow ceased completely, dropping fan motor RPM and causing the ammonia expansion valve to flood liquid into the compressor."
+    },
+    {
+      "id": "ammonia_chiller_sodium_chromate_corrosion_inhibitor",
+      "chiller_unit_id": "COMMUNAL_SEED_BANK_CHILLER_02",
+      "refrigerant_charge_kg": 120.0,
+      "leak_rate_ppm_ambient": 5.0,
+      "system_failure_mode": "CHROMATE_SLUDGE_ABSORBER_SETTLING",
+      "timestamp_relative": "YEAR_09_COLD_LOG_04",
+      "tags": [
+        "refrigeration",
+        "corrosion_inhibitor",
+        "sodium_chromate",
+        "sludge",
+        "toxic"
+      ],
+      "prose": "Over-concentration of sodium chromate corrosion inhibitor formed bright yellow crystalline sludge in the absorber sump. The toxic hexavalent chromium sludge plugged the solution pump impeller, requiring full hazmat gear to disassemble and flush the system."
+    },
+    {
+      "id": "ammonia_chiller_expansion_valve_hydrate_freeze",
+      "chiller_unit_id": "VACCINE_CRYO_LOCKER_SUB_LEVEL_4",
+      "refrigerant_charge_kg": 45.0,
+      "leak_rate_ppm_ambient": 0.0,
+      "system_failure_mode": "ORIFICE_AMMONIA_HYDRATE_ICE_PLUG",
+      "timestamp_relative": "YEAR_12_COLD_LOG_01",
+      "tags": [
+        "refrigeration",
+        "expansion_valve",
+        "hydrate_plug",
+        "vaccine",
+        "cryo"
+      ],
+      "prose": "Trace moisture (0.4%) in scavenged ammonia condensed at the -30°C expansion valve orifice, freezing into solid ammonia hydrate ice needles. The clogged nozzle starved the evaporator, causing cryo-locker temperature to climb past the critical -15°C vaccine threshold."
+    },
+    {
+      "id": "ammonia_chiller_absorber_cooling_jacket_fouling",
+      "chiller_unit_id": "CENTRAL_PROVISION_DEPOT_UNIT_05",
+      "refrigerant_charge_kg": 310.0,
+      "leak_rate_ppm_ambient": 40.0,
+      "system_failure_mode": "CALCIUM_SCALE_ABSORBER_OVERPRESSURE",
+      "timestamp_relative": "YEAR_15_COLD_LOG_03",
+      "tags": [
+        "refrigeration",
+        "hard_water",
+        "absorber",
+        "overpressure",
+        "scale"
+      ],
+      "prose": "Unfiltered limestone well water fed into the absorber water jacket deposited a 4mm crust of hard calcium carbonate scale. Absorber cooling efficiency fell 65%, driving internal pressure up to 24 bar and bursting the rupture disc."
+    },
+    {
+      "id": "ammonia_chiller_relief_valve_sulfur_dross_corrosion",
+      "chiller_unit_id": "VEGETABLE_STORAGE_CRU_04",
+      "refrigerant_charge_kg": 85.0,
+      "leak_rate_ppm_ambient": 120.0,
+      "system_failure_mode": "SAFETY_VALVE_SPRING_CORROSION_SEEPAGE",
+      "timestamp_relative": "YEAR_17_COLD_LOG_02",
+      "tags": [
+        "refrigeration",
+        "relief_valve",
+        "spring_corrosion",
+        "vegetables",
+        "venting"
+      ],
+      "prose": "Sulfurous geothermal air corroded the steel spring inside the high-pressure safety relief valve. The weakened spring allowed continuous ammonia leakage (120 ppm) into the cabbage cellar, yellowing ten tons of stored sauerkraut heads."
+    },
+    {
+      "id": "ammonia_chiller_secondary_brine_glycol_dilution",
+      "chiller_unit_id": "ICE_MAKING_BRINE_TANK_01",
+      "refrigerant_charge_kg": 150.0,
+      "leak_rate_ppm_ambient": 0.0,
+      "system_failure_mode": "BRINE_DILUTION_INTERNAL_FREEZE_BURST",
+      "timestamp_relative": "YEAR_20_COLD_LOG_01",
+      "tags": [
+        "refrigeration",
+        "brine",
+        "calcium_chloride",
+        "freeze_burst",
+        "ice_making"
+      ],
+      "prose": "Melting condensation continually diluted the calcium chloride secondary brine solution from 24% down to 11% salt. The weakened brine froze solid inside the shell-and-tube heat exchanger, bursting four seamless steel refrigerant tubes."
+    }
+  ]
+}

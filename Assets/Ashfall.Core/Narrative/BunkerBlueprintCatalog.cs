@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -57,7 +58,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public BunkerBlueprintEntry GetById(string roomId)
+        public BunkerBlueprintEntry? GetById(string roomId)
         {
             if (string.IsNullOrEmpty(roomId)) return null;
             _byId.TryGetValue(roomId, out var entry);

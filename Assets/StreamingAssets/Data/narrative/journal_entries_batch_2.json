@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "collection_id": "journal_entries_batch_2_raw_survivor_observations",
+  "description": "Second batch of raw journal entries. Uses survivors not featured in batch 1. Covers infrastructure, chemistry, botany, weather, daily life, and interpersonal dynamics.",
+  "entries": [
+    {
+      "id": "journal_raw_b2_01_pharmacist_compounding",
+      "text": "Spent the morning trying to compound an anti-rad solution from the raw chemicals we salvaged from the rural gas station pharmacy. The formula is straightforward — potassium iodide, activated charcoal, a binding agent. The problem is the binding agent. We don't have pharmaceutical-grade cellulose. I tried powdered bark from the birch outside the perimeter. It worked, sort of. The tablets hold their shape but dissolve too fast in water. Shelf life maybe three weeks instead of six. I labelled them clearly: 'EFFECTIVE — USE WITHIN 21 DAYS.' The Surgeon asked if that was safe. I said it was as safe as anything we're doing.",
+      "timestamp": "Day 39, 10h",
+      "author_name": "The Pharmacist",
+      "author_id": "the_pharmacist",
+      "knowledge_key": "pharmacist_compounding_attempt",
+      "day": 39,
+      "hour": 10.0
+    },
+    {
+      "id": "journal_raw_b2_02_electrician_generator_repair",
+      "text": "The backup generator's voltage regulator failed at 03:00. I was woken by the lights going out — not the main grid, the backup circuit that feeds the medical bay and the comms room. Crawled down to the generator housing in the dark with a flashlight and a multimeter. The regulator board was burnt out on two channels. I bypassed the damaged channels and rewired through the remaining four. It's not a permanent fix — the voltage will fluctuate under load — but it'll hold until we can scavenge a replacement board. I told the Architect we need to find a pre-war electrical supply warehouse. She said she'd add it to the list. The list is very long.",
+      "timestamp": "Day 43, 06h",
+      "author_name": "The Electrician",
+      "author_id": "the_electrician",
+      "knowledge_key": "backup_generator_failure",
+      "day": 43,
+      "hour": 6.0
+    },
+    {
+      "id": "journal_raw_b2_03_botanist_greenhouse_progress",
+      "text": "The wheat from the seed vault germinated. Seven seeds out of twelve planted — better than I expected for grain that's been in cold storage since before the war. The seedlings are thin but green. Real green. Not the sickly yellow-green of the hydroponic trays we've been running. This soil has something the trays don't. I've started a second batch using the clay-heavy mix from the eastern tunnel — the one the Plumber says has better mineral content. If both batches take, we'll have enough to try a small outdoor plot when the radiation drops below the planting threshold. When that is, I don't know. The Meteorologist says maybe by Day 200. Maybe.",
+      "timestamp": "Day 65, 08h",
+      "author_name": "The Botanist",
+      "author_id": "the_botanist",
+      "knowledge_key": "seed_vault_wheat_germination",
+      "day": 65,
+      "hour": 8.0
+    },
+    {
+      "id": "journal_raw_b2_04_meteorologist_storm_prediction",
+      "text": "Barometric pressure has been dropping for three days. The wind shifted northeast yesterday — it was coming from the industrial ruins, which means it's carrying particulates from the collapsed chemical storage facility. I can taste it: metallic, faintly sweet. The ash storm that's coming will be bad. Not the worst we've seen, but bad enough to seal the upper hatches and run the filtration on high for at least forty-eight hours. I've posted the warning on the mess hall board. Some people will read it. Some won't. The ones who don't will spend the first six hours of the storm coughing and asking why nobody told them.",
+      "timestamp": "Day 71, 17h",
+      "author_name": "The Meteorologist",
+      "author_id": "the_meteorologist",
+      "knowledge_key": "approaching_ash_storm_warning",
+      "day": 71,
+      "hour": 17.0
+    },
+    {
+      "id": "journal_raw_b2_05_watchmaker_clock_calibration",
+      "text": "Calibrated all six bunker clocks against the mechanical chronometer from the comms room today. The discrepancy ranged from four minutes fast (mess hall clock) to eleven minutes slow (Sub-Level 3 corridor). In a place where shift changes, medication schedules, and sentry rotations all run on time, eleven minutes is not nothing. I've posted a correction notice next to each clock. The Chef was annoyed — she says her baking times are already calibrated to the mess hall clock and now she has to adjust everything. I told her the bread doesn't know what time it is. She told me to mind my own business.",
+      "timestamp": "Day 48, 12h",
+      "author_name": "The Watchmaker",
+      "author_id": "the_watchmaker",
+      "knowledge_key": "bunker_clock_calibration",
+      "day": 48,
+      "hour": 12.0
+    },
+    {
+      "id": "journal_raw_b2_06_chef_ration_innovation",
+      "text": "Today's innovation: rehydrated mushroom powder mixed into the turnip broth with a pinch of dried thyme from the greenhouse shelf. The result is not delicious. But it is warm, it has texture, and for twelve minutes tonight the mess hall smelled like something other than boiled root vegetables and regret. The Exhausted Father asked for a second bowl. That's the highest compliment I get. I'm running low on thyme. The Botanist says the next harvest is twelve days away. I'll make it last.",
+      "timestamp": "Day 55, 19h",
+      "author_name": "The Chef",
+      "author_id": "the_chef",
+      "knowledge_key": "mess_hall_ration_innovation",
+      "day": 55,
+      "hour": 19.0
+    },
+    {
+      "id": "journal_raw_b2_07_teacher_children_lesson",
+      "text": "Held school for the four children today. We're down to four — the Maren family left last week and didn't come back. I taught them about the water cycle. Not the real water cycle — the one from the textbooks I salvaged from the suburban houses on the east road. Condensation, precipitation, collection. The youngest — Sonya, age 7 — asked if it used to rain clean water. I said yes. She said: 'What did it taste like?' I couldn't answer. The older boy, Petr, said his mother told him rain used to be warm. I told them that one day, maybe, it would be again. I don't know if I believe it. But they needed to hear it.",
+      "timestamp": "Day 59, 14h",
+      "author_name": "The Teacher",
+      "author_id": "the_teacher",
+      "knowledge_key": "bunker_schoolroom_session",
+      "day": 59,
+      "hour": 14.0
+    },
+    {
+      "id": "journal_raw_b2_08_historian_archive_discovery",
+      "text": "Found a pre-war filing cabinet in the sealed corridor behind Sub-Level 4. Inside: seventeen folders of municipal records — building permits, zoning maps, utility connection logs. Most of it is irrelevant to our survival. But one folder contains the original engineering specifications for this bunker. It was built as a civil defence shelter for 200 persons. We have 47. The specifications list a maximum occupancy duration of 18 months with full life support. We're past that now. The air filtration is holding. The water recycler is holding. The walls are holding. Whatever this place was built to survive, it's outlasting the expectations.",
+      "timestamp": "Day 83, 11h",
+      "author_name": "The Historian",
+      "author_id": "the_historian",
+      "knowledge_key": "bunker_original_specifications_found",
+      "day": 83,
+      "hour": 11.0
+    },
+    {
+      "id": "journal_raw_b2_09_plumber_water_recycler",
+      "text": "The water recycler's secondary membrane needs replacing. I've been watching the output quality drop for a week — the turbidity is creeping up from 0.2 NTU to 0.6. Still safe, but trending. The problem is we don't have a replacement membrane. The original is a pre-war proprietary part — no dimensions, no material spec, just a part number stamped on the housing. I've been measuring it with calipers and sketching a replacement from salvaged filter cloth. It won't be as good as the original. It'll be close enough. Close enough is the standard now.",
+      "timestamp": "Day 62, 09h",
+      "author_name": "The Plumber",
+      "author_id": "the_plumber",
+      "knowledge_key": "water_recycler_membrane_degradation",
+      "day": 62,
+      "hour": 9.0
+    },
+    {
+      "id": "journal_raw_b2_10_chemist_soil_analysis",
+      "text": "Ran a full chemical analysis on the soil samples from three locations: the greenhouse beds, the eastern tunnel, and the surface ash layer. Results: greenhouse soil has adequate nitrogen, low phosphorus, no detectable radionuclides above background. Eastern tunnel soil is clay-heavy with iron contamination — usable for construction, not for growing. Surface ash has elevated caesium-137 at 4.2 Bq/kg, plus traces of strontium-90. Nothing unexpected. I've written the results on the lab board. The Botanist is already planning how to amend the greenhouse soil with bone meal from the kitchen waste. She's smarter about growing things than I am. I'm smarter about what kills them.",
+      "timestamp": "Day 67, 15h",
+      "author_name": "The Chemist",
+      "author_id": "the_chemist",
+      "knowledge_key": "soil_chemical_analysis_complete",
+      "day": 67,
+      "hour": 15.0
+    },
+    {
+      "id": "journal_raw_b2_11_prepper_cache_inventory",
+      "text": "Finally opened the last cache I brought in from my pre-war stash. I've been saving it. Three months of canned goods, a box of ammunition, a first-aid kit, and a hand-crank radio. The cans are past their best-before date by two years. The contents are fine — canned food doesn't expire, it just gets sad. The ammunition matches the garrison rifle calibre. The first-aid kit has been supplemented with what we've scavenged since. The radio picks up three stations on a good day. I sat in my bunk and ate a can of peaches by flashlight. It was the best thing I've eaten in a year. I'm not sharing this. Not because I'm selfish. Because some things are just for you.",
+      "timestamp": "Day 74, 22h",
+      "author_name": "The Prepper",
+      "author_id": "the_prepper",
+      "knowledge_key": "prepper_last_cache_opened",
+      "day": 74,
+      "hour": 22.0
+    },
+    {
+      "id": "journal_raw_b2_12_general_tactical_assessment",
+      "text": "Conducted a perimeter assessment today. Walked the full outer ring — 2.4 kilometres — with the Veteran. Our defences are adequate against small groups but would not withstand a coordinated assault by more than fifteen armed persons. The northern approach is the strongest: collapsed overpass provides natural cover, sight lines are clear to 300 metres. The southern approach is the weakest: the creek bed provides covered movement to within 200 metres of the hatch. I've recommended three changes: clear the creek bed vegetation for 50 metres on each side, establish a secondary observation post on the eastern ridge, and pre-position emergency supplies at the fallback point. The bunker is not a fortress. It's a shelter. There's a difference.",
+      "timestamp": "Day 80, 07h",
+      "author_name": "The General",
+      "author_id": "the_general",
+      "knowledge_key": "perimeter_tactical_assessment",
+      "day": 80,
+      "hour": 7.0
+    },
+    {
+      "id": "journal_raw_b2_13_architect_structural_note",
+      "text": "The concrete in the Sub-Level 2 corridor is showing signs of carbonation distress. The surface is spalling — small flakes breaking away where the rebar has started to corrode. This is not structural failure. Not yet. But it's the kind of thing that gets worse slowly and then all at once. I've mapped the affected areas: seven locations along the east wall, total area approximately 2 square metres. The fix is straightforward — chip away the damaged concrete, treat the rebar, patch with fresh mix. We have concrete. We have the tools. What we don't have is time to do it properly while keeping up with everything else. I've prioritised the three worst spots. The rest will wait.",
+      "timestamp": "Day 86, 13h",
+      "author_name": "The Architect",
+      "author_id": "the_architect",
+      "knowledge_key": "bunker_concrete_carbonation",
+      "day": 86,
+      "hour": 13.0
+    },
+    {
+      "id": "journal_raw_b2_14_priest_unsent_letter",
+      "text": "I wrote a letter today to no one. Or to everyone. I don't know. I wrote: 'We are still here. The walls hold. The air is filtered. The water is clean. We have food, though not enough. We have each other, though not all of us. I do not know if God is in this bunker. I do not know if God was ever in any bunker. But I know that the people in this bunker are real, and their suffering is real, and the small kindnesses they show each other are real. That has to be enough. It is enough.' I folded the paper and put it in the archive box. Someday someone will find it. Maybe they'll need to read it. Maybe they won't. I wrote it for myself.",
+      "timestamp": "Day 90, 23h",
+      "author_name": "The Priest",
+      "author_id": "the_priest",
+      "knowledge_key": "priest_existential_reflection",
+      "day": 90,
+      "hour": 23.0
+    },
+    {
+      "id": "journal_raw_b2_15_courier_route_report",
+      "text": "Came back from a three-day run to the Cluster. The route is getting harder. The eastern road has new damage — a sinkhole about four metres across that wasn't there last month. Had to detour through the industrial ruins, which adds six kilometres and takes you through 18 microsieverts per hour. The Cluster is holding. Cael Ormund is still running the census. They've got a new water main going in. Perrin Ashby asked me to carry a letter back to the Railway Guild — something about transit schedules. I said I'd take it on the next run. There's always a next run. That's what couriers do. We walk the roads so other people don't have to.",
+      "timestamp": "Day 93, 18h",
+      "author_name": "The Courier",
+      "author_id": "the_courier",
+      "knowledge_key": "courier_route_status_update",
+      "day": 93,
+      "hour": 18.0
+    }
+  ]
+}

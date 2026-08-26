@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Combat
 {
@@ -170,7 +171,7 @@ namespace Ashfall.Core.Combat
         /// weapon to full condition, clearing any jam. Returns false when scrap
         /// cannot be afforded.
         /// </summary>
-        public bool TryFieldRepair(WeaponInstanceState weapon, CombatHostPorts ports, Func<string, int, bool> consume = null)
+        public bool TryFieldRepair(WeaponInstanceState weapon, CombatHostPorts ports, Func<string, int, bool>? consume = null)
         {
             if (weapon == null) return false;
             int cost = GetScrapRepairCost(weapon);

@@ -53,10 +53,12 @@ namespace AtomicWar.GodotApp.UI
             }
             if (_core != null)
             {
-                _core.IceRoad.OnStateChanged += _ => RefreshView();
+                _core.IceRoad.OnStateChanged += HandleIceRoadStateChanged;
             }
             RefreshView();
         }
+
+        private void HandleIceRoadStateChanged(Ashfall.Core.IceRoadSystemState _) => RefreshView();
 
         public void Open()
         {
@@ -281,14 +283,14 @@ namespace AtomicWar.GodotApp.UI
                 diveBox.AddChild(AshfallUiHelpers.MakeButton("CRANK COMPRESSOR (+30s)", () => { _statusLabel.Text = _deepCoast.CrankDockDive(); RefreshView(); }));
                 diveBox.AddChild(AshfallUiHelpers.MakeButton("ADVANCE ROOM (+10 NOISE)", () => { _statusLabel.Text = _deepCoast.AdvanceDockDive(10); RefreshView(); }));
                 diveBox.AddChild(AshfallUiHelpers.MakeButton("SIMULATE DIVE (+30s)", () => { _statusLabel.Text = _deepCoast.TickDockDive(30f); RefreshView(); }));
-                diveBox.AddChild(AshfallUiHelpers.MakeButton("SURFACE — RECOVER SALVAGE", () => { _statusLabel.Text = _deepCoast.CompleteDockDive(true, null, Day()); RefreshView(); }));
+                diveBox.AddChild(AshfallUiHelpers.MakeButton("SURFACE — RECOVER SALVAGE", () => { _statusLabel.Text = _deepCoast.CompleteDockDive(true, null!, Day()); RefreshView(); }));
                 diveBox.AddChild(AshfallUiHelpers.MakeButton("ABORT DIVE", () => { _statusLabel.Text = _deepCoast.CompleteDockDive(false); RefreshView(); }));
             }
         }
 
         private void Decide(string decisionId)
         {
-            var result = _deepCoast.Decide(decisionId, Day());
+            var result = _deepCoast!.Decide(decisionId, Day());
             _statusLabel.Text = result;
             RefreshView();
         }
@@ -308,13 +310,20 @@ namespace AtomicWar.GodotApp.UI
 
         private static void ClearContainer(VBoxContainer container)
         {
-            if (container == null) return;
-            while (container.GetChildCount() > 0)
+            AshfallUiHelpers.EmptyChildren(container);
+        }
+
+        public override void _ExitTree()
+        {
+            if (_deepCoast != null)
             {
-                var child = container.GetChild(0);
-                container.RemoveChild(child);
-                child.QueueFree();
+                _deepCoast.StateChanged -= RefreshView;
             }
+            if (_core != null)
+            {
+                _core.IceRoad.OnStateChanged -= HandleIceRoadStateChanged;
+            }
+            base._ExitTree();
         }
     }
 }

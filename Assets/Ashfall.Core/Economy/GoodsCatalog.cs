@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS0649
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Economy
 {
@@ -9,7 +11,7 @@ namespace Ashfall.Core.Economy
         public static readonly string[] Known =
         {
             "food", "water", "medical", "fuel", "weapons", "tools",
-            "materials", "ammo", "documents", "luxury", "misc"
+            "materials", "ammo", "documents", "luxury", "misc", "contraband"
         };
 
         public static bool IsKnown(string category)
@@ -18,6 +20,46 @@ namespace Ashfall.Core.Economy
             for (int i = 0; i < Known.Length; i++)
                 if (Known[i] == category) return true;
             return false;
+        }
+
+        public static string DisplayName(string category)
+        {
+            return category switch
+            {
+                "food" => "Provisions",
+                "water" => "Hydration",
+                "medical" => "Medical Supplies",
+                "fuel" => "Energy Sources",
+                "weapons" => "Armaments",
+                "tools" => "Tools & Hardware",
+                "materials" => "Raw Materials",
+                "ammo" => "Munitions",
+                "documents" => "Intel",
+                "luxury" => "Comforts",
+                "misc" => "Miscellaneous",
+                "contraband" => "Forbidden Goods",
+                _ => category
+            };
+        }
+
+        public static string CategoryDescription(string category)
+        {
+            return category switch
+            {
+                "food" => "Nourishment for the long watch. Freshness varies. Some say the canned goods whisper when opened.",
+                "water" => "Clean water is life itself in the irradiated wastes. The universal measure. Every faction prices its offers against the litre.",
+                "medical" => "Bandages, antiseptics, and remedies for body and mind. The antiseptic stings worse than the wound.",
+                "fuel" => "Power the generators that keep the bunker's heart beating. A full can means warmth through the night. An empty can means a long, cold watch.",
+                "weapons" => "Tools of survival and defense in a hostile world. The brass is tarnished, the powder smells old. But a bullet is a bullet when the lights go out.",
+                "tools" => "The means to repair, build, and adapt. The prying end is polished bright from use. It opens doors, crates, and arguments.",
+                "materials" => "Raw resources for crafting and construction. Nothing is thrown away if it is still metal. The ground is full of it now.",
+                "ammo" => "Projectiles for ranged defense and hunting. Ammo holds value better than most promises.",
+                "documents" => "Knowledge is power, but dangerous knowledge doubly so. Paper currency from before, bundled with a band that still says a bank name nobody visits.",
+                "luxury" => "Small comforts that keep morale from fracturing completely. Wedding rings are the most common, then watches, then everything else.",
+                "misc" => "Odds and ends with unpredictable value. The wasteland runs on salvage.",
+                "contraband" => "Forbidden goods that could get you executed. Worth every rad you'll absorb trying to move them.",
+                _ => "A mysterious commodity of uncertain origin."
+            };
         }
     }
 
@@ -39,6 +81,24 @@ namespace Ashfall.Core.Economy
         public int stackSize = 10;
         public float weightKg = 1f;
         public string barterNote = string.Empty; // optional barter-relevant metadata
+
+        public string Description =>
+            category switch
+            {
+                "food" => "Nourishment for the long watch. Freshness varies. Some say the canned goods whisper when opened.",
+                "water" => "Clean water is life itself in the irradiated wastes. The universal measure. Every faction prices its offers against the litre.",
+                "medical" => "Bandages, antiseptics, and remedies for body and mind. The antiseptic stings worse than the wound.",
+                "fuel" => "Power the generators that keep the bunker's heart beating. A full can means warmth through the night. An empty can means a long, cold watch.",
+                "weapons" => "Tools of survival and defense in a hostile world. The brass is tarnished, the powder smells old. But a bullet is a bullet when the lights go out.",
+                "tools" => "The means to repair, build, and adapt. The prying end is polished bright from use. It opens doors, crates, and arguments.",
+                "materials" => "Raw resources for crafting and construction. Nothing is thrown away if it is still metal. The ground is full of it now.",
+                "ammo" => "Projectiles for ranged defense and hunting. Ammo holds value better than most promises.",
+                "documents" => "Knowledge is power, but dangerous knowledge doubly so. Paper currency from before, bundled with a band that still says a bank name nobody visits.",
+                "luxury" => "Small comforts that keep morale from fracturing completely. Wedding rings are the most common, then watches, then everything else.",
+                "misc" => "Odds and ends with unpredictable value. The wasteland runs on salvage.",
+                "contraband" => "Forbidden goods that could get you executed. Worth every rad you'll absorb trying to move them.",
+                _ => "A mysterious commodity of uncertain origin."
+            };
     }
 
     /// <summary>Load outcome: goods plus any validation errors (domain result, no exceptions).</summary>
@@ -84,6 +144,7 @@ namespace Ashfall.Core.Economy
     public static class GoodsCatalogLoader
     {
         public const string FileName = "economy_goods.json";
+        public const int CurrentSchemaVersion = 1;
 
         public static GoodsCatalogLoadResult Load(string dataDir, IFileIO fileIO, IJsonSerializer json)
         {
@@ -108,29 +169,42 @@ namespace Ashfall.Core.Economy
                 return result;
             }
 
-            // Strict pass: RawGoodDefinition uses nullable fields so an ABSENT
-            // required field is distinguishable from a defaulted one (the
-            // GoodDefinition initializers would otherwise mask absence).
-            RawGoodDefinition[] rawParsed;
+            // Schema-envelope: parse root object with schema_version + goods array.
+            GoodsCatalogRoot root;
             try
             {
-                rawParsed = json.Deserialize<RawGoodDefinition[]>(raw);
+                root = json.Deserialize<GoodsCatalogRoot>(raw);
             }
             catch (Exception e)
             {
                 result.Errors.Add("catalog malformed JSON: " + e.Message);
                 return result;
             }
-            if (rawParsed == null)
+            if (root == null)
             {
                 result.Errors.Add("catalog parsed to null");
                 return result;
             }
+            if (root.schema_version > CurrentSchemaVersion)
+            {
+                result.Errors.Add($"catalog schema {root.schema_version} is newer than supported {CurrentSchemaVersion}");
+                return result;
+            }
+
+            // Strict pass: RawGoodDefinition uses nullable fields so an ABSENT
+            // required field is distinguishable from a defaulted one (the
+            // GoodDefinition initializers would otherwise mask absence).
+            var rawEntries = root.goods;
+            if (rawEntries == null)
+            {
+                result.Errors.Add("catalog goods array is null");
+                return result;
+            }
 
             var seen = new HashSet<string>(StringComparer.Ordinal);
-            for (int i = 0; i < rawParsed.Length; i++)
+            for (int i = 0; i < rawEntries.Count; i++)
             {
-                var rawDef = rawParsed[i];
+                var rawDef = rawEntries[i];
                 if (rawDef == null)
                 {
                     result.Errors.Add($"entry [{i}] is null");
@@ -219,6 +293,13 @@ namespace Ashfall.Core.Economy
                 });
             }
             return result;
+        }
+
+        /// <summary>Schema-envelope root for economy_goods.json.</summary>
+        private class GoodsCatalogRoot
+        {
+            public int schema_version = 1;
+            public List<RawGoodDefinition> goods = new List<RawGoodDefinition>();
         }
 
         /// <summary>Strict DTO: null fields mean ABSENT, not defaulted.</summary>

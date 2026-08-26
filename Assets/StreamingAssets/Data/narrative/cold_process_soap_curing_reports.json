@@ -1,72 +1,117 @@
-[
-  {
-    "id": "cold_process_trace_gel_phase_insulation",
-    "molding_rack_id": "WOODEN_FRAME_MOLD_BAY_01",
-    "cure_time_days": 42.0,
-    "bar_moisture_content_pct": 12.5,
-    "shore_hardness_durometer": 78.0,
-    "timestamp_relative": "YEAR_03_CURE_01",
-    "tags": ["saponification", "cold_process", "gel_phase", "trace", "insulation_blanket"],
-    "prose": "Pouring soap batter into pine frame molds at heavy trace and bundling the molds in thick wool blankets trapped exothermic heat. The temperature climbed to 72°C, forcing the entire block through a translucent gel phase that locked in uniform saponification."
-  },
-  {
-    "id": "cold_process_wire_slab_cutter_piano_string",
-    "molding_rack_id": "WIRE_CUTTING_TABLE_02",
-    "cure_time_days": 2.0,
-    "bar_moisture_content_pct": 24.0,
-    "shore_hardness_durometer": 45.0,
-    "timestamp_relative": "YEAR_05_CURE_03",
-    "tags": ["saponification", "cold_process", "wire_cutter", "piano_wire", "slab_slicing"],
-    "prose": "Demolding forty-eight hours post-pour, the fifty-kilogram soap block passed through a multi-strand piano wire harp. Tensioned 0.4mm spring-steel wires sliced the block cleanly into 300 crisp, rectangular 150-gram ration bars with zero crumbling."
-  },
-  {
-    "id": "cold_process_drying_rack_curing_six_weeks",
-    "molding_rack_id": "VENTILATED_CURING_CHEST_03",
-    "cure_time_days": 45.0,
-    "bar_moisture_content_pct": 11.8,
-    "shore_hardness_durometer": 82.0,
-    "timestamp_relative": "YEAR_08_CURE_02",
-    "tags": ["saponification", "cold_process", "curing_rack", "moisture_evaporation", "hardening"],
-    "prose": "Arranging cut bars on slatted red cedar racks under a steady 0.5 m/s dehumidified air draft cured the soap across six weeks. Moisture evaporated from 24% down to 11.8%, condensing the crystal lattice into an ultra-dense, long-lasting bar."
-  },
-  {
-    "id": "cold_process_soda_ash_surface_efflorescence",
-    "molding_rack_id": "HIGH_HUMIDITY_CURING_BAY_04",
-    "cure_time_days": 30.0,
-    "bar_moisture_content_pct": 14.5,
-    "shore_hardness_durometer": 72.0,
-    "timestamp_relative": "YEAR_11_CURE_04",
-    "tags": ["saponification", "cold_process", "soda_ash", "efflorescence", "surface_bloom"],
-    "prose": "Exposure to moist, carbon-dioxide-rich bunker air during early curing formed a chalky white film of sodium carbonate efflorescence on bar tops. Passing the bars through a brief steam jet dissolved the ash bloom, restoring a glossy amber finish."
-  },
-  {
-    "id": "cold_process_superfatting_unsaponified_emollient",
-    "molding_rack_id": "HOSPITAL_TOILET_SOAP_FRAME_05",
-    "cure_time_days": 40.0,
-    "bar_moisture_content_pct": 13.0,
-    "shore_hardness_durometer": 76.0,
-    "timestamp_relative": "YEAR_14_CURE_01",
-    "tags": ["saponification", "cold_process", "superfatting", "emollient", "chapped_skin"],
-    "prose": "Formulating toilet soap with 6% superfatting left a small fraction of unreacted tallow, lanolin, and beeswax dispersed throughout the bar. The gentle emollient formula protected bunker personnel from harsh chemical dermatitis and eczema."
-  },
-  {
-    "id": "cold_process_essential_pine_needle_antiseptic_scent",
-    "molding_rack_id": "SCENTED_BATCH_CURING_RACK_06",
-    "cure_time_days": 35.0,
-    "bar_moisture_content_pct": 12.2,
-    "shore_hardness_durometer": 80.0,
-    "timestamp_relative": "YEAR_17_CURE_03",
-    "tags": ["saponification", "cold_process", "pine_needle_oil", "antiseptic", "terpenes"],
-    "prose": "Dosing soap batter at trace with 1% steam-distilled pine needle oil infused the bars with natural alpha-pinene and limonene terpenes. The fragrant essential oils provided natural antimicrobial properties while completely masking raw tallow odors."
-  },
-  {
-    "id": "cold_process_hardness_durometer_penetrometer_assay",
-    "molding_rack_id": "METROLOGY_HARDNESS_STAND_07",
-    "cure_time_days": 50.0,
-    "bar_moisture_content_pct": 10.5,
-    "shore_hardness_durometer": 86.0,
-    "timestamp_relative": "YEAR_20_CURE_01",
-    "tags": ["saponification", "cold_process", "durometer", "shore_hardness", "durability"],
-    "prose": "Shore A durometer penetration tests across fully cured fifty-day bars registered a hardness reading of 86. The rigid crystal matrix prevented bars from softening into mush when left in standing water trays in communal wash houses."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "cold_process_trace_gel_phase_insulation",
+      "molding_rack_id": "WOODEN_FRAME_MOLD_BAY_01",
+      "cure_time_days": 42.0,
+      "bar_moisture_content_pct": 12.5,
+      "shore_hardness_durometer": 78.0,
+      "timestamp_relative": "YEAR_03_CURE_01",
+      "tags": [
+        "saponification",
+        "cold_process",
+        "gel_phase",
+        "trace",
+        "insulation_blanket"
+      ],
+      "prose": "Pouring soap batter into pine frame molds at heavy trace and bundling the molds in thick wool blankets trapped exothermic heat. The temperature climbed to 72°C, forcing the entire block through a translucent gel phase that locked in uniform saponification."
+    },
+    {
+      "id": "cold_process_wire_slab_cutter_piano_string",
+      "molding_rack_id": "WIRE_CUTTING_TABLE_02",
+      "cure_time_days": 2.0,
+      "bar_moisture_content_pct": 24.0,
+      "shore_hardness_durometer": 45.0,
+      "timestamp_relative": "YEAR_05_CURE_03",
+      "tags": [
+        "saponification",
+        "cold_process",
+        "wire_cutter",
+        "piano_wire",
+        "slab_slicing"
+      ],
+      "prose": "Demolding forty-eight hours post-pour, the fifty-kilogram soap block passed through a multi-strand piano wire harp. Tensioned 0.4mm spring-steel wires sliced the block cleanly into 300 crisp, rectangular 150-gram ration bars with zero crumbling."
+    },
+    {
+      "id": "cold_process_drying_rack_curing_six_weeks",
+      "molding_rack_id": "VENTILATED_CURING_CHEST_03",
+      "cure_time_days": 45.0,
+      "bar_moisture_content_pct": 11.8,
+      "shore_hardness_durometer": 82.0,
+      "timestamp_relative": "YEAR_08_CURE_02",
+      "tags": [
+        "saponification",
+        "cold_process",
+        "curing_rack",
+        "moisture_evaporation",
+        "hardening"
+      ],
+      "prose": "Arranging cut bars on slatted red cedar racks under a steady 0.5 m/s dehumidified air draft cured the soap across six weeks. Moisture evaporated from 24% down to 11.8%, condensing the crystal lattice into an ultra-dense, long-lasting bar."
+    },
+    {
+      "id": "cold_process_soda_ash_surface_efflorescence",
+      "molding_rack_id": "HIGH_HUMIDITY_CURING_BAY_04",
+      "cure_time_days": 30.0,
+      "bar_moisture_content_pct": 14.5,
+      "shore_hardness_durometer": 72.0,
+      "timestamp_relative": "YEAR_11_CURE_04",
+      "tags": [
+        "saponification",
+        "cold_process",
+        "soda_ash",
+        "efflorescence",
+        "surface_bloom"
+      ],
+      "prose": "Exposure to moist, carbon-dioxide-rich bunker air during early curing formed a chalky white film of sodium carbonate efflorescence on bar tops. Passing the bars through a brief steam jet dissolved the ash bloom, restoring a glossy amber finish."
+    },
+    {
+      "id": "cold_process_superfatting_unsaponified_emollient",
+      "molding_rack_id": "HOSPITAL_TOILET_SOAP_FRAME_05",
+      "cure_time_days": 40.0,
+      "bar_moisture_content_pct": 13.0,
+      "shore_hardness_durometer": 76.0,
+      "timestamp_relative": "YEAR_14_CURE_01",
+      "tags": [
+        "saponification",
+        "cold_process",
+        "superfatting",
+        "emollient",
+        "chapped_skin"
+      ],
+      "prose": "Formulating toilet soap with 6% superfatting left a small fraction of unreacted tallow, lanolin, and beeswax dispersed throughout the bar. The gentle emollient formula protected bunker personnel from harsh chemical dermatitis and eczema."
+    },
+    {
+      "id": "cold_process_essential_pine_needle_antiseptic_scent",
+      "molding_rack_id": "SCENTED_BATCH_CURING_RACK_06",
+      "cure_time_days": 35.0,
+      "bar_moisture_content_pct": 12.2,
+      "shore_hardness_durometer": 80.0,
+      "timestamp_relative": "YEAR_17_CURE_03",
+      "tags": [
+        "saponification",
+        "cold_process",
+        "pine_needle_oil",
+        "antiseptic",
+        "terpenes"
+      ],
+      "prose": "Dosing soap batter at trace with 1% steam-distilled pine needle oil infused the bars with natural alpha-pinene and limonene terpenes. The fragrant essential oils provided natural antimicrobial properties while completely masking raw tallow odors."
+    },
+    {
+      "id": "cold_process_hardness_durometer_penetrometer_assay",
+      "molding_rack_id": "METROLOGY_HARDNESS_STAND_07",
+      "cure_time_days": 50.0,
+      "bar_moisture_content_pct": 10.5,
+      "shore_hardness_durometer": 86.0,
+      "timestamp_relative": "YEAR_20_CURE_01",
+      "tags": [
+        "saponification",
+        "cold_process",
+        "durometer",
+        "shore_hardness",
+        "durability"
+      ],
+      "prose": "Shore A durometer penetration tests across fully cured fifty-day bars registered a hardness reading of 86. The rigid crystal matrix prevented bars from softening into mush when left in standing water trays in communal wash houses."
+    }
+  ]
+}

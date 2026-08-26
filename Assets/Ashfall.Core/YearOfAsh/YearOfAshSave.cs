@@ -7,11 +7,14 @@ namespace Ashfall.Core.YearOfAsh
     public class YearOfAshSave
     {
         /// <summary>
-        /// v3 adds the warlord doctrine/territory section (adaptive warlord AI).
-        /// v1 and v2 saves migrate with a fresh toll-doctrine warlord (home
-        /// controlled, no knowledge) — older saves load safely.
+        /// v4 adds the faction-war chain runner section (per-chain stage
+        /// progress, visited locations, cumulative morale from the 22
+        /// faction_war_events.json chains). v1-v3 saves migrate with a fresh
+        /// chain runner (every chain unstarted) — older saves load safely,
+        /// they simply replay the faction-war narrative content from its
+        /// beginning rather than resuming mid-chain.
         /// </summary>
-        public const int CurrentSaveVersion = 3;
+        public const int CurrentSaveVersion = 4;
 
         public int saveVersion = CurrentSaveVersion;
         public int simDay = 180;
@@ -26,6 +29,9 @@ namespace Ashfall.Core.YearOfAsh
         public YearOfAshDeepFreezeState deepFreeze = new YearOfAshDeepFreezeState();
         public YearOfAshRadonState radon = new YearOfAshRadonState();
         public QuestlineSystemState quests = new QuestlineSystemState();
+
+        // v4 section.
+        public FactionWarChainRunnerState factionWarChainRunner = new FactionWarChainRunnerState();
 
         /// <summary>
         /// Integrity hash computed over all payload fields.
@@ -70,6 +76,26 @@ namespace Ashfall.Core.YearOfAsh
     }
 
     /// <summary>
+    /// Frozen v3 envelope shape (adds warlord doctrine, but no faction-war
+    /// chain runner section). Do not add fields here — it must match what v3
+    /// wrote byte-for-byte in field set.
+    /// </summary>
+    [Serializable]
+    public class YearOfAshSaveV3
+    {
+        public int saveVersion = 3;
+        public int simDay = 180;
+        public YearOfAshTimelineState timeline = new YearOfAshTimelineState();
+        public DoorEncounterSystemState encounters = new DoorEncounterSystemState();
+        public FactionWarSystemState factionWar = new FactionWarSystemState();
+        public WarlordDoctrineState warlord = new WarlordDoctrineState();
+        public YearOfAshDeepFreezeState deepFreeze = new YearOfAshDeepFreezeState();
+        public YearOfAshRadonState radon = new YearOfAshRadonState();
+        public QuestlineSystemState quests = new QuestlineSystemState();
+        public string Checksum = string.Empty;
+    }
+
+    /// <summary>
     /// Serialization codec for the 180-360 day Year of Ash expansion state.
     /// Uses the IJsonSerializer port so saves roundtrip between Godot and Unity.
     /// </summary>
@@ -80,10 +106,11 @@ namespace Ashfall.Core.YearOfAsh
             DoorEncounterSystem encounters,
             FactionWarSystem factionWar,
             IClock clock,
-            YearOfAshDeepFreezeSystem deepFreeze = null,
-            YearOfAshRadonSystem radon = null,
-            QuestlineSystem quests = null,
-            WarlordDoctrineSystem warlord = null)
+YearOfAshDeepFreezeSystem? deepFreeze = null,
+YearOfAshRadonSystem? radon = null,
+QuestlineSystem? quests = null,
+WarlordDoctrineSystem? warlord = null,
+FactionWarChainRunner? factionWarChainRunner = null)
         {
             var save = new YearOfAshSave
             {
@@ -99,6 +126,7 @@ namespace Ashfall.Core.YearOfAsh
             if (radon != null) save.radon = radon.CaptureState();
             if (quests != null) save.quests = quests.CaptureState();
             if (warlord != null) save.warlord = warlord.CaptureState();
+            if (factionWarChainRunner != null) save.factionWarChainRunner = factionWarChainRunner.CaptureState();
 
             save.Checksum = SaveChecksum.Compute(save);
             return save;
@@ -113,10 +141,11 @@ namespace Ashfall.Core.YearOfAsh
             YearOfAshTimelineSystem timeline,
             DoorEncounterSystem encounters,
             FactionWarSystem factionWar,
-            YearOfAshDeepFreezeSystem deepFreeze = null,
-            YearOfAshRadonSystem radon = null,
-            QuestlineSystem quests = null,
-            WarlordDoctrineSystem warlord = null)
+YearOfAshDeepFreezeSystem? deepFreeze = null,
+YearOfAshRadonSystem? radon = null,
+QuestlineSystem? quests = null,
+WarlordDoctrineSystem? warlord = null,
+FactionWarChainRunner? factionWarChainRunner = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));
@@ -130,6 +159,7 @@ namespace Ashfall.Core.YearOfAsh
             if (radon != null) radon.RestoreState(save.radon);
             if (quests != null) quests.RestoreState(save.quests);
             if (warlord != null) warlord.RestoreState(save.warlord);
+            if (factionWarChainRunner != null) factionWarChainRunner.RestoreState(save.factionWarChainRunner);
 
             // Keep simDay authoritative if the timeline section was absent.
             if (save.timeline == null && save.simDay > 0)
@@ -233,6 +263,40 @@ namespace Ashfall.Core.YearOfAsh
                     radon = v2.radon,
                     quests = v2.quests
                     // warlord stays at its field initialiser (fresh toll doctrine).
+                    // factionWarChainRunner stays at its field initialiser (every
+                    // chain unstarted — the faction-war narrative replays from
+                    // the beginning rather than resuming mid-chain).
+                };
+                upgraded.Checksum = SaveChecksum.Compute(upgraded);
+                return upgraded;
+            }
+
+            if (version == 3)
+            {
+                var v3 = json.Deserialize<YearOfAshSaveV3>(jsonText);
+                if (v3 == null)
+                    throw new InvalidOperationException("YearOfAshSave: v3 deserialization returned null.");
+
+                if (!string.IsNullOrEmpty(v3.Checksum))
+                {
+                    string actual = SaveChecksum.Compute(v3);
+                    if (!string.Equals(v3.Checksum, actual, StringComparison.Ordinal))
+                        throw new InvalidOperationException("YearOfAshSave: checksum mismatch (corrupted or tampered save).");
+                }
+
+                var upgraded = new YearOfAshSave
+                {
+                    saveVersion = YearOfAshSave.CurrentSaveVersion,
+                    simDay = v3.simDay,
+                    timeline = v3.timeline,
+                    encounters = v3.encounters,
+                    factionWar = v3.factionWar,
+                    warlord = v3.warlord,
+                    deepFreeze = v3.deepFreeze,
+                    radon = v3.radon,
+                    quests = v3.quests
+                    // factionWarChainRunner stays at its field initialiser (every
+                    // chain unstarted).
                 };
                 upgraded.Checksum = SaveChecksum.Compute(upgraded);
                 return upgraded;

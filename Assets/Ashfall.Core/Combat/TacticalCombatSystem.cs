@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Combat
 {
@@ -48,7 +49,7 @@ namespace Ashfall.Core.Combat
         public CombatState State => _state;
         public CombatHostPorts Ports { get => _ports; set => _ports = value; }
 
-        public TacticalCombatSystem(CombatState state = null, CombatHostPorts ports = null)
+        public TacticalCombatSystem(CombatState? state = null, CombatHostPorts? ports = null)
         {
             if (state != null) _state = state;
             _ports = ports ?? new CombatHostPorts();
@@ -56,7 +57,7 @@ namespace Ashfall.Core.Combat
         }
 
         /// <summary>The perks tracker for a survivor (lazily created, save-safe).</summary>
-        public CombatPerks PerksFor(string survivorId, int seed)
+        public CombatPerks? PerksFor(string survivorId, int seed)
         {
             if (string.IsNullOrEmpty(survivorId)) return null;
             if (!_perksBySurvivor.TryGetValue(survivorId, out var p))
@@ -69,14 +70,17 @@ namespace Ashfall.Core.Combat
 
         // ══ Stance table ══════════════════════════════════════════════════
 
+        private static readonly TacticalStance[] s_allStances = (TacticalStance[])Enum.GetValues(typeof(TacticalStance));
+
         public static string StanceId(TacticalStance s) => "combat_stance_" + s.ToString().ToLowerInvariant();
 
         public static bool TryParseStance(string id, out TacticalStance stance)
         {
             stance = TacticalStance.HoldPosition;
             if (string.IsNullOrEmpty(id)) return false;
-            foreach (TacticalStance s in Enum.GetValues(typeof(TacticalStance)))
+            for (int i = 0; i < s_allStances.Length; i++)
             {
+                TacticalStance s = s_allStances[i];
                 if (string.Equals(id, StanceId(s), StringComparison.OrdinalIgnoreCase))
                 {
                     stance = s;
@@ -123,7 +127,7 @@ namespace Ashfall.Core.Combat
             IReadOnlyList<WeaponInstanceState> playerWeapons,
             int enemyCount,
             float enemyHealth,
-            ILog log = null)
+ILog? log = null)
         {
             if (string.IsNullOrEmpty(encounterId)
                 || players == null || players.Count == 0
@@ -223,7 +227,7 @@ namespace Ashfall.Core.Combat
             return TryParseStance(_state.PlayerStance, out var s) ? s : TacticalStance.HoldPosition;
         }
 
-        private CombatantState FindPlayerCombatant(string survivorIdOrCombatantId)
+        private CombatantState? FindPlayerCombatant(string survivorIdOrCombatantId)
         {
             for (int i = 0; i < _state.Combatants.Count; i++)
             {
@@ -235,7 +239,7 @@ namespace Ashfall.Core.Combat
             return null;
         }
 
-        private CombatantState FindCombatant(string id)
+        private CombatantState? FindCombatant(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < _state.Combatants.Count; i++)
@@ -269,7 +273,7 @@ namespace Ashfall.Core.Combat
             return list;
         }
 
-        private CombatantState PickActiveShooter()
+        private CombatantState? PickActiveShooter()
         {
             var players = LivingPlayers();
             if (players.Count == 0) return null;
@@ -281,7 +285,7 @@ namespace Ashfall.Core.Combat
             return null;
         }
 
-        private WeaponInstanceState WeaponOf(CombatantState c)
+        private WeaponInstanceState? WeaponOf(CombatantState c)
         {
             if (c == null || string.IsNullOrEmpty(c.WeaponInstanceId)) return null;
             for (int i = 0; i < _state.Weapons.Count; i++)
@@ -322,7 +326,7 @@ namespace Ashfall.Core.Combat
 
         // ══ Player actions ═══════════════════════════════════════════════
 
-        public CombatActionResult SetStance(TacticalStance stance, string subjectSurvivorId = null)
+        public CombatActionResult SetStance(TacticalStance stance, string? subjectSurvivorId = null)
         {
             var res = new CombatActionResult();
             if (_state.Resolved)
@@ -438,7 +442,7 @@ namespace Ashfall.Core.Combat
             // ── Ballistics ──
             var ammo = CombatCatalog.GetAmmo(weapon.AmmoId);
             var coverMaterial = CombatCatalog.GetMaterial("material_concrete"); // default rubble cover
-            var armorMaterial = CombatCatalog.GetMaterial(GetArmorMaterialId(shooter));
+            var armorMaterial = CombatCatalog.GetMaterial(GetArmorMaterialId(shooter)!);
             var barrier = FindPlayerLaneBarrier(target.Lane); // enemy behind a player barrier? use enemy barrier
 
             var ctx = new BallisticContext
@@ -462,9 +466,9 @@ namespace Ashfall.Core.Combat
                 IsFirstShotCritBonus = false,
                 ExtraCritChance = 0f,
                 IntendedTarget = target,
-                CoverMaterial = coverMaterial,
-                ArmorMaterial = armorMaterial,
-                BarrierMaterial = null,
+                CoverMaterial = coverMaterial!,
+                ArmorMaterial = armorMaterial!,
+                BarrierMaterial = null!,
                 RicochetTargets = LivingEnemies()
             };
 
@@ -498,7 +502,7 @@ namespace Ashfall.Core.Combat
             return res;
         }
 
-        private string GetArmorMaterialId(CombatantState c)
+        private string? GetArmorMaterialId(CombatantState c)
         {
             if (c.ArmorRating >= 0.6f) return "armor_plate";
             if (c.ArmorRating >= 0.4f) return "armor_kevlar";
@@ -512,7 +516,7 @@ namespace Ashfall.Core.Combat
             return p != null ? p.GetCloseQuartersDamageMultiplier(shooter.SurvivorId, false) : 1f;
         }
 
-        private BarrierState FindPlayerLaneBarrier(int lane)
+        private BarrierState? FindPlayerLaneBarrier(int lane)
         {
             for (int i = 0; i < _state.Barriers.Count; i++)
                 if (_state.Barriers[i].IsPlayer && _state.Barriers[i].Lane == lane) return _state.Barriers[i];
@@ -527,7 +531,8 @@ namespace Ashfall.Core.Combat
             var shooter = PickActiveShooter();
             if (shooter == null) { res.Message = "No standing armed survivor."; return res; }
             var weapon = WeaponOf(shooter);
-            var def = weapon != null ? CombatCatalog.GetWeapon(weapon.WeaponId) : null;
+            if (weapon == null) { res.Message = shooter.Name + " has no weapon."; return res; }
+            var def = CombatCatalog.GetWeapon(weapon.WeaponId);
             if (def == null || !def.isSuppressionCapable)
             {
                 res.Message = "Weapon cannot lay suppressive fire (needs a rifle or LMG).";
@@ -593,6 +598,44 @@ namespace Ashfall.Core.Combat
             return res;
         }
 
+        /// <summary>Item 6: explicit Reload action. Refills ammo for the survivor's
+        /// weapon if the inventory adapter can supply the magazine.</summary>
+        public CombatActionResult PlayerReload(string survivorIdOrCombatantId)
+        {
+            var res = new CombatActionResult();
+            var c = FindPlayerCombatant(survivorIdOrCombatantId);
+            if (c == null) { res.Message = "Unknown survivor."; return res; }
+            var weapon = WeaponOf(c);
+            if (weapon == null) { res.Message = "No weapon to reload."; return res; }
+            string ammoId = weapon.AmmoId;
+            if (string.IsNullOrEmpty(ammoId))
+            {
+                res.Message = weapon.WeaponId + " has no ammo type assigned.";
+                return res;
+            }
+            int maxLoad = weapon.MagazineCapacity > 0 ? weapon.MagazineCapacity : 30;
+            int needed = Math.Max(0, maxLoad - weapon.AmmoRemaining);
+            if (needed == 0)
+            {
+                res.Message = weapon.WeaponId + " is already fully loaded.";
+                return res;
+            }
+            int granted = _ports?.ConsumeAmmo != null ? _ports.ConsumeAmmo(ammoId, needed) : 0;
+            if (granted <= 0)
+            {
+                res.Message = "No " + ammoId + " available to reload.";
+                return res;
+            }
+            weapon.AmmoRemaining += granted;
+            AddEvent("reload", c.Id,
+                weapon.WeaponId + " reloaded +" + granted + " " + ammoId + " (" +
+                weapon.AmmoRemaining + "/" + maxLoad + ").");
+            res.Success = true;
+            res.Message = weapon.WeaponId + " +" + granted + " " + ammoId + ".";
+            Notify();
+            return res;
+        }
+
         public CombatActionResult PlayerFieldRepair(string survivorIdOrCombatantId, ISeededRng rng)
         {
             var res = new CombatActionResult();
@@ -642,7 +685,7 @@ namespace Ashfall.Core.Combat
             var leading = enemies[0];
             var perkMultiplier = GetMaxTrapDamageMultiplier();
             float dmg = 14f * perkMultiplier;
-            ApplyDamage(leading, dmg, null, false, rng);
+            ApplyDamage(leading, dmg, null!, false, rng);
             AddEvent("trap", leading.Id, "A jury-rigged trap tears into " + leading.Name + ".");
             res.Success = true;
             res.Message = "Trap wounds " + leading.Name + " (" + dmg.ToString("0") + ").";
@@ -756,7 +799,7 @@ namespace Ashfall.Core.Combat
             {
                 var victim = players[0];
                 float inj = MathfCompat.Max(8f, victim.Health * 0.4f);
-                ApplyDamage(victim, inj, null, false, rng);
+                ApplyDamage(victim, inj, null!, false, rng);
                 AddEvent("retreat_fail", victim.Id, "The retreat collapses; " + victim.Name + " is hit.");
             }
             res.Success = true;

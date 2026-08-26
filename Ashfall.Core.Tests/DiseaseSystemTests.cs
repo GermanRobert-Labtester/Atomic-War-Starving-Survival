@@ -312,8 +312,8 @@ namespace Ashfall.Core.Tests
             Assert.Equal(ExpansionHubSave.CurrentSaveVersion, decoded.saveVersion);
             Assert.NotNull(decoded.disease);
             Assert.True(decoded.disease.air_filtration);
-            // One simulation row per authored disease (cholera, flu, blood, spore).
-            Assert.Equal(4, decoded.disease.diseases.Count);
+            // One simulation row per authored disease (cholera, flu, blood, spore, ARS, fungal, typhoid).
+            Assert.Equal(7, decoded.disease.diseases.Count);
             var spore = decoded.disease.diseases.Find(d => d.disease_id == DiseaseIds.SporeBlight);
             Assert.NotNull(spore);
             Assert.Equal(3, spore.infected.Count);

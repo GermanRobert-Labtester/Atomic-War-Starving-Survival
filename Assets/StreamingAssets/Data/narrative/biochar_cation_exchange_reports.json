@@ -1,72 +1,117 @@
-[
-  {
-    "id": "biochar_compost_charging_nitrogen_quench",
-    "soil_amendment_lot_id": "GREENHOUSE_SOIL_BED_ALPHA_01",
-    "biochar_bet_surface_area_m2_per_g": 385.0,
-    "cation_exchange_capacity_meq": 42.5,
-    "soil_ph_buffered_level": 6.5,
-    "timestamp_relative": "YEAR_03_BIOCHAR_01",
-    "tags": ["pyrolysis", "biochar", "soil_charging", "compost_tea", "nutrient_loading"],
-    "prose": "Soaking raw, highly porous biochar in aerated rabbit manure tea and vermicompost extract for two weeks saturated its inner pore lattice. Pre-charging the carbon prevented it from locking up plant-available nitrogen when tilled into greenhouse beds."
-  },
-  {
-    "id": "biochar_cation_exchange_capacity_surface_area",
-    "soil_amendment_lot_id": "PRECISION_AGRONOMY_BED_02",
-    "biochar_bet_surface_area_m2_per_g": 420.0,
-    "cation_exchange_capacity_meq": 48.0,
-    "soil_ph_buffered_level": 6.8,
-    "timestamp_relative": "YEAR_05_BIOCHAR_03",
-    "tags": ["pyrolysis", "biochar", "cation_exchange", "surface_area", "bet_analysis"],
-    "prose": "Laboratory assays of 550°C maple biochar measured a specific surface area of 420 m²/g and a cation exchange capacity of 48 meq/100g. The high surface charge held potassium, calcium, and magnesium cations tightly against irrigation leaching."
-  },
-  {
-    "id": "biochar_hydroponic_radionuclide_cesium_adsorption",
-    "soil_amendment_lot_id": "RADIONUCLIDE_WATER_FILTER_03",
-    "biochar_bet_surface_area_m2_per_g": 360.0,
-    "cation_exchange_capacity_meq": 38.0,
-    "soil_ph_buffered_level": 7.1,
-    "timestamp_relative": "YEAR_08_BIOCHAR_02",
-    "tags": ["pyrolysis", "biochar", "radionuclide_adsorption", "cesium_filtration", "heavy_metal"],
-    "prose": "Passing raw aquifer drainage through a two-meter vertical bed of granulated 600°C biochar scrubbed 96.5% of dissolved radioactive Cesium-137. The aromatic carbon ring matrix chelated heavy radiometals, isolating them from crop irrigation lines."
-  },
-  {
-    "id": "biochar_soil_ph_buffering_acidic_peat_neutralization",
-    "soil_amendment_lot_id": "MUSHROOM_SUBSTRATE_BAY_04",
-    "biochar_bet_surface_area_m2_per_g": 310.0,
-    "cation_exchange_capacity_meq": 34.0,
-    "soil_ph_buffered_level": 6.4,
-    "timestamp_relative": "YEAR_11_BIOCHAR_04",
-    "tags": ["pyrolysis", "biochar", "ph_buffering", "peat_neutralization", "liming_effect"],
-    "prose": "Blending 12% alkaline biochar (pH 8.8) into raw acidic sphagnum moss peat (pH 4.6) neutralized soil acidity without requiring scarce agricultural lime. The calcium carbonate and potassium oxide ash fractions buffered the root zone at pH 6.4."
-  },
-  {
-    "id": "biochar_mycorrhizal_hyphae_micropore_colonization",
-    "soil_amendment_lot_id": "SYMBIOSIS_CULTURE_CHEST_05",
-    "biochar_bet_surface_area_m2_per_g": 440.0,
-    "cation_exchange_capacity_meq": 51.0,
-    "soil_ph_buffered_level": 6.7,
-    "timestamp_relative": "YEAR_14_BIOCHAR_01",
-    "tags": ["pyrolysis", "biochar", "mycorrhizal_fungi", "hyphae", "microbial_habitat"],
-    "prose": "Microscopic analysis of root zones confirmed dense colonization of 15-micron biochar tracheid pores by arbuscular mycorrhizal fungal hyphae. The charcoal pores provided a moist subterranean refuge that protected beneficial microbes during pesticide flushes."
-  },
-  {
-    "id": "biochar_water_holding_capacity_drought_buffer",
-    "soil_amendment_lot_id": "COMMISSARY_ROOT_CROP_BED_06",
-    "biochar_bet_surface_area_m2_per_g": 390.0,
-    "cation_exchange_capacity_meq": 44.0,
-    "soil_ph_buffered_level": 6.6,
-    "timestamp_relative": "YEAR_17_BIOCHAR_03",
-    "tags": ["pyrolysis", "biochar", "water_retention", "drought_buffer", "moisture_sponge"],
-    "prose": "Amending sandy loam planting beds with 15% crushed biochar increased volumetric water holding capacity by 28%. During a forty-eight-hour main irrigation pump outage, potato foliage remained crisp and turgid without drought wilt."
-  },
-  {
-    "id": "biochar_polycyclic_aromatic_hydrocarbon_pah_bake",
-    "soil_amendment_lot_id": "CLEAN_CARBON_CALCINER_07",
-    "biochar_bet_surface_area_m2_per_g": 460.0,
-    "cation_exchange_capacity_meq": 55.0,
-    "soil_ph_buffered_level": 7.0,
-    "timestamp_relative": "YEAR_20_BIOCHAR_01",
-    "tags": ["pyrolysis", "biochar", "pah_removal", "secondary_roast", "detoxification"],
-    "prose": "Subjecting low-temperature char to a secondary 650°C purge sweep inside a sealed calciner stripped toxic polycyclic aromatic hydrocarbons (PAH). The post-treated biochar showed zero phytotoxicity in cress germination bioassays."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "biochar_compost_charging_nitrogen_quench",
+      "soil_amendment_lot_id": "GREENHOUSE_SOIL_BED_ALPHA_01",
+      "biochar_bet_surface_area_m2_per_g": 385.0,
+      "cation_exchange_capacity_meq": 42.5,
+      "soil_ph_buffered_level": 6.5,
+      "timestamp_relative": "YEAR_03_BIOCHAR_01",
+      "tags": [
+        "pyrolysis",
+        "biochar",
+        "soil_charging",
+        "compost_tea",
+        "nutrient_loading"
+      ],
+      "prose": "Soaking raw, highly porous biochar in aerated rabbit manure tea and vermicompost extract for two weeks saturated its inner pore lattice. Pre-charging the carbon prevented it from locking up plant-available nitrogen when tilled into greenhouse beds."
+    },
+    {
+      "id": "biochar_cation_exchange_capacity_surface_area",
+      "soil_amendment_lot_id": "PRECISION_AGRONOMY_BED_02",
+      "biochar_bet_surface_area_m2_per_g": 420.0,
+      "cation_exchange_capacity_meq": 48.0,
+      "soil_ph_buffered_level": 6.8,
+      "timestamp_relative": "YEAR_05_BIOCHAR_03",
+      "tags": [
+        "pyrolysis",
+        "biochar",
+        "cation_exchange",
+        "surface_area",
+        "bet_analysis"
+      ],
+      "prose": "Laboratory assays of 550°C maple biochar measured a specific surface area of 420 m²/g and a cation exchange capacity of 48 meq/100g. The high surface charge held potassium, calcium, and magnesium cations tightly against irrigation leaching."
+    },
+    {
+      "id": "biochar_hydroponic_radionuclide_cesium_adsorption",
+      "soil_amendment_lot_id": "RADIONUCLIDE_WATER_FILTER_03",
+      "biochar_bet_surface_area_m2_per_g": 360.0,
+      "cation_exchange_capacity_meq": 38.0,
+      "soil_ph_buffered_level": 7.1,
+      "timestamp_relative": "YEAR_08_BIOCHAR_02",
+      "tags": [
+        "pyrolysis",
+        "biochar",
+        "radionuclide_adsorption",
+        "cesium_filtration",
+        "heavy_metal"
+      ],
+      "prose": "Passing raw aquifer drainage through a two-meter vertical bed of granulated 600°C biochar scrubbed 96.5% of dissolved radioactive Cesium-137. The aromatic carbon ring matrix chelated heavy radiometals, isolating them from crop irrigation lines."
+    },
+    {
+      "id": "biochar_soil_ph_buffering_acidic_peat_neutralization",
+      "soil_amendment_lot_id": "MUSHROOM_SUBSTRATE_BAY_04",
+      "biochar_bet_surface_area_m2_per_g": 310.0,
+      "cation_exchange_capacity_meq": 34.0,
+      "soil_ph_buffered_level": 6.4,
+      "timestamp_relative": "YEAR_11_BIOCHAR_04",
+      "tags": [
+        "pyrolysis",
+        "biochar",
+        "ph_buffering",
+        "peat_neutralization",
+        "liming_effect"
+      ],
+      "prose": "Blending 12% alkaline biochar (pH 8.8) into raw acidic sphagnum moss peat (pH 4.6) neutralized soil acidity without requiring scarce agricultural lime. The calcium carbonate and potassium oxide ash fractions buffered the root zone at pH 6.4."
+    },
+    {
+      "id": "biochar_mycorrhizal_hyphae_micropore_colonization",
+      "soil_amendment_lot_id": "SYMBIOSIS_CULTURE_CHEST_05",
+      "biochar_bet_surface_area_m2_per_g": 440.0,
+      "cation_exchange_capacity_meq": 51.0,
+      "soil_ph_buffered_level": 6.7,
+      "timestamp_relative": "YEAR_14_BIOCHAR_01",
+      "tags": [
+        "pyrolysis",
+        "biochar",
+        "mycorrhizal_fungi",
+        "hyphae",
+        "microbial_habitat"
+      ],
+      "prose": "Microscopic analysis of root zones confirmed dense colonization of 15-micron biochar tracheid pores by arbuscular mycorrhizal fungal hyphae. The charcoal pores provided a moist subterranean refuge that protected beneficial microbes during pesticide flushes."
+    },
+    {
+      "id": "biochar_water_holding_capacity_drought_buffer",
+      "soil_amendment_lot_id": "COMMISSARY_ROOT_CROP_BED_06",
+      "biochar_bet_surface_area_m2_per_g": 390.0,
+      "cation_exchange_capacity_meq": 44.0,
+      "soil_ph_buffered_level": 6.6,
+      "timestamp_relative": "YEAR_17_BIOCHAR_03",
+      "tags": [
+        "pyrolysis",
+        "biochar",
+        "water_retention",
+        "drought_buffer",
+        "moisture_sponge"
+      ],
+      "prose": "Amending sandy loam planting beds with 15% crushed biochar increased volumetric water holding capacity by 28%. During a forty-eight-hour main irrigation pump outage, potato foliage remained crisp and turgid without drought wilt."
+    },
+    {
+      "id": "biochar_polycyclic_aromatic_hydrocarbon_pah_bake",
+      "soil_amendment_lot_id": "CLEAN_CARBON_CALCINER_07",
+      "biochar_bet_surface_area_m2_per_g": 460.0,
+      "cation_exchange_capacity_meq": 55.0,
+      "soil_ph_buffered_level": 7.0,
+      "timestamp_relative": "YEAR_20_BIOCHAR_01",
+      "tags": [
+        "pyrolysis",
+        "biochar",
+        "pah_removal",
+        "secondary_roast",
+        "detoxification"
+      ],
+      "prose": "Subjecting low-temperature char to a secondary 650°C purge sweep inside a sealed calciner stripped toxic polycyclic aromatic hydrocarbons (PAH). The post-treated biochar showed zero phytotoxicity in cress germination bioassays."
+    }
+  ]
+}

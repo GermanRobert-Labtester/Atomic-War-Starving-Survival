@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.UI;
@@ -68,7 +69,7 @@ namespace AtomicWar.GodotApp
             {
                 _session.StateChanged += RefreshView;
                 _selectedFactionId = _session.Trade.SelectedFactionId;
-                _dispatch = new HoldfastDispatchLog(HoldfastFlavorCatalog.Load(session.World.Catalog.Items.Items.Count > 0 ? "Assets/StreamingAssets/Data" : null));
+                _dispatch = new HoldfastDispatchLog(HoldfastFlavorCatalog.Load(session.World.Catalog.Items.Items.Count > 0 ? "Assets/StreamingAssets/Data" : "")!);
                 _dispatch.OnSessionOpened("holdfast");
             }
             RefreshView();
@@ -124,7 +125,7 @@ namespace AtomicWar.GodotApp
             RefreshTradeDetails();
         }
 
-        public HoldfastTradeResult PressBuy()
+        public HoldfastTradeResult? PressBuy()
         {
             if (_session == null)
                 return null;
@@ -148,7 +149,7 @@ namespace AtomicWar.GodotApp
             return result;
         }
 
-        public HoldfastTradeResult PressSell()
+        public HoldfastTradeResult? PressSell()
         {
             if (_session == null)
                 return null;
@@ -167,7 +168,7 @@ namespace AtomicWar.GodotApp
             return result;
         }
 
-        public bool PressSave(string basePathOverride = null, string tradePathOverride = null)
+        public bool PressSave(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool saved = _session != null && _session.TrySave(basePathOverride, tradePathOverride);
             _feedback.Text = _session == null
@@ -182,7 +183,7 @@ namespace AtomicWar.GodotApp
             return saved;
         }
 
-        public bool PressReload(string basePathOverride = null, string tradePathOverride = null)
+        public bool PressReload(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool loaded = _session != null && _session.TryReload(basePathOverride, tradePathOverride);
             _feedback.Text = _session == null
@@ -686,7 +687,7 @@ namespace AtomicWar.GodotApp
             if (definition == null)
             {
                 _tradeDetails.Text = "No item selected.";
-                UpdateTradeActions(null, 0, 0);
+                UpdateTradeActions(null!, 0, 0);
                 return;
             }
             int stock = _session.Trade.GetStock(definition.Id);

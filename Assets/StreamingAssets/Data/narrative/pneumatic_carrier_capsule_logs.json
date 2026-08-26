@@ -1,82 +1,133 @@
-[
-  {
-    "id": "pneumatic_carrier_felt_seal_ring_abrasion",
-    "capsule_serial_number": "DISPATCH_CARRIER_UNIT_042",
-    "carrier_diameter_mm": 75.0,
-    "transit_velocity_m_s": 12.5,
-    "felt_wear_thickness_mm": 3.8,
-    "timestamp_relative": "YEAR_02_PNEUMATIC_01",
-    "tags": ["pneumatic", "carrier_capsule", "felt_ring", "air_blowby", "dispatch"],
-    "prose": "Continuous dispatch across four kilometers of copper pneumatic tubing wore 3.8mm off the forward wool-felt sealing gasket. The resulting high-pressure air blow-by reduced capsule transit speed from 14 m/s down to 6 m/s, causing transit timeout alarms."
-  },
-  {
-    "id": "pneumatic_carrier_vulcanized_fiber_body_split",
-    "capsule_serial_number": "HEAVY_SAMPLE_CARRIER_018",
-    "carrier_diameter_mm": 110.0,
-    "transit_velocity_m_s": 16.0,
-    "felt_wear_thickness_mm": 1.2,
-    "timestamp_relative": "YEAR_04_PNEUMATIC_03",
-    "tags": ["pneumatic", "carrier_body", "vulcanized_fiber", "impact_split", "decelerator"],
-    "prose": "Failure of the terminal dashpot air cushion valve allowed a 110mm carrier to slam into the receiving hopper at 16 m/s. The severe deceleration impact split the red vulcanized fiber cylinder along its seam, scattering written intelligence dispatches."
-  },
-  {
-    "id": "pneumatic_carrier_rotary_selector_contact_band",
-    "capsule_serial_number": "AUTOMATED_ROUTING_POD_007",
-    "carrier_diameter_mm": 75.0,
-    "transit_velocity_m_s": 11.0,
-    "felt_wear_thickness_mm": 0.5,
-    "timestamp_relative": "YEAR_07_PNEUMATIC_02",
-    "tags": ["pneumatic", "selector_ring", "electrical_contact", "automatic_routing", "diverter"],
-    "prose": "Rotating the brass collar index ring on the capsule body aligned electrical contact pins for Sub-Level 4. As the canister sped past optical-magnetic track sensors, the circuit closed, energizing solenoid diverters to switch the carrier into the hospital siding."
-  },
-  {
-    "id": "pneumatic_carrier_lead_pellet_sample_overweight_jam",
-    "capsule_serial_number": "METALLURGICAL_ASSAY_CARRIER_12",
-    "carrier_diameter_mm": 75.0,
-    "transit_velocity_m_s": 3.0,
-    "felt_wear_thickness_mm": 2.1,
-    "timestamp_relative": "YEAR_09_PNEUMATIC_04",
-    "tags": ["pneumatic", "overweight_jam", "lead_sample", "bend_radius", "pipe_blockage"],
-    "prose": "Overloading the carrier with 3.2 kg of crushed lead-ore drill core exceeded the pneumatic lifting pressure gradient. The sluggish canister stalled inside a 90-degree long-radius bend, blocking the main inter-vault dispatch trunk line for twelve hours."
-  },
-  {
-    "id": "pneumatic_carrier_leather_skirt_oil_desiccation",
-    "capsule_serial_number": "EXPEDITION_FIELD_CARRIER_089",
-    "carrier_diameter_mm": 60.0,
-    "transit_velocity_m_s": 8.0,
-    "felt_wear_thickness_mm": 4.5,
-    "timestamp_relative": "YEAR_12_PNEUMATIC_01",
-    "tags": ["pneumatic", "leather_skirt", "neatsfoot_oil", "desiccation", "capsule_stall"],
-    "prose": "Desiccation of the flared steer-hide leather sealing skirt left the leather stiff and brittle. The un-oiled skirt failed to expand against the brass tube walls under 0.6 bar driving pressure, stranding the carrier halfway through the ventilation duct run."
-  },
-  {
-    "id": "pneumatic_carrier_intercom_whistle_air_signal",
-    "capsule_serial_number": "EMERGENCY_PRIORITY_POD_001",
-    "carrier_diameter_mm": 75.0,
-    "transit_velocity_m_s": 15.5,
-    "felt_wear_thickness_mm": 0.8,
-    "timestamp_relative": "YEAR_15_PNEUMATIC_03",
-    "tags": ["pneumatic", "acoustic_whistle", "air_signal", "arrival_warning", "priority_mail"],
-    "prose": "Milling a resonant acoustic whistle port into the aluminum head cap produced a sharp 2.4 kHz piercing tone propelled by bypass airflow. The acoustic arrival signal alerted bunker dispatchers ten seconds before the capsule docked in the drop tray."
-  },
-  {
-    "id": "pneumatic_carrier_magnetic_reed_sensor_tracker",
-    "capsule_serial_number": "TELEMETRY_TRACKED_CARRIER_55",
-    "carrier_diameter_mm": 75.0,
-    "transit_velocity_m_s": 13.0,
-    "felt_wear_thickness_mm": 1.0,
-    "timestamp_relative": "YEAR_17_PNEUMATIC_02",
-    "tags": ["pneumatic", "neodymium_magnet", "hall_sensor", "position_tracking", "telemetry"],
-    "prose": "Embedding an axial neodymium ring magnet in the carrier nose pulsed external inductive pick-up coils strapped around the brass conduit. The central dispatcher board tracked the capsule's position across forty-two junction checkpoints in real time."
-  },
-  {
-    "id": "pneumatic_carrier_corrugated_rubber_impact_buffer",
-    "capsule_serial_number": "SHOCK_ABSORBER_CARRIER_03",
-    "carrier_diameter_mm": 110.0,
-    "transit_velocity_m_s": 18.0,
-    "felt_wear_thickness_mm": 1.5,
-    "timestamp_relative": "YEAR_20_PNEUMATIC_01",
-    "tags": ["pneumatic", "rubber_buffer", "shock_absorption", "high_velocity", "terminal_dock"],
-    "prose": "Molding deep concentric corrugations into the synthetic buna rubber nose cone absorbed 95% of kinetic energy upon high-speed terminal arrival. Vials of liquid biological culture transported inside survived 18 m/s impacts without hairline glass fractures."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "pneumatic_carrier_felt_seal_ring_abrasion",
+      "capsule_serial_number": "DISPATCH_CARRIER_UNIT_042",
+      "carrier_diameter_mm": 75.0,
+      "transit_velocity_m_s": 12.5,
+      "felt_wear_thickness_mm": 3.8,
+      "timestamp_relative": "YEAR_02_PNEUMATIC_01",
+      "tags": [
+        "pneumatic",
+        "carrier_capsule",
+        "felt_ring",
+        "air_blowby",
+        "dispatch"
+      ],
+      "prose": "Continuous dispatch across four kilometers of copper pneumatic tubing wore 3.8mm off the forward wool-felt sealing gasket. The resulting high-pressure air blow-by reduced capsule transit speed from 14 m/s down to 6 m/s, causing transit timeout alarms."
+    },
+    {
+      "id": "pneumatic_carrier_vulcanized_fiber_body_split",
+      "capsule_serial_number": "HEAVY_SAMPLE_CARRIER_018",
+      "carrier_diameter_mm": 110.0,
+      "transit_velocity_m_s": 16.0,
+      "felt_wear_thickness_mm": 1.2,
+      "timestamp_relative": "YEAR_04_PNEUMATIC_03",
+      "tags": [
+        "pneumatic",
+        "carrier_body",
+        "vulcanized_fiber",
+        "impact_split",
+        "decelerator"
+      ],
+      "prose": "Failure of the terminal dashpot air cushion valve allowed a 110mm carrier to slam into the receiving hopper at 16 m/s. The severe deceleration impact split the red vulcanized fiber cylinder along its seam, scattering written intelligence dispatches."
+    },
+    {
+      "id": "pneumatic_carrier_rotary_selector_contact_band",
+      "capsule_serial_number": "AUTOMATED_ROUTING_POD_007",
+      "carrier_diameter_mm": 75.0,
+      "transit_velocity_m_s": 11.0,
+      "felt_wear_thickness_mm": 0.5,
+      "timestamp_relative": "YEAR_07_PNEUMATIC_02",
+      "tags": [
+        "pneumatic",
+        "selector_ring",
+        "electrical_contact",
+        "automatic_routing",
+        "diverter"
+      ],
+      "prose": "Rotating the brass collar index ring on the capsule body aligned electrical contact pins for Sub-Level 4. As the canister sped past optical-magnetic track sensors, the circuit closed, energizing solenoid diverters to switch the carrier into the hospital siding."
+    },
+    {
+      "id": "pneumatic_carrier_lead_pellet_sample_overweight_jam",
+      "capsule_serial_number": "METALLURGICAL_ASSAY_CARRIER_12",
+      "carrier_diameter_mm": 75.0,
+      "transit_velocity_m_s": 3.0,
+      "felt_wear_thickness_mm": 2.1,
+      "timestamp_relative": "YEAR_09_PNEUMATIC_04",
+      "tags": [
+        "pneumatic",
+        "overweight_jam",
+        "lead_sample",
+        "bend_radius",
+        "pipe_blockage"
+      ],
+      "prose": "Overloading the carrier with 3.2 kg of crushed lead-ore drill core exceeded the pneumatic lifting pressure gradient. The sluggish canister stalled inside a 90-degree long-radius bend, blocking the main inter-vault dispatch trunk line for twelve hours."
+    },
+    {
+      "id": "pneumatic_carrier_leather_skirt_oil_desiccation",
+      "capsule_serial_number": "EXPEDITION_FIELD_CARRIER_089",
+      "carrier_diameter_mm": 60.0,
+      "transit_velocity_m_s": 8.0,
+      "felt_wear_thickness_mm": 4.5,
+      "timestamp_relative": "YEAR_12_PNEUMATIC_01",
+      "tags": [
+        "pneumatic",
+        "leather_skirt",
+        "neatsfoot_oil",
+        "desiccation",
+        "capsule_stall"
+      ],
+      "prose": "Desiccation of the flared steer-hide leather sealing skirt left the leather stiff and brittle. The un-oiled skirt failed to expand against the brass tube walls under 0.6 bar driving pressure, stranding the carrier halfway through the ventilation duct run."
+    },
+    {
+      "id": "pneumatic_carrier_intercom_whistle_air_signal",
+      "capsule_serial_number": "EMERGENCY_PRIORITY_POD_001",
+      "carrier_diameter_mm": 75.0,
+      "transit_velocity_m_s": 15.5,
+      "felt_wear_thickness_mm": 0.8,
+      "timestamp_relative": "YEAR_15_PNEUMATIC_03",
+      "tags": [
+        "pneumatic",
+        "acoustic_whistle",
+        "air_signal",
+        "arrival_warning",
+        "priority_mail"
+      ],
+      "prose": "Milling a resonant acoustic whistle port into the aluminum head cap produced a sharp 2.4 kHz piercing tone propelled by bypass airflow. The acoustic arrival signal alerted bunker dispatchers ten seconds before the capsule docked in the drop tray."
+    },
+    {
+      "id": "pneumatic_carrier_magnetic_reed_sensor_tracker",
+      "capsule_serial_number": "TELEMETRY_TRACKED_CARRIER_55",
+      "carrier_diameter_mm": 75.0,
+      "transit_velocity_m_s": 13.0,
+      "felt_wear_thickness_mm": 1.0,
+      "timestamp_relative": "YEAR_17_PNEUMATIC_02",
+      "tags": [
+        "pneumatic",
+        "neodymium_magnet",
+        "hall_sensor",
+        "position_tracking",
+        "telemetry"
+      ],
+      "prose": "Embedding an axial neodymium ring magnet in the carrier nose pulsed external inductive pick-up coils strapped around the brass conduit. The central dispatcher board tracked the capsule's position across forty-two junction checkpoints in real time."
+    },
+    {
+      "id": "pneumatic_carrier_corrugated_rubber_impact_buffer",
+      "capsule_serial_number": "SHOCK_ABSORBER_CARRIER_03",
+      "carrier_diameter_mm": 110.0,
+      "transit_velocity_m_s": 18.0,
+      "felt_wear_thickness_mm": 1.5,
+      "timestamp_relative": "YEAR_20_PNEUMATIC_01",
+      "tags": [
+        "pneumatic",
+        "rubber_buffer",
+        "shock_absorption",
+        "high_velocity",
+        "terminal_dock"
+      ],
+      "prose": "Molding deep concentric corrugations into the synthetic buna rubber nose cone absorbed 95% of kinetic energy upon high-speed terminal arrival. Vials of liquid biological culture transported inside survived 18 m/s impacts without hairline glass fractures."
+    }
+  ]
+}

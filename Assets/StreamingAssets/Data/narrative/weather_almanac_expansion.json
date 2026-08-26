@@ -1,0 +1,580 @@
+{
+  "schema_version": 1,
+  "collection_id": "weather_almanac_expansion",
+  "description": "Weather almanac and seasonal records — daily observations, seasonal markers, frost dates, ashfall measurements, wind patterns, temperature logs. People watching the sky carefully because the sky is the difference between living and dying.",
+  "documents": [
+    {
+      "doc_id": "bunker_doc_weather_day1",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 1, The Exchange",
+      "posted_day": 1,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the first entry",
+      "transcript": "WEATHER LOG — DAY 1\n\nTime: 06:00\nSky: black. Not dark — black. The black is not the night. The night was 3 hours ago. The black is the sky. The sky is the black.\nTemperature: unknown. The thermometer is inside. The outside is the black.\nWind: unknown. The anemometer is frozen. The frozen is the anemometer.\nAshfall: heavy. The ash is the black. The black is the ash. The ash is falling. The falling is the ash.\nVisibility: 0. The 0 is the ash. The ash is the 0.\n\nNOTE: The sky is the black. The black is the sky. I do not know if the sun is behind the black. The sun is the question. The question is the sun. The black is the answer. The answer is the black. I am writing this because the writing is the proof I am alive. The alive is the writing. The black does not care if I am alive. The writing cares. The writing is the alive.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_1",
+        "exchange",
+        "black_sky",
+        "ashfall",
+        "visibility_zero"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day7",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 7, The Ash Thins",
+      "posted_day": 7,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook",
+      "transcript": "WEATHER LOG — DAY 7\n\nTime: 06:00\nSky: dark grey. The grey is the ash. The ash is the grey. The black is gone. The grey is the now. The now is the grey.\nTemperature: -18C. The thermometer works. The -18 is the cold. The cold is the -18.\nWind: north, 15 km/h. The north is the cold. The cold is the north.\nAshfall: moderate, decreasing. The decreasing is the grey. The grey is the decreasing.\nVisibility: 50m. The 50 is the grey. The grey is the 50.\n\nNOTE: The sky is grey. The grey is the ash. The ash is thinning. The thinning is the first sign. The first sign is the thinning. The sun is behind the grey. The grey is between us and the sun. The sun is the behind. The behind is the sun. I do not know if the sun is still there. The grey does not tell me. The grey is the not-telling. The not-telling is the grey. The thermometer tells me. The thermometer is the telling. The telling is the -18. The -18 is the telling.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_7",
+        "grey",
+        "ash_thinning",
+        "temperature",
+        "visibility_50"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day14",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 14, First Wind Shift",
+      "posted_day": 14,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook",
+      "transcript": "WEATHER LOG — DAY 14\n\nTime: 06:00\nSky: grey, lighter at the horizon. The lighter is the first. The first is the lighter. The horizon is the maybe. The maybe is the horizon.\nTemperature: -15C. The -15 is warmer than the -18. The warmer is the -3. The -3 is the warmer. The warmer is the sign. The sign is the -3.\nWind: shifted from north to east at 03:00. The east is the warmer. The warmer is the east. The shift is the weather. The weather is the shift.\nAshfall: light. The light is the ash. The ash is the light. The light is the first light in 14 days. The 14 is the light. The light is the 14.\nVisibility: 200m. The 200 is the light. The light is the 200.\n\nNOTE: The wind shifted. The shift is the first change since the Exchange. The change is the shift. The shift is the east. The east is the warmer. The warmer is the -3. The -3 is the sign. The sign is the warmer. The horizon is lighter. The lighter is the maybe. The maybe is the sun. The sun is the maybe. I do not know if the sun is behind the lighter. The lighter is the maybe. The maybe is the lighter. The thermometer is the telling. The telling is the -15. The -15 is the warmer. The warmer is the telling.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_14",
+        "wind_shift",
+        "east",
+        "warmer",
+        "horizon",
+        "lighter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day30",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 30, The First Storm",
+      "posted_day": 30,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the pages are damp",
+      "transcript": "WEATHER LOG — DAY 30\n\nTime: 06:00\nSky: dark grey, closing. The closing is the storm. The storm is the closing.\nTemperature: -22C, dropping.\nWind: east, 30 km/h, rising. The rising is the storm. The storm is the rising.\nAshfall: heavy, increasing. The increasing is the storm. The storm is the increasing.\nVisibility: 100m, dropping. The dropping is the storm. The storm is the dropping.\nBarometric pressure: 960 mb, falling fast. The falling is the storm. The storm is the falling.\n\nNOTE: The storm is coming. The coming is the storm. The pressure is falling. The falling is the proof. The proof is the falling. The storm will last 6-8 hours by the pressure curve. The curve is the prediction. The prediction is the curve. Do not travel. Do not travel. The storm is the ash and the wind and the cold and the dark. The four are the storm. The storm is the four. The shelter is the not-storm. The not-storm is the shelter. Stay in the shelter. The shelter is the alive. The alive is the shelter.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_30",
+        "storm",
+        "pressure_falling",
+        "ashfall_heavy",
+        "do_not_travel"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_season_first_frost",
+      "doc_type": "seasonal_marker",
+      "title": "Seasonal Marker — First Frost, Day 18",
+      "posted_day": 18,
+      "posted_by": "Old Petr",
+      "location": "Allotments, south wall",
+      "material": "Handwritten on a seed packet, dirt on the corner",
+      "transcript": "SEASONAL MARKER — FIRST FROST\n\nDate: Day 18\nFrost: on the inside of the greenhouse glass. The inside is the cold. The cold is the inside. The frost is the first. The first is the frost.\nTemperature at frost: -8C. The -8 is the frost. The frost is the -8.\n\nThe frost is early. The frost is 2 weeks early by the old calendar. The old calendar is the before. The before is the old calendar. The new calendar is the now. The now is the new calendar. The new calendar does not have months. The new calendar has days. The days are the calendar. The calendar is the days.\n\nThe frost is the sign. The sign is the frost. The sign says: the cold is coming. The coming is the cold. The cold is the coming. The cold frame is the counter. The counter is the cold frame. The cold frame is the glass and the south wall and the straw. The straw is the insulation. The insulation is the straw. The south wall is the heat. The heat is the south wall. The glass is the trap. The trap is the glass. The three are the counter. The counter is the three.\n\nThe frost is the first. The first is the frost. The frost is the sign the planting must be now. The now is the planting. The planting is the now. The frost is the reason. The reason is the frost. The planting is the counter. The counter is the planting.\n\n— Petr.",
+      "tags": [
+        "seasonal",
+        "first_frost",
+        "day_18",
+        "cold_frame",
+        "planting",
+        "calendar"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_season_first_snow",
+      "doc_type": "seasonal_marker",
+      "title": "Seasonal Marker — First Snow, Day 38",
+      "posted_day": 38,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook",
+      "transcript": "SEASONAL MARKER — FIRST SNOW\n\nDate: Day 38\nSnow: first snow of the cold season. The snow is white. The white is the snow. The ash is grey. The grey is the ash. The snow is white on the grey. The white on the grey is the first. The first is the white on the grey.\nTemperature at snow: -20C. The -20 is the snow. The snow is the -20.\n\nThe snow is early or late, depending on which calendar. The old calendar says the snow is early. The new calendar says the snow is the first. The first is the snow. The snow is the first. The old calendar is the before. The new calendar is the now. The now is the first. The first is the now.\n\nThe snow is the sign. The sign is the snow. The sign says: the cold is here. The here is the cold. The cold is the here. The snow is the white. The white is the proof the sky is not all grey. The grey is the ash. The white is the snow. The two are the sky. The sky is the two. The grey and the white. The white and the grey. The snow is the proof the sky can still be something other than grey. The something-other is the snow. The snow is the something-other.\n\n— The Relay Operator.",
+      "tags": [
+        "seasonal",
+        "first_snow",
+        "day_38",
+        "white_on_grey",
+        "sky",
+        "something_other"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_season_solstice",
+      "doc_type": "seasonal_marker",
+      "title": "Seasonal Marker — Winter Solstice, Day 65",
+      "posted_day": 65,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the entry is careful, the pencil is sharp",
+      "transcript": "SEASONAL MARKER — WINTER SOLSTICE\n\nDate: Day 65\nSolstice: the longest dark. The dark is the longest. The longest is the solstice.\nHours of light: 4. The 4 is the light. The light is the 4. The 4 is the shortest. The shortest is the 4.\nHours of dark: 20. The 20 is the dark. The dark is the 20. The 20 is the longest. The longest is the 20.\nTemperature: -32C. The -32 is the solstice. The solstice is the -32.\n\nThe solstice is the turning. The turning is the solstice. After the solstice, the days grow longer. The longer is the spring. The spring is the longer. The solstice is the promise. The promise is the solstice. The promise is the longer. The longer is the promise.\n\nThe 4 hours of light are grey. The grey is the ash. The ash is the grey. The 4 is the grey. The grey is the 4. But the 4 is the light. The light is the 4. The grey is the light. The light is the grey. The grey light is the solstice. The solstice is the grey light. The grey light is the turning. The turning is the grey light.\n\nAfter today, the 4 becomes 5. The 5 is the longer. The longer is the 5. The 5 is the spring. The spring is the 5. The 5 is the promise. The promise is the 5. The solstice is the 4. The spring is the 5. The 4 and the 5 are the turning. The turning is the 4 and the 5.\n\n— The Relay Operator.",
+      "tags": [
+        "seasonal",
+        "solstice",
+        "day_65",
+        "longest_dark",
+        "4_hours_light",
+        "turning",
+        "promise"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_season_first_thaw",
+      "doc_type": "seasonal_marker",
+      "title": "Seasonal Marker — First Thaw, Day 80",
+      "posted_day": 80,
+      "posted_by": "Old Petr",
+      "location": "Allotments, south wall",
+      "material": "Handwritten on a seed packet, the handwriting is hopeful",
+      "transcript": "SEASONAL MARKER — FIRST THAW\n\nDate: Day 80\nThaw: the first thaw. The thaw is the melt. The melt is the thaw. The ice on the south wall is dripping. The dripping is the thaw. The thaw is the dripping.\nTemperature at thaw: -2C. The -2 is the thaw. The thaw is the -2. The -2 is the warmer. The warmer is the -2.\n\nThe thaw is the sign. The sign is the thaw. The sign says: the ground is waking. The waking is the thaw. The thaw is the waking. The ground is the sleeping. The sleeping is the ground. The thaw is the waking of the sleeping. The waking of the sleeping is the thaw.\n\nThe south wall is the first to thaw. The first is the south wall. The south wall remembers the sun. The sun is the south wall. The south wall is the sun. The thaw is the south wall remembering the sun. The remembering is the thaw. The thaw is the remembering.\n\nThe cold frame is the counter. The counter is the cold frame. The thaw is the sign the counter is working. The working is the counter. The counter is the working. The potato is the proof. The proof is the potato. The potato is the sprout. The sprout is the proof. The thaw is the reason the sprout is coming. The coming is the sprout. The sprout is the coming. The thaw is the coming. The coming is the thaw.\n\n— Petr.",
+      "tags": [
+        "seasonal",
+        "first_thaw",
+        "day_80",
+        "south_wall",
+        "waking",
+        "cold_frame",
+        "sprout"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_season_spring",
+      "doc_type": "seasonal_marker",
+      "title": "Seasonal Marker — First Spring, Day 100",
+      "posted_day": 100,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the handwriting is the lightest",
+      "transcript": "SEASONAL MARKER — FIRST SPRING\n\nDate: Day 100\nSpring: the first spring. The spring is the warming. The warming is the spring. The ash is thin. The thin is the ash. The sky is grey but lighter. The lighter is the spring. The spring is the lighter.\nTemperature: -5C, rising to +2C by midday. The +2 is the spring. The spring is the +2. The +2 is the first above-zero. The first above-zero is the +2. The +2 is the spring.\nWind: south, 12 km/h. The south is the warm. The warm is the south. The south is the spring. The spring is the south.\nAshfall: light, thinnest yet. The thinnest is the spring. The spring is the thinnest.\nVisibility: 500m, best in months. The best is the spring. The spring is the best.\n\nThe spring is the first. The first is the spring. The spring is the after-the-winter. The after-the-winter is the spring. The winter was the 3. The 3 is the winters. The winters are the 3. The spring is the after. The after is the spring. The spring is the after-the-3.\n\nThe spring is the counter. The counter is the spring. The flour is going down. The spring is going up. The down and the up are the same direction: the spring. The spring is the direction. The direction is the spring.\n\nThe sky is grey but lighter. The lighter is the maybe. The maybe is the sun. The sun is the maybe. The lighter is the maybe-sun. The maybe-sun is the lighter. I do not know if the sun is behind the lighter. The lighter is the spring. The spring is the lighter. The spring is the maybe-sun. The maybe-sun is the spring.\n\n— The Relay Operator. The relay operator is the spring. The spring is the relay operator.",
+      "tags": [
+        "seasonal",
+        "first_spring",
+        "day_100",
+        "warming",
+        "ash_thinnest",
+        "visibility_500",
+        "maybe_sun"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ashfall_day10",
+      "doc_type": "ashfall_measurement",
+      "title": "Ashfall Measurement — Day 10",
+      "posted_day": 10,
+      "posted_by": "The Mechanic",
+      "location": "Shelter yard, north wall",
+      "material": "Handwritten on a scrap of metal, the ash is weighed",
+      "transcript": "ASHFALL MEASUREMENT — DAY 10\n\nMethod: clean metal sheet, 1 square metre, left for 24 hours. The sheet is the measure. The measure is the sheet. The ash is collected and weighed.\n\nWeight: 47 grams per square metre per 24 hours. The 47 is the ash. The ash is the 47. The 47 is the falling. The falling is the 47.\n\nComparison:\nDay 1: not measured (the black was the ash, the ash was the black, the measuring was the not-possible).\nDay 7: 120 grams (estimated, the sheet was not clean).\nDay 10: 47 grams (measured, the sheet is clean).\n\nThe 47 is less than the 120. The less is the ash thinning. The thinning is the less. The less is the 47. The 47 is the thinning.\n\nNOTE: The ash is thinning. The thinning is the 47. The 47 is the sign. The sign is the 47. The ash is the sky. The sky is the ash. The thinning of the ash is the thinning of the sky. The thinning of the sky is the thinning of the ash. The 47 is the sky thinning. The sky thinning is the 47. The 47 is the sign the sky is changing. The changing is the 47. The 47 is the changing.\n\n— The Mechanic.",
+      "tags": [
+        "ashfall",
+        "measurement",
+        "day_10",
+        "47_grams",
+        "thinning",
+        "sky_changing"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ashfall_day50",
+      "doc_type": "ashfall_measurement",
+      "title": "Ashfall Measurement — Day 50",
+      "posted_day": 50,
+      "posted_by": "The Mechanic",
+      "location": "Shelter yard, north wall",
+      "material": "Handwritten on a scrap of metal",
+      "transcript": "ASHFALL MEASUREMENT — DAY 50\n\nWeight: 12 grams per square metre per 24 hours. The 12 is the ash. The ash is the 12. The 12 is the thinnest measured. The thinnest is the 12.\n\nComparison:\nDay 10: 47 grams.\nDay 30: 35 grams (during the storm, the ash was heavier).\nDay 50: 12 grams.\n\nThe 12 is less than the 47. The less is the thinning. The thinning is the 12. The 12 is the sign. The sign is the 12. The ash is going down. The down is the ash. The ash is the down. The 12 is the down. The down is the 12.\n\nNOTE: The ash is 12. The 12 is the thinnest. The thinnest is the sign. The sign is the thinnest. The sky is the ash. The ash is the sky. The 12 is the sky. The sky is the 12. The sky is thinning. The thinning is the sky. The 12 is the sky thinning. The sky thinning is the 12. The 12 is the sign the spring is coming. The spring is the 12. The 12 is the spring. The spring is the ash going down. The down is the spring. The spring is the down.\n\n— The Mechanic.",
+      "tags": [
+        "ashfall",
+        "measurement",
+        "day_50",
+        "12_grams",
+        "thinnest",
+        "spring_coming"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_ashfall_day100",
+      "doc_type": "ashfall_measurement",
+      "title": "Ashfall Measurement — Day 100",
+      "posted_day": 100,
+      "posted_by": "The Mechanic",
+      "location": "Shelter yard, north wall",
+      "material": "Handwritten on a scrap of metal, the handwriting is light",
+      "transcript": "ASHFALL MEASUREMENT — DAY 100\n\nWeight: 3 grams per square metre per 24 hours. The 3 is the ash. The ash is the 3. The 3 is the thinnest. The thinnest is the 3.\n\nComparison:\nDay 10: 47 grams.\nDay 50: 12 grams.\nDay 100: 3 grams.\n\nThe 3 is the thinnest. The thinnest is the 3. The ash is going down. The down is the ash. The 3 is the down. The down is the 3. The trajectory is 47, 12, 3. The trajectory is the thinning. The thinning is the trajectory. The trajectory is the spring. The spring is the trajectory.\n\nNOTE: The ash is 3. The 3 is the thinnest. The 3 is the sign. The sign is the 3. The sky is the ash. The ash is the sky. The 3 is the sky. The sky is the 3. The sky is the thinnest. The thinnest is the sky. The 3 is the spring. The spring is the 3. The spring is the ash going to almost-nothing. The almost-nothing is the spring. The spring is the almost-nothing. The almost-nothing is the 3. The 3 is the almost-nothing. The almost-nothing is the sky. The sky is the almost-nothing. The 3 is the sky. The sky is the 3.\n\nThe flour is also 3. The flour is 3 days. The ash is 3 grams. The two 3s are the same number. The same number is the two 3s. The flour is going down. The ash is going down. The two downs are the same direction: the spring. The spring is the direction. The direction is the spring. The two 3s are the spring. The spring is the two 3s.\n\n— The Mechanic.",
+      "tags": [
+        "ashfall",
+        "measurement",
+        "day_100",
+        "3_grams",
+        "thinnest",
+        "two_threes",
+        "spring",
+        "flour_3"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_wind_day22",
+      "doc_type": "wind_observation",
+      "title": "Wind Log — Day 22, The Katabatic",
+      "posted_day": 22,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the wind is loud",
+      "transcript": "WIND LOG — DAY 22\n\nWind: katabatic, from the north, steady, heavy. The katabatic is the down-slope. The down-slope is the katabatic. The wind comes down the ridge. The ridge is the wind. The wind is the ridge.\nSpeed: 40 km/h, gusting to 60. The 40 is the steady. The 60 is the gust. The steady and the gust are the wind. The wind is the steady and the gust.\nTemperature with wind chill: -35C. The -35 is the wind. The wind is the -35. The -35 is the cold. The cold is the -35.\nDirection: from the north, down the slope. The north is the cold. The cold is the north. The down is the cold. The cold is the down.\n\nNOTE: The katabatic is the gravity wind. The gravity is the wind. The wind is the gravity. The cold air is heavy. The heavy is the cold. The cold air flows down the slope. The down is the flow. The flow is the down. The katabatic is the heaviest wind. The heaviest is the katabatic. The katabatic is not the gust. The katabatic is the steady. The steady is the heavy. The heavy is the steady.\n\nThe katabatic is the danger for the switchbacks. The switchbacks are the path. The path is the switchbacks. The katabatic pushes the walker. The walker is the pushed. The pushed is the walker. The low walls are the windbreaks. The windbreaks are the low walls. Use the walls. The walls are the using. The using is the walls.\n\n— The Relay Operator.",
+      "tags": [
+        "wind",
+        "katabatic",
+        "day_22",
+        "north",
+        "down_slope",
+        "switchbacks",
+        "windbreaks"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_wind_day60",
+      "doc_type": "wind_observation",
+      "title": "Wind Log — Day 60, The East Shift",
+      "posted_day": 60,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook",
+      "transcript": "WIND LOG — DAY 60\n\nWind: shifted from north to east at 01:00. The shift is the weather. The weather is the shift. The east is the warmer. The warmer is the east.\nSpeed: 10 km/h, light. The 10 is the light. The light is the 10. The light is the warmer. The warmer is the light.\nTemperature: -18C, rising 2 degrees in 30 minutes after the shift. The 2 is the warmer. The warmer is the 2. The 2 is the shift. The shift is the 2.\nDirection: east. The east is the warmer. The warmer is the east. The east is the sea. The sea is the east. The sea is the warmer. The warmer is the sea.\n\nNOTE: The east wind is the warmer wind. The warmer is the east. The east is the warmer. The north wind is the cold wind. The cold is the north. The north is the cold. The shift from north to east is the shift from cold to warm. The warm is the shift. The shift is the warm. The 2 degrees is the proof. The proof is the 2. The 2 is the warm. The warm is the 2.\n\nThe east wind is the spring wind. The spring is the east. The east is the spring. The spring is the warmer. The warmer is the spring. The east is the sign. The sign is the east. The sign says: the spring is coming. The coming is the spring. The spring is the coming. The east is the coming. The coming is the east.\n\n— The Relay Operator.",
+      "tags": [
+        "wind",
+        "east_shift",
+        "day_60",
+        "warmer",
+        "spring_wind",
+        "2_degrees"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_temp_log_month1",
+      "doc_type": "temperature_log",
+      "title": "Temperature Log — Month 1 Summary",
+      "posted_day": 30,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the summary page",
+      "transcript": "TEMPERATURE LOG — MONTH 1 SUMMARY\n\nDay 1: unknown (the black, the not-measuring).\nDay 7: -18C.\nDay 14: -15C.\nDay 18: -8C (the frost).\nDay 22: -35C with wind chill (the katabatic).\nDay 30: -22C (the storm).\n\nMean: -19.6C. The -19.6 is the month. The month is the -19.6.\nLow: -35C (Day 22, wind chill). The -35 is the low. The low is the -35.\nHigh: -8C (Day 18, the frost). The -8 is the high. The high is the -8.\n\nNOTE: The first month is the cold. The cold is the first month. The -19.6 is the cold. The cold is the -19.6. The temperature is the sky. The sky is the temperature. The sky is the cold. The cold is the sky. The -19.6 is the sky. The sky is the -19.6. The sky is the difference between living and dying. The -19.6 is the difference. The difference is the -19.6. The living is the shelter. The shelter is the living. The dying is the outside. The outside is the dying. The -19.6 is the outside. The outside is the -19.6. The shelter is the not--19.6. The not--19.6 is the shelter. The shelter is the 12. The 12 is the shelter. The 12 is the not--19.6. The not--19.6 is the 12. The 12 is the living. The living is the 12. The -19.6 is the dying. The dying is the -19.6. The difference is the 31.6. The 31.6 is the difference between the shelter and the sky. The 31.6 is the wall. The wall is the 31.6. The wall is the difference. The difference is the wall.\n\n— The Relay Operator.",
+      "tags": [
+        "temperature",
+        "month_1",
+        "mean_-19.6",
+        "low_-35",
+        "high_-8",
+        "wall",
+        "difference"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_temp_log_month3",
+      "doc_type": "temperature_log",
+      "title": "Temperature Log — Month 3 Summary",
+      "posted_day": 90,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the summary page",
+      "transcript": "TEMPERATURE LOG — MONTH 3 SUMMARY\n\nDay 65: -32C (the solstice).\nDay 70: -28C.\nDay 80: -2C (the first thaw).\nDay 90: -10C.\n\nMean: -18C. The -18 is the month. The month is the -18.\nLow: -32C (Day 65, the solstice). The -32 is the low. The low is the -32.\nHigh: -2C (Day 80, the first thaw). The -2 is the high. The high is the -2.\n\nNOTE: The third month is the turning. The turning is the third month. The -18 is the turning. The turning is the -18. The mean is rising. The rising is the turning. The turning is the rising. The -32 was the solstice. The -2 was the thaw. The -32 to the -2 is the 30. The 30 is the turning. The turning is the 30. The 30 is the degrees. The degrees are the 30. The 30 degrees is the spring. The spring is the 30 degrees. The 30 is the warming. The warming is the 30. The warming is the turning. The turning is the warming.\n\nThe wall is still the difference. The difference is still the wall. The -18 is the sky. The sky is the -18. The 12 is the shelter. The shelter is the 12. The 30 is the difference. The difference is the 30. The 30 is the wall. The wall is the 30. The wall is thinner now. The thinner is the wall. The wall is the 30. The 30 is thinner than the 31.6. The 31.6 was the first month. The 30 is the third month. The 30 is thinner. The thinner is the spring. The spring is the thinner. The wall is thinning. The thinning is the wall. The thinning is the spring. The spring is the thinning.\n\n— The Relay Operator.",
+      "tags": [
+        "temperature",
+        "month_3",
+        "mean_-18",
+        "turning",
+        "solstice_to_thaw",
+        "wall_thinning",
+        "spring"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_temp_log_spring",
+      "doc_type": "temperature_log",
+      "title": "Temperature Log — First Spring, Day 100",
+      "posted_day": 100,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the handwriting is the lightest",
+      "transcript": "TEMPERATURE LOG — FIRST SPRING, DAY 100\n\nDay 95: -5C.\nDay 100: -5C at dawn, +2C by midday. The +2 is the first above-zero. The first above-zero is the +2. The +2 is the spring. The spring is the +2.\n\nMean for the spring week: -1.5C. The -1.5 is the spring. The spring is the -1.5. The -1.5 is the warming. The warming is the -1.5.\nLow: -5C. The -5 is the dawn. The dawn is the -5.\nHigh: +2C. The +2 is the midday. The midday is the +2.\n\nNOTE: The +2 is the first above-zero. The first above-zero is the +2. The +2 is the spring. The spring is the +2. The +2 is the sign. The sign is the +2. The sign says: the water will flow. The flow is the +2. The +2 is the flow. The ice will melt. The melt is the +2. The +2 is the melt. The ground will soften. The soften is the +2. The +2 is the soften. The seeds will sprout. The sprout is the +2. The +2 is the sprout.\n\nThe wall is the difference. The difference is the wall. The -1.5 is the sky. The sky is the -1.5. The 12 is the shelter. The shelter is the 12. The 13.5 is the difference. The difference is the 13.5. The 13.5 is the wall. The wall is the 13.5. The wall is thinner. The thinner is the 13.5. The 13.5 is thinner than the 30. The 30 was the third month. The 13.5 is the spring. The spring is the 13.5. The wall is thinning. The thinning is the wall. The thinning is the spring. The spring is the thinning. The wall is the 13.5. The 13.5 is the spring. The spring is the 13.5.\n\nThe sky is the difference between living and dying. The sky is the -1.5. The -1.5 is the difference. The difference is the -1.5. The dying is the -1.5 outside without shelter. The living is the 12 inside with shelter. The difference is the 13.5. The 13.5 is the wall. The wall is the 13.5. The wall is the living. The living is the wall. The -1.5 is the dying. The dying is the -1.5. The wall is the difference. The difference is the wall.\n\n— The Relay Operator. The relay operator is the sky. The sky is the relay operator. The relay operator is the difference. The difference is the relay operator.",
+      "tags": [
+        "temperature",
+        "first_spring",
+        "day_100",
+        "plus_2",
+        "above_zero",
+        "wall_13.5",
+        "difference",
+        "living_dying"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day45",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 45, The Still",
+      "posted_day": 45,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the entry is quiet",
+      "transcript": "WEATHER LOG — DAY 45\n\nTime: 06:00\nSky: grey, uniform, no horizon. The uniform is the no-horizon. The no-horizon is the uniform. The grey is the all. The all is the grey.\nTemperature: -25C. The -25 is the still. The still is the -25.\nWind: 0. The 0 is the still. The still is the 0. The 0 is the first 0 since the Exchange. The first 0 is the still. The still is the first 0.\nAshfall: 8 grams. The 8 is the ash. The ash is the 8.\nVisibility: 300m. The 300 is the grey. The grey is the 300.\n\nNOTE: The wind is 0. The 0 is the still. The still is the 0. The wind has not been 0 since the Exchange. The Exchange was the wind. The wind was the Exchange. The 0 is the first not-Exchange. The first not-Exchange is the 0. The 0 is the sign. The sign is the 0. The sign says: the wind can stop. The stop is the 0. The 0 is the stop. The wind can stop. The can-stop is the 0. The 0 is the can-stop.\n\nThe still is the silence. The silence is the still. The 0 is the silence. The silence is the 0. The wind is the noise. The noise is the wind. The 0 is the not-noise. The not-noise is the 0. The still is the not-noise. The not-noise is the still. The still is the 0. The 0 is the still.\n\nThe still is the first. The first is the still. The still is the sign the sky can be something other than the wind. The something-other is the still. The still is the something-other. The something-other is the 0. The 0 is the something-other.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_45",
+        "still",
+        "wind_zero",
+        "silence",
+        "first_zero",
+        "something_other"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day70",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 70, The Stars",
+      "posted_day": 70,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the entry is excited, the handwriting is large",
+      "transcript": "WEATHER LOG — DAY 70\n\nTime: 23:00\nSky: clear above the ash. The clear is the first. The first is the clear. The ash is below. The stars are above. The stars are the first stars since the Exchange. The first stars are the 70. The 70 is the stars. The stars are the 70.\nTemperature: -28C. The -28 is the clear. The clear is the -28. The clear is the cold. The cold is the clear.\nWind: 5 km/h, west. The 5 is the clear. The clear is the 5.\nAshfall: 0. The 0 is the clear. The clear is the 0. The 0 is the first 0 ashfall. The first 0 ashfall is the clear.\nVisibility: excellent above 500m. The excellent is the stars. The stars are the excellent.\n\nSTAR COUNT (north quadrant): 47. The 47 is the stars. The stars are the 47. The 47 is the first count. The first count is the 47.\n\nNOTE: The stars. The stars are the first stars since the Exchange. The Exchange was the black. The black was the Exchange. The stars are the not-black. The not-black is the stars. The stars are the proof the sky is not all grey. The not-all-grey is the stars. The stars are the not-all-grey. The stars are the proof the sky is still there. The still-there is the stars. The stars are the still-there. The 47 is the stars. The stars are the 47. The 47 is the proof. The proof is the 47.\n\nThe stars are fewer than the before. The before had more. The more was the before. The before is the more. The now is the 47. The 47 is the now. The fewer is the ash. The ash is the fewer. The ash is between us and the stars. The between is the ash. The ash is the between. The 47 is the stars we can see through the ash. The through-the-ash is the 47. The 47 is the through-the-ash.\n\nThe stars are the sign. The sign is the stars. The sign says: the sky is still there. The still-there is the sign. The sign is the still-there. The sky is the behind-the-ash. The behind-the-ash is the sky. The stars are the proof of the behind. The proof of the behind is the stars. The stars are the proof.\n\n— The Relay Operator. The relay operator is the stars. The stars are the relay operator. The 47 is the relay operator. The relay operator is the 47.",
+      "tags": [
+        "weather",
+        "day_70",
+        "stars",
+        "first_stars",
+        "47",
+        "clear",
+        "ashfall_zero",
+        "proof"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day85",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 85, The Grey Returns",
+      "posted_day": 85,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the entry is sad",
+      "transcript": "WEATHER LOG — DAY 85\n\nTime: 06:00\nSky: grey, thickening. The thickening is the grey. The grey is the thickening. The stars are gone. The gone is the grey. The grey is the gone. The stars were the 70. The 70 is the gone. The gone is the 70.\nTemperature: -20C. The -20 is the grey. The grey is the -20.\nWind: west, 15 km/h. The west is the grey. The grey is the west.\nAshfall: 5 grams, increasing. The 5 is the grey. The grey is the 5. The increasing is the grey. The grey is the increasing.\nVisibility: 200m, dropping. The dropping is the grey. The grey is the dropping.\n\nNOTE: The stars are gone. The gone is the grey. The grey is the gone. The stars were the 70. The 70 was the clear. The clear was the 70. The grey is the 85. The 85 is the grey. The clear and the grey are the sky. The sky is the clear and the grey. The clear is the 70. The grey is the 85. The sky is the 70 and the 85. The 70 is the stars. The 85 is the not-stars. The stars and the not-stars are the sky. The sky is the stars and the not-stars.\n\nThe grey is the ash returning. The returning is the grey. The grey is the returning. The ash is the between. The between is the ash. The ash is between us and the stars again. The again is the ash. The ash is the again. The stars are behind the ash. The behind is the ash. The ash is the behind. The stars are the behind-the-ash. The behind-the-ash is the stars. The stars are the still-there. The still-there is the stars. The grey is the not-seeing. The not-seeing is the grey. The stars are the still-there behind the not-seeing. The behind-the-not-seeing is the stars. The stars are the behind-the-not-seeing.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_85",
+        "grey_returns",
+        "stars_gone",
+        "ash_thickening",
+        "behind",
+        "not_seeing"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_season_ice_break",
+      "doc_type": "seasonal_marker",
+      "title": "Seasonal Marker — Ice Break on the River, Day 82",
+      "posted_day": 82,
+      "posted_by": "The Veteran",
+      "location": "River watch post, east",
+      "material": "Handwritten on a waterproof notebook, the entry is loud",
+      "transcript": "SEASONAL MARKER — ICE BREAK\n\nDate: Day 82\nEvent: the river ice cracked. The cracked is the ice. The ice is the cracked. The crack was loud. The loud was the crack. The crack was the first sound from the river since the freeze. The first sound is the crack. The crack is the first sound.\nTemperature at crack: -3C. The -3 is the crack. The crack is the -3. The -3 is the warmer. The warmer is the -3.\n\nThe crack is the sign. The sign is the crack. The sign says: the river is waking. The waking is the crack. The crack is the waking. The river is the sleeping. The sleeping is the river. The crack is the waking of the sleeping. The waking of the sleeping is the crack.\n\nThe ice is the cover. The cover is the ice. The crack is the cover breaking. The breaking is the crack. The crack is the first break. The first break is the crack. The first break is the sign the ice is going. The going is the ice. The ice is the going. The crack is the going. The going is the crack.\n\nThe river is the water. The water is the river. The ice is the not-water. The not-water is the ice. The crack is the water returning. The returning is the crack. The crack is the returning. The water is the returning. The returning is the water.\n\nNOTE: The ice break is the spring. The spring is the ice break. The crack is the spring. The spring is the crack. The river is the spring. The spring is the river. The water is the spring. The spring is the water. The crack is the proof. The proof is the crack. The proof says: the river is alive. The alive is the river. The river is the alive. The crack is the alive. The alive is the crack.\n\n— The Veteran.",
+      "tags": [
+        "seasonal",
+        "ice_break",
+        "day_82",
+        "river_waking",
+        "spring",
+        "crack",
+        "alive"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_season_first_green",
+      "doc_type": "seasonal_marker",
+      "title": "Seasonal Marker — First Green, Day 88",
+      "posted_day": 88,
+      "posted_by": "Old Petr",
+      "location": "Cold frame, south wall",
+      "material": "Handwritten on a seed packet, the handwriting is shaking",
+      "transcript": "SEASONAL MARKER — FIRST GREEN\n\nDate: Day 88\nEvent: the first green. The green is the sprout. The sprout is the green. The sprout is the potato. The potato is the sprout. The green is the first green since the Exchange. The first green is the 88. The 88 is the green. The green is the 88.\nTemperature: -1C. The -1 is the green. The green is the -1. The -1 is the warmer. The warmer is the -1.\n\nThe green is the sign. The sign is the green. The sign says: the ground is alive. The alive is the green. The green is the alive. The ground is the alive. The alive is the ground. The green is the proof. The proof is the green. The proof says: the ground remembers. The remembers is the ground. The ground is the remembers. The green is the remembering. The remembering is the green.\n\nThe green is the first. The first is the green. The green is the first colour since the grey. The grey is the ash. The ash is the grey. The green is the not-grey. The not-grey is the green. The green is the first not-grey. The first not-grey is the green. The green is the proof the world can be something other than grey. The something-other is the green. The green is the something-other.\n\nI cried. The crying is the green. The green is the crying. The crying is the first. The first is the crying. The crying is the first time I cried since the Exchange. The Exchange was the not-crying. The not-crying was the Exchange. The crying is the green. The green is the crying. The two are the same. The same is the two. The green and the crying are the same. The same is the green and the crying.\n\n— Petr. The farmer. The farmer is the green. The green is the farmer. The farmer is the crying. The crying is the farmer. The farmer is the first green. The first green is the farmer.",
+      "tags": [
+        "seasonal",
+        "first_green",
+        "day_88",
+        "sprout",
+        "potato",
+        "crying",
+        "not_grey",
+        "alive"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day95",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 95, The Ash Is Thin",
+      "posted_day": 95,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the entry is hopeful",
+      "transcript": "WEATHER LOG — DAY 95\n\nTime: 06:00\nSky: light grey, the thinnest yet. The thinnest is the sky. The sky is the thinnest. The light grey is the almost-not-grey. The almost-not-grey is the light grey.\nTemperature: -5C. The -5 is the thinnest. The thinnest is the -5. The -5 is the warmer. The warmer is the -5.\nWind: south, 10 km/h. The south is the warm. The warm is the south. The south is the spring. The spring is the south.\nAshfall: 2 grams. The 2 is the thinnest. The thinnest is the 2. The 2 is the almost-0. The almost-0 is the 2.\nVisibility: 400m. The 400 is the thinnest. The thinnest is the 400.\n\nNOTE: The ash is 2. The 2 is the almost-0. The almost-0 is the 2. The 2 is the sign. The sign is the 2. The sign says: the ash is almost gone. The almost-gone is the 2. The 2 is the almost-gone. The ash is the sky. The sky is the ash. The 2 is the sky. The sky is the 2. The sky is the almost-not-grey. The almost-not-grey is the 2. The 2 is the almost-not-grey.\n\nThe spring is the 2. The 2 is the spring. The spring is the almost-0. The almost-0 is the spring. The spring is the almost-not-grey. The almost-not-grey is the spring. The spring is the almost. The almost is the spring. The almost is the 2. The 2 is the almost. The almost is the sign. The sign is the almost. The sign says: the sky is almost the sky. The sky is almost the sky. The almost is the sky. The sky is the almost.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_95",
+        "ash_2_grams",
+        "almost_zero",
+        "almost_not_grey",
+        "spring",
+        "hopeful"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_wind_day95",
+      "doc_type": "wind_observation",
+      "title": "Wind Log — Day 95, The South Wind",
+      "posted_day": 95,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook",
+      "transcript": "WIND LOG — DAY 95\n\nWind: south, steady, warm. The south is the warm. The warm is the south. The south is the spring. The spring is the south.\nSpeed: 12 km/h, steady. The 12 is the steady. The steady is the 12. The 12 is the warm. The warm is the 12.\nTemperature: -5C, rising. The rising is the south. The south is the rising. The rising is the spring. The spring is the rising.\nDirection: south. The south is the warm. The warm is the south. The south is the sea. The sea is the south. The sea is the warm. The warm is the sea.\n\nNOTE: The south wind is the spring wind. The spring is the south. The south is the spring. The south wind is the warm wind. The warm is the south. The south is the warm. The north wind was the cold. The cold was the north. The east wind was the warmer. The warmer was the east. The south wind is the warmest. The warmest is the south. The south is the warmest. The warmest is the spring. The spring is the warmest. The south is the spring. The spring is the south.\n\nThe south wind is the sign. The sign is the south. The sign says: the spring is here. The here is the south. The south is the here. The spring is the here. The here is the spring. The south is the here. The here is the south. The spring is the south. The south is the spring.\n\n— The Relay Operator.",
+      "tags": [
+        "wind",
+        "south",
+        "day_95",
+        "warmest",
+        "spring",
+        "sea",
+        "steady"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day110",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 110, The Sky Is Almost the Sky",
+      "posted_day": 110,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the handwriting is the lightest, the entry is the last of the rotation",
+      "transcript": "WEATHER LOG — DAY 110\n\nTime: 06:00\nSky: light grey, almost not-grey. The almost-not-grey is the sky. The sky is the almost-not-grey. The almost is the sky. The sky is the almost.\nTemperature: -1C at dawn, +3C by midday. The +3 is the first above-zero. The first above-zero is the +3. The +3 is the spring. The spring is the +3.\nWind: south, 10 km/h. The south is the spring. The spring is the south.\nAshfall: 1 gram. The 1 is the almost-0. The almost-0 is the 1. The 1 is the almost-gone. The almost-gone is the 1.\nVisibility: 500m. The 500 is the almost-clear. The almost-clear is the 500.\n\nSTAR COUNT (last clear night, Day 108): 62. The 62 is the stars. The stars are the 62. The 62 is more than the 47. The more is the ash thinning. The thinning is the more. The 62 is the proof the sky is clearing. The clearing is the 62. The 62 is the clearing.\n\nNOTE: The sky is almost the sky. The almost is the sky. The sky is the almost. The ash is 1. The 1 is the almost-gone. The almost-gone is the 1. The sky is the almost-not-grey. The almost-not-grey is the sky. The sky is the almost. The almost is the sky.\n\nThe trajectory of the ash: 47, 35, 12, 5, 3, 2, 1. The trajectory is the thinning. The thinning is the trajectory. The trajectory is the spring. The spring is the trajectory. The 47 was the first measuring. The 1 is the last measuring. The 47 to the 1 is the spring. The spring is the 47 to the 1. The 47 is the winter. The 1 is the spring. The winter is the 47. The spring is the 1.\n\nThe trajectory of the flour: 19, 14, 11, 8, 6, 5, 3. The trajectory is the thinning. The thinning is the trajectory. The flour is going down. The ash is going down. The two downs are the same direction: the spring. The spring is the direction. The direction is the spring.\n\nThe trajectory of the thin: 0, 12, 8, 31, 28, 14, 8. The trajectory is the turning. The turning is the trajectory. The thin went up and then down. The up was the winter. The down was the spring. The 31 was the worst. The 8 is the spring. The 31 is the winter. The 8 is the spring. The winter is the 31. The spring is the 8.\n\nThe sky is the difference between living and dying. The sky is the -1. The -1 is the sky. The shelter is the 12. The 12 is the shelter. The difference is the 13. The 13 is the difference. The 13 is the wall. The wall is the 13. The wall is the thinnest. The thinnest is the wall. The wall is the spring. The spring is the wall. The wall is thinning. The thinning is the spring. The spring is the thinning.\n\nThe sky is almost the sky. The almost is the sky. The sky is the almost. The spring is the almost. The almost is the spring. The spring is the sky. The sky is the spring.\n\n— The Relay Operator. The last entry of the rotation. The rotation is the sky. The sky is the rotation. The relay operator is the sky. The sky is the relay operator. The sky is the almost. The almost is the relay operator. The relay operator is the almost. The almost is the spring. The spring is the relay operator. The relay operator is the spring.",
+      "tags": [
+        "weather",
+        "day_110",
+        "almost_sky",
+        "ash_1",
+        "plus_3",
+        "stars_62",
+        "trajectory",
+        "spring",
+        "last_rotation"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day35_storm",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 35, The Black Rain",
+      "posted_day": 35,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the pages are stained",
+      "transcript": "WEATHER LOG — DAY 35\n\nTime: 14:00\nSky: black-grey. The black-grey is the rain. The rain is the black-grey. The rain is black. The black is the rain. The rain is the ash and the water. The ash and the water are the rain. The rain is the two. The two are the rain.\nTemperature: -5C. The -5 is the rain. The rain is the -5.\nWind: east, 25 km/h. The east is the rain. The rain is the east.\nAshfall: heavy, mixed with rain. The mixed is the rain. The rain is the mixed. The ash is in the rain. The rain is in the ash. The two are the same. The same is the two.\nVisibility: 30m. The 30 is the rain. The rain is the 30.\n\nNOTE: The black rain is the ash and the water. The ash is in the water. The water is in the ash. The rain is the contamination. The contamination is the rain. The rain is the not-drinkable. The not-drinkable is the rain. Do not drink the rain. Do not collect the rain. The rain is the poison. The poison is the rain. The ash is the poison. The poison is the ash. The water is the carrier. The carrier is the water. The rain carries the ash into the water. The water carries the ash into the ground. The ground carries the ash into the well. The well is the not-drinkable. The not-drinkable is the well. The rain is the not-drinkable. The not-drinkable is the rain.\n\nThe black rain is the sign. The sign is the black rain. The sign says: the sky is still the ash. The ash is the sky. The sky is the ash. The rain is the proof the sky is still the ash. The proof is the rain. The rain is the proof. The black is the proof. The proof is the black.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_35",
+        "black_rain",
+        "ash_water",
+        "contamination",
+        "not_drinkable",
+        "poison"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day55_fog",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 55, The Fog",
+      "posted_day": 55,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the entry is damp",
+      "transcript": "WEATHER LOG — DAY 55\n\nTime: 06:00\nSky: fog. The fog is the sky. The sky is the fog. The fog is the not-grey. The not-grey is the fog. The fog is the not-ash. The not-ash is the fog. The fog is the water-in-the-air. The water-in-the-air is the fog.\nTemperature: -8C. The -8 is the fog. The fog is the -8.\nWind: 0. The 0 is the fog. The fog is the 0. The fog is the still. The still is the fog.\nAshfall: 0 (the fog is the not-ash). The 0 is the fog. The fog is the 0.\nVisibility: 10m. The 10 is the fog. The fog is the 10. The 10 is the not-seeing. The not-seeing is the 10.\n\nNOTE: The fog is the water-in-the-air. The water is the air. The air is the water. The fog is the not-ash. The not-ash is the fog. The fog is the first not-ash weather. The first not-ash is the fog. The fog is the sign. The sign is the fog. The sign says: the sky can be something other than ash. The something-other is the fog. The fog is the something-other. The something-other is the water. The water is the something-other. The fog is the water. The water is the fog.\n\nThe fog is the not-seeing. The not-seeing is the fog. The fog hides the ridge. The ridge is the hidden. The hidden is the ridge. The fog hides the valley. The valley is the hidden. The hidden is the valley. The fog hides the everything. The everything is the hidden. The hidden is the everything. The fog is the hiding. The hiding is the fog. The fog is the blanket. The blanket is the fog. The fog is the not-ash blanket. The not-ash blanket is the fog.\n\nThe fog is the sign the water is in the air. The water-in-the-air is the sign. The sign is the water-in-the-air. The water-in-the-air is the spring. The spring is the water-in-the-air. The fog is the spring. The spring is the fog. The spring is the water. The water is the spring. The fog is the water. The water is the fog. The spring is the fog. The fog is the spring.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_55",
+        "fog",
+        "water_in_air",
+        "not_ash",
+        "spring",
+        "blanket",
+        "not_seeing"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day75_clear",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 75, The Clear Night",
+      "posted_day": 75,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the entry is excited",
+      "transcript": "WEATHER LOG — DAY 75\n\nTime: 23:00\nSky: clear above the ash. The clear is the stars. The stars are the clear. The stars are more than the 47. The more is the clear. The clear is the more.\nTemperature: -25C. The -25 is the clear. The clear is the -25. The clear is the cold. The cold is the clear.\nWind: 5 km/h, west. The 5 is the clear. The clear is the 5.\nAshfall: 0. The 0 is the clear. The clear is the 0.\nVisibility: excellent above 500m. The excellent is the stars. The stars are the excellent.\n\nSTAR COUNT (north quadrant): 53. The 53 is the stars. The stars are the 53. The 53 is more than the 47. The more is the 6. The 6 is the more. The 6 is the ash thinning. The thinning is the 6. The 6 is the stars returning. The returning is the 6. The 6 is the proof the sky is clearing. The clearing is the 6. The 6 is the clearing.\n\nNOTE: The stars are 53. The 53 is more than the 47. The more is the 6. The 6 is the ash thinning. The thinning is the 6. The 6 is the stars returning. The returning is the 6. The 6 is the proof. The proof is the 6. The proof says: the sky is clearing. The clearing is the proof. The proof is the clearing. The 6 is the proof. The proof is the 6.\n\nThe stars are returning. The returning is the stars. The stars are the returning. The ash is going. The going is the ash. The stars are the coming. The coming is the stars. The going and the coming are the sky. The sky is the going and the coming. The going is the ash. The coming is the stars. The sky is the ash going and the stars coming. The coming is the spring. The spring is the coming. The stars are the spring. The spring is the stars.\n\n— The Relay Operator.",
+      "tags": [
+        "weather",
+        "day_75",
+        "clear_night",
+        "stars_53",
+        "more_than_47",
+        "ash_thinning",
+        "returning",
+        "spring"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_season_grow_season",
+      "doc_type": "seasonal_marker",
+      "title": "Seasonal Marker — Growing Season Begins, Day 100",
+      "posted_day": 100,
+      "posted_by": "Old Petr",
+      "location": "Cold frame and allotments",
+      "material": "Handwritten on a seed packet, the handwriting is the largest",
+      "transcript": "SEASONAL MARKER — GROWING SEASON\n\nDate: Day 100\nEvent: the growing season begins. The growing is the season. The season is the growing. The growing is the planting. The planting is the growing. The season is the planting. The planting is the season.\nTemperature: +2C by midday. The +2 is the growing. The growing is the +2. The +2 is the above-zero. The above-zero is the growing. The growing is the above-zero.\n\nThe growing season is the counter. The counter is the growing season. The growing season is the potato and the nettle and the clover and the dandelion and the cabbage and the root and the berry. The growing season is the all. The all is the growing season. The growing season is the not-flour. The not-flour is the growing season. The flour is going down. The growing season is going up. The down and the up are the same direction: the spring. The spring is the growing season. The growing season is the spring.\n\nThe growing season is the wall remembering. The wall is the south wall. The south wall is the remembering. The remembering is the sun. The sun is the remembering. The wall remembered the sun. The sun is the growing season. The growing season is the sun. The wall is the growing season. The growing season is the wall.\n\nThe growing season is the farmer. The farmer is the growing season. The farmer is the planting. The planting is the farmer. The farmer is the spring. The spring is the farmer. The farmer is the counter. The counter is the farmer. The flour is the quartermaster. The growing season is the farmer. The two are the counter. The counter is the two. The quartermaster and the farmer are the counter. The counter is the spring. The spring is the counter.\n\n— Petr. The farmer. The farmer is the growing season. The growing season is the farmer.",
+      "tags": [
+        "seasonal",
+        "growing_season",
+        "day_100",
+        "counter",
+        "spring",
+        "planting",
+        "wall",
+        "farmer",
+        "quartermaster"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_weather_day105",
+      "doc_type": "daily_observation",
+      "title": "Weather Log — Day 105, The Almost-Blue",
+      "posted_day": 105,
+      "posted_by": "The Relay Operator",
+      "location": "Ridge relay station",
+      "material": "Handwritten in a waterproof notebook, the entry is the most excited, the handwriting is the largest",
+      "transcript": "WEATHER LOG — DAY 105\n\nTime: 12:00\nSky: light grey, almost blue at the zenith. The almost-blue is the sky. The sky is the almost-blue. The almost-blue is the first. The first is the almost-blue. The almost-blue is the sign. The sign is the almost-blue.\nTemperature: +4C. The +4 is the almost-blue. The almost-blue is the +4. The +4 is the warmest. The warmest is the +4.\nWind: south, 8 km/h. The south is the almost-blue. The almost-blue is the south.\nAshfall: 0. The 0 is the almost-blue. The almost-blue is the 0.\nVisibility: 600m. The 600 is the almost-blue. The almost-blue is the 600.\n\nNOTE: The sky is almost blue. The almost-blue is the sky. The sky is the almost-blue. The almost is the blue. The blue is the almost. The almost-blue is the first colour since the grey. The first colour is the almost-blue. The almost-blue is the first colour. The grey is the not-colour. The not-colour is the grey. The almost-blue is the colour. The colour is the almost-blue. The almost-blue is the first colour since the Exchange. The first colour is the almost-blue. The Exchange was the grey. The grey was the Exchange. The almost-blue is the not-Exchange. The not-Exchange is the almost-blue.\n\nThe almost-blue is the sky remembering the blue. The remembering is the almost-blue. The almost-blue is the remembering. The sky is remembering the blue. The blue is the remembering. The remembering is the blue. The almost is the remembering. The remembering is the almost. The almost-blue is the sky remembering what it was. The what-it-was is the almost-blue. The almost-blue is the what-it-was. The sky is the almost-what-it-was. The almost-what-it-was is the sky.\n\nThe almost-blue is the spring. The spring is the almost-blue. The almost-blue is the sign. The sign is the almost-blue. The sign says: the sky is coming back. The coming-back is the almost-blue. The almost-blue is the coming-back. The sky is coming back. The coming-back is the sky. The almost-blue is the coming-back. The coming-back is the almost-blue.\n\nThe children say the ash fairy is going. The going is the ash fairy. The ash fairy is the going. The almost-blue is the ash fairy going. The going is the almost-blue. The almost-blue is the proof the ash fairy is going. The proof is the almost-blue. The almost-blue is the proof.\n\n— The Relay Operator. The relay operator is the almost-blue. The almost-blue is the relay operator. The relay operator is the sky remembering. The sky remembering is the relay operator. The relay operator is the coming-back. The coming-back is the relay operator.",
+      "tags": [
+        "weather",
+        "day_105",
+        "almost_blue",
+        "first_colour",
+        "sky_remembering",
+        "coming_back",
+        "ash_fairy_going",
+        "spring"
+      ]
+    }
+  ]
+}

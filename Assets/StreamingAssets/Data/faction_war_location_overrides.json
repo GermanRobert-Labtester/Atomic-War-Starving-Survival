@@ -1,79 +1,80 @@
 {
- "locationOverrides": [
-  {
-   "id": "loc_override_almshouse_pre_strike",
-   "locationId": "loc_st_brigids_almshouse",
-   "overrideType": "pre_strike",
-   "activeFromDay": 515,
-   "activeUntilDay": 516,
-   "displayName": "St Brigid's Almshouse",
-   "description": "The almshouse was a hospice before the war and ran as one through the worst of it, and the building still carries that purpose in its bones. The beds are made, the sheets drawn tight, the lockers closed. Forty rads an hour, high enough to make visitors count their minutes. Lately, though, people who used to cut through the ward as a shortcut have started going the long way round instead, without quite saying why, the way a district gets quiet about a place before it has a reason to."
-  },
-  {
-   "id": "loc_override_almshouse_post_strike",
-   "locationId": "loc_st_brigids_almshouse",
-   "overrideType": "post_strike",
-   "activeFromDay": 517,
-   "displayName": "St Brigid's Almshouse (Struck)",
-   "description": "The roof is gone over the east wing, and what used to be kept as a kind of monument is a monument no longer. The made beds are scattered under open sky, three years of undisturbed dust blown open in a single night. The charts that were filled in to a date and not after it are ash, along with the date itself. Fifty-one rads an hour now, the debris field wider and hotter than the ward it replaced. Whoever ran this place knew how to end a shift properly. Whoever ended this one did not know, or did not care, that there was a difference."
-  },
-  {
-   "id": "loc_override_ration_plaza_pre_strike",
-   "locationId": "loc_ration_queue_plaza",
-   "overrideType": "pre_strike",
-   "activeFromDay": 541,
-   "activeUntilDay": 544,
-   "displayName": "Ration Plaza",
-   "description": "The plaza is a civic square with queue lines painted on the pavement, and they are repainted often, because painted lines are cheaper than riot control and everyone here knows it. The line forms at 0600 whether or not a distribution has been announced. Twenty-eight rads an hour, moderate. Nothing about the square looks different this week than it has for three years. That is precisely what makes it hard to stand here, if you know something the queue does not."
-  },
-  {
-   "id": "loc_override_ration_plaza_post_strike",
-   "locationId": "loc_ration_queue_plaza",
-   "overrideType": "post_strike",
-   "activeFromDay": 545,
-   "displayName": "Ration Plaza (Struck)",
-   "description": "The painted lines are still visible in the crater's ash shadow, one stroke half-finished where a hand was repainting them when it came. The dose math the scavengers used to quote — an hour in line, a lifetime of margin — never accounted for this. Thirty-nine rads an hour now, climbing from the impact point outward. The square that waited for the first horn for three years finally got an answer, and the queue lines, absurdly, patiently, have already started forming again a little further back from the crater, because the ration schedule did not stop and neither, in the end, did the hunger."
-  },
-  {
-   "id": "loc_override_ash_sign_shrine_pre_strike",
-   "locationId": "loc_ash_sign_shrine",
-   "overrideType": "pre_strike",
-   "activeFromDay": 576,
-   "activeUntilDay": 577,
-   "displayName": "The Ash Sign Shrine",
-   "description": "The survey cairn has been built up with concrete and glass slag into something taller than a person, and a working dosimeter is mounted at the top, honest, every time. Forty-eight rads an hour here. Lately the shrine-keepers have taken to checking the mounted reading more than once a shift, murmuring about numbers that climb and drop with no pattern their liturgy has a verse for yet. The pilgrims keep coming anyway. The shrine-keepers watch the dosimeter a little more closely than they watch the pilgrims."
-  },
-  {
-   "id": "loc_override_ash_sign_shrine_post_strike",
-   "locationId": "loc_ash_sign_shrine",
-   "overrideType": "post_strike",
-   "activeFromDay": 578,
-   "displayName": "The Ash Sign Shrine (Struck)",
-   "description": "The cairn still stands, glass slag intact, dosimeter still mounted and still honest, but the packed earth in front of it — where pilgrims have stood to read the number for three years — is a fresh crater, close enough to the shrine that the margin feels less like protection and more like a warning that arrived one strike too late to matter. Fifty-two rads an hour at the crater lip. For the first time since the shrine was built, the ground it stands on was not spared, and every pilgrim who climbs the switchback now reads that absence before they read the dosimeter at all."
-  },
-  {
-   "id": "loc_override_span44_ambient_crater",
-   "locationId": "loc_railway_span_44_alpha",
-   "overrideType": "ambient_addendum",
-   "activeFromDay": 495,
-   "displayName": "Railway Span 44-Alpha",
-   "description": "Short of the span itself, in a stretch of open ground nobody had a use for, a single clean crater has settled into the landscape the way old craters do, grassless and quiet, the rad reading at its lip lower than the ground around it rather than higher. Nobody who crosses the bridge can explain the crater to anyone who asks, and most people crossing the bridge have learned not to ask twice."
-  },
-  {
-   "id": "loc_override_forward_roster_camp_ambient",
-   "locationId": "loc_forward_roster_camp",
-   "overrideType": "ambient_addendum",
-   "activeFromDay": 572,
-   "displayName": "The Forward Roster Camp",
-   "description": "Three weeks into running the toll and the camp still doesn't agree on a name for itself, but it has routines now: a chalk tally on the container door for coin taken, a second column for goods taken instead, and a third nobody totals out loud, marked only IOU. The dozen who first tied on an armband are closer to two dozen now, mostly Exchange runners who found the toll steadier work than dodging it. Twenty-two rads an hour, unremarkable, same as it's always read. What's changed is smaller than the number: the floodlight from the Garrison checkpoint used to sweep past the camp without stopping. Most nights now it lingers, a beat or two longer than it needs to."
-  },
-  {
-   "id": "loc_override_understory_transmitter_ambient",
-   "locationId": "loc_understory_transmitter",
-   "overrideType": "ambient_addendum",
-   "activeFromDay": 586,
-   "displayName": "The Understory Relay",
-   "description": "The call log taped inside the stairwell door has always run thin, a handful of entries a week, no names attached. Lately it runs thick, two and three lines stacked to a night, more hands adding to it than the relay chain has ever needed before. Whatever is moving through Sector 4 this month, both checkpoints want a piece of what The Understory can tell them, and neither has managed to trace where the antenna moves to next. Eighteen rads an hour, low as ever, still the reason nobody's found this stairwell. The extra traffic hasn't slowed the relay's habit of moving on after a single broadcast. If anything, it's moving faster."
-  }
- ]
+  "schema_version": 1,
+  "locationOverrides": [
+    {
+      "id": "loc_override_almshouse_pre_strike",
+      "locationId": "loc_st_brigids_almshouse",
+      "overrideType": "pre_strike",
+      "activeFromDay": 515,
+      "activeUntilDay": 516,
+      "displayName": "St Brigid's Almshouse",
+      "description": "The almshouse was a hospice before the war and ran as one through the worst of it, and the building still carries that purpose in its bones. The beds are made, the sheets drawn tight, the lockers closed. Forty rads an hour, high enough to make visitors count their minutes. Lately, though, people who used to cut through the ward as a shortcut have started going the long way round instead, without quite saying why, the way a district gets quiet about a place before it has a reason to."
+    },
+    {
+      "id": "loc_override_almshouse_post_strike",
+      "locationId": "loc_st_brigids_almshouse",
+      "overrideType": "post_strike",
+      "activeFromDay": 517,
+      "displayName": "St Brigid's Almshouse (Struck)",
+      "description": "The roof is gone over the east wing, and what used to be kept as a kind of monument is a monument no longer. The made beds are scattered under open sky, three years of undisturbed dust blown open in a single night. The charts that were filled in to a date and not after it are ash, along with the date itself. Fifty-one rads an hour now, the debris field wider and hotter than the ward it replaced. Whoever ran this place knew how to end a shift properly. Whoever ended this one did not know, or did not care, that there was a difference."
+    },
+    {
+      "id": "loc_override_ration_plaza_pre_strike",
+      "locationId": "loc_ration_queue_plaza",
+      "overrideType": "pre_strike",
+      "activeFromDay": 541,
+      "activeUntilDay": 544,
+      "displayName": "Ration Plaza",
+      "description": "The plaza is a civic square with queue lines painted on the pavement, and they are repainted often, because painted lines are cheaper than riot control and everyone here knows it. The line forms at 0600 whether or not a distribution has been announced. Twenty-eight rads an hour, moderate. Nothing about the square looks different this week than it has for three years. That is precisely what makes it hard to stand here, if you know something the queue does not."
+    },
+    {
+      "id": "loc_override_ration_plaza_post_strike",
+      "locationId": "loc_ration_queue_plaza",
+      "overrideType": "post_strike",
+      "activeFromDay": 545,
+      "displayName": "Ration Plaza (Struck)",
+      "description": "The painted lines are still visible in the crater's ash shadow, one stroke half-finished where a hand was repainting them when it came. The dose math the scavengers used to quote — an hour in line, a lifetime of margin — never accounted for this. Thirty-nine rads an hour now, climbing from the impact point outward. The square that waited for the first horn for three years finally got an answer, and the queue lines, absurdly, patiently, have already started forming again a little further back from the crater, because the ration schedule did not stop and neither, in the end, did the hunger."
+    },
+    {
+      "id": "loc_override_ash_sign_shrine_pre_strike",
+      "locationId": "loc_ash_sign_shrine",
+      "overrideType": "pre_strike",
+      "activeFromDay": 576,
+      "activeUntilDay": 577,
+      "displayName": "The Ash Sign Shrine",
+      "description": "The survey cairn has been built up with concrete and glass slag into something taller than a person, and a working dosimeter is mounted at the top, honest, every time. Forty-eight rads an hour here. Lately the shrine-keepers have taken to checking the mounted reading more than once a shift, murmuring about numbers that climb and drop with no pattern their liturgy has a verse for yet. The pilgrims keep coming anyway. The shrine-keepers watch the dosimeter a little more closely than they watch the pilgrims."
+    },
+    {
+      "id": "loc_override_ash_sign_shrine_post_strike",
+      "locationId": "loc_ash_sign_shrine",
+      "overrideType": "post_strike",
+      "activeFromDay": 578,
+      "displayName": "The Ash Sign Shrine (Struck)",
+      "description": "The cairn still stands, glass slag intact, dosimeter still mounted and still honest, but the packed earth in front of it — where pilgrims have stood to read the number for three years — is a fresh crater, close enough to the shrine that the margin feels less like protection and more like a warning that arrived one strike too late to matter. Fifty-two rads an hour at the crater lip. For the first time since the shrine was built, the ground it stands on was not spared, and every pilgrim who climbs the switchback now reads that absence before they read the dosimeter at all."
+    },
+    {
+      "id": "loc_override_span44_ambient_crater",
+      "locationId": "loc_railway_span_44_alpha",
+      "overrideType": "ambient_addendum",
+      "activeFromDay": 495,
+      "displayName": "Railway Span 44-Alpha",
+      "description": "Short of the span itself, in a stretch of open ground nobody had a use for, a single clean crater has settled into the landscape the way old craters do, grassless and quiet, the rad reading at its lip lower than the ground around it rather than higher. Nobody who crosses the bridge can explain the crater to anyone who asks, and most people crossing the bridge have learned not to ask twice."
+    },
+    {
+      "id": "loc_override_forward_roster_camp_ambient",
+      "locationId": "loc_forward_roster_camp",
+      "overrideType": "ambient_addendum",
+      "activeFromDay": 572,
+      "displayName": "The Forward Roster Camp",
+      "description": "Three weeks into running the toll and the camp still doesn't agree on a name for itself, but it has routines now: a chalk tally on the container door for coin taken, a second column for goods taken instead, and a third nobody totals out loud, marked only IOU. The dozen who first tied on an armband are closer to two dozen now, mostly Exchange runners who found the toll steadier work than dodging it. Twenty-two rads an hour, unremarkable, same as it's always read. What's changed is smaller than the number: the floodlight from the Garrison checkpoint used to sweep past the camp without stopping. Most nights now it lingers, a beat or two longer than it needs to."
+    },
+    {
+      "id": "loc_override_understory_transmitter_ambient",
+      "locationId": "loc_understory_transmitter",
+      "overrideType": "ambient_addendum",
+      "activeFromDay": 586,
+      "displayName": "The Understory Relay",
+      "description": "The call log taped inside the stairwell door has always run thin, a handful of entries a week, no names attached. Lately it runs thick, two and three lines stacked to a night, more hands adding to it than the relay chain has ever needed before. Whatever is moving through Sector 4 this month, both checkpoints want a piece of what The Understory can tell them, and neither has managed to trace where the antenna moves to next. Eighteen rads an hour, low as ever, still the reason nobody's found this stairwell. The extra traffic hasn't slowed the relay's habit of moving on after a single broadcast. If anything, it's moving faster."
+    }
+  ]
 }

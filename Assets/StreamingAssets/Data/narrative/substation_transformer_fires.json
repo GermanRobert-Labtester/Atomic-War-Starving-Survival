@@ -1,82 +1,133 @@
-[
-  {
-    "id": "substation_fire_500kv_pcb_pyranol_conflagration",
-    "substation_id": "VALLEY_GRID_SUBSTATION_500KV",
-    "transformer_mva_rating": 750.0,
-    "oil_volume_liters": 65000,
-    "contaminant_combustion_byproduct": "POLYCHLORINATED_DIBENZODIOXINS",
-    "timestamp_relative": "YEAR_02_GRID_FIRE_01",
-    "tags": ["machinery", "substation", "pcb_fire", "transformer", "grid_collapse"],
-    "prose": "Prompt EMP overcurrent caused internal dielectric arc-over in the 750 MVA step-up transformer. Sixty-five thousand liters of PCB-laden Pyranol insulating oil superheated, ruptured the tank lid, and burned for eighteen days in a tower of oily black smoke."
-  },
-  {
-    "id": "substation_fire_porcelain_bushing_shrapnel_burst",
-    "substation_id": "RIVER_CROSSING_SWITCHYARD_230KV",
-    "transformer_mva_rating": 350.0,
-    "oil_volume_liters": 28000,
-    "contaminant_combustion_byproduct": "CERAMIC_SHRAPNEL_FRAGMENTATION",
-    "timestamp_relative": "YEAR_04_GRID_FIRE_03",
-    "tags": ["machinery", "substation", "bushing_burst", "shrapnel", "high_voltage"],
-    "prose": "Thermal shock from an adjacent fire caused the three-meter 230kV porcelain condenser bushing to explode with explosive force. Hundreds of razor-sharp ceramic shards pierced control cabinets and severed oil cooling radiators eighty meters away."
-  },
-  {
-    "id": "substation_fire_sulfur_hexafluoride_toxic_gas_cloud",
-    "substation_id": "MOUNTAIN_PASS_GAS_INSULATED_STATION",
-    "transformer_mva_rating": 500.0,
-    "oil_volume_liters": 0,
-    "contaminant_combustion_byproduct": "THIONYL_TETRAFLUORIDE_GAS",
-    "timestamp_relative": "YEAR_06_GRID_FIRE_02",
-    "tags": ["machinery", "substation", "sf6_gas", "toxic_plume", "switchgear"],
-    "prose": "Catastrophic arc-fault inside the SF6 gas-insulated circuit breaker decomposed sulfur hexafluoride into highly toxic thionyl fluoride and hydrogen fluoride gas. The invisible plume drifted into the nearby railway tunnel, causing fatal pulmonary edema in four scavengers."
-  },
-  {
-    "id": "substation_fire_lightning_arrester_varistor_meltdown",
-    "substation_id": "COAL_PLANT_INTERTIE_345KV",
-    "transformer_mva_rating": 450.0,
-    "oil_volume_liters": 38000,
-    "contaminant_combustion_byproduct": "ZINC_OXIDE_HEAVY_SMOKE",
-    "timestamp_relative": "YEAR_09_GRID_FIRE_01",
-    "tags": ["machinery", "substation", "surge_arrester", "emp", "varistor"],
-    "prose": "Multiple nanosecond EMP voltage spikes saturated the zinc-oxide varistor blocks inside the high-voltage surge arresters. The varistor disks shattered into molten zinc slag, igniting dry brush beneath the steel lattice tower."
-  },
-  {
-    "id": "substation_fire_oil_containment_bund_overflow",
-    "substation_id": "EAST_COAST_AUTO_TRANSFORMER_BANK",
-    "transformer_mva_rating": 600.0,
-    "oil_volume_liters": 52000,
-    "contaminant_combustion_byproduct": "BURNING_OIL_SURFACE_SLICK",
-    "timestamp_relative": "YEAR_12_GRID_FIRE_04",
-    "tags": ["machinery", "substation", "oil_slick", "bund_wall", "environmental"],
-    "prose": "Heavy rainfall filled the concrete oil-catchment basin prior to the transformer rupture. Fifty thousand liters of burning dielectric oil floated atop the rainwater and cascaded over the perimeter bund wall, creating a river of fire that destroyed the control building."
-  },
-  {
-    "id": "substation_fire_copper_busbar_vaporization_flash",
-    "substation_id": "HEAVY_FOUNDRY_FEEDER_YARD_115KV",
-    "transformer_mva_rating": 250.0,
-    "oil_volume_liters": 18000,
-    "contaminant_combustion_byproduct": "METALLIC_COPPER_VAPOR_CORONA",
-    "timestamp_relative": "YEAR_15_GRID_FIRE_02",
-    "tags": ["machinery", "substation", "busbar", "arc_flash", "vaporization"],
-    "prose": "A three-phase short-circuit carrying 95,000 amperes sustained an electric arc for six seconds before upstream breakers tripped. Four-inch hollow aluminum and copper tubular busbars were completely vaporized, leaving molten green droplets welded to the gravel floor."
-  },
-  {
-    "id": "substation_fire_relay_building_battery_explosion",
-    "substation_id": "CENTRAL_REGIONAL_DISPATCH_YARD",
-    "transformer_mva_rating": 400.0,
-    "oil_volume_liters": 32000,
-    "contaminant_combustion_byproduct": "HYDROGEN_SULFATE_BLAST_DEBRIS",
-    "timestamp_relative": "YEAR_17_GRID_FIRE_01",
-    "tags": ["machinery", "substation", "battery_explosion", "hydrogen", "control_room"],
-    "prose": "Failure of the exhaust fan in the 125-volt station DC battery room allowed hydrogen gas concentration to exceed 14%. A static spark from an automated relay trip contact detonated seventy-two lead-acid battery cells, blowing the concrete roof off the building."
-  },
-  {
-    "id": "substation_fire_dioxin_soot_crust_deposition",
-    "substation_id": "NORTHERN_GRID_TERMINAL_765KV",
-    "transformer_mva_rating": 1000.0,
-    "oil_volume_liters": 95000,
-    "contaminant_combustion_byproduct": "CHLORACNE_INDUCING_DIOXIN_CRUST",
-    "timestamp_relative": "YEAR_20_GRID_FIRE_01",
-    "tags": ["machinery", "substation", "dioxin", "toxic_soot", "chloracne"],
-    "prose": "Combustion of chlorinated PCB transformers deposited a dense, tarry soot crust across an eight-kilometer radius downwind. Surface scavengers traversing the zone developed severe disfiguring chloracne, liver enlargement, and chronic peripheral neuropathy."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "substation_fire_500kv_pcb_pyranol_conflagration",
+      "substation_id": "VALLEY_GRID_SUBSTATION_500KV",
+      "transformer_mva_rating": 750.0,
+      "oil_volume_liters": 65000,
+      "contaminant_combustion_byproduct": "POLYCHLORINATED_DIBENZODIOXINS",
+      "timestamp_relative": "YEAR_02_GRID_FIRE_01",
+      "tags": [
+        "machinery",
+        "substation",
+        "pcb_fire",
+        "transformer",
+        "grid_collapse"
+      ],
+      "prose": "Prompt EMP overcurrent caused internal dielectric arc-over in the 750 MVA step-up transformer. Sixty-five thousand liters of PCB-laden Pyranol insulating oil superheated, ruptured the tank lid, and burned for eighteen days in a tower of oily black smoke."
+    },
+    {
+      "id": "substation_fire_porcelain_bushing_shrapnel_burst",
+      "substation_id": "RIVER_CROSSING_SWITCHYARD_230KV",
+      "transformer_mva_rating": 350.0,
+      "oil_volume_liters": 28000,
+      "contaminant_combustion_byproduct": "CERAMIC_SHRAPNEL_FRAGMENTATION",
+      "timestamp_relative": "YEAR_04_GRID_FIRE_03",
+      "tags": [
+        "machinery",
+        "substation",
+        "bushing_burst",
+        "shrapnel",
+        "high_voltage"
+      ],
+      "prose": "Thermal shock from an adjacent fire caused the three-meter 230kV porcelain condenser bushing to explode with explosive force. Hundreds of razor-sharp ceramic shards pierced control cabinets and severed oil cooling radiators eighty meters away."
+    },
+    {
+      "id": "substation_fire_sulfur_hexafluoride_toxic_gas_cloud",
+      "substation_id": "MOUNTAIN_PASS_GAS_INSULATED_STATION",
+      "transformer_mva_rating": 500.0,
+      "oil_volume_liters": 0,
+      "contaminant_combustion_byproduct": "THIONYL_TETRAFLUORIDE_GAS",
+      "timestamp_relative": "YEAR_06_GRID_FIRE_02",
+      "tags": [
+        "machinery",
+        "substation",
+        "sf6_gas",
+        "toxic_plume",
+        "switchgear"
+      ],
+      "prose": "Catastrophic arc-fault inside the SF6 gas-insulated circuit breaker decomposed sulfur hexafluoride into highly toxic thionyl fluoride and hydrogen fluoride gas. The invisible plume drifted into the nearby railway tunnel, causing fatal pulmonary edema in four scavengers."
+    },
+    {
+      "id": "substation_fire_lightning_arrester_varistor_meltdown",
+      "substation_id": "COAL_PLANT_INTERTIE_345KV",
+      "transformer_mva_rating": 450.0,
+      "oil_volume_liters": 38000,
+      "contaminant_combustion_byproduct": "ZINC_OXIDE_HEAVY_SMOKE",
+      "timestamp_relative": "YEAR_09_GRID_FIRE_01",
+      "tags": [
+        "machinery",
+        "substation",
+        "surge_arrester",
+        "emp",
+        "varistor"
+      ],
+      "prose": "Multiple nanosecond EMP voltage spikes saturated the zinc-oxide varistor blocks inside the high-voltage surge arresters. The varistor disks shattered into molten zinc slag, igniting dry brush beneath the steel lattice tower."
+    },
+    {
+      "id": "substation_fire_oil_containment_bund_overflow",
+      "substation_id": "EAST_COAST_AUTO_TRANSFORMER_BANK",
+      "transformer_mva_rating": 600.0,
+      "oil_volume_liters": 52000,
+      "contaminant_combustion_byproduct": "BURNING_OIL_SURFACE_SLICK",
+      "timestamp_relative": "YEAR_12_GRID_FIRE_04",
+      "tags": [
+        "machinery",
+        "substation",
+        "oil_slick",
+        "bund_wall",
+        "environmental"
+      ],
+      "prose": "Heavy rainfall filled the concrete oil-catchment basin prior to the transformer rupture. Fifty thousand liters of burning dielectric oil floated atop the rainwater and cascaded over the perimeter bund wall, creating a river of fire that destroyed the control building."
+    },
+    {
+      "id": "substation_fire_copper_busbar_vaporization_flash",
+      "substation_id": "HEAVY_FOUNDRY_FEEDER_YARD_115KV",
+      "transformer_mva_rating": 250.0,
+      "oil_volume_liters": 18000,
+      "contaminant_combustion_byproduct": "METALLIC_COPPER_VAPOR_CORONA",
+      "timestamp_relative": "YEAR_15_GRID_FIRE_02",
+      "tags": [
+        "machinery",
+        "substation",
+        "busbar",
+        "arc_flash",
+        "vaporization"
+      ],
+      "prose": "A three-phase short-circuit carrying 95,000 amperes sustained an electric arc for six seconds before upstream breakers tripped. Four-inch hollow aluminum and copper tubular busbars were completely vaporized, leaving molten green droplets welded to the gravel floor."
+    },
+    {
+      "id": "substation_fire_relay_building_battery_explosion",
+      "substation_id": "CENTRAL_REGIONAL_DISPATCH_YARD",
+      "transformer_mva_rating": 400.0,
+      "oil_volume_liters": 32000,
+      "contaminant_combustion_byproduct": "HYDROGEN_SULFATE_BLAST_DEBRIS",
+      "timestamp_relative": "YEAR_17_GRID_FIRE_01",
+      "tags": [
+        "machinery",
+        "substation",
+        "battery_explosion",
+        "hydrogen",
+        "control_room"
+      ],
+      "prose": "Failure of the exhaust fan in the 125-volt station DC battery room allowed hydrogen gas concentration to exceed 14%. A static spark from an automated relay trip contact detonated seventy-two lead-acid battery cells, blowing the concrete roof off the building."
+    },
+    {
+      "id": "substation_fire_dioxin_soot_crust_deposition",
+      "substation_id": "NORTHERN_GRID_TERMINAL_765KV",
+      "transformer_mva_rating": 1000.0,
+      "oil_volume_liters": 95000,
+      "contaminant_combustion_byproduct": "CHLORACNE_INDUCING_DIOXIN_CRUST",
+      "timestamp_relative": "YEAR_20_GRID_FIRE_01",
+      "tags": [
+        "machinery",
+        "substation",
+        "dioxin",
+        "toxic_soot",
+        "chloracne"
+      ],
+      "prose": "Combustion of chlorinated PCB transformers deposited a dense, tarry soot crust across an eight-kilometer radius downwind. Surface scavengers traversing the zone developed severe disfiguring chloracne, liver enlargement, and chronic peripheral neuropathy."
+    }
+  ]
+}

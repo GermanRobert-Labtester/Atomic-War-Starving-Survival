@@ -1,0 +1,433 @@
+{
+  "schema_version": 1,
+  "collection_id": "improvised_repair_guides_batch_2",
+  "description": "Step-by-step repair guides for bunker systems, written by the Mechanic, the Electrician, and the Plumber. Each guide covers a specific failure mode and its field-expedient repair.",
+  "guides": [
+    {
+      "guide_id": "repair_b2_001",
+      "author": "the_electrician",
+      "system": "generator",
+      "title": "Generator Voltage Regulator Failure — Manual Bypass",
+      "symptoms": "Voltage fluctuates above 250V or below 200V. Equipment flickers. The voltmeter on the distribution panel shows unstable readings.",
+      "cause": "The electronic voltage regulator has failed. This is a pre-war component with no replacement available.",
+      "tools_needed": [
+        "manual_variac_installed",
+        "voltmeter",
+        "file_notch_on_dial"
+      ],
+      "steps": [
+        "Check the voltmeter on the distribution panel. If voltage is above 250V, immediately reduce the generator load (turn off non-essential equipment).",
+        "Locate the Variac (manual variable transformer) mounted on the wall beside the distribution panel.",
+        "Turn the Variac dial clockwise to reduce voltage, or counter-clockwise to increase it. Watch the voltmeter while adjusting.",
+        "Set the Variac to the position that gives 230V output. The file notch on the dial marks the approximate correct position for normal load.",
+        "If the load changes significantly (kitchen stove on/off, water pump running), re-check the voltage and adjust the Variac.",
+        "Log the adjustment in the generator logbook. Note the time, the voltage, and the load condition."
+      ],
+      "warnings": "Do not exceed 240V — this will damage the radio equipment and medical devices. Do not go below 210V — the water pump motor may overheat.",
+      "tags": [
+        "generator",
+        "electrical",
+        "manual_override",
+        "critical"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_002",
+      "author": "the_mechanic",
+      "system": "water_pump",
+      "title": "Electric Water Pump Motor Burnout — Gravity Feed Bypass",
+      "symptoms": "The water pump does not start when switched on. No sound from the motor. The kitchen tap runs dry.",
+      "cause": "The pump motor has burned out (winding failure). This is a pre-war motor with no replacement winding available.",
+      "tools_needed": [
+        "pipe_wrench",
+        "valve_keys_for_gravity_system"
+      ],
+      "steps": [
+        "Switch off the pump at the distribution panel. Lock out the circuit breaker.",
+        "Open the gravity-feed bypass valve (located on the pipe running from the cistern up through the ventilation shaft to the kitchen). The valve is a ball valve — turn the handle 90 degrees to open.",
+        "Open the kitchen storage tank inlet valve. Water will flow by gravity from the cistern (12m above) into the 50-litre storage tank.",
+        "Wait for the tank to fill (approximately 25 minutes for 50 litres). The float valve will shut off the flow automatically when the tank is full.",
+        "The kitchen tap draws from the storage tank. The flow rate is slower than the pump (approximately 2 litres/minute) but continuous.",
+        "When the pump is repaired, close the gravity bypass valve and reopen the pump outlet valve."
+      ],
+      "warnings": "The gravity system delivers water at low pressure. Do not attempt to run the dishwasher or washing machine from gravity feed — they require pump pressure.",
+      "tags": [
+        "water",
+        "pump",
+        "gravity_bypass",
+        "backup"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_003",
+      "author": "the_plumber",
+      "system": "compost_toilet",
+      "title": "Compost Toilet Odour — Urine Diversion Check",
+      "symptoms": "Foul smell from the compost toilet area. The smell is ammonia-like (sharp, burning).",
+      "cause": "The urine diversion plate has shifted or the urine collection bucket is full. Mixed urine and faeces produce ammonia as the urea breaks down.",
+      "tools_needed": [
+        "gloves",
+        "bucket",
+        "water_for_dilution"
+      ],
+      "steps": [
+        "Put on gloves. Open the compost toilet enclosure.",
+        "Check the urine diversion plate (the curved plastic insert on the seat). If it has shifted, reposition it so that urine flows into the collection container, not the compost chamber.",
+        "Check the urine collection bucket. If it is more than 3/4 full, empty it into the dilution tank (10-litre container near the greenhouse).",
+        "Dilute the urine 1:8 with water (1 part urine to 8 parts water). This produces the liquid fertiliser for the greenhouse.",
+        "Check the compost chamber. If it is too wet, add dry bulking material (sawdust, shredded paper, dry leaves). The compost should be damp, not soggy.",
+        "Close the enclosure. The smell should dissipate within 1 hour as the compost rebalances."
+      ],
+      "warnings": "Never mix undiluted urine with the compost — it will kill the aerobic bacteria and the compost will go anaerobic (smells like sewage). Always dilute 1:8 before applying to plants.",
+      "tags": [
+        "plumbing",
+        "compost_toilet",
+        "odour",
+        "maintenance"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_004",
+      "author": "the_electrician",
+      "system": "lighting",
+      "title": "Grow Light Ballast Failure — Replacement Procedure",
+      "symptoms": "One or more grow lights in the greenhouse are not illuminating. The bulbs are functional (tested in another fixture).",
+      "cause": "The electronic ballast has failed. Ballasts are pre-war components with limited lifespan. We have 3 spare ballasts in the workshop stores.",
+      "tools_needed": [
+        "screwdriver",
+        "spare_ballast",
+        "ladder"
+      ],
+      "steps": [
+        "Switch off the grow light circuit at the distribution panel. Verify with a voltage tester that the circuit is dead.",
+        "Climb the ladder to the failed light fixture. Remove the protective cover (4 screws).",
+        "Disconnect the ballast wiring (note the wire colours before disconnecting — take a photo or draw a diagram).",
+        "Remove the ballast mounting screws. Install the replacement ballast.",
+        "Reconnect the wiring according to your diagram. Double-check all connections.",
+        "Switch on the circuit and test the light. If it illuminates, replace the protective cover.",
+        "Log the replacement in the greenhouse maintenance log. Note which ballast failed and its age."
+      ],
+      "warnings": "Never work on the grow lights with the circuit energised. The ballasts operate at high voltage (400V+) and can cause serious shock. Always verify dead before touching.",
+      "tags": [
+        "lighting",
+        "greenhouse",
+        "ballast",
+        "electrical"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_005",
+      "author": "the_mechanic",
+      "system": "blast_door",
+      "title": "Blast Door Hydraulic Failure — Manual Winch Operation",
+      "symptoms": "The blast door does not open when the hydraulic switch is activated. The hydraulic pump runs but the door does not move.",
+      "cause": "Hydraulic fluid leak (seal failure) or pump failure. The door weighs 800 kg and cannot be moved by hand without the winch.",
+      "tools_needed": [
+        "winch_crank_handle"
+      ],
+      "steps": [
+        "Switch off the hydraulic system at the distribution panel.",
+        "Locate the manual winch mounted on the wall beside the blast door.",
+        "Engage the winch gear with the toothed rack on the door frame (slide the engagement lever until it clicks).",
+        "Insert the crank handle into the winch gearbox.",
+        "Turn the crank handle clockwise to open the door. The 20:1 gear reduction means you feel approximately 40 kg of force. One person can operate it.",
+        "The door opens at approximately 10 cm per crank revolution. Full opening takes approximately 4 minutes of continuous cranking.",
+        "When the door is fully open, the ratchet will hold it in position. Remove the crank handle.",
+        "To close: reverse the crank direction (counter-clockwise). The door will close under its own weight, controlled by the ratchet."
+      ],
+      "warnings": "Never stand in the door path while operating the winch. The door is 800 kg and will crush anything in its path. Two-person operation recommended: one cranking, one spotting.",
+      "tags": [
+        "blast_door",
+        "manual_override",
+        "emergency",
+        "winch"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_006",
+      "author": "the_chemist",
+      "system": "water_treatment",
+      "title": "UV Sterilization Lamp Failure — Emergency Chlorination",
+      "symptoms": "The UV sterilization lamp is not illuminating (visible through the inspection port). The water recycler is running but the water is not being sterilised.",
+      "cause": "UV lamp burnout or ballast failure. The lamp has a rated lifespan of 9,000 hours and may have exceeded it.",
+      "tools_needed": [
+        "electrolysis_apparatus",
+        "NaCl_salt",
+        "12V_DC_supply",
+        "glass_jar"
+      ],
+      "steps": [
+        "Switch off the UV sterilization system. Do not run the water recycler without sterilization — it will distribute contaminated water.",
+        "Prepare the electrolysis apparatus: fill the glass jar with salt water (5% NaCl — 50g salt per litre of water).",
+        "Insert the graphite electrodes and connect to the 12V DC supply. Run the electrolysis for 30 minutes. The solution will become sodium hypochlorite (bleach).",
+        "Test the produced solution: add 4 ml per litre of bunker water. Wait 30 minutes. Test with the DPD reagent (if available) for free chlorine. Target: 2 mg/L.",
+        "If DPD reagent is not available, use the smell test: the water should have a faint chlorine smell (like a swimming pool). If it smells strongly of chlorine, you have added too much — dilute with untreated water.",
+        "The chlorinated water is safe to drink after 30 minutes of contact time. Prepare fresh solution daily — it loses 5% potency per day.",
+        "When a replacement UV lamp is available, install it and discontinue chlorination."
+      ],
+      "warnings": "The electrolysis produces chlorine gas as a byproduct. Always perform the electrolysis in a ventilated area. Do not inhale the gas. The sodium hypochlorite solution is corrosive — wear gloves when handling.",
+      "tags": [
+        "water_treatment",
+        "UV",
+        "chlorination",
+        "emergency"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_007",
+      "author": "the_mechanic",
+      "system": "manual_lathe",
+      "title": "Lathe Cutting Tool Breakage — File Steel Replacement",
+      "symptoms": "The lathe cutting tool has broken or is too dull to cut. The original HSS tool is irreplaceable.",
+      "cause": "Tool breakage from overload, or normal wear. The file steel replacement tools last approximately 30 minutes of cutting before needing resharpening.",
+      "tools_needed": [
+        "metal_file",
+        "bench_grinder_or_rock",
+        "coolant_water"
+      ],
+      "steps": [
+        "Select a metal file from the workshop stores. A flat file (20-25cm) is ideal. The file must be high-carbon steel (pre-war files are best).",
+        "Break the file handle end off (wrap in cloth and strike with a hammer). The cutting end of the file is the working portion.",
+        "Grind the file to a cutting tool shape: a pointed tip with clearance angles on both sides. Use the bench grinder if available, or a flat rock and sand if not.",
+        "Harden the tip: heat it to cherry red with the forge (or the kitchen stove if the forge is unavailable), then quench in water. The tip should be hard enough to scratch glass.",
+        "Temper the tip: heat it to a straw colour (approximately 230 degrees C) to reduce brittleness. This takes practice — too hot and the tool is soft, too cool and it is brittle.",
+        "Mount the tool in the lathe tool post. Adjust the height so the cutting edge is at centre height.",
+        "Use coolant (water) during cutting to prevent overheating. Cut at reduced speed compared to the HSS tool."
+      ],
+      "warnings": "File steel is not as hard as HSS. Do not attempt to cut stainless steel or hardened alloys. The tool is suitable for aluminium, brass, mild steel, and wood only.",
+      "tags": [
+        "workshop",
+        "lathe",
+        "tool_making",
+        "improvised"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_008",
+      "author": "the_electrician",
+      "system": "radio",
+      "title": "Radio Receiver Static — Antenna and Ground Check",
+      "symptoms": "The radio receiver produces excessive static. Signals are buried in noise. Reception range has decreased.",
+      "cause": "Antenna connection corrosion, ground wire disconnection, or long-wire antenna damage.",
+      "tools_needed": [
+        "screwdriver",
+        "sandpaper",
+        "multimeter"
+      ],
+      "steps": [
+        "Check the antenna connection at the radio back panel. Disconnect and reconnect the antenna plug. Clean the connector with sandpaper if corroded.",
+        "Check the ground wire connection. The ground wire should be connected to a metal stake driven into the bunker floor. If disconnected, reconnect it.",
+        "If the problem persists, check the long-wire antenna on the surface. The wire should be taut and the insulators should be clean. If the wire is broken, splice it with available copper wire.",
+        "Test with the multimeter: the antenna should show continuity (low resistance) from the radio connector to the far end of the long wire.",
+        "If the antenna and ground are both good, the problem is internal to the radio. This requires the Radio Host expertise — refer to him."
+      ],
+      "warnings": "Never work on the antenna during an ash storm. The wire can become charged with static electricity and deliver a shock. Wait for calm conditions.",
+      "tags": [
+        "radio",
+        "antenna",
+        "maintenance",
+        "communications"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_009",
+      "author": "the_plumber",
+      "system": "water_distribution",
+      "title": "Pipe Leak — Emergency Patch Procedure",
+      "symptoms": "Water dripping from a pipe joint or visible water on the floor near a pipe run.",
+      "cause": "Pipe joint failure, corrosion pinhole, or physical damage.",
+      "tools_needed": [
+        "pipe_wrench",
+        "rubber_patch_material",
+        "hose_clamps_or_wire"
+      ],
+      "steps": [
+        "Identify the leak source. Dry the pipe with a cloth and watch for the water emergence point.",
+        "If the leak is at a joint: tighten the joint with a pipe wrench. Do not over-tighten — the pipe is old and may crack.",
+        "If the leak is a pinhole or crack: cut a piece of rubber (from an inner tube or gasket material) larger than the hole. Place it over the hole and secure with hose clamps or wire tied tightly around the pipe.",
+        "If the leak is a burst section: isolate the section by closing the nearest valves upstream and downstream. Bypass the section with a temporary pipe (available from the workshop stores).",
+        "After the repair, pressurise the system and check for leaks. Monitor the repair for 24 hours.",
+        "Log the repair in the maintenance log. Note the pipe material, diameter, and repair method."
+      ],
+      "warnings": "Never attempt to repair a pressurised pipe without isolating it first. The water system operates at low pressure (gravity feed) but a sudden release can cause injury.",
+      "tags": [
+        "plumbing",
+        "pipe",
+        "leak",
+        "emergency"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_010",
+      "author": "the_mechanic",
+      "system": "ventilation",
+      "title": "Ventilation Fan Failure — Natural Ventilation Bypass",
+      "symptoms": "The ventilation fan is not running. Air is stale. CO2 levels are rising.",
+      "cause": "Fan motor failure or belt breakage. The fan is a pre-war industrial unit with no replacement motor.",
+      "tools_needed": [
+        "screwdriver",
+        "replacement_belt_if_available"
+      ],
+      "steps": [
+        "Switch off the fan at the distribution panel. Check the belt: if broken, replace with a spare (we have 2 spares). If the belt is intact, the motor has failed.",
+        "If the motor has failed, remove the fan from the duct (4 mounting bolts). The duct opening is now a passive air inlet.",
+        "Open the passive airflow redirectors (see engineering mod eng_mod_004) to maximise natural ventilation through the duct.",
+        "Open the greenhouse east window (filtered) to create a cross-draft. The temperature difference between the bunker and the surface will drive natural airflow.",
+        "Monitor CO2 levels with the Chemist improvised detector. If CO2 exceeds 1500 ppm, increase the natural ventilation (open more windows, remove more duct covers).",
+        "The natural ventilation is approximately 30% as effective as the fan. This is adequate for the current population (47) but will become insufficient if the population grows."
+      ],
+      "warnings": "Natural ventilation does not filter the incoming air. In an ash storm, close all surface openings and seal the duct with a cloth filter (HEPA panel if available).",
+      "tags": [
+        "ventilation",
+        "fan",
+        "natural_ventilation",
+        "backup"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_011",
+      "author": "the_electrician",
+      "system": "generator",
+      "title": "Generator Fuel Filter Clogging — Cleaning Procedure",
+      "symptoms": "The generator runs rough, loses power, or stalls under load. The fuel supply is adequate (tank is more than 1/4 full).",
+      "cause": "The fuel filter is clogged with particulate contamination (rust, sediment from the fuel tank).",
+      "tools_needed": [
+        "wrench",
+        "clean_container",
+        "clean_cloth"
+      ],
+      "steps": [
+        "Switch off the generator. Close the fuel supply valve.",
+        "Locate the fuel filter (inline, between the tank and the carburetor). Disconnect the fuel lines on both sides of the filter.",
+        "Remove the filter element. If it is a paper element, replace it with a spare (we have 4 spares). If it is a metal mesh element, clean it.",
+        "To clean a metal mesh element: wash it in clean diesel (or the cleanest fuel available), then blow it out with compressed air (or your lungs — carefully).",
+        "Before reinstalling the filter, drain a litre of fuel from the tank bottom into a clean container. This removes the sediment that is clogging the filter. If the drained fuel is dirty, dispose of it (use it for the stove — it burns fine).",
+        "Reinstall the filter, reconnect the fuel lines, open the fuel valve. Start the generator and check for leaks.",
+        "Log the filter service in the generator logbook."
+      ],
+      "warnings": "Diesel is flammable. Do not smoke or use open flames near the fuel system. Wipe up any spills immediately.",
+      "tags": [
+        "generator",
+        "fuel",
+        "maintenance",
+        "filter"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_012",
+      "author": "the_watchmaker",
+      "system": "medical",
+      "title": "Metronome Spring Fatigue — Replacement Procedure",
+      "symptoms": "The metronome tick is irregular. The tempo drifts. The mechanism stops before 45 minutes.",
+      "cause": "The mainspring is fatigued. After approximately 5,000 hours of operation, the spring loses its elasticity.",
+      "tools_needed": [
+        "small_screwdriver",
+        "replacement_spring_from_wall_clock"
+      ],
+      "steps": [
+        "Remove the metronome case (2 screws on the back).",
+        "Note the spring orientation (take a photo or draw a diagram).",
+        "Release the spring tension carefully — the spring is under load and will unwind rapidly if not controlled.",
+        "Remove the old spring. Install the replacement spring (salvaged from a wall clock — the Watchmaker has 6 spare clock mechanisms).",
+        "Wind the spring 3 turns to engage it. Test the escapement: the pendulum arm should swing freely and the hammer should strike the brass block at each oscillation.",
+        "Adjust the tempo by moving the weight on the pendulum arm. Calibrate against a known time reference (the General watch, if running).",
+        "Replace the case. Log the spring replacement."
+      ],
+      "warnings": "The spring is under tension. Wear eye protection when removing it. A released spring can cause eye injury.",
+      "tags": [
+        "medical_device",
+        "metronome",
+        "clockwork",
+        "maintenance"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_013",
+      "author": "the_mechanic",
+      "system": "kitchen_stove",
+      "title": "Wood Stove Flue Blockage — Cleaning Procedure",
+      "symptoms": "The stove smokes when lit. The fire burns poorly. There is a visible smoke backup in the kitchen.",
+      "cause": "The flue (chimney) is blocked by creosote buildup or debris (bird nest, ash accumulation).",
+      "tools_needed": [
+        "flue_brush_or_weighted_brush",
+        "drop_cloth",
+        "dust_mask"
+      ],
+      "steps": [
+        "Ensure the stove is cold. Do not clean a hot flue — the creosote can ignite.",
+        "Place a drop cloth around the stove base to catch debris.",
+        "Remove the flue access panel (at the base of the chimney, behind the stove).",
+        "Insert the flue brush (or a weighted brush on a rope) into the flue from the access point. Work the brush up and down to dislodge the creosote.",
+        "Alternatively, drop a weighted brush from the roof (if the roof access is safe). The weight pulls the brush down through the flue.",
+        "Collect the dislodged creosote from the access panel. The creosote is flammable — dispose of it in a metal container away from the bunker.",
+        "Replace the access panel. Light the stove and check for proper draft. The smoke should rise cleanly through the flue."
+      ],
+      "warnings": "Creosote is highly flammable. Do not allow it to accumulate in the flue — clean the flue every 3 months. A flue fire can spread to the bunker structure.",
+      "tags": [
+        "kitchen",
+        "stove",
+        "flue",
+        "maintenance",
+        "fire_safety"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_014",
+      "author": "the_plumber",
+      "system": "water_distribution",
+      "title": "Float Valve Failure — Manual Water Level Control",
+      "symptoms": "The kitchen storage tank overflows. The float valve does not shut off the water flow when the tank is full.",
+      "cause": "The float valve mechanism has failed (corrosion, mineral buildup, or float puncture).",
+      "tools_needed": [
+        "pipe_wrench",
+        "replacement_float_if_available"
+      ],
+      "steps": [
+        "Close the gravity-feed bypass valve to stop the water flow to the tank.",
+        "Remove the float valve from the tank (it is threaded into the tank inlet). Inspect the float: if punctured (water inside), it will not float. Replace the float.",
+        "If the float is intact, the problem is the valve seat. Clean the valve seat with a cloth (mineral deposits can prevent the valve from sealing).",
+        "If cleaning does not fix the problem, the valve must be replaced. We have 2 spare float valves in the workshop stores.",
+        "If no spare is available, implement manual water level control: assign a resident to watch the tank and close the gravity valve when the tank reaches the full mark (a line drawn on the tank interior).",
+        "The manual method requires someone watching the tank at all times. This is not ideal but prevents overflow and water waste."
+      ],
+      "warnings": "Overflow from the tank will flood the kitchen floor. Standing water promotes mould growth and creates a slip hazard. Fix the float valve promptly.",
+      "tags": [
+        "plumbing",
+        "float_valve",
+        "water_tank",
+        "maintenance"
+      ]
+    },
+    {
+      "guide_id": "repair_b2_015",
+      "author": "the_electrician",
+      "system": "thermoelectric_generator",
+      "title": "TEG Module Failure — Replacement from Spare",
+      "symptoms": "The candle-to-electricity converter produces less than 2 watts. The output voltage drops below 4V with a load connected.",
+      "cause": "One or more of the 4 bismuth-telluride TEG modules has failed (cracked or delaminated from thermal cycling).",
+      "tools_needed": [
+        "soldering_iron",
+        "solder",
+        "replacement_TEG_module",
+        "thermal_compound"
+      ],
+      "steps": [
+        "Disconnect the TEG from the load. Allow it to cool completely (the modules get hot during operation).",
+        "Remove the heat sink from the hot side of the TEG array. The modules are sandwiched between the candle holder (hot side) and the heat sink (cold side).",
+        "Test each module individually with the multimeter: place a candle under one module at a time and measure the voltage output. A good module produces approximately 1V at temperature difference. A failed module produces 0V.",
+        "Remove the failed module (it is soldered to the copper bus bars). Desolder the connections carefully — the modules are fragile.",
+        "Install the replacement module. Apply thermal compound to both sides (thin layer). Solder the connections.",
+        "Reassemble the heat sink. Test the complete array: all 4 modules should produce approximately 4V total with 6 candles.",
+        "Log the replacement. We have 2 spare modules remaining. When they are gone, the TEG cannot be repaired."
+      ],
+      "warnings": "The TEG modules are fragile. Do not apply excessive force when handling. The bismuth-telluride material is brittle and will crack if dropped.",
+      "tags": [
+        "electrical",
+        "TEG",
+        "emergency_power",
+        "candle",
+        "finite_spares"
+      ]
+    }
+  ]
+}

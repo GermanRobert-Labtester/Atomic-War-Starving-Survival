@@ -159,7 +159,7 @@ namespace Ashfall.Core.Narrative
             string orbitalPath = Path.Combine(directoryPath, "orbital_kinetic_telemetry.json");
             if (File.Exists(orbitalPath))
             {
-                var list = JsonSerializer.Deserialize<List<OrbitalKineticEntry>>(File.ReadAllText(orbitalPath), options);
+                var list = CatalogLocator.LoadWrappedList<OrbitalKineticEntry>(File.ReadAllText(orbitalPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -175,7 +175,7 @@ namespace Ashfall.Core.Narrative
             string dronePath = Path.Combine(directoryPath, "drone_carrier_blackboxes.json");
             if (File.Exists(dronePath))
             {
-                var list = JsonSerializer.Deserialize<List<DroneCarrierBlackboxEntry>>(File.ReadAllText(dronePath), options);
+                var list = CatalogLocator.LoadWrappedList<DroneCarrierBlackboxEntry>(File.ReadAllText(dronePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -191,7 +191,7 @@ namespace Ashfall.Core.Narrative
             string cobaltPath = Path.Combine(directoryPath, "cobalt_arming_directives.json");
             if (File.Exists(cobaltPath))
             {
-                var list = JsonSerializer.Deserialize<List<CobaltDirectiveEntry>>(File.ReadAllText(cobaltPath), options);
+                var list = CatalogLocator.LoadWrappedList<CobaltDirectiveEntry>(File.ReadAllText(cobaltPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -207,7 +207,7 @@ namespace Ashfall.Core.Narrative
             string vaultPath = Path.Combine(directoryPath, "architect_vault_audits.json");
             if (File.Exists(vaultPath))
             {
-                var list = JsonSerializer.Deserialize<List<ArchitectVaultAuditEntry>>(File.ReadAllText(vaultPath), options);
+                var list = CatalogLocator.LoadWrappedList<ArchitectVaultAuditEntry>(File.ReadAllText(vaultPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -222,25 +222,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public OrbitalKineticEntry GetOrbital(string id)
+        public OrbitalKineticEntry? GetOrbital(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is OrbitalKineticEntry e ? e : null;
         }
 
-        public DroneCarrierBlackboxEntry GetDrone(string id)
+        public DroneCarrierBlackboxEntry? GetDrone(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is DroneCarrierBlackboxEntry e ? e : null;
         }
 
-        public CobaltDirectiveEntry GetCobalt(string id)
+        public CobaltDirectiveEntry? GetCobalt(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CobaltDirectiveEntry e ? e : null;
         }
 
-        public ArchitectVaultAuditEntry GetVault(string id)
+        public ArchitectVaultAuditEntry? GetVault(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ArchitectVaultAuditEntry e ? e : null;

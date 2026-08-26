@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -52,7 +53,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public TradeCaravanRouteEntry GetById(string routeId)
+        public TradeCaravanRouteEntry? GetById(string routeId)
         {
             if (string.IsNullOrEmpty(routeId)) return null;
             _byId.TryGetValue(routeId, out var entry);

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using System.Text;
 
 namespace Ashfall.Core
@@ -31,7 +32,7 @@ namespace Ashfall.Core
     {
         public const int DefaultSeed = 808;
 
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string? dataDirectory = null, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -100,7 +101,7 @@ namespace Ashfall.Core
             var roundtrip = new IceRoadSystem(1);
             ice.LogAccident();
             string blob = json.Serialize(ice.CaptureState());
-            roundtrip.RestoreState(json.Deserialize<IceRoadSystemState>(blob));
+            roundtrip.RestoreState(json.Deserialize<IceRoadSystemState>(blob)!);
             Check(roundtrip.IsUnlocked, "save roundtrip unlocked");
             Check(roundtrip.State.clerkStarted, "save roundtrip clerk");
             Check(roundtrip.State.accidentCount == ice.State.accidentCount, "save roundtrip accidents");

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using AtomicWar.GodotApp.UI;
 using Ashfall.Core.UI;
@@ -60,10 +61,7 @@ namespace AtomicWar.GodotApp.Muster
         public void RefreshView(int day, RiskBiasTrait authorBias)
         {
             if (_witnessList == null) return;
-            foreach (Node child in _witnessList.GetChildren())
-                child.QueueFree();
-
-            for (int i = 0; i < _witnesses.Count; i++)
+            AshfallUiHelpers.EmptyChildren(_witnessList);for (int i = 0; i < _witnesses.Count; i++)
             {
                 var w = _witnesses[i];
                 if (day < w.dayMin) continue;

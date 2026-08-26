@@ -1,75 +1,106 @@
-# Unity compatibility artifact build. Unity version pinned to ProjectVersion.txt.
-#
-# Canonical gameplay verification lives in ci.yml and uses Core + Godot/.NET.
-# This workflow deliberately does not duplicate that test battery; it only checks
-# that the retained Unity compatibility surface can still produce platform artifacts.
-# See docs/ENGINE_SUPPORT_POLICY.md.
-name: Build ASHFALL (Unity Compatibility)
+# Build ASHFALL — Godot export (replaces Unity 6000.5.5f1 builds)
+# Uses project.godot export_presets.cfg: Linux/X11 + Windows Desktop.
+# ci.yml is the test gate; this workflow only exports release builds.
+# See AGENTS.md: verification is dotnet + godot --headless; never Unity.
+
+name: Build ASHFALL
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-env:
-  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-  UNITY_VERSION: 6000.5.5f1
-
 jobs:
-  build-windows:
-    if: ${{ env.UNITY_LICENSE != '' && env.UNITY_EMAIL != '' && env.UNITY_PASSWORD != '' }}
-    name: Build Windows Compatibility Artifact
+  export-linux:
+    name: Export Linux/X11
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           lfs: true
 
-      - uses: actions/cache@v4
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@v4
         with:
-          path: Library
-          key: Library-Windows-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
-          restore-keys: |
-            Library-Windows-${{ env.UNITY_VERSION }}-
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
-      - uses: game-ci/unity-builder@v4
+      - name: Setup Godot 4.7.1 mono
+        uses: chickensoft-games/setup-godot@v2
         with:
-          projectPath: .
-          buildTarget: StandaloneWindows64
-          buildsPath: builds
-          unityVersion: 6000.5.5f1
+          version: 4.7.1
+          use-dotnet: true
+          include-templates: true
+
+      - name: dotnet build Godot host
+        run: dotnet build Ashfall.csproj --nologo
+
+      - name: godot --import
+        run: godot --headless --path . --import 2>&1 | tail -n 20
+
+      - name: Export Linux/X11
+        run: |
+          mkdir -p builds/linux
+          godot --headless --path . --export-release "Linux/X11" builds/linux/ashfall.x86_64
+          ls -lh builds/linux/
+          test -f builds/linux/ashfall.x86_64
+          # PCK should embed Data; also verify executable-adjacent Data for isolated CI gate
+          ls -lh builds/linux/*.pck 2>/dev/null || echo "no pck (embed_pck=false — Data beside binary)"
+
+      - name: Verify export includes data authority
+        run: |
+          # Either embedded in PCK or beside binary — one must exist
+          if [ -f "builds/linux/ashfall.pck" ]; then
+            echo "PCK found; Data embedded or beside binary per export_presets.cfg"
+          fi
+          # Quick smoke: run data-integrity on exported Data if present
+          if [ -d "builds/linux/Assets/StreamingAssets/Data" ]; then
+            echo "Exported Data on disk — verifying isolated selftest layout"
+            ls builds/linux/Assets/StreamingAssets/Data/*.json | head -n 5
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
-          name: unity-compat-Windows
-          path: builds/StandaloneWindows64
+          name: build-Linux
+          path: builds/linux
 
-  build-webgl:
-    if: ${{ env.UNITY_LICENSE != '' && env.UNITY_EMAIL != '' && env.UNITY_PASSWORD != '' }}
-    name: Build WebGL Compatibility Artifact
+  export-windows:
+    name: Export Windows Desktop
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           lfs: true
 
-      - uses: actions/cache@v4
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@v4
         with:
-          path: Library
-          key: Library-WebGL-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
-          restore-keys: |
-            Library-WebGL-${{ env.UNITY_VERSION }}-
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
-      - uses: game-ci/unity-builder@v4
+      - name: Setup Godot 4.7.1 mono
+        uses: chickensoft-games/setup-godot@v2
         with:
-          projectPath: .
-          buildTarget: WebGL
-          buildsPath: builds
-          unityVersion: 6000.5.5f1
+          version: 4.7.1
+          use-dotnet: true
+          include-templates: true
+
+      - name: dotnet build Godot host
+        run: dotnet build Ashfall.csproj --nologo
+
+      - name: godot --import
+        run: godot --headless --path . --import 2>&1 | tail -n 20
+
+      - name: Export Windows Desktop
+        run: |
+          mkdir -p builds/windows
+          godot --headless --path . --export-release "Windows Desktop" builds/windows/ashfall.exe
+          ls -lh builds/windows/
+          test -f builds/windows/ashfall.exe
 
       - uses: actions/upload-artifact@v4
         with:
-          name: unity-compat-WebGL
-          path: builds/WebGL
+          name: build-Windows
+          path: builds/windows

@@ -30,7 +30,9 @@ namespace AtomicWar.GodotApp.UI;
 public partial class MaritimeAtlasPanel : Control
 {
     public event Action? OnClose;
-    public event Action<string>? OnSiteSelected;
+    // OnSiteSelected was previously declared here but had zero subscribers
+    // anywhere in the codebase (audit §10). Removed in the cleanup pass;
+    // re-introduce with a host subscriber if a downstream consumer is added.
 
     private AshfallDashboardShell _shell = null!;
     private AshfallStatusRail? _statusRail;

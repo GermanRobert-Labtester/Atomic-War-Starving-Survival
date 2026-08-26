@@ -105,15 +105,12 @@ namespace Ashfall.Core.Narrative
                 AllowTrailingCommas = true
             };
 
-            var list = JsonSerializer.Deserialize<List<ContrabandEntry>>(json, options);
-            if (list != null)
+            var list = CatalogLocator.LoadWrappedList<ContrabandEntry>(json, options);
+            foreach (var entry in list)
             {
-                foreach (var entry in list)
-                {
-                    if (entry == null || string.IsNullOrWhiteSpace(entry.Id)) continue;
-                    catalog._entriesById[entry.Id] = entry;
-                    catalog._allEntries.Add(entry);
-                }
+                if (entry == null || string.IsNullOrWhiteSpace(entry.Id)) continue;
+                catalog._entriesById[entry.Id] = entry;
+                catalog._allEntries.Add(entry);
             }
 
             return catalog;
@@ -126,7 +123,7 @@ namespace Ashfall.Core.Narrative
             return LoadFromJson(json);
         }
 
-        public ContrabandEntry GetById(string id)
+        public ContrabandEntry? GetById(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             _entriesById.TryGetValue(id, out var entry);

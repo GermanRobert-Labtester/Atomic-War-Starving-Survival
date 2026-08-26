@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Combat
 {
@@ -178,7 +179,7 @@ namespace Ashfall.Core.Combat
             if (e.HumanKills >= HumanKillsForDesensitized) Grant(survivorId, DesensitizedId);
         }
 
-        public CombatPerkEntry GetEntry(string survivorId)
+        public CombatPerkEntry? GetEntry(string survivorId)
         {
             return !string.IsNullOrEmpty(survivorId) && _bySurvivor.TryGetValue(survivorId, out var e)
                 ? CloneEntry(e) : null;
@@ -239,7 +240,7 @@ namespace Ashfall.Core.Combat
                 if (e == null || string.IsNullOrEmpty(e.SurvivorId)) continue;
                 _bySurvivor[e.SurvivorId] = e;
             }
-            OnCombatPerkEarned = null; // do not replay grants on restore
+            OnCombatPerkEarned = null!; // do not replay grants on restore
         }
     }
 }

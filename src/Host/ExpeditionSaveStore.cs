@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
@@ -15,12 +16,43 @@ namespace AtomicWar.GodotApp
     public static class ExpeditionSaveStore
     {
         public const string FileName = "expedition_save.json";
+        public const string SectionName = "expedition";
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(List<ExpeditionState> state)
+    {
+        try
+        {
+            if (state == null) return string.Empty;
+            return new SystemTextJsonSerializer().Serialize(state);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[ExpeditionSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static List<ExpeditionState>? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return new SystemTextJsonSerializer().Deserialize<List<ExpeditionState>>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[ExpeditionSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 
@@ -32,7 +64,7 @@ namespace AtomicWar.GodotApp
                 var envelope = new ExpeditionHostSave { State = state };
                 envelope.Checksum = SaveChecksum.Compute(envelope);
                 string path = SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
@@ -45,7 +77,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static List<ExpeditionState> TryLoad()
+        public static List<ExpeditionState>? TryLoad()
         {
             try
             {

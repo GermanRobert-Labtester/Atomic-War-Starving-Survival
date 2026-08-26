@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Maritime
 {
@@ -44,7 +45,7 @@ namespace Ashfall.Core.Maritime
             new Dictionary<string, List<ContaminationEntry>>(StringComparer.Ordinal);
 
         public void ApplyContamination(string survivorId, string locationId,
-            float moraleAtVisit, string survivorArchetype = null)
+float moraleAtVisit, string? survivorArchetype = null)
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(locationId)) return;
             if (!LocationContaminations.TryGetValue(locationId, out var types)) return;
@@ -110,7 +111,7 @@ namespace Ashfall.Core.Maritime
             if (!_bySurvivor.TryGetValue(survivorId, out var list)) return false;
             for (int i = 0; i < list.Count; i++)
             {
-                string[] blocked = GetBlockedActions(list[i].Type);
+                string[] blocked = GetBlockedActions(list[i].Type)!;
                 if (blocked != null)
                     for (int j = 0; j < blocked.Length; j++)
                         if (blocked[j] == actionId) return true;
@@ -118,7 +119,7 @@ namespace Ashfall.Core.Maritime
             return false;
         }
 
-        private static string[] GetBlockedActions(string type)
+        private static string[]? GetBlockedActions(string type)
         {
             switch (type)
             {
@@ -129,7 +130,7 @@ namespace Ashfall.Core.Maritime
             }
         }
 
-        public IReadOnlyList<ContaminationEntry> GetContaminations(string survivorId)
+        public IReadOnlyList<ContaminationEntry>? GetContaminations(string survivorId)
             => _bySurvivor.TryGetValue(survivorId, out var list) ? list : null;
 
         public void Tick(float gameDays, string survivorId, float currentMorale, string currentAssignment)

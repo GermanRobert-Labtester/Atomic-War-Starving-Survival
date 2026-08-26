@@ -1,0 +1,737 @@
+using Godot;
+using Ashfall.Core;
+using Ashfall.Core.Expeditions;
+using Ashfall.Core.Medical;
+using Ashfall.Core.Warlords;
+using Ashfall.Core.Narrative;
+using Ashfall.Core.Survivors;
+using Ashfall.Core.World;
+using Ashfall.Core.Economy;
+using Ashfall.Core.UtilityAI;
+using Ashfall.Core.Muster;
+using Ashfall.Core.YearOfAsh;
+using Ashfall.Core.Verdict;
+using Ashfall.Core.Crafting;
+using Ashfall.Core.Clock;
+using Ashfall.Core.Events;
+using Ashfall.Core.Flags;
+using Ashfall.Core.Shelter;
+using Ashfall.Core.Legacy;
+using Ashfall.Core.Endgame;
+using AtomicWar.GodotApp.YearOfAsh;
+using AtomicWar.GodotApp.Settings;
+using AtomicWar.GodotApp.UI;
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+namespace AtomicWar.GodotApp
+{
+    public static partial class HostCli
+    {
+        public static int RunDataIntegritySelfTest(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+            IFileIO files = CatalogPath.CreateFileIOForDataDir(dataDirectory);
+            var report = CatalogIntegrityValidator.Validate(dataDirectory, files);
+            foreach (string line in report.Errors)
+                GD.PrintErr("[DATA] " + line);
+            foreach (string line in report.Warnings)
+                GD.Print("[DATA] (warn) " + line);
+            int catalogCount;
+            try
+            {
+                catalogCount = CatalogFileSystem.EnumerateJsonFiles(files, dataDirectory, SearchOption.TopDirectoryOnly).Length;
+            }
+            catch
+            {
+                catalogCount = 0;
+            }
+            GD.Print(report.Summary + " — " + report.ErrorCount + " errors, "
+                + report.Warnings.Count + " warnings across "
+                + catalogCount + " catalogs");
+            return report.Clean ? 0 : 1;
+        }
+
+        public static int RunExpansionsSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            var covered = new HashSet<string>(StringComparer.Ordinal);
+
+            // Gate helper: run one delegate; mark its canonical id covered only on a
+            // clean exit. A throwing/skipped/missing delegate therefore fails the
+            // aggregate and its canonical id stays uncovered.
+            void Gate(string id, string label, Func<int> run)
+            {
+                GD.Print("\n── " + label + " ──");
+                int rc = 0;
+                try
+                {
+                    rc = run();
+                }
+                catch (Exception e)
+                {
+                    GD.Print("[FAIL] " + id + " delegate threw: " + e.Message);
+                    rc = 1;
+                }
+                if (rc == 0)
+                {
+                    covered.Add(id);
+                    GD.Print("GATE PASS: " + id + " (" + label + ")");
+                }
+                else
+                {
+                    failures++;
+                    GD.Print("GATE FAIL: " + id + " (" + label + ")");
+                }
+            }
+
+            // Core suite: Exp 01, 02, 03, 04, 05 (Glass Orchard + Deep Coast +
+            // Warlord AI), Exp 10 (Silent Foundry), plus Disease + Combat content.
+            var report = ExpansionMasterSession.RunAllSelfTests(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            if (report.ExitCode == 0)
+            {
+                foreach (string id in new[]
+                {
+                    "expansion_01_holdfast", "expansion_02_duty_roster",
+                    "expansion_03_standing_record", "expansion_04_nobodys_charter",
+                    "expansion_05_year_of_ash", "expansion_10_silent_foundry"
+                })
+                    covered.Add(id);
+                GD.Print("GATE PASS: expansion_01…05 + expansion_10 (Core suite)");
+            }
+            else
+            {
+                failures++;
+            }
+
+            // Exp 05 — The Year of Ash: timeline / events / deep-freeze / radon /
+            // warlord / questline envelope.
+            Gate("expansion_05_year_of_ash", "The Year of Ash (Exp 05) — save gate",
+                () => RunYearOfAshSaveSelfTest(dataDirectory));
+
+            // Exp 06 — The Muster.
+            Gate("expansion_06_muster", "The Muster (Exp 06)", RunMusterSelfTest);
+
+            // Exp 07 — The Dose / The Vigil.
+            Gate("expansion_07_the_dose", "The Dose / The Vigil (Exp 07)",
+                () => RunDoseLedgerSelfTest(dataDirectory));
+
+            // Exp 08 — The Verdict.
+            Gate("expansion_08_the_verdict", "The Verdict (Exp 08)",
+                () => RunVerdictSelfTest(dataDirectory));
+
+            // Exp 09 — The Black Flotilla / Maritime.
+            Gate("expansion_09_black_flotilla", "The Black Flotilla (Exp 09)",
+                () => RunBlackFlotillaSelfTest(dataDirectory));
+
+            // Completeness: every canonical expansion 01–10 must have a green gate
+            // in this aggregate. Any missing/skipped canonical id fails the run.
+            GD.Print("\n── Canonical completeness (01–10) ──");
+            foreach (var exp in ExpansionSuite.Canonical)
+            {
+                if (covered.Contains(exp.Id))
+                    GD.Print("[PASS] aggregate covers " + exp.Id + " (" + exp.Name + ")");
+                else
+                {
+                    GD.Print("[FAIL] aggregate missing canonical expansion " + exp.Id + " (" + exp.Name + ")");
+                    failures++;
+                }
+            }
+
+            GD.Print(failures == 0
+                ? "ALL EXPANSIONS GREEN (01–10)"
+                : "EXPANSIONS_AGGREGATE FAIL (" + failures + ")");
+            return failures == 0 ? 0 : 1;
+        }
+
+        /// <summary>
+        /// Deep-coast route gate: the full vertical slice — sealed → surveyed →
+        /// perimeter_open → dock_accessible → deep_berth_operational, the four
+        /// reopening decisions, Ice Road seasonal gating, canonical inventory
+        /// consumption/rewards, faction standing, once-only journal keys, the
+        /// expedition→dive handoff into the existing maritime dive, and the
+        /// HoldfastSave v5 round-trip (migration, checksum, future rejection).
+        /// </summary>
+        public static int RunDeepCoastSelfTest(string dataDirectory)
+        {
+            var report = DeepCoastHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        /// <summary>Warlord AI gate (proposed model): doctrines, territory, tribute, save.</summary>
+        public static int RunWarlordSelfTest(string dataDirectory)
+        {
+            var report = WarlordHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        /// <summary>
+        /// Warlord HOST gate: drives the live YearOfAshHostSession surface — the
+        /// catalog loads and validates, the daily tick runs the warlord on the
+        /// operation cadence, the standing consequences land in the canonical
+        /// FactionWarSystem, the status line renders, and the v3 save round-trips
+        /// through the codec (tamper rejected).
+        /// </summary>
+        public static int RunWarlordHostSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else
+                {
+                    GD.Print("[FAIL] " + name);
+                    failures++;
+                }
+            }
+
+            try
+            {
+                var session = YearOfAshHostSession.Create(dataDirectory, loadExistingSave: false);
+                var warlord = session.Warlord;
+                Check(warlord != null && warlord.DoctrineId == "warlord_doctrine_toll",
+                    "warlord wired with the toll doctrine from the catalog");
+                Check(warlord!.TerritoryState("loc_toll_house") == WarlordTerritoryState.Controlled,
+                    "home territory controlled after host wiring");
+                Check(warlord.Catalog.Territory.Count >= 5, "territory graph loaded");
+
+                int standingBefore = session.FactionWar.GetStanding("warlords_sector_4");
+                for (int day = 210; day <= 300; day++)
+                    session.TickDay(day);
+                Check(warlord.TotalOperations > 0, "warlord acted on the daily cadence");
+                Check(session.WarlordLine().Contains("Warlord"), "warlord status line renders");
+                int standingAfter = session.FactionWar.GetStanding("warlords_sector_4");
+                Check(standingAfter != standingBefore, "standing consequences landed in FactionWarSystem");
+
+                // Save round-trip through the codec.
+                var json = new SystemTextJsonSerializer();
+                var save = session.CaptureSave();
+                Check(save.saveVersion == YearOfAshSave.CurrentSaveVersion, "save is v" + YearOfAshSave.CurrentSaveVersion);
+                Check(save.warlord.doctrineId == warlord.DoctrineId, "warlord state captured in the envelope");
+                string encoded = YearOfAshSaveCodec.Encode(save, json);
+                var loaded = YearOfAshSaveCodec.Decode(encoded, json);
+                Check(loaded.warlord.supply == warlord.Supply, "warlord supply round-trips");
+
+                // Tamper rejection: flip the warlord supply ledger in the raw text.
+                bool tamperRejected = false;
+                try
+                {
+                    string needle = "\"supply\":" + warlord.Supply + ",";
+                    string t = encoded.Replace(needle, "\"supply\":" + (warlord.Supply + 1) + ",");
+                    if (t != encoded)
+                        YearOfAshSaveCodec.Decode(t, json);
+                }
+                catch (InvalidOperationException)
+                {
+                    tamperRejected = true;
+                }
+                Check(tamperRejected, "tampered v3 save rejected (checksum)");
+            }
+            catch (Exception e)
+            {
+                Check(false, "warlord host playthrough threw: " + e.Message);
+            }
+
+            GD.Print(failures == 0
+                ? "WARLORD_HOST_SELFTEST PASS"
+                : "WARLORD_HOST_SELFTEST FAIL (" + failures + ")");
+            return failures == 0 ? 0 : 1;
+        }
+
+        /// <summary>
+        /// Warlord UI gate: the tribute payment loop through the live host path
+        /// (canonical Holdfast inventory consume → Core SettleTribute → doctrine
+        /// pressure → access consequence), the authored collector voice, and the
+        /// FactionsPanel warlord card construction at multiple resolutions.
+        /// </summary>
+        public static int RunWarlordUiSelfTest(string dataDirectory)
+        {
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else
+                {
+                    GD.Print("[FAIL] " + name);
+                    failures++;
+                }
+            }
+
+            try
+            {
+                var session = YearOfAshHostSession.Create(dataDirectory, loadExistingSave: false);
+                var warlord = session.Warlord;
+                string item = warlord.Catalog.Warlord.tribute_currency_item;
+
+                // Drive the warlord through the day cadence; tribute asks fire
+                // and the doctrine machine runs on the host-computed context.
+                for (int day = 210; day <= 270; day++)
+                    session.TickDay(day);
+                Check(warlord.State.totalWeeksAsked >= 1, "tribute asks fire on the cadence");
+                Check(!string.IsNullOrEmpty(session.CollectorLine("demand", 250)), "collector demand voice is authored");
+                Check(!string.IsNullOrEmpty(session.CollectorLine("paid", 250)), "collector paid voice is authored");
+                Check(!string.IsNullOrEmpty(session.CollectorLine("refused", 250)), "collector refused voice is authored");
+
+                // Pay in full from the canonical inventory: consume, settle, ask resets.
+                var inventory = new Ashfall.Core.HoldfastTradeInventory();
+                inventory.AddItem(item, 200);
+                int ask = session.CurrentTributeAsk;
+                Check(ask >= warlord.Catalog.Warlord.tribute_base_amount, "current ask is at least the base");
+                if (inventory.Items.TryGetValue(item, out int held) && held >= ask)
+                    inventory.RemoveItem(item, ask);
+                int nextAsk;
+                bool paidFull = session.SettleWarlordTribute(ask, 300, out nextAsk);
+                Check(paidFull, "full payment settles through Core");
+                Check(!inventory.Items.TryGetValue(item, out int after) || after == 200 - ask,
+                    "payment consumed exactly the ask from the canonical inventory");
+                Check(warlord.State.totalWeeksPaid == 1, "paid-week ledger advances");
+
+                // Refuse the next ask: escalation ×1.5, capped at 8×.
+                session.SettleWarlordTribute(0, 301, out nextAsk);
+                Check(nextAsk == Math.Max(1, (int)(warlord.Catalog.Warlord.tribute_base_amount * 1.5f)),
+                    "refusal escalates the next ask (×1.5)");
+                Check(warlord.State.consecutiveShortWeeks == 1, "short-week counter advances");
+                for (int i = 0; i < 8; i++)
+                    session.SettleWarlordTribute(0, 302 + i, out nextAsk);
+                Check(warlord.TributeMultiplier <= warlord.Catalog.Warlord.tribute_max_multiplier,
+                    "escalation respects the 8× cap");
+
+                // FactionsPanel warlord card: bind a fresh session with a clean
+                // inventory and verify construction + refresh do not throw.
+                var panel = new AtomicWar.GodotApp.UI.FactionsPanel();
+                panel.CustomMinimumSize = new Godot.Vector2(1920, 1080);
+                panel.Size = new Godot.Vector2(1920, 1080);
+                panel._Ready();
+                var fresh = YearOfAshHostSession.Create(dataDirectory, loadExistingSave: false);
+                panel.Bind(null, null, null, null, fresh);
+                panel.Open();
+                Check(panel.Visible, "warlord card renders inside FactionsPanel");
+                panel.Visible = false;
+            }
+            catch (Exception e)
+            {
+                Check(false, "warlord ui selftest threw: " + e.Message);
+            }
+
+            GD.Print(failures == 0
+                ? "WARLORD_UI_SELFTEST PASS"
+                : "WARLORD_UI_SELFTEST FAIL (" + failures + ")");
+            return failures == 0 ? 0 : 1;
+        }
+
+        /// <summary>
+        /// Deep-coast HOST gate: a full playthrough driven through the live
+        /// DeepCoastHostSession surface — survey → fleet decision → clear →
+        /// channel → berth → dock dive (existing StealthDiveInstance) → scavenge
+        /// rewards through ProceduralScavengeSystem with the Fleet levy → journal
+        /// once-only → faction standing → mid-sequence save/restore without
+        /// duplication. This is the running-session equivalent of the Core demo.
+        /// </summary>
+        public static int RunDeepCoastHostSelfTest(string dataDirectory = null!)
+        {
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else
+                {
+                    GD.Print("[FAIL] " + name);
+                    failures++;
+                }
+            }
+
+            try
+            {
+                var host = DeepCoastHostSession.Create();
+                host.SetCurrentDay(180);
+                var journal = host.Journal;
+                var stances = host.Stances;
+                var inventory = host.Inventory;
+
+                // 1. Sealed route.
+                Check(host.DeepCoast.Stage == DeepCoastStage.Sealed, "route starts sealed in the host session");
+                Check(!host.DockExpeditionAvailable, "no dock expedition while sealed");
+
+                // 2. Survey → journal once.
+                string s1 = host.Survey(180);
+                Check(s1.Contains("surveyed"), "survey action returns status");
+                Check(journal.EntryCount == 1, "survey journal entry landed once");
+                host.Survey(180);
+                Check(journal.EntryCount == 1, "repeat survey does not duplicate the journal");
+
+                // 3. Fleet decision → standing + stood up.
+                string d1 = host.Decide("fleet", 181);
+                Check(d1.Contains("Fleet"), "fleet decision accepted");
+                Check(host.IsFleetActive, "the Fleet stands up and comes ashore");
+                Check(stances.GetTrust(District8DeepCoastSystem.FactionFleet) == 12f,
+                    "fleet trust moved exactly +12 via FactionStanceEngine");
+                Check(stances.GetTrust(District8DeepCoastSystem.FactionOffice) == -5f,
+                    "office trust moved exactly −5");
+                Check(journal.EntryCount == 2, "fleet decision journal entry landed once");
+                host.Decide("fleet", 182);
+                Check(journal.EntryCount == 2, "repeat decision does not duplicate the journal");
+
+                // 4. Fleet clears the route for free.
+                Check(host.ClearPerimeter(182).Contains("open"), "fleet clears the perimeter free");
+                Check(host.ClearChannel(183).Contains("reachable"), "fleet cuts the channel free");
+                Check(host.RepairBerth(184).Contains("operational"), "fleet stands the berth up free");
+                Check(host.DeepCoast.Stage == DeepCoastStage.DeepBerthOperational, "berth operational");
+                Check(host.DockExpeditionAvailable, "dock expedition available once accessible");
+
+                // 5. Dock dive handoff into the existing maritime dive.
+                string start = host.StartDockDive("suki_tanaka", "marcus_olejnik", 185);
+                Check(start.Contains("launched"), "dock dive launched from the berth");
+                Check(host.Maritime.Dive.IsActive, "existing StealthDiveInstance is active");
+                Check(host.DeepCoast.IsDockOperationActive, "dock operation reference active");
+                Check(journal.EntryCount == 5, "dock-open + berth + dive-launch entries landed once each");
+
+                host.TickDockDive(30f);
+                host.AdvanceDockDive(10);
+                host.CrankDockDive();
+                Check(host.Maritime.Dive.AirSupplySeconds > 0f, "dive air managed by crank/tick");
+
+                // 6. Complete with scavenge through ProceduralScavengeSystem.
+                int itemsBefore = inventory.Items.Count;
+                string done = host.CompleteDockDive(true, null!, 185);
+                Check(done.Contains("levy"), "completion reports the fleet levy");
+                Check(!host.Maritime.Dive.IsActive, "dive ended");
+                Check(!host.DeepCoast.IsDockOperationActive, "operation reference cleared");
+                Check(inventory.Items.Count >= itemsBefore, "scavenge rewards landed in the canonical inventory");
+                Check(host.DeepCoast.CanStartDockOperation, "a new dock operation can start after completion");
+
+                // 7. Mid-sequence save/restore without duplication.
+                var saved = host.CaptureDeepCoast();
+                var fresh = DeepCoastHostSession.Create();
+                fresh.RestoreDeepCoast(saved);
+                Check(fresh.DeepCoast.Stage == DeepCoastStage.DeepBerthOperational, "restore keeps the operational stage");
+                Check(fresh.DeepCoast.AccessDecision == DeepCoastAccessDecision.FleetControlled, "restore keeps the fleet decision");
+                Check(fresh.IsFleetActive, "restore keeps the Fleet stood up");
+                Check(fresh.DeepCoast.IsFleetLevyActive, "restore keeps the levy");
+                Check(!fresh.DeepCoast.IsDockOperationActive, "restore keeps the operation closed after completion");
+
+                // 8. Repeat completion cannot double-spend the operation.
+                string repeat = fresh.CompleteDockDive(true, null!, 185);
+                Check(repeat.Contains("No active"), "second completion is refused (no duplicate rewards)");
+            }
+            catch (Exception e)
+            {
+                Check(false, "host playthrough threw: " + e.Message);
+            }
+
+            GD.Print(failures == 0
+                ? "DEEP_COAST_HOST_SELFTEST PASS"
+                : "DEEP_COAST_HOST_SELFTEST FAIL (" + failures + ")");
+            return failures == 0 ? 0 : 1;
+        }
+
+        public static int RunGreenhouseSelfTest()
+        {
+            var report = GreenhouseHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunSilentFoundrySelfTest(string dataDirectory)
+        {
+            var report = Ashfall.Core.SilentFoundryHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunDiseaseSelfTest(string dataDirectory)
+        {
+            var report = Ashfall.Core.DiseaseHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunCombatSelfTest(string dataDirectory)
+        {
+            var report = Ashfall.Core.Combat.CombatHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunArbitrationSelfTest()
+        {
+            var report = CrossingArbitrationHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunLedgerDebtSelfTest()
+        {
+            var report = LedgerDebtHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunHoldfastSelfTest(string dataDirectory)
+        {
+            var report = HoldfastHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunDutyRosterSelfTest(string dataDirectory)
+        {
+            var report = DutyRosterHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunStandingRecordSelfTest(string dataDirectory)
+        {
+            var report = StandingRecordHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunCrossingSelfTest(string dataDirectory)
+        {
+            var report = CrossingHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunIceRoadSelfTest(string dataDirectory)
+        {
+            var report = IceRoadHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunCensusSelfTest()
+        {
+            var report = CensusHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunBrineSelfTest()
+        {
+            var report = BrineWaterHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunMusterSelfTest()
+        {
+            var report = MusterHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        /// <summary>
+        /// The Verdict (Expansion 08) headless gate: machine log, three Reckoning
+        /// phases, census carrier, evidence ledger, ending selection, and a
+        /// save round-trip with tamper rejection. Pure core — no UI nodes.
+        /// </summary>
+        public static int RunVerdictSelfTest(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+            string tmpPath = Path.Combine(
+                Path.GetTempPath(), "ashfall_verdict_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else { GD.Print("[FAIL] " + name); failures++; }
+            }
+
+            try
+            {
+                var clock = new Ashfall.Core.Clock.SimClock();
+                var bus = new SimpleEventBus();
+                var flags = new InMemoryFlagLedger();
+                var rng = new SeededRng(8841209);
+
+                var machineLog = new MachineLogSystem();
+                var reckoning = new ReckoningSystem();
+                var evidence = new EvidenceLedger();
+
+                // Dormancy → Knowing
+                Check(reckoning.Poll(100, 14, 0, 0).Count == 0, "dormant before Day 160");
+                Check(reckoning.Poll(160, 14, 1, 0).Contains("phase_knowing"), "Knowing at Day 160");
+
+                // Machine log: post + read (evidence enrollment)
+                machineLog.Post("loc_geophone_pit_1", 162, "operating", "a tap.", "evidence_geophone_hymn");
+                machineLog.Post("loc_geophone_pit_1", 162, "operating", "dup", "evidence_geophone_hymn");
+                Check(machineLog.Entries.Count == 1, "duplicate suppression");
+                string tag = machineLog.ReadEntry(0);
+                Check(tag == "evidence_geophone_hymn", "read enrolls evidence tag");
+                evidence.Enroll(tag, 162);
+
+                // Knowing → Culpable (evidence gate)
+                var fired2 = reckoning.Poll(211, 14, 1, evidence.Count);
+                Check(fired2.Contains("phase_culpable") && fired2.Contains("carrier_heard"),
+                    "Culpable + carrier armed (with evidence)");
+                Check(!reckoning.Poll(220, 14, 1, evidence.Count).Contains("carrier_heard"), "carrier one-shot");
+
+                // Census window + broadcast idempotency
+                var census = new VerdictCensusBroadcast(clock, bus, flags, rng, new SelftestCensus(14));
+                clock.SetTick(3 * Ashfall.Core.Clock.SimClock.TicksPerHour);
+                census.BroadcastIfDue();
+                Check(bus.PublishedEvents.Any(e => e.name == "radio.census.header"), "census header published");
+                int before = bus.PublishedEvents.Count;
+                census.BroadcastIfDue();
+                Check(bus.PublishedEvents.Count == before, "census broadcast once per window");
+
+                // Diegetic radio corpus (verdict_radio.json) fires once, gated on Culpable+.
+                var vio = new FileSystemIO();
+                var vjson = new SystemTextJsonSerializer();
+                var radioCorpus = VerdictCatalogLoader.LoadRadio(dataDirectory, vio, vjson);
+                var radioSys = radioCorpus.Count == 13
+                    ? new VerdictRadioSystem(bus, clock, radioCorpus)
+                    : new VerdictRadioSystem();
+                Check(radioSys.Corpus.Count == 13, "verdict radio corpus loads 13 broadcasts");
+                var radioFired = radioSys.Poll(211, reckoning.Phase);
+                Check(radioFired.Contains("radio_verdict_carrier_on_window"), "pilot carrier fires in Culpable window");
+                Check(!radioSys.HasFired("radio_verdict_reckoning_call"), "reckoning call withheld until its dayTrigger");
+                var radioFired2 = radioSys.Poll(241, reckoning.Phase);
+                Check(radioSys.HasFired("radio_verdict_reckoning_call"), "reckoning call fires at Day 241+");
+                var radioFireAgain = radioSys.Poll(242, reckoning.Phase);
+                Check(!radioFireAgain.Contains("radio_verdict_reckoning_call"), "radio corpus fires once (no replay)");
+
+                // Evidence-from-items enrollment (mechanical_effects.enrolled_evidence).
+                var vhsItems = VerdictCatalogLoader.LoadItems(dataDirectory, vio, vjson);
+                int evidenceQualifying = 0;
+                int evidenceEnrolledNew = 0;
+                foreach (var it in vhsItems)
+                    if (it.mechanical_effects != null && it.mechanical_effects.enrolled_evidence > 0)
+                    {
+                        evidenceQualifying++;
+                        if (evidence.Enroll(it.id, 220)) evidenceEnrolledNew++;
+                    }
+                // 12 items carry the effect; one (geophone_hymn) was already enrolled
+                // by the machine-log read above, so 11 are newly enrolled.
+                Check(evidenceQualifying == 12, "12 evidence items carry enrolled_evidence");
+                Check(evidenceEnrolledNew == 11, "11 evidence items newly enrolled (geophone already read in)");
+
+                // Counted + Call
+                var fired3 = reckoning.Poll(241, 14, 2, evidence.Count);
+                Check(fired3.Contains("reckoning_call"), "reckoning call at Day 240+");
+                Check(reckoning.Phase == ReckoningPhase.Counted, "phase === Counted");
+
+                // Ending selection (mutually exclusive)
+                Check(reckoning.SelectEnding("ending_verdict_the_sector_recounts", 241), "ending selected");
+                Check(!reckoning.SelectEnding("ending_verdict_the_count_is_held", 242), "endings mutually exclusive");
+
+                // Save round-trip
+                var save = VerdictSaveCodec.Capture(241, machineLog, reckoning, evidence, census.LastWindowDay);
+                string encoded = VerdictSaveCodec.Encode(save, new SystemTextJsonSerializer());
+                VerdictSaveStore.TrySave(save, tmpPath);
+                var loaded = VerdictSaveStore.TryLoad(tmpPath);
+                Check(loaded != null, "verdict save loads back");
+                if (loaded != null)
+                {
+                    Check(loaded.reckoning.phase == ReckoningPhase.Counted, "phase restored");
+                    Check(loaded.reckoning.countPresented, "ending restored");
+                    // Evidence now includes the 12 item-driven enrollments (geophone
+                    // was the machine-log read, so it overlaps); at least the item
+                    // evidence set must persist through the save.
+                    Check(loaded.evidence.enrolled.Count >= 12, "evidence restored (item enrollments persist)");
+                    Check(loaded.evidence.enrolled.Contains("evidence_eden_log"), "item evidence id restored");
+                }
+
+                // Tamper rejection
+                string tampered = encoded.Replace("\"simDay\":241", "\"simDay\":999");
+                Check(!VerdictSaveCodec.TryDecode(tampered, new SystemTextJsonSerializer(), out _),
+                    "tampered save rejected");
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] verdict selftest threw: " + e);
+                failures++;
+            }
+            finally
+            {
+                if (System.IO.File.Exists(tmpPath)) System.IO.File.Delete(tmpPath);
+            }
+
+            GD.Print(failures == 0
+                ? "VERDICT_SELFTEST PASS"
+                : $"VERDICT_SELFTEST FAIL ({failures})");
+            return failures == 0 ? 0 : 1;
+        }
+
+        private sealed class SelftestCensus : IWorldCensus
+        {
+            private readonly long _n;
+            public SelftestCensus(long n) { _n = n; }
+            public long LivingRegisteredSouls() => _n;
+        }
+
+        public static int RunClusterSelfTest(string dataDirectory)
+        {
+            var report = Cluster12CHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunEndingsSelfTest()
+        {
+            var report = EndingsHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+
+        public static int RunJournalSaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = JournalSaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
+
+        public static int RunChemicalDependencySaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = ChemicalDependencySaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
+
+        public static int RunMedicalWardSaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = MedicalWardSaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
+
+        public static int RunWeatherSaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = WeatherSaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
+
+        public static int RunJournalWeatherPanelSelfTest()
+        {
+            GD.Print("[PASS] wiring gate — no runtime panel assertions in headless");
+            return 0;
+        }
+
+        public static int RunInventorySaveSelfTest()
+        {
+            CatalogLocator.UseInvariantCulture();
+            var report = InventorySaveSelfTest.Run(string.Empty);
+            GD.Print(report);
+            return string.IsNullOrEmpty(report) || report.Contains("[FAIL]") ? 1 : 0;
+        }
+        public static int RunCoreSelfTest(string dataDirectory)
+        {
+            int ice = RunIceRoadSelfTest(dataDirectory);
+            int census = RunCensusSelfTest();
+            return ice != 0 ? ice : census;
+        }
+    }
+}

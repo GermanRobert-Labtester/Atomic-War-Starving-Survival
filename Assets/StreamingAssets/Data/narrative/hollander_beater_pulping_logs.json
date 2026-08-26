@@ -1,82 +1,133 @@
-[
-  {
-    "id": "hollander_beater_flax_linen_rag_maceration",
-    "beater_tub_id": "PRIMARY_HOLLANDER_PULP_ENGINE_01",
-    "rag_feedstock_type": "FLAX_LINEN_BEDDING_RAGS",
-    "beating_duration_hours": 7.5,
-    "schopper_riegler_freeness_sr": 35.0,
-    "timestamp_relative": "YEAR_02_PULP_01",
-    "tags": ["paper_making", "hollander_beater", "linen_rags", "fibrillation", "cellulose_pulp"],
-    "prose": "Macerating sixty kilograms of chopped white linen rags between the phosphor-bronze bedplate knives and the sixty-RPM revolving roll fibrillated the fibers without shortening. The resulting creamy stock had high internal fiber-to-fiber bonding strength."
-  },
-  {
-    "id": "hollander_beater_bedplate_gap_freeness_drain",
-    "beater_tub_id": "PRECISION_PULPING_VAT_02",
-    "rag_feedstock_type": "HEIRLOOM_COTTON_RAGS",
-    "beating_duration_hours": 6.0,
-    "schopper_riegler_freeness_sr": 42.0,
-    "timestamp_relative": "YEAR_04_PULP_03",
-    "tags": ["paper_making", "hollander_beater", "bedplate_gap", "freeness", "drainage_rate"],
-    "prose": "Adjusting the screw-wheel bedplate gap to exactly 0.25mm regulated stock freeness to 42° Schopper-Riegler. The fine degree of hydration allowed fast water drainage across wire moulds while retaining tight sheet formation."
-  },
-  {
-    "id": "hollander_beater_washing_drum_dirty_water_extract",
-    "beater_tub_id": "CONTINUOUS_WASHING_ENGINE_03",
-    "rag_feedstock_type": "SOILED_COMMISSARY_WORKWEAR",
-    "beating_duration_hours": 4.5,
-    "schopper_riegler_freeness_sr": 28.0,
-    "timestamp_relative": "YEAR_07_PULP_02",
-    "tags": ["paper_making", "hollander_beater", "washing_drum", "dirt_removal", "water_extraction"],
-    "prose": "A revolving hexagonal drum clad in 60-mesh brass wire gauze skimmed dirty wash water from the center trough while retaining pulp. Fresh spring water flushed through the oval tub until the effluent ran crystal-clear."
-  },
-  {
-    "id": "hollander_beater_hemp_canvas_fiber_length_retention",
-    "beater_tub_id": "HEAVY_DUTY_RAG_ENGINE_04",
-    "rag_feedstock_type": "MILITARY_HEMP_TARPAULIN",
-    "beating_duration_hours": 10.0,
-    "schopper_riegler_freeness_sr": 25.0,
-    "timestamp_relative": "YEAR_09_PULP_04",
-    "tags": ["paper_making", "hollander_beater", "hemp_canvas", "fiber_length", "bast_fibers"],
-    "prose": "Processing tough hemp canvas with wooden-backed dull roll bars combed out ten-millimeter long bast fibers without severing them. The long-fibered pulp was reserved for high-tensile technical drawing paper and filter membranes."
-  },
-  {
-    "id": "hollander_beater_cotton_rag_knot_clump_breakup",
-    "beater_tub_id": "FINES_REFINING_VAT_05",
-    "rag_feedstock_type": "WHITE_COTTON_UNDERGARMENTS",
-    "beating_duration_hours": 5.0,
-    "schopper_riegler_freeness_sr": 38.0,
-    "timestamp_relative": "YEAR_12_PULP_01",
-    "tags": ["paper_making", "hollander_beater", "knot_breakup", "backfall", "homogenization"],
-    "prose": "Circulating pulp slurry over the curved backfall crest broke up un-macerated seam knots and cotton twist clumps. The homogeneous fiber suspension showed zero floating clots when diluted in inspection glass cylinders."
-  },
-  {
-    "id": "hollander_beater_reclaimed_blueprint_ammonia_leach",
-    "beater_tub_id": "DE-INKING_RECLAMATION_TUB_06",
-    "rag_feedstock_type": "PRE_WAR_DRAFTING_BLUEPRINTS",
-    "beating_duration_hours": 8.0,
-    "schopper_riegler_freeness_sr": 48.0,
-    "timestamp_relative": "YEAR_15_PULP_03",
-    "tags": ["paper_making", "hollander_beater", "blueprint_deinking", "prussian_blue", "fiber_recycling"],
-    "prose": "Shredded pre-war diazo and cyanotype blueprints were soaked in 2% warm soda ash liquor to decompose Prussian blue ferric ferrocyanide dyes. Three subsequent freshwater wash cycles converted the dark scrap into pristine cream-colored pulp."
-  },
-  {
-    "id": "hollander_beater_bronze_flybar_edge_burr_honing",
-    "beater_tub_id": "MAINTENANCE_OVERHAUL_CRADLE",
-    "rag_feedstock_type": "STANDARD_FLAX_HEMP_BLEND",
-    "beating_duration_hours": 0.0,
-    "schopper_riegler_freeness_sr": 0.0,
-    "timestamp_relative": "YEAR_17_PULP_02",
-    "tags": ["paper_making", "hollander_beater", "flybar_honing", "knife_maintenance", "shearing_edge"],
-    "prose": "Inspecting the thirty-two cast bronze flybars revealed rounded edges and cavitation pits along leading corners. Dressing the bars with silicon carbide stones restored sharp, burr-free bevels, reducing beating power consumption by 22%."
-  },
-  {
-    "id": "hollander_beater_calcium_carbonate_buffer_loading",
-    "beater_tub_id": "ARCHIVAL_GRADE_BEATER_08",
-    "rag_feedstock_type": "VIRGIN_LINEN_COMBINGS",
-    "beating_duration_hours": 7.0,
-    "schopper_riegler_freeness_sr": 32.0,
-    "timestamp_relative": "YEAR_20_PULP_01",
-    "tags": ["paper_making", "hollander_beater", "calcium_carbonate", "alkaline_reserve", "archival_paper"],
-    "prose": "Dosing the finished linen pulp with 6% precipitated calcium carbonate provided a built-in alkaline buffer. The alkaline reserve guaranteed that finished bunker ledger sheets will resist acid deterioration and yellowing for over five centuries."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "hollander_beater_flax_linen_rag_maceration",
+      "beater_tub_id": "PRIMARY_HOLLANDER_PULP_ENGINE_01",
+      "rag_feedstock_type": "FLAX_LINEN_BEDDING_RAGS",
+      "beating_duration_hours": 7.5,
+      "schopper_riegler_freeness_sr": 35.0,
+      "timestamp_relative": "YEAR_02_PULP_01",
+      "tags": [
+        "paper_making",
+        "hollander_beater",
+        "linen_rags",
+        "fibrillation",
+        "cellulose_pulp"
+      ],
+      "prose": "Macerating sixty kilograms of chopped white linen rags between the phosphor-bronze bedplate knives and the sixty-RPM revolving roll fibrillated the fibers without shortening. The resulting creamy stock had high internal fiber-to-fiber bonding strength."
+    },
+    {
+      "id": "hollander_beater_bedplate_gap_freeness_drain",
+      "beater_tub_id": "PRECISION_PULPING_VAT_02",
+      "rag_feedstock_type": "HEIRLOOM_COTTON_RAGS",
+      "beating_duration_hours": 6.0,
+      "schopper_riegler_freeness_sr": 42.0,
+      "timestamp_relative": "YEAR_04_PULP_03",
+      "tags": [
+        "paper_making",
+        "hollander_beater",
+        "bedplate_gap",
+        "freeness",
+        "drainage_rate"
+      ],
+      "prose": "Adjusting the screw-wheel bedplate gap to exactly 0.25mm regulated stock freeness to 42° Schopper-Riegler. The fine degree of hydration allowed fast water drainage across wire moulds while retaining tight sheet formation."
+    },
+    {
+      "id": "hollander_beater_washing_drum_dirty_water_extract",
+      "beater_tub_id": "CONTINUOUS_WASHING_ENGINE_03",
+      "rag_feedstock_type": "SOILED_COMMISSARY_WORKWEAR",
+      "beating_duration_hours": 4.5,
+      "schopper_riegler_freeness_sr": 28.0,
+      "timestamp_relative": "YEAR_07_PULP_02",
+      "tags": [
+        "paper_making",
+        "hollander_beater",
+        "washing_drum",
+        "dirt_removal",
+        "water_extraction"
+      ],
+      "prose": "A revolving hexagonal drum clad in 60-mesh brass wire gauze skimmed dirty wash water from the center trough while retaining pulp. Fresh spring water flushed through the oval tub until the effluent ran crystal-clear."
+    },
+    {
+      "id": "hollander_beater_hemp_canvas_fiber_length_retention",
+      "beater_tub_id": "HEAVY_DUTY_RAG_ENGINE_04",
+      "rag_feedstock_type": "MILITARY_HEMP_TARPAULIN",
+      "beating_duration_hours": 10.0,
+      "schopper_riegler_freeness_sr": 25.0,
+      "timestamp_relative": "YEAR_09_PULP_04",
+      "tags": [
+        "paper_making",
+        "hollander_beater",
+        "hemp_canvas",
+        "fiber_length",
+        "bast_fibers"
+      ],
+      "prose": "Processing tough hemp canvas with wooden-backed dull roll bars combed out ten-millimeter long bast fibers without severing them. The long-fibered pulp was reserved for high-tensile technical drawing paper and filter membranes."
+    },
+    {
+      "id": "hollander_beater_cotton_rag_knot_clump_breakup",
+      "beater_tub_id": "FINES_REFINING_VAT_05",
+      "rag_feedstock_type": "WHITE_COTTON_UNDERGARMENTS",
+      "beating_duration_hours": 5.0,
+      "schopper_riegler_freeness_sr": 38.0,
+      "timestamp_relative": "YEAR_12_PULP_01",
+      "tags": [
+        "paper_making",
+        "hollander_beater",
+        "knot_breakup",
+        "backfall",
+        "homogenization"
+      ],
+      "prose": "Circulating pulp slurry over the curved backfall crest broke up un-macerated seam knots and cotton twist clumps. The homogeneous fiber suspension showed zero floating clots when diluted in inspection glass cylinders."
+    },
+    {
+      "id": "hollander_beater_reclaimed_blueprint_ammonia_leach",
+      "beater_tub_id": "DE-INKING_RECLAMATION_TUB_06",
+      "rag_feedstock_type": "PRE_WAR_DRAFTING_BLUEPRINTS",
+      "beating_duration_hours": 8.0,
+      "schopper_riegler_freeness_sr": 48.0,
+      "timestamp_relative": "YEAR_15_PULP_03",
+      "tags": [
+        "paper_making",
+        "hollander_beater",
+        "blueprint_deinking",
+        "prussian_blue",
+        "fiber_recycling"
+      ],
+      "prose": "Shredded pre-war diazo and cyanotype blueprints were soaked in 2% warm soda ash liquor to decompose Prussian blue ferric ferrocyanide dyes. Three subsequent freshwater wash cycles converted the dark scrap into pristine cream-colored pulp."
+    },
+    {
+      "id": "hollander_beater_bronze_flybar_edge_burr_honing",
+      "beater_tub_id": "MAINTENANCE_OVERHAUL_CRADLE",
+      "rag_feedstock_type": "STANDARD_FLAX_HEMP_BLEND",
+      "beating_duration_hours": 0.0,
+      "schopper_riegler_freeness_sr": 0.0,
+      "timestamp_relative": "YEAR_17_PULP_02",
+      "tags": [
+        "paper_making",
+        "hollander_beater",
+        "flybar_honing",
+        "knife_maintenance",
+        "shearing_edge"
+      ],
+      "prose": "Inspecting the thirty-two cast bronze flybars revealed rounded edges and cavitation pits along leading corners. Dressing the bars with silicon carbide stones restored sharp, burr-free bevels, reducing beating power consumption by 22%."
+    },
+    {
+      "id": "hollander_beater_calcium_carbonate_buffer_loading",
+      "beater_tub_id": "ARCHIVAL_GRADE_BEATER_08",
+      "rag_feedstock_type": "VIRGIN_LINEN_COMBINGS",
+      "beating_duration_hours": 7.0,
+      "schopper_riegler_freeness_sr": 32.0,
+      "timestamp_relative": "YEAR_20_PULP_01",
+      "tags": [
+        "paper_making",
+        "hollander_beater",
+        "calcium_carbonate",
+        "alkaline_reserve",
+        "archival_paper"
+      ],
+      "prose": "Dosing the finished linen pulp with 6% precipitated calcium carbonate provided a built-in alkaline buffer. The alkaline reserve guaranteed that finished bunker ledger sheets will resist acid deterioration and yellowing for over five centuries."
+    }
+  ]
+}

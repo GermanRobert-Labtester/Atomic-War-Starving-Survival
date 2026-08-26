@@ -1,776 +1,779 @@
-[
-  {
-    "id": "npc_bram_ostrowski",
-    "display_name": "Bram Ostrowski",
-    "profession": "Mapmaker",
-    "bio": "Walks the corridor selling maps he surveys himself, on waxed paper, priced by the sheet. Accurate to a degree that makes people uncomfortable about how he obtained the detail.",
-    "faction": "none",
-    "region": "the_toll",
-    "first_day": 20,
-    "location_id": "",
-    "wants": [
-      "map_corrections"
-    ],
-    "offers": [
-      "reduced_travel_time",
-      "hazard_forewarning"
-    ],
-    "will_not": [
-      "carry_a_message",
-      "take_a_passenger",
-      "name_his_buyers"
-    ],
-    "signature_quote": "I don't sell where people are. I sell where things are. People move. That's their business and it's not on the paper."
-  },
-  {
-    "id": "npc_sergeant_pell",
-    "display_name": "Sergeant Pell",
-    "profession": "Garrison Intake Officer",
-    "bio": "Runs intake at the district conscription office. Polite, thorough, and entirely sincere when he explains that service is the fastest route to rations. He believes it, because it is true. Ask him what happens to the ones who decline, and he answers honestly. That is the encounter.",
-    "faction": "military_remnants",
-    "region": "the_grid",
-    "first_day": 15,
-    "location_id": "loc_conscription_office",
-    "wants": [
-      "to_hit_his_numbers_without_lying"
-    ],
-    "offers": [
-      "garrison_protection",
-      "medical_access",
-      "straight_answers"
-    ],
-    "will_not": [],
-    "signature_quote": ""
-  },
-  {
-    "id": "npc_doctor_ianov",
-    "display_name": "Doctor Ianov",
-    "profession": "Large-Animal Veterinarian",
-    "bio": "Performs human medicine because he is the closest thing available and everyone including him knows it. He does the arithmetic on paper in front of the patient every single time, and he has never once rounded in the direction that would be easier.",
-    "faction": "upland_militia",
-    "region": "the_verge",
-    "first_day": 10,
-    "location_id": "loc_veterinary_surgery",
-    "wants": [
-      "a_human_formulary"
-    ],
-    "offers": [
-      "surgery_at_stated_odds"
-    ],
-    "will_not": [],
-    "signature_quote": ""
-  },
-  {
-    "id": "npc_wren",
-    "display_name": "Wren",
-    "profession": "Trader",
-    "bio": "Eleven. Attends the nine-pupil school at the gymnasium. Trades small found objects at prices that are always slightly too generous to the player. Born the year of the Exchange: every explanation the player gives is the first and only version they will ever hear, and the game records which ones were told and whether they were true.",
-    "faction": "none",
-    "region": "the_verge",
-    "first_day": 25,
-    "location_id": "loc_school_gymnasium",
-    "wants": [
-      "to_know_what_things_were_for"
-    ],
-    "offers": [
-      "minor_salvage",
-      "verge_gossip"
-    ],
-    "will_not": [],
-    "signature_quote": ""
-  },
-  {
-    "id": "npc_kestrel",
-    "display_name": "Kestrel",
-    "profession": "Pilgrim",
-    "bio": "Walks the switchbacks in stages. Visibly in the second phase of acute radiation sickness, lucid, unhurried, and entirely at peace. Declines medical aid, politely, every time it is offered, and does not argue. She is dying of a choice she made freely and is not frightened. The narration does not comment.",
-    "faction": "cult_of_the_glow",
-    "region": "the_spine",
-    "first_day": 60,
-    "location_id": "loc_pilgrim_switchbacks",
-    "wants": [],
-    "offers": [
-      "safe_passage",
-      "hot_zone_routes",
-      "her_boots_late"
-    ],
-    "will_not": [
-      "accept_medical_aid"
-    ],
-    "signature_quote": ""
-  },
-  {
-    "id": "npc_nomi_fisk",
-    "display_name": "Nomi Fisk",
-    "profession": "Shallows Trader",
-    "bio": "Runs a nine-metre launch at the Shallows. Trades with all four factions on the same afternoon without difficulty. She explains the hull etiquette once. If the crew violates it, she does not retaliate - she simply is not at the Shallows again, and the Drown closes.",
-    "faction": "none",
-    "region": "the_drown",
-    "first_day": 90,
-    "location_id": "loc_the_shallows_market",
-    "wants": [
-      "cargo_that_does_not_pick_a_side"
-    ],
-    "offers": [
-      "water_transport",
-      "access_to_cold_store",
-      "access_to_records_annex"
-    ],
-    "will_not": [
-      "explain_the_etiquette_twice"
-    ],
-    "signature_quote": ""
-  },
-  {
-    "id": "npc_ivor_lasko",
-    "display_name": "Ivor Lasko",
-    "profession": "Garrison Deserter",
-    "bio": "Hiding in a Verge outbuilding. The Militia is holding a vote on whether to return him. Voss's standing order is unambiguous and publicly posted. He waits to learn what his neighbours decide, and he does not run.",
-    "faction": "none",
-    "region": "the_verge",
-    "first_day": 40,
-    "location_id": "loc_grange_hall",
-    "wants": [
-      "a_vote"
-    ],
-    "offers": [],
-    "will_not": [
-      "beg"
-    ],
-    "signature_quote": ""
-  },
-  {
-    "id": "npc_the_cartwright_sisters",
-    "display_name": "The Cartwright Sisters",
-    "profession": "Press Operators",
-    "bio": "Run the cider press. Ada speaks and negotiates. Ruth has not spoken since Hour Zero and does the work. They want apples, fuel for the boiler, and no questions about Ruth. Late in a long partnership, Ruth hands over a written note rather than speaking. It is four words long and it is not about herself.",
-    "faction": "upland_militia",
-    "region": "the_verge",
-    "first_day": 35,
-    "location_id": "loc_cider_press",
-    "wants": [
-      "apples",
-      "boiler_fuel",
-      "no_questions_about_ruth"
-    ],
-    "offers": [
-      "ethanol"
-    ],
-    "will_not": [],
-    "signature_quote": ""
-  },
-  {
-    "id": "npc_edor_vale",
-    "display_name": "Edor Vale",
-    "profession": "Census Clerk Grade III",
-    "bio": "Junior enumerator. Score 60.4 — lowest allocated band. He knows it. Offers to read the form again. Will not enter the bunker uninvited. Will not falsify a date of birth.",
-    "faction": "none",
-    "region": "the_cut",
-    "first_day": 90,
-    "location_id": "loc_weighbridge",
-    "wants": [
-      "corrected_occupations",
-      "dates_of_birth_once"
-    ],
-    "offers": [
-      "the_pink_copy",
-      "to_wait_in_the_ash"
-    ],
-    "will_not": [
-      "enter_uninvited",
-      "falsify_a_dob"
-    ],
-    "signature_quote": "Most people want it read again. That's all right. There isn't a time limit on understanding it. There is a time limit on the ice."
-  },
-  {
-    "id": "npc_yara_holm",
-    "display_name": "Yara Holm",
-    "profession": "Cutter",
-    "bio": "Harbour ice-pilot. Score 44. Unlisted. Hired because the allocated would not go out in year one. Dark and lit are moral words. Will not guide a column onto ice she has marked dark. Will not blast.",
-    "faction": "none",
-    "region": "the_cut",
-    "first_day": 90,
-    "location_id": "loc_cut_waystation_a",
-    "wants": [
-      "item_beacon_oil",
-      "columns_that_wait"
-    ],
-    "offers": [
-      "lit_hours",
-      "accident_book",
-      "overnight_at_a"
-    ],
-    "will_not": [
-      "guide_dark_ice",
-      "blast"
-    ],
-    "signature_quote": "I don't open it for you. I open it. If it's dark, you wait. If you don't wait, I write the accident in the book and I don't fetch you."
-  },
-  {
-    "id": "npc_leva_quist",
-    "display_name": "Leva Quist",
-    "profession": "Shift Lead",
-    "bio": "Municipal RO technician. Never allocated — in situ essential. Counts out loud. Will not shut the plant to spite Ormund. Corrects people who say abandoned.",
-    "faction": "hydro_barons",
-    "region": "the_saltworks",
-    "first_day": 90,
-    "location_id": "loc_salt_grade_hut",
-    "wants": [
-      "item_ro_resin",
-      "brass_fittings",
-      "outfall_hands"
-    ],
-    "offers": [
-      "salt_trade",
-      "shift_whistle",
-      "volume_12"
-    ],
-    "will_not": [
-      "shut_the_plant_to_spite"
-    ],
-    "signature_quote": "They scored high enough to be continued. The membranes don't care."
-  },
-  {
-    "id": "npc_cael_ormund",
-    "display_name": "Cael Ormund",
-    "profession": "Registrar-General",
-    "bio": "Logistics planner, Office of Continuity. RUR 34, score 62.1, ALLOCATED. Civil-service present tense. Will not falsify a score. Will not raise his voice. Will not call anyone a thief.",
-    "faction": "none",
-    "region": "the_cluster",
-    "first_day": 90,
-    "location_id": "loc_cluster_office",
-    "wants": [
-      "occupancy_return",
-      "levy_honour",
-      "item_order_12c"
-    ],
-    "offers": [
-      "the_schedule",
-      "regular_rate",
-      "discrepancy_noted"
-    ],
-    "will_not": [
-      "falsify_a_score",
-      "raise_his_voice",
-      "call_anyone_a_thief"
-    ],
-    "signature_quote": "You are living in a facility that authenticated for fourteen. The fourteen did not arrive. I am not collecting you. I am scheduling you."
-  },
-  {
-    "id": "npc_halden_mire",
-    "display_name": "Halden Mire",
-    "profession": "Sparks",
-    "bio": "Fleet radio. The authenticator above the boarding hatch is still a small green lamp. He will not open for unauthenticated boarding. He logs every refusal.",
-    "faction": "none",
-    "region": "the_shelf",
-    "first_day": 110,
-    "location_id": "loc_shelf_hearth4",
-    "wants": [
-      "stand_up_order",
-      "allocation_number"
-    ],
-    "offers": [
-      "hatch_log",
-      "schedule_crystal"
-    ],
-    "will_not": [
-      "open_unauthenticated",
-      "blast_the_ice"
-    ],
-    "signature_quote": "The authenticator wanted a number."
-  },
-  {
-    "id": "npc_cluster_teacher",
-    "display_name": "Cluster Teacher",
-    "profession": "Schoolteacher",
-    "bio": "Unnamed. Nineteen children. Curriculum includes the Reconstruction Utility Rating, taught as arithmetic. A dependent is worth points. That is on the worksheet.",
-    "faction": "none",
-    "region": "the_cluster",
-    "first_day": 90,
-    "location_id": "loc_cluster_school",
-    "wants": [
-      "consistency"
-    ],
-    "offers": [
-      "the_hour",
-      "the_rubric"
-    ],
-    "will_not": [
-      "allow_a_referendum"
-    ],
-    "signature_quote": "A dependent is worth points. Sit the hour. Correct a sum or let it stand."
-  },
-  {
-    "id": "npc_osran_kell",
-    "display_name": "Osran Kell",
-    "profession": "Scale Keeper",
-    "bio": "Keeps the depot scale honest. The number is real; what people infer from it is not his problem. His office has one chair for him and none for you; he will fetch a second one, and he always does.",
-    "faction": "none",
-    "region": "region_crossing",
-    "first_day": 20,
-    "location_id": "loc_crossing_scalehouse",
-    "wants": [
-      "trade_goods"
-    ],
-    "offers": [
-      "verification",
-      "weighing"
-    ],
-    "will_not": [
-      "rig_a_weight",
-      "claim_authority_he_would_have_to_defend"
-    ],
-    "signature_quote": "The number is real. What people infer from it is not my problem."
-  },
-  {
-    "id": "npc_mattis_cray",
-    "display_name": "Mattis Cray",
-    "profession": "Gate Attendant",
-    "bio": "The last-resort vouch at the Crossing's viaduct gate. Will vouch, will run messages, will not pick a bloc. When someone burns his name he does not offer it a second time.",
-    "faction": "none",
-    "region": "region_crossing",
-    "first_day": 20,
-    "location_id": "loc_crossing_viaduct_gate",
-    "wants": [
-      "reliable_messages"
-    ],
-    "offers": [
-      "vouch",
-      "message_running"
-    ],
-    "will_not": [
-      "pick_a_bloc",
-      "vouch_twice_for_the_burned"
-    ],
-    "signature_quote": "I vouch for you, not the Crossing. Keep them separate and we stay friends."
-  },
-  {
-    "id": "npc_wyn_sabler",
-    "display_name": "Wyn Sabler",
-    "profession": "Farmer",
-    "bio": "Second bad season. Her granary pledge is due and she can count exactly what is owed without looking at the paper. She will not ask anyone to break the terms for her; she read them twice, same as everyone. She will accept it if someone breaks them anyway.",
-    "faction": "none",
-    "region": "region_crossing",
-    "first_day": 40,
-    "location_id": "loc_crossing_the_annex",
-    "wants": [
-      "keep_the_granary"
-    ],
-    "offers": [
-      "grain_pledge"
-    ],
-    "will_not": [
-      "ask_anyone_to_break_the_terms"
-    ],
-    "signature_quote": "I signed. I'd sign again. I'm telling you what's owed and what happens if it isn't."
-  },
-  {
-    "id": "npc_dessa_vane",
-    "display_name": "Dessa Vane",
-    "profession": "Underwrite Keeper",
-    "bio": "Runs the Underwrite Hall. Draws contracts, reads them twice, collects forfeits at the hall — never at the hatch. She is not the Tally. The Tally will walk to your door. Dessa will not leave the hall.",
-    "faction": "faction_the_underwrite",
-    "region": "region_crossing",
-    "first_day": 20,
-    "location_id": "loc_crossing_underwrite_hall",
-    "wants": [
-      "contracts_honoured"
-    ],
-    "offers": [
-      "credit",
-      "structured_debt"
-    ],
-    "will_not": [
-      "lie_about_a_term",
-      "waive_a_forfeit_on_the_record",
-      "leave_the_hall_to_collect"
-    ],
-    "signature_quote": "Read it twice. I'll say it twice. After the second time there is only the ink."
-  },
-  {
-    "id": "npc_perrin_ashby",
-    "display_name": "Perrin Ashby",
-    "profession": "Charter Drafter",
-    "bio": "Drafts charters for a place that has never had one. Earnest, precise, slightly too fond of 'finally.' Osran's only joke about anyone. The Compact's advocate at the Petition Tent.",
-    "faction": "faction_the_compact",
-    "region": "region_crossing",
-    "first_day": 20,
-    "location_id": "loc_crossing_petition_tent",
-    "wants": [
-      "a_written_charter"
-    ],
-    "offers": [
-      "drafting",
-      "canvassing"
-    ],
-    "will_not": [
-      "pass_a_known_unfair_clause",
-      "admit_the_scoring_clause_resembles_a_rur"
-    ],
-    "signature_quote": "None of that is a reason it cannot also be a town, with a vote, and a code, and an appeal that is not 'find three backers faster.'"
-  },
-  {
-    "id": "npc_ivo_fenn",
-    "display_name": "Ivo Fenn",
-    "profession": "Records Clerk",
-    "bio": "Keeps five years of the Crossing filed by someone who believes a paper trail is the only enforcement a town without a guard can afford. His records do not lie. He will not summarise the Charter — he produces files.",
-    "faction": "none",
-    "region": "region_crossing",
-    "first_day": 20,
-    "location_id": "loc_crossing_records_room",
-    "wants": [
-      "order"
-    ],
-    "offers": [
-      "records",
-      "filing"
-    ],
-    "will_not": [
-      "destroy_a_record",
-      "summarise_the_charter"
-    ],
-    "signature_quote": "I file things. That is the whole job. If you want a summary, ask someone who thinks paper is negotiable."
-  },
-  {
-    "id": "npc_kess_adler",
-    "display_name": "Kess Adler",
-    "profession": "Records Clerk",
-    "bio": "Municipal records clerk, Reconstruction Utility Rating 9. Unlisted. Keeps the duty chart true in the morning. Pencil, not ink, until someone orders otherwise. Erases dust from blank rows every day.",
-    "faction": "none",
-    "region": "the_stack",
-    "first_day": 60,
-    "location_id": "loc_stack_roster_wall",
-    "wants": [
-      "roster_pencil_allowed",
-      "wall_true_in_morning"
-    ],
-    "offers": [
-      "morning_row",
-      "levy_names_correct"
-    ],
-    "will_not": [
-      "write_unslept_name",
-      "falsify_dob",
-      "choose_ink"
-    ],
-    "signature_quote": "The wall was left blank because the names it wanted did not arrive. If I write yours, that is not the same as being them. It is only the same as being here."
-  },
-  {
-    "id": "npc_ansel_duth",
-    "display_name": "Ansel Duth",
-    "profession": "Parent",
-    "bio": "Unlisted parent. Dependent count that would have helped a score, in a household that was not allocated. One child in the stack. Short questions that are not rhetorical.",
-    "faction": "none",
-    "region": "the_stack",
-    "first_day": 60,
-    "location_id": "loc_stack_mess",
-    "wants": [
-      "child_not_line_item",
-      "food_without_speech"
-    ],
-    "offers": [
-      "table_truth",
-      "ladle_witness"
-    ],
-    "will_not": [
-      "ask_twice",
-      "threaten_to_leave",
-      "call_office_evil"
-    ],
-    "signature_quote": "If you tell them the boots were for someone else, they will still put them on. They will just know."
-  },
-  {
-    "id": "npc_tamsin_rook",
-    "display_name": "Tamsin Rook",
-    "profession": "Harbour Night-Clerk",
-    "bio": "Harbour night-clerk, unlisted. Score would have been in the thirties if anyone had scored a person who worked when others slept. The hatch intercom. Will not lie about who is outside.",
-    "faction": "none",
-    "region": "the_approach",
-    "first_day": 60,
-    "location_id": "loc_approach_hatch",
-    "wants": [
-      "rotating_watch",
-      "truth_on_grille"
-    ],
-    "offers": [
-      "hatch_account",
-      "apron_facts"
-    ],
-    "will_not": [
-      "lie_on_intercom",
-      "sleep_same_bunk_twice",
-      "call_edor_coward"
-    ],
-    "signature_quote": "There's a stool in the ash. There's a person on it. I'm not opening until you say. I'm also not pretending the stool isn't there."
-  },
-  {
-    "id": "npc_len_quill",
-    "display_name": "Len Quill",
-    "profession": "Quiet House Runner",
-    "bio": "Quiet House runner. Not a medic. Two knocks. Name, and one true thing. The back room is not shown. Writes the sentence exactly as given.",
-    "faction": "faction_quiet_house",
-    "region": "the_approach",
-    "first_day": 60,
-    "location_id": "loc_approach_apron",
-    "wants": [
-      "deceased_name",
-      "one_true_thing"
-    ],
-    "offers": [
-      "quiet_transport",
-      "tag_truth"
-    ],
-    "will_not": [
-      "enter_uninvited",
-      "adjudicate_back_room",
-      "take_body_without_name"
-    ],
-    "signature_quote": "We make it quiet. I need the name. I need one true thing. I will write it the way you say it."
-  },
-  {
-    "id": "npc_hadi_morrow",
-    "display_name": "Hadi Morrow",
-    "profession": "Veterinary Assistant",
-    "bio": "Veterinary assistant. The trade the rubric scored cheap and District 8 cannot desalinate a child without. Will not call himself a doctor. Doses out loud, counts rags, names the morning.",
-    "faction": "none",
-    "region": "the_stack",
-    "first_day": 60,
-    "location_id": "loc_stack_clinic_alcove",
-    "wants": [
-      "finish_stack_people",
-      "clean_rag"
-    ],
-    "offers": [
-      "honest_needle",
-      "outfall_whistle"
-    ],
-    "will_not": [
-      "call_himself_doctor",
-      "leave_septic_child",
-      "hate_the_office"
-    ],
-    "signature_quote": "I can do this here with iodine and a clean rag. I can do the outfall with a whistle. I cannot do both in the same morning. You have to write which morning it is."
-  },
-  {
-    "id": "npc_nila_brant",
-    "display_name": "Nila Brant",
-    "profession": "Lamp-Oil Clerk",
-    "bio": "Lamp-oil clerk, unlisted. Occupies Allocation 11 with three others. Keeps their chart blank on purpose. A hiding place, not a pool. Will withdraw if you write her living in ink.",
-    "faction": "none",
-    "region": "the_overflow",
-    "first_day": 60,
-    "location_id": "loc_overflow_alloc_11",
-    "wants": [
-      "filters_without_lecture",
-      "silence"
-    ],
-    "offers": [
-      "hiding_place",
-      "overflow_shelter"
-    ],
-    "will_not": [
-      "hide_listed_name",
-      "explain_twice",
-      "say_please"
-    ],
-    "signature_quote": "You can sleep here if you are not a pool. The minute you are a pool, this hatch is a wall. I will not explain it twice."
-  },
-  {
-    "id": "npc_maren_holt",
-    "display_name": "Maren Holt",
-    "profession": "Overlay Surveyor",
-    "bio": "Municipal cadastral technician. Not allocated. In-situ the way Leva was. Finishing the Standing Record on the ground. Distances, lot numbers, the lived name is a subtitle.",
-    "faction": "faction_the_overlay",
-    "region": "the_cut",
-    "first_day": 75,
-    "location_id": "loc_cut_kilometre_19",
-    "wants": [
-      "brass_fittings",
-      "walker_with_plates",
-      "stencil_pigment"
-    ],
-    "offers": [
-      "cadastral_keys",
-      "travel_correction_on_named_sites"
-    ],
-    "will_not": [
-      "falsify_gauge",
-      "enter_alloc_11",
-      "ask_lamplighter_exception"
-    ],
-    "signature_quote": "The Schedule named households. This names ground. Ground does not argue. People do. I am not here to argue. I am here to finish the post."
-  },
-  {
-    "id": "npc_ira_vell",
-    "display_name": "Ira Vell",
-    "profession": "Registrar",
-    "bio": "Filing grade. The woman who stayed, or the junior who did not leave when the senior grades did. Has the Standing Record. Wants it complete or honestly incomplete.",
-    "faction": "none",
-    "region": "ministry",
-    "first_day": 75,
-    "location_id": "location_ministry_of_truth_bunker",
-    "wants": [
-      "record_complete_or_honest",
-      "receipt"
-    ],
-    "offers": [
-      "standing_record_copy",
-      "visited_column"
-    ],
-    "will_not": [
-      "give_book_without_receipt",
-      "raise_voice",
-      "call_player_allocated"
-    ],
-    "signature_quote": "I can copy you the list of sites. That is not the same as you having been there. The book has a column for that. It is empty until the column is not a lie."
-  },
-  {
-    "id": "npc_benno_kade",
-    "display_name": "Benno Kade",
-    "profession": "Lock Electrician",
-    "bio": "Lock electrician, unlisted. Has lived in the control house since the gate froze mid-cycle. The Drown's rise is his duty roster. Water-heights, dates. Open, as far as it opened.",
-    "faction": "none",
-    "region": "the_drown",
-    "first_day": 75,
-    "location_id": "loc_lock_gate_four",
-    "wants": [
-      "gauges_believed",
-      "fuse"
-    ],
-    "offers": [
-      "benno_rise_chart",
-      "drown_read"
-    ],
-    "will_not": [
-      "call_failure_bomb",
-      "guide_overlay_to_condemned_pump"
-    ],
-    "signature_quote": "They can screw COMPLETE on the leaf. The leaf is still where it stopped. I sleep in the house that stopped with it."
-  },
-  {
-    "id": "npc_quil_esser",
-    "display_name": "Quil Esser",
-    "profession": "Annex Keeper",
-    "bio": "Born after. Learned filing from watching. Archivist practice, not a sermon. Wants names said aloud. Will not file a plate as a name.",
-    "faction": "faction_archivists",
-    "region": "the_vault",
-    "first_day": 75,
-    "location_id": "loc_records_annex",
-    "wants": [
-      "names_said_aloud",
-      "two_witnesses"
-    ],
-    "offers": [
-      "annex_filing",
-      "second_copy_help"
-    ],
-    "will_not": [
-      "file_plate_as_name",
-      "skip_corroboration",
-      "adjudicate_quiet_house"
-    ],
-    "signature_quote": "If you don't say it, you're only copying. A plate is a copy that does not have a mouth."
-  },
-  {
-    "id": "npc_osric_tann",
-    "display_name": "Osric Tann",
-    "profession": "Weigh-clerk",
-    "bio": "Municipal scale technician. Toll pays him in food to keep the needle true. He is not the Tollman. Kilograms, receipts, the joke that stopped being one.",
-    "faction": "none",
-    "region": "the_weighbridge",
-    "first_day": 75,
-    "location_id": "loc_weighbridge",
-    "wants": [
-      "mass",
-      "calibration_weight"
-    ],
-    "offers": [
-      "weigh_carbon",
-      "honest_needle"
-    ],
-    "will_not": [
-      "price_favour_as_lot",
-      "lie_about_needle"
-    ],
-    "signature_quote": "Put the plate on the scale if you want. It will read as mass. That is the only number I will write."
-  },
-  {
-    "id": "npc_dara_mewn",
-    "display_name": "Dara Mewn",
-    "profession": "Plot Watch",
-    "bio": "Waiting-list name, alive, farming. Levy-shaped trade (caretaker). If Hadi or levy took the night watch labour, this hut is empty. Plot 114 is still 114.",
-    "faction": "none",
-    "region": "the_allotments",
-    "first_day": 75,
-    "location_id": "loc_the_allotments",
-    "wants": [
-      "sleeve_current",
-      "fittings_not_plates"
-    ],
-    "offers": [
-      "watered_row",
-      "waitlist_truth"
-    ],
-    "will_not": [
-      "sign_historical_plate",
-      "comment_on_nameplates"
-    ],
-    "signature_quote": "Plot 114 is still 114. The plate they want to put on it has a different 114. I water this one."
-  },
-  {
-    "id": "npc_dr_irina_vel",
-    "display_name": "Dr. Irina Vel",
-    "profession": "Radiation Registrar",
-    "bio": "The night the dosimeter is taken apart, she holds the red pencil. She will not read a number up to make it easier. She asks one question: how much do you want written. She remembers every number refused.",
-    "faction": "none",
-    "region": "the_bunker",
-    "first_day": 180,
-    "location_id": "loc_low_background_lab",
-    "wants": [
-      "dosimeter",
-      "ledger_clearance"
-    ]
-  },
-  {
-    "id": "npc_wyn_omah",
-    "display_name": "Wyn Omah",
-    "profession": "Sick-room Nurse",
-    "bio": "Presents the bed order and waits. If you name a Red survivor she writes it and does not thank you; if you hide a name she does not accuse you — she asks whether the morphine stays on the tray.",
-    "faction": "none",
-    "region": "the_bunker",
-    "first_day": 180,
-    "location_id": "loc_cluster_clinic",
-    "wants": [
-      "morphine",
-      "clean_water"
-    ]
-  },
-  {
-    "id": "npc_piet_abar",
-    "display_name": "Piet Abar",
-    "profession": "Clockmaker",
-    "bio": "The analogue of the dosimeter dial and the only honest voice about error. Every figure has a drift, the drift is normal, and he will not lie about it to make a reading land softer.",
-    "faction": "none",
-    "region": "the_bunker",
-    "first_day": 180,
-    "location_id": "loc_cluster_school",
-    "wants": [
-      "dosimeter",
-      "scrap_metal"
-    ]
-  },
-  {
-    "id": "npc_saria_voss",
-    "display_name": "Saria Voss",
-    "profession": "Midwife",
-    "bio": "Keeps the children's board in chalk so it can be erased. When a child is born she asks you to choose a guess band — low, honest, or refused — and weeks later she may bring the child's true number. She will not book a guess as a truth.",
-    "faction": "none",
-    "region": "the_bunker",
-    "first_day": 180,
-    "location_id": "loc_cluster_school",
-    "wants": [
-      "clean_water",
-      "bandages"
-    ]
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "npc_bram_ostrowski",
+      "display_name": "Bram Ostrowski",
+      "profession": "Mapmaker",
+      "bio": "Walks the corridor selling maps he surveys himself, on waxed paper, priced by the sheet. Accurate to a degree that makes people uncomfortable about how he obtained the detail.",
+      "faction": "none",
+      "region": "the_toll",
+      "first_day": 20,
+      "location_id": "",
+      "wants": [
+        "map_corrections"
+      ],
+      "offers": [
+        "reduced_travel_time",
+        "hazard_forewarning"
+      ],
+      "will_not": [
+        "carry_a_message",
+        "take_a_passenger",
+        "name_his_buyers"
+      ],
+      "signature_quote": "I don't sell where people are. I sell where things are. People move. That's their business and it's not on the paper."
+    },
+    {
+      "id": "npc_sergeant_pell",
+      "display_name": "Sergeant Pell",
+      "profession": "Garrison Intake Officer",
+      "bio": "Runs intake at the district conscription office. Polite, thorough, and entirely sincere when he explains that service is the fastest route to rations. He believes it, because it is true. Ask him what happens to the ones who decline, and he answers honestly. That is the encounter.",
+      "faction": "military_remnants",
+      "region": "the_grid",
+      "first_day": 15,
+      "location_id": "loc_conscription_office",
+      "wants": [
+        "to_hit_his_numbers_without_lying"
+      ],
+      "offers": [
+        "garrison_protection",
+        "medical_access",
+        "straight_answers"
+      ],
+      "will_not": [],
+      "signature_quote": ""
+    },
+    {
+      "id": "npc_doctor_ianov",
+      "display_name": "Doctor Ianov",
+      "profession": "Large-Animal Veterinarian",
+      "bio": "Performs human medicine because he is the closest thing available and everyone including him knows it. He does the arithmetic on paper in front of the patient every single time, and he has never once rounded in the direction that would be easier.",
+      "faction": "upland_militia",
+      "region": "the_verge",
+      "first_day": 10,
+      "location_id": "loc_veterinary_surgery",
+      "wants": [
+        "a_human_formulary"
+      ],
+      "offers": [
+        "surgery_at_stated_odds"
+      ],
+      "will_not": [],
+      "signature_quote": ""
+    },
+    {
+      "id": "npc_wren",
+      "display_name": "Wren",
+      "profession": "Trader",
+      "bio": "Eleven. Attends the nine-pupil school at the gymnasium. Trades small found objects at prices that are always slightly too generous to the player. Born the year of the Exchange: every explanation the player gives is the first and only version they will ever hear, and the game records which ones were told and whether they were true.",
+      "faction": "none",
+      "region": "the_verge",
+      "first_day": 25,
+      "location_id": "loc_school_gymnasium",
+      "wants": [
+        "to_know_what_things_were_for"
+      ],
+      "offers": [
+        "minor_salvage",
+        "verge_gossip"
+      ],
+      "will_not": [],
+      "signature_quote": ""
+    },
+    {
+      "id": "npc_kestrel",
+      "display_name": "Kestrel",
+      "profession": "Pilgrim",
+      "bio": "Walks the switchbacks in stages. Visibly in the second phase of acute radiation sickness, lucid, unhurried, and entirely at peace. Declines medical aid, politely, every time it is offered, and does not argue. She is dying of a choice she made freely and is not frightened. The narration does not comment.",
+      "faction": "cult_of_the_glow",
+      "region": "the_spine",
+      "first_day": 60,
+      "location_id": "loc_pilgrim_switchbacks",
+      "wants": [],
+      "offers": [
+        "safe_passage",
+        "hot_zone_routes",
+        "her_boots_late"
+      ],
+      "will_not": [
+        "accept_medical_aid"
+      ],
+      "signature_quote": ""
+    },
+    {
+      "id": "npc_nomi_fisk",
+      "display_name": "Nomi Fisk",
+      "profession": "Shallows Trader",
+      "bio": "Runs a nine-metre launch at the Shallows. Trades with all four factions on the same afternoon without difficulty. She explains the hull etiquette once. If the crew violates it, she does not retaliate - she simply is not at the Shallows again, and the Drown closes.",
+      "faction": "none",
+      "region": "the_drown",
+      "first_day": 90,
+      "location_id": "loc_the_shallows_market",
+      "wants": [
+        "cargo_that_does_not_pick_a_side"
+      ],
+      "offers": [
+        "water_transport",
+        "access_to_cold_store",
+        "access_to_records_annex"
+      ],
+      "will_not": [
+        "explain_the_etiquette_twice"
+      ],
+      "signature_quote": ""
+    },
+    {
+      "id": "npc_ivor_lasko",
+      "display_name": "Ivor Lasko",
+      "profession": "Garrison Deserter",
+      "bio": "Hiding in a Verge outbuilding. The Militia is holding a vote on whether to return him. Voss's standing order is unambiguous and publicly posted. He waits to learn what his neighbours decide, and he does not run.",
+      "faction": "none",
+      "region": "the_verge",
+      "first_day": 40,
+      "location_id": "loc_grange_hall",
+      "wants": [
+        "a_vote"
+      ],
+      "offers": [],
+      "will_not": [
+        "beg"
+      ],
+      "signature_quote": ""
+    },
+    {
+      "id": "npc_the_cartwright_sisters",
+      "display_name": "The Cartwright Sisters",
+      "profession": "Press Operators",
+      "bio": "Run the cider press. Ada speaks and negotiates. Ruth has not spoken since Hour Zero and does the work. They want apples, fuel for the boiler, and no questions about Ruth. Late in a long partnership, Ruth hands over a written note rather than speaking. It is four words long and it is not about herself.",
+      "faction": "upland_militia",
+      "region": "the_verge",
+      "first_day": 35,
+      "location_id": "loc_cider_press",
+      "wants": [
+        "apples",
+        "boiler_fuel",
+        "no_questions_about_ruth"
+      ],
+      "offers": [
+        "ethanol"
+      ],
+      "will_not": [],
+      "signature_quote": ""
+    },
+    {
+      "id": "npc_edor_vale",
+      "display_name": "Edor Vale",
+      "profession": "Census Clerk Grade III",
+      "bio": "Junior enumerator. Score 60.4 — lowest allocated band. He knows it. Offers to read the form again. Will not enter the bunker uninvited. Will not falsify a date of birth.",
+      "faction": "none",
+      "region": "the_cut",
+      "first_day": 90,
+      "location_id": "loc_weighbridge",
+      "wants": [
+        "corrected_occupations",
+        "dates_of_birth_once"
+      ],
+      "offers": [
+        "the_pink_copy",
+        "to_wait_in_the_ash"
+      ],
+      "will_not": [
+        "enter_uninvited",
+        "falsify_a_dob"
+      ],
+      "signature_quote": "Most people want it read again. That's all right. There isn't a time limit on understanding it. There is a time limit on the ice."
+    },
+    {
+      "id": "npc_yara_holm",
+      "display_name": "Yara Holm",
+      "profession": "Cutter",
+      "bio": "Harbour ice-pilot. Score 44. Unlisted. Hired because the allocated would not go out in year one. Dark and lit are moral words. Will not guide a column onto ice she has marked dark. Will not blast.",
+      "faction": "none",
+      "region": "the_cut",
+      "first_day": 90,
+      "location_id": "loc_cut_waystation_a",
+      "wants": [
+        "item_beacon_oil",
+        "columns_that_wait"
+      ],
+      "offers": [
+        "lit_hours",
+        "accident_book",
+        "overnight_at_a"
+      ],
+      "will_not": [
+        "guide_dark_ice",
+        "blast"
+      ],
+      "signature_quote": "I don't open it for you. I open it. If it's dark, you wait. If you don't wait, I write the accident in the book and I don't fetch you."
+    },
+    {
+      "id": "npc_leva_quist",
+      "display_name": "Leva Quist",
+      "profession": "Shift Lead",
+      "bio": "Municipal RO technician. Never allocated — in situ essential. Counts out loud. Will not shut the plant to spite Ormund. Corrects people who say abandoned.",
+      "faction": "hydro_barons",
+      "region": "the_saltworks",
+      "first_day": 90,
+      "location_id": "loc_salt_grade_hut",
+      "wants": [
+        "item_ro_resin",
+        "brass_fittings",
+        "outfall_hands"
+      ],
+      "offers": [
+        "salt_trade",
+        "shift_whistle",
+        "volume_12"
+      ],
+      "will_not": [
+        "shut_the_plant_to_spite"
+      ],
+      "signature_quote": "They scored high enough to be continued. The membranes don't care."
+    },
+    {
+      "id": "npc_cael_ormund",
+      "display_name": "Cael Ormund",
+      "profession": "Registrar-General",
+      "bio": "Logistics planner, Office of Continuity. RUR 34, score 62.1, ALLOCATED. Civil-service present tense. Will not falsify a score. Will not raise his voice. Will not call anyone a thief.",
+      "faction": "none",
+      "region": "the_cluster",
+      "first_day": 90,
+      "location_id": "loc_cluster_office",
+      "wants": [
+        "occupancy_return",
+        "levy_honour",
+        "item_order_12c"
+      ],
+      "offers": [
+        "the_schedule",
+        "regular_rate",
+        "discrepancy_noted"
+      ],
+      "will_not": [
+        "falsify_a_score",
+        "raise_his_voice",
+        "call_anyone_a_thief"
+      ],
+      "signature_quote": "You are living in a facility that authenticated for fourteen. The fourteen did not arrive. I am not collecting you. I am scheduling you."
+    },
+    {
+      "id": "npc_halden_mire",
+      "display_name": "Halden Mire",
+      "profession": "Sparks",
+      "bio": "Fleet radio. The authenticator above the boarding hatch is still a small green lamp. He will not open for unauthenticated boarding. He logs every refusal.",
+      "faction": "none",
+      "region": "the_shelf",
+      "first_day": 110,
+      "location_id": "loc_shelf_hearth4",
+      "wants": [
+        "stand_up_order",
+        "allocation_number"
+      ],
+      "offers": [
+        "hatch_log",
+        "schedule_crystal"
+      ],
+      "will_not": [
+        "open_unauthenticated",
+        "blast_the_ice"
+      ],
+      "signature_quote": "The authenticator wanted a number."
+    },
+    {
+      "id": "npc_cluster_teacher",
+      "display_name": "Cluster Teacher",
+      "profession": "Schoolteacher",
+      "bio": "Unnamed. Nineteen children. Curriculum includes the Reconstruction Utility Rating, taught as arithmetic. A dependent is worth points. That is on the worksheet.",
+      "faction": "none",
+      "region": "the_cluster",
+      "first_day": 90,
+      "location_id": "loc_cluster_school",
+      "wants": [
+        "consistency"
+      ],
+      "offers": [
+        "the_hour",
+        "the_rubric"
+      ],
+      "will_not": [
+        "allow_a_referendum"
+      ],
+      "signature_quote": "A dependent is worth points. Sit the hour. Correct a sum or let it stand."
+    },
+    {
+      "id": "npc_osran_kell",
+      "display_name": "Osran Kell",
+      "profession": "Scale Keeper",
+      "bio": "Keeps the depot scale honest. The number is real; what people infer from it is not his problem. His office has one chair for him and none for you; he will fetch a second one, and he always does.",
+      "faction": "none",
+      "region": "region_crossing",
+      "first_day": 20,
+      "location_id": "loc_crossing_scalehouse",
+      "wants": [
+        "trade_goods"
+      ],
+      "offers": [
+        "verification",
+        "weighing"
+      ],
+      "will_not": [
+        "rig_a_weight",
+        "claim_authority_he_would_have_to_defend"
+      ],
+      "signature_quote": "The number is real. What people infer from it is not my problem."
+    },
+    {
+      "id": "npc_mattis_cray",
+      "display_name": "Mattis Cray",
+      "profession": "Gate Attendant",
+      "bio": "The last-resort vouch at the Crossing's viaduct gate. Will vouch, will run messages, will not pick a bloc. When someone burns his name he does not offer it a second time.",
+      "faction": "none",
+      "region": "region_crossing",
+      "first_day": 20,
+      "location_id": "loc_crossing_viaduct_gate",
+      "wants": [
+        "reliable_messages"
+      ],
+      "offers": [
+        "vouch",
+        "message_running"
+      ],
+      "will_not": [
+        "pick_a_bloc",
+        "vouch_twice_for_the_burned"
+      ],
+      "signature_quote": "I vouch for you, not the Crossing. Keep them separate and we stay friends."
+    },
+    {
+      "id": "npc_wyn_sabler",
+      "display_name": "Wyn Sabler",
+      "profession": "Farmer",
+      "bio": "Second bad season. Her granary pledge is due and she can count exactly what is owed without looking at the paper. She will not ask anyone to break the terms for her; she read them twice, same as everyone. She will accept it if someone breaks them anyway.",
+      "faction": "none",
+      "region": "region_crossing",
+      "first_day": 40,
+      "location_id": "loc_crossing_the_annex",
+      "wants": [
+        "keep_the_granary"
+      ],
+      "offers": [
+        "grain_pledge"
+      ],
+      "will_not": [
+        "ask_anyone_to_break_the_terms"
+      ],
+      "signature_quote": "I signed. I'd sign again. I'm telling you what's owed and what happens if it isn't."
+    },
+    {
+      "id": "npc_dessa_vane",
+      "display_name": "Dessa Vane",
+      "profession": "Underwrite Keeper",
+      "bio": "Runs the Underwrite Hall. Draws contracts, reads them twice, collects forfeits at the hall — never at the hatch. She is not the Tally. The Tally will walk to your door. Dessa will not leave the hall.",
+      "faction": "faction_the_underwrite",
+      "region": "region_crossing",
+      "first_day": 20,
+      "location_id": "loc_crossing_underwrite_hall",
+      "wants": [
+        "contracts_honoured"
+      ],
+      "offers": [
+        "credit",
+        "structured_debt"
+      ],
+      "will_not": [
+        "lie_about_a_term",
+        "waive_a_forfeit_on_the_record",
+        "leave_the_hall_to_collect"
+      ],
+      "signature_quote": "Read it twice. I'll say it twice. After the second time there is only the ink."
+    },
+    {
+      "id": "npc_perrin_ashby",
+      "display_name": "Perrin Ashby",
+      "profession": "Charter Drafter",
+      "bio": "Drafts charters for a place that has never had one. Earnest, precise, slightly too fond of 'finally.' Osran's only joke about anyone. The Compact's advocate at the Petition Tent.",
+      "faction": "faction_the_compact",
+      "region": "region_crossing",
+      "first_day": 20,
+      "location_id": "loc_crossing_petition_tent",
+      "wants": [
+        "a_written_charter"
+      ],
+      "offers": [
+        "drafting",
+        "canvassing"
+      ],
+      "will_not": [
+        "pass_a_known_unfair_clause",
+        "admit_the_scoring_clause_resembles_a_rur"
+      ],
+      "signature_quote": "None of that is a reason it cannot also be a town, with a vote, and a code, and an appeal that is not 'find three backers faster.'"
+    },
+    {
+      "id": "npc_ivo_fenn",
+      "display_name": "Ivo Fenn",
+      "profession": "Records Clerk",
+      "bio": "Keeps five years of the Crossing filed by someone who believes a paper trail is the only enforcement a town without a guard can afford. His records do not lie. He will not summarise the Charter — he produces files.",
+      "faction": "none",
+      "region": "region_crossing",
+      "first_day": 20,
+      "location_id": "loc_crossing_records_room",
+      "wants": [
+        "order"
+      ],
+      "offers": [
+        "records",
+        "filing"
+      ],
+      "will_not": [
+        "destroy_a_record",
+        "summarise_the_charter"
+      ],
+      "signature_quote": "I file things. That is the whole job. If you want a summary, ask someone who thinks paper is negotiable."
+    },
+    {
+      "id": "npc_kess_adler",
+      "display_name": "Kess Adler",
+      "profession": "Records Clerk",
+      "bio": "Municipal records clerk, Reconstruction Utility Rating 9. Unlisted. Keeps the duty chart true in the morning. Pencil, not ink, until someone orders otherwise. Erases dust from blank rows every day.",
+      "faction": "none",
+      "region": "the_stack",
+      "first_day": 60,
+      "location_id": "loc_stack_roster_wall",
+      "wants": [
+        "roster_pencil_allowed",
+        "wall_true_in_morning"
+      ],
+      "offers": [
+        "morning_row",
+        "levy_names_correct"
+      ],
+      "will_not": [
+        "write_unslept_name",
+        "falsify_dob",
+        "choose_ink"
+      ],
+      "signature_quote": "The wall was left blank because the names it wanted did not arrive. If I write yours, that is not the same as being them. It is only the same as being here."
+    },
+    {
+      "id": "npc_ansel_duth",
+      "display_name": "Ansel Duth",
+      "profession": "Parent",
+      "bio": "Unlisted parent. Dependent count that would have helped a score, in a household that was not allocated. One child in the stack. Short questions that are not rhetorical.",
+      "faction": "none",
+      "region": "the_stack",
+      "first_day": 60,
+      "location_id": "loc_stack_mess",
+      "wants": [
+        "child_not_line_item",
+        "food_without_speech"
+      ],
+      "offers": [
+        "table_truth",
+        "ladle_witness"
+      ],
+      "will_not": [
+        "ask_twice",
+        "threaten_to_leave",
+        "call_office_evil"
+      ],
+      "signature_quote": "If you tell them the boots were for someone else, they will still put them on. They will just know."
+    },
+    {
+      "id": "npc_tamsin_rook",
+      "display_name": "Tamsin Rook",
+      "profession": "Harbour Night-Clerk",
+      "bio": "Harbour night-clerk, unlisted. Score would have been in the thirties if anyone had scored a person who worked when others slept. The hatch intercom. Will not lie about who is outside.",
+      "faction": "none",
+      "region": "the_approach",
+      "first_day": 60,
+      "location_id": "loc_approach_hatch",
+      "wants": [
+        "rotating_watch",
+        "truth_on_grille"
+      ],
+      "offers": [
+        "hatch_account",
+        "apron_facts"
+      ],
+      "will_not": [
+        "lie_on_intercom",
+        "sleep_same_bunk_twice",
+        "call_edor_coward"
+      ],
+      "signature_quote": "There's a stool in the ash. There's a person on it. I'm not opening until you say. I'm also not pretending the stool isn't there."
+    },
+    {
+      "id": "npc_len_quill",
+      "display_name": "Len Quill",
+      "profession": "Quiet House Runner",
+      "bio": "Quiet House runner. Not a medic. Two knocks. Name, and one true thing. The back room is not shown. Writes the sentence exactly as given.",
+      "faction": "faction_quiet_house",
+      "region": "the_approach",
+      "first_day": 60,
+      "location_id": "loc_approach_apron",
+      "wants": [
+        "deceased_name",
+        "one_true_thing"
+      ],
+      "offers": [
+        "quiet_transport",
+        "tag_truth"
+      ],
+      "will_not": [
+        "enter_uninvited",
+        "adjudicate_back_room",
+        "take_body_without_name"
+      ],
+      "signature_quote": "We make it quiet. I need the name. I need one true thing. I will write it the way you say it."
+    },
+    {
+      "id": "npc_hadi_morrow",
+      "display_name": "Hadi Morrow",
+      "profession": "Veterinary Assistant",
+      "bio": "Veterinary assistant. The trade the rubric scored cheap and District 8 cannot desalinate a child without. Will not call himself a doctor. Doses out loud, counts rags, names the morning.",
+      "faction": "none",
+      "region": "the_stack",
+      "first_day": 60,
+      "location_id": "loc_stack_clinic_alcove",
+      "wants": [
+        "finish_stack_people",
+        "clean_rag"
+      ],
+      "offers": [
+        "honest_needle",
+        "outfall_whistle"
+      ],
+      "will_not": [
+        "call_himself_doctor",
+        "leave_septic_child",
+        "hate_the_office"
+      ],
+      "signature_quote": "I can do this here with iodine and a clean rag. I can do the outfall with a whistle. I cannot do both in the same morning. You have to write which morning it is."
+    },
+    {
+      "id": "npc_nila_brant",
+      "display_name": "Nila Brant",
+      "profession": "Lamp-Oil Clerk",
+      "bio": "Lamp-oil clerk, unlisted. Occupies Allocation 11 with three others. Keeps their chart blank on purpose. A hiding place, not a pool. Will withdraw if you write her living in ink.",
+      "faction": "none",
+      "region": "the_overflow",
+      "first_day": 60,
+      "location_id": "loc_overflow_alloc_11",
+      "wants": [
+        "filters_without_lecture",
+        "silence"
+      ],
+      "offers": [
+        "hiding_place",
+        "overflow_shelter"
+      ],
+      "will_not": [
+        "hide_listed_name",
+        "explain_twice",
+        "say_please"
+      ],
+      "signature_quote": "You can sleep here if you are not a pool. The minute you are a pool, this hatch is a wall. I will not explain it twice."
+    },
+    {
+      "id": "npc_maren_holt",
+      "display_name": "Maren Holt",
+      "profession": "Overlay Surveyor",
+      "bio": "Municipal cadastral technician. Not allocated. In-situ the way Leva was. Finishing the Standing Record on the ground. Distances, lot numbers, the lived name is a subtitle.",
+      "faction": "faction_the_overlay",
+      "region": "the_cut",
+      "first_day": 75,
+      "location_id": "loc_cut_kilometre_19",
+      "wants": [
+        "brass_fittings",
+        "walker_with_plates",
+        "stencil_pigment"
+      ],
+      "offers": [
+        "cadastral_keys",
+        "travel_correction_on_named_sites"
+      ],
+      "will_not": [
+        "falsify_gauge",
+        "enter_alloc_11",
+        "ask_lamplighter_exception"
+      ],
+      "signature_quote": "The Schedule named households. This names ground. Ground does not argue. People do. I am not here to argue. I am here to finish the post."
+    },
+    {
+      "id": "npc_ira_vell",
+      "display_name": "Ira Vell",
+      "profession": "Registrar",
+      "bio": "Filing grade. The woman who stayed, or the junior who did not leave when the senior grades did. Has the Standing Record. Wants it complete or honestly incomplete.",
+      "faction": "none",
+      "region": "ministry",
+      "first_day": 75,
+      "location_id": "location_ministry_of_truth_bunker",
+      "wants": [
+        "record_complete_or_honest",
+        "receipt"
+      ],
+      "offers": [
+        "standing_record_copy",
+        "visited_column"
+      ],
+      "will_not": [
+        "give_book_without_receipt",
+        "raise_voice",
+        "call_player_allocated"
+      ],
+      "signature_quote": "I can copy you the list of sites. That is not the same as you having been there. The book has a column for that. It is empty until the column is not a lie."
+    },
+    {
+      "id": "npc_benno_kade",
+      "display_name": "Benno Kade",
+      "profession": "Lock Electrician",
+      "bio": "Lock electrician, unlisted. Has lived in the control house since the gate froze mid-cycle. The Drown's rise is his duty roster. Water-heights, dates. Open, as far as it opened.",
+      "faction": "none",
+      "region": "the_drown",
+      "first_day": 75,
+      "location_id": "loc_lock_gate_four",
+      "wants": [
+        "gauges_believed",
+        "fuse"
+      ],
+      "offers": [
+        "benno_rise_chart",
+        "drown_read"
+      ],
+      "will_not": [
+        "call_failure_bomb",
+        "guide_overlay_to_condemned_pump"
+      ],
+      "signature_quote": "They can screw COMPLETE on the leaf. The leaf is still where it stopped. I sleep in the house that stopped with it."
+    },
+    {
+      "id": "npc_quil_esser",
+      "display_name": "Quil Esser",
+      "profession": "Annex Keeper",
+      "bio": "Born after. Learned filing from watching. Archivist practice, not a sermon. Wants names said aloud. Will not file a plate as a name.",
+      "faction": "faction_archivists",
+      "region": "the_vault",
+      "first_day": 75,
+      "location_id": "loc_records_annex",
+      "wants": [
+        "names_said_aloud",
+        "two_witnesses"
+      ],
+      "offers": [
+        "annex_filing",
+        "second_copy_help"
+      ],
+      "will_not": [
+        "file_plate_as_name",
+        "skip_corroboration",
+        "adjudicate_quiet_house"
+      ],
+      "signature_quote": "If you don't say it, you're only copying. A plate is a copy that does not have a mouth."
+    },
+    {
+      "id": "npc_osric_tann",
+      "display_name": "Osric Tann",
+      "profession": "Weigh-clerk",
+      "bio": "Municipal scale technician. Toll pays him in food to keep the needle true. He is not the Tollman. Kilograms, receipts, the joke that stopped being one.",
+      "faction": "none",
+      "region": "the_weighbridge",
+      "first_day": 75,
+      "location_id": "loc_weighbridge",
+      "wants": [
+        "mass",
+        "calibration_weight"
+      ],
+      "offers": [
+        "weigh_carbon",
+        "honest_needle"
+      ],
+      "will_not": [
+        "price_favour_as_lot",
+        "lie_about_needle"
+      ],
+      "signature_quote": "Put the plate on the scale if you want. It will read as mass. That is the only number I will write."
+    },
+    {
+      "id": "npc_dara_mewn",
+      "display_name": "Dara Mewn",
+      "profession": "Plot Watch",
+      "bio": "Waiting-list name, alive, farming. Levy-shaped trade (caretaker). If Hadi or levy took the night watch labour, this hut is empty. Plot 114 is still 114.",
+      "faction": "none",
+      "region": "the_allotments",
+      "first_day": 75,
+      "location_id": "loc_the_allotments",
+      "wants": [
+        "sleeve_current",
+        "fittings_not_plates"
+      ],
+      "offers": [
+        "watered_row",
+        "waitlist_truth"
+      ],
+      "will_not": [
+        "sign_historical_plate",
+        "comment_on_nameplates"
+      ],
+      "signature_quote": "Plot 114 is still 114. The plate they want to put on it has a different 114. I water this one."
+    },
+    {
+      "id": "npc_dr_irina_vel",
+      "display_name": "Dr. Irina Vel",
+      "profession": "Radiation Registrar",
+      "bio": "The night the dosimeter is taken apart, she holds the red pencil. She will not read a number up to make it easier. She asks one question: how much do you want written. She remembers every number refused.",
+      "faction": "none",
+      "region": "the_bunker",
+      "first_day": 180,
+      "location_id": "loc_low_background_lab",
+      "wants": [
+        "dosimeter",
+        "ledger_clearance"
+      ]
+    },
+    {
+      "id": "npc_wyn_omah",
+      "display_name": "Wyn Omah",
+      "profession": "Sick-room Nurse",
+      "bio": "Presents the bed order and waits. If you name a Red survivor she writes it and does not thank you; if you hide a name she does not accuse you — she asks whether the morphine stays on the tray.",
+      "faction": "none",
+      "region": "the_bunker",
+      "first_day": 180,
+      "location_id": "loc_cluster_clinic",
+      "wants": [
+        "morphine",
+        "clean_water"
+      ]
+    },
+    {
+      "id": "npc_piet_abar",
+      "display_name": "Piet Abar",
+      "profession": "Clockmaker",
+      "bio": "The analogue of the dosimeter dial and the only honest voice about error. Every figure has a drift, the drift is normal, and he will not lie about it to make a reading land softer.",
+      "faction": "none",
+      "region": "the_bunker",
+      "first_day": 180,
+      "location_id": "loc_cluster_school",
+      "wants": [
+        "dosimeter",
+        "scrap_metal"
+      ]
+    },
+    {
+      "id": "npc_saria_voss",
+      "display_name": "Saria Voss",
+      "profession": "Midwife",
+      "bio": "Keeps the children's board in chalk so it can be erased. When a child is born she asks you to choose a guess band — low, honest, or refused — and weeks later she may bring the child's true number. She will not book a guess as a truth.",
+      "faction": "none",
+      "region": "the_bunker",
+      "first_day": 180,
+      "location_id": "loc_cluster_school",
+      "wants": [
+        "clean_water",
+        "bandages"
+      ]
+    }
+  ]
+}

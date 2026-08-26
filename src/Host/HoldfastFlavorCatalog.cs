@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS0649
+#pragma warning disable CS8618
 using Godot;
 using Ashfall.Core;
 
@@ -31,7 +33,7 @@ namespace AtomicWar.GodotApp
             return FactionVoices.TryGetValue(factionId, out FactionVoice voice) ? voice : NeutralFactionVoice;
         }
 
-        public static HoldfastFlavorCatalog Load(string dataDirectory, ILog log = null)
+        public static HoldfastFlavorCatalog Load(string dataDirectory, ILog log = null!)
         {
             log ??= new GodotLog();
             var catalog = new HoldfastFlavorCatalog();

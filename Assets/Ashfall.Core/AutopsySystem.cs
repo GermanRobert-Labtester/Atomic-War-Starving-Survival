@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core.Medical;
 using Ashfall.Core.Radiation;
 
@@ -69,7 +70,7 @@ namespace Ashfall.Core
             VentilationSystem ventilation,
             ResearchSystem research,
             MedicalWardSystem medical,
-            ILog log = null)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
@@ -193,12 +194,20 @@ namespace Ashfall.Core
 
         public List<AutopsyCase> GetActiveCases() => _state.cases.FindAll(c => c.status == AutopsyStatus.InProgress);
 
-        public AutopsyState CaptureState() => _state;
+        public AutopsyState CaptureState() => CloneState(_state);
+
         public void RestoreState(AutopsyState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnAutopsyChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static AutopsyState CloneState(AutopsyState src)
+        {
+            if (src == null) return new AutopsyState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<AutopsyState>(json) ?? new AutopsyState();
         }
     }
 }

@@ -498,4 +498,13 @@ public partial class MusterAtlasPanel : Control
             GetViewport().SetInputAsHandled();
         }
     }
+
+    public override void _ExitTree()
+    {
+        if (_host != null)
+        {
+            _host.StateChanged -= RefreshView;
+        }
+        base._ExitTree();
+    }
 }

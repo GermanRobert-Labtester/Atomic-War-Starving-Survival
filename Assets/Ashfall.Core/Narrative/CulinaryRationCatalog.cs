@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -51,7 +52,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public CulinaryRecipeEntry GetById(string recipeId)
+        public CulinaryRecipeEntry? GetById(string recipeId)
         {
             if (string.IsNullOrEmpty(recipeId)) return null;
             _byId.TryGetValue(recipeId, out var entry);

@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "description": "Gossip propagation flavor text. After a moral choice resolves and propagatesOnDay arrives, the world reacts through camp chatter, NPC greeting changes, and whispered reputation. The player never sees their score — only these reactions.",
+  "camp_chatter": {
+    "description": "Ambient lines overheard in camp after gossip propagates. Sorted by moral band at time of propagation.",
+    "very_positive": [
+      "Did you hear? They gave their last medicine to that stranger's kid. The whole course.",
+      "The one from the eastern shelter — people say they buried every body they found on the ridge. Every one.",
+      "Someone told me they sat with old Mara all night. Didn't ask for anything. Just sat.",
+      "I heard they turned down a clean trade route to carry a wounded stranger back to camp. On their back.",
+      "The Peacekeepers are talking about them. Not the bad kind of talking.",
+      "Word is they gave seeds to the last farmer on the plateau. The whole stock. Their own stock.",
+      "They say even the raiders won't touch that one. Too much... weight, I guess. Too much weight behind the name.",
+      "A child in the east quarter drew a picture of them. Calls them 'the kind one.' Hangs it on the wall.",
+      "The Knowledge Keepers want to meet them. Not to ask — to give. That's new.",
+      "I don't trust saints. But this one keeps showing up, and keeps giving, and hasn't asked for a single thing back."
+    ],
+    "positive": [
+      "They helped the Peacekeeper on the north road. Shared supplies, I heard. Not nothing.",
+      "People say they listened to old Gregor's war story. The whole thing. Even the ugly parts.",
+      "Word around camp — they comforted the widow by the east fire. Sat with her through the bad hours.",
+      "The merchant at the crossroads gives them a nod now. Fair trader, apparently.",
+      "I heard they buried a body near the water tower. Properly. Not just kicked dirt over it.",
+      "Someone said they gave food to that raider with the broken gun. The raider told them about the next raid.",
+      "The doctor at the clinic speaks well of them. Something about patience. About listening.",
+      "They stopped for the thirsty one on the desert road. Gave water. Got directions to a spring.",
+      "Not a saint. But decent. That's worth noting, these days."
+    ],
+    "slightly_positive": [
+      "They helped someone on the road. I forget who. But they helped.",
+      "People say they're not bad. Which is... something.",
+      "The Peacekeepers don't frown when that name comes up. Low bar, but there it is.",
+      "I heard they gave a little food to a stranger. Not much. But they gave.",
+      "Someone said they listened to a story or two. Didn't mock anyone for telling one."
+    ],
+    "neutral": [
+      "Who? Oh, them. I don't know. They come and go. Keep to themselves.",
+      "Never helped me. Never hurt me. That's the whole file on them.",
+      "The name doesn't ring any bells. Which is probably fine.",
+      "Neither the raiders nor the Peacekeepers mention them. That's a kind of safety.",
+      "Average. In the old world that was an insult. Now it's a blessing."
+    ],
+    "slightly_evil": [
+      "Watch your gear around that one. I'm not saying they took anything. I'm saying watch it.",
+      "They walked past someone on the road. I saw it. Just walked past.",
+      "People say they refused a child. Could be rumor. Could be fact. The child remembers.",
+      "The merchant at the crossroads doesn't give them credit anymore. Something happened.",
+      "I don't like the look they give people who ask for help. The look says 'no' before the mouth does."
+    ],
+    "evil": [
+      "Stay away from that one. I mean it. People who cross their path end up lighter.",
+      "They took from the injured man on the east road. Took his pack while he watched.",
+      "Word is they robbed the Knowledge Keeper. Ripped the notes right out of their hands.",
+      "The Peacekeepers have a description circulating. Matches that one pretty well.",
+      "A raider told me even their people talk about this one — and not with admiration. With caution.",
+      "Someone died on the south road. Didn't have to. This one walked past, pockets heavier than before.",
+      "The farmer's seed locker is empty. You know who did it. I know who did it. The fence knows.",
+      "Don't trade with them. The last person who did found their kit missing the next morning."
+    ],
+    "very_evil": [
+      "Lock your shelter. That one is in the area.",
+      "The Peacekeepers posted a bounty. You know whose face is on it.",
+      "I watched them take from a dying woman. Her last bundle. While she tried to curse them.",
+      "The raiders respect them. Think about what that means. Think hard.",
+      "A child won't go near the east path anymore. Says 'the bad one' lives there.",
+      "They say you can trade with them — but only if you have something they can't just take.",
+      "The Knowledge Keepers tell their children about this one. As a warning.",
+      "Someone put a mark on the wall outside their shelter. A red mark. Everyone knows what it means.",
+      "The old man by the fire stopped telling stories. Says there's no point. Not with this one around.",
+      "Even the dogs cross the road when they see them coming. Animals know."
+    ]
+  },
+  "npc_greeting_shifts": {
+    "description": "How NPCs change their opening line when greeting the player after gossip propagates.",
+    "very_positive": [
+      "Oh — you're the one they talk about. The kind one. What can I do for you?",
+      "I heard what you did for the family on the ridge. Thank you. Truly.",
+      "You don't have to buy anything. Sit. Eat. You've earned that much.",
+      "My daughter drew a picture of you. She's never met you. That's how far your name travels.",
+      "The Peacekeepers told us about you. We saved you a share. Here."
+    ],
+    "positive": [
+      "Ah, you. I've heard good things. What do you need?",
+      "The merchant said you trade fair. That's enough for me. What can I offer?",
+      "You helped someone I know. So I'll help you. Fair's fair.",
+      "I trust you more than most. Which isn't saying much, but it's saying something."
+    ],
+    "slightly_positive": [
+      "You seem alright. What are you after?",
+      "Haven't heard anything bad about you. That's practically a recommendation.",
+      "You can sit if you want. Fire's open."
+    ],
+    "neutral": [
+      "What do you want?",
+      "Trading or passing through?",
+      "I don't know you. State your business.",
+      "Sit if you want. Leave if you want. Makes no difference to me."
+    ],
+    "slightly_evil": [
+      "Keep your distance. We can talk from here.",
+      "I know your face. I'll trade, but I'm watching my pack.",
+      "What do you want? Make it quick.",
+      "The children go inside when you come around. You notice that?"
+    ],
+    "evil": [
+      "You. I know what you did. Say your piece and go.",
+      "My hand's on my knife. Don't take it personally. Actually, do.",
+      "Last person who looked at me like that lost a tooth. State your business.",
+      "I'd spit, but you're not worth the moisture."
+    ],
+    "very_evil": [
+      "Get away from my fire. Now.",
+      "I know your face. Everyone does. The bounty poster made sure of that.",
+      "You come any closer and I scream. The whole camp comes running.",
+      "I have nothing you can take. Leave.",
+      "The mark on my door is for you. You know what it means. Walk on."
+    ]
+  },
+  "whisper_lines": {
+    "description": "Lines murmured between NPCs when the player passes by. The player catches fragments.",
+    "very_positive": [
+      "...gave everything they had, I heard...",
+      "...the Peacekeepers want to meet them, not arrest them...",
+      "...buried every body on the ridge. Every single one...",
+      "...sat with the old woman all night. Didn't sleep...",
+      "...even the raiders won't...",
+      "...a saint, or the closest thing we have left..."
+    ],
+    "positive": [
+      "...fair trader, they say...",
+      "...helped the doctor's patient. Didn't ask for pay...",
+      "...listened to old Gregor. The whole damn story...",
+      "...gave water to the one on the road..."
+    ],
+    "neutral": [
+      "...who? Oh, nobody special...",
+      "...comes and goes...",
+      "...I don't know them. Do you?..."
+    ],
+    "slightly_evil": [
+      "...didn't help, I heard...",
+      "...walked past someone. Just walked past...",
+      "...the merchant watches their hands now..."
+    ],
+    "evil": [
+      "...took from the dying one...",
+      "...the Keeper screamed for an hour after...",
+      "...lock your things tonight...",
+      "...the Peacekeepers are circulating a description..."
+    ],
+    "very_evil": [
+      "...that's them. Don't look. Don't look...",
+      "...the bounty says alive, but I've heard 'dead' works too...",
+      "...even the raiders are careful around...",
+      "...took a child's toy from a grave. A grave...",
+      "...I won't sleep until they're gone from this camp..."
+    ]
+  },
+  "gossip_decay": {
+    "description": "Gossip intensity fades over time. After 30 days without a new resolution, gossip downgrades one intensity level. After 60 days, it reaches baseline (neutral greetings). A single dramatic act resets the clock.",
+    "decay_interval_days": 30,
+    "full_decay_days": 60,
+    "dramatic_reset_threshold": 10
+  }
+}

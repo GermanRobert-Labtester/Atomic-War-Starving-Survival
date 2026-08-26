@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Muster
 {
@@ -32,7 +33,7 @@ namespace Ashfall.Core.Muster
         public event Action<ProvisionedState> OnStateChanged;
         public event Action OnContactMade;
 
-        public ProvisionedSystem(ProvisionedState state = null)
+        public ProvisionedSystem(ProvisionedState? state = null)
         {
             _state = state ?? new ProvisionedState();
             if (_state.systemId != SystemId) _state.systemId = SystemId;

@@ -201,21 +201,21 @@ namespace Ashfall.Core
                 if (v1 != null && v1.saveVersion == 1)
                 {
                     ValidateChecksum(v1.Checksum, v1, "v1");
-                    return BuildCurrent(v1.simDay, v1.iceRoad, v1.census, null, null, null);
+                    return BuildCurrent(v1.simDay, v1.iceRoad, v1.census, null!, null!, null!);
                 }
 
                 var v2 = json.Deserialize<HoldfastSaveV2>(jsonText);
                 if (v2 != null && v2.saveVersion == 2)
                 {
                     ValidateChecksum(v2.Checksum, v2, "v2");
-                    return BuildCurrent(v2.simDay, v2.iceRoad, v2.census, v2.brineWater, null, null);
+                    return BuildCurrent(v2.simDay, v2.iceRoad, v2.census, v2.brineWater, null!, null!);
                 }
 
                 var v3 = json.Deserialize<HoldfastSaveV3>(jsonText);
                 if (v3 != null && v3.saveVersion == 3)
                 {
                     ValidateChecksum(v3.Checksum, v3, "v3");
-                    return BuildCurrent(v3.simDay, v3.iceRoad, v3.census, v3.brineWater, v3.quests, null);
+                    return BuildCurrent(v3.simDay, v3.iceRoad, v3.census, v3.brineWater, v3.quests, null!);
                 }
 
                 var v4 = json.Deserialize<HoldfastSaveV4>(jsonText);
@@ -236,7 +236,7 @@ namespace Ashfall.Core
                     return current;
                 }
 
-                migrated = json.Deserialize<HoldfastSave>(jsonText);
+                migrated = json.Deserialize<HoldfastSave>(jsonText!);
             }
             catch (InvalidOperationException)
             {

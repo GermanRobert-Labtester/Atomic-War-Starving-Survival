@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -51,14 +52,14 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public CurrentsPamphletEntry GetByPamphletId(string pamphletId)
+        public CurrentsPamphletEntry? GetByPamphletId(string pamphletId)
         {
             if (string.IsNullOrEmpty(pamphletId)) return null;
             _byPamphletId.TryGetValue(pamphletId, out var entry);
             return entry;
         }
 
-        public CurrentsPamphletEntry GetByFactionId(string factionId)
+        public CurrentsPamphletEntry? GetByFactionId(string factionId)
         {
             if (string.IsNullOrEmpty(factionId)) return null;
             _byFactionId.TryGetValue(factionId, out var entry);

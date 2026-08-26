@@ -1,82 +1,133 @@
-[
-  {
-    "id": "cipher_station_lincolnshire_poacher_echo",
-    "station_nickname": "THE_POACHER_ECHO",
-    "transmission_frequency_khz": 14487.0,
-    "modulation_mode": "AM_CARRIER_VOICE",
-    "chime_interval_seconds": 120,
-    "timestamp_relative": "YEAR_02_MONTH_08_RECORDED",
-    "tags": ["sigint", "numbers_station", "cipher", "shortwave", "radio"],
-    "prose": "Two bars of an electronic music box playing an 18th-century folk tune, followed by a synthesized female voice reciting five-figure groups: '0-4-2-9-1... 8-8-3-1-0...' The transmission runs without variation every four hours from a coastal transmitter site powered by a decaying RTG."
-  },
-  {
-    "id": "cipher_station_swedish_rhapsody_musicbox",
-    "station_nickname": "RHAPSODY_ORPHAN",
-    "transmission_frequency_khz": 6890.0,
-    "modulation_mode": "USB_PHONETIC_TRIADS",
-    "chime_interval_seconds": 60,
-    "timestamp_relative": "YEAR_04_MONTH_12_RECORDED",
-    "tags": ["sigint", "numbers_station", "music_box", "cipher", "shortwave"],
-    "prose": "A metallic, high-pitched mechanical music box chime that speeds up slightly as the clockwork spring winds down, followed by a child's voice: 'Achtung! 5-5-2... 1-0-9...' In the radio room, dwellers listen in absolute silence, wondering if the child was recorded forty years ago or yesterday."
-  },
-  {
-    "id": "cipher_station_magnetic_tape_loop_cherry_ripe",
-    "station_nickname": "CHERRY_RIPE_VAULT",
-    "transmission_frequency_khz": 19800.0,
-    "modulation_mode": "AM_LOOP_CORRUPTED",
-    "chime_interval_seconds": 300,
-    "timestamp_relative": "YEAR_06_MONTH_03_RECORDED",
-    "tags": ["sigint", "numbers_station", "tape_loop", "orphan_vault", "radio"],
-    "prose": "The magnetic audio tape loop has degraded from twenty years of exposure to damp bunker air. The introductory flute melody wobbles with extreme wow and flutter, followed by a hiss of oxide flaking off the plastic backing. An open microphone in the transmitter vault picks up the distant sound of dripping groundwater."
-  },
-  {
-    "id": "cipher_station_buzzer_uvb_76_marker",
-    "station_nickname": "THE_DEAD_BUZZER",
-    "transmission_frequency_khz": 4625.0,
-    "modulation_mode": "MONOTONE_BUZZER_TRANSIENT",
-    "chime_interval_seconds": 2,
-    "timestamp_relative": "YEAR_09_MONTH_05_RECORDED",
-    "tags": ["sigint", "the_buzzer", "dead_hand", "marker_tone", "radio"],
-    "prose": "A monotonous 25-tone per minute buzzer pulse on 4625 kHz. For sixteen years, it has held the frequency open like an automated heartbeat. At 04:12 on Day 3,412, the buzzer suddenly dropped carrier and a raspy human voice read: 'ANNA-BORIS-7-4-1-9-0-ZAPAL' before the buzzer slammed back on."
-  },
-  {
-    "id": "cipher_station_backward_music_station_whistle",
-    "station_nickname": "WHISTLING_SPECTER",
-    "transmission_frequency_khz": 3370.0,
-    "modulation_mode": "AUDIO_MODULATED_SWEEP",
-    "chime_interval_seconds": 180,
-    "timestamp_relative": "YEAR_11_MONTH_09_RECORDED",
-    "tags": ["sigint", "whistle", "backward_music", "carrier_sweep", "radio"],
-    "prose": "A strange warbling acoustic modulation that sweeps from 800 Hz down to 200 Hz, sounding like a descending copper whistle. Analysis on a spectrum analyzer reveals multi-layered phonetic audio tracks played backwards at quadruple speed—an automated high-speed burst transmitter awaiting acknowledgment from ghost submarines."
-  },
-  {
-    "id": "cipher_station_four_tone_flute_cadence",
-    "station_nickname": "THE_FOUR_NOTE_GONG",
-    "transmission_frequency_khz": 8930.0,
-    "modulation_mode": "MULTITONE_CADENCE",
-    "chime_interval_seconds": 240,
-    "timestamp_relative": "YEAR_13_MONTH_01_RECORDED",
-    "tags": ["sigint", "four_tone", "cadence", "telemetry", "shortwave"],
-    "prose": "Four pure sinusoidal tones (440, 554, 659, 880 Hz) struck in ascending sequence, followed by two minutes of dead unmodulated carrier. A bunker engineer noted that the four tones match the acoustic resonant frequencies of the main intake damper solenoids in Government Bunker 04."
-  },
-  {
-    "id": "cipher_station_phonetic_alphabet_drill_sergeant",
-    "station_nickname": "DRILL_SERGEANT_LOOP",
-    "transmission_frequency_khz": 11240.0,
-    "modulation_mode": "USB_VOICE_DRILL",
-    "chime_interval_seconds": 15,
-    "timestamp_relative": "YEAR_16_MONTH_07_RECORDED",
-    "tags": ["sigint", "phonetic", "military_voice", "automation", "radio"],
-    "prose": "A harsh, barking male voice repeating standard phonetic alphabet pairs against background 60-cycle generator rumble: 'BRAVO-TANGO... ECHO-KILO... SIERRA-WHISKEY...' The recording cuts off mid-word every fourteen minutes when the mechanical drum player resets its head."
-  },
-  {
-    "id": "cipher_station_final_farewell_simplex_loop",
-    "station_nickname": "THE_LAST_SIMPLEX",
-    "transmission_frequency_khz": 500.0,
-    "modulation_mode": "CW_MORSE_BEACON",
-    "chime_interval_seconds": 30,
-    "timestamp_relative": "YEAR_19_MONTH_11_RECORDED",
-    "tags": ["sigint", "morse_code", "simplex", "last_words", "distress"],
-    "prose": "Hand-keyed Morse code sent at eight words per minute on the old 500 kHz maritime distress band. The message loops endlessly from an automated mechanical code wheel: 'ALL STATIONS CLOSE LOGS STOP PRIME POWER FAILING STOP GOD PRESERVE US STOP VAULT 07 OUT STOP SK'."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "cipher_station_lincolnshire_poacher_echo",
+      "station_nickname": "THE_POACHER_ECHO",
+      "transmission_frequency_khz": 14487.0,
+      "modulation_mode": "AM_CARRIER_VOICE",
+      "chime_interval_seconds": 120,
+      "timestamp_relative": "YEAR_02_MONTH_08_RECORDED",
+      "tags": [
+        "sigint",
+        "numbers_station",
+        "cipher",
+        "shortwave",
+        "radio"
+      ],
+      "prose": "Two bars of an electronic music box playing an 18th-century folk tune, followed by a synthesized female voice reciting five-figure groups: '0-4-2-9-1... 8-8-3-1-0...' The transmission runs without variation every four hours from a coastal transmitter site powered by a decaying RTG."
+    },
+    {
+      "id": "cipher_station_swedish_rhapsody_musicbox",
+      "station_nickname": "RHAPSODY_ORPHAN",
+      "transmission_frequency_khz": 6890.0,
+      "modulation_mode": "USB_PHONETIC_TRIADS",
+      "chime_interval_seconds": 60,
+      "timestamp_relative": "YEAR_04_MONTH_12_RECORDED",
+      "tags": [
+        "sigint",
+        "numbers_station",
+        "music_box",
+        "cipher",
+        "shortwave"
+      ],
+      "prose": "A metallic, high-pitched mechanical music box chime that speeds up slightly as the clockwork spring winds down, followed by a child's voice: 'Achtung! 5-5-2... 1-0-9...' In the radio room, dwellers listen in absolute silence, wondering if the child was recorded forty years ago or yesterday."
+    },
+    {
+      "id": "cipher_station_magnetic_tape_loop_cherry_ripe",
+      "station_nickname": "CHERRY_RIPE_VAULT",
+      "transmission_frequency_khz": 19800.0,
+      "modulation_mode": "AM_LOOP_CORRUPTED",
+      "chime_interval_seconds": 300,
+      "timestamp_relative": "YEAR_06_MONTH_03_RECORDED",
+      "tags": [
+        "sigint",
+        "numbers_station",
+        "tape_loop",
+        "orphan_vault",
+        "radio"
+      ],
+      "prose": "The magnetic audio tape loop has degraded from twenty years of exposure to damp bunker air. The introductory flute melody wobbles with extreme wow and flutter, followed by a hiss of oxide flaking off the plastic backing. An open microphone in the transmitter vault picks up the distant sound of dripping groundwater."
+    },
+    {
+      "id": "cipher_station_buzzer_uvb_76_marker",
+      "station_nickname": "THE_DEAD_BUZZER",
+      "transmission_frequency_khz": 4625.0,
+      "modulation_mode": "MONOTONE_BUZZER_TRANSIENT",
+      "chime_interval_seconds": 2,
+      "timestamp_relative": "YEAR_09_MONTH_05_RECORDED",
+      "tags": [
+        "sigint",
+        "the_buzzer",
+        "dead_hand",
+        "marker_tone",
+        "radio"
+      ],
+      "prose": "A monotonous 25-tone per minute buzzer pulse on 4625 kHz. For sixteen years, it has held the frequency open like an automated heartbeat. At 04:12 on Day 3,412, the buzzer suddenly dropped carrier and a raspy human voice read: 'ANNA-BORIS-7-4-1-9-0-ZAPAL' before the buzzer slammed back on."
+    },
+    {
+      "id": "cipher_station_backward_music_station_whistle",
+      "station_nickname": "WHISTLING_SPECTER",
+      "transmission_frequency_khz": 3370.0,
+      "modulation_mode": "AUDIO_MODULATED_SWEEP",
+      "chime_interval_seconds": 180,
+      "timestamp_relative": "YEAR_11_MONTH_09_RECORDED",
+      "tags": [
+        "sigint",
+        "whistle",
+        "backward_music",
+        "carrier_sweep",
+        "radio"
+      ],
+      "prose": "A strange warbling acoustic modulation that sweeps from 800 Hz down to 200 Hz, sounding like a descending copper whistle. Analysis on a spectrum analyzer reveals multi-layered phonetic audio tracks played backwards at quadruple speed—an automated high-speed burst transmitter awaiting acknowledgment from ghost submarines."
+    },
+    {
+      "id": "cipher_station_four_tone_flute_cadence",
+      "station_nickname": "THE_FOUR_NOTE_GONG",
+      "transmission_frequency_khz": 8930.0,
+      "modulation_mode": "MULTITONE_CADENCE",
+      "chime_interval_seconds": 240,
+      "timestamp_relative": "YEAR_13_MONTH_01_RECORDED",
+      "tags": [
+        "sigint",
+        "four_tone",
+        "cadence",
+        "telemetry",
+        "shortwave"
+      ],
+      "prose": "Four pure sinusoidal tones (440, 554, 659, 880 Hz) struck in ascending sequence, followed by two minutes of dead unmodulated carrier. A bunker engineer noted that the four tones match the acoustic resonant frequencies of the main intake damper solenoids in Government Bunker 04."
+    },
+    {
+      "id": "cipher_station_phonetic_alphabet_drill_sergeant",
+      "station_nickname": "DRILL_SERGEANT_LOOP",
+      "transmission_frequency_khz": 11240.0,
+      "modulation_mode": "USB_VOICE_DRILL",
+      "chime_interval_seconds": 15,
+      "timestamp_relative": "YEAR_16_MONTH_07_RECORDED",
+      "tags": [
+        "sigint",
+        "phonetic",
+        "military_voice",
+        "automation",
+        "radio"
+      ],
+      "prose": "A harsh, barking male voice repeating standard phonetic alphabet pairs against background 60-cycle generator rumble: 'BRAVO-TANGO... ECHO-KILO... SIERRA-WHISKEY...' The recording cuts off mid-word every fourteen minutes when the mechanical drum player resets its head."
+    },
+    {
+      "id": "cipher_station_final_farewell_simplex_loop",
+      "station_nickname": "THE_LAST_SIMPLEX",
+      "transmission_frequency_khz": 500.0,
+      "modulation_mode": "CW_MORSE_BEACON",
+      "chime_interval_seconds": 30,
+      "timestamp_relative": "YEAR_19_MONTH_11_RECORDED",
+      "tags": [
+        "sigint",
+        "morse_code",
+        "simplex",
+        "last_words",
+        "distress"
+      ],
+      "prose": "Hand-keyed Morse code sent at eight words per minute on the old 500 kHz maritime distress band. The message loops endlessly from an automated mechanical code wheel: 'ALL STATIONS CLOSE LOGS STOP PRIME POWER FAILING STOP GOD PRESERVE US STOP VAULT 07 OUT STOP SK'."
+    }
+  ]
+}

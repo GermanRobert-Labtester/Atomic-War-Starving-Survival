@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core
@@ -37,7 +38,7 @@ namespace Ashfall.Core
         private readonly Dictionary<string, int> _items = new Dictionary<string, int>(StringComparer.Ordinal);
         private readonly HoldfastCatalog _catalog;
 
-        public HoldfastTradeInventory(HoldfastCatalog catalog = null)
+        public HoldfastTradeInventory(HoldfastCatalog? catalog = null)
         {
             _catalog = catalog;
         }
@@ -115,7 +116,7 @@ namespace Ashfall.Core
     public sealed class HoldfastTradeSession
     {
         public const int DefaultInventoryCapacity = 20;
-        private readonly HoldfastCatalog _catalog;
+        private readonly HoldfastCatalog _catalog = null!;
         private readonly Dictionary<string, int> _held = new Dictionary<string, int>(StringComparer.Ordinal);
         private readonly Dictionary<string, int> _stock = new Dictionary<string, int>(StringComparer.Ordinal);
         private long _value;
@@ -228,7 +229,9 @@ namespace Ashfall.Core
             if (quantity <= 0)
                 return HoldfastTradeResult.Fail("Quantity must be at least 1.", HoldfastTradeFailure.InvalidQuantity);
 
-            var def = _catalog.GetItem(itemId);
+            var def = _catalog!.GetItem(itemId);
+            if (def == null)
+                return HoldfastTradeResult.Fail("Unknown item: " + itemId, HoldfastTradeFailure.UnknownItem);
             int currentStock = GetStock(itemId);
             if (currentStock < quantity)
                 return HoldfastTradeResult.Fail("Insufficient merchant stock.", HoldfastTradeFailure.InsufficientStock);
@@ -269,7 +272,9 @@ namespace Ashfall.Core
             if (currentlyHeld < quantity)
                 return HoldfastTradeResult.Fail("Insufficient player inventory.", HoldfastTradeFailure.InsufficientInventory);
 
-            var def = _catalog.GetItem(itemId);
+            var def = _catalog!.GetItem(itemId);
+            if (def == null)
+                return HoldfastTradeResult.Fail("Unknown item: " + itemId, HoldfastTradeFailure.UnknownItem);
             int gain = quantity * Math.Max(1, (int)def.TradeValue);
             _value += gain;
             _held[itemId] = currentlyHeld - quantity;

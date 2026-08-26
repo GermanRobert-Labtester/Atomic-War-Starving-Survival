@@ -1,57 +1,60 @@
-[
-  {
-    "id": "faction_the_scale",
-    "display_name": "The Scale",
-    "alignment": "conditional",
-    "home_region": "region_crossing",
-    "is_active": true,
-    "trust": 0,
-    "wants": [
-      "trade_goods"
-    ],
-    "offers": [
-      "stallrow_trade_access",
-      "verification"
-    ],
-    "signature_quote": "The number is real. What people infer from it is not my problem.",
-    "access_rule": "An honest weigh is the price of anything at Stallrow. Contest a true reading without cause and the exchange stays open but remembers you.",
-    "badge_asset_id": ""
-  },
-  {
-    "id": "faction_the_underwrite",
-    "display_name": "The Underwrite",
-    "alignment": "conditional",
-    "home_region": "region_crossing",
-    "is_active": true,
-    "trust": 0,
-    "wants": [
-      "pledged_goods"
-    ],
-    "offers": [
-      "seed_stock",
-      "covered_loss",
-      "favour_bank"
-    ],
-    "signature_quote": "Read it twice. I'll say it twice. After the second time there is only the ink.",
-    "access_rule": "Help is real, against a plainly named forfeit. The forfeit is never abstract. Sign, negotiate the term, or decline — no hidden clause survives a second reading.",
-    "badge_asset_id": ""
-  },
-  {
-    "id": "faction_the_compact",
-    "display_name": "The Compact",
-    "alignment": "peaceful",
-    "home_region": "region_crossing",
-    "is_active": true,
-    "trust": 0,
-    "wants": [
-      "signatories"
-    ],
-    "offers": [
-      "charter_draft",
-      "ratification"
-    ],
-    "signature_quote": "There is a document now. People argue with it instead of with each other.",
-    "access_rule": "Sign the draft and you are on the record. Perrin will not pass a clause he knows is unfair — but he has not yet noticed every clause that is.",
-    "badge_asset_id": ""
-  }
-]
+{
+  "schema_version": 1,
+  "actions": [
+    {
+      "id": "faction_the_scale",
+      "display_name": "The Scale",
+      "alignment": "conditional",
+      "home_region": "region_crossing",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "trade_goods"
+      ],
+      "offers": [
+        "stallrow_trade_access",
+        "verification"
+      ],
+      "signature_quote": "The number is real. What people infer from it is not my problem.",
+      "access_rule": "An honest weigh is the price of anything at Stallrow. Contest a true reading without cause and the exchange stays open but remembers you.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_underwrite",
+      "display_name": "The Underwrite",
+      "alignment": "conditional",
+      "home_region": "region_crossing",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "pledged_goods"
+      ],
+      "offers": [
+        "seed_stock",
+        "covered_loss",
+        "favour_bank"
+      ],
+      "signature_quote": "Read it twice. I'll say it twice. After the second time there is only the ink.",
+      "access_rule": "Help is real, against a plainly named forfeit. The forfeit is never abstract. Sign, negotiate the term, or decline — no hidden clause survives a second reading.",
+      "badge_asset_id": ""
+    },
+    {
+      "id": "faction_the_compact",
+      "display_name": "The Compact",
+      "alignment": "peaceful",
+      "home_region": "region_crossing",
+      "is_active": true,
+      "trust": 0,
+      "wants": [
+        "signatories"
+      ],
+      "offers": [
+        "charter_draft",
+        "ratification"
+      ],
+      "signature_quote": "There is a document now. People argue with it instead of with each other.",
+      "access_rule": "Sign the draft and you are on the record. Perrin will not pass a clause he knows is unfair — but he has not yet noticed every clause that is.",
+      "badge_asset_id": ""
+    }
+  ]
+}

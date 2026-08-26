@@ -1,58 +1,61 @@
-[
-  {
-    "id": "drop_spindle_001",
-    "spindle_unit_id": "su_linden_01",
-    "fibre_stock_type": "nettle_bast",
-    "draft_ratio_target": 4.2,
-    "log_text": "Nettle stalks retted eight days. Bast strips longer than expected — wrist holds a longer draw than the whorl can sustain. Snapped twice before I shortened the draft."
-  },
-  {
-    "id": "drop_spindle_002",
-    "spindle_unit_id": "su_linden_01",
-    "fibre_stock_type": "hemp_tow",
-    "draft_ratio_target": 3.8,
-    "log_text": "Hemp tow coarser than the bast. Fingers numb halfway through the cop. Spun shorter lengths and parked the spindle on the edge of the cot frame. Thread is lumpy but it holds."
-  },
-  {
-    "id": "drop_spindle_003",
-    "spindle_unit_id": "su_bone_02",
-    "fibre_stock_type": "dog_fur_combed",
-    "draft_ratio_target": 5.1,
-    "log_text": "Bone whorl salvaged from the kitchen stores. Dog fur carded flat with two nails set in scrap board. Drafts clean if you keep the twist running ahead. Smells like wet animal when it warms."
-  },
-  {
-    "id": "drop_spindle_004",
-    "spindle_unit_id": "su_bone_02",
-    "fibre_stock_type": "cattail_down",
-    "draft_ratio_target": 6.0,
-    "log_text": "Cattail fluff spins poorly alone — too slippery. Mixed it half-and-half with hemp tow and the twist held. Thin singles, weak, but enough for weft fill if we do not stress the cloth."
-  },
-  {
-    "id": "drop_spindle_005",
-    "spindle_unit_id": "su_clay_03",
-    "fibre_stock_type": "linen_line",
-    "draft_ratio_target": 4.5,
-    "log_text": "Clay whorl cracked on the first drop. Wrapped the shaft with wire and it seats well enough. Linen line fibre draws clean and the thread is fine. Best cop yet. Twelve metres before I had to wind off."
-  },
-  {
-    "id": "flyer_wheel_001",
-    "spindle_unit_id": "fw_oak_frame_01",
-    "fibre_stock_type": "nettle_bast",
-    "draft_ratio_target": 8.5,
-    "log_text": "Flyer wheel built from oak salvage and a bent iron crook for the flyer. Drive band is braided gut — stretches when damp. Treadle is rough but rhythmic. First bobbin filled in an hour. Hands still know this."
-  },
-  {
-    "id": "flyer_wheel_002",
-    "spindle_unit_id": "fw_oak_frame_01",
-    "fibre_stock_type": "hemp_line",
-    "draft_ratio_target": 7.9,
-    "log_text": "Hemp line fibre feeds faster than nettle. Bobbin full before expected. Thread is consistent — no slubs in the last three metres. Wheel needs re-tensioning; the mother-of-all creaks under load."
-  },
-  {
-    "id": "flyer_wheel_003",
-    "spindle_unit_id": "fw_ash_frame_02",
-    "fibre_stock_type": "linen_tow",
-    "draft_ratio_target": 9.2,
-    "log_text": "Second wheel uses ash uprights. Lighter. Treadle pivot is a salvaged bolt and it holds. Linen tow drafts with more tension than expected — broke the drive band twice. Replaced with a doubled cord. Bobbin filled clean."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "drop_spindle_001",
+      "spindle_unit_id": "su_linden_01",
+      "fibre_stock_type": "nettle_bast",
+      "draft_ratio_target": 4.2,
+      "log_text": "Nettle stalks retted eight days. Bast strips longer than expected — wrist holds a longer draw than the whorl can sustain. Snapped twice before I shortened the draft."
+    },
+    {
+      "id": "drop_spindle_002",
+      "spindle_unit_id": "su_linden_01",
+      "fibre_stock_type": "hemp_tow",
+      "draft_ratio_target": 3.8,
+      "log_text": "Hemp tow coarser than the bast. Fingers numb halfway through the cop. Spun shorter lengths and parked the spindle on the edge of the cot frame. Thread is lumpy but it holds."
+    },
+    {
+      "id": "drop_spindle_003",
+      "spindle_unit_id": "su_bone_02",
+      "fibre_stock_type": "dog_fur_combed",
+      "draft_ratio_target": 5.1,
+      "log_text": "Bone whorl salvaged from the kitchen stores. Dog fur carded flat with two nails set in scrap board. Drafts clean if you keep the twist running ahead. Smells like wet animal when it warms."
+    },
+    {
+      "id": "drop_spindle_004",
+      "spindle_unit_id": "su_bone_02",
+      "fibre_stock_type": "cattail_down",
+      "draft_ratio_target": 6.0,
+      "log_text": "Cattail fluff spins poorly alone — too slippery. Mixed it half-and-half with hemp tow and the twist held. Thin singles, weak, but enough for weft fill if we do not stress the cloth."
+    },
+    {
+      "id": "drop_spindle_005",
+      "spindle_unit_id": "su_clay_03",
+      "fibre_stock_type": "linen_line",
+      "draft_ratio_target": 4.5,
+      "log_text": "Clay whorl cracked on the first drop. Wrapped the shaft with wire and it seats well enough. Linen line fibre draws clean and the thread is fine. Best cop yet. Twelve metres before I had to wind off."
+    },
+    {
+      "id": "flyer_wheel_001",
+      "spindle_unit_id": "fw_oak_frame_01",
+      "fibre_stock_type": "nettle_bast",
+      "draft_ratio_target": 8.5,
+      "log_text": "Flyer wheel built from oak salvage and a bent iron crook for the flyer. Drive band is braided gut — stretches when damp. Treadle is rough but rhythmic. First bobbin filled in an hour. Hands still know this."
+    },
+    {
+      "id": "flyer_wheel_002",
+      "spindle_unit_id": "fw_oak_frame_01",
+      "fibre_stock_type": "hemp_line",
+      "draft_ratio_target": 7.9,
+      "log_text": "Hemp line fibre feeds faster than nettle. Bobbin full before expected. Thread is consistent — no slubs in the last three metres. Wheel needs re-tensioning; the mother-of-all creaks under load."
+    },
+    {
+      "id": "flyer_wheel_003",
+      "spindle_unit_id": "fw_ash_frame_02",
+      "fibre_stock_type": "linen_tow",
+      "draft_ratio_target": 9.2,
+      "log_text": "Second wheel uses ash uprights. Lighter. Treadle pivot is a salvaged bolt and it holds. Linen tow drafts with more tension than expected — broke the drive band twice. Replaced with a doubled cord. Bobbin filled clean."
+    }
+  ]
+}

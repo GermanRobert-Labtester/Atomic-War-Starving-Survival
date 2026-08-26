@@ -310,5 +310,14 @@ namespace AtomicWar.GodotApp.UI
             "DEAD" => DesignTheme.Muted,
             _ => DesignTheme.Pale,
         };
+
+        public override void _ExitTree()
+        {
+            if (_survivorsHost != null)
+            {
+                _survivorsHost.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
+        }
     }
 }

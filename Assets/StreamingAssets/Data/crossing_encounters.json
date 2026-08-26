@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "encounters": [
     {
       "id": "enc_nc_collector_visit",
@@ -9,7 +10,9 @@
       "choices": [
         {
           "text": "Produce the signed voucher copy and clear the day's interest.",
-          "cost_items": ["item_crossing_pledge_slip"],
+          "cost_items": [
+            "item_crossing_pledge_slip"
+          ],
           "result": "The collector crosses the line out in purple ink, gives a low nod, and moves on."
         },
         {
@@ -27,7 +30,9 @@
       "choices": [
         {
           "text": "Hand over the salt to secure her voice.",
-          "cost_items": ["item_crossing_traded_salt"],
+          "cost_items": [
+            "item_crossing_traded_salt"
+          ],
           "result": "She pockets the token and promises her hand will be in the air when the quorum is called."
         },
         {
@@ -45,7 +50,9 @@
       "choices": [
         {
           "text": "Show the formal redemption note.",
-          "cost_items": ["item_wyn_receipt_paid"],
+          "cost_items": [
+            "item_wyn_receipt_paid"
+          ],
           "result": "They step aside without a word. The chain rattles loose."
         },
         {
@@ -93,7 +100,9 @@
       "choices": [
         {
           "text": "Back Osran's calibration test with the True Weight.",
-          "cost_items": ["item_calibration_weight"],
+          "cost_items": [
+            "item_calibration_weight"
+          ],
           "result": "The scale drops true. The rogue merchant is escorted out without violence."
         },
         {
@@ -150,7 +159,9 @@
       "choices": [
         {
           "text": "Spend your gathered Favour Tokens to call the honest quorum.",
-          "cost_items": ["item_vouch_token_crossing"],
+          "cost_items": [
+            "item_vouch_token_crossing"
+          ],
           "result": "The authentic backers step forward. The quorum holds firm and the hijack fails."
         }
       ]
@@ -160,35 +171,60 @@
     {
       "id": "crisis_the_forfeit",
       "name": "Wyn's Granary Forfeit",
-      "phases": ["Notice", "Terms Read", "Broker Attempt", "Resolution"],
+      "phases": [
+        "Notice",
+        "Terms Read",
+        "Broker Attempt",
+        "Resolution"
+      ],
       "description": "The Underwrite moves to seize the community granary unless the debt is paid or renegotiated.",
       "resolution": "Debt honoured or fairly renegotiated through arbitration."
     },
     {
       "id": "crisis_the_vote",
       "name": "Draft Four Ratification",
-      "phases": ["Call", "Canvas", "Interference", "Count"],
+      "phases": [
+        "Call",
+        "Canvas",
+        "Interference",
+        "Count"
+      ],
       "description": "The Compact brings the revised charter rubric to an open assembly vote.",
       "resolution": "Clean or contested ratification by majority show of hands."
     },
     {
       "id": "crisis_the_standing_contested",
       "name": "The Contested Standing",
-      "phases": ["Call", "Backer Recruitment", "Rival Recruitment", "Verdict"],
+      "phases": [
+        "Call",
+        "Backer Recruitment",
+        "Rival Recruitment",
+        "Verdict"
+      ],
       "description": "A high-stakes trade arbitration is challenged by a bloc claiming corrupted calibration.",
       "resolution": "Ruling holds or is honestly overturned through verified weights."
     },
     {
       "id": "crisis_the_charter_found",
       "name": "Three Dry Pages Discovered",
-      "phases": ["Request", "Read", "Verify", "Decide"],
+      "phases": [
+        "Request",
+        "Read",
+        "Verify",
+        "Decide"
+      ],
       "description": "The original pre-war charter pages are recovered from the Records Room archive.",
       "resolution": "The truth of the crossing is revealed to all three blocs."
     },
     {
       "id": "crisis_who_holds_the_ledger",
       "name": "Who Holds the Ledger",
-      "phases": ["Summons", "Final Backing", "Quorum Ruling", "Aftermath"],
+      "phases": [
+        "Summons",
+        "Final Backing",
+        "Quorum Ruling",
+        "Aftermath"
+      ],
       "description": "The final confrontation determining whether Scale, Underwrite, Compact, or Collapse governs Sector 4.",
       "resolution": "One of four canonical faction resolutions is established."
     }

@@ -10,7 +10,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class DutyRosterHeadlessDemo
     {
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string? dataDirectory = null, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -42,7 +42,7 @@ namespace Ashfall.Core
             Check(catalog.Quests.Count >= 2, "duty roster quests loaded (>=2)");
             Check(catalog.Marks.Count >= 5, "duty roster marks loaded (>=5)");
 
-            var wall = catalog.GetLocation(DutyRosterSystem.LocStackRosterWall);
+            var wall = catalog.GetLocation(DutyRosterIds.LocStackRosterWall);
             Check(wall != null, "loc_stack_roster_wall present in catalog");
             Check(catalog.GetLocation("loc_overflow_alloc_11") != null, "loc_overflow_alloc_11 present in catalog");
             Check(catalog.GetLocation("loc_overflow_pump_hatch") != null, "loc_overflow_pump_hatch present in catalog");
@@ -56,7 +56,7 @@ namespace Ashfall.Core
             // System runtime test
             var roster = new DutyRosterSystem();
             roster.Unlock(1);
-            Check(roster.State.chartScript == DutyRosterSystem.ScriptBlank, "initial chart is blank");
+            Check(roster.State.chartScript == DutyRosterIds.ScriptBlank, "initial chart is blank");
             Check(!roster.State.wallInspected, "wall not inspected initially");
 
             roster.NotifyWallInspected();
@@ -69,27 +69,27 @@ namespace Ashfall.Core
                 new DutyRosterOccupant { survivorId = "sv_elena", displayName = "Elena", occupationObserved = "Scout", sleptHere = false }
             };
 
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 1);
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 1);
             Check(roster.State.kessPencilAllowed, "pencil allowed for Kess");
-            Check(roster.State.chartScript == DutyRosterSystem.ScriptPencil, "chart script transitioned to pencil");
+            Check(roster.State.chartScript == DutyRosterIds.ScriptPencil, "chart script transitioned to pencil");
 
             roster.TickMorning(1, occupants);
             Check(roster.State.rows.Count == 2, "morning tick registered 2 slept survivors");
             Check(roster.GetRow("sv_kess") != null, "Kess found in roster rows");
 
-            roster.WriteName("sv_elena", "Elena", "Scout", DutyRosterSystem.ScriptInk, 2, false);
+            roster.WriteName("sv_elena", "Elena", "Scout", DutyRosterIds.ScriptInk, 2, false);
             Check(roster.GetRow("sv_elena") != null, "Elena committed in ink");
 
             // Save / Load roundtrip
             string blob = json.Serialize(roster.CaptureState());
             var restored = new DutyRosterSystem();
-            restored.RestoreState(json.Deserialize<DutyRosterSystemState>(blob));
+            restored.RestoreState(json.Deserialize<DutyRosterSystemState>(blob)!);
             Check(restored.State.rows.Count == 3, "save roundtrip preserved 3 rows");
             Check(restored.GetRow("sv_elena") != null, "Elena found after restore");
 
             // Burn action
             roster.BurnChart(10);
-            Check(roster.State.chartScript == DutyRosterSystem.ScriptBurned, "chart script is burned after BurnChart");
+            Check(roster.State.chartScript == DutyRosterIds.ScriptBurned, "chart script is burned after BurnChart");
             Check(roster.State.rows.Count == 0, "rows cleared after BurnChart");
 
             // Shelter encounter system
@@ -110,20 +110,20 @@ namespace Ashfall.Core
                 "night slate resolved");
             string encBlob = json.Serialize(encounters.CaptureState());
             var encRestored = new ShelterEncounterSystem();
-            encRestored.RestoreState(json.Deserialize<ShelterEncounterSystemState>(encBlob));
+            encRestored.RestoreState(json.Deserialize<ShelterEncounterSystemState>(encBlob)!);
             Check(encRestored.IsResolved("se_night_slate"), "encounter save roundtrip preserved resolution");
             Check(encRestored.PeekVisitor() == ShelterEncounterSystem.VisitorEdor, "visitor queue survived save roundtrip");
 
             // Second Winter season profile (data, not a class)
-            var season = catalog.GetSeason(DutyRosterSystem.SeasonSecondWinter);
+            var season = catalog.GetSeason(DutyRosterIds.SeasonSecondWinter);
             Check(season != null, "season_second_winter profile present in catalog");
             if (season != null)
             {
-                Check(season.windowMinDays == DutyRosterSystem.SecondWinterWindowMinDays,
+                Check(season.windowMinDays == DutyRosterIds.SecondWinterWindowMinDays,
                     "second winter window min matches");
-                Check(season.windowMaxDays == DutyRosterSystem.SecondWinterWindowMaxDays,
+                Check(season.windowMaxDays == DutyRosterIds.SecondWinterWindowMaxDays,
                     "second winter window max matches");
-                Check(System.Math.Abs(season.encounterWeight - DutyRosterSystem.SecondWinterEncounterWeight) < 0.001f,
+                Check(System.Math.Abs(season.encounterWeight - DutyRosterIds.SecondWinterEncounterWeight) < 0.001f,
                     "second winter encounter weight matches");
             }
             Check(catalog.GetQuest("quest_roster_window") != null, "quest_roster_window present");
@@ -135,7 +135,7 @@ namespace Ashfall.Core
             endingRoster.SetSecondWinterActive(true);
             Check(endingRoster.IsSecondWinterActive, "second winter activates");
             Check(endingRoster.ResolveInkEnding(90), "ink ending resolves");
-            Check(endingRoster.State.endingId == DutyRosterSystem.EndingInk, "ink ending id set");
+            Check(endingRoster.State.endingId == DutyRosterIds.EndingInk, "ink ending id set");
 
             report.Passed = report.FailedCount == 0;
             var sb = new StringBuilder();

@@ -54,7 +54,7 @@ namespace AtomicWar.GodotApp
             BrineWaterSystem brine,
             HoldfastQuestSystem quests,
             LocationLayoutSystem layouts,
-            District8DeepCoastSystem deepCoast = null)
+            District8DeepCoastSystem deepCoast = null!)
         {
             IceRoad = iceRoad;
             Clock = clock;
@@ -205,7 +205,7 @@ namespace AtomicWar.GodotApp
                 string mark = Quests.IsCompleted(id)
                     ? "done"
                     : Quests.IsStarted(id)
-                        ? "stage " + Quests.GetProgress(id).stage
+                        ? "stage " + Quests.GetProgress(id)!.stage
                         : "—";
                 parts.Add(id.Replace("quest_holdfast_the_", "") + ":" + mark);
             }

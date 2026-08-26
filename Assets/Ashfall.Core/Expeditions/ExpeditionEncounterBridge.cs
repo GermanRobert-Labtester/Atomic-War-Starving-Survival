@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core.Narrative;
 
 namespace Ashfall.Core.Expeditions
@@ -80,7 +81,7 @@ namespace Ashfall.Core.Expeditions
             {
                 trigger = state,
                 resolved_at_lead = null,
-                encounter_record_resolution_id = null
+                encounter_record_resolution_id = null!
             };
 
             var def = _narrative.SelectEncounter(
@@ -91,7 +92,7 @@ namespace Ashfall.Core.Expeditions
 
             if (def == null)
             {
-                dto.encounter_id = null;
+                dto.encounter_id = null!;
                 dto.title = "Encounter";
                 dto.description = "Something is happening on this leg. No record of it survives.";
                 dto.category = string.Empty;
@@ -116,7 +117,7 @@ namespace Ashfall.Core.Expeditions
         /// when nothing has been surfaced yet.
         /// </summary>
         public bool ResolveChoice(string encounterId, string choiceId, int day)
-            => ResolveChoice(encounterId, choiceId, day, null);
+            => ResolveChoice(encounterId, choiceId, day, null!);
 
         /// <summary>
         /// Resolve an encounter against an explicit locationId. Use this when the
@@ -131,7 +132,7 @@ namespace Ashfall.Core.Expeditions
         {
             if (string.IsNullOrEmpty(encounterId)) return false;
 
-            string effectiveLocation = locationId ?? _lastSurfaced?.trigger?.locationId;
+            string effectiveLocation = locationId ?? _lastSurfaced?.trigger?.locationId!;
             if (effectiveLocation == null) return false;
 
             bool ok = _narrative.Resolve(encounterId, choiceId, effectiveLocation, day);

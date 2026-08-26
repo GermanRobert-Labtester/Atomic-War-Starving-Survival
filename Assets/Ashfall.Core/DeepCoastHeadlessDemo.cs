@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Maritime;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core
 {
     /// <summary>
@@ -21,7 +23,7 @@ namespace Ashfall.Core
     {
         public const int DefaultSeed = 4048;
 
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string? dataDirectory = null, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -98,10 +100,11 @@ namespace Ashfall.Core
 
             var rngA = new SeededRng(DefaultSeed);
             var outcome = dc.MakeReopeningDecision(DeepCoastAccessDecision.SalvageImmediate, 125, rngA);
+            if (outcome == null) { log.Warn("DeepCoastHeadlessDemo: MakeReopeningDecision returned null — aborting route test"); return report; }
             Check(outcome != null, "reopening decision accepted");
             Check(dc.MakeReopeningDecision(DeepCoastAccessDecision.StabilizeRepair, 125, new SeededRng(DefaultSeed)) == null,
                 "second decision rejected (one decision per route)");
-            Check(outcome.Salvage.Count > 0, "salvage-immediate rolls immediate salvage");
+            Check(outcome!.Salvage.Count > 0, "salvage-immediate rolls immediate salvage");
             Check(dc.StructuralIntegrity < 100f, "salvage-immediate damages the structure");
             Check(dc.ContaminationLevel > 0f, "salvage-immediate raises contamination");
             Check(dc.AccessDecision == DeepCoastAccessDecision.SalvageImmediate, "decision recorded");
@@ -110,6 +113,7 @@ namespace Ashfall.Core
             var dc2 = new District8DeepCoastSystem(DefaultSeed);
             dc2.SurveyPerimeter(124);
             var out2 = dc2.MakeReopeningDecision(DeepCoastAccessDecision.SalvageImmediate, 125, new SeededRng(DefaultSeed));
+            if (out2 == null) { log.Warn("DeepCoastHeadlessDemo: second decision null — aborting"); return report; }
             Check(SameSalvage(outcome.Salvage, out2.Salvage), "same-seed salvage determinism");
 
             // Invalid transition rejection.
@@ -199,6 +203,7 @@ namespace Ashfall.Core
             dcFleet.SurveyPerimeter(124);
             var stances = new FactionStanceEngine();
             var fleetOut = dcFleet.MakeReopeningDecision(DeepCoastAccessDecision.FleetControlled, 125, new SeededRng(DefaultSeed + 1));
+            if (fleetOut == null) { log.Warn("DeepCoastHeadlessDemo: fleet decision null — aborting"); return report; }
             stances.ModifyTrust(District8DeepCoastSystem.FactionFleet, fleetOut.FleetTrustDelta);
             stances.ModifyTrust(District8DeepCoastSystem.FactionOffice, fleetOut.OfficeTrustDelta);
             Check(dcFleet.TryClearPerimeter(126, (_, _) => true), "fleet clears perimeter free");
@@ -216,8 +221,8 @@ namespace Ashfall.Core
             // ── Journal once-only (real JournalSystem dedupe) ──────────
             var journal = new JournalSystem();
             int before = journal.EntryCount;
-            journal.TryAddRawEntry(District8DeepCoastSystem.JournalSurvey, "first", null, 1);
-            journal.TryAddRawEntry(District8DeepCoastSystem.JournalSurvey, "second", null, 2);
+            journal.TryAddRawEntry(District8DeepCoastSystem.JournalSurvey, "first", null!, 1);
+            journal.TryAddRawEntry(District8DeepCoastSystem.JournalSurvey, "second", null!, 2);
             Check(journal.EntryCount == before + 1, "journal entry lands once per knowledge key");
 
             // ── Daily tick idempotence ─────────────────────────────────
@@ -271,7 +276,7 @@ namespace Ashfall.Core
                 "v4 migration yields a sealed deep-coast route (missing-state default)");
 
             // Future-version rejection.
-            var future = json.Deserialize<HoldfastSave>(encoded);
+            var future = json.Deserialize<HoldfastSave>(encoded) ?? new HoldfastSave();
             future.saveVersion = HoldfastSave.CurrentSaveVersion + 1;
             future.Checksum = SaveChecksum.Compute(future);
             bool rejected = false;
@@ -307,7 +312,7 @@ namespace Ashfall.Core
         private static bool IsKnownGood(string itemId)
         {
             // Existence probe across the StreamingAssets item catalogs.
-            string dataDir = null;
+            string dataDir = null!;
             if (!CatalogLocator.TryFindDataDirectory(Environment.CurrentDirectory, out dataDir) || string.IsNullOrEmpty(dataDir))
                 return false;
             var files = new FileSystemIO();
@@ -323,15 +328,39 @@ namespace Ashfall.Core
                 if (!files.FileExists(path)) continue;
                 try
                 {
-                    var list = json.Deserialize<List<HoldfastItemDto>>(files.ReadAllText(path));
-                    if (list == null) continue;
-                    for (int j = 0; j < list.Count; j++)
-                        if (list[j] != null && list[j].id == itemId)
-                            return true;
+                    string raw = files.ReadAllText(path);
+                    using var doc = JsonDocument.Parse(raw);
+                    JsonElement array = doc.RootElement;
+                    if (array.ValueKind == JsonValueKind.Object)
+                    {
+                        foreach (var prop in array.EnumerateObject())
+                        {
+                            if (prop.Name.Equals("schema_version", StringComparison.OrdinalIgnoreCase))
+                                continue;
+                            if (prop.Value.ValueKind == JsonValueKind.Array)
+                            {
+                                array = prop.Value;
+                                break;
+                            }
+                        }
+                    }
+                    if (array.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var elem in array.EnumerateArray())
+                        {
+                            if (elem.TryGetProperty("id", out var idProp))
+                            {
+                                string id = idProp.GetString();
+                                if (!string.IsNullOrEmpty(id) && id == itemId)
+                                    return true;
+                            }
+                        }
+                    }
                 }
-                catch
+                catch (Exception ex_CATDIAG)
                 {
-                    // Not every catalog uses the HoldfastItemDto shape; skip it.
+                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                    // Not every catalog uses the item shape; skip it.
                 }
             }
             return false;

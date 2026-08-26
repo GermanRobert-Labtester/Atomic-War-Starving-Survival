@@ -1,72 +1,117 @@
-[
-  {
-    "id": "silica_seed_cobalt_chloride_indicator_bead_color",
-    "storage_vessel_id": "HERMETIC_MASON_JAR_BANK_01",
-    "desiccant_compound_type": "INDICATING_SILICA_GEL_BEADS",
-    "seed_batch_moisture_pct": 5.8,
-    "equilibrium_rh_pct": 14.0,
-    "timestamp_relative": "YEAR_03_SILICA_LOG_01",
-    "tags": ["seed_banking", "silica_gel", "indicator_beads", "moisture_indicator", "hermetic_jar"],
-    "prose": "Porous silica gel beads impregnated with cobalt chloride remained brilliant anhydrous deep blue inside the rubber-gasketed glass jars. A shift toward lavender alerted technicians that jar seal integrity had allowed humid bunker air intrusion."
-  },
-  {
-    "id": "silica_seed_equilibrium_relative_humidity_hygrometer",
-    "storage_vessel_id": "ALUMINUM_SEED_DRUM_CELL_03",
-    "desiccant_compound_type": "TYPE_A_MICROPOROUS_SILICA",
-    "seed_batch_moisture_pct": 6.2,
-    "equilibrium_rh_pct": 12.5,
-    "timestamp_relative": "YEAR_05_SILICA_LOG_03",
-    "tags": ["seed_banking", "equilibrium_rh", "hygrometer", "moisture_control", "seed_longevity"],
-    "prose": "Sealed dial hygrometer probes inserted into forty-liter seed drums measured equilibrium relative humidity at 12.5%. The low moisture vapor pressure prevented cellular enzymatic decay while preserving seed embryo hydration structures."
-  },
-  {
-    "id": "silica_seed_toasted_rice_flour_calcium_oxide_desiccant",
-    "storage_vessel_id": "EMERGENCY_RESERVE_CROCK_04",
-    "desiccant_compound_type": "CALCIUM_OXIDE_PARCHED_RICE",
-    "seed_batch_moisture_pct": 7.0,
-    "equilibrium_rh_pct": 16.0,
-    "timestamp_relative": "YEAR_08_SILICA_LOG_02",
-    "tags": ["seed_banking", "quicklime", "calcium_oxide", "parched_rice", "emergency_desiccant"],
-    "prose": "When synthetic silica stocks depleted, technicians fashioned emergency desiccants from calcined quicklime (calcium oxide) and parched brown rice wrapped in linen. The porous lime packets absorbed water aggressively, drying bean seeds to 7.0% moisture."
-  },
-  {
-    "id": "silica_seed_harrington_rule_of_thumb_viability",
-    "storage_vessel_id": "LONG_TERM_SEED_VAULT_CHEST",
-    "desiccant_compound_type": "REGENERATED_SILICA_MATRIX",
-    "seed_batch_moisture_pct": 5.0,
-    "equilibrium_rh_pct": 10.0,
-    "timestamp_relative": "YEAR_11_SILICA_LOG_04",
-    "tags": ["seed_banking", "harrington_rule", "longevity_doubling", "temperature_drop", "seed_viability"],
-    "prose": "Auditing storage metrics according to Harrington's rule of thumb confirmed that reducing seed moisture from 11% to 5% and chilling vault air from 15°C to 0°C increased projected tomato seed viability from 4 years to over 60 years."
-  },
-  {
-    "id": "silica_seed_lipid_peroxidation_rancidity_oily_seeds",
-    "storage_vessel_id": "OILSEED_PRESERVATION_CHAMBER",
-    "desiccant_compound_type": "ACTIVE_DESICCANT_POUCH",
-    "seed_batch_moisture_pct": 2.4,
-    "equilibrium_rh_pct": 6.0,
-    "timestamp_relative": "YEAR_14_SILICA_LOG_01",
-    "tags": ["seed_banking", "over_drying", "lipid_peroxidation", "oilseed", "membrane_damage"],
-    "prose": "Over-drying high-oil flax and rape seeds below 2.5% moisture triggered severe lipid auto-oxidation. Free fatty acid radicals attacked cell membranes, rendering embryonic radicles brittle and reducing seed vigor upon rehydration."
-  },
-  {
-    "id": "silica_seed_oven_reactivation_120c_baking",
-    "storage_vessel_id": "DESICCANT_REGENERATION_OVEN",
-    "desiccant_compound_type": "COBALT_SATURATED_SILICA",
-    "seed_batch_moisture_pct": 0.5,
-    "equilibrium_rh_pct": 2.0,
-    "timestamp_relative": "YEAR_17_SILICA_LOG_03",
-    "tags": ["seed_banking", "reactivation", "baking_oven", "thermal_desorption", "regeneration"],
-    "prose": "Spreading exhausted pink silica beads across sheet iron trays and baking them at 125°C for three hours drove off all adsorbed water vapor. The beads regained their intense deep blue coloration with zero loss of pore capillary capacity."
-  },
-  {
-    "id": "silica_seed_foil_laminated_mylar_heat_seal",
-    "storage_vessel_id": "HERMETIC_MYLAR_POUCH_RACK",
-    "desiccant_compound_type": "FOOD_GRADE_SILICA_PACKET",
-    "seed_batch_moisture_pct": 5.4,
-    "equilibrium_rh_pct": 11.0,
-    "timestamp_relative": "YEAR_20_SILICA_LOG_01",
-    "tags": ["seed_banking", "mylar_pouch", "foil_laminate", "heat_seal", "water_vapor_barrier"],
-    "prose": "Sealing dried squash seed envelopes inside 7-mil aluminum foil laminated Mylar pouches using a 180°C pneumatic bar sealer formed an absolute zero-transmission barrier against oxygen, radon diffusion, and bunker moisture."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "silica_seed_cobalt_chloride_indicator_bead_color",
+      "storage_vessel_id": "HERMETIC_MASON_JAR_BANK_01",
+      "desiccant_compound_type": "INDICATING_SILICA_GEL_BEADS",
+      "seed_batch_moisture_pct": 5.8,
+      "equilibrium_rh_pct": 14.0,
+      "timestamp_relative": "YEAR_03_SILICA_LOG_01",
+      "tags": [
+        "seed_banking",
+        "silica_gel",
+        "indicator_beads",
+        "moisture_indicator",
+        "hermetic_jar"
+      ],
+      "prose": "Porous silica gel beads impregnated with cobalt chloride remained brilliant anhydrous deep blue inside the rubber-gasketed glass jars. A shift toward lavender alerted technicians that jar seal integrity had allowed humid bunker air intrusion."
+    },
+    {
+      "id": "silica_seed_equilibrium_relative_humidity_hygrometer",
+      "storage_vessel_id": "ALUMINUM_SEED_DRUM_CELL_03",
+      "desiccant_compound_type": "TYPE_A_MICROPOROUS_SILICA",
+      "seed_batch_moisture_pct": 6.2,
+      "equilibrium_rh_pct": 12.5,
+      "timestamp_relative": "YEAR_05_SILICA_LOG_03",
+      "tags": [
+        "seed_banking",
+        "equilibrium_rh",
+        "hygrometer",
+        "moisture_control",
+        "seed_longevity"
+      ],
+      "prose": "Sealed dial hygrometer probes inserted into forty-liter seed drums measured equilibrium relative humidity at 12.5%. The low moisture vapor pressure prevented cellular enzymatic decay while preserving seed embryo hydration structures."
+    },
+    {
+      "id": "silica_seed_toasted_rice_flour_calcium_oxide_desiccant",
+      "storage_vessel_id": "EMERGENCY_RESERVE_CROCK_04",
+      "desiccant_compound_type": "CALCIUM_OXIDE_PARCHED_RICE",
+      "seed_batch_moisture_pct": 7.0,
+      "equilibrium_rh_pct": 16.0,
+      "timestamp_relative": "YEAR_08_SILICA_LOG_02",
+      "tags": [
+        "seed_banking",
+        "quicklime",
+        "calcium_oxide",
+        "parched_rice",
+        "emergency_desiccant"
+      ],
+      "prose": "When synthetic silica stocks depleted, technicians fashioned emergency desiccants from calcined quicklime (calcium oxide) and parched brown rice wrapped in linen. The porous lime packets absorbed water aggressively, drying bean seeds to 7.0% moisture."
+    },
+    {
+      "id": "silica_seed_harrington_rule_of_thumb_viability",
+      "storage_vessel_id": "LONG_TERM_SEED_VAULT_CHEST",
+      "desiccant_compound_type": "REGENERATED_SILICA_MATRIX",
+      "seed_batch_moisture_pct": 5.0,
+      "equilibrium_rh_pct": 10.0,
+      "timestamp_relative": "YEAR_11_SILICA_LOG_04",
+      "tags": [
+        "seed_banking",
+        "harrington_rule",
+        "longevity_doubling",
+        "temperature_drop",
+        "seed_viability"
+      ],
+      "prose": "Auditing storage metrics according to Harrington's rule of thumb confirmed that reducing seed moisture from 11% to 5% and chilling vault air from 15°C to 0°C increased projected tomato seed viability from 4 years to over 60 years."
+    },
+    {
+      "id": "silica_seed_lipid_peroxidation_rancidity_oily_seeds",
+      "storage_vessel_id": "OILSEED_PRESERVATION_CHAMBER",
+      "desiccant_compound_type": "ACTIVE_DESICCANT_POUCH",
+      "seed_batch_moisture_pct": 2.4,
+      "equilibrium_rh_pct": 6.0,
+      "timestamp_relative": "YEAR_14_SILICA_LOG_01",
+      "tags": [
+        "seed_banking",
+        "over_drying",
+        "lipid_peroxidation",
+        "oilseed",
+        "membrane_damage"
+      ],
+      "prose": "Over-drying high-oil flax and rape seeds below 2.5% moisture triggered severe lipid auto-oxidation. Free fatty acid radicals attacked cell membranes, rendering embryonic radicles brittle and reducing seed vigor upon rehydration."
+    },
+    {
+      "id": "silica_seed_oven_reactivation_120c_baking",
+      "storage_vessel_id": "DESICCANT_REGENERATION_OVEN",
+      "desiccant_compound_type": "COBALT_SATURATED_SILICA",
+      "seed_batch_moisture_pct": 0.5,
+      "equilibrium_rh_pct": 2.0,
+      "timestamp_relative": "YEAR_17_SILICA_LOG_03",
+      "tags": [
+        "seed_banking",
+        "reactivation",
+        "baking_oven",
+        "thermal_desorption",
+        "regeneration"
+      ],
+      "prose": "Spreading exhausted pink silica beads across sheet iron trays and baking them at 125°C for three hours drove off all adsorbed water vapor. The beads regained their intense deep blue coloration with zero loss of pore capillary capacity."
+    },
+    {
+      "id": "silica_seed_foil_laminated_mylar_heat_seal",
+      "storage_vessel_id": "HERMETIC_MYLAR_POUCH_RACK",
+      "desiccant_compound_type": "FOOD_GRADE_SILICA_PACKET",
+      "seed_batch_moisture_pct": 5.4,
+      "equilibrium_rh_pct": 11.0,
+      "timestamp_relative": "YEAR_20_SILICA_LOG_01",
+      "tags": [
+        "seed_banking",
+        "mylar_pouch",
+        "foil_laminate",
+        "heat_seal",
+        "water_vapor_barrier"
+      ],
+      "prose": "Sealing dried squash seed envelopes inside 7-mil aluminum foil laminated Mylar pouches using a 180°C pneumatic bar sealer formed an absolute zero-transmission barrier against oxygen, radon diffusion, and bunker moisture."
+    }
+  ]
+}

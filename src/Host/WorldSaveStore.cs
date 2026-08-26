@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using System.IO;
 using Godot;
 using Ashfall.Core;
@@ -15,24 +16,79 @@ namespace AtomicWar.GodotApp
     public static class WorldSaveStore
     {
         public const string FileName = "world_save.json";
+        public const string SectionName = "world";
+    /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+    public static string TryCaptureDirect(WorldHostSave envelope)
+    {
+        return TryCapture(envelope);
+    }
+
+    /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+    public static WorldHostSave? TryRestoreDirect(string json)
+    {
+        return TryRestore(json);
+    }
+
+    /// <summary>Capture state to JSON without writing to disk.</summary>
+    public static string TryCapture(WorldHostSave envelope)
+    {
+        try
+        {
+            if (envelope == null) return string.Empty;
+            return new SystemTextJsonSerializer().Serialize(envelope);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[WorldSaveStore] capture failed: " + e.Message);
+            return string.Empty;
+        }
+    }
+
+    /// <summary>Restore state from JSON without reading from disk.</summary>
+    public static WorldHostSave? TryRestore(string json)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            return new SystemTextJsonSerializer().Deserialize<WorldHostSave>(json);
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr("[WorldSaveStore] restore failed: " + e.Message);
+            return null;
+        }
+    }
+
 
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
         public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+            SaveSlotRoot.Resolve(FileName);
 
         public static bool Exists => s_files.FileExists(SavePath);
 
-        public static bool TrySave(WorldWeatherState state, SkyArmorSaveState skyArmor = null)
+        public static bool TrySave(
+            WorldWeatherState state,
+            SkyArmorSaveState skyArmor = null!,
+            LocationEvolutionSaveState locationEvolution = null!,
+            WildlifeSaveState wildlife = null!,
+            LandmarkSaveState landmark = null!)
         {
             try
             {
                 if (state == null) return false;
-                var envelope = new WorldHostSave { State = state, SkyArmor = skyArmor };
+                var envelope = new WorldHostSave
+                {
+                    State = state,
+                    SkyArmor = skyArmor,
+                    LocationEvolution = locationEvolution,
+                    Wildlife = wildlife,
+                    Landmark = landmark
+                };
                 envelope.Checksum = SaveChecksum.Compute(envelope);
                 string path = SavePath;
-                string dir = Path.GetDirectoryName(path);
+                string? dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
                 System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
@@ -45,7 +101,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static WorldHostSave TryLoadEnvelope()
+        public static WorldHostSave? TryLoadEnvelope()
         {
             try
             {
@@ -86,7 +142,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static WorldWeatherState TryLoad()
+        public static WorldWeatherState? TryLoad()
         {
             return TryLoadEnvelope()?.State;
         }
@@ -97,6 +153,9 @@ namespace AtomicWar.GodotApp
     {
         public WorldWeatherState State;
         public SkyArmorSaveState SkyArmor;
+        public LocationEvolutionSaveState LocationEvolution;
+        public WildlifeSaveState Wildlife;
+        public LandmarkSaveState Landmark;
         public string Checksum = string.Empty;
     }
 }

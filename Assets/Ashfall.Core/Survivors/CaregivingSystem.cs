@@ -1,6 +1,7 @@
 #pragma warning disable CS0067 // Public API event surface; subscribers arrive with feature wiring
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Survivors
 {
@@ -167,6 +168,8 @@ namespace Ashfall.Core.Survivors
             OnStateChanged?.Invoke();
         }
 
+        private readonly List<string> _tickKeyBuffer = new();
+
         /// <summary>
         /// Tick all active caregiving assignments over elapsed game hours.
         /// </summary>
@@ -175,12 +178,14 @@ namespace Ashfall.Core.Survivors
             if (gameHours <= 0f) return;
 
             // Snapshot keys to allow mutation during iteration
-            var caregiverIds = new List<string>(_caregiverToPatient.Keys);
+            _tickKeyBuffer.Clear();
+            foreach (var k in _caregiverToPatient.Keys)
+                _tickKeyBuffer.Add(k);
             bool changed = false;
 
-            for (int i = 0; i < caregiverIds.Count; i++)
+            for (int i = 0; i < _tickKeyBuffer.Count; i++)
             {
-                var caregiverId = caregiverIds[i];
+                var caregiverId = _tickKeyBuffer[i];
                 if (!_caregiverToPatient.TryGetValue(caregiverId, out var patientId))
                     continue;
 
@@ -243,7 +248,7 @@ namespace Ashfall.Core.Survivors
         // ── Queries ────────────────────────────────────────────────────
 
         /// <summary>Get the patient ID for a caregiver, or null if not caregiving.</summary>
-        public string GetPatientForCaregiver(string caregiverId)
+        public string? GetPatientForCaregiver(string caregiverId)
         {
             if (string.IsNullOrEmpty(caregiverId)) return null;
             return _caregiverToPatient.TryGetValue(caregiverId, out var patientId)
@@ -251,7 +256,7 @@ namespace Ashfall.Core.Survivors
         }
 
         /// <summary>Get the caregiver ID for a patient, or null if no caregiver assigned.</summary>
-        public string GetCaregiverForPatient(string patientId)
+        public string? GetCaregiverForPatient(string patientId)
         {
             if (string.IsNullOrEmpty(patientId)) return null;
             return _patientToCaregiver.TryGetValue(patientId, out var caregiverId)

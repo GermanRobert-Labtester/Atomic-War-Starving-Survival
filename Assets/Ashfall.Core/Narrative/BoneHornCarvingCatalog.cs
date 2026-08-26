@@ -81,8 +81,7 @@ namespace Ashfall.Core.Narrative
         private static IReadOnlyList<T> Load<T>(string dir, string file)
         {
             var json = File.ReadAllText(Path.Combine(dir, file));
-            return JsonSerializer.Deserialize<List<T>>(json, _opts)
-                   ?? throw new InvalidOperationException($"Failed to deserialize {file}");
+            return CatalogLocator.LoadWrappedList<T>(json, _opts);
         }
 
         public IEnumerable<BoneDegreasingPrepLog>  GetDegreasingLogsByAnimal(string animal)    { foreach (var e in DegreasingLogs)   if (string.Equals(e.BoneSourceAnimal, animal,    StringComparison.OrdinalIgnoreCase)) yield return e; }

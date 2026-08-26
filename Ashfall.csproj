@@ -3,32 +3,35 @@
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>AtomicWar</RootNamespace>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <!--
-      Unity legacy code is compiled here via the shim and is not nullable-analyzed
-      by Unity itself; tuple nullability drift (CS8619/CS8620) and serializer-/
-      inspector-populated fields (CS0649/CS0169) are expected noise. CS8605/CS8629
-      are NOT suppressed: they flag real unboxing/.Value crash risks.
+      Remaining suppressed warnings (narrowed from original 19):
+      CS0108/CS0114  — intentional member hiding in host sessions
+      CS0414         — serializer-assigned fields flagged as unused
+      CS0067         — public event surface wired by feature registration
+      CS8600/CS8601  — JSON-populated DTO null conversions (known safe)
+      CS8604/CS8618  — serializer-assigned reference fields
+      CS8625         — null passed to non-nullable param in JSON paths
+      CS8765         — interface/override nullability mismatch on DTOs
+      CS8619/CS8620  — tuple nullability drift in host adapters
+      CS0649/CS0169  — fields only written by JSON serializer
+      CS8602/CS8603  — NOT suppressed: real null-dereference detection active
+      CS8605/CS8629  — NOT suppressed: real unboxing/.Value crash detection active
     -->
-    <NoWarn>$(NoWarn);CS0108;CS0114;CS0414;CS0067;CS8600;CS8601;CS8602;CS8603;CS8604;CS8618;CS8625;CS8765;CS8619;CS8620;CS0649;CS0169</NoWarn>
+    <NoWarn>$(NoWarn);CS8619;CS8765;CS0414;CS0169</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Godot C# Sources and Compatibility Bridge -->
+    <!-- Godot C# Sources -->
     <Compile Include="src/**/*.cs" Exclude="src/bin/**;src/obj/**" />
     <Compile Include="scripts/**/*.cs" Exclude="scripts/bin/**;scripts/obj/**" />
     <!--
-      Engine-agnostic core. Source lives under Assets/ so Unity can compile it too
-      (Unity only sees C# under Assets/). One copy, three consumers: this host,
-      AtomicWar.Ashfall.Core.asmdef, and Ashfall.Core.Tests.
+      Engine-agnostic core. Single shared source tree compiled into this Godot
+      host and the xUnit test project. Do not copy core sources elsewhere.
     -->
     <Compile Include="Assets/Ashfall.Core/**/*.cs" />
-
-    <!-- Ashfall Game Subsystems -->
-    <Compile Include="Assets/_Game/**/*.cs" Exclude="Assets/_Game/bin/**;Assets/_Game/obj/**" />
   </ItemGroup>
 
   <ItemGroup>

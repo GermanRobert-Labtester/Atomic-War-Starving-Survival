@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -51,16 +52,16 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public GhostTransmissionEntry GetById(string transmissionId)
+        public GhostTransmissionEntry? GetById(string transmissionId)
         {
             if (string.IsNullOrEmpty(transmissionId)) return null;
             _byId.TryGetValue(transmissionId, out var t);
             return t;
         }
 
-        public GhostTransmissionEntry FindNearestFrequency(float freqKhz, float maxDeltaKhz = 25.0f)
+        public GhostTransmissionEntry? FindNearestFrequency(float freqKhz, float maxDeltaKhz = 25.0f)
         {
-            GhostTransmissionEntry best = null;
+            GhostTransmissionEntry? best = null;
             float bestDelta = float.MaxValue;
 
             for (int i = 0; i < _all.Count; i++)

@@ -1,0 +1,25 @@
+{
+    "schema_version": 1,
+    "entries": [
+        {
+            "description": "Chapter 1 Complete: The Exchange — Nuclear detonations across the globe",
+            "order": 1
+        },
+        {
+            "description": "Chapter 2 Complete: Ashfall — Surviving the initial fallout and radiation",
+            "order": 2
+        },
+        {
+            "description": "Chapter 3 Active: The Bunker — Establishing shelter and community",
+            "order": 3
+        },
+        {
+            "description": "Chapter 4 Pending: First Contact — Encountering other survivors",
+            "order": 4
+        },
+        {
+            "description": "Chapter 5 Pending: The Long Winter — Nuclear winter conditions setting in",
+            "order": 5
+        }
+    ]
+}

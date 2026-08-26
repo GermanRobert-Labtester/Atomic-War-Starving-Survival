@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Foundry
 {
     // ---------------------------------------------------------------------
@@ -123,8 +124,8 @@ namespace Ashfall.Core.Foundry
 
         public static FoundryTreatyConsequenceFile Load(
             string dataDirectory,
-            IFileIO files = null,
-            IJsonSerializer serializer = null)
+IFileIO? files = null,
+IJsonSerializer? serializer = null)
         {
             files = files ?? new FileSystemIO();
             serializer = serializer ?? new SystemTextJsonSerializer();
@@ -136,10 +137,11 @@ namespace Ashfall.Core.Foundry
             {
                 return serializer.Deserialize<FoundryTreatyConsequenceFile>(text) ?? new FoundryTreatyConsequenceFile();
             }
-            catch
-            {
-                return new FoundryTreatyConsequenceFile();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new FoundryTreatyConsequenceFile();
+                                }
         }
     }
 
@@ -190,7 +192,7 @@ namespace Ashfall.Core.Foundry
             }
         }
 
-        public FoundryTreatyConsequencePolicy Find(string treatyId, FoundryTreatyOutcome outcome)
+        public FoundryTreatyConsequencePolicy? Find(string treatyId, FoundryTreatyOutcome outcome)
         {
             if (string.IsNullOrEmpty(treatyId)) return null;
             string key = Key(treatyId, OutcomeName(outcome));

@@ -1,0 +1,579 @@
+canonical_name,source_path,kind,core_authority,host_entrypoint,runtime_reachable,save_owner,test_surface,classification,risk,evidence_source,status_confidence
+**Total**,Assets/Ashfall.Core/**Total**.cs,domain component,yes,none,not proven,none,none,LIVE_CORE,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+1 (1-30),Assets/Ashfall.Core/1 (1-30).cs,domain component,yes,none,not proven,none,none,LIVE_CORE,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+2 (31-60),Assets/Ashfall.Core/2 (31-60).cs,domain component,yes,none,not proven,none,none,LIVE_CORE,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+3 (61-110),Assets/Ashfall.Core/3 (61-110).cs,domain component,yes,none,not proven,none,none,LIVE_CORE,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+4 (111-160),Assets/Ashfall.Core/4 (111-160).cs,domain component,yes,none,not proven,none,none,LIVE_CORE,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+5 (161-210),Assets/Ashfall.Core/5 (161-210).cs,domain component,yes,none,not proven,none,none,LIVE_CORE,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+6 (211-254),Assets/Ashfall.Core/6 (211-254).cs,domain component,yes,none,not proven,none,none,LIVE_CORE,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+AbyssalAnomaliesCatalog,Assets/Ashfall.Core/Narrative/AbyssalAnomaliesCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: AbyssalAnomaliesCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+AchievementDetailPanel,src/UI/AchievementDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+AchievementsPanel,src/UI/AchievementsPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ActiveCraftSave,Assets/Ashfall.Core/Crafting/CraftingSystem.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),none,CORE_INTERNAL,LOW,codebase scan,verified
+AfflictionsPanel,src/UI/AfflictionsPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+AirlockSecurityHostSave,src/Host/AirlockSecuritySaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: ExpandedShelterSaveChecksumTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+AirlockSecurityHostSession,src/Host/AirlockSecurityHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+AirlockSecurityPanel,src/UI/AirlockSecurityPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+AirlockSecuritySaveStore,src/Host/AirlockSecuritySaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+AirlockSecuritySystem,Assets/Ashfall.Core/AirlockSecuritySystem.cs,gameplay system,yes,direct,proven,AirlockSecuritySaveStore,Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+ApicultureBeeCatalog,Assets/Ashfall.Core/Narrative/ApicultureBeeCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: ApicultureBeeCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+ApicultureSystem,Assets/Ashfall.Core/Greenhouse/ApicultureSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: ApicultureAndTriangulationIntegrationTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+ApprenticeshipHostSave,src/Host/ApprenticeshipSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: ExpandedShelterSaveChecksumTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+ApprenticeshipHostSession,src/Host/ApprenticeshipHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+ApprenticeshipPanel,src/UI/ApprenticeshipPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ApprenticeshipSaveStore,src/Host/ApprenticeshipSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+ApprenticeshipSystem,Assets/Ashfall.Core/ApprenticeshipSystem.cs,gameplay system,yes,direct,proven,ApprenticeshipSaveStore,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+ArchiveDeskHostSave,src/Host/ArchiveDeskHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: NewSaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+ArchiveDeskHostSession,src/Host/ArchiveDeskHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+ArchiveDeskPanel,src/UI/ArchiveDeskPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ArchiveDeskSaveStore,src/Host/ArchiveDeskHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+ArchiveDeskSystem,Assets/Ashfall.Core/ArchiveDeskSystem.cs,gameplay system,yes,direct,proven,ArchiveDeskSaveStore,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+AudioConditionSystem,Assets/Ashfall.Core/AudioConditionSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+AudioCueCatalog,src/Audio/AudioCueCatalog.cs,catalog,no (host),direct (host),proven,none,CatalogIntegrityValidator (129 catalogs),LIVE_GODOT,LOW,codebase scan,verified
+AutopsyHostSave,src/Host/AutopsySaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+AutopsyHostSession,src/Host/AutopsyHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+AutopsyReportPanel,src/UI/AutopsyReportPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+AutopsySaveStore,src/Host/AutopsySaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+AutopsySystem,Assets/Ashfall.Core/AutopsySystem.cs,gameplay system,yes,direct,proven,AutopsySaveStore,Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+BallisticsSystem,Assets/Ashfall.Core/Combat/BallisticsSystem.cs,gameplay system,yes,core-internal,proven (Core),none,Core tests (1 suites: CombatBallisticsTests.cs),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+BlackProjectsCatalog,Assets/Ashfall.Core/Narrative/BlackProjectsCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: BlackProjectsCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+BoneHornCarvingCatalog,Assets/Ashfall.Core/Narrative/BoneHornCarvingCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: BoneHornCarvingCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+BrineExtractionPanel,src/UI/BrineExtractionPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+BrineWaterSystem,Assets/Ashfall.Core/BrineWaterSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+BuiltInQuestlineCatalog,Assets/Ashfall.Core/YearOfAsh/BuiltInQuestlineCatalog.cs,catalog,yes,core-internal,proven (Core),none,CatalogIntegrityValidator (129 catalogs),CORE_INTERNAL,LOW,codebase scan,verified
+BunkerBlueprintCatalog,Assets/Ashfall.Core/Narrative/BunkerBlueprintCatalog.cs,catalog,yes,indirect,proven,none,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+BunkerContrabandCatalog,Assets/Ashfall.Core/Narrative/BunkerContrabandCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: BunkerContrabandCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+BunkerCourtCatalog,Assets/Ashfall.Core/Narrative/BunkerCourtCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: BunkerCourtCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+BunkerGraffitiCatalog,Assets/Ashfall.Core/Narrative/BunkerGraffitiCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: BunkerGraffitiCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+BunkerMaintenanceCatalog,Assets/Ashfall.Core/Narrative/BunkerMaintenanceCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: BunkerMaintenanceCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CampaignDaySave,Assets/Ashfall.Core/Campaign/CampaignDaySave.cs,save DTO/codec,yes,indirect,proven,none,none,LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+CampaignDaySaveStore,src/Host/CampaignDaySaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+CandleMakingWaxCatalog,Assets/Ashfall.Core/Narrative/CandleMakingWaxCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: CandleMakingWaxCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CaravanBarterLedgerPanel,src/UI/CaravanBarterLedgerPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CaravanHostSave,src/Host/CaravanSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CaravanSaveStore,src/Host/CaravanSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+CaregivingHostSave,src/Host/CaregivingSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: ExpandedShelterSaveChecksumTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+CaregivingHostSession,src/Host/CaregivingHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CaregivingPanel,src/UI/CaregivingPanel.cs,ui panel,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CaregivingSaveStore,src/Host/CaregivingSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+CaregivingSystem,Assets/Ashfall.Core/Survivors/CaregivingSystem.cs,gameplay system,yes,direct,proven,CaregivingSaveStore,Core tests (1 suites: CaregivingSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+CatalogFileSystem,Assets/Ashfall.Core/CatalogFileSystem.cs,catalog,yes,indirect,proven,none,Core tests (1 suites: CatalogFileSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CatalogIntegrityValidator,Assets/Ashfall.Core/CatalogIntegrityValidator.cs,catalog,yes,indirect,proven,none,Core tests (7 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+CensusClaimSystem,Assets/Ashfall.Core/CensusClaimSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (5 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+CenturySeedPanel,src/UI/CenturySeedPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CeramicsKilnCatalog,Assets/Ashfall.Core/Narrative/CeramicsKilnCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: CeramicsKilnCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CharcoalPyrolysisCatalog,Assets/Ashfall.Core/Narrative/CharcoalPyrolysisCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: CharcoalPyrolysisCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+ChemicalDependencyHostSave,src/Host/ChemicalDependencySaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: BareSaveStoreSealTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+ChemicalDependencyHostSession,src/Host/ChemicalDependencyHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ChemicalDependencyPanel,src/UI/ChemicalDependencyPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ChemicalDependencySaveStore,src/Host/ChemicalDependencySaveStore.cs,save store,no (host),direct (host),proven,store (self),Core tests (1 suites: BareSaveStoreSealTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+ChemicalDependencySystem,Assets/Ashfall.Core/Medical/ChemicalDependencySystem.cs,gameplay system,yes,direct,proven,ChemicalDependencySaveStore,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CoalitionCampSystem,Assets/Ashfall.Core/Muster/CoalitionCampSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: CoalitionCampSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+CohortSystem,Assets/Ashfall.Core/CohortSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+ColdCountSystem,Assets/Ashfall.Core/Muster/ColdCountSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CombatCatalog,Assets/Ashfall.Core/Combat/CombatCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (6 suites),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CombatDetailPanel,src/UI/CombatDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CombatHistoryPanel,src/UI/CombatHistoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CombatHostSave,src/Host/CombatSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CombatHostSession,src/Host/CombatHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CombatPanel,src/UI/CombatPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CombatSaveStore,src/Host/CombatSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+CombatSystem,Assets/Ashfall.Core/CombatSystem.cs,gameplay system,yes,direct,proven,CombatSaveStore,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+CombatTraumaSystem,Assets/Ashfall.Core/Survivors/CombatTraumaSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: CombatTraumaSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+ContaminationEntrySave,Assets/Ashfall.Core/Maritime/PsychologicalContaminationSystem.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),none,CORE_INTERNAL,LOW,codebase scan,verified
+ContaminationSurvivorSave,Assets/Ashfall.Core/Maritime/PsychologicalContaminationSystem.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),none,CORE_INTERNAL,LOW,codebase scan,verified
+ContractorRosterHostSave,src/Host/ContractorRosterHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: NewSaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+ContractorRosterHostSession,src/Host/ContractorRosterHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+ContractorRosterPanel,src/UI/ContractorRosterPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ContractorRosterSaveStore,src/Host/ContractorRosterHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+ContractorRosterSystem,Assets/Ashfall.Core/ContractorRosterSystem.cs,gameplay system,yes,direct,proven,ContractorRosterSaveStore,Core tests (1 suites: ContractorRosterSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+CordageCableCatalog,Assets/Ashfall.Core/Narrative/CordageCableCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: CordageCableCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CourierDispatchCatalog,Assets/Ashfall.Core/Narrative/CourierDispatchCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: CourierDispatchCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CraftingDetailPanel,src/UI/CraftingDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CraftingHistoryPanel,src/UI/CraftingHistoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CraftingHostSave,src/Host/CraftingSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CraftingHostSession,src/Host/CraftingHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CraftingPanel,src/UI/CraftingPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CraftingSaveStore,src/Host/CraftingSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+CraftingSystem,Assets/Ashfall.Core/Crafting/CraftingSystem.cs,gameplay system,yes,direct,proven,CraftingSaveStore,Core tests (5 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+CraftingSystemSave,Assets/Ashfall.Core/Crafting/CraftingSystem.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),none,LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+CropCatalog,Assets/Ashfall.Core/Greenhouse/GreenhouseExpansionCatalog.cs,catalog,yes,core-internal,proven (Core),none,CatalogIntegrityValidator (129 catalogs),CORE_INTERNAL,LOW,codebase scan,verified
+CrossingArbitrationSystem,Assets/Ashfall.Core/CrossingArbitrationSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+CrossingCatalog,Assets/Ashfall.Core/CrossingCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: ExpansionsIntegrationTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CrossingQuestPanel,src/UI/CrossingQuestPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+CrossingQuestSystem,Assets/Ashfall.Core/Crossing/CrossingQuestSystem.cs,gameplay system,yes,direct,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+CrucibleFoundryCatalog,Assets/Ashfall.Core/Narrative/CrucibleFoundryCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: CrucibleFoundryCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CryoPreservationCatalog,Assets/Ashfall.Core/Narrative/CryoPreservationCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: CryoPreservationCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CulinaryRationCatalog,Assets/Ashfall.Core/Narrative/CulinaryRationCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: CulinaryRationCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CurrentsCatalog,Assets/Ashfall.Core/Narrative/CurrentsCatalog.cs,catalog,yes,indirect,proven,none,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+CurrentsPamphletCatalog,Assets/Ashfall.Core/Narrative/CurrentsPamphletCatalog.cs,catalog,yes,core-internal,proven (Core),none,CatalogIntegrityValidator (129 catalogs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DailyBriefingSave,Assets/Ashfall.Core/Campaign/DailyBriefingSave.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),Core tests (1 suites: DailyBriefingReportBuilderTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+DailyBriefingSaveStore,src/Host/DailyBriefingSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+DailySurvivalCatalog,Assets/Ashfall.Core/Narrative/DailySurvivalCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: DailySurvivalCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DeadHandDirectiveCatalog,Assets/Ashfall.Core/Narrative/DeadHandDirectiveCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: DeadHandDirectiveCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DecontaminationHostSave,src/Host/DecontaminationHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: NewSaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+DecontaminationHostSession,src/Host/DecontaminationHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DecontaminationPanel,src/UI/DecontaminationPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+DecontaminationSaveStore,src/Host/DecontaminationHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+DecontaminationSystem,Assets/Ashfall.Core/DecontaminationSystem.cs,gameplay system,yes,direct,proven,DecontaminationSaveStore,Core tests (1 suites: DecontaminationSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+DeepCoastHostSession,src/Host/DeepCoastHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DeepCoastPanel,src/UI/DeepCoastPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+DiseaseCatalog,Assets/Ashfall.Core/Disease/DiseaseCatalog.cs,catalog,yes,indirect,proven,none,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DiseaseHostSession,src/Disease/DiseaseHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DiseaseSaveStore,src/Host/DiseaseSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+DiseaseSystem,Assets/Ashfall.Core/Disease/DiseaseSystem.cs,gameplay system,yes,direct,proven,DiseaseSaveStore,Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+District8DeepCoastSystem,Assets/Ashfall.Core/District8DeepCoastSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: District8DeepCoastTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+DiveSiteCatalog,Assets/Ashfall.Core/Narrative/DiveSiteCatalog.cs,catalog,yes,indirect,proven,system (CaptureState),Core tests (1 suites: ExpansionAggregateCompletenessTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DoorEncounterSystem,Assets/Ashfall.Core/YearOfAsh/DoorEncounterSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DoseContentCatalog,Assets/Ashfall.Core/DoseContentCatalog.cs,catalog,yes,indirect,proven,none,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DoseLedgerHostSession,src/Host/DoseLedgerHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DoseLedgerPanel,src/UI/DoseLedgerPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+DoseLedgerSave,Assets/Ashfall.Core/DoseLedgerSave.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+DoseLedgerSaveStore,src/Host/DoseLedgerSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+DoseLedgerSystem,Assets/Ashfall.Core/DoseLedgerSystem.cs,gameplay system,yes,direct,proven,DoseLedgerSaveStore,Core tests (6 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+DoseRegistersCatalog,Assets/Ashfall.Core/DoseRegistersCatalog.cs,catalog,yes,indirect,proven,none,Core tests (1 suites: DoseRegistersCatalogTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DosimeterCalibrationSystem,Assets/Ashfall.Core/Radiation/DosimeterCalibrationSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: DosimeterCalibrationSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+DosimeterSave,Assets/Ashfall.Core/Radiation/Dosimeter.cs,save DTO/codec,yes,core-internal,proven (Core),none,none,CORE_INTERNAL,LOW,codebase scan,verified
+DutyRosterAssignmentEngine,Assets/Ashfall.Core/DutyRoster/DutyRosterAssignmentEngine.cs,gameplay system,yes,core-internal,proven (Core),none,none,CORE_INTERNAL,LOW,codebase scan,verified
+DutyRosterCatalog,Assets/Ashfall.Core/DutyRoster/DutyRosterCatalog.cs,catalog,yes,indirect,proven,none,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DutyRosterChartEngine,Assets/Ashfall.Core/DutyRoster/DutyRosterChartEngine.cs,gameplay system,yes,core-internal,proven (Core),none,none,CORE_INTERNAL,LOW,codebase scan,verified
+DutyRosterDetailPanel,src/UI/DutyRosterDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+DutyRosterHostSession,src/Host/DutyRosterHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DutyRosterOverflowEngine,Assets/Ashfall.Core/DutyRoster/DutyRosterOverflowEngine.cs,gameplay system,yes,core-internal,proven (Core),none,none,CORE_INTERNAL,LOW,codebase scan,verified
+DutyRosterPanel,src/UI/DutyRosterPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+DutyRosterSave,Assets/Ashfall.Core/DutyRoster/DutyRosterSave.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+DutyRosterSaveStore,src/Host/DutyRosterSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+DutyRosterSystem,Assets/Ashfall.Core/DutyRoster/DutyRosterSystem.cs,gameplay system,yes,direct,proven,DutyRosterSaveStore,Core tests (11 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+DwellerHeirloomCatalog,Assets/Ashfall.Core/Narrative/DwellerHeirloomCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: DwellerHeirloomCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+DwellerMedicalCatalog,Assets/Ashfall.Core/Narrative/DwellerMedicalCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: DwellerMedicalCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+EconomyDetailPanel,src/UI/EconomyDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+EconomyHostSession,src/Host/EconomyHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+EconomyMarketPanel,src/Economy/EconomyMarketPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+EconomyOverlayPanel,src/UI/EconomyPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+EconomySaveStore,src/Host/EconomySaveStore.cs,save store,no (host),direct (host),proven,store (self),Core tests (1 suites: EconomyProbeTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+EncounterCatalog,Assets/Ashfall.Core/Narrative/EncounterCatalog.cs,catalog,yes,indirect,proven,none,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+EncounterChoiceSaveStore,src/Host/EncounterChoiceSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+EpiloguePanel,src/UI/EpiloguePanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+EquipmentConditionHostSave,src/Host/EquipmentConditionHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: NewSaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+EquipmentConditionHostSession,src/Host/EquipmentConditionHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_3.md,verified
+EquipmentConditionPanel,src/UI/EquipmentConditionPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+EquipmentConditionSaveStore,src/Host/EquipmentConditionHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+EquipmentConditionSystem,Assets/Ashfall.Core/EquipmentConditionSystem.cs,gameplay system,yes,direct,proven,EquipmentConditionSaveStore,Core tests (1 suites: EquipmentConditionSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+EquippedSave,Assets/Ashfall.Core/Inventory/Inventory.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),none,CORE_INTERNAL,LOW,codebase scan,verified
+EventDetailPanel,src/UI/EventDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+EventsHostSession,src/Host/EventsHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+EventsLogPanel,src/UI/EventsLogPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExcavationHostSave,src/Host/ExcavationSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExcavationHostSession,src/Host/ExcavationHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+ExcavationPanel,src/UI/ExcavationPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExcavationSaveStore,src/Host/ExcavationSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+ExcavationSystem,Assets/Ashfall.Core/ExcavationSystem.cs,gameplay system,yes,direct,proven,ExcavationSaveStore,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+ExpansionEnrichmentCatalog,Assets/Ashfall.Core/ExpansionEnrichmentCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (2 suites),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+ExpansionHostSession,src/Host/ExpansionHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: ExpansionHubSaveTests.cs),LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+ExpansionHubSave,Assets/Ashfall.Core/ExpansionHubSave.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),Core tests (5 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+ExpansionHubSaveStore,src/Host/ExpansionHubSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+ExpansionQuestHostSession,src/Host/ExpansionQuestHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExpansionQuestSaveStore,src/Host/ExpansionQuestSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+ExpansionQuestSystem,Assets/Ashfall.Core/ExpansionQuestSystem.cs,gameplay system,yes,direct,proven,ExpansionQuestSaveStore,Core tests (1 suites: ExpansionQuestSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+ExpansionsHubPanel,src/UI/ExpansionsHubPanel.cs,ui panel,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExpeditionCampPanel,src/UI/ExpeditionCampPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExpeditionDetailPanel,src/UI/ExpeditionDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExpeditionHistoryPanel,src/UI/ExpeditionHistoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExpeditionHostSave,src/Host/ExpeditionSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: SaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+ExpeditionHostSession,src/Host/ExpeditionHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: ExpeditionEncounterBridgeTests.cs),LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+ExpeditionPanel,src/UI/ExpeditionPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExpeditionRadarPanel,src/UI/ExpeditionRadarPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ExpeditionSaveStore,src/Host/ExpeditionSaveStore.cs,save store,no (host),direct (host),proven,store (self),Core tests (2 suites),LIVE_GODOT,LOW,codebase scan,verified
+ExpeditionSystem,Assets/Ashfall.Core/Expeditions/ExpeditionSystem.cs,gameplay system,yes,direct,proven,ExpeditionSaveStore,Core tests (6 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+ExpeditionVehicleSystem,Assets/Ashfall.Core/ExpeditionVehicleSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (2 suites),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+FactionDetailPanel,src/UI/FactionDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+FactionHistoryPanel,src/UI/FactionHistoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+FactionIconCatalog,Assets/Ashfall.Core/UI/FactionIconCatalog.cs,catalog,yes,indirect,proven,none,Core tests (1 suites: FactionIconCatalogTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+FactionMatrixPanel,src/UI/FactionMatrixPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+FactionRadioEngine,Assets/Ashfall.Core/Radio/FactionRadioEngine.cs,gameplay system,yes,indirect,proven,none,Core tests (1 suites: FactionRadioCorpusTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+FactionRadioHudPanel,src/Radio/FactionRadioHudPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+FactionStanceEngine,Assets/Ashfall.Core/Economy/FactionStanceEngine.cs,gameplay system,yes,indirect,proven,none,Core tests (5 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+FactionWarContentCatalog,Assets/Ashfall.Core/YearOfAsh/FactionWarContentCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (4 suites),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+FactionWarSystem,Assets/Ashfall.Core/YearOfAsh/FactionWarSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+FactionsNarrativePanel,src/UI/FactionsNarrativePanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+FactionsPanel,src/UI/FactionsPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+FaunaEntomologyCatalog,Assets/Ashfall.Core/Narrative/FaunaEntomologyCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: FaunaEntomologyCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+FermentationYeastCatalog,Assets/Ashfall.Core/Narrative/FermentationYeastCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: FermentationYeastCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+FinalWishSystem,Assets/Ashfall.Core/Survivors/FinalWishSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: FinalWishSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+FireIncidentPanel,src/UI/FireIncidentPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+FringeCultsCatalog,Assets/Ashfall.Core/Narrative/FringeCultsCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: FringeCultsCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+GameDashboardPanel,src/UI/GameDashboardPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+GameOverPanel,src/UI/GameOverPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+GeigerCalibrationPanel,src/UI/GeigerCalibrationPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+GenerationalSuccessionEngine,Assets/Ashfall.Core/Legacy/GenerationalSuccessionEngine.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+GeologicalStrataCatalog,Assets/Ashfall.Core/Narrative/GeologicalStrataCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: GeologicalStrataCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+GhostTransmissionCatalog,Assets/Ashfall.Core/Narrative/GhostTransmissionCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: GhostTransmissionCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+GlassblowingDistillationCatalog,Assets/Ashfall.Core/Narrative/GlassblowingDistillationCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: GlassblowingDistillationCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+GoodsCatalog,Assets/Ashfall.Core/Economy/GoodsCatalog.cs,catalog,yes,indirect,proven,none,Core tests (7 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+GrainMillingCatalog,Assets/Ashfall.Core/Narrative/GrainMillingCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: GrainMillingCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+GreenhouseExpansionCatalog,Assets/Ashfall.Core/Greenhouse/GreenhouseExpansionCatalog.cs,catalog,yes,indirect,proven,none,Core tests (1 suites: GreenhouseSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+GreenhouseHostSession,src/Host/GreenhouseHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+GreenhousePanel,src/UI/GreenhousePanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+GreenhouseSaveStore,src/Host/GreenhouseHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+GreenhouseSystem,Assets/Ashfall.Core/Greenhouse/GreenhouseSystem.cs,gameplay system,yes,direct,proven,GreenhouseSaveStore,Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+GuiltInsomniaSystem,Assets/Ashfall.Core/Survivors/GuiltInsomniaSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: GuiltInsomniaSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+HoldfastCatalog,Assets/Ashfall.Core/HoldfastCatalog.cs,catalog,yes,indirect,proven,none,Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+HoldfastFactionsCatalog,Assets/Ashfall.Core/HoldfastFactionsCatalog.cs,catalog,yes,indirect,proven,none,CatalogIntegrityValidator (129 catalogs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+HoldfastFlavorCatalog,src/Host/HoldfastFlavorCatalog.cs,catalog,no (host),direct (host),proven,none,CatalogIntegrityValidator (129 catalogs),LIVE_GODOT,LOW,codebase scan,verified
+HoldfastItemsCatalog,Assets/Ashfall.Core/HoldfastItemsCatalog.cs,catalog,yes,core-internal,proven (Core),none,CatalogIntegrityValidator (129 catalogs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+HoldfastNpcCatalog,Assets/Ashfall.Core/Narrative/HoldfastNpcCatalog.cs,catalog,yes,core-internal,proven (Core),none,CatalogIntegrityValidator (129 catalogs),CORE_INTERNAL,LOW,codebase scan,verified
+HoldfastQuestSystem,Assets/Ashfall.Core/HoldfastQuestSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+HoldfastSave,Assets/Ashfall.Core/HoldfastSave.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),Core tests (6 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+HoldfastSaveStore,src/Host/HoldfastSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+HoldfastTerminalPanel,src/Host/HoldfastTerminalPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+HoldfastTradeSaveStore,src/Host/HoldfastTradeSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+HoldfastTradeSession,Assets/Ashfall.Core/HoldfastTradeSession.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: HoldfastTradeSessionTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+HostEventHostSave,src/Host/HostEventSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: BareSaveStoreSealTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+HostEventSaveStore,src/Host/HostEventSaveStore.cs,save store,no (host),direct (host),proven,store (self),Core tests (1 suites: BareSaveStoreSealTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+HydroBaronsSystem,Assets/Ashfall.Core/Muster/HydroBaronsSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+HydroGeologyCatalog,Assets/Ashfall.Core/Narrative/HydroGeologyCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: HydroGeologyCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+IceRoadSystem,Assets/Ashfall.Core/IceRoadSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+IdeologicalFrictionSystem,Assets/Ashfall.Core/Survivors/IdeologicalFrictionSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: IdeologicalFrictionSystemTests.cs),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+IndependentBranchCatalog,Assets/Ashfall.Core/Factions/IndependentBranchCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (3 suites),CORE_INTERNAL,LOW,codebase scan,verified
+IndependentBranchSave,Assets/Ashfall.Core/Factions/IndependentBranchSave.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: IndependentBranchSystemTests.cs),CORE_INTERNAL,LOW,codebase scan,verified
+IndependentBranchSystem,Assets/Ashfall.Core/Factions/IndependentBranchSystem.cs,gameplay system,yes,core-internal,proven (Core),codec,Core tests (2 suites),CORE_INTERNAL,LOW,codebase scan,verified
+IndustrialRuinsCatalog,Assets/Ashfall.Core/Narrative/IndustrialRuinsCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: IndustrialRuinsCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+InventoryDetailPanel,src/UI/InventoryDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+InventoryHostSave,src/Host/InventorySaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+InventoryHostSession,src/Host/InventoryHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+InventoryPanel,src/UI/InventoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+InventorySaveStore,src/Host/InventorySaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+IronRaidersSystem,Assets/Ashfall.Core/Muster/IronRaidersSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: MusterCurrentSystemsTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+ItemCatalog,Assets/Ashfall.Core/Inventory/ProceduralItemInstance.cs,catalog,yes,indirect,proven,none,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+JournalDetailPanel,src/UI/JournalDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+JournalHostSave,src/Journal/JournalSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: SaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+JournalHostSession,src/Host/JournalHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+JournalPanel,src/UI/JournalPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+JournalSave,Assets/Ashfall.Core/Journal/JournalSystem.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+JournalSaveStore,src/Journal/JournalSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+JournalSystem,Assets/Ashfall.Core/Journal/JournalSystem.cs,gameplay system,yes,direct,proven,JournalSaveStore,Core tests (7 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+JournalWitnessPanel,src/Muster/JournalWitnessPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+KitchenNutritionHostSave,src/Host/KitchenNutritionHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: NewSaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+KitchenNutritionHostSession,src/Host/KitchenNutritionHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+KitchenNutritionPanel,src/UI/KitchenNutritionPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+KitchenNutritionSaveStore,src/Host/KitchenNutritionHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+KitchenNutritionSystem,Assets/Ashfall.Core/KitchenNutritionSystem.cs,gameplay system,yes,direct,proven,KitchenNutritionSaveStore,Core tests (1 suites: KitchenNutritionSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+KnowledgeBaseSave,Assets/Ashfall.Core/Journal/KnowledgeBase.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),Core tests (2 suites),CORE_INTERNAL,LOW,codebase scan,verified
+LandmarkDegradationSystem,Assets/Ashfall.Core/LandmarkDegradationSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: WorldSaveablesTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+LeadershipSystem,Assets/Ashfall.Core/Survivors/LeadershipSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: LeadershipSystemTests.cs),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+LedgerDebtSystem,Assets/Ashfall.Core/LedgerDebtSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (6 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+LibraryStudyHostSave,src/Host/LibraryStudyHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: NewSaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+LibraryStudyHostSession,src/Host/LibraryStudyHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+LibraryStudyPanel,src/UI/LibraryStudyPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+LibraryStudySaveStore,src/Host/LibraryStudyHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+LibraryStudySystem,Assets/Ashfall.Core/LibraryStudySystem.cs,gameplay system,yes,direct,proven,LibraryStudySaveStore,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+LocationEvolutionSystem,Assets/Ashfall.Core/LocationEvolutionSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: WorldSaveablesTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+LocationLayoutParentSave,Assets/Ashfall.Core/StandingRecord/LocationLayoutSystem.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),none,CORE_INTERNAL,LOW,codebase scan,verified
+LocationLayoutSystem,Assets/Ashfall.Core/StandingRecord/LocationLayoutSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+LocationMemorySystem,Assets/Ashfall.Core/StandingRecord/LocationMemorySystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (5 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+LocationVisitSave,Assets/Ashfall.Core/Maritime/ProceduralScavengeSystem.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),none,CORE_INTERNAL,LOW,codebase scan,verified
+LongWalkSystem,Assets/Ashfall.Core/Muster/LongWalkSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: MusterCurrentSystemsTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+LostTechManualCatalog,Assets/Ashfall.Core/Narrative/LostTechManualCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: LostTechManualCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MachineLogSystem,Assets/Ashfall.Core/Verdict/MachineLogSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MainMenuPanel,src/UI/MainMenuPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MapAtlasPanel,src/UI/MapAtlasPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MapDetailPanel,src/UI/MapDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MapPanel,src/UI/MapPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MaritimeAtlasPanel,src/UI/MaritimeAtlasPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MaritimeDiveSystem,Assets/Ashfall.Core/MaritimeDiveSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (2 suites),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MaritimeHostSave,src/Host/MaritimeHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MaritimeHostSession,src/Host/MaritimeHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MaritimePanel,src/UI/MaritimePanel.cs,ui panel,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MaritimeSaveStore,src/Host/MaritimeSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+MaritimeSystem,Assets/Ashfall.Core/MaritimeSystem.cs,gameplay system,yes,direct,proven,MaritimeSaveStore,none,LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+MarketSystem,Assets/Ashfall.Core/Economy/MarketSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (8 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+MasonryBrickworksCatalog,Assets/Ashfall.Core/Narrative/MasonryBrickworksCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: MasonryBrickworksCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MaterialShieldingSave,Assets/Ashfall.Core/Shelter/MaterialShieldingSystem.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: MaterialShieldingSystemTests.cs),CORE_INTERNAL,LOW,codebase scan,verified
+MaterialShieldingSystem,Assets/Ashfall.Core/Shelter/MaterialShieldingSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: MaterialShieldingSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MedicalBedSave,Assets/Ashfall.Core/Medical/MedicalWardSave.cs,save DTO/codec,yes,indirect,proven,none,Core tests (1 suites: MedicalWardSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+MedicalDetailPanel,src/UI/MedicalDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MedicalHistoryPanel,src/UI/MedicalHistoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MedicalHostSave,src/Host/MedicalSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: SaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+MedicalHostSession,src/Host/MedicalHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MedicalPanel,src/UI/MedicalPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MedicalPathologyCatalog,Assets/Ashfall.Core/Narrative/MedicalPathologyCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: MedicalPathologyCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MedicalSaveStore,src/Host/MedicalSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+MedicalSystem,Assets/Ashfall.Core/MedicalSystem.cs,gameplay system,yes,direct,proven,MedicalSaveStore,Core tests (5 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+MedicalWardHostSession,src/Host/MedicalWardHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MedicalWardPanel,src/UI/MedicalWardPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MedicalWardSave,Assets/Ashfall.Core/Medical/MedicalWardSave.cs,save DTO/codec,yes,indirect,proven,none,Core tests (1 suites: MedicalWardSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+MedicalWardSaveStore,src/Host/MedicalWardSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+MedicalWardSystem,Assets/Ashfall.Core/Medical/MedicalWardSystem.cs,gameplay system,yes,direct,proven,MedicalWardSaveStore,Core tests (6 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+MemorialSave,Assets/Ashfall.Core/Memorial/MemorialSave.cs,save DTO/codec,yes,indirect,proven,none,none,LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+MemorialSaveStore,src/Host/MemorialSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+MemorialSystem,Assets/Ashfall.Core/Memorial/MemorialSystem.cs,gameplay system,yes,indirect,proven,MemorialSaveStore,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MentalHealthCrisisHostSave,src/Host/MentalHealthCrisisHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: NewSaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+MentalHealthCrisisHostSession,src/Host/MentalHealthCrisisHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MentalHealthCrisisPanel,src/UI/MentalHealthCrisisPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MentalHealthCrisisSaveStore,src/Host/MentalHealthCrisisHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+MentalHealthCrisisSystem,Assets/Ashfall.Core/MentalHealthCrisisSystem.cs,gameplay system,yes,direct,proven,MentalHealthCrisisSaveStore,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+MetallurgyToolingCatalog,Assets/Ashfall.Core/Narrative/MetallurgyToolingCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: MetallurgyToolingCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MilitaryArmoryCatalog,Assets/Ashfall.Core/Narrative/MilitaryArmoryCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: MilitaryArmoryCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_4.md,verified
+MilitaryBranchCatalog,Assets/Ashfall.Core/Factions/MilitaryBranchCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (5 suites),CORE_INTERNAL,LOW,codebase scan,verified
+MilitaryBranchSave,Assets/Ashfall.Core/Factions/MilitaryBranchSave.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: MilitaryBranchSystemTests.cs),CORE_INTERNAL,LOW,codebase scan,verified
+MilitaryBranchSystem,Assets/Ashfall.Core/Factions/MilitaryBranchSystem.cs,gameplay system,yes,core-internal,proven (Core),codec,Core tests (2 suites),CORE_INTERNAL,LOW,codebase scan,verified
+MoralBranchingSystem,Assets/Ashfall.Core/Survivors/MoralBranchingSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: MoralBranchingSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+MoralChoiceHostSave,src/Host/MoralChoiceSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MoralChoiceSaveStore,src/Host/MoralChoiceSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+MoralChoiceSystem,Assets/Ashfall.Core/MoralChoice/MoralChoiceSystem.cs,gameplay system,yes,indirect,proven,MoralChoiceSaveStore,Core tests (8 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+MoraleMarkSystem,Assets/Ashfall.Core/DutyRoster/MoraleMarkSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+MusterAtlasPanel,src/UI/MusterAtlasPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MusterHostSave,src/Host/MusterSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MusterHostSession,src/Host/MusterHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+MusterPanel,src/UI/MusterPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+MusterSaveStore,src/Host/MusterSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+MusterSystem,Assets/Ashfall.Core/Muster/MusterSystem.cs,gameplay system,yes,direct,proven,MusterSaveStore,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+NarrativeBatchCatalog,Assets/Ashfall.Core/Narrative/NarrativeBatchCatalog.cs,catalog,yes,indirect,proven,none,Core tests (1 suites: SilentFoundrySystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+NarrativeEncounterSystem,Assets/Ashfall.Core/Narrative/NarrativeEncounterSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+NarrativeHostSave,src/Host/NarrativeSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (2 suites),LIVE_GODOT,LOW,codebase scan,verified
+NarrativeHostSession,src/Host/NarrativeHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+NarrativeSaveStore,src/Host/NarrativeSaveStore.cs,save store,no (host),direct (host),proven,store (self),Core tests (2 suites),LIVE_GODOT,LOW,codebase scan,verified
+NeedsSystem,Assets/Ashfall.Core/Survivors/NeedsSystem.cs,gameplay system,yes,indirect,proven,none,Core tests (14 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+NightWatchCatalog,Assets/Ashfall.Core/Narrative/NightWatchCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: NightWatchCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+OpticsGlassworksCatalog,Assets/Ashfall.Core/Narrative/OpticsGlassworksCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: OpticsGlassworksCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+OralLoreCatalog,Assets/Ashfall.Core/Narrative/OralLoreCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: OralLoreCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+OrbitalHarrowTelemetrySystem,Assets/Ashfall.Core/OrbitalHarrowTelemetrySystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (2 suites),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+PaperMakingCatalog,Assets/Ashfall.Core/Narrative/PaperMakingCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: PaperMakingCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+PaperPrintingCatalog,Assets/Ashfall.Core/Narrative/PaperPrintingCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: PaperPrintingCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+PhantomMemoryEngine,Assets/Ashfall.Core/PhantomMemoryEngine.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: PhantomMemoryEngineTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+PhantomMemoryHostSave,src/Host/PhantomMemorySaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+PhantomMemoryHostSession,src/Host/PhantomMemoryHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+PhantomMemoryPanel,src/UI/PhantomMemoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+PhantomMemorySaveStore,src/Host/PhantomMemorySaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+PhantomMemorySystem,Assets/Ashfall.Core/PhantomMemoryEngine.cs,gameplay system,yes,direct,proven,PhantomMemorySaveStore,Core tests (1 suites: PhantomMemoryEngineTests.cs),LIVE_CORE + LIVE_GODOT,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+PharmaLabSystem,Assets/Ashfall.Core/PharmaLabSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (2 suites),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+PharmaRecipeCatalog,Assets/Ashfall.Core/PharmaLabSystem.cs,catalog,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: IslandBridgesTests.cs),CORE_INTERNAL,LOW,codebase scan,verified
+Phase0HostSave,src/Host/Phase0SaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+Phase0HostSession,src/Host/Phase0HostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (1 suites: GapTestCoverageTests.cs),LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+Phase0Panel,src/UI/Phase0Panel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+Phase0SaveStore,src/Host/Phase0SaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+PhaseProgressionSurvivorSave,Assets/Ashfall.Core/Radiation/RadiationPhaseProgression.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),none,CORE_INTERNAL,LOW,codebase scan,verified
+PneumaticTubeDispatchCatalog,Assets/Ashfall.Core/Narrative/PneumaticTubeDispatchCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: PneumaticTubeDispatchCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+PolymerTextileCatalog,Assets/Ashfall.Core/Narrative/PolymerTextileCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: PolymerTextileCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+PowerGridHostSession,src/Host/PowerGridHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+PowerGridPanel,src/UI/PowerGridPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+PowerGridRoomSave,Assets/Ashfall.Core/Shelter/PowerGridSave.cs,save DTO/codec,yes,indirect,proven,none,Core tests (1 suites: PowerGridSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+PowerGridSave,Assets/Ashfall.Core/Shelter/PowerGridSave.cs,save DTO/codec,yes,indirect,proven,none,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+PowerGridSaveStore,src/Host/PowerGridSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+PowerGridSystem,Assets/Ashfall.Core/Shelter/PowerGridSystem.cs,gameplay system,yes,direct,proven,PowerGridSaveStore,Core tests (9 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+ProceduralEulogyEngine,Assets/Ashfall.Core/Journal/ProceduralEulogyEngine.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),none,CORE_INTERNAL,LOW,codebase scan,verified
+ProceduralScavengeSave,Assets/Ashfall.Core/Maritime/ProceduralScavengeSystem.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),none,LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+ProceduralScavengeSystem,Assets/Ashfall.Core/Maritime/ProceduralScavengeSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+ProvisionedSystem,Assets/Ashfall.Core/Muster/ProvisionedSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: MusterCurrentSystemsTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+PrpfSave,Assets/Ashfall.Core/Factions/PrpfSave.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: PrpfStandingSystemTests.cs),CORE_INTERNAL,LOW,codebase scan,verified
+PrpfStandingSystem,Assets/Ashfall.Core/Factions/PrpfStandingSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (3 suites),CORE_INTERNAL,LOW,codebase scan,verified
+PsychContaminationSave,Assets/Ashfall.Core/Maritime/PsychologicalContaminationSystem.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),none,LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+PsychologicalContaminationSystem,Assets/Ashfall.Core/Maritime/PsychologicalContaminationSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: BlackFlotillaTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+QuestDetailPanel,src/UI/QuestDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+QuestlineMasterCatalog,Assets/Ashfall.Core/QuestlineMasterCatalog.cs,catalog,yes,indirect,proven,none,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+QuestlineSystem,Assets/Ashfall.Core/YearOfAsh/QuestlineSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (9 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+QuestsAtlasPanel,src/UI/QuestsAtlasPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+QuestsPanel,src/UI/QuestsPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+RadiationDetailPanel,src/UI/RadiationDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+RadiationHistoryPanel,src/UI/RadiationHistoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+RadiationSystem,Assets/Ashfall.Core/Radiation/RadiationSystem.cs,gameplay system,yes,indirect,proven,none,Core tests (12 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RadioDetailPanel,src/UI/RadioDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+RadioHostSession,src/Host/RadioHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RadioPanel,src/UI/RadioPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+RadioSaveStore,src/Host/RadioSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+RadioScriptbookCatalog,Assets/Ashfall.Core/Narrative/RadioScriptbookCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: RadioScriptbookCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RadioSystem,Assets/Ashfall.Core/RadioSystem.cs,gameplay system,yes,direct,proven,RadioSaveStore,Core tests (1 suites: VerdictRadioSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+RationConflictSystem,Assets/Ashfall.Core/Survivors/RationConflictSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: RationConflictSystemTests.cs),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+RebelBranchCatalog,Assets/Ashfall.Core/Factions/RebelBranchCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (4 suites),CORE_INTERNAL,LOW,codebase scan,verified
+RebelBranchSave,Assets/Ashfall.Core/Factions/RebelBranchSave.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: RebelBranchSystemTests.cs),CORE_INTERNAL,LOW,codebase scan,verified
+RebelBranchSystem,Assets/Ashfall.Core/Factions/RebelBranchSystem.cs,gameplay system,yes,core-internal,proven (Core),codec,Core tests (2 suites),CORE_INTERNAL,LOW,codebase scan,verified
+ReckoningSystem,Assets/Ashfall.Core/Verdict/ReckoningSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (5 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RefrigerationFermentationCatalog,Assets/Ashfall.Core/Narrative/RefrigerationFermentationCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: RefrigerationFermentationCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RegionalTreatyCatalog,Assets/Ashfall.Core/Narrative/RegionalTreatyCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (2 suites),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RegionalTreatyHostSave,src/Host/RegionalTreatySaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: ExpandedShelterSaveChecksumTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+RegionalTreatyHostSession,src/Host/RegionalTreatyHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RegionalTreatyPanel,src/UI/RegionalTreatyPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+RegionalTreatySaveStore,src/Host/RegionalTreatySaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+RegionalTreatySystem,Assets/Ashfall.Core/RegionalTreatySystem.cs,gameplay system,yes,direct,proven,RegionalTreatySaveStore,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RelicCatalog,Assets/Ashfall.Core/WorkshopReverseEngineeringSystem.cs,catalog,yes,core-internal,proven (Core),system (CaptureState),Core tests (2 suites),CORE_INTERNAL,LOW,codebase scan,verified
+RelicProvenanceCatalog,Assets/Ashfall.Core/Narrative/RelicProvenanceCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: RelicProvenanceCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+ResearchAtlasPanel,src/UI/ResearchAtlasPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ResearchDetailPanel,src/UI/ResearchDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ResearchHostSession,src/Host/ResearchHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+ResearchPanel,src/UI/ResearchPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ResearchSave,src/Host/ResearchHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),none,LIVE_GODOT,LOW,codebase scan,verified
+ResearchSystem,Assets/Ashfall.Core/Research/ResearchSystem.cs,gameplay system,yes,direct,proven,system (CaptureState),Core tests (8 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RespiratoryDegenerationSystem,Assets/Ashfall.Core/Medical/RespiratoryDegenerationSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+RopeMakingCordageCatalog,Assets/Ashfall.Core/Narrative/RopeMakingCordageCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: RopeMakingCordageCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SafeCrackingSystem,Assets/Ashfall.Core/Maritime/SafeCrackingSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: SafeCrackingSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+SaltMineExtractionSystem,Assets/Ashfall.Core/Foundry/SaltMineExtractionSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: SaltMineExtractionSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+SaveChecksum,Assets/Ashfall.Core/SaveChecksum.cs,save DTO/codec,yes,indirect,proven,none,Core tests (48 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+SaveLoadHostSession,src/Host/SaveLoadHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SaveLoadPanel,src/UI/SaveLoadPanel.cs,save DTO/codec,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ScavengerGuildSystem,Assets/Ashfall.Core/Muster/ScavengerGuildSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: MusterCurrentSystemsTests.cs),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SeedBankPreservationCatalog,Assets/Ashfall.Core/Narrative/SeedBankPreservationCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: SeedBankPreservationCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SettingsPanel,src/UI/SettingsPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ShelterAssignmentHostSession,src/Host/ShelterAssignmentHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+ShelterAssignmentSave,Assets/Ashfall.Core/Shelter/ShelterAssignmentSave.cs,save DTO/codec,yes,indirect,proven,none,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+ShelterAssignmentSaveStore,src/Host/ShelterAssignmentHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+ShelterAssignmentSystem,Assets/Ashfall.Core/Shelter/ShelterAssignmentSystem.cs,gameplay system,yes,direct,proven,ShelterAssignmentSaveStore,Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+ShelterDetailPanel,src/UI/ShelterDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ShelterEncounterSystem,Assets/Ashfall.Core/DutyRoster/ShelterEncounterSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+ShelterFireHazardSystem,Assets/Ashfall.Core/Shelter/ShelterFireHazardSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: ShelterFireHazardSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+ShelterHistoryPanel,src/UI/ShelterHistoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ShelterHudPanel,src/UI/ShelterHudPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ShelterPanel,src/UI/ShelterPanel.cs,ui panel,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ShelterRoomSave,Assets/Ashfall.Core/Shelter/ShelterAssignmentSave.cs,save DTO/codec,yes,indirect,proven,none,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+ShelterScheduleHostSave,src/Host/ShelterScheduleSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ShelterScheduleHostSession,src/Host/ShelterScheduleHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+ShelterSchedulePanel,src/UI/ShelterSchedulePanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ShelterScheduleSaveStore,src/Host/ShelterScheduleSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+ShelterScheduleSystem,Assets/Ashfall.Core/ShelterScheduleSystem.cs,gameplay system,yes,direct,proven,ShelterScheduleSaveStore,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+ShelterThermalHostSave,src/Host/ShelterThermalSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: ExpandedShelterSaveChecksumTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+ShelterThermalHostSession,src/Host/ShelterThermalHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+ShelterThermalPanel,src/UI/ShelterThermalPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ShelterThermalSaveStore,src/Host/ShelterThermalSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+ShelterThermalSystem,Assets/Ashfall.Core/ShelterThermalSystem.cs,gameplay system,yes,direct,proven,ShelterThermalSaveStore,Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+SickListSystem,Assets/Ashfall.Core/SickListSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SignalIntelligenceCatalog,Assets/Ashfall.Core/Narrative/SignalIntelligenceCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: SignalIntelligenceCatalogTests.cs),CORE_INTERNAL,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SignalTriangulationSystem,Assets/Ashfall.Core/Radio/SignalTriangulationSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+SilentFoundryCatalog,Assets/Ashfall.Core/Foundry/SilentFoundryCatalog.cs,catalog,yes,indirect,proven,none,Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SilentFoundryConsequencePolicyCatalog,Assets/Ashfall.Core/Foundry/SilentFoundryConsequencePolicy.cs,catalog,yes,indirect,proven,none,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+SilentFoundryHostSession,src/Foundry/SilentFoundryHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SilentFoundryPanel,src/UI/SilentFoundryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SilentFoundrySaveStore,src/Host/SilentFoundrySaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+SilentFoundrySystem,Assets/Ashfall.Core/Foundry/SilentFoundrySystem.TreatyLabor.cs,gameplay system,yes,direct,proven,SilentFoundrySaveStore,Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+SiteEncounterSystem,Assets/Ashfall.Core/StandingRecord/SiteEncounterSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SkillAtrophySystem,Assets/Ashfall.Core/Survivors/SkillAtrophySystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: SkillProgressionSystemTests.cs),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SkillMatrixPanel,src/UI/SkillMatrixPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SkillProgressionSystem,Assets/Ashfall.Core/Survivors/SkillProgressionSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (7 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SkyLayerArmorSystem,Assets/Ashfall.Core/Shelter/SkyLayerArmorSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (4 suites),LIVE_CORE + LIVE_GODOT,LOW,50_SUBSYSTEMS_FORENSIC_REPORT_5.md,verified
+SlotSave,Assets/Ashfall.Core/Inventory/Inventory.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),none,CORE_INTERNAL,LOW,codebase scan,verified
+SoapSaponificationCatalog,Assets/Ashfall.Core/Narrative/SoapSaponificationCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: SoapSaponificationCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+SomaticFlashbackSystem,Assets/Ashfall.Core/Survivors/SomaticFlashbackSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+StandingRecordAtlasPanel,src/UI/StandingRecordAtlasPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+StandingRecordCatalog,Assets/Ashfall.Core/StandingRecord/StandingRecordCatalog.cs,catalog,yes,indirect,proven,none,Core tests (1 suites: StandingRecordSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+StandingRecordEngine,Assets/Ashfall.Core/StandingRecord/StandingRecordEngine.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: StandingRecordEngineTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+StandingRecordHostSession,src/Host/StandingRecordHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+StandingRecordPanel,src/UI/StandingRecordPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+StandingRecordSave,src/Host/StandingRecordHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),none,LIVE_GODOT,LOW,codebase scan,verified
+StartingLevelHostSession,src/Host/StartingLevelHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+StartingLevelSaveStore,src/Host/StartingLevelHostSession.cs,host session,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+StartingLevelSystem,Assets/Ashfall.Core/StartingLevel/StartingLevelSystem.cs,gameplay system,yes,direct,proven,StartingLevelSaveStore,Core tests (11 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+StatusPanel,src/UI/StatusPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SteamTurbinePowerCatalog,Assets/Ashfall.Core/Narrative/SteamTurbinePowerCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: SteamTurbinePowerCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+StructuralFortificationCatalog,Assets/Ashfall.Core/Narrative/StructuralFortificationCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: StructuralFortificationCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+SumpFloodingHostSave,src/Host/SumpFloodingHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Core tests (2 suites),LIVE_GODOT,LOW,codebase scan,verified
+SumpFloodingHostSession,src/Host/SumpFloodingHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+SumpFloodingPanel,src/UI/SumpFloodingPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SumpFloodingSaveStore,src/Host/SumpFloodingHostSession.cs,host session,no (host),direct (host),proven,store (self),Core tests (1 suites: ExpandedShelterSavePersistenceTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+SumpFloodingSystem,Assets/Ashfall.Core/SumpFloodingSystem.cs,gameplay system,yes,direct,proven,SumpFloodingSaveStore,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT_2.md,verified
+SurvivalDetailPanel,src/UI/SurvivalDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SurvivalWorkstationPanel,src/UI/SurvivalWorkstationPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SurvivorCatalog,Assets/Ashfall.Core/Narrative/SurvivorCatalog.cs,catalog,yes,indirect,proven,none,Core tests (1 suites: SurvivorRosterSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+SurvivorDetailPanel,src/UI/SurvivorDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SurvivorInspectionHostSession,Assets/Ashfall.Core/Survivors/SurvivorInspectionHostSession.cs,host session,yes,direct (host),proven,none,Core tests (1 suites: SurvivorInspectionHostSessionTests.cs),LIVE_CORE,LOW,codebase scan,verified
+SurvivorLetterCatalog,Assets/Ashfall.Core/Narrative/SurvivorLetterCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: SurvivorLetterCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+SurvivorRelationsHostSave,src/Host/SurvivorRelationsSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: ExpandedShelterSaveChecksumTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+SurvivorRelationsHostSession,src/Host/SurvivorRelationsHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+SurvivorRelationsPanel,src/UI/SurvivorRelationsPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SurvivorRelationsSaveStore,src/Host/SurvivorRelationsSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+SurvivorRelationsSystem,Assets/Ashfall.Core/SurvivorRelationsSystem.cs,gameplay system,yes,direct,proven,SurvivorRelationsSaveStore,Core tests (6 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+SurvivorRosterSystem,Assets/Ashfall.Core/Survivors/SurvivorCatalog.cs,catalog,yes,indirect,proven,system (CaptureState),Core tests (1 suites: SurvivorRosterSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+SurvivorsHostSave,src/Host/SurvivorsSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SurvivorsHostSession,src/Host/SurvivorsHostSession.cs,host session,no (host),direct (host),proven,none,Core tests (1 suites: NeedsRadiationSystemTests.cs),LIVE_GODOT,MEDIUM — authority projected from Needs/Radiation,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+SurvivorsPanel,src/UI/SurvivorsPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+SurvivorsSaveStore,src/Host/SurvivorsSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+TacticalCombatSystem,Assets/Ashfall.Core/Combat/TacticalCombatSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+TanningLeatherCatalog,Assets/Ashfall.Core/Narrative/TanningLeatherCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: TanningLeatherCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+TanningLeatherworkCatalog,Assets/Ashfall.Core/Narrative/TanningLeatherworkCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: TanningLeatherworkCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+TextileSpinningWeavingCatalog,Assets/Ashfall.Core/Narrative/TextileSpinningWeavingCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: TextileSpinningWeavingCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+ThirdonaryHostSession,src/Host/ThirdonaryHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+ThirdonaryQuestSystem,Assets/Ashfall.Core/Thirdonary/ThirdonaryQuestSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: ThirdonaryQuestSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+ThirdonarySaveStore,src/Host/ThirdonarySaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+TimberCarpentryCatalog,Assets/Ashfall.Core/Narrative/TimberCarpentryCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: TimberCarpentryCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+TimekeepingHorologyCatalog,Assets/Ashfall.Core/Narrative/TimekeepingHorologyCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: TimekeepingHorologyCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+TradeCaravanCatalog,Assets/Ashfall.Core/Narrative/TradeCaravanCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: TradeCaravanCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+TradeDetailPanel,src/UI/TradeDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+TradeScreenGodotPanel,src/Economy/TradeScreenGodotPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+TradeSpecialtySystem,Assets/Ashfall.Core/Survivors/TradeSpecialtySystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: TradeSpecialtySystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+TradeTellEngine,Assets/Ashfall.Core/Economy/TradeTellEngine.cs,gameplay system,yes,core-internal,proven (Core),none,Core tests (2 suites),CORE_INTERNAL,LOW,codebase scan,verified
+TraumaBondSystem,Assets/Ashfall.Core/Survivors/TraumaBondSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: TraumaBondSystemTests.cs),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+TravelingCaravanHostSession,src/Host/TravelingCaravanHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+TravelingCaravanPanel,src/UI/TravelingCaravanPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+TravelingCaravanSystem,Assets/Ashfall.Core/TravelingCaravanSystem.cs,gameplay system,yes,direct,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+TriangulationPanel,src/UI/TriangulationPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+TutorialPanel,src/UI/TutorialPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+UndergroundFungiCatalog,Assets/Ashfall.Core/Narrative/UndergroundFungiCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: UndergroundFungiCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+UtilityAiHostSession,src/Host/UtilityAiHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+UtilityAiPanel,src/UtilityAI/UtilityAiPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+UtilityAiSystem,Assets/Ashfall.Core/UtilityAI/UtilityAiSystem.cs,gameplay system,yes,direct,proven,none,Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+VehicleCatalog,Assets/Ashfall.Core/ExpeditionVehicleSystem.cs,catalog,yes,core-internal,proven (Core),system (CaptureState),Core tests (2 suites),CORE_INTERNAL,LOW,codebase scan,verified
+VentilationSystem,Assets/Ashfall.Core/VentilationSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (5 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+VerdictDashboardPanel,src/UI/VerdictDashboardPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+VerdictHostSession,src/Host/VerdictHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+VerdictNpcSystem,Assets/Ashfall.Core/Verdict/VerdictNpcSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+VerdictPanel,src/VerdictPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+VerdictRadioSystem,Assets/Ashfall.Core/Verdict/VerdictRadioSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: VerdictRadioSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+VerdictSave,Assets/Ashfall.Core/Verdict/VerdictSave.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+VerdictSaveStore,src/Host/VerdictSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+VerdictSystem,Assets/Ashfall.Core/VerdictSystem.cs,gameplay system,yes,direct,proven,VerdictSaveStore,none,LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+VinylMoraleHostSave,src/Host/VinylMoraleSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: ExpandedShelterSaveChecksumTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+VinylMoraleHostSession,src/Host/VinylMoraleHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+VinylMoralePanel,src/UI/VinylMoralePanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+VinylMoraleSaveStore,src/Host/VinylMoraleSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+VinylMoraleSystem,Assets/Ashfall.Core/VinylMoraleSystem.cs,gameplay system,yes,direct,proven,VinylMoraleSaveStore,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+VinylRecordCatalog,Assets/Ashfall.Core/Narrative/VinylRecordCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: VinylRecordCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+VoluntaryRegisterSystem,Assets/Ashfall.Core/VoluntaryRegisterSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+VouchAccessSystem,Assets/Ashfall.Core/VouchAccessSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (6 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WarlordDoctrineCatalog,Assets/Ashfall.Core/Warlords/WarlordDoctrineCatalog.cs,catalog,yes,indirect,proven,none,Core tests (1 suites: WarlordDoctrineTests.cs),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WarlordDoctrineSystem,Assets/Ashfall.Core/Warlords/WarlordDoctrineSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+WastelandBestiaryCatalog,Assets/Ashfall.Core/Narrative/WastelandBestiaryCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: WastelandBestiaryCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WastelandCartographyCatalog,Assets/Ashfall.Core/Narrative/WastelandCartographyCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: WastelandCartographyCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WastelandExpeditionCatalog,Assets/Ashfall.Core/Narrative/WastelandExpeditionCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: WastelandExpeditionCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WastelandGazetteerCatalog,Assets/Ashfall.Core/Narrative/WastelandGazetteerCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: WastelandGazetteerCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WastelandMapSaveStore,src/Host/WastelandMapSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+WastelandMapSystem,Assets/Ashfall.Core/World/WastelandMapSystem.cs,gameplay system,yes,indirect,proven,WastelandMapSaveStore,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WaterTreatmentHostSave,src/Host/WaterTreatmentSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: ExpandedShelterSaveChecksumTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+WaterTreatmentHostSession,src/Host/WaterTreatmentHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WaterTreatmentPanel,src/UI/WaterTreatmentPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WaterTreatmentPotableCatalog,Assets/Ashfall.Core/Narrative/WaterTreatmentPotableCatalog.cs,catalog,yes,core-internal,proven (Core),none,Core tests (1 suites: WaterTreatmentPotableCatalogTests.cs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WaterTreatmentSaveStore,src/Host/WaterTreatmentSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+WaterTreatmentSystem,Assets/Ashfall.Core/WaterTreatmentSystem.cs,gameplay system,yes,direct,proven,WaterTreatmentSaveStore,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WaystationHostSave,src/Host/WaystationSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WaystationHostSession,src/Host/WaystationHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WaystationNetworkPanel,src/UI/WaystationNetworkPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WaystationSaveStore,src/Host/WaystationSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+WaystationSystem,Assets/Ashfall.Core/WaystationSystem.cs,gameplay system,yes,direct,proven,WaystationSaveStore,Core tests (10 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WeaponConditionSystem,Assets/Ashfall.Core/Combat/WeaponConditionSystem.cs,gameplay system,yes,core-internal,proven (Core),none,Core tests (1 suites: CombatWeaponConditionTests.cs),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WeatherDetailPanel,src/UI/WeatherDetailPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WeatherForecastPanel,src/UI/WeatherForecastPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WeatherHistoryPanel,src/UI/WeatherHistoryPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WeatherHostSave,src/Host/WeatherSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: BareSaveStoreSealTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+WeatherHostSession,src/Host/WeatherHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WeatherPanel,src/UI/WeatherPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WeatherSaveStore,src/Host/WeatherSaveStore.cs,save store,no (host),direct (host),proven,store (self),Core tests (1 suites: BareSaveStoreSealTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+WeatherSondePanel,src/UI/WeatherSondePanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WeatherSondeSystem,Assets/Ashfall.Core/World/WeatherSondeSystem.cs,gameplay system,yes,direct,proven,system (CaptureState),Core tests (1 suites: WeatherSondeSystemTests.cs),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+WeatherStationSystem,Assets/Ashfall.Core/WeatherStationSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (2 suites),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WeatherSystem,Assets/Ashfall.Core/World/WeatherSystem.cs,gameplay system,yes,direct,proven,WeatherSaveStore,Core tests (7 suites),LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+WeightOfChoicesSave,Assets/Ashfall.Core/Factions/WeightOfChoicesSave.cs,save DTO/codec,yes,core-internal,proven (Core),system (CaptureState),Core tests (1 suites: WeightOfChoicesSaveTests.cs),CORE_INTERNAL,LOW,codebase scan,verified
+WildlifeMigrationSystem,Assets/Ashfall.Core/WildlifeMigrationSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: WorldSaveablesTests.cs),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WildlifeTrappingHostSave,src/Host/WildlifeTrappingSaveStore.cs,save store,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WildlifeTrappingHostSession,src/Host/WildlifeTrappingHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WildlifeTrappingPanel,src/UI/WildlifeTrappingPanel.cs,ui panel,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,codebase scan,verified
+WildlifeTrappingSaveStore,src/Host/WildlifeTrappingSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+WildlifeTrappingSystem,Assets/Ashfall.Core/WildlifeTrappingSystem.cs,gameplay system,yes,direct,proven,WildlifeTrappingSaveStore,Core tests (3 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WireConfessionCatalog,Assets/Ashfall.Core/Narrative/WireConfessionCatalog.cs,catalog,yes,core-internal,proven (Core),none,CatalogIntegrityValidator (129 catalogs),CORE_INTERNAL,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WitnessCatalog,Assets/Ashfall.Core/Narrative/WitnessCatalog.cs,catalog,yes,indirect,proven,none,Core tests (1 suites: MusterContentCatalogTests.cs),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WorkshopReverseEngineeringSystem,Assets/Ashfall.Core/WorkshopReverseEngineeringSystem.cs,gameplay system,yes,core-internal,proven (Core),system (CaptureState),Core tests (2 suites),CORE_INTERNAL,LOW — reconciled as CORE_INTERNAL / DIRECT_HOSTED,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WorldHostSave,src/Host/WorldSaveStore.cs,save store,no (host),direct (host),proven,none,Core tests (1 suites: SaveStoreChecksumSweepTests.cs),LIVE_GODOT,LOW,codebase scan,verified
+WorldHostSession,src/Host/WorldHostSession.cs,host session,no (host),direct (host),proven,system (CaptureState),Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+WorldSaveStore,src/Host/WorldSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+WorldSystem,Assets/Ashfall.Core/WorldSystem.cs,gameplay system,yes,direct,proven,WorldSaveStore,none,LIVE_CORE + LIVE_GODOT,LOW,30_SUBSYSTEMS_FORENSIC_REPORT.md,verified
+YearOfAshDeepFreezeSystem,Assets/Ashfall.Core/YearOfAsh/YearOfAshDeepFreezeSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (7 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+YearOfAshHostSession,src/YearOfAsh/YearOfAshHostSession.cs,host session,no (host),direct (host),proven,none,Godot headless selftests,LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+YearOfAshRadonSystem,Assets/Ashfall.Core/YearOfAsh/YearOfAshRadonSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (1 suites: YearOfAshTests.cs),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified
+YearOfAshSave,Assets/Ashfall.Core/YearOfAsh/YearOfAshSave.cs,save DTO/codec,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,codebase scan,verified
+YearOfAshSaveStore,src/YearOfAsh/YearOfAshSaveStore.cs,save store,no (host),direct (host),proven,store (self),none,LIVE_GODOT,LOW,codebase scan,verified
+YearOfAshTimelineSystem,Assets/Ashfall.Core/YearOfAsh/YearOfAshTimelineSystem.cs,gameplay system,yes,indirect,proven,system (CaptureState),Core tests (2 suites),LIVE_CORE + LIVE_GODOT,LOW,57_SUBSYSTEMS_FORENSIC_REPORT_FINAL.md,verified

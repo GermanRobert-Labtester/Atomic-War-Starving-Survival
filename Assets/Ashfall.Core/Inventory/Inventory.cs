@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Inventory
 {
@@ -18,13 +19,29 @@ namespace Ashfall.Core.Inventory
         public float DegradeRate;
     }
 
-    /// <summary>Ported worn-gear record consumed by radiation exposure.</summary>
+    /// <summary>Authoritative worn-gear record consumed by radiation exposure.</summary>
     public class WornGear
     {
         public float RadProtection;
         public float MaxDurability;
         public float CurrentDurability;
         public float DegradeRate;
+
+        public float DurabilityFraction()
+        {
+            return MaxDurability > 0f ? Math.Clamp(CurrentDurability / MaxDurability, 0f, 1f) : 0f;
+        }
+
+        public float EffectiveProtection()
+        {
+            return Math.Max(0f, RadProtection) * DurabilityFraction();
+        }
+
+        public void Degrade(float gameHours)
+        {
+            if (gameHours <= 0f) return;
+            CurrentDurability = Math.Max(0f, CurrentDurability - DegradeRate * gameHours);
+        }
     }
 
     public class Inventory
@@ -123,7 +140,7 @@ namespace Ashfall.Core.Inventory
             return MathfCompat.Clamp01(CountByType(ItemType.Fuel) / (float)cap);
         }
 
-        public InventorySlot FindSlot(string itemId)
+        public InventorySlot? FindSlot(string itemId)
         {
             if (string.IsNullOrEmpty(itemId) || _slots == null) return null;
             for (int i = 0; i < _slots.Count; i++)
@@ -134,22 +151,24 @@ namespace Ashfall.Core.Inventory
             return null;
         }
 
-        public InventorySlot FindBestWorkingDevice(string itemId)
+        public InventorySlot? FindBestWorkingDevice(string itemId)
         {
             if (string.IsNullOrEmpty(itemId) || _slots == null) return null;
-            InventorySlot best = null;
+            InventorySlot best = null!;
+            DeviceState? bestDevice = null;
             for (int i = 0; i < _slots.Count; i++)
             {
                 var slot = _slots[i];
                 if (slot == null || slot.Item == null || slot.Item.id != itemId) continue;
                 if (slot.Device == null) continue;
                 if (!InstrumentDevice.CanMeasure(slot.Device)) continue;
-                if (best == null
-                    || slot.Device.Battery > best.Device.Battery
-                    || (MathfCompat.Approximately(slot.Device.Battery, best.Device.Battery)
-                        && slot.Device.Calibration > best.Device.Calibration))
+                if (bestDevice == null
+                    || slot.Device.Battery > bestDevice.Battery
+                    || (MathfCompat.Approximately(slot.Device.Battery, bestDevice.Battery)
+                        && slot.Device.Calibration > bestDevice.Calibration))
                 {
                     best = slot;
+                    bestDevice = slot.Device;
                 }
             }
             return best;
@@ -161,7 +180,7 @@ namespace Ashfall.Core.Inventory
                 || FindBestWorkingDevice("item_geiger_m3") != null;
         }
 
-        public DeviceState GetBestGeigerState()
+        public DeviceState? GetBestGeigerState()
         {
             var working = FindBestWorkingDevice("geiger_counter")
                 ?? FindBestWorkingDevice("item_geiger_m3");
@@ -340,7 +359,7 @@ namespace Ashfall.Core.Inventory
             if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
             if (CountById(itemId) < amount) return false;
             int remaining = amount;
-            ItemDefinition removedDef = null;
+            ItemDefinition? removedDef = null;
             for (int i = _slots.Count - 1; i >= 0 && remaining > 0; i--)
             {
                 if (_slots[i] == null || _slots[i].Item == null) continue;
@@ -398,7 +417,7 @@ namespace Ashfall.Core.Inventory
             return true;
         }
 
-        public ItemDefinition Unequip(EquipSlot slot)
+        public ItemDefinition? Unequip(EquipSlot slot)
         {
             for (int i = 0; i < _equipped.Count; i++)
             {
@@ -438,7 +457,7 @@ namespace Ashfall.Core.Inventory
             return false;
         }
 
-        public EquippedItem GetEquipped(EquipSlot slot)
+        public EquippedItem? GetEquipped(EquipSlot slot)
         {
             for (int i = 0; i < _equipped.Count; i++)
             {
@@ -492,10 +511,10 @@ namespace Ashfall.Core.Inventory
         /// <summary>Consume one unit, applying effects via optional needs/radiation callbacks.</summary>
         public bool Consume(
             ItemDefinition item,
-            Func<ItemType, float, bool> applyNeed = null,
-            Action<float> applyRadCleanse = null,
-            Action applyIodine = null,
-            Action<float> applyContamination = null,
+Func<ItemType, float, bool>? applyNeed = null,
+Action<float>? applyRadCleanse = null,
+Action? applyIodine = null,
+Action<float>? applyContamination = null,
             float therapeuticScale = 1f)
         {
             if (item == null) return false;
@@ -581,7 +600,7 @@ namespace Ashfall.Core.Inventory
             return true;
         }
 
-        public void RestoreState(InventorySaveState state, Func<string, ItemDefinition> lookup)
+        public void RestoreState(InventorySaveState state, Func<string, ItemDefinition?> lookup)
         {
             if (state == null) return;
             _slots.Clear();
@@ -596,7 +615,7 @@ namespace Ashfall.Core.Inventory
                     var item = lookup?.Invoke(slotSave.itemId);
                     if (item != null && slotSave.amount > 0)
                     {
-                        DeviceState device = null;
+                        DeviceState? device = null;
                         if (item.type == ItemType.Device)
                         {
                             if (slotSave.hasDevice)
@@ -638,7 +657,7 @@ namespace Ashfall.Core.Inventory
     {
         public ItemDefinition Item;
         public int Amount;
-        public DeviceState Device;
+        public DeviceState? Device;
         public float CurrentDurability = -1f;
 
         public float GetDurability()

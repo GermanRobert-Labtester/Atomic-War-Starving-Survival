@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using Ashfall.Core.Verdict;
 using Ashfall.Core.UI;
@@ -417,5 +418,14 @@ namespace AtomicWar.GodotApp
 
         [Signal]
         public delegate void NpcSpokenEventHandler(string npcId);
+
+        public override void _ExitTree()
+        {
+            if (_verdict != null)
+            {
+                _verdict.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
+        }
     }
 }

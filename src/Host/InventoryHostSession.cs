@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using System.IO;
 using Godot;
 using Ashfall.Core;
@@ -8,21 +9,18 @@ using InventoryContainer = Ashfall.Core.Inventory.Inventory;
 namespace AtomicWar.GodotApp
 {
     /// <summary>
-    /// Thin Godot-host session for the Inventory (ported from Unity's
-    /// AtomicWar._Game.Inventory). Wraps an Inventory container + ItemCatalog,
+    /// Thin Godot-host session for the Inventory (ported from the legacy
+    /// engine host). Engine-agnostic inventory surface. Wraps an Inventory container + ItemCatalog,
     /// loads item definitions (catalog or seed), and persists to user:// via
     /// InventorySaveStore. No gameplay rules — hosts only present.
     /// </summary>
     public sealed class InventoryHostSession
-    {
+    : HostSessionBase{
         public InventoryContainer Inventory { get; }
         public ItemCatalog Catalog { get; }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
-        public InventoryHostSession(InventoryContainer inventory = null, ItemCatalog catalog = null)
+        public InventoryHostSession(InventoryContainer inventory = null!, ItemCatalog catalog = null!)
         {
             Inventory = inventory ?? new InventoryContainer();
             Catalog = catalog ?? new ItemCatalog();
@@ -30,7 +28,7 @@ namespace AtomicWar.GodotApp
             // seeded too, or RestoreSave cannot resolve item ids.
             if (Catalog.Count == 0)
                 SeedCatalog(Catalog);
-            Inventory.OnInventoryChanged += () => StateChanged?.Invoke();
+            Inventory.OnInventoryChanged += () => RaiseStateChanged();
         }
 
         public static InventoryHostSession Create(string dataDir)

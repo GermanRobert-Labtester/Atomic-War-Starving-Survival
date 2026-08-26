@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Clock;
 using Ashfall.Core.Events;
@@ -19,7 +20,7 @@ namespace AtomicWar.GodotApp
     /// here — hosts only present.
     /// </summary>
     public sealed class VerdictHostSession
-    {
+    : HostSessionBase{
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
@@ -53,26 +54,23 @@ namespace AtomicWar.GodotApp
         }
 
         /// <summary>NPCs currently available given live progress (flag + phase + optional site).</summary>
-        public System.Collections.Generic.List<Ashfall.Core.Verdict.VerdictNpcEntry> AvailableNpcs(string locationId = null)
+        public System.Collections.Generic.List<Ashfall.Core.Verdict.VerdictNpcEntry> AvailableNpcs(string locationId = null!)
         {
             int phase = (int)Reckoning.Phase;
             return Npcs.GetAvailable(MaterializedNpcFlags(), phase, locationId);
         }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
         public VerdictHostSession(
-            MachineLogSystem machineLog = null,
-            ReckoningSystem reckoning = null,
-            EvidenceLedger evidence = null,
-            VerdictNpcSystem npcs = null,
-            VerdictCensusBroadcast census = null,
-            IReadOnlyList<VerdictCatalogLoader.VerdictLocationEntry> locations = null,
-            IReadOnlyList<VerdictCatalogLoader.VerdictItemEntry> items = null,
-            IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> radio = null,
-            QuestlineSystem quests = null)
+            MachineLogSystem machineLog = null!,
+            ReckoningSystem reckoning = null!,
+            EvidenceLedger evidence = null!,
+            VerdictNpcSystem npcs = null!,
+            VerdictCensusBroadcast census = null!,
+            IReadOnlyList<VerdictCatalogLoader.VerdictLocationEntry> locations = null!,
+            IReadOnlyList<VerdictCatalogLoader.VerdictItemEntry> items = null!,
+            IReadOnlyList<VerdictCatalogLoader.VerdictRadioEntry> radio = null!,
+            QuestlineSystem quests = null!)
         {
             MachineLog = machineLog ?? new MachineLogSystem();
             Reckoning = reckoning ?? new ReckoningSystem();
@@ -86,22 +84,22 @@ namespace AtomicWar.GodotApp
             CorruptionCorpus = new List<string>();
             _machineRng = new SeededRng(8841209 + 17);
 
-            MachineLog.OnLogPosted += e => { LastEvent = $"log:{e.facilityId}@{e.day}:{e.kind}"; StateChanged?.Invoke(); };
-            MachineLog.OnEntryRead += e => { LastEvent = $"read:{e.evidenceTag}"; StateChanged?.Invoke(); };
-            Reckoning.OnPhaseChanged += p => { LastEvent = $"phase:{p}"; StateChanged?.Invoke(); };
-            Reckoning.OnReckoningCall += n => { LastEvent = $"reckoning_call:{n}"; StateChanged?.Invoke(); };
-            Reckoning.OnVerdictResolved += key => { LastEvent = $"resolved:{key}"; StateChanged?.Invoke(); };
-            Evidence.OnEnrolled += id => { LastEvent = $"evidence:{id}"; StateChanged?.Invoke(); };
-            Npcs.OnSpoken += n => { LastEvent = $"npc:{n.id}"; StateChanged?.Invoke(); };
+            MachineLog.OnLogPosted += e => { LastEvent = $"log:{e.facilityId}@{e.day}:{e.kind}"; RaiseStateChanged(); };
+            MachineLog.OnEntryRead += e => { LastEvent = $"read:{e.evidenceTag}"; RaiseStateChanged(); };
+            Reckoning.OnPhaseChanged += p => { LastEvent = $"phase:{p}"; RaiseStateChanged(); };
+            Reckoning.OnReckoningCall += n => { LastEvent = $"reckoning_call:{n}"; RaiseStateChanged(); };
+            Reckoning.OnVerdictResolved += key => { LastEvent = $"resolved:{key}"; RaiseStateChanged(); };
+            Evidence.OnEnrolled += id => { LastEvent = $"evidence:{id}"; RaiseStateChanged(); };
+            Npcs.OnSpoken += n => { LastEvent = $"npc:{n.id}"; RaiseStateChanged(); };
         }
 
         public static VerdictHostSession Create(
             string dataDir,
-            ISimClock clock = null,
-            IEventBus bus = null,
-            IFlagLedger flags = null,
-            ISeededRng radioRng = null,
-            IWorldCensus census = null)
+            ISimClock clock = null!,
+            IEventBus bus = null!,
+            IFlagLedger flags = null!,
+            ISeededRng radioRng = null!,
+            IWorldCensus census = null!)
         {
             clock = clock ?? new ClockSimClock();
             bus = bus ?? new SimpleEventBus();
@@ -170,7 +168,7 @@ namespace AtomicWar.GodotApp
             if (Radio == null) return new System.Collections.Generic.List<string>();
             var fired = Radio.Poll(day, Reckoning.Phase);
             if (fired.Count > 0) LastEvent = "radio:" + string.Join(";", fired);
-            if (fired.Count > 0) StateChanged?.Invoke();
+            if (fired.Count > 0) RaiseStateChanged();
             return fired;
         }
 
@@ -194,7 +192,7 @@ namespace AtomicWar.GodotApp
             if (enrolled > 0)
             {
                 LastEvent = "evidence_from_items:" + enrolled;
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return enrolled;
         }
@@ -228,7 +226,7 @@ namespace AtomicWar.GodotApp
                    $"call: {(Reckoning.State.callResolved ? "RESOLVED" : "OPEN")}";
         }
 
-        public VerdictCatalogLoader.VerdictLocationEntry FindLocation(string id)
+        public VerdictCatalogLoader.VerdictLocationEntry? FindLocation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             foreach (var loc in Locations)

@@ -19,6 +19,12 @@
 # reimport):  git commit --no-verify
 set -euo pipefail
 
+# --- Secret scan (fast, always-on) ---
+secret_scan="scripts/ci/git-hooks/secret-scan"
+if [ -x "$secret_scan" ]; then
+    "$secret_scan"
+fi
+
 # Only act when the commit touches Godot asset paths.
 staged_files=$(git diff --cached --name-only)
 if [ -z "$staged_files" ]; then

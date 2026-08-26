@@ -1,0 +1,1027 @@
+{
+  "schema_version": 1,
+  "radio_broadcasts": [
+    {
+      "rundown_id": "broadcast_rundown_001",
+      "broadcast_day": 38,
+      "scheduled_time": "0600",
+      "actual_airtime": "0603",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Morning Call",
+          "type": "greeting",
+          "duration_min": 3,
+          "notes": "Opened with the bunker siren test. 47 survivors tuned in by estimate."
+        },
+        {
+          "title": "Weather Report",
+          "type": "information",
+          "duration_min": 5,
+          "notes": "the_meteorologist provided data. Surface temp -12C, wind NW 22km/h, visibility 200m. Ashfall light."
+        },
+        {
+          "title": "Ration Announcement",
+          "type": "information",
+          "duration_min": 4,
+          "notes": "the_quartermaster approved the script. Rice reduction from 200g to 180g. No complaints on air."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 8,
+          "notes": "Played the Bach cello suite from the vinyl archive. Side B. Three survivors requested it yesterday."
+        },
+        {
+          "title": "Security Notice",
+          "type": "information",
+          "duration_min": 2,
+          "notes": "the_general reviewed. Perimeter sweep at 1400. Surface teams avoid sector 7."
+        }
+      ],
+      "total_planned_min": 22,
+      "total_actual_min": 24,
+      "overrun_cause": "the_meteorologist added an unscheduled note about atmospheric particulate density. Let it run.",
+      "signal_quality": "Clear. Minor static on the 40m band from the storm front.",
+      "tags": [
+        "morning_broadcast",
+        "routine",
+        "good_reception"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_002",
+      "broadcast_day": 41,
+      "scheduled_time": "1800",
+      "actual_airtime": "1800",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Evening Address",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Short. People are tired after the water pump repair."
+        },
+        {
+          "title": "Water Update",
+          "type": "information",
+          "duration_min": 6,
+          "notes": "the_plumber provided technical details. Gravity-feed backup online. Primary pump offline for seal replacement."
+        },
+        {
+          "title": "Missing Persons",
+          "type": "community",
+          "duration_min": 10,
+          "notes": "Read three names submitted by survivors. Anyone with information to contact the_general. This segment is always the hardest."
+        },
+        {
+          "title": "Children's Corner",
+          "type": "entertainment",
+          "duration_min": 5,
+          "notes": "the_teacher let the children pick a song. They chose the one about the fish. It is not a real song. They made it up."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Signed off at 1824. On time."
+        }
+      ],
+      "total_planned_min": 24,
+      "total_actual_min": 24,
+      "overrun_cause": "None. Clean broadcast.",
+      "signal_quality": "Good. Two listeners reported feedback on the shortwave. Adjusted gain.",
+      "tags": [
+        "evening_broadcast",
+        "missing_persons",
+        "water_update"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_003",
+      "broadcast_day": 45,
+      "scheduled_time": "0600",
+      "actual_airtime": "0612",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Emergency Opening",
+          "type": "information",
+          "duration_min": 3,
+          "notes": "Delayed broadcast. Radiation storm detected at 0530. the_general ordered immediate airtime."
+        },
+        {
+          "title": "Storm Bulletin",
+          "type": "information",
+          "duration_min": 7,
+          "notes": "the_hazmat_tech read the dosimetry data. External dose rate climbing. All surface operations suspended. Shelter in place."
+        },
+        {
+          "title": "Safety Reminders",
+          "type": "information",
+          "duration_min": 4,
+          "notes": "Seal checks on blast doors. Wet cloth over ventilation gaps. Do not open water cistern until all-clear."
+        },
+        {
+          "title": "Roll Call",
+          "type": "community",
+          "duration_min": 8,
+          "notes": "Each zone leader confirmed their area sealed. Generator zone reported a draft from the cable conduit. the_electrician dispatched."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Told people to stay calm, stay inside, stay together. Signed off."
+        }
+      ],
+      "total_planned_min": 23,
+      "total_actual_min": 23,
+      "overrun_cause": "None. Emergency protocol broadcast.",
+      "signal_quality": "Poor. Storm interference on all bands. Estimated 60 percent of bunker heard the full broadcast.",
+      "tags": [
+        "emergency_broadcast",
+        "radiation_storm",
+        "shelter_in_place",
+        "delayed_start"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_004",
+      "broadcast_day": 49,
+      "scheduled_time": "1200",
+      "actual_airtime": "1200",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Midday Check-in",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Post-storm all-clear issued at 1100. First broadcast since the storm."
+        },
+        {
+          "title": "Storm After-Action",
+          "type": "information",
+          "duration_min": 8,
+          "notes": "the_general provided summary. Peak external dose 85 microSv/h at hour 6. Duration 14 hours. No internal contamination detected."
+        },
+        {
+          "title": "Damage Report",
+          "type": "information",
+          "duration_min": 5,
+          "notes": "the_architect walked through the bunker on mic. Minor seepage in corridor C. Air filter degraded 15 percent. No structural damage."
+        },
+        {
+          "title": "Memorial",
+          "type": "community",
+          "duration_min": 3,
+          "notes": "the_priest read a brief passage. No names. Just a moment of silence for anyone the storm took outside."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 6,
+          "notes": "Played the Chopin nocturne. Someone left a note requesting it. No signature."
+        }
+      ],
+      "total_planned_min": 24,
+      "total_actual_min": 24,
+      "overrun_cause": "None.",
+      "signal_quality": "Excellent. Post-storm atmospheric clarity. Best reception in weeks.",
+      "tags": [
+        "midday_broadcast",
+        "post_storm",
+        "damage_report",
+        "memorial"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_005",
+      "broadcast_day": 53,
+      "scheduled_time": "0600",
+      "actual_airtime": "0600",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Morning Call",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Standard opening. Mentioned it is day 53. Someone counted."
+        },
+        {
+          "title": "Greenhouse Report",
+          "type": "information",
+          "duration_min": 6,
+          "notes": "the_botanist came on herself. First mushroom harvest. 2.3 kg of oyster mushrooms. She sounded almost happy."
+        },
+        {
+          "title": "Trade Notice",
+          "type": "information",
+          "duration_min": 4,
+          "notes": "the_quartermaster announced the barter session for day 55. Accepted items listed. No currency, as always."
+        },
+        {
+          "title": "Birth Announcement",
+          "type": "community",
+          "duration_min": 3,
+          "notes": "the_surgeon confirmed a successful delivery. Mother and child stable. First bunker-born child. Named Asha. The bunker needed that."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 7,
+          "notes": "Played something upbeat. A pre-war pop song. People were humming it in the corridor after."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Signed off. Good morning."
+        }
+      ],
+      "total_planned_min": 23,
+      "total_actual_min": 23,
+      "overrun_cause": "None.",
+      "signal_quality": "Good. Minor interference from the generator cycle. the_electrician adjusting.",
+      "tags": [
+        "morning_broadcast",
+        "birth_announcement",
+        "greenhouse_report",
+        "high_morale"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_006",
+      "broadcast_day": 57,
+      "scheduled_time": "1800",
+      "actual_airtime": "1822",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Evening Address",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Delayed. the_general was still briefing me on the Kilo-1 situation when airtime hit."
+        },
+        {
+          "title": "New Arrival Policy",
+          "type": "information",
+          "duration_min": 8,
+          "notes": "the_general explained the intake criteria without naming the refused applicant. the_therapist requested airtime to present the counter-argument. I let both sides run."
+        },
+        {
+          "title": "Open Forum",
+          "type": "community",
+          "duration_min": 12,
+          "notes": "Survivors called in with opinions. Mostly angry. Some at the_general, some at the_therapist. One woman said she would take in a refugee herself if the bunker would allow it. I did not identify her."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Told people the argument is not over and that is okay. Signed off late."
+        }
+      ],
+      "total_planned_min": 24,
+      "total_actual_min": 24,
+      "overrun_cause": "The open forum ran long. It needed to. This is democracy in a concrete box.",
+      "signal_quality": "Fair. The long-wire antenna picked up a distant station on the 40m band during the open forum. Could not identify the source. Let it play.",
+      "tags": [
+        "evening_broadcast",
+        "delayed",
+        "open_forum",
+        "new_arrival_debate",
+        "contentious"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_007",
+      "broadcast_day": 62,
+      "scheduled_time": "0600",
+      "actual_airtime": "0600",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Morning Call",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Quiet morning. People are settling into the new shift rotation."
+        },
+        {
+          "title": "Shift Schedule",
+          "type": "information",
+          "duration_min": 5,
+          "notes": "the_quartermaster read the new rotation. Generator team 0400-1200. Greenhouse 0600-1400. Medical 0800-1600. Surface patrol 0500-1100."
+        },
+        {
+          "title": "Maintenance Alert",
+          "type": "information",
+          "duration_min": 3,
+          "notes": "the_plumber announced water pipe inspection in corridor B. Brief disruption expected between 1000 and 1200."
+        },
+        {
+          "title": "Education Block",
+          "type": "community",
+          "duration_min": 7,
+          "notes": "the_teacher introduced the new curriculum. Reading group at 1500. Math at 1600. She asked parents to send children with paper and the charcoal pencils."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 6,
+          "notes": "Played the folk album from the archive. Side A. The one with the song about the river."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Standard sign-off."
+        }
+      ],
+      "total_planned_min": 24,
+      "total_actual_min": 24,
+      "overrun_cause": "None.",
+      "signal_quality": "Clear. The new antenna from the_mechanic is performing well. 10dB gain as promised.",
+      "tags": [
+        "morning_broadcast",
+        "shift_schedule",
+        "maintenance",
+        "education"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_008",
+      "broadcast_day": 66,
+      "scheduled_time": "1200",
+      "actual_airtime": "1200",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Midday Special",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Special broadcast. the_priest requested airtime for a eulogy."
+        },
+        {
+          "title": "Eulogy for Oscar-1",
+          "type": "community",
+          "duration_min": 10,
+          "notes": "the_priest spoke for eight minutes. the_undertaker provided the biographical details. Oscar-1 died on day 64 from radiation exposure sustained before arrival. 4.1 Sv. He knew. He came here anyway."
+        },
+        {
+          "title": "Burial Notice",
+          "type": "information",
+          "duration_min": 2,
+          "notes": "the_undertaker announced the interment at 1400 in the ash dune cemetery. All welcome. Surface-rated personnel only."
+        },
+        {
+          "title": "Moment of Silence",
+          "type": "community",
+          "duration_min": 2,
+          "notes": "Two minutes of dead air. The longest two minutes of my career behind this microphone."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 8,
+          "notes": "Played the Adagio from Albinoni. It was not the right choice. It was too beautiful for this place. But it was the only thing that fit."
+        }
+      ],
+      "total_planned_min": 23,
+      "total_actual_min": 23,
+      "overrun_cause": "None.",
+      "signal_quality": "Clear. Broadcast was received by at least two external listeners. the_radio_host logged anomalous signal bounce. Possible atmospheric ducting.",
+      "tags": [
+        "midday_broadcast",
+        "special",
+        "eulogy",
+        "burial",
+        "first_death"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_009",
+      "broadcast_day": 70,
+      "scheduled_time": "0600",
+      "actual_airtime": "0605",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Morning Call",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Five minutes late. the_radio_host overslept. First time this has happened. Noted."
+        },
+        {
+          "title": "Expedition Debrief",
+          "type": "information",
+          "duration_min": 9,
+          "notes": "the_courier returned from the frozen river route. Reported ice thickness stable. Barge location accessible. Recovered 40 kg of supplies. the_general reviewed on air."
+        },
+        {
+          "title": "Supply Update",
+          "type": "information",
+          "duration_min": 4,
+          "notes": "the_quartermaster confirmed the new inventory. Rice reserves at 62 days. Medical supplies at 45 days. Fuel at 30 days. The numbers are getting shorter."
+        },
+        {
+          "title": "Court Announcement",
+          "type": "information",
+          "duration_min": 3,
+          "notes": "the_general announced the next court session for day 72. Two cases: unauthorised access to the medical bay and a dispute over ration allocation."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Signed off. Mentioned that the radio_host would try to be on time tomorrow."
+        }
+      ],
+      "total_planned_min": 19,
+      "total_actual_min": 19,
+      "overrun_cause": "Short broadcast. The news was mostly numbers today.",
+      "signal_quality": "Fair. Intermittent static from the storm front to the east.",
+      "tags": [
+        "morning_broadcast",
+        "expedition_debrief",
+        "supply_update",
+        "court_notice"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_010",
+      "broadcast_day": 75,
+      "scheduled_time": "1800",
+      "actual_airtime": "1800",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Evening Address",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "the_radio_host was joined by the_chef for a special segment."
+        },
+        {
+          "title": "Recipe of the Week",
+          "type": "entertainment",
+          "duration_min": 8,
+          "notes": "the_chef demonstrated mushroom and barley soup. Live. He described each step while the_chef actually made it in the kitchen. The sounds of cooking on radio. Someone laughed."
+        },
+        {
+          "title": "Taste Test",
+          "type": "community",
+          "duration_min": 5,
+          "notes": "Three volunteers came to the studio to taste. Their reactions were genuine. the_botanist said the mushrooms tasted like the forest floor. the_mechanic said it tasted like not starving."
+        },
+        {
+          "title": "Community Requests",
+          "type": "entertainment",
+          "duration_min": 6,
+          "notes": "Read requests from the suggestion box. Someone wants a broadcast about insects. Someone else wants the weather read in a different accent."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "the_chef said goodnight. First time a co-host has signed off. It felt right."
+        }
+      ],
+      "total_planned_min": 23,
+      "total_actual_min": 23,
+      "overrun_cause": "None. Best broadcast of the month.",
+      "signal_quality": "Good. The cooking sounds transmitted clearly. the_radio_host moved the kitchen mic closer.",
+      "tags": [
+        "evening_broadcast",
+        "cooking_segment",
+        "community_engagement",
+        "high_morale",
+        "special_format"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_011",
+      "broadcast_day": 79,
+      "scheduled_time": "0600",
+      "actual_airtime": "0600",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Morning Call",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Standard. Mentioned day 79. Seven days until the next court session."
+        },
+        {
+          "title": "Medical Update",
+          "type": "information",
+          "duration_min": 5,
+          "notes": "the_surgeon reported the dysentery cluster is contained. Seven cases, all recovering. Water treatment verified. No new cases in 48 hours."
+        },
+        {
+          "title": "Quarantine Lift",
+          "type": "information",
+          "duration_min": 3,
+          "notes": "the_general announced the kitchen quarantine is lifted. the_chef is back. Full meal service resumes today."
+        },
+        {
+          "title": "Lost Signal Report",
+          "type": "information",
+          "duration_min": 4,
+          "notes": "the_radio_host reported picking up a fragment of a broadcast on 7.2 MHz at 0340. Voice, male, speaking English. Could not resolve the content. Logged frequency and time for analysis."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 8,
+          "notes": "Played the jazz album. the_courier requested it. Said it reminded him of running."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Standard sign-off."
+        }
+      ],
+      "total_planned_min": 23,
+      "total_actual_min": 23,
+      "overrun_cause": "None.",
+      "signal_quality": "Good. The 7.2 MHz fragment was logged. the_radio_host will monitor the frequency at the same time tomorrow.",
+      "tags": [
+        "morning_broadcast",
+        "medical_update",
+        "quarantine_lift",
+        "mysterious_signal"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_012",
+      "broadcast_day": 84,
+      "scheduled_time": "1200",
+      "actual_airtime": "1200",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Midday Check-in",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Quiet day. No emergencies. A quiet day is a good day."
+        },
+        {
+          "title": "Council Decision",
+          "type": "information",
+          "duration_min": 7,
+          "notes": "the_general announced the council's decision on the Delta-1 emissary trade proposal. Accepted with modifications. Salt trade with the Freeholders begins day 90."
+        },
+        {
+          "title": "Trade Protocol",
+          "type": "information",
+          "duration_min": 5,
+          "notes": "the_quartermaster detailed the exchange rates. Salt for dried fish. Two kilograms salt per kilogram fish. the_chef will inspect all food imports."
+        },
+        {
+          "title": "Children's Segment",
+          "type": "entertainment",
+          "duration_min": 6,
+          "notes": "the_teacher brought three students to read their essays. Topic: what I would do if the sky came back. The answers were varied and heartbreaking."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Signed off. The essays stayed with me."
+        }
+      ],
+      "total_planned_min": 21,
+      "total_actual_min": 21,
+      "overrun_cause": "None.",
+      "signal_quality": "Clear. The children's voices transmitted well. the_teacher used the close mic.",
+      "tags": [
+        "midday_broadcast",
+        "trade_announcement",
+        "children_essays",
+        "council_decision"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_013",
+      "broadcast_day": 88,
+      "scheduled_time": "0600",
+      "actual_airtime": "0600",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Morning Call",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Day 88. the_radio_host is tired. The signal log is getting long."
+        },
+        {
+          "title": "Generator Report",
+          "type": "information",
+          "duration_min": 6,
+          "notes": "the_electrician reported the Variac bypass is holding. Fuel consumption down 8 percent. Estimated fuel reserves now at 45 days instead of 30. The bypass bought time."
+        },
+        {
+          "title": "Surface Conditions",
+          "type": "information",
+          "duration_min": 4,
+          "notes": "the_meteorologist reported temperature rising to -8C. Ice melt beginning on the frozen river. Barge access window closing."
+        },
+        {
+          "title": "Security Alert",
+          "type": "information",
+          "duration_min": 3,
+          "notes": "the_general reported the generator sabotage investigation is ongoing. No suspects. Increased lock changes. All personnel to report unusual activity."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 7,
+          "notes": "Played the string quartet. Slow movement. It sounded like grief."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Signed off."
+        }
+      ],
+      "total_planned_min": 23,
+      "total_actual_min": 23,
+      "overrun_cause": "None.",
+      "signal_quality": "Fair. The generator sabotage alert was broadcast on the_general's instruction. Tone was measured but firm.",
+      "tags": [
+        "morning_broadcast",
+        "generator_update",
+        "surface_conditions",
+        "security_alert"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_014",
+      "broadcast_day": 92,
+      "scheduled_time": "1800",
+      "actual_airtime": "1815",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Evening Address",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Delayed. the_general and the_therapist were in session. The bunker can wait fifteen minutes."
+        },
+        {
+          "title": "Court Verdicts",
+          "type": "information",
+          "duration_min": 8,
+          "notes": "the_general read the two verdicts from day 90. Case 1: unauthorised medical bay access, reprimand and one week kitchen duty. Case 2: ration dispute, mediated by the_therapist, both parties accepted terms."
+        },
+        {
+          "title": "Therapist Note",
+          "type": "community",
+          "duration_min": 5,
+          "notes": "the_therapist spoke briefly about the mediation process. Invited anyone with an unresolved conflict to come forward. Said the room is always open."
+        },
+        {
+          "title": "Anniversary Notice",
+          "type": "community",
+          "duration_min": 3,
+          "notes": "Day 95 will mark 95 days since the event. the_priest is planning a memorial service. Details to follow."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Signed off. Ninety-five days. It feels like a year. It feels like nothing."
+        }
+      ],
+      "total_planned_min": 19,
+      "total_actual_min": 19,
+      "overrun_cause": "Short broadcast. The verdicts were brief. The therapist note was the longest segment.",
+      "signal_quality": "Good. the_therapist's voice was calm on air. People responded well.",
+      "tags": [
+        "evening_broadcast",
+        "delayed",
+        "court_verdicts",
+        "mediation",
+        "anniversary"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_015",
+      "broadcast_day": 95,
+      "scheduled_time": "1200",
+      "actual_airtime": "1200",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Anniversary Special",
+          "type": "greeting",
+          "duration_min": 3,
+          "notes": "Ninety-five days since the event. the_radio_host did not prepare remarks. Just started talking."
+        },
+        {
+          "title": "Roll Call of the Dead",
+          "type": "community",
+          "duration_min": 12,
+          "notes": "the_undertaker read every name. Twenty-three bunker dead. Fourteen arrivals who did not survive intake. Three expedition casualties. Forty names. The bunker was very quiet."
+        },
+        {
+          "title": "Survivor Testimonies",
+          "type": "community",
+          "duration_min": 15,
+          "notes": "Eight survivors spoke. Each had two minutes. the_widow spoke about her husband. the_courier spoke about the road. the_botanist spoke about the first seed that grew. the_child_soldier spoke about his squad. He is twelve."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 10,
+          "notes": "Played the entire Barber Adagio. All eight minutes. Then the Bach again. Then silence for two minutes."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "the_radio_host said: we are still here. Signed off. Turned off the mic. Did not turn off the radio."
+        }
+      ],
+      "total_planned_min": 42,
+      "total_actual_min": 42,
+      "overrun_cause": "None. This was not a normal broadcast.",
+      "signal_quality": "Clear. The broadcast was heard by at least three external listeners based on signal bounce. No response from any of them. The silence was also transmitted.",
+      "tags": [
+        "special_broadcast",
+        "anniversary",
+        "memorial",
+        "roll_call",
+        "testimonies",
+        "longest_broadcast"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_016",
+      "broadcast_day": 98,
+      "scheduled_time": "0600",
+      "actual_airtime": "0600",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Morning Call",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Day 98. The day after the anniversary. People are quiet this morning."
+        },
+        {
+          "title": "Mental Health Notice",
+          "type": "information",
+          "duration_min": 4,
+          "notes": "the_therapist requested airtime. Announced open-door sessions for the next three days. No appointment needed. Said the anniversary can bring things up. She was right."
+        },
+        {
+          "title": "Greenhouse Update",
+          "type": "information",
+          "duration_min": 5,
+          "notes": "the_botanist reported the potato sprouts from the expedition source. First green in the greenhouse that is not a leafy vegetable. People need to see something grow."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 8,
+          "notes": "Played something gentle. Acoustic guitar. Pre-war. The artist is unknown. The recording has surface noise. It sounded like rain."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Standard sign-off. the_radio_host added: take care of each other today."
+        }
+      ],
+      "total_planned_min": 20,
+      "total_actual_min": 20,
+      "overrun_cause": "None.",
+      "signal_quality": "Good. the_therapist's notice was important. Six survivors attended the open-door session on day 98.",
+      "tags": [
+        "morning_broadcast",
+        "post_anniversary",
+        "mental_health",
+        "greenhouse_update"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_017",
+      "broadcast_day": 102,
+      "scheduled_time": "1800",
+      "actual_airtime": "1800",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Evening Address",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Standard opening. Mentioned the successful trade with the Shallows Market caravan. First external trade contact."
+        },
+        {
+          "title": "Trade Report",
+          "type": "information",
+          "duration_min": 7,
+          "notes": "the_quartermaster detailed the exchange. Dried mushrooms and herbs for smoked fish and salt. the_chef inspected the fish. Acceptable quality. First fresh protein from outside in 102 days."
+        },
+        {
+          "title": "Expedition Planning",
+          "type": "information",
+          "duration_min": 5,
+          "notes": "the_general announced the next surface expedition. Target: the seed vault. Team: the_courier, the_hunter, the_hazmat_tech. Departure day 105."
+        },
+        {
+          "title": "Community Notice",
+          "type": "community",
+          "duration_min": 3,
+          "notes": "the_teacher announced the children's art exhibition in corridor A. Day 104. All survivors invited. The children have been working on something."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 6,
+          "notes": "Played the folk album again. Side B this time. The song about coming home. No one in this bunker has a home to come back to. But the song is still good."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Signed off."
+        }
+      ],
+      "total_planned_min": 24,
+      "total_actual_min": 24,
+      "overrun_cause": "None.",
+      "signal_quality": "Excellent. The long-wire antenna is performing beyond expectations.",
+      "tags": [
+        "evening_broadcast",
+        "trade_report",
+        "expedition_planning",
+        "art_exhibition"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_018",
+      "broadcast_day": 106,
+      "scheduled_time": "0600",
+      "actual_airtime": "0600",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Morning Call",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Day 106. Expedition team departed yesterday. the_radio_host is monitoring frequencies for their check-in."
+        },
+        {
+          "title": "Expedition Status",
+          "type": "information",
+          "duration_min": 4,
+          "notes": "No contact since departure. This is normal for the seed vault route. Expected check-in is day 107 at 1200. If no contact by day 108, the_general will dispatch a search team."
+        },
+        {
+          "title": "Bunker Status",
+          "type": "information",
+          "duration_min": 5,
+          "notes": "the_architect reported the corridor C seepage has been sealed. the_plumber confirmed water quality tests passed. All systems nominal."
+        },
+        {
+          "title": "Personal Note",
+          "type": "community",
+          "duration_min": 3,
+          "notes": "the_radio_host broke format. Said he is worried about the_courier. She has been gone before but never this long without a check-in. Asked listeners to keep their radios on."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 8,
+          "notes": "Played the entire acoustic guitar album. All of it. the_radio_host did not speak over it."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Signed off. Kept the receiver on."
+        }
+      ],
+      "total_planned_min": 23,
+      "total_actual_min": 23,
+      "overrun_cause": "None.",
+      "signal_quality": "Fair. the_radio_host is scanning all bands for the expedition team's handheld. No contact.",
+      "tags": [
+        "morning_broadcast",
+        "expedition_status",
+        "missing_contact",
+        "personal_note",
+        "concern"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_019",
+      "broadcast_day": 108,
+      "scheduled_time": "1200",
+      "actual_airtime": "1150",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Emergency Opening",
+          "type": "information",
+          "duration_min": 2,
+          "notes": "Early broadcast. the_courier checked in at 1145. Handheld signal weak but readable. Team is at the seed vault. All three accounted for."
+        },
+        {
+          "title": "Expedition Update",
+          "type": "information",
+          "duration_min": 6,
+          "notes": "the_courier reported: seed vault accessible. Cryo-units partially intact. Recovered 14 viable seed ampoules. the_hazmat_tech reports external dose at the vault is 28 microSv/h. Manageable with time limits."
+        },
+        {
+          "title": "Return Timeline",
+          "type": "information",
+          "duration_min": 3,
+          "notes": "Team departing seed vault at 1200. Estimated return to bunker day 109 by 1600. the_general has the airlock team standing by."
+        },
+        {
+          "title": "Celebration Notice",
+          "type": "community",
+          "duration_min": 2,
+          "notes": "the_chef announced a special meal when the team returns. He has been saving something. Would not say what on air."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "the_radio_host signed off. His hands were shaking. He did not say why on air."
+        }
+      ],
+      "total_planned_min": 14,
+      "total_actual_min": 14,
+      "overrun_cause": "None. Short emergency broadcast. Good news is easy to broadcast quickly.",
+      "signal_quality": "Poor then good. the_courier's handheld was barely readable. The bunker transmitter is strong.",
+      "tags": [
+        "emergency_broadcast",
+        "expedition_contact",
+        "seed_vault_success",
+        "relief"
+      ]
+    },
+    {
+      "rundown_id": "broadcast_rundown_020",
+      "broadcast_day": 112,
+      "scheduled_time": "1800",
+      "actual_airtime": "1800",
+      "host": "the_radio_host",
+      "segments": [
+        {
+          "title": "Evening Address",
+          "type": "greeting",
+          "duration_min": 2,
+          "notes": "Day 112. The bunker is in a good place tonight. the_radio_host can feel it."
+        },
+        {
+          "title": "Seed Vault Report",
+          "type": "information",
+          "duration_min": 7,
+          "notes": "the_botanist presented the full inventory. 14 ampoules: turnip, barley, potato, two varieties of bean, cabbage, carrot, onion, radish, pea, lentil, squash, and one unidentified. She was crying. She was not hiding it."
+        },
+        {
+          "title": "Planting Schedule",
+          "type": "information",
+          "duration_min": 4,
+          "notes": "the_botanist and the_quartermaster coordinated on air. First plantings day 115. Greenhouse capacity doubled. The bunker might eat real food by day 150."
+        },
+        {
+          "title": "Trade Expansion",
+          "type": "information",
+          "duration_min": 5,
+          "notes": "the_general announced a second trade contact. Juliet-1, the journalist, has provided coordinates for 12 settlements. the_general is evaluating which are viable trade partners."
+        },
+        {
+          "title": "Music Block",
+          "type": "entertainment",
+          "duration_min": 8,
+          "notes": "Played the upbeat folk album. Both sides. the_chef sang along in the kitchen. the_radio_host let it carry."
+        },
+        {
+          "title": "Close",
+          "type": "greeting",
+          "duration_min": 1,
+          "notes": "Signed off. Day 112. We are still here. We are growing things. That is enough for tonight."
+        }
+      ],
+      "total_planned_min": 27,
+      "total_actual_min": 27,
+      "overrun_cause": "None.",
+      "signal_quality": "Excellent. The long-wire antenna and the clear post-storm air are giving the best reception since day 1.",
+      "tags": [
+        "evening_broadcast",
+        "seed_vault_report",
+        "planting_schedule",
+        "trade_expansion",
+        "hope"
+      ]
+    }
+  ]
+}

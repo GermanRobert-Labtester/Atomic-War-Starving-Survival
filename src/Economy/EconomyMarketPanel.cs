@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using Godot;
 using AtomicWar.GodotApp.UI;
 using Ashfall.Core.UI;
@@ -81,7 +82,7 @@ namespace AtomicWar.GodotApp.Economy
         {
             if (_session == null) return;
             _session.StateChanged -= RefreshView;
-            _session = null;
+            _session = null!;
         }
 
         public override void _ExitTree()
@@ -94,10 +95,7 @@ namespace AtomicWar.GodotApp.Economy
         {
             if (_session == null || _session.Catalog == null) return;
 
-            foreach (Node child in _goodsList.GetChildren())
-                child.QueueFree();
-
-            _lblSummary.Text =
+            AshfallUiHelpers.EmptyChildren(_goodsList);_lblSummary.Text =
                 $"Day {_session.Market.Day} · ledger {_session.Market.State.ledger.Count} lines · " +
                 $"supplies {( _session.Market.IsSuppliesShort() ? "SHORT" : "normal")}";
 

@@ -144,7 +144,7 @@ namespace Ashfall.Core.Narrative
             string barkPath = Path.Combine(directoryPath, "oak_bark_tanning_pit_logs.json");
             if (File.Exists(barkPath))
             {
-                var list = JsonSerializer.Deserialize<List<OakBarkTanningPitEntry>>(File.ReadAllText(barkPath), options);
+                var list = CatalogLocator.LoadWrappedList<OakBarkTanningPitEntry>(File.ReadAllText(barkPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -160,7 +160,7 @@ namespace Ashfall.Core.Narrative
             string mineralPath = Path.Combine(directoryPath, "chrome_alum_tanning_assays.json");
             if (File.Exists(mineralPath))
             {
-                var list = JsonSerializer.Deserialize<List<MineralTanLiquorEntry>>(File.ReadAllText(mineralPath), options);
+                var list = CatalogLocator.LoadWrappedList<MineralTanLiquorEntry>(File.ReadAllText(mineralPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -176,7 +176,7 @@ namespace Ashfall.Core.Narrative
             string batePath = Path.Combine(directoryPath, "rawhide_bating_failure_reports.json");
             if (File.Exists(batePath))
             {
-                var list = JsonSerializer.Deserialize<List<RawhideBatingFailureEntry>>(File.ReadAllText(batePath), options);
+                var list = CatalogLocator.LoadWrappedList<RawhideBatingFailureEntry>(File.ReadAllText(batePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -192,7 +192,7 @@ namespace Ashfall.Core.Narrative
             string curryPath = Path.Combine(directoryPath, "leather_harness_conditioning_audits.json");
             if (File.Exists(curryPath))
             {
-                var list = JsonSerializer.Deserialize<List<LeatherHarnessCurryingEntry>>(File.ReadAllText(curryPath), options);
+                var list = CatalogLocator.LoadWrappedList<LeatherHarnessCurryingEntry>(File.ReadAllText(curryPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -207,25 +207,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public OakBarkTanningPitEntry GetBark(string id)
+        public OakBarkTanningPitEntry? GetBark(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is OakBarkTanningPitEntry e ? e : null;
         }
 
-        public MineralTanLiquorEntry GetMineral(string id)
+        public MineralTanLiquorEntry? GetMineral(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is MineralTanLiquorEntry e ? e : null;
         }
 
-        public RawhideBatingFailureEntry GetBating(string id)
+        public RawhideBatingFailureEntry? GetBating(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RawhideBatingFailureEntry e ? e : null;
         }
 
-        public LeatherHarnessCurryingEntry GetCurrying(string id)
+        public LeatherHarnessCurryingEntry? GetCurrying(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LeatherHarnessCurryingEntry e ? e : null;

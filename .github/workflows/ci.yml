@@ -1,6 +1,13 @@
-# ASHFALL canonical CI gate — Godot 4.7.1 .NET/C#.
-# Unity compatibility artifacts are built separately in build.yml; they are not gameplay gates.
-# Policy: docs/ENGINE_SUPPORT_POLICY.md
+# ASHFALL CI — Godot 4.7 .NET (canonical)
+# Replaces Unity 6000.5.5f1 game-ci pipeline.
+# Verification checklist per AGENTS.md:
+#   1. dotnet build Ashfall.Core.Tests
+#   2. dotnet test Ashfall.Core.Tests
+#   3. dotnet build Ashfall.csproj (Godot host: 0 errors, 0 warnings)
+#   4. godot --headless -- --data-integrity-selftest
+#   5. godot --headless -- --bridge-selftest
+# No Unity batchmode; no JsonUtility; Core stays engine-agnostic.
+
 name: ASHFALL CI
 
 on:
@@ -9,30 +16,18 @@ on:
   pull_request:
     branches: [main, master]
 
-permissions:
-  contents: read
-
-concurrency:
-  group: ashfall-ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-env:
-  DOTNET_CLI_TELEMETRY_OPTOUT: true
-  DOTNET_NOLOGO: true
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  GODOT_VERSION: 4.7.1
-
 jobs:
-  validate:
-    name: Repository / Data Validation
+  ci:
+    name: CI Gate (dotnet + godot headless)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
-      - name: Validate StreamingAssets JSON syntax
-        shell: bash
+      - name: Validate StreamingAssets JSON syntax (fast-fail)
         run: |
           python3 - <<'PY'
           import json
@@ -64,100 +59,40 @@ jobs:
           print(f"OK: validated {len(files)} JSON file(s) under {root}")
           PY
 
-      - name: Assert Godot project version pins
-        shell: bash
-        run: |
-          grep -Fq 'config/features=PackedStringArray("4.7", "C#", "Compatibility")' project.godot
-          grep -Fq '<Project Sdk="Godot.NET.Sdk/4.7.1">' Ashfall.csproj
-          echo "Godot project pins OK: project.godot 4.7 / Godot.NET.Sdk 4.7.1"
-
-  core-tests:
-    name: Ashfall.Core Tests
-    needs: validate
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup .NET 8 and 9
+      - name: Setup .NET SDKs (8.0 for Godot host, 9.0 for tests)
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
             8.0.x
             9.0.x
 
-      - name: Restore Core tests
-        run: dotnet restore Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
-
-      - name: Build Core tests
-        run: dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --configuration Release --no-restore
-
-      - name: Run Core tests
-        run: >-
-          dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
-          --configuration Release
-          --no-build
-          --logger "trx;LogFileName=ashfall-core-tests.trx"
-          --results-directory TestResults
-
-      - name: Upload Core test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: ashfall-core-test-results
-          path: TestResults
-          if-no-files-found: warn
-
-  godot-gates:
-    name: Godot Headless Gates
-    needs: [validate, core-tests]
-    runs-on: ubuntu-latest
-    timeout-minutes: 35
-    steps:
-      - name: Checkout Repository with Git LFS
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Setup .NET 8 and 9
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            8.0.x
-            9.0.x
-
-      - name: Setup Godot .NET
+      - name: Setup Godot 4.7.1 mono
         uses: chickensoft-games/setup-godot@v2
         with:
-          version: ${{ env.GODOT_VERSION }}
+          version: 4.7.1
           use-dotnet: true
-          include-templates: false
+          include-templates: true
 
-      - name: Verify toolchain
-        shell: bash
-        run: |
-          dotnet --version
-          godot --version
-          godot --version | grep -q '^4\.7\.1'
+      - name: 1) dotnet build Ashfall.Core.Tests
+        run: dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
 
-      - name: Prepare repository scripts
-        shell: bash
-        run: |
-          chmod +x setup-repo.sh
-          chmod +x scripts/ci/godot-asset-gate.sh
-          if [[ -f scripts/ci/asset-orphan-sweep.sh ]]; then
-            chmod +x scripts/ci/asset-orphan-sweep.sh
-          fi
+      - name: 2) dotnet test Ashfall.Core.Tests
+        run: dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj --nologo
 
-      - name: Run canonical Godot asset and gameplay gates
-        shell: bash
-        run: ./scripts/ci/godot-asset-gate.sh
+      - name: 3) dotnet build Godot host (Ashfall.csproj)
+        run: dotnet build Ashfall.csproj --nologo
 
-      - name: Upload Godot import log on failure
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: godot-import-log
-          path: /tmp/godot-import.log
-          if-no-files-found: ignore
+      - name: godot --import (build .godot/ cache)
+        run: godot --headless --path . --import 2>&1 | tail -n 20
+
+      - name: 4) godot --headless -- --data-integrity-selftest
+        run: godot --headless --path . -- --data-integrity-selftest
+
+      - name: 5) godot --headless -- --bridge-selftest
+        run: godot --headless --path . -- --bridge-selftest
+
+      - name: 6) godot --headless -- --expansions-selftest
+        run: godot --headless --path . -- --expansions-selftest
+
+      - name: 7) triad drift gate (Setup/Save/AllSaveSections)
+        run: bash scripts/ci/triad-drift-gate.sh

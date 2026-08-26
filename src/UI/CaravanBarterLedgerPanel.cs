@@ -8,6 +8,7 @@ using AtomicWar.GodotApp.UI;
 using AtomicWar.GodotApp.Economy;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using Ashfall.Core.IO;
 namespace AtomicWar.GodotApp.UI;
 
 /// <summary>
@@ -60,11 +61,15 @@ public partial class CaravanBarterLedgerPanel : Control
         IFactionRadioProvider? radioProvider = null,
         ISeededRng? rng = null)
     {
+        if (_session != null)
+            _session.StateChanged -= RefreshView;
         _session = session;
         _stance = stanceProvider;
+        if (_session != null)
+            _session.StateChanged += RefreshView;
         if (_tradeInner != null)
         {
-            _tradeInner.BindSession(session, stanceProvider, priceShockProvider, radioProvider, rng);
+            _tradeInner.BindSession(session, stanceProvider!, priceShockProvider!, radioProvider!, rng!);
         }
         RefreshView();
     }
@@ -142,10 +147,11 @@ public partial class CaravanBarterLedgerPanel : Control
             }
             return 0;
         }
-        catch
-        {
-            return 0;
-        }
+        catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return 0;
+                                }
     }
 
     public override void _Ready()
@@ -193,7 +199,7 @@ public partial class CaravanBarterLedgerPanel : Control
 
         if (_session != null)
         {
-            _tradeInner.BindSession(_session, _stance);
+            _tradeInner.BindSession(_session, _stance!);
         }
 
         // Sidebar nav highlights the relevant sub-section by changing
@@ -235,5 +241,14 @@ public partial class CaravanBarterLedgerPanel : Control
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        if (_session != null)
+        {
+            _session.StateChanged -= RefreshView;
+        }
+        base._ExitTree();
     }
 }

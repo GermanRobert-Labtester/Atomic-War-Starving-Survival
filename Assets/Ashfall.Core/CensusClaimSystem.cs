@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -171,6 +172,7 @@ namespace Ashfall.Core
                 MarkAssigned(_state.levy.survivorIds, false);
 
             ClearLevyFlags();
+            if (_state.levy == null) return false;
             _state.levySubstitute = true;
             _state.levy.survivorIds = ids.ToArray();
             _state.levy.active = true;
@@ -289,7 +291,7 @@ namespace Ashfall.Core
             }
         }
 
-        private CensusLedgerEntry Find(string survivorId)
+        private CensusLedgerEntry? Find(string survivorId)
         {
             if (string.IsNullOrEmpty(survivorId)) return null;
             for (int i = 0; i < _state.ledger.Count; i++)

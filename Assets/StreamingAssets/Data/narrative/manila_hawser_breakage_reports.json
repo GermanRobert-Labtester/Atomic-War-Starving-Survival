@@ -1,72 +1,117 @@
-[
-  {
-    "id": "manila_hawser_abaca_fiber_saltwater_steep",
-    "hawser_coil_id": "TUNNEL_FERRY_TOW_HAWSER_01",
-    "fiber_botanical_origin": "MUSA_TEXTILIS_ABACA_LEAF_FIBER",
-    "rope_diameter_inches": 3.0,
-    "tensile_break_load_kn": 380.0,
-    "timestamp_relative": "YEAR_03_HAWSER_LOG_01",
-    "tags": ["cordage", "manila", "abaca", "marine_hawser", "towline"],
-    "prose": "Hard leaf fibers from *Musa textilis* (Abaca) laid into a three-inch three-strand hawser demonstrated exceptional resistance to brackish tunnel flooding. The line retained 90% tensile elasticity despite continuous six-month immersion in flooded rail haulage canals."
-  },
-  {
-    "id": "manila_hawser_three_strand_hockling_twist",
-    "hawser_coil_id": "RESCUE_WINCH_HAWSER_SPOOL",
-    "fiber_botanical_origin": "GRADE_A_WHITE_MANILA_YARN",
-    "rope_diameter_inches": 2.0,
-    "tensile_break_load_kn": 195.0,
-    "timestamp_relative": "YEAR_05_HAWSER_LOG_03",
-    "tags": ["cordage", "manila", "hockle", "torsion_kink", "uncoiling_error"],
-    "prose": "Pulling a brand new 2-inch Manila hawser from the inside eye of the storage coil instead of the outside circumference threw heavy reverse twist into the line. Under initial winch tension, the twisted strands doubled over into tight 'hockles' that destroyed 50% breaking strength."
-  },
-  {
-    "id": "manila_hawser_internal_grit_fiber_shear",
-    "hawser_coil_id": "QUARRY_STONE_SLING_LINE_04",
-    "fiber_botanical_origin": "RECYCLED_MANILA_HEMP_BLEND",
-    "rope_diameter_inches": 1.5,
-    "tensile_break_load_kn": 110.0,
-    "timestamp_relative": "YEAR_08_HAWSER_LOG_02",
-    "tags": ["cordage", "manila", "internal_wear", "grit_abrasion", "fiber_shear"],
-    "prose": "Fine, abrasive quartz granite dust from quarry drilling worked deep between the three twisted strands. As the sling flexed over rough boulder edges under load, the trapped grit acted like millions of microscopic razor blades, severing inner yarns into short chaff."
-  },
-  {
-    "id": "manila_hawser_tallow_wax_core_lubrication",
-    "hawser_coil_id": "DEEP_CORE_DRILL_MAST_LINE",
-    "fiber_botanical_origin": "PREMIUM_DAVAO_MANILA_STAPLE",
-    "rope_diameter_inches": 2.5,
-    "tensile_break_load_kn": 290.0,
-    "timestamp_relative": "YEAR_11_HAWSER_LOG_04",
-    "tags": ["cordage", "manila", "core_lubrication", "petrolatum", "anti_chafing"],
-    "prose": "Impregnating the central heart yarn of a 2.5-inch Manila hawser with hot petrolatum and microcrystalline wax reduced internal strand-on-strand friction by 65%. Flex-fatigue bench testing recorded over 100,000 bending cycles over a 30-inch sheave before failure."
-  },
-  {
-    "id": "manila_hawser_capstan_friction_thermal_glaze",
-    "hawser_coil_id": "BARGE_WARPING_CAPSTAN_LINE",
-    "fiber_botanical_origin": "UN-OILED_RAW_MANILA_ROPE",
-    "rope_diameter_inches": 2.25,
-    "tensile_break_load_kn": 220.0,
-    "timestamp_relative": "YEAR_14_HAWSER_LOG_01",
-    "tags": ["cordage", "manila", "capstan_burn", "thermal_glaze", "friction_heat"],
-    "prose": "Surging the hawser too rapidly around a high-speed electric warping capstan generated extreme frictional heat (>220°C). Outer fiber crowns carbonized and fused into a brittle black glaze; the glazed surface cracked upon flexure, shedding broken fibers like straw."
-  },
-  {
-    "id": "manila_hawser_braided_eight_strand_anti_rotation",
-    "hawser_coil_id": "HEAVY_SHAFT_SINKING_HOIST_ROPE",
-    "fiber_botanical_origin": "EIGHT_STRAND_PLAITED_ABACA",
-    "rope_diameter_inches": 3.5,
-    "tensile_break_load_kn": 510.0,
-    "timestamp_relative": "YEAR_17_HAWSER_LOG_03",
-    "tags": ["cordage", "plaited_rope", "eight_strand", "torque_free", "shaft_sinking"],
-    "prose": "Braiding four left-hand (S-twist) and four right-hand (Z-twist) strands into a square eight-strand plaited hawser eliminated all rotational torque. Suspended shaft-sinking kibbles hanging from a 500-meter drop descended without spinning or tangling umbilical hoses."
-  },
-  {
-    "id": "manila_hawser_acid_fume_storage_embrittlement",
-    "hawser_coil_id": "BATTERY_VAULT_BACKUP_SLING",
-    "fiber_botanical_origin": "STORED_PRE_WAR_MANILA_COIL",
-    "rope_diameter_inches": 1.75,
-    "tensile_break_load_kn": 140.0,
-    "timestamp_relative": "YEAR_20_HAWSER_LOG_01",
-    "tags": ["cordage", "manila", "acid_fumes", "sulfuric_acid", "chemical_rot"],
-    "prose": "Storing two coils of heavy Manila hawser in the emergency lead-acid battery vault exposed the natural cellulose fibers to sulfuric acid outgassing. The acid fumes depolymerized the glucan chains, turning the tough golden fibers into a crumbly yellow powder."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "manila_hawser_abaca_fiber_saltwater_steep",
+      "hawser_coil_id": "TUNNEL_FERRY_TOW_HAWSER_01",
+      "fiber_botanical_origin": "MUSA_TEXTILIS_ABACA_LEAF_FIBER",
+      "rope_diameter_inches": 3.0,
+      "tensile_break_load_kn": 380.0,
+      "timestamp_relative": "YEAR_03_HAWSER_LOG_01",
+      "tags": [
+        "cordage",
+        "manila",
+        "abaca",
+        "marine_hawser",
+        "towline"
+      ],
+      "prose": "Hard leaf fibers from *Musa textilis* (Abaca) laid into a three-inch three-strand hawser demonstrated exceptional resistance to brackish tunnel flooding. The line retained 90% tensile elasticity despite continuous six-month immersion in flooded rail haulage canals."
+    },
+    {
+      "id": "manila_hawser_three_strand_hockling_twist",
+      "hawser_coil_id": "RESCUE_WINCH_HAWSER_SPOOL",
+      "fiber_botanical_origin": "GRADE_A_WHITE_MANILA_YARN",
+      "rope_diameter_inches": 2.0,
+      "tensile_break_load_kn": 195.0,
+      "timestamp_relative": "YEAR_05_HAWSER_LOG_03",
+      "tags": [
+        "cordage",
+        "manila",
+        "hockle",
+        "torsion_kink",
+        "uncoiling_error"
+      ],
+      "prose": "Pulling a brand new 2-inch Manila hawser from the inside eye of the storage coil instead of the outside circumference threw heavy reverse twist into the line. Under initial winch tension, the twisted strands doubled over into tight 'hockles' that destroyed 50% breaking strength."
+    },
+    {
+      "id": "manila_hawser_internal_grit_fiber_shear",
+      "hawser_coil_id": "QUARRY_STONE_SLING_LINE_04",
+      "fiber_botanical_origin": "RECYCLED_MANILA_HEMP_BLEND",
+      "rope_diameter_inches": 1.5,
+      "tensile_break_load_kn": 110.0,
+      "timestamp_relative": "YEAR_08_HAWSER_LOG_02",
+      "tags": [
+        "cordage",
+        "manila",
+        "internal_wear",
+        "grit_abrasion",
+        "fiber_shear"
+      ],
+      "prose": "Fine, abrasive quartz granite dust from quarry drilling worked deep between the three twisted strands. As the sling flexed over rough boulder edges under load, the trapped grit acted like millions of microscopic razor blades, severing inner yarns into short chaff."
+    },
+    {
+      "id": "manila_hawser_tallow_wax_core_lubrication",
+      "hawser_coil_id": "DEEP_CORE_DRILL_MAST_LINE",
+      "fiber_botanical_origin": "PREMIUM_DAVAO_MANILA_STAPLE",
+      "rope_diameter_inches": 2.5,
+      "tensile_break_load_kn": 290.0,
+      "timestamp_relative": "YEAR_11_HAWSER_LOG_04",
+      "tags": [
+        "cordage",
+        "manila",
+        "core_lubrication",
+        "petrolatum",
+        "anti_chafing"
+      ],
+      "prose": "Impregnating the central heart yarn of a 2.5-inch Manila hawser with hot petrolatum and microcrystalline wax reduced internal strand-on-strand friction by 65%. Flex-fatigue bench testing recorded over 100,000 bending cycles over a 30-inch sheave before failure."
+    },
+    {
+      "id": "manila_hawser_capstan_friction_thermal_glaze",
+      "hawser_coil_id": "BARGE_WARPING_CAPSTAN_LINE",
+      "fiber_botanical_origin": "UN-OILED_RAW_MANILA_ROPE",
+      "rope_diameter_inches": 2.25,
+      "tensile_break_load_kn": 220.0,
+      "timestamp_relative": "YEAR_14_HAWSER_LOG_01",
+      "tags": [
+        "cordage",
+        "manila",
+        "capstan_burn",
+        "thermal_glaze",
+        "friction_heat"
+      ],
+      "prose": "Surging the hawser too rapidly around a high-speed electric warping capstan generated extreme frictional heat (>220°C). Outer fiber crowns carbonized and fused into a brittle black glaze; the glazed surface cracked upon flexure, shedding broken fibers like straw."
+    },
+    {
+      "id": "manila_hawser_braided_eight_strand_anti_rotation",
+      "hawser_coil_id": "HEAVY_SHAFT_SINKING_HOIST_ROPE",
+      "fiber_botanical_origin": "EIGHT_STRAND_PLAITED_ABACA",
+      "rope_diameter_inches": 3.5,
+      "tensile_break_load_kn": 510.0,
+      "timestamp_relative": "YEAR_17_HAWSER_LOG_03",
+      "tags": [
+        "cordage",
+        "plaited_rope",
+        "eight_strand",
+        "torque_free",
+        "shaft_sinking"
+      ],
+      "prose": "Braiding four left-hand (S-twist) and four right-hand (Z-twist) strands into a square eight-strand plaited hawser eliminated all rotational torque. Suspended shaft-sinking kibbles hanging from a 500-meter drop descended without spinning or tangling umbilical hoses."
+    },
+    {
+      "id": "manila_hawser_acid_fume_storage_embrittlement",
+      "hawser_coil_id": "BATTERY_VAULT_BACKUP_SLING",
+      "fiber_botanical_origin": "STORED_PRE_WAR_MANILA_COIL",
+      "rope_diameter_inches": 1.75,
+      "tensile_break_load_kn": 140.0,
+      "timestamp_relative": "YEAR_20_HAWSER_LOG_01",
+      "tags": [
+        "cordage",
+        "manila",
+        "acid_fumes",
+        "sulfuric_acid",
+        "chemical_rot"
+      ],
+      "prose": "Storing two coils of heavy Manila hawser in the emergency lead-acid battery vault exposed the natural cellulose fibers to sulfuric acid outgassing. The acid fumes depolymerized the glucan chains, turning the tough golden fibers into a crumbly yellow powder."
+    }
+  ]
+}

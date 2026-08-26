@@ -3,6 +3,7 @@ using AtomicWar.GodotApp.UI;
 using Ashfall.Core.UI;
 using Ashfall.Core.Muster;
 
+#pragma warning disable CS8618
 namespace AtomicWar.GodotApp.Muster
 {
     /// <summary>

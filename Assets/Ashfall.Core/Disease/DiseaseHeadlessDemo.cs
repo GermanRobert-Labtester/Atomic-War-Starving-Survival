@@ -16,7 +16,7 @@ namespace Ashfall.Core
     {
         public const int DemoSeed = 1013;
 
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string? dataDirectory = null, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -75,7 +75,7 @@ namespace Ashfall.Core
             system.Infect("demo_survivor_b", DiseaseIds.Cholera, day: 10);
             system.Infect("demo_survivor_c", DiseaseIds.Cholera, day: 10);
             Check(system.GetDiseaseState(DiseaseIds.Cholera) != null
-                  && system.GetDiseaseState(DiseaseIds.Cholera).outbreak_active,
+                  && system.GetDiseaseState(DiseaseIds.Cholera)!.outbreak_active,
                 "three active infections declare an outbreak");
             Check(system.GetSnapshot().total_outbreaks == 1, "outbreaks_total == 1");
 
@@ -122,7 +122,7 @@ namespace Ashfall.Core
             string encoded = json.Serialize(stateA);
             var stateB = json.Deserialize<DiseaseSystemState>(encoded);
             var restored = new DiseaseSystem(log: log);
-            restored.RestoreState(stateB);
+            restored.RestoreState(stateB!);
             restored.BindCatalog(catalog ?? new DiseaseCatalog());
             Check(restored.CaptureState().diseases.Count == system.CaptureState().diseases.Count,
                 "save round-trip preserves every disease entry");
@@ -184,7 +184,21 @@ namespace Ashfall.Core
             if (!files.FileExists(path)) return ids;
             try
             {
-                var rows = json.Deserialize<List<DiseaseDemoItemRow>>(files.ReadAllText(path));
+                string raw = files.ReadAllText(path);
+                List<DiseaseDemoItemRow> rows = null;
+                try
+                {
+                    var root = json.Deserialize<DiseaseDemoItemsRoot>(raw);
+                    rows = root?.items;
+                }
+                catch (Exception)
+                {
+                    // bare list fallback
+                }
+                if (rows == null)
+                {
+                    rows = CatalogLocator.LoadWrappedList<DiseaseDemoItemRow>(raw, SystemTextJsonSerializer.Options);
+                }
                 if (rows != null)
                 {
                     for (int i = 0; i < rows.Count; i++)
@@ -203,6 +217,15 @@ namespace Ashfall.Core
         private sealed class DiseaseDemoItemRow
         {
             public string id = string.Empty;
+        }
+
+        [Serializable]
+        private sealed class DiseaseDemoItemsRoot
+        {
+#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
+            public int schema_version;
+#pragma warning restore CS0649
+            public List<DiseaseDemoItemRow> items = new List<DiseaseDemoItemRow>();
         }
     }
 }

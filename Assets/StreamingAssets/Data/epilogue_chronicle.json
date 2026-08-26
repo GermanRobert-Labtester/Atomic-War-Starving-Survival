@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "default_slides": [
+    { "order": 0, "title": "Opening", "art_asset_id": "epilogue_opening_placeholder" },
+    { "order": 1, "title": "The Bunker", "art_asset_id": "epilogue_bunker_placeholder" },
+    { "order": 2, "title": "What Remains", "art_asset_id": "epilogue_remains_placeholder" },
+    { "order": 3, "title": "Survivors", "art_asset_id": "epilogue_survivors_placeholder" },
+    { "order": 4, "title": "Final Word", "art_asset_id": "epilogue_final_placeholder" }
+  ]
+}

@@ -121,12 +121,12 @@ namespace Ashfall.Core
             SiteEncounterSystem siteEncounters,
             VouchAccessSystem vouch,
             GreenhouseSystem greenhouse,
-            CrossingArbitrationSystem arbitration = null,
-            LedgerDebtSystem ledger = null,
-            CrossingQuestSystem crossingQuests = null,
-            GenerationalSuccessionEngine generational = null,
-            SilentFoundrySystem silentFoundry = null,
-            DiseaseSystem disease = null)
+CrossingArbitrationSystem? arbitration = null,
+LedgerDebtSystem? ledger = null,
+CrossingQuestSystem? crossingQuests = null,
+GenerationalSuccessionEngine? generational = null,
+SilentFoundrySystem? silentFoundry = null,
+DiseaseSystem? disease = null)
         {
             var save = new ExpansionHubSave
             {
@@ -266,7 +266,7 @@ namespace Ashfall.Core
             ExpansionHubSave save;
             try
             {
-                save = json.Deserialize<ExpansionHubSave>(jsonText);
+                save = json.Deserialize<ExpansionHubSave>(jsonText!);
             }
             catch (Exception e)
             {
@@ -319,12 +319,12 @@ namespace Ashfall.Core
             SiteEncounterSystem siteEncounters,
             VouchAccessSystem vouch,
             GreenhouseSystem greenhouse,
-            CrossingArbitrationSystem arbitration = null,
-            LedgerDebtSystem ledger = null,
-            CrossingQuestSystem crossingQuests = null,
-            GenerationalSuccessionEngine generational = null,
-            SilentFoundrySystem silentFoundry = null,
-            DiseaseSystem disease = null)
+CrossingArbitrationSystem? arbitration = null,
+LedgerDebtSystem? ledger = null,
+CrossingQuestSystem? crossingQuests = null,
+GenerationalSuccessionEngine? generational = null,
+SilentFoundrySystem? silentFoundry = null,
+DiseaseSystem? disease = null)
         {
             if (save == null)
                 throw new ArgumentNullException(nameof(save));

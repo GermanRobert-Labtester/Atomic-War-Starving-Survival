@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -68,7 +69,7 @@ namespace Ashfall.Core
         public IReadOnlyList<DebtContract> ClosedContracts => _state.closedContracts;
         public bool LedgerTampered => _state.ledgerTampered;
 
-        public DebtContract GetContract(string debtorId)
+        public DebtContract? GetContract(string debtorId)
         {
             if (string.IsNullOrEmpty(debtorId)) return null;
             for (int i = 0; i < _state.contracts.Count; i++)
@@ -185,7 +186,7 @@ namespace Ashfall.Core
         /// not in an optional host wrapper, so no host can bypass it.
         /// </summary>
         public bool RenegotiateContract(string debtorId, float newPrincipal, int newTermDays, float newRate, string newForfeit,
-            bool contested = false, Func<bool> freshStanding = null)
+            bool contested =false, Func<bool>? freshStanding = null)
         {
             if (string.IsNullOrEmpty(debtorId)) return false;
             if (newPrincipal <= 0f || newTermDays <= 0) return false;

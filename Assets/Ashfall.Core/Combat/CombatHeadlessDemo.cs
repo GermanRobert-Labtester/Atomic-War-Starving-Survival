@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using System.Text;
 
 namespace Ashfall.Core.Combat
@@ -26,7 +27,7 @@ namespace Ashfall.Core.Combat
         public const int EnemyCount = 3;
         public const float EnemyHealth = 40f;
 
-        public static CombatHeadlessReport Run(ILog log = null)
+        public static CombatHeadlessReport Run(ILog? log = null)
         {
             log = log ?? NullLog.Instance;
             var report = new CombatHeadlessReport();
@@ -122,7 +123,7 @@ namespace Ashfall.Core.Combat
             ports.ConsumeAmmo = (ammoId, n) => { ammoConsumed += n; return 100 - ammoConsumed; };
             ports.ConsumeItem = (id, n) => id == "scrap_metal";
 
-            var sys = new TacticalCombatSystem(null, ports);
+            var sys = new TacticalCombatSystem(null!, ports);
             var players = new List<CombatantState>
             {
                 new CombatantState { Id = "p1", Name = "Yuki", SurvivorId = "survivor_yuki", IsPlayer = true, Health = 100, MaxHealth = 100, ArmorRating = 0.4f, CoverRating = 0.3f },
@@ -152,6 +153,7 @@ namespace Ashfall.Core.Combat
             // ── 5. Save → restore deep-copy ✓
             var save = sys.CaptureState();
             Check(save != null && save.Combatants.Count == players.Count + EnemyCount, "capture deep-copies full roster");
+            if (save == null) return report;
             Check(save.Weapons.Count == 2, "capture retains both weapons");
             Check(save.Events.Count > 0, "capture retains combat history");
 
@@ -187,6 +189,7 @@ namespace Ashfall.Core.Combat
             legacy.Phase = 99; // out-of-range phase
             var migrated = TacticalCombatSystem.Migrate(legacy);
             Check(migrated != null && migrated.SaveVersion == CombatState.CurrentSaveVersion, "migration bumps save version");
+            if (migrated == null) return report;
             Check(migrated.Phase >= (int)CombatPhase.Setup && migrated.Phase <= (int)CombatPhase.Retreated, "migration clamps out-of-range phase");
             Check(migrated.Combatants.Count == 1, "migration preserves legacy combatants null-safely");
 
@@ -195,7 +198,7 @@ namespace Ashfall.Core.Combat
 
             // ── 8. Expedition → combat handoff (raiding / ambush seam) ──
             var expSys = new Ashfall.Core.Expeditions.ExpeditionSystem();
-            var handoff = new TacticalCombatSystem(null, new CombatHostPorts());
+            var handoff = new TacticalCombatSystem(null!, new CombatHostPorts());
             int triggered = 0;
             expSys.OnEncounterTriggered += st =>
             {
@@ -260,7 +263,7 @@ namespace Ashfall.Core.Combat
             int guard = 0;
             while (!sys.State.Resolved && guard++ < 40)
             {
-                var res = sys.PlayerFire(TargetOf(sys), rng);
+                var res = sys.PlayerFire(TargetOf(sys)!, rng);
                 if (!sys.State.Resolved)
                     sys.EndTurn(rng);
             }
@@ -271,7 +274,7 @@ namespace Ashfall.Core.Combat
             return details;
         }
 
-        private static string TargetOf(TacticalCombatSystem sys)
+        private static string? TargetOf(TacticalCombatSystem sys)
         {
             var enemies = sys.State.Combatants.FindAll(c => !c.IsPlayer && !c.HasFled);
             if (enemies.Count == 0) return null;

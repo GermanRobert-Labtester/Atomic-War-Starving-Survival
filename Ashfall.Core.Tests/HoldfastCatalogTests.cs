@@ -5,7 +5,7 @@ using Ashfall.Core;
 namespace Ashfall.Core.Tests
 {
     public class HoldfastCatalogTests
-    {
+    : CatalogTestBase{
         private static string DataDir()
         {
             string start = Directory.GetCurrentDirectory();

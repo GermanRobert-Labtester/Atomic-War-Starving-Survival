@@ -1,72 +1,117 @@
-[
-  {
-    "id": "mudbrick_assay_wheat_straw_tensile_reinforcement",
-    "adobe_batch_identifier": "SUN_DRIED_ADOBE_BLOCK_SET_01",
-    "reinforcement_fiber_type": "CHOPPED_WINTER_WHEAT_STRAW",
-    "clay_to_sand_ratio": "30_PCT_CLAY_70_PCT_SAND",
-    "wet_compressive_strength_mpa": 2.4,
-    "timestamp_relative": "YEAR_02_ADOBE_LOG_01",
-    "tags": ["masonry", "adobe", "mudbrick", "straw_fiber", "revetment"],
-    "prose": "Incorporating two kilograms of chopped wheat straw per hundred adobe blocks provided high tensile fiber reinforcement. The straw matrices arrested drying shrinkage micro-cracks, allowing massive four-inch thick wall blocks to cure without warping."
-  },
-  {
-    "id": "mudbrick_assay_acid_rain_surface_scour_erosion",
-    "adobe_batch_identifier": "EXTERNAL_BLAST_BERM_REVETMENT",
-    "reinforcement_fiber_type": "FLAX_STALK_COARSE_SHIVES",
-    "clay_to_sand_ratio": "40_PCT_CLAY_60_PCT_SAND",
-    "wet_compressive_strength_mpa": 1.1,
-    "timestamp_relative": "YEAR_04_ADOBE_LOG_03",
-    "tags": ["masonry", "adobe", "acid_rain", "erosion", "scour"],
-    "prose": "Acid fallout rainstorms (pH 3.4) dissolved the calcareous clay binders on unplastered surface blast revetments. Five inches of exterior mud eroded away in eighteen months, exposing bare rotting straw bundles and causing corner collapse."
-  },
-  {
-    "id": "mudbrick_assay_bentonite_expansive_swelling_heave",
-    "adobe_batch_identifier": "SUMP_ADIT_PARTITION_WALL",
-    "reinforcement_fiber_type": "HEMP_FIBER_WASTE_STRINGS",
-    "clay_to_sand_ratio": "60_PCT_BENTONITE_40_PCT_SILT",
-    "wet_compressive_strength_mpa": 0.8,
-    "timestamp_relative": "YEAR_07_ADOBE_LOG_02",
-    "tags": ["masonry", "adobe", "bentonite", "expansive_clay", "wall_heave"],
-    "prose": "Using high-swelling sodium bentonite clay from the creek bed caused severe moisture expansion. Sump humidity caused the partition wall to swell 12% in volume, crushing the overhead timber shoring and buckling outward into the walkway."
-  },
-  {
-    "id": "mudbrick_assay_cattle_dung_casein_waterproofing",
-    "adobe_batch_identifier": "LIVESTOCK_BARN_PLASTER_SKIN",
-    "reinforcement_fiber_type": "HORSEHAIR_AND_COW_MANURE",
-    "clay_to_sand_ratio": "25_PCT_CLAY_75_PCT_SAND",
-    "wet_compressive_strength_mpa": 3.8,
-    "timestamp_relative": "YEAR_10_ADOBE_LOG_04",
-    "tags": ["masonry", "adobe", "cow_dung", "waterproofing", "casein_render"],
-    "prose": "Fermented livestock manure blended with slaked lime and fine sand created a hydrophobic exterior plaster skin. Microbial polysaccharides and natural casein proteins formed a resilient water-shedding barrier that repelled monsoon rains."
-  },
-  {
-    "id": "mudbrick_assay_termite_straw_cavitation_collapse",
-    "adobe_batch_identifier": "GRAIN_STORE_PERIMETER_WALL_02",
-    "reinforcement_fiber_type": "BARLEY_STRAW_CHOPPED_FINES",
-    "clay_to_sand_ratio": "35_PCT_CLAY_65_PCT_SAND",
-    "wet_compressive_strength_mpa": 0.5,
-    "timestamp_relative": "YEAR_13_ADOBE_LOG_01",
-    "tags": ["masonry", "adobe", "termites", "cavitation", "wall_collapse"],
-    "prose": "Subterranean termites tunneled into the mudbrick foundations to consume the organic barley straw fibers embedded in the clay matrix. The bricks were hollowed into fragile honeycomb shells that collapsed under roof truss deadweight."
-  },
-  {
-    "id": "mudbrick_assay_sand_clay_silt_texture_balance",
-    "adobe_batch_identifier": "BARRACKS_ROOM_DIVIDER_BRICK",
-    "reinforcement_fiber_type": "PINE_NEEDLE_FIBER_BINDER",
-    "clay_to_sand_ratio": "20_PCT_CLAY_80_PCT_SAND",
-    "wet_compressive_strength_mpa": 3.2,
-    "timestamp_relative": "YEAR_16_ADOBE_LOG_03",
-    "tags": ["masonry", "adobe", "texture_balance", "sand_ratio", "compression"],
-    "prose": "Carefully grading sand aggregates to 75% coarse sharp sand and 25% rich fat clay eliminated shrinkage cracks completely. The dried blocks supported three tons of compressive floor loading per square foot without spalling."
-  },
-  {
-    "id": "mudbrick_assay_lime_stabilization_compressive_boost",
-    "adobe_batch_identifier": "FORTIFIED_AIRLOCK_BLAST_PARAPET",
-    "reinforcement_fiber_type": "POLYESTER_UNIFORM_SHREDDINGS",
-    "clay_to_sand_ratio": "30_PCT_CLAY_70_PCT_SAND_8_PCT_LIME",
-    "wet_compressive_strength_mpa": 5.8,
-    "timestamp_relative": "YEAR_20_ADOBE_LOG_01",
-    "tags": ["masonry", "adobe", "lime_stabilization", "compressive_strength", "fortification"],
-    "prose": "Adding 8% hydrated lime powder into the moist clay-sand mix induced pozzolanic cementation over twenty-eight days. The stabilized earth blocks resisted water immersion without softening, achieving an exceptional 5.8 MPa compressive strength."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "mudbrick_assay_wheat_straw_tensile_reinforcement",
+      "adobe_batch_identifier": "SUN_DRIED_ADOBE_BLOCK_SET_01",
+      "reinforcement_fiber_type": "CHOPPED_WINTER_WHEAT_STRAW",
+      "clay_to_sand_ratio": "30_PCT_CLAY_70_PCT_SAND",
+      "wet_compressive_strength_mpa": 2.4,
+      "timestamp_relative": "YEAR_02_ADOBE_LOG_01",
+      "tags": [
+        "masonry",
+        "adobe",
+        "mudbrick",
+        "straw_fiber",
+        "revetment"
+      ],
+      "prose": "Incorporating two kilograms of chopped wheat straw per hundred adobe blocks provided high tensile fiber reinforcement. The straw matrices arrested drying shrinkage micro-cracks, allowing massive four-inch thick wall blocks to cure without warping."
+    },
+    {
+      "id": "mudbrick_assay_acid_rain_surface_scour_erosion",
+      "adobe_batch_identifier": "EXTERNAL_BLAST_BERM_REVETMENT",
+      "reinforcement_fiber_type": "FLAX_STALK_COARSE_SHIVES",
+      "clay_to_sand_ratio": "40_PCT_CLAY_60_PCT_SAND",
+      "wet_compressive_strength_mpa": 1.1,
+      "timestamp_relative": "YEAR_04_ADOBE_LOG_03",
+      "tags": [
+        "masonry",
+        "adobe",
+        "acid_rain",
+        "erosion",
+        "scour"
+      ],
+      "prose": "Acid fallout rainstorms (pH 3.4) dissolved the calcareous clay binders on unplastered surface blast revetments. Five inches of exterior mud eroded away in eighteen months, exposing bare rotting straw bundles and causing corner collapse."
+    },
+    {
+      "id": "mudbrick_assay_bentonite_expansive_swelling_heave",
+      "adobe_batch_identifier": "SUMP_ADIT_PARTITION_WALL",
+      "reinforcement_fiber_type": "HEMP_FIBER_WASTE_STRINGS",
+      "clay_to_sand_ratio": "60_PCT_BENTONITE_40_PCT_SILT",
+      "wet_compressive_strength_mpa": 0.8,
+      "timestamp_relative": "YEAR_07_ADOBE_LOG_02",
+      "tags": [
+        "masonry",
+        "adobe",
+        "bentonite",
+        "expansive_clay",
+        "wall_heave"
+      ],
+      "prose": "Using high-swelling sodium bentonite clay from the creek bed caused severe moisture expansion. Sump humidity caused the partition wall to swell 12% in volume, crushing the overhead timber shoring and buckling outward into the walkway."
+    },
+    {
+      "id": "mudbrick_assay_cattle_dung_casein_waterproofing",
+      "adobe_batch_identifier": "LIVESTOCK_BARN_PLASTER_SKIN",
+      "reinforcement_fiber_type": "HORSEHAIR_AND_COW_MANURE",
+      "clay_to_sand_ratio": "25_PCT_CLAY_75_PCT_SAND",
+      "wet_compressive_strength_mpa": 3.8,
+      "timestamp_relative": "YEAR_10_ADOBE_LOG_04",
+      "tags": [
+        "masonry",
+        "adobe",
+        "cow_dung",
+        "waterproofing",
+        "casein_render"
+      ],
+      "prose": "Fermented livestock manure blended with slaked lime and fine sand created a hydrophobic exterior plaster skin. Microbial polysaccharides and natural casein proteins formed a resilient water-shedding barrier that repelled monsoon rains."
+    },
+    {
+      "id": "mudbrick_assay_termite_straw_cavitation_collapse",
+      "adobe_batch_identifier": "GRAIN_STORE_PERIMETER_WALL_02",
+      "reinforcement_fiber_type": "BARLEY_STRAW_CHOPPED_FINES",
+      "clay_to_sand_ratio": "35_PCT_CLAY_65_PCT_SAND",
+      "wet_compressive_strength_mpa": 0.5,
+      "timestamp_relative": "YEAR_13_ADOBE_LOG_01",
+      "tags": [
+        "masonry",
+        "adobe",
+        "termites",
+        "cavitation",
+        "wall_collapse"
+      ],
+      "prose": "Subterranean termites tunneled into the mudbrick foundations to consume the organic barley straw fibers embedded in the clay matrix. The bricks were hollowed into fragile honeycomb shells that collapsed under roof truss deadweight."
+    },
+    {
+      "id": "mudbrick_assay_sand_clay_silt_texture_balance",
+      "adobe_batch_identifier": "BARRACKS_ROOM_DIVIDER_BRICK",
+      "reinforcement_fiber_type": "PINE_NEEDLE_FIBER_BINDER",
+      "clay_to_sand_ratio": "20_PCT_CLAY_80_PCT_SAND",
+      "wet_compressive_strength_mpa": 3.2,
+      "timestamp_relative": "YEAR_16_ADOBE_LOG_03",
+      "tags": [
+        "masonry",
+        "adobe",
+        "texture_balance",
+        "sand_ratio",
+        "compression"
+      ],
+      "prose": "Carefully grading sand aggregates to 75% coarse sharp sand and 25% rich fat clay eliminated shrinkage cracks completely. The dried blocks supported three tons of compressive floor loading per square foot without spalling."
+    },
+    {
+      "id": "mudbrick_assay_lime_stabilization_compressive_boost",
+      "adobe_batch_identifier": "FORTIFIED_AIRLOCK_BLAST_PARAPET",
+      "reinforcement_fiber_type": "POLYESTER_UNIFORM_SHREDDINGS",
+      "clay_to_sand_ratio": "30_PCT_CLAY_70_PCT_SAND_8_PCT_LIME",
+      "wet_compressive_strength_mpa": 5.8,
+      "timestamp_relative": "YEAR_20_ADOBE_LOG_01",
+      "tags": [
+        "masonry",
+        "adobe",
+        "lime_stabilization",
+        "compressive_strength",
+        "fortification"
+      ],
+      "prose": "Adding 8% hydrated lime powder into the moist clay-sand mix induced pozzolanic cementation over twenty-eight days. The stabilized earth blocks resisted water immersion without softening, achieving an exceptional 5.8 MPa compressive strength."
+    }
+  ]
+}

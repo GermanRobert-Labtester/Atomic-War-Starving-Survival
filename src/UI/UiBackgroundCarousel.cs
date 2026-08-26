@@ -112,15 +112,16 @@ namespace AtomicWar.GodotApp.UI
         {
             if (_parallaxStrength <= 0f) return;
 
-            // Calculate target parallax based on viewport position
+            // Calculate target parallax based on viewport mouse position
             Vector2 viewportSize = GetSize(); // Control's size, which matches viewport for full-rect
             float viewportWidth = viewportSize.X;
             float viewportHeight = viewportSize.Y;
+            if (viewportWidth <= 0f || viewportHeight <= 0f) return;
 
             // Target offset: center of screen = (0,0), edges = ±strength
-            Vector2 windowPos = GetWindow().GetPosition();
-            _targetParallax.X = (windowPos.X / viewportWidth - 0.5f) * _parallaxStrength * 2f;
-            _targetParallax.Y = (windowPos.Y / viewportHeight - 0.5f) * _parallaxStrength * 2f;
+            Vector2 mousePos = GetViewport().GetMousePosition();
+            _targetParallax.X = (mousePos.X / viewportWidth - 0.5f) * _parallaxStrength * 2f;
+            _targetParallax.Y = (mousePos.Y / viewportHeight - 0.5f) * _parallaxStrength * 2f;
 
             // Smooth interpolation using manual lerp
             float lerpFactor = Mathf.Clamp((float)(delta * 3f), 0f, 1f);

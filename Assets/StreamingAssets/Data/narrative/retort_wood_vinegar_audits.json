@@ -1,82 +1,133 @@
-[
-  {
-    "id": "retort_pyroligneous_acid_wood_vinegar_collection",
-    "retort_vessel_id": "RECOVERY_RETORT_UNIT_ALPHA_01",
-    "condensed_liquor_volume_liters": 420.0,
-    "pyroligneous_acetic_acid_pct": 7.4,
-    "settled_wood_tar_volume_liters": 65.0,
-    "timestamp_relative": "YEAR_02_RETORT_01",
-    "tags": ["pyrolysis", "retort", "pyroligneous_acid", "wood_vinegar", "byproduct_recovery"],
-    "prose": "Routing pyrolysis exhaust from a two-ton oak charge through water-cooled copper condenser coils condensed 420 liters of amber pyroligneous acid. Titration confirmed 7.4% acetic acid alongside methanol, acetone, and soluble wood resins."
-  },
-  {
-    "id": "retort_wood_tar_pitch_fractional_separation",
-    "retort_vessel_id": "TAR_DECANTING_SUMP_02",
-    "condensed_liquor_volume_liters": 380.0,
-    "pyroligneous_acetic_acid_pct": 6.8,
-    "settled_wood_tar_volume_liters": 85.0,
-    "timestamp_relative": "YEAR_04_RETORT_03",
-    "tags": ["pyrolysis", "wood_tar", "decanting", "maritime_pitch", "waterproofing"],
-    "prose": "Gravity settling inside deep wooden barrels separated aqueous wood vinegar from dense, black settled wood tar. Boiling down the heavy tar fraction in iron kettles produced forty kilograms of sticky waterproof pitch for sealing airlock bulkheads."
-  },
-  {
-    "id": "retort_wood_gas_producer_recycle_burner",
-    "retort_vessel_id": "AUTOGENOUS_RETORT_BATTERY_03",
-    "condensed_liquor_volume_liters": 450.0,
-    "pyroligneous_acetic_acid_pct": 8.1,
-    "settled_wood_tar_volume_liters": 72.0,
-    "timestamp_relative": "YEAR_07_RETORT_02",
-    "tags": ["pyrolysis", "wood_gas", "syngas_recycle", "energy_efficiency", "autogenous_burn"],
-    "prose": "Non-condensable wood gas—composed of carbon monoxide, hydrogen, and methane—was recycled back into the retort firebox via inspirator burners. Once exothermic coaling commenced at 280°C, external fuel feed was shut off completely."
-  },
-  {
-    "id": "retort_methanol_wood_alcohol_fractional_distillation",
-    "retort_vessel_id": "SOLVENT_FRACTIONATION_STILL_04",
-    "condensed_liquor_volume_liters": 290.0,
-    "pyroligneous_acetic_acid_pct": 9.2,
-    "settled_wood_tar_volume_liters": 45.0,
-    "timestamp_relative": "YEAR_09_RETORT_04",
-    "tags": ["pyrolysis", "methanol", "fractional_distillation", "wood_spirits", "solvent"],
-    "prose": "Fractionally distilling clarified wood vinegar through a packed bubble-cap column isolated a 65°C overhead distillate of crude wood spirits (methanol and acetone). The solvent was diverted to chemistry labs for lacquer and varnish compounding."
-  },
-  {
-    "id": "retort_calcium_acetate_lime_neutralization",
-    "retort_vessel_id": "NEUTRALIZATION_EVAPORATOR_PAN_05",
-    "condensed_liquor_volume_liters": 500.0,
-    "pyroligneous_acetic_acid_pct": 8.5,
-    "settled_wood_tar_volume_liters": 90.0,
-    "timestamp_relative": "YEAR_12_RETORT_01",
-    "tags": ["pyrolysis", "calcium_acetate", "slaked_lime", "acetate_of_lime", "chemical_salt"],
-    "prose": "Adding slaked lime (calcium hydroxide) to raw wood vinegar until neutral to litmus precipitated grey acetate of lime. Evaporating the neutralized liquor across sheet iron drying pans yielded eighty kilograms of dry calcium acetate crystals."
-  },
-  {
-    "id": "retort_copper_condenser_tube_acetic_acid_corrosion",
-    "retort_vessel_id": "HEAVY_CORROSION_CONDENSER_06",
-    "condensed_liquor_volume_liters": 310.0,
-    "pyroligneous_acetic_acid_pct": 7.0,
-    "settled_wood_tar_volume_liters": 55.0,
-    "timestamp_relative": "YEAR_15_RETORT_03",
-    "tags": ["pyrolysis", "copper_corrosion", "acid_attack", "condenser_failure", "verdigris"],
-    "prose": "Continuous contact with boiling 8% acetic acid and formic acid vapors corroded the 1.5mm copper cooling coil. Green copper acetate verdigris crusts thinned the tube walls, producing pinhole leaks that contaminated the condensate with cooling water."
-  },
-  {
-    "id": "retort_tar_clogged_exhaust_manifold_burnout",
-    "retort_vessel_id": "EXHAUST_MANIFOLD_MAINTENANCE_BAY",
-    "condensed_liquor_volume_liters": 0.0,
-    "pyroligneous_acetic_acid_pct": 0.0,
-    "settled_wood_tar_volume_liters": 120.0,
-    "timestamp_relative": "YEAR_17_RETORT_02",
-    "tags": ["pyrolysis", "manifold_clog", "tar_coking", "blowtorch_burnout", "de-coking"],
-    "prose": "Accumulated heavy pitch and resin cracked into rock-hard carbon coke inside the 150mm cast-iron gas takeaway header. Clearing the restriction required dismantling the manifold and baking out the coke with high-heat propane torches."
-  },
-  {
-    "id": "retort_creosote_timber_preservative_fraction",
-    "retort_vessel_id": "CREOSOTE_RECOVERY_STILL_08",
-    "condensed_liquor_volume_liters": 180.0,
-    "pyroligneous_acetic_acid_pct": 5.5,
-    "settled_wood_tar_volume_liters": 110.0,
-    "timestamp_relative": "YEAR_20_RETORT_01",
-    "tags": ["pyrolysis", "creosote", "guaiacol", "timber_preservation", "antiseptic"],
-    "prose": "Distilling settled beechwood tar between 200°C and 250°C isolated heavy wood creosote rich in guaiacol and cresol. The oily antiseptic fraction was pressure-impregnated into mine shaft support timbers, extending timber service life fourfold."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "retort_pyroligneous_acid_wood_vinegar_collection",
+      "retort_vessel_id": "RECOVERY_RETORT_UNIT_ALPHA_01",
+      "condensed_liquor_volume_liters": 420.0,
+      "pyroligneous_acetic_acid_pct": 7.4,
+      "settled_wood_tar_volume_liters": 65.0,
+      "timestamp_relative": "YEAR_02_RETORT_01",
+      "tags": [
+        "pyrolysis",
+        "retort",
+        "pyroligneous_acid",
+        "wood_vinegar",
+        "byproduct_recovery"
+      ],
+      "prose": "Routing pyrolysis exhaust from a two-ton oak charge through water-cooled copper condenser coils condensed 420 liters of amber pyroligneous acid. Titration confirmed 7.4% acetic acid alongside methanol, acetone, and soluble wood resins."
+    },
+    {
+      "id": "retort_wood_tar_pitch_fractional_separation",
+      "retort_vessel_id": "TAR_DECANTING_SUMP_02",
+      "condensed_liquor_volume_liters": 380.0,
+      "pyroligneous_acetic_acid_pct": 6.8,
+      "settled_wood_tar_volume_liters": 85.0,
+      "timestamp_relative": "YEAR_04_RETORT_03",
+      "tags": [
+        "pyrolysis",
+        "wood_tar",
+        "decanting",
+        "maritime_pitch",
+        "waterproofing"
+      ],
+      "prose": "Gravity settling inside deep wooden barrels separated aqueous wood vinegar from dense, black settled wood tar. Boiling down the heavy tar fraction in iron kettles produced forty kilograms of sticky waterproof pitch for sealing airlock bulkheads."
+    },
+    {
+      "id": "retort_wood_gas_producer_recycle_burner",
+      "retort_vessel_id": "AUTOGENOUS_RETORT_BATTERY_03",
+      "condensed_liquor_volume_liters": 450.0,
+      "pyroligneous_acetic_acid_pct": 8.1,
+      "settled_wood_tar_volume_liters": 72.0,
+      "timestamp_relative": "YEAR_07_RETORT_02",
+      "tags": [
+        "pyrolysis",
+        "wood_gas",
+        "syngas_recycle",
+        "energy_efficiency",
+        "autogenous_burn"
+      ],
+      "prose": "Non-condensable wood gas—composed of carbon monoxide, hydrogen, and methane—was recycled back into the retort firebox via inspirator burners. Once exothermic coaling commenced at 280°C, external fuel feed was shut off completely."
+    },
+    {
+      "id": "retort_methanol_wood_alcohol_fractional_distillation",
+      "retort_vessel_id": "SOLVENT_FRACTIONATION_STILL_04",
+      "condensed_liquor_volume_liters": 290.0,
+      "pyroligneous_acetic_acid_pct": 9.2,
+      "settled_wood_tar_volume_liters": 45.0,
+      "timestamp_relative": "YEAR_09_RETORT_04",
+      "tags": [
+        "pyrolysis",
+        "methanol",
+        "fractional_distillation",
+        "wood_spirits",
+        "solvent"
+      ],
+      "prose": "Fractionally distilling clarified wood vinegar through a packed bubble-cap column isolated a 65°C overhead distillate of crude wood spirits (methanol and acetone). The solvent was diverted to chemistry labs for lacquer and varnish compounding."
+    },
+    {
+      "id": "retort_calcium_acetate_lime_neutralization",
+      "retort_vessel_id": "NEUTRALIZATION_EVAPORATOR_PAN_05",
+      "condensed_liquor_volume_liters": 500.0,
+      "pyroligneous_acetic_acid_pct": 8.5,
+      "settled_wood_tar_volume_liters": 90.0,
+      "timestamp_relative": "YEAR_12_RETORT_01",
+      "tags": [
+        "pyrolysis",
+        "calcium_acetate",
+        "slaked_lime",
+        "acetate_of_lime",
+        "chemical_salt"
+      ],
+      "prose": "Adding slaked lime (calcium hydroxide) to raw wood vinegar until neutral to litmus precipitated grey acetate of lime. Evaporating the neutralized liquor across sheet iron drying pans yielded eighty kilograms of dry calcium acetate crystals."
+    },
+    {
+      "id": "retort_copper_condenser_tube_acetic_acid_corrosion",
+      "retort_vessel_id": "HEAVY_CORROSION_CONDENSER_06",
+      "condensed_liquor_volume_liters": 310.0,
+      "pyroligneous_acetic_acid_pct": 7.0,
+      "settled_wood_tar_volume_liters": 55.0,
+      "timestamp_relative": "YEAR_15_RETORT_03",
+      "tags": [
+        "pyrolysis",
+        "copper_corrosion",
+        "acid_attack",
+        "condenser_failure",
+        "verdigris"
+      ],
+      "prose": "Continuous contact with boiling 8% acetic acid and formic acid vapors corroded the 1.5mm copper cooling coil. Green copper acetate verdigris crusts thinned the tube walls, producing pinhole leaks that contaminated the condensate with cooling water."
+    },
+    {
+      "id": "retort_tar_clogged_exhaust_manifold_burnout",
+      "retort_vessel_id": "EXHAUST_MANIFOLD_MAINTENANCE_BAY",
+      "condensed_liquor_volume_liters": 0.0,
+      "pyroligneous_acetic_acid_pct": 0.0,
+      "settled_wood_tar_volume_liters": 120.0,
+      "timestamp_relative": "YEAR_17_RETORT_02",
+      "tags": [
+        "pyrolysis",
+        "manifold_clog",
+        "tar_coking",
+        "blowtorch_burnout",
+        "de-coking"
+      ],
+      "prose": "Accumulated heavy pitch and resin cracked into rock-hard carbon coke inside the 150mm cast-iron gas takeaway header. Clearing the restriction required dismantling the manifold and baking out the coke with high-heat propane torches."
+    },
+    {
+      "id": "retort_creosote_timber_preservative_fraction",
+      "retort_vessel_id": "CREOSOTE_RECOVERY_STILL_08",
+      "condensed_liquor_volume_liters": 180.0,
+      "pyroligneous_acetic_acid_pct": 5.5,
+      "settled_wood_tar_volume_liters": 110.0,
+      "timestamp_relative": "YEAR_20_RETORT_01",
+      "tags": [
+        "pyrolysis",
+        "creosote",
+        "guaiacol",
+        "timber_preservation",
+        "antiseptic"
+      ],
+      "prose": "Distilling settled beechwood tar between 200°C and 250°C isolated heavy wood creosote rich in guaiacol and cresol. The oily antiseptic fraction was pressure-impregnated into mine shaft support timbers, extending timber service life fourfold."
+    }
+  ]
+}

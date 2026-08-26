@@ -1,68 +1,92 @@
-[
-  {
-    "relic_id": "gramophone",
-    "display_name": "Hand-Crank Gramophone",
-    "description": "A pre-war hand-crank gramophone. The lacquer is cracked but the mechanism still turns.",
-    "required_components": ["vacuum_tube", "spring_mechanism", "phonograph_needle"],
-    "repair_time_hours": 8,
-    "morale_bonus": 5,
-    "dialogue_event_id": "narrative_gramophone_restored",
-    "restoration_text": "The gramophone crackles to life. A scratchy recording of a string quartet fills the bunker. For three minutes and forty seconds, everyone stops what they're doing and just listens.",
-    "world_flag": "relic_restored_gramophone"
-  },
-  {
-    "relic_id": "film_projector",
-    "display_name": "8mm Film Projector",
-    "description": "A portable film projector, bulb intact but mechanism seized from decades of disuse.",
-    "required_components": ["projector_bulb", "lubricant_oil", "film_reel"],
-    "repair_time_hours": 6,
-    "morale_bonus": 5,
-    "dialogue_event_id": "narrative_projector_restored",
-    "restoration_text": "The projector whirs to life, casting flickering images on the bunker wall. It's an old home movie — a birthday party, a child blowing out candles. No one knows these people. Everyone watches anyway.",
-    "world_flag": "relic_restored_film_projector"
-  },
-  {
-    "relic_id": "ham_radio",
-    "display_name": "Vintage Ham Radio Set",
-    "description": "A vacuum-tube ham radio transceiver, pre-digital, built to last through anything.",
-    "required_components": ["vacuum_tube", "antenna_coil", "soldering_kit"],
-    "repair_time_hours": 12,
-    "morale_bonus": 5,
-    "dialogue_event_id": "narrative_ham_radio_restored",
-    "restoration_text": "The radio hums with static, then — a voice. Faint, distant, but unmistakably human. 'Hello? Is anyone out there?' The bunker holds its breath.",
-    "world_flag": "relic_restored_ham_radio"
-  },
-  {
-    "relic_id": "music_box",
-    "display_name": "Antique Music Box",
-    "description": "A small silver music box, tarnished but intact. The winding key is still attached.",
-    "required_components": ["music_box_comb", "spring_key"],
-    "repair_time_hours": 4,
-    "morale_bonus": 3,
-    "dialogue_event_id": "narrative_music_box_restored",
-    "restoration_text": "The music box plays a melody no one recognizes but everyone feels. An old lullaby, maybe. A child hums along, and for just a moment, the bunker feels like a home.",
-    "world_flag": "relic_restored_music_box"
-  },
-  {
-    "relic_id": "typewriter",
-    "display_name": "Mechanical Typewriter",
-    "description": "A heavy cast-iron typewriter. The ribbon is dry but the keys still strike true.",
-    "required_components": ["typewriter_ribbon", "machine_oil"],
-    "repair_time_hours": 3,
-    "morale_bonus": 3,
-    "dialogue_event_id": "narrative_typewriter_restored",
-    "restoration_text": "The typewriter's clack fills the quiet hours. Survivors take turns typing letters — to loved ones, to the future, to no one in particular. The paper stacks up like a testament.",
-    "world_flag": "relic_restored_typewriter"
-  },
-  {
-    "relic_id": "camera",
-    "display_name": "Twin-Lens Reflex Camera",
-    "description": "A medium-format camera, lenses fogged but body solid. The shutter still clicks.",
-    "required_components": ["camera_lens_cleaner", "photographic_film"],
-    "repair_time_hours": 5,
-    "morale_bonus": 3,
-    "dialogue_event_id": "narrative_camera_restored",
-    "restoration_text": "The camera captures the bunker in black and white — tired faces, patched walls, small kindnesses. Someone suggests a group portrait. For the first time since the exchange, everyone smiles at once.",
-    "world_flag": "relic_restored_camera"
-  }
-]
+{
+  "schema_version": 1,
+  "recipes": [
+    {
+      "relic_id": "gramophone",
+      "display_name": "Hand-Crank Gramophone",
+      "description": "A pre-war hand-crank gramophone. The lacquer is cracked but the mechanism still turns.",
+      "required_components": [
+        "vacuum_tube",
+        "spring_mechanism",
+        "phonograph_needle"
+      ],
+      "repair_time_hours": 8,
+      "morale_bonus": 5,
+      "dialogue_event_id": "narrative_gramophone_restored",
+      "restoration_text": "The gramophone crackles to life. A scratchy recording of a string quartet fills the bunker. For three minutes and forty seconds, everyone stops what they're doing and just listens.",
+      "world_flag": "relic_restored_gramophone"
+    },
+    {
+      "relic_id": "film_projector",
+      "display_name": "8mm Film Projector",
+      "description": "A portable film projector, bulb intact but mechanism seized from decades of disuse.",
+      "required_components": [
+        "projector_bulb",
+        "lubricant_oil",
+        "film_reel"
+      ],
+      "repair_time_hours": 6,
+      "morale_bonus": 5,
+      "dialogue_event_id": "narrative_projector_restored",
+      "restoration_text": "The projector whirs to life, casting flickering images on the bunker wall. It's an old home movie — a birthday party, a child blowing out candles. No one knows these people. Everyone watches anyway.",
+      "world_flag": "relic_restored_film_projector"
+    },
+    {
+      "relic_id": "ham_radio",
+      "display_name": "Vintage Ham Radio Set",
+      "description": "A vacuum-tube ham radio transceiver, pre-digital, built to last through anything.",
+      "required_components": [
+        "vacuum_tube",
+        "antenna_coil",
+        "soldering_kit"
+      ],
+      "repair_time_hours": 12,
+      "morale_bonus": 5,
+      "dialogue_event_id": "narrative_ham_radio_restored",
+      "restoration_text": "The radio hums with static, then — a voice. Faint, distant, but unmistakably human. 'Hello? Is anyone out there?' The bunker holds its breath.",
+      "world_flag": "relic_restored_ham_radio"
+    },
+    {
+      "relic_id": "music_box",
+      "display_name": "Antique Music Box",
+      "description": "A small silver music box, tarnished but intact. The winding key is still attached.",
+      "required_components": [
+        "music_box_comb",
+        "spring_key"
+      ],
+      "repair_time_hours": 4,
+      "morale_bonus": 3,
+      "dialogue_event_id": "narrative_music_box_restored",
+      "restoration_text": "The music box plays a melody no one recognizes but everyone feels. An old lullaby, maybe. A child hums along, and for just a moment, the bunker feels like a home.",
+      "world_flag": "relic_restored_music_box"
+    },
+    {
+      "relic_id": "typewriter",
+      "display_name": "Mechanical Typewriter",
+      "description": "A heavy cast-iron typewriter. The ribbon is dry but the keys still strike true.",
+      "required_components": [
+        "typewriter_ribbon",
+        "machine_oil"
+      ],
+      "repair_time_hours": 3,
+      "morale_bonus": 3,
+      "dialogue_event_id": "narrative_typewriter_restored",
+      "restoration_text": "The typewriter's clack fills the quiet hours. Survivors take turns typing letters — to loved ones, to the future, to no one in particular. The paper stacks up like a testament.",
+      "world_flag": "relic_restored_typewriter"
+    },
+    {
+      "relic_id": "camera",
+      "display_name": "Twin-Lens Reflex Camera",
+      "description": "A medium-format camera, lenses fogged but body solid. The shutter still clicks.",
+      "required_components": [
+        "camera_lens_cleaner",
+        "photographic_film"
+      ],
+      "repair_time_hours": 5,
+      "morale_bonus": 3,
+      "dialogue_event_id": "narrative_camera_restored",
+      "restoration_text": "The camera captures the bunker in black and white — tired faces, patched walls, small kindnesses. Someone suggests a group portrait. For the first time since the exchange, everyone smiles at once.",
+      "world_flag": "relic_restored_camera"
+    }
+  ]
+}

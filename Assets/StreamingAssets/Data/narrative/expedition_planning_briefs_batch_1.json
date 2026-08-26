@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "collection_id": "expedition_planning_briefs_batch_1",
+  "briefs": [
+    {
+      "brief_id": "006",
+      "day": 395,
+      "author": "the_cartographer",
+      "reviewed_by": "the_council",
+      "objective": "Survey low-dose zone 5 (the hollow) for future expansion. The hollow is the place where the snowflake falls. The snowflake is the fourth carving. The hollow is the place the Cartographer described (unsent_letter_b2_38).",
+      "route": "North from zone 4, 12km to the hollow. The route follows the meltwater stream. The stream is the thing that feeds the zones. The hollow is the place where the stream begins.",
+      "distance_km": 12,
+      "estimated_duration_hours": 16,
+      "team_size": 4,
+      "team_requirements": [
+        "the_botanist (soil assessment)",
+        "the_courier (navigation, water)",
+        "the_bouncer (security, perimeter)",
+        "the_veteran (route knowledge, experience)"
+      ],
+      "equipment": [
+        "dosimeters (4)",
+        "soil test kits (2)",
+        "water containers (4L)",
+        "meltwater filters (2)",
+        "the four carvings (wolf, bee, wheat, snowflake) — the thing the Bouncer watches",
+        "the 16 words list — the thing the family lives by"
+      ],
+      "weather_forecast": "Clear, cold, -2C to +2C. The second winter is ending. The melt is beginning. The meltwater stream will be running.",
+      "surface_dose_estimate_uSv_h": "1.0-1.5 (the hollow is low-dose, but the meltwater may carry contamination)",
+      "key_questions": [
+        "Is the hollow suitable for planting? The hollow is the place where the snowflake falls. The snowflake is the thing that is the fourth carving.",
+        "Does the meltwater stream carry radiation? The meltwater is the thing that feeds the zones. The zones are the thing the family farms.",
+        "Is the hollow the place for the bridge? The bridge is the thing that connects the family to the next family. The next family is the thing that is not the 47.",
+        "Can the hollow be the fifth zone? The 4 zones are the family. The fifth zone is the thing that is the next family."
+      ],
+      "success_criteria": [
+        "Zone 5 (the hollow) is surveyed. The survey is the thing that tells the family if the hollow is the fifth zone.",
+        "Soil samples are taken. The soil is the thing that tells the family if the hollow is the place for the bridge.",
+        "Meltwater samples are taken. The meltwater is the thing that tells the family if the hollow is safe.",
+        "The route to the hollow is mapped. The map is the thing that tells the family how to walk to the next family."
+      ],
+      "risks": [
+        "Meltwater contamination: the meltwater may carry radiation. The radiation is the thing that is not safe.",
+        "Wildlife: the hollow may be a den site. The den is the thing that is not the family.",
+        "Weather: the second winter may return. The cold is the thing that is not the melt.",
+        "Navigation: the route is untested. The untested is the thing that is not the known."
+      ],
+      "recommendations": [
+        "Depart at dawn. The dawn is the thing that is the start of the walk.",
+        "Follow the meltwater stream. The stream is the thing that leads to the hollow.",
+        "the_botanist to test soil and water. The tests are the thing that tell the family if the hollow is safe.",
+        "the_bouncer to watch the perimeter. The watching is the thing that keeps the family safe.",
+        "the_courier to navigate. The navigation is the thing that gets the family to the hollow and back.",
+        "the_veteran to advise. The advice is the thing that keeps the family from the untested.",
+        "Bring the four carvings. The carvings are the thing that tells the family what the hollow is for.",
+        "Bring the 16 words. The words are the thing the family lives by. The words are the thing the next family may live by."
+      ],
+      "cross_refs": [
+        "unsent_letter_b2_38",
+        "patrol_debrief_036",
+        "council_minutes_032",
+        "diplomatic_contact_004"
+      ],
+      "tags": [
+        "zone_5_survey",
+        "the_hollow",
+        "the_snowflake",
+        "the_bridge",
+        "the_fifth_zone",
+        "the_meltwater",
+        "the_next_family",
+        "the_16_words"
+      ]
+    }
+  ]
+}

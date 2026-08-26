@@ -7,7 +7,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public class FactionIconCatalogTests
-    {
+    : CatalogTestBase{
         [Fact]
         public void Resolve_HydroBarons_ReturnsCanonicalPath()
         {

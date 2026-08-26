@@ -1,72 +1,117 @@
-[
-  {
-    "id": "dry_rot_serpula_hyphae_brick_masonry_tunnel",
-    "infestation_site_id": "SUB_BASEMENT_BUNKER_WALL_02",
-    "fungal_species_identified": "SERPULA_LACRYMANS_TRUE_DRY_ROT",
-    "timber_moisture_content_pct": 26.5,
-    "affected_area_sq_meters": 45.0,
-    "timestamp_relative": "YEAR_03_DRYROT_LOG_01",
-    "tags": ["carpentry", "dry_rot", "serpula_lacrymans", "mycelium", "masonry_penetration"],
-    "prose": "Thick, root-like water-conducting hyphal strands (rhizomorphs) of *Serpula lacrymans* bridged five meters of dry brick mortar joints from a leaking sump. The fungus transported moisture directly into dry floor joists, reducing structural load capacity to zero."
-  },
-  {
-    "id": "dry_rot_coniophora_puteana_wet_rot_cubical_fracture",
-    "infestation_site_id": "COMMISSARY_COLD_ROOM_SUBFLOOR",
-    "fungal_species_identified": "CONIOPHORA_PUTEANA_CELLAR_FUNGUS",
-    "timber_moisture_content_pct": 52.0,
-    "affected_area_sq_meters": 28.0,
-    "timestamp_relative": "YEAR_05_DRYROT_LOG_03",
-    "tags": ["carpentry", "wet_rot", "coniophora", "cubical_cracking", "cellar_fungus"],
-    "prose": "Persistent condensation under meat locker refrigeration coils maintained timber moisture at 52%. *Coniophora puteana* thoroughly digested the pine subfloor, causing severe longitudinal and cross-grain cubical cracking that collapsed under a fork truck."
-  },
-  {
-    "id": "dry_rot_spore_dust_cloud_ventilation_dispersal",
-    "infestation_site_id": "AIR_INTAKE_FILTER_PLENUM_EAST",
-    "fungal_species_identified": "SERPULA_FRUITING_BODY_SPOROPHORE",
-    "timber_moisture_content_pct": 30.0,
-    "affected_area_sq_meters": 12.0,
-    "timestamp_relative": "YEAR_08_DRYROT_LOG_02",
-    "tags": ["carpentry", "dry_rot", "spore_cloud", "sporophore", "air_filter_clog"],
-    "prose": "A massive 60cm fleshy bracket fruiting body (sporophore) matured behind the air plenum wood framing, discharging billions of rust-red microscopic spores per hour. The airborne spore cloud choked electrostatic pre-filters and triggered respiratory asthma."
-  },
-  {
-    "id": "dry_rot_zinc_oxyquinoline_fungicidal_barrier",
-    "infestation_site_id": "HISTORICAL_ARCHIVE_STORAGE_VAULT",
-    "fungal_species_identified": "CHEMICAL_STERILIZATION_CORDON",
-    "timber_moisture_content_pct": 14.0,
-    "affected_area_sq_meters": 60.0,
-    "timestamp_relative": "YEAR_11_DRYROT_LOG_04",
-    "tags": ["carpentry", "fungicide", "sterilization", "chemical_barrier", "containment"],
-    "prose": "Halting an advancing dry-rot front required cutting back all infected wood one meter beyond visible hyphae and pressure-injecting a 5% zinc oxyquinoline fungicidal fluid into masonry mortar lines. The chemical barrier successfully contained the outbreak."
-  },
-  {
-    "id": "dry_rot_postia_placenta_brown_rot_cellulase",
-    "infestation_site_id": "DEEP_TIMBERED_ESCAPEMENT_STAIRWELL",
-    "fungal_species_identified": "POSTIA_PLACENTA_BROWN_ROT",
-    "timber_moisture_content_pct": 34.0,
-    "affected_area_sq_meters": 18.5,
-    "timestamp_relative": "YEAR_14_DRYROT_LOG_01",
-    "tags": ["carpentry", "brown_rot", "postia_placenta", "cellulase", "brittle_failure"],
-    "prose": "*Postia placenta* brown rot enzymes selectively metabolized holocellulose while modifying lignin into a friable brown residue. Timber stair stringers lost 70% of their cross-grain shear strength within six weeks while retaining normal dimensional shape."
-  },
-  {
-    "id": "dry_rot_trametes_versicolor_white_rot_delignification",
-    "infestation_site_id": "SURFACE_GATE_GUARDHOUSE_CEILING",
-    "fungal_species_identified": "TRAMETES_VERSICOLOR_WHITE_ROT",
-    "timber_moisture_content_pct": 42.0,
-    "affected_area_sq_meters": 22.0,
-    "timestamp_relative": "YEAR_17_DRYROT_LOG_03",
-    "tags": ["carpentry", "white_rot", "trametes", "delignification", "stringy_rot"],
-    "prose": "Rain seepage through blast-damaged concrete roof slabs nourished *Trametes versicolor* colonies across the ash roof rafters. The fungus bleached the wood white and dissolved the structural lignin, turning dense hardwood into soft, fibrous sponge."
-  },
-  {
-    "id": "dry_rot_moisture_membrane_condensation_trap",
-    "infestation_site_id": "RESIDENTIAL_BARRACKS_WING_B",
-    "fungal_species_identified": "ASCOCOMYCETE_SOFT_ROT_COMPLEX",
-    "timber_moisture_content_pct": 38.0,
-    "affected_area_sq_meters": 55.0,
-    "timestamp_relative": "YEAR_20_DRYROT_LOG_01",
-    "tags": ["carpentry", "moisture_trap", "vapor_barrier", "soft_rot", "microclimate"],
-    "prose": "Installing un-vented polyethylene plastic sheeting over damp concrete sub-bases trapped moisture underneath. The warm 100% relative humidity microclimate fostered rapid soft rot decay, rotting forty linear meters of structural floor sills."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "dry_rot_serpula_hyphae_brick_masonry_tunnel",
+      "infestation_site_id": "SUB_BASEMENT_BUNKER_WALL_02",
+      "fungal_species_identified": "SERPULA_LACRYMANS_TRUE_DRY_ROT",
+      "timber_moisture_content_pct": 26.5,
+      "affected_area_sq_meters": 45.0,
+      "timestamp_relative": "YEAR_03_DRYROT_LOG_01",
+      "tags": [
+        "carpentry",
+        "dry_rot",
+        "serpula_lacrymans",
+        "mycelium",
+        "masonry_penetration"
+      ],
+      "prose": "Thick, root-like water-conducting hyphal strands (rhizomorphs) of *Serpula lacrymans* bridged five meters of dry brick mortar joints from a leaking sump. The fungus transported moisture directly into dry floor joists, reducing structural load capacity to zero."
+    },
+    {
+      "id": "dry_rot_coniophora_puteana_wet_rot_cubical_fracture",
+      "infestation_site_id": "COMMISSARY_COLD_ROOM_SUBFLOOR",
+      "fungal_species_identified": "CONIOPHORA_PUTEANA_CELLAR_FUNGUS",
+      "timber_moisture_content_pct": 52.0,
+      "affected_area_sq_meters": 28.0,
+      "timestamp_relative": "YEAR_05_DRYROT_LOG_03",
+      "tags": [
+        "carpentry",
+        "wet_rot",
+        "coniophora",
+        "cubical_cracking",
+        "cellar_fungus"
+      ],
+      "prose": "Persistent condensation under meat locker refrigeration coils maintained timber moisture at 52%. *Coniophora puteana* thoroughly digested the pine subfloor, causing severe longitudinal and cross-grain cubical cracking that collapsed under a fork truck."
+    },
+    {
+      "id": "dry_rot_spore_dust_cloud_ventilation_dispersal",
+      "infestation_site_id": "AIR_INTAKE_FILTER_PLENUM_EAST",
+      "fungal_species_identified": "SERPULA_FRUITING_BODY_SPOROPHORE",
+      "timber_moisture_content_pct": 30.0,
+      "affected_area_sq_meters": 12.0,
+      "timestamp_relative": "YEAR_08_DRYROT_LOG_02",
+      "tags": [
+        "carpentry",
+        "dry_rot",
+        "spore_cloud",
+        "sporophore",
+        "air_filter_clog"
+      ],
+      "prose": "A massive 60cm fleshy bracket fruiting body (sporophore) matured behind the air plenum wood framing, discharging billions of rust-red microscopic spores per hour. The airborne spore cloud choked electrostatic pre-filters and triggered respiratory asthma."
+    },
+    {
+      "id": "dry_rot_zinc_oxyquinoline_fungicidal_barrier",
+      "infestation_site_id": "HISTORICAL_ARCHIVE_STORAGE_VAULT",
+      "fungal_species_identified": "CHEMICAL_STERILIZATION_CORDON",
+      "timber_moisture_content_pct": 14.0,
+      "affected_area_sq_meters": 60.0,
+      "timestamp_relative": "YEAR_11_DRYROT_LOG_04",
+      "tags": [
+        "carpentry",
+        "fungicide",
+        "sterilization",
+        "chemical_barrier",
+        "containment"
+      ],
+      "prose": "Halting an advancing dry-rot front required cutting back all infected wood one meter beyond visible hyphae and pressure-injecting a 5% zinc oxyquinoline fungicidal fluid into masonry mortar lines. The chemical barrier successfully contained the outbreak."
+    },
+    {
+      "id": "dry_rot_postia_placenta_brown_rot_cellulase",
+      "infestation_site_id": "DEEP_TIMBERED_ESCAPEMENT_STAIRWELL",
+      "fungal_species_identified": "POSTIA_PLACENTA_BROWN_ROT",
+      "timber_moisture_content_pct": 34.0,
+      "affected_area_sq_meters": 18.5,
+      "timestamp_relative": "YEAR_14_DRYROT_LOG_01",
+      "tags": [
+        "carpentry",
+        "brown_rot",
+        "postia_placenta",
+        "cellulase",
+        "brittle_failure"
+      ],
+      "prose": "*Postia placenta* brown rot enzymes selectively metabolized holocellulose while modifying lignin into a friable brown residue. Timber stair stringers lost 70% of their cross-grain shear strength within six weeks while retaining normal dimensional shape."
+    },
+    {
+      "id": "dry_rot_trametes_versicolor_white_rot_delignification",
+      "infestation_site_id": "SURFACE_GATE_GUARDHOUSE_CEILING",
+      "fungal_species_identified": "TRAMETES_VERSICOLOR_WHITE_ROT",
+      "timber_moisture_content_pct": 42.0,
+      "affected_area_sq_meters": 22.0,
+      "timestamp_relative": "YEAR_17_DRYROT_LOG_03",
+      "tags": [
+        "carpentry",
+        "white_rot",
+        "trametes",
+        "delignification",
+        "stringy_rot"
+      ],
+      "prose": "Rain seepage through blast-damaged concrete roof slabs nourished *Trametes versicolor* colonies across the ash roof rafters. The fungus bleached the wood white and dissolved the structural lignin, turning dense hardwood into soft, fibrous sponge."
+    },
+    {
+      "id": "dry_rot_moisture_membrane_condensation_trap",
+      "infestation_site_id": "RESIDENTIAL_BARRACKS_WING_B",
+      "fungal_species_identified": "ASCOCOMYCETE_SOFT_ROT_COMPLEX",
+      "timber_moisture_content_pct": 38.0,
+      "affected_area_sq_meters": 55.0,
+      "timestamp_relative": "YEAR_20_DRYROT_LOG_01",
+      "tags": [
+        "carpentry",
+        "moisture_trap",
+        "vapor_barrier",
+        "soft_rot",
+        "microclimate"
+      ],
+      "prose": "Installing un-vented polyethylene plastic sheeting over damp concrete sub-bases trapped moisture underneath. The warm 100% relative humidity microclimate fostered rapid soft rot decay, rotting forty linear meters of structural floor sills."
+    }
+  ]
+}

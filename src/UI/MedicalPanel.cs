@@ -5,6 +5,7 @@ using Ashfall.Core.Medical;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using Ashfall.Core.IO;
 namespace AtomicWar.GodotApp.UI
 {
     /// <summary>
@@ -367,7 +368,7 @@ namespace AtomicWar.GodotApp.UI
                     AshfallUiHelpers.MakeMetadata($"Last medical event: {_medicalHost.LastEvent}"));
         }
 
-        private int CountItem(string primaryId, string fallbackId = null)
+        private int CountItem(string primaryId, string fallbackId = null!)
         {
             if (_inventoryHost == null) return 0;
             int count = _inventoryHost.Inventory.CountById(primaryId);
@@ -579,8 +580,9 @@ namespace AtomicWar.GodotApp.UI
                     scroll.ScrollVertical = (int)Math.Max(0, targetOffset - 8);
                 }
             }
-            catch
+            catch (Exception ex_CATDIAG)
             {
+                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
                 // ignore — scroll happens best-effort
             }
         }
@@ -600,6 +602,15 @@ namespace AtomicWar.GodotApp.UI
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_respiratory != null)
+            {
+                _respiratory.OnStateChanged -= OnRespiratoryStateChanged;
+            }
+            base._ExitTree();
         }
     }
 }

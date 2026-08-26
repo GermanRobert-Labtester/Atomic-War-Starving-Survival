@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string cryoPath = Path.Combine(directoryPath, "cryo_seed_ampoule_logs.json");
             if (File.Exists(cryoPath))
             {
-                var list = JsonSerializer.Deserialize<List<CryoSeedAmpouleEntry>>(File.ReadAllText(cryoPath), options);
+                var list = CatalogLocator.LoadWrappedList<CryoSeedAmpouleEntry>(File.ReadAllText(cryoPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string ragdollPath = Path.Combine(directoryPath, "ragdoll_germination_assays.json");
             if (File.Exists(ragdollPath))
             {
-                var list = JsonSerializer.Deserialize<List<RagdollGerminationEntry>>(File.ReadAllText(ragdollPath), options);
+                var list = CatalogLocator.LoadWrappedList<RagdollGerminationEntry>(File.ReadAllText(ragdollPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string silicaPath = Path.Combine(directoryPath, "silica_gel_seed_desiccation_audits.json");
             if (File.Exists(silicaPath))
             {
-                var list = JsonSerializer.Deserialize<List<SilicaGelSeedDesiccationEntry>>(File.ReadAllText(silicaPath), options);
+                var list = CatalogLocator.LoadWrappedList<SilicaGelSeedDesiccationEntry>(File.ReadAllText(silicaPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string heirloomPath = Path.Combine(directoryPath, "heirloom_seed_viability_reports.json");
             if (File.Exists(heirloomPath))
             {
-                var list = JsonSerializer.Deserialize<List<HeirloomSeedViabilityEntry>>(File.ReadAllText(heirloomPath), options);
+                var list = CatalogLocator.LoadWrappedList<HeirloomSeedViabilityEntry>(File.ReadAllText(heirloomPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CryoSeedAmpouleEntry GetCryo(string id)
+        public CryoSeedAmpouleEntry? GetCryo(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CryoSeedAmpouleEntry e ? e : null;
         }
 
-        public RagdollGerminationEntry GetRagdoll(string id)
+        public RagdollGerminationEntry? GetRagdoll(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RagdollGerminationEntry e ? e : null;
         }
 
-        public SilicaGelSeedDesiccationEntry GetSilica(string id)
+        public SilicaGelSeedDesiccationEntry? GetSilica(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SilicaGelSeedDesiccationEntry e ? e : null;
         }
 
-        public HeirloomSeedViabilityEntry GetHeirloom(string id)
+        public HeirloomSeedViabilityEntry? GetHeirloom(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is HeirloomSeedViabilityEntry e ? e : null;

@@ -1,0 +1,8 @@
+seed,scenario,day,hunger,thirst,fatigue,warmth,morale,health,radiationDose,lifetimeExposure,foodConsumed,waterConsumed,hungerCritical,thirstCritical,healthLossPerDay
+123,DailyRation,1,19.20,23.80,19.60,100.00,70.00,100.00,29.00,34.00,2,3,False,False,0.00
+123,DailyRation,2,18.40,22.60,29.20,100.00,70.00,100.00,53.00,58.00,4,6,False,False,0.00
+123,DailyRation,3,17.60,21.40,38.80,100.00,70.00,100.00,77.00,82.00,6,9,False,False,0.00
+123,DailyRation,4,16.80,20.20,48.40,100.00,70.00,100.00,100.00,106.00,8,12,False,False,0.00
+123,DailyRation,5,16.00,19.00,58.00,100.00,70.00,100.00,100.00,130.00,10,15,False,False,0.00
+123,DailyRation,6,15.20,17.80,67.60,100.00,70.00,100.00,100.00,154.00,12,18,False,False,0.00
+123,DailyRation,7,14.40,16.60,77.20,100.00,70.00,100.00,100.00,178.00,14,21,False,False,0.00

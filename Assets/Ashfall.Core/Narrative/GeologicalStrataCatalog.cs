@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -54,14 +55,14 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public GeologicalStrataEntry GetById(string strataId)
+        public GeologicalStrataEntry? GetById(string strataId)
         {
             if (string.IsNullOrEmpty(strataId)) return null;
             _byId.TryGetValue(strataId, out var entry);
             return entry;
         }
 
-        public GeologicalStrataEntry GetByDepth(float depthMeters)
+        public GeologicalStrataEntry? GetByDepth(float depthMeters)
         {
             float absDepth = Math.Abs(depthMeters);
             for (int i = 0; i < _allStrata.Count; i++)

@@ -380,7 +380,7 @@ consecutive zero-finding loops = convergence).
 | Current status of everything | `docs/ASHFALL_DEEP_CODE_AUDIT_2_2026-08-14.md` (post-bridge, supersedes #1) |
 | The fix history / what was remediated | `docs/ASHFALL_DEEP_CODE_AUDIT_2026-08-14.md` (first pass, includes original findings) |
 | The closed-loop sweep ledger | `docs/DEBUG_LOOPS_LOG.md` |
-| The old master issue register (severity × frequency × impact) | `docs/audit/ISSUE_REGISTER.md` (marked RESOLVED/CLOSED) |
+| The old master issue register (severity × frequency × impact) | `docs/deprecated_audits/ISSUE_REGISTER.md` (marked RESOLVED/CLOSED) |
 | Reproducible sweep scripts | `tools/audit_loops.sh` |
 | CI/Unity secrets (info only, do NOT run Unity) | `docs/CI.md` |
 

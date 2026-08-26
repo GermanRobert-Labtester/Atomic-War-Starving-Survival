@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.UtilityAI
 {
     /// <summary>
@@ -17,16 +19,16 @@ namespace Ashfall.Core.UtilityAI
 
         public event Action<string, string, float> OnActionSelected; // survivorId, actionId, score
 
-        public UtilityActionDef SelectAction(
+        public UtilityActionDef? SelectAction(
             AIActionContext context,
             IReadOnlyList<UtilityActionDef> candidates,
             ISeededRng rng,
-            UtilityActionScorer scorer = null)
+UtilityActionScorer? scorer = null)
         {
             if (context == null || candidates == null || candidates.Count == 0) return null;
             scorer = scorer ?? new UtilityActionScorer();
 
-            UtilityActionDef best = null;
+            UtilityActionDef? best = null;
             float bestScore = -1f;
 
             for (int i = 0; i < candidates.Count; i++)
@@ -62,7 +64,7 @@ namespace Ashfall.Core.UtilityAI
         public List<KeyValuePair<UtilityActionDef, float>> ScoreAll(
             AIActionContext context,
             IReadOnlyList<UtilityActionDef> candidates,
-            UtilityActionScorer scorer = null)
+UtilityActionScorer? scorer = null)
         {
             var result = new List<KeyValuePair<UtilityActionDef, float>>();
             if (context == null || candidates == null) return result;
@@ -98,7 +100,7 @@ namespace Ashfall.Core.UtilityAI
 
             try
             {
-                var parsed = json.Deserialize<UtilityActionDef[]>(raw);
+                var parsed = CatalogLocator.LoadWrappedList<UtilityActionDef>(raw, SystemTextJsonSerializer.Options).ToArray();
                 if (parsed == null) return result;
                 for (int i = 0; i < parsed.Length; i++)
                 {
@@ -109,10 +111,11 @@ namespace Ashfall.Core.UtilityAI
                     result.Add(def);
                 }
             }
-            catch
-            {
-                return result;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return result;
+                                }
             return result;
         }
     }

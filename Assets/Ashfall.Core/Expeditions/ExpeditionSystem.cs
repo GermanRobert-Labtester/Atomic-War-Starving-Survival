@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Expeditions
 {
@@ -15,7 +16,8 @@ namespace Ashfall.Core.Expeditions
         Looting,   // at the site, push-your-luck scavenging
         Inbound,   // returning to shelter
         Completed, // returned with loot unloaded
-        Failed     // collapsed or killed
+        Failed,    // collapsed or killed
+        Camp       // overnight camp during travel
     }
 
     [Serializable]
@@ -24,6 +26,54 @@ namespace Ashfall.Core.Expeditions
         public string itemId = string.Empty;
         public int quantity = 0;
         public float weightKg = 0f;
+    }
+
+    /// <summary>Camp shelter assignment for overnight survival.</summary>
+    [Serializable]
+    public class CampShelterAssignment
+    {
+        public string survivorId = string.Empty;
+        public bool hasTent = false;
+        public bool hasBedroll = false;
+        public string shelterType = "none"; // none, lean_to, tent, cave
+    }
+
+    /// <summary>Camp watch/sentry shift assignment.</summary>
+    [Serializable]
+    public class CampWatchShift
+    {
+        public string survivorId = string.Empty;
+        public int shiftIndex = 0;       // 0 = first half, 1 = second half
+        public float alertness = 1.0f;   // 0..1, degrades with fatigue
+        public bool isActive = false;
+    }
+
+    /// <summary>Serialized state of an overnight camp (part of expedition save).</summary>
+    [Serializable]
+    public class CampState
+    {
+        public int campStartDay = 0;
+        public float campStartHour = 0f;
+        public int nightSegmentsCompleted = 0;
+        public int totalNightSegments = 4;  // 4 segments = one night
+        public float firewoodRemaining = 0f;
+        public float firewoodConsumed = 0f;
+        public float heatOutput = 0f;       // degrees C added
+        public float waterReserved = 0f;
+        public float waterConsumed = 0f;
+        public float foodReserved = 0f;
+        public float foodConsumed = 0f;
+        public float temperatureC = 0f;    // ambient at camp
+        public string weatherCondition = "Clear";
+        public float coldExposure = 0f;    // accumulated cold damage
+        public float radiationExposure = 0f;
+        public int wildlifeThreatLevel = 0;
+        public bool encounterTriggered = false;
+        public string encounterKey = string.Empty;
+        public bool encounterResolved = false;
+        public string campOutcome = string.Empty; // resume, retreat, injury, loss, failed
+        public List<CampShelterAssignment> shelterAssignments = new List<CampShelterAssignment>();
+        public List<CampWatchShift> watchShifts = new List<CampWatchShift>();
     }
 
     /// <summary>Serialized state of one expedition (save/load safe).</summary>
@@ -53,6 +103,7 @@ namespace Ashfall.Core.Expeditions
         public bool hasFlashlight = false;
         public string outcomeText = string.Empty;
         public List<ExpeditionLootEntry> loot = new List<ExpeditionLootEntry>();
+        public CampState campState = new CampState();
     }
 
     /// <summary>Data-driven target definition for an expedition.</summary>
@@ -83,6 +134,18 @@ namespace Ashfall.Core.Expeditions
         public const int AutoRetreatAfterLootTicks = 3;
         public const float EncumberPenaltyPerTickMax = 15f;
 
+        // Camp constants
+        public const int CampNightSegments = 4;
+        public const float CampFirewoodPerSegment = 2.0f;
+        public const float CampHeatPerFirewood = 3.0f;     // degrees C per unit
+        public const float CampWaterPerSegment = 0.5f;
+        public const float CampFoodPerSegment = 0.5f;
+        public const float CampColdDamageThresholdC = -5f;  // below this, cold damage
+        public const float CampColdDamagePerSegment = 5f;   // HP per segment below threshold
+        public const float CampStaminaRecoveryPerSegment = 8f;
+        public const float CampEncounterChanceBase = 0.15f;
+        public const float CampSentryDetectionBonus = 0.3f; // reduces encounter chance
+
         private readonly Dictionary<string, ExpeditionState> _active = new Dictionary<string, ExpeditionState>();
 
         /// <summary>
@@ -102,6 +165,14 @@ namespace Ashfall.Core.Expeditions
         public event Action<ExpeditionState> OnExpeditionCompleted;
         public event Action<ExpeditionState, string> OnExpeditionFailed;
         public event Action<ExpeditionState> OnStateChanged;
+
+        // Camp events
+        public event Action<ExpeditionState> OnCampEntered;
+        public event Action<ExpeditionState> OnCampSuppliesReserved;
+        public event Action<ExpeditionState> OnCampNightSegmentResolved;
+        public event Action<ExpeditionState> OnCampEncounterSurfaced;
+        public event Action<ExpeditionState> OnCampEncounterResolved;
+        public event Action<ExpeditionState> OnCampDawnResolved;
 
         public ExpeditionSystem()
         {
@@ -176,15 +247,19 @@ namespace Ashfall.Core.Expeditions
             return true;
         }
 
+        private readonly List<string> _tickKeyBuffer = new();
+
         /// <summary>Advance the sector clock by tick hours for every active expedition.</summary>
         public void TickHours(float hours, ISeededRng rng)
         {
             if (hours <= 0f) return;
-            var ids = new List<string>(_active.Keys);
-            ids.Sort(string.CompareOrdinal); // deterministic iteration
-            for (int i = 0; i < ids.Count; i++)
+            _tickKeyBuffer.Clear();
+            foreach (var k in _active.Keys)
+                _tickKeyBuffer.Add(k);
+            _tickKeyBuffer.Sort(string.CompareOrdinal); // deterministic iteration
+            for (int i = 0; i < _tickKeyBuffer.Count; i++)
             {
-                var exp = _active[ids[i]];
+                var exp = _active[_tickKeyBuffer[i]];
                 if (exp.phase == (int)ExpeditionPhase.Completed || exp.phase == (int)ExpeditionPhase.Failed)
                     continue;
 
@@ -207,6 +282,9 @@ namespace Ashfall.Core.Expeditions
                         break;
                     case ExpeditionPhase.Inbound:
                         AdvanceInbound(exp);
+                        break;
+                    case ExpeditionPhase.Camp:
+                        // Camp has its own tick method (CampTick); skip here.
                         break;
                 }
 
@@ -239,6 +317,296 @@ namespace Ashfall.Core.Expeditions
             SetPhase(exp, ExpeditionPhase.Inbound);
             OnStateChanged?.Invoke(exp);
             return true;
+        }
+
+        // ── Camp lifecycle ─────────────────────────────────────────────
+
+        /// <summary>
+        /// Enter camp phase. Called when outbound travel reaches a configured
+        /// dusk boundary. Supplies must be reserved before night ticks begin.
+        /// </summary>
+        public bool EnterCamp(
+            string survivorId,
+            int day,
+            float hour,
+            float temperatureC,
+            string weatherCondition,
+            float firewood,
+            float water,
+            float food,
+            bool hasTent,
+            bool hasBedroll,
+            string shelterType,
+            bool hasSentry)
+        {
+            if (!_active.TryGetValue(survivorId, out var exp)) return false;
+            if ((ExpeditionPhase)exp.phase != ExpeditionPhase.Outbound) return false;
+
+            var camp = exp.campState;
+            camp.campStartDay = day;
+            camp.campStartHour = hour;
+            camp.nightSegmentsCompleted = 0;
+            camp.totalNightSegments = CampNightSegments;
+            camp.firewoodRemaining = Math.Max(0f, firewood);
+            camp.firewoodConsumed = 0f;
+            camp.waterReserved = Math.Max(0f, water);
+            camp.waterConsumed = 0f;
+            camp.foodReserved = Math.Max(0f, food);
+            camp.foodConsumed = 0f;
+            camp.temperatureC = temperatureC;
+            camp.weatherCondition = weatherCondition ?? "Clear";
+            camp.coldExposure = 0f;
+            camp.radiationExposure = 0f;
+            camp.encounterTriggered = false;
+            camp.encounterKey = string.Empty;
+            camp.encounterResolved = false;
+            camp.campOutcome = string.Empty;
+
+            camp.shelterAssignments.Clear();
+            camp.shelterAssignments.Add(new CampShelterAssignment
+            {
+                survivorId = survivorId,
+                hasTent = hasTent,
+                hasBedroll = hasBedroll,
+                shelterType = shelterType ?? "none"
+            });
+
+            camp.watchShifts.Clear();
+            if (hasSentry)
+            {
+                camp.watchShifts.Add(new CampWatchShift
+                {
+                    survivorId = survivorId,
+                    shiftIndex = 0,
+                    alertness = 1.0f,
+                    isActive = true
+                });
+                camp.watchShifts.Add(new CampWatchShift
+                {
+                    survivorId = survivorId,
+                    shiftIndex = 1,
+                    alertness = 0.8f, // second shift slightly more fatigued
+                    isActive = true
+                });
+            }
+
+            SetPhase(exp, ExpeditionPhase.Camp);
+            OnCampEntered?.Invoke(exp);
+            OnStateChanged?.Invoke(exp);
+            return true;
+        }
+
+        /// <summary>
+        /// Reserve supplies for the night. Must be called after EnterCamp
+        /// and before CampTick. Can be called multiple times to adjust.
+        /// </summary>
+        public bool ReserveCampSupplies(
+            string survivorId,
+            float firewood,
+            float water,
+            float food)
+        {
+            if (!_active.TryGetValue(survivorId, out var exp)) return false;
+            if ((ExpeditionPhase)exp.phase != ExpeditionPhase.Camp) return false;
+
+            var camp = exp.campState;
+            camp.firewoodRemaining = Math.Max(0f, firewood);
+            camp.waterReserved = Math.Max(0f, water);
+            camp.foodReserved = Math.Max(0f, food);
+            OnCampSuppliesReserved?.Invoke(exp);
+            OnStateChanged?.Invoke(exp);
+            return true;
+        }
+
+        /// <summary>
+        /// Advance one night segment. Consumes supplies, applies cold/fatigue,
+        /// rolls encounters. Returns true if the night is complete (dawn).
+        /// </summary>
+        public bool CampTick(string survivorId, ISeededRng rng)
+        {
+            if (!_active.TryGetValue(survivorId, out var exp)) return false;
+            if ((ExpeditionPhase)exp.phase != ExpeditionPhase.Camp) return false;
+
+            var camp = exp.campState;
+            if (camp.nightSegmentsCompleted >= camp.totalNightSegments)
+                return true; // already dawn
+
+            // Consume firewood
+            float firewoodNeeded = CampFirewoodPerSegment;
+            if (camp.firewoodRemaining >= firewoodNeeded)
+            {
+                camp.firewoodRemaining -= firewoodNeeded;
+                camp.firewoodConsumed += firewoodNeeded;
+                camp.heatOutput = CampHeatPerFirewood * firewoodNeeded;
+            }
+            else
+            {
+                camp.heatOutput = CampHeatPerFirewood * camp.firewoodRemaining;
+                camp.firewoodConsumed += camp.firewoodRemaining;
+                camp.firewoodRemaining = 0f;
+            }
+
+            // Consume water and food
+            float waterNeeded = CampWaterPerSegment;
+            if (camp.waterReserved >= waterNeeded)
+            {
+                camp.waterReserved -= waterNeeded;
+                camp.waterConsumed += waterNeeded;
+            }
+            else
+            {
+                camp.waterConsumed += camp.waterReserved;
+                camp.waterReserved = 0f;
+            }
+
+            float foodNeeded = CampFoodPerSegment;
+            if (camp.foodReserved >= foodNeeded)
+            {
+                camp.foodReserved -= foodNeeded;
+                camp.foodConsumed += foodNeeded;
+            }
+            else
+            {
+                camp.foodConsumed += camp.foodReserved;
+                camp.foodReserved = 0f;
+            }
+
+            // Calculate effective temperature
+            float effectiveTemp = camp.temperatureC + camp.heatOutput;
+            // Shelter bonus
+            foreach (var shelter in camp.shelterAssignments)
+            {
+                if (shelter.shelterType == "tent") effectiveTemp += 5f;
+                else if (shelter.shelterType == "cave") effectiveTemp += 8f;
+                else if (shelter.shelterType == "lean_to") effectiveTemp += 2f;
+                if (shelter.hasBedroll) effectiveTemp += 3f;
+            }
+
+            // Cold exposure
+            if (effectiveTemp < CampColdDamageThresholdC)
+            {
+                float damage = CampColdDamagePerSegment * (1f - (effectiveTemp - CampColdDamageThresholdC) / 10f);
+                camp.coldExposure += Math.Max(0f, damage);
+            }
+
+            // Stamina recovery (partial, reduced by cold exposure)
+            float recovery = CampStaminaRecoveryPerSegment;
+            if (camp.coldExposure > 0f) recovery *= 0.5f;
+            exp.stamina = Math.Clamp(exp.stamina + recovery, 0f, MaxStamina);
+
+            // Encounter roll
+            if (!camp.encounterTriggered && rng != null)
+            {
+                float encounterChance = CampEncounterChanceBase;
+                // Sentry reduces encounter chance
+                foreach (var shift in camp.watchShifts)
+                {
+                    if (shift.isActive && shift.shiftIndex == (camp.nightSegmentsCompleted < 2 ? 0 : 1))
+                    {
+                        encounterChance -= CampSentryDetectionBonus * shift.alertness;
+                        break;
+                    }
+                }
+                encounterChance = Math.Clamp(encounterChance, 0.05f, 0.5f);
+                if (rng.NextDouble() < encounterChance)
+                {
+                    camp.encounterTriggered = true;
+                    camp.encounterKey = "camp_night_" + camp.campStartDay + "_" + survivorId;
+                    camp.wildlifeThreatLevel = rng.Next(1, 4);
+                    OnCampEncounterSurfaced?.Invoke(exp);
+                }
+            }
+
+            camp.nightSegmentsCompleted++;
+            OnCampNightSegmentResolved?.Invoke(exp);
+            OnStateChanged?.Invoke(exp);
+
+            // Check if night is complete
+            if (camp.nightSegmentsCompleted >= camp.totalNightSegments)
+            {
+                return true; // dawn
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Resolve a camp encounter. Must be called after an encounter is surfaced.
+        /// outcome: "resolved" (fought off), "injury" (took damage), "loss" (lost supplies)
+        /// </summary>
+        public bool ResolveCampEncounter(string survivorId, string outcome, float staminaCost = 0f)
+        {
+            if (!_active.TryGetValue(survivorId, out var exp)) return false;
+            if ((ExpeditionPhase)exp.phase != ExpeditionPhase.Camp) return false;
+
+            var camp = exp.campState;
+            if (!camp.encounterTriggered || camp.encounterResolved) return false;
+
+            camp.encounterResolved = true;
+            if (staminaCost > 0f)
+                exp.stamina = Math.Clamp(exp.stamina - staminaCost, 0f, MaxStamina);
+
+            if (outcome == "injury")
+            {
+                camp.coldExposure += 10f; // injury adds stress
+            }
+            else if (outcome == "loss")
+            {
+                // Lose some supplies
+                float lossFraction = 0.25f;
+                camp.firewoodRemaining *= (1f - lossFraction);
+                camp.waterReserved *= (1f - lossFraction);
+                camp.foodReserved *= (1f - lossFraction);
+            }
+
+            OnCampEncounterResolved?.Invoke(exp);
+            OnStateChanged?.Invoke(exp);
+            return true;
+        }
+
+        /// <summary>
+        /// Break camp at dawn. Resumes outbound travel or retreats based on
+        /// camp outcome. Must be called when CampTick returns true (dawn).
+        /// </summary>
+        public bool BreakCamp(string survivorId, bool retreat = false)
+        {
+            if (!_active.TryGetValue(survivorId, out var exp)) return false;
+            if ((ExpeditionPhase)exp.phase != ExpeditionPhase.Camp) return false;
+
+            var camp = exp.campState;
+            if (camp.nightSegmentsCompleted < camp.totalNightSegments)
+                return false; // night not over yet
+
+            // Determine outcome
+            if (exp.stamina <= 0f)
+            {
+                camp.campOutcome = "failed";
+                Fail(exp, "Collapsed during overnight camp.");
+                return true;
+            }
+
+            if (retreat)
+            {
+                camp.campOutcome = "retreat";
+                SetPhase(exp, ExpeditionPhase.Inbound);
+            }
+            else
+            {
+                camp.campOutcome = "resume";
+                // Resume outbound from where we left off
+                SetPhase(exp, ExpeditionPhase.Outbound);
+            }
+
+            OnCampDawnResolved?.Invoke(exp);
+            OnStateChanged?.Invoke(exp);
+            return true;
+        }
+
+        /// <summary>Query camp state for UI display.</summary>
+        public CampState? GetCampState(string survivorId)
+        {
+            if (!_active.TryGetValue(survivorId, out var exp)) return null;
+            if ((ExpeditionPhase)exp.phase != ExpeditionPhase.Camp) return null;
+            return exp.campState;
         }
 
         // ── Phase mechanics (ported 1:1 from the Unity host) ──────────
@@ -412,7 +780,7 @@ namespace Ashfall.Core.Expeditions
                 var exp = CloneExpedition(s);
                 _active[exp.survivorId] = exp;
             }
-            OnStateChanged?.Invoke(null);
+            OnStateChanged?.Invoke(null!);
         }
 
         private static ExpeditionState CloneExpedition(ExpeditionState src)
@@ -425,7 +793,7 @@ namespace Ashfall.Core.Expeditions
                 locationId = src.locationId,
                 displayName = src.displayName,
                 stance = src.stance,
-                phase = Math.Clamp(src.phase, (int)ExpeditionPhase.Outbound, (int)ExpeditionPhase.Failed),
+                phase = Math.Clamp(src.phase, (int)ExpeditionPhase.Outbound, (int)ExpeditionPhase.Camp),
                 startedDay = src.startedDay,
                 distanceTicks = src.distanceTicks,
                 travelTicksCompleted = src.travelTicksCompleted,
@@ -454,6 +822,55 @@ namespace Ashfall.Core.Expeditions
                         weightKg = ordered[i].weightKg
                     });
             }
+            // Clone camp state
+            if (src.campState != null)
+            {
+                copy.campState = new CampState
+                {
+                    campStartDay = src.campState.campStartDay,
+                    campStartHour = src.campState.campStartHour,
+                    nightSegmentsCompleted = src.campState.nightSegmentsCompleted,
+                    totalNightSegments = src.campState.totalNightSegments,
+                    firewoodRemaining = src.campState.firewoodRemaining,
+                    firewoodConsumed = src.campState.firewoodConsumed,
+                    heatOutput = src.campState.heatOutput,
+                    waterReserved = src.campState.waterReserved,
+                    waterConsumed = src.campState.waterConsumed,
+                    foodReserved = src.campState.foodReserved,
+                    foodConsumed = src.campState.foodConsumed,
+                    temperatureC = src.campState.temperatureC,
+                    weatherCondition = src.campState.weatherCondition,
+                    coldExposure = src.campState.coldExposure,
+                    radiationExposure = src.campState.radiationExposure,
+                    wildlifeThreatLevel = src.campState.wildlifeThreatLevel,
+                    encounterTriggered = src.campState.encounterTriggered,
+                    encounterKey = src.campState.encounterKey,
+                    encounterResolved = src.campState.encounterResolved,
+                    campOutcome = src.campState.campOutcome
+                };
+                if (src.campState.shelterAssignments != null)
+                {
+                    foreach (var sa in src.campState.shelterAssignments)
+                        copy.campState.shelterAssignments.Add(new CampShelterAssignment
+                        {
+                            survivorId = sa.survivorId,
+                            hasTent = sa.hasTent,
+                            hasBedroll = sa.hasBedroll,
+                            shelterType = sa.shelterType
+                        });
+                }
+                if (src.campState.watchShifts != null)
+                {
+                    foreach (var ws in src.campState.watchShifts)
+                        copy.campState.watchShifts.Add(new CampWatchShift
+                        {
+                            survivorId = ws.survivorId,
+                            shiftIndex = ws.shiftIndex,
+                            alertness = ws.alertness,
+                            isActive = ws.isActive
+                        });
+                }
+            }
             return copy;
         }
     }
@@ -474,7 +891,7 @@ namespace Ashfall.Core.Expeditions
             s_defs[def.id] = def;
         }
 
-        public static ExpeditionDefinition Get(string id)
+        public static ExpeditionDefinition? Get(string id)
         {
             return !string.IsNullOrEmpty(id) && s_defs.TryGetValue(id, out var def) ? def : null;
         }

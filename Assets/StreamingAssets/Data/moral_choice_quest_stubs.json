@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "description": "Stub quest definitions for moral choice chain references. These quests are gated by moral_choice_chains.json and must exist for catalog integrity.",
+  "quests": [
+    { "id": "quest_moral_merge_" },
+    { "id": "quest_moral_chain_betray_01" },
+    { "id": "quest_moral_chain_betray_02" },
+    { "id": "quest_moral_chain_betray_03" },
+    { "id": "quest_moral_chain_iron_01" },
+    { "id": "quest_moral_chain_iron_02" },
+    { "id": "quest_moral_chain_iron_03" },
+    { "id": "quest_moral_chain_listen_01" },
+    { "id": "quest_moral_chain_listen_02" },
+    { "id": "quest_moral_chain_listen_03" }
+  ]
+}

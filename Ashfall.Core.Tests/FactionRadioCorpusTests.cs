@@ -68,7 +68,6 @@ namespace Ashfall.Core.Tests
         {
             var engine = CreateLoadedEngine();
             var allLines = new HashSet<string>(StringComparer.Ordinal);
-            int totalLinesCounted = 0;
 
             // Silence lines
             Assert.True(engine.SilenceEventCount >= 12, "Expected >= 12 silence lines");

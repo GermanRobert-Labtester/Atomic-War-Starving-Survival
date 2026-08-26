@@ -203,3 +203,39 @@ __pycache__/
 # AI-tool workspaces and generation staging (not part of the repo tree)
 .mistral/
 generated_AIassets/
+
+# Real Godot/.NET solution (explicit allow over rule above).
+!/Ashfall.slnx
+
+# Legacy Unity asset archive — kept locally, never re-committed (see AGENTS.md).
+# 140 MB gzipped tarball; flagged for removal from git history.
+/unity-assets-archive-*.tar.gz
+/unity-assets-archive-*.tar.gz.sha256
+
+# Stale Unity test-run reports at repo root (superseded by dotnet test + headless gates).
+/test-results-*.xml
+/batch20-playmode-results.xml
+/art-wiring-results.xml
+generated_AIassets/
+audit/
+test-results-*.xml
+codex_alt_*.png
+.aider*
+
+# Rust build output (tools/agent-skill-manager)
+/tools/agent-skill-manager/target/
+
+# Scratch env-gate probe project (session artifact)
+/_envgate/
+
+# Session scratch scripts & notes at repo root
+/fix_*.py
+/fix_*.sh
+/safe_fix.py
+/test_parse.py
+/files_to_check.txt
+/summaries.md
+/summaries/
+
+# Other agent harness local state
+/.commandcode/

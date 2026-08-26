@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -119,12 +120,13 @@ namespace Ashfall.Core
         {
             if (string.IsNullOrEmpty(survivorId) || nominalMsv <= 0f) return DoseBandResult.NoEntry;
             var entry = GetOrCreate(survivorId);
+            if (entry == null) return DoseBandResult.NoEntry;
             if (string.IsNullOrEmpty(entry.assignedDosimeterTag)) return DoseBandResult.NoEntry;
 
             // Flux ambiguity: a high-energy event makes the dial a range, not a point.
             bool fluxAmbiguous = highEnergyEvent && rng != null;
             float ratio = 1f;
-            if (fluxAmbiguous) ratio = 0.85f + rng.NextFloat() * 0.30f;
+            if (fluxAmbiguous && rng != null) ratio = 0.85f + rng.NextFloat() * 0.30f;
 
             // Pre-exposure anti-rad attenuates the incoming dose.
             float incoming = antiRadBefore ? nominalMsv * 0.5f : nominalMsv;
@@ -180,7 +182,7 @@ namespace Ashfall.Core
 
         // ── Queries ────────────────────────────────────────────────
 
-        public DoseEntry GetEntry(string survivorId) =>
+        public DoseEntry? GetEntry(string survivorId) =>
             _entries.TryGetValue(survivorId, out var e) ? e : null;
 
         public float GetCumulative(string survivorId) =>

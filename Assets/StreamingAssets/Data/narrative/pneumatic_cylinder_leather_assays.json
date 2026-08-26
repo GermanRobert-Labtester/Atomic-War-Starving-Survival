@@ -1,72 +1,117 @@
-[
-  {
-    "id": "pneumatic_cylinder_oak_tanned_cup_leather_curl",
-    "actuator_cylinder_id": "BLAST_VALVE_ACTUATOR_CYLINDER_01",
-    "packing_leather_type": "OAK_TANNED_MOLDED_CUP_PACKING",
-    "operating_pressure_bar": 6.5,
-    "bore_diameter_mm": 150.0,
-    "timestamp_relative": "YEAR_02_CYLINDER_LOG_01",
-    "tags": ["pneumatic", "air_cylinder", "cup_leather", "lip_curling", "piston_seal"],
-    "prose": "Bone-dry instrument air extracted natural moisture from the 150mm oak-tanned leather piston cup. The sealing lip curled inward away from the cylinder wall, allowing 6.5 bar air to bypass the piston and stalling the emergency blast damper halfway closed."
-  },
-  {
-    "id": "pneumatic_cylinder_cast_iron_honed_bore_score",
-    "actuator_cylinder_id": "HOPPER_GATE_ACTUATOR_02",
-    "packing_leather_type": "WAX_IMPREGNATED_V_RING_SET",
-    "operating_pressure_bar": 8.0,
-    "bore_diameter_mm": 200.0,
-    "timestamp_relative": "YEAR_05_CYLINDER_LOG_03",
-    "tags": ["pneumatic", "cylinder_bore", "piston_scoring", "air_blowby", "particulate_damage"],
-    "prose": "Hard magnetite scale particles carried through un-filtered air lines lodged beneath the piston follower plate. The trapped debris plowed 0.8mm deep longitudinal scoring grooves down the mirror-honed cast iron bore, causing continuous pneumatic hiss and pressure loss."
-  },
-  {
-    "id": "pneumatic_cylinder_cushion_spear_deceleration_bind",
-    "actuator_cylinder_id": "AIRLOCK_DOOR_ACTUATOR_EAST",
-    "packing_leather_type": "CHROME_TANNED_DOUBLE_CUP_ASSEMBLY",
-    "operating_pressure_bar": 7.0,
-    "bore_diameter_mm": 125.0,
-    "timestamp_relative": "YEAR_08_CYLINDER_LOG_02",
-    "tags": ["pneumatic", "cushion_spear", "deceleration", "spear_bind", "door_actuator"],
-    "prose": "Misalignment of the 125mm piston rod caused the tapered brass cushion spear to enter the head deceleration pocket off-center. The brass spear galled tightly inside the mating steel sleeve, jamming the heavy armored blast door at 95% full travel."
-  },
-  {
-    "id": "pneumatic_cylinder_castor_oil_graphite_cup_dressing",
-    "actuator_cylinder_id": "PRECISION_PNEUMATIC_PRESS_01",
-    "packing_leather_type": "NEATSFOOT_CASTOR_GRAPHITE_PACKING",
-    "operating_pressure_bar": 10.0,
-    "bore_diameter_mm": 100.0,
-    "timestamp_relative": "YEAR_11_CYLINDER_LOG_04",
-    "tags": ["pneumatic", "leather_dressing", "castor_oil", "graphite", "low_friction"],
-    "prose": "Vacuum-impregnating molded steer-hide piston cups with a hot compounding of castor oil, beeswax, and colloidal flake graphite created a self-lubricating seal. The packing demonstrated zero stick-slip and sustained over 250,000 cycles without pressure bleed."
-  },
-  {
-    "id": "pneumatic_cylinder_tie_rod_differential_thermal_stretch",
-    "actuator_cylinder_id": "FURNACE_CHARGING_CYLINDER_04",
-    "packing_leather_type": "HIGH_TEMPERATURE_SYNTHETIC_LEATHER",
-    "operating_pressure_bar": 6.0,
-    "bore_diameter_mm": 160.0,
-    "timestamp_relative": "YEAR_14_CYLINDER_LOG_01",
-    "tags": ["pneumatic", "tie_rod", "thermal_stretch", "end_cap_blowout", "gasket_leak"],
-    "prose": "Radiant heat from the nearby foundry crucible furnace heated one side of the 160mm air cylinder to 180°C. The unequal thermal elongation stretched the two exposed steel tie rods, blowing out the rear cylinder head gasket in a deafening burst of compressed air."
-  },
-  {
-    "id": "pneumatic_cylinder_bronze_rod_wiper_grit_exclusion",
-    "actuator_cylinder_id": "SURFACE_HATCH_HOIST_CYLINDER",
-    "packing_leather_type": "OIL_TREATED_HAT_LEATHER_PACKING",
-    "operating_pressure_bar": 8.5,
-    "bore_diameter_mm": 140.0,
-    "timestamp_relative": "YEAR_17_CYLINDER_LOG_03",
-    "tags": ["pneumatic", "rod_wiper", "bronze_scraper", "grit_exclusion", "surface_dust"],
-    "prose": "Spring-loaded segmented bronze rod scraper rings mounted ahead of the rod gland packing scraped radioactive silica fallout dust and frozen ice off the 40mm hard-chrome piston rod. The scraper prevented abrasive grit from entering the internal cylinder barrel."
-  },
-  {
-    "id": "pneumatic_cylinder_quick_exhaust_valve_diaphragm_tear",
-    "actuator_cylinder_id": "RAPID_FIRE_VALVE_EJECTOR",
-    "packing_leather_type": "MOLDED_CUP_WITH_QUICK_EXHAUST",
-    "operating_pressure_bar": 5.5,
-    "bore_diameter_mm": 80.0,
-    "timestamp_relative": "YEAR_20_CYLINDER_LOG_01",
-    "tags": ["pneumatic", "quick_exhaust", "diaphragm_tear", "shuttle_valve", "piston_speed"],
-    "prose": "Flexural fatigue in the synthetic rubber shuttle diaphragm of the quick-exhaust valve tore the rubber flapper away from its center brass rivet. The ruptured valve prevented rapid cylinder decompression, increasing piston return stroke time from 0.4s to 4.2s."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "pneumatic_cylinder_oak_tanned_cup_leather_curl",
+      "actuator_cylinder_id": "BLAST_VALVE_ACTUATOR_CYLINDER_01",
+      "packing_leather_type": "OAK_TANNED_MOLDED_CUP_PACKING",
+      "operating_pressure_bar": 6.5,
+      "bore_diameter_mm": 150.0,
+      "timestamp_relative": "YEAR_02_CYLINDER_LOG_01",
+      "tags": [
+        "pneumatic",
+        "air_cylinder",
+        "cup_leather",
+        "lip_curling",
+        "piston_seal"
+      ],
+      "prose": "Bone-dry instrument air extracted natural moisture from the 150mm oak-tanned leather piston cup. The sealing lip curled inward away from the cylinder wall, allowing 6.5 bar air to bypass the piston and stalling the emergency blast damper halfway closed."
+    },
+    {
+      "id": "pneumatic_cylinder_cast_iron_honed_bore_score",
+      "actuator_cylinder_id": "HOPPER_GATE_ACTUATOR_02",
+      "packing_leather_type": "WAX_IMPREGNATED_V_RING_SET",
+      "operating_pressure_bar": 8.0,
+      "bore_diameter_mm": 200.0,
+      "timestamp_relative": "YEAR_05_CYLINDER_LOG_03",
+      "tags": [
+        "pneumatic",
+        "cylinder_bore",
+        "piston_scoring",
+        "air_blowby",
+        "particulate_damage"
+      ],
+      "prose": "Hard magnetite scale particles carried through un-filtered air lines lodged beneath the piston follower plate. The trapped debris plowed 0.8mm deep longitudinal scoring grooves down the mirror-honed cast iron bore, causing continuous pneumatic hiss and pressure loss."
+    },
+    {
+      "id": "pneumatic_cylinder_cushion_spear_deceleration_bind",
+      "actuator_cylinder_id": "AIRLOCK_DOOR_ACTUATOR_EAST",
+      "packing_leather_type": "CHROME_TANNED_DOUBLE_CUP_ASSEMBLY",
+      "operating_pressure_bar": 7.0,
+      "bore_diameter_mm": 125.0,
+      "timestamp_relative": "YEAR_08_CYLINDER_LOG_02",
+      "tags": [
+        "pneumatic",
+        "cushion_spear",
+        "deceleration",
+        "spear_bind",
+        "door_actuator"
+      ],
+      "prose": "Misalignment of the 125mm piston rod caused the tapered brass cushion spear to enter the head deceleration pocket off-center. The brass spear galled tightly inside the mating steel sleeve, jamming the heavy armored blast door at 95% full travel."
+    },
+    {
+      "id": "pneumatic_cylinder_castor_oil_graphite_cup_dressing",
+      "actuator_cylinder_id": "PRECISION_PNEUMATIC_PRESS_01",
+      "packing_leather_type": "NEATSFOOT_CASTOR_GRAPHITE_PACKING",
+      "operating_pressure_bar": 10.0,
+      "bore_diameter_mm": 100.0,
+      "timestamp_relative": "YEAR_11_CYLINDER_LOG_04",
+      "tags": [
+        "pneumatic",
+        "leather_dressing",
+        "castor_oil",
+        "graphite",
+        "low_friction"
+      ],
+      "prose": "Vacuum-impregnating molded steer-hide piston cups with a hot compounding of castor oil, beeswax, and colloidal flake graphite created a self-lubricating seal. The packing demonstrated zero stick-slip and sustained over 250,000 cycles without pressure bleed."
+    },
+    {
+      "id": "pneumatic_cylinder_tie_rod_differential_thermal_stretch",
+      "actuator_cylinder_id": "FURNACE_CHARGING_CYLINDER_04",
+      "packing_leather_type": "HIGH_TEMPERATURE_SYNTHETIC_LEATHER",
+      "operating_pressure_bar": 6.0,
+      "bore_diameter_mm": 160.0,
+      "timestamp_relative": "YEAR_14_CYLINDER_LOG_01",
+      "tags": [
+        "pneumatic",
+        "tie_rod",
+        "thermal_stretch",
+        "end_cap_blowout",
+        "gasket_leak"
+      ],
+      "prose": "Radiant heat from the nearby foundry crucible furnace heated one side of the 160mm air cylinder to 180°C. The unequal thermal elongation stretched the two exposed steel tie rods, blowing out the rear cylinder head gasket in a deafening burst of compressed air."
+    },
+    {
+      "id": "pneumatic_cylinder_bronze_rod_wiper_grit_exclusion",
+      "actuator_cylinder_id": "SURFACE_HATCH_HOIST_CYLINDER",
+      "packing_leather_type": "OIL_TREATED_HAT_LEATHER_PACKING",
+      "operating_pressure_bar": 8.5,
+      "bore_diameter_mm": 140.0,
+      "timestamp_relative": "YEAR_17_CYLINDER_LOG_03",
+      "tags": [
+        "pneumatic",
+        "rod_wiper",
+        "bronze_scraper",
+        "grit_exclusion",
+        "surface_dust"
+      ],
+      "prose": "Spring-loaded segmented bronze rod scraper rings mounted ahead of the rod gland packing scraped radioactive silica fallout dust and frozen ice off the 40mm hard-chrome piston rod. The scraper prevented abrasive grit from entering the internal cylinder barrel."
+    },
+    {
+      "id": "pneumatic_cylinder_quick_exhaust_valve_diaphragm_tear",
+      "actuator_cylinder_id": "RAPID_FIRE_VALVE_EJECTOR",
+      "packing_leather_type": "MOLDED_CUP_WITH_QUICK_EXHAUST",
+      "operating_pressure_bar": 5.5,
+      "bore_diameter_mm": 80.0,
+      "timestamp_relative": "YEAR_20_CYLINDER_LOG_01",
+      "tags": [
+        "pneumatic",
+        "quick_exhaust",
+        "diaphragm_tear",
+        "shuttle_valve",
+        "piston_speed"
+      ],
+      "prose": "Flexural fatigue in the synthetic rubber shuttle diaphragm of the quick-exhaust valve tore the rubber flapper away from its center brass rivet. The ruptured valve prevented rapid cylinder decompression, increasing piston return stroke time from 0.4s to 4.2s."
+    }
+  ]
+}

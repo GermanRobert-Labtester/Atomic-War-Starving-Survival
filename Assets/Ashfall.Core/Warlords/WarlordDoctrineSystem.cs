@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Warlords
 {
@@ -100,7 +101,7 @@ namespace Ashfall.Core.Warlords
         public int seedSalt;
         public int lastTickDay = -1;
 
-        public WarlordTerritoryRecord Territory(string locationId)
+        public WarlordTerritoryRecord? Territory(string locationId)
         {
             if (territory == null) return null;
             for (int i = 0; i < territory.Count; i++)
@@ -161,7 +162,7 @@ namespace Ashfall.Core.Warlords
         public event Action<string, string> OnNarrativeRequested;             // journalKey / radioKey
         public event Action OnStateChanged;
 
-        public WarlordDoctrineSystem(WarlordDoctrineCatalog catalog = null, int seedSalt = 808)
+        public WarlordDoctrineSystem(WarlordDoctrineCatalog? catalog = null, int seedSalt = 808)
         {
             _catalog = catalog ?? new WarlordDoctrineCatalog();
             _state.seedSalt = seedSalt;
@@ -170,7 +171,7 @@ namespace Ashfall.Core.Warlords
 
         public WarlordDoctrineState State => _state;
         public string DoctrineId => _state.doctrineId;
-        public WarlordDoctrineDef Doctrine => _catalog.GetDoctrine(_state.doctrineId);
+        public WarlordDoctrineDef? Doctrine => _catalog.GetDoctrine(_state.doctrineId);
         public int Supply => _state.supply;
         public int SupplyNeed => _state.supplyNeed;
         public float TributeMultiplier => _state.tributeMultiplier;
@@ -435,7 +436,7 @@ namespace Ashfall.Core.Warlords
             // Doctrine change resets streaks: the road starts over.
             _state.successStreak = 0;
             _state.failureStreak = 0;
-            EmitNarrative(_catalog.GetDoctrine(doctrineId));
+            EmitNarrative(_catalog.GetDoctrine(doctrineId)!);
             OnDoctrineChanged?.Invoke(from, doctrineId, reason, day);
             RaiseChanged();
         }
@@ -453,7 +454,7 @@ namespace Ashfall.Core.Warlords
             return false;
         }
 
-        private WarlordActionResult SelectAndResolveAction(int day, ISeededRng rng, WarlordContext context)
+        private WarlordActionResult? SelectAndResolveAction(int day, ISeededRng rng, WarlordContext context)
         {
             var def = Doctrine;
             if (def == null || def.eligible_actions == null || def.eligible_actions.Count == 0) return null;
@@ -480,17 +481,35 @@ namespace Ashfall.Core.Warlords
             return ResolveAction(NormalizeActionName(chosen), day, rng, context);
         }
 
+        private static readonly WarlordStrategicAction[] s_allStrategicActions = (WarlordStrategicAction[])Enum.GetValues(typeof(WarlordStrategicAction));
+        private static readonly Dictionary<string, string> s_normalizedActionCache = new(StringComparer.Ordinal);
+
         /// <summary>demand_tribute → DemandTribute; DemandTribute stays as-is.</summary>
         private static string NormalizeActionName(string catalogName)
         {
             if (string.IsNullOrEmpty(catalogName)) return catalogName;
-            foreach (WarlordStrategicAction a in Enum.GetValues(typeof(WarlordStrategicAction)))
+            if (s_normalizedActionCache.TryGetValue(catalogName, out var cached))
+                return cached;
+
+            string normalized = catalogName;
+            for (int i = 0; i < s_allStrategicActions.Length; i++)
             {
+                var a = s_allStrategicActions[i];
                 if (a == WarlordStrategicAction.None) continue;
-                if (a.ToString() == catalogName) return catalogName;
-                if (ToSnake(a.ToString()) == catalogName) return a.ToString();
+                string aStr = a.ToString();
+                if (aStr == catalogName)
+                {
+                    normalized = catalogName;
+                    break;
+                }
+                if (ToSnake(aStr) == catalogName)
+                {
+                    normalized = aStr;
+                    break;
+                }
             }
-            return catalogName;
+            s_normalizedActionCache[catalogName] = normalized;
+            return normalized;
         }
 
         private static bool MatchesActionName(string catalogName, WarlordStrategicAction action)
@@ -520,7 +539,7 @@ namespace Ashfall.Core.Warlords
             return 1;
         }
 
-        private WarlordActionResult ResolveAction(string actionName, int day, ISeededRng rng, WarlordContext context)
+        private WarlordActionResult? ResolveAction(string actionName, int day, ISeededRng rng, WarlordContext context)
         {
             switch (actionName)
             {
@@ -726,7 +745,7 @@ namespace Ashfall.Core.Warlords
 
         // ── Target selection (deterministic ordering) ──────────────────
 
-        private WarlordTerritoryNodeDef PickTarget(bool adjacentOnly, bool requireControlled, ISeededRng rng)
+        private WarlordTerritoryNodeDef? PickTarget(bool adjacentOnly, bool requireControlled, ISeededRng rng)
         {
             var candidates = new List<WarlordTerritoryNodeDef>();
             for (int i = 0; i < _catalog.Territory.Count; i++)
@@ -749,7 +768,7 @@ namespace Ashfall.Core.Warlords
             return candidates[0];
         }
 
-        private WarlordTerritoryNodeDef PickAnnexTarget(ISeededRng rng)
+        private WarlordTerritoryNodeDef? PickAnnexTarget(ISeededRng rng)
         {
             var candidates = new List<WarlordTerritoryNodeDef>();
             for (int i = 0; i < _catalog.Territory.Count; i++)
@@ -858,7 +877,7 @@ namespace Ashfall.Core.Warlords
             _state.supply += gain;
         }
 
-        private void EmitNarrative(WarlordDoctrineDef doctrine = null)
+        private void EmitNarrative(WarlordDoctrineDef? doctrine = null)
         {
             var d = doctrine ?? Doctrine;
             if (d == null) return;

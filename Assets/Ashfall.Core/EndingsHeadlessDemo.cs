@@ -1,5 +1,6 @@
 using System.Text;
 
+#pragma warning disable CS8618
 namespace Ashfall.Core
 {
     /// <summary>Headless-report extension for the endings slice.</summary>
@@ -18,7 +19,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class EndingsHeadlessDemo
     {
-        public static EndingsHeadlessReport Run(ILog log = null)
+        public static EndingsHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

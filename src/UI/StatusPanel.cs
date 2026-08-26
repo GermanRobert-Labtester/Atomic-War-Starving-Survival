@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using Godot;
 using Ashfall.Core.UI;
+using Ashfall.Core.World;
 using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp.UI
@@ -9,6 +11,8 @@ namespace AtomicWar.GodotApp.UI
     /// ASHFALL — Status panel.
     /// Shows overall game status, day counter, current objectives, and quick stats
     /// using tactile 9-slice card framing and status badge icons.
+    /// Bound to live host sessions (Survivors, Weather, Power Grid, Inventory);
+    /// unbound systems render "NOT MONITORED" instead of fabricated data.
     /// </summary>
     public partial class StatusPanel : Control
     {
@@ -19,41 +23,30 @@ namespace AtomicWar.GodotApp.UI
         private VBoxContainer _statsData = null!;
         private VBoxContainer _statusData = null!;
 
-        private readonly (string label, string val, Color col)[] _placeholderDayInfo = {
-            ("Current Day", "Day 25", new Color(0.96f, 0.78f, 0.46f)),
-            ("Total Days Survived", "25 Days", new Color(0.96f, 0.78f, 0.46f)),
-            ("Season Cycle", "Nuclear Winter (Cold Count active)", new Color(0.43f, 0.64f, 0.66f)),
-            ("External Reading", "-5°C · Ash Storm warning", new Color(0.58f, 0.56f, 0.52f)),
-            ("Radio Frequency", "142.850 MHz [Carrier Stable]", new Color(0.43f, 0.64f, 0.66f)),
-            ("Next Scheduled Shift", "Day 26 // Dawn Ration Triage", new Color(0.83f, 0.67f, 0.38f))
-        };
+        private SurvivorsHostSession? _survivors;
+        private WeatherSystem? _weather;
+        private PowerGridHostSession? _power;
+        private InventoryHostSession? _inventory;
+        private int _simDay = 1;
 
-        private readonly (string type, string text)[] _placeholderObjectives = {
-            ("PRIMARY", "Maintain shelter filtration and prevent osteophage escalation"),
-            ("SECONDARY", "Scavenge desalination membrane cartridges from Unit 4"),
-            ("TERTIARY", "Arbitrate crossing fee dispute with Coastal Hydro-Barons"),
-            ("DAILY", "Log dosimeter levels and reconcile water rations"),
-            ("STANDING", "Keep roster casualty count below critical threshold")
-        };
+        /// <summary>True when at least one live session is bound.</summary>
+        public bool IsBound => _survivors != null || _weather != null || _power != null;
 
-        private readonly (string label, string val, string badge)[] _placeholderStats = {
-            ("Survivor Cohort", "5 / 20 Registered", "badge_exhaustion"),
-            ("Water Stores", "30 units (10 days)", "item_desal_membrane"),
-            ("Food Stores", "45 units (15 days)", "item_brine_salt"),
-            ("Dosimetry Dose", "12.4 mSv (Low Risk)", "item_dosimeter_pen"),
-            ("Bunker Morale", "75 / 100 [Stable]", "badge_guilt_insomnia")
-        };
+        /// <summary>Live day-info rows rendered by the last refresh.</summary>
+        public int RenderedDayInfoCount { get; private set; }
 
-        private readonly (string system, string status, Color col)[] _placeholderStatus = {
-            ("Shelter Air Filtration", "HEPA Pleats 78% · Spares: 03", new Color(0.43f, 0.64f, 0.66f)),
-            ("Radiation Shielding", "Lead Plating Active (65% reduction)", new Color(0.83f, 0.67f, 0.38f)),
-            ("Hatch Perimeter", "Sealed & Barricaded against fallout", new Color(0.9f, 0.9f, 0.9f)),
-            ("Emergency Power", "85% Battery + Fuel Reserves", new Color(0.96f, 0.78f, 0.46f)),
-            ("Medical Triage", "Potassium Iodide stock holding", new Color(0.43f, 0.64f, 0.66f))
-        };
-
-        public void Bind(object gameStatus)
+        public void Bind(
+            SurvivorsHostSession? survivors = null,
+            WeatherSystem? weather = null,
+            PowerGridHostSession? power = null,
+            InventoryHostSession? inventory = null,
+            int simDay = 1)
         {
+            _survivors = survivors;
+            _weather = weather;
+            _power = power;
+            _inventory = inventory;
+            _simDay = simDay;
             RefreshView();
         }
 
@@ -66,13 +59,106 @@ namespace AtomicWar.GodotApp.UI
             AshfallUiHelpers.EmptyChildren(_statsData);
             AshfallUiHelpers.EmptyChildren(_statusData);
 
-            foreach (var item in _placeholderDayInfo)
+            RenderDayInfo();
+            RenderObjectives();
+            RenderStats();
+            RenderSystemStatus();
+        }
+
+        private void RenderDayInfo()
+        {
+            int rows = 0;
+
+            _dayInfo.AddChild(AshfallUiHelpers.MakeDataRow("Current Day", $"Day {_simDay}",
+                AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm)));
+            rows++;
+
+            if (_survivors?.RosterState != null && _survivors.RosterState.Count > 0)
             {
-                var row = AshfallUiHelpers.MakeDataRow(item.label, item.val, item.col);
-                _dayInfo.AddChild(row);
+                int total = _survivors.RosterState.Count;
+                int alive = _survivors.RosterState.Count(s => s != null && s.IsAlive);
+                _dayInfo.AddChild(AshfallUiHelpers.MakeDataRow("Survivors",
+                    $"{alive} / {total} Alive",
+                    AshfallUiHelpers.ToColor(alive < total
+                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+                rows++;
             }
 
-            foreach (var obj in _placeholderObjectives)
+            if (_weather != null)
+            {
+                var kind = _weather.Current;
+                bool hazard = kind == Ashfall.Core.WeatherKind.FalloutStorm
+                           || kind == Ashfall.Core.WeatherKind.BlackRain
+                           || kind == Ashfall.Core.WeatherKind.Blizzard;
+                _dayInfo.AddChild(AshfallUiHelpers.MakeDataRow("External Conditions",
+                    $"{kind}{(hazard ? " — HAZARD WATCH" : " — Nominal")}",
+                    AshfallUiHelpers.ToColor(hazard
+                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+                rows++;
+            }
+            else
+            {
+                _dayInfo.AddChild(AshfallUiHelpers.MakeDataRow("External Conditions", "NOT MONITORED",
+                    AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim)));
+                rows++;
+            }
+
+            if (_power?.LastSnapshot != null)
+            {
+                var snap = _power.LastSnapshot;
+                _dayInfo.AddChild(AshfallUiHelpers.MakeDataRow("Power Reserve",
+                    $"Battery {snap.BatteryReserveWh:0}/{snap.BatteryCapacityWh:0} Wh · Fuel {snap.FuelUnits:0}",
+                    AshfallUiHelpers.ToColor(snap.IsBrownout
+                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+                rows++;
+            }
+
+            RenderedDayInfoCount = rows;
+        }
+
+        private void RenderObjectives()
+        {
+            // Objectives are derived from live state — the panel never fabricates
+            // quests. Critical conditions surface first; standing orders last.
+            var objectives = new System.Collections.Generic.List<(string type, string text)>();
+
+            if (_survivors?.RosterState != null)
+            {
+                int critical = _survivors.RosterState
+                    .Count(s => s != null && s.IsAlive && s.Health < 30f);
+                if (critical > 0)
+                    objectives.Add(("PRIMARY",
+                        $"{critical} survivor(s) in critical health — triage immediately"));
+
+                int dosed = _survivors.RosterState
+                    .Count(s => s != null && s.IsAlive
+                        && (_survivors.RadStateFor(s.Id)?.RadiationDose ?? 0f) >= 50f);
+                if (dosed > 0)
+                    objectives.Add(("PRIMARY",
+                        $"{dosed} survivor(s) above 50 mSv dose — iodine/chelation required"));
+            }
+
+            if (_power?.LastSnapshot is { IsBrownout: true })
+                objectives.Add(("PRIMARY", "Power grid in brownout — shed load or add fuel"));
+
+            if (_weather != null)
+            {
+                var kind = _weather.Current;
+                if (kind == Ashfall.Core.WeatherKind.FalloutStorm
+                    || kind == Ashfall.Core.WeatherKind.BlackRain)
+                    objectives.Add(("DAILY", "Hazard weather active — keep survivors indoors"));
+            }
+
+            if (_inventory?.Inventory != null)
+            {
+                int water = CountItem("clean_water", "item_clean_water") + CountItem("water_bottle");
+                if (water <= 3)
+                    objectives.Add(("SECONDARY", "Water stores critical — purify or trade for clean water"));
+            }
+
+            objectives.Add(("STANDING", "Keep the roster fed, hydrated, and below dose ceiling"));
+
+            foreach (var obj in objectives)
             {
                 var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
                 var tag = AshfallUiHelpers.MakeSmall($"[{obj.type}]");
@@ -85,29 +171,102 @@ namespace AtomicWar.GodotApp.UI
                 row.AddChild(desc);
                 _objectivesList.AddChild(row);
             }
+        }
 
-            foreach (var stat in _placeholderStats)
+        private void RenderStats()
+        {
+            if (_survivors?.RosterState == null || _survivors.RosterState.Count == 0)
             {
-                var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
-                var icon = AshfallUiHelpers.MakeBadgeIcon(stat.badge, 22);
-                row.AddChild(icon);
-
-                var lbl = AshfallUiHelpers.MakeSmall(stat.label);
-                lbl.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-                row.AddChild(lbl);
-
-                var val = AshfallUiHelpers.MakeMono(stat.val);
-                val.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
-                row.AddChild(val);
-
-                _statsData.AddChild(row);
+                var none = AshfallUiHelpers.MakeSmall("No survivor roster bound.");
+                none.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
+                _statsData.AddChild(none);
+                return;
             }
 
-            foreach (var stat in _placeholderStatus)
+            var roster = _survivors.RosterState.Where(s => s != null).ToList();
+            int alive = roster.Count(s => s.IsAlive);
+            float avgHealth = roster.Count > 0 ? roster.Average(s => s.Health) : 0f;
+            float avgMorale = roster.Count > 0 ? roster.Average(s => s.Morale) : 0f;
+            float avgDose = roster.Count > 0
+                ? roster.Average(s => _survivors.RadStateFor(s.Id)?.RadiationDose ?? 0f)
+                : 0f;
+
+            AddStatRow("Survivor Cohort", $"{alive} / {roster.Count} Alive", "badge_exhaustion");
+            AddStatRow("Average Health", $"{avgHealth:0} / 100", "item_first_aid_kit");
+            AddStatRow("Bunker Morale", $"{avgMorale:0} / 100", "badge_guilt_insomnia");
+            AddStatRow("Dosimetry Dose", $"{avgDose:0.0} mSv (avg)", "item_dosimeter_pen");
+
+            if (_inventory?.Inventory != null)
             {
-                var row = AshfallUiHelpers.MakeDataRow(stat.system, stat.status, stat.col);
-                _statusData.AddChild(row);
+                int water = CountItem("clean_water", "item_clean_water") + CountItem("water_bottle");
+                int food = CountItem("canned_food") + CountItem("canned_meat")
+                         + CountItem("canned_soup") + CountItem("canned_beans");
+                AddStatRow("Water Stores", $"{water} unit(s)", "item_desal_membrane");
+                AddStatRow("Food Stores", $"{food} unit(s)", "item_brine_salt");
             }
+        }
+
+        private void RenderSystemStatus()
+        {
+            if (_power?.LastSnapshot != null)
+            {
+                var snap = _power.LastSnapshot;
+                _statusData.AddChild(AshfallUiHelpers.MakeDataRow("Power Grid",
+                    snap.IsBrownout
+                        ? $"BROWNOUT · Gen {snap.GenerationWatts:0} W vs Draw {snap.TotalDrawWatts:0} W"
+                        : $"Online · Gen {snap.GenerationWatts:0} W · Draw {snap.TotalDrawWatts:0} W",
+                    AshfallUiHelpers.ToColor(snap.IsBrownout
+                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+            }
+            else
+            {
+                _statusData.AddChild(AshfallUiHelpers.MakeDataRow("Power Grid", "NOT MONITORED",
+                    AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim)));
+            }
+
+            if (_survivors?.Shelter != null)
+            {
+                float weakest = _survivors.Shelter.GetWeakestCeilingAttenuation();
+                _statusData.AddChild(AshfallUiHelpers.MakeDataRow("Radiation Shielding",
+                    $"Weakest ceiling {weakest * 100f:0}% attenuation",
+                    AshfallUiHelpers.ToColor(weakest >= 0.5f
+                        ? Ashfall.Core.UI.Theme.Lethe : Ashfall.Core.UI.Theme.Warm)));
+            }
+
+            if (_weather != null)
+            {
+                float outdoor = _weather.OutdoorRadModifier;
+                _statusData.AddChild(AshfallUiHelpers.MakeDataRow("Outdoor Radiation",
+                    outdoor > 0f ? $"+{outdoor:0} mSv/h modifier active" : "No weather modifier",
+                    AshfallUiHelpers.ToColor(outdoor > 0f
+                        ? Ashfall.Core.UI.Theme.Critical : Ashfall.Core.UI.Theme.Lethe)));
+            }
+        }
+
+        private void AddStatRow(string label, string value, string badge)
+        {
+            var row = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            var icon = AshfallUiHelpers.MakeBadgeIcon(badge, 22);
+            row.AddChild(icon);
+
+            var lbl = AshfallUiHelpers.MakeSmall(label);
+            lbl.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+            row.AddChild(lbl);
+
+            var val = AshfallUiHelpers.MakeMono(value);
+            val.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            row.AddChild(val);
+
+            _statsData.AddChild(row);
+        }
+
+        private int CountItem(string primaryId, string fallbackId = null!)
+        {
+            if (_inventory?.Inventory == null) return 0;
+            int count = _inventory.Inventory.CountById(primaryId);
+            if (count == 0 && fallbackId != null)
+                count = _inventory.Inventory.CountById(fallbackId);
+            return count;
         }
 
         public override void _Ready()

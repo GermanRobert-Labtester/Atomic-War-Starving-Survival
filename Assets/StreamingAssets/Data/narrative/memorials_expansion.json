@@ -1,0 +1,473 @@
+{
+  "schema_version": 1,
+  "memorials": [
+    {
+      "id": "memorial_01_dmitri",
+      "name": "Dmitri",
+      "text": "Dmitri. Day 3. He shoveled first.",
+      "type": "grave_marker",
+      "tags": [
+        "stoker",
+        "early_days",
+        "first"
+      ]
+    },
+    {
+      "id": "memorial_02_anna_k",
+      "name": "Anna K.",
+      "text": "Anna K. Day 7. She knew the water table.",
+      "type": "grave_marker",
+      "tags": [
+        "water",
+        "engineer",
+        "early"
+      ]
+    },
+    {
+      "id": "memorial_03_pavel_m",
+      "name": "Pavel M.",
+      "text": "Pavel M. Day 10. The road took him.",
+      "type": "grave_marker",
+      "tags": [
+        "courier",
+        "road",
+        "early"
+      ]
+    },
+    {
+      "id": "memorial_04_sergei",
+      "name": "Sergei",
+      "text": "Sergei. Day 12. He held the gate.",
+      "type": "grave_marker",
+      "tags": [
+        "gate",
+        "guard",
+        "early"
+      ]
+    },
+    {
+      "id": "memorial_05_katya",
+      "name": "Katya",
+      "text": "Katya. Day 14. The cold, not the rad.",
+      "type": "grave_marker",
+      "tags": [
+        "cold",
+        "exposure",
+        "early"
+      ]
+    },
+    {
+      "id": "memorial_06_mikhail",
+      "name": "Mikhail",
+      "text": "Mikhail. Day 18. The beam fell.",
+      "type": "grave_marker",
+      "tags": [
+        "structural",
+        "collapse",
+        "early"
+      ]
+    },
+    {
+      "id": "memorial_07_olga_b",
+      "name": "Olga B.",
+      "text": "Olga B. Day 20. She counted the children.",
+      "type": "grave_marker",
+      "tags": [
+        "teacher",
+        "children",
+        "early"
+      ]
+    },
+    {
+      "id": "memorial_08_yuri",
+      "name": "Yuri",
+      "text": "Yuri. Day 22. He did not wake.",
+      "type": "grave_marker",
+      "tags": [
+        "sleep",
+        "unknown",
+        "early"
+      ]
+    },
+    {
+      "id": "memorial_09_larisa",
+      "name": "Larisa",
+      "text": "Larisa. Day 25. The cough took her in three days.",
+      "type": "grave_marker",
+      "tags": [
+        "respiratory",
+        "cough",
+        "disease"
+      ]
+    },
+    {
+      "id": "memorial_10_piotr",
+      "name": "Piotr",
+      "text": "Piotr. Day 27. He went for fuel. He did not come back.",
+      "type": "grave_marker",
+      "tags": [
+        "fuel",
+        "road",
+        "not_come_back"
+      ]
+    },
+    {
+      "id": "memorial_11_nina",
+      "name": "Nina",
+      "text": "Nina. Day 30. She sang to the end.",
+      "type": "grave_marker",
+      "tags": [
+        "music",
+        "dying",
+        "peace"
+      ]
+    },
+    {
+      "id": "memorial_12_gregori",
+      "name": "Gregori",
+      "text": "Gregori. Day 33. The river woman died the same day. He was not the river woman. He was Gregori.",
+      "type": "grave_marker",
+      "tags": [
+        "same_day",
+        "river_woman",
+        "coincidence"
+      ]
+    },
+    {
+      "id": "memorial_13_tamara",
+      "name": "Tamara",
+      "text": "Tamara. Day 35. She asked for water. There was no water.",
+      "type": "grave_marker",
+      "tags": [
+        "water",
+        "thirst",
+        "deprivation"
+      ]
+    },
+    {
+      "id": "memorial_14_alexei",
+      "name": "Alexei",
+      "text": "Alexei. Day 38. The filter bank failed. He was in the room.",
+      "type": "grave_marker",
+      "tags": [
+        "filters",
+        "air",
+        "suffocation"
+      ]
+    },
+    {
+      "id": "memorial_15_maria_s",
+      "name": "Maria S.",
+      "text": "Maria S. Day 40. She went looking for her son. The son is not here. She is not here.",
+      "type": "grave_marker",
+      "tags": [
+        "mother",
+        "son",
+        "search",
+        "not_come_back"
+      ]
+    },
+    {
+      "id": "memorial_16_ivan_g",
+      "name": "Ivan G.",
+      "text": "Ivan G. Day 42. He said the wall would hold. The wall held. He did not.",
+      "type": "grave_marker",
+      "tags": [
+        "wall",
+        "garrison",
+        "promise"
+      ]
+    },
+    {
+      "id": "memorial_17_dasha",
+      "name": "Dasha",
+      "text": "Dasha. Day 45. She was nine. She drew the sun.",
+      "type": "grave_marker",
+      "tags": [
+        "child",
+        "sun",
+        "drawing",
+        "nine"
+      ]
+    },
+    {
+      "id": "memorial_18_kostya",
+      "name": "Kostya",
+      "text": "Kostya. Day 48. The dogs knew first.",
+      "type": "grave_marker",
+      "tags": [
+        "dogs",
+        "warning",
+        "quiet"
+      ]
+    },
+    {
+      "id": "memorial_19_zoya",
+      "name": "Zoya",
+      "text": "Zoya. Day 50. She kept the ledger to the last entry. The last entry is her name.",
+      "type": "grave_marker",
+      "tags": [
+        "clerk",
+        "ledger",
+        "last_entry"
+      ]
+    },
+    {
+      "id": "memorial_20_viktor_l",
+      "name": "Viktor L.",
+      "text": "Viktor L. Day 52. He jumped the gap at bridge seven. He made it. The other side did not.",
+      "type": "grave_marker",
+      "tags": [
+        "bridge",
+        "gap",
+        "fall"
+      ]
+    },
+    {
+      "id": "memorial_21_wall_north",
+      "name": "The North Wall",
+      "text": "The north wall of the shelter yard. 47 names, carved in the concrete, in three hands. The first hand carved 12 names. The second hand carved 23. The third hand carved 12 and stopped. The third hand is the one that is still alive. The third hand is the one that does not carve anymore.",
+      "type": "memorial_wall",
+      "tags": [
+        "wall",
+        "names",
+        "carved",
+        "three_hands"
+      ]
+    },
+    {
+      "id": "memorial_22_wall_tally",
+      "name": "The Tally Wall",
+      "text": "The tally wall in the plaza. Not names — marks. A mark for each person who came to the queue. The marks are in clusters of five, the way a hand counts. The clusters go back years. No one knows who started the tally. The tally does not need to know. The tally is the tally.",
+      "type": "memorial_wall",
+      "tags": [
+        "tally",
+        "marks",
+        "plaza",
+        "queue",
+        "years"
+      ]
+    },
+    {
+      "id": "memorial_23_wall_school",
+      "name": "The School Wall",
+      "text": "The wall by the school corner, in the corridor. The children's names, in chalk, in a child's hand. Eleven names. One is crossed out. The crossed-out name is Dima. The crossing is in a different hand. The different hand is the teacher's. The teacher crossed out the name. The teacher did not carve a new one. The chalk is the chalk. The chalk will fade. The fading is the mercy. The mercy is the chalk.",
+      "type": "memorial_wall",
+      "tags": [
+        "school",
+        "children",
+        "chalk",
+        "dima",
+        "crossed_out"
+      ]
+    },
+    {
+      "id": "memorial_24_victor_conscript",
+      "name": "Pvt. Victor S.",
+      "text": "Pvt. Victor S. Day 1 to Day 95. 4200 mSv. The books said he would die in 30. He lived 95. He asked about the sky every day. The nurse told him it was clearing. It was not clearing. He smiled. The smile was the truth. The sky was the lie. He had one cigarette for the morning. That was the kind of man the world had made of him. The man was not nothing. He was the 95 days. He was the cigarette. He was the smile. He was the man the books were wrong about.",
+      "type": "eulogy",
+      "tags": [
+        "victor",
+        "conscript",
+        "95_days",
+        "radiation",
+        "cigarette",
+        "smile"
+      ]
+    },
+    {
+      "id": "memorial_25_river_woman",
+      "name": "The River Woman",
+      "text": "The River Woman. Name unknown. Day 12 to Day 33. She was pulled from the river, blue with cold, speaking no language anyone knew. The nurse named her. The doctor chose the strong. She was not the strong. She was given the narrow. The narrow was not enough. She died at four in the morning. The nurse was there. The doctor was not. The nurse held a hand that did not hold back. She is the river woman. She is the name the nurse gave her. The name is the medicine. The medicine is the name.",
+      "type": "eulogy",
+      "tags": [
+        "river_woman",
+        "unnamed",
+        "nurse",
+        "naming",
+        "narrow",
+        "hand"
+      ]
+    },
+    {
+      "id": "memorial_26_dima_child",
+      "name": "Dima",
+      "text": "Dima. Age 6. Day 1 to Day 22. He was good at the quiet game. He giggled. He asked where the rain goes. The teacher said yes. The yes was the teacher's not-knowing. The not-knowing was the lesson. The lesson was the child. He played the quiet game the day the boots came. He was the best at the quiet game. He won. He did not want to win. The candle is by his bed. The candle is for the seeing of the empty. The empty is the text. He is the quiet game. The quiet game is the child. The child is the empty. The empty is the candle.",
+      "type": "eulogy",
+      "tags": [
+        "dima",
+        "child",
+        "quiet_game",
+        "rain",
+        "candle",
+        "six"
+      ]
+    },
+    {
+      "id": "memorial_27_old_man_cold",
+      "name": "The Old Man in the Ditch",
+      "text": "The old man in the ditch. Name unknown. Found Day 50, by the south road. He was old. He was cold. He was not the courier. He was an old man. The cold was the cause. The old was the reason. The reason is the margin. The margin is where the doctor writes that the old die first in the cold. He had a note in his pocket: 'For my daughter. I am sorry I am slow.' The daughter is not named. The note is the memorial. The memorial is the note. The old man is the note. The note is the old man.",
+      "type": "eulogy",
+      "tags": [
+        "old_man",
+        "ditch",
+        "cold",
+        "note",
+        "daughter",
+        "unnamed"
+      ]
+    },
+    {
+      "id": "memorial_28_notice_burial",
+      "name": "Burial Notice — Day 34",
+      "text": "BURIAL NOTICE. The river woman. Day 34. South plot. Unmarked. Per policy. The policy is not the mourner's. The mourner is the nurse. The nurse named her. The name is the marker the policy does not allow. The marker is the name. The name is the marker.",
+      "type": "funerary_notice",
+      "tags": [
+        "burial",
+        "river_woman",
+        "unmarked",
+        "policy",
+        "nurse"
+      ]
+    },
+    {
+      "id": "memorial_29_notice_victor",
+      "name": "Burial Notice — Day 96",
+      "text": "BURIAL NOTICE. Pvt. Victor S. Day 96. South plot. Unmarked. Per policy. The policy is the policy. The cigarette is not the policy. The smile is not the policy. The 95 days are not the policy. The policy is the unmarked. The unmarked is the policy. The 95 days are the man. The man is the 95 days. The policy does not know the man. The policy knows the plot.",
+      "type": "funerary_notice",
+      "tags": [
+        "burial",
+        "victor",
+        "unmarked",
+        "policy",
+        "95_days"
+      ]
+    },
+    {
+      "id": "memorial_30_notice_dima",
+      "name": "Burial Notice — Day 23",
+      "text": "BURIAL NOTICE. Dima. Age 6. Day 23. South plot. Unmarked. Per policy. The candle is not the policy. The quiet game is not the policy. The giggling is not the policy. The policy is the unmarked. The unmarked is the policy. The candle is by the bed. The bed is not the plot. The candle is the mother's. The plot is the policy's.",
+      "type": "funerary_notice",
+      "tags": [
+        "burial",
+        "dima",
+        "unmarked",
+        "policy",
+        "candle",
+        "child"
+      ]
+    },
+    {
+      "id": "memorial_31_sofia",
+      "name": "Sofia",
+      "text": "Sofia. Day 55. She knew the herbs. The herbs did not know her.",
+      "type": "grave_marker",
+      "tags": [
+        "herbs",
+        "medicine",
+        "irony"
+      ]
+    },
+    {
+      "id": "memorial_32_oleg",
+      "name": "Oleg",
+      "text": "Oleg. Day 58. The floor gave way. He was looking for candles.",
+      "type": "grave_marker",
+      "tags": [
+        "collapse",
+        "candles",
+        "irony"
+      ]
+    },
+    {
+      "id": "memorial_33_pasha",
+      "name": "Pasha",
+      "text": "Pasha. Day 60. He fell asleep on watch. He did not wake on watch.",
+      "type": "grave_marker",
+      "tags": [
+        "watch",
+        "sleep",
+        "sentry"
+      ]
+    },
+    {
+      "id": "memorial_34_clara",
+      "name": "Clara",
+      "text": "Clara. Day 62. She kept the fire. The fire did not keep her.",
+      "type": "grave_marker",
+      "tags": [
+        "fire",
+        "stoker",
+        "irony"
+      ]
+    },
+    {
+      "id": "memorial_35_boris_r",
+      "name": "Boris R.",
+      "text": "Boris R. Day 65. He burned the bread. The bread was the last. He ate the burned. He was the bread.",
+      "type": "grave_marker",
+      "tags": [
+        "bread",
+        "baker",
+        "burned",
+        "last"
+      ]
+    },
+    {
+      "id": "memorial_36_mila",
+      "name": "Mila",
+      "text": "Mila. Day 70. She went to the well. The well was dry. She was not dry. She was thirsty.",
+      "type": "grave_marker",
+      "tags": [
+        "well",
+        "water",
+        "thirst"
+      ]
+    },
+    {
+      "id": "memorial_37_igor",
+      "name": "Igor",
+      "text": "Igor. Day 75. He said the ice would hold. The ice held. He did not.",
+      "type": "grave_marker",
+      "tags": [
+        "ice",
+        "river",
+        "promise"
+      ]
+    },
+    {
+      "id": "memorial_38_nadya",
+      "name": "Nadya",
+      "text": "Nadya. Day 80. She taught the children to count. The children counted. She stopped.",
+      "type": "grave_marker",
+      "tags": [
+        "teacher",
+        "children",
+        "counting"
+      ]
+    },
+    {
+      "id": "memorial_39_leo",
+      "name": "Leo",
+      "text": "Leo. Day 85. He was the last of his family. The family is the name. The name is the last.",
+      "type": "grave_marker",
+      "tags": [
+        "family",
+        "last",
+        "name"
+      ]
+    },
+    {
+      "id": "memorial_40_unknown",
+      "name": "Unknown",
+      "text": "Unknown. Day unknown. The stone is the name. The name is the stone. The stone does not explain. The dead do not explain themselves.",
+      "type": "grave_marker",
+      "tags": [
+        "unknown",
+        "stone",
+        "unmarked",
+        "name"
+      ]
+    }
+  ]
+}

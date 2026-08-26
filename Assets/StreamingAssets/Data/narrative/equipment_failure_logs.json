@@ -1,0 +1,487 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "failure_id": "equip_failure_001",
+      "day": 39,
+      "system": "generator",
+      "component": "fuel injection nozzle",
+      "reporter": "the_electrician",
+      "severity": "MEDIUM",
+      "description": "Nozzle partially clogged with carbon deposits. Generator running rough, voltage fluctuating +/- 8V.",
+      "cause": "Carbon buildup from extended low-load operation. Fuel quality has degraded since day 1.",
+      "fix_applied": "Removed nozzle, soaked in solvent from the_chemist, cleaned with wire. Reinstalled. Voltage stabilised.",
+      "downtime_hours": 4,
+      "preventive_action": "the_electrician has scheduled monthly nozzle inspections. the_chemist to provide solvent quarterly.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "power_grid_management_logs"
+      ],
+      "tags": [
+        "generator",
+        "fuel_system",
+        "carbon",
+        "preventive"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_002",
+      "day": 42,
+      "system": "water pump",
+      "component": "impeller seal",
+      "reporter": "the_plumber",
+      "severity": "HIGH",
+      "description": "Primary water pump impeller seal failed. Water leaking into pump housing. Pump offline.",
+      "cause": "Seal material degraded by continuous operation and trace chemical contamination in the water supply.",
+      "fix_applied": "Replaced seal with improvised gasket cut from salvaged rubber. the_plumber hand-cut the gasket to spec. Pump back online.",
+      "downtime_hours": 8,
+      "preventive_action": "the_plumber has fabricated three spare seals. Scheduled quarterly replacement. See gravity-feed backup in engineering_mod_notes.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "improvised_repair_guides_batch_2",
+        "water_quality_test_reports_batch_2"
+      ],
+      "tags": [
+        "water_pump",
+        "seal_failure",
+        "improvised_repair",
+        "high_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_003",
+      "day": 45,
+      "system": "ventilation",
+      "component": "air filter bank",
+      "reporter": "the_architect",
+      "severity": "HIGH",
+      "description": "Air filter efficiency dropped to 65 percent during the day 45 radiation storm. Particulate breakthrough detected in corridor C.",
+      "cause": "Filter media overloaded by storm particulate. Filters rated for 500 hours; storm accelerated degradation by factor of 10.",
+      "fix_applied": "Replaced filter bank with spares. the_architect has requested additional filter media from the next expedition. Storm filters are now staged for immediate swap.",
+      "downtime_hours": 2,
+      "preventive_action": "Storm-rated filter bank staged in corridor C for immediate swap. the_architect monitoring filter pressure differential hourly during storms.",
+      "cross_refs": [
+        "radiation_survey_readings_batch_2",
+        "bunker_maintenance_logs_batch_2"
+      ],
+      "tags": [
+        "ventilation",
+        "air_filter",
+        "radiation_storm",
+        "high_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_004",
+      "day": 48,
+      "system": "blast door",
+      "component": "hydraulic actuator",
+      "reporter": "the_mechanic",
+      "severity": "CRITICAL",
+      "description": "Blast door hydraulic actuator lost pressure. Door stuck at 80 percent open. Cannot seal.",
+      "cause": "Hydraulic fluid leak at the cylinder seal. The seal material is incompatible with the synthetic fluid. Pre-war specification mismatch.",
+      "fix_applied": "the_mechanic fabricated a new seal from salvaged neoprene. Replaced fluid with compatible type. the_electrician built the manual winch backup. See engineering_mod_notes.",
+      "downtime_hours": 6,
+      "preventive_action": "Manual winch backup installed. Monthly hydraulic fluid compatibility check added to maintenance schedule.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "improvised_repair_guides_batch_2",
+        "security_incident_reports_batch_2"
+      ],
+      "tags": [
+        "blast_door",
+        "hydraulic",
+        "critical",
+        "seal_failure",
+        "backup_installed"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_005",
+      "day": 51,
+      "system": "radio",
+      "component": "final amplifier tube",
+      "reporter": "the_radio_host",
+      "severity": "MEDIUM",
+      "description": "Radio transmitter output power dropped 40 percent. Signal range reduced from 200km to 80km.",
+      "cause": "Final amplifier tube degraded. Vacuum loss from micro-fracture in the glass envelope. Pre-war tube reaching end of life.",
+      "fix_applied": "the_electrician has one spare tube. Installed it. Output restored to 95 percent. the_electrician says no more spares exist. When this tube fails, the transmitter is dead.",
+      "downtime_hours": 3,
+      "preventive_action": "Transmitter power reduced to 70 percent to extend tube life. the_radio_host broadcasting on reduced schedule. the_electrician searching for compatible tubes on surface expeditions.",
+      "cross_refs": [
+        "radio_broadcast_rundowns",
+        "engineering_mod_notes"
+      ],
+      "tags": [
+        "radio",
+        "amplifier_tube",
+        "degradation",
+        "no_spares",
+        "range_reduction"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_006",
+      "day": 54,
+      "system": "greenhouse",
+      "component": "grow light ballast",
+      "reporter": "the_botanist",
+      "severity": "MEDIUM",
+      "description": "Two of six grow light banks flickering and dimming. Light output reduced 30 percent in the affected section.",
+      "cause": "Ballast capacitor failing. The capacitors are pre-war and 20 years past their rated life. Heat and humidity in the greenhouse accelerate degradation.",
+      "fix_applied": "the_electrician rebuilt the ballast with salvaged capacitors. Light output restored to 85 percent. Two more ballasts showing early warning signs.",
+      "downtime_hours": 5,
+      "preventive_action": "the_electrician has identified four compatible capacitor types from the salvage inventory. Scheduled replacement of all six ballasts within 30 days.",
+      "cross_refs": [
+        "greenhouse_cultivation_logs",
+        "improvised_repair_guides_batch_2"
+      ],
+      "tags": [
+        "greenhouse",
+        "grow_light",
+        "ballast",
+        "capacitor",
+        "partial_fix"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_007",
+      "day": 57,
+      "system": "compost toilet",
+      "component": "divertor valve",
+      "reporter": "the_plumber",
+      "severity": "LOW",
+      "description": "Urine divertor valve sticking. Some cross-contamination between liquid and solid channels. Odour increasing.",
+      "cause": "Mineral buildup from urine crystallisation on the valve mechanism. The valve was not designed for continuous use by 47 people.",
+      "fix_applied": "Disassembled and descaled with vinegar from the_chemist. Valve operating smoothly. the_plumber added a weekly descaling protocol.",
+      "downtime_hours": 1,
+      "preventive_action": "Weekly descaling with vinegar. the_plumber fabricated a spare valve from pipe fittings. the_chemist to provide vinegar monthly.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "water_quality_test_reports_batch_2"
+      ],
+      "tags": [
+        "compost_toilet",
+        "valve",
+        "mineral_buildup",
+        "low_severity",
+        "maintenance"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_008",
+      "day": 60,
+      "system": "kitchen stove",
+      "component": "flue damper",
+      "reporter": "the_chef",
+      "severity": "MEDIUM",
+      "description": "Kitchen stove flue damper seized in the closed position. Smoke filling the kitchen. Ventilation unable to keep up.",
+      "cause": "Creosote buildup on the damper pivot. The damper has not been serviced since the bunker was sealed. Creosote is flammable; this is a fire risk.",
+      "fix_applied": "the_mechanic freed the damper with penetrating oil. the_chef cleaned the flue manually. the_plumber installed an access panel for future cleaning.",
+      "downtime_hours": 3,
+      "preventive_action": "Monthly flue cleaning protocol established. the_chef trained on creosote identification. Access panel installed for maintenance access.",
+      "cross_refs": [
+        "improvised_repair_guides_batch_2",
+        "bunker_maintenance_logs_batch_2"
+      ],
+      "tags": [
+        "kitchen_stove",
+        "flue",
+        "creosote",
+        "fire_risk",
+        "safety"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_009",
+      "day": 63,
+      "system": "water treatment",
+      "component": "UV sterilisation lamp",
+      "reporter": "the_plumber",
+      "severity": "HIGH",
+      "description": "UV sterilisation lamp output dropped below effective threshold. Water treatment relying on chemical backup only.",
+      "cause": "UV lamp end-of-life. Pre-war rated for 8000 hours; lamp has exceeded 9200 hours. The lamp is dead and no replacement exists.",
+      "fix_applied": "the_plumber has switched to full chemical treatment with calcium hypochlorite from the_chemist. Water quality tests passed. the_electrician is investigating whether a salvaged UV lamp from a surface source can be adapted.",
+      "downtime_hours": 0,
+      "preventive_action": "Chemical treatment is the primary method until a replacement UV lamp is found. the_chemist monitoring hypochlorite stock. Estimated 45 days of supply remaining.",
+      "cross_refs": [
+        "water_quality_test_reports_batch_2",
+        "engineering_mod_notes"
+      ],
+      "tags": [
+        "water_treatment",
+        "UV_lamp",
+        "end_of_life",
+        "chemical_backup",
+        "no_replacement"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_010",
+      "day": 65,
+      "system": "generator",
+      "component": "voltage regulator",
+      "reporter": "the_electrician",
+      "severity": "CRITICAL",
+      "description": "Generator voltage regulator failed. Output spiked to 260V before the_electrician manually disconnected the load. Equipment damage narrowly avoided.",
+      "cause": "Power transistor in the regulator circuit failed short-circuit. The transistor is a pre-war component with no equivalent in the salvage inventory.",
+      "fix_applied": "the_electrician built a Variac bypass as described in engineering_mod_notes. Manual voltage control. This is a permanent modification, not a repair.",
+      "downtime_hours": 12,
+      "preventive_action": "Variac bypass is now the primary voltage control method. the_electrician monitoring output continuously during load changes. See engineering_mod_notes for details.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "improvised_repair_guides_batch_2",
+        "power_grid_management_logs"
+      ],
+      "tags": [
+        "generator",
+        "voltage_regulator",
+        "critical",
+        "variac_bypass",
+        "permanent_mod"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_011",
+      "day": 68,
+      "system": "lathe",
+      "component": "drive belt",
+      "reporter": "the_mechanic",
+      "severity": "MEDIUM",
+      "description": "Lathe drive belt snapped during operation. The workpiece (a replacement pipe fitting) was ruined. No injury.",
+      "cause": "Rubber belt degraded by age and heat. The belt is pre-war and the rubber has become brittle. It snapped under normal load.",
+      "fix_applied": "the_mechanic spliced a new belt from salvaged rubber. the_mechanic has also designed a bicycle-to-belt-drive conversion as a backup. See engineering_mod_notes.",
+      "downtime_hours": 6,
+      "preventive_action": "Two spare belts fabricated. Bicycle drive conversion installed as backup power source. Monthly belt inspection added to maintenance schedule.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "improvised_repair_guides_batch_2"
+      ],
+      "tags": [
+        "lathe",
+        "drive_belt",
+        "rubber_degradation",
+        "backup_drive",
+        "medium_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_012",
+      "day": 71,
+      "system": "periscope",
+      "component": "prism mounting",
+      "reporter": "the_architect",
+      "severity": "LOW",
+      "description": "Surface observation periscope image quality degraded. Prism shifting in its mount due to vibration from generator operation.",
+      "cause": "Prism mounting adhesive failing. The adhesive was not designed for continuous vibration exposure. The periscope shares a structural wall with the generator room.",
+      "fix_applied": "the_mechanic re-seated the prism with mechanical clips instead of adhesive. Image quality restored. the_architect has isolated the periscope mount from the generator wall with rubber dampeners.",
+      "downtime_hours": 2,
+      "preventive_action": "Mechanical mounting replaces adhesive for all optical components. Vibration dampeners installed on periscope mount. Monthly image quality check.",
+      "cross_refs": [
+        "bunker_blueprints_codex",
+        "bunker_maintenance_logs_batch_2"
+      ],
+      "tags": [
+        "periscope",
+        "prism",
+        "vibration",
+        "mechanical_fix",
+        "low_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_013",
+      "day": 74,
+      "system": "cold storage",
+      "component": "ammonia chiller compressor",
+      "reporter": "the_electrician",
+      "severity": "HIGH",
+      "description": "Cold storage temperature rising. Ammonia chiller compressor running continuously but unable to maintain target temperature. Currently at 8C instead of 4C.",
+      "cause": "Compressor valve leaking. Refrigerant loss reducing cooling capacity. the_electrician has detected ammonia odour in the compressor room. Minor leak but increasing.",
+      "fix_applied": "the_mechanic tightened the valve fittings and applied sealant. Compressor cycling normally. Temperature returning to target. the_electrician monitoring refrigerant pressure daily.",
+      "downtime_hours": 8,
+      "preventive_action": "Daily refrigerant pressure checks. the_electrician has identified a surface source for compatible sealant. Ammonia odour protocol posted in compressor room.",
+      "cross_refs": [
+        "ammonia_chiller_leak_logs",
+        "engineering_mod_notes"
+      ],
+      "tags": [
+        "cold_storage",
+        "compressor",
+        "refrigerant_leak",
+        "ammonia",
+        "high_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_014",
+      "day": 77,
+      "system": "blast door",
+      "component": "manual winch cable",
+      "reporter": "the_mechanic",
+      "severity": "MEDIUM",
+      "description": "Manual winch cable fraying at the drum splice point. Cable rated for 50 cycles; currently at 34. Estimated 16 cycles before failure.",
+      "cause": "Metal fatigue at the splice point where the cable joins the drum. The splice was hand-made and the stress concentration is higher than designed.",
+      "fix_applied": "the_mechanic has fabricated a replacement cable from salvaged wire rope. Installed and tested. Full operation restored. Original cable retained as emergency backup.",
+      "downtime_hours": 4,
+      "preventive_action": "Monthly cable inspection protocol. the_mechanic has fabricated two spare cables. Cycle counter installed on the winch drum.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "improvised_repair_guides_batch_2"
+      ],
+      "tags": [
+        "blast_door",
+        "winch_cable",
+        "metal_fatigue",
+        "replacement",
+        "medium_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_015",
+      "day": 80,
+      "system": "radio",
+      "component": "antenna tuning capacitor",
+      "reporter": "the_radio_host",
+      "severity": "LOW",
+      "description": "Radio receiving sensitivity reduced on the 40m band. Static levels increased. the_radio_host can still transmit but reception is poor.",
+      "cause": "Antenna tuning capacitor plates corroded. Surface salt deposits from atmospheric fallout are creating intermittent shorts between the plates.",
+      "fix_applied": "the_electrician cleaned the capacitor plates with alcohol. Reception restored to 90 percent. the_radio_host has covered the capacitor with a sealed enclosure to prevent future contamination.",
+      "downtime_hours": 2,
+      "preventive_action": "Sealed enclosure installed on antenna tuning capacitor. Monthly cleaning protocol. the_radio_host monitoring reception quality daily.",
+      "cross_refs": [
+        "radio_broadcast_rundowns",
+        "engineering_mod_notes"
+      ],
+      "tags": [
+        "radio",
+        "antenna",
+        "corrosion",
+        "sealed_enclosure",
+        "low_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_016",
+      "day": 83,
+      "system": "water pump",
+      "component": "float valve",
+      "reporter": "the_plumber",
+      "severity": "MEDIUM",
+      "description": "Cistern float valve stuck in the open position. Water overflowing from the cistern into the drainage sump. Water loss estimated at 200 litres over 6 hours.",
+      "cause": "Mineral deposit on the float valve seat preventing closure. The water supply has high mineral content from the underground source.",
+      "fix_applied": "the_plumber disassembled and cleaned the float valve. Installed a manual override lever for future stuck-valve situations. the_plumber has added monthly float valve inspection to the maintenance schedule.",
+      "downtime_hours": 2,
+      "preventive_action": "Monthly float valve inspection and cleaning. Manual override lever installed. the_plumber monitoring cistern level hourly during known high-mineral periods.",
+      "cross_refs": [
+        "improvised_repair_guides_batch_2",
+        "water_quality_test_reports_batch_2"
+      ],
+      "tags": [
+        "water_pump",
+        "float_valve",
+        "mineral_deposit",
+        "water_loss",
+        "medium_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_017",
+      "day": 86,
+      "system": "generator",
+      "component": "fuel filter",
+      "reporter": "the_electrician",
+      "severity": "MEDIUM",
+      "description": "Generator fuel filter clogged. Engine starving for fuel, running at 60 percent power. Voltage dropping under load.",
+      "cause": "Particulate contamination in the fuel supply. The fuel has been sitting for months and sediment has accumulated in the tank bottom. The filter is doing its job but clogging faster than expected.",
+      "fix_applied": "Replaced fuel filter with spare. the_electrician drained sediment from the fuel tank bottom. the_chemist has provided a fuel treatment to suspend remaining particulate.",
+      "downtime_hours": 3,
+      "preventive_action": "Monthly fuel filter replacement. Quarterly fuel tank draining. the_chemist fuel treatment added to monthly schedule. the_electrician monitoring fuel pressure continuously.",
+      "cross_refs": [
+        "improvised_repair_guides_batch_2",
+        "power_grid_management_logs"
+      ],
+      "tags": [
+        "generator",
+        "fuel_filter",
+        "contamination",
+        "fuel_treatment",
+        "medium_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_018",
+      "day": 89,
+      "system": "ventilation",
+      "component": "passive airflow baffle",
+      "reporter": "the_architect",
+      "severity": "LOW",
+      "description": "Passive airflow baffle in corridor B has come loose. Rattling when the ventilation fan cycles. The baffle is not damaged but the mounting brackets have pulled out of the concrete.",
+      "cause": "Vibration from the ventilation fan has worked the mounting brackets loose. The concrete around the brackets has cracked from repeated stress.",
+      "fix_applied": "the_mechanic re-anchored the baffle with expansion bolts drilled into fresh concrete. the_architect has added vibration dampening pads between the brackets and the concrete.",
+      "downtime_hours": 1,
+      "preventive_action": "Monthly baffle mounting inspection. Vibration dampening pads installed on all passive baffles. the_architect monitoring concrete crack propagation.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "bunker_maintenance_logs_batch_2"
+      ],
+      "tags": [
+        "ventilation",
+        "baffle",
+        "vibration",
+        "mounting",
+        "low_severity"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_019",
+      "day": 92,
+      "system": "TEG (thermoelectric generator)",
+      "component": "thermoelectric module",
+      "reporter": "the_electrician",
+      "severity": "MEDIUM",
+      "description": "Candle-to-electricity TEG output dropped from 3W to 1.2W. The thermoelectric module has degraded.",
+      "cause": "Thermal cycling has caused micro-cracks in the thermoelectric semiconductor elements. The module was always a prototype and the materials were not rated for continuous operation.",
+      "fix_applied": "the_electrician has one spare module from the salvage inventory. Installed it. Output restored to 2.8W. No more spare modules exist.",
+      "downtime_hours": 2,
+      "preventive_action": "TEG operating schedule reduced to 8 hours per day to extend module life. the_electrician searching for compatible thermoelectric modules on surface expeditions.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "power_grid_management_logs"
+      ],
+      "tags": [
+        "TEG",
+        "thermoelectric",
+        "degradation",
+        "no_spares",
+        "reduced_schedule"
+      ]
+    },
+    {
+      "failure_id": "equip_failure_020",
+      "day": 95,
+      "system": "generator",
+      "component": "exhaust manifold gasket",
+      "reporter": "the_electrician",
+      "severity": "HIGH",
+      "description": "Generator exhaust manifold gasket failed. Exhaust gas leaking into the generator room. Carbon monoxide detected by the_hazmat_tech monitoring equipment. Generator room evacuated.",
+      "cause": "Gasket material degraded by heat and age. The gasket is pre-war and the material has become brittle. Exhaust pressure increased when the fuel filter was partially clogged, accelerating the failure.",
+      "fix_applied": "the_mechanic fabricated a new gasket from salvaged high-temperature material. Generator room ventilated for 2 hours before re-entry. CO levels returned to zero. Generator back online.",
+      "downtime_hours": 14,
+      "preventive_action": "Monthly exhaust system inspection including gasket condition. the_mechanic has fabricated three spare gaskets. CO monitoring equipment now permanently installed in the generator room.",
+      "cross_refs": [
+        "engineering_mod_notes",
+        "improvised_repair_guides_batch_2",
+        "security_incident_reports_batch_2"
+      ],
+      "tags": [
+        "generator",
+        "exhaust_gasket",
+        "carbon_monoxide",
+        "evacuation",
+        "high_severity",
+        "safety"
+      ]
+    }
+  ]
+}

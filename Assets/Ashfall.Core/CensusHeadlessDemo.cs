@@ -1,5 +1,6 @@
 using System.Text;
 
+#pragma warning disable CS8618
 namespace Ashfall.Core
 {
     /// <summary>Headless-report extension for the Census slice.</summary>
@@ -21,7 +22,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class CensusHeadlessDemo
     {
-        public static CensusHeadlessReport Run(ILog log = null)
+        public static CensusHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -105,7 +106,7 @@ namespace Ashfall.Core
             var json = new SystemTextJsonSerializer();
             var blob = json.Serialize(refusing.CaptureState());
             var restored = new CensusClaimSystem();
-            restored.RestoreState(json.Deserialize<CensusClaimSystemState>(blob));
+            restored.RestoreState(json.Deserialize<CensusClaimSystemState>(blob)!);
             Check(restored.LevyRefuse, "roundtrip refuse flag");
             Check(restored.Order12CActive, "roundtrip 12-C");
             Check(restored.State.ledger.Count == refusing.State.ledger.Count, "roundtrip ledger size");

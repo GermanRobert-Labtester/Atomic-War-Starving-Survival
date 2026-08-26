@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "collection_id": "water_quality_test_reports_batch_2",
+  "description": "Water quality test reports from the bunker water system and external sources. Tested by the Pharmacist and the Chemist. Parameters: pH, turbidity, biological contamination, chemical contamination, radiation content.",
+  "reports": [
+    {
+      "report_id": "water_b2_001",
+      "day": 42,
+      "tester": "the_pharmacist",
+      "source": "Water Cistern (main supply)",
+      "ph": 7.2,
+      "turbidity_ntu": 0.5,
+      "biological": "NEGATIVE (no coliforms detected)",
+      "chemical": "Within safe limits",
+      "radiation_bq_l": 0.1,
+      "verdict": "SAFE",
+      "notes": "Main supply is clean. The UV sterilization system is functioning within specification. The cistern water is clear, odourless, and palatable.",
+      "tags": [
+        "cistern",
+        "safe",
+        "routine"
+      ]
+    },
+    {
+      "report_id": "water_b2_002",
+      "day": 42,
+      "tester": "the_pharmacist",
+      "source": "Kitchen Tap (post-treatment)",
+      "ph": 7.1,
+      "turbidity_ntu": 0.3,
+      "biological": "NEGATIVE",
+      "chemical": "Within safe limits",
+      "radiation_bq_l": 0.1,
+      "verdict": "SAFE",
+      "notes": "Kitchen tap water matches cistern quality. The distribution system is clean. No biofilm detected in the pipes.",
+      "tags": [
+        "kitchen",
+        "safe",
+        "routine"
+      ]
+    },
+    {
+      "report_id": "water_b2_003",
+      "day": 42,
+      "tester": "the_pharmacist",
+      "source": "Medical Bay Tap (post-treatment)",
+      "ph": 7.0,
+      "turbidity_ntu": 0.2,
+      "biological": "NEGATIVE",
+      "chemical": "Within safe limits",
+      "radiation_bq_l": 0.05,
+      "verdict": "SAFE",
+      "notes": "Medical bay water is slightly cleaner than kitchen tap due to an additional filtration stage (the Surgeon insisted). This water is used for wound irrigation and surgical preparation.",
+      "tags": [
+        "medical",
+        "safe",
+        "extra_filtered"
+      ]
+    },
+    {
+      "report_id": "water_b2_004",
+      "day": 50,
+      "tester": "the_chemist",
+      "source": "Greenhouse Irrigation (cistern supply)",
+      "ph": 6.8,
+      "turbidity_ntu": 1.2,
+      "biological": "LOW (non-pathogenic bacteria present)",
+      "chemical": "Elevated nitrates (from compost leachate)",
+      "radiation_bq_l": 0.2,
+      "verdict": "SAFE_FOR_IRRIGATION",
+      "notes": "Greenhouse water is not tested to drinking standards. The elevated nitrates are beneficial for plant growth. The non-pathogenic bacteria are from the compost system and pose no risk to plants. The Botanist is satisfied.",
+      "tags": [
+        "greenhouse",
+        "irrigation",
+        "nitrates"
+      ]
+    },
+    {
+      "report_id": "water_b2_005",
+      "day": 55,
+      "tester": "the_pharmacist",
+      "source": "Water Cistern (post-dysentery outbreak)",
+      "ph": 7.3,
+      "turbidity_ntu": 0.3,
+      "biological": "NEGATIVE (72 hours post-flush)",
+      "chemical": "Within safe limits",
+      "radiation_bq_l": 0.1,
+      "verdict": "SAFE",
+      "notes": "Tested 72 hours after the water system flush following the dysentery outbreak. The UV lamp has been replaced with a verified unit. All tanks have been chlorinated and flushed. The water is clean. The Pharmacist will test again in 48 hours for confirmation.",
+      "tags": [
+        "cistern",
+        "post_outbreak",
+        "safe",
+        "verification"
+      ]
+    },
+    {
+      "report_id": "water_b2_006",
+      "day": 57,
+      "tester": "the_pharmacist",
+      "source": "Water Cistern (confirmation test)",
+      "ph": 7.2,
+      "turbidity_ntu": 0.2,
+      "biological": "NEGATIVE",
+      "chemical": "Within safe limits",
+      "radiation_bq_l": 0.1,
+      "verdict": "SAFE",
+      "notes": "Confirmation test passed. The water system is clean. The dysentery outbreak has been resolved. The new UV lamp protocol is working.",
+      "tags": [
+        "cistern",
+        "confirmation",
+        "safe"
+      ]
+    },
+    {
+      "report_id": "water_b2_007",
+      "day": 60,
+      "tester": "the_chemist",
+      "source": "Surface Stream (east ridge, 500m from bunker)",
+      "ph": 5.8,
+      "turbidity_ntu": 15.0,
+      "biological": "POSITIVE (coliforms detected)",
+      "chemical": "Elevated heavy metals (lead, cadmium)",
+      "radiation_bq_l": 12.0,
+      "verdict": "UNSAFE",
+      "notes": "Surface water is heavily contaminated. The low pH indicates acid deposition from fallout. The heavy metals are from building debris washed into the stream. The radiation content is above drinking thresholds. This water must not be consumed without extensive treatment (reverse osmosis, which we do not have). The expedition teams have been warned.",
+      "tags": [
+        "surface",
+        "stream",
+        "unsafe",
+        "contaminated"
+      ]
+    },
+    {
+      "report_id": "water_b2_008",
+      "day": 65,
+      "tester": "the_pharmacist",
+      "source": "Rainwater Collection (surface collector)",
+      "ph": 5.5,
+      "turbidity_ntu": 2.0,
+      "biological": "LOW (atmospheric bacteria)",
+      "chemical": "Elevated sulphates (acid rain)",
+      "radiation_bq_l": 3.5,
+      "verdict": "TREATMENT_REQUIRED",
+      "notes": "Rainwater is slightly acidic and contains dissolved fallout particles. It can be made safe by boiling (10 minutes) and filtering through activated carbon (from the air filter workshop). The Pharmacist has established a rainwater treatment protocol for emergency water supply.",
+      "tags": [
+        "rainwater",
+        "treatment_required",
+        "acid"
+      ]
+    },
+    {
+      "report_id": "water_b2_009",
+      "day": 70,
+      "tester": "the_chemist",
+      "source": "Urine Diversion Output (compost toilet)",
+      "ph": 8.5,
+      "turbidity_ntu": 0.8,
+      "biological": "LOW (urea-dominant)",
+      "chemical": "High nitrogen (urea), potassium",
+      "radiation_bq_l": 0.3,
+      "verdict": "SAFE_FOR_FERTILISER",
+      "notes": "The urine diversion system (see engineering mod eng_mod_003) produces a nitrogen-rich liquid that the Botanist uses as fertiliser. The urine is diluted 1:8 with water before application. The radiation content is negligible. The fertiliser is safe for food crops.",
+      "tags": [
+        "urine",
+        "fertiliser",
+        "recycling"
+      ]
+    },
+    {
+      "report_id": "water_b2_010",
+      "day": 75,
+      "tester": "the_pharmacist",
+      "source": "Water Cistern (routine quarterly)",
+      "ph": 7.1,
+      "turbidity_ntu": 0.4,
+      "biological": "NEGATIVE",
+      "chemical": "Within safe limits",
+      "radiation_bq_l": 0.1,
+      "verdict": "SAFE",
+      "notes": "Quarterly routine test. All parameters within safe limits. The water system is stable. No action required.",
+      "tags": [
+        "cistern",
+        "quarterly",
+        "safe",
+        "routine"
+      ]
+    },
+    {
+      "report_id": "water_b2_011",
+      "day": 78,
+      "tester": "the_chemist",
+      "source": "Frozen River (expedition source, 1km south)",
+      "ph": 6.9,
+      "turbidity_ntu": 1.0,
+      "biological": "LOW (cold water suppresses growth)",
+      "chemical": "Within safe limits",
+      "radiation_bq_l": 2.8,
+      "verdict": "SAFE_AFTER_TREATMENT",
+      "notes": "River water can be made safe by boiling and filtering. The radiation content is low but not negligible. The expedition teams are instructed to treat all surface water before consumption. The fish from this river are safe (see food testing).",
+      "tags": [
+        "river",
+        "treatment_required",
+        "expedition"
+      ]
+    },
+    {
+      "report_id": "water_b2_012",
+      "day": 80,
+      "tester": "the_pharmacist",
+      "source": "Greenhouse Condensate (dehumidification runoff)",
+      "ph": 6.5,
+      "turbidity_ntu": 0.1,
+      "biological": "NEGATIVE",
+      "chemical": "Low mineral content",
+      "radiation_bq_l": 0.05,
+      "verdict": "SAFE_FOR_IRRIGATION",
+      "notes": "The greenhouse produces condensation from plant transpiration and dehumidification. The condensate is essentially distilled water — very pure but lacking minerals. The Botanist uses it for seedling irrigation (the low mineral content prevents salt buildup in the soil).",
+      "tags": [
+        "greenhouse",
+        "condensate",
+        "irrigation",
+        "pure"
+      ]
+    },
+    {
+      "report_id": "water_b2_013",
+      "day": 83,
+      "tester": "the_chemist",
+      "source": "Emergency Water Supply (chemically treated)",
+      "ph": 7.0,
+      "turbidity_ntu": 0.3,
+      "biological": "NEGATIVE (post-chlorination)",
+      "chemical": "Free chlorine: 2 mg/L (within WHO standard)",
+      "radiation_bq_l": 0.1,
+      "verdict": "SAFE",
+      "notes": "Test of the Chemist improvised chlorination system (see engineering mod eng_mod_013). The electrolysis-produced sodium hypochlorite is effective at killing biological contaminants. The free chlorine level is within the WHO standard for drinking water. The system works.",
+      "tags": [
+        "emergency",
+        "chlorination",
+        "safe",
+        "improvised"
+      ]
+    },
+    {
+      "report_id": "water_b2_014",
+      "day": 87,
+      "tester": "the_pharmacist",
+      "source": "Water Cistern (post-dehumidification panel installation)",
+      "ph": 7.2,
+      "turbidity_ntu": 0.3,
+      "biological": "NEGATIVE",
+      "chemical": "Within safe limits",
+      "radiation_bq_l": 0.1,
+      "verdict": "SAFE",
+      "notes": "The dehumidification panels (see engineering mod eng_mod_014) have reduced bunker humidity from 73% to 64%. This has reduced condensation on surfaces and the associated mould growth. The water system is unaffected. The cistern water remains clean.",
+      "tags": [
+        "cistern",
+        "post_mod",
+        "safe"
+      ]
+    },
+    {
+      "report_id": "water_b2_015",
+      "day": 90,
+      "tester": "the_pharmacist",
+      "source": "Bunker-wide water quality summary",
+      "ph": 7.1,
+      "turbidity_ntu": 0.3,
+      "biological": "NEGATIVE (all tested points)",
+      "chemical": "Within safe limits (all tested points)",
+      "radiation_bq_l": 0.1,
+      "verdict": "SAFE",
+      "notes": "Quarterly summary: All bunker water sources are safe for consumption. The water treatment system (UV sterilization + chlorination backup) is functioning correctly. The distribution system is clean. No biofilm or contamination detected. The bunker water supply is the most reliable resource we have. It is the one thing we do not have to worry about.",
+      "tags": [
+        "summary",
+        "quarterly",
+        "safe",
+        "all_clear"
+      ]
+    }
+  ]
+}

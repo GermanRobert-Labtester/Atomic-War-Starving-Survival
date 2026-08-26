@@ -242,6 +242,37 @@ namespace Ashfall.Core.Tests
                 fresh.GetWorkRefusalHours("sv_brk"), 4);
         }
 
+        [Fact]
+        public void PhantomTriggerCatalogJson_Deserialization_Passes()
+        {
+            string sampleJson = @"{
+                ""schema_version"": 1,
+                ""items"": [
+                    {
+                        ""background_id"": ""former_soldier"",
+                        ""triggers"": [
+                            {
+                                ""item_category"": ""military"",
+                                ""motivation_chance"": 0.4,
+                                ""description"": ""Dog tags."",
+                                ""motivation_text"": ""Pockets tags."",
+                                ""breakdown_text"": ""Goes pale.""
+                            }
+                        ]
+                    }
+                ]
+            }";
+
+            var serializer = new SystemTextJsonSerializer();
+            var catalog = serializer.Deserialize<Ashfall.Core.Phantoms.PhantomTriggerCatalogJson>(sampleJson);
+            Assert.NotNull(catalog);
+            Assert.Equal(1, catalog.schema_version);
+            Assert.Single(catalog.items);
+            Assert.Equal("former_soldier", catalog.items[0].background_id);
+            Assert.Single(catalog.items[0].triggers);
+            Assert.Equal("military", catalog.items[0].triggers[0].item_category);
+        }
+
         private sealed class SeededRng : ISeededRng
         {
             private readonly System.Random _rng;

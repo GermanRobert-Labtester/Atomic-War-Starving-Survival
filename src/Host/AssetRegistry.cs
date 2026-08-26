@@ -922,8 +922,16 @@ namespace AtomicWar.GodotApp
                 string pattern = $"\"{fieldName}\":";
 
                 int pos = 0;
+                int maxIterations = content.Length * 2; // pathological guard: no JSON field should need more scans than chars
+                int iterations = 0;
                 while (true)
                 {
+                    iterations++;
+                    if (iterations > maxIterations)
+                    {
+                        GD.PrintErr($"[AssetRegistrySelfTest] ExtractIdsFromJson exceeded max iterations for {path} field {fieldName}");
+                        break;
+                    }
                     int idx = content.IndexOf(pattern, pos, StringComparison.Ordinal);
                     if (idx < 0) break;
 

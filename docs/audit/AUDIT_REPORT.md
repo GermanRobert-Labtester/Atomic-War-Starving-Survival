@@ -281,7 +281,7 @@ URP 17.6, Input System 1.19, Test Framework 1.7, 2D feature set, Timeline, Visua
 
 ## 9. Appendices
 
-- Master issue register: [`ISSUE_REGISTER.md`](./ISSUE_REGISTER.md)
+- Master issue register: [`ISSUE_REGISTER.md`](../deprecated_audits/ISSUE_REGISTER.md)
 - Compile evidence: `compile-complexity4.log` (repo root, session artifact)
 - AGENTS workflow: `AGENTS.md`
 - Domain notes: `IntelBible.md`

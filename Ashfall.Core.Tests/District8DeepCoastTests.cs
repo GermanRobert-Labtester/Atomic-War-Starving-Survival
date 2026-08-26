@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using Xunit;
 using Ashfall.Core;
 using Ashfall.Core.Economy;
+using Ashfall.Core.IO;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Maritime;
 
@@ -161,11 +163,41 @@ namespace Ashfall.Core.Tests
             {
                 string path = files.Combine(DataDir(), candidates[i]);
                 if (!files.FileExists(path)) continue;
-                var list = json.Deserialize<List<HoldfastItemDto>>(files.ReadAllText(path));
-                if (list == null) continue;
-                foreach (var e in list)
-                    if (e != null && !string.IsNullOrEmpty(e.id))
-                        ids.Add(e.id);
+                try
+                {
+                    string raw = files.ReadAllText(path);
+                    using var doc = JsonDocument.Parse(raw);
+                    JsonElement array = doc.RootElement;
+                    if (array.ValueKind == JsonValueKind.Object)
+                    {
+                        foreach (var prop in array.EnumerateObject())
+                        {
+                            if (prop.Name.Equals("schema_version", StringComparison.OrdinalIgnoreCase))
+                                continue;
+                            if (prop.Value.ValueKind == JsonValueKind.Array)
+                            {
+                                array = prop.Value;
+                                break;
+                            }
+                        }
+                    }
+                    if (array.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (var elem in array.EnumerateArray())
+                        {
+                            if (elem.TryGetProperty("id", out var idProp))
+                            {
+                                string id = idProp.GetString();
+                                if (!string.IsNullOrEmpty(id))
+                                    ids.Add(id);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex_CATDIAG)
+                {
+                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                }
             }
             return ids;
         }

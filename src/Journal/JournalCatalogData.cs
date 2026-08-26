@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS0649
 using System.IO;
 using System.Text.Json;
+using Ashfall.Core;
 
 namespace AtomicWar.Journal
 {
@@ -131,7 +133,24 @@ namespace AtomicWar.Journal
             {
                 if (!File.Exists(path)) return new List<T>();
                 string json = File.ReadAllText(path);
-                return JsonSerializer.Deserialize<List<T>>(json, s_options) ?? new List<T>();
+
+                // Support wrapped catalogs: {"schema_version": N, "items"/"locations"/"survivors"/"events": [...]}
+                using var doc = JsonDocument.Parse(json);
+                if (doc.RootElement.ValueKind == JsonValueKind.Object)
+                {
+                    foreach (var prop in doc.RootElement.EnumerateObject())
+                    {
+                        if (prop.Name.Equals("schema_version", StringComparison.OrdinalIgnoreCase))
+                            continue;
+                        if (prop.Value.ValueKind == JsonValueKind.Array)
+                        {
+                            var list = CatalogLocator.LoadWrappedList<T>(prop.Value.GetRawText(), s_options);
+                            return list ?? new List<T>();
+                        }
+                    }
+                }
+
+                return CatalogLocator.LoadWrappedList<T>(json, s_options) ?? new List<T>();
             }
             catch (Exception)
             {

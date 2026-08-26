@@ -8,7 +8,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public class BoneHornCarvingCatalogTests
-    {
+    : CatalogTestBase{
         private static string DataDir => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "Assets", "StreamingAssets", "Data", "narrative");
         private static BoneHornCarvingCatalog Load() => BoneHornCarvingCatalog.LoadFromDirectory(DataDir);
 

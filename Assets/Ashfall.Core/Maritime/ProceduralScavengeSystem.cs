@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Maritime
 {
@@ -31,7 +32,7 @@ namespace Ashfall.Core.Maritime
         private int _currentDay;
         private readonly Dictionary<string, int> _locationVisitCounts = new Dictionary<string, int>(StringComparer.Ordinal);
 
-        public ProceduralScavengeSystem(ISeededRng rng = null)
+        public ProceduralScavengeSystem(ISeededRng? rng = null)
         {
             _rng = rng ?? new SeededRng(9999);
         }
@@ -76,7 +77,8 @@ namespace Ashfall.Core.Maritime
                     IsDegraded = degraded,
                     IsContaminated = contaminated,
                     DegradedItemId = degraded && !string.IsNullOrEmpty(node.DegradedItemId)
-                        ? node.DegradedItemId : null
+                        ? node.DegradedItemId
+                        : null!
                 });
 
                 OnLootRolled?.Invoke(locationId, node.ItemId, qty);

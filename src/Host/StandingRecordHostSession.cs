@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Godot;
 using Ashfall.Core;
 
 namespace AtomicWar.GodotApp
@@ -14,15 +15,12 @@ namespace AtomicWar.GodotApp
     /// Spec: docs/expansions/expansion_03_the_standing_record_plan.md.
     /// </summary>
     public sealed class StandingRecordHostSession
-    {
+    : HostSessionBase{
         public const int DefaultSeed = 1401; // catalog seed offset for SR rooms/mutations.
 
         public StandingRecordEngine Engine { get; }
         public string LastEvent { get; private set; } = string.Empty;
         public string DataDir { get; }
-
-        public event Action? StateChanged;
-
         public static StandingRecordHostSession Create(string dataDir)
         {
             return new StandingRecordHostSession(dataDir, seed: DefaultSeed);
@@ -129,8 +127,8 @@ namespace AtomicWar.GodotApp
 
         private void RaiseStateChanged()
         {
-            try { StateChanged?.Invoke(); }
-            catch { /* host event badness — log only */ }
+            try { RaiseStateChanged(); }
+            catch (Exception ex) { GD.PrintErr($"[StandingRecord] StateChanged event failed: {ex.Message}"); }
         }
     }
 

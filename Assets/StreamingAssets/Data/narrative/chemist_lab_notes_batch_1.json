@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "collection_id": "chemist_lab_notes_batch_1",
+  "reports": [
+    {
+      "report_id": "007",
+      "day": 392,
+      "author": "the_chemist",
+      "subject": "Soil analysis — zone 4 (north flat) and meltwater sediment",
+      "samples": [
+        {
+          "sample_id": "soil_zone_4_392",
+          "source": "zone 4, north flat, clay soil, 0-10cm depth",
+          "collection_day": 385,
+          "analysis_day": 392,
+          "findings": {
+            "pH": 6.8,
+            "organic_matter": "1.2% (low, expected for clay)",
+            "nitrogen": "0.08% (low, clover planting recommended)",
+            "phosphorus": "12 ppm (low, bone meal recommended)",
+            "potassium": "80 ppm (low, wood ash recommended)",
+            "radiation": "0.9 uSv/h (surface), 0.3 uSv/h (10cm depth) — safe for planting",
+            "contaminants": {
+              "heavy_metals": "none detected (Cd, Pb, Hg, As below detection limits)",
+              "radionuclides": "Cs-137: 8 Bq/kg, Sr-90: 5 Bq/kg — below safety thresholds"
+            },
+            "texture": "clay (70% clay, 20% silt, 10% sand) — poor drainage, high water retention",
+            "recommendations": [
+              "Raised beds for wheat and oats. The clay is the thing that holds the water. The water is the thing that drowns the roots.",
+              "Clover cover crop to fix nitrogen. The clover is the thing that feeds the soil. The soil is the thing that feeds the wheat.",
+              "Wood ash for potassium. The ash is the thing that is the fire. The fire is the thing that is the home.",
+              "Bone meal for phosphorus. The bone is the thing that is the animal. The animal is the thing that is the food."
+            ]
+          }
+        },
+        {
+          "sample_id": "sediment_meltwater_392",
+          "source": "meltwater stream, 1km upstream of zone 4, sediment from streambed",
+          "collection_day": 390,
+          "analysis_day": 392,
+          "findings": {
+            "pH": 7.1,
+            "organic_matter": "2.1% (moderate, decaying plant matter)",
+            "nitrogen": "0.15% (moderate, meltwater carries nutrients)",
+            "phosphorus": "18 ppm (moderate)",
+            "potassium": "120 ppm (moderate)",
+            "radiation": "0.4 uSv/h (surface) — safe for irrigation",
+            "contaminants": {
+              "heavy_metals": "none detected",
+              "radionuclides": "Cs-137: 12 Bq/kg, Sr-90: 8 Bq/kg — below safety thresholds, but higher than zone 4 soil"
+            },
+            "texture": "silt loam (60% silt, 30% sand, 10% clay) — ideal for filtration",
+            "recommendations": [
+              "Meltwater is safe for irrigation. The meltwater is the thing that feeds the zones. The zones are the thing the family farms.",
+              "Filter meltwater through sand before use. The sand is the thing that catches the silt. The silt is the thing that carries the radiation.",
+              "Monitor Cs-137 and Sr-90 levels monthly. The levels are the thing that may rise. The rise is the thing that is not safe.",
+              "Use meltwater for zone 4 raised beds. The raised beds are the thing that is not the clay. The clay is the thing that is not the drainage."
+            ]
+          }
+        }
+      ],
+      "key_findings": [
+        "Zone 4 clay soil is nutrient-poor but safe. The clay is the thing that is the foundation. The foundation is the thing the family builds on.",
+        "Meltwater is safe for irrigation but carries slightly higher radionuclides. The meltwater is the thing that is the snowflake. The snowflake is the thing that is the hollow.",
+        "Clover and raised beds will improve zone 4 yield. The clover is the thing that is the nitrogen. The nitrogen is the thing that is the wheat.",
+        "The snowflake is the thing that is the melt. The melt is the thing that is the water. The water is the thing that is the life."
+      ],
+      "cross_refs": [
+        "expedition_field_reports_b2_011",
+        "patrol_debrief_036",
+        "unsent_letter_b2_38",
+        "council_minutes_032"
+      ],
+      "tags": [
+        "zone_4_soil",
+        "meltwater_sediment",
+        "clay_soil",
+        "raised_beds",
+        "clover_cover_crop",
+        "the_snowflake",
+        "the_hollow",
+        "the_bridge",
+        "the_melt",
+        "the_water"
+      ]
+    }
+  ]
+}

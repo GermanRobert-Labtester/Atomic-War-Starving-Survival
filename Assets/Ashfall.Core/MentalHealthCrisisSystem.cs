@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core.Medical;
 using Ashfall.Core.Survivors;
 
@@ -58,7 +59,7 @@ namespace Ashfall.Core
             MedicalWardSystem medical,
             ChemicalDependencySystem dependency,
             DutyRosterSystem roster,
-            ILog log = null)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _needs = needs ?? throw new ArgumentNullException(nameof(needs));
@@ -91,7 +92,7 @@ namespace Ashfall.Core
             _state.currentOccupancy++;
 
             // Remove from duty roster
-            string activeRole = _roster.GetRoleOf(survivorId);
+            string activeRole = _roster.GetRoleOf(survivorId)!;
             if (!string.IsNullOrEmpty(activeRole))
                 _roster.Assign(activeRole, string.Empty);
 
@@ -106,12 +107,19 @@ namespace Ashfall.Core
             if (crisis == null) return ActionResult.Failed("unknown_case", "mental.unknown_case");
             if (crisis.status != CrisisStatus.Active) return ActionResult.Blocked("not_active", "mental.not_active");
 
+            // Bug-09: caregiver must not currently hold a duty role — doing so
+            // pulls a critical shift worker away from their assignment.
+            if (!string.IsNullOrEmpty(caregiverId) && _roster.GetRoleOf(caregiverId) != null)
+                return ActionResult.Blocked("caregiver_busy", "mental.caregiver_busy");
+
             crisis.status = CrisisStatus.InTreatment;
             crisis.assignedCaregiverId = caregiverId;
             crisis.intervention = intervention;
             OnMentalHealthChanged?.Invoke();
             return ActionResult.Success("mental.treatment_started");
         }
+
+        public const int ChronicThresholdDays = 14;
 
         public void TickDay(int day)
         {
@@ -146,6 +154,23 @@ namespace Ashfall.Core
                         OnCrisisResolved?.Invoke(crisis);
                     }
                 }
+                else if (crisis.status == CrisisStatus.Active
+                         && crisis.dayStarted >= 0
+                         && day - crisis.dayStarted > ChronicThresholdDays)
+                {
+                    // Bug-05: a crisis left untreated past the threshold does not
+                    // hold a ward bed forever. Transition to Chronic, archive
+                    // into resolvedCases for history, and free occupancy. Do not
+                    // grant the morale boost from the recovery branch (Chronic
+                    // is not the same as recovered).
+                    crisis.status = CrisisStatus.Chronic;
+                    crisis.dayResolved = day;
+                    _state.currentOccupancy--;
+                    _state.resolvedCases.Add(crisis);
+                    _log.Warn($"[MentalHealth] {crisis.survivorId} untreated for "
+                              + $"{day - crisis.dayStarted} days → Chronic");
+                    OnMentalHealthChanged?.Invoke();
+                }
             }
 
             _state.activeCases.RemoveAll(c => c.status == CrisisStatus.Recovered || c.status == CrisisStatus.Chronic);
@@ -163,12 +188,20 @@ namespace Ashfall.Core
             return crisis == null || crisis.status == CrisisStatus.Recovered || crisis.status == CrisisStatus.Chronic;
         }
 
-        public MentalHealthState CaptureState() => _state;
+        public MentalHealthState CaptureState() => CloneState(_state);
+
         public void RestoreState(MentalHealthState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnMentalHealthChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static MentalHealthState CloneState(MentalHealthState src)
+        {
+            if (src == null) return new MentalHealthState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<MentalHealthState>(json) ?? new MentalHealthState();
         }
     }
 }

@@ -1,82 +1,133 @@
-[
-  {
-    "id": "oak_bark_tan_chestnut_liquor_density",
-    "tannery_vat_id": "LAY_AWAY_PIT_ROW_ALPHA_01",
-    "bark_source_botanical": "QUERCUS_PRINOIDES_CHESTNUT_OAK",
-    "barkometer_density_degrees": 48.0,
-    "hide_steep_duration_months": 12.0,
-    "timestamp_relative": "YEAR_02_TANNERY_LOG_01",
-    "tags": ["tanning", "vegetable_tan", "oak_bark", "barkometer", "sole_leather"],
-    "prose": "Layering shredded chestnut oak bark between twenty heavy bull hides in the deep lime-rock pit built a 48° Barkometer tannin steep. Twelve months of slow cold subterranean soaking yielded dense, water-resistant sole leather capable of five years heavy tunnel wear."
-  },
-  {
-    "id": "oak_bark_tan_pit_sour_fermentation_bloom",
-    "tannery_vat_id": "SOUR_FERMENTATION_HANDLER_03",
-    "bark_source_botanical": "QUERCUS_ROBUR_ENGLISH_OAK",
-    "barkometer_density_degrees": 22.0,
-    "hide_steep_duration_months": 3.0,
-    "timestamp_relative": "YEAR_04_TANNERY_LOG_03",
-    "tags": ["tanning", "sour_liquor", "fermentation", "plumping", "collagen"],
-    "prose": "Wild *Lactobacillus* proliferation in the early tan liquor dropped pit pH to 3.7. The resulting organic acid bath plumped the steer hide collagen bundles, opening interstitial spaces for rapid tannin penetration without grain harshness."
-  },
-  {
-    "id": "oak_bark_tan_tannin_case_hardening_strike",
-    "tannery_vat_id": "FAST_TRACK_BARREL_DRUM_02",
-    "bark_source_botanical": "CONCENTRATED_QUEBRACHO_EXTRACT",
-    "barkometer_density_degrees": 85.0,
-    "hide_steep_duration_months": 1.0,
-    "timestamp_relative": "YEAR_07_TANNERY_LOG_02",
-    "tags": ["tanning", "case_hardening", "over_tanning", "raw_core", "leather_failure"],
-    "prose": "Plunging fresh un-conditioned hides into an overly concentrated 85° Barkometer tannin liquor case-hardened the surface grain instantly. The impenetrable outer tannin barrier starved the interior, leaving an untanned gelatinous core that rotted into liquid stench within weeks."
-  },
-  {
-    "id": "oak_bark_tan_iron_stain_black_rust_spot",
-    "tannery_vat_id": "WASH_POOL_VAT_NUMBER_05",
-    "bark_source_botanical": "WHITE_OAK_INNER_BARK_SHREDS",
-    "barkometer_density_degrees": 35.0,
-    "hide_steep_duration_months": 6.0,
-    "timestamp_relative": "YEAR_09_TANNERY_LOG_04",
-    "tags": ["tanning", "iron_stain", "ferric_tannate", "blemish", "rust_hook"],
-    "prose": "A rusted iron handling hook left submerged in the tan vat reacted with oak gallotannins, precipitating insoluble black ferric tannate. Thirty premium saddle skirts were indelibly stained with jet-black ink spots, downgrading the lot to tool sheath utility scrap."
-  },
-  {
-    "id": "oak_bark_tan_sumac_leaf_light_saddlery_cure",
-    "tannery_vat_id": "FINE_PALE_LEATHER_VAT_02",
-    "bark_source_botanical": "RHUS_GLABRA_SMOOTH_SUMAC_LEAVES",
-    "barkometer_density_degrees": 28.0,
-    "hide_steep_duration_months": 4.0,
-    "timestamp_relative": "YEAR_12_TANNERY_LOG_01",
-    "tags": ["tanning", "sumac", "pale_leather", "saddlery", "scabbard"],
-    "prose": "Steeping wild smooth sumac leaves rich in gallotannins produced an exceptionally pale, cream-colored leather. The hides remained remarkably pliable and light-fast, ideal for crafting non-abrasive rifle slings and holster linings."
-  },
-  {
-    "id": "oak_bark_tan_willow_bark_flexible_boot_upper",
-    "tannery_vat_id": "SUBTERRANEAN_RIVER_WILLOW_PIT",
-    "bark_source_botanical": "SALIX_ALBA_WHITE_WILLOW_BARK",
-    "barkometer_density_degrees": 18.0,
-    "hide_steep_duration_months": 5.0,
-    "timestamp_relative": "YEAR_15_TANNERY_LOG_03",
-    "tags": ["tanning", "willow_bark", "boot_leather", "supple", "footwear"],
-    "prose": "Infusing peeled white willow bark in cold aquifer drainage yielded a mild, non-astringent tannin broth. The leather produced had low stiffness and high tensile elongation, providing ideal material for waterproof survival boot uppers that never blister dweller feet."
-  },
-  {
-    "id": "oak_bark_tan_spent_tanbark_fuel_briquetting",
-    "tannery_vat_id": "SPENT_BARK_HYDRAULIC_PRESS",
-    "bark_source_botanical": "LEACHED_OAK_AND_HEMLOCK_MUSH",
-    "barkometer_density_degrees": 0.0,
-    "hide_steep_duration_months": 0.0,
-    "timestamp_relative": "YEAR_17_TANNERY_LOG_02",
-    "tags": ["tanning", "spent_bark", "fuel_briquette", "recycling", "kiln_fuel"],
-    "prose": "Dewatering spent, tannin-depleted bark residue under a 20-ton screw press produced dense, interlocking cake blocks. Once air-dried in the exhaust gallery, the tanbark briquettes burned with a steady, smokeless glow in the foundry reverberatory furnace."
-  },
-  {
-    "id": "oak_bark_tan_tannery_effluent_oxygen_depletion",
-    "tannery_vat_id": "DRAINAGE_OUTFALL_SUMP_CANAL",
-    "bark_source_botanical": "MIXED_TANNERY_WASTE_SLUDGE",
-    "barkometer_density_degrees": 12.0,
-    "hide_steep_duration_months": 0.0,
-    "timestamp_relative": "YEAR_20_TANNERY_LOG_01",
-    "tags": ["tanning", "effluent", "bod_depletion", "crayfish_kill", "pollution"],
-    "prose": "Unfiltered discharge of spent tannin wash containing 4,000 mg/L BOD into the lower drainage canal stripped all dissolved oxygen from the water. An entire commercial cave crayfish cultivation pool suffocated in six hours, wiping out a critical bunker protein supply."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "oak_bark_tan_chestnut_liquor_density",
+      "tannery_vat_id": "LAY_AWAY_PIT_ROW_ALPHA_01",
+      "bark_source_botanical": "QUERCUS_PRINOIDES_CHESTNUT_OAK",
+      "barkometer_density_degrees": 48.0,
+      "hide_steep_duration_months": 12.0,
+      "timestamp_relative": "YEAR_02_TANNERY_LOG_01",
+      "tags": [
+        "tanning",
+        "vegetable_tan",
+        "oak_bark",
+        "barkometer",
+        "sole_leather"
+      ],
+      "prose": "Layering shredded chestnut oak bark between twenty heavy bull hides in the deep lime-rock pit built a 48° Barkometer tannin steep. Twelve months of slow cold subterranean soaking yielded dense, water-resistant sole leather capable of five years heavy tunnel wear."
+    },
+    {
+      "id": "oak_bark_tan_pit_sour_fermentation_bloom",
+      "tannery_vat_id": "SOUR_FERMENTATION_HANDLER_03",
+      "bark_source_botanical": "QUERCUS_ROBUR_ENGLISH_OAK",
+      "barkometer_density_degrees": 22.0,
+      "hide_steep_duration_months": 3.0,
+      "timestamp_relative": "YEAR_04_TANNERY_LOG_03",
+      "tags": [
+        "tanning",
+        "sour_liquor",
+        "fermentation",
+        "plumping",
+        "collagen"
+      ],
+      "prose": "Wild *Lactobacillus* proliferation in the early tan liquor dropped pit pH to 3.7. The resulting organic acid bath plumped the steer hide collagen bundles, opening interstitial spaces for rapid tannin penetration without grain harshness."
+    },
+    {
+      "id": "oak_bark_tan_tannin_case_hardening_strike",
+      "tannery_vat_id": "FAST_TRACK_BARREL_DRUM_02",
+      "bark_source_botanical": "CONCENTRATED_QUEBRACHO_EXTRACT",
+      "barkometer_density_degrees": 85.0,
+      "hide_steep_duration_months": 1.0,
+      "timestamp_relative": "YEAR_07_TANNERY_LOG_02",
+      "tags": [
+        "tanning",
+        "case_hardening",
+        "over_tanning",
+        "raw_core",
+        "leather_failure"
+      ],
+      "prose": "Plunging fresh un-conditioned hides into an overly concentrated 85° Barkometer tannin liquor case-hardened the surface grain instantly. The impenetrable outer tannin barrier starved the interior, leaving an untanned gelatinous core that rotted into liquid stench within weeks."
+    },
+    {
+      "id": "oak_bark_tan_iron_stain_black_rust_spot",
+      "tannery_vat_id": "WASH_POOL_VAT_NUMBER_05",
+      "bark_source_botanical": "WHITE_OAK_INNER_BARK_SHREDS",
+      "barkometer_density_degrees": 35.0,
+      "hide_steep_duration_months": 6.0,
+      "timestamp_relative": "YEAR_09_TANNERY_LOG_04",
+      "tags": [
+        "tanning",
+        "iron_stain",
+        "ferric_tannate",
+        "blemish",
+        "rust_hook"
+      ],
+      "prose": "A rusted iron handling hook left submerged in the tan vat reacted with oak gallotannins, precipitating insoluble black ferric tannate. Thirty premium saddle skirts were indelibly stained with jet-black ink spots, downgrading the lot to tool sheath utility scrap."
+    },
+    {
+      "id": "oak_bark_tan_sumac_leaf_light_saddlery_cure",
+      "tannery_vat_id": "FINE_PALE_LEATHER_VAT_02",
+      "bark_source_botanical": "RHUS_GLABRA_SMOOTH_SUMAC_LEAVES",
+      "barkometer_density_degrees": 28.0,
+      "hide_steep_duration_months": 4.0,
+      "timestamp_relative": "YEAR_12_TANNERY_LOG_01",
+      "tags": [
+        "tanning",
+        "sumac",
+        "pale_leather",
+        "saddlery",
+        "scabbard"
+      ],
+      "prose": "Steeping wild smooth sumac leaves rich in gallotannins produced an exceptionally pale, cream-colored leather. The hides remained remarkably pliable and light-fast, ideal for crafting non-abrasive rifle slings and holster linings."
+    },
+    {
+      "id": "oak_bark_tan_willow_bark_flexible_boot_upper",
+      "tannery_vat_id": "SUBTERRANEAN_RIVER_WILLOW_PIT",
+      "bark_source_botanical": "SALIX_ALBA_WHITE_WILLOW_BARK",
+      "barkometer_density_degrees": 18.0,
+      "hide_steep_duration_months": 5.0,
+      "timestamp_relative": "YEAR_15_TANNERY_LOG_03",
+      "tags": [
+        "tanning",
+        "willow_bark",
+        "boot_leather",
+        "supple",
+        "footwear"
+      ],
+      "prose": "Infusing peeled white willow bark in cold aquifer drainage yielded a mild, non-astringent tannin broth. The leather produced had low stiffness and high tensile elongation, providing ideal material for waterproof survival boot uppers that never blister dweller feet."
+    },
+    {
+      "id": "oak_bark_tan_spent_tanbark_fuel_briquetting",
+      "tannery_vat_id": "SPENT_BARK_HYDRAULIC_PRESS",
+      "bark_source_botanical": "LEACHED_OAK_AND_HEMLOCK_MUSH",
+      "barkometer_density_degrees": 0.0,
+      "hide_steep_duration_months": 0.0,
+      "timestamp_relative": "YEAR_17_TANNERY_LOG_02",
+      "tags": [
+        "tanning",
+        "spent_bark",
+        "fuel_briquette",
+        "recycling",
+        "kiln_fuel"
+      ],
+      "prose": "Dewatering spent, tannin-depleted bark residue under a 20-ton screw press produced dense, interlocking cake blocks. Once air-dried in the exhaust gallery, the tanbark briquettes burned with a steady, smokeless glow in the foundry reverberatory furnace."
+    },
+    {
+      "id": "oak_bark_tan_tannery_effluent_oxygen_depletion",
+      "tannery_vat_id": "DRAINAGE_OUTFALL_SUMP_CANAL",
+      "bark_source_botanical": "MIXED_TANNERY_WASTE_SLUDGE",
+      "barkometer_density_degrees": 12.0,
+      "hide_steep_duration_months": 0.0,
+      "timestamp_relative": "YEAR_20_TANNERY_LOG_01",
+      "tags": [
+        "tanning",
+        "effluent",
+        "bod_depletion",
+        "crayfish_kill",
+        "pollution"
+      ],
+      "prose": "Unfiltered discharge of spent tannin wash containing 4,000 mg/L BOD into the lower drainage canal stripped all dissolved oxygen from the water. An entire commercial cave crayfish cultivation pool suffocated in six hours, wiping out a critical bunker protein supply."
+    }
+  ]
+}

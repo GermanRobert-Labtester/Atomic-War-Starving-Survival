@@ -1,12 +1,18 @@
 using System;
+#pragma warning disable CS8618
 using System.IO;
 using Ashfall.Core;
+using Ashfall.Core.Survivors;
 
 namespace AtomicWar.GodotApp
 {
     /// <summary>
     /// Godot's playable Holdfast boundary. The world session owns existing
     /// Holdfast systems; the Core trade session owns mutable inventory/value/stock.
+    ///
+    /// Single-source-of-truth: Survival mechanics (Health/Hunger/Thirst/Radiation)
+    /// project directly from Ashfall.Core.Survivors.NeedsSystem and RadiationSystem
+    /// via the bound SurvivorsHostSession.
     /// </summary>
     public sealed class HoldfastRuntimeSession
     {
@@ -24,11 +30,33 @@ namespace AtomicWar.GodotApp
         public string LastPersistenceMessage { get; private set; } = string.Empty;
         public bool HasPurchasedThisSession { get; set; }
 
-        // ── Survival state ───────────────────────────────────────────
-        public int Health { get; private set; } = MaxHealth;
-        public float Radiation { get; private set; } = 0f; // mSv accumulated
-        public int Hunger { get; private set; } = 0; // 0 = fed, 100 = starving
-        public int Thirst { get; private set; } = 0; // 0 = hydrated, 100 = dehydrated
+        // ── Authoritative Cohort / Player Binding ────────────────────
+        public SurvivorsHostSession? Survivors { get; set; }
+        public string PlayerSurvivorId { get; set; } = "survivor_dr_sarah_chen";
+
+        // ── Fallback survival state (for headless/standalone tests) ──
+        private int _fallbackHealth = MaxHealth;
+        private int _fallbackHunger = 0;
+        private int _fallbackThirst = 0;
+        private float _fallbackRadiation = 0f;
+
+        // ── Survival state projections ───────────────────────────────
+        public int Health => Survivors?.Find(PlayerSurvivorId) != null
+            ? (int)Math.Clamp(Survivors.Find(PlayerSurvivorId)!.Health, 0f, (float)MaxHealth)
+            : _fallbackHealth;
+
+        public float Radiation => Survivors != null
+            ? (Survivors.RadStateFor(PlayerSurvivorId)?.RadiationDose ?? 0f)
+            : _fallbackRadiation;
+
+        public int Hunger => Survivors?.Find(PlayerSurvivorId) != null
+            ? (int)Math.Clamp(Survivors.Find(PlayerSurvivorId)!.Hunger, 0f, (float)MaxHunger)
+            : _fallbackHunger;
+
+        public int Thirst => Survivors?.Find(PlayerSurvivorId) != null
+            ? (int)Math.Clamp(Survivors.Find(PlayerSurvivorId)!.Thirst, 0f, (float)MaxThirst)
+            : _fallbackThirst;
+
         public int Day { get; private set; } = 1;
         public bool IsDead => Health <= 0;
         public string DeathCause { get; private set; } = string.Empty;
@@ -76,7 +104,7 @@ namespace AtomicWar.GodotApp
             return session;
         }
 
-        public bool TrySave(string basePathOverride = null, string tradePathOverride = null)
+        public bool TrySave(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool baseSaved = HoldfastSaveStore.TrySave(World.CaptureSave(), basePathOverride);
             bool tradeSaved = HoldfastTradeSaveStore.TrySave(Trade.CaptureState(), tradePathOverride);
@@ -87,7 +115,7 @@ namespace AtomicWar.GodotApp
             return saved;
         }
 
-        public bool TryReload(string basePathOverride = null, string tradePathOverride = null)
+        public bool TryReload(string basePathOverride = null!, string tradePathOverride = null!)
         {
             bool restoredAny = false;
             var baseSave = HoldfastSaveStore.TryLoad(basePathOverride);
@@ -122,9 +150,9 @@ namespace AtomicWar.GodotApp
         // ── Survival mechanics ────────────────────────────────────────
 
         /// <summary>
-        /// Advance one day. Hunger and thirst increase; radiation accumulates;
-        /// health decreases if thresholds are exceeded. Quests auto-advance.
-        /// Returns a summary string.
+        /// Advance one day. Advances quest progress and checks game over / win conditions.
+        /// Simulation decay (hunger, thirst, radiation, health loss) is driven authoritatively
+        /// by Core NeedsSystem and RadiationSystem (ticked via SurvivorsHostSession.TickHour).
         /// </summary>
         public string TickDay()
         {
@@ -132,24 +160,24 @@ namespace AtomicWar.GodotApp
 
             Day++;
 
-            // Hunger and thirst increase daily
-            Hunger = Math.Min(MaxHunger, Hunger + 8);
-            Thirst = Math.Min(MaxThirst, Thirst + 10);
+            // Fallback decay when running in isolated test harnesses without SurvivorsHostSession
+            if (Survivors == null)
+            {
+                _fallbackHunger = Math.Min(MaxHunger, _fallbackHunger + 8);
+                _fallbackThirst = Math.Min(MaxThirst, _fallbackThirst + 10);
+                if (_fallbackRadiation > 0)
+                    _fallbackRadiation = Math.Max(0, _fallbackRadiation - _fallbackRadiation * 0.07f);
 
-            // Radiation decays slowly (biological half-life ~10 days)
-            if (Radiation > 0)
-                Radiation = Math.Max(0, Radiation - Radiation * 0.07f);
+                int hpLoss = 0;
+                if (_fallbackHunger >= StarvationThreshold)
+                    hpLoss += (int)((_fallbackHunger - StarvationThreshold) * 0.5f);
+                if (_fallbackThirst >= DehydrationThreshold)
+                    hpLoss += (int)((_fallbackThirst - DehydrationThreshold) * 0.6f);
+                if (_fallbackRadiation >= RadDamageThreshold)
+                    hpLoss += (int)((_fallbackRadiation - RadDamageThreshold) * 0.1f);
 
-            // Health damage from starvation, dehydration, radiation
-            int hpLoss = 0;
-            if (Hunger >= StarvationThreshold)
-                hpLoss += (int)((Hunger - StarvationThreshold) * 0.5f);
-            if (Thirst >= DehydrationThreshold)
-                hpLoss += (int)((Thirst - DehydrationThreshold) * 0.6f);
-            if (Radiation >= RadDamageThreshold)
-                hpLoss += (int)((Radiation - RadDamageThreshold) * 0.1f);
-
-            Health = Math.Max(0, Health - hpLoss);
+                _fallbackHealth = Math.Max(0, _fallbackHealth - hpLoss);
+            }
 
             // Advance quests
             if (World.Quests != null)
@@ -188,11 +216,19 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public bool ConsumeFood(string itemId, int amount = 1)
         {
+            if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
             int held = Trade.GetHeld(itemId);
             if (held < amount) return false;
 
             Trade.Inventory.RemoveItem(itemId, amount);
-            Hunger = Math.Max(0, Hunger - 30 * amount);
+            if (Survivors != null)
+            {
+                Survivors.Needs.Modify(PlayerSurvivorId, NeedKind.Hunger, -30f * amount);
+            }
+            else
+            {
+                _fallbackHunger = Math.Max(0, _fallbackHunger - 30 * amount);
+            }
             StateChanged?.Invoke();
             return true;
         }
@@ -203,11 +239,19 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public bool ConsumeWater(string itemId, int amount = 1)
         {
+            if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
             int held = Trade.GetHeld(itemId);
             if (held < amount) return false;
 
             Trade.Inventory.RemoveItem(itemId, amount);
-            Thirst = Math.Max(0, Thirst - 35 * amount);
+            if (Survivors != null)
+            {
+                Survivors.Needs.Modify(PlayerSurvivorId, NeedKind.Thirst, -35f * amount);
+            }
+            else
+            {
+                _fallbackThirst = Math.Max(0, _fallbackThirst - 35 * amount);
+            }
             StateChanged?.Invoke();
             return true;
         }
@@ -217,7 +261,15 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public void ExposeRadiation(float msv)
         {
-            Radiation += msv;
+            if (msv <= 0f) return;
+            if (Survivors != null)
+            {
+                Survivors.ExposeToZone(PlayerSurvivorId, msv);
+            }
+            else
+            {
+                _fallbackRadiation += msv;
+            }
             StateChanged?.Invoke();
         }
 
@@ -226,11 +278,19 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public bool UseAntiRad(string itemId, float reduction = 20f)
         {
+            if (string.IsNullOrEmpty(itemId) || reduction <= 0f) return false;
             int held = Trade.GetHeld(itemId);
             if (held < 1) return false;
 
             Trade.Inventory.RemoveItem(itemId, 1);
-            Radiation = Math.Max(0, Radiation - reduction);
+            if (Survivors != null)
+            {
+                Survivors.AdministerAntiRad(PlayerSurvivorId, reduction);
+            }
+            else
+            {
+                _fallbackRadiation = Math.Max(0, _fallbackRadiation - reduction);
+            }
             StateChanged?.Invoke();
             return true;
         }
@@ -240,7 +300,15 @@ namespace AtomicWar.GodotApp
         /// </summary>
         public void Heal(int amount)
         {
-            Health = Math.Min(MaxHealth, Health + amount);
+            if (amount <= 0) return;
+            if (Survivors != null)
+            {
+                Survivors.Needs.Modify(PlayerSurvivorId, NeedKind.Health, (float)amount);
+            }
+            else
+            {
+                _fallbackHealth = Math.Min(MaxHealth, _fallbackHealth + amount);
+            }
             StateChanged?.Invoke();
         }
 
@@ -284,7 +352,7 @@ namespace AtomicWar.GodotApp
             return $"Visited {displayName}.{radNote}{questNote}";
         }
 
-        private HoldfastLocationEntry FindLocation(string id)
+        private HoldfastLocationEntry? FindLocation(string id)
         {
             var locs = World.Catalog?.Locations;
             if (locs == null) return null;
@@ -332,7 +400,7 @@ namespace AtomicWar.GodotApp
             return "The bunker fell silent. The ledger closes here.";
         }
 
-        public bool ArchiveAndFreshStart(string basePathOverride = null, string tradePathOverride = null)
+        public bool ArchiveAndFreshStart(string basePathOverride = null!, string tradePathOverride = null!)
         {
             try
             {

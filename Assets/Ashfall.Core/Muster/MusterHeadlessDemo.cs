@@ -1,5 +1,6 @@
 using Ashfall.Core;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Muster
 {    public sealed class MusterHeadlessReport : HeadlessReport
@@ -14,7 +15,7 @@ namespace Ashfall.Core.Muster
     /// </summary>
     public static class MusterHeadlessDemo
     {
-        public static MusterHeadlessReport Run(ILog log = null)
+        public static MusterHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

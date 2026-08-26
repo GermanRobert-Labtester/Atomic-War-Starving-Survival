@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string lyePath = Path.Combine(directoryPath, "wood_ash_lye_hydrometer_logs.json");
             if (File.Exists(lyePath))
             {
-                var list = JsonSerializer.Deserialize<List<WoodAshLyeHydrometerEntry>>(File.ReadAllText(lyePath), options);
+                var list = CatalogLocator.LoadWrappedList<WoodAshLyeHydrometerEntry>(File.ReadAllText(lyePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string tallowPath = Path.Combine(directoryPath, "tallow_saponification_kettle_audits.json");
             if (File.Exists(tallowPath))
             {
-                var list = JsonSerializer.Deserialize<List<TallowSaponificationKettleEntry>>(File.ReadAllText(tallowPath), options);
+                var list = CatalogLocator.LoadWrappedList<TallowSaponificationKettleEntry>(File.ReadAllText(tallowPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string curingPath = Path.Combine(directoryPath, "cold_process_soap_curing_reports.json");
             if (File.Exists(curingPath))
             {
-                var list = JsonSerializer.Deserialize<List<ColdProcessSoapCuringEntry>>(File.ReadAllText(curingPath), options);
+                var list = CatalogLocator.LoadWrappedList<ColdProcessSoapCuringEntry>(File.ReadAllText(curingPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string glycerinPath = Path.Combine(directoryPath, "sweet_water_glycerin_assays.json");
             if (File.Exists(glycerinPath))
             {
-                var list = JsonSerializer.Deserialize<List<SweetWaterGlycerinEntry>>(File.ReadAllText(glycerinPath), options);
+                var list = CatalogLocator.LoadWrappedList<SweetWaterGlycerinEntry>(File.ReadAllText(glycerinPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public WoodAshLyeHydrometerEntry GetLye(string id)
+        public WoodAshLyeHydrometerEntry? GetLye(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is WoodAshLyeHydrometerEntry e ? e : null;
         }
 
-        public TallowSaponificationKettleEntry GetTallow(string id)
+        public TallowSaponificationKettleEntry? GetTallow(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TallowSaponificationKettleEntry e ? e : null;
         }
 
-        public ColdProcessSoapCuringEntry GetCuring(string id)
+        public ColdProcessSoapCuringEntry? GetCuring(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ColdProcessSoapCuringEntry e ? e : null;
         }
 
-        public SweetWaterGlycerinEntry GetGlycerin(string id)
+        public SweetWaterGlycerinEntry? GetGlycerin(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SweetWaterGlycerinEntry e ? e : null;

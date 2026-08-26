@@ -1,0 +1,1045 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "npc_yelena_quartermaster",
+      "display_name": "Yelena",
+      "profession": "Quartermaster",
+      "bio": "Carries two numbers: the one she tells people and the one in the book. The book is the only honest place left. She has been counting since the first day, when no one else would, and the counting made her the quartermaster by default. She refuses the double ration and the top bunk. She sleeps in the office, on a cot, with the stores locked behind her. She has a face that says nothing, which is the face her sister taught her, and the face the shelter relies on. The shelter does not know the flour number. The book knows. She is the book.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "honest_count",
+        "fair_distribution",
+        "someone_to_share_the_number"
+      ],
+      "offers": [
+        "ration_discipline",
+        "inventory_accuracy",
+        "the_honest_count"
+      ],
+      "will_not": [
+        "lie_about_the_number",
+        "play_favorites",
+        "sleep_the_top_bunk"
+      ],
+      "signature_quote": "Forty-two is the number they can carry. Eleven is the number. I carry both. The book is the only honest place."
+    },
+    {
+      "id": "npc_tomas_engineer",
+      "display_name": "Tomas",
+      "profession": "Engineer",
+      "bio": "Keeps a 1971 Meridian diesel generator alive on heating oil and boot leather. The manual is missing its back pages — the trouble pages — so he writes them himself, in the margin, in pencil. He has been the trouble pages for eleven years. He talks to the generator the way some people talk to animals, and the generator, so far, has answered. He cut a bearing shim from a clock that no longer keeps time, and the clock is in the generator now, and the generator keeps time in its own way. He is not a religious man, but the hum is the closest thing he has to a prayer, and he does not let it stop.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "fuel",
+        "a_real_bearing",
+        "someone_to_hold_the_lamp"
+      ],
+      "offers": [
+        "generator_repair",
+        "improvised_engineering",
+        "the_trouble_pages"
+      ],
+      "will_not": [
+        "stop_the_generator",
+        "leave_the_shelter",
+        "sleep_during_the_knock"
+      ],
+      "signature_quote": "The clock is in the generator. The generator is keeping time. I am the trouble pages."
+    },
+    {
+      "id": "npc_ivan_doctor",
+      "display_name": "Dr. Ivan",
+      "profession": "Physician",
+      "bio": "Ran triage in the first hours and has not stopped running it since. He has a triage doctrine written in pencil on a clipboard — the pencil is still on the clipboard. He chose the strong once, and the river woman died, and he wrote the choosing down, and he writes it down again in every note, because the writing is the only way he knows he decided and did not simply let it happen. He is tired in the way that is not the body. He sleeps in the clinic, on the floor, with the sheet that is not a wall still hanging. He is the policy. The policy is in the margin.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "medicine",
+        "a_real_wall_for_isolation",
+        "someone_to_make_the_choice_for_him"
+      ],
+      "offers": [
+        "triage",
+        "clinical_judgment",
+        "the_margin_note"
+      ],
+      "will_not": [
+        "choose_again",
+        "leave_the_sheet_down",
+        "forget_the_river_woman"
+      ],
+      "signature_quote": "I chose the strong. I wrote it here so I cannot un-write it. The lungs are the proof."
+    },
+    {
+      "id": "npc_anya_nurse",
+      "display_name": "Nurse Anya",
+      "profession": "Nurse",
+      "bio": "Takes the pulse and the name. The sky is not her department. She lies about the sky to the ones who are going — she tells them it is clearing, and they smile, and the smile is the truth, and the sky is the lie. She names the dead who come without names: the river woman, the man in the ditch, the one by the road. The naming is the medicine she practices when the medicine runs out. She keeps a child's drawing of the sun on the wall by her cot — the sun has a face, the face is smiling, the sun is not smiling, the picture is the only sun. She is the nurse. She keeps the sun.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "medicine",
+        "a_real_name_for_every_patient",
+        "the_sky_to_clear"
+      ],
+      "offers": [
+        "comfort_care",
+        "patient_intake",
+        "the_name_for_the_nameless"
+      ],
+      "will_not": [
+        "tell_the_truth_about_the_sky",
+        "stop_naming_the_dead",
+        "take_the_top_bunk"
+      ],
+      "signature_quote": "He smiled when I told him the sky was clearing. The sky is not clearing. The smile is the truth."
+    },
+    {
+      "id": "npc_suki_teacher",
+      "display_name": "Suki",
+      "profession": "Teacher",
+      "bio": "Teaches the water cycle in a corridor with no chalk. She drew the cycle on the wall with the last of the chalk, and when the chalk ran out she drew it in the air, and the children drew it with their fingers, and the cycle was in the air, and the air was the lesson. She teaches what she finds out: the engineer told her the grey rain is the ash, and she taught the children, and the children taught the children. She is the cycle. The cycle is the sky. The sky is still there, even when it is grey. Especially when it is grey.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 6,
+      "location_id": "",
+      "wants": [
+        "chalk",
+        "a_real_classroom",
+        "the_children_to_grow"
+      ],
+      "offers": [
+        "the_lesson",
+        "the_cycle",
+        "teaching_without_chalk"
+      ],
+      "will_not": [
+        "stop_teaching",
+        "leave_the_shelter",
+        "forget_the_cycle"
+      ],
+      "signature_quote": "The lesson is not the chalk. The lesson is the cycle. The cycle is in me. I am the teacher."
+    },
+    {
+      "id": "npc_petr_farmer",
+      "display_name": "Old Petr",
+      "profession": "Farmer",
+      "bio": "Plants against the season, in a cold frame, against a south wall, because the season is not the season and the spring is not the spring and the ground is the only calendar that is honest. He is older than the calendar. He cried at the sprout, which is a thing he does not do, he plants, but the sprout was the first green in a long time and the green is the thing and the crying is the thing and the two are the same. He writes in the dirt because the dirt is where the thing is and the dirt is the only honest page. He lets the child Rima watch, because the child watching a potato is a child watching a thing become itself.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 8,
+      "location_id": "",
+      "wants": [
+        "seed",
+        "a_real_spring",
+        "the_wall_to_remember"
+      ],
+      "offers": [
+        "planting_against_the_season",
+        "the_cold_frame",
+        "the_wall_remembers"
+      ],
+      "will_not": [
+        "plant_in_the_spring",
+        "leave_the_wall",
+        "forget_the_dirt"
+      ],
+      "signature_quote": "The ground is workable now. The ground is the only calendar that is honest. Plant when the ground is workable."
+    },
+    {
+      "id": "npc_rima_child",
+      "display_name": "Rima",
+      "profession": "Child (age 9)",
+      "bio": "Mama gave her the book. She writes what she sees. She sees the book, the pencil, the wall. The wall is the colour of porridge. She drew the sun with a face because Mama said to, and the face is smiling, and the sun is not smiling, but the drawing is smiling and Mama put it on the wall. She counts the people at dinner. She does not write the number. She learned a word: ration. She thinks fair is not the same as enough. She did not say this. She wrote it. The book is where she says the things. She is good at the quiet game. She did not want to win.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 3,
+      "location_id": "",
+      "wants": [
+        "papa",
+        "the_sun_to_come_back",
+        "the_number_to_be_enough"
+      ],
+      "offers": [
+        "the_quiet_game",
+        "counting",
+        "the_book"
+      ],
+      "will_not": [
+        "make_noise",
+        "stop_counting",
+        "forget_papa"
+      ],
+      "signature_quote": "I think fair is not the same as enough. I did not say this. I wrote it. The book is where I say the things."
+    },
+    {
+      "id": "npc_bram_courier",
+      "display_name": "Bram",
+      "profession": "Courier",
+      "bio": "Runs the road with a pouch against his skin. The pouch is the treaty. The treaty is the words that change the lists. He talked to the pouch in the forest when he was lost, and the pouch did not answer, and he was the only one who had to. He runs clean. He comes back. He carries the word, late or not, and the word is the word. He does not talk about the forest. He will tell you or he will not. He sleeps with his boots on, which is how you know he is a courier, and which is how he knows he is still a courier, and the boots are the identity and the identity is the boots.",
+      "faction": "none",
+      "region": "the_road",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "a_clear_road",
+        "the_word_to_be_on_time",
+        "the_forest_to_be_behind_him"
+      ],
+      "offers": [
+        "the_pouch",
+        "the_route",
+        "running_clean"
+      ],
+      "will_not": [
+        "open_the_pouch",
+        "take_a_passenger",
+        "stop_running"
+      ],
+      "signature_quote": "The word was late but the word was the word. I am here. That is the delivery."
+    },
+    {
+      "id": "npc_mira_scavenger",
+      "display_name": "Mira",
+      "profession": "Scavenger",
+      "bio": "Goes to the printing works when the others go to the stores. The stores are picked. The printing works has the office wing, which the others do not bother with because it has no food, but the office wing has the lamps and the wire and the brass screws. She found iodine in a desk once, in the back of a drawer, and she did not tell anyone. She left screws on a desk for another scavenger, and a candle, and the other scavenger left a note that said thank you, and she carries the note and does not know what to do with it. She is a scavenger who takes. She is a scavenger who leaves things. She does not know why she leaves things.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 7,
+      "location_id": "",
+      "wants": [
+        "the_list",
+        "a_partner",
+        "to_know_why_she_leaves_things"
+      ],
+      "offers": [
+        "scavenging",
+        "the_printing_works",
+        "the_iodine_jar"
+      ],
+      "will_not": [
+        "take_the_candle_back",
+        "tell_the_others_about_the_printing_works",
+        "stop_leaving_things"
+      ],
+      "signature_quote": "I am a scavenger. I take. I left screws on a desk and a candle and someone said thank you and I do not know what to do with that."
+    },
+    {
+      "id": "npc_boris_baker",
+      "display_name": "Boris",
+      "profession": "Baker",
+      "bio": "Burns the bread on Tuesdays, which is the joke and the truth and the thing the mess hall knows him for. He takes the Tuesday bread from his own tray and gives it to the Loma girl, who is hungry, and he eats the burned bread himself, and he does not say, and the quartermaster does not say, and the two of them are the two who do not say. He knows the flour number, or he suspects it, because he is the baker and the baker knows the flour the way the engineer knows the fuel. He does not ask. The tray is the yes. The counter is the no. He is the bread. The bread is the Tuesday. The Tuesday is eternal.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 7,
+      "location_id": "",
+      "wants": [
+        "flour",
+        "a_real_oven",
+        "the_flour_number_to_be_public"
+      ],
+      "offers": [
+        "the_bread",
+        "the_tuesday_bread",
+        "the_burned_slice"
+      ],
+      "will_not": [
+        "stop_burning_the_bread",
+        "stop_giving_to_the_loma_girl",
+        "ask_the_quartermaster_the_number"
+      ],
+      "signature_quote": "The brown speckles in the Tuesday hardtack are pine bark flour, not weevils. Weevils would have more protein."
+    },
+    {
+      "id": "npc_dmitri_stoker",
+      "display_name": "Dmitri the Stoker",
+      "profession": "Stoker",
+      "bio": "Shovels lignite in the boiler room and has a rule about wet gloves on the draft lever, which is the rule and the joke and the law of the boiler room. He is the heat. The heat is the shelter. He knows the west branch is cold because the valve is closed, and he closed it, and the corridor is the cold, and the ward is the warm, and the patient is the warm, and the warm is the patient. He is loud in the boiler room and quiet everywhere else, which is the stoker, and which is the man. He does not sleep well. The boiler does not sleep. He is the boiler's shadow.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "coal",
+        "a_real_gasket",
+        "the_west_branch_to_be_warm_again"
+      ],
+      "offers": [
+        "the_heat",
+        "the_draft_lever",
+        "the_wet_gloves_rule"
+      ],
+      "will_not": [
+        "leave_the_boiler",
+        "open_the_west_branch",
+        "sleep_through_the_night"
+      ],
+      "signature_quote": "Wet gloves on the draft lever = two tons of lignite on Saturday. Yes, this means you."
+    },
+    {
+      "id": "npc_grandmother_loma",
+      "display_name": "Grandmother Loma",
+      "profession": "Elder / Grandmother",
+      "bio": "Arrived with the family, seven of them, and asked where the school was. There is no school, she was told. There is a teacher, she said. Then there is a school. She planted the seed potatoes in the autumn, against the season, because the farmer said to and because the grandmother knows the farmer is older than the calendar. She is the one who said, 'then we eat less, and we plant,' when the quartermaster told the real number, and she said it like it was already decided, and it was. She carries the family the way the quartermaster carries the number: between her and the book, and not in front of the children.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 14,
+      "location_id": "",
+      "wants": [
+        "the_children_to_grow",
+        "the_school",
+        "the_spring"
+      ],
+      "offers": [
+        "the_family",
+        "the_planting",
+        "the_decision"
+      ],
+      "will_not": [
+        "leave_the_shelter",
+        "stop_planting",
+        "let_the_children_go"
+      ],
+      "signature_quote": "Then we eat less, and we plant the seed potatoes now, not in the spring, now, in the cold frame, and we see."
+    },
+    {
+      "id": "npc_kolya_burn_boy",
+      "display_name": "Kolya",
+      "profession": "Child (age 8, burn survivor)",
+      "bio": "Scalded his hand on a kettle and did not cry, which is the thing the nurse worried about, and the thing the nurse cried about, and the thing Kolya did not see. He drew the sun with the healed hand — the sun has a face, the face is smiling — and he gave the drawing to the nurse, and the nurse keeps it on the wall by her cot. He is quiet in the way that is not shy, and not brave, and not anything — he is quiet in the way of a child who has decided the world is loud and he will not add to it. He is healing. The hand is the medicine. The sun is the medicine. The medicine is the picture.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 7,
+      "location_id": "",
+      "wants": [
+        "the_hand_to_heal",
+        "the_sun",
+        "the_nurse"
+      ],
+      "offers": [
+        "the_healed_hand",
+        "the_sun_drawing",
+        "the_quiet"
+      ],
+      "will_not": [
+        "cry",
+        "stop_drawing",
+        "leave_the_nurse"
+      ],
+      "signature_quote": "He drew the sun with the hand I dressed. The hand is the medicine. The sun is the medicine."
+    },
+    {
+      "id": "npc_victor_conscript",
+      "display_name": "Pvt. Victor S.",
+      "profession": "Conscript (deceased, Day 95)",
+      "bio": "Survived 4200 mSv for 95 days, which the books said was impossible, and the books are the books, and Victor was the Victor. He asked about the sky every day, and the nurse told him it was clearing, and it was not clearing, and he smiled, and the smile was the truth, and the sky was the lie. He had one cigarette for the morning, which was the thing he would not have done before, and which was the kind of man the world had made of him, and the man was not nothing. He is gone now. The books are wrong or Victor was wrong. The marrow is the proof. The proof is in the margin.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "the_sky_to_clear",
+        "a_second_cigarette",
+        "the_morning"
+      ],
+      "offers": [
+        "the_95_days",
+        "the_cigarette",
+        "the_smile"
+      ],
+      "will_not": [
+        "give_up",
+        "stop_asking_about_the_sky",
+        "die_angry"
+      ],
+      "signature_quote": "I have one cigarette for the morning. That is the kind of man this has made of me. The man is not nothing."
+    },
+    {
+      "id": "npc_river_woman",
+      "display_name": "The River Woman",
+      "profession": "Unknown (deceased, Day 33)",
+      "bio": "Pulled from the river, blue with cold, coughing, speaking no language anyone knew or she would not speak. The nurse named her the river woman because the form wanted a name and the river was the name the nurse had. She was given the narrow, not the broad, because the broad was for the strong, and she was not the strong, and the doctor wrote the choosing down. She did not respond to the narrow. She died at four in the morning, and the nurse was there, and the doctor was not, and the nurse held a hand that did not hold back. She is the river woman. She is the name the nurse gave her. The name is the medicine.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 12,
+      "location_id": "",
+      "wants": [
+        "a_name",
+        "the_broad_not_the_narrow",
+        "to_hold_back"
+      ],
+      "offers": [
+        "the_name",
+        "the_river",
+        "the_hand"
+      ],
+      "will_not": [
+        "be_the_strong",
+        "speak",
+        "hold_back"
+      ],
+      "signature_quote": "River woman. I named her. She died with the name I gave her. The naming is the medicine."
+    },
+    {
+      "id": "npc_captain_gate",
+      "display_name": "Captain of the Gate",
+      "profession": "Captain",
+      "bio": "Keeps the gate, the roster, the weapons amnesty that is an invitation and not a seizure. He signed the fuel confiscation with an authority he did not have, because no one with authority was left, and the signing was the reason the fuel was pooled, and the pooling was the reason the generators ran. He is the gate. The gate is the law. The law is the gate. He asks for the blade, he does not take the blade, and the asking is the difference between the captain and the violence, and he is the captain, and the asking is the thing. He does not sleep at the gate. He sleeps near the gate. The gate is the reason.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "authority",
+        "a_real_garrison",
+        "the_blades_to_be_voluntary"
+      ],
+      "offers": [
+        "the_gate",
+        "the_roster",
+        "the_asking"
+      ],
+      "will_not": [
+        "take_the_blades",
+        "leave_the_gate",
+        "sign_without_asking"
+      ],
+      "signature_quote": "I am not taking your blade. I am asking for your blade. The asking is the difference. If I take, I am the violence. I am the Captain."
+    },
+    {
+      "id": "npc_duty_clerk",
+      "display_name": "The Duty Clerk",
+      "profession": "Clerk",
+      "bio": "Keeps the ledger of the living and the ledger of the dead, which are two ledgers, and which should be one book, and are two, and the two is the thing the clerk carries. He started the dead ledger on the tenth day because the living ledger had no field for the gone. He carries the list of names — the thin lines, the thick lines, the no lines for the not-come-back — and the list is heavy, and he gives it to the captain because the captain carries the list. He writes in the margin because the form does not have a field for the things he sees, and the margin is where the clerk lives.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "the_list_to_be_lighter",
+        "a_field_for_the_not_come_back",
+        "the_two_books_to_be_one"
+      ],
+      "offers": [
+        "the_ledger",
+        "the_list",
+        "the_margin"
+      ],
+      "will_not": [
+        "stop_counting",
+        "forget_the_names",
+        "merge_the_books"
+      ],
+      "signature_quote": "The list is the list. I carry the list. I am giving you the list. The list is yours. The line is yours."
+    },
+    {
+      "id": "npc_mechanic",
+      "display_name": "The Mechanic",
+      "profession": "Mechanic",
+      "bio": "Keeps the pump, the fan, the duct, the damper — everything that moves and some things that do not. She uses boot leather for gaskets, lamp oil for bearings, cloth for filters, and she is borrowing from everything, and everything is the lamp now, and the lamp is the fan, and the fan is the hatch, and the hatch is the shelter. She checks the artesian well weekly because the well does not need checking, which is why she checks it, because the not-needing is the relief and the relief is the margin. She is the mechanic. She is the boot. The boot is the pump.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "gaskets",
+        "a_real_filter",
+        "the_well_to_keep_being_the_well"
+      ],
+      "offers": [
+        "improvised_repair",
+        "the_boot_leather_gasket",
+        "the_well_check"
+      ],
+      "will_not": [
+        "stop_borrowing",
+        "let_the_well_go",
+        "use_real_parts"
+      ],
+      "signature_quote": "The pump is the pump. The pump is older than the shelter. The pump is older than most of the people. The boot is the pump now."
+    },
+    {
+      "id": "npc_electrician",
+      "display_name": "The Electrician",
+      "profession": "Electrician",
+      "bio": "Keeps the dark at bay with a file that is getting smaller and a junction that is getting more corroded, and the file is the electrician and the electrician is getting smaller and the corrosion is getting bigger. She grounded the live railing at the substation with a salvaged copper jumper, and the railing is cool, and the current is in the earth, and the earth is the ground. She leaves the substation live because the substation feeds the relay, and the relay feeds the radio, and the radio is the air, and the air is the only thing on the grid that is still on. She is the grid. The grid is the radio. The radio is the hum.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "wire",
+        "a_real_file",
+        "the_grid_to_know_it_is_over"
+      ],
+      "offers": [
+        "the_grounding",
+        "the_jumper",
+        "the_hum"
+      ],
+      "will_not": [
+        "cut_the_power",
+        "stop_filing",
+        "let_the_dark_come"
+      ],
+      "signature_quote": "The transformers are still in circuit with something, somewhere, that still wants power. The hum is the sound of a grid that does not know it is over."
+    },
+    {
+      "id": "npc_mason",
+      "display_name": "The Mason",
+      "profession": "Mason",
+      "bio": "Seals cracks with pozzolan mortar that is the last of the pozzolan, and the next crack is the cloth, and the cloth is not the wall, and the cloth is the margin. He re-scratched the depth gauge on the blast door so the door would remember how far it closed, because the door does not remember, and the gauge remembers, and he is the gauge. He works in the quiet of the structure, which is the structure's own quiet, and which is not the quiet of the people, and the two quiets are different, and he prefers the structure's. He is the mason. He is the margin between the wall and the crack.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "pozzolan",
+        "a_real_wall",
+        "the_crack_to_not_come_back"
+      ],
+      "offers": [
+        "the_mortar",
+        "the_gauge",
+        "the_seal"
+      ],
+      "will_not": [
+        "leave_the_crack",
+        "stop_scratching_the_gauge",
+        "use_cloth_for_the_wall"
+      ],
+      "signature_quote": "The crack is the age. The age is the concrete. The concrete is the crack. I am the margin between the wall and the crack."
+    },
+    {
+      "id": "npc_stoker_fyodor",
+      "display_name": "Fyodor the Stoker",
+      "profession": "Stoker",
+      "bio": "Shovels lignite and has a rule about wet gloves, which is the rule and the law and the joke of the boiler room. He is the heat. He is loud. He is the loudest person in the shelter and the quietest person in the yard, and the two are the same man, and the man is the stoker, and the stoker is the heat. He does not trust the damper to anyone else, which is the trust and the not-trust, and the damper is the air and the air is the shelter and the shelter is the damper. He sleeps in the boiler room, on a cot, with the hum, and the hum is the only sleep he gets.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "coal",
+        "a_real_damper",
+        "sleep"
+      ],
+      "offers": [
+        "the_heat",
+        "the_damper",
+        "the_wet_gloves_rule"
+      ],
+      "will_not": [
+        "leave_the_boiler",
+        "trust_the_damper",
+        "sleep_in_the_dormitory"
+      ],
+      "signature_quote": "The boiler is the shelter. The shelter is the heat. The heat is the shovel. The shovel is the stoker. I am the stoker."
+    },
+    {
+      "id": "npc_old_veteran",
+      "display_name": "The Old Veteran",
+      "profession": "Veteran (pre-war)",
+      "bio": "Has scars on the face from a war that was not this war, and tells the story of that battle to anyone who will listen, and has told it many times, and will tell it again, because the story is the veteran's life and the story is the thing the veteran carries. The battle was before the Exchange. The battle was a different war. The veteran has not been asked about it in a long time, and the not-asking is the thing the veteran carries more than the story. He is the story. The story is the veteran. The veteran is the alone.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 5,
+      "location_id": "",
+      "wants": [
+        "someone_to_ask",
+        "the_story_to_be_heard",
+        "the_battle_to_be_over"
+      ],
+      "offers": [
+        "the_battle_story",
+        "the_scars",
+        "the_telling"
+      ],
+      "will_not": [
+        "stop_telling",
+        "forget_the_battle",
+        "be_the_veteran_without_the_story"
+      ],
+      "signature_quote": "I have told the story many times. I will tell it again. The story is the veteran's life. The story is the thing I carry."
+    },
+    {
+      "id": "npc_cultist",
+      "display_name": "The Cultist",
+      "profession": "Cultist",
+      "bio": "Marked, in the road, telling anyone who will listen that the world will end on a specific day, soon. The cultist is calm. The cultist believes it. The cultist has a following, which is the thing the cultist has, and the following is the thing the cultist is afraid of losing, and the fear is the thing the cultist will not say. The prophecy could be madness. The prophecy could be true. The cultist does not know which, and the not-knowing is the faith, and the faith is the calm, and the calm is the thing that moves people, and the cultist is moved by the moving.",
+      "faction": "none",
+      "region": "the_road",
+      "first_day": 30,
+      "location_id": "",
+      "wants": [
+        "followers",
+        "the_day_to_come",
+        "the_calm"
+      ],
+      "offers": [
+        "the_prophecy",
+        "the_calm",
+        "the_following"
+      ],
+      "will_not": [
+        "admit_doubt",
+        "disband_the_following",
+        "leave_the_road"
+      ],
+      "signature_quote": "The world will end on a specific day. I am calm. The calm is the faith. The faith is the not-knowing. The not-knowing moves people. I am moved by the moving."
+    },
+    {
+      "id": "npc_pianist",
+      "display_name": "The Pianist",
+      "profession": "Pianist",
+      "bio": "Plays an upright piano with three working keys, in a ruined concert hall, the same three-note phrase, over and over, as if waiting for the fourth. He does not stop when you enter. He does not eat the food you leave. He plays. The hall is cold. He is thin. He has been here a long time. The fourth note is the thing he is waiting for, and the waiting is the playing, and the playing is the waiting, and the three notes are the prayer and the prayer is unfinished. He is the piano. The piano is the three notes. The three notes are the man.",
+      "faction": "none",
+      "region": "the_ruins",
+      "first_day": 20,
+      "location_id": "",
+      "wants": [
+        "the_fourth_note",
+        "food",
+        "to_finish"
+      ],
+      "offers": [
+        "the_three_notes",
+        "the_piano",
+        "the_waiting"
+      ],
+      "will_not": [
+        "stop_playing",
+        "leave_the_hall",
+        "take_the_fourth_note"
+      ],
+      "signature_quote": "I play the same three-note phrase, over and over, as if waiting for the fourth. The fourth is the thing. The waiting is the playing."
+    },
+    {
+      "id": "npc_greenhouse_keeper",
+      "display_name": "The Greenhouse Keeper",
+      "profession": "Greenhouse Keeper",
+      "bio": "Tends a single row of seedlings in the one corner of a greenhouse that still has glass, with a shotgun leaned, not aimed. She trades seedlings for salt. She will not trade the shotgun. She has been here alone for months, and the alone is the thing she does not say, and the seedlings are the thing she does say, and the shotgun is the thing between the two. She is the greenhouse. The greenhouse is the glass. The glass is the seedlings. The seedlings are the reason. The shotgun is the price of the reason.",
+      "faction": "none",
+      "region": "the_allotments",
+      "first_day": 40,
+      "location_id": "",
+      "wants": [
+        "salt",
+        "company",
+        "the_seedlings_to_live"
+      ],
+      "offers": [
+        "seedlings",
+        "the_glass",
+        "the_shotgun"
+      ],
+      "will_not": [
+        "trade_the_shotgun",
+        "leave_the_greenhouse",
+        "let_the_seedlings_die"
+      ],
+      "signature_quote": "I will trade seedlings for salt. I will not trade the shotgun. The shotgun is the price of the seedlings. The seedlings are the reason."
+    },
+    {
+      "id": "npc_lighthouse_keeper",
+      "display_name": "The Lighthouse Keeper",
+      "profession": "Lighthouse Keeper",
+      "bio": "Keeps an automated light on a cape, and the light does not need her, and she knows it, and she stays because the light is not the only thing that needs keeping. She let the people who came believe she kept the light, because the light was the reason they came in, and the not-truth was the mercy, and the mercy was the letting-believe. She is the keeper. The keeper before her kept it. The keeper after her will keep it. The light keeps itself. She is the not-the-light. The not-the-light is the reason she stays.",
+      "faction": "none",
+      "region": "the_cape",
+      "first_day": 5,
+      "location_id": "",
+      "wants": [
+        "the_light",
+        "a_boat",
+        "the_truth_to_be_enough"
+      ],
+      "offers": [
+        "the_light",
+        "the_keeping",
+        "the_letting_believe"
+      ],
+      "will_not": [
+        "tell_the_truth",
+        "leave_the_cape",
+        "let_the_light_go_dark"
+      ],
+      "signature_quote": "The light is automated. I am the keeper. The keeper before me kept it. The keeper after me will keep it. The light keeps itself."
+    },
+    {
+      "id": "npc_dam_operator",
+      "display_name": "The Dam Operator",
+      "profession": "Dam Operator",
+      "bio": "Closed a spillway gate alone, with a winch that takes two, and he is one, and the math is wrong, and the math is the math, and the man is the man, and the man is more than the math. He sent his family to the high school before he called the relay, and the calling was the thing he did for the town, and the winch was the thing he did for the dam, and the two were the same man. He is the dam. The dam is the gate. The gate is the winch. The winch is the man. The man is more than the math.",
+      "faction": "none",
+      "region": "the_dam",
+      "first_day": 4,
+      "location_id": "",
+      "wants": [
+        "a_second_person",
+        "the_gate_to_stay_closed",
+        "the_family_to_be_safe"
+      ],
+      "offers": [
+        "the_winch",
+        "the_gate",
+        "the_call"
+      ],
+      "will_not": [
+        "leave_the_dam",
+        "let_the_gate_open",
+        "give_up"
+      ],
+      "signature_quote": "The winch takes two. I am one. I closed it. The math is wrong. The man is more than the math."
+    },
+    {
+      "id": "npc_relay_operator",
+      "display_name": "The Relay Operator",
+      "profession": "Radio Operator",
+      "bio": "Keeps the repeater on the ridge, alone, because the repeater is the only one still up in the sector, and the repeater is the reason the distress signals are heard, and the distress signals are the reason the relay is up. She relays the valley's traffic — a woman calling for a doctor, a caravan calling for the road — and she passes it on, and the passing is the thing she can do. She watches the valley lights go out, one by one, and the going-out is the thing she does not say, and the relay is the thing she does say. She is the relay. The relay is the air. The air is the only thing she can give.",
+      "faction": "none",
+      "region": "the_ridge",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "power",
+        "the_valley_lights_to_come_back",
+        "a_message_for_her"
+      ],
+      "offers": [
+        "the_repeater",
+        "the_relay",
+        "the_valley_watch"
+      ],
+      "will_not": [
+        "stop_relays",
+        "leave_the_ridge",
+        "let_the_repeater_go_dark"
+      ],
+      "signature_quote": "The repeater is the only one still up. I am the reason it is up. The repeater is the reason the distress signals are heard. I pass them on. That is what I can do."
+    },
+    {
+      "id": "npc_caravan_leader",
+      "display_name": "The Caravan Leader",
+      "profession": "Caravan Master",
+      "bio": "Leads a caravan of mules and salt and iron through passes that close behind him, and the closing is the thing he does not tell the clients, and the not-telling is the trade, and the trade is the thing the caravan is. He lost the low cart in a pass to the snow, and the trade was on the high cart, and the trade was the reason the low cart was the low cart. He is the caravan. The caravan is the mules. The mules are the salt. The salt is the trade. The trade is the man. The man is the road.",
+      "faction": "none",
+      "region": "the_road",
+      "first_day": 15,
+      "location_id": "",
+      "wants": [
+        "a_clear_pass",
+        "the_mules_to_live",
+        "the_trade_to_be_fair"
+      ],
+      "offers": [
+        "the_caravan",
+        "the_pass",
+        "the_trade"
+      ],
+      "will_not": [
+        "abandon_the_mules",
+        "leave_the_road",
+        "tell_the_clients_about_the_pass"
+      ],
+      "signature_quote": "The pass closed behind us. The trade is on the high cart. The low cart is the snow's. The trade is the reason. The reason is the caravan."
+    },
+    {
+      "id": "npc_lost_patrol_sergeant",
+      "display_name": "The Sergeant",
+      "profession": "Patrol Sergeant",
+      "bio": "Lost the map in the river and found a town that is not on any old map, and the town is occupied, and the town is kind, and the sergeant is crying because the crying is the safe, and the safe is the thing he did not know he was until he was. He is the patrol. The patrol is the four. The four are the town now. The town is the home. The home is the not-the-map. The not-the-map is the thing the sergeant found, and the finding is the crying, and the crying is the safe.",
+      "faction": "none",
+      "region": "the_lost_town",
+      "first_day": 30,
+      "location_id": "",
+      "wants": [
+        "the_map",
+        "a_real_home",
+        "the_patrol_to_be_safe"
+      ],
+      "offers": [
+        "the_patrol",
+        "the_lost_town",
+        "the_not_the_map"
+      ],
+      "will_not": [
+        "leave_the_town",
+        "go_back_for_the_map",
+        "be_the_patrol_again"
+      ],
+      "signature_quote": "We are staying. The sergeant says we are staying. The town does not need our maps and we do not need our maps here. We are four, and now we are four more."
+    },
+    {
+      "id": "npc_water_seller",
+      "display_name": "The Water Seller",
+      "profession": "Trader",
+      "bio": "Sells filtered water by the cup at a crossroads, and his filter is real — charcoal and sand — and his price is information, which is the trade the water buys, and the water is the trade the information buys. He wants to know which settlements are still occupied, and the knowing is the map he is building, and the map is the thing he does not say he is building, and the not-saying is the trade. He is the water. The water is the filter. The filter is the information. The information is the map. The map is the man.",
+      "faction": "none",
+      "region": "the_crossroads",
+      "first_day": 20,
+      "location_id": "",
+      "wants": [
+        "names",
+        "a_real_filter",
+        "the_map_to_be_complete"
+      ],
+      "offers": [
+        "the_filter",
+        "the_water",
+        "the_information"
+      ],
+      "will_not": [
+        "give_the_water_free",
+        "stop_trading_for_names",
+        "leave_the_crossroads"
+      ],
+      "signature_quote": "I sell filtered water by the cup. My price is information. I want to know which settlements are still occupied. The water is the trade. The names are the map."
+    },
+    {
+      "id": "npc_roadside_trader",
+      "display_name": "The Roadside Trader",
+      "profession": "Trader",
+      "bio": "Sits at the highway with a cart, salt and tins and a working flashlight, and counts by touch, not by sight, which is the thing that makes people wonder, and the wondering is the thing she does not explain, and the not-explaining is the trade. She does not want to know your name and does not offer hers, and the not-knowing is the trade, and the trade is the not-knowing. She wants medical supplies, which she trades for, and the medical supplies are the thing she does not say she needs, and the not-saying is the trade. She is the cart. The cart is the salt. The salt is the not-knowing.",
+      "faction": "none",
+      "region": "the_highway",
+      "first_day": 25,
+      "location_id": "",
+      "wants": [
+        "medical_supplies",
+        "a_real_name",
+        "the_sight_to_come_back"
+      ],
+      "offers": [
+        "the_cart",
+        "the_salt",
+        "the_not_knowing"
+      ],
+      "will_not": [
+        "give_her_name",
+        "ask_for_her_name",
+        "stop_trading"
+      ],
+      "signature_quote": "I do not want to know your name. I do not offer mine. I count by touch. The not-knowing is the trade. The trade is the not-knowing."
+    },
+    {
+      "id": "npc_whiteout_traveler",
+      "display_name": "The Whiteout Traveler",
+      "profession": "Unknown",
+      "bio": "Walks the road in a whiteout, not dressed for the cold, not cold, asking the way to a town that is gone. He is calm. He is not cold. He is not dressed for the cold. He is the question the road asks, and the road does not answer, and the traveler does not stop. He is the thing the road does not understand, and the not-understanding is the thing the road carries, and the traveler is the thing the road cannot put down. He is the gone town. The gone town is the man. The man is the road. The road does not know.",
+      "faction": "none",
+      "region": "the_road",
+      "first_day": 50,
+      "location_id": "",
+      "wants": [
+        "the_town",
+        "the_way",
+        "the_cold"
+      ],
+      "offers": [
+        "the_calm",
+        "the_not_cold",
+        "the_gone_town"
+      ],
+      "will_not": [
+        "stop",
+        "turn_back",
+        "ask_for_help"
+      ],
+      "signature_quote": "I am looking for a town. The town is gone. I am calm. I am not cold. I do not know why I am not cold."
+    },
+    {
+      "id": "npc_quiet_house_elder",
+      "display_name": "The Quiet House Elder",
+      "profession": "Elder",
+      "bio": "Keeps the quiet house, which is the place where the quiet is the rule and the rule is the quiet, and the quiet is not the silence, and the silence is not the quiet, and the two are different, and the elder is the difference. She is the quiet. The quiet is the house. The house is the people who come for the quiet, and the people are the reason the quiet is, and the quiet is the reason the people are. She is the elder. The elder is the quiet. The quiet is the rule. The rule is the elder.",
+      "faction": "none",
+      "region": "the_quiet_house",
+      "first_day": 10,
+      "location_id": "",
+      "wants": [
+        "the_quiet",
+        "the_people",
+        "the_house"
+      ],
+      "offers": [
+        "the_quiet",
+        "the_rule",
+        "the_house"
+      ],
+      "will_not": [
+        "break_the_quiet",
+        "leave_the_house",
+        "let_the_noise_in"
+      ],
+      "signature_quote": "The quiet is not the silence. The silence is empty. The quiet is full. The quiet is the people who come for it. I am the quiet."
+    },
+    {
+      "id": "npc_archivist",
+      "display_name": "The Archivist",
+      "profession": "Archivist",
+      "bio": "Keeps the municipal archive, which is the records, which is the history, which is the thing the archivist keeps because the keeping is the thing the archivist is. She knows the records are the old world, and the old world is the thing the new world does not want, and the not-wanting is the thing the archivist does not say, and the not-saying is the keeping. She found a false wall once, behind it a room, behind the room a logbook that lists things the other records do not, and the false wall was the real record, and the rest was the copy. She is the archive. The archive is the records. The records are the keeping. The keeping is the archivist.",
+      "faction": "none",
+      "region": "the_archive",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "the_records",
+        "a_real_archive",
+        "the_new_world_to_want_the_records"
+      ],
+      "offers": [
+        "the_records",
+        "the_false_wall",
+        "the_keeping"
+      ],
+      "will_not": [
+        "burn_the_records",
+        "leave_the_archive",
+        "let_the_records_go"
+      ],
+      "signature_quote": "The clean wall was the real record. The rest was the copy. I am the archive. The archive is the keeping. The keeping is the thing I am."
+    },
+    {
+      "id": "npc_undertaker",
+      "display_name": "The Undertaker",
+      "profession": "Undertaker",
+      "bio": "Buries the dead, unmarked, per policy, and the policy is not his, and the not-his is the thing he carries, and the carrying is the thing he does not say. He puts a stone to the left, for himself, not for the dead, because the dead do not need a stone, and he needs a stone, and the stone is the margin between the policy and the man. He digs the graves alone, at dawn, and the alone is the thing the dead get, and the alone is the thing the undertaker gets, and the two alones are the same, and the same is the thing the undertaker does not say.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 10,
+      "location_id": "",
+      "wants": [
+        "a_marker",
+        "the_policy_to_change",
+        "the_stone_to_be_enough"
+      ],
+      "offers": [
+        "the_burial",
+        "the_stone",
+        "the_unmarked"
+      ],
+      "will_not": [
+        "mark_the_graves",
+        "leave_the_shelter",
+        "stop_burying"
+      ],
+      "signature_quote": "I bury them unmarked, per policy. I put a stone to the left. The stone is for me, not for them. The stone is the margin."
+    },
+    {
+      "id": "npc_hunter",
+      "display_name": "The Hunter",
+      "profession": "Hunter",
+      "bio": "Hunts in the ash-wood, alone, with a bow, and the bow is the thing he made himself, and the making is the thing he does not say, and the not-saying is the thing the shelter does not know. He brings back meat, and the meat is the thing the shelter needs, and the meat is the thing the hunter trades for the shelter's tolerance, and the tolerance is the thing the hunter is afraid of losing, and the fear is the thing the hunter does not say. He is the bow. The bow is the ash-wood. The ash-wood is the hunt. The hunt is the meat. The meat is the tolerance. The tolerance is the man.",
+      "faction": "none",
+      "region": "the_ash_wood",
+      "first_day": 15,
+      "location_id": "",
+      "wants": [
+        "arrows",
+        "the_tolerance",
+        "the_shelter_to_know_the_bow"
+      ],
+      "offers": [
+        "the_bow",
+        "the_hunt",
+        "the_meat"
+      ],
+      "will_not": [
+        "stop_hunting",
+        "leave_the_shelter",
+        "show_the_bow"
+      ],
+      "signature_quote": "I hunt in the ash-wood, alone, with a bow I made myself. The meat is the trade. The trade is the tolerance. The tolerance is the thing I am afraid of losing."
+    },
+    {
+      "id": "npc_child_dima",
+      "display_name": "Dima (the quiet child)",
+      "profession": "Child (deceased, Day 22, age 6)",
+      "bio": "Was six. Was good at the quiet game, which was not a game the day the boots came. Asked where the rain goes, and the rain is grey now, and the teacher said yes, and the yes was the teacher's not-knowing, and the not-knowing was the lesson, and the lesson was the child. He is gone now. The candle is by his bed. The candle is for the seeing of the empty. The empty is the text. He is the quiet game. The quiet game is the child. The child is the empty. The empty is the candle.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 1,
+      "location_id": "",
+      "wants": [
+        "the_rain_to_go_up",
+        "the_quiet_game_to_be_a_game",
+        "the_candle"
+      ],
+      "offers": [
+        "the_quiet_game",
+        "the_rain_question",
+        "the_counting"
+      ],
+      "will_not": [
+        "make_noise",
+        "stop_asking",
+        "cry"
+      ],
+      "signature_quote": "You were six. You are not six anymore. You were good at the quiet game. You giggled. I loved the giggling."
+    },
+    {
+      "id": "npc_old_woman_letters",
+      "display_name": "The Old Woman",
+      "profession": "Elder / Letter Writer",
+      "bio": "Writes letters to the dead, to the gone, to the before, to the self that was, and the writing is the thing she does because the doing is the thing she is. She writes to her younger self: you will plant against the season, you will cry at the sprout, let yourself cry. She writes to the house: the blue is faded, the table is set, someone knew I would come back. She writes to the dirt: the dirt is where the thing is, the dirt is the only honest page. She is the letters. The letters are the dead. The dead are the writing. The writing is the woman.",
+      "faction": "none",
+      "region": "the_shelter",
+      "first_day": 35,
+      "location_id": "",
+      "wants": [
+        "the_letters_to_arrive",
+        "the_before",
+        "the_dirt"
+      ],
+      "offers": [
+        "the_letters",
+        "the_writing",
+        "the_dirt"
+      ],
+      "will_not": [
+        "stop_writing",
+        "leave_the_dirt",
+        "forget_the_before"
+      ],
+      "signature_quote": "I write to the dead, to the gone, to the before, to myself. The writing is the thing I do because the doing is the thing I am."
+    },
+    {
+      "id": "npc_smuggler",
+      "display_name": "The Smuggler",
+      "profession": "Smuggler",
+      "bio": "Moves goods between shelters, through checkpoints, through the dark, and the moving is the thing the smuggler is, and the thing the shelters need, and the thing the shelters do not say they need, and the not-saying is the trade. He carries the things the forms do not allow — extra medicine, a letter, a child's toy — and the carrying is the thing the smuggler does not write down, and the not-writing is the smuggler, and the smuggler is the not-writing. He is the road. The road is the dark. The dark is the goods. The goods are the not-writing. The not-writing is the man.",
+      "faction": "none",
+      "region": "the_road",
+      "first_day": 20,
+      "location_id": "",
+      "wants": [
+        "a_clear_road",
+        "the_goods_to_arrive",
+        "the_forms_to_not_matter"
+      ],
+      "offers": [
+        "the_smuggling",
+        "the_dark",
+        "the_not_writing"
+      ],
+      "will_not": [
+        "write_it_down",
+        "stop_smuggling",
+        "take_the_road_in_the_light"
+      ],
+      "signature_quote": "I move what the forms do not allow. The moving is the thing the shelters need and do not say. The not-saying is the trade. I am the not-writing."
+    }
+  ]
+}

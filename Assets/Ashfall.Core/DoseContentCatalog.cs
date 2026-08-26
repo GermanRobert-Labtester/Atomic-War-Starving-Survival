@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Ashfall.Core.YearOfAsh;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core
 {
     /// <summary>One Dose location row (dose_locations.json).</summary>
@@ -76,6 +77,28 @@ namespace Ashfall.Core
         public List<QuestlineDefinition> quests = new List<QuestlineDefinition>();
     }
 
+    // ── Schema-versioned wrapper DTOs ──────────────────────────────────
+    // The dose files are wrapped in {"schema_version": N, "locations"/"items": [...]}
+    // so the loader can distinguish schema_version from bare-list fallback.
+
+    [Serializable]
+    internal sealed class DoseLocationsRoot
+    {
+#pragma warning disable CS0649 // schema_version is deserialized for contract compliance, not read in code
+        public int schema_version;
+#pragma warning restore CS0649
+        public List<DoseLocationDef> locations = new List<DoseLocationDef>();
+    }
+
+    [Serializable]
+    internal sealed class DoseItemsRoot
+    {
+#pragma warning disable CS0649
+        public int schema_version;
+#pragma warning restore CS0649
+        public List<DoseItemDef> items = new List<DoseItemDef>();
+    }
+
     /// <summary>Engine-agnostic loader for the dose_content bundle (three files).</summary>
     public static class DoseContentCatalogLoader
     {
@@ -89,28 +112,40 @@ namespace Ashfall.Core
             if (fileIO == null || json == null || string.IsNullOrEmpty(dataDir))
                 return catalog;
 
-            // Locations
+            // Locations (wrapped: {"schema_version":1, "locations":[...]})
             string locPath = fileIO.Combine(dataDir, LocationsFile);
             if (fileIO.FileExists(locPath))
             {
                 try
                 {
-                    var rows = json.Deserialize<List<DoseLocationDef>>(fileIO.ReadAllText(locPath));
-                    if (rows != null) catalog.locations.AddRange(rows);
+                    var root = json.Deserialize<DoseLocationsRoot>(fileIO.ReadAllText(locPath));
+                    if (root?.locations != null && root.locations.Count > 0)
+                    {
+                        catalog.locations.AddRange(root.locations);
+                    }
                 }
-                catch { /* tolerate a malformed editorial file; integrity gate flags it */ }
+                catch (Exception ex_CATDIAG)
+                {
+                    CatalogDiagnostics.Warn(locPath, "DoseLocationsRoot", ex_CATDIAG);
+                }
             }
 
-            // Items
+            // Items (wrapped: {"schema_version":1, "items":[...]})
             string itemPath = fileIO.Combine(dataDir, ItemsFile);
             if (fileIO.FileExists(itemPath))
             {
                 try
                 {
-                    var rows = json.Deserialize<List<DoseItemDef>>(fileIO.ReadAllText(itemPath));
-                    if (rows != null) catalog.items.AddRange(rows);
+                    var root = json.Deserialize<DoseItemsRoot>(fileIO.ReadAllText(itemPath));
+                    if (root?.items != null && root.items.Count > 0)
+                    {
+                        catalog.items.AddRange(root.items);
+                    }
                 }
-                catch { }
+                catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
             }
 
             // Quests (authored to the live DAG DTO)
@@ -119,7 +154,7 @@ namespace Ashfall.Core
             {
                 try
                 {
-                    var rows = json.Deserialize<List<DoseQuestDef>>(fileIO.ReadAllText(questPath));
+                    var rows = CatalogLocator.LoadWrappedList<DoseQuestDef>(fileIO.ReadAllText(questPath), SystemTextJsonSerializer.Options);
                     if (rows != null)
                     {
                         foreach (var rq in rows)
@@ -129,13 +164,16 @@ namespace Ashfall.Core
                         }
                     }
                 }
-                catch { }
+                catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
             }
 
             return catalog;
         }
 
-        public static QuestlineDefinition ToQuestlineDefinition(DoseQuestDef rq)
+        public static QuestlineDefinition? ToQuestlineDefinition(DoseQuestDef rq)
         {
             if (rq == null || string.IsNullOrEmpty(rq.questlineId)) return null;
             var def = new QuestlineDefinition

@@ -1,3 +1,4 @@
+using System;
 using Ashfall.Core;
 using Ashfall.Core.Shelter;
 using Xunit;
@@ -113,6 +114,57 @@ namespace Ashfall.Core.Tests
             Assert.Equal(21f, def.curfewStartHour);
         }
 
+        [Fact] public void TickDay_DayPhase_UsesScheduleFatigueModifier()
+        {
+            // Bug-07 regression: a schedule with a non-default fatigue recovery
+            // modifier must apply that modifier during the day phase, not just
+            // the curfew phase. Previously the day branch hardcoded 1f.
+            var s = Create(out _);
+            s.LoadCatalog(new System.Collections.Generic.List<ScheduleDefinition>
+            {
+                new ScheduleDefinition
+                {
+                    schedule_id = "restful",
+                    display_name = "Restful",
+                    fatigueRecoveryModifier = 1.3f
+                }
+            });
+            s.SetSchedule("restful");
+            // No curfew, no emergency — pure day phase.
+            s.TickDay(1);
+            Assert.Equal(1.3f, s.FatigueRecoveryModifier);
+        }
+
+        [Fact] public void TickDay_DayPhase_PropagatesRestlessSchedule()
+        {
+            // Bug-07 regression #2: a schedule with a SUPPRESSED recovery
+            // modifier (e.g. 0.7f) must also propagate during the day phase.
+            // Default behavior (1f) is the special case, not the general rule.
+            var s = Create(out _);
+            s.LoadCatalog(new System.Collections.Generic.List<ScheduleDefinition>
+            {
+                new ScheduleDefinition
+                {
+                    schedule_id = "restless",
+                    display_name = "Restless",
+                    fatigueRecoveryModifier = 0.7f
+                }
+            });
+            s.SetSchedule("restless");
+            s.TickDay(2);
+            Assert.Equal(0.7f, s.FatigueRecoveryModifier);
+        }
+
+        // Bug-15 (brownout) has no dedicated regression test in this batch.
+        // Static-evidence rationale: the production fix in
+        // ShelterScheduleSystem.TickDay moves the brownout multiplier inside
+        // the if/else block so it runs AFTER the lightingDemand assignment,
+        // preserving the × 0.5 effect. Writing a deterministic brownout test
+        // would require controlling PowerGridSystem into a sustained brownout
+        // state, which is a separate upstream design issue (ComputeTotalDraw
+        // returns 0 under brownout, causing IsBrownout to flip on the same
+        // tick). That is not in scope for this batch.
+
         [Fact] public void CaptureRestoreState_PreservesAssignments()
         {
             var s = Create(out _);
@@ -144,6 +196,33 @@ namespace Ashfall.Core.Tests
             };
             power = new PowerGridSystem(state, rooms, new SeededRng(42));
             return new ShelterScheduleSystem(power);
+        }
+
+        // Bug-15 deferred from Batch 2: brownout halves the schedule's daily
+        // lighting demand *after* the base assignment, so a brownout-shelter
+        // shows 0.25 ('day' baseline 0.5 halved) rather than 0.5.
+        [Fact] public void TickDay_Brownout_DoublesLightingDemandHalving()
+        {
+            var s = Create(out var power);
+            // Force a brownout: demand > generation, no battery reserve.
+            power.State.GenerationWatts = 50f;
+            power.State.BatteryReserveWh = 0f;
+            power.State.BatteryCapacityWh = 0f;
+
+            s.LoadCatalog(new System.Collections.Generic.List<ScheduleDefinition>
+            {
+                new ScheduleDefinition { schedule_id = "default", display_name = "Default" }
+            });
+            float before = s.State.lightingDemand;
+            s.TickDay(1);
+            float after = s.State.lightingDemand;
+
+            // Baseline demand in day phase with default definitions is 0.5.
+            // Brownout applies ×0.5. Assertuion checks the multiplied value.
+            float expectedBase = 0.5f;
+            float expectedBrownout = expectedBase * 0.5f;
+            Assert.True(Math.Abs(after - expectedBrownout) < 0.001f,
+                $"brownout lighting demand = {after}, expected {expectedBrownout}; pre={before}");
         }
     }
 }

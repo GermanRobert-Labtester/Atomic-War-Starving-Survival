@@ -1,8 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/_Game/UI/UIBatch11_A.uss" />
-    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
-    <ui:VisualElement name="phantom-memory-vignette-root" class="phantom-memory-vignette" picking-mode="Ignore">
-        <ui:VisualElement name="vignette-gradient" class="vignette-gradient" />
-        <ui:Label name="phantom-memory-text" class="phantom-memory-text memory-text" text="" />
-    </ui:VisualElement>
-</ui:UXML>

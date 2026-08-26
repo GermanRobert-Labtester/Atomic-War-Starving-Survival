@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using Godot;
 using AtomicWar.GodotApp.UI;
 using Ashfall.Core.UI;
@@ -81,7 +82,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             _session.Timeline.OnPhaseTransitioned -= OnPhaseTransition;
             _session.Timeline.OnDayAdvanced -= OnDayAdvanced;
             _session.FactionWar.OnFactionStandingChanged -= OnFactionStandingChanged;
-            _session = null;
+            _session = null!;
         }
 
         private void OnFactionStandingChanged(string factionId, int standing)
@@ -123,10 +124,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
 
             if (_factionsList != null)
             {
-                foreach (Node child in _factionsList.GetChildren())
-                {
-                    child.QueueFree();
-                }
+                AshfallUiHelpers.EmptyChildren(_factionsList);
 
                 foreach (var f in _session.FactionWar.State.factions)
                 {

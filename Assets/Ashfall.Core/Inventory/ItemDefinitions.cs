@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Inventory
 {
@@ -172,7 +173,9 @@ namespace Ashfall.Core.Inventory
             ("chest", EquipSlot.Body),
         };
 
-        public static string[] CanonicalNames => Enum.GetNames(typeof(EquipSlot));
+        private static readonly string[] s_canonicalNames = Enum.GetNames(typeof(EquipSlot));
+
+        public static string[] CanonicalNames => s_canonicalNames;
 
         public static bool TryParse(string raw, out EquipSlot slot)
         {
@@ -205,7 +208,7 @@ namespace Ashfall.Core.Inventory
             return Enum.TryParse<EquipSlot>(raw.Trim(), true, out _);
         }
 
-        public static string CanonicalNameForAlias(string raw)
+        public static string? CanonicalNameForAlias(string raw)
         {
             if (string.IsNullOrWhiteSpace(raw)) return null;
             string key = raw.Trim();

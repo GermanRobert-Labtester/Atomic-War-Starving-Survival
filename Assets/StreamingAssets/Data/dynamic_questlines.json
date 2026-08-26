@@ -1,26 +1,114 @@
-[
-  {
-    "quest_id": "quest_dying_signal",
-    "title": "The Dying Signal",
-    "target_location_id": "loc_comm_array",
-    "stages": [
-      { "stage": 0, "name": "Discovery", "description": "Intercept a repeating 142.5 MHz distress beacon from the Regional Communications Array. The signal pattern is military — but the voice sounds civilian.", "objective_items": ["radio_transcript_142_5"] },
-      { "stage": 1, "name": "Investigation", "description": "Send an expedition to the Communications Array to repair the antenna and locate the signal source room. The transmitter is still running on backup power.", "objective_items": ["antenna_coil", "vacuum_tube"] },
-      { "stage": 2, "name": "Crisis", "description": "The signal is an automated death loop from a deceased technician — but a trapped civilian family is in the basement below a collapsing roof.", "branch_a": { "id": "dismantle_array", "label": "Dismantle the Array", "description": "Strip the array for vacuum tubes and copper wiring. Gain high scrap value. The family dies.", "rewards": ["vacuum_tube", "copper_wiring"], "morale_delta": -20 },
-        "branch_b": { "id": "rescue_family", "label": "Rescue the Family", "description": "Use tools to shore up the basement and rescue the family. Lose expedition time. Gain 2 survivors.", "rewards": ["survivor_family_adult", "survivor_family_child"], "morale_delta": 15 } },
-      { "stage": 3, "name": "Resolution", "description": "The rescued survivors join the shelter, or the dismantled parts unlock advanced radio intercept capabilities." }
-    ]
-  },
-  {
-    "quest_id": "quest_aquifer_contamination",
-    "title": "The Aquifer Contamination",
-    "target_location_id": "loc_water_treatment_plant",
-    "stages": [
-      { "stage": 0, "name": "Discovery", "description": "The Water Purity Gauge reports a sudden 40% spike in heavy metal contamination. The source must be upstream.", "objective_items": ["water_sample_contaminated"] },
-      { "stage": 1, "name": "Investigation", "description": "Dispatch a team to the Flooded Water Treatment Plant to inspect the intake valves. Someone has been here recently.", "objective_items": ["intake_valve_report"] },
-      { "stage": 2, "name": "Crisis", "description": "A sabotaged chemical barrel was dumped into the main intake pipe by a hostile raider faction. The contamination is spreading.", "branch_a": { "id": "neutralize_chemical", "label": "Neutralize with Medicine", "description": "Use 3 antibiotics to neutralize the chemical contamination. Restores full water purity.", "rewards": ["clean_water"], "cost": ["antibiotics:3"], "morale_delta": 10 },
-        "branch_b": { "id": "seal_intake", "label": "Seal the Intake Permanently", "description": "Seal the primary intake pipe permanently. Avoids medicine cost but lowers daily water output by 50%.", "rewards": [], "cost": ["water_output:-50%"], "morale_delta": -5 } },
-      { "stage": 3, "name": "Resolution", "description": "The shelter water system stabilizes. The daily water yield is determined by the crisis choice — full purification or permanent rationing." }
-    ]
-  }
-]
+{
+  "schema_version": 1,
+  "questlines": [
+    {
+      "quest_id": "quest_dying_signal",
+      "title": "The Dying Signal",
+      "target_location_id": "loc_comm_array",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "Intercept a repeating 142.5 MHz distress beacon from the Regional Communications Array. The signal pattern is military — but the voice sounds civilian.",
+          "objective_items": [
+            "radio_transcript_142_5"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "Send an expedition to the Communications Array to repair the antenna and locate the signal source room. The transmitter is still running on backup power.",
+          "objective_items": [
+            "antenna_coil",
+            "vacuum_tube"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "The signal is an automated death loop from a deceased technician — but a trapped civilian family is in the basement below a collapsing roof.",
+          "branch_a": {
+            "id": "dismantle_array",
+            "label": "Dismantle the Array",
+            "description": "Strip the array for vacuum tubes and copper wiring. Gain high scrap value. The family dies.",
+            "rewards": [
+              "vacuum_tube",
+              "copper_wiring"
+            ],
+            "morale_delta": -20
+          },
+          "branch_b": {
+            "id": "rescue_family",
+            "label": "Rescue the Family",
+            "description": "Use tools to shore up the basement and rescue the family. Lose expedition time. Gain 2 survivors.",
+            "rewards": [
+              "survivor_family_adult",
+              "survivor_family_child"
+            ],
+            "morale_delta": 15
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "The rescued survivors join the shelter, or the dismantled parts unlock advanced radio intercept capabilities."
+        }
+      ]
+    },
+    {
+      "quest_id": "quest_aquifer_contamination",
+      "title": "The Aquifer Contamination",
+      "target_location_id": "loc_water_treatment_plant",
+      "stages": [
+        {
+          "stage": 0,
+          "name": "Discovery",
+          "description": "The Water Purity Gauge reports a sudden 40% spike in heavy metal contamination. The source must be upstream.",
+          "objective_items": [
+            "water_sample_contaminated"
+          ]
+        },
+        {
+          "stage": 1,
+          "name": "Investigation",
+          "description": "Dispatch a team to the Flooded Water Treatment Plant to inspect the intake valves. Someone has been here recently.",
+          "objective_items": [
+            "intake_valve_report"
+          ]
+        },
+        {
+          "stage": 2,
+          "name": "Crisis",
+          "description": "A sabotaged chemical barrel was dumped into the main intake pipe by a hostile raider faction. The contamination is spreading.",
+          "branch_a": {
+            "id": "neutralize_chemical",
+            "label": "Neutralize with Medicine",
+            "description": "Use 3 antibiotics to neutralize the chemical contamination. Restores full water purity.",
+            "rewards": [
+              "clean_water"
+            ],
+            "cost": [
+              "antibiotics:3"
+            ],
+            "morale_delta": 10
+          },
+          "branch_b": {
+            "id": "seal_intake",
+            "label": "Seal the Intake Permanently",
+            "description": "Seal the primary intake pipe permanently. Avoids medicine cost but lowers daily water output by 50%.",
+            "rewards": [],
+            "cost": [
+              "water_output:-50%"
+            ],
+            "morale_delta": -5
+          }
+        },
+        {
+          "stage": 3,
+          "name": "Resolution",
+          "description": "The shelter water system stabilizes. The daily water yield is determined by the crisis choice — full purification or permanent rationing."
+        }
+      ]
+    }
+  ]
+}

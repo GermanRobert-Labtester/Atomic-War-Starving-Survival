@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -50,7 +51,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public RelicDossierEntry GetById(string relicId)
+        public RelicDossierEntry? GetById(string relicId)
         {
             if (string.IsNullOrEmpty(relicId)) return null;
             _byId.TryGetValue(relicId, out var entry);

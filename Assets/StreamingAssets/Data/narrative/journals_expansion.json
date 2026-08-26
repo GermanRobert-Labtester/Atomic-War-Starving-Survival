@@ -1,0 +1,560 @@
+{
+  "schema_version": 1,
+  "collection_id": "journals_expansion_multi_entry_arcs",
+  "journal_entries": [
+    {
+      "id": "journal_qm_01_first_count",
+      "title": "Day 9: The First Count",
+      "bodyText": "Took the first full count today. We have, by my count, enough tinned protein for forty-two days at current headcount, forty if the Loma family joins us as they say they will. The flour is the worry. I have it at nineteen days. I am not telling anyone the flour number yet. I am telling them forty-two, which is true, and which is the protein number, and which is not a lie. I will keep the flour number in this book and in this book only. The book is the only honest place left.",
+      "day": 9,
+      "type": "personal",
+      "author": "quartermaster_yelena",
+      "tags": [
+        "food",
+        "rationing",
+        "ledger",
+        "secrecy"
+      ]
+    },
+    {
+      "id": "journal_qm_02_loma_arrival",
+      "title": "Day 14: The Lomas Arrive",
+      "bodyText": "The Lomas came, all seven of them, which is two more than the five I counted on. I recalculated on the back of the inventory sheet while they were still in the yard hugging people. The flour is now at fourteen days. I did not change the number I tell people. I told them forty-two. They were grateful. I wrote the fourteen in the book. The book is getting heavier than the ledger.",
+      "day": 14,
+      "type": "personal",
+      "author": "quartermaster_yelena",
+      "tags": [
+        "food",
+        "rationing",
+        "ledger",
+        "new_survivors"
+      ]
+    },
+    {
+      "id": "journal_qm_03_the_missing_sacks",
+      "title": "Day 22: Two Sacks",
+      "bodyText": "Two sacks of flour are gone from the west locker. Not eaten, gone. The lock is not broken, which means a key, which means one of three people. I know which one. I am not writing which one. I am writing that the flour is now at eleven days, and that I have moved the remaining sacks to my office, and that I have changed the lock, and that I have not told anyone the number is eleven. I told them forty-two. The number I tell and the number I know are now two different numbers and I am the only person who holds both.",
+      "day": 22,
+      "type": "personal",
+      "author": "quartermaster_yelena",
+      "tags": [
+        "food",
+        "theft",
+        "ledger",
+        "trust"
+      ]
+    },
+    {
+      "id": "journal_qm_04_the_confrontation",
+      "title": "Day 29: I Asked",
+      "bodyText": "I asked him. Not in front of anyone. I said, where are the two sacks. He said he fed them to the night watch, who were not getting their share. He may be telling the truth. The night watch were not getting their share, that is also true, I had not counted the night watch as separate, I had counted them as all. He is right that I was wrong. He is wrong that he took the decision from me. I told him the flour is at eleven. I have never told anyone the real number before. He went white. He said, why did you tell them forty-two. I said, because forty-two is the number they can carry. He did not understand. I did not explain.",
+      "day": 29,
+      "type": "personal",
+      "author": "quartermaster_yelena",
+      "tags": [
+        "food",
+        "confrontation",
+        "ledger",
+        "trust"
+      ]
+    },
+    {
+      "id": "journal_qm_05_the_real_count",
+      "title": "Day 38: The Honest Count",
+      "bodyText": "I told everyone today. The real number. Eleven days of flour, thirty-six of protein. I had thought the room would turn on me, or on him, or on each other. They went quiet. Then the oldest Loma, the grandmother, she said, well, then we eat less, and we plant the seed potatoes now, not in the spring, now, in the cold frame, and we see. She said it like it was already decided, and it was. I have been carrying the wrong number for a month and the right number for a month and the wrong number was heavier. The book and the ledger are the same number now. I slept.",
+      "day": 38,
+      "type": "personal",
+      "author": "quartermaster_yelena",
+      "tags": [
+        "food",
+        "honesty",
+        "community",
+        "recovery"
+      ]
+    },
+    {
+      "id": "journal_child_01_the_book",
+      "title": "Day 3: The Book",
+      "bodyText": "Mama gave me this book. She said write what you see. I see the book. I see the pencil. I see the wall. The wall is the colour of porridge. I do not like porridge. I will write every day. Mama said.",
+      "day": 3,
+      "type": "personal",
+      "author": "child_rima",
+      "tags": [
+        "child",
+        "routine",
+        "family"
+      ]
+    },
+    {
+      "id": "journal_child_02_the_counting",
+      "title": "Day 10: Counting",
+      "bodyText": "I count the people at dinner. There are nineteen. Yesterday there were twenty. I did not ask. Mama said do not ask where the one went. I count the candles too. There are more people than candles. I do not say this. I write it.",
+      "day": 10,
+      "type": "personal",
+      "author": "child_rima",
+      "tags": [
+        "child",
+        "counting",
+        "loss"
+      ]
+    },
+    {
+      "id": "journal_child_03_the_quiet_game",
+      "title": "Day 18: The Quiet Game",
+      "bodyText": "We play the quiet game. Who can be quiet the longest. I am good at the quiet game. Dima is not good, he giggles. Today the quiet game was not a game. Mama said be quiet be quiet be quiet and we were. There were boots outside. We were quiet for a long time. The boots went. I won the quiet game. I did not want to win.",
+      "day": 18,
+      "type": "personal",
+      "author": "child_rima",
+      "tags": [
+        "child",
+        "fear",
+        "hiding"
+      ]
+    },
+    {
+      "id": "journal_child_04_the_drawing",
+      "title": "Day 27: The Drawing",
+      "bodyText": "I drew the sun. Mama looked at it and she did a funny face. She said draw the sun with a face. I said the sun does not have a face. She said draw it with a face anyway. I drew it with a face. The face is smiling. The sun is not smiling, the sun is not anything, the sun is gone, but the drawing is smiling and Mama put it on the wall. The wall is still the colour of porridge. The sun is not.",
+      "day": 27,
+      "type": "personal",
+      "author": "child_rima",
+      "tags": [
+        "child",
+        "art",
+        "memory"
+      ]
+    },
+    {
+      "id": "journal_child_05_the_word",
+      "title": "Day 34: The Word",
+      "bodyText": "I learned a word today. The word is ration. I asked Mama what it means. She said it means everyone gets a little. I said is that good. She said it is fair. I said is fair good. She said yes. I think fair is not the same as enough. I did not say this. I wrote it. The book is where I say the things.",
+      "day": 34,
+      "type": "personal",
+      "author": "child_rima",
+      "tags": [
+        "child",
+        "language",
+        "fairness"
+      ]
+    },
+    {
+      "id": "journal_doc_01_the_round",
+      "title": "Day 5: The Round",
+      "bodyText": "Round of the ward. Four patients, none critical. The boy with the burns is healing clean. I have fourteen courses of broad-spectrum, six of the narrow, and the iodine is adequate. I am writing this down because I was taught to write it down and because the writing is the round, the round is the day, and the day is the shape of the work. I have enough. That is the entry. I have enough.",
+      "day": 5,
+      "type": "personal",
+      "author": "doctor_ivan",
+      "tags": [
+        "medical",
+        "routine",
+        "supplies"
+      ]
+    },
+    {
+      "id": "journal_doc_02_the_cough",
+      "title": "Day 12: The Cough",
+      "bodyText": "The cough is in the ward. Not the burn boy, the woman from the river, the one who swallowed the water. I have started her on a broad-spectrum, which leaves me thirteen. I do not like using the broad for what may be a narrow. I cannot culture it, the lab is dark. I am guessing. A doctor who guesses is a doctor who is honest about it in the book, so: I am guessing. The cough is wet. I do not like the sound.",
+      "day": 12,
+      "type": "personal",
+      "author": "doctor_ivan",
+      "tags": [
+        "medical",
+        "diagnosis",
+        "supplies",
+        "uncertainty"
+      ]
+    },
+    {
+      "id": "journal_doc_03_the_second_case",
+      "title": "Day 19: The Second",
+      "bodyText": "A second cough. The man who carried the Loma grandmother. He is strong, he was the strongest, and the cough is in him now. Either it is spreading or it is the water or it is the cold. I have started him on the broad. Twelve. I have separated them, which the ward cannot really do, the ward is one room, I have hung a sheet. The sheet is not medicine. The sheet is a sheet. I am writing this with the lamp low because the lamp oil is also a supply and I am now counting the lamp oil, which a doctor should not have to count.",
+      "day": 19,
+      "type": "personal",
+      "author": "doctor_ivan",
+      "tags": [
+        "medical",
+        "contagion",
+        "supplies",
+        "pressure"
+      ]
+    },
+    {
+      "id": "journal_doc_04_the_choice",
+      "title": "Day 26: The Choice",
+      "bodyText": "I have ten courses. I have three coughs. I have one burn boy who is not yet well. I cannot treat all of them with the broad and have any left for what comes next. This is the entry I do not want to write. I am treating the two who are strongest and the burn boy, and I am giving the river woman the narrow, which I do not think will work, and I am watching. I have made a choice about who is most likely to live. I have made a choice. A doctor who chooses is a doctor who writes it down. I am writing it down. I chose the strong. I do not know if that is medicine.",
+      "day": 26,
+      "type": "personal",
+      "author": "doctor_ivan",
+      "tags": [
+        "medical",
+        "triage",
+        "ethics",
+        "supplies"
+      ]
+    },
+    {
+      "id": "journal_doc_05_the_recovery",
+      "title": "Day 33: The Sheet",
+      "bodyText": "The river woman lived. The narrow worked, or she did it herself, I do not know which, and a doctor who does not know which writes both down. The two strong coughs are clear. The burn boy is on his feet. I have eight courses left and three patients and I am not proud and I am not ashamed, I am tired, and the sheet is still hanging, and I have not taken it down, because the sheet is the shape of the week I had, and I want to remember the shape before I forget it was that shape.",
+      "day": 33,
+      "type": "personal",
+      "author": "doctor_ivan",
+      "tags": [
+        "medical",
+        "recovery",
+        "ethics",
+        "weariness"
+      ]
+    },
+    {
+      "id": "journal_courier_01_the_pouch",
+      "title": "Day 1: The Pouch",
+      "bodyText": "They gave me the pouch and the route and the word. The word is for the captain at Millhaven, the pouch is the treaty, the route is the south road. Two days if the weather holds. I have run this road before the war, I know the stone that marks the halfway, I know the barn where I can sleep. I am a courier. I run. The pouch is light, which is good, the light ones are the important ones, the heavy ones are the lists, the light ones are the words that change the lists.",
+      "day": 1,
+      "type": "personal",
+      "author": "courier_bram",
+      "tags": [
+        "courier",
+        "routine",
+        "treaty",
+        "route"
+      ]
+    },
+    {
+      "id": "journal_courier_02_the_rain",
+      "title": "Day 2: The Rain",
+      "bodyText": "The rain came at the halfway stone. I waited in the barn. The barn has a roof, mostly. The pouch is inside my coat, inside my shirt, against the skin, which is how you carry paper in the rain. The paper does not know it is paper, it thinks it is dry, because I am. I am not. I am wet. But the paper is dry. That is the job. The rain is still. I am still. The barn is the place. I will run when the rain stops, not before. A courier who runs in the rain is a courier who delivers wet paper and calls it a treaty.",
+      "day": 2,
+      "type": "personal",
+      "author": "courier_bram",
+      "tags": [
+        "courier",
+        "weather",
+        "treaty",
+        "duty"
+      ]
+    },
+    {
+      "id": "journal_courier_03_the_roadblock",
+      "title": "Day 3: The Road",
+      "bodyText": "The south road is blocked, not by weather, by people. They have a table across the road and a fire beside it. They are not soldiers. They are men with a table. I watched them from the ridge for an hour. They take something from everyone who passes. I cannot lose the pouch. The pouch is the treaty. I am going around, through the forest, which adds a day, which means the captain waits, which means the word is late. A late word is a different word. I am going through the forest. The pouch is against the skin.",
+      "day": 3,
+      "type": "personal",
+      "author": "courier_bram",
+      "tags": [
+        "courier",
+        "detour",
+        "danger",
+        "treaty"
+      ]
+    },
+    {
+      "id": "journal_courier_04_the_forest",
+      "title": "Day 4: The Trees",
+      "bodyText": "I do not know the forest. I know the road. The forest is not the road. I have been walking by the moss, which the old courier told me, moss on the north, but the moss is thin here and the trees are thick and I am not sure. The pouch is still against the skin. I am talking to the pouch. I told the pouch I will get it there. The pouch does not answer. I am the only one who has to. I am cold and I am lost and I am a courier and the pouch is the treaty and I will get it there. That is the sentence I am saying. I am saying it out loud. The trees do not care.",
+      "day": 4,
+      "type": "personal",
+      "author": "courier_bram",
+      "tags": [
+        "courier",
+        "lost",
+        "pressure",
+        "treaty"
+      ]
+    },
+    {
+      "id": "journal_courier_05_the_delivery",
+      "title": "Day 5: The Word",
+      "bodyText": "I found the road again this morning, the north road, not the south, but it meets the south at the bridge, and I crossed and I ran. I am at Millhaven. The captain read the pouch. He read the word. He said, you are late. I said, I am here. He read the treaty. He signed. He gave me bread and a bed and he said, the word was late but the word was the word. I gave him the pouch. I gave him the treaty. I am empty against the skin now. I slept. I am a courier. I ran. The pouch is delivered. The trees are behind me.",
+      "day": 5,
+      "type": "personal",
+      "author": "courier_bram",
+      "tags": [
+        "courier",
+        "delivery",
+        "recovery",
+        "duty"
+      ]
+    },
+    {
+      "id": "journal_scav_01_the_list",
+      "title": "Day 7: The List",
+      "bodyText": "The list from the quartermaster: copper, if I can find it, brass, any tool with a handle, candles, and the thing she did not name but I know she means, which is medicine, any medicine, I know the look. I go to the printing works, the one on the hill, the one with the roof still on. I do not go where the others go. The others go to the stores. The stores are picked. The printing works has the office wing, which the others do not bother with because it has no food, but the office wing has the lamps and the wire and the brass screws, and the brass screws are on the list under tools. I am a scavenger. I read the list. I go where the list says, not where the others go.",
+      "day": 7,
+      "type": "personal",
+      "author": "scavenger_mira",
+      "tags": [
+        "scavenging",
+        "routine",
+        "list",
+        "strategy"
+      ]
+    },
+    {
+      "id": "journal_scav_02_the_find",
+      "title": "Day 11: The Jar",
+      "bodyText": "The office wing had a jar. The jar was in the bottom drawer of a desk that had been forced already, but the jar was in the back, behind the files, and whoever forced the desk did not see the jar. The jar is small, brown glass, and the label says iodine. The label is in the old writing, the clean writing, before. I held it to the lamp. It is still liquid. I do not know if it is still good. The quartermaster will know. I put it in the bag with the brass screws and the copper and I did not tell anyone, because the jar is the thing she did not name and the jar is worth more than the screws and I do not want the others to know I found it, because the others will want to know where, and where is the printing works, and the printing works is mine.",
+      "day": 11,
+      "type": "personal",
+      "author": "scavenger_mira",
+      "tags": [
+        "scavenging",
+        "discovery",
+        "medicine",
+        "secrecy"
+      ]
+    },
+    {
+      "id": "journal_scav_03_the_other_scavenger",
+      "title": "Day 16: The Other",
+      "bodyText": "There was someone in the printing works. Not one of ours. I heard the floor before I saw them, the floor there is wood, it speaks. I went still. They were in the office wing. They were in the desk. They were looking for the jar, or a jar, or anything. They were not careful, they were throwing the files. I had the jar already, from last time, but they did not know that. I watched them. They were hungry, you could see it in the way they moved, the way they threw. I did not show myself. I left by the window I came in. I left the brass screws I had found today on the desk, by the open drawer, where they would see them. I do not know why I did that. I am a scavenger. I take. I left. I will think about why I left.",
+      "day": 16,
+      "type": "personal",
+      "author": "scavenger_mira",
+      "tags": [
+        "scavenging",
+        "encounter",
+        "ethics",
+        "empathy"
+      ]
+    },
+    {
+      "id": "journal_scav_04_the_second_trip",
+      "title": "Day 21: The Second Trip",
+      "bodyText": "I went back. I did not need to, the list was done, but I went back. The brass screws were gone. The files were still on the floor. I sat in the office and I did not take anything. I sat for a long time. The floor spoke once, and I went still, but no one came. I think the other scavenger does not come every day. I think they come when they have to, like me. I left a candle, a good one, the ones I find are usually broken but this one was whole, I left it on the desk. I do not know why I am writing this. I am a scavenger. I take. I am leaving things in a building that is not mine and I do not know why.",
+      "day": 21,
+      "type": "personal",
+      "author": "scavenger_mira",
+      "tags": [
+        "scavenging",
+        "gift",
+        "ethics",
+        "mystery"
+      ]
+    },
+    {
+      "id": "journal_scav_05_the_note",
+      "title": "Day 28: The Note",
+      "bodyText": "There was a note on the desk. Not my candle, the candle was gone, but a note, on a piece of the file paper, and it said: thank you for the screws. I did not write back. I took the note. I have it in my pocket. I am not going back for a while. The list is done. But I have the note. The note is from the other scavenger and the other scavenger said thank you and I am a scavenger who takes and someone said thank you and I do not know what to do with that except carry it and write it here. The book is where I put the things I do not know what to do with.",
+      "day": 28,
+      "type": "personal",
+      "author": "scavenger_mira",
+      "tags": [
+        "scavenging",
+        "connection",
+        "ethics",
+        "recovery"
+      ]
+    },
+    {
+      "id": "journal_teacher_01_the_lesson",
+      "title": "Day 6: The Lesson",
+      "bodyText": "I taught the lesson today. The lesson was the water cycle, which I taught because I had the diagram in my bag, which I had brought from the school, which I had brought because I thought the bag was for the children and the diagram was for the lesson and the lesson was for the day. There are eleven children. They sat on the floor. They were quiet. I drew the cycle on the wall with the chalk. The chalk is the last of the chalk. I will teach the lesson until the chalk is gone and then I will teach the lesson without the chalk, because the lesson is not the chalk, the lesson is the cycle, and the cycle is in me. I am the teacher. I have the cycle.",
+      "day": 6,
+      "type": "personal",
+      "author": "teacher_suki",
+      "tags": [
+        "teaching",
+        "routine",
+        "children",
+        "knowledge"
+      ]
+    },
+    {
+      "id": "journal_teacher_02_the_question",
+      "title": "Day 13: The Question",
+      "bodyText": "Dima asked where the rain goes. The cycle says the rain goes up and comes down. Dima said, but the rain is grey now, does it still go up. I said yes. I do not know if yes is true. I said yes because Dima is six and the cycle is the lesson and the lesson is the shape of the day and I will not break the shape. I will find out if the grey rain goes up. I will ask the engineer, the one who worked at the water plant. I will not tell Dima I do not know. The teacher who does not know finds out. That is also the lesson.",
+      "day": 13,
+      "type": "personal",
+      "author": "teacher_suki",
+      "tags": [
+        "teaching",
+        "questions",
+        "children",
+        "uncertainty"
+      ]
+    },
+    {
+      "id": "journal_teacher_03_the_engineer",
+      "title": "Day 20: The Engineer",
+      "bodyText": "The engineer said the grey rain is the ash, and the ash does not go up the same way, the ash goes up in the fire and comes down in the rain and the rain carries it and the rain is grey because the sky is grey and the sky is grey because of the ash. He said it slowly, like he was teaching me, and I wrote it down, and I will teach it to Dima, and Dima will teach it to the others, because Dima asks and the others listen to Dima. The cycle is changed. The lesson is changed. The teacher changes with it. I am not sad about this. I am the teacher. I find out. I teach what I found.",
+      "day": 20,
+      "type": "personal",
+      "author": "teacher_suki",
+      "tags": [
+        "teaching",
+        "knowledge",
+        "children",
+        "adaptation"
+      ]
+    },
+    {
+      "id": "journal_teacher_04_the_no_chalk",
+      "title": "Day 27: No Chalk",
+      "bodyText": "The chalk is gone. I taught the cycle without the chalk. I drew it in the air with my finger. The children drew it in the air with their fingers. The wall is empty. The cycle is in the air now. Dima said, the cycle is invisible now, like the rain going up. I said yes. The lesson is in the air and the children are in the air and I am in the air and we are all drawing something no one can see and that is also the lesson, the lesson that the thing you cannot see is still there if you know the shape of it. I know the shape of it. I am the teacher.",
+      "day": 27,
+      "type": "personal",
+      "author": "teacher_suki",
+      "tags": [
+        "teaching",
+        "adaptation",
+        "children",
+        "memory"
+      ]
+    },
+    {
+      "id": "journal_teacher_05_the_new_chalk",
+      "title": "Day 35: The Chalk",
+      "bodyText": "The scavenger, the quiet one, the one who goes to the printing works, she brought me chalk. Two sticks, in a paper bag, she said she found them in a desk and she thought of me. I did not cry. I am the teacher. I drew the cycle on the wall again. The children cheered. Dima cheered. The cycle is on the wall and in the air and in the children and now it is on the wall again and I have two sticks and I will use them slowly and I will teach the lesson until the chalk is gone and then I will teach it in the air again and the scavenger will find more chalk or she will not and either way the lesson is the cycle and the cycle is in me. I am the teacher. I have the cycle. I have the chalk. For now.",
+      "day": 35,
+      "type": "personal",
+      "author": "teacher_suki",
+      "tags": [
+        "teaching",
+        "gift",
+        "children",
+        "hope"
+      ]
+    },
+    {
+      "id": "journal_eng_01_the_generator",
+      "title": "Day 4: The Generator",
+      "bodyText": "The generator is a Meridian 4-cylinder diesel, model K, year of manufacture 1971. I know this because the plate is still on the block, which is more than I can say for most of the plate. It runs. It runs on the fuel we have, which is not the fuel it wants, but it runs. I have the manual, or most of it, the back pages are gone, which are the trouble pages, which is the joke. I do not need the trouble pages. I am the trouble pages. I have been the trouble pages for eleven years. The generator runs. I will keep it running. That is the entry. The generator runs.",
+      "day": 4,
+      "type": "personal",
+      "author": "engineer_tomas",
+      "tags": [
+        "engineering",
+        "routine",
+        "generator",
+        "manual"
+      ]
+    },
+    {
+      "id": "journal_eng_02_the_fuel",
+      "title": "Day 15: The Fuel",
+      "bodyText": "The fuel is the problem. The fuel we have is heating oil, not diesel, and the generator does not know the difference, but the injectors do. I have cleaned the injectors twice. The third cleaning will need a new gasket, which I do not have, which I will make from the leather of a boot, which is not a gasket, which is a boot, but a boot can be a gasket if the engineer says so and I am the engineer. The generator runs on heating oil and a boot. I am writing this in the manual, in the margin of the trouble pages, which I am writing myself now, because the back pages are gone and I am the back pages.",
+      "day": 15,
+      "type": "personal",
+      "author": "engineer_tomas",
+      "tags": [
+        "engineering",
+        "improvisation",
+        "generator",
+        "fuel"
+      ]
+    },
+    {
+      "id": "journal_eng_03_the_sound",
+      "title": "Day 24: The Sound",
+      "bodyText": "The sound changed. A knock, low, on the third cylinder, not the knock of the fuel, a different knock, the knock of the bearing. I know this knock. I have heard this knock before, in a generator that did not survive the knock. I am running the generator at half load now, which buys time, which is all an engineer can buy. I am listening to the knock. I am writing the knock in the manual. The knock is in the third cylinder and the knock is in the book and I am the only one who hears both. I have not told the quartermaster. The quartermaster counts the power as a supply. The power is a supply. The knock is the supply running out.",
+      "day": 24,
+      "type": "personal",
+      "author": "engineer_tomas",
+      "tags": [
+        "engineering",
+        "failure",
+        "generator",
+        "pressure"
+      ]
+    },
+    {
+      "id": "journal_eng_04_the_rebuild",
+      "title": "Day 31: The Rebuild",
+      "bodyText": "I did not sleep. I pulled the third cylinder in the night, with the lamp, with the boy, the one who watches, he held the lamp. The bearing was gone, the race was scored, I have no bearing. I have a pipe. I cut the pipe to the race and I shimmed it with the brass from a clock, the clock from the office, the one that does not keep time anymore. The brass is not a bearing. The brass is a shim. The generator runs. The knock is gone, or the knock is different, a softer sound, a sound I do not know, a sound I will listen for. I am writing this in the manual. The brass is in the generator. The clock is in the generator. The time is in the generator now. I am the engineer. I am tired.",
+      "day": 31,
+      "type": "personal",
+      "author": "engineer_tomas",
+      "tags": [
+        "engineering",
+        "repair",
+        "improvisation",
+        "weariness"
+      ]
+    },
+    {
+      "id": "journal_eng_05_the_morning",
+      "title": "Day 32: The Morning",
+      "bodyText": "The generator ran all night. The sound is the same sound, the softer sound, the sound I do not know. I am learning the sound. A new sound is a new generator, and a new generator is a new relationship, and a new relationship is a new set of trouble pages, which I am writing. The boy who held the lamp is asleep on the floor. I will let him sleep. The quartermaster will ask me about the power today and I will say the power is fine, which is true, which is true for today, which is all an engineer can say. The generator runs. The brass holds. The clock is in the generator and the generator is keeping time now, in its own way, which is the only way it has.",
+      "day": 32,
+      "type": "personal",
+      "author": "engineer_tomas",
+      "tags": [
+        "engineering",
+        "recovery",
+        "generator",
+        "duty"
+      ]
+    },
+    {
+      "id": "journal_farmer_01_the_frame",
+      "title": "Day 8: The Frame",
+      "bodyText": "I built the cold frame today, against the south wall, with the glass from the greenhouse that the wind took. The glass is not whole, it is in pieces, but the pieces overlap and the overlap sheds the rain and holds the sun, or holds what is left of the sun. I am planting the seed potatoes, the ones the quartermaster gave me, the ones she said were for the spring. I am planting them now, in the autumn, against the season, because the season is not the season anymore and the spring is not the spring and the planting is when the ground is workable and the ground is workable now. I am the farmer. I plant when I can.",
+      "day": 8,
+      "type": "personal",
+      "author": "farmer_old_petr",
+      "tags": [
+        "farming",
+        "routine",
+        "cold_frame",
+        "seasons"
+      ]
+    },
+    {
+      "id": "journal_farmer_02_the_frost",
+      "title": "Day 17: The Frost",
+      "bodyText": "The frost came two nights ago, early, the quartermaster said it was early, I do not know if it is early, I have lost the calendar. The frame held. The glass held. The potatoes are under the straw and the straw is under the glass and the glass is over the south wall and the south wall is warm, the south wall is the wall the sun used to love, and the wall remembers. I am betting on the wall remembering. The farmer bets on the wall. The wall has not let me down in forty years, though the sun has let the wall down, which is a different bet, and I am making it.",
+      "day": 17,
+      "type": "personal",
+      "author": "farmer_old_petr",
+      "tags": [
+        "farming",
+        "frost",
+        "cold_frame",
+        "bet"
+      ]
+    },
+    {
+      "id": "journal_farmer_03_the_sprout",
+      "title": "Day 26: The Sprout",
+      "bodyText": "They are up. The potatoes are up. I did not expect them up, not this soon, not in this cold, but the wall remembered and the straw held and the glass held and they are up. I am not telling the quartermaster yet. I am not telling anyone yet. I am sitting by the frame and I am watching them and I am an old man watching potatoes come up in the autumn and I am crying, which is a thing I do not do, I do not cry, I plant, but I am crying, and the crying is also a kind of planting, I think, I do not know, I am the farmer, I plant, and today I am watching what I planted and it is up and I am crying and that is the entry.",
+      "day": 26,
+      "type": "personal",
+      "author": "farmer_old_petr",
+      "tags": [
+        "farming",
+        "growth",
+        "hope",
+        "emotion"
+      ]
+    },
+    {
+      "id": "journal_farmer_04_the_child",
+      "title": "Day 30: The Child",
+      "bodyText": "The child came, the one they call Rima, the one with the book. She came to the frame. She asked what the green was. I said potatoes. She asked if they would be potatoes. I said they are potatoes now, they are being potatoes, under the straw, in the dark, they are being potatoes. She said, like the baby is being a person. I said yes, like that. She sat with me for a long time. She did not write in the book. She watched. I let her watch. A child watching a potato is a child watching a thing become itself, and that is the lesson the teacher does not have, because the teacher has the cycle and the cycle is the sky and the potato is the ground, and the ground is mine, and the child can come.",
+      "day": 30,
+      "type": "personal",
+      "author": "farmer_old_petr",
+      "tags": [
+        "farming",
+        "child",
+        "teaching",
+        "growth"
+      ]
+    },
+    {
+      "id": "journal_farmer_05_the_harvest",
+      "title": "Day 44: The Harvest",
+      "bodyText": "I dug them today. The child helped. The quartermaster came. We dug four kilos of potato from a frame I built against a wall in the autumn, which is not the season, which is the season now. The quartermaster weighed them and she wrote them in the ledger and the ledger is the book that is honest and the book said four kilos and the four kilos is the first harvest of the new season and the new season is the one we are making and the one we are making is the one we have. I am the farmer. I planted against the season and the season let me. The wall remembered. The straw held. The child helped. The harvest is in. I am tired and I am not sad and that is the entry and that is enough.",
+      "day": 44,
+      "type": "personal",
+      "author": "farmer_old_petr",
+      "tags": [
+        "farming",
+        "harvest",
+        "hope",
+        "recovery"
+      ]
+    }
+  ]
+}

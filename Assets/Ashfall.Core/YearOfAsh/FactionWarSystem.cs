@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.YearOfAsh
 {
@@ -40,7 +41,7 @@ namespace Ashfall.Core.YearOfAsh
         public event Action<string> OnDecreeEnacted;
         public event Action<string, string> OnTerritorialClashOccurred;
 
-        public FactionWarSystem(FactionWarSystemState state = null)
+        public FactionWarSystem(FactionWarSystemState? state = null)
         {
             _state = state ?? new FactionWarSystemState();
             if (_state.enactedDecrees == null) _state.enactedDecrees = new List<string>();
@@ -113,7 +114,8 @@ namespace Ashfall.Core.YearOfAsh
                 "faction_rebuilders",
                 "faction_black_ops",
                 "faction_ash_sign",
-                "faction_hydro_barons"
+                "faction_hydro_barons",
+                "faction_forward_roster"
             };
 
             foreach (var fId in defaultFactions)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -94,7 +95,7 @@ namespace Ashfall.Core
         }
 
         public bool StartEncounter(string id, string roomId, string kind, int day,
-            string aftermathFlag = null, string payload = null)
+string? aftermathFlag = null, string? payload = null)
         {
             if (!_state.expansionUnlocked) return false;
             if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(roomId) || string.IsNullOrEmpty(kind))

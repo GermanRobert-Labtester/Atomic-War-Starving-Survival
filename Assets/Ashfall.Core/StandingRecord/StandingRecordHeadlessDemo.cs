@@ -10,7 +10,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class StandingRecordHeadlessDemo
     {
-        public static HeadlessReport Run(string dataDirectory = null, ILog log = null)
+        public static HeadlessReport Run(string? dataDirectory = null, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -73,7 +73,7 @@ namespace Ashfall.Core
             string blob = json.Serialize(layoutSys.CaptureState());
             var restored = new LocationLayoutSystem(files, json, log);
             restored.Load(dataDirectory);
-            restored.RestoreState(json.Deserialize<LocationLayoutState>(blob));
+            restored.RestoreState(json.Deserialize<LocationLayoutState>(blob)!);
 
             Check(restored.ArriveAtParent(LocationLayoutSystem.LocKilometre19), "arrive at parent after restore");
             Check(restored.CanEnter(LocationLayoutSystem.RoomKm19Seam), "save roundtrip preserved unlocked room state");
@@ -87,7 +87,7 @@ namespace Ashfall.Core
             memory.ApplyMutation(LocationMemorySystem.MutationKm19Plated);
             Check(memory.GetActiveRecast("loc_cut_kilometre_19") != null, "km19 now recast after plated mutation");
             memory.ApplyMutation(LocationMemorySystem.MutationKm19Scraped);
-            Check(memory.GetActiveRecast("loc_cut_kilometre_19").Contains("short one post"),
+            Check(memory.GetActiveRecast("loc_cut_kilometre_19")!.Contains("short one post"),
                 "scraped recast wins over plated");
 
             // SiteEncounterSystem — room-keyed, Overlay withdraws after 3 scrapes

@@ -1,0 +1,176 @@
+using System;
+using System.Collections.Generic;
+#pragma warning disable CS8618
+
+namespace Ashfall.Core
+{
+    [Serializable]
+    public sealed class VinylMoraleState
+    {
+        public string systemId = VinylMoraleSystem.SystemId;
+        public List<string> ownedRecordIds = new List<string>();
+        public string currentPlayingId = string.Empty;
+        public string lastPlayedId = string.Empty;
+        public int lastPlayedDay = -1;
+        public int totalPlays;
+        public float totalMoraleApplied;
+        public bool isTurntableActive;
+        // Cultural broadcast bridge (future-proof): rare vinyl → shortwave cultural signal
+        public string lastBroadcastRecordId = string.Empty;
+        public int lastBroadcastDay = -1;
+        public int broadcastCount;
+        public float lastBroadcastSignalStrength;
+    }
+
+    [Serializable]
+    public sealed class VinylRecordDefinition
+    {
+        public string record_id = string.Empty;
+        public string display_name = string.Empty;
+        public string genre = string.Empty;
+        public float morale_daily_bonus = 3f;
+        public float flashback_suppression; // 0-1, reduces flashback probability
+        public string audio_cue_id = string.Empty;
+        public string description = string.Empty;
+    }
+
+    public sealed class VinylMoraleSystem
+    {
+        public const string SystemId = "vinyl_morale";
+        private VinylMoraleState _state = new VinylMoraleState();
+        private readonly Dictionary<string, VinylRecordDefinition> _catalog = new Dictionary<string, VinylRecordDefinition>(StringComparer.Ordinal);
+        private readonly ILog _log;
+
+        public VinylMoraleState State => _state;
+        public bool IsPlaying => _state.isTurntableActive && !string.IsNullOrEmpty(_state.currentPlayingId);
+
+        public event Action<float> OnMoraleApplied;      // morale amount
+        public event Action<float> OnFlashbackSuppressed; // suppression amount
+        public event Action OnPlaybackChanged;
+        public event Action<VinylRecordDefinition, int> OnCulturalBroadcast; // record, day — rare vinyl → radio
+
+        public VinylMoraleSystem(ILog? log = null)
+        {
+            _log = log ?? NullLog.Instance;
+        }
+
+        public void LoadCatalog(List<VinylRecordDefinition> records)
+        {
+            if (records == null) return;
+            _catalog.Clear();
+            foreach (var r in records)
+                if (!string.IsNullOrEmpty(r.record_id))
+                    _catalog[r.record_id] = r;
+        }
+
+        public void AcquireRecord(string recordId)
+        {
+            if (!_state.ownedRecordIds.Contains(recordId))
+            {
+                _state.ownedRecordIds.Add(recordId);
+                _log.Info($"[Vinyl] acquired record '{recordId}'");
+                OnPlaybackChanged?.Invoke();
+            }
+        }
+
+        public ActionResult Play(string recordId)
+        {
+            return Play(recordId, -1);
+        }
+
+        /// <summary>Play with explicit day for cultural broadcast tracking (host passes _simDay).</summary>
+        public ActionResult Play(string recordId, int day)
+        {
+            if (!_state.ownedRecordIds.Contains(recordId))
+                return ActionResult.Blocked("not_owned", "vinyl.not_owned");
+            if (!_catalog.TryGetValue(recordId, out var record))
+                return ActionResult.Failed("unknown_record", "vinyl.unknown");
+
+            _state.lastPlayedId = _state.currentPlayingId;
+            _state.currentPlayingId = recordId;
+            _state.isTurntableActive = true;
+            _log.Info($"[Vinyl] playing '{record.display_name}'");
+            OnPlaybackChanged?.Invoke();
+
+            // Cultural broadcast bridge: rare pre-war vinyl (high morale bonus or classical/jazz) → shortwave signal
+            if (IsRareCulturalRecord(record))
+            {
+                _state.lastBroadcastRecordId = recordId;
+                _state.lastBroadcastDay = day >= 0 ? day : _state.lastPlayedDay;
+                _state.broadcastCount++;
+                _state.lastBroadcastSignalStrength = 0.85f; // 85% — strong cultural signal
+                OnCulturalBroadcast?.Invoke(record, _state.lastBroadcastDay);
+            }
+
+            return ActionResult.Success("vinyl.playing",
+                new Dictionary<string, double>
+                {
+                    { "morale_bonus", record.morale_daily_bonus },
+                    { "flashback_suppression", record.flashback_suppression }
+                });
+        }
+
+        public bool IsRareCulturalRecord(VinylRecordDefinition record)
+        {
+            if (record == null) return false;
+            if (record.morale_daily_bonus >= 4f) return true;
+            string g = record.genre ?? string.Empty;
+            return g.Equals("classical", StringComparison.OrdinalIgnoreCase)
+                || g.Equals("jazz", StringComparison.OrdinalIgnoreCase)
+                || g.Equals("symphony", StringComparison.OrdinalIgnoreCase)
+                || g.Equals("hymnal", StringComparison.OrdinalIgnoreCase);
+        }
+
+        public ActionResult Stop()
+        {
+            if (!_state.isTurntableActive)
+                return ActionResult.Blocked("not_playing", "vinyl.not_playing");
+            _state.isTurntableActive = false;
+            // Broadcast ends when turntable stops — signal drops
+            _state.lastBroadcastSignalStrength = 0f;
+            OnPlaybackChanged?.Invoke();
+            return ActionResult.Success("vinyl.stopped");
+        }
+
+        /// <summary>Called once per day to apply the daily morale effect.</summary>
+        public void ApplyDailyEffect(int day)
+        {
+            if (!IsPlaying) return;
+            if (_state.lastPlayedDay == day) return; // one-time per day
+
+            if (!_catalog.TryGetValue(_state.currentPlayingId, out var record)) return;
+
+            _state.totalPlays++;
+            _state.totalMoraleApplied += record.morale_daily_bonus;
+            _state.lastPlayedDay = day;
+
+            OnMoraleApplied?.Invoke(record.morale_daily_bonus);
+            if (record.flashback_suppression > 0)
+                OnFlashbackSuppressed?.Invoke(record.flashback_suppression);
+
+            _log.Info($"[Vinyl] daily effect: +{record.morale_daily_bonus} morale, -{record.flashback_suppression:P0} flashback");
+        }
+
+        public VinylRecordDefinition? GetRecord(string id)
+        {
+            _catalog.TryGetValue(id, out var r);
+            return r;
+        }
+
+        public VinylMoraleState CaptureState() => CloneState(_state);
+
+        public void RestoreState(VinylMoraleState saved)
+        {
+            if (saved == null) return;
+            _state = CloneState(saved);
+        }
+
+        private static VinylMoraleState CloneState(VinylMoraleState src)
+        {
+            if (src == null) return new VinylMoraleState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<VinylMoraleState>(json) ?? new VinylMoraleState();
+        }
+    }
+}

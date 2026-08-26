@@ -1,58 +1,61 @@
-[
-  {
-    "id": "tallow_rendering_001",
-    "fat_source_animal": "dog",
-    "rendering_vat_id": "rv_tin_pot_01",
-    "yield_grams": 180.0,
-    "log_text": "Dog fat from the last large animal. Cut into small pieces and melted slowly over a low charcoal heat in the salvaged tin pot. The crackling floated and was skimmed off. Strained through two layers of cloth. One hundred and eighty grams of clean white tallow. Not much for what it took."
-  },
-  {
-    "id": "tallow_rendering_002",
-    "fat_source_animal": "rat",
-    "rendering_vat_id": "rv_tin_pot_01",
-    "yield_grams": 22.0,
-    "log_text": "Rat fat — small deposit around the kidneys. Six rats, combined. Twenty-two grams total. The smell during rendering is worse than dog fat. The tallow is slightly yellow. Still functional. Blended into the dog tallow batch rather than storing separately."
-  },
-  {
-    "id": "tallow_rendering_003",
-    "fat_source_animal": "rabbit",
-    "rendering_vat_id": "rv_stone_cup_02",
-    "yield_grams": 45.0,
-    "log_text": "Rabbit kidney fat is the cleanest of any animal we have processed. Renders at lower heat, comes out nearly white, almost odourless. Forty-five grams from two rabbits. Stored separately from the dog tallow — will use for the finest work."
-  },
-  {
-    "id": "tallow_rendering_004",
-    "fat_source_animal": "dog",
-    "rendering_vat_id": "rv_tin_pot_01",
-    "yield_grams": 210.0,
-    "log_text": "Second large dog — better fat distribution than the first. Two hundred and ten grams. Rendered in two passes: first pass at low heat for the soft fat, second pass hotter to extract from the connective tissue. Second-pass tallow is darker and smells stronger. Used for lamp fuel, not candles."
-  },
-  {
-    "id": "tallow_rendering_005",
-    "fat_source_animal": "rat",
-    "rendering_vat_id": "rv_stone_cup_02",
-    "yield_grams": 38.0,
-    "log_text": "Larger batch of rats — twelve this time. Thirty-eight grams. The yield per animal does not improve much with scale. The process is the bottleneck regardless of quantity. Rendered cleanly. Added to the candle-grade stock."
-  },
-  {
-    "id": "tallow_rendering_006",
-    "fat_source_animal": "mixed_scraps",
-    "rendering_vat_id": "rv_tin_pot_01",
-    "yield_grams": 95.0,
-    "log_text": "Mixed fat scraps — accumulated over a week from preparation of meals. Dog, rat, whatever came. Ninety-five grams of mixed tallow; darker in colour, uneven smell. Not suitable for candles but good for leather fatiquoring and tool lubrication. Nothing wasted."
-  },
-  {
-    "id": "tallow_rendering_007",
-    "fat_source_animal": "rabbit",
-    "rendering_vat_id": "rv_stone_cup_02",
-    "yield_grams": 68.0,
-    "log_text": "Three rabbits — good fat season. Sixty-eight grams total from kidney and back fat. The finest rendering batch yet. The tallow is almost crystalline when cool, breaks cleanly. Allocated entirely to candle stock. The lamp fuel will use dog tallow."
-  },
-  {
-    "id": "tallow_rendering_008",
-    "fat_source_animal": "cat",
-    "rendering_vat_id": "rv_stone_cup_02",
-    "yield_grams": 31.0,
-    "log_text": "Cat fat — unexpected source. The animal had clearly been eating well before the shelters closed. Thirty-one grams from a single cat. The tallow is pale and soft, similar to rabbit. Added to the fine candle stock without labelling. It does not need a label."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "tallow_rendering_001",
+      "fat_source_animal": "dog",
+      "rendering_vat_id": "rv_tin_pot_01",
+      "yield_grams": 180.0,
+      "log_text": "Dog fat from the last large animal. Cut into small pieces and melted slowly over a low charcoal heat in the salvaged tin pot. The crackling floated and was skimmed off. Strained through two layers of cloth. One hundred and eighty grams of clean white tallow. Not much for what it took."
+    },
+    {
+      "id": "tallow_rendering_002",
+      "fat_source_animal": "rat",
+      "rendering_vat_id": "rv_tin_pot_01",
+      "yield_grams": 22.0,
+      "log_text": "Rat fat — small deposit around the kidneys. Six rats, combined. Twenty-two grams total. The smell during rendering is worse than dog fat. The tallow is slightly yellow. Still functional. Blended into the dog tallow batch rather than storing separately."
+    },
+    {
+      "id": "tallow_rendering_003",
+      "fat_source_animal": "rabbit",
+      "rendering_vat_id": "rv_stone_cup_02",
+      "yield_grams": 45.0,
+      "log_text": "Rabbit kidney fat is the cleanest of any animal we have processed. Renders at lower heat, comes out nearly white, almost odourless. Forty-five grams from two rabbits. Stored separately from the dog tallow — will use for the finest work."
+    },
+    {
+      "id": "tallow_rendering_004",
+      "fat_source_animal": "dog",
+      "rendering_vat_id": "rv_tin_pot_01",
+      "yield_grams": 210.0,
+      "log_text": "Second large dog — better fat distribution than the first. Two hundred and ten grams. Rendered in two passes: first pass at low heat for the soft fat, second pass hotter to extract from the connective tissue. Second-pass tallow is darker and smells stronger. Used for lamp fuel, not candles."
+    },
+    {
+      "id": "tallow_rendering_005",
+      "fat_source_animal": "rat",
+      "rendering_vat_id": "rv_stone_cup_02",
+      "yield_grams": 38.0,
+      "log_text": "Larger batch of rats — twelve this time. Thirty-eight grams. The yield per animal does not improve much with scale. The process is the bottleneck regardless of quantity. Rendered cleanly. Added to the candle-grade stock."
+    },
+    {
+      "id": "tallow_rendering_006",
+      "fat_source_animal": "mixed_scraps",
+      "rendering_vat_id": "rv_tin_pot_01",
+      "yield_grams": 95.0,
+      "log_text": "Mixed fat scraps — accumulated over a week from preparation of meals. Dog, rat, whatever came. Ninety-five grams of mixed tallow; darker in colour, uneven smell. Not suitable for candles but good for leather fatiquoring and tool lubrication. Nothing wasted."
+    },
+    {
+      "id": "tallow_rendering_007",
+      "fat_source_animal": "rabbit",
+      "rendering_vat_id": "rv_stone_cup_02",
+      "yield_grams": 68.0,
+      "log_text": "Three rabbits — good fat season. Sixty-eight grams total from kidney and back fat. The finest rendering batch yet. The tallow is almost crystalline when cool, breaks cleanly. Allocated entirely to candle stock. The lamp fuel will use dog tallow."
+    },
+    {
+      "id": "tallow_rendering_008",
+      "fat_source_animal": "cat",
+      "rendering_vat_id": "rv_stone_cup_02",
+      "yield_grams": 31.0,
+      "log_text": "Cat fat — unexpected source. The animal had clearly been eating well before the shelters closed. Thirty-one grams from a single cat. The tallow is pale and soft, similar to rabbit. Added to the fine candle stock without labelling. It does not need a label."
+    }
+  ]
+}

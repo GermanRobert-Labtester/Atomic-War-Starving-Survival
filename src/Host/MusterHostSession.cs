@@ -13,6 +13,7 @@ namespace AtomicWar.GodotApp
     /// No gameplay rules here — hosts only present.
     /// </summary>
     public sealed class MusterHostSession
+    : HostSessionBase
     {
         public MusterSystem Engine { get; }
         public CoalitionCampSystem Camp { get; }
@@ -36,17 +37,17 @@ namespace AtomicWar.GodotApp
         public event Action<MusterRecord>? OnQuestlineResolved;
 
         public MusterHostSession(
-            MusterSystem engine = null,
-            CoalitionCampSystem camp = null,
-            ColdCountSystem coldCount = null,
-            ProvisionedSystem provisioned = null,
-            LongWalkSystem longWalk = null,
-            ScavengerGuildSystem scavengerGuild = null,
-            IronRaidersSystem ironRaiders = null,
-            HydroBaronsSystem hydroBarons = null,
-            List<CurrentDefinition> roster = null,
-            List<WitnessDefinition> witnesses = null,
-            List<EndingDefinition> epilogues = null)
+            MusterSystem engine = null!,
+            CoalitionCampSystem camp = null!,
+            ColdCountSystem coldCount = null!,
+            ProvisionedSystem provisioned = null!,
+            LongWalkSystem longWalk = null!,
+            ScavengerGuildSystem scavengerGuild = null!,
+            IronRaidersSystem ironRaiders = null!,
+            HydroBaronsSystem hydroBarons = null!,
+            List<CurrentDefinition> roster = null!,
+            List<WitnessDefinition> witnesses = null!,
+            List<EndingDefinition> epilogues = null!)
         {
             Engine = engine ?? new MusterSystem();
             Camp = camp ?? new CoalitionCampSystem();
@@ -82,7 +83,7 @@ namespace AtomicWar.GodotApp
             var epilogues = new List<EndingDefinition>();
             if (!string.IsNullOrEmpty(dataDir))
             {
-                var fileIO = new FileSystemIO();
+                var fileIO = CatalogPath.CreateFileIOForDataDir(dataDir);
                 var serializer = new SystemTextJsonSerializer();
                 roster = CurrentsCatalogLoader.LoadCurrents(dataDir, fileIO, serializer);
                 witnesses = WitnessCatalogLoader.LoadWitnesses(dataDir, fileIO, serializer);

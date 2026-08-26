@@ -1,82 +1,133 @@
-[
-  {
-    "id": "square_set_heavy_ground_crushing_horn_failure",
-    "stope_location_id": "DEEP_VEIN_STOPE_LEVEL_8",
-    "timber_framing_system": "PHILIP_DEIDESHEIMER_SQUARE_SET",
-    "measured_rock_pressure_mpa": 18.5,
-    "set_deflection_mm": 65.0,
-    "timestamp_relative": "YEAR_02_SHORING_LOG_01",
-    "tags": ["carpentry", "square_set", "mine_shoring", "heavy_ground", "tenon_horn"],
-    "prose": "Massive horizontal wall squeezing in the stoping zone exerted 18.5 MPa across the 12x12-inch Douglas fir sets. The square tenon horns broomed and crushed under side pressure, compressing the joints by 65mm before auxiliary diagonal cribbing was driven."
-  },
-  {
-    "id": "square_set_hydraulic_fill_waste_stope_pack",
-    "stope_location_id": "MINED_OUT_CENTRAL_CHAMBER_03",
-    "timber_framing_system": "FILLED_SQUARE_SET_TIMBERING",
-    "measured_rock_pressure_mpa": 8.0,
-    "set_deflection_mm": 12.0,
-    "timestamp_relative": "YEAR_05_SHORING_LOG_03",
-    "tags": ["carpentry", "hydraulic_fill", "stope_pack", "tailings", "timber_support"],
-    "prose": "Pumping an engineered slurry of classified mill sand tailings and 5% Portland cement around the standing square-sets stabilized the voids. Once dewatered through burlap lag curtains, the dense backfill carried 85% of the roof load, saving the framing from decay."
-  },
-  {
-    "id": "square_set_wedge_pinching_cap_sill_settlement",
-    "stope_location_id": "HAULAGE_DRIFT_INTERSECTION_EAST",
-    "timber_framing_system": "THREE_PIECE_TIMBER_SET_AND_SILL",
-    "measured_rock_pressure_mpa": 12.0,
-    "set_deflection_mm": 38.0,
-    "timestamp_relative": "YEAR_07_SHORING_LOG_02",
-    "tags": ["carpentry", "wedging", "cap_and_sill", "rock_settlement", "tightening"],
-    "prose": "Blasting vibration loosened the hardwood blocking wedges driven between the cap timber and hanging wall rock. The resulting roof settlement dropped the cap 38mm, requiring miners to drive twin oak wedges with 14-lb sledges to restore pretension."
-  },
-  {
-    "id": "square_set_breast_stull_hitch_pocket_blowout",
-    "stope_location_id": "NARROW_VEIN_INCLINE_STOPE_02",
-    "timber_framing_system": "INCLINED_BATTERED_STULL_TIMBER",
-    "measured_rock_pressure_mpa": 24.0,
-    "set_deflection_mm": 110.0,
-    "timestamp_relative": "YEAR_10_SHORING_LOG_04",
-    "tags": ["carpentry", "stull", "hitch_pocket", "rockburst", "footwall_blowout"],
-    "prose": "A seismic rockburst in the brittle quartz footwall blew out the rock lip of the lower hitch pocket. The 14-inch round spruce stull kicked out with tremendous force, sending fifty tons of shattered hanging wall slate crashing onto the tram tracks."
-  },
-  {
-    "id": "square_set_forepoling_spiling_running_ground",
-    "stope_location_id": "FAULT_BRECCIA_TRANSIT_TUNNEL",
-    "timber_framing_system": "FOREPOLING_SPILING_BRIDGE_SET",
-    "measured_rock_pressure_mpa": 6.5,
-    "set_deflection_mm": 20.0,
-    "timestamp_relative": "YEAR_13_SHORING_LOG_01",
-    "tags": ["carpentry", "forepoling", "spiling", "running_ground", "breastboarding"],
-    "prose": "Encountering a water-saturated fault zone with running sand forced miners to drive 3-inch chisel-pointed larch spiles ahead over bridge caps. Breastboards held the collapsing face while tail timbers were wedged in, advancing the header 1.2 meters per shift safely."
-  },
-  {
-    "id": "square_set_pigsty_cribbing_bulkhead_compression",
-    "stope_location_id": "MAIN_SHAFT_PILLAR_EXTRACTION",
-    "timber_framing_system": "SOLID_CRISS_CROSS_PIGSTY_CRIB",
-    "measured_rock_pressure_mpa": 32.0,
-    "set_deflection_mm": 180.0,
-    "timestamp_relative": "YEAR_16_SHORING_LOG_03",
-    "tags": ["carpentry", "pigsty_crib", "compression_yield", "bulkhead", "pillar_robbing"],
-    "prose": "Building solid 8x8-inch oak cribs (pigsties) filled with hand-packed waste rock provided controlled yielding support during pillar recovery. The cribs compressed 180mm (15% height reduction) under 32 MPa overburden load without catastrophic collapse."
-  },
-  {
-    "id": "square_set_spotted_gum_compression_burst",
-    "stope_location_id": "HARD_ROCK_DEVELOPMENT_HEADER",
-    "timber_framing_system": "EUCALYPT_ROUND_PROP_BATTERY",
-    "measured_rock_pressure_mpa": 40.0,
-    "set_deflection_mm": 5.0,
-    "timestamp_relative": "YEAR_18_SHORING_LOG_02",
-    "tags": ["carpentry", "hardwood", "compression_burst", "brittle_failure", "eucalypt"],
-    "prose": "Spotted gum hardwood props withstood massive axial compression (40 MPa) with zero visible deflection, but lacked the fibrous warning creak of softwoods. When ultimate shear strength was exceeded, three props detonated in a shower of lethal wooden splinters."
-  },
-  {
-    "id": "square_set_telescoping_steel_friction_prop_hybrid",
-    "stope_location_id": "LONGWALL_COAL_EXTRACTION_FACE",
-    "timber_framing_system": "HYBRID_TIMBER_BAR_AND_FRICTION_PROP",
-    "measured_rock_pressure_mpa": 15.0,
-    "set_deflection_mm": 90.0,
-    "timestamp_relative": "YEAR_20_SHORING_LOG_01",
-    "tags": ["carpentry", "hybrid_support", "friction_prop", "yielding_timber", "acoustic_warning"],
-    "prose": "Pairing split-pine roof bars with wedge-clamped telescoping friction props gave optimal yield characteristics. The wood bar bowed to give visible and audible acoustic creaking warnings of roof weighting, while the steel legs slipped smoothly at 25 tons load."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "square_set_heavy_ground_crushing_horn_failure",
+      "stope_location_id": "DEEP_VEIN_STOPE_LEVEL_8",
+      "timber_framing_system": "PHILIP_DEIDESHEIMER_SQUARE_SET",
+      "measured_rock_pressure_mpa": 18.5,
+      "set_deflection_mm": 65.0,
+      "timestamp_relative": "YEAR_02_SHORING_LOG_01",
+      "tags": [
+        "carpentry",
+        "square_set",
+        "mine_shoring",
+        "heavy_ground",
+        "tenon_horn"
+      ],
+      "prose": "Massive horizontal wall squeezing in the stoping zone exerted 18.5 MPa across the 12x12-inch Douglas fir sets. The square tenon horns broomed and crushed under side pressure, compressing the joints by 65mm before auxiliary diagonal cribbing was driven."
+    },
+    {
+      "id": "square_set_hydraulic_fill_waste_stope_pack",
+      "stope_location_id": "MINED_OUT_CENTRAL_CHAMBER_03",
+      "timber_framing_system": "FILLED_SQUARE_SET_TIMBERING",
+      "measured_rock_pressure_mpa": 8.0,
+      "set_deflection_mm": 12.0,
+      "timestamp_relative": "YEAR_05_SHORING_LOG_03",
+      "tags": [
+        "carpentry",
+        "hydraulic_fill",
+        "stope_pack",
+        "tailings",
+        "timber_support"
+      ],
+      "prose": "Pumping an engineered slurry of classified mill sand tailings and 5% Portland cement around the standing square-sets stabilized the voids. Once dewatered through burlap lag curtains, the dense backfill carried 85% of the roof load, saving the framing from decay."
+    },
+    {
+      "id": "square_set_wedge_pinching_cap_sill_settlement",
+      "stope_location_id": "HAULAGE_DRIFT_INTERSECTION_EAST",
+      "timber_framing_system": "THREE_PIECE_TIMBER_SET_AND_SILL",
+      "measured_rock_pressure_mpa": 12.0,
+      "set_deflection_mm": 38.0,
+      "timestamp_relative": "YEAR_07_SHORING_LOG_02",
+      "tags": [
+        "carpentry",
+        "wedging",
+        "cap_and_sill",
+        "rock_settlement",
+        "tightening"
+      ],
+      "prose": "Blasting vibration loosened the hardwood blocking wedges driven between the cap timber and hanging wall rock. The resulting roof settlement dropped the cap 38mm, requiring miners to drive twin oak wedges with 14-lb sledges to restore pretension."
+    },
+    {
+      "id": "square_set_breast_stull_hitch_pocket_blowout",
+      "stope_location_id": "NARROW_VEIN_INCLINE_STOPE_02",
+      "timber_framing_system": "INCLINED_BATTERED_STULL_TIMBER",
+      "measured_rock_pressure_mpa": 24.0,
+      "set_deflection_mm": 110.0,
+      "timestamp_relative": "YEAR_10_SHORING_LOG_04",
+      "tags": [
+        "carpentry",
+        "stull",
+        "hitch_pocket",
+        "rockburst",
+        "footwall_blowout"
+      ],
+      "prose": "A seismic rockburst in the brittle quartz footwall blew out the rock lip of the lower hitch pocket. The 14-inch round spruce stull kicked out with tremendous force, sending fifty tons of shattered hanging wall slate crashing onto the tram tracks."
+    },
+    {
+      "id": "square_set_forepoling_spiling_running_ground",
+      "stope_location_id": "FAULT_BRECCIA_TRANSIT_TUNNEL",
+      "timber_framing_system": "FOREPOLING_SPILING_BRIDGE_SET",
+      "measured_rock_pressure_mpa": 6.5,
+      "set_deflection_mm": 20.0,
+      "timestamp_relative": "YEAR_13_SHORING_LOG_01",
+      "tags": [
+        "carpentry",
+        "forepoling",
+        "spiling",
+        "running_ground",
+        "breastboarding"
+      ],
+      "prose": "Encountering a water-saturated fault zone with running sand forced miners to drive 3-inch chisel-pointed larch spiles ahead over bridge caps. Breastboards held the collapsing face while tail timbers were wedged in, advancing the header 1.2 meters per shift safely."
+    },
+    {
+      "id": "square_set_pigsty_cribbing_bulkhead_compression",
+      "stope_location_id": "MAIN_SHAFT_PILLAR_EXTRACTION",
+      "timber_framing_system": "SOLID_CRISS_CROSS_PIGSTY_CRIB",
+      "measured_rock_pressure_mpa": 32.0,
+      "set_deflection_mm": 180.0,
+      "timestamp_relative": "YEAR_16_SHORING_LOG_03",
+      "tags": [
+        "carpentry",
+        "pigsty_crib",
+        "compression_yield",
+        "bulkhead",
+        "pillar_robbing"
+      ],
+      "prose": "Building solid 8x8-inch oak cribs (pigsties) filled with hand-packed waste rock provided controlled yielding support during pillar recovery. The cribs compressed 180mm (15% height reduction) under 32 MPa overburden load without catastrophic collapse."
+    },
+    {
+      "id": "square_set_spotted_gum_compression_burst",
+      "stope_location_id": "HARD_ROCK_DEVELOPMENT_HEADER",
+      "timber_framing_system": "EUCALYPT_ROUND_PROP_BATTERY",
+      "measured_rock_pressure_mpa": 40.0,
+      "set_deflection_mm": 5.0,
+      "timestamp_relative": "YEAR_18_SHORING_LOG_02",
+      "tags": [
+        "carpentry",
+        "hardwood",
+        "compression_burst",
+        "brittle_failure",
+        "eucalypt"
+      ],
+      "prose": "Spotted gum hardwood props withstood massive axial compression (40 MPa) with zero visible deflection, but lacked the fibrous warning creak of softwoods. When ultimate shear strength was exceeded, three props detonated in a shower of lethal wooden splinters."
+    },
+    {
+      "id": "square_set_telescoping_steel_friction_prop_hybrid",
+      "stope_location_id": "LONGWALL_COAL_EXTRACTION_FACE",
+      "timber_framing_system": "HYBRID_TIMBER_BAR_AND_FRICTION_PROP",
+      "measured_rock_pressure_mpa": 15.0,
+      "set_deflection_mm": 90.0,
+      "timestamp_relative": "YEAR_20_SHORING_LOG_01",
+      "tags": [
+        "carpentry",
+        "hybrid_support",
+        "friction_prop",
+        "yielding_timber",
+        "acoustic_warning"
+      ],
+      "prose": "Pairing split-pine roof bars with wedge-clamped telescoping friction props gave optimal yield characteristics. The wood bar bowed to give visible and audible acoustic creaking warnings of roof weighting, while the steel legs slipped smoothly at 25 tons load."
+    }
+  ]
+}

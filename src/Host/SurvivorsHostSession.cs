@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using System.IO;
 using Godot;
 using Ashfall.Core;
@@ -38,7 +39,7 @@ namespace AtomicWar.GodotApp
     /// the hour, and persists per-survivor slices to user:// via SurvivorsSaveStore.
     /// </summary>
     public sealed class SurvivorsHostSession
-    {
+    : HostSessionBase{
         public NeedsSystem Needs { get; }
         public RadiationSystem Radiation { get; }
         public MaterialShieldingSystem Shelter { get; } = new MaterialShieldingSystem();
@@ -56,8 +57,6 @@ namespace AtomicWar.GodotApp
         private readonly System.Collections.Generic.Dictionary<string, RadSurvivorWrapper> _radStates;
 
         public string LastEvent { get; private set; } = string.Empty;
-        public event Action StateChanged;
-
         private sealed class RadSurvivorWrapper : SurvivorRadState { }
 
         public SurvivorsHostSession()
@@ -80,11 +79,11 @@ namespace AtomicWar.GodotApp
             Shelter.UpgradeCeiling("room_bunks_living", MaterialShieldingSystem.WallMaterial.Wood);
             Shelter.UpgradeCeiling("room_radio_tuner", MaterialShieldingSystem.WallMaterial.Concrete);
 
-            Needs.OnNeedChanged += (s, kind, v) => StateChanged?.Invoke();
+            Needs.OnNeedChanged += (s, kind, v) => RaiseStateChanged();
             Needs.OnDied += s =>
             {
                 LastEvent = $"{s.Id} has died.";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
 
             Radiation.OnStatusGained += (radState, status) =>
@@ -93,12 +92,12 @@ namespace AtomicWar.GodotApp
                 {
                     LastEvent = $"RADIATION ALERT: {radState.Id} entered acute radiation sickness.";
                     AtomicWar.GodotApp.Audio.AudioManager.Instance?.PlayRadiationAlert();
-                    StateChanged?.Invoke();
+                    RaiseStateChanged();
                 }
                 else if (status == SurvivorStatus.ChronicIllness)
                 {
                     LastEvent = $"RADIATION ALERT: {radState.Id} developed chronic illness.";
-                    StateChanged?.Invoke();
+                    RaiseStateChanged();
                 }
             };
         }
@@ -164,7 +163,7 @@ namespace AtomicWar.GodotApp
             Radiation.Register(rad);
         }
 
-        public SurvivorNeedsState Find(string id)
+        public SurvivorNeedsState? Find(string id)
         {
             for (int i = 0; i < RosterState.Count; i++)
                 if (RosterState[i] != null && RosterState[i].Id == id) return RosterState[i];
@@ -221,7 +220,7 @@ namespace AtomicWar.GodotApp
             Needs.Tick(gameHours);
             Radiation.Tick(gameHours);
             LastEvent = $"Advanced {gameHours:F0} hour(s).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -233,7 +232,7 @@ namespace AtomicWar.GodotApp
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.AdministerIodine(rad);
             LastEvent = $"{survivorId}: iodine administered — {rad.RadResistanceHoursRemaining:F0}h rad resistance.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -243,7 +242,7 @@ namespace AtomicWar.GodotApp
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.AdministerAntiRad(rad, rads);
             LastEvent = $"{survivorId}: anti-rad cleared {rads:F0} mSv (dose now {rad.RadiationDose:F0}).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -253,7 +252,7 @@ namespace AtomicWar.GodotApp
             if (survivor == null) return $"Unknown survivor: {survivorId}.";
             Needs.Modify(survivor, NeedKind.Health, amount);
             LastEvent = $"{survivorId}: treated with bandage (+{amount:F0} HP, health now {survivor.Health:F0}).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -263,7 +262,7 @@ namespace AtomicWar.GodotApp
             if (rad == null) return $"Unknown survivor: {survivorId}.";
             Radiation.Expose(rad, radsPerHour, 1f);
             LastEvent = $"{survivorId}: exposed to {radsPerHour} mSv/hr for 1h (dose {rad.RadiationDose:F0}/100).";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -370,7 +369,7 @@ namespace AtomicWar.GodotApp
                 _radStates[slice.id] = rad;
                 Radiation.Register(rad);
             }
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
     }
 

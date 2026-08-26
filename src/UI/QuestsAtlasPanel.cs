@@ -45,12 +45,16 @@ public partial class QuestsAtlasPanel : Control
 
     public void Bind(HoldfastQuestSystem holdfast, CrossingQuestSystem? crossing = null)
     {
+        if (_holdfast != null)
+            _holdfast.OnQuestStageChanged -= HandleQuestStageChanged;
         _holdfast = holdfast;
         _crossing = crossing;
         if (_holdfast != null)
-            _holdfast.OnQuestStageChanged += (_, __) => RefreshView();
+            _holdfast.OnQuestStageChanged += HandleQuestStageChanged;
         RefreshView();
     }
+
+    private void HandleQuestStageChanged(string _, int __) => RefreshView();
 
     public override void _Ready()
     {
@@ -407,5 +411,14 @@ public partial class QuestsAtlasPanel : Control
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        if (_holdfast != null)
+        {
+            _holdfast.OnQuestStageChanged -= HandleQuestStageChanged;
+        }
+        base._ExitTree();
     }
 }

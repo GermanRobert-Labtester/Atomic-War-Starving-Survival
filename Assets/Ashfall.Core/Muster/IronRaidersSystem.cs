@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Muster
 {
@@ -30,7 +31,7 @@ namespace Ashfall.Core.Muster
         public event Action OnRaidExecuted;
         public event Action OnFortified;
 
-        public IronRaidersSystem(IronRaidersState state = null)
+        public IronRaidersSystem(IronRaidersState? state = null)
         {
             _state = state ?? new IronRaidersState();
             if (_state.systemId != SystemId) _state.systemId = SystemId;

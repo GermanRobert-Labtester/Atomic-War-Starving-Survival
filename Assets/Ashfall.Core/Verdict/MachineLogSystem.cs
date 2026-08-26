@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Verdict
 {
@@ -46,7 +47,7 @@ namespace Ashfall.Core.Verdict
         public event Action<MachineLogEntry> OnEntryRead;
         public event Action OnTapeSpin;
 
-        public MachineLogSystem(MachineLogSystemState state = null)
+        public MachineLogSystem(MachineLogSystemState? state = null)
         {
             _state = state ?? new MachineLogSystemState();
         }
@@ -79,7 +80,7 @@ namespace Ashfall.Core.Verdict
 
         /// <summary>Insert a deterministic, seed-dependent garbling marker (corruption).
         /// Corpus is data-driven (verdict_data.json). Falls back to built-ins if none supplied.</summary>
-        public bool InsertCorruptionMarker(int day, ISeededRng rng, IReadOnlyList<string> corpus = null)
+        public bool InsertCorruptionMarker(int day, ISeededRng rng, IReadOnlyList<string>? corpus = null)
         {
             if (rng == null) return false;
 

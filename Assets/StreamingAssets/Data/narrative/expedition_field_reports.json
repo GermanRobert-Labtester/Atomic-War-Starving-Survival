@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "collection_id": "expedition_field_reports_from_wasteland_reconnaissance",
+  "description": "Field reports filed by expedition teams returning from reconnaissance and salvage runs to specific locations. Each report covers approach conditions, hazards encountered, salvage recovered, and recommendations for future visits.",
+  "reports": [
+    {
+      "report_id": "exp_report_abandoned_hospital_01",
+      "location_id": "abandoned_hospital",
+      "expedition_leader": "the_veteran",
+      "team_size": 3,
+      "duration_days": 2,
+      "day_completed": 42,
+      "approach_summary": "Southern approach via the creek bed. Vegetation provides partial cover but the mud slows movement to half-speed. Radiation at the entrance reads 35 microsieverts per hour. Team wore gas masks for the full duration.",
+      "hazards_encountered": [
+        "Structural collapse on the second floor — stairwell blocked by fallen ceiling panels",
+        "Standing water in the basement with visible chemical sheen — rad count 120 uSv/h",
+        "Feral dogs observed on the third floor, two with visible lesions",
+        "Asbestos insulation exposed in the ventilation ducts — particulate hazard"
+      ],
+      "salvage_recovered": [
+        "4 x surgical instrument sets (sterile packaging intact)",
+        "2 x wheelchairs (functional)",
+        "1 x medicine cabinet (mostly empty — 3 sealed bottles of morphine, 1 bottle of antiseptic)",
+        "14 x bed frames (steel, salvageable for rebar)",
+        "1 x first-aid station (partially looted — remaining supplies expired)"
+      ],
+      "recommendation": "Hospital is high-value for medical supplies but the radiation dose limits time on site to 4 hours per visit without exceeding weekly exposure limits. Future runs should focus on the pharmacy on the ground floor — the basement is too hot and the upper floors are structurally compromised.",
+      "tags": ["expedition", "hospital", "medical", "high_radiation"]
+    },
+    {
+      "report_id": "exp_report_rural_gas_station_01",
+      "location_id": "rural_gas_station",
+      "expedition_leader": "the_hunter",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 36,
+      "approach_summary": "Direct road approach from the east. The gas station is visible from 500 metres — a single-storey concrete building with a collapsed canopy over the fuel pumps. Radiation at the perimeter is 15 uSv/h, dropping to 8 uSv/h at 100 metres south.",
+      "hazards_encountered": [
+        "Underground fuel tanks may still contain volatile residue — no open flames permitted",
+        "One armed individual observed 200 metres north — retreated when spotted, identity unknown",
+        "Collapsed roof section over the rear workshop — entry not possible without shoring"
+      ],
+      "salvage_recovered": [
+        "6 x cans of motor oil (sealed, 5-litre each)",
+        "1 x toolbox (wrenches, pliers, screwdrivers — rusted but usable)",
+        "3 x car batteries (1 still holds charge)",
+        "1 x propane tank (empty)",
+        "11 x packets of beef jerky (expired but sealed — edible)",
+        "2 x pairs of work boots (size 9 and 11, worn but intact)"
+      ],
+      "recommendation": "Low-risk location suitable for solo or pair scouting runs. The pharmacy shelf inside the shop was already looted. The underground tanks should be tested for residual fuel — if any remains, it would be high-value. Return visit recommended in 30 days to check for the armed individual's activity pattern.",
+      "tags": ["expedition", "gas_station", "low_risk", "fuel"]
+    },
+    {
+      "report_id": "exp_report_government_bunker_01",
+      "location_id": "government_bunker",
+      "expedition_leader": "the_general",
+      "team_size": 4,
+      "duration_days": 3,
+      "day_completed": 58,
+      "approach_summary": "Northern approach through the forested ridge. The bunker entrance is concealed behind a collapsed communications tower. Radiation at the blast door reads 60 uSv/h — the highest we've encountered on any expedition. The door is sealed but not locked; the electronic mechanism has failed in the open position.",
+      "hazards_encountered": [
+        "Extreme radiation in the entrance corridor (60 uSv/h) — maximum 2-hour exposure per person per visit",
+        "Automated defence system still active — one pressure-activated alarm triggered on Day 2, no hostile response observed",
+        "Sealed compartments on Sub-Level 3 — doors require electronic access cards we don't have",
+        "Air quality poor on lower levels — chemical smell, possible coolant leak"
+      ],
+      "salvage_recovered": [
+        "1 x military radio set (pre-war, frequency range 30-88 MHz, non-functional — needs repair)",
+        "2 x cases of 5.56mm ammunition (480 rounds total, sealed)",
+        "1 x set of bunker blueprints (laminated, showing layout of this bunker and two others within 50km)",
+        "1 x dosimeter calibration kit",
+        "3 x gas mask filters (pre-war military specification — compatible with our masks)",
+        "1 x field telephone (functional, cable severed)"
+      ],
+      "recommendation": "Government bunker is the highest-value target we've identified but also the most dangerous. The radiation limits our time on site severely. The blueprints are the priority find — they show two other bunker locations that may contain additional supplies. Recommend a dedicated expedition to one of the secondary sites. The sealed compartments on Sub-Level 3 require an access card — if one can be found, the contents may include critical military-grade equipment.",
+      "tags": ["expedition", "government_bunker", "extreme_radiation", "high_value", "military"]
+    },
+    {
+      "report_id": "exp_report_suburban_house_01",
+      "location_id": "suburban_house",
+      "expedition_leader": "the_courier",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 31,
+      "approach_summary": "The suburban house is 3km south of the bunker along a broken residential street. Radiation at the front door is 10 uSv/h. The house is a single-storey timber-frame structure with a partially collapsed roof. Interior is accessible through a ground-floor window.",
+      "hazards_encountered": [
+        "Structural instability — ceiling sagging in the kitchen, floor soft in the hallway",
+        "Mould growth on all soft furnishings — spore hazard, masks recommended",
+        "No hostile contacts"
+      ],
+      "salvage_recovered": [
+        "1 x cast-iron wood stove (intact, heavy — requires two persons to carry)",
+        "3 x wool blankets (moth-eaten but usable)",
+        "1 x box of kitchen utensils (pots, pans, cutlery)",
+        "2 x pairs of winter coats (adult sizes, one child's)",
+        "1 x hand-crank grain mill (functional)",
+        "7 x cans of preserved food (labels unreadable — contents appear to be vegetables)",
+        "1 x child's backpack (empty)",
+        "1 x kerosene lamp (glass cracked, base intact)"
+      ],
+      "recommendation": "Low-risk residential salvage. The house has been partially looted before but still contains useful household items. The wood stove is the highest-value find — it could supplement the bunker's heating if we can install it safely. Return visit for the remaining rooms — the bedroom and study are unexplored.",
+      "tags": ["expedition", "suburban", "low_risk", "household"]
+    },
+    {
+      "report_id": "exp_report_geo_thermal_plant_01",
+      "location_id": "location_geo_thermal_plant_ruins",
+      "expedition_leader": "the_mechanic",
+      "team_size": 3,
+      "duration_days": 2,
+      "day_completed": 50,
+      "approach_summary": "The geo-thermal plant is 8km south-southwest. Approach via the dry river bed provides cover for the first 5km, then open ground for the final 3km. Radiation at the plant perimeter is 45 uSv/h. The steam venting from the main stack is visible from 3km away.",
+      "hazards_encountered": [
+        "High radiation near the turbine hall (45 uSv/h) — 3-hour maximum exposure",
+        "Steam vents at ground level in two locations — burn hazard, invisible in certain light",
+        "Collapsed catwalk over the turbine pit — crossing requires improvised bridge",
+        "No hostile contacts but fresh boot prints observed in the ash outside the east entrance"
+      ],
+      "salvage_recovered": [
+        "1 x industrial pressure gauge (functional, range 0-25 bar)",
+        "2 x lengths of stainless steel pipe (10cm diameter, 2m each)",
+        "1 x set of pipe wrenches (large, industrial grade)",
+        "3 x rolls of high-temperature gasket material (intact sealing)",
+        "1 x electric motor (seized, potentially rebuildable)",
+        "1 x technical manual for the turbine system (water-damaged, 40% legible)"
+      ],
+      "recommendation": "The plant is a viable long-term heat source if we can route the steam to the bunker. The engineering is beyond what we can do with current tools and knowledge — we need someone who understands geothermal systems. The fresh boot prints are concerning — someone else has been here recently. Recommend increased vigilance on future visits. The stainless steel pipe and gasket material are high-value for our plumbing and heating projects.",
+      "tags": ["expedition", "geo_thermal", "high_radiation", "engineering", "heat_source"]
+    },
+    {
+      "report_id": "exp_report_silent_observatory_01",
+      "location_id": "location_silent_observatory",
+      "expedition_leader": "the_historian",
+      "team_size": 2,
+      "duration_days": 2,
+      "day_completed": 54,
+      "approach_summary": "The Silent Observatory is 6km northeast, perched on a hilltop. The approach is exposed — no cover for the final 2km. Radiation at the building is 15 uSv/h, lower than expected. The building is a dome structure with no visible antenna or dish.",
+      "hazards_encountered": [
+        "Compass deviation of 3 degrees within 1km of the building — possible electromagnetic interference",
+        "The interior is completely dark — no windows, all light sources absorbed by the wall material",
+        "A low hum was audible throughout the building — source not identified",
+        "No hostile contacts"
+      ],
+      "salvage_recovered": [
+        "1 x brass telescope (cracked lens, mount functional)",
+        "2 x leather-bound notebooks (handwritten observations in an unknown shorthand)",
+        "1 x mechanical clock (stopped at 03:14)",
+        "1 x copper wire coil (50 metres, insulated)",
+        "1 x glass lens assembly (intact, unknown purpose)"
+      ],
+      "recommendation": "The observatory is architecturally unusual — the walls appear to absorb electromagnetic radiation, which may explain the compass deviation. The hum could be residual mechanical equipment or natural resonance in the dome structure. The notebooks may contain valuable astronomical or meteorological data if the shorthand can be decoded. The copper wire is useful. Low-priority location for future visits — interesting but not survival-critical.",
+      "tags": ["expedition", "observatory", "mystery", "low_radiation", "scientific"]
+    },
+    {
+      "report_id": "exp_report_frozen_river_barge_01",
+      "location_id": "location_frozen_river_barge",
+      "expedition_leader": "the_mechanic",
+      "team_size": 4,
+      "duration_days": 3,
+      "day_completed": 84,
+      "approach_summary": "The frozen river barge is 5km west, locked in ice on the river. Ice thickness is 40cm — sufficient to support the team and a loaded sled. Radiation at the barge is 30 uSv/h. The vessel is listed to port, with the starboard deck accessible above the waterline.",
+      "hazards_encountered": [
+        "Ice conditions are stable but the spring thaw will make the approach impossible within 6 weeks",
+        "Below-deck compartments are flooded in several areas — cold water immersion risk",
+        "The cargo hold requires cutting through a sealed hatch — done with the angle grinder",
+        "No hostile contacts"
+      ],
+      "salvage_recovered": [
+        "42 x crates of sealed ball bearings (various sizes, industrial grade)",
+        "6 x drums of industrial lubricant (200 litres each, sealed)",
+        "1 x locked steel cabinet (not yet opened — too heavy to transport intact)",
+        "2 x ship's chronometers (functional, brass construction)",
+        "1 x coil of marine-grade rope (100 metres, 12mm diameter)",
+        "1 x ship's manifest (partially legible — lists cargo origin and destination)"
+      ],
+      "recommendation": "The barge is a high-value salvage target with a limited window — ice conditions will deteriorate after Day 120. The locked steel cabinet should be opened on site next visit; contents unknown but the locking mechanism suggests valuable cargo. The ball bearings and lubricant are immediately useful for our machinery maintenance. Recommend a larger team for the next visit to maximise extraction before the thaw.",
+      "tags": ["expedition", "barge", "time_limited", "high_value", "industrial"]
+    },
+    {
+      "report_id": "exp_report_arcology_sector4_01",
+      "location_id": "location_arcology_sector_4",
+      "expedition_leader": "the_general",
+      "team_size": 3,
+      "duration_days": 1,
+      "day_completed": 70,
+      "approach_summary": "The arcology in Sector 4 is 4km southeast. Approach via the southern road — direct but exposed. The Warlords control the eastern wing. Our team approached from the west, which is unoccupied. Radiation at the base of the structure is 20 uSv/h.",
+      "hazards_encountered": [
+        "Warlord presence confirmed in the eastern wing — cooking smoke observed on floors 7-9, armed sentries visible on the ground floor east entrance",
+        "Structural damage throughout — load-bearing walls cracked, floors unstable above the third level",
+        "Flooding on the first and second floors — standing water 30cm deep, rad count 25 uSv/h",
+        "No direct confrontation with Warlord forces — team withdrew when sentry patrol was observed approaching"
+      ],
+      "salvage_recovered": [
+        "8 x lengths of structural steel rebar (1m each, recovered from collapsed wall section)",
+        "1 x pre-war fire extinguisher (empty but the steel body is usable)",
+        "3 x wooden pallets (salvageable for construction material)",
+        "1 x bicycle wheel (intact, tyre deflated)",
+        "2 x glass window panels (intact, 60x80cm each)"
+      ],
+      "recommendation": "The arcology is partially occupied by Warlord forces and structurally compromised. The western wing is unoccupied but offers limited salvage value compared to the risk. The Warlords appear to have established a permanent presence — this is not a transient camp. Future expeditions should avoid the arcology unless a specific high-value target is identified. The structural steel from the collapsed sections could be useful if we can access it without entering Warlord territory.",
+      "tags": ["expedition", "arcology", "warlord_territory", "moderate_risk", "structural"]
+    },
+    {
+      "report_id": "exp_report_seed_vault_01",
+      "location_id": "location_subterranean_seed_vault",
+      "expedition_leader": "the_botanist",
+      "team_size": 3,
+      "duration_days": 2,
+      "day_completed": 63,
+      "approach_summary": "The seed vault is 7km north, built into a hillside. The entrance is concealed by collapsed concrete and vegetation. Radiation at the entrance is 10 uSv/h — the hillside provides natural shielding. The vault door required two days to unbolt; the steel plate had corroded into the frame.",
+      "hazards_encountered": [
+        "The vault interior is cold (4°C) and dry — no radiation above background",
+        "Several shelf units have collapsed — glass jars broken, seed contamination possible",
+        "Air quality is good but stale — ventilation has been sealed since construction",
+        "No hostile contacts"
+      ],
+      "salvage_recovered": [
+        "47 x sealed glass jars of heirloom seed varieties (wheat, barley, oats, rye, lentils, beans)",
+        "12 x damaged jars (seeds exposed, viability unknown)",
+        "1 x seed catalog (pre-war, listing 200+ varieties with planting instructions)",
+        "1 x soil thermometer (functional)",
+        "1 x pair of rubber boots (size 8, intact)",
+        "1 x steel shelving unit (collapsed, salvageable for parts)"
+      ],
+      "recommendation": "The seed vault is the most important discovery we've made. The 47 sealed jars represent a genetic library of pre-war crop varieties — if even half are viable, they could transform our food production. The cold, dry conditions inside the vault have preserved the seeds well. Recommend immediate priority for agricultural planning. The vault itself could serve as a cold storage facility for food preservation. Return visit planned to recover the remaining shelving and explore the unsearched rear chamber.",
+      "tags": ["expedition", "seed_vault", "critical_value", "agriculture", "low_radiation"]
+    },
+    {
+      "report_id": "exp_report_stranger_cache_01",
+      "location_id": "stranger_cache",
+      "expedition_leader": "the_prepper",
+      "team_size": 2,
+      "duration_days": 1,
+      "day_completed": 45,
+      "approach_summary": "The Cartographer's Cache is 5km east, hidden in the ruins of a suburban shopping centre. The approach follows a drainage ditch that provides cover for most of the distance. Radiation at the cache location is 25 uSv/h. The cache itself is a buried container — a steel ammunition box sealed with wax.",
+      "hazards_encountered": [
+        "The cache was booby-trapped with a tripwire connected to a noise-making device (tin cans and string) — clearly a warning system, not an explosive",
+        "Fresh footprints around the cache site — someone has been here within the last week",
+        "A note was attached to the cache lid: 'This is not yours. Take only what you need. Leave the rest for the next walker.' — handwriting matches the map markings we've seen before",
+        "No hostile contacts"
+      ],
+      "salvage_recovered": [
+        "1 x hand-drawn map of the surrounding 20km area (showing water sources, danger zones, and safe routes — extremely detailed)",
+        "1 x compass (functional, military specification)",
+        "2 x cans of preserved meat (unlabelled, edible)",
+        "1 x waterproof matchbox (contains 12 matches, all functional)",
+        "1 x length of paracord (15 metres)",
+        "1 x pencil and small notebook (blank pages — for the next person to use)"
+      ],
+      "recommendation": "The Cartographer's Cache is maintained by someone — or multiple someones — who travel the wasteland and leave supplies for other survivors. The map is extraordinarily valuable and should be cross-referenced with our own charts. The booby-trap is a warning system, not hostile — it tells the cache-keeper when someone has visited. I wrote a note in the notebook: 'Thank you. The map is received. We are 47 souls in the bunker to the west. If you ever come near, you are welcome.' I left one of our iodine pills in the box as a trade. The cache-keeper moves fast — the footprints were already filling with ash by the time we left.",
+      "tags": ["expedition", "cache", "mystery", "cartographer", "moderate_risk"]
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Verdict
 {
     /// <summary>One Verdict NPC — a figure with flag-gated availability and phase reactions.</summary>
@@ -39,7 +41,7 @@ namespace Ashfall.Core.Verdict
 
         public event Action<VerdictNpcEntry> OnSpoken;
 
-        public VerdictNpcSystem(VerdictNpcState state = null)
+        public VerdictNpcSystem(VerdictNpcState? state = null)
         {
             _state = state ?? new VerdictNpcState();
         }
@@ -50,7 +52,7 @@ namespace Ashfall.Core.Verdict
             if (!_catalog.Exists(e => e.id == entry.id)) _catalog.Add(entry);
         }
 
-        public VerdictNpcEntry Find(string id)
+        public VerdictNpcEntry? Find(string id)
         {
             foreach (var e in _catalog)
                 if (e.id == id) return e;
@@ -59,7 +61,7 @@ namespace Ashfall.Core.Verdict
 
         /// <summary>NPCs whose gate flag is set and whose phase requirement is met.</summary>
         public List<VerdictNpcEntry> GetAvailable(
-            IReadOnlyCollection<string> setFlags, int phase, string locationId = null)
+IReadOnlyCollection<string> setFlags, int phase, string? locationId = null)
         {
             var result = new List<VerdictNpcEntry>();
             foreach (var e in _catalog)
@@ -74,7 +76,7 @@ namespace Ashfall.Core.Verdict
         }
 
         /// <summary>Spend the NPC's only interjection. Idempotent per NPC.</summary>
-        public bool Speak(string npcId, string locationId = null)
+        public bool Speak(string npcId, string? locationId = null)
         {
             var npc = Find(npcId);
             if (npc == null) return false;
@@ -123,7 +125,7 @@ namespace Ashfall.Core.Verdict
             if (string.IsNullOrWhiteSpace(raw)) return 0;
             try
             {
-                var list = json.Deserialize<List<VerdictNpcEntry>>(raw);
+                var list = CatalogLocator.LoadWrappedList<VerdictNpcEntry>(raw, SystemTextJsonSerializer.Options);
                 if (list == null) return 0;
                 int count = 0;
                 foreach (var e in list)
@@ -134,7 +136,11 @@ namespace Ashfall.Core.Verdict
                 }
                 return count;
             }
-            catch { return 0; }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return 0;
+                                }
         }
     }
 }

@@ -1,230 +1,233 @@
-[
-  {
-    "siteId": "loc_cut_kilometre_19",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "The post is Lamplighter orange, the kilometre stencilled twice. No plate. The lamp is lit on Ivy's schedule."
-  },
-  {
-    "siteId": "loc_cut_kilometre_19",
-    "stratumId": "after",
-    "requiredFlag": "mutation_km19_plated",
-    "text": "A brass plate sits over the second stencil, four screws, one steel. The lamp is still Ivy's."
-  },
-  {
-    "siteId": "loc_cut_kilometre_19",
-    "stratumId": "now",
-    "requiredFlag": "mutation_km19_plated",
-    "text": "CUT-19 reads in brass. The stencil underneath is colder. The lamp is still Ivy's."
-  },
-  {
-    "siteId": "loc_cut_kilometre_19",
-    "stratumId": "now",
-    "requiredFlag": "mutation_km19_scraped",
-    "text": "The plate is gone. The stencil read again in a day. Overlay is short one post."
-  },
-  {
-    "siteId": "loc_cut_kilometre_19",
-    "stratumId": "now",
-    "requiredFlag": "mutation_km19_palimpsest",
-    "text": "Brass over stencil, both visible. The post means two things, which is already its job."
-  },
-  {
-    "siteId": "loc_transit_authority_hq",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "The lobby timetable is pre-Exchange and wrong. The grease pencil is the document."
-  },
-  {
-    "siteId": "loc_transit_authority_hq",
-    "stratumId": "now",
-    "requiredFlag": "mutation_transit_maps",
-    "text": "Overlay print over glass. The hand is paler underneath. HELD is not in the font."
-  },
-  {
-    "siteId": "loc_municipal_archive",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "Rolling stacks, most off their rails. The Garrison looked twice."
-  },
-  {
-    "siteId": "loc_municipal_archive",
-    "stratumId": "now",
-    "requiredFlag": "mutation_archive_dug",
-    "text": "A hole in the grey brick. If an index came out, it is on a desk somewhere."
-  },
-  {
-    "siteId": "loc_municipal_archive",
-    "stratumId": "now",
-    "requiredFlag": "mutation_archive_sunk",
-    "text": "The half-sunk plate still shows REC-. The index stays in the geology."
-  },
-  {
-    "siteId": "location_ministry_of_truth_bunker",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "The corridors still believe in authenticators."
-  },
-  {
-    "siteId": "location_ministry_of_truth_bunker",
-    "stratumId": "now",
-    "requiredFlag": "mutation_ministry_recast",
-    "text": "The book is out, or copy, or refused. The visited column is honest."
-  },
-  {
-    "siteId": "loc_weighbridge",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "The needle has hairline cracks and a stop painted by someone tired of replacing it."
-  },
-  {
-    "siteId": "loc_weighbridge",
-    "stratumId": "now",
-    "requiredFlag": "mutation_weigh_lots",
-    "text": "Overlay lots on the beam. District 8 can pathfind by number. The needle has no opinion."
-  },
-  {
-    "siteId": "loc_weighbridge",
-    "stratumId": "now",
-    "requiredFlag": "mutation_weigh_mass_only",
-    "text": "Mass only. Osric still writes kilograms."
-  },
-  {
-    "siteId": "loc_grange_hall",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "A long table, scarred, benches both sides. Oil lamps with glass intact."
-  },
-  {
-    "siteId": "loc_grange_hall",
-    "stratumId": "now",
-    "requiredFlag": "mutation_verge_names",
-    "text": "The ledger names people. The cross is still in it. The notice is face-down."
-  },
-  {
-    "siteId": "loc_bridge_seven",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "Four lanes narrowing to a booth that is not always staffed."
-  },
-  {
-    "siteId": "loc_bridge_seven",
-    "stratumId": "now",
-    "requiredFlag": "mutation_bridge_listed",
-    "text": "A clipboard calls it a friendly obstacle. D/9 marked the rail."
-  },
-  {
-    "siteId": "loc_bridge_seven",
-    "stratumId": "now",
-    "requiredFlag": "mutation_bridge_disturbed",
-    "text": "The housing was checked. The Tollman does not need to be present for the authority to work."
-  },
-  {
-    "siteId": "loc_lock_gate_four",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "A gate frozen mid-cycle. Water-heights, dates."
-  },
-  {
-    "siteId": "loc_lock_gate_four",
-    "stratumId": "now",
-    "requiredFlag": "mutation_lock_complete_lie",
-    "text": "COMPLETE brass on the leaf. The leaf is still where it stopped."
-  },
-  {
-    "siteId": "loc_lock_gate_four",
-    "stratumId": "now",
-    "requiredFlag": "mutation_lock_gauges_filed",
-    "text": "The gauges are filed. They believe the failure."
-  },
-  {
-    "siteId": "loc_lock_gate_four",
-    "stratumId": "now",
-    "requiredFlag": "mutation_lock_plate_down",
-    "text": "The plate is down. Benno's gauges are the honest document."
-  },
-  {
-    "siteId": "loc_alloc_12b",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "Fallback designation. Chalk marks: fourteen, a gap, six."
-  },
-  {
-    "siteId": "loc_alloc_12b",
-    "stratumId": "now",
-    "requiredFlag": "mutation_12b_address",
-    "text": "Fresh stencil. 12-C can cite it as a pool. The kit is water."
-  },
-  {
-    "siteId": "loc_alloc_12b",
-    "stratumId": "now",
-    "requiredFlag": "mutation_12b_kit_gone",
-    "text": "The kit is gone. The stencil is a levy map."
-  },
-  {
-    "siteId": "loc_pump_station_nine",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "A condemned tag on a room with one dry motor."
-  },
-  {
-    "siteId": "loc_pump_station_nine",
-    "stratumId": "now",
-    "requiredFlag": "mutation_pump_live",
-    "text": "One dry motor hums. The Drown lowers a step."
-  },
-  {
-    "siteId": "loc_pump_station_nine",
-    "stratumId": "now",
-    "requiredFlag": "mutation_pump_condemned",
-    "text": "Condemned stands. Sublevels stay shut."
-  },
-  {
-    "siteId": "loc_records_annex",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "A window entry, a dusted room, a crate of plates string-tied."
-  },
-  {
-    "siteId": "loc_records_annex",
-    "stratumId": "now",
-    "requiredFlag": "mutation_gazetteer_stands",
-    "text": "The crate is open. Plates filed by number. Lived names are subtitles."
-  },
-  {
-    "siteId": "loc_records_annex",
-    "stratumId": "now",
-    "requiredFlag": "mutation_gazetteer_lived",
-    "text": "The crate stayed tied. Ostrowski's sheet is the one that matches the ground."
-  },
-  {
-    "siteId": "location_the_memory_vault",
-    "stratumId": "pre",
-    "requiredFlag": "",
-    "text": "Cotton gloves that are not yours. The second-copy cage is empty."
-  },
-  {
-    "siteId": "location_the_memory_vault",
-    "stratumId": "now",
-    "requiredFlag": "mutation_gazetteer_stands",
-    "text": "The cage holds the Record. Sole filed it. Two witnesses."
-  },
-  {
-    "siteId": "location_the_memory_vault",
-    "stratumId": "now",
-    "requiredFlag": "mutation_gazetteer_lived",
-    "text": "The cage holds the lived map. Sole filed spoken names."
-  },
-  {
-    "siteId": "location_the_memory_vault",
-    "stratumId": "now",
-    "requiredFlag": "mutation_gazetteer_palimpsest",
-    "text": "Both copies in the cage. Nobody likes either."
-  },
-  {
-    "siteId": "location_the_memory_vault",
-    "stratumId": "now",
-    "requiredFlag": "mutation_gazetteer_scraped",
-    "text": "The cage is empty. Sole cannot complete ground."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "siteId": "loc_cut_kilometre_19",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "The post is Lamplighter orange, the kilometre stencilled twice. No plate. The lamp is lit on Ivy's schedule."
+    },
+    {
+      "siteId": "loc_cut_kilometre_19",
+      "stratumId": "after",
+      "requiredFlag": "mutation_km19_plated",
+      "text": "A brass plate sits over the second stencil, four screws, one steel. The lamp is still Ivy's."
+    },
+    {
+      "siteId": "loc_cut_kilometre_19",
+      "stratumId": "now",
+      "requiredFlag": "mutation_km19_plated",
+      "text": "CUT-19 reads in brass. The stencil underneath is colder. The lamp is still Ivy's."
+    },
+    {
+      "siteId": "loc_cut_kilometre_19",
+      "stratumId": "now",
+      "requiredFlag": "mutation_km19_scraped",
+      "text": "The plate is gone. The stencil read again in a day. Overlay is short one post."
+    },
+    {
+      "siteId": "loc_cut_kilometre_19",
+      "stratumId": "now",
+      "requiredFlag": "mutation_km19_palimpsest",
+      "text": "Brass over stencil, both visible. The post means two things, which is already its job."
+    },
+    {
+      "siteId": "loc_transit_authority_hq",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "The lobby timetable is pre-Exchange and wrong. The grease pencil is the document."
+    },
+    {
+      "siteId": "loc_transit_authority_hq",
+      "stratumId": "now",
+      "requiredFlag": "mutation_transit_maps",
+      "text": "Overlay print over glass. The hand is paler underneath. HELD is not in the font."
+    },
+    {
+      "siteId": "loc_municipal_archive",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "Rolling stacks, most off their rails. The Garrison looked twice."
+    },
+    {
+      "siteId": "loc_municipal_archive",
+      "stratumId": "now",
+      "requiredFlag": "mutation_archive_dug",
+      "text": "A hole in the grey brick. If an index came out, it is on a desk somewhere."
+    },
+    {
+      "siteId": "loc_municipal_archive",
+      "stratumId": "now",
+      "requiredFlag": "mutation_archive_sunk",
+      "text": "The half-sunk plate still shows REC-. The index stays in the geology."
+    },
+    {
+      "siteId": "location_ministry_of_truth_bunker",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "The corridors still believe in authenticators."
+    },
+    {
+      "siteId": "location_ministry_of_truth_bunker",
+      "stratumId": "now",
+      "requiredFlag": "mutation_ministry_recast",
+      "text": "The book is out, or copy, or refused. The visited column is honest."
+    },
+    {
+      "siteId": "loc_weighbridge",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "The needle has hairline cracks and a stop painted by someone tired of replacing it."
+    },
+    {
+      "siteId": "loc_weighbridge",
+      "stratumId": "now",
+      "requiredFlag": "mutation_weigh_lots",
+      "text": "Overlay lots on the beam. District 8 can pathfind by number. The needle has no opinion."
+    },
+    {
+      "siteId": "loc_weighbridge",
+      "stratumId": "now",
+      "requiredFlag": "mutation_weigh_mass_only",
+      "text": "Mass only. Osric still writes kilograms."
+    },
+    {
+      "siteId": "loc_grange_hall",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "A long table, scarred, benches both sides. Oil lamps with glass intact."
+    },
+    {
+      "siteId": "loc_grange_hall",
+      "stratumId": "now",
+      "requiredFlag": "mutation_verge_names",
+      "text": "The ledger names people. The cross is still in it. The notice is face-down."
+    },
+    {
+      "siteId": "loc_bridge_seven",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "Four lanes narrowing to a booth that is not always staffed."
+    },
+    {
+      "siteId": "loc_bridge_seven",
+      "stratumId": "now",
+      "requiredFlag": "mutation_bridge_listed",
+      "text": "A clipboard calls it a friendly obstacle. D/9 marked the rail."
+    },
+    {
+      "siteId": "loc_bridge_seven",
+      "stratumId": "now",
+      "requiredFlag": "mutation_bridge_disturbed",
+      "text": "The housing was checked. The Tollman does not need to be present for the authority to work."
+    },
+    {
+      "siteId": "loc_lock_gate_four",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "A gate frozen mid-cycle. Water-heights, dates."
+    },
+    {
+      "siteId": "loc_lock_gate_four",
+      "stratumId": "now",
+      "requiredFlag": "mutation_lock_complete_lie",
+      "text": "COMPLETE brass on the leaf. The leaf is still where it stopped."
+    },
+    {
+      "siteId": "loc_lock_gate_four",
+      "stratumId": "now",
+      "requiredFlag": "mutation_lock_gauges_filed",
+      "text": "The gauges are filed. They believe the failure."
+    },
+    {
+      "siteId": "loc_lock_gate_four",
+      "stratumId": "now",
+      "requiredFlag": "mutation_lock_plate_down",
+      "text": "The plate is down. Benno's gauges are the honest document."
+    },
+    {
+      "siteId": "loc_alloc_12b",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "Fallback designation. Chalk marks: fourteen, a gap, six."
+    },
+    {
+      "siteId": "loc_alloc_12b",
+      "stratumId": "now",
+      "requiredFlag": "mutation_12b_address",
+      "text": "Fresh stencil. 12-C can cite it as a pool. The kit is water."
+    },
+    {
+      "siteId": "loc_alloc_12b",
+      "stratumId": "now",
+      "requiredFlag": "mutation_12b_kit_gone",
+      "text": "The kit is gone. The stencil is a levy map."
+    },
+    {
+      "siteId": "loc_pump_station_nine",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "A condemned tag on a room with one dry motor."
+    },
+    {
+      "siteId": "loc_pump_station_nine",
+      "stratumId": "now",
+      "requiredFlag": "mutation_pump_live",
+      "text": "One dry motor hums. The Drown lowers a step."
+    },
+    {
+      "siteId": "loc_pump_station_nine",
+      "stratumId": "now",
+      "requiredFlag": "mutation_pump_condemned",
+      "text": "Condemned stands. Sublevels stay shut."
+    },
+    {
+      "siteId": "loc_records_annex",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "A window entry, a dusted room, a crate of plates string-tied."
+    },
+    {
+      "siteId": "loc_records_annex",
+      "stratumId": "now",
+      "requiredFlag": "mutation_gazetteer_stands",
+      "text": "The crate is open. Plates filed by number. Lived names are subtitles."
+    },
+    {
+      "siteId": "loc_records_annex",
+      "stratumId": "now",
+      "requiredFlag": "mutation_gazetteer_lived",
+      "text": "The crate stayed tied. Ostrowski's sheet is the one that matches the ground."
+    },
+    {
+      "siteId": "location_the_memory_vault",
+      "stratumId": "pre",
+      "requiredFlag": "",
+      "text": "Cotton gloves that are not yours. The second-copy cage is empty."
+    },
+    {
+      "siteId": "location_the_memory_vault",
+      "stratumId": "now",
+      "requiredFlag": "mutation_gazetteer_stands",
+      "text": "The cage holds the Record. Sole filed it. Two witnesses."
+    },
+    {
+      "siteId": "location_the_memory_vault",
+      "stratumId": "now",
+      "requiredFlag": "mutation_gazetteer_lived",
+      "text": "The cage holds the lived map. Sole filed spoken names."
+    },
+    {
+      "siteId": "location_the_memory_vault",
+      "stratumId": "now",
+      "requiredFlag": "mutation_gazetteer_palimpsest",
+      "text": "Both copies in the cage. Nobody likes either."
+    },
+    {
+      "siteId": "location_the_memory_vault",
+      "stratumId": "now",
+      "requiredFlag": "mutation_gazetteer_scraped",
+      "text": "The cage is empty. Sole cannot complete ground."
+    }
+  ]
+}

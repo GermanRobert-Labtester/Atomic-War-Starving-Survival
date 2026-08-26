@@ -1,5 +1,6 @@
 using System.Text;
 
+#pragma warning disable CS8618
 namespace Ashfall.Core
 {
     /// <summary>Headless-report extension for the Cluster / Order 12-C slice.</summary>
@@ -17,7 +18,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class Cluster12CHeadlessDemo
     {
-        public static Cluster12CHeadlessReport Run(string dataDirectory, ILog log = null)
+        public static Cluster12CHeadlessReport Run(string dataDirectory, ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;

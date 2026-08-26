@@ -55,11 +55,13 @@ public partial class DutyRosterPanel : Control
         if (_host != null)
         {
             _host.Roster.OnRosterUpdated += RefreshView;
-            _host.Roster.OnNameWritten += _ => RefreshView();
-            _host.Roster.OnNameErased += _ => RefreshView();
+            _host.Roster.OnNameWritten += HandleSurvivorNameChanged;
+            _host.Roster.OnNameErased += HandleSurvivorNameChanged;
         }
         RefreshView();
     }
+
+    private void HandleSurvivorNameChanged(string _) => RefreshView();
 
     public override void _Ready()
     {
@@ -282,7 +284,7 @@ public partial class DutyRosterPanel : Control
                 {
                     new("[UNASSIGNED]", AshfallDataGrid.CellState.Muted),
                     new(r.displayName ?? FormatSurvivorName(r.survivorId), AshfallDataGrid.CellState.Normal),
-                    new(r.status ?? "—", StatusState(r.status)),
+                    new(r.status ?? "—", StatusState(r.status ?? "—")),
                     new(r.occupationObserved ?? "Resident", AshfallDataGrid.CellState.Muted),
                     new(r.lastSleptDay < 0 ? "—" : $"D{r.lastSleptDay}", AshfallDataGrid.CellState.Normal),
                     new("—", AshfallDataGrid.CellState.Muted),
@@ -394,7 +396,7 @@ public partial class DutyRosterPanel : Control
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
         _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Occupation", row?.occupationObserved ?? "—",
             AshfallUiHelpers.ToColor(DesignTheme.Muted)));
-        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Last Slept", (row?.lastSleptDay ?? -1) < 0 ? "—" : $"D{row.lastSleptDay}",
+        _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Last Slept", (row?.lastSleptDay ?? -1) < 0 ? "—" : $"D{row!.lastSleptDay}",
             AshfallUiHelpers.ToColor(DesignTheme.Dim)));
         _detailContent.AddChild(AshfallUiHelpers.MakeDataRow("Shift", string.IsNullOrEmpty(roleId) ? "—" : ResolveShiftText(roleId),
             AshfallUiHelpers.ToColor(DesignTheme.Lethe)));
@@ -402,21 +404,21 @@ public partial class DutyRosterPanel : Control
 
     private static string RoleTitle(string roleId) => roleId switch
     {
-        DutyRosterSystem.RoleNightWatch    => "Night Watch",
-        DutyRosterSystem.RoleMess          => "Mess & Rations",
-        DutyRosterSystem.RoleHatchOpener   => "Hatch Defense",
-        DutyRosterSystem.RoleIntakeSleeper => "Intake Filtration",
-        DutyRosterSystem.RoleExpedition     => "Scavenging Sortie",
+        DutyRosterIds.RoleNightWatch    => "Night Watch",
+        DutyRosterIds.RoleMess          => "Mess & Rations",
+        DutyRosterIds.RoleHatchOpener   => "Hatch Defense",
+        DutyRosterIds.RoleIntakeSleeper => "Intake Filtration",
+        DutyRosterIds.RoleExpedition     => "Scavenging Sortie",
         _ => roleId,
     };
 
     private static string ResolveShiftText(string roleId) => roleId switch
     {
-        DutyRosterSystem.RoleNightWatch    => "00:00–04:00",
-        DutyRosterSystem.RoleMess          => "06:00–10:00",
-        DutyRosterSystem.RoleHatchOpener   => "12:00–14:00",
-        DutyRosterSystem.RoleIntakeSleeper => "20:00–00:00",
-        DutyRosterSystem.RoleExpedition     => "04:00–20:00",
+        DutyRosterIds.RoleNightWatch    => "00:00–04:00",
+        DutyRosterIds.RoleMess          => "06:00–10:00",
+        DutyRosterIds.RoleHatchOpener   => "12:00–14:00",
+        DutyRosterIds.RoleIntakeSleeper => "20:00–00:00",
+        DutyRosterIds.RoleExpedition     => "04:00–20:00",
         _ => "—",
     };
 
@@ -508,5 +510,16 @@ public partial class DutyRosterPanel : Control
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        if (_host != null)
+        {
+            _host.Roster.OnRosterUpdated -= RefreshView;
+            _host.Roster.OnNameWritten -= HandleSurvivorNameChanged;
+            _host.Roster.OnNameErased -= HandleSurvivorNameChanged;
+        }
+        base._ExitTree();
     }
 }

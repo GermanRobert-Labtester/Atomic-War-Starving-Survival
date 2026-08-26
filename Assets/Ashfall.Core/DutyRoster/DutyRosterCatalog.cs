@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -61,10 +62,10 @@ namespace Ashfall.Core
     /// </summary>
     public class DutyRosterSeasonEntry
     {
-        public string id = DutyRosterSystem.SeasonSecondWinter;
-        public int windowMinDays = DutyRosterSystem.SecondWinterWindowMinDays;
-        public int windowMaxDays = DutyRosterSystem.SecondWinterWindowMaxDays;
-        public float encounterWeight = DutyRosterSystem.SecondWinterEncounterWeight;
+        public string id = DutyRosterIds.SeasonSecondWinter;
+        public int windowMinDays = DutyRosterIds.SecondWinterWindowMinDays;
+        public int windowMaxDays = DutyRosterIds.SecondWinterWindowMaxDays;
+        public float encounterWeight = DutyRosterIds.SecondWinterEncounterWeight;
         public float steamTripChanceBoost;
     }
 
@@ -75,7 +76,7 @@ namespace Ashfall.Core
         public List<DutyRosterMarkEntry> Marks { get; } = new List<DutyRosterMarkEntry>();
         public List<DutyRosterSeasonEntry> Seasons { get; } = new List<DutyRosterSeasonEntry>();
 
-        public DutyRosterLocationEntry GetLocation(string id)
+        public DutyRosterLocationEntry? GetLocation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Locations.Count; i++)
@@ -84,7 +85,7 @@ namespace Ashfall.Core
             return null;
         }
 
-        public DutyRosterQuestEntry GetQuest(string id)
+        public DutyRosterQuestEntry? GetQuest(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Quests.Count; i++)
@@ -93,7 +94,7 @@ namespace Ashfall.Core
             return null;
         }
 
-        public DutyRosterMarkEntry GetMark(string id)
+        public DutyRosterMarkEntry? GetMark(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Marks.Count; i++)
@@ -102,7 +103,7 @@ namespace Ashfall.Core
             return null;
         }
 
-        public DutyRosterSeasonEntry GetSeason(string id)
+        public DutyRosterSeasonEntry? GetSeason(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Seasons.Count; i++)
@@ -128,7 +129,7 @@ namespace Ashfall.Core
         private readonly IJsonSerializer _json;
         private readonly ILog _log;
 
-        public DutyRosterCatalogLoader(IFileIO files, IJsonSerializer json, ILog log = null)
+        public DutyRosterCatalogLoader(IFileIO files, IJsonSerializer json, ILog? log = null)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -162,8 +163,7 @@ namespace Ashfall.Core
             try
             {
                 string json = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<T>>(json);
-                if (items == null) return;
+                var items = CatalogLocator.LoadWrappedList<T>(json, SystemTextJsonSerializer.Options);
                 for (int i = 0; i < items.Count; i++)
                 {
                     if (items[i] != null)

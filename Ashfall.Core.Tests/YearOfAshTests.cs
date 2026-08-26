@@ -191,6 +191,80 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void DefaultFactionRoster_IncludesForwardRoster()
+        {
+            // NARRATIVE_NEEDS.md §5: the Rebuilders splinter introduced in
+            // evt_d552_rebuilders_fracture has a real faction_id
+            // (faction_forward_roster) and needs a FactionWarSystem roster
+            // slot to participate in simulated daily friction, not just live
+            // in the event-chain content.
+            var war = new FactionWarSystem();
+            Assert.Contains(war.State.factions, f => f.factionId == "faction_forward_roster");
+            Assert.Equal(0, war.GetStanding("faction_forward_roster"));
+        }
+
+        [Fact]
+        public void YearOfAshSave_V4_CapturesAndRestoresChainRunnerProgress()
+        {
+            string start = System.IO.Directory.GetCurrentDirectory();
+            string dir;
+            if (!CatalogLocator.TryFindDataDirectory(start, out dir))
+                CatalogLocator.TryFindDataDirectory(AppContext.BaseDirectory, out dir);
+
+            var loader = new FactionWarContentCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(dir);
+
+            var runnerA = new FactionWarChainRunner(catalog);
+            runnerA.RecordLocationVisited("loc_grain_silo");
+            runnerA.ResolveChoice("evt_d480_grain_tally_dispute", "evt_d480_grain_tally_dispute_s1",
+                "evt_d480_grain_tally_dispute_s1_c1", 480);
+
+            var timeline = new YearOfAshTimelineSystem();
+            var encounters = new DoorEncounterSystem();
+            var war = new FactionWarSystem();
+
+            var save = YearOfAshSaveCodec.Capture(timeline, encounters, war, null, factionWarChainRunner: runnerA);
+            Assert.Equal(YearOfAshSave.CurrentSaveVersion, save.saveVersion);
+
+            var jsonSerializer = new SystemTextJsonSerializer();
+            string jsonText = YearOfAshSaveCodec.Encode(save, jsonSerializer);
+            var loaded = YearOfAshSaveCodec.Decode(jsonText, jsonSerializer);
+
+            var runnerB = new FactionWarChainRunner(catalog);
+            var timelineB = new YearOfAshTimelineSystem();
+            var encountersB = new DoorEncounterSystem();
+            var warB = new FactionWarSystem();
+            YearOfAshSaveCodec.Restore(loaded, timelineB, encountersB, warB, factionWarChainRunner: runnerB);
+
+            Assert.True(runnerB.HasVisited("loc_grain_silo"));
+            Assert.Equal(2, runnerB.CumulativeMoraleDelta);
+            Assert.False(runnerB.IsChainResolved("evt_d480_grain_tally_dispute"));
+        }
+
+        [Fact]
+        public void YearOfAshSave_V3Envelope_MigratesWithFreshChainRunner()
+        {
+            // Build a v3 envelope by hand (the pre-chain-runner shape) and
+            // confirm it upgrades cleanly instead of failing the checksum
+            // check against the v4 shape.
+            var v3 = new YearOfAshSaveV3();
+            v3.simDay = 250;
+            v3.factionWar.factions.Add(new FactionStandingRecord { factionId = "faction_rebuilders", standing = 20 });
+            v3.Checksum = SaveChecksum.Compute(v3);
+
+            var jsonSerializer = new SystemTextJsonSerializer();
+            string jsonText = jsonSerializer.Serialize(v3);
+
+            var migrated = YearOfAshSaveCodec.Decode(jsonText, jsonSerializer);
+
+            Assert.Equal(YearOfAshSave.CurrentSaveVersion, migrated.saveVersion);
+            Assert.Equal(250, migrated.simDay);
+            Assert.Contains(migrated.factionWar.factions, f => f.factionId == "faction_rebuilders" && f.standing == 20);
+            Assert.NotNull(migrated.factionWarChainRunner);
+            Assert.Empty(migrated.factionWarChainRunner.chains);
+        }
+
+        [Fact]
         public void RestoreState_WithNullSections_IsANoOp()
         {
             // v1 saves always carry the three sections, but defensive null tolerance

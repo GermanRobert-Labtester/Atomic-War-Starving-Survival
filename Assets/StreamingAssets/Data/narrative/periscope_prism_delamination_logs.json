@@ -1,82 +1,133 @@
-[
-  {
-    "id": "prism_delam_canada_balsam_cement_yellowing",
-    "periscope_assembly_id": "PERISCOPE_MAST_NORTH_SENTRY_01",
-    "optical_glass_type": "BOROSILICATE_CROWN_BK7_PRISM",
-    "optical_cement_type": "NATURAL_CANADA_BALSAM_RESIN",
-    "transmission_loss_pct": 55.0,
-    "timestamp_relative": "YEAR_02_OPTICS_LOG_01",
-    "tags": ["optics", "periscope", "prism", "delamination", "canada_balsam"],
-    "prose": "Aged Canada balsam optical cement bonding the ninety-degree erector prisms crystallized into a web of micro-fractures. Light transmission dropped by 55%, tinting the surface observation field an opaque muddy amber."
-  },
-  {
-    "id": "prism_delam_thermal_shock_doublet_cleavage",
-    "periscope_assembly_id": "MAIN_BLAST_CUPOLA_PERISCOPE_02",
-    "optical_glass_type": "ACHROMATIC_CROWN_FLINT_DOUBLET",
-    "optical_cement_type": "SYNTHETIC_UV_CURED_EPOXY",
-    "transmission_loss_pct": 80.0,
-    "timestamp_relative": "YEAR_04_OPTICS_LOG_03",
-    "tags": ["optics", "periscope", "thermal_shock", "achromatic_lens", "cleavage"],
-    "prose": "Extreme temperature differential between the -35°C blizzard exterior mast and +25°C bunker air created intense thermal shear stress. The synthetic epoxy bond between the crown and dense flint elements cleaved with an audible snap, producing total internal reflection glare."
-  },
-  {
-    "id": "prism_delam_fungal_hyphae_etching_flint_glass",
-    "periscope_assembly_id": "RANGEFINDER_TURRET_OPTIC_ALPHA",
-    "optical_glass_type": "DENSE_LEAD_FLINT_ZF7",
-    "optical_cement_type": "POLYESTER_OPTICAL_CEMENT",
-    "transmission_loss_pct": 35.0,
-    "timestamp_relative": "YEAR_07_OPTICS_LOG_02",
-    "tags": ["optics", "periscope", "fungus", "glass_etching", "mycelium"],
-    "prose": "Fungal hyphae of *Aspergillus niger* colonized the moist interface between lens elements. The metabolic oxalic acid etched permanent dendritic tree-like grooves into the lead flint glass, scattering spotlight beams into blinding halos."
-  },
-  {
-    "id": "prism_delam_silicone_sealant_acetic_outgassing",
-    "periscope_assembly_id": "TARGET_ACQUISITION_MAST_04",
-    "optical_glass_type": "FUSED_SILICA_OBJECTIVE_WINDOW",
-    "optical_cement_type": "ACETOXY_CURE_SILICONE_GASKET",
-    "transmission_loss_pct": 28.0,
-    "timestamp_relative": "YEAR_09_OPTICS_LOG_04",
-    "tags": ["optics", "periscope", "silicone_fogging", "acetic_acid", "coatings"],
-    "prose": "Maintenance crews sealed the mast viewing port using household acetoxy-cure silicone sealant. The outgassed acetic acid vapor reacted with the anti-reflection coating on the inner lens surface, depositing a milky, un-cleanable white chemical haze."
-  },
-  {
-    "id": "prism_delam_antireflection_magnesium_fluoride_crazing",
-    "periscope_assembly_id": "SURFACE_PANORAMIC_VIEWER_03",
-    "optical_glass_type": "HARD_COATED_BK7_SUBSTRATE",
-    "optical_cement_type": "SINGLE_LAYER_MGF2_THIN_FILM",
-    "transmission_loss_pct": 18.0,
-    "timestamp_relative": "YEAR_12_OPTICS_LOG_01",
-    "tags": ["optics", "periscope", "antireflection", "mgf2", "dust_abrasion"],
-    "prose": "Windblown volcanic ash scoured the 1/4-wave magnesium fluoride anti-reflection coating off the objective lens. Flare and internal ghost reflections tripled, blinding sentries during dawn and dusk surveillance."
-  },
-  {
-    "id": "prism_delam_radiation_cerium_stabilization_drift",
-    "periscope_assembly_id": "DEEP_RAD_BUNKER_SURVEY_TUBE",
-    "optical_glass_type": "NON_CERIUM_DOPED_CROWN_GLASS",
-    "optical_cement_type": "OPTICAL_PHENOLIC_ADHESIVE",
-    "transmission_loss_pct": 72.0,
-    "timestamp_relative": "YEAR_15_OPTICS_LOG_03",
-    "tags": ["optics", "periscope", "radiation_browning", "color_centers", "gamma"],
-    "prose": "High-intensity gamma radiation (cumulative 120 Gy) generated color-center electron traps in the non-stabilized optical crown elements. The glass darkened from water-white to dark molasses brown, rendering the periscope useless for night viewing."
-  },
-  {
-    "id": "prism_delam_argon_purging_seal_desiccation",
-    "periscope_assembly_id": "EAST_OBSERVATION_POST_PERISCOPE",
-    "optical_glass_type": "PRESSURIZED_OPTICAL_BARREL_TUBE",
-    "optical_cement_type": "DRY_NITROGEN_ARGON_SEAL",
-    "transmission_loss_pct": 45.0,
-    "timestamp_relative": "YEAR_18_OPTICS_LOG_02",
-    "tags": ["optics", "periscope", "condensation", "argon_purge", "internal_fog"],
-    "prose": "Deterioration of the Schrader charging valve allowed dry argon gas to bleed out of the four-meter optical tube. Moist bunker air infiltrated, condensing droplets of water on the internal reticle plate whenever outside temperatures dropped below freezing."
-  },
-  {
-    "id": "prism_delam_front_surface_silver_tarnish_sulfide",
-    "periscope_assembly_id": "NIGHT_SIGHT_IR_COLLIMATOR",
-    "optical_glass_type": "FRONT_SURFACE_SILVER_MIRROR",
-    "optical_cement_type": "DIELECTRIC_OVERCOAT_EVAPORATED",
-    "transmission_loss_pct": 65.0,
-    "timestamp_relative": "YEAR_20_OPTICS_LOG_01",
-    "tags": ["optics", "periscope", "silver_mirror", "tarnish", "sulfur"],
-    "prose": "Airborne hydrogen sulfide from geothermal steam vents penetrated pinholes in the silicon monoxide protective overcoat. The front-surface silver mirror tarnished into black silver sulfide, reducing reflectivity from 98% to less than 35%."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "prism_delam_canada_balsam_cement_yellowing",
+      "periscope_assembly_id": "PERISCOPE_MAST_NORTH_SENTRY_01",
+      "optical_glass_type": "BOROSILICATE_CROWN_BK7_PRISM",
+      "optical_cement_type": "NATURAL_CANADA_BALSAM_RESIN",
+      "transmission_loss_pct": 55.0,
+      "timestamp_relative": "YEAR_02_OPTICS_LOG_01",
+      "tags": [
+        "optics",
+        "periscope",
+        "prism",
+        "delamination",
+        "canada_balsam"
+      ],
+      "prose": "Aged Canada balsam optical cement bonding the ninety-degree erector prisms crystallized into a web of micro-fractures. Light transmission dropped by 55%, tinting the surface observation field an opaque muddy amber."
+    },
+    {
+      "id": "prism_delam_thermal_shock_doublet_cleavage",
+      "periscope_assembly_id": "MAIN_BLAST_CUPOLA_PERISCOPE_02",
+      "optical_glass_type": "ACHROMATIC_CROWN_FLINT_DOUBLET",
+      "optical_cement_type": "SYNTHETIC_UV_CURED_EPOXY",
+      "transmission_loss_pct": 80.0,
+      "timestamp_relative": "YEAR_04_OPTICS_LOG_03",
+      "tags": [
+        "optics",
+        "periscope",
+        "thermal_shock",
+        "achromatic_lens",
+        "cleavage"
+      ],
+      "prose": "Extreme temperature differential between the -35°C blizzard exterior mast and +25°C bunker air created intense thermal shear stress. The synthetic epoxy bond between the crown and dense flint elements cleaved with an audible snap, producing total internal reflection glare."
+    },
+    {
+      "id": "prism_delam_fungal_hyphae_etching_flint_glass",
+      "periscope_assembly_id": "RANGEFINDER_TURRET_OPTIC_ALPHA",
+      "optical_glass_type": "DENSE_LEAD_FLINT_ZF7",
+      "optical_cement_type": "POLYESTER_OPTICAL_CEMENT",
+      "transmission_loss_pct": 35.0,
+      "timestamp_relative": "YEAR_07_OPTICS_LOG_02",
+      "tags": [
+        "optics",
+        "periscope",
+        "fungus",
+        "glass_etching",
+        "mycelium"
+      ],
+      "prose": "Fungal hyphae of *Aspergillus niger* colonized the moist interface between lens elements. The metabolic oxalic acid etched permanent dendritic tree-like grooves into the lead flint glass, scattering spotlight beams into blinding halos."
+    },
+    {
+      "id": "prism_delam_silicone_sealant_acetic_outgassing",
+      "periscope_assembly_id": "TARGET_ACQUISITION_MAST_04",
+      "optical_glass_type": "FUSED_SILICA_OBJECTIVE_WINDOW",
+      "optical_cement_type": "ACETOXY_CURE_SILICONE_GASKET",
+      "transmission_loss_pct": 28.0,
+      "timestamp_relative": "YEAR_09_OPTICS_LOG_04",
+      "tags": [
+        "optics",
+        "periscope",
+        "silicone_fogging",
+        "acetic_acid",
+        "coatings"
+      ],
+      "prose": "Maintenance crews sealed the mast viewing port using household acetoxy-cure silicone sealant. The outgassed acetic acid vapor reacted with the anti-reflection coating on the inner lens surface, depositing a milky, un-cleanable white chemical haze."
+    },
+    {
+      "id": "prism_delam_antireflection_magnesium_fluoride_crazing",
+      "periscope_assembly_id": "SURFACE_PANORAMIC_VIEWER_03",
+      "optical_glass_type": "HARD_COATED_BK7_SUBSTRATE",
+      "optical_cement_type": "SINGLE_LAYER_MGF2_THIN_FILM",
+      "transmission_loss_pct": 18.0,
+      "timestamp_relative": "YEAR_12_OPTICS_LOG_01",
+      "tags": [
+        "optics",
+        "periscope",
+        "antireflection",
+        "mgf2",
+        "dust_abrasion"
+      ],
+      "prose": "Windblown volcanic ash scoured the 1/4-wave magnesium fluoride anti-reflection coating off the objective lens. Flare and internal ghost reflections tripled, blinding sentries during dawn and dusk surveillance."
+    },
+    {
+      "id": "prism_delam_radiation_cerium_stabilization_drift",
+      "periscope_assembly_id": "DEEP_RAD_BUNKER_SURVEY_TUBE",
+      "optical_glass_type": "NON_CERIUM_DOPED_CROWN_GLASS",
+      "optical_cement_type": "OPTICAL_PHENOLIC_ADHESIVE",
+      "transmission_loss_pct": 72.0,
+      "timestamp_relative": "YEAR_15_OPTICS_LOG_03",
+      "tags": [
+        "optics",
+        "periscope",
+        "radiation_browning",
+        "color_centers",
+        "gamma"
+      ],
+      "prose": "High-intensity gamma radiation (cumulative 120 Gy) generated color-center electron traps in the non-stabilized optical crown elements. The glass darkened from water-white to dark molasses brown, rendering the periscope useless for night viewing."
+    },
+    {
+      "id": "prism_delam_argon_purging_seal_desiccation",
+      "periscope_assembly_id": "EAST_OBSERVATION_POST_PERISCOPE",
+      "optical_glass_type": "PRESSURIZED_OPTICAL_BARREL_TUBE",
+      "optical_cement_type": "DRY_NITROGEN_ARGON_SEAL",
+      "transmission_loss_pct": 45.0,
+      "timestamp_relative": "YEAR_18_OPTICS_LOG_02",
+      "tags": [
+        "optics",
+        "periscope",
+        "condensation",
+        "argon_purge",
+        "internal_fog"
+      ],
+      "prose": "Deterioration of the Schrader charging valve allowed dry argon gas to bleed out of the four-meter optical tube. Moist bunker air infiltrated, condensing droplets of water on the internal reticle plate whenever outside temperatures dropped below freezing."
+    },
+    {
+      "id": "prism_delam_front_surface_silver_tarnish_sulfide",
+      "periscope_assembly_id": "NIGHT_SIGHT_IR_COLLIMATOR",
+      "optical_glass_type": "FRONT_SURFACE_SILVER_MIRROR",
+      "optical_cement_type": "DIELECTRIC_OVERCOAT_EVAPORATED",
+      "transmission_loss_pct": 65.0,
+      "timestamp_relative": "YEAR_20_OPTICS_LOG_01",
+      "tags": [
+        "optics",
+        "periscope",
+        "silver_mirror",
+        "tarnish",
+        "sulfur"
+      ],
+      "prose": "Airborne hydrogen sulfide from geothermal steam vents penetrated pinholes in the silicon monoxide protective overcoat. The front-surface silver mirror tarnished into black silver sulfide, reducing reflectivity from 98% to less than 35%."
+    }
+  ]
+}

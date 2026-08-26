@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "nodes": [
     {
       "id": "loc_holdfast",
@@ -8,7 +8,9 @@
       "faction": "player",
       "lootTable": null,
       "positionX": 500,
-      "positionY": 300
+      "positionY": 300,
+      "discoverable": false,
+      "startingUnlocked": true
     },
     {
       "id": "loc_cut_abandoned_depot",
@@ -17,7 +19,9 @@
       "faction": null,
       "lootTable": "salvage_common",
       "positionX": 700,
-      "positionY": 200
+      "positionY": 200,
+      "discoverable": true,
+      "startingUnlocked": false
     },
     {
       "id": "loc_cut_radiation_zone_alpha",
@@ -26,7 +30,9 @@
       "faction": null,
       "lootTable": "salvage_rare",
       "positionX": 300,
-      "positionY": 400
+      "positionY": 400,
+      "discoverable": true,
+      "startingUnlocked": false
     },
     {
       "id": "loc_black_flotilla_outpost",
@@ -35,7 +41,40 @@
       "faction": "black_flotilla",
       "lootTable": null,
       "positionX": 600,
-      "positionY": 500
+      "positionY": 500,
+      "discoverable": true,
+      "startingUnlocked": false
+    },
+    {
+      "id": "loc_cut_merchant_caravanserai",
+      "displayName": "Merchant Caravanserai",
+      "danger": "low",
+      "faction": "merchant",
+      "lootTable": "trade_goods",
+      "positionX": 400,
+      "positionY": 200,
+      "discoverable": true,
+      "startingUnlocked": true
+    },
+    {
+      "id": "loc_cut_arsenal_ruin",
+      "displayName": "Arsenal Ruin",
+      "danger": "medium",
+      "faction": null,
+      "lootTable": "salvage_weapons",
+      "positionX": 800,
+      "positionY": 350,
+      "discoverable": true,
+      "startingUnlocked": false
     }
+  ],
+  "routes": [
+    { "from": "loc_holdfast", "to": "loc_cut_abandoned_depot", "distanceKm": 12, "weatherHazard": 0.2 },
+    { "from": "loc_holdfast", "to": "loc_cut_merchant_caravanserai", "distanceKm": 8, "weatherHazard": 0.1 },
+    { "from": "loc_holdfast", "to": "loc_cut_radiation_zone_alpha", "distanceKm": 18, "weatherHazard": 0.5 },
+    { "from": "loc_cut_abandoned_depot", "to": "loc_cut_arsenal_ruin", "distanceKm": 9, "weatherHazard": 0.3 },
+    { "from": "loc_cut_merchant_caravanserai", "to": "loc_cut_abandoned_depot", "distanceKm": 7, "weatherHazard": 0.15 },
+    { "from": "loc_cut_merchant_caravanserai", "to": "loc_black_flotilla_outpost", "distanceKm": 22, "weatherHazard": 0.4 },
+    { "from": "loc_cut_radiation_zone_alpha", "to": "loc_black_flotilla_outpost", "distanceKm": 14, "weatherHazard": 0.45 }
   ]
 }

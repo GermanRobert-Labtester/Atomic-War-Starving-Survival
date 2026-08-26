@@ -1,82 +1,133 @@
-[
-  {
-    "id": "silt_report_cast_iron_impeller_cavitation",
-    "sump_basin_id": "MAIN_DRAINAGE_SUMP_SECTOR_4",
-    "pump_model": "WORTHINGTON_15KW_SLURRY_PUMP",
-    "silt_density_grams_per_liter": 185.0,
-    "operational_status": "PUMP_IMPELLER_EROSION_SEVERE",
-    "timestamp_relative": "YEAR_03_SUMP_REPORT_01",
-    "tags": ["architecture", "drainage", "sump_pump", "cavitation", "maintenance"],
-    "prose": "Pumping sand-heavy groundwater has eroded the cast-iron impeller vanes to razor-thin knife edges, with deep honeycomb cavitation pitting across the suction eye. Pump discharge volume has dropped from 450 liters/min down to 120 liters/min; motor running at 85°C."
-  },
-  {
-    "id": "silt_report_geothermal_calcite_scale_constriction",
-    "sump_basin_id": "GEOTHERMAL_CONDENSATE_PIT_B",
-    "pump_model": "GOULDS_SUBMERSIBLE_TURBINE",
-    "silt_density_grams_per_liter": 42.0,
-    "operational_status": "DISCHARGE_LINE_SCALE_CONSTRICTION",
-    "timestamp_relative": "YEAR_05_SUMP_REPORT_03",
-    "tags": ["architecture", "sump", "calcite_scale", "piping", "geothermal"],
-    "prose": "Mineral-rich 55°C drainage water deposited a rock-hard ring of calcium carbonate scale inside the four-inch galvanized riser pipe, reducing the effective internal bore to barely thirty millimeters. Line pressure spiked to 9.5 bar, blowing out two victaulic pipe couplings."
-  },
-  {
-    "id": "silt_report_float_switch_silt_burial",
-    "sump_basin_id": "LOWER_SUB_LEVEL_COLLECTION_C",
-    "pump_model": "FLYGT_HEAVY_SOLIDS_CUTTER",
-    "silt_density_grams_per_liter": 310.0,
-    "operational_status": "FLOAT_SWITCH_IMMOBILIZED",
-    "timestamp_relative": "YEAR_07_SUMP_REPORT_02",
-    "tags": ["architecture", "float_switch", "flooding_risk", "sump", "mud"],
-    "prose": "The copper mercury-tilt float switch was buried under forty centimeters of dense, grey coal-wash silt, preventing it from rising with the water level. Basin flooded over the curb, inundating forty linear meters of battery rack flooring before manual pump startup."
-  },
-  {
-    "id": "silt_report_suction_strainer_shredded_plastic",
-    "sump_basin_id": "COMMISSARY_WASH_SUMP_01",
-    "pump_model": "PEERLESS_END_SUCTION_CENTRIFUGAL",
-    "silt_density_grams_per_liter": 95.0,
-    "operational_status": "STRAINER_BASKET_BLINDED",
-    "timestamp_relative": "YEAR_09_SUMP_REPORT_04",
-    "tags": ["architecture", "strainer", "plastic_debris", "blockage", "sump"],
-    "prose": "Suction basket was completely blinded by a compacted mat of shredded polyethylene ration wrappers, decayed cotton mops, and cable insulation strippings. Pump drew full vacuum and cavitated violently, melting its mechanical carbon shaft seal in less than fifteen minutes."
-  },
-  {
-    "id": "silt_report_check_valve_flapper_gravel_prop",
-    "sump_basin_id": "AUXILIARY_SILL_SUMP_HATCH_02",
-    "pump_model": "AURORA_VERTICAL_CANTILEVER",
-    "silt_density_grams_per_liter": 140.0,
-    "operational_status": "CHECK_VALVE_BACKFLOW_LEAKAGE",
-    "timestamp_relative": "YEAR_12_SUMP_REPORT_01",
-    "tags": ["architecture", "check_valve", "gravel", "backflow", "plumbing"],
-    "prose": "A jagged 25mm quartz river pebble lodged under the bronze flapper of the six-inch swing check valve. When the pump shuts down, fifty meters of vertical water column rushes backward into the sump pit, spinning the motor backward and churning the silt bed into liquid mud."
-  },
-  {
-    "id": "silt_report_motor_winding_insulation_breakdown",
-    "sump_basin_id": "REACTOR_CONTAINMENT_DRAIN_PIT",
-    "pump_model": "HAYWARD_CORROSIVE_DUTY_PUMP",
-    "silt_density_grams_per_liter": 210.0,
-    "operational_status": "STATOR_WINDING_GROUND_FAULT",
-    "timestamp_relative": "YEAR_14_SUMP_REPORT_03",
-    "tags": ["architecture", "motor_failure", "acidic_water", "sump", "electrical"],
-    "prose": "Acidic leachate (pH 3.8) penetrated the mechanical oil chamber seal and attacked the class-H stator insulation. Phase-to-ground short circuit tripped the 40-amp main circuit breaker, cutting power to the primary containment drainage manifold."
-  },
-  {
-    "id": "silt_report_grease_trap_congealed_tallow_block",
-    "sump_basin_id": "MESS_HALL_GREASE_SEPARATOR",
-    "pump_model": "GRUNDFOS_POSITIVE_DISPLACEMENT",
-    "silt_density_grams_per_liter": 75.0,
-    "operational_status": "SOLID_TALLOW_FATBERG_BLOCKAGE",
-    "timestamp_relative": "YEAR_17_SUMP_REPORT_02",
-    "tags": ["architecture", "fatberg", "grease_trap", "tallow", "sanitation"],
-    "prose": "Cold winter temperatures congealed forty kilograms of mutton fat and lye soap scum into a solid white 'fatberg' blocking the four-inch outflow weir. Maintenance crew used sharpened iron spades and buckets of boiling salt brine to clear the sixty-meter drain line."
-  },
-  {
-    "id": "silt_report_discharge_weir_overflow_mudslide",
-    "sump_basin_id": "TERRACE_RETENTION_LAGOON_05",
-    "pump_model": "DUAL_WEIR_SETTLING_SYSTEM",
-    "silt_density_grams_per_liter": 450.0,
-    "operational_status": "WEIR_OVERTOPPING_MUDSLIDE",
-    "timestamp_relative": "YEAR_20_SUMP_REPORT_01",
-    "tags": ["architecture", "mudslide", "weir", "lagoon", "disaster"],
-    "prose": "Heavy surface rains combined with seismic slumping overloaded the third-tier settling weir. Six hundred tons of liquid shale mud overtopped the concrete retaining lip, flooding the Level 4 mushroom tunnels under four feet of dense black silt."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "silt_report_cast_iron_impeller_cavitation",
+      "sump_basin_id": "MAIN_DRAINAGE_SUMP_SECTOR_4",
+      "pump_model": "WORTHINGTON_15KW_SLURRY_PUMP",
+      "silt_density_grams_per_liter": 185.0,
+      "operational_status": "PUMP_IMPELLER_EROSION_SEVERE",
+      "timestamp_relative": "YEAR_03_SUMP_REPORT_01",
+      "tags": [
+        "architecture",
+        "drainage",
+        "sump_pump",
+        "cavitation",
+        "maintenance"
+      ],
+      "prose": "Pumping sand-heavy groundwater has eroded the cast-iron impeller vanes to razor-thin knife edges, with deep honeycomb cavitation pitting across the suction eye. Pump discharge volume has dropped from 450 liters/min down to 120 liters/min; motor running at 85°C."
+    },
+    {
+      "id": "silt_report_geothermal_calcite_scale_constriction",
+      "sump_basin_id": "GEOTHERMAL_CONDENSATE_PIT_B",
+      "pump_model": "GOULDS_SUBMERSIBLE_TURBINE",
+      "silt_density_grams_per_liter": 42.0,
+      "operational_status": "DISCHARGE_LINE_SCALE_CONSTRICTION",
+      "timestamp_relative": "YEAR_05_SUMP_REPORT_03",
+      "tags": [
+        "architecture",
+        "sump",
+        "calcite_scale",
+        "piping",
+        "geothermal"
+      ],
+      "prose": "Mineral-rich 55°C drainage water deposited a rock-hard ring of calcium carbonate scale inside the four-inch galvanized riser pipe, reducing the effective internal bore to barely thirty millimeters. Line pressure spiked to 9.5 bar, blowing out two victaulic pipe couplings."
+    },
+    {
+      "id": "silt_report_float_switch_silt_burial",
+      "sump_basin_id": "LOWER_SUB_LEVEL_COLLECTION_C",
+      "pump_model": "FLYGT_HEAVY_SOLIDS_CUTTER",
+      "silt_density_grams_per_liter": 310.0,
+      "operational_status": "FLOAT_SWITCH_IMMOBILIZED",
+      "timestamp_relative": "YEAR_07_SUMP_REPORT_02",
+      "tags": [
+        "architecture",
+        "float_switch",
+        "flooding_risk",
+        "sump",
+        "mud"
+      ],
+      "prose": "The copper mercury-tilt float switch was buried under forty centimeters of dense, grey coal-wash silt, preventing it from rising with the water level. Basin flooded over the curb, inundating forty linear meters of battery rack flooring before manual pump startup."
+    },
+    {
+      "id": "silt_report_suction_strainer_shredded_plastic",
+      "sump_basin_id": "COMMISSARY_WASH_SUMP_01",
+      "pump_model": "PEERLESS_END_SUCTION_CENTRIFUGAL",
+      "silt_density_grams_per_liter": 95.0,
+      "operational_status": "STRAINER_BASKET_BLINDED",
+      "timestamp_relative": "YEAR_09_SUMP_REPORT_04",
+      "tags": [
+        "architecture",
+        "strainer",
+        "plastic_debris",
+        "blockage",
+        "sump"
+      ],
+      "prose": "Suction basket was completely blinded by a compacted mat of shredded polyethylene ration wrappers, decayed cotton mops, and cable insulation strippings. Pump drew full vacuum and cavitated violently, melting its mechanical carbon shaft seal in less than fifteen minutes."
+    },
+    {
+      "id": "silt_report_check_valve_flapper_gravel_prop",
+      "sump_basin_id": "AUXILIARY_SILL_SUMP_HATCH_02",
+      "pump_model": "AURORA_VERTICAL_CANTILEVER",
+      "silt_density_grams_per_liter": 140.0,
+      "operational_status": "CHECK_VALVE_BACKFLOW_LEAKAGE",
+      "timestamp_relative": "YEAR_12_SUMP_REPORT_01",
+      "tags": [
+        "architecture",
+        "check_valve",
+        "gravel",
+        "backflow",
+        "plumbing"
+      ],
+      "prose": "A jagged 25mm quartz river pebble lodged under the bronze flapper of the six-inch swing check valve. When the pump shuts down, fifty meters of vertical water column rushes backward into the sump pit, spinning the motor backward and churning the silt bed into liquid mud."
+    },
+    {
+      "id": "silt_report_motor_winding_insulation_breakdown",
+      "sump_basin_id": "REACTOR_CONTAINMENT_DRAIN_PIT",
+      "pump_model": "HAYWARD_CORROSIVE_DUTY_PUMP",
+      "silt_density_grams_per_liter": 210.0,
+      "operational_status": "STATOR_WINDING_GROUND_FAULT",
+      "timestamp_relative": "YEAR_14_SUMP_REPORT_03",
+      "tags": [
+        "architecture",
+        "motor_failure",
+        "acidic_water",
+        "sump",
+        "electrical"
+      ],
+      "prose": "Acidic leachate (pH 3.8) penetrated the mechanical oil chamber seal and attacked the class-H stator insulation. Phase-to-ground short circuit tripped the 40-amp main circuit breaker, cutting power to the primary containment drainage manifold."
+    },
+    {
+      "id": "silt_report_grease_trap_congealed_tallow_block",
+      "sump_basin_id": "MESS_HALL_GREASE_SEPARATOR",
+      "pump_model": "GRUNDFOS_POSITIVE_DISPLACEMENT",
+      "silt_density_grams_per_liter": 75.0,
+      "operational_status": "SOLID_TALLOW_FATBERG_BLOCKAGE",
+      "timestamp_relative": "YEAR_17_SUMP_REPORT_02",
+      "tags": [
+        "architecture",
+        "fatberg",
+        "grease_trap",
+        "tallow",
+        "sanitation"
+      ],
+      "prose": "Cold winter temperatures congealed forty kilograms of mutton fat and lye soap scum into a solid white 'fatberg' blocking the four-inch outflow weir. Maintenance crew used sharpened iron spades and buckets of boiling salt brine to clear the sixty-meter drain line."
+    },
+    {
+      "id": "silt_report_discharge_weir_overflow_mudslide",
+      "sump_basin_id": "TERRACE_RETENTION_LAGOON_05",
+      "pump_model": "DUAL_WEIR_SETTLING_SYSTEM",
+      "silt_density_grams_per_liter": 450.0,
+      "operational_status": "WEIR_OVERTOPPING_MUDSLIDE",
+      "timestamp_relative": "YEAR_20_SUMP_REPORT_01",
+      "tags": [
+        "architecture",
+        "mudslide",
+        "weir",
+        "lagoon",
+        "disaster"
+      ],
+      "prose": "Heavy surface rains combined with seismic slumping overloaded the third-tier settling weir. Six hundred tons of liquid shale mud overtopped the concrete retaining lip, flooding the Level 4 mushroom tunnels under four feet of dense black silt."
+    }
+  ]
+}

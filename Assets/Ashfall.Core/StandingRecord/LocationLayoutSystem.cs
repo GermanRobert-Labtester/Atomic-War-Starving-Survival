@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -108,7 +109,7 @@ namespace Ashfall.Core
         public string CurrentParentId => _state.currentParentId;
         public IReadOnlyList<LocationLayoutDef> Layouts => _layouts;
 
-        public LocationLayoutSystem(IFileIO files, IJsonSerializer json, ILog log = null)
+        public LocationLayoutSystem(IFileIO files, IJsonSerializer json, ILog? log = null)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -144,7 +145,7 @@ namespace Ashfall.Core
             try
             {
                 string blob = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<LocationLayoutDef>>(blob);
+                var items = CatalogLocator.LoadWrappedList<LocationLayoutDef>(blob, SystemTextJsonSerializer.Options);
                 if (items == null) return;
                 for (int i = 0; i < items.Count; i++)
                 {
@@ -177,7 +178,7 @@ namespace Ashfall.Core
         {
             if (!_state.expansionUnlocked) return false;
             if (string.IsNullOrEmpty(parentLocationId)) return false;
-            LocationLayoutDef def = GetLayout(parentLocationId);
+            LocationLayoutDef def = GetLayout(parentLocationId)!;
             if (def == null) return false;
 
             _state.currentParentId = parentLocationId;
@@ -189,7 +190,7 @@ namespace Ashfall.Core
 
         public void LeaveParent()
         {
-            _state.currentParentId = null;
+            _state.currentParentId = null!;
             RaiseChanged();
         }
 
@@ -257,7 +258,7 @@ namespace Ashfall.Core
         {
             string parentId = _state.currentParentId;
             if (string.IsNullOrEmpty(parentId) || string.IsNullOrEmpty(roomId)) return false;
-            LocationLayoutDef def = GetLayout(parentId);
+            LocationLayoutDef def = GetLayout(parentId)!;
             if (def == null || def.GetRoom(roomId) == null) return false;
             ParentRuntime rt = EnsureRuntime(parentId);
             if (!rt.Entered.Contains(roomId)) return false;
@@ -272,7 +273,7 @@ namespace Ashfall.Core
         {
             LocationLayoutDef def = GetLayout(parentLocationId);
             if (def == null) return null;
-            LocationLayoutRoomDef room = def.GetRoom(roomId);
+            LocationLayoutRoomDef room = def.GetRoom(roomId)!;
             if (room == null) return null;
             return string.IsNullOrEmpty(room.inspectKey) ? null : room.inspectKey;
         }

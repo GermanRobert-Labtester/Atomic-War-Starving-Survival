@@ -1,6 +1,8 @@
 using System;
+#pragma warning disable CS8618
 using System.Text;
 using Ashfall.Core;
+using Ashfall.Core.Radiation;
 using Ashfall.Core.YearOfAsh;
 using Godot;
 
@@ -13,7 +15,7 @@ namespace AtomicWar.GodotApp
     /// ExpansionHostSession pattern. Persistence via DoseLedgerSaveStore.
     /// </summary>
     public sealed class DoseLedgerHostSession
-    {
+    : HostSessionBase{
         public const int DemoSeed = 1401;
 
         public DoseLedgerSystem Ledger { get; }
@@ -23,20 +25,20 @@ namespace AtomicWar.GodotApp
         public DoseRegistersCatalog Registers { get; }
         public DoseContentCatalog Content { get; }
         public QuestlineSystem Quests { get; }
+        public DosimeterCalibrationSystem Calibration { get; }
 
         private readonly SeededRng _rng;
 
         /// <summary>Raised when any register changes (coalesced save dirty flag).</summary>
-        public event Action StateChanged;
-
         public DoseLedgerHostSession(
-            DoseLedgerSystem ledger = null,
-            SickListSystem sickList = null,
-            CohortSystem cohort = null,
-            VoluntaryRegisterSystem voluntary = null,
-            DoseRegistersCatalog registers = null,
-            DoseContentCatalog content = null,
-            QuestlineSystem quests = null)
+            DoseLedgerSystem ledger = null!,
+            SickListSystem sickList = null!,
+            CohortSystem cohort = null!,
+            VoluntaryRegisterSystem voluntary = null!,
+            DoseRegistersCatalog registers = null!,
+            DoseContentCatalog content = null!,
+            QuestlineSystem quests = null!,
+            DosimeterCalibrationSystem calibration = null!)
         {
             Ledger = ledger ?? new DoseLedgerSystem();
             SickList = sickList ?? new SickListSystem();
@@ -45,19 +47,21 @@ namespace AtomicWar.GodotApp
             Registers = registers ?? new DoseRegistersCatalog();
             Content = content ?? new DoseContentCatalog();
             Quests = quests ?? new QuestlineSystem();
+            Calibration = calibration ?? new DosimeterCalibrationSystem();
             _rng = new SeededRng(DemoSeed);
 
             // Persistence: any register mutation marks the save dirty.
-            Ledger.OnStateChanged += _ => StateChanged?.Invoke();
-            SickList.OnStateChanged += _ => StateChanged?.Invoke();
-            Cohort.OnStateChanged += _ => StateChanged?.Invoke();
-            Voluntary.OnStateChanged += _ => StateChanged?.Invoke();
-            Quests.OnQuestlineStarted += _ => StateChanged?.Invoke();
-            Quests.OnQuestChoiceTaken += _ => StateChanged?.Invoke();
-            Quests.OnQuestlineResolved += (_, _) => StateChanged?.Invoke();
+            Ledger.OnStateChanged += _ => RaiseStateChanged();
+            SickList.OnStateChanged += _ => RaiseStateChanged();
+            Cohort.OnStateChanged += _ => RaiseStateChanged();
+            Voluntary.OnStateChanged += _ => RaiseStateChanged();
+            Quests.OnQuestlineStarted += _ => RaiseStateChanged();
+            Quests.OnQuestChoiceTaken += _ => RaiseStateChanged();
+            Quests.OnQuestlineResolved += (_, _) => RaiseStateChanged();
+            Calibration.OnStateChanged += _ => RaiseStateChanged();
         }
 
-        public static DoseLedgerHostSession Create(string dataDir, ILog log = null)
+        public static DoseLedgerHostSession Create(string dataDir, ILog log = null!)
         {
             CatalogLocator.UseInvariantCulture();
             var registers = new DoseRegistersCatalog();
@@ -97,6 +101,53 @@ namespace AtomicWar.GodotApp
             Ledger.AssignDosimeter("survivor_gunner_mikhail", "tag_1", 40f);
             Ledger.AssignDosimeter("elena_vasquez", "tag_2", 15f);
             Ledger.SetShieldingFactor("survivor_gunner_mikhail", 0.6f);
+            // Register calibration devices
+            Calibration.RegisterDevice("tag_1", "survivor_gunner_mikhail");
+            Calibration.RegisterDevice("tag_2", "elena_vasquez");
+        }
+
+        // ── Calibration demo actions ─────────────────────────────────
+
+        /// <summary>Start calibration for a device.</summary>
+        public string StartCalibrationDemo(string deviceTag, int currentDay)
+        {
+            bool ok = Calibration.StartCalibration(deviceTag, currentDay);
+            return ok
+                ? $"Calibration started for {deviceTag}. Duration: {DosimeterCalibrationSystem.CalibrationDurationDays} day(s)."
+                : $"Cannot start calibration for {deviceTag} (battery low, sensor damaged, or station occupied).";
+        }
+
+        /// <summary>Complete calibration for a device (if duration elapsed).</summary>
+        public string CompleteCalibrationDemo(string deviceTag, int currentDay)
+        {
+            bool ok = Calibration.CompleteCalibration(deviceTag, currentDay);
+            if (!ok) return $"Calibration not ready for {deviceTag}.";
+            var device = Calibration.GetDevice(deviceTag);
+            return $"Calibration complete for {deviceTag}. Quality: {device?.calibrationQuality:F2}. Error band: ±{device?.errorBandMsv:F1} mSv.";
+        }
+
+        /// <summary>Replace battery in a device.</summary>
+        public string ReplaceBatteryDemo(string deviceTag)
+        {
+            bool ok = Calibration.ReplaceBattery(deviceTag);
+            return ok ? $"Battery replaced in {deviceTag}." : $"Unknown device: {deviceTag}.";
+        }
+
+        /// <summary>Service sensor in a device.</summary>
+        public string ServiceSensorDemo(string deviceTag)
+        {
+            bool ok = Calibration.ServiceSensor(deviceTag);
+            return ok ? $"Sensor serviced for {deviceTag}." : $"Unknown device: {deviceTag}.";
+        }
+
+        /// <summary>Get calibration status for a device.</summary>
+        public string CalibrationStatusLine(string deviceTag)
+        {
+            var device = Calibration.GetDevice(deviceTag);
+            if (device == null) return $"Unknown device: {deviceTag}";
+            return $"Device {deviceTag}: battery={device.batteryLevel:P0}, sensor={device.sensorCondition:P0}, " +
+                   $"quality={device.calibrationQuality:F2}, readings={device.readingsSinceCalibration}/{DosimeterCalibrationSystem.ReadingsPerCalibration}, " +
+                   $"error=±{device.errorBandMsv:F1} mSv, overdue={device.isOverdue}, calibrating={device.isStationOccupied}";
         }
 
         /// <summary>Book a nominal reading against the veteran; returns the band label.</summary>

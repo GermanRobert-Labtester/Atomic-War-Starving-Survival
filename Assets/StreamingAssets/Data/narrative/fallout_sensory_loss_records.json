@@ -1,72 +1,117 @@
-[
-  {
-    "id": "sensory_loss_posterior_subcapsular_cataracts",
-    "case_file": "CLINICAL-SENSORY-CASE-008",
-    "sensory_modality": "VISUAL_ACUITY_DEFICIT",
-    "pathological_cause": "CHRONIC_NEUTRON_IONIZATION",
-    "functional_impairment_pct": 75,
-    "timestamp_relative": "YEAR_04_EXAM_SERIES",
-    "tags": ["sensory_loss", "cataracts", "eyes", "radiation", "vision"],
-    "prose": "Ophthalmoscopic slit-lamp exam shows characteristic dense, iridescent posterior subcapsular plaques resembling cracked ice across both lenses. The patient can no longer read printed ration slips and requires a walking stick in dim hallway lighting."
-  },
-  {
-    "id": "sensory_loss_sensorineural_high_frequency_tinnitus",
-    "case_file": "CLINICAL-SENSORY-CASE-021",
-    "sensory_modality": "AUDITORY_THRESHOLD_SHIFT",
-    "pathological_cause": "ACOUSTIC_OVERPRESSURE_TRAUMA",
-    "functional_impairment_pct": 40,
-    "timestamp_relative": "YEAR_06_EXAM_SERIES",
-    "tags": ["sensory_loss", "tinnitus", "hearing", "blast_wave", "audiology"],
-    "prose": "Permanent bilateral notch at 4,000 to 6,000 Hz accompanied by an unceasing, high-pitched metallic whine. The patient stood within thirty meters of the main intake muffler when the secondary shockwave sheared the damper pins. Patient reports insomnia and severe irritability during quiet hours."
-  },
-  {
-    "id": "sensory_loss_anosmia_ozone_cautery",
-    "case_file": "CLINICAL-SENSORY-CASE-039",
-    "sensory_modality": "OLFACTORY_GUSTATORY_LOSS",
-    "pathological_cause": "CORROSIVE_GAS_INHALATION",
-    "functional_impairment_pct": 90,
-    "timestamp_relative": "YEAR_09_EXAM_SERIES",
-    "tags": ["sensory_loss", "smell", "taste", "ozone", "electrical_fire"],
-    "prose": "Total destruction of the olfactory neuroepithelium following inhalation of superheated ozone and nitrogen dioxide during the main switchboard arc flash. The patient cannot distinguish between fresh bread and rotten turnip slurry except by texture."
-  },
-  {
-    "id": "sensory_loss_peripheral_rad_neuropathy",
-    "case_file": "CLINICAL-SENSORY-CASE-057",
-    "sensory_modality": "SOMATOSENSORY_PARESTHESIA",
-    "pathological_cause": "ISOTOPE_CONTACT_NEUROPATHY",
-    "functional_impairment_pct": 55,
-    "timestamp_relative": "YEAR_12_EXAM_SERIES",
-    "tags": ["sensory_loss", "neuropathy", "hands", "radiation", "numbness"],
-    "prose": "Stocking-and-glove pattern sensory neuropathy affecting both hands. Fine two-point discrimination is lost; the machinist can no longer feel thread pitches on bolts or detect whether a lathe tool is hot without touching it to their cheek."
-  },
-  {
-    "id": "sensory_loss_xerophthalmia_corneal_keratomalacia",
-    "case_file": "CLINICAL-SENSORY-CASE-074",
-    "sensory_modality": "CORNEAL_OPACITY_DRYNESS",
-    "pathological_cause": "HYPOVITAMINOSIS_A_DEFICIENCY",
-    "functional_impairment_pct": 80,
-    "timestamp_relative": "YEAR_15_EXAM_SERIES",
-    "tags": ["sensory_loss", "xerophthalmia", "cornea", "malnutrition", "eyes"],
-    "prose": "Bitot's foamy silver spots observed on the temporal bulbar conjunctiva of a nine-year-old child who has eaten exclusively white rice and dried pea mash for six years. Both corneas are dull, hazy, and prone to spontaneous ulceration."
-  },
-  {
-    "id": "sensory_loss_vestibular_canal_otolith_concussion",
-    "case_file": "CLINICAL-SENSORY-CASE-091",
-    "sensory_modality": "VESTIBULAR_EQUILIBRIUM_LOSS",
-    "pathological_cause": "DECELERATION_OTOLITH_DISRUPTION",
-    "functional_impairment_pct": 60,
-    "timestamp_relative": "YEAR_17_EXAM_SERIES",
-    "tags": ["sensory_loss", "vertigo", "vestibular", "balance", "concussion"],
-    "prose": "Severe rotatory vertigo and spontaneous horizontal nystagmus provoked by any head tilt. The otolith organs in the inner ear were shattered when the bunker suspended floor dropped eighteen inches onto concrete shock snubbers during a near-miss ground burst."
-  },
-  {
-    "id": "sensory_loss_tactile_callus_anesthesia",
-    "case_file": "CLINICAL-SENSORY-CASE-108",
-    "sensory_modality": "THERMAL_TACTILE_ANESTHESIA",
-    "pathological_cause": "REPEATED_THERMAL_MICRO_BURNS",
-    "functional_impairment_pct": 45,
-    "timestamp_relative": "YEAR_20_EXAM_SERIES",
-    "tags": ["sensory_loss", "callus", "burns", "foundry", "insensibility"],
-    "prose": "Palmar skin on both hands is thickened into five-millimeter horn-like yellow calluses from twelve years of pulling slag skimmers and ingot tongs from the reverberatory furnace. The smith feels neither boiling water nor open flame on their fingertips until the flesh chars."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "sensory_loss_posterior_subcapsular_cataracts",
+      "case_file": "CLINICAL-SENSORY-CASE-008",
+      "sensory_modality": "VISUAL_ACUITY_DEFICIT",
+      "pathological_cause": "CHRONIC_NEUTRON_IONIZATION",
+      "functional_impairment_pct": 75,
+      "timestamp_relative": "YEAR_04_EXAM_SERIES",
+      "tags": [
+        "sensory_loss",
+        "cataracts",
+        "eyes",
+        "radiation",
+        "vision"
+      ],
+      "prose": "Ophthalmoscopic slit-lamp exam shows characteristic dense, iridescent posterior subcapsular plaques resembling cracked ice across both lenses. The patient can no longer read printed ration slips and requires a walking stick in dim hallway lighting."
+    },
+    {
+      "id": "sensory_loss_sensorineural_high_frequency_tinnitus",
+      "case_file": "CLINICAL-SENSORY-CASE-021",
+      "sensory_modality": "AUDITORY_THRESHOLD_SHIFT",
+      "pathological_cause": "ACOUSTIC_OVERPRESSURE_TRAUMA",
+      "functional_impairment_pct": 40,
+      "timestamp_relative": "YEAR_06_EXAM_SERIES",
+      "tags": [
+        "sensory_loss",
+        "tinnitus",
+        "hearing",
+        "blast_wave",
+        "audiology"
+      ],
+      "prose": "Permanent bilateral notch at 4,000 to 6,000 Hz accompanied by an unceasing, high-pitched metallic whine. The patient stood within thirty meters of the main intake muffler when the secondary shockwave sheared the damper pins. Patient reports insomnia and severe irritability during quiet hours."
+    },
+    {
+      "id": "sensory_loss_anosmia_ozone_cautery",
+      "case_file": "CLINICAL-SENSORY-CASE-039",
+      "sensory_modality": "OLFACTORY_GUSTATORY_LOSS",
+      "pathological_cause": "CORROSIVE_GAS_INHALATION",
+      "functional_impairment_pct": 90,
+      "timestamp_relative": "YEAR_09_EXAM_SERIES",
+      "tags": [
+        "sensory_loss",
+        "smell",
+        "taste",
+        "ozone",
+        "electrical_fire"
+      ],
+      "prose": "Total destruction of the olfactory neuroepithelium following inhalation of superheated ozone and nitrogen dioxide during the main switchboard arc flash. The patient cannot distinguish between fresh bread and rotten turnip slurry except by texture."
+    },
+    {
+      "id": "sensory_loss_peripheral_rad_neuropathy",
+      "case_file": "CLINICAL-SENSORY-CASE-057",
+      "sensory_modality": "SOMATOSENSORY_PARESTHESIA",
+      "pathological_cause": "ISOTOPE_CONTACT_NEUROPATHY",
+      "functional_impairment_pct": 55,
+      "timestamp_relative": "YEAR_12_EXAM_SERIES",
+      "tags": [
+        "sensory_loss",
+        "neuropathy",
+        "hands",
+        "radiation",
+        "numbness"
+      ],
+      "prose": "Stocking-and-glove pattern sensory neuropathy affecting both hands. Fine two-point discrimination is lost; the machinist can no longer feel thread pitches on bolts or detect whether a lathe tool is hot without touching it to their cheek."
+    },
+    {
+      "id": "sensory_loss_xerophthalmia_corneal_keratomalacia",
+      "case_file": "CLINICAL-SENSORY-CASE-074",
+      "sensory_modality": "CORNEAL_OPACITY_DRYNESS",
+      "pathological_cause": "HYPOVITAMINOSIS_A_DEFICIENCY",
+      "functional_impairment_pct": 80,
+      "timestamp_relative": "YEAR_15_EXAM_SERIES",
+      "tags": [
+        "sensory_loss",
+        "xerophthalmia",
+        "cornea",
+        "malnutrition",
+        "eyes"
+      ],
+      "prose": "Bitot's foamy silver spots observed on the temporal bulbar conjunctiva of a nine-year-old child who has eaten exclusively white rice and dried pea mash for six years. Both corneas are dull, hazy, and prone to spontaneous ulceration."
+    },
+    {
+      "id": "sensory_loss_vestibular_canal_otolith_concussion",
+      "case_file": "CLINICAL-SENSORY-CASE-091",
+      "sensory_modality": "VESTIBULAR_EQUILIBRIUM_LOSS",
+      "pathological_cause": "DECELERATION_OTOLITH_DISRUPTION",
+      "functional_impairment_pct": 60,
+      "timestamp_relative": "YEAR_17_EXAM_SERIES",
+      "tags": [
+        "sensory_loss",
+        "vertigo",
+        "vestibular",
+        "balance",
+        "concussion"
+      ],
+      "prose": "Severe rotatory vertigo and spontaneous horizontal nystagmus provoked by any head tilt. The otolith organs in the inner ear were shattered when the bunker suspended floor dropped eighteen inches onto concrete shock snubbers during a near-miss ground burst."
+    },
+    {
+      "id": "sensory_loss_tactile_callus_anesthesia",
+      "case_file": "CLINICAL-SENSORY-CASE-108",
+      "sensory_modality": "THERMAL_TACTILE_ANESTHESIA",
+      "pathological_cause": "REPEATED_THERMAL_MICRO_BURNS",
+      "functional_impairment_pct": 45,
+      "timestamp_relative": "YEAR_20_EXAM_SERIES",
+      "tags": [
+        "sensory_loss",
+        "callus",
+        "burns",
+        "foundry",
+        "insensibility"
+      ],
+      "prose": "Palmar skin on both hands is thickened into five-millimeter horn-like yellow calluses from twelve years of pulling slag skimmers and ingot tongs from the reverberatory furnace. The smith feels neither boiling water nor open flame on their fingertips until the flesh chars."
+    }
+  ]
+}

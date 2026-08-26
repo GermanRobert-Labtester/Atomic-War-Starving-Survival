@@ -1,5 +1,7 @@
+using AtomicWar.GodotApp.UI;
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using static AtomicWar.GodotApp.UI.AshfallUiHelpers;
 using Ashfall.Core;
@@ -61,7 +63,7 @@ namespace AtomicWar.GodotApp.Radio
             CustomMinimumSize = new Vector2(720, 480);
 
             // Apply 9-slice steel radio frame
-            var frameTex = LoadTexture("res://Assets/UI/Textures/radio_frame_9slice.png");
+            var frameTex = LoadTexture("res://assets/ui/Textures/radio_frame_9slice.png");
             if (frameTex != null)
             {
                 var sb = new StyleBoxTexture
@@ -152,7 +154,7 @@ namespace AtomicWar.GodotApp.Radio
             {
                 CustomMinimumSize = new Vector2(64, 32),
                 StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
-                Texture = LoadTexture("res://Assets/UI/Icons/meter_signal_strength.png")
+                Texture = LoadTexture("res://assets/ui/Icons/meter_signal_strength.png")
             };
             smeterHbox.AddChild(_textureSmeter);
 
@@ -224,7 +226,7 @@ namespace AtomicWar.GodotApp.Radio
             // Static overlay on CRT
             _crtOverlay = new TextureRect
             {
-                Texture = LoadTexture("res://Assets/UI/Textures/signal_static_overlay.png"),
+                Texture = LoadTexture("res://assets/ui/Textures/signal_static_overlay.png"),
                 StretchMode = TextureRect.StretchModeEnum.Tile,
                 MouseFilter = MouseFilterEnum.Ignore
             };
@@ -354,10 +356,7 @@ namespace AtomicWar.GodotApp.Radio
         {
             if (_presetGrid == null || _radioProvider == null) return;
 
-            foreach (Node child in _presetGrid.GetChildren())
-                child.QueueFree();
-
-            foreach (var f in _radioProvider.GetAllFactions())
+            AshfallUiHelpers.EmptyChildren(_presetGrid);foreach (var f in _radioProvider.GetAllFactions())
             {
                 float freq = _radioProvider.GetFactionFrequency(f);
                 string callsign = _radioProvider.GetFactionCallsign(f);
@@ -381,7 +380,7 @@ namespace AtomicWar.GodotApp.Radio
             return ToColor(token);
         }
 
-        private static Texture2D LoadTexture(string path)
+        private static Texture2D? LoadTexture(string path)
         {
             return TryLoadTexture(path);
         }

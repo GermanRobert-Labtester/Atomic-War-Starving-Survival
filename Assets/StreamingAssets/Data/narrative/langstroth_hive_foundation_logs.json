@@ -1,82 +1,133 @@
-[
-  {
-    "id": "langstroth_wax_foundation_embossed_roller_mill",
-    "hive_assembly_id": "PRIMARY_APIARY_LANGSTROTH_01",
-    "cell_base_diameter_mm": 5.3,
-    "comb_foundation_wax_grade": "SOLAR_RENDERED_CAPPING_WAX",
-    "frame_count": 10.0,
-    "timestamp_relative": "YEAR_02_APIARY_01",
-    "tags": ["apiculture", "wax_foundation", "roller_mill", "worker_cell", "langstroth"],
-    "prose": "Hand-cranking warm (42°C) beeswax ribbon sheets through water-lubricated pewter roller dies embossed identical hexagonal worker cell bases. The 5.3mm cell spacing guided worker bees to draw uniform worker brood rather than oversized drone cells."
-  },
-  {
-    "id": "langstroth_bee_space_burr_comb_interlock",
-    "hive_assembly_id": "EXPERIMENTAL_NUC_BOX_02",
-    "cell_base_diameter_mm": 5.3,
-    "comb_foundation_wax_grade": "REFINED_BROOD_COMB_WAX",
-    "frame_count": 5.0,
-    "timestamp_relative": "YEAR_04_APIARY_03",
-    "tags": ["apiculture", "bee_space", "burr_comb", "propolis", "frame_spacing"],
-    "prose": "A 4mm fabrication error in frame spacing violated the 9.5mm 'bee space' rule between the top bars and inner cover. Bees filled the void with criss-crossed bridge comb and sticky propolis, cementing frames into a solid wooden block."
-  },
-  {
-    "id": "langstroth_tinned_copper_wiring_embedder_heat",
-    "hive_assembly_id": "HONEY_SUPER_FRAME_BAY_03",
-    "cell_base_diameter_mm": 5.3,
-    "comb_foundation_wax_grade": "TRIPLE_FILTERED_VIRGIN_WAX",
-    "frame_count": 10.0,
-    "timestamp_relative": "YEAR_07_APIARY_02",
-    "tags": ["apiculture", "frame_wiring", "spur_embedder", "copper_wire", "structural_reinforcement"],
-    "prose": "Tensioning four horizontal strands of 28-gauge tinned copper wire across the pine frame and heating them with a momentary 6V battery burst embedded the wires halfway into the wax. The embedded wires prevented heavy honey combs from collapsing during centrifugal extraction."
-  },
-  {
-    "id": "langstroth_drone_comb_excess_foundation_sag",
-    "hive_assembly_id": "DEEP_BROOD_CHAMBER_04",
-    "cell_base_diameter_mm": 6.8,
-    "comb_foundation_wax_grade": "ADULTERATED_PARAFFIN_BLEND",
-    "frame_count": 10.0,
-    "timestamp_relative": "YEAR_09_APIARY_04",
-    "tags": ["apiculture", "foundation_sag", "drone_comb", "thermal_creep", "wax_distortion"],
-    "prose": "Blending 15% paraffin into foundation wax weakened its melting resistance. Under 36°C greenhouse heat, the sagging sheets deformed worker hexagons into wide 6.8mm cells, prompting the colony to raise 400 superfluous drone bees."
-  },
-  {
-    "id": "langstroth_queen_excluder_zinc_slotted_gauge",
-    "hive_assembly_id": "COMMISSARY_HONEY_SUPER_05",
-    "cell_base_diameter_mm": 5.3,
-    "comb_foundation_wax_grade": "UNREFINED_SOLAR_WAX",
-    "frame_count": 8.0,
-    "timestamp_relative": "YEAR_12_APIARY_01",
-    "tags": ["apiculture", "queen_excluder", "zinc_slots", "brood_restriction", "honey_super"],
-    "prose": "Inserting a perforated zinc queen excluder with precision 4.14mm slots between the brood box and honey super kept brood out of the honey harvest. Worker bees passed freely through the slots while the larger queen remained confined below."
-  },
-  {
-    "id": "langstroth_propolis_screen_bunker_harvest",
-    "hive_assembly_id": "MEDICINAL_APIARY_BOX_06",
-    "cell_base_diameter_mm": 5.3,
-    "comb_foundation_wax_grade": "NATURAL_COMB_CELLS",
-    "frame_count": 10.0,
-    "timestamp_relative": "YEAR_15_APIARY_03",
-    "tags": ["apiculture", "propolis", "harvest_screen", "antimicrobial", "bunker_tincture"],
-    "prose": "Placing slotted polypropylene grids beneath the hive outer covers prompted worker bees to seal every crack with resinous propolis gathered from pine buds. Freezing the screen at -10°C allowed technicians to shatter and collect 120 grams of antimicrobial tincture base."
-  },
-  {
-    "id": "langstroth_bottom_board_slotted_screen_varroa_drop",
-    "hive_assembly_id": "VARROA_RESISTANT_HIVE_07",
-    "cell_base_diameter_mm": 4.9,
-    "comb_foundation_wax_grade": "SMALL_CELL_NATURAL_WAX",
-    "frame_count": 10.0,
-    "timestamp_relative": "YEAR_17_APIARY_02",
-    "tags": ["apiculture", "varroa_screen", "mesh_floor", "mite_drop", "biological_control"],
-    "prose": "Installing an 8-mesh stainless steel screen bottom board allowed naturally groomed *Varroa destructor* parasitic mites to fall through to a sticky bottom tray. Mites could not crawl back up, reducing hive parasite counts by 45% without chemical miticides."
-  },
-  {
-    "id": "langstroth_cedar_super_dovetail_corner_decay",
-    "hive_assembly_id": "HIGH_HUMIDITY_GREENHOUSE_HIVE",
-    "cell_base_diameter_mm": 5.3,
-    "comb_foundation_wax_grade": "HEAVY_FOUNDATION_SHEET",
-    "frame_count": 10.0,
-    "timestamp_relative": "YEAR_20_APIARY_01",
-    "tags": ["apiculture", "cedar_super", "dovetail_joints", "fungal_resistance", "hive_construction"],
-    "prose": "Crafting hive bodies from aromatic red cedar joined with locking dovetail corners resisted warping under continuous 80% relative humidity in the hydro-canopy. Bees sealed inner cedar grain with bee glue, rendering the wood immune to subterranean dry rot."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "langstroth_wax_foundation_embossed_roller_mill",
+      "hive_assembly_id": "PRIMARY_APIARY_LANGSTROTH_01",
+      "cell_base_diameter_mm": 5.3,
+      "comb_foundation_wax_grade": "SOLAR_RENDERED_CAPPING_WAX",
+      "frame_count": 10.0,
+      "timestamp_relative": "YEAR_02_APIARY_01",
+      "tags": [
+        "apiculture",
+        "wax_foundation",
+        "roller_mill",
+        "worker_cell",
+        "langstroth"
+      ],
+      "prose": "Hand-cranking warm (42°C) beeswax ribbon sheets through water-lubricated pewter roller dies embossed identical hexagonal worker cell bases. The 5.3mm cell spacing guided worker bees to draw uniform worker brood rather than oversized drone cells."
+    },
+    {
+      "id": "langstroth_bee_space_burr_comb_interlock",
+      "hive_assembly_id": "EXPERIMENTAL_NUC_BOX_02",
+      "cell_base_diameter_mm": 5.3,
+      "comb_foundation_wax_grade": "REFINED_BROOD_COMB_WAX",
+      "frame_count": 5.0,
+      "timestamp_relative": "YEAR_04_APIARY_03",
+      "tags": [
+        "apiculture",
+        "bee_space",
+        "burr_comb",
+        "propolis",
+        "frame_spacing"
+      ],
+      "prose": "A 4mm fabrication error in frame spacing violated the 9.5mm 'bee space' rule between the top bars and inner cover. Bees filled the void with criss-crossed bridge comb and sticky propolis, cementing frames into a solid wooden block."
+    },
+    {
+      "id": "langstroth_tinned_copper_wiring_embedder_heat",
+      "hive_assembly_id": "HONEY_SUPER_FRAME_BAY_03",
+      "cell_base_diameter_mm": 5.3,
+      "comb_foundation_wax_grade": "TRIPLE_FILTERED_VIRGIN_WAX",
+      "frame_count": 10.0,
+      "timestamp_relative": "YEAR_07_APIARY_02",
+      "tags": [
+        "apiculture",
+        "frame_wiring",
+        "spur_embedder",
+        "copper_wire",
+        "structural_reinforcement"
+      ],
+      "prose": "Tensioning four horizontal strands of 28-gauge tinned copper wire across the pine frame and heating them with a momentary 6V battery burst embedded the wires halfway into the wax. The embedded wires prevented heavy honey combs from collapsing during centrifugal extraction."
+    },
+    {
+      "id": "langstroth_drone_comb_excess_foundation_sag",
+      "hive_assembly_id": "DEEP_BROOD_CHAMBER_04",
+      "cell_base_diameter_mm": 6.8,
+      "comb_foundation_wax_grade": "ADULTERATED_PARAFFIN_BLEND",
+      "frame_count": 10.0,
+      "timestamp_relative": "YEAR_09_APIARY_04",
+      "tags": [
+        "apiculture",
+        "foundation_sag",
+        "drone_comb",
+        "thermal_creep",
+        "wax_distortion"
+      ],
+      "prose": "Blending 15% paraffin into foundation wax weakened its melting resistance. Under 36°C greenhouse heat, the sagging sheets deformed worker hexagons into wide 6.8mm cells, prompting the colony to raise 400 superfluous drone bees."
+    },
+    {
+      "id": "langstroth_queen_excluder_zinc_slotted_gauge",
+      "hive_assembly_id": "COMMISSARY_HONEY_SUPER_05",
+      "cell_base_diameter_mm": 5.3,
+      "comb_foundation_wax_grade": "UNREFINED_SOLAR_WAX",
+      "frame_count": 8.0,
+      "timestamp_relative": "YEAR_12_APIARY_01",
+      "tags": [
+        "apiculture",
+        "queen_excluder",
+        "zinc_slots",
+        "brood_restriction",
+        "honey_super"
+      ],
+      "prose": "Inserting a perforated zinc queen excluder with precision 4.14mm slots between the brood box and honey super kept brood out of the honey harvest. Worker bees passed freely through the slots while the larger queen remained confined below."
+    },
+    {
+      "id": "langstroth_propolis_screen_bunker_harvest",
+      "hive_assembly_id": "MEDICINAL_APIARY_BOX_06",
+      "cell_base_diameter_mm": 5.3,
+      "comb_foundation_wax_grade": "NATURAL_COMB_CELLS",
+      "frame_count": 10.0,
+      "timestamp_relative": "YEAR_15_APIARY_03",
+      "tags": [
+        "apiculture",
+        "propolis",
+        "harvest_screen",
+        "antimicrobial",
+        "bunker_tincture"
+      ],
+      "prose": "Placing slotted polypropylene grids beneath the hive outer covers prompted worker bees to seal every crack with resinous propolis gathered from pine buds. Freezing the screen at -10°C allowed technicians to shatter and collect 120 grams of antimicrobial tincture base."
+    },
+    {
+      "id": "langstroth_bottom_board_slotted_screen_varroa_drop",
+      "hive_assembly_id": "VARROA_RESISTANT_HIVE_07",
+      "cell_base_diameter_mm": 4.9,
+      "comb_foundation_wax_grade": "SMALL_CELL_NATURAL_WAX",
+      "frame_count": 10.0,
+      "timestamp_relative": "YEAR_17_APIARY_02",
+      "tags": [
+        "apiculture",
+        "varroa_screen",
+        "mesh_floor",
+        "mite_drop",
+        "biological_control"
+      ],
+      "prose": "Installing an 8-mesh stainless steel screen bottom board allowed naturally groomed *Varroa destructor* parasitic mites to fall through to a sticky bottom tray. Mites could not crawl back up, reducing hive parasite counts by 45% without chemical miticides."
+    },
+    {
+      "id": "langstroth_cedar_super_dovetail_corner_decay",
+      "hive_assembly_id": "HIGH_HUMIDITY_GREENHOUSE_HIVE",
+      "cell_base_diameter_mm": 5.3,
+      "comb_foundation_wax_grade": "HEAVY_FOUNDATION_SHEET",
+      "frame_count": 10.0,
+      "timestamp_relative": "YEAR_20_APIARY_01",
+      "tags": [
+        "apiculture",
+        "cedar_super",
+        "dovetail_joints",
+        "fungal_resistance",
+        "hive_construction"
+      ],
+      "prose": "Crafting hive bodies from aromatic red cedar joined with locking dovetail corners resisted warping under continuous 80% relative humidity in the hydro-canopy. Bees sealed inner cedar grain with bee glue, rendering the wood immune to subterranean dry rot."
+    }
+  ]
+}

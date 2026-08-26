@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Survivors
 {
@@ -80,7 +81,7 @@ namespace Ashfall.Core.Survivors
         /// <summary>Optional death-gate: return true to defer death at 0 Health.</summary>
         public Func<SurvivorNeedsState, bool> TryDeferDeath;
 
-        public NeedsSystem(NeedsProfile profile = null, Func<SurvivorNeedsState, bool> isNearHeatSource = null)
+        public NeedsSystem(NeedsProfile? profile = null, Func<SurvivorNeedsState, bool>? isNearHeatSource = null)
         {
             _profile = profile ?? new NeedsProfile();
             _isNearHeatSource = isNearHeatSource;
@@ -97,7 +98,7 @@ namespace Ashfall.Core.Survivors
             _survivors.Remove(survivor);
         }
 
-        public SurvivorNeedsState Get(string id)
+        public SurvivorNeedsState? Get(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < _survivors.Count; i++)

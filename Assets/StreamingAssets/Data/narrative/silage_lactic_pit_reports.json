@@ -1,72 +1,117 @@
-[
-  {
-    "id": "silage_pit_clostridium_butyric_spoilage_foul_odor",
-    "silage_trench_id": "DEEP_BUNKER_FORAGE_TRENCH_01",
-    "forage_substrate_crop": "CHOPPED_ALFALFA_CLOVER_MIX",
-    "pit_fermentation_ph": 5.4,
-    "butyric_acid_concentration_pct": 2.8,
-    "timestamp_relative": "YEAR_03_SILAGE_01",
-    "tags": ["fermentation", "silage", "clostridium", "butyric_acid", "spoilage"],
-    "prose": "Ensilaging soaking-wet forage (74% moisture) without sufficient dry matter packing allowed *Clostridium tyrobutyricum* spores to germinate. Clostridial fermentation consumed protective lactic acid, converting eighty tons of feed into slimy, foul-smelling butyric rot."
-  },
-  {
-    "id": "silage_pit_tractor_wheel_compaction_air_exclusion",
-    "silage_trench_id": "REINFORCED_CONCRETE_PIT_02",
-    "forage_substrate_crop": "WHOLE_CROP_OAT_FORAGE",
-    "pit_fermentation_ph": 3.9,
-    "butyric_acid_concentration_pct": 0.05,
-    "timestamp_relative": "YEAR_05_SILAGE_03",
-    "tags": ["fermentation", "silage", "compaction", "air_exclusion", "anaerobic"],
-    "prose": "Operating an eight-ton wheeled compactor over fifteen-centimeter forage layers expelled trapped air pockets, boosting pack density to 240 kg/m³. Immediate anaerobiosis halted plant respiration and preserved valuable water-soluble carbohydrates."
-  },
-  {
-    "id": "silage_pit_homofermentative_inoculant_ph_drop",
-    "silage_trench_id": "DAIRY_FEED_SILO_TRENCH_03",
-    "forage_substrate_crop": "DWARF_FORAGE_MAIZE",
-    "pit_fermentation_ph": 3.8,
-    "butyric_acid_concentration_pct": 0.02,
-    "timestamp_relative": "YEAR_08_SILAGE_02",
-    "tags": ["fermentation", "silage", "inoculant", "lactobacillus_plantarum", "acidification"],
-    "prose": "Spraying high-titer *Lactobacillus plantarum* and *Enterococcus faecium* inoculant onto the forage chopper chute accelerated fermentation. Silo pit pH plunged from 6.2 to 3.8 within forty-eight hours, locking in total nitrogen and digestible nutrients."
-  },
-  {
-    "id": "silage_pit_seepage_effluent_corrosion_concrete",
-    "silage_trench_id": "HEAVY_FORAGE_STORAGE_BAY_04",
-    "forage_substrate_crop": "SUCCULENT_RYE_GRASS",
-    "pit_fermentation_ph": 3.7,
-    "butyric_acid_concentration_pct": 0.1,
-    "timestamp_relative": "YEAR_11_SILAGE_04",
-    "tags": ["fermentation", "silage", "effluent", "concrete_corrosion", "organic_acid"],
-    "prose": "Acidic leachate (pH 3.7) discharging from 200 tons of wet ensiled grass dissolved calcium hydroxide from the concrete apron. Corrosive organic acids exposed aggregate rock and generated 1,200 liters of high-BOD effluent requiring sump neutralization."
-  },
-  {
-    "id": "silage_pit_nitrogen_dioxide_silo_gas_lethal_plume",
-    "silage_trench_id": "SEALED_DEEP_EXCAVATION_CELL_05",
-    "forage_substrate_crop": "HIGH_NITRATE_SUDANGRASS",
-    "pit_fermentation_ph": 4.1,
-    "butyric_acid_concentration_pct": 0.08,
-    "timestamp_relative": "YEAR_14_SILAGE_01",
-    "tags": ["fermentation", "silage", "nitrogen_dioxide", "silo_gas", "lethal_hazard"],
-    "prose": "Anaerobic reduction of plant nitrates during initial fermentation generated a dense, yellow-orange nitrogen dioxide (NO2) gas blanket in the pit sump. Portable gas detectors registered lethal 120 ppm NO2 concentrations, mandating 30-minute forced exhaust venting."
-  },
-  {
-    "id": "silage_pit_mycotoxin_penicillium_roqueforti_crust",
-    "silage_trench_id": "TARPAULIN_COVERED_TRENCH_06",
-    "forage_substrate_crop": "SUMMER_FORAGE_PEAS_OATS",
-    "pit_fermentation_ph": 4.8,
-    "butyric_acid_concentration_pct": 0.4,
-    "timestamp_relative": "YEAR_17_SILAGE_03",
-    "tags": ["fermentation", "silage", "mycotoxin", "penicillium", "aerobic_spoilage"],
-    "prose": "Ripping of the heavy polyethylene silage tarp by rodent claws introduced oxygen into the top layer. *Penicillium roqueforti* mold colonies formed a green velvety crust synthesizing roquefortine C and PR-toxin, requiring manual scraping of five tons of ruined feed."
-  },
-  {
-    "id": "silage_pit_volatile_fatty_acid_chromatography",
-    "silage_trench_id": "COMMISSARY_LIVESTOCK_PIT_07",
-    "forage_substrate_crop": "BALANCED_LEGUME_GRASS_BLEND",
-    "pit_fermentation_ph": 3.85,
-    "butyric_acid_concentration_pct": 0.01,
-    "timestamp_relative": "YEAR_20_SILAGE_01",
-    "tags": ["fermentation", "silage", "chromatography", "fatty_acids", "quality_assay"],
-    "prose": "Volatile fatty acid analysis of core samples revealed 6.4% lactic acid, 1.6% acetic acid, and under 0.01% butyric acid on dry matter basis. The excellent organic acid spectrum confirmed optimal bunker fodder preservation for the dairy herd."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "silage_pit_clostridium_butyric_spoilage_foul_odor",
+      "silage_trench_id": "DEEP_BUNKER_FORAGE_TRENCH_01",
+      "forage_substrate_crop": "CHOPPED_ALFALFA_CLOVER_MIX",
+      "pit_fermentation_ph": 5.4,
+      "butyric_acid_concentration_pct": 2.8,
+      "timestamp_relative": "YEAR_03_SILAGE_01",
+      "tags": [
+        "fermentation",
+        "silage",
+        "clostridium",
+        "butyric_acid",
+        "spoilage"
+      ],
+      "prose": "Ensilaging soaking-wet forage (74% moisture) without sufficient dry matter packing allowed *Clostridium tyrobutyricum* spores to germinate. Clostridial fermentation consumed protective lactic acid, converting eighty tons of feed into slimy, foul-smelling butyric rot."
+    },
+    {
+      "id": "silage_pit_tractor_wheel_compaction_air_exclusion",
+      "silage_trench_id": "REINFORCED_CONCRETE_PIT_02",
+      "forage_substrate_crop": "WHOLE_CROP_OAT_FORAGE",
+      "pit_fermentation_ph": 3.9,
+      "butyric_acid_concentration_pct": 0.05,
+      "timestamp_relative": "YEAR_05_SILAGE_03",
+      "tags": [
+        "fermentation",
+        "silage",
+        "compaction",
+        "air_exclusion",
+        "anaerobic"
+      ],
+      "prose": "Operating an eight-ton wheeled compactor over fifteen-centimeter forage layers expelled trapped air pockets, boosting pack density to 240 kg/m³. Immediate anaerobiosis halted plant respiration and preserved valuable water-soluble carbohydrates."
+    },
+    {
+      "id": "silage_pit_homofermentative_inoculant_ph_drop",
+      "silage_trench_id": "DAIRY_FEED_SILO_TRENCH_03",
+      "forage_substrate_crop": "DWARF_FORAGE_MAIZE",
+      "pit_fermentation_ph": 3.8,
+      "butyric_acid_concentration_pct": 0.02,
+      "timestamp_relative": "YEAR_08_SILAGE_02",
+      "tags": [
+        "fermentation",
+        "silage",
+        "inoculant",
+        "lactobacillus_plantarum",
+        "acidification"
+      ],
+      "prose": "Spraying high-titer *Lactobacillus plantarum* and *Enterococcus faecium* inoculant onto the forage chopper chute accelerated fermentation. Silo pit pH plunged from 6.2 to 3.8 within forty-eight hours, locking in total nitrogen and digestible nutrients."
+    },
+    {
+      "id": "silage_pit_seepage_effluent_corrosion_concrete",
+      "silage_trench_id": "HEAVY_FORAGE_STORAGE_BAY_04",
+      "forage_substrate_crop": "SUCCULENT_RYE_GRASS",
+      "pit_fermentation_ph": 3.7,
+      "butyric_acid_concentration_pct": 0.1,
+      "timestamp_relative": "YEAR_11_SILAGE_04",
+      "tags": [
+        "fermentation",
+        "silage",
+        "effluent",
+        "concrete_corrosion",
+        "organic_acid"
+      ],
+      "prose": "Acidic leachate (pH 3.7) discharging from 200 tons of wet ensiled grass dissolved calcium hydroxide from the concrete apron. Corrosive organic acids exposed aggregate rock and generated 1,200 liters of high-BOD effluent requiring sump neutralization."
+    },
+    {
+      "id": "silage_pit_nitrogen_dioxide_silo_gas_lethal_plume",
+      "silage_trench_id": "SEALED_DEEP_EXCAVATION_CELL_05",
+      "forage_substrate_crop": "HIGH_NITRATE_SUDANGRASS",
+      "pit_fermentation_ph": 4.1,
+      "butyric_acid_concentration_pct": 0.08,
+      "timestamp_relative": "YEAR_14_SILAGE_01",
+      "tags": [
+        "fermentation",
+        "silage",
+        "nitrogen_dioxide",
+        "silo_gas",
+        "lethal_hazard"
+      ],
+      "prose": "Anaerobic reduction of plant nitrates during initial fermentation generated a dense, yellow-orange nitrogen dioxide (NO2) gas blanket in the pit sump. Portable gas detectors registered lethal 120 ppm NO2 concentrations, mandating 30-minute forced exhaust venting."
+    },
+    {
+      "id": "silage_pit_mycotoxin_penicillium_roqueforti_crust",
+      "silage_trench_id": "TARPAULIN_COVERED_TRENCH_06",
+      "forage_substrate_crop": "SUMMER_FORAGE_PEAS_OATS",
+      "pit_fermentation_ph": 4.8,
+      "butyric_acid_concentration_pct": 0.4,
+      "timestamp_relative": "YEAR_17_SILAGE_03",
+      "tags": [
+        "fermentation",
+        "silage",
+        "mycotoxin",
+        "penicillium",
+        "aerobic_spoilage"
+      ],
+      "prose": "Ripping of the heavy polyethylene silage tarp by rodent claws introduced oxygen into the top layer. *Penicillium roqueforti* mold colonies formed a green velvety crust synthesizing roquefortine C and PR-toxin, requiring manual scraping of five tons of ruined feed."
+    },
+    {
+      "id": "silage_pit_volatile_fatty_acid_chromatography",
+      "silage_trench_id": "COMMISSARY_LIVESTOCK_PIT_07",
+      "forage_substrate_crop": "BALANCED_LEGUME_GRASS_BLEND",
+      "pit_fermentation_ph": 3.85,
+      "butyric_acid_concentration_pct": 0.01,
+      "timestamp_relative": "YEAR_20_SILAGE_01",
+      "tags": [
+        "fermentation",
+        "silage",
+        "chromatography",
+        "fatty_acids",
+        "quality_assay"
+      ],
+      "prose": "Volatile fatty acid analysis of core samples revealed 6.4% lactic acid, 1.6% acetic acid, and under 0.01% butyric acid on dry matter basis. The excellent organic acid spectrum confirmed optimal bunker fodder preservation for the dairy herd."
+    }
+  ]
+}

@@ -6,7 +6,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public class CurrentsCatalogTests
-    {
+    : CatalogTestBase{
         private static string FindDataDir()
         {
             string dataDir = string.Empty;
@@ -66,18 +66,19 @@ namespace Ashfall.Core.Tests
             Assert.True(System.IO.File.Exists(path), "currents.json must exist for this test");
             string raw = System.IO.File.ReadAllText(path);
             var doc = System.Text.Json.JsonDocument.Parse(raw);
+            var entries = doc.RootElement.GetProperty("entries");
             int expectedActive = 0;
-            foreach (var elem in doc.RootElement.EnumerateArray())
+            foreach (var elem in entries.EnumerateArray())
                 if (elem.TryGetProperty("is_active", out var ia) && ia.GetBoolean())
                     expectedActive++;
-            int expectedDormant = doc.RootElement.GetArrayLength() - expectedActive;
+            int expectedDormant = entries.GetArrayLength() - expectedActive;
 
             int active = 0;
             foreach (var c in roster)
                 if (c.isActive) active++;
             Assert.Equal(expectedActive, active);
             Assert.Equal(expectedDormant, roster.Count - active);
-            Assert.Equal(doc.RootElement.GetArrayLength(), roster.Count);
+            Assert.Equal(entries.GetArrayLength(), roster.Count);
         }
 
         [Fact]

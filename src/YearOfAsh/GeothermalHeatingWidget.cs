@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 using Godot;
 using AtomicWar.GodotApp.UI;
 using Ashfall.Core.UI;
@@ -90,7 +91,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
         {
             if (_session == null) return;
             _session.DeepFreeze.OnTemperatureChanged -= _temperatureChangedHandler;
-            _session = null;
+            _session = null!;
         }
 
         public override void _ExitTree()

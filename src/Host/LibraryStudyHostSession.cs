@@ -14,12 +14,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class LibraryStudyHostSession
-    {
+    : HostSessionBase{
         public LibraryStudySystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public LibraryStudyHostSession(
             LibraryStudySystem system,
             SkillProgressionSystem skills,
@@ -33,16 +30,16 @@ namespace AtomicWar.GodotApp
             System.OnJobCompleted += _ =>
             {
                 LastEvent = "Study completed";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            System.OnLibraryChanged += () => StateChanged?.Invoke();
+            System.OnLibraryChanged += () => RaiseStateChanged();
         }
 
         public void LoadCatalog(List<ManualDefinition> manuals)
         {
             System.LoadCatalog(manuals);
             LastEvent = $"Library catalog loaded: {manuals.Count} manuals";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
         }
 
         /// <summary>Load the library_manuals.json catalog into the Core system (the authority).</summary>
@@ -55,7 +52,7 @@ namespace AtomicWar.GodotApp
             if (count > 0)
             {
                 LastEvent = $"Library manual catalog loaded: {count} manuals";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
         }
 
@@ -65,7 +62,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Study started: {manualId} by {readerId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -73,7 +70,14 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
+        }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            LibraryStudySaveStore.TrySave(System.CaptureState());
+            base.Save();
         }
     }
 
@@ -88,11 +92,54 @@ namespace AtomicWar.GodotApp
     public static class LibraryStudySaveStore
     {
         public const string FileName = "library_study_save.json";
+        public const string SectionName = "library_study";
+
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(LibraryStudyState state)
+        {
+            return TryCapture(state);
+        }
+
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static LibraryStudyState? TryRestoreDirect(string json)
+        {
+            return TryRestore(json);
+        }
+
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(LibraryStudyState state)
+        {
+            try
+            {
+                if (state == null) return string.Empty;
+                return s_json.Serialize(state);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[LibraryStudySaveStore] capture failed: " + e.Message);
+                return string.Empty;
+            }
+        }
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static LibraryStudyState? TryRestore(string json)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(json)) return null;
+                return s_json.Deserialize<LibraryStudyState>(json);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[LibraryStudySaveStore] restore failed: " + e.Message);
+                return null;
+            }
+        }
+
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
-        public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+        public static string SavePath => SaveSlotRoot.Resolve(FileName);
         public static bool Exists => s_files.FileExists(SavePath);
 
         public static bool TrySave(LibraryStudyState state)

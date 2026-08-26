@@ -1,5 +1,7 @@
+using AtomicWar.GodotApp.UI;
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using static AtomicWar.GodotApp.UI.AshfallUiHelpers;
 using Ashfall.Core;
@@ -382,7 +384,7 @@ namespace AtomicWar.GodotApp.Economy
                 {
                     CustomMinimumSize = new Vector2(20, 20),
                     StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
-                    Texture = LoadTexture($"res://Assets/UI/Icons/{iconFile}")
+                    Texture = LoadTexture($"res://assets/ui/Icons/{iconFile}")
                 };
                 row.AddChild(iconRect);
 
@@ -459,10 +461,10 @@ namespace AtomicWar.GodotApp.Economy
 
         public void BindSession(
             EconomyHostSession session,
-            IFactionStanceProvider stanceProvider = null,
-            IPriceShockProvider priceShockProvider = null,
-            IFactionRadioProvider radioProvider = null,
-            ISeededRng rng = null)
+            IFactionStanceProvider stanceProvider = null!,
+            IPriceShockProvider priceShockProvider = null!,
+            IFactionRadioProvider radioProvider = null!,
+            ISeededRng rng = null!)
         {
             _session = session;
             _stanceProvider = stanceProvider;
@@ -473,8 +475,8 @@ namespace AtomicWar.GodotApp.Economy
             if (_viewModel != null)
             {
                 _viewModel.Changed -= OnViewModelChanged;
-                _viewModel = null;
-                _intentSink = null;
+                _viewModel = null!;
+                _intentSink = null!;
             }
 
             if (_session != null)
@@ -537,8 +539,7 @@ namespace AtomicWar.GodotApp.Economy
             int day = _session.Market?.Day ?? 1;
             _lblPhaseDay.Text = $"Phase: CivilWar · Day {day}";
 
-            foreach (Node child in _shocksContainer.GetChildren())
-                child.QueueFree();
+            AshfallUiHelpers.EmptyChildren(_shocksContainer);
 
             if (_priceShockProvider != null)
             {
@@ -662,8 +663,7 @@ namespace AtomicWar.GodotApp.Economy
 
         private void RebuildShockBadges(IReadOnlyList<ShockBadgeData> badges)
         {
-            foreach (Node child in _shocksContainer.GetChildren())
-                child.QueueFree();
+            AshfallUiHelpers.EmptyChildren(_shocksContainer);
 
             if (badges == null) return;
             foreach (var badge in badges)
@@ -686,8 +686,7 @@ namespace AtomicWar.GodotApp.Economy
 
         private static void ClearList(VBoxContainer list)
         {
-            foreach (Node child in list.GetChildren())
-                child.QueueFree();
+            AshfallUiHelpers.EmptyChildren(list);
         }
 
         private Label MakeTableLineLabel(string text, bool dimmed = false)
@@ -724,10 +723,8 @@ namespace AtomicWar.GodotApp.Economy
         {
             if (_session?.Catalog == null) return;
 
-            foreach (Node child in _playerOfferList.GetChildren())
-                child.QueueFree();
-            foreach (Node child in _factionStockList.GetChildren())
-                child.QueueFree();
+            AshfallUiHelpers.EmptyChildren(_playerOfferList);
+            AshfallUiHelpers.EmptyChildren(_factionStockList);
 
             foreach (var good in _session.Catalog.All())
             {
@@ -913,11 +910,11 @@ namespace AtomicWar.GodotApp.Economy
         {
             switch (kind)
             {
-                case PriceShockKind.PlumePassing: return "res://Assets/UI/Icons/icon_shock_plume.png";
-                case PriceShockKind.ConvoyAmbush: return "res://Assets/UI/Icons/icon_shock_convoy.png";
-                case PriceShockKind.FactionWar: return "res://Assets/UI/Icons/icon_shock_war.png";
-                case PriceShockKind.WinterDeepens: return "res://Assets/UI/Icons/icon_shock_winter.png";
-                default: return "res://Assets/UI/Icons/icon_shock_plume.png";
+                case PriceShockKind.PlumePassing: return "res://assets/ui/Icons/icon_shock_plume.png";
+                case PriceShockKind.ConvoyAmbush: return "res://assets/ui/Icons/icon_shock_convoy.png";
+                case PriceShockKind.FactionWar: return "res://assets/ui/Icons/icon_shock_war.png";
+                case PriceShockKind.WinterDeepens: return "res://assets/ui/Icons/icon_shock_winter.png";
+                default: return "res://assets/ui/Icons/icon_shock_plume.png";
             }
         }
 
@@ -927,7 +924,7 @@ namespace AtomicWar.GodotApp.Economy
             return global::Ashfall.Core.Economy.TradeWorthLabels.Format(value);
         }
 
-        private static Texture2D LoadTexture(string path)
+        private static Texture2D? LoadTexture(string path)
         {
             return TryLoadTexture(path);
         }

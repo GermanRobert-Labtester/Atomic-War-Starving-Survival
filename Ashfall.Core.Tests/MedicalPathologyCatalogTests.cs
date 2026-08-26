@@ -6,7 +6,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public sealed class MedicalPathologyCatalogTests
-    {
+    : CatalogTestBase{
         private readonly string _narrativeDir;
 
         public MedicalPathologyCatalogTests()

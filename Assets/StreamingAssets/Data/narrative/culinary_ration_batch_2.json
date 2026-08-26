@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "collection_id": "culinary_ration_codex_batch_2_survival_recipes",
+  "description": "Second batch of survival recipes from the bunker's kitchen. Each recipe uses ingredients available in the post-impact environment.",
+  "recipes": [
+    {
+      "recipe_id": "recipe_b2_turnip_bread",
+      "title": "Turnip Bread",
+      "chef_author": "The Chef",
+      "calories_approx": 180,
+      "morale_modifier": 2,
+      "ingredients": ["dried_turnip_flour_200g", "salvaged_wheat_flour_50g", "water_150ml", "salt_pinch", "dried_yeast_if_available"],
+      "method": "Mix the turnip flour with whatever wheat flour you can spare. Add warm water and a pinch of salt. If you have yeast from the greenhouse herb garden, add it — the bread will rise. If not, it'll be flat but edible. Knead for ten minutes. Shape into a flat loaf. Bake on a hot stone beside the wood stove for 25 minutes, turning once. The crust will be dark and the crumb will be grey. It tastes like earth and salt. But it's bread.",
+      "canteen_gossip_review": "Better than the ration paste. The children eat it without complaining. The Botanist says the turnip flour has more fibre than wheat. The Chef says it has less flavour. They're both right.",
+      "tags": ["bread", "turnip", "baking", "staple"]
+    },
+    {
+      "doc_id": "recipe_b2_mushroom_broth",
+      "recipe_id": "recipe_b2_mushroom_broth",
+      "title": "Mushroom Broth with Wild Thyme",
+      "chef_author": "The Chef",
+      "calories_approx": 65,
+      "morale_modifier": 3,
+      "ingredients": ["dried_mushrooms_30g", "water_1L", "wild_thyme_sprig", "salt_pinch", "pork_fat_if_available_5g"],
+      "method": "Soak the dried mushrooms in warm water for one hour. The soaking water becomes part of the broth — don't discard it. Bring the water and mushrooms to a slow boil. Add the thyme. Simmer for 30 minutes. If you have pork fat from the last hunt, add a small piece — it gives the broth body. Strain through a cloth. Serve hot. The broth is dark and earthy. It smells like a forest floor after rain. It doesn't taste like the real thing. But it's close enough to make you remember.",
+      "canteen_gossip_review": "The Surgeon says it has medicinal properties — the mushrooms contain beta-glucans that support the immune system. The Therapist says it smells like comfort. The Chef says it's the best thing they've made in three months. No one disagrees.",
+      "tags": ["broth", "mushroom", "soup", "medicinal"]
+    },
+    {
+      "recipe_id": "recipe_b2_roasted_root_mash",
+      "title": "Roasted Root Mash",
+      "chef_author": "The Chef",
+      "calories_approx": 140,
+      "morale_modifier": 1,
+      "ingredients": ["turnips_4_medium", "carrots_2_small", "onion_dried_1", "pork_lard_10g", "salt_pinch"],
+      "method": "Peel and chop the roots into chunks. Roast them on a flat stone beside the fire until they're soft — about 40 minutes, turning occasionally. When they're cool enough to handle, mash them with a wooden spoon. Add the lard and salt. Mix until smooth. The mash is thick and starchy. It sticks to the spoon. It fills the stomach. It's not exciting. But on a cold day, with the stove going and the lights on, a bowl of root mash feels like a meal.",
+      "canteen_gossip_review": "The Mechanic says it's the most filling thing the Chef makes. The Teacher says the children eat it without complaint when she tells them it's 'mashed treasure.' The Chef says the secret is the roasting — boiling makes it watery, roasting concentrates the flavour. The secret is also the lard. Everything is better with lard.",
+      "tags": ["mash", "root_vegetables", "roasted", "staple"]
+    },
+    {
+      "recipe_id": "recipe_b2_barley_water",
+      "title": "Barley Water with Dried Mint",
+      "chef_author": "The Chef",
+      "calories_approx": 45,
+      "morale_modifier": 2,
+      "ingredients": ["barley_grains_50g", "water_1L", "dried_mint_leaves_3", "honey_if_available_tsp"],
+      "method": "Rinse the barley. Boil it in the water for 45 minutes until the grains split and the water turns cloudy. Strain through a cloth. Add the dried mint and let it steep for 10 minutes. If you have honey from the greenhouse bee colony (yes, we have bees now), add a teaspoon. The drink is pale gold and slightly sweet. It's served warm or cold depending on the season. The Botanist says barley water has electrolytes. The Therapist says it's calming. The Chef says it's the closest thing to tea they're likely to have for a while.",
+      "canteen_gossip_review": "The children call it 'golden water.' The General drinks it every morning instead of the ration coffee. The Pharmacist says it helps with digestion. The Chef makes a batch every Sunday and it's gone by Monday.",
+      "tags": ["drink", "barley", "mint", "beverage", "calming"]
+    },
+    {
+      "recipe_id": "recipe_b2_lentil_stew",
+      "title": "Lentil and Dried Onion Stew",
+      "chef_author": "The Chef",
+      "calories_approx": 210,
+      "morale_modifier": 2,
+      "ingredients": ["dried_lentils_100g", "dried_onion_flakes_10g", "water_500ml", "salt_pinch", "dried_herb_mix_5g", "pork_fat_if_available_10g"],
+      "method": "Soak the lentils overnight if you can remember. If not, boil them for 20 minutes first. Add the dried onion, herbs, salt, and fat. Simmer for another 30 minutes until the lentils are soft and the liquid has thickened. The stew is brown and thick. It smells like onions — which is the best smell in the bunker when the kitchen is cooking. Serve with a piece of turnip bread if available. The meal is complete: protein, carbohydrate, fat, salt. It's not fancy. It's fuel. But the onion makes it taste like someone cared.",
+      "canteen_gossip_review": "The Electrician says it's the only thing that makes him forget the generator is broken. The Undertaker eats it slowly and says nothing, which is his version of praise. The Chef says the secret is soaking the lentils — unsoaked, they stay hard no matter how long you boil them. The secret is also patience. Everything in the bunker takes patience.",
+      "tags": ["stew", "lentil", "protein", "staple", "onion"]
+    },
+    {
+      "recipe_id": "recipe_b2_acorn_coffee",
+      "title": "Acorn Coffee",
+      "chef_author": "The Chef",
+      "calories_approx": 15,
+      "morale_modifier": 4,
+      "ingredients": ["acorns_20", "water_500ml"],
+      "method": "Collect acorns from the oak tree outside the greenhouse (the one that survived). Shell them. Roast them on a dry pan until they're dark brown and smell nutty — about 20 minutes. Grind them with a mortar and pestle until they're a coarse powder. Boil the powder in water for 5 minutes. Strain through a cloth. The result is a dark, bitter liquid that looks like coffee and almost smells like coffee. It doesn't taste like coffee. It tastes like burnt nuts in hot water. But it's warm, it's dark, and it's served in a cup. For fifteen minutes every morning, the bunker pretends it's having coffee. That fifteen minutes is worth more than the calories.",
+      "canteen_gossip_review": "The General drinks it black and says it reminds him of the officer's mess before the war. The Chef says that's the point — it's not about the taste, it's about the ritual. The children think it's disgusting and watch the adults drink it with fascinated horror. The Therapist says the morning acorn coffee ritual is the most important morale intervention in the bunker. She's probably right.",
+      "tags": ["beverage", "acorn", "coffee_substitute", "ritual", "morale"]
+    },
+    {
+      "recipe_id": "recipe_b2_fish_bone_broth",
+      "title": "Fish Bone Broth",
+      "chef_author": "The Chef",
+      "calories_approx": 55,
+      "morale_modifier": 1,
+      "ingredients": ["fish_bones_and_heads_500g", "water_1L", "salt_pinch", "dried_herbs_5g", "vinegar_dash"],
+      "method": "After the fish are filleted (whatever fish the expedition teams bring back — usually carp from the frozen river, radiation-checked), save the bones and heads. Don't throw them away. Put them in a pot with cold water and a dash of vinegar — the vinegar helps draw the minerals from the bones. Bring to a boil, then reduce to a simmer. Cook for at least 2 hours. The longer the better. The broth will turn cloudy white. Strain it through a cloth, pressing the bones to extract everything. The result is a milky, mineral-rich broth. It tastes like the river. It's not pleasant. But the Pharmacist says it has calcium and phosphorus from the bones, which the body needs. Drink it while it's hot. Cold, it congeals.",
+      "canteen_gossip_review": "The Mechanic says it's the only thing that fixes his joints after a long shift. The Pharmacist confirms the mineral content is beneficial. The Chef says it's an acquired taste. Most people haven't acquired it. But they drink it because the Pharmacist told them to. In the bunker, medical advice is the strongest flavouring.",
+      "tags": ["broth", "fish", "bones", "mineral", "medicinal"]
+    },
+    {
+      "recipe_id": "recipe_b2_honeyed_herb_tea",
+      "title": "Honeyed Herb Tea",
+      "chef_author": "The Chef",
+      "calories_approx": 25,
+      "morale_modifier": 5,
+      "ingredients": ["dried_mint_3_leaves", "dried_thyme_sprig", "dried_chamomile_if_available", "honey_half_tsp", "water_300ml"],
+      "method": "Boil the water. Add the herbs. Let steep for 5 minutes. Strain. Add the honey — only half a teaspoon per cup, because the honey is precious and the bees don't produce much yet. The tea is pale green and smells like the greenhouse. It tastes like mint and thyme and something sweet that isn't sugar. The Therapist prescribes it for insomnia. The Surgeon prescribes it for nausea. The Chef prescribes it for everything else. It's the closest thing to luxury in the bunker. One cup, once a week, on Sunday evening. The children call it 'fancy water.' The adults call it 'worth living for.'",
+      "canteen_gossip_review": "The Therapist says she has clinical evidence that the tea reduces anxiety. The evidence is anecdotal and uncontrolled. She doesn't care. The tea works. The General drinks it before bed and sleeps better. The Teacher drinks it before school and teaches better. The Chef makes it and feels, for ten minutes, like a real chef in a real kitchen. That's worth half a teaspoon of honey.",
+      "tags": ["tea", "herbs", "honey", "medicinal", "luxury"]
+    },
+    {
+      "recipe_id": "recipe_b2_pemmican_bars",
+      "title": "Expedition Pemmican Bars",
+      "chef_author": "The Chef",
+      "calories_approx": 350,
+      "morale_modifier": 0,
+      "ingredients": ["dried_meat_powder_100g", "rendered_fat_50g", "dried_berries_20g", "salt_pinch"],
+      "method": "Grind the dried meat to a fine powder. Melt the rendered fat over low heat. Mix the meat powder with the melted fat until it forms a thick paste. Add the dried berries and salt. Press the mixture into small bars — about 5cm by 3cm by 1cm. Let them cool and harden. Each bar is roughly 350 calories — a full day's ration for a person on minimal activity. The bars keep for months. They don't need refrigeration. They don't need cooking. They can be eaten while walking. This is the food of expeditions. It's not food you eat for pleasure. It's food you eat because you need to keep moving and there's nothing else.",
+      "canteen_gossip_review": "The Courier eats them on long runs and says they taste like 'determined survival.' The Hunter carries four bars on every expedition and says they've saved his life twice. The Chef makes them with no pleasure and no apology. They're not meant to be good. They're meant to keep you alive. Mission accomplished.",
+      "tags": ["pemmican", "expedition", "high_calorie", "preserved", "travel_food"]
+    },
+    {
+      "recipe_id": "recipe_b2_sunday_special",
+      "title": "The Chef's Sunday Special",
+      "chef_author": "The Chef",
+      "calories_approx": 250,
+      "morale_modifier": 6,
+      "ingredients": ["whatever_is_available_this_week"],
+      "method": "Every Sunday, the Chef makes something different from whatever the greenhouse produced, whatever the expedition teams brought back, and whatever is left in the stores. The recipe changes every week. Sometimes it's a mushroom and barley pie. Sometimes it's a root vegetable gratin. Sometimes it's a lentil cake with herb sauce. The only rule is: it must look different from the daily ration. It must be plated, not ladled. It must have a name on the mess hall board. The Sunday Special is not about calories. It's about the principle that food can be more than fuel. That a meal can be an event. That once a week, the bunker is not just surviving — it's living.",
+      "canteen_gossip_review": "The Sunday Special is the most anticipated event in the bunker calendar. The children draw pictures of what they think it will be. The adults place bets. The Therapist says the Sunday Special does more for morale than any intervention she's designed. The Chef says that's because she's a chef, not a therapist. This week's special: Roasted Turnip and Mushroom Tart with Herb Crust. The board says 'Tart.' The children think 'tart' means 'cake.' The Chef doesn't correct them.",
+      "tags": ["sunday", "special", "morale", "variety", "chef"]
+    }
+  ]
+}

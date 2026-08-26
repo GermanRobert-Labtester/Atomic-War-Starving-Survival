@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -52,7 +53,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public SurvivorLetterEntry GetById(string letterId)
+        public SurvivorLetterEntry? GetById(string letterId)
         {
             if (string.IsNullOrEmpty(letterId)) return null;
             _byId.TryGetValue(letterId, out var entry);

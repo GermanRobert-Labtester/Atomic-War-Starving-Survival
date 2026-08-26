@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.Narrative;
 
@@ -11,30 +12,27 @@ namespace AtomicWar.GodotApp
     /// persists the resolution history. No rules here — hosts only wire.
     /// </summary>
     public sealed class NarrativeHostSession
-    {
+    : HostSessionBase{
         public const int DemoSeed = 4242;
 
         public NarrativeEncounterSystem Engine { get; }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
-        public NarrativeHostSession(NarrativeEncounterSystem engine = null)
+        public NarrativeHostSession(NarrativeEncounterSystem engine = null!)
         {
             Engine = engine ?? new NarrativeEncounterSystem();
             Engine.OnEncounterSelected += def =>
             {
                 LastEvent = $"Encounter: {def.title}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Engine.OnEncounterResolved += r =>
             {
                 LastEvent = $"Resolved {r.encounterId} / {r.choiceId} " +
                             $"(morale {r.moraleDelta:+0;-0;0}, guilt {r.guiltDelta:+0;-0;0}).";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            Engine.OnStateChanged += _ => StateChanged?.Invoke();
+            Engine.OnStateChanged += _ => RaiseStateChanged();
         }
 
         public static NarrativeHostSession Create(string dataDir)

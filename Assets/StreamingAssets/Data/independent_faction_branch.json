@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "faction_id": "faction_independent",
+  "branches": [
+    {
+      "id": "branch_ind_1_survivor",
+      "display_name": "The Survivor",
+      "ponr_flag": "flag_branch_ind_1_ponr",
+      "ponr_trigger": "You make the choice that defines you with no faction left to blame or credit.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_1a_lone_survivor", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "The Lone Survivor" },
+        { "ending_id": "ending_ind_1b_traitor", "band_min": "very_evil", "band_max": "evil", "display_name": "The Traitor" },
+        { "ending_id": "ending_ind_1c_legend", "band_min": "positive", "band_max": "very_positive", "display_name": "The Legend" }
+      ]
+    },
+    {
+      "id": "branch_ind_2_mercenary",
+      "display_name": "The Mercenary",
+      "ponr_flag": "flag_branch_ind_2_ponr",
+      "ponr_trigger": "You betray a paying client for more money or power, and word of it cannot be unspread.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_2a_warlord", "band_min": "very_evil", "band_max": "evil", "display_name": "The Warlord" },
+        { "ending_id": "ending_ind_2b_survivor", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Survivor" },
+        { "ending_id": "ending_ind_2c_legend", "band_min": "positive", "band_max": "very_positive", "display_name": "The Legend" }
+      ]
+    },
+    {
+      "id": "branch_ind_3_peacekeeper_diplomat",
+      "display_name": "The Peacekeeper / Diplomat",
+      "ponr_flag": "flag_branch_ind_3_ponr",
+      "ponr_trigger": "You mediate the conflict that cannot be un-mediated; the wasteland remembers whichever side you favored.",
+      "entry_band_min": "positive",
+      "entry_band_max": "very_positive",
+      "requires_prpf_standing_min": 20,
+      "endings": [
+        { "ending_id": "ending_ind_3a_peacekeeper_unifier", "band_min": "very_positive", "band_max": "very_positive", "display_name": "The Peacekeeper Unifier" },
+        { "ending_id": "ending_ind_3b_diplomat", "band_min": "positive", "band_max": "positive", "display_name": "The Diplomat" },
+        { "ending_id": "ending_ind_3c_survivor", "band_min": "slightly_positive", "band_max": "slightly_positive", "display_name": "The Survivor" }
+      ]
+    },
+    {
+      "id": "branch_ind_4_exile",
+      "display_name": "The Exile",
+      "ponr_flag": "flag_branch_ind_4_ponr",
+      "ponr_trigger": "You are formally banished by every faction that could have sheltered you; the wasteland is now the only home left.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "evil",
+      "requires_hostile_to_military": true,
+      "requires_hostile_to_rebel": true,
+      "endings": [
+        { "ending_id": "ending_ind_4a_tyrant", "band_min": "very_evil", "band_max": "very_evil", "display_name": "The Tyrant" },
+        { "ending_id": "ending_ind_4b_ghost", "band_min": "slightly_evil", "band_max": "evil", "display_name": "The Ghost" },
+        { "ending_id": "ending_ind_4c_traitor", "band_min": "neutral", "band_max": "neutral", "display_name": "The Traitor" }
+      ]
+    },
+    {
+      "id": "branch_ind_5_kingmaker",
+      "display_name": "The Kingmaker",
+      "ponr_flag": "flag_branch_ind_5_ponr",
+      "ponr_trigger": "You manipulate a decisive event to your own advantage, and every faction now knows your hand was on the scale.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_5a_puppet_master", "band_min": "very_evil", "band_max": "evil", "display_name": "The Puppet Master" },
+        { "ending_id": "ending_ind_5b_survivor", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Survivor" },
+        { "ending_id": "ending_ind_5c_unifier", "band_min": "positive", "band_max": "very_positive", "display_name": "The Unifier" }
+      ]
+    },
+    {
+      "id": "branch_ind_6_legend",
+      "display_name": "The Legend",
+      "ponr_flag": "flag_branch_ind_6_ponr",
+      "ponr_trigger": "You do the thing that cements your legend — for good or ill, the story is now told without your permission.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_6a_savior", "band_min": "positive", "band_max": "very_positive", "display_name": "The Savior" },
+        { "ending_id": "ending_ind_6b_monster", "band_min": "very_evil", "band_max": "evil", "display_name": "The Monster" },
+        { "ending_id": "ending_ind_6c_myth", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Myth" }
+      ]
+    },
+    {
+      "id": "branch_ind_7_ghost",
+      "display_name": "The Ghost",
+      "ponr_flag": "flag_branch_ind_7_ponr",
+      "ponr_trigger": "You vanish from every faction's records for the last time; no one is looking for you anymore, by your own design.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_7a_unseen", "band_min": "neutral", "band_max": "slightly_positive", "display_name": "The Unseen" },
+        { "ending_id": "ending_ind_7b_forgotten", "band_min": "very_evil", "band_max": "slightly_evil", "display_name": "The Forgotten" },
+        { "ending_id": "ending_ind_7c_watcher", "band_min": "positive", "band_max": "very_positive", "display_name": "The Watcher" }
+      ]
+    },
+    {
+      "id": "branch_ind_8_wasteland_myth",
+      "display_name": "The Wasteland Myth",
+      "ponr_flag": "flag_branch_ind_8_ponr",
+      "ponr_trigger": "The story others tell about you outgrows anything you could still control or correct.",
+      "entry_band_min": "very_evil",
+      "entry_band_max": "very_positive",
+      "endings": [
+        { "ending_id": "ending_ind_8a_feared_legend", "band_min": "very_evil", "band_max": "evil", "display_name": "The Feared Legend" },
+        { "ending_id": "ending_ind_8b_revered_legend", "band_min": "positive", "band_max": "very_positive", "display_name": "The Revered Legend" },
+        { "ending_id": "ending_ind_8c_forgotten_legend", "band_min": "slightly_evil", "band_max": "slightly_positive", "display_name": "The Forgotten Legend" }
+      ]
+    }
+  ]
+}

@@ -13,12 +13,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class MentalHealthCrisisHostSession
-    {
+    : HostSessionBase{
         public MentalHealthCrisisSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public MentalHealthCrisisHostSession(
             MentalHealthCrisisSystem system,
             NeedsSystem needs,
@@ -29,8 +26,8 @@ namespace AtomicWar.GodotApp
             System = system
                 ?? new MentalHealthCrisisSystem(new SeededRng(1986), needs, ward, chemical, roster, new GodotLog());
 
-            System.OnCrisisResolved += _ => StateChanged?.Invoke();
-            System.OnMentalHealthChanged += () => StateChanged?.Invoke();
+            System.OnCrisisResolved += _ => RaiseStateChanged();
+            System.OnMentalHealthChanged += () => RaiseStateChanged();
         }
 
         public ActionResult TriggerCrisis(string survivorId, float stressInput, CrisisProfile profile)
@@ -39,7 +36,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Crisis triggered: {survivorId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -50,7 +47,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Treatment begun: {caseId} by {caregiverId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -61,7 +58,14 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
+        }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            MentalHealthCrisisSaveStore.TrySave(System.CaptureState());
+            base.Save();
         }
     }
 
@@ -76,11 +80,54 @@ namespace AtomicWar.GodotApp
     public static class MentalHealthCrisisSaveStore
     {
         public const string FileName = "mental_health_crisis_save.json";
+        public const string SectionName = "mental_health_crisis";
+
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(MentalHealthState state)
+        {
+            return TryCapture(state);
+        }
+
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static MentalHealthState? TryRestoreDirect(string json)
+        {
+            return TryRestore(json);
+        }
+
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(MentalHealthState state)
+        {
+            try
+            {
+                if (state == null) return string.Empty;
+                return s_json.Serialize(state);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[MentalHealthCrisisSaveStore] capture failed: " + e.Message);
+                return string.Empty;
+            }
+        }
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static MentalHealthState? TryRestore(string json)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(json)) return null;
+                return s_json.Deserialize<MentalHealthState>(json);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[MentalHealthCrisisSaveStore] restore failed: " + e.Message);
+                return null;
+            }
+        }
+
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
-        public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+        public static string SavePath => SaveSlotRoot.Resolve(FileName);
         public static bool Exists => s_files.FileExists(SavePath);
 
         public static bool TrySave(MentalHealthState state)

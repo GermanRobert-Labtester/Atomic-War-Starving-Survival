@@ -430,4 +430,13 @@ public partial class DoseLedgerPanel : Control
             GetViewport().SetInputAsHandled();
         }
     }
+
+    public override void _ExitTree()
+    {
+        if (_doseSession?.Ledger != null)
+        {
+            _doseSession.Ledger.OnStateChanged -= HandleLedgerChanged;
+        }
+        base._ExitTree();
+    }
 }

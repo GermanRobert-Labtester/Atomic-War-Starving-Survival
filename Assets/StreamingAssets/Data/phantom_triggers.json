@@ -1,53 +1,152 @@
-[
-  {
-    "background_id": "child_refugee",
-    "triggers": [
-      { "item_category": "childhood", "motivation_chance": 0.30, "description": "The child's shoe sits in the rubble like a question nobody answered. {name} stares at it, and for a moment the bunker walls dissolve into a memory of playing in a yard that no longer exists.", "motivation_text": "{name} tucks the toy into their pocket. 'Someone should remember,' they say quietly, and their hands steady on their work for the rest of the shift.", "breakdown_text": "{name} can't look away from the small shoe. They set it down with trembling hands, then turn to the wall. No work gets done for hours." },
-      { "item_category": "photograph", "motivation_chance": 0.50, "description": "A charred photograph, edges curled by heat. A family — or what was a family — smiles up from the emulsion. {name} recognizes something in the faces.", "motivation_text": "{name} studies the photograph, then nods once. 'They made it this far,' they whisper. A quiet resolve settles over them.", "breakdown_text": "{name} presses the photograph to their chest and sinks to the floor. The sobs are silent, but the whole bunker feels them." },
-      { "item_category": "correspondence", "motivation_chance": 0.40, "description": "An unread letter, postmarked the morning the missiles launched. {name} holds it like it might crumble if they breathe wrong.", "motivation_text": "{name} reads the letter aloud to no one in particular. When they finish, they fold it carefully and return to work with renewed purpose.", "breakdown_text": "{name} reads the first line and stops. They can't continue. The letter stays in their pocket, unread, for days." }
-    ]
-  },
-  {
-    "background_id": "former_soldier",
-    "triggers": [
-      { "item_category": "military", "motivation_chance": 0.20, "description": "Dog tags, half-melted, still readable. {name} knows the format — name, blood type, religion. They've filled out too many casualty cards.", "motivation_text": "{name} pockets the tags. 'I'll remember them,' they say. Their posture straightens. The soldier is back on duty.", "breakdown_text": "{name} reads the name on the tag and goes pale. They knew this person. The thousand-yard stare returns, and they don't speak for the rest of the day." },
-      { "item_category": "personal_item", "motivation_chance": 0.40, "description": "A tarnished medal, still in its presentation box. {name} picks it up and turns it over in their hands. The ribbon is singed.", "motivation_text": "{name} sets the medal on the shelf. 'Someone earned this,' they say. 'Today, so will I.'", "breakdown_text": "{name} stares at the medal for a long time. 'We all earned medals,' they finally say. 'None of them mattered.'" },
-      { "item_category": "medical", "motivation_chance": 0.30, "description": "A field dressing kit, still sealed. {name} checks the expiration date — three weeks after the war started. Still good.", "motivation_text": "{name} pockets the kit. 'This can still save someone,' they say. The medic's instinct hasn't dulled.", "breakdown_text": "{name} opens the kit and arranges the contents in a neat line. 'I ran out of these on Day 2,' they say. 'We used torn shirts instead.'" }
-    ]
-  },
-  {
-    "background_id": "nurse",
-    "triggers": [
-      { "item_category": "medical", "motivation_chance": 0.50, "description": "A stethoscope, tubing cracked but bell intact. {name} hangs it around their neck without thinking — the gesture is pure muscle memory.", "motivation_text": "{name} taps the bell of the stethoscope. 'Still works,' they say with a half-smile. They move through the bunker checking on everyone.", "breakdown_text": "{name} listens to their own heartbeat through the stethoscope. 'I used to do this for the children first,' they say. 'The little ones were always most scared.'" },
-      { "item_category": "correspondence", "motivation_chance": 0.40, "description": "A patient chart, names redacted by water damage. {name} traces the handwriting. They know these abbreviations.", "motivation_text": "{name} studies the chart and nods. 'This patient made it,' they say with certainty. The victory, however small, fuels them.", "breakdown_text": "{name} can't stop reading the chart. 'I had a patient just like this,' they whisper. 'I don't know if they survived.'" },
-      { "item_category": "photograph", "motivation_chance": 0.40, "description": "A hospital staff photo, radiation-fogged but recognizable. {name} points at the figures one by one.", "motivation_text": "{name} smiles at the photo. 'That was Dr. Chen. Best diagnostician I ever saw.' They work with renewed precision.", "breakdown_text": "{name} counts the faces in the photo. 'Twelve of us,' they say. 'I'm the only one left.'" }
-    ]
-  },
-  {
-    "background_id": "teacher",
-    "triggers": [
-      { "item_category": "correspondence", "motivation_chance": 0.50, "description": "A child's notebook, arithmetic problems still legible in pencil. {name} turns the pages slowly.", "motivation_text": "{name} finds a blank page and writes a new lesson at the top. 'The children who survive will need this,' they say.", "breakdown_text": "{name} reads a name written in clumsy letters on the cover. 'Sarah was in my third-period class,' they say. 'She'd be fourteen now.'" },
-      { "item_category": "childhood", "motivation_chance": 0.30, "description": "A box of chalk, colors faded but still usable. {name} picks up a piece and their hand instinctively moves to a wall.", "motivation_text": "{name} starts writing on the concrete wall — simple multiplication tables. 'Education doesn't stop,' they declare.", "breakdown_text": "{name} draws a stick figure on the wall. 'I had thirty-two students,' they say. 'I don't know how many made it.'" }
-    ]
-  },
-  {
-    "background_id": "electrician",
-    "triggers": [
-      { "item_category": "personal_item", "motivation_chance": 0.30, "description": "A voltage tester, casing cracked but still functional. {name} tests it on a known live wire and nods when the light blinks.", "motivation_text": "{name} pockets the tester. 'I can fix the grid with this,' they say, already mentally tracing the wiring diagram.", "breakdown_text": "{name} tests every wire in the bunker, one by one. 'My whole crew was in the substation when it hit,' they finally say. 'The EMP got them before the blast.'" }
-    ]
-  },
-  {
-    "background_id": "machinist",
-    "triggers": [
-      { "item_category": "personal_item", "motivation_chance": 0.30, "description": "A micrometer, still in its felt-lined case. {name} checks the calibration against a known standard.", "motivation_text": "{name} slips the micrometer into their pocket. 'Precision still matters,' they say, and their next craft job is flawless.", "breakdown_text": "{name} measures everything in the bunker — gaps in the walls, thickness of the hatch, width of the cracks. 'Tolerances are slipping,' they mutter. 'Everything is slipping.'" }
-    ]
-  },
-  {
-    "background_id": "generic",
-    "triggers": [
-      { "item_category": "photograph", "motivation_chance": 0.50, "description": "A photograph of strangers, edges burned. {name} studies the faces — someone's parents, someone's children.", "motivation_text": "{name} props the photograph against the wall. 'They'd want us to keep going,' they say.", "breakdown_text": "{name} can't stop looking at the photograph. 'These people had lives,' they whisper. 'Whole lives.'" },
-      { "item_category": "correspondence", "motivation_chance": 0.40, "description": "A letter, never sent. The ink is smeared by what might be rain or might be tears. {name} handles it carefully.", "motivation_text": "{name} reads the letter and folds it neatly. 'We're still here to read it,' they say. 'That counts for something.'", "breakdown_text": "{name} reads the letter twice, then sets it down. 'Some letters shouldn't be read alone,' they say." },
-      { "item_category": "personal_item", "motivation_chance": 0.20, "description": "A wedding ring, still on a skeletal finger. {name} doesn't try to remove it.", "motivation_text": "{name} says a quiet word over the remains. 'Rest now,' they say, and move forward with a heavy but steady heart.", "breakdown_text": "{name} sits beside the remains for an hour. 'I had someone too,' they finally say, and then nothing more." }
-    ]
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "background_id": "child_refugee",
+      "triggers": [
+        {
+          "item_category": "childhood",
+          "motivation_chance": 0.3,
+          "description": "The child's shoe sits in the rubble like a question nobody answered. {name} stares at it, and for a moment the bunker walls dissolve into a memory of playing in a yard that no longer exists.",
+          "motivation_text": "{name} tucks the toy into their pocket. 'Someone should remember,' they say quietly, and their hands steady on their work for the rest of the shift.",
+          "breakdown_text": "{name} can't look away from the small shoe. They set it down with trembling hands, then turn to the wall. No work gets done for hours."
+        },
+        {
+          "item_category": "photograph",
+          "motivation_chance": 0.5,
+          "description": "A charred photograph, edges curled by heat. A family — or what was a family — smiles up from the emulsion. {name} recognizes something in the faces.",
+          "motivation_text": "{name} studies the photograph, then nods once. 'They made it this far,' they whisper. A quiet resolve settles over them.",
+          "breakdown_text": "{name} presses the photograph to their chest and sinks to the floor. The sobs are silent, but the whole bunker feels them."
+        },
+        {
+          "item_category": "correspondence",
+          "motivation_chance": 0.4,
+          "description": "An unread letter, postmarked the morning the missiles launched. {name} holds it like it might crumble if they breathe wrong.",
+          "motivation_text": "{name} reads the letter aloud to no one in particular. When they finish, they fold it carefully and return to work with renewed purpose.",
+          "breakdown_text": "{name} reads the first line and stops. They can't continue. The letter stays in their pocket, unread, for days."
+        }
+      ]
+    },
+    {
+      "background_id": "former_soldier",
+      "triggers": [
+        {
+          "item_category": "military",
+          "motivation_chance": 0.2,
+          "description": "Dog tags, half-melted, still readable. {name} knows the format — name, blood type, religion. They've filled out too many casualty cards.",
+          "motivation_text": "{name} pockets the tags. 'I'll remember them,' they say. Their posture straightens. The soldier is back on duty.",
+          "breakdown_text": "{name} reads the name on the tag and goes pale. They knew this person. The thousand-yard stare returns, and they don't speak for the rest of the day."
+        },
+        {
+          "item_category": "personal_item",
+          "motivation_chance": 0.4,
+          "description": "A tarnished medal, still in its presentation box. {name} picks it up and turns it over in their hands. The ribbon is singed.",
+          "motivation_text": "{name} sets the medal on the shelf. 'Someone earned this,' they say. 'Today, so will I.'",
+          "breakdown_text": "{name} stares at the medal for a long time. 'We all earned medals,' they finally say. 'None of them mattered.'"
+        },
+        {
+          "item_category": "medical",
+          "motivation_chance": 0.3,
+          "description": "A field dressing kit, still sealed. {name} checks the expiration date — three weeks after the war started. Still good.",
+          "motivation_text": "{name} pockets the kit. 'This can still save someone,' they say. The medic's instinct hasn't dulled.",
+          "breakdown_text": "{name} opens the kit and arranges the contents in a neat line. 'I ran out of these on Day 2,' they say. 'We used torn shirts instead.'"
+        }
+      ]
+    },
+    {
+      "background_id": "nurse",
+      "triggers": [
+        {
+          "item_category": "medical",
+          "motivation_chance": 0.5,
+          "description": "A stethoscope, tubing cracked but bell intact. {name} hangs it around their neck without thinking — the gesture is pure muscle memory.",
+          "motivation_text": "{name} taps the bell of the stethoscope. 'Still works,' they say with a half-smile. They move through the bunker checking on everyone.",
+          "breakdown_text": "{name} listens to their own heartbeat through the stethoscope. 'I used to do this for the children first,' they say. 'The little ones were always most scared.'"
+        },
+        {
+          "item_category": "correspondence",
+          "motivation_chance": 0.4,
+          "description": "A patient chart, names redacted by water damage. {name} traces the handwriting. They know these abbreviations.",
+          "motivation_text": "{name} studies the chart and nods. 'This patient made it,' they say with certainty. The victory, however small, fuels them.",
+          "breakdown_text": "{name} can't stop reading the chart. 'I had a patient just like this,' they whisper. 'I don't know if they survived.'"
+        },
+        {
+          "item_category": "photograph",
+          "motivation_chance": 0.4,
+          "description": "A hospital staff photo, radiation-fogged but recognizable. {name} points at the figures one by one.",
+          "motivation_text": "{name} smiles at the photo. 'That was Dr. Chen. Best diagnostician I ever saw.' They work with renewed precision.",
+          "breakdown_text": "{name} counts the faces in the photo. 'Twelve of us,' they say. 'I'm the only one left.'"
+        }
+      ]
+    },
+    {
+      "background_id": "teacher",
+      "triggers": [
+        {
+          "item_category": "correspondence",
+          "motivation_chance": 0.5,
+          "description": "A child's notebook, arithmetic problems still legible in pencil. {name} turns the pages slowly.",
+          "motivation_text": "{name} finds a blank page and writes a new lesson at the top. 'The children who survive will need this,' they say.",
+          "breakdown_text": "{name} reads a name written in clumsy letters on the cover. 'Sarah was in my third-period class,' they say. 'She'd be fourteen now.'"
+        },
+        {
+          "item_category": "childhood",
+          "motivation_chance": 0.3,
+          "description": "A box of chalk, colors faded but still usable. {name} picks up a piece and their hand instinctively moves to a wall.",
+          "motivation_text": "{name} starts writing on the concrete wall — simple multiplication tables. 'Education doesn't stop,' they declare.",
+          "breakdown_text": "{name} draws a stick figure on the wall. 'I had thirty-two students,' they say. 'I don't know how many made it.'"
+        }
+      ]
+    },
+    {
+      "background_id": "electrician",
+      "triggers": [
+        {
+          "item_category": "personal_item",
+          "motivation_chance": 0.3,
+          "description": "A voltage tester, casing cracked but still functional. {name} tests it on a known live wire and nods when the light blinks.",
+          "motivation_text": "{name} pockets the tester. 'I can fix the grid with this,' they say, already mentally tracing the wiring diagram.",
+          "breakdown_text": "{name} tests every wire in the bunker, one by one. 'My whole crew was in the substation when it hit,' they finally say. 'The EMP got them before the blast.'"
+        }
+      ]
+    },
+    {
+      "background_id": "machinist",
+      "triggers": [
+        {
+          "item_category": "personal_item",
+          "motivation_chance": 0.3,
+          "description": "A micrometer, still in its felt-lined case. {name} checks the calibration against a known standard.",
+          "motivation_text": "{name} slips the micrometer into their pocket. 'Precision still matters,' they say, and their next craft job is flawless.",
+          "breakdown_text": "{name} measures everything in the bunker — gaps in the walls, thickness of the hatch, width of the cracks. 'Tolerances are slipping,' they mutter. 'Everything is slipping.'"
+        }
+      ]
+    },
+    {
+      "background_id": "generic",
+      "triggers": [
+        {
+          "item_category": "photograph",
+          "motivation_chance": 0.5,
+          "description": "A photograph of strangers, edges burned. {name} studies the faces — someone's parents, someone's children.",
+          "motivation_text": "{name} props the photograph against the wall. 'They'd want us to keep going,' they say.",
+          "breakdown_text": "{name} can't stop looking at the photograph. 'These people had lives,' they whisper. 'Whole lives.'"
+        },
+        {
+          "item_category": "correspondence",
+          "motivation_chance": 0.4,
+          "description": "A letter, never sent. The ink is smeared by what might be rain or might be tears. {name} handles it carefully.",
+          "motivation_text": "{name} reads the letter and folds it neatly. 'We're still here to read it,' they say. 'That counts for something.'",
+          "breakdown_text": "{name} reads the letter twice, then sets it down. 'Some letters shouldn't be read alone,' they say."
+        },
+        {
+          "item_category": "personal_item",
+          "motivation_chance": 0.2,
+          "description": "A wedding ring, still on a skeletal finger. {name} doesn't try to remove it.",
+          "motivation_text": "{name} says a quiet word over the remains. 'Rest now,' they say, and move forward with a heavy but steady heart.",
+          "breakdown_text": "{name} sits beside the remains for an hour. 'I had someone too,' they finally say, and then nothing more."
+        }
+      ]
+    }
+  ]
+}

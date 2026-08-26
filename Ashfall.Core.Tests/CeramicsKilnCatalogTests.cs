@@ -8,7 +8,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public class CeramicsKilnCatalogTests
-    {
+    : CatalogTestBase{
         private static string DataDir => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "Assets", "StreamingAssets", "Data", "narrative");
         private static CeramicsKilnCatalog Load() => CeramicsKilnCatalog.LoadFromDirectory(DataDir);
 

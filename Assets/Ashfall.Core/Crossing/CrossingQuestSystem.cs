@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Crossing
 {
     // ── Data model (matches crossing_quests.json) ───────────────
@@ -367,13 +369,14 @@ namespace Ashfall.Core.Crossing
 
             try
             {
-                var quests = serializer.Deserialize<List<CrossingQuestDef>>(json);
+                var quests = CatalogLocator.LoadWrappedList<CrossingQuestDef>(json, SystemTextJsonSerializer.Options);
                 return quests ?? new List<CrossingQuestDef>();
             }
-            catch
-            {
-                return new List<CrossingQuestDef>();
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return new List<CrossingQuestDef>();
+                                }
         }
     }
 }

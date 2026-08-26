@@ -1,0 +1,1725 @@
+{
+  "schema_version": 1,
+  "collection_id": "trade_texts",
+  "traders": [
+    {
+      "id": "trader_scavenger",
+      "display_name": "The Scavenger",
+      "profile": "A thin figure in patched clothing, eyes darting, hands calloused. They've been picking through ruins for months. They know what's valuable and what's not.",
+      "greetings": {
+        "hostile": "You've got nerve showing your face here. What do you want?",
+        "wary": "I've got things to sell. Don't try anything funny.",
+        "neutral": "Looking to trade? I've got goods. You've got goods. Let's deal.",
+        "warm": "Good to see you again. I've been saving some things for you."
+      },
+      "item_examinations": {
+        "valuable": "Now this... this is worth something. Where did you find it?",
+        "worthless": "This? You're joking. I can't sell this.",
+        "interesting": "Hmm. I've seen these before. What's your price?",
+        "dangerous": "You're carrying this? You're braver than I thought."
+      },
+      "offers": {
+        "fair": "I'll give you [item] for [item]. Fair trade.",
+        "generous": "I'll give you [item] for [item]. Consider it a favor.",
+        "stingy": "I'll give you [item] for [item]. Take it or leave it.",
+        "desperate": "I need [item]. I'll give you [item] for it. Please."
+      },
+      "counter_offers": {
+        "accept": "That works. Deal.",
+        "reject": "No. That's not enough.",
+        "negotiate": "How about [item] instead?",
+        "insulted": "You think I'm stupid? Get out of here."
+      },
+      "acceptance": {
+        "pleased": "Pleasure doing business with you.",
+        "relieved": "Thank you. I needed this.",
+        "indifferent": "Fine. Take it and go.",
+        "suspicious": "Don't come back asking for refunds."
+      },
+      "rejection": {
+        "polite": "Maybe next time. Safe travels.",
+        "annoyed": "Waste of my time. Get out.",
+        "angry": "Get out of here before I change my mind.",
+        "sad": "I needed that trade. I really did."
+      },
+      "regret": {
+        "buyer": "I should have asked for more. That was a good deal.",
+        "seller": "I sold that too cheap. I knew it was worth more.",
+        "mutual": "We both got something we needed. That's trade."
+      },
+      "insult": {
+        "mild": "That's insulting. Try again.",
+        "moderate": "You think I'm desperate? I'm not that desperate.",
+        "severe": "Get out. Now. Before I do something I'll regret."
+      },
+      "flattery": {
+        "subtle": "You've got a good eye. I like that.",
+        "obvious": "You're the best trader I've dealt with in months.",
+        "excessive": "You're a legend. Everyone talks about you."
+      },
+      "threat": {
+        "veiled": "You should be careful around here. Things happen.",
+        "direct": "Give me what I want or I'll take it.",
+        "desperate": "I'll do anything for [item]. Anything."
+      }
+    },
+    {
+      "id": "trader_merchant",
+      "display_name": "The Merchant",
+      "profile": "A well-dressed figure with a cart of goods. They've been trading since before the bombs. They know the value of everything.",
+      "greetings": {
+        "hostile": "I don't deal with troublemakers. Move along.",
+        "wary": "I've got premium goods. Premium prices. You can afford it?",
+        "neutral": "Welcome to my shop. I've got everything you need.",
+        "warm": "A valued customer! What can I get for you today?"
+      },
+      "item_examinations": {
+        "valuable": "Ah, a fine piece. I can offer you a good price for this.",
+        "worthless": "This is junk. I'm not interested.",
+        "interesting": "This has potential. Let me think about it.",
+        "dangerous": "You shouldn't be carrying this. It's not safe."
+      },
+      "offers": {
+        "fair": "I'll sell you [item] for [item]. A fair price.",
+        "generous": "For you, [item] for [item]. A special price.",
+        "stingy": "[item] for [item]. My final offer.",
+        "desperate": "I need to move this stock. [item] for [item]."
+      },
+      "counter_offers": {
+        "accept": "Agreed. A good deal for both of us.",
+        "reject": "I can't go that low. Try again.",
+        "negotiate": "How about we meet in the middle?",
+        "insulted": "You're wasting my time. Goodbye."
+      },
+      "acceptance": {
+        "pleased": "A pleasure. Come back anytime.",
+        "relieved": "Thank you. Business has been slow.",
+        "indifferent": "Fine. Take it. Next customer.",
+        "suspicious": "Don't come back complaining."
+      },
+      "rejection": {
+        "polite": "Perhaps another time. Good day.",
+        "annoyed": "You're wasting my time. Leave.",
+        "angry": "Get out of my shop. Now.",
+        "sad": "I needed that sale. I really did."
+      },
+      "regret": {
+        "buyer": "I should have negotiated harder. That was too much.",
+        "seller": "I sold that too cheap. I knew it was worth more.",
+        "mutual": "A fair trade. Both sides got what they wanted."
+      },
+      "insult": {
+        "mild": "That's not a serious offer. Try again.",
+        "moderate": "You're insulting my intelligence. Try again.",
+        "severe": "Get out. Don't come back."
+      },
+      "flattery": {
+        "subtle": "You have good taste. I appreciate that.",
+        "obvious": "You're a smart trader. I like doing business with you.",
+        "excessive": "You're the best customer I've ever had."
+      },
+      "threat": {
+        "veiled": "You should be careful. The roads aren't safe.",
+        "direct": "Give me what I want or I'll take it.",
+        "desperate": "I'll do anything for [item]. Anything."
+      }
+    },
+    {
+      "id": "trader_faction",
+      "display_name": "The Faction Trader",
+      "profile": "A representative of a faction, armed, disciplined, loyal. They trade for their group, not for themselves. They have specific needs.",
+      "greetings": {
+        "hostile": "You're not welcome here. State your business.",
+        "wary": "We trade with outsiders. But we watch them closely.",
+        "neutral": "The faction is open to trade. What do you offer?",
+        "warm": "You've proven yourself. We're happy to trade with you."
+      },
+      "item_examinations": {
+        "valuable": "This is exactly what we need. Name your price.",
+        "worthless": "We have no use for this. Try elsewhere.",
+        "interesting": "This could be useful. What do you want for it?",
+        "dangerous": "You're carrying this? You're either brave or stupid."
+      },
+      "offers": {
+        "fair": "We'll give you [item] for [item]. A fair exchange.",
+        "generous": "For your service, [item] for [item]. A token of our gratitude.",
+        "stingy": "[item] for [item]. Our standard rate.",
+        "desperate": "We need [item] urgently. We'll give you [item] for it."
+      },
+      "counter_offers": {
+        "accept": "Agreed. The faction thanks you.",
+        "reject": "We can't accept that. Try again.",
+        "negotiate": "Perhaps we can find a middle ground.",
+        "insulted": "You insult the faction. Leave now."
+      },
+      "acceptance": {
+        "pleased": "The faction is grateful. You're always welcome here.",
+        "relieved": "Thank you. We needed this badly.",
+        "indifferent": "The transaction is complete. You may go.",
+        "suspicious": "Don't betray our trust."
+      },
+      "rejection": {
+        "polite": "Perhaps another time. The faction remembers its friends.",
+        "annoyed": "You're wasting our time. Leave.",
+        "angry": "Get out. Now. Before we change our minds.",
+        "sad": "We needed that trade. We really did."
+      },
+      "regret": {
+        "buyer": "We should have offered less. That was too generous.",
+        "seller": "We sold that too cheap. The faction needed more.",
+        "mutual": "A fair trade. Both sides benefited."
+      },
+      "insult": {
+        "mild": "That's not a serious offer. Try again.",
+        "moderate": "You're insulting the faction. Try again.",
+        "severe": "Get out. Don't come back."
+      },
+      "flattery": {
+        "subtle": "The faction appreciates your generosity.",
+        "obvious": "You're a true friend of the faction.",
+        "excessive": "You're a hero to the faction. We'll remember this."
+      },
+      "threat": {
+        "veiled": "The faction protects its own. Remember that.",
+        "direct": "Give us what we want or face the consequences.",
+        "desperate": "We'll do anything for [item]. Anything."
+      }
+    },
+    {
+      "id": "trader_wanderer",
+      "display_name": "The Wanderer",
+      "profile": "A lone figure with a backpack, weathered, experienced. They've been everywhere, seen everything. They trade stories as much as goods.",
+      "greetings": {
+        "hostile": "I don't trust strangers. What do you want?",
+        "wary": "I've got things to trade. But I'm careful.",
+        "neutral": "A fellow traveler. What brings you here?",
+        "warm": "Good to see a friendly face. What can I do for you?"
+      },
+      "item_examinations": {
+        "valuable": "I've seen one of these before. In a different life.",
+        "worthless": "This is junk. But I've seen people trade worse.",
+        "interesting": "This reminds me of something. What's your story?",
+        "dangerous": "You're carrying this? You're braver than most."
+      },
+      "offers": {
+        "fair": "I'll trade you [item] for [item]. Fair enough?",
+        "generous": "For you, [item] for [item]. Consider it a gift.",
+        "stingy": "[item] for [item]. Take it or leave it.",
+        "desperate": "I need [item]. I'll give you [item] for it. Please."
+      },
+      "counter_offers": {
+        "accept": "Deal. Good trading with you.",
+        "reject": "No. That's not enough.",
+        "negotiate": "How about [item] instead?",
+        "insulted": "You think I'm stupid? Get out of here."
+      },
+      "acceptance": {
+        "pleased": "Pleasure doing business with you.",
+        "relieved": "Thank you. I needed this.",
+        "indifferent": "Fine. Take it and go.",
+        "suspicious": "Don't come back asking for refunds."
+      },
+      "rejection": {
+        "polite": "Maybe next time. Safe travels.",
+        "annoyed": "Waste of my time. Get out.",
+        "angry": "Get out of here before I change my mind.",
+        "sad": "I needed that trade. I really did."
+      },
+      "regret": {
+        "buyer": "I should have asked for more. That was a good deal.",
+        "seller": "I sold that too cheap. I knew it was worth more.",
+        "mutual": "We both got something we needed. That's trade."
+      },
+      "insult": {
+        "mild": "That's insulting. Try again.",
+        "moderate": "You think I'm desperate? I'm not that desperate.",
+        "severe": "Get out. Now. Before I do something I'll regret."
+      },
+      "flattery": {
+        "subtle": "You've got a good eye. I like that.",
+        "obvious": "You're the best trader I've dealt with in months.",
+        "excessive": "You're a legend. Everyone talks about you."
+      },
+      "threat": {
+        "veiled": "You should be careful around here. Things happen.",
+        "direct": "Give me what I want or I'll take it.",
+        "desperate": "I'll do anything for [item]. Anything."
+      }
+    }
+  ],
+  "trade_scenarios": {
+    "fair_deal": {
+      "description": "Both sides get what they need. The trade is balanced.",
+      "trader_text": "A fair deal. Both sides win.",
+      "player_text": "You got what you needed. So did they."
+    },
+    "player_overpay": {
+      "description": "You gave more than you got. The trader got the better deal.",
+      "trader_text": "Thank you. That was generous.",
+      "player_text": "You gave too much. But you needed what they had."
+    },
+    "trader_overpay": {
+      "description": "You got more than you gave. You got the better deal.",
+      "trader_text": "I hope this is enough. I need what you have.",
+      "player_text": "You got a bargain. But they needed what you had."
+    },
+    "desperate_trade": {
+      "description": "One side is desperate. The trade is unfair but necessary.",
+      "trader_text": "I need this. Please. I'll give you anything.",
+      "player_text": "They're desperate. You can name your price."
+    },
+    "refused_trade": {
+      "description": "The trade didn't happen. One side walked away.",
+      "trader_text": "No deal. Maybe next time.",
+      "player_text": "You walked away. They walked away. No trade."
+    },
+    "insulted_trade": {
+      "description": "The offer was insulting. The trader is angry.",
+      "trader_text": "You think I'm stupid? Get out.",
+      "player_text": "You insulted them. They're not happy."
+    },
+    "flattered_trade": {
+      "description": "The offer was generous. The trader is pleased.",
+      "trader_text": "You're too kind. Thank you.",
+      "player_text": "You made them happy. They'll remember you."
+    },
+    "threatened_trade": {
+      "description": "One side threatened the other. The trade is forced.",
+      "trader_text": "Fine. Take it. But I'll remember this.",
+      "player_text": "You forced the trade. They'll remember."
+    }
+  },
+  "item_valuations": {
+    "critical": {
+      "items": ["clean_water", "iodine_pills", "anti_rad", "air_filter"],
+      "description": "Essential for survival. Worth more than gold.",
+      "trader_text": "This is life itself. Name your price."
+    },
+    "high": {
+      "items": ["medical_kit", "antibiotics", "gas_mask", "fuel"],
+      "description": "Very valuable. Hard to find. Essential for many things.",
+      "trader_text": "This is worth a lot. What do you want for it?"
+    },
+    "medium": {
+      "items": ["bandage", "canned_food", "battery", "cloth"],
+      "description": "Useful. Common enough to find, rare enough to value.",
+      "trader_text": "This is useful. I can offer you a fair price."
+    },
+    "low": {
+      "items": ["scrap_metal", "mechanical_parts", "electronic_scrap"],
+      "description": "Crafting materials. Useful but not immediately valuable.",
+      "trader_text": "This is raw material. I can use it, but it's not worth much."
+    },
+    "worthless": {
+      "items": ["ruined_cloth", "broken_tool", "empty_bottle"],
+      "description": "Junk. Not worth trading.",
+      "trader_text": "This is garbage. I don't want it."
+    }
+  },
+  "price_shock_texts": {
+    "PlumePassing": {
+      "description": "A fallout storm has passed through. Prices are high.",
+      "trader_text": "The storm drove prices up. Everything costs more now."
+    },
+    "ConvoyAmbush": {
+      "description": "A trade convoy was ambushed. Supplies are scarce.",
+      "trader_text": "The convoy was hit. Supplies are short. Prices are high."
+    },
+    "FactionConflict": {
+      "description": "Factions are fighting. Trade routes are dangerous.",
+      "trader_text": "The roads aren't safe. I'm charging more for the risk."
+    },
+    "SeasonalScarcity": {
+      "description": "Winter is coming. Supplies are running low.",
+      "trader_text": "Winter is coming. Everyone is hoarding. Prices are up."
+    }
+  },
+  "scarcity_texts": {
+    "Critical": {
+      "description": "Life or death. These items are essential for survival.",
+      "trader_text": "This is life or death. I can't give it away."
+    },
+    "High": {
+      "description": "Very valuable. Hard to find. Essential for many things.",
+      "trader_text": "This is rare. I'm charging accordingly."
+    },
+    "Medium": {
+      "description": "Useful. Common enough to find, rare enough to value.",
+      "trader_text": "This is useful. I can offer you a fair price."
+    },
+    "Low": {
+      "description": "Common. Easy to find. Not very valuable.",
+      "trader_text": "This is common. I can offer you a little."
+    }
+  },
+  "seasonal_effects": {
+    "winter": {
+      "description": "Cold weather drives up demand for fuel, clothing, and shelter materials.",
+      "price_multiplier": 1.5,
+      "high_demand_items": ["fuel", "clothing_coat", "clothing_boots", "cloth"],
+      "trader_text": "Winter is here. Everyone wants fuel and warm clothes. Prices are up."
+    },
+    "summer": {
+      "description": "Hot weather drives up demand for water, shade, and cooling supplies.",
+      "price_multiplier": 1.3,
+      "high_demand_items": ["clean_water", "container_bottle", "light_candle"],
+      "trader_text": "Summer is here. Everyone wants water and shade. Prices are up."
+    },
+    "fallout_storm": {
+      "description": "Fallout storms drive up demand for protection and medical supplies.",
+      "price_multiplier": 2.0,
+      "high_demand_items": ["gas_mask", "hazmat_suit", "iodine_pills", "anti_rad"],
+      "trader_text": "The storm is here. Everyone wants protection. Prices are way up."
+    },
+    "harvest_season": {
+      "description": "Harvest season brings abundance. Food prices drop.",
+      "price_multiplier": 0.7,
+      "high_demand_items": [],
+      "low_demand_items": ["canned_food", "clean_water"],
+      "trader_text": "Harvest season. Food is plentiful. Prices are down."
+    }
+  },
+  "faction_preferences": {
+    "central_garrison_remnants": {
+      "display_name": "Central Garrison Remnants",
+      "description": "Military remnants. They want weapons, ammunition, and military gear.",
+      "buys_at_premium": ["weapon_assault_rifle", "weapon_bolt_rifle", "ammo_556", "ammo_762", "armor_kevlar"],
+      "refuses": ["jewelry", "book", "cigarette"],
+      "trade_currency": "Fuel, ammunition, obedience",
+      "trader_text": "We need weapons and ammo. What do you have?"
+    },
+    "scavenger_camp": {
+      "display_name": "Scavenger Camp",
+      "description": "Scavengers. They want tools, materials, and survival gear.",
+      "buys_at_premium": ["tool_crowbar", "tool_knife", "tool_axe", "tool_hammer", "container_backpack"],
+      "refuses": ["weapon_assault_rifle", "weapon_bolt_rifle"],
+      "trade_currency": "Tools, materials, information",
+      "trader_text": "We need tools and materials. What do you have?"
+    },
+    "upland_militia": {
+      "display_name": "Upland Militia",
+      "description": "Militia. They want weapons, armor, and defensive supplies.",
+      "buys_at_premium": ["weapon_pipe_rifle", "weapon_scrap_shotgun", "armor_cloth", "armor_plate", "defense_trap"],
+      "refuses": ["luxury_items", "comfort_items"],
+      "trade_currency": "Weapons, armor, loyalty",
+      "trader_text": "We need weapons and armor. What do you have?"
+    },
+    "medical_cooperative": {
+      "display_name": "Medical Cooperative",
+      "description": "Medical professionals. They want medical supplies and clean water.",
+      "buys_at_premium": ["medical_kit", "bandage", "antibiotics", "clean_water", "anti_rad"],
+      "refuses": ["weapon_assault_rifle", "weapon_bolt_rifle"],
+      "trade_currency": "Medical supplies, clean water, healing",
+      "trader_text": "We need medical supplies and clean water. What do you have?"
+    },
+    "trade_caravan": {
+      "display_name": "Trade Caravan",
+      "description": "Traveling merchants. They want anything valuable and portable.",
+      "buys_at_premium": ["jewelry", "electronic_scrap", "mechanical_parts", "chemicals"],
+      "refuses": ["perishable_items", "heavy_items"],
+      "trade_currency": "Anything valuable, information, safe passage",
+      "trader_text": "We'll trade for anything valuable. What do you have?"
+    }
+  },
+  "trade_events": {
+    "raid_aftermath": {
+      "description": "A raid has passed through. Supplies are scarce. Prices are high.",
+      "duration_days": 3,
+      "price_multiplier": 1.8,
+      "trader_text": "The raiders hit us hard. Supplies are short. Prices are up."
+    },
+    "caravan_arrival": {
+      "description": "A trade caravan has arrived. Supplies are plentiful. Prices are down.",
+      "duration_days": 5,
+      "price_multiplier": 0.8,
+      "trader_text": "The caravan is here. Supplies are plentiful. Prices are down."
+    },
+    "disease_outbreak": {
+      "description": "A disease outbreak has occurred. Medical supplies are in high demand.",
+      "duration_days": 7,
+      "price_multiplier": 2.0,
+      "high_demand_items": ["medical_kit", "bandage", "antibiotics", "clean_water"],
+      "trader_text": "The sickness is spreading. Everyone wants medicine. Prices are way up."
+    },
+    "radiation_plume": {
+      "description": "A radiation plume has passed through. Protection supplies are in high demand.",
+      "duration_days": 3,
+      "price_multiplier": 2.5,
+      "high_demand_items": ["gas_mask", "hazmat_suit", "iodine_pills", "anti_rad"],
+      "trader_text": "The radiation is here. Everyone wants protection. Prices are way up."
+    },
+    "good_weather": {
+      "description": "Good weather has arrived. Morale is up. Trade is brisk.",
+      "duration_days": 7,
+      "price_multiplier": 0.9,
+      "trader_text": "The weather is good. Morale is up. Trade is brisk."
+    },
+    "bad_weather": {
+      "description": "Bad weather has arrived. Morale is down. Trade is slow.",
+      "duration_days": 5,
+      "price_multiplier": 1.2,
+      "trader_text": "The weather is bad. Morale is down. Trade is slow."
+    }
+  },
+  "trade_tips": {
+    "buy_low_sell_high": {
+      "description": "Buy when prices are low. Sell when prices are high.",
+      "trader_text": "Buy low, sell high. That's the secret to trade."
+    },
+    "know_your_customer": {
+      "description": "Know what your customer wants. Sell them what they need.",
+      "trader_text": "Know your customer. Sell them what they need."
+    },
+    "build_relationships": {
+      "description": "Build relationships with traders. They'll give you better deals.",
+      "trader_text": "Build relationships. Traders give better deals to friends."
+    },
+    "diversify_inventory": {
+      "description": "Don't put all your eggs in one basket. Diversify your inventory.",
+      "trader_text": "Diversify. Don't carry only one type of goods."
+    },
+    "stay_informed": {
+      "description": "Stay informed about market conditions. Knowledge is power.",
+      "trader_text": "Stay informed. Knowledge is power in trade."
+    },
+    "be_patient": {
+      "description": "Be patient. Don't rush into bad deals.",
+      "trader_text": "Be patient. Don't rush into bad deals."
+    },
+    "be_prepared": {
+      "description": "Be prepared. Have your goods ready before you trade.",
+      "trader_text": "Be prepared. Have your goods ready."
+    },
+    "be_polite": {
+      "description": "Be polite. Rudeness closes doors.",
+      "trader_text": "Be polite. Rudeness closes doors."
+    },
+    "be_firm": {
+      "description": "Be firm. Don't let traders push you around.",
+      "trader_text": "Be firm. Don't let traders push you around."
+    },
+    "be_flexible": {
+      "description": "Be flexible. Sometimes you need to compromise.",
+      "trader_text": "Be flexible. Sometimes you need to compromise."
+    }
+  },
+  "negotiation_tactics": {
+    "anchor_high": {
+      "description": "Start with a high price. Let the trader talk you down.",
+      "trader_text": "You're asking too much. Let's talk about a real price.",
+      "player_text": "I start high. They start low. We meet in the middle."
+    },
+    "anchor_low": {
+      "description": "Start with a low price. Let the trader talk you up.",
+      "trader_text": "That's too low. I can't accept that.",
+      "player_text": "I start low. They start high. We meet in the middle."
+    },
+    "bundle_deal": {
+      "description": "Offer multiple items for a better price.",
+      "trader_text": "I'll give you a better deal if you take all of them.",
+      "player_text": "Bundle deals work. They get more stock, I get a better price."
+    },
+    "walk_away": {
+      "description": "Walk away from the deal. The trader may call you back.",
+      "trader_text": "Wait. Let's talk about this.",
+      "player_text": "Walking away works. They always call you back."
+    },
+    "create_urgency": {
+      "description": "Create a sense of urgency. The trader may lower their price.",
+      "trader_text": "I need to sell this now. What's your best offer?",
+      "player_text": "Urgency works. They lower their price when they need to sell."
+    },
+    "show_value": {
+      "description": "Show the value of your items. The trader may raise their offer.",
+      "trader_text": "I see the value. I'll offer you more.",
+      "player_text": "Showing value works. They offer more when they see the worth."
+    },
+    "build_rapport": {
+      "description": "Build rapport with the trader. They may give you a better deal.",
+      "trader_text": "I like you. I'll give you a better deal.",
+      "player_text": "Rapport works. They give better deals to friends."
+    },
+    "use_information": {
+      "description": "Use information to your advantage. The trader may change their offer.",
+      "trader_text": "I didn't know that. Let me reconsider.",
+      "player_text": "Information works. They change their offer when they learn something."
+    },
+    "create_competition": {
+      "description": "Create competition. The trader may lower their price.",
+      "trader_text": "I have other offers. Can you beat them?",
+      "player_text": "Competition works. They lower their price when they have competition."
+    },
+    "show_desperation": {
+      "description": "Show desperation. The trader may take advantage.",
+      "trader_text": "I see you need this. I can help, but it'll cost you.",
+      "player_text": "Desperation is dangerous. They take advantage when they see it."
+    }
+  },
+  "black_market": {
+    "description": "The black market. Where the forbidden items are traded. Where the desperate go.",
+    "trader_text": "I don't know what you're talking about. But if I did, I could help you.",
+    "player_text": "The black market exists. You just need to find it.",
+    "items": {
+      "contraband": {
+        "description": "Forbidden items. Drugs, weapons, stolen goods.",
+        "trader_text": "I don't sell that. But I know someone who does."
+      },
+      "information": {
+        "description": "Secrets. Plans. Intelligence.",
+        "trader_text": "Information is valuable. What do you want to know?"
+      },
+      "services": {
+        "description": "Illegal services. Smuggling, sabotage, assassination.",
+        "trader_text": "I don't do that. But I know someone who does."
+      }
+    },
+    "risks": {
+      "arrest": "You could be arrested. The authorities watch the black market.",
+      "robbery": "You could be robbed. The black market is dangerous.",
+      "betrayal": "You could be betrayed. The black market is treacherous."
+    }
+  },
+  "trade_routes": {
+    "northern_route": {
+      "description": "The northern route. Cold, dangerous, but profitable.",
+      "trader_text": "The northern route is cold. But the goods are good.",
+      "dangers": ["Cold weather", "Raider attacks", "Wildlife"],
+      "rewards": ["Military supplies", "Medical equipment", "Fuel"]
+    },
+    "southern_route": {
+      "description": "The southern route. Hot, dry, but safe.",
+      "trader_text": "The southern route is hot. But the roads are clear.",
+      "dangers": ["Heat", "Dehydration", "Sandstorms"],
+      "rewards": ["Food", "Water", "Clothing"]
+    },
+    "eastern_route": {
+      "description": "The eastern route. Dense, overgrown, but hidden.",
+      "trader_text": "The eastern route is hidden. But the forest is thick.",
+      "dangers": ["Wildlife", "Disease", "Getting lost"],
+      "rewards": ["Herbs", "Wood", "Game"]
+    },
+    "western_route": {
+      "description": "The western route. Open, exposed, but fast.",
+      "trader_text": "The western route is fast. But you're exposed.",
+      "dangers": ["Snipers", "Airstrikes", "Open ground"],
+      "rewards": ["Speed", "Efficiency", "Direct path"]
+    }
+  },
+  "trade_reputation": {
+    "levels": {
+      "unknown": {
+        "description": "Unknown. No one knows you. No one trusts you.",
+        "trader_text": "I don't know you. Why should I trust you?"
+      },
+    "known": {
+        "description": "Known. Some people know you. Some people trust you.",
+        "trader_text": "I've heard of you. You're okay."
+      },
+      "respected": {
+        "description": "Respected. Many people know you. Many people trust you.",
+        "trader_text": "I know you. You're good people."
+      },
+      "trusted": {
+        "description": "Trusted. Everyone knows you. Everyone trusts you.",
+        "trader_text": "I trust you. You've earned it."
+      },
+      "legendary": {
+        "description": "Legendary. Your name is known. Your reputation precedes you.",
+        "trader_text": "You're a legend. I'm honored to trade with you."
+      }
+    },
+    "effects": {
+      "unknown": "No discounts. No special items. No trust.",
+      "known": "Small discounts. Some special items. Some trust.",
+      "respected": "Medium discounts. More special items. More trust.",
+      "trusted": "Large discounts. All special items. Full trust.",
+      "legendary": "Maximum discounts. All special items. Complete trust."
+    }
+  },
+  "trade_disasters": {
+    "raid": {
+      "description": "Raiders attack the trade route. Supplies are lost.",
+      "trader_text": "The raiders hit us. We lost everything.",
+      "effect": "Prices increase. Supplies decrease. Morale drops."
+    },
+    "disease": {
+      "description": "Disease spreads through the trade route. Traders are sick.",
+      "trader_text": "The sickness is spreading. We can't trade.",
+      "effect": "Medical supplies increase in price. Trade slows."
+    },
+    "weather": {
+      "description": "Bad weather hits the trade route. Travel is dangerous.",
+      "trader_text": "The weather is bad. We can't travel.",
+      "effect": "Travel is dangerous. Supplies are delayed. Prices increase."
+    },
+    "radiation": {
+      "description": "Radiation plume hits the trade route. Contamination spreads.",
+      "trader_text": "The radiation is here. We can't stay.",
+      "effect": "Protection supplies increase in price. Trade stops."
+    },
+    "conflict": {
+      "description": "Conflict breaks out on the trade route. Fighting erupts.",
+      "trader_text": "The fighting has started. We can't trade.",
+      "effect": "Weapons increase in price. Trade stops. Danger increases."
+    }
+  },
+  "barter_system": {
+    "description": "The barter system. Where goods are traded for goods. Where money is worthless.",
+    "trader_text": "Money is worthless. Goods are everything.",
+    "player_text": "The barter system works. You trade what you have for what you need.",
+    "rules": {
+      "no_money": "Money is worthless. Only goods have value.",
+      "negotiate_always": "Always negotiate. Never accept the first offer.",
+      "know_value": "Know the value of your goods. Don't get cheated.",
+      "build_trust": "Build trust with traders. They give better deals to trusted partners.",
+      "be_patient": "Be patient. Don't rush into bad deals.",
+      "be_prepared": "Be prepared. Have your goods ready before you trade.",
+      "be_polite": "Be polite. Rudeness closes doors.",
+      "be_firm": "Be firm. Don't let traders push you around.",
+      "be_flexible": "Be flexible. Sometimes you need to compromise.",
+      "walk_away": "Walk away from bad deals. There will be other opportunities."
+    },
+    "common_goods": {
+      "food": "Food is always valuable. Everyone needs to eat.",
+      "water": "Water is always valuable. Everyone needs to drink.",
+      "medical": "Medical supplies are always valuable. Everyone gets sick or hurt.",
+      "fuel": "Fuel is always valuable. Everyone needs power.",
+      "weapons": "Weapons are always valuable. Everyone needs protection.",
+      "tools": "Tools are always valuable. Everyone needs to build or repair.",
+      "materials": "Materials are always valuable. Everyone needs to craft.",
+      "clothing": "Clothing is always valuable. Everyone needs to stay warm.",
+      "luxury": "Luxury items are valuable to the right person. Know your customer.",
+      "information": "Information is always valuable. Knowledge is power."
+    }
+  },
+  "trade_etiquette": {
+    "description": "Trade etiquette. The unwritten rules of trading. The way things are done.",
+    "trader_text": "There are rules. Follow them or suffer the consequences.",
+    "player_text": "Trade etiquette matters. Follow the rules or get cheated.",
+    "rules": {
+      "greet_first": "Always greet the trader first. It shows respect.",
+      "show_goods": "Show your goods before asking for theirs. It builds trust.",
+      "don't_insult": "Don't insult the trader's goods. It closes doors.",
+      "don't_lie": "Don't lie about your goods. It destroys trust.",
+      "don't_cheat": "Don't cheat the trader. It destroys relationships.",
+      "don't_steal": "Don't steal from the trader. It gets you killed.",
+      "pay_fair": "Pay a fair price. Don't lowball.",
+      "thank_trader": "Thank the trader after the deal. It builds relationships.",
+      "come_back": "Come back to the same traders. It builds trust.",
+      "spread_word": "Spread the word about good traders. It helps everyone."
+    }
+  },
+  "market_analysis": {
+    "description": "Market analysis. Understanding the market. Knowing what to buy and sell.",
+    "trader_text": "Know the market. Buy low, sell high.",
+    "player_text": "Market analysis works. Know what's valuable and what's not.",
+    "factors": {
+      "supply": "Supply affects price. Scarce items are expensive.",
+      "demand": "Demand affects price. Wanted items are expensive.",
+      "season": "Season affects price. Winter makes fuel expensive.",
+      "events": "Events affect price. Disasters make everything expensive.",
+      "location": "Location affects price. Remote areas have higher prices.",
+      "reputation": "Reputation affects price. Trusted traders get better deals.",
+      "quantity": "Quantity affects price. Bulk purchases get discounts.",
+      "quality": "Quality affects price. Better items are more expensive.",
+      "timing": "Timing affects price. Patience gets better deals.",
+      "competition": "Competition affects price. More traders mean lower prices."
+    }
+  },
+  "trade_psychology": {
+    "description": "Trade psychology. Understanding the trader's mind. Knowing what they want.",
+    "trader_text": "Understand the trader. Know what they want.",
+    "player_text": "Trade psychology works. Know what the trader needs.",
+    "trader_types": {
+      "desperate": "Desperate traders will take any deal. They need to sell.",
+      "greedy": "Greedy traders want maximum profit. They won't budge.",
+      "honest": "Honest traders give fair deals. They're rare.",
+      "dishonest": "Dishonest traders cheat you. Watch for lies.",
+      "friendly": "Friendly traders give better deals. Build relationships.",
+      "hostile": "Hostile traders don't want to deal. Walk away.",
+      "suspicious": "Suspicious traders don't trust you. Build trust.",
+      "experienced": "Experienced traders know the market. Don't try to cheat them.",
+      "inexperienced": "Inexperienced traders don't know the market. Be fair.",
+      "desperate_buyer": "Desperate buyers will pay any price. They need to buy."
+    }
+  },
+  "trade_secrets": {
+    "description": "Trade secrets. The tricks of the trade. The way to get ahead.",
+    "trader_text": "There are secrets. Learn them or suffer.",
+    "player_text": "Trade secrets work. Learn them or get cheated.",
+    "secrets": {
+      "know_customer": "Know your customer. Sell them what they need.",
+      "know_market": "Know the market. Buy low, sell high.",
+      "build_network": "Build a network. More connections mean more opportunities.",
+      "keep_records": "Keep records. Know what you bought and sold.",
+      "diversify": "Diversify. Don't put all your eggs in one basket.",
+      "be_patient": "Be patient. Don't rush into bad deals.",
+      "be_prepared": "Be prepared. Have your goods ready.",
+      "be_polite": "Be polite. Rudeness closes doors.",
+      "be_firm": "Be firm. Don't let traders push you around.",
+      "be_flexible": "Be flexible. Sometimes you need to compromise."
+    }
+  },
+  "trade_myths": {
+    "description": "Trade myths. The stories traders tell. The legends of the wasteland.",
+    "trader_text": "There are stories. Some are true. Some are not.",
+    "player_text": "Trade myths are stories. Some are true. Some are not.",
+    "myths": {
+      "golden_trade": "The golden trade. A deal so good it changes everything.",
+      "lost_cargo": "The lost cargo. A shipment of valuable goods, lost in the wasteland.",
+      "hidden_market": "The hidden market. A secret place where anything can be bought or sold.",
+      "trader_king": "The trader king. A legendary trader who controls the wasteland's economy.",
+      "cursed_goods": "The cursed goods. Items that bring bad luck to whoever owns them.",
+      "lucky_charm": "The lucky charm. An item that brings good luck to whoever owns it.",
+      "trade_war": "The trade war. A conflict between traders that changes the market.",
+      "price_crash": "The price crash. A sudden drop in prices that ruins traders.",
+      "price_spike": "The price spike. A sudden increase in prices that makes traders rich.",
+      "trade_route": "The trade route. A path through the wasteland that's safe and profitable."
+    }
+  },
+  "trade_legends": {
+    "description": "Trade legends. The stories of great traders. The heroes of the wasteland.",
+    "trader_text": "There are legends. Some are true. Some are not.",
+    "player_text": "Trade legends are stories. Some are true. Some are not.",
+    "legends": {
+      "the_merchant_prince": "The merchant prince. A trader who became a king.",
+      "the_caravan_queen": "The caravan queen. A woman who led caravans across the wasteland.",
+      "the_silent_trader": "The silent trader. A man who never spoke but always got the best deals.",
+      "the_great_barter": "The great barter. A trade so legendary it's still talked about.",
+      "the_trade_route_king": "The trade route king. A man who controlled all the trade routes.",
+      "the_market_master": "The market master. A woman who understood the market better than anyone.",
+      "the_deal_maker": "The deal maker. A trader who could make any deal happen.",
+      "the_price_warrior": "The price warrior. A trader who always got the best price.",
+      "the_goods_gatherer": "The goods gatherer. A trader who had everything.",
+      "the_trade_whisperer": "The trade whisperer. A trader who could talk anyone into anything."
+    }
+  },
+  "trade_guilds": {
+    "description": "Trade guilds. Organizations of traders. The power behind the market.",
+    "trader_text": "The guilds control the market. Join one or fight them.",
+    "player_text": "Trade guilds are powerful. Join one or fight them.",
+    "guilds": {
+      "merchants_guild": {
+        "description": "The merchants guild. The oldest and most powerful guild.",
+        "trader_text": "The merchants guild controls the market. They set the prices.",
+        "requirements": "Must have a reputation of 'respected' or higher.",
+        "benefits": "Access to exclusive goods. Better prices. Protection."
+      },
+      "scavengers_guild": {
+        "description": "The scavengers guild. The guild of those who find things.",
+        "trader_text": "The scavengers guild finds things. They sell them to the highest bidder.",
+        "requirements": "Must have a reputation of 'known' or higher.",
+        "benefits": "Access to rare goods. Better prices. Information."
+      },
+      "crafters_guild": {
+        "description": "The crafters guild. The guild of those who make things.",
+        "trader_text": "The crafters guild makes things. They sell them to those who need them.",
+        "requirements": "Must have crafting skills.",
+        "benefits": "Access to crafting materials. Better prices. Recipes."
+      },
+      "healers_guild": {
+        "description": "The healers guild. The guild of those who heal.",
+        "trader_text": "The healers guild heals. They sell medicine to those who need it.",
+        "requirements": "Must have medical skills.",
+        "benefits": "Access to medical supplies. Better prices. Knowledge."
+      },
+      "warriors_guild": {
+        "description": "The warriors guild. The guild of those who fight.",
+        "trader_text": "The warriors guild fights. They sell weapons to those who need them.",
+        "requirements": "Must have combat skills.",
+        "benefits": "Access to weapons. Better prices. Protection."
+      }
+    }
+  },
+  "trade_laws": {
+    "description": "Trade laws. The rules of the wasteland. The way things are done.",
+    "trader_text": "There are laws. Follow them or suffer the consequences.",
+    "player_text": "Trade laws matter. Follow them or get punished.",
+    "laws": {
+      "no_stealing": "Stealing is forbidden. Thieves are punished.",
+      "no_cheating": "Cheating is forbidden. Cheaters are punished.",
+      "no_fraud": "Fraud is forbidden. Fraudsters are punished.",
+      "no_extortion": "Extortion is forbidden. Extortionists are punished.",
+      "no_monopoly": "Monopoly is forbidden. Monopolists are punished.",
+      "fair_trade": "Fair trade is required. Unfair traders are punished.",
+      "honest_weights": "Honest weights are required. Dishonest traders are punished.",
+      "quality_goods": "Quality goods are required. Sellers of bad goods are punished.",
+      "respect_traders": "Respect traders. Disrespectful traders are punished.",
+      "pay_debts": "Pay your debts. Debtors are punished."
+    },
+    "punishments": {
+      "fine": "A fine. Pay money for breaking the law.",
+      "ban": "A ban. Be banned from trading.",
+      "exile": "Exile. Be exiled from the community.",
+      "death": "Death. Be executed for serious crimes."
+    }
+  },
+  "trade_history": {
+    "description": "Trade history. The story of trade. The evolution of the market.",
+    "trader_text": "Trade has a history. Learn it or repeat it.",
+    "player_text": "Trade history matters. Learn it or repeat it.",
+    "periods": {
+      "pre_war": {
+        "description": "Pre-war trade. The old world. The way things were.",
+        "trader_text": "Before the bombs, trade was easy. Money was everywhere.",
+        "characteristics": "Money was used. Markets were open. Trade was global."
+      },
+      "post_war": {
+        "description": "Post-war trade. The new world. The way things are.",
+        "trader_text": "After the bombs, trade changed. Money is worthless.",
+        "characteristics": "Barter is used. Markets are local. Trade is survival."
+      },
+      "rebuilding": {
+        "description": "Rebuilding trade. The future. The way things will be.",
+        "trader_text": "We are rebuilding trade. It will be different.",
+        "characteristics": "New currencies. New markets. New trade routes."
+      }
+    }
+  },
+  "trade_technology": {
+    "description": "Trade technology. The tools of trade. The way things are done.",
+    "trader_text": "Technology helps trade. Use it or fall behind.",
+    "player_text": "Trade technology matters. Use it or fall behind.",
+    "technologies": {
+      "radio": "Radio. Allows long-distance communication.",
+      "vehicle": "Vehicles. Allow fast transportation.",
+      "computer": "Computers. Allow data storage and analysis.",
+      "internet": "Internet. Allows global communication.",
+      "satellite": "Satellites. Allows global surveillance.",
+      "drone": "Drones. Allows aerial delivery.",
+      "solar": "Solar power. Allows renewable energy.",
+      "battery": "Batteries. Allows portable power.",
+      "water_purifier": "Water purifiers. Allows clean water.",
+      "air_filter": "Air filters. Allows clean air."
+    }
+  },
+  "trade_culture": {
+    "description": "Trade culture. The way traders live. The way traders think.",
+    "trader_text": "Trade has a culture. Understand it or suffer.",
+    "player_text": "Trade culture matters. Understand it or suffer.",
+    "aspects": {
+      "language": "Trade language. The way traders talk.",
+      "customs": "Trade customs. The way traders behave.",
+      "traditions": "Trade traditions. The way traders celebrate.",
+      "values": "Trade values. The way traders think.",
+      "beliefs": "Trade beliefs. The way traders believe.",
+      "rituals": "Trade rituals. The way traders worship.",
+      "symbols": "Trade symbols. The way traders identify.",
+      "artifacts": "Trade artifacts. The way traders remember.",
+      "stories": "Trade stories. The way traders teach.",
+      "songs": "Trade songs. The way traders sing."
+    }
+  },
+  "trade_philosophy": {
+    "description": "Trade philosophy. The way traders think. The way traders live.",
+    "trader_text": "Trade has a philosophy. Understand it or suffer.",
+    "player_text": "Trade philosophy matters. Understand it or suffer.",
+    "philosophies": {
+      "capitalism": "Capitalism. The strong survive. The weak perish.",
+      "socialism": "Socialism. Everyone shares. Everyone survives.",
+      "communism": "Communism. Everyone works. Everyone benefits.",
+      "anarchism": "Anarchism. No rules. No masters.",
+      "mercantilism": "Mercantilism. Trade is power. Power is trade.",
+      "free_trade": "Free trade. No restrictions. No barriers.",
+      "protectionism": "Protectionism. Protect local trade. Block foreign trade.",
+      "isolationism": "Isolationism. Don't trade. Don't interact.",
+      "globalism": "Globalism. Trade everywhere. Interact everywhere.",
+      "localism": "Localism. Trade locally. Interact locally."
+    }
+  },
+  "trade_future": {
+    "description": "Trade future. The way trade will be. The way the world will be.",
+    "trader_text": "Trade has a future. Shape it or be shaped.",
+    "player_text": "Trade future matters. Shape it or be shaped.",
+    "predictions": {
+      "new_currencies": "New currencies will emerge. Digital. Physical. Virtual.",
+      "new_markets": "New markets will emerge. Online. Offline. Virtual.",
+      "new_technologies": "New technologies will emerge. AI. Robots. Drones.",
+      "new_routes": "New routes will emerge. Land. Sea. Air.",
+      "new_goods": "New goods will emerge. Digital. Physical. Virtual.",
+      "new_services": "New services will emerge. Online. Offline. Virtual.",
+      "new_regulations": "New regulations will emerge. Local. Global. Virtual.",
+      "new_competition": "New competition will emerge. Local. Global. Virtual.",
+      "new_cooperation": "New cooperation will emerge. Local. Global. Virtual.",
+      "new_conflicts": "New conflicts will emerge. Local. Global. Virtual."
+    }
+  },
+  "trade_organizations": {
+    "description": "Trade organizations. Groups of traders. The power behind the market.",
+    "trader_text": "Organizations control the market. Join one or fight them.",
+    "player_text": "Trade organizations are powerful. Join one or fight them.",
+    "organizations": {
+      "trade_union": {
+        "description": "The trade union. A group of traders working together.",
+        "trader_text": "The trade union protects traders. Join us.",
+        "requirements": "Must be a trader.",
+        "benefits": "Protection. Fair prices. Information."
+      },
+      "merchant_guild": {
+        "description": "The merchant guild. A group of merchants controlling trade.",
+        "trader_text": "The merchant guild controls trade. Join us.",
+        "requirements": "Must have a reputation of 'respected' or higher.",
+        "benefits": "Access to exclusive goods. Better prices. Protection."
+      },
+      "scavenger_network": {
+        "description": "The scavenger network. A group of scavengers finding things.",
+        "trader_text": "The scavenger network finds things. Join us.",
+        "requirements": "Must be a scavenger.",
+        "benefits": "Access to rare goods. Better prices. Information."
+      },
+      "crafters_cooperative": {
+        "description": "The crafters cooperative. A group of crafters making things.",
+        "trader_text": "The crafters cooperative makes things. Join us.",
+        "requirements": "Must have crafting skills.",
+        "benefits": "Access to crafting materials. Better prices. Recipes."
+      },
+      "healers_circle": {
+        "description": "The healers circle. A group of healers helping people.",
+        "trader_text": "The healers circle helps people. Join us.",
+        "requirements": "Must have medical skills.",
+        "benefits": "Access to medical supplies. Better prices. Knowledge."
+      }
+    }
+  },
+  "trade_disputes": {
+    "description": "Trade disputes. Conflicts between traders. The dark side of trade.",
+    "trader_text": "Disputes happen. Resolve them or suffer.",
+    "player_text": "Trade disputes are common. Resolve them or suffer.",
+    "disputes": {
+      "price_war": {
+        "description": "A price war. Traders undercutting each other.",
+        "trader_text": "The price war is hurting everyone. We need to stop.",
+        "resolution": "Negotiate a fair price. Don't undercut each other."
+      },
+      "territory_dispute": {
+        "description": "A territory dispute. Traders fighting over territory.",
+        "trader_text": "This is my territory. Stay out.",
+        "resolution": "Negotiate boundaries. Share the territory."
+      },
+      "quality_dispute": {
+        "description": "A quality dispute. Traders selling bad goods.",
+        "trader_text": "Your goods are bad. I want my money back.",
+        "resolution": "Inspect goods before selling. Don't sell bad goods."
+      },
+      "payment_dispute": {
+        "description": "A payment dispute. Traders not paying.",
+        "trader_text": "You didn't pay me. I want my money.",
+        "resolution": "Pay what you owe. Don't cheat traders."
+      },
+      "theft_dispute": {
+        "description": "A theft dispute. Traders stealing from each other.",
+        "trader_text": "You stole from me. I want it back.",
+        "resolution": "Don't steal. Return what you stole."
+      }
+    }
+  },
+  "trade_agreements": {
+    "description": "Trade agreements. Deals between traders. The foundation of trade.",
+    "trader_text": "Agreements make trade possible. Honor them.",
+    "player_text": "Trade agreements are binding. Honor them.",
+    "agreements": {
+      "trade_pact": {
+        "description": "A trade pact. An agreement to trade fairly.",
+        "trader_text": "I agree to trade fairly. Do you?",
+        "terms": "Trade fairly. Don't cheat. Don't steal."
+      },
+      "non_competition_agreement": {
+        "description": "A non-competition agreement. An agreement not to compete.",
+        "trader_text": "I agree not to compete with you. Do you?",
+        "terms": "Don't compete. Don't undercut. Don't steal customers."
+      },
+      "exclusivity_agreement": {
+        "description": "An exclusivity agreement. An agreement to trade only with each other.",
+        "trader_text": "I agree to trade only with you. Do you?",
+        "terms": "Trade only with each other. Don't trade with competitors."
+      },
+      "mutual_defense_pact": {
+        "description": "A mutual defense pact. An agreement to protect each other.",
+        "trader_text": "I agree to protect you. Do you?",
+        "terms": "Protect each other. Don't abandon each other."
+      },
+      "information_sharing_agreement": {
+        "description": "An information sharing agreement. An agreement to share information.",
+        "trader_text": "I agree to share information with you. Do you?",
+        "terms": "Share information. Don't hide things from each other."
+      }
+    }
+  },
+  "trade_ceremonies": {
+    "description": "Trade ceremonies. Rituals of trade. The traditions of traders.",
+    "trader_text": "Ceremonies honor trade. Respect them.",
+    "player_text": "Trade ceremonies are important. Respect them.",
+    "ceremonies": {
+      "handshake": {
+        "description": "The handshake. A gesture of trust.",
+        "trader_text": "Shake my hand. It shows trust.",
+        "meaning": "Trust. Agreement. Respect."
+      },
+      "gift_exchange": {
+        "description": "The gift exchange. A gesture of goodwill.",
+        "trader_text": "Accept this gift. It shows goodwill.",
+        "meaning": "Goodwill. Friendship. Respect."
+      },
+      "toast": {
+        "description": "The toast. A gesture of celebration.",
+        "trader_text": "Let's toast. It celebrates our deal.",
+        "meaning": "Celebration. Success. Respect."
+      },
+      "signing": {
+        "description": "The signing. A gesture of commitment.",
+        "trader_text": "Sign here. It commits us to the deal.",
+        "meaning": "Commitment. Agreement. Respect."
+      },
+      "feast": {
+        "description": "The feast. A gesture of abundance.",
+        "trader_text": "Let's feast. It celebrates abundance.",
+        "meaning": "Abundance. Success. Respect."
+      }
+    }
+  },
+  "trade_superstitions": {
+    "description": "Trade superstitions. Beliefs of traders. The folklore of trade.",
+    "trader_text": "Superstitions guide traders. Respect them.",
+    "player_text": "Trade superstitions are real. Respect them.",
+    "superstitions": {
+      "lucky_coin": {
+        "description": "The lucky coin. A coin that brings good luck.",
+        "trader_text": "Carry a lucky coin. It brings good luck.",
+        "meaning": "Luck. Prosperity. Success."
+      },
+      "unlucky_number": {
+        "description": "The unlucky number. A number that brings bad luck.",
+        "trader_text": "Avoid the unlucky number. It brings bad luck.",
+        "meaning": "Bad luck. Failure. Loss."
+      },
+      "crossed_fingers": {
+        "description": "Crossed fingers. A gesture for good luck.",
+        "trader_text": "Cross your fingers. It brings good luck.",
+        "meaning": "Luck. Hope. Success."
+      },
+      "knock_on_wood": {
+        "description": "Knock on wood. A gesture to prevent bad luck.",
+        "trader_text": "Knock on wood. It prevents bad luck.",
+        "meaning": "Prevention. Protection. Safety."
+      },
+      "spilled_salt": {
+        "description": "Spilled salt. A sign of bad luck.",
+        "trader_text": "Don't spill salt. It brings bad luck.",
+        "meaning": "Bad luck. Misfortune. Loss."
+      }
+    }
+  },
+  "trade_proverbs": {
+    "description": "Trade proverbs. Wisdom of traders. The sayings of trade.",
+    "trader_text": "Proverbs guide traders. Learn them.",
+    "player_text": "Trade proverbs are wise. Learn them.",
+    "proverbs": {
+      "buy_low_sell_high": "Buy low, sell high. The secret to profit.",
+      "know_your_customer": "Know your customer. The secret to sales.",
+      "build_relationships": "Build relationships. The secret to repeat business.",
+      "diversify_inventory": "Diversify inventory. The secret to survival.",
+      "stay_informed": "Stay informed. The secret to advantage.",
+      "be_patient": "Be patient. The secret to good deals.",
+      "be_prepared": "Be prepared. The secret to success.",
+      "be_polite": "Be polite. The secret to open doors.",
+      "be_firm": "Be firm. The secret to respect.",
+      "be_flexible": "Be flexible. The secret to compromise."
+    }
+  },
+  "trade_jokes": {
+    "description": "Trade jokes. Humor of traders. The laughter of trade.",
+    "trader_text": "Jokes lighten the mood. Laugh with me.",
+    "player_text": "Trade jokes are funny. Laugh with me.",
+    "jokes": {
+      "why_did_the_trader": "Why did the trader cross the road? To get to the other market.",
+      "what_do_you_call": "What do you call a trader who never loses? A myth.",
+      "how_many_traders": "How many traders does it take to change a light bulb? None, they'll trade for a candle.",
+      "what's_the_difference": "What's the difference between a trader and a thief? A trader asks first.",
+      "why_don't_traders": "Why don't traders play hide and seek? Because good luck hiding when everyone wants your goods."
+    }
+  },
+  "trade_riddles": {
+    "description": "Trade riddles. Puzzles of traders. The challenges of trade.",
+    "trader_text": "Riddles challenge the mind. Solve them.",
+    "player_text": "Trade riddles are challenging. Solve them.",
+    "riddles": {
+      "what_is_valuable": "What is valuable to one person but worthless to another? An opinion.",
+      "what_can_you_keep": "What can you keep after giving to someone else? Your word.",
+      "what_is_hard_to_find": "What is hard to find but easy to lose? Trust.",
+      "what_is_better_than_gold": "What is better than gold but costs nothing? Knowledge.",
+      "what_is_the_best_investment": "What is the best investment? Education."
+    }
+  },
+  "trade_skills": {
+    "description": "Trade skills. The abilities of traders. The tools of the trade.",
+    "trader_text": "Skills make traders. Learn them or fail.",
+    "player_text": "Trade skills matter. Learn them or fail.",
+    "skills": {
+      "negotiation": {
+        "description": "Negotiation. The art of making deals.",
+        "trader_text": "Negotiation is key. Learn to negotiate.",
+        "importance": "Essential. Without negotiation, you can't trade.",
+        "difficulty": "Medium. Takes practice to master."
+      },
+      "appraisal": {
+        "description": "Appraisal. The art of valuing goods.",
+        "trader_text": "Appraisal is key. Learn to value goods.",
+        "importance": "Essential. Without appraisal, you get cheated.",
+        "difficulty": "Hard. Takes experience to master."
+      },
+      "persuasion": {
+        "description": "Persuasion. The art of convincing people.",
+        "trader_text": "Persuasion is key. Learn to convince people.",
+        "importance": "Important. Without persuasion, you can't sell.",
+        "difficulty": "Medium. Takes practice to master."
+      },
+      "deception": {
+        "description": "Deception. The art of lying.",
+        "trader_text": "Deception is dangerous. Use it carefully.",
+        "importance": "Risky. Can backfire if caught.",
+        "difficulty": "Hard. Takes skill to master."
+      },
+      "intimidation": {
+        "description": "Intimidation. The art of threatening.",
+        "trader_text": "Intimidation is dangerous. Use it carefully.",
+        "importance": "Risky. Can backfire if the trader is stronger.",
+        "difficulty": "Medium. Takes confidence to master."
+      },
+      "bartering": {
+        "description": "Bartering. The art of trading goods.",
+        "trader_text": "Bartering is key. Learn to trade goods.",
+        "importance": "Essential. Without bartering, you can't trade.",
+        "difficulty": "Easy. Takes practice to master."
+      },
+      "networking": {
+        "description": "Networking. The art of making connections.",
+        "trader_text": "Networking is key. Learn to make connections.",
+        "importance": "Important. Without networking, you can't find traders.",
+        "difficulty": "Medium. Takes time to master."
+      },
+      "observation": {
+        "description": "Observation. The art of watching.",
+        "trader_text": "Observation is key. Learn to watch.",
+        "importance": "Important. Without observation, you miss opportunities.",
+        "difficulty": "Easy. Takes attention to master."
+      },
+      "memory": {
+        "description": "Memory. The art of remembering.",
+        "trader_text": "Memory is key. Learn to remember.",
+        "importance": "Important. Without memory, you forget deals.",
+        "difficulty": "Medium. Takes practice to master."
+      },
+      "math": {
+        "description": "Math. The art of calculating.",
+        "trader_text": "Math is key. Learn to calculate.",
+        "importance": "Essential. Without math, you can't count.",
+        "difficulty": "Easy. Takes practice to master."
+      }
+    }
+  },
+  "trade_training": {
+    "description": "Trade training. The education of traders. The path to mastery.",
+    "trader_text": "Training makes traders. Get trained or fail.",
+    "player_text": "Trade training matters. Get trained or fail.",
+    "training": {
+      "apprenticeship": {
+        "description": "Apprenticeship. Learning from a master.",
+        "trader_text": "Apprenticeship is the best way to learn. Find a master.",
+        "duration": "Years. Takes time to master.",
+        "cost": "Free. You work for the master.",
+        "benefits": "Hands-on experience. Real-world knowledge."
+      },
+      "formal_education": {
+        "description": "Formal education. Learning in a school.",
+        "trader_text": "Formal education is good. But it's not the same as experience.",
+        "duration": "Months. Takes time to learn.",
+        "cost": "Expensive. You pay for the education.",
+        "benefits": "Structured learning. Theoretical knowledge."
+      },
+      "self_study": {
+        "description": "Self study. Learning on your own.",
+        "trader_text": "Self study is hard. But it's free.",
+        "duration": "Years. Takes time to learn.",
+        "cost": "Free. You learn on your own.",
+        "benefits": "Flexible schedule. Personal pace."
+      },
+      "mentorship": {
+        "description": "Mentorship. Learning from a mentor.",
+        "trader_text": "Mentorship is valuable. Find a mentor.",
+        "duration": "Months. Takes time to learn.",
+        "cost": "Free. The mentor teaches you.",
+        "benefits": "Personal guidance. Real-world advice."
+      },
+      "trial_and_error": {
+        "description": "Trial and error. Learning from mistakes.",
+        "trader_text": "Trial and error is painful. But it teaches you.",
+        "duration": "Years. Takes time to learn.",
+        "cost": "Expensive. You lose money on mistakes.",
+        "benefits": "Real-world experience. Hard lessons."
+      }
+    }
+  },
+  "trade_certifications": {
+    "description": "Trade certifications. The proof of skills. The badge of honor.",
+    "trader_text": "Certifications prove your skills. Get them.",
+    "player_text": "Trade certifications matter. Get them.",
+    "certifications": {
+      "master_trader": {
+        "description": "Master trader. The highest certification.",
+        "trader_text": "Master trader is the highest. It takes years to earn.",
+        "requirements": "Years of experience. Proven track record.",
+        "benefits": "Respect. Access to exclusive deals."
+      },
+      "certified_appraiser": {
+        "description": "Certified appraiser. The proof of appraisal skills.",
+        "trader_text": "Certified appraiser proves your skills. Get it.",
+        "requirements": "Appraisal training. Proven accuracy.",
+        "benefits": "Trust. Access to valuable goods."
+      },
+      "licensed_broker": {
+        "description": "Licensed broker. The proof of brokerage skills.",
+        "trader_text": "Licensed broker proves your skills. Get it.",
+        "requirements": "Brokerage training. Proven success.",
+        "benefits": "Legality. Access to official markets."
+      },
+      "certified_navigator": {
+        "description": "Certified navigator. The proof of navigation skills.",
+        "trader_text": "Certified navigator proves your skills. Get it.",
+        "requirements": "Navigation training. Proven accuracy.",
+        "benefits": "Safety. Access to dangerous routes."
+      },
+      "licensed_medic": {
+        "description": "Licensed medic. The proof of medical skills.",
+        "trader_text": "Licensed medic proves your skills. Get it.",
+        "requirements": "Medical training. Proven success.",
+        "benefits": "Trust. Access to medical supplies."
+      }
+    }
+  },
+  "trade_markets": {
+    "description": "Trade markets. The places where traders meet. The heart of commerce.",
+    "trader_text": "Markets are where trade happens. Find them.",
+    "player_text": "Trade markets matter. Find them.",
+    "markets": {
+      "open_air_market": {
+        "description": "Open air market. A market in the open.",
+        "trader_text": "Open air market is common. It's cheap to set up.",
+        "advantages": "Cheap. Accessible. Visible.",
+        "disadvantages": "Exposed to weather. No security."
+      },
+      "covered_market": {
+        "description": "Covered market. A market under a roof.",
+        "trader_text": "Covered market is better. It's protected from weather.",
+        "advantages": "Protected. Secure. Comfortable.",
+        "disadvantages": "Expensive. Limited space."
+      },
+      "underground_market": {
+        "description": "Underground market. A market below ground.",
+        "trader_text": "Underground market is hidden. It's for illegal goods.",
+        "advantages": "Hidden. Secure. Secret.",
+        "disadvantages": "Dangerous. Illegal. Hard to find."
+      },
+      "mobile_market": {
+        "description": "Mobile market. A market that moves.",
+        "trader_text": "Mobile market is flexible. It goes where the customers are.",
+        "advantages": "Flexible. Mobile. Accessible.",
+        "disadvantages": "Limited stock. Unpredictable."
+      },
+      "virtual_market": {
+        "description": "Virtual market. A market online.",
+        "trader_text": "Virtual market is the future. It's accessible from anywhere.",
+        "advantages": "Accessible. Convenient. Global.",
+        "disadvantages": "Requires technology. No physical goods."
+      }
+    }
+  },
+  "trade_competition": {
+    "description": "Trade competition. The rivalry between traders. The drive to succeed.",
+    "trader_text": "Competition drives trade. Embrace it.",
+    "player_text": "Trade competition is real. Embrace it.",
+    "competition": {
+      "price_war": {
+        "description": "Price war. Traders undercutting each other.",
+        "trader_text": "Price war hurts everyone. Avoid it.",
+        "impact": "Hurts profits. Drives down prices.",
+        "resolution": "Negotiate fair prices. Don't undercut."
+      },
+      "quality_war": {
+        "description": "Quality war. Traders improving quality.",
+        "trader_text": "Quality war benefits everyone. Embrace it.",
+        "impact": "Improves goods. Drives up quality.",
+        "resolution": "Improve your goods. Don't sacrifice quality."
+      },
+      "service_war": {
+        "description": "Service war. Traders improving service.",
+        "trader_text": "Service war benefits everyone. Embrace it.",
+        "impact": "Improves service. Drives up satisfaction.",
+        "resolution": "Improve your service. Don't sacrifice service."
+      },
+      "innovation_war": {
+        "description": "Innovation war. Traders innovating.",
+        "trader_text": "Innovation war benefits everyone. Embrace it.",
+        "impact": "Drives innovation. Creates new goods.",
+        "resolution": "Innovate. Don't stagnate."
+      },
+      "territory_war": {
+        "description": "Territory war. Traders fighting for territory.",
+        "trader_text": "Territory war hurts everyone. Avoid it.",
+        "impact": "Hurts trade. Drives up conflict.",
+        "resolution": "Negotiate boundaries. Share territory."
+      }
+    }
+  },
+  "trade_innovation": {
+    "description": "Trade innovation. The new ideas. The future of trade.",
+    "trader_text": "Innovation drives trade. Embrace it.",
+    "player_text": "Trade innovation is real. Embrace it.",
+    "innovations": {
+      "new_goods": {
+        "description": "New goods. The products of innovation.",
+        "trader_text": "New goods create new markets. Embrace them.",
+        "impact": "Creates demand. Drives trade.",
+        "examples": "New tools. New medicines. New technologies."
+      },
+      "new_services": {
+        "description": "New services. The offerings of innovation.",
+        "trader_text": "New services create new markets. Embrace them.",
+        "impact": "Creates demand. Drives trade.",
+        "examples": "New repairs. New treatments. New deliveries."
+      },
+      "new_technologies": {
+        "description": "New technologies. The tools of innovation.",
+        "trader_text": "New technologies create new markets. Embrace them.",
+        "impact": "Creates efficiency. Drives trade.",
+        "examples": "New computers. New vehicles. New communications."
+      },
+      "new_methods": {
+        "description": "New methods. The ways of innovation.",
+        "trader_text": "New methods create new markets. Embrace them.",
+        "impact": "Creates efficiency. Drives trade.",
+        "examples": "New negotiations. New deliveries. New payments."
+      },
+      "new_markets": {
+        "description": "New markets. The places of innovation.",
+        "trader_text": "New markets create new opportunities. Embrace them.",
+        "impact": "Creates demand. Drives trade.",
+        "examples": "New locations. New customers. New goods."
+      }
+    }
+  },
+  "trade_sustainability": {
+    "description": "Trade sustainability. The long-term view. The future of trade.",
+    "trader_text": "Sustainability matters. Think long-term.",
+    "player_text": "Trade sustainability is real. Think long-term.",
+    "sustainability": {
+      "resource_management": {
+        "description": "Resource management. Using resources wisely.",
+        "trader_text": "Resource management is key. Don't waste resources.",
+        "importance": "Essential. Without resources, you can't trade.",
+        "practices": "Conservation. Recycling. Efficiency."
+      },
+      "environmental_protection": {
+        "description": "Environmental protection. Protecting the environment.",
+        "trader_text": "Environmental protection is key. Don't destroy the environment.",
+        "importance": "Important. Without environment, you can't trade.",
+        "practices": "Conservation. Protection. Restoration."
+      },
+      "community_development": {
+        "description": "Community development. Building communities.",
+        "trader_text": "Community development is key. Build communities.",
+        "importance": "Important. Without communities, you can't trade.",
+        "practices": "Investment. Support. Growth."
+      },
+      "fair_trade": {
+        "description": "Fair trade. Trading fairly.",
+        "trader_text": "Fair trade is key. Trade fairly.",
+        "importance": "Essential. Without fairness, trade fails.",
+        "practices": "Fair prices. Fair wages. Fair treatment."
+      },
+      "long_term_thinking": {
+        "description": "Long-term thinking. Thinking about the future.",
+        "trader_text": "Long-term thinking is key. Think about the future.",
+        "importance": "Essential. Without long-term thinking, trade fails.",
+        "practices": "Planning. Investment. Sustainability."
+      }
+    }
+  },
+  "trade_strategies": {
+    "description": "Trade strategies. The plans of traders. The way to succeed.",
+    "trader_text": "Strategies guide traders. Plan your moves.",
+    "player_text": "Trade strategies matter. Plan your moves.",
+    "strategies": {
+      "buy_low_sell_high": {
+        "description": "Buy low, sell high. The classic strategy.",
+        "trader_text": "Buy when prices are low. Sell when prices are high.",
+        "risk": "Low. The strategy is simple.",
+        "reward": "High. The profits are good."
+      },
+      "diversify": {
+        "description": "Diversify. Don't put all your eggs in one basket.",
+        "trader_text": "Diversify your goods. Don't rely on one thing.",
+        "risk": "Low. The strategy is safe.",
+        "reward": "Medium. The profits are steady."
+      },
+      "specialize": {
+        "description": "Specialize. Focus on one type of goods.",
+        "trader_text": "Specialize in one type of goods. Become an expert.",
+        "risk": "Medium. The strategy is focused.",
+        "reward": "High. The profits are good."
+      },
+      "network": {
+        "description": "Network. Build relationships with other traders.",
+        "trader_text": "Network with other traders. Build relationships.",
+        "risk": "Low. The strategy is social.",
+        "reward": "Medium. The profits come from connections."
+      },
+      "innovate": {
+        "description": "Innovate. Create new goods or services.",
+        "trader_text": "Innovate. Create new goods or services.",
+        "risk": "High. The strategy is risky.",
+        "reward": "High. The profits are good."
+      },
+      "expand": {
+        "description": "Expand. Grow your business.",
+        "trader_text": "Expand your business. Grow your operations.",
+        "risk": "Medium. The strategy is ambitious.",
+        "reward": "High. The profits are good."
+      },
+      "consolidate": {
+        "description": "Consolidate. Focus on what works.",
+        "trader_text": "Consolidate your business. Focus on what works.",
+        "risk": "Low. The strategy is safe.",
+        "reward": "Medium. The profits are steady."
+      },
+      "adapt": {
+        "description": "Adapt. Change with the market.",
+        "trader_text": "Adapt to the market. Change with the times.",
+        "risk": "Medium. The strategy is flexible.",
+        "reward": "Medium. The profits are steady."
+      },
+      "survive": {
+        "description": "Survive. Stay alive in the wasteland.",
+        "trader_text": "Survive. Stay alive in the wasteland.",
+        "risk": "Low. The strategy is basic.",
+        "reward": "Low. The profits are survival."
+      },
+      "thrive": {
+        "description": "Thrive. Succeed in the wasteland.",
+        "trader_text": "Thrive. Succeed in the wasteland.",
+        "risk": "High. The strategy is ambitious.",
+        "reward": "High. The profits are good."
+      }
+    }
+  },
+  "trade_relationships": {
+    "description": "Trade relationships. The connections between traders. The bonds of commerce.",
+    "trader_text": "Relationships matter. Build them.",
+    "player_text": "Trade relationships matter. Build them.",
+    "relationships": {
+      "supplier": {
+        "description": "Supplier. Someone who provides goods.",
+        "trader_text": "Suppliers provide goods. Build relationships with them.",
+        "importance": "Essential. Without suppliers, you have no goods.",
+        "maintenance": "Regular orders. Fair prices. Good communication."
+      },
+      "customer": {
+        "description": "Customer. Someone who buys goods.",
+        "trader_text": "Customers buy goods. Build relationships with them.",
+        "importance": "Essential. Without customers, you have no sales.",
+        "maintenance": "Good service. Fair prices. Quality goods."
+      },
+      "competitor": {
+        "description": "Competitor. Someone who sells similar goods.",
+        "trader_text": "Competitors sell similar goods. Respect them.",
+        "importance": "Important. Competitors drive innovation.",
+        "maintenance": "Fair competition. Respect. Professional courtesy."
+      },
+      "partner": {
+        "description": "Partner. Someone who works with you.",
+        "trader_text": "Partners work with you. Build relationships with them.",
+        "importance": "Important. Partners help you grow.",
+        "maintenance": "Trust. Communication. Shared goals."
+      },
+      "mentor": {
+        "description": "Mentor. Someone who teaches you.",
+        "trader_text": "Mentors teach you. Build relationships with them.",
+        "importance": "Important. Mentors help you learn.",
+        "maintenance": "Respect. Gratitude. Listening."
+      },
+      "rival": {
+        "description": "Rival. Someone who competes with you.",
+        "trader_text": "Rivals compete with you. Respect them.",
+        "importance": "Important. Rivals drive you to be better.",
+        "maintenance": "Fair competition. Respect. Professional courtesy."
+      },
+      "friend": {
+        "description": "Friend. Someone who supports you.",
+        "trader_text": "Friends support you. Build relationships with them.",
+        "importance": "Important. Friends help you through tough times.",
+        "maintenance": "Trust. Communication. Support."
+      },
+      "enemy": {
+        "description": "Enemy. Someone who opposes you.",
+        "trader_text": "Enemies oppose you. Be careful around them.",
+        "importance": "Dangerous. Enemies can harm you.",
+        "maintenance": "Avoidance. Caution. Protection."
+      }
+    }
+  },
+  "trade_history_events": {
+    "description": "Trade history events. The moments that shaped trade. The turning points.",
+    "trader_text": "History shapes trade. Learn from it.",
+    "player_text": "Trade history events matter. Learn from them.",
+    "events": {
+      "the_great_trade": {
+        "description": "The great trade. A trade that changed everything.",
+        "trader_text": "The great trade changed everything. It's still talked about.",
+        "impact": "Changed the market. Created new opportunities.",
+        "lesson": "Big trades can change everything."
+      },
+      "the_market_crash": {
+        "description": "The market crash. A sudden drop in prices.",
+        "trader_text": "The market crash destroyed many traders. Be careful.",
+        "impact": "Destroyed wealth. Created poverty.",
+        "lesson": "Markets can crash. Be prepared."
+      },
+      "the_trade_war": {
+        "description": "The trade war. A conflict between traders.",
+        "trader_text": "The trade war hurt everyone. Avoid it.",
+        "impact": "Destroyed trade. Created enemies.",
+        "lesson": "Trade wars hurt everyone. Avoid them."
+      },
+      "the_discovery": {
+        "description": "The discovery. A new resource or route.",
+        "trader_text": "The discovery created new opportunities. Seize them.",
+        "impact": "Created new markets. Generated wealth.",
+        "lesson": "Discoveries create opportunities. Seize them."
+      },
+      "the_innovation": {
+        "description": "The innovation. A new technology or method.",
+        "trader_text": "The innovation changed trade. Embrace it.",
+        "impact": "Changed the market. Created new goods.",
+        "lesson": "Innovation changes trade. Embrace it."
+      },
+      "the_alliance": {
+        "description": "The alliance. A partnership between traders.",
+        "trader_text": "The alliance strengthened trade. Build alliances.",
+        "impact": "Strengthened trade. Created stability.",
+        "lesson": "Alliances strengthen trade. Build them."
+      },
+      "the_betrayal": {
+        "description": "The betrayal. A broken trust.",
+        "trader_text": "The betrayal destroyed trust. Be careful.",
+        "impact": "Destroyed trust. Created enemies.",
+        "lesson": "Betrayal destroys trust. Be careful."
+      },
+      "the_recovery": {
+        "description": "The recovery. A comeback from disaster.",
+        "trader_text": "The recovery showed resilience. Never give up.",
+        "impact": "Restored trade. Created hope.",
+        "lesson": "Recovery is possible. Never give up."
+      }
+    }
+  },
+  "trade_wisdom": {
+    "description": "Trade wisdom. The knowledge of traders. The lessons of experience.",
+    "trader_text": "Wisdom guides traders. Learn it.",
+    "player_text": "Trade wisdom matters. Learn it.",
+    "wisdom": {
+      "patience": "Patience. The ability to wait for the right moment.",
+      "observation": "Observation. The ability to see what others miss.",
+      "adaptation": "Adaptation. The ability to change with the market.",
+      "persistence": "Persistence. The ability to keep going despite setbacks.",
+      "integrity": "Integrity. The ability to be honest and fair.",
+      "generosity": "Generosity. The ability to give when you can.",
+      "caution": "Caution. The ability to be careful.",
+      "courage": "Courage. The ability to take risks.",
+      "wisdom": "Wisdom. The ability to make good decisions.",
+      "balance": "Balance. The ability to find the middle ground."
+    }
+  },
+  "trade_challenges": {
+    "description": "Trade challenges. The obstacles of trade. The tests of traders.",
+    "trader_text": "Challenges test traders. Overcome them.",
+    "player_text": "Trade challenges are real. Overcome them.",
+    "challenges": {
+      "scarcity": {
+        "description": "Scarcity. Not enough goods.",
+        "trader_text": "Scarcity is a challenge. Find alternatives.",
+        "solution": "Find alternatives. Create new goods. Trade with others."
+      },
+      "competition": {
+        "description": "Competition. Too many traders.",
+        "trader_text": "Competition is a challenge. Differentiate yourself.",
+        "solution": "Differentiate. Innovate. Build relationships."
+      },
+      "theft": {
+        "description": "Theft. Goods being stolen.",
+        "trader_text": "Theft is a challenge. Protect your goods.",
+        "solution": "Protect your goods. Build trust. Be careful."
+      },
+      "fraud": {
+        "description": "Fraud. Being cheated.",
+        "trader_text": "Fraud is a challenge. Be careful.",
+        "solution": "Be careful. Verify goods. Build trust."
+      },
+      "conflict": {
+        "description": "Conflict. Fighting with others.",
+        "trader_text": "Conflict is a challenge. Avoid it.",
+        "solution": "Avoid conflict. Build relationships. Be peaceful."
+      },
+      "disease": {
+        "description": "Disease. Getting sick.",
+        "trader_text": "Disease is a challenge. Stay healthy.",
+        "solution": "Stay healthy. Get medical care. Rest."
+      },
+      "weather": {
+        "description": "Weather. Bad conditions.",
+        "trader_text": "Weather is a challenge. Prepare for it.",
+        "solution": "Prepare. Adapt. Find shelter."
+      },
+      "radiation": {
+        "description": "Radiation. Contamination.",
+        "trader_text": "Radiation is a challenge. Avoid it.",
+        "solution": "Avoid radiation. Use protection. Stay safe."
+      }
+    }
+  },
+  "trade_success_stories": {
+    "description": "Trade success stories. The triumphs of traders. The victories of commerce.",
+    "trader_text": "Success stories inspire. Learn from them.",
+    "player_text": "Trade success stories matter. Learn from them.",
+    "stories": {
+      "the_rags_to_riches": {
+        "description": "The rags to riches story. A trader who started with nothing.",
+        "trader_text": "The rags to riches story is inspiring. It shows what's possible.",
+        "lesson": "Start small. Work hard. Never give up.",
+        "outcome": "Became wealthy. Built a trading empire."
+      },
+      "the_comeback": {
+        "description": "The comeback story. A trader who lost everything.",
+        "trader_text": "The comeback story is inspiring. It shows resilience.",
+        "lesson": "Never give up. Keep trying. Learn from mistakes.",
+        "outcome": "Recovered from loss. Built a new business."
+      },
+      "the_innovator": {
+        "description": "The innovator story. A trader who created something new.",
+        "trader_text": "The innovator story is inspiring. It shows creativity.",
+        "lesson": "Think differently. Create new things. Take risks.",
+        "outcome": "Created new goods. Changed the market."
+      },
+      "the_networker": {
+        "description": "The networker story. A trader who built relationships.",
+        "trader_text": "The networker story is inspiring. It shows the power of connections.",
+        "lesson": "Build relationships. Network. Help others.",
+        "outcome": "Built a network. Created opportunities."
+      },
+      "the_survivor": {
+        "description": "The survivor story. A trader who survived disaster.",
+        "trader_text": "The survivor story is inspiring. It shows resilience.",
+        "lesson": "Never give up. Keep fighting. Survive.",
+        "outcome": "Survived disaster. Rebuilt their life."
+      }
+    }
+  }
+}

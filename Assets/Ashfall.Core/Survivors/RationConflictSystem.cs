@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Survivors
 {
@@ -46,7 +47,7 @@ namespace Ashfall.Core.Survivors
         private readonly Dictionary<string, float> _allocations =
             new Dictionary<string, float>(StringComparer.Ordinal);
 
-        public RationConflictSystem(ISeededRng rng = null)
+        public RationConflictSystem(ISeededRng? rng = null)
         {
             _rng = rng ?? new SeededRng(31415);
         }
@@ -76,7 +77,7 @@ namespace Ashfall.Core.Survivors
             return sum / _allocations.Count;
         }
 
-        public RationConflictSurvivorState GetState(string survivorId)
+        public RationConflictSurvivorState? GetState(string survivorId)
         {
             return _bySurvivor.TryGetValue(survivorId, out var s) ? s : null;
         }
@@ -92,7 +93,7 @@ namespace Ashfall.Core.Survivors
             float deficit = average - myAlloc;
             if (deficit + 0.001f >= FairnessDeviationThreshold)
             {
-                string mostOverId = null;
+                string mostOverId = null!;
                 float maxAlloc = 0f;
                 foreach (var kv in _allocations)
                 {

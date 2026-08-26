@@ -34,13 +34,13 @@ namespace AtomicWar.GodotApp.YearOfAsh
         public IReadOnlyList<SurvivorOccupantSnapshot> DemoRoster => _demoRoster;
 
         public YearOfAshHostSession(
-            YearOfAshTimelineSystem timeline = null,
-            DoorEncounterSystem encounters = null,
-            FactionWarSystem factionWar = null,
-            QuestlineSystem quests = null,
-            YearOfAshDeepFreezeSystem deepFreeze = null,
-            YearOfAshRadonSystem radon = null,
-            WarlordDoctrineSystem warlord = null)
+            YearOfAshTimelineSystem timeline = null!,
+            DoorEncounterSystem encounters = null!,
+            FactionWarSystem factionWar = null!,
+            QuestlineSystem quests = null!,
+            YearOfAshDeepFreezeSystem deepFreeze = null!,
+            YearOfAshRadonSystem radon = null!,
+            WarlordDoctrineSystem warlord = null!)
         {
             _timeline = timeline ?? new YearOfAshTimelineSystem();
             _encounters = encounters ?? new DoorEncounterSystem();
@@ -94,7 +94,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             var session = new YearOfAshHostSession();
             if (!string.IsNullOrEmpty(dataDir))
             {
-                var fileIO = new FileSystemIO();
+                var fileIO = AtomicWar.GodotApp.CatalogPath.CreateFileIOForDataDir(dataDir);
                 var serializer = new SystemTextJsonSerializer();
                 DoorEncounterCatalogLoader.LoadAndRegister(session.Encounters, dataDir, fileIO, serializer);
                 YearOfAshCatalogLoader.LoadAndRegisterQuests(session.Quests, dataDir, fileIO, serializer);
@@ -253,7 +253,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 _timeline,
                 _encounters,
                 _factionWar,
-                null,
+                null!,
                 _deepFreeze,
                 _radon,
                 _quests,

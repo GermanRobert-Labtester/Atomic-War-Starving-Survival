@@ -24,7 +24,7 @@ namespace Ashfall.Core
             WaystationSystem waystation,
             HoldfastQuestSystem quests,
             HoldfastCatalog catalog,
-            District8DeepCoastSystem deepCoast = null)
+District8DeepCoastSystem? deepCoast = null)
         {
             IceRoad = ice ?? new IceRoadSystem();
             Census = census ?? new CensusClaimSystem();
@@ -36,7 +36,7 @@ namespace Ashfall.Core
             Wire();
         }
 
-        public static HoldfastSession Load(string dataDirectory, int seedSalt, bool expansionUnlocked, ILog log = null)
+        public static HoldfastSession Load(string dataDirectory, int seedSalt, bool expansionUnlocked, ILog? log = null)
         {
             var loader = new HoldfastCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer(), log);
             var catalog = loader.Load(dataDirectory, expansionUnlocked);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core;
 using Ashfall.Core.UtilityAI;
 
@@ -11,21 +12,18 @@ namespace AtomicWar.GodotApp
     /// the crossing companion actions. No rules here — hosts only wire.
     /// </summary>
     public sealed class UtilityAiHostSession
-    {
+    : HostSessionBase{
         public UtilityAiSystem Engine { get; }
         public List<UtilityActionDef> Actions { get; } = new List<UtilityActionDef>();
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
-        public UtilityAiHostSession(UtilityAiSystem engine = null)
+        public UtilityAiHostSession(UtilityAiSystem engine = null!)
         {
             Engine = engine ?? new UtilityAiSystem();
             Engine.OnActionSelected += (sv, actionId, score) =>
             {
                 LastEvent = $"{sv} selects {actionId} (score {score:0.000})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
         }
 

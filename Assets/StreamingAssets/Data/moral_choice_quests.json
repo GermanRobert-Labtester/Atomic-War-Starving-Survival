@@ -1,0 +1,784 @@
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_moral_share_child", "display_name": "The Hungry Child", "category": "share",
+      "trigger": "A starving child asks for food at a ruin crossing.",
+      "discovery": "A child, no older than eight, huddles in a corner, ribs showing through a torn shirt. 'Do you have any food?' The voice trembles on the last word.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give all your food", "moral_delta": 10, "empathy_delta": 1, "outcome_text": "You hand over everything. The child eats half, pockets the rest, and presses a charcoal drawing into your hand.", "epitaph": "Gave all my food to the child. They drew me a picture in return." },
+        { "label": "Give half your food", "moral_delta": 5, "empathy_delta": 1, "outcome_text": "The child eats carefully, watching you the whole time. Grateful, but not stupid.", "epitaph": "Shared half my food. The child said thank you twice and moved on." },
+        { "label": "Give a little food", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "A crust changes hands. The child looks at it, then at you, and says nothing.", "epitaph": "Gave a crust. It was something. It wasn't enough." },
+        { "label": "Refuse and walk on", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "You shake your head. The child mutters something bitter and turns away.", "epitaph": "Refused the child. I still hear the quiet way they said nothing." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_family", "display_name": "The Starving Family", "category": "share",
+      "trigger": "A family of four surfaces in an abandoned apartment block, a week without food.",
+      "discovery": "Two adults, two children, clothes gone to rags. The mother clutches a baby that hasn't cried in days. 'We haven't eaten in a week,' she whispers.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give all your supplies", "moral_delta": 15, "empathy_delta": 1, "outcome_text": "You empty your pack on their blanket. The father cries without noise. From today, this family calls you one of their own.", "epitaph": "Shared everything I had. They call me family now." },
+        { "label": "Give half your supplies", "moral_delta": 8, "empathy_delta": 1, "outcome_text": "Half of what you carry stays behind. They ration it like a ceremony. Grateful, and careful around you still.", "epitaph": "Gave the family half my stores. They will last the week." },
+        { "label": "Give a little", "moral_delta": 3, "empathy_delta": 0, "outcome_text": "You leave a few tins at the door. The mother thanks you. The father doesn't look up.", "epitaph": "Left a few tins for the family. Polite words, distant eyes." },
+        { "label": "Refuse", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "You say no. The mother nods like she expected it. The father curses your name with the last of his strength.", "epitaph": "Refused the family. The father's curse followed me down the stairwell." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_injured", "display_name": "The Injured Stranger", "category": "share",
+      "trigger": "A man lies bleeding in an alley with a broken leg.",
+      "discovery": "A man lies bleeding in the alley, leg bent the wrong way, face gray. 'Help me. Please,' he gasps, and doesn't seem to believe his own words.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give medical supplies", "moral_delta": 8, "empathy_delta": 1, "outcome_text": "You splint the leg and bind it clean. He grips your wrist and thanks you too many times.", "epitaph": "Treated the stranger's leg. He promised to help me if our roads cross again." },
+        { "label": "Give food instead", "moral_delta": 5, "empathy_delta": 1, "outcome_text": "No bandages, so you leave food. Color comes back to his face, not his leg.", "epitaph": "Left food with the injured man. His leg keeps its bend." },
+        { "label": "Give nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You step around him. He curses you once, then goes quiet.", "epitaph": "Walked past the injured man. His eyes followed me out of the alley." },
+        { "label": "Take his supplies", "moral_delta": -3, "empathy_delta": 0, "outcome_text": "You take his pack while he watches. He tries to stop you. He can't.", "epitaph": "Took the injured man's pack. It wasn't much. It was all he had." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_water", "display_name": "The Thirsty Traveler", "category": "share",
+      "trigger": "A sun-scorched traveler staggers into your camp asking for water.",
+      "discovery": "The traveler stumbles into camp, lips cracked black, skin burned through their coat. 'Water,' they rasp. 'Please.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give all your water", "moral_delta": 7, "empathy_delta": 1, "outcome_text": "You pass over the bottle. They drink like it's a religion, then tell you about a spring two valleys east.", "epitaph": "Shared all my water. They drank, and told me where the spring runs." },
+        { "label": "Give half your water", "moral_delta": 4, "empathy_delta": 1, "outcome_text": "Half your bottle. They ration it, grateful and worried at once.", "epitaph": "Split my water with the traveler. Half is better than none." },
+        { "label": "Give a sip", "moral_delta": 1, "empathy_delta": 0, "outcome_text": "A mouthful. They look at you a long moment, trying to decide what that was.", "epitaph": "Gave the traveler a sip. I'm still deciding what that was myself." },
+        { "label": "Refuse", "moral_delta": -4, "empathy_delta": 0, "outcome_text": "You pull the bottle back. They spit at your boots and move on.", "epitaph": "Refused water to the traveler. The spit dried before the anger did." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_elder", "display_name": "The Dying Elder", "category": "share",
+      "trigger": "An old woman near death asks for a kind voice and a little food.",
+      "discovery": "An old woman sits against a wall, breathing shallow. 'I don't have long. But I'd like to hear a kind voice before I go.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give food and medicine", "moral_delta": 12, "empathy_delta": 1, "outcome_text": "You share your food and the last of your medicine. She smiles, and tells you where her family's bunker sleeps.", "epitaph": "Gave the old woman my food and medicine. She told me about the family bunker before she passed." },
+        { "label": "Give some supplies", "moral_delta": 6, "empathy_delta": 1, "outcome_text": "You leave a little of everything. She thanks you for your kindness and rests easier.", "epitaph": "Left supplies with the dying woman. Kindness was the larger part." },
+        { "label": "Give nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You sit a moment, then go. She watches you leave without reproach, which is worse.", "epitaph": "Sat with the old woman, gave nothing. Her patience was the worst part." },
+        { "label": "Take her supplies", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "Her bundle is small. You take it anyway. She tries to curse you; she hasn't the breath.", "epitaph": "Took a dying woman's bundle. There wasn't much in it." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_pregnant", "display_name": "The Pregnant Woman", "category": "share",
+      "trigger": "A woman in labor reaches a medical outpost with nothing.",
+      "discovery": "A woman holds her belly in the doorway, face twisted with each wave. 'It's coming,' she says. 'It's coming soon.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give all your medical supplies", "moral_delta": 18, "empathy_delta": 1, "outcome_text": "You give everything: clean cloth, thread, the last of the antiseptic. A girl is born before dawn. They give her your name.", "epitaph": "Gave everything I had. A healthy girl. She carries my name now." },
+        { "label": "Give some supplies", "moral_delta": 9, "empathy_delta": 1, "outcome_text": "You give enough to keep it clean. The birth is hard, but it holds.", "epitaph": "Shared my medical kit. The delivery was hard, but it held." },
+        { "label": "Give nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You keep your kit shut. Somewhere in the dark, she does it alone.", "epitaph": "Withheld my kit. She delivered alone, and lived. Barely." },
+        { "label": "Take her supplies", "moral_delta": -12, "empathy_delta": 0, "outcome_text": "Her go-bag is under the cot. You take it while she can't stop you. She screams until the screaming becomes the labor.", "epitaph": "Took a woman's go-bag while she gave birth. I don't write the rest." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_raider", "display_name": "The Starving Raider", "category": "share",
+      "trigger": "A wounded raider with a broken gun begs for help at the edge of their own camp.",
+      "discovery": "A raider lies bleeding in the dirt, gun snapped in two beside them. 'I didn't mean to hurt you. Just give me something,' they plead.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give medical supplies", "moral_delta": 5, "empathy_delta": 1, "outcome_text": "You dress the wound. They laugh, then go serious, then tell you when the next raid moves out.", "epitaph": "Treated the raider's wound. They told me where the raiders are headed." },
+        { "label": "Give food", "moral_delta": 3, "empathy_delta": 1, "outcome_text": "You toss them a ration. They eat fast, watching the road the whole time.", "epitaph": "Fed the raider. They ate fast and said I was strange." },
+        { "label": "Give nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You leave them to the road. They spit, and it misses.", "epitaph": "Left the raider where they lay. Their luck was their problem." },
+        { "label": "Finish them", "moral_delta": -2, "empathy_delta": 0, "outcome_text": "It's quick. They curse you with their last breath, and the curse carries.", "epitaph": "Finished the raider. Their people will hear how." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_peacekeeper", "display_name": "The Peacekeeper in Need", "category": "share",
+      "trigger": "An ambushed Peacekeeper lies injured on the road.",
+      "discovery": "A Peacekeeper leans against a wreck, uniform torn, one leg useless. 'I was ambushed. Help me,' they gasp.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give all your supplies", "moral_delta": 14, "empathy_delta": 1, "outcome_text": "You treat the wound and share your stores. In return: safehouse codes, patrol rotations, quiet thanks.", "epitaph": "Helped the Peacekeeper. They shared safehouse locations and patrol routes." },
+        { "label": "Give some supplies", "moral_delta": 7, "empathy_delta": 1, "outcome_text": "Enough to stabilize. They thank you formally and limp for the outpost.", "epitaph": "Shared supplies with the Peacekeeper. Formal thanks, a firm handshake." },
+        { "label": "Give nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You walk on. They watch you go and note your face.", "epitaph": "Passed the injured Peacekeeper. They noted my face. I saw them do it." },
+        { "label": "Take their supplies", "moral_delta": -6, "empathy_delta": 0, "outcome_text": "Their kit is good. They try to stop you with one arm.", "epitaph": "Took the Peacekeeper's kit. Their report will carry my description." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_keeper", "display_name": "The Knowledge Keeper", "category": "share",
+      "trigger": "A Knowledge Keeper with broken glasses admits to hunger.",
+      "discovery": "A Knowledge Keeper sits hunched over a dead radio, glasses mended with wire and hope. 'I can't read without them. And I'm hungry,' they admit.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give food and spare glasses", "moral_delta": 16, "empathy_delta": 1, "outcome_text": "You share food and your spare lenses. They read aloud from a pre-war survey until the light dies, then gift it.", "epitaph": "Fed the Keeper and gave my spare lenses. They gave me a book of pre-war maps." },
+        { "label": "Give food only", "moral_delta": 8, "empathy_delta": 1, "outcome_text": "Food first. They share what they memorized, which is plenty.", "epitaph": "Fed the Keeper. What they keep in their head is worth more than the shelves." },
+        { "label": "Give nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You leave them to the dark and their memory.", "epitaph": "Gave the Keeper nothing. The dark reads to no one." },
+        { "label": "Take their notes", "moral_delta": -7, "empathy_delta": 0, "outcome_text": "Their notes go into your pack. They scream like you took a child.", "epitaph": "Took the Keeper's notes. They screamed at my back for an hour." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_bandit_leader", "display_name": "The Bandit Leader", "category": "share",
+      "trigger": "The bandit leader who once spared you sits by their fire.",
+      "discovery": "The bandit leader who let you live last winter sits by a low fire, counting shells. 'You showed mercy once. Maybe I return the favor,' they say.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give them supplies", "moral_delta": 6, "empathy_delta": 1, "outcome_text": "You share freely. They nod once — the road past their wire is yours.", "epitaph": "Shared supplies with the bandit leader. Their road is open to me now." },
+        { "label": "Give them nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You keep your pack shut. They shrug. 'Worth asking.' Respect, of a kind.", "epitaph": "Gave the bandit leader nothing but honesty. They respected that." },
+        { "label": "Take their supplies", "moral_delta": -1, "empathy_delta": 0, "outcome_text": "You try it. They laugh at the nerve, and let you keep your hands.", "epitaph": "Tried to take from the bandit leader. They laughed. I kept my hands." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_scientist", "display_name": "The Starving Scientist", "category": "share",
+      "trigger": "A radiation-sick scientist wheezes for medicine at a ruined lab.",
+      "discovery": "A scientist coughs into a rag, skin the color of old paper. 'I need medicine. Please,' they wheeze. Charts of isotope decay flutter around them.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give all your medicine", "moral_delta": 15, "empathy_delta": 1, "outcome_text": "You hand over your whole kit. Steadied, they talk you through a chelation formula used before the hospitals fell.", "epitaph": "Gave the scientist all my medicine. They taught me a chelation formula that works." },
+        { "label": "Give some medicine", "moral_delta": 8, "empathy_delta": 1, "outcome_text": "Half your stores. They stabilize enough to write the formula down for you.", "epitaph": "Shared my medicine. The scientist wrote the formula on the wall before I left." },
+        { "label": "Give nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You keep the kit. They go back to their charts, coughing in ratios.", "epitaph": "Withheld the medicine. Their charts outlived them by a season, I hear." },
+        { "label": "Take their research", "moral_delta": -9, "empathy_delta": 0, "outcome_text": "The binder is worth trading. They try to curse you between coughs.", "epitaph": "Took the scientist's research binder. It trades well. That's all I'll say." }
+      ]
+    },
+    {
+      "id": "quest_moral_share_farmer", "display_name": "The Last Farmer", "category": "share",
+      "trigger": "The last working farmer kneels among dying crops.",
+      "discovery": "The farmer kneels in black soil, every row gone to ash-blight. 'I can't save them. But I can save you,' they say, and mean it.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give seeds and fertilizer", "moral_delta": 20, "empathy_delta": 1, "outcome_text": "You hand over your seed stock and the last fertilizer. Within a month, green rows. Within two, a standing share of the harvest.", "epitaph": "Gave the farmer my seeds and fertilizer. The rows came back green, and they share the harvest." },
+        { "label": "Give some supplies", "moral_delta": 10, "empathy_delta": 1, "outcome_text": "Half the seed. Half the rows return. The farmer splits the yield with you anyway.", "epitaph": "Shared half my seed stock. Half a field grows. Half a harvest is mine." },
+        { "label": "Give nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You watch them watch the dirt. Then you go.", "epitaph": "Gave the farmer nothing but company. The dirt kept its dead." },
+        { "label": "Steal their seeds", "moral_delta": -15, "empathy_delta": 0, "outcome_text": "Their seed locker is unlocked — trust, once. You clean it out. They chase you to the fence line, screaming.", "epitaph": "Took the farmer's seed locker clean. Their fence has a new warning now." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_oldman", "display_name": "The Old Man's Tale", "category": "listen",
+      "trigger": "An old man by a fire offers stories of the world before.",
+      "discovery": "An old man feeds a small fire, eyes on something further off than the dark. 'You look like you've got time to listen. I've got stories. About before.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Listen for a while", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You listen until the fire needs feeding. He slips a location into the middle of a sentence, like it cost nothing.", "epitaph": "Listened to the old man's stories. He mentioned a family bunker I should see." },
+        { "label": "Listen until he's done", "moral_delta": 12, "empathy_delta": 3, "outcome_text": "You stay to the end, cold and all. He tells you about his son, and where his son's cache is.", "epitaph": "Stayed for the whole tale. He gave me his son's name and his son's cache." },
+        { "label": "Interrupt and move on", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You cut him off. He stops like a tap closed, and looks back into the fire.", "epitaph": "Cut the old man off mid-story. The fire got more of him than I did." },
+        { "label": "Mock his stories", "moral_delta": -2, "empathy_delta": 0, "outcome_text": "You laugh at the wrong part. He goes quiet in a way you'll remember.", "epitaph": "Laughed at the old man's world. He stopped talking. The night got long." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_mother", "display_name": "The Mother's Lament", "category": "listen",
+      "trigger": "A grieving mother rocks an empty cradle.",
+      "discovery": "A woman rocks a cradle with nothing in it, eyes red-raw. 'She would have been five this year,' she whispers, to the cradle.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Listen and offer comfort", "moral_delta": 10, "empathy_delta": 2, "outcome_text": "You stay, and you say the small true things. Afterward she presses a toy engine into your hands — something to carry for her.", "epitaph": "Listened to the mother's grief. She gave me her daughter's toy to carry." },
+        { "label": "Listen in silence", "moral_delta": 5, "empathy_delta": 3, "outcome_text": "You just listen. She talks for an hour and thanks you for the silence.", "epitaph": "Said nothing, heard everything. Sometimes that's the whole job." },
+        { "label": "Interrupt or leave", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You ease away. The rocking doesn't stop.", "epitaph": "Left the mother to her cradle. The rocking followed me out." },
+        { "label": "Laugh at her grief", "moral_delta": -3, "empathy_delta": 0, "outcome_text": "You laugh — nerves, or worse. She screams until people come.", "epitaph": "Laughed at the wrong grief. The camp remembers my face for it." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_soldier", "display_name": "The Soldier's Regret", "category": "listen",
+      "trigger": "A former soldier offers to talk about the war.",
+      "discovery": "A man in tattered fatigues sharpens a knife he doesn't need sharp. 'You want to hear about the war?' he asks. His voice makes it not a question.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Listen respectfully", "moral_delta": 9, "empathy_delta": 2, "outcome_text": "You hear it all, start to finish. At the end he adjusts your grip on your rifle, and it's like a different weapon.", "epitaph": "Heard the soldier out. He fixed my rifle grip and my stance." },
+        { "label": "Listen, but skeptically", "moral_delta": 4, "empathy_delta": 3, "outcome_text": "You question the parts that don't add up. He respects it — and marks two of your doubts as true.", "epitaph": "Questioned the soldier's story. He admitted which parts were true." },
+        { "label": "Interrupt or leave", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You've heard wars before. You go. The knife keeps its rhythm.", "epitaph": "Walked out on the soldier's war. His knife kept time with my steps." },
+        { "label": "Mock his service", "moral_delta": -4, "empathy_delta": 0, "outcome_text": "You say the wrong thing about the uniform. He's on his feet faster than he should be.", "epitaph": "Mocked the wrong uniform. Nearly bled for that one." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_child", "display_name": "The Child's Dream", "category": "listen",
+      "trigger": "A child tugs your sleeve to tell a story about stars.",
+      "discovery": "A child tugs your sleeve. 'Can I tell you a story? It's about stars,' they say, already glowing with it.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Listen enthusiastically", "moral_delta": 12, "empathy_delta": 2, "outcome_text": "You ask questions at the right places. They draw you their favorite constellation, and name a star after you.", "epitaph": "Heard the child's story about the stars. They named one after me." },
+        { "label": "Listen politely", "moral_delta": 6, "empathy_delta": 3, "outcome_text": "You nod through. They're happy. Stars, it turns out, are still worth talking about.", "epitaph": "Listened politely to the star story. Kids still look up. That's something." },
+        { "label": "Interrupt or leave", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You have somewhere to be. Their hand drops off your sleeve.", "epitaph": "Brushed off the child's story. Their hand let go slow." },
+        { "label": "Laugh at their story", "moral_delta": -1, "empathy_delta": 0, "outcome_text": "You laugh. They don't cry — they just file it away where you can't reach.", "epitaph": "Laughed at the star story. They didn't cry. Somehow that was worse." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_doctor", "display_name": "The Doctor's Warning", "category": "listen",
+      "trigger": "A doctor at a ruined hospital offers advice — story first.",
+      "discovery": "A doctor sits at a desk in a hallway of empty beds, charts fanned like cards. 'You look like you could use advice. But I tell it as a story first. Sit.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Listen carefully", "moral_delta": 14, "empathy_delta": 2, "outcome_text": "The story is about an outbreak two towns over. The lesson: how to catch radiation sickness early. She checks your hands before you go.", "epitaph": "Heard the doctor's whole story. She taught me the early signs, and checked my hands." },
+        { "label": "Listen, but impatiently", "moral_delta": 7, "empathy_delta": 3, "outcome_text": "You fidget; she notices; the story gets shorter but the dose advice survives.", "epitaph": "Fidgeted through the doctor's story. Kept the dose advice, lost the rest." },
+        { "label": "Interrupt or leave", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You've no time for stories. She sighs like a door closing.", "epitaph": "Left before the doctor's point. I'll wonder about that point later." },
+        { "label": "Mock their knowledge", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "You tell her stories don't matter. She looks at you the way the hallway looks at the beds.", "epitaph": "Mocked the doctor. Her eyes did the arithmetic on me." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_preacher", "display_name": "The Preacher's Sermon", "category": "listen",
+      "trigger": "A preacher on a crate asks for a moment of the word — what's left of it.",
+      "discovery": "A man in scorched robes stands on a crate. 'Brother. A moment for the word of — what's left of it,' he asks, not unkindly.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Listen respectfully", "moral_delta": 10, "empathy_delta": 2, "outcome_text": "You stand through the sermon. Afterward he gives you a pressed-tin cross and a warning about the eastern storm season.", "epitaph": "Stood for the whole sermon. He gave me a tin cross and a storm warning." },
+        { "label": "Listen skeptically", "moral_delta": 5, "empathy_delta": 3, "outcome_text": "You argue a point or two. He enjoys it more than the sermon. You leave with a blessing and a bruise on your certainty.", "epitaph": "Argued with the preacher. Enjoyed it, both of us. Left with his blessing." },
+        { "label": "Interrupt or leave", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You move on. He nods, used to it, and keeps preaching to the road.", "epitaph": "Walked past the sermon. His voice carried a long way behind me." },
+        { "label": "Blaspheme or mock", "moral_delta": -6, "empathy_delta": 0, "outcome_text": "You say something ugly about what's left of the word. The crowd goes quiet, and quiet crowds remember.", "epitaph": "Mocked the preacher's word. The crowd went quiet in a bad way." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_engineer", "display_name": "The Engineer's Explanation", "category": "listen",
+      "trigger": "An engineer offers to fix your broken tool — explanation included.",
+      "discovery": "A woman with grease to the elbows turns your broken tool over. 'I can fix this. But first, how it works — that part's not free to skip,' she says.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Hear the whole explanation", "moral_delta": 16, "empathy_delta": 2, "outcome_text": "You learn the mechanism, the failure, and the fix. The tool comes back better, and so do you.", "epitaph": "Learned how the tool works and why it broke. She re-hafted it and taught me the rest." },
+        { "label": "Listen, but impatiently", "moral_delta": 8, "empathy_delta": 3, "outcome_text": "You drum your fingers. She fixes it anyway, faster, quieter about the why.", "epitaph": "Got the tool fixed. Skipped most of the why. It works." },
+        { "label": "Interrupt: just fix it", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You wave the lesson off. She shrugs, fixes it, and gives you the tool like a closed subject.", "epitaph": "Had the tool fixed without the lesson. It works until it doesn't." },
+        { "label": "Mock their knowledge", "moral_delta": -7, "empathy_delta": 0, "outcome_text": "You tell her explanations are for schools. She hands back the tool in pieces.", "epitaph": "Mocked the engineer. Got my tool back in pieces." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_warning", "display_name": "The Survivor's Warning", "category": "listen",
+      "trigger": "A nervous survivor warns you off the road ahead.",
+      "discovery": "A survivor catches your sleeve at the fork, eyes flicking down both roads. 'Don't go that way. There's something bad there,' they whisper.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Take the warning seriously", "moral_delta": 12, "empathy_delta": 2, "outcome_text": "You take the other road. At dusk you hear it anyway, far off, where you would have been.", "epitaph": "Took the survivor's warning. Heard the trouble at dusk, right where I would've been." },
+        { "label": "Listen, but doubt it", "moral_delta": 6, "empathy_delta": 3, "outcome_text": "You go, but careful, wide, slow. The caution saves you the lesson's cost, if not the lesson.", "epitaph": "Doubted the warning but walked careful. Care was enough." },
+        { "label": "Ignore them", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You take the bad road anyway. Something bad is on it.", "epitaph": "Ignored the warning. The road taught the lesson instead." },
+        { "label": "Mock their fear", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "You laugh at them and take the road they feared, loudly. The road takes the joke badly.", "epitaph": "Mocked the warning and walked right in. Paid for the joke." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_lover", "display_name": "The Lover's Tale", "category": "listen",
+      "trigger": "A survivor by a fire tells of love before the exchange.",
+      "discovery": "A woman feeds photographs to the fire one at a time, not burning them — warming them. 'He used to bring me flowers. Before everything changed,' she says.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Listen sympathetically", "moral_delta": 9, "empathy_delta": 2, "outcome_text": "You hear it through. At the end she gives you the last photograph, kept whole — 'someone should carry it forward.'", "epitaph": "Heard her whole story. She gave me the last photo to carry forward." },
+        { "label": "Listen politely", "moral_delta": 4, "empathy_delta": 3, "outcome_text": "You nod at the right beats. She keeps one photograph and lets you see it.", "epitaph": "Listened to the lover's tale. She showed me the last photo." },
+        { "label": "Interrupt or leave", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You leave her to the photographs.", "epitaph": "Left her to her photographs. The fire was doing its slow work." },
+        { "label": "Laugh at the romance", "moral_delta": -3, "empathy_delta": 0, "outcome_text": "You laugh at flowers. She stands up. The night rearranges itself.", "epitaph": "Laughed at the flowers. She stood up and the night changed shape." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_teacher", "display_name": "The Teacher's Lesson", "category": "listen",
+      "trigger": "A former teacher offers a lesson on the world before.",
+      "discovery": "A woman with cracked glasses and a straight back looks you over. 'You could use some education. Let me tell you about the world before,' she says, and it starts exactly on time.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Listen attentively", "moral_delta": 15, "empathy_delta": 2, "outcome_text": "Hours pass like minutes. You leave reading the signage on the dead roads.", "epitaph": "Sat through the teacher's whole lesson. I can read the road signs now." },
+        { "label": "Listen, but bored", "moral_delta": 7, "empathy_delta": 3, "outcome_text": "You fidget through half. She assigns you homework — a sign to read on your way out.", "epitaph": "Half-listened to the lesson. She left me homework. I did it." },
+        { "label": "Interrupt or leave", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You've survived this long without the old world. You go.", "epitaph": "Walked out of the schoolroom. Survived fine. Know less." },
+        { "label": "Mock her teaching", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "You tell her the old world is dead weight. She closes the book gently, like a coffin lid.", "epitaph": "Mocked the teacher's old world. She closed the book on me." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_thief", "display_name": "The Thief's Confession", "category": "listen",
+      "trigger": "You catch a young thief with your gear — and an explanation.",
+      "discovery": "A young man freezes with your flashlight halfway into his coat. 'I can explain. I was going to pay you back,' he says fast, and mostly means it.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Hear the explanation", "moral_delta": 6, "empathy_delta": 2, "outcome_text": "His sister is coughing somewhere. You listen, then let him keep the light. He becomes useful after that.", "epitaph": "Heard the thief out. Let him keep the light. He's been useful since." },
+        { "label": "Listen, skeptical", "moral_delta": 3, "empathy_delta": 3, "outcome_text": "You question the story. Half of it holds. He returns half of what he took.", "epitaph": "Questioned the thief's story. Half held up. Half came back." },
+        { "label": "Report them to the camp", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "You hand him to the watch. The camp handles it. His sister's cough handles itself.", "epitaph": "Turned the thief in. The camp was thorough. I didn't stay to learn the rest." },
+        { "label": "Take more from them", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "You take from him what he took from you, plus interest. He doesn't argue. He remembers.", "epitaph": "Took back my gear and then some. He didn't argue. He'll remember." }
+      ]
+    },
+    {
+      "id": "quest_moral_listen_prophet", "display_name": "The Prophet's Vision", "category": "listen",
+      "trigger": "A wild-eyed man says the stars speak to him.",
+      "discovery": "A wild-eyed man points at the smoke-stained sky like it owes him money. 'The stars speak to me! Want to hear their message?' he asks, urgent as weather.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Hear the vision", "moral_delta": 18, "empathy_delta": 2, "outcome_text": "The vision is nonsense stitched with coordinates. You use the coordinates. They're real.", "epitaph": "Heard the prophet's vision. The message was madness with a map in it — the map was real." },
+        { "label": "Listen skeptically", "moral_delta": 9, "empathy_delta": 3, "outcome_text": "You sort the signal from the noise with him. Half the message survives your doubts, and half of that is useful.", "epitaph": "Argued the prophet's vision into sense. Kept the parts that held." },
+        { "label": "Interrupt or leave", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You have messages of your own to deliver — to anywhere but here.", "epitaph": "Left the prophet to his stars. They talk only to him." },
+        { "label": "Mock the visions", "moral_delta": -12, "empathy_delta": 0, "outcome_text": "You laugh at the stars. He goes very still and says your name, which you never gave him.", "epitaph": "Mocked the prophet's stars. He said my name. I never gave it." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_widow", "display_name": "The Grieving Widow", "category": "comfort",
+      "trigger": "A widow mourns her husband at the edge of camp.",
+      "discovery": "A woman sits alone with her husband's jacket in her lap, rocking slightly, whispering to a collar that isn't there.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Sit with her and listen", "moral_delta": 14, "empathy_delta": 4, "outcome_text": "You sit through the cold hours. Near dawn she presses his pocket watch into your hand — 'it should tick for someone.'", "epitaph": "Sat the night with the widow. She gave me his pocket watch. It should tick for someone." },
+        { "label": "Offer kind words", "moral_delta": 7, "empathy_delta": 2, "outcome_text": "You say what can be said. She thanks you, and the rocking slows.", "epitaph": "Said what could be said. Her rocking slowed a little." },
+        { "label": "Let her grieve alone", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You leave her the silence she seems to be keeping.", "epitaph": "Left the widow her silence. Maybe that was hers to keep." },
+        { "label": "Mock her grief", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "You say something about moving on. Her look files you where you belong.", "epitaph": "Told the widow to move on. Her look filed me away." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_child", "display_name": "The Traumatized Child", "category": "comfort",
+      "trigger": "A child screams through a nightmare.",
+      "discovery": "A child thrashes in their sleep, crying out — 'No! Don't take me!' — to something that isn't in the room.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Wake them gently and stay", "moral_delta": 16, "empathy_delta": 4, "outcome_text": "You wake them slow and stay until the shaking stops. The next day they bring you a flower, solemn as a treaty.", "epitaph": "Woke the child gently and stayed. They brought me a flower the next day." },
+        { "label": "Wake them roughly", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You shake them awake. The nightmare loses; so do you, a little.", "epitaph": "Shook the child awake. Nightmare over. They flinch at me now." },
+        { "label": "Ignore them", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You turn over. The crying wears itself out, the way it always has.", "epitaph": "Let the child cry it out. It's how the wasteland raises them." },
+        { "label": "Laugh at the nightmare", "moral_delta": -6, "empathy_delta": 0, "outcome_text": "You laugh at what scares them. They stop screaming. They stop most things after that.", "epitaph": "Laughed at the child's nightmare. They went quiet everywhere." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_injured", "display_name": "The Injured Survivor", "category": "comfort",
+      "trigger": "A survivor lies somewhere, weeping with pain.",
+      "discovery": "A survivor lies clutching their side in an alley, breath coming in little paying-out bursts. They aren't asking for anything anymore. That's the bad sign.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Stay until they're stable", "moral_delta": 10, "empathy_delta": 4, "outcome_text": "You stay, steady them, talk nonsense until the pain loosens. They say they owe you their life, and mean it like a debt.", "epitaph": "Stayed with the injured survivor till they steadied. They say the debt is standing." },
+        { "label": "Give basic first aid", "moral_delta": 5, "empathy_delta": 2, "outcome_text": "Clean, bind, elevate — the old words. They breathe easier and don't forget it.", "epitaph": "Bandaged the survivor properly. They remembered." },
+        { "label": "Ignore them", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You pass by. The alley keeps its own hours.", "epitaph": "Passed through the alley. Their breathing kept its own time." },
+        { "label": "Kick them", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "You nudge them out of your way with a boot. The sound they make travels.", "epitaph": "Kicked the injured out of my way. The sound carried." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_fear", "display_name": "The Survivor's Fear", "category": "comfort",
+      "trigger": "A survivor panics in the dark of a basement.",
+      "discovery": "A survivor kneels in the far corner of a cellar, hands over their ears. 'I can't — I can't do the dark,' they whisper, over and over.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Stay and keep them company", "moral_delta": 12, "empathy_delta": 4, "outcome_text": "You sit against the wall and talk about anything — routes, weather, food — until the dark is just dark again.", "epitaph": "Sat in the dark with them till it was only dark. Afterward they sorted my supplies without being asked." },
+        { "label": "Give them a light source", "moral_delta": 6, "empathy_delta": 2, "outcome_text": "You leave them your candle stub. Light is a language everyone reads.", "epitaph": "Left them my candle stub. Light talks people down." },
+        { "label": "Ignore them", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You find your own corner of the dark. The whimpering fades or you fade; hard to say.", "epitaph": "Kept my corner of the cellar. Their corner kept its noises." },
+        { "label": "Mock their fear", "moral_delta": -7, "empathy_delta": 0, "outcome_text": "You imitate the whimpering. It's very funny, to you. The cellar remembers.", "epitaph": "Mocked the fear in the dark. The cellar kept the echo." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_addict", "display_name": "The Addict's Struggle", "category": "comfort",
+      "trigger": "A survivor shakes through withdrawal.",
+      "discovery": "A survivor shakes against a wall, eyes running the perimeter. 'I need — I need something,' they whisper, hating every word.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Offer words and distraction", "moral_delta": 8, "empathy_delta": 4, "outcome_text": "You talk them through it — routes, weather, food, anything — hour after hour. The wave passes. They call it the first time.", "epitaph": "Talked the addict through the worst of it. First clean day, they said. First of a run, maybe." },
+        { "label": "Give them a placebo", "moral_delta": 4, "empathy_delta": 2, "outcome_text": "Sugar pills, blessed with a straight face. The body believes what the mind is told.", "epitaph": "Gave the sugar pills with a doctor's face. Belief did the medicine." },
+        { "label": "Give them the real thing", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "You hand over what they're begging for. The relief is instant, and it's a down payment on the next time.", "epitaph": "Gave them what they begged for. Instant relief. Compounded interest." },
+        { "label": "Mock their addiction", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "You do the shaking, as a joke. They laugh too, which is the worst part.", "epitaph": "Mocked the addict's shaking. They laughed along. That's the part I keep." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_guilt", "display_name": "The Survivor's Guilt", "category": "comfort",
+      "trigger": "A survivor repeats that they should have died instead.",
+      "discovery": "A survivor sits apart from the fire, saying it like a rosary: 'I should have died. I should have saved them. I should have died.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Listen and offer understanding", "moral_delta": 15, "empathy_delta": 4, "outcome_text": "You say the true thing: that the dead don't bill the living. It lands, eventually. That night they tell you where they've been hiding a working radio.", "epitaph": "Told them the dead don't bill the living. That night they showed me a working radio." },
+        { "label": "Offer kind words", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You say the kind thing. It doesn't fix it. It helps.", "epitaph": "Said the kind thing. Didn't fix it. Helped." },
+        { "label": "Ignore them", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You let the rosary run. It's not your liturgy.", "epitaph": "Left them to their litany. The fire did the rest." },
+        { "label": "Tell them to get over it", "moral_delta": -9, "empathy_delta": 0, "outcome_text": "You tell them everyone lost someone. They stop saying it out loud. They don't stop saying it.", "epitaph": "Told them everyone lost someone. True, and useless, and cruel." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_elder", "display_name": "The Elder's Wisdom", "category": "comfort",
+      "trigger": "An elder offers wisdom by the fire.",
+      "discovery": "An old man pats the crate beside him. 'You look like you could use some wisdom, son. Sit. Let an old man spend some,' he says.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Sit and take it all", "moral_delta": 14, "empathy_delta": 4, "outcome_text": "You get the flood season, the filter trick, the way to read a raider's camp by its smoke — and his pocket knife.", "epitaph": "Sat for the elder's wisdom. Flood season, the filter trick, his pocket knife." },
+        { "label": "Listen, but impatiently", "moral_delta": 7, "empathy_delta": 2, "outcome_text": "You take the headlines. He notices, and trims the sermon to the knife and one trick.", "epitaph": "Took the headlines of the elder's wisdom. He gave me the knife anyway." },
+        { "label": "Interrupt or leave", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You've survived this long on your own wisdom. You go.", "epitaph": "Declined the elder's wisdom. My own has carried me — so far." },
+        { "label": "Mock their age", "moral_delta": -6, "empathy_delta": 0, "outcome_text": "You joke about his era. He smiles with all his teeth and wishes you a long life.", "epitaph": "Mocked the elder's era. He wished me a long life, with all his teeth." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_nightmare", "display_name": "The Survivor's Nightmare", "category": "comfort",
+      "trigger": "A stranger on your floor thrashes through a nightmare.",
+      "discovery": "A survivor on the common floor thrashes, screaming — 'Don't let them take me!' — fists beating the blanket into surrender.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Wake them gently and comfort", "moral_delta": 10, "empathy_delta": 4, "outcome_text": "You bring them up slow, easy voice, hands where they can see them. They help you cook that evening, wordless, even.", "epitaph": "Woke the stranger gentle. That evening they helped me cook, no words needed." },
+        { "label": "Wake them roughly", "moral_delta": 5, "empathy_delta": 2, "outcome_text": "You shake them up and out of it. Awake is awake.", "epitaph": "Shook the stranger awake. Awake is awake. They kept their distance after." },
+        { "label": "Ignore them", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "Not your nightmare. You put your jacket over your ears.", "epitaph": "Let the stranger's nightmare run. Jacket over the ears." },
+        { "label": "Laugh at the nightmare", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "You laugh at the fighting blanket. Some of the others laugh too. The sleeper heard it all.", "epitaph": "Laughed at the fighting blanket. The sleeper heard. They knew." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_loneliness", "display_name": "The Survivor's Loneliness", "category": "comfort",
+      "trigger": "A survivor admits to weeks without speaking.",
+      "discovery": "A survivor sits where the firelight thins out, watching the camp like television. 'I haven't talked to anyone in weeks,' they say, to you, which counts as one.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Sit and talk with them", "moral_delta": 12, "empathy_delta": 4, "outcome_text": "You talk about nothing for two hours. They feed you afterward, from their own stores — hospitality as a second language.", "epitaph": "Talked with the lonely one about nothing for hours. They fed me from their own stores after." },
+        { "label": "Offer kind words", "moral_delta": 6, "empathy_delta": 2, "outcome_text": "You say the camp's not so bad. They half-smile. It's a start.", "epitaph": "Told them the camp wasn't so bad. Half a smile. Start of one." },
+        { "label": "Move along", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You nod and pass. The firelight takes them back.", "epitaph": "Nodded and moved along. The dark took them back in." },
+        { "label": "Tell them to find someone else", "moral_delta": -4, "empathy_delta": 0, "outcome_text": "You tell them everyone's busy surviving. They agree, which is how you lose them.", "epitaph": "Told the lonely one everyone's busy. They agreed. That was that." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_anger", "display_name": "The Survivor's Anger", "category": "comfort",
+      "trigger": "A survivor rages at the sky.",
+      "discovery": "A survivor stands in the road screaming at the sky, fists tight as valves. 'I HATE THIS WORLD!' — at the ash, the cold, the whole arithmetic of it.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Approach calmly and listen", "moral_delta": 9, "empathy_delta": 4, "outcome_text": "You walk up slow and let it run out. Afterward, hoarse, they tell you what the world took, itemized.", "epitaph": "Let the rage run its course. Hoarse, they itemized what the world took." },
+        { "label": "Offer kind words", "moral_delta": 4, "empathy_delta": 2, "outcome_text": "You say something mild. The volume drops. The anger keeps.", "epitaph": "Said something mild. Volume down. Anger intact." },
+        { "label": "Let them rage", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You wait it out at a safe radius, the way you'd weather a storm.", "epitaph": "Waited out the rage at storm distance." },
+        { "label": "Mock their anger", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "You cheer the sky on. They come down off the curb swinging.", "epitaph": "Cheered the sky on. Came to fists. The sky won either way." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_hope", "display_name": "The Survivor's Hope", "category": "comfort",
+      "trigger": "A survivor declares the world can be rebuilt.",
+      "discovery": "A survivor smiles at you — actually smiles — over a drawing of a rebuilt bridge. 'We can put it back. I can feel it in my heart,' they say, hand over the drawing like an oath.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Encourage their hope", "moral_delta": 18, "empathy_delta": 4, "outcome_text": "You say the bridge needs hands, and yours are two. They recruit you into the rebuild on the spot.", "epitaph": "Told them the bridge needs hands. Mine are two. I'm on the rebuild list." },
+        { "label": "Hear them out", "moral_delta": 9, "empathy_delta": 2, "outcome_text": "You listen to the whole plan. Some of it is even possible.", "epitaph": "Heard the whole rebuild plan. Parts of it might hold." },
+        { "label": "Say nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You keep your arithmetic to yourself and move along.", "epitaph": "Kept my arithmetic to myself. Their bridge, their business." },
+        { "label": "Call them delusional", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "You explain the numbers. You're right, and the light in their face goes out on schedule.", "epitaph": "Explained the numbers. Was right. Watched the light go out." }
+      ]
+    },
+    {
+      "id": "quest_moral_comfort_despair", "display_name": "The Survivor's Despair", "category": "comfort",
+      "trigger": "A survivor at the breaking point asks what the point is.",
+      "discovery": "A survivor sits against a basement wall, head in their hands. 'What's the point? We're all going to die anyway,' they say, in the tone of someone doing sums.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Sit with them, honestly", "moral_delta": 16, "empathy_delta": 4, "outcome_text": "You don't argue the sums; you re-aim them. 'Today, then.' They stand up. Months later they're running the watch roster.", "epitaph": "Re-aimed the sums to 'today, then.' They stood up. They run a watch roster now." },
+        { "label": "Offer kind words", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You say the standard things. Some land.", "epitaph": "Said the standard things. Some of them landed." },
+        { "label": "Let them be", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You leave them to the basement. Basements keep their own counsel.", "epitaph": "Left them in the basement. The basement kept its counsel." },
+        { "label": "Tell them to toughen up", "moral_delta": -12, "empathy_delta": 0, "outcome_text": "You tell them the weak are already dead. They look at you like you're the proof.", "epitaph": "Told them the weak are dead already. They looked at me like proof." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_unmarked", "display_name": "The Unmarked Grave", "category": "dead",
+      "trigger": "You find a small unmarked grave.",
+      "discovery": "A mound of dirt with no marker, no name, tidied by weather. Someone buried this one quietly, without ceremony, maybe without time.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Leave a marker and words", "moral_delta": 12, "empathy_delta": 2, "outcome_text": "You set a stone and say what words you have. The road feels lighter going on.", "epitaph": "Left a stone and a few words on the unmarked grave. The road felt lighter after." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You pass it by. It stays what it was: someone, somewhere, once.", "epitaph": "Passed the unmarked grave. It kept its secret." },
+        { "label": "Disturb the grave", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "You dig, gently or not. Whatever you learn, the road feels longer after.", "epitaph": "Dug into the unmarked grave. Found little. The road got longer." },
+        { "label": "Take items from the grave", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "There isn't much. You take it anyway. Word travels strangely from graves.", "epitaph": "Took from the unmarked grave. Small things. Word traveled anyway." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_burned", "display_name": "The Burned Body", "category": "dead",
+      "trigger": "A charred body lies in a burn zone.",
+      "discovery": "A body lies in the ashes, blackened past guessing. Whatever happened here, it was fast, and then it was over, and then it was this.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Cover the body", "moral_delta": 10, "empathy_delta": 2, "outcome_text": "You lay what cover you can over them. The ash stops moving in the wind, or seems to.", "epitaph": "Covered the burned body as well as the ash allows. Seemed quieter after." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The ash keeps its own counsel. You move on.", "epitaph": "Left the burned body to the ash." },
+        { "label": "Take items from the body", "moral_delta": -6, "empathy_delta": 0, "outcome_text": "The heat kept some things intact. You take them.", "epitaph": "Took what the fire kept intact. It kept more than I expected." },
+        { "label": "Laugh at the remains", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "You laugh at what the fire left. Companions, if any, remember the sound.", "epitaph": "Laughed at what the fire left. The sound stayed in my ears for days." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_bloated", "display_name": "The Bloated Corpse", "category": "dead",
+      "trigger": "A corpse floats near a water source.",
+      "discovery": "A body lies bloated in the shallows, skin gray and tight, upstream of where the camp draws water. Whatever ended them, the water is asking questions now.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Bury it away from the water", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You drag the body upwind and up-slope, and bury it deep. The camp's bellies stay quiet that week.", "epitaph": "Buried the body well away from the water. The camp stayed healthy and never knew why." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The water will decide. Water always decides.", "epitaph": "Left the body in the shallows. The water decided." },
+        { "label": "Move it carelessly", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "You haul it out without care for what leaks. Gloves would have been wise.", "epitaph": "Hauled the body out sloppy. Paid for it in a bad week." },
+        { "label": "Push it into the current", "moral_delta": -12, "empathy_delta": 0, "outcome_text": "You push it downstream — someone else's water problem now. Downstream is someone.", "epitaph": "Pushed the body downstream. Someone downstream drew that water." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_child", "display_name": "The Child's Body", "category": "dead",
+      "trigger": "A small body waits in a ruined home.",
+      "discovery": "A small body in the corner of a nursery, dust-covered, a toy still clutched where the hand closed years ago. The house is very quiet, and it wasn't always.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Bury the child properly", "moral_delta": 20, "empathy_delta": 2, "outcome_text": "You do it right: deep, marked, the toy left with them. A survivor passing asks who it was. 'Someone,' you say, and they help you finish.", "epitaph": "Buried the child properly, toy and all. A stranger stopped and helped me finish." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You leave the nursery as you found it. It stays found that way.", "epitaph": "Left the nursery as I found it. It will stay that way for the next one." },
+        { "label": "Take the toy", "moral_delta": -15, "empathy_delta": 0, "outcome_text": "You take the toy. It's worth trading. That's all it will ever be now.", "epitaph": "Took the toy from the small hand. It trades well. That's all it will ever buy." },
+        { "label": "Disturb the body", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "You turn the room looking for anything else. There is nothing else. There never was.", "epitaph": "Turned the nursery looking for more. There was no more." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_mass", "display_name": "The Mass Grave", "category": "dead",
+      "trigger": "A pit holds dozens, buried together.",
+      "discovery": "A pit lined with bodies, layered like sediment, no names, no order — someone with a machine did the arithmetic here, and someone else did the burying.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Say words, leave offerings", "moral_delta": 18, "empathy_delta": 2, "outcome_text": "You say one thing over the pit for all of them, and leave what you can spare. It's not enough. It's not nothing.", "epitaph": "Said one thing for all of them over the pit, and left what I could spare." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The pit keeps its ledger. You walk the rim and go.", "epitaph": "Walked the rim of the pit and went." },
+        { "label": "Take items from the bodies", "moral_delta": -12, "empathy_delta": 0, "outcome_text": "The dead were buried dressed. You know, because now you have their coat.", "epitaph": "Took a coat from the pit. It fits. That's the part I keep to myself." },
+        { "label": "Burn the bodies", "moral_delta": -15, "empathy_delta": 0, "outcome_text": "You burn the pit to be safe — plague, maybe. The smoke stands straight up for hours.", "epitaph": "Burned the pit, to be safe. The smoke stood straight up for hours. Safe." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_hanged", "display_name": "The Hanged Body", "category": "dead",
+      "trigger": "A body hangs from a gantry.",
+      "discovery": "A body hangs from a road gantry, turning gently, face fixed mid-plea. The rope is good rope. Someone knew what they were doing, or someone wanted it to look that way.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Cut them down and bury them", "moral_delta": 14, "empathy_delta": 2, "outcome_text": "You cut the rope and dig proper. The road feels returned to the road.", "epitaph": "Cut the hanged body down and buried them. The road belongs to the road again." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You pass under. The body turns to watch you go, in its way.", "epitaph": "Passed under the gantry. The turning followed me a while." },
+        { "label": "Cut them down, leave the body", "moral_delta": 7, "empathy_delta": 1, "outcome_text": "You cut the rope — nobody hangs on your road — but the digging is a step too far today.", "epitaph": "Cut them down, couldn't manage the rest. Nobody hangs on my road." },
+        { "label": "Take the rope", "moral_delta": -9, "empathy_delta": 0, "outcome_text": "Good rope is life out here. You leave them hanging and take what you need from below.", "epitaph": "Took the rope and left them hanging. Good rope. I know what I did." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_closet", "display_name": "The Skeleton in the Closet", "category": "dead",
+      "trigger": "A skeleton hides in a closet, half-covered.",
+      "discovery": "A skeleton in a bedroom closet, half-draped in the coat they died hiding under. The door was closed from the inside. You know because you opened it.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Bury the skeleton", "moral_delta": 12, "empathy_delta": 2, "outcome_text": "You carry them out and bury them under the yard tree. The house breathes out, or you do.", "epitaph": "Buried the closet skeleton under the yard tree. The house felt lighter, or I did." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You close the door again. From the outside, this time.", "epitaph": "Closed the closet door again. From the outside." },
+        { "label": "Take the coat", "moral_delta": -7, "empathy_delta": 0, "outcome_text": "The coat is good wool. You take it off them carefully, which counts for nothing, and you know it.", "epitaph": "Took the wool coat off the closet skeleton. Carefully. It counted for nothing." },
+        { "label": "Burn the skeleton", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "You burn the closet clean — plague rules. The house smells of wool smoke for days.", "epitaph": "Burned the closet by plague rules. Wool smoke for days." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_water", "display_name": "The Waterlogged Corpse", "category": "dead",
+      "trigger": "A body floats in a flooded street.",
+      "discovery": "A body floats face-down in the flood, pale as candle wax. The water around it has opinions — the bloating has begun, and the filtration math is getting worse.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Pull them out and bury them", "moral_delta": 10, "empathy_delta": 2, "outcome_text": "You wade in, haul them out, and bury them on the dry side. The water settles, in the way water does when it's done being a grave.", "epitaph": "Pulled the body from the flood and buried it on the dry side. The water settled after." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The flood keeps its tenant. You note which way the water flows — away from camp, hopefully.", "epitaph": "Left the body to the flood. Checked which way the water runs." },
+        { "label": "Take items from the body", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "You strip what the water kept. The water keeps other things too — you'll know in a few days.", "epitaph": "Took what the water kept. It kept other things too. I knew within the week." },
+        { "label": "Push them along", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "You push the body along the current. Out of sight is a kind of solution.", "epitaph": "Pushed the body along the flood. Out of sight. Some solution." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_cremated", "display_name": "The Cremated Remains", "category": "dead",
+      "trigger": "Partially-cremated remains wait in a burn zone.",
+      "discovery": "Bones in a shallow fire-pit, partially burned — someone tried to do this right and ran out of fuel, or time, or both. The ashes are cold and have been for a while.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Scatter the remains respectfully", "moral_delta": 16, "empathy_delta": 2, "outcome_text": "You finish what was started, with words, and scatter them where the wind takes them west — like they'd have wanted. Everyone wants west.", "epitaph": "Finished what the fire started and scattered them west. Everyone wants west." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The fire-pit keeps its half-story.", "epitaph": "Left the half-cremation as I found it. Half a story." },
+        { "label": "Take items from the remains", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "There's a melted ring and a heat-warped watch. You take both. Time, told twice wrong.", "epitaph": "Took the melted ring and the warped watch. Time, told twice wrong." },
+        { "label": "Reburn the remains", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "You light it again, to finish the job. The fire takes this time. Somehow that's worse.", "epitaph": "Lit the pit again to finish it. The fire took. It was worse." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_executed", "display_name": "The Executed Prisoner", "category": "dead",
+      "trigger": "A bound body waits in a cell.",
+      "discovery": "A body in a cell, hands still bound behind it, wall behind marked in a line. Firing squad, or its cousin. The paperwork on the desk says 'processed'.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Bury the prisoner properly", "moral_delta": 18, "empathy_delta": 2, "outcome_text": "You cut the bindings first — that matters — and bury them outside the wire. The block feels lighter for it.", "epitaph": "Cut the bindings and buried the prisoner outside the wire. It mattered." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The cell keeps its tenant and its paperwork.", "epitaph": "Left the prisoner to the cell and the paperwork." },
+        { "label": "Take items from the body", "moral_delta": -14, "empathy_delta": 0, "outcome_text": "The boots are army and fit. You know exactly what you're doing when you take them.", "epitaph": "Took the army boots off the bound body. They fit. I knew what I was doing." },
+        { "label": "Lay the body straight", "moral_delta": 9, "empathy_delta": 1, "outcome_text": "You can't manage a grave, but you lay them straight, facing the door, bindings cut. Small dignities are still dignities.", "epitaph": "Laid the prisoner straight and cut the bindings. Small dignity, still dignity." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_suicide", "display_name": "The Suicide", "category": "dead",
+      "trigger": "A body chose its own exit.",
+      "discovery": "A body in a quiet room, the means close at hand, a note weighted down with a stone — addressed to no one you'll ever meet, and to everyone.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Bury them with dignity", "moral_delta": 14, "empathy_delta": 2, "outcome_text": "You bury them with the note, unread but kept, under a cairn. Whatever the arithmetic was, it's theirs.", "epitaph": "Buried them with the note unread, under a cairn. The arithmetic was theirs." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You leave the room quiet, the way it was arranged.", "epitaph": "Left the room as it was arranged. Quiet." },
+        { "label": "Judge them for weakness", "moral_delta": -12, "empathy_delta": 0, "outcome_text": "You say what the weak do, out loud, to a room that can't argue. Survivors nearby can hear, and do.", "epitaph": "Called it weakness, out loud, to a room that couldn't argue. Others heard." },
+        { "label": "Take items from the body", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "The kit is complete and careful — it belonged to someone who planned. You take it all.", "epitaph": "Took the careful kit. It belonged to someone who planned. Now it plans for me." }
+      ]
+    },
+    {
+      "id": "quest_moral_dead_massacre", "display_name": "The Massacre Site", "category": "dead",
+      "trigger": "Dozens lie where they fell.",
+      "discovery": "Dozens of bodies across a field, dropped mid-motion — washing lines still up, a kettle on a cold stove. Whoever did this was quick and thorough, and the field has been keeping the details.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Bury the bodies", "moral_delta": 22, "empathy_delta": 2, "outcome_text": "It takes two days. You dig until your hands belong to someone else, and the field is rows instead of a story.", "epitaph": "Two days of digging turned the field to rows. My hands still remember the shovel." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You walk the field's edge, careful of your step, and leave it keeping them.", "epitaph": "Walked the massacre field's edge and left it keeping them." },
+        { "label": "Take items from the bodies", "moral_delta": -18, "empathy_delta": 0, "outcome_text": "The dead keep their pockets, but not from you. You work the field like a harvest.", "epitaph": "Worked the field like a harvest. The dead kept nothing, in the end." },
+        { "label": "Burn the bodies", "moral_delta": -15, "empathy_delta": 0, "outcome_text": "You burn the field clean — plague rules again — and the smoke can be seen from the next settlement, who send a rider to ask.", "epitaph": "Burned the field by plague rules. The next settlement sent a rider to ask." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_fire", "display_name": "The Stranger at the Fire", "category": "trust",
+      "trigger": "A stranger asks to share your fire.",
+      "discovery": "A stranger stands at the edge of your light, hands visible, cold written all over them. 'Mind if I join you?' — the oldest question in the world.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Invite them to sit", "moral_delta": 10, "empathy_delta": 2, "outcome_text": "They sit, share their food unprompted, and pass you a route north that's been good to them.", "epitaph": "Invited the stranger to the fire. They shared food and a safe route north." },
+        { "label": "Let them sit, keep your distance", "moral_delta": 5, "empathy_delta": 1, "outcome_text": "You nod at the far log. Everyone keeps their knives and their weather.", "epitaph": "Let the stranger sit at the far log. Knives stayed sheathed, both sides." },
+        { "label": "Send them off", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You tell them no. They go, taking the cold with them, leaving some behind.", "epitaph": "Turned the stranger from the fire. The cold split the difference." },
+        { "label": "Attack them", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "You go for them first. They're faster than cold people should be.", "epitaph": "Went for the stranger first. Cold people can be fast." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_wounded", "display_name": "The Wounded Stranger", "category": "trust",
+      "trigger": "A stranger bleeds out on the road.",
+      "discovery": "A stranger lies in the road's ruts, one hand pressed to their side, waving you down with the other. 'Help me. Please.' The road is empty in both directions, which is how you know someone may be watching.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Help them to their feet", "moral_delta": 14, "empathy_delta": 2, "outcome_text": "You take their weight. Two roads later they're still with you, teaching you the area's moods as they mend.", "epitaph": "Took the stranger's weight. They're still traveling with me, teaching me the roads." },
+        { "label": "Give first aid and send them on", "moral_delta": 7, "empathy_delta": 1, "outcome_text": "You patch what you can and point them at the clinic lights.", "epitaph": "Patched the stranger and pointed them at the clinic lights." },
+        { "label": "Walk past", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You pass wide around the waving hand. It stops waving.", "epitaph": "Walked wide around the waving hand. It stopped." },
+        { "label": "Take their supplies", "moral_delta": -10, "empathy_delta": 0, "outcome_text": "Their pack is right there. You take it and the road keeps its silence.", "epitaph": "Took the wounded stranger's pack. The road kept its silence." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_merchant", "display_name": "The Traveling Merchant", "category": "trust",
+      "trigger": "A merchant with a loaded cart offers trade.",
+      "discovery": "A merchant leans into the harness of a creaking cart, goods lashed under tarp. 'Looking for trade, friend?' — and the prices will tell you how friendly.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Trade fairly", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You pay the asking price without theater. They knock something off anyway, and tell you where the market gathers next.", "epitaph": "Traded fair with the merchant. They found me a discount and the next market's ground." },
+        { "label": "Bargain hard", "moral_delta": 4, "empathy_delta": 1, "outcome_text": "You grind them down a notch. They respect the work, mostly.", "epitaph": "Ground the merchant down a notch. They respected the craft." },
+        { "label": "Decline to trade", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You wave the cart on. The wheels complain into the distance.", "epitaph": "Waved the merchant on. The wheels complained out of earshot." },
+        { "label": "Rob them", "moral_delta": -6, "empathy_delta": 0, "outcome_text": "You take the cart at the crossroads. They scream for help; the crossroads is not a helping kind of place.", "epitaph": "Took the cart at the crossroads. Their screaming carried. So did the story." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_child", "display_name": "The Lost Child", "category": "trust",
+      "trigger": "A small child stands alone, crying.",
+      "discovery": "A small child stands in the ruin's mouth, crying the careful cry of someone who has been told not to attract attention. 'I can't find my mommy,' they manage.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Help them find family", "moral_delta": 16, "empathy_delta": 2, "outcome_text": "It takes all day. The reunion at the camp is brief, fierce, and the family marks you down in the good book.", "epitaph": "Walked the child home through the ruins. The family marked me in the good book." },
+        { "label": "Take them somewhere safe", "moral_delta": 8, "empathy_delta": 1, "outcome_text": "You deliver them to the waystation matron, who asks your name twice, to remember it right.", "epitaph": "Delivered the child to the waystation. The matron asked my name twice." },
+        { "label": "Leave them", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You can't carry one more thing. You go, and the crying follows farther than it should.", "epitaph": "Left the child crying in the ruin. It followed me farther than the sound should carry." },
+        { "label": "Take them somewhere else", "moral_delta": -12, "empathy_delta": 0, "outcome_text": "You take them — away, away from here, away from whoever asks after. They realize before you do.", "epitaph": "Took the child 'somewhere else.' They realized before I said it out loud." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_deserter", "display_name": "The Deserter", "category": "trust",
+      "trigger": "A soldier asks you not to turn them in.",
+      "discovery": "A man in half a uniform slips from a culvert, hands up before you've raised anything. 'I deserted. Please don't turn me in,' he whispers, already looking past you for the patrol.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Let him go", "moral_delta": 12, "empathy_delta": 2, "outcome_text": "You never saw him. In thanks he strips his rifle down and back together at speed — your rifle — until you can do it blind.", "epitaph": "Never saw the deserter. He taught me to strip my rifle blind, in thanks." },
+        { "label": "Hear his story", "moral_delta": 6, "empathy_delta": 1, "outcome_text": "You listen to where he ran from and why. He keeps the details; you keep the shape of it.", "epitaph": "Heard the deserter's story. He kept the details, I got the shape." },
+        { "label": "Walk on", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You've no side in this war either. You walk.", "epitaph": "Walked past the deserter. No side of mine." },
+        { "label": "Turn him in", "moral_delta": -9, "empathy_delta": 0, "outcome_text": "You point the patrol his way. The thank-you is a coupon and the look on his face is the change.", "epitaph": "Turned in the deserter. Got a coupon. Keep seeing his face in the change." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_woman", "display_name": "The Mysterious Woman", "category": "trust",
+      "trigger": "A woman with watchful eyes decides you seem trustworthy.",
+      "discovery": "A woman sits alone with a courier's bag she guards like a heartbeat, eyes doing the perimeter. 'You seem trustworthy,' she says. 'I have information.' The sentence hangs there like weather.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Hear her secrets", "moral_delta": 18, "empathy_delta": 2, "outcome_text": "The information is raider rotations for the whole eastern shore. She becomes a fixture at your fire after that.", "epitaph": "Heard the woman out. Raider rotations for the eastern shore — and her, at my fire, for good." },
+        { "label": "Listen skeptically", "moral_delta": 9, "empathy_delta": 1, "outcome_text": "Half of it checks out, and she respects that you checked. The other half comes with a discount.", "epitaph": "Checked her information. The half that held earned the other half." },
+        { "label": "Decline", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You've carried enough other people's weights. You decline, gently, and she takes her weather elsewhere.", "epitaph": "Declined the woman's information. She took the weather elsewhere." },
+        { "label": "Pry for more", "moral_delta": -14, "empathy_delta": 0, "outcome_text": "You push past what she offered. The bag disappears, the door closes, and your name gets a mark in whatever book she keeps.", "epitaph": "Pried past what she offered. The door closed. Somewhere there's a book with my name in it now." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_soldier", "display_name": "The Old Soldier", "category": "trust",
+      "trigger": "An old soldier cleans a rifle and offers advice.",
+      "discovery": "An old soldier in fatigues faded to rumor sits cleaning a rifle that outdates the war. 'You look like you could use some advice,' he says, working the bolt on 'advice.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Take his advice", "moral_delta": 15, "empathy_delta": 2, "outcome_text": "The lesson runs until dark — angles, doors, breathing. At the end he shoulders his pack and falls in beside you.", "epitaph": "Took the old soldier's lesson — angles, doors, breathing. He walked on with me after." },
+        { "label": "Listen, but impatiently", "moral_delta": 8, "empathy_delta": 1, "outcome_text": "You take the headlines of survival. He notices, trims it to three rules, and makes you repeat them.", "epitaph": "Got the headline version. Three rules. He made me repeat them back." },
+        { "label": "Wave him off", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You've made it this far on reflexes. He shrugs and keeps cleaning.", "epitaph": "Waved off the old soldier. Reflexes have carried me this far." },
+        { "label": "Mock his age", "moral_delta": -11, "empathy_delta": 0, "outcome_text": "You joke about museum pieces. He stands up in a way that ends the joking.", "epitaph": "Joked about museum pieces. He stood up slowly. The joke ended first." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_runaway", "display_name": "The Runaway", "category": "trust",
+      "trigger": "A barefoot teenager crashes out of the dark, pursued.",
+      "discovery": "A barefoot teenager crashes out of the rubble, wrists raw where rope bit. Behind: torchlight, a dog giving voice. 'Don't let them take me back. I'll work. Anything. Not the pits,' they gasp.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Hide them, misdirect the crew", "moral_delta": 15, "empathy_delta": 2, "outcome_text": "You point the torches down the wrong road. The kid sleeps warm behind your fire wall and leaves a carved token at dawn.", "epitaph": "Hid the runaway and sent the crew down the wrong road. They left me a carved token before heading north." },
+        { "label": "Rest them a few hours", "moral_delta": 7, "empathy_delta": 1, "outcome_text": "You feed them and point them at the marsh road. Frightened, grateful, gone by the second watch.", "epitaph": "Fed the runaway and set them on the marsh road. Gone by second watch." },
+        { "label": "Do nothing", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You step back into the dark and let the road sort it out. The dog sorts it out.", "epitaph": "Let the road sort out the runaway. The dog did the sorting." },
+        { "label": "Signal the crew", "moral_delta": -11, "empathy_delta": 0, "outcome_text": "You wave the torches over. The finder's fee is fair. The kid doesn't struggle — just looks at you, itemizing.", "epitaph": "Waved the crew over for the finder's fee. The kid didn't struggle. Just looked." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_silent", "display_name": "The Silent Stranger", "category": "trust",
+      "trigger": "A hooded figure waits at the edge of your firelight.",
+      "discovery": "A hooded figure stands at the edge of the light and says nothing. They point at the fire, at themselves, and hold up empty palms. The boots are worn through to the skin.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Welcome them to the fire", "moral_delta": 13, "empathy_delta": 2, "outcome_text": "They eat, sleep, and are gone before dawn — leaving your canteen full and a charcoal mark on your map: a safe ford.", "epitaph": "Fed the stranger who couldn't speak. Woke to a full canteen and a safe ford marked on my map." },
+        { "label": "Let them warm up, watch them", "moral_delta": 6, "empathy_delta": 1, "outcome_text": "You keep one eye open all night. In the morning they're a warm memory and one fewer ration.", "epitaph": "Let the silent one warm up, one eye open. Cost me a ration. Cheap." },
+        { "label": "Wave them off", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You shake your head. They fold back into the dark without a sound — on their side or yours.", "epitaph": "Waved off the silent stranger. They left without a sound, both kinds." },
+        { "label": "Draw a weapon", "moral_delta": -7, "empathy_delta": 0, "outcome_text": "You raise iron at empty palms. They're gone before the shout. Weeks later: a mute tracker, frozen, three roads over.", "epitaph": "Raised iron at empty palms. Heard about the mute tracker three roads over. Frozen." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_signal", "display_name": "The Distress Signal", "category": "trust",
+      "trigger": "Three taps repeat from a collapsed building.",
+      "discovery": "Tap. Tap. Tap. Then nothing. Then again — from under the slabs where a stairwell used to be. It could be someone pinned. It could be bait; the raiders have worked that trick before. The tapping is getting weaker.",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Dig them out, watching your back", "moral_delta": 17, "empathy_delta": 2, "outcome_text": "Two hours of slab-moving with one eye on the street. It's not a trap — it's a tunnel scout with route-chalk and a warning about the eastern passages.", "epitaph": "Dug two hours for the tapper. A tunnel scout — she shared her route-chalk and a warning about the east passages." },
+        { "label": "Call out and stand off", "moral_delta": 8, "empathy_delta": 1, "outcome_text": "You shout down the gap and wait, iron ready. Slower. Colder. They understand, and say so.", "epitaph": "Called down the gap and waited, iron ready. Slower, colder, alive." },
+        { "label": "Ignore it", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The tapping stops sometime before morning. You keep your own counsel about when exactly.", "epitaph": "The tapping stopped before morning. I kept my own count of when." },
+        { "label": "Set up on the rescuers", "moral_delta": -9, "empathy_delta": 0, "outcome_text": "You settle in to tax whoever answers the call. The only ones who come are other rescuers.", "epitaph": "Set up on the distress signal. Only rescuers came. I robbed rescuers." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_borrower", "display_name": "The Borrower", "category": "trust",
+      "trigger": "A stranger asks to borrow your good tool.",
+      "discovery": "'Lend me the prybar. Three days. I'm opening a cache on the river road and my partner took ours.' Their eyes hold yours and stay. 'I know what it costs to ask. I'm asking anyway.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Lend the good one", "moral_delta": 11, "empathy_delta": 2, "outcome_text": "It comes back on day two, re-hafted with cord, better than it left, wrapped around a note about a fuel cache under the bridge.", "epitaph": "Lent the prybar. Came back day two, better than it left, with a note about a fuel cache under the bridge." },
+        { "label": "Lend the broken one", "moral_delta": 4, "empathy_delta": 1, "outcome_text": "You hand over the cracked spare. They see the truth of it and say nothing — the loan was the point.", "epitaph": "Lent the cracked spare. They saw through it and said nothing. The loan was the point." },
+        { "label": "Refuse", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "You keep your iron to yourself. They nod and move on — but the asking cost them, and now you both know it.", "epitaph": "Refused the loan. They nodded. The asking cost them something." },
+        { "label": "Lend it, then follow and rob", "moral_delta": -13, "empathy_delta": 0, "outcome_text": "You lend it and shadow them to the cache. They don't fight you for it. They just remember your face, which is now their whole job.", "epitaph": "Lent the prybar and followed. Took the whole cache. They didn't fight. They'll remember." }
+      ]
+    },
+    {
+      "id": "quest_moral_trust_messenger", "display_name": "The Dying Messenger", "category": "trust",
+      "trigger": "A dying stranger entrusts you with a sealed packet.",
+      "discovery": "They make it to your fire before they fall. Inside their coat: a sealed oilcloth packet and a name on a scrap. 'Don't open it. Just get it to her. North station. Tell her I finished it.' You know north station — four days through bad country.",
+      "location_id": "", "min_day": 200, "max_day": 0,
+      "choices": [
+        { "label": "Carry it north, unopened", "moral_delta": 20, "empathy_delta": 4, "outcome_text": "Four days through the burned country and the seal stays whole. She reads it and weeps, and the station's back room is always warm for you now.", "epitaph": "Carried the packet north, seal whole. She cried at 'he finished it.' The back room at north station is always warm for me now." },
+        { "label": "Open it, then deliver", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You break the seal on night two — you had to know. She can tell. She takes the packet anyway, and thanks you for less.", "epitaph": "Opened it on the second night. Delivered it anyway. She could tell. I got the lesser thank-you." },
+        { "label": "Keep it", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The packet goes into your pack and stays there, heavier than its weight, gathering the dust of unfinished business.", "epitaph": "The packet's still in my pack. Heavier than its weight." },
+        { "label": "Sell the contents", "moral_delta": -15, "empathy_delta": 0, "outcome_text": "It buys something good at the waystation. You will not remember what, and neither will the record.", "epitaph": "Sold the packet's contents at the waystation. Bought something good. Can't recall what." }
+      ]
+    },
+    {
+      "id": "quest_moral_env_scavenger_child", "display_name": "The Scavenger's Child", "category": "share",
+      "trigger": "A child too young to scavenge searches through rubble alone.",
+      "discovery": "She can't be more than six. She pulls at a collapsed wall with bare hands, nails torn, looking for cans. She doesn't look up when you approach. 'Go away. I found this spot first.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Give her your food and help her search", "moral_delta": 12, "empathy_delta": 2, "outcome_text": "She eats without stopping work. You pull cans from the rubble together. At the end she gives you a bent bottle cap. 'For luck,' she says, and runs.", "epitaph": "Fed a scavenger child and helped her search. She gave me a bottle cap for luck." },
+        { "label": "Give her a little food", "moral_delta": 5, "empathy_delta": 1, "outcome_text": "She takes the crust and keeps digging. Doesn't say thank you. Doesn't need to.", "epitaph": "Gave a crust to a scavenger child. She kept digging." },
+        { "label": "Tell her to go home", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "'I don't have a home,' she says, and goes back to the rubble. You stand there a moment too long.", "epitaph": "Told a scavenger child to go home. She said she didn't have one." },
+        { "label": "Take what she's found", "moral_delta": -8, "empathy_delta": 0, "outcome_text": "Three cans and a water bottle. She watches you take them with eyes that have already learned this lesson.", "epitaph": "Took a scavenger child's finds. Three cans. Her eyes already knew this." }
+      ]
+    },
+    {
+      "id": "quest_moral_env_buried_letters", "display_name": "The Buried Letters", "category": "listen",
+      "trigger": "A survivor finds a bundle of pre-war letters and offers to share them.",
+      "discovery": "An old man sits against a wall, holding a bundle of letters tied with ribbon. 'Found these in a house,' he says. 'Can't read them myself. Eyes are gone. But I'd like to know what they say.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Read all the letters to him", "moral_delta": 10, "empathy_delta": 2, "outcome_text": "Love letters, mostly. A woman writing to her husband overseas. The old man listens with his eyes closed. When you finish he says, 'That's how it was. That's exactly how it was.'", "epitaph": "Read love letters to a blind old man. He said 'that's how it was.' I think he knew the couple." },
+        { "label": "Read a few, then move on", "moral_delta": 4, "empathy_delta": 1, "outcome_text": "Two letters. He nods and thanks you. 'Enough,' he says. 'Enough to remember by.'", "epitaph": "Read two letters to the old man. He said it was enough to remember by." },
+        { "label": "Refuse", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "He tucks the bundle back inside his coat. 'Someone else will read them,' he says, to no one.", "epitaph": "Refused to read the letters. He put them back in his coat." },
+        { "label": "Take the letters", "moral_delta": -5, "empathy_delta": 0, "outcome_text": "He doesn't fight you. 'They're just paper now,' he says. But his hands shake after you take them.", "epitaph": "Took the old man's letters. He said they're just paper. His hands shook." }
+      ]
+    },
+    {
+      "id": "quest_moral_env_shelter_refugee", "display_name": "The Shelter Seeker", "category": "trust",
+      "trigger": "A stranger asks to share your shelter for one night.",
+      "discovery": "Rain is coming. A woman stands at the edge of your camp, soaked through. 'One night,' she says. 'I'll be gone before light. I don't want trouble.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Share your shelter and fire", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "She dries her clothes and sleeps sitting up. Before dawn she leaves a bundle of kindling by the fire and is gone. You never learn her name.", "epitaph": "Shared my shelter with a stranger. She left kindling at dawn. Never got her name." },
+        { "label": "Let her stay outside the camp", "moral_delta": 3, "empathy_delta": 1, "outcome_text": "She huddles under the overhang, out of the worst of it. In the morning she nods once and walks into the rain.", "epitaph": "Let a stranger shelter at the edge. She nodded once and left in the rain." },
+        { "label": "Refuse", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "She doesn't argue. Just turns and walks into the weather. You hear her coughing long after she's gone.", "epitaph": "Refused shelter to a stranger in the rain. Heard her cough for a long time after." },
+        { "label": "Refuse and threaten her", "moral_delta": -7, "empathy_delta": 0, "outcome_text": "She raises her hands and backs away. 'I'm sorry,' she says, like it's her fault. It isn't.", "epitaph": "Threatened a soaked stranger asking for shelter. She apologized. It wasn't her fault." }
+      ]
+    },
+    {
+      "id": "quest_moral_env_dead_explorer", "display_name": "The Dead Explorer", "category": "dead",
+      "trigger": "A corpse found with a journal and personal effects.",
+      "discovery": "They died sitting up, back against a wall, journal open on their lap. The last entry is dated three months ago. 'Day 47. Ran out of water. The map was wrong. If anyone finds this, tell my daughter I tried.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Bury them and keep the journal", "moral_delta": 8, "empathy_delta": 2, "outcome_text": "You dig with your hands in the soft earth. The journal goes into your pack. If you ever find the daughter, you'll have something to give her.", "epitaph": "Buried the explorer and kept their journal. Looking for their daughter." },
+        { "label": "Say a few words and move on", "moral_delta": 4, "empathy_delta": 1, "outcome_text": "You stand there a moment. 'I'll look for her,' you say, knowing you probably won't. The words matter anyway.", "epitaph": "Said words over the explorer's body. Promised to find their daughter. Probably won't." },
+        { "label": "Take the map and leave them", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "The map is detailed, even if it was wrong for them. You fold it into your pack and leave the journal on their lap.", "epitaph": "Took the explorer's map. Left the journal. The map might be wrong for me too." },
+        { "label": "Take everything", "moral_delta": -4, "empathy_delta": 0, "outcome_text": "Map, journal, boots, coat. You strip them efficient and leave the bones to the weather.", "epitaph": "Stripped a dead explorer. Map, journal, boots, coat. Left the bones." }
+      ]
+    },
+    {
+      "id": "quest_moral_env_wounded_scavenger", "display_name": "The Wounded Scavenger", "category": "comfort",
+      "trigger": "A scavenger with a fresh wound sits alone, refusing to move.",
+      "discovery": "He sits in the rubble, hand wrapped in a bloody rag. 'Don't,' he says when you approach. 'I'm done. Just let me sit here.'",
+      "location_id": "", "min_day": 0, "max_day": 0,
+      "choices": [
+        { "label": "Treat his wound and stay with him", "moral_delta": 10, "empathy_delta": 2, "outcome_text": "You clean the cut and bind it proper. He doesn't thank you, but when you stand to leave he says, 'Wait. I know a route through the east block. Safer than the main road.'", "epitaph": "Treated a wounded scavenger. He told me a safe route through the east block." },
+        { "label": "Give him bandages and move on", "moral_delta": 5, "empathy_delta": 1, "outcome_text": "You toss him clean bandages. He catches them one-handed and starts unwrapping the rag. That's something.", "epitaph": "Gave bandages to a wounded scavenger. He started wrapping his own hand." },
+        { "label": "Walk past", "moral_delta": 0, "empathy_delta": 0, "outcome_text": "He said don't. You don't. You wonder about him for the rest of the day.", "epitaph": "Walked past a wounded scavenger who said don't. Wondered about him all day." },
+        { "label": "Take his pack while he sits", "moral_delta": -6, "empathy_delta": 0, "outcome_text": "He watches you take it. 'Figures,' he says, and goes back to staring at his hand.", "epitaph": "Took a wounded scavenger's pack. He said 'figures' and stared at his hand." }
+      ]
+    }
+  ]
+}

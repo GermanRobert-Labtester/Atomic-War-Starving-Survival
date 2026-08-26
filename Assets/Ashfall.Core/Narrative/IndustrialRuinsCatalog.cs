@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string draglinePath = Path.Combine(directoryPath, "surface_dragline_ruins.json");
             if (File.Exists(draglinePath))
             {
-                var list = JsonSerializer.Deserialize<List<DraglineRuinEntry>>(File.ReadAllText(draglinePath), options);
+                var list = CatalogLocator.LoadWrappedList<DraglineRuinEntry>(File.ReadAllText(draglinePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string subPath = Path.Combine(directoryPath, "substation_transformer_fires.json");
             if (File.Exists(subPath))
             {
-                var list = JsonSerializer.Deserialize<List<SubstationFireEntry>>(File.ReadAllText(subPath), options);
+                var list = CatalogLocator.LoadWrappedList<SubstationFireEntry>(File.ReadAllText(subPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string locoPath = Path.Combine(directoryPath, "armored_locomotive_manifests.json");
             if (File.Exists(locoPath))
             {
-                var list = JsonSerializer.Deserialize<List<ArmoredLocomotiveEntry>>(File.ReadAllText(locoPath), options);
+                var list = CatalogLocator.LoadWrappedList<ArmoredLocomotiveEntry>(File.ReadAllText(locoPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string pipePath = Path.Combine(directoryPath, "pipeline_sabotage_records.json");
             if (File.Exists(pipePath))
             {
-                var list = JsonSerializer.Deserialize<List<PipelineSabotageEntry>>(File.ReadAllText(pipePath), options);
+                var list = CatalogLocator.LoadWrappedList<PipelineSabotageEntry>(File.ReadAllText(pipePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public DraglineRuinEntry GetDragline(string id)
+        public DraglineRuinEntry? GetDragline(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is DraglineRuinEntry e ? e : null;
         }
 
-        public SubstationFireEntry GetSubstation(string id)
+        public SubstationFireEntry? GetSubstation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SubstationFireEntry e ? e : null;
         }
 
-        public ArmoredLocomotiveEntry GetLocomotive(string id)
+        public ArmoredLocomotiveEntry? GetLocomotive(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ArmoredLocomotiveEntry e ? e : null;
         }
 
-        public PipelineSabotageEntry GetPipeline(string id)
+        public PipelineSabotageEntry? GetPipeline(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PipelineSabotageEntry e ? e : null;

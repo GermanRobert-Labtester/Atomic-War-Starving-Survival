@@ -1,82 +1,133 @@
-[
-  {
-    "id": "escapement_wear_synthetic_ruby_pallet_chipping",
-    "clock_mechanism_id": "MASTER_REGULATOR_CENTRAL_TOWER",
-    "escapement_type": "GRAHAM_DEADBEAT_RUBY_PALLET",
-    "daily_rate_drift_seconds": 1.8,
-    "wear_depth_microns": 12.0,
-    "timestamp_relative": "YEAR_02_HOROLOGY_LOG_01",
-    "tags": ["horology", "deadbeat_escapement", "ruby_pallet", "chipping", "master_clock"],
-    "prose": "Mechanical vibration from a ceiling hoist failure transmitted shock into the Graham deadbeat escapement. The exit pallet's synthetic corundum jewel chipped at the impulse edge, causing the brass escape tooth to drag and losing 1.8 seconds per day."
-  },
-  {
-    "id": "escapement_wear_brass_escape_wheel_tooth_burr",
-    "clock_mechanism_id": "BUNKER_SECTOR_3_WALL_CLOCK",
-    "escapement_type": "HARDENED_BRASS_ESCAPE_WHEEL_30T",
-    "daily_rate_drift_seconds": -14.5,
-    "wear_depth_microns": 35.0,
-    "timestamp_relative": "YEAR_04_HOROLOGY_LOG_03",
-    "tags": ["horology", "escape_wheel", "burr", "pallet_stall", "timing_drift"],
-    "prose": "Friction against hardened steel pallet faces raised microscopic metal burrs along the locking tips of the 30-tooth brass escape wheel. The rough burrs seized against the entering pallet, stalling the pendulum mid-swing every morning."
-  },
-  {
-    "id": "escapement_wear_whale_oil_gumming_cold_tower",
-    "clock_mechanism_id": "SURFACE_GATE_TURRET_CLOCK",
-    "escapement_type": "DEADBEAT_STEEL_PALLET_ASSEMBLY",
-    "daily_rate_drift_seconds": -45.0,
-    "wear_depth_microns": 5.0,
-    "timestamp_relative": "YEAR_07_HOROLOGY_LOG_02",
-    "tags": ["horology", "lubrication", "whale_oil", "gumming", "cold_freeze"],
-    "prose": "A nuclear winter blizzard chilled the unheated gate tower to -18°C. The scavenged sperm whale oil lubricant oxidized into a waxy white paste that locked the escape wheel pivot arbor, freezing the tower hands at 03:14."
-  },
-  {
-    "id": "escapement_wear_graham_deadbeat_drop_rebound",
-    "clock_mechanism_id": "COMMAND_STAFF_SYNCHRONIZER",
-    "escapement_type": "PRECISION_GRAHAM_DEADBEAT_ADJUSTABLE",
-    "daily_rate_drift_seconds": 3.2,
-    "wear_depth_microns": 18.0,
-    "timestamp_relative": "YEAR_09_HOROLOGY_LOG_04",
-    "tags": ["horology", "locking_depth", "drop_rebound", "parasitic_drag", "synchronizer"],
-    "prose": "Improper adjustment of the eccentric pallet arbor screw increased locking depth by two degrees. The resulting tooth rebound exerted parasitic braking torque on the pendulum crutch, shortening pendulum arc amplitude from 2.5° to 1.4°."
-  },
-  {
-    "id": "escapement_wear_cycloidal_cheeks_leaf_spring_fatigue",
-    "clock_mechanism_id": "SECTOR_CHRONOMETER_VAULT_04",
-    "escapement_type": "HUYGENS_CYCLOIDAL_CHEEKS_ASSEMBLY",
-    "daily_rate_drift_seconds": -8.0,
-    "wear_depth_microns": 22.0,
-    "timestamp_relative": "YEAR_12_HOROLOGY_LOG_01",
-    "tags": ["horology", "cycloidal_cheeks", "suspension_spring", "isochronism", "fatigue"],
-    "prose": "Work hardening in the thin flat steel pendulum suspension spring caused it to curve unevenly against the brass cycloidal guide cheeks. The asymmetric flexure destroyed isochronism, causing wide timing variances between full and depleted weight drops."
-  },
-  {
-    "id": "escapement_wear_lantern_pinion_steel_roller_flat",
-    "clock_mechanism_id": "HOSPITAL_SHIFT_BELL_STRIKER",
-    "escapement_type": "LANTERN_PINION_CENTRAL_ARBOR",
-    "daily_rate_drift_seconds": 12.0,
-    "wear_depth_microns": 50.0,
-    "timestamp_relative": "YEAR_15_HOROLOGY_LOG_03",
-    "tags": ["horology", "lantern_pinion", "flat_spot", "trundle", "gear_stutter"],
-    "prose": "Dirt particles wedged into the great wheel teeth ground flat spots onto the freely rotating steel trundle pins of the lantern pinion. The resulting tooth engagement shudder jerked the escapement arbor every twelve seconds, blurring second hand motion."
-  },
-  {
-    "id": "escapement_wear_gravity_arm_remontoire_impulse",
-    "clock_mechanism_id": "FOUR_LEGGED_GRAVITY_REGULATOR",
-    "escapement_type": "DENISON_FOUR_LEGGED_GRAVITY_ARM",
-    "daily_rate_drift_seconds": 0.4,
-    "wear_depth_microns": 8.0,
-    "timestamp_relative": "YEAR_17_HOROLOGY_LOG_02",
-    "tags": ["horology", "gravity_escapement", "remontoire", "denison", "precision"],
-    "prose": "Dry molybdenum disulfide film on the gravity arm release pallets allowed consistent, unvarying mechanical impulse to the pendulum regardless of train friction. Daily timing drift was held to an exceptional 0.4 seconds across twelve months of continuous run."
-  },
-  {
-    "id": "escapement_wear_mercury_switch_electrical_impulse",
-    "clock_mechanism_id": "MASTER_CLOCK_PULSE_TRANSMITTER",
-    "escapement_type": "HIPP_TOGGLE_ELECTRICAL_IMPULSE",
-    "daily_rate_drift_seconds": 5.5,
-    "wear_depth_microns": 0.0,
-    "timestamp_relative": "YEAR_20_HOROLOGY_LOG_01",
-    "tags": ["horology", "hipp_toggle", "mercury_switch", "pulse_transmitter", "slave_clock"],
-    "prose": "Oxidation scum on the mercury pool of the Hipp toggle electrical impulse mechanism added 20ms of contact bounce. The delayed electromagnetic kick to the pendulum created random rate jitter, causing thirty secondary slave dials across the bunker to desynchronize."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "escapement_wear_synthetic_ruby_pallet_chipping",
+      "clock_mechanism_id": "MASTER_REGULATOR_CENTRAL_TOWER",
+      "escapement_type": "GRAHAM_DEADBEAT_RUBY_PALLET",
+      "daily_rate_drift_seconds": 1.8,
+      "wear_depth_microns": 12.0,
+      "timestamp_relative": "YEAR_02_HOROLOGY_LOG_01",
+      "tags": [
+        "horology",
+        "deadbeat_escapement",
+        "ruby_pallet",
+        "chipping",
+        "master_clock"
+      ],
+      "prose": "Mechanical vibration from a ceiling hoist failure transmitted shock into the Graham deadbeat escapement. The exit pallet's synthetic corundum jewel chipped at the impulse edge, causing the brass escape tooth to drag and losing 1.8 seconds per day."
+    },
+    {
+      "id": "escapement_wear_brass_escape_wheel_tooth_burr",
+      "clock_mechanism_id": "BUNKER_SECTOR_3_WALL_CLOCK",
+      "escapement_type": "HARDENED_BRASS_ESCAPE_WHEEL_30T",
+      "daily_rate_drift_seconds": -14.5,
+      "wear_depth_microns": 35.0,
+      "timestamp_relative": "YEAR_04_HOROLOGY_LOG_03",
+      "tags": [
+        "horology",
+        "escape_wheel",
+        "burr",
+        "pallet_stall",
+        "timing_drift"
+      ],
+      "prose": "Friction against hardened steel pallet faces raised microscopic metal burrs along the locking tips of the 30-tooth brass escape wheel. The rough burrs seized against the entering pallet, stalling the pendulum mid-swing every morning."
+    },
+    {
+      "id": "escapement_wear_whale_oil_gumming_cold_tower",
+      "clock_mechanism_id": "SURFACE_GATE_TURRET_CLOCK",
+      "escapement_type": "DEADBEAT_STEEL_PALLET_ASSEMBLY",
+      "daily_rate_drift_seconds": -45.0,
+      "wear_depth_microns": 5.0,
+      "timestamp_relative": "YEAR_07_HOROLOGY_LOG_02",
+      "tags": [
+        "horology",
+        "lubrication",
+        "whale_oil",
+        "gumming",
+        "cold_freeze"
+      ],
+      "prose": "A nuclear winter blizzard chilled the unheated gate tower to -18°C. The scavenged sperm whale oil lubricant oxidized into a waxy white paste that locked the escape wheel pivot arbor, freezing the tower hands at 03:14."
+    },
+    {
+      "id": "escapement_wear_graham_deadbeat_drop_rebound",
+      "clock_mechanism_id": "COMMAND_STAFF_SYNCHRONIZER",
+      "escapement_type": "PRECISION_GRAHAM_DEADBEAT_ADJUSTABLE",
+      "daily_rate_drift_seconds": 3.2,
+      "wear_depth_microns": 18.0,
+      "timestamp_relative": "YEAR_09_HOROLOGY_LOG_04",
+      "tags": [
+        "horology",
+        "locking_depth",
+        "drop_rebound",
+        "parasitic_drag",
+        "synchronizer"
+      ],
+      "prose": "Improper adjustment of the eccentric pallet arbor screw increased locking depth by two degrees. The resulting tooth rebound exerted parasitic braking torque on the pendulum crutch, shortening pendulum arc amplitude from 2.5° to 1.4°."
+    },
+    {
+      "id": "escapement_wear_cycloidal_cheeks_leaf_spring_fatigue",
+      "clock_mechanism_id": "SECTOR_CHRONOMETER_VAULT_04",
+      "escapement_type": "HUYGENS_CYCLOIDAL_CHEEKS_ASSEMBLY",
+      "daily_rate_drift_seconds": -8.0,
+      "wear_depth_microns": 22.0,
+      "timestamp_relative": "YEAR_12_HOROLOGY_LOG_01",
+      "tags": [
+        "horology",
+        "cycloidal_cheeks",
+        "suspension_spring",
+        "isochronism",
+        "fatigue"
+      ],
+      "prose": "Work hardening in the thin flat steel pendulum suspension spring caused it to curve unevenly against the brass cycloidal guide cheeks. The asymmetric flexure destroyed isochronism, causing wide timing variances between full and depleted weight drops."
+    },
+    {
+      "id": "escapement_wear_lantern_pinion_steel_roller_flat",
+      "clock_mechanism_id": "HOSPITAL_SHIFT_BELL_STRIKER",
+      "escapement_type": "LANTERN_PINION_CENTRAL_ARBOR",
+      "daily_rate_drift_seconds": 12.0,
+      "wear_depth_microns": 50.0,
+      "timestamp_relative": "YEAR_15_HOROLOGY_LOG_03",
+      "tags": [
+        "horology",
+        "lantern_pinion",
+        "flat_spot",
+        "trundle",
+        "gear_stutter"
+      ],
+      "prose": "Dirt particles wedged into the great wheel teeth ground flat spots onto the freely rotating steel trundle pins of the lantern pinion. The resulting tooth engagement shudder jerked the escapement arbor every twelve seconds, blurring second hand motion."
+    },
+    {
+      "id": "escapement_wear_gravity_arm_remontoire_impulse",
+      "clock_mechanism_id": "FOUR_LEGGED_GRAVITY_REGULATOR",
+      "escapement_type": "DENISON_FOUR_LEGGED_GRAVITY_ARM",
+      "daily_rate_drift_seconds": 0.4,
+      "wear_depth_microns": 8.0,
+      "timestamp_relative": "YEAR_17_HOROLOGY_LOG_02",
+      "tags": [
+        "horology",
+        "gravity_escapement",
+        "remontoire",
+        "denison",
+        "precision"
+      ],
+      "prose": "Dry molybdenum disulfide film on the gravity arm release pallets allowed consistent, unvarying mechanical impulse to the pendulum regardless of train friction. Daily timing drift was held to an exceptional 0.4 seconds across twelve months of continuous run."
+    },
+    {
+      "id": "escapement_wear_mercury_switch_electrical_impulse",
+      "clock_mechanism_id": "MASTER_CLOCK_PULSE_TRANSMITTER",
+      "escapement_type": "HIPP_TOGGLE_ELECTRICAL_IMPULSE",
+      "daily_rate_drift_seconds": 5.5,
+      "wear_depth_microns": 0.0,
+      "timestamp_relative": "YEAR_20_HOROLOGY_LOG_01",
+      "tags": [
+        "horology",
+        "hipp_toggle",
+        "mercury_switch",
+        "pulse_transmitter",
+        "slave_clock"
+      ],
+      "prose": "Oxidation scum on the mercury pool of the Hipp toggle electrical impulse mechanism added 20ms of contact bounce. The delayed electromagnetic kick to the pendulum created random rate jitter, causing thirty secondary slave dials across the bunker to desynchronize."
+    }
+  ]
+}

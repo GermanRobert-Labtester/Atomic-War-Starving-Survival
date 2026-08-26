@@ -1,72 +1,117 @@
-[
-  {
-    "id": "locomotive_armored_steel_plow_dreadnought",
-    "locomotive_id": "ARMORED_ENGINE_704_IRON_WOLF",
-    "locomotive_type": "DIESEL_ELECTRIC_3000HP",
-    "armor_thickness_mm": 40.0,
-    "current_operational_status": "DERAILED_IN_MARSHALLING_YARD_B",
-    "timestamp_relative": "YEAR_03_RAIL_LOG_01",
-    "tags": ["machinery", "locomotive", "armored_train", "railway", "dreadnought"],
-    "prose": "A three-thousand-horsepower freight locomotive wrapped in forty-millimeter scrap boiler plate and fitted with a massive steel V-plow for smashing through abandoned vehicles and road barricades. The engine sits stalled across Switch 14 with a fractured front truck axle."
-  },
-  {
-    "id": "locomotive_armored_boiler_explosion_crater",
-    "locomotive_id": "HEAVY_STEAM_CONVOY_4402",
-    "locomotive_type": "2_10_2_HEAVY_FREIGHT_STEAM",
-    "armor_thickness_mm": 25.0,
-    "current_operational_status": "BOILER_EXPLOSION_WRECK",
-    "timestamp_relative": "YEAR_05_RAIL_LOG_03",
-    "tags": ["machinery", "steam_train", "boiler_explosion", "roundhouse", "ruin"],
-    "prose": "Low water level combined with mud scaling caused the crown sheet to fail at 220 PSI. The locomotive boiler rocketed three hundred feet through the roundhouse brick roof, leaving the sixteen-ton cast-iron cylinder block welded to the turntable pit."
-  },
-  {
-    "id": "locomotive_armored_rail_gun_turret_tender",
-    "locomotive_id": "GUN_PLATFORM_TENDER_DELTA",
-    "locomotive_type": "CONVERTED_COAL_TENDER_CAR",
-    "armor_thickness_mm": 50.0,
-    "current_operational_status": "AMMUNITION_DEPLETED_PILLBOX",
-    "timestamp_relative": "YEAR_08_RAIL_LOG_02",
-    "tags": ["machinery", "rail_gun", "turret", "autocannon", "armored_train"],
-    "prose": "A six-axle coal tender rebuilt with twin 30mm dual-feed autocannon turrets mounted on armored cupolas. The car defended the rail bridge for seventy-two hours during the evacuation before running out of ammunition; empty shell brass fills the tender bin three feet deep."
-  },
-  {
-    "id": "locomotive_armored_sandstone_avalanche_derailment",
-    "locomotive_id": "PASS_RUNNER_SD40_TITAN",
-    "locomotive_type": "SD40_2_SIX_AXLE_DIESEL",
-    "armor_thickness_mm": 35.0,
-    "current_operational_status": "SUSPENDED_TRESTLE_WRECK",
-    "timestamp_relative": "YEAR_11_RAIL_LOG_01",
-    "tags": ["machinery", "derailment", "trestle", "avalanche", "railway"],
-    "prose": "An earthquake-triggered rockslide struck the lead locomotive on the high timber trestle. The armored engine plunged two hundred meters into the canyon below; three armored personnel cars remain teetering over the abyss, secured only by safety air hoses."
-  },
-  {
-    "id": "locomotive_armored_sand_dome_ballast_clog",
-    "locomotive_id": "SWITCHER_LOCOMOTIVE_EMD_SW1200",
-    "locomotive_type": "YARD_SWITCHER_DIESEL",
-    "armor_thickness_mm": 20.0,
-    "current_operational_status": "TRACTION_LOSS_SPIN_BURNOUT",
-    "timestamp_relative": "YEAR_14_RAIL_LOG_04",
-    "tags": ["machinery", "switcher", "sand_dome", "traction", "wheel_slip"],
-    "prose": "Damp volcanic ash clogged the pneumatic sanders above the driving wheels. When the engineer attempted to haul twelve coal hoppers up a wet 3% yard grade, the driving wheels spun at 100 MPH on the spot, grinding deep semicircular hollows into the rail heads."
-  },
-  {
-    "id": "locomotive_armored_traction_motor_burnout_grade",
-    "locomotive_id": "MOUNTAIN_HAULER_GE_C44_9W",
-    "locomotive_type": "HEAVY_FREIGHT_DIESEL_4400HP",
-    "armor_thickness_mm": 30.0,
-    "current_operational_status": "TRACTION_MOTOR_INSULATION_CHARRED",
-    "timestamp_relative": "YEAR_17_RAIL_LOG_02",
-    "tags": ["machinery", "traction_motor", "overload", "refugee_train", "grade"],
-    "prose": "Hauling nineteen overloaded passenger coaches packed with three thousand refugees up the icy Summit Pass. The six traction motors drew double rated amperage for forty minutes until the stator coils melted into copper slag, stalling the train in a snowbound tunnel."
-  },
-  {
-    "id": "locomotive_armored_hospital_train_sterile_car",
-    "locomotive_id": "HOSPITAL_COACH_CAR_08_SANCTUARY",
-    "locomotive_type": "HEAVYWEIGHT_PASSENGER_SURGERY",
-    "armor_thickness_mm": 45.0,
-    "current_operational_status": "MOTHBALLED_MEDICAL_OUTPOST",
-    "timestamp_relative": "YEAR_20_RAIL_LOG_01",
-    "tags": ["machinery", "hospital_train", "surgery_car", "lead_lined", "refuge"],
-    "prose": "A reinforced steel passenger coach fitted with lead-lined window shutters, twenty stainless steel triage beds, and an autoclave operating suite powered by a roof-mounted diesel generator. Still used as a quarantined surgical clinic parked on Siding 3."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "locomotive_armored_steel_plow_dreadnought",
+      "locomotive_id": "ARMORED_ENGINE_704_IRON_WOLF",
+      "locomotive_type": "DIESEL_ELECTRIC_3000HP",
+      "armor_thickness_mm": 40.0,
+      "current_operational_status": "DERAILED_IN_MARSHALLING_YARD_B",
+      "timestamp_relative": "YEAR_03_RAIL_LOG_01",
+      "tags": [
+        "machinery",
+        "locomotive",
+        "armored_train",
+        "railway",
+        "dreadnought"
+      ],
+      "prose": "A three-thousand-horsepower freight locomotive wrapped in forty-millimeter scrap boiler plate and fitted with a massive steel V-plow for smashing through abandoned vehicles and road barricades. The engine sits stalled across Switch 14 with a fractured front truck axle."
+    },
+    {
+      "id": "locomotive_armored_boiler_explosion_crater",
+      "locomotive_id": "HEAVY_STEAM_CONVOY_4402",
+      "locomotive_type": "2_10_2_HEAVY_FREIGHT_STEAM",
+      "armor_thickness_mm": 25.0,
+      "current_operational_status": "BOILER_EXPLOSION_WRECK",
+      "timestamp_relative": "YEAR_05_RAIL_LOG_03",
+      "tags": [
+        "machinery",
+        "steam_train",
+        "boiler_explosion",
+        "roundhouse",
+        "ruin"
+      ],
+      "prose": "Low water level combined with mud scaling caused the crown sheet to fail at 220 PSI. The locomotive boiler rocketed three hundred feet through the roundhouse brick roof, leaving the sixteen-ton cast-iron cylinder block welded to the turntable pit."
+    },
+    {
+      "id": "locomotive_armored_rail_gun_turret_tender",
+      "locomotive_id": "GUN_PLATFORM_TENDER_DELTA",
+      "locomotive_type": "CONVERTED_COAL_TENDER_CAR",
+      "armor_thickness_mm": 50.0,
+      "current_operational_status": "AMMUNITION_DEPLETED_PILLBOX",
+      "timestamp_relative": "YEAR_08_RAIL_LOG_02",
+      "tags": [
+        "machinery",
+        "rail_gun",
+        "turret",
+        "autocannon",
+        "armored_train"
+      ],
+      "prose": "A six-axle coal tender rebuilt with twin 30mm dual-feed autocannon turrets mounted on armored cupolas. The car defended the rail bridge for seventy-two hours during the evacuation before running out of ammunition; empty shell brass fills the tender bin three feet deep."
+    },
+    {
+      "id": "locomotive_armored_sandstone_avalanche_derailment",
+      "locomotive_id": "PASS_RUNNER_SD40_TITAN",
+      "locomotive_type": "SD40_2_SIX_AXLE_DIESEL",
+      "armor_thickness_mm": 35.0,
+      "current_operational_status": "SUSPENDED_TRESTLE_WRECK",
+      "timestamp_relative": "YEAR_11_RAIL_LOG_01",
+      "tags": [
+        "machinery",
+        "derailment",
+        "trestle",
+        "avalanche",
+        "railway"
+      ],
+      "prose": "An earthquake-triggered rockslide struck the lead locomotive on the high timber trestle. The armored engine plunged two hundred meters into the canyon below; three armored personnel cars remain teetering over the abyss, secured only by safety air hoses."
+    },
+    {
+      "id": "locomotive_armored_sand_dome_ballast_clog",
+      "locomotive_id": "SWITCHER_LOCOMOTIVE_EMD_SW1200",
+      "locomotive_type": "YARD_SWITCHER_DIESEL",
+      "armor_thickness_mm": 20.0,
+      "current_operational_status": "TRACTION_LOSS_SPIN_BURNOUT",
+      "timestamp_relative": "YEAR_14_RAIL_LOG_04",
+      "tags": [
+        "machinery",
+        "switcher",
+        "sand_dome",
+        "traction",
+        "wheel_slip"
+      ],
+      "prose": "Damp volcanic ash clogged the pneumatic sanders above the driving wheels. When the engineer attempted to haul twelve coal hoppers up a wet 3% yard grade, the driving wheels spun at 100 MPH on the spot, grinding deep semicircular hollows into the rail heads."
+    },
+    {
+      "id": "locomotive_armored_traction_motor_burnout_grade",
+      "locomotive_id": "MOUNTAIN_HAULER_GE_C44_9W",
+      "locomotive_type": "HEAVY_FREIGHT_DIESEL_4400HP",
+      "armor_thickness_mm": 30.0,
+      "current_operational_status": "TRACTION_MOTOR_INSULATION_CHARRED",
+      "timestamp_relative": "YEAR_17_RAIL_LOG_02",
+      "tags": [
+        "machinery",
+        "traction_motor",
+        "overload",
+        "refugee_train",
+        "grade"
+      ],
+      "prose": "Hauling nineteen overloaded passenger coaches packed with three thousand refugees up the icy Summit Pass. The six traction motors drew double rated amperage for forty minutes until the stator coils melted into copper slag, stalling the train in a snowbound tunnel."
+    },
+    {
+      "id": "locomotive_armored_hospital_train_sterile_car",
+      "locomotive_id": "HOSPITAL_COACH_CAR_08_SANCTUARY",
+      "locomotive_type": "HEAVYWEIGHT_PASSENGER_SURGERY",
+      "armor_thickness_mm": 45.0,
+      "current_operational_status": "MOTHBALLED_MEDICAL_OUTPOST",
+      "timestamp_relative": "YEAR_20_RAIL_LOG_01",
+      "tags": [
+        "machinery",
+        "hospital_train",
+        "surgery_car",
+        "lead_lined",
+        "refuge"
+      ],
+      "prose": "A reinforced steel passenger coach fitted with lead-lined window shutters, twenty stainless steel triage beds, and an autoclave operating suite powered by a roof-mounted diesel generator. Still used as a quarantined surgical clinic parked on Siding 3."
+    }
+  ]
+}

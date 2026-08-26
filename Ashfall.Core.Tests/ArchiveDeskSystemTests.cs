@@ -110,9 +110,9 @@ namespace Ashfall.Core.Tests
             // Place archivist on a duty shift.
             roster.Unlock(0);
             roster.WriteName("archivist_busy", displayName: "Archivist Busy",
-                occupationObserved: "scribe", script: DutyRosterSystem.ScriptPencil,
+                occupationObserved: "scribe", script: DutyRosterIds.ScriptPencil,
                 day: 1, sleptHere: true);
-            Assert.True(roster.Assign(DutyRosterSystem.AssignmentRoles[0], "archivist_busy"));
+            Assert.True(roster.Assign(DutyRosterIds.AssignmentRoles[0], "archivist_busy"));
             int inkBefore = inv.CountById("iron_gall_ink");
             var r = a.QueueTranscription("evidence_1", "archivist_busy", "iron_gall");
             // Block on busy archivist; ink inventory must be UNCHANGED.

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Radio
 {
     /// <summary>
@@ -65,7 +66,7 @@ namespace Ashfall.Core.Radio
 
         public static bool TryDecode(string json, IJsonSerializer serializer, out RadioSaveState state)
         {
-            state = null;
+            state = null!;
             if (string.IsNullOrEmpty(json) || serializer == null) return false;
             try
             {
@@ -81,10 +82,11 @@ namespace Ashfall.Core.Radio
                 state = decoded;
                 return true;
             }
-            catch
-            {
-                return false;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return false;
+                                }
         }
     }
 }

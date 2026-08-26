@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "collection_id": "greenhouse_cultivation_logs",
+  "description": "Cultivation records from the bunker's greenhouse — planting, harvest, contamination, and yield data. Maintained by the Botanist.",
+  "logs": [
+    {
+      "log_id": "greenhouse_log_001",
+      "recorded_day": 40,
+      "author": "the_botanist",
+      "crop": "turnip_brassica_napus",
+      "action": "PLANTING",
+      "location": "Bed Row A (south-facing, grow-light supplemented)",
+      "seeds_planted": 120,
+      "seed_source": "harvested_from_greenhouse_cycle_3",
+      "notes": "Seeds saved from the third cycle harvest. Germination rate has been declining — Cycle 1 was 94%, Cycle 2 was 81%, Cycle 3 was 73%. I am selecting the largest, healthiest turnips for seed stock next cycle. The soil has been amended with compost from the kitchen waste and bone meal from the fish bones. pH tested at 6.4 — acceptable. The grow lights are running 14 hours on, 10 hours off. The Electrician replaced two failing ballasts last week.",
+      "tags": [
+        "planting",
+        "turnip",
+        "seed_stock"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_002",
+      "recorded_day": 52,
+      "author": "the_botanist",
+      "crop": "turnip_brassica_napus",
+      "action": "HARVEST",
+      "location": "Bed Row A",
+      "yield_kg": 8.4,
+      "notes": "Harvested 94 turnips from 120 planted (78% survival). Average weight: 89g. Largest: 210g. The yield is down from Cycle 3 (10.2 kg) but the individual turnips are larger. I attribute this to thinner spacing — I planted at 15cm intervals instead of 10cm. The smaller total count but larger individual size suggests the plants had more room to develop. I will continue this spacing for Cycle 5. Total edible biomass after peeling: approximately 6.8 kg. The Chef has already planned the menus.",
+      "tags": [
+        "harvest",
+        "turnip",
+        "yield"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_003",
+      "recorded_day": 45,
+      "author": "the_botanist",
+      "crop": "mushroom_pleurotus_ostreatus",
+      "action": "INOCULATION",
+      "location": "Mushroom Shelf Unit 3 (dark corner, ambient humidity)",
+      "substrate": "spent_coffee_substitute_acorn_grounds_plus_cardboard",
+      "spawn_source": "wild_culture_isolation_from_surface_log",
+      "notes": "Inoculated 8 bags with oyster mushroom spawn cultivated from a surface log I found near the frozen river. The log was growing vigorously despite the radiation — the mycelium appeared healthy and white. I isolated the culture in the medical bay's still-air box (the Surgeon let me use it for an hour). The substrate is a mix of acorn grounds (from the Chef's acorn coffee production — 2 kg of grounds saved over 3 weeks) and shredded cardboard (from the packaging stores). The bags are sealed with micropore tape to allow gas exchange while blocking contaminants.",
+      "tags": [
+        "inoculation",
+        "mushroom",
+        "wild_culture"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_004",
+      "recorded_day": 58,
+      "author": "the_botanist",
+      "crop": "mushroom_pleurotus_ostreatus",
+      "action": "FIRST_FLUSH",
+      "location": "Mushroom Shelf Unit 3",
+      "yield_kg": 1.2,
+      "notes": "First flush from the acorn substrate bags. 6 bags produced, 5 successfully. One bag contaminated with green mould (Trichoderma suspected — discarded immediately). The yield is modest but the mushrooms are healthy — firm caps, white stems, no discolouration. I had the Pharmacist test them for radiation: 45 Bq/kg Cs-137, well below the 100 Bq/kg threshold we use for food. The Chef is delighted. Mushrooms are the closest thing to luxury protein we have.",
+      "tags": [
+        "harvest",
+        "mushroom",
+        "first_flush"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_005",
+      "recorded_day": 48,
+      "author": "the_botanist",
+      "crop": "barley_hordeum_vulgare",
+      "action": "PLANTING",
+      "location": "Bed Row C (full-spectrum grow lights, deep soil bed)",
+      "seeds_planted": 200,
+      "seed_source": "seed_vault_antechamber_expedition_4",
+      "notes": "Planted 200 barley seeds from the seed vault sample. This is a pre-war variety — 'Prisma' spring barley, bred for malting. I am not growing it for malt — I am growing it for grain. Barley is the most calorie-dense crop we can produce in the bunker. The seeds were stored in the vault's cold room and may have reduced viability. I planted 200 expecting 60% germination (120 plants). The soil is deeper in Row C — 40cm — which should support the barley's root system. I have added wood ash for potassium.",
+      "tags": [
+        "planting",
+        "barley",
+        "seed_vault"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_006",
+      "recorded_day": 72,
+      "author": "the_botanist",
+      "crop": "barley_hordeum_vulgare",
+      "action": "HARVEST",
+      "location": "Bed Row C",
+      "yield_kg": 3.1,
+      "notes": "Harvested the barley. 108 plants matured (54% of planted — within my estimate). The heads were small compared to pre-war photographs in my reference books. Average grain count per head: 28 (pre-war average: 40-50). Total grain: 3.1 kg after threshing and winnowing. The grain is smaller than commercial barley but nutritionally adequate. The Pharmacist ran a proximate analysis: 68% carbohydrate, 10% protein, 2% fat. It is food. It is not abundant, but it is food. I have saved 1 kg for seed. The Chef has the remaining 2.1 kg.",
+      "tags": [
+        "harvest",
+        "barley",
+        "yield",
+        "seed_saving"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_007",
+      "recorded_day": 55,
+      "author": "the_botanist",
+      "crop": "chicken_egg_production",
+      "action": "FLOCK_STATUS",
+      "location": "Chicken Coop (repurposed storage room, east wing)",
+      "notes": "Flock status: 3 hens (Rhode Island Red crosses, pre-war breeding stock). All three are laying. Average: 1.4 eggs per day across the flock. The hens are fed a mix of kitchen scraps, dried insect protein (mealworms from the compost bin), and cracked barley. The coop has a heat lamp (the Electrician's installation) to maintain 16-hour daylight — this stimulates laying through the winter. The hens are healthy but showing signs of inbreeding depression — one has a slightly deformed comb. I am looking for a rooster to expand the gene pool, but no expeditions have found one yet. If we had a rooster, we could hatch chicks and expand the flock. Without one, these three hens are a closed system. When they die, the eggs stop.",
+      "tags": [
+        "chicken",
+        "eggs",
+        "flock",
+        "genetic_bottleneck"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_008",
+      "recorded_day": 62,
+      "author": "the_botanist",
+      "crop": "herbs_mixed",
+      "action": "HARVEST_AND_PROCESSING",
+      "location": "Herb Shelf (south wall, vertical planters)",
+      "yield_kg": 0.8,
+      "notes": "Harvested and dried: mint (0.3 kg dried), thyme (0.2 kg dried), chamomile (0.15 kg dried), rosemary (0.1 kg dried), lavender (0.05 kg dried). The herbs are grown in vertical planters made from salvaged PVC pipe sections. They require minimal soil and light, and they provide the bunker's only flavour variety beyond salt. The Therapist uses the chamomile and lavender for her anxiety tea. The Chef uses the mint and rosemary for cooking. The Surgeon uses the thyme as a mild antiseptic (thymol content). The lavender is used by the Undertaker in the cemetery — he says it masks the smell. Each plant has multiple uses. That is the principle of the greenhouse: nothing has a single purpose.",
+      "tags": [
+        "harvest",
+        "herbs",
+        "medicinal",
+        "culinary"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_009",
+      "recorded_day": 68,
+      "author": "the_botanist",
+      "crop": "contamination_event",
+      "action": "EMERGENCY_RESPONSE",
+      "location": "Bed Row B (central beds)",
+      "notes": "Discovered powdery mildew on the lentil plants in Row B at morning inspection. The mildew appears to have entered through the ventilation duct — spores were visible on the dust filter when I removed it. I immediately isolated the affected plants (12 of 40 showing symptoms), removed the worst cases, and sprayed the remainder with a baking soda solution (1 tablespoon per litre of water). I have increased ventilation in the greenhouse and reduced humidity by opening the east window (filtered, of course — the window has a HEPA panel the Mechanic built). The Chemist is preparing a sulphur-based fungicide from salvaged materials. If the mildew spreads to the turnip or barley beds, the food loss will be significant. I am watching closely.",
+      "tags": [
+        "contamination",
+        "mildew",
+        "emergency",
+        "ventilation"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_010",
+      "recorded_day": 71,
+      "author": "the_botanist",
+      "crop": "contamination_event",
+      "action": "RESOLUTION",
+      "location": "Bed Row B",
+      "notes": "The mildew has been contained. The baking soda spray arrested the spread, and the Chemist's sulphur dust killed the remaining colonies. 8 lentil plants were lost (20% of the Row B crop). The remaining 32 are healthy and have resumed growth. I have installed a permanent HEPA filter on the greenhouse ventilation intake and established a weekly inspection protocol for all beds. The mildew cost us approximately 1.2 kg of dried lentils. That is 600 calories lost. In the old world, a gardener loses a plant and buys new seeds. Here, every lost plant is a meal that doesn't happen.",
+      "tags": [
+        "resolution",
+        "mildew",
+        "contained",
+        "loss"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_011",
+      "recorded_day": 75,
+      "author": "the_botanist",
+      "crop": "honey_production",
+      "action": "HIVE_INSPECTION",
+      "location": "Bee Colony (repurposed electrical cabinet, south wall, access tube to exterior)",
+      "notes": "Hive inspection: colony strength estimated at 3,000 bees. The queen is present and laying — I saw eggs in 4 frames. The bees are foraging on the surface through a 5cm access tube that exits above the bunker's ventilation outlet. They are bringing in pollen from mutated wildflowers growing near the bunker — the pollen is a darker colour than pre-war photographs suggest (deep amber, almost brown). I had the Chemist test the honey: radiation content is 12 Bq/kg — well below food thresholds. The bees appear unaffected by the radiation. They do not have lungs, so they do not breathe in the dust. Their exoskeleton shields them from external contamination. They may be the most radiation-resistant animals in the bunker. Honey harvested this inspection: 0.4 kg. Total colony production to date: 2.1 kg. The Therapist considers this the most important food in the bunker. She may be right.",
+      "tags": [
+        "bees",
+        "honey",
+        "hive_inspection",
+        "foraging"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_012",
+      "recorded_day": 80,
+      "author": "the_botanist",
+      "crop": "potato_solanum_tuberosum",
+      "action": "PLANTING",
+      "location": "Grow Bag Station (repurposed rice sacks, deep soil mix)",
+      "seeds_planted": 30,
+      "seed_source": "seed_potatoes_from_expedition_9_root_cellar",
+      "notes": "Planted 30 seed potatoes from a root cellar found during Expedition 9. The potatoes were stored in a cool, dark environment and appear viable — small sprouts visible on 24 of 30 tubers. The variety is unknown (pre-war commercial stock, possibly 'Desiree' or 'King Edward' based on skin colour). I have planted them in repurposed rice sacks filled with a mix of bunker soil (from the construction excavation), compost, and sand (for drainage). Potatoes are the highest-calorie crop I can grow per square metre. If these succeed, they could double our caloric output. If they fail, I have wasted 30 seed potatoes we could have eaten. The pressure is considerable.",
+      "tags": [
+        "planting",
+        "potato",
+        "expedition_source",
+        "high_stakes"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_013",
+      "recorded_day": 85,
+      "author": "the_botanist",
+      "crop": "compost_system",
+      "action": "SYSTEM_MAINTENANCE",
+      "location": "Compost Bay (east wing, behind the greenhouse)",
+      "notes": "Turned the compost bay. The bay receives: kitchen vegetable waste (all peelings, inedible parts, spoiled food), human waste from the compost toilet (the Plumber's system — see maintenance logs), chicken coop bedding (straw and droppings), greenhouse plant waste (non-contaminated only), and paper/cardboard shreddings. The compost is reaching 55°C in the core — thermophilic bacteria are active. This temperature is sufficient to kill most pathogens. I am monitoring the temperature daily with a salvaged thermometer. The compost cycle is approximately 90 days from input to usable soil amendment. Current throughput: approximately 5 kg of input per day, producing 2 kg of finished compost. The nutrient balance is roughly correct — carbon (paper, straw) to nitrogen (food waste, humanure) ratio is approximately 30:1. The smell is earthy, not offensive. The Chef complained once. I told her that without the compost bay, she would be cooking in sewage. She has not complained since.",
+      "tags": [
+        "compost",
+        "system_maintenance",
+        "nutrient_cycling"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_014",
+      "recorded_day": 90,
+      "author": "the_botanist",
+      "crop": "experimental_surface_soil_grow",
+      "action": "EXPERIMENT",
+      "location": "Isolation Bed (quarantine section, separate ventilation)",
+      "notes": "Planted 10 barley seeds in surface soil collected from 200 metres south of the bunker. The soil was tested: radiation 840 Bq/kg (above our food threshold but not lethally contaminated). The experiment is testing whether crops grown in surface soil accumulate radiation in the edible portion. If they do not — if the roots act as a filter and the grain remains clean — then we could eventually farm on the surface without importing soil. This would change everything. I am growing the plants to maturity and will have the Pharmacist test the grain for Cs-137 and Sr-90. The control group (10 seeds in bunker soil) is growing in the adjacent bed. Both groups receive identical light, water, and temperature. Results expected in approximately 60 days. I am cautiously hopeful. The surface soil is dark and loamy — it smells like a real field. For a moment, when I opened the sample bag, I forgot where I was.",
+      "tags": [
+        "experiment",
+        "surface_soil",
+        "radiation_accumulation",
+        "high_stakes"
+      ]
+    },
+    {
+      "log_id": "greenhouse_log_015",
+      "recorded_day": 92,
+      "author": "the_botanist",
+      "crop": "inventory_summary",
+      "action": "QUARTERLY_ASSESSMENT",
+      "location": "Entire greenhouse",
+      "notes": "Quarterly inventory. Current greenhouse production capacity: Turnips (Cycle 5 planted, Day 88 — harvest expected Day 110). Barley (harvested, Cycle 2 planting pending). Lentils (recovering from mildew, slow growth). Mushrooms (second flush pending). Herbs (continuous harvest). Chickens (3 hens, 1.4 eggs/day). Bees (1 colony, honey production ongoing). Potatoes (planted Day 80 — first shoots visible Day 91, promising). Surface soil experiment (Day 2 — no germination yet). Total caloric output this quarter: approximately 42,000 kcal from plant crops, 1,800 kcal from eggs, 800 kcal from honey. Total: 44,600 kcal. This feeds approximately 47 people for 3.4 days. The greenhouse provides roughly 7% of the bunker's total caloric needs. The other 93% comes from stored rations, expedition salvage, and trade. The greenhouse is not keeping us alive. But it is keeping us human. It is the difference between surviving and living.",
+      "tags": [
+        "inventory",
+        "quarterly",
+        "assessment",
+        "caloric_output"
+      ]
+    }
+  ]
+}

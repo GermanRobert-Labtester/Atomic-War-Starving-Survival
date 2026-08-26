@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Radiation
 {
@@ -171,7 +172,7 @@ namespace Ashfall.Core.Radiation
 
         public IReadOnlyDictionary<string, PhaseProgressionState> Survivors => _survivors;
 
-        public RadiationPhaseProgression(ISeededRng rng = null)
+        public RadiationPhaseProgression(ISeededRng? rng = null)
         {
             _rng = rng;
         }

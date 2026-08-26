@@ -1,72 +1,117 @@
-[
-  {
-    "id": "fermentation_crock_water_channel_gutter_evaporation",
-    "stoneware_crock_id": "PRESERVATION_CELLAR_CROCK_01",
-    "crock_volume_liters": 25.0,
-    "brine_salinity_pct": 2.5,
-    "airlock_water_loss_ml_per_day": 45.0,
-    "timestamp_relative": "YEAR_02_CROCK_LOG_01",
-    "tags": ["fermentation", "stoneware_crock", "water_gutter", "evaporation", "airlock_seal"],
-    "prose": "Subterranean ventilation airflow accelerated water evaporation from the circumferential moat gutter of a 25-liter German stoneware crock. Losing 45 ml of water daily broke the hydraulic barrier, requiring bi-weekly water replenishment to protect cabbage kraut."
-  },
-  {
-    "id": "fermentation_crock_sauerkraut_salinity_cabbage_osmosis",
-    "stoneware_crock_id": "COMMISSARY_KRAUT_CROCK_02",
-    "crock_volume_liters": 50.0,
-    "brine_salinity_pct": 2.25,
-    "airlock_water_loss_ml_per_day": 20.0,
-    "timestamp_relative": "YEAR_04_CROCK_LOG_03",
-    "tags": ["fermentation", "sauerkraut", "salinity", "osmosis", "cabbage_brine"],
-    "prose": "Weighing exactly 2.25% non-iodized mineral salt into shredded white cabbage drew out intracellular vegetable juices via rapid osmosis. Vigorous wooden stomping compacted the cabbage mass until natural brine rose 5cm above the packed cabbage shreds."
-  },
-  {
-    "id": "fermentation_crock_glaze_lead_leaching_acidic_brine",
-    "stoneware_crock_id": "SALVAGED_EARTHENWARE_POT_03",
-    "crock_volume_liters": 15.0,
-    "brine_salinity_pct": 3.0,
-    "airlock_water_loss_ml_per_day": 30.0,
-    "timestamp_relative": "YEAR_07_CROCK_LOG_02",
-    "tags": ["fermentation", "lead_leaching", "earthenware", "toxic_assay", "acid_attack"],
-    "prose": "Testing a salvaged earthenware pot with sodium rhodizonate swabs after forty days of sauerkraut fermentation revealed toxic lead leaching from the interior amber glaze. The aggressive pH 3.4 lactic acid brine dissolved 18 ppm lead, condemning the vessel."
-  },
-  {
-    "id": "fermentation_crock_ceramic_split_weight_submersion",
-    "stoneware_crock_id": "FERMENTED_TURNIP_VESSEL_04",
-    "crock_volume_liters": 30.0,
-    "brine_salinity_pct": 2.8,
-    "airlock_water_loss_ml_per_day": 15.0,
-    "timestamp_relative": "YEAR_09_CROCK_LOG_04",
-    "tags": ["fermentation", "split_weights", "submersion", "mold_prevention", "stoneware"],
-    "prose": "Pairing dual semi-circular unglazed ceramic weights locked over a sterile oak pressing board held 20 kg of shredded turnips four centimeters beneath the brine surface. Total liquid submersion deprived spoilage mold spores of oxygen."
-  },
-  {
-    "id": "fermentation_crock_gas_burping_bubble_frequency",
-    "stoneware_crock_id": "KIMCHI_FERMENTATION_TUB_05",
-    "crock_volume_liters": 40.0,
-    "brine_salinity_pct": 2.5,
-    "airlock_water_loss_ml_per_day": 25.0,
-    "timestamp_relative": "YEAR_12_CROCK_LOG_01",
-    "tags": ["fermentation", "gas_burping", "carbon_dioxide", "bubble_rate", "kimchi"],
-    "prose": "During peak fermentation on Day 4, carbon dioxide buildup pushed the deep stoneware lid upwards, releasing burps of gas through the water channel at eighteen bubbles per minute. The positive pressure outflow barred bunker airborne microbes."
-  },
-  {
-    "id": "fermentation_crock_leuconostoc_to_lactobacillus_succession",
-    "stoneware_crock_id": "SALTED_CUCUMBER_VAT_06",
-    "crock_volume_liters": 60.0,
-    "brine_salinity_pct": 3.5,
-    "airlock_water_loss_ml_per_day": 18.0,
-    "timestamp_relative": "YEAR_15_CROCK_LOG_03",
-    "tags": ["fermentation", "microbial_succession", "leuconostoc", "lactobacillus", "pickle_brine"],
-    "prose": "Bacteriological plating mapped microbial succession in salted pickle barrels: heterofermentative *Leuconostoc mesenteroides* dominated Days 1–3 producing gas and pleasant volatiles, followed by homofermentative *Lactobacillus plantarum* creating crisp, clean acidity."
-  },
-  {
-    "id": "fermentation_crock_paraffin_mineral_oil_gutter_fluid",
-    "stoneware_crock_id": "WINTER_PICKLE_STORAGE_BAY_07",
-    "crock_volume_liters": 100.0,
-    "brine_salinity_pct": 4.0,
-    "airlock_water_loss_ml_per_day": 0.0,
-    "timestamp_relative": "YEAR_20_CROCK_LOG_01",
-    "tags": ["fermentation", "mineral_oil", "gutter_seal", "zero_evaporation", "long_term_curing"],
-    "prose": "Replacing water in the crock rim moat with odorless pharmaceutical mineral oil eliminated evaporation entirely during a six-month subterranean salt-curing cycle. The fluid oil barrier maintained zero vapor loss without turning rancid or growing scum."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "fermentation_crock_water_channel_gutter_evaporation",
+      "stoneware_crock_id": "PRESERVATION_CELLAR_CROCK_01",
+      "crock_volume_liters": 25.0,
+      "brine_salinity_pct": 2.5,
+      "airlock_water_loss_ml_per_day": 45.0,
+      "timestamp_relative": "YEAR_02_CROCK_LOG_01",
+      "tags": [
+        "fermentation",
+        "stoneware_crock",
+        "water_gutter",
+        "evaporation",
+        "airlock_seal"
+      ],
+      "prose": "Subterranean ventilation airflow accelerated water evaporation from the circumferential moat gutter of a 25-liter German stoneware crock. Losing 45 ml of water daily broke the hydraulic barrier, requiring bi-weekly water replenishment to protect cabbage kraut."
+    },
+    {
+      "id": "fermentation_crock_sauerkraut_salinity_cabbage_osmosis",
+      "stoneware_crock_id": "COMMISSARY_KRAUT_CROCK_02",
+      "crock_volume_liters": 50.0,
+      "brine_salinity_pct": 2.25,
+      "airlock_water_loss_ml_per_day": 20.0,
+      "timestamp_relative": "YEAR_04_CROCK_LOG_03",
+      "tags": [
+        "fermentation",
+        "sauerkraut",
+        "salinity",
+        "osmosis",
+        "cabbage_brine"
+      ],
+      "prose": "Weighing exactly 2.25% non-iodized mineral salt into shredded white cabbage drew out intracellular vegetable juices via rapid osmosis. Vigorous wooden stomping compacted the cabbage mass until natural brine rose 5cm above the packed cabbage shreds."
+    },
+    {
+      "id": "fermentation_crock_glaze_lead_leaching_acidic_brine",
+      "stoneware_crock_id": "SALVAGED_EARTHENWARE_POT_03",
+      "crock_volume_liters": 15.0,
+      "brine_salinity_pct": 3.0,
+      "airlock_water_loss_ml_per_day": 30.0,
+      "timestamp_relative": "YEAR_07_CROCK_LOG_02",
+      "tags": [
+        "fermentation",
+        "lead_leaching",
+        "earthenware",
+        "toxic_assay",
+        "acid_attack"
+      ],
+      "prose": "Testing a salvaged earthenware pot with sodium rhodizonate swabs after forty days of sauerkraut fermentation revealed toxic lead leaching from the interior amber glaze. The aggressive pH 3.4 lactic acid brine dissolved 18 ppm lead, condemning the vessel."
+    },
+    {
+      "id": "fermentation_crock_ceramic_split_weight_submersion",
+      "stoneware_crock_id": "FERMENTED_TURNIP_VESSEL_04",
+      "crock_volume_liters": 30.0,
+      "brine_salinity_pct": 2.8,
+      "airlock_water_loss_ml_per_day": 15.0,
+      "timestamp_relative": "YEAR_09_CROCK_LOG_04",
+      "tags": [
+        "fermentation",
+        "split_weights",
+        "submersion",
+        "mold_prevention",
+        "stoneware"
+      ],
+      "prose": "Pairing dual semi-circular unglazed ceramic weights locked over a sterile oak pressing board held 20 kg of shredded turnips four centimeters beneath the brine surface. Total liquid submersion deprived spoilage mold spores of oxygen."
+    },
+    {
+      "id": "fermentation_crock_gas_burping_bubble_frequency",
+      "stoneware_crock_id": "KIMCHI_FERMENTATION_TUB_05",
+      "crock_volume_liters": 40.0,
+      "brine_salinity_pct": 2.5,
+      "airlock_water_loss_ml_per_day": 25.0,
+      "timestamp_relative": "YEAR_12_CROCK_LOG_01",
+      "tags": [
+        "fermentation",
+        "gas_burping",
+        "carbon_dioxide",
+        "bubble_rate",
+        "kimchi"
+      ],
+      "prose": "During peak fermentation on Day 4, carbon dioxide buildup pushed the deep stoneware lid upwards, releasing burps of gas through the water channel at eighteen bubbles per minute. The positive pressure outflow barred bunker airborne microbes."
+    },
+    {
+      "id": "fermentation_crock_leuconostoc_to_lactobacillus_succession",
+      "stoneware_crock_id": "SALTED_CUCUMBER_VAT_06",
+      "crock_volume_liters": 60.0,
+      "brine_salinity_pct": 3.5,
+      "airlock_water_loss_ml_per_day": 18.0,
+      "timestamp_relative": "YEAR_15_CROCK_LOG_03",
+      "tags": [
+        "fermentation",
+        "microbial_succession",
+        "leuconostoc",
+        "lactobacillus",
+        "pickle_brine"
+      ],
+      "prose": "Bacteriological plating mapped microbial succession in salted pickle barrels: heterofermentative *Leuconostoc mesenteroides* dominated Days 1–3 producing gas and pleasant volatiles, followed by homofermentative *Lactobacillus plantarum* creating crisp, clean acidity."
+    },
+    {
+      "id": "fermentation_crock_paraffin_mineral_oil_gutter_fluid",
+      "stoneware_crock_id": "WINTER_PICKLE_STORAGE_BAY_07",
+      "crock_volume_liters": 100.0,
+      "brine_salinity_pct": 4.0,
+      "airlock_water_loss_ml_per_day": 0.0,
+      "timestamp_relative": "YEAR_20_CROCK_LOG_01",
+      "tags": [
+        "fermentation",
+        "mineral_oil",
+        "gutter_seal",
+        "zero_evaporation",
+        "long_term_curing"
+      ],
+      "prose": "Replacing water in the crock rim moat with odorless pharmaceutical mineral oil eliminated evaporation entirely during a six-month subterranean salt-curing cycle. The fluid oil barrier maintained zero vapor loss without turning rancid or growing scum."
+    }
+  ]
+}

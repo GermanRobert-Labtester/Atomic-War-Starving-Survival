@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using AtomicWar.GodotApp.UI;
 using Ashfall.Core.UI;
@@ -54,10 +55,7 @@ namespace AtomicWar.GodotApp.Muster
                 _lblTitle.Text = questlineId.ToUpperInvariant() + " — CHOOSE AN APPROACH";
 
             if (_choicesContainer == null) return;
-            foreach (Node child in _choicesContainer.GetChildren())
-                child.QueueFree();
-
-            for (int i = 0; i < approaches.Count; i++)
+            AshfallUiHelpers.EmptyChildren(_choicesContainer);for (int i = 0; i < approaches.Count; i++)
             {
                 var option = approaches[i];
                 var button = new Button

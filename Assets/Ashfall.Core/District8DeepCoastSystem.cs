@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -285,7 +286,7 @@ namespace Ashfall.Core
         /// fleet levy, contamination persistence) are owned here.
         /// Returns the immediate trust deltas applied, or null when invalid.
         /// </summary>
-        public DeepCoastDecisionOutcome MakeReopeningDecision(DeepCoastAccessDecision decision, int day, ISeededRng rng)
+        public DeepCoastDecisionOutcome? MakeReopeningDecision(DeepCoastAccessDecision decision, int day, ISeededRng rng)
         {
             if (_state.accessDecision != (int)DeepCoastAccessDecision.None) return null;
             if (_state.stage < (int)DeepCoastStage.Surveyed) return null;

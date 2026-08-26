@@ -30,8 +30,8 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             Assert.False(roster.IsUnlocked);
-            Assert.Equal(DutyRosterSystem.ScriptBlank, roster.ChartScript);
-            Assert.False(roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true));
+            Assert.Equal(DutyRosterIds.ScriptBlank, roster.ChartScript);
+            Assert.False(roster.WriteName(DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterIds.ScriptPencil, 60, true));
             Assert.Equal(0, roster.OccupiedRowCount);
         }
 
@@ -41,7 +41,7 @@ namespace Ashfall.Core.Tests
             var roster = Sys();
             roster.Unlock(10);
             Assert.False(roster.CanBeginChart(10, false, false));
-            Assert.True(roster.CanBeginChart(DutyRosterSystem.SoftGateDay, false, false));
+            Assert.True(roster.CanBeginChart(DutyRosterIds.SoftGateDay, false, false));
             roster.NotifyWallInspected();
             Assert.True(roster.CanBeginChart(10, false, false));
         }
@@ -51,15 +51,15 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            Assert.True(roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60));
+            Assert.True(roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60));
             Assert.True(roster.MutationInUse);
             var home = Occupants(
-                (DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"),
-                (DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent"));
+                (DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk"),
+                (DutyRosterIds.NpcAnselDuth, "Ansel Duth", "parent"));
             roster.TickMorning(61, home);
             Assert.Equal(2, roster.OccupiedRowCount);
-            Assert.Equal(DutyRosterSystem.ScriptPencil, roster.GetRow(DutyRosterSystem.NpcKessAdler).script);
-            Assert.Equal(61, roster.GetRow(DutyRosterSystem.NpcAnselDuth).lastSleptDay);
+            Assert.Equal(DutyRosterIds.ScriptPencil, roster.GetRow(DutyRosterIds.NpcKessAdler).script);
+            Assert.Equal(61, roster.GetRow(DutyRosterIds.NpcAnselDuth).lastSleptDay);
         }
 
         [Fact]
@@ -67,16 +67,16 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
             var two = Occupants(
-                (DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"),
-                (DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent"));
+                (DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk"),
+                (DutyRosterIds.NpcAnselDuth, "Ansel Duth", "parent"));
             roster.TickMorning(61, two);
-            Assert.True(roster.SetRowScript(DutyRosterSystem.NpcKessAdler, DutyRosterSystem.ScriptInk));
-            Assert.Equal(DutyRosterSystem.ScriptInk, roster.ChartScript);
+            Assert.True(roster.SetRowScript(DutyRosterIds.NpcKessAdler, DutyRosterIds.ScriptInk));
+            Assert.Equal(DutyRosterIds.ScriptInk, roster.ChartScript);
             var three = Occupants(
-                (DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"),
-                (DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent"),
+                (DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk"),
+                (DutyRosterIds.NpcAnselDuth, "Ansel Duth", "parent"),
                 ("npc_hadi_morrow", "Hadi Morrow", "veterinary_assistant"));
             roster.TickMorning(62, three);
             Assert.Equal(2, roster.OccupiedRowCount);
@@ -88,15 +88,15 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
-            for (int i = 0; i < DutyRosterSystem.ManifestCap; i++)
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
+            for (int i = 0; i < DutyRosterIds.ManifestCap; i++)
             {
                 string id = "survivor_" + i.ToString("00");
-                Assert.True(roster.WriteName(id, id, "unlisted", DutyRosterSystem.ScriptPencil, 60, true));
+                Assert.True(roster.WriteName(id, id, "unlisted", DutyRosterIds.ScriptPencil, 60, true));
             }
 
             Assert.Equal(14, roster.OccupiedRowCount);
-            Assert.False(roster.WriteName("survivor_14", "extra", "unlisted", DutyRosterSystem.ScriptPencil, 60, true));
+            Assert.False(roster.WriteName("survivor_14", "extra", "unlisted", DutyRosterIds.ScriptPencil, 60, true));
         }
 
         [Fact]
@@ -104,10 +104,10 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
-            Assert.True(roster.WriteName(DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent", DutyRosterSystem.ScriptPencil, 60, true));
-            Assert.True(roster.SetStatus(DutyRosterSystem.NpcAnselDuth, DutyRosterSystem.StatusDead));
-            Assert.False(roster.Assign(DutyRosterSystem.RoleNightWatch, DutyRosterSystem.NpcAnselDuth));
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
+            Assert.True(roster.WriteName(DutyRosterIds.NpcAnselDuth, "Ansel Duth", "parent", DutyRosterIds.ScriptPencil, 60, true));
+            Assert.True(roster.SetStatus(DutyRosterIds.NpcAnselDuth, DutyRosterIds.StatusDead));
+            Assert.False(roster.Assign(DutyRosterIds.RoleNightWatch, DutyRosterIds.NpcAnselDuth));
         }
 
         [Fact]
@@ -115,11 +115,11 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
             roster.RegisterBlankRowsLivingName("npc_nila_brant");
             Assert.True(roster.BlankRowsAccess);
-            Assert.False(roster.WriteName("npc_nila_brant", "Nila Brant", "lamp_oil_clerk", DutyRosterSystem.ScriptPencil, 60, true));
-            Assert.True(roster.WriteName("npc_nila_brant", "Nila Brant", "lamp_oil_clerk", DutyRosterSystem.ScriptInk, 60, true));
+            Assert.False(roster.WriteName("npc_nila_brant", "Nila Brant", "lamp_oil_clerk", DutyRosterIds.ScriptPencil, 60, true));
+            Assert.True(roster.WriteName("npc_nila_brant", "Nila Brant", "lamp_oil_clerk", DutyRosterIds.ScriptInk, 60, true));
             Assert.False(roster.BlankRowsAccess);
         }
 
@@ -128,9 +128,9 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            Assert.True(roster.ResolveChartChoice(DutyRosterSystem.ChoiceLeaveBlank, 60));
-            var home = Occupants((DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"));
-            for (int d = 1; d <= DutyRosterSystem.StillBlankDays; d++)
+            Assert.True(roster.ResolveChartChoice(DutyRosterIds.ChoiceLeaveBlank, 60));
+            var home = Occupants((DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk"));
+            for (int d = 1; d <= DutyRosterIds.StillBlankDays; d++)
                 roster.TickMorning(60 + d, home);
             Assert.True(roster.State.mutationRosterStillBlank);
             Assert.Equal(0, roster.OccupiedRowCount);
@@ -141,38 +141,38 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
-            roster.WriteName("npc_hadi_morrow", "Hadi Morrow", "veterinary_assistant", DutyRosterSystem.ScriptPencil, 60, true);
-            roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true);
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
+            roster.WriteName("npc_hadi_morrow", "Hadi Morrow", "veterinary_assistant", DutyRosterIds.ScriptPencil, 60, true);
+            roster.WriteName(DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterIds.ScriptPencil, 60, true);
             roster.HideFromNorthCopy("npc_hadi_morrow");
             var north = roster.CopyForNorth();
             Assert.Single(north);
-            Assert.Equal(DutyRosterSystem.NpcKessAdler, north[0].survivorId);
+            Assert.Equal(DutyRosterIds.NpcKessAdler, north[0].survivorId);
             Assert.True(roster.LevyRequiresRows);
             Assert.False(roster.IsValidLevyName("npc_hadi_morrow"));
-            Assert.True(roster.IsValidLevyName(DutyRosterSystem.NpcKessAdler));
+            Assert.True(roster.IsValidLevyName(DutyRosterIds.NpcKessAdler));
         }
 
         [Fact]
         public void SameSeedSameAssignment()
         {
             var home = Occupants(
-                (DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"),
-                (DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent"),
+                (DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk"),
+                (DutyRosterIds.NpcAnselDuth, "Ansel Duth", "parent"),
                 ("npc_hadi_morrow", "Hadi Morrow", "veterinary_assistant"));
             var a = Sys(1208);
             var b = Sys(1208);
             a.Unlock(60);
             b.Unlock(60);
-            a.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
-            b.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            a.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
+            b.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
             a.TickMorning(61, home);
             b.TickMorning(61, home);
             a.AutoAssignDefaults(61);
             b.AutoAssignDefaults(61);
-            Assert.Equal(a.GetAssignment(DutyRosterSystem.RoleNightWatch), b.GetAssignment(DutyRosterSystem.RoleNightWatch));
-            Assert.Equal(a.GetAssignment(DutyRosterSystem.RoleMess), b.GetAssignment(DutyRosterSystem.RoleMess));
-            Assert.Equal(a.GetAssignment(DutyRosterSystem.RoleHatchOpener), b.GetAssignment(DutyRosterSystem.RoleHatchOpener));
+            Assert.Equal(a.GetAssignment(DutyRosterIds.RoleNightWatch), b.GetAssignment(DutyRosterIds.RoleNightWatch));
+            Assert.Equal(a.GetAssignment(DutyRosterIds.RoleMess), b.GetAssignment(DutyRosterIds.RoleMess));
+            Assert.Equal(a.GetAssignment(DutyRosterIds.RoleHatchOpener), b.GetAssignment(DutyRosterIds.RoleHatchOpener));
         }
 
         [Fact]
@@ -180,14 +180,14 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
-            roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true);
-            Assert.True(roster.ResolveLadleChoice(DutyRosterSystem.ChoiceLadleProtocol, 61));
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
+            roster.WriteName(DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterIds.ScriptPencil, 60, true);
+            Assert.True(roster.ResolveLadleChoice(DutyRosterIds.ChoiceLadleProtocol, 61));
             Assert.True(roster.State.mutationRationProtocol);
             Assert.True(roster.BurnChart(80));
-            Assert.Equal(DutyRosterSystem.ScriptBurned, roster.ChartScript);
+            Assert.Equal(DutyRosterIds.ScriptBurned, roster.ChartScript);
             Assert.Equal(0, roster.OccupiedRowCount);
-            Assert.False(roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 81, true));
+            Assert.False(roster.WriteName(DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterIds.ScriptPencil, 81, true));
         }
 
         [Fact]
@@ -197,18 +197,18 @@ namespace Ashfall.Core.Tests
             var roster = Sys(1208);
             roster.Unlock(60);
             roster.NotifyWallInspected();
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
-            roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true);
-            roster.Assign(DutyRosterSystem.RoleNightWatch, DutyRosterSystem.NpcKessAdler);
-            roster.HideFromNorthCopy(DutyRosterSystem.NpcKessAdler);
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
+            roster.WriteName(DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterIds.ScriptPencil, 60, true);
+            roster.Assign(DutyRosterIds.RoleNightWatch, DutyRosterIds.NpcKessAdler);
+            roster.HideFromNorthCopy(DutyRosterIds.NpcKessAdler);
             string blob = json.Serialize(roster.CaptureState());
             var restored = new DutyRosterSystem(1);
             restored.RestoreState(json.Deserialize<DutyRosterSystemState>(blob));
             Assert.True(restored.IsUnlocked);
             Assert.True(restored.MutationInUse);
-            Assert.Equal(DutyRosterSystem.NpcKessAdler, restored.GetAssignment(DutyRosterSystem.RoleNightWatch));
-            Assert.NotNull(restored.GetRow(DutyRosterSystem.NpcKessAdler));
-            Assert.False(restored.IsValidLevyName(DutyRosterSystem.NpcKessAdler));
+            Assert.Equal(DutyRosterIds.NpcKessAdler, restored.GetAssignment(DutyRosterIds.RoleNightWatch));
+            Assert.NotNull(restored.GetRow(DutyRosterIds.NpcKessAdler));
+            Assert.False(restored.IsValidLevyName(DutyRosterIds.NpcKessAdler));
             Assert.Equal(1208, restored.State.seedSalt);
         }
 
@@ -217,8 +217,8 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
-            Assert.False(roster.WriteName("npc_on_stool", "Edor Vale", "census_clerk", DutyRosterSystem.ScriptPencil, 60, false));
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
+            Assert.False(roster.WriteName("npc_on_stool", "Edor Vale", "census_clerk", DutyRosterIds.ScriptPencil, 60, false));
         }
 
         [Fact]
@@ -226,11 +226,11 @@ namespace Ashfall.Core.Tests
         {
             var roster = Sys();
             roster.Unlock(60);
-            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
-            roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true);
+            roster.ResolveChartChoice(DutyRosterIds.ChoiceWritePencil, 60);
+            roster.WriteName(DutyRosterIds.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterIds.ScriptPencil, 60, true);
             Assert.True(roster.ResolveInkEnding(80));
-            Assert.Equal(DutyRosterSystem.ScriptInk, roster.ChartScript);
-            Assert.Equal(DutyRosterSystem.EndingInk, roster.State.endingId);
+            Assert.Equal(DutyRosterIds.ScriptInk, roster.ChartScript);
+            Assert.Equal(DutyRosterIds.EndingInk, roster.State.endingId);
             Assert.False(roster.State.kessPencilAllowed);
         }
 
@@ -255,7 +255,7 @@ namespace Ashfall.Core.Tests
             roster.Unlock(60);
             roster.BurnChart(80);
             Assert.False(roster.ResolveInkEnding(81));
-            Assert.Equal(DutyRosterSystem.ScriptBurned, roster.ChartScript);
+            Assert.Equal(DutyRosterIds.ScriptBurned, roster.ChartScript);
         }
     }
 
@@ -346,13 +346,13 @@ namespace Ashfall.Core.Tests
             }
             Assert.Equal(4, overflowCount);
 
-            var wall = catalog.GetLocation(DutyRosterSystem.LocStackRosterWall);
+            var wall = catalog.GetLocation(DutyRosterIds.LocStackRosterWall);
             Assert.NotNull(wall);
             Assert.Contains("Fourteen rows", wall.inspect);
             Assert.Contains("ALLOCATION 12", wall.description);
-            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackMess));
-            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackSleeping));
-            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackFiltration));
+            Assert.NotNull(catalog.GetLocation(DutyRosterIds.LocStackMess));
+            Assert.NotNull(catalog.GetLocation(DutyRosterIds.LocStackSleeping));
+            Assert.NotNull(catalog.GetLocation(DutyRosterIds.LocStackFiltration));
             Assert.NotNull(catalog.GetLocation("loc_stack_clinic_alcove"));
             Assert.NotNull(catalog.GetLocation("loc_approach_hatch"));
             Assert.NotNull(catalog.GetLocation("loc_approach_apron"));
@@ -370,18 +370,18 @@ namespace Ashfall.Core.Tests
             var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
             var catalog = loader.Load(DataDir());
             Assert.True(catalog.Quests.Count >= 2);
-            var chart = catalog.GetQuest(DutyRosterSystem.QuestTheChart);
+            var chart = catalog.GetQuest(DutyRosterIds.QuestTheChart);
             Assert.NotNull(chart);
             Assert.Equal("shelter", chart.type);
-            Assert.Equal(DutyRosterSystem.LocStackRosterWall, chart.target_location_id);
+            Assert.Equal(DutyRosterIds.LocStackRosterWall, chart.target_location_id);
             Assert.Equal("lore_dr_chart", chart.knowledge_key);
             Assert.Equal("mutation_roster_in_use", chart.complete_mutation);
-            Assert.Contains(chart.choices, c => c.id == DutyRosterSystem.ChoiceWritePencil);
-            var ladle = catalog.GetQuest(DutyRosterSystem.QuestWhoEats);
+            Assert.Contains(chart.choices, c => c.id == DutyRosterIds.ChoiceWritePencil);
+            var ladle = catalog.GetQuest(DutyRosterIds.QuestWhoEats);
             Assert.NotNull(ladle);
-            Assert.Equal(DutyRosterSystem.QuestTheChart, ladle.prereq_quest_id);
-            Assert.Equal(DutyRosterSystem.LocStackMess, ladle.target_location_id);
-            Assert.Contains(ladle.choices, c => c.id == DutyRosterSystem.ChoiceLadleProtocol);
+            Assert.Equal(DutyRosterIds.QuestTheChart, ladle.prereq_quest_id);
+            Assert.Equal(DutyRosterIds.LocStackMess, ladle.target_location_id);
+            Assert.Contains(ladle.choices, c => c.id == DutyRosterIds.ChoiceLadleProtocol);
 
             var fourteenth = catalog.GetQuest("quest_roster_fourteenth");
             Assert.NotNull(fourteenth);
@@ -432,11 +432,11 @@ namespace Ashfall.Core.Tests
         {
             var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
             var catalog = loader.Load(DataDir());
-            var season = catalog.GetSeason(DutyRosterSystem.SeasonSecondWinter);
+            var season = catalog.GetSeason(DutyRosterIds.SeasonSecondWinter);
             Assert.NotNull(season);
-            Assert.Equal(DutyRosterSystem.SecondWinterWindowMinDays, season.windowMinDays);
-            Assert.Equal(DutyRosterSystem.SecondWinterWindowMaxDays, season.windowMaxDays);
-            Assert.Equal(DutyRosterSystem.SecondWinterEncounterWeight, season.encounterWeight, 3);
+            Assert.Equal(DutyRosterIds.SecondWinterWindowMinDays, season.windowMinDays);
+            Assert.Equal(DutyRosterIds.SecondWinterWindowMaxDays, season.windowMaxDays);
+            Assert.Equal(DutyRosterIds.SecondWinterEncounterWeight, season.encounterWeight, 3);
         }
 
         [Fact]
@@ -446,16 +446,16 @@ namespace Ashfall.Core.Tests
             var catalog = loader.Load(DataDir());
 
             // All 10 main quests registered (plan §4.1).
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestTheChart));
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestWhoEats));
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestFourteenth));
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestCaretaker));
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestTheColumn));
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestTheTin));
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestQuiet));
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestSole));
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestWindow));
-            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestInk));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestTheChart));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestWhoEats));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestFourteenth));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestCaretaker));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestTheColumn));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestTheTin));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestQuiet));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestSole));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestWindow));
+            Assert.NotNull(catalog.GetQuest(DutyRosterIds.QuestInk));
 
             // Side quests registered (plan §4.2) — spot-check each family.
             Assert.NotNull(catalog.GetQuest("quest_roster_pell_numbers"));
@@ -479,8 +479,8 @@ namespace Ashfall.Core.Tests
             Assert.True(catalog.Quests.Count >= 28);
 
             // All Stack wings incl. airlock + clinic (plan §2.1).
-            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackAirlock));
-            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackClinicAlcove));
+            Assert.NotNull(catalog.GetLocation(DutyRosterIds.LocStackAirlock));
+            Assert.NotNull(catalog.GetLocation(DutyRosterIds.LocStackClinicAlcove));
             Assert.True(catalog.Locations.Count >= 14);
         }
 
@@ -490,13 +490,13 @@ namespace Ashfall.Core.Tests
             string path = System.IO.Path.Combine(DataDir(), "characters.json");
             Assert.True(System.IO.File.Exists(path));
             var json = new SystemTextJsonSerializer();
-            var chars = json.Deserialize<System.Collections.Generic.List<DutyRosterCharacterProbe>>(
-                System.IO.File.ReadAllText(path));
+            var chars = CatalogLocator.LoadWrappedList<DutyRosterCharacterProbe>(
+                System.IO.File.ReadAllText(path), SystemTextJsonSerializer.Options);
             var ids = new System.Collections.Generic.HashSet<string>();
             for (int i = 0; i < chars.Count; i++)
                 ids.Add(chars[i].id);
-            Assert.Contains(DutyRosterSystem.NpcKessAdler, ids);
-            Assert.Contains(DutyRosterSystem.NpcAnselDuth, ids);
+            Assert.Contains(DutyRosterIds.NpcKessAdler, ids);
+            Assert.Contains(DutyRosterIds.NpcAnselDuth, ids);
             Assert.Contains("npc_tamsin_rook", ids);
             Assert.Contains("npc_len_quill", ids);
             Assert.Contains("npc_hadi_morrow", ids);
@@ -505,7 +505,7 @@ namespace Ashfall.Core.Tests
 
         private sealed class DutyRosterCharacterProbe
         {
-            public string id;
+            public string id = string.Empty;
         }
 
         [Fact]

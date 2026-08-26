@@ -1,72 +1,117 @@
-[
-  {
-    "id": "tire_retread_carbon_black_reinforcement_mix",
-    "tire_casing_id": "MILITARY_TRUCK_TIRE_11R20",
-    "rubber_compound_formula": "RECLAIMED_SBR_WITH_WOOD_CHAR_SOOT",
-    "vulcanization_temp_celsius": 145.0,
-    "road_wear_rating": "MODERATE_CHIPPING_GRAVEL_USE",
-    "timestamp_relative": "YEAR_02_RETREAD_LOG_01",
-    "tags": ["polymer", "tires", "retreading", "vulcanization", "carbon_black"],
-    "prose": "Lacking commercial N220 carbon black, the rubber workshop milled pulverized pine charcoal soot into reclaimed styrene-butadiene rubber (SBR). The compound molded cleanly into a lug tread, providing 8,000 miles of service on rough gravel roads."
-  },
-  {
-    "id": "tire_retread_sulfur_accelerator_scorch_pre_cure",
-    "tire_casing_id": "TRACTOR_DRIVE_TIRE_18_4_38",
-    "rubber_compound_formula": "HIGH_SULFUR_TMTD_ACCELERATED",
-    "vulcanization_temp_celsius": 160.0,
-    "road_wear_rating": "UNBONDED_SCORCH_DEFECT",
-    "timestamp_relative": "YEAR_05_RETREAD_LOG_03",
-    "tags": ["polymer", "tires", "scorch", "vulcanization", "accelerator"],
-    "prose": "Over-dosage of tetramethylthiuram disulfide (TMTD) accelerator caused the rubber to 'scorch' and crosslink inside the warm extrusion nozzle before entering the curing mold. The pre-cured tread strip failed to bond to the casing buff line, peeling off in sheets."
-  },
-  {
-    "id": "tire_retread_pine_tar_tackifier_adhesion_failure",
-    "tire_casing_id": "AMBULANCE_VAN_TIRE_LT245",
-    "rubber_compound_formula": "CRUDE_PINE_RESIN_TACKIFIER_BLEND",
-    "vulcanization_temp_celsius": 140.0,
-    "road_wear_rating": "CATASTROPHIC_TREAD_THROW_OVER_40MPH",
-    "timestamp_relative": "YEAR_08_RETREAD_LOG_02",
-    "tags": ["polymer", "tires", "pine_tar", "adhesion", "tread_throw"],
-    "prose": "Using unrefined pine pitch as an adhesive tackifier left terpene acid residues along the buffed carcass surface. At forty miles per hour, centrifugal force sheared the entire crown tread off, destroying the ambulance front fiberglass fender."
-  },
-  {
-    "id": "tire_retread_steel_belt_corrosion_blistering",
-    "tire_casing_id": "TRAILER_CARGO_TIRE_295_75R",
-    "rubber_compound_formula": "BRASS_CORD_CUSHION_GUM_RELOAD",
-    "vulcanization_temp_celsius": 150.0,
-    "road_wear_rating": "STEEL_CORD_RUST_BLISTER_BLOWOUT",
-    "timestamp_relative": "YEAR_11_RETREAD_LOG_04",
-    "tags": ["polymer", "tires", "steel_belt", "corrosion", "blowout"],
-    "prose": "Water entering an unsealed nail hole corroded the brass-plated steel cord belts. Rust expansion pushed the overlying tread rubber outward into a fist-sized blister that exploded violently under an eight-ton trailer load."
-  },
-  {
-    "id": "tire_retread_reclaimed_crumb_rubber_hysteresis",
-    "tire_casing_id": "HEAVY_DUMP_TRUCK_TIRE_1200R24",
-    "rubber_compound_formula": "65_PERCENT_GROUND_CRUMB_RECLAIM",
-    "vulcanization_temp_celsius": 142.0,
-    "road_wear_rating": "HIGH_HYSTERESIS_THERMAL_MELTDOWN",
-    "timestamp_relative": "YEAR_14_RETREAD_LOG_01",
-    "tags": ["polymer", "tires", "crumb_rubber", "hysteresis", "overheating"],
-    "prose": "Retread compound containing 65% coarse ground crumb rubber exhibited high internal friction (hysteresis loss). Continuous hauling at highway speeds caused the interior tread shoulder temperature to reach 170°C, melting the rubber core into a smoking liquid paste."
-  },
-  {
-    "id": "tire_retread_cold_cure_cushion_gum_delamination",
-    "tire_casing_id": "SNOW_RUNNER_UTILITY_TIRE_750R16",
-    "rubber_compound_formula": "COLD_CURE_SELF_VULCANIZING_CEMENT",
-    "vulcanization_temp_celsius": 20.0,
-    "road_wear_rating": "SUB_ZERO_COLD_DELAMINATION",
-    "timestamp_relative": "YEAR_17_RETREAD_LOG_03",
-    "tags": ["polymer", "tires", "cold_cure", "nuclear_winter", "cement"],
-    "prose": "Attempting to cure pre-molded winter treads using chemical room-temperature cement in an unheated shop (4°C) prevented complete amine-promoted vulcanization. The treads separated cleanly from the tire casing during the first sub-zero snow patrol."
-  },
-  {
-    "id": "tire_retread_butyl_inner_tube_patch_permeation",
-    "tire_casing_id": "COMMUNAL_BICYCLE_INNER_TUBE_28IN",
-    "rubber_compound_formula": "NATURAL_GUM_ON_ISOBUTYLENE_TUBE",
-    "vulcanization_temp_celsius": 25.0,
-    "road_wear_rating": "SLOW_BOUNDARY_AIR_DIFFUSION",
-    "timestamp_relative": "YEAR_20_RETREAD_LOG_01",
-    "tags": ["polymer", "inner_tube", "butyl", "patch", "air_loss"],
-    "prose": "Patching impermeable synthetic butyl inner tubes with natural gum rubber patches caused high boundary air diffusion. The patches held mechanically, but oxygen molecules migrated through the natural rubber matrix, requiring daily tire pumping."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "tire_retread_carbon_black_reinforcement_mix",
+      "tire_casing_id": "MILITARY_TRUCK_TIRE_11R20",
+      "rubber_compound_formula": "RECLAIMED_SBR_WITH_WOOD_CHAR_SOOT",
+      "vulcanization_temp_celsius": 145.0,
+      "road_wear_rating": "MODERATE_CHIPPING_GRAVEL_USE",
+      "timestamp_relative": "YEAR_02_RETREAD_LOG_01",
+      "tags": [
+        "polymer",
+        "tires",
+        "retreading",
+        "vulcanization",
+        "carbon_black"
+      ],
+      "prose": "Lacking commercial N220 carbon black, the rubber workshop milled pulverized pine charcoal soot into reclaimed styrene-butadiene rubber (SBR). The compound molded cleanly into a lug tread, providing 8,000 miles of service on rough gravel roads."
+    },
+    {
+      "id": "tire_retread_sulfur_accelerator_scorch_pre_cure",
+      "tire_casing_id": "TRACTOR_DRIVE_TIRE_18_4_38",
+      "rubber_compound_formula": "HIGH_SULFUR_TMTD_ACCELERATED",
+      "vulcanization_temp_celsius": 160.0,
+      "road_wear_rating": "UNBONDED_SCORCH_DEFECT",
+      "timestamp_relative": "YEAR_05_RETREAD_LOG_03",
+      "tags": [
+        "polymer",
+        "tires",
+        "scorch",
+        "vulcanization",
+        "accelerator"
+      ],
+      "prose": "Over-dosage of tetramethylthiuram disulfide (TMTD) accelerator caused the rubber to 'scorch' and crosslink inside the warm extrusion nozzle before entering the curing mold. The pre-cured tread strip failed to bond to the casing buff line, peeling off in sheets."
+    },
+    {
+      "id": "tire_retread_pine_tar_tackifier_adhesion_failure",
+      "tire_casing_id": "AMBULANCE_VAN_TIRE_LT245",
+      "rubber_compound_formula": "CRUDE_PINE_RESIN_TACKIFIER_BLEND",
+      "vulcanization_temp_celsius": 140.0,
+      "road_wear_rating": "CATASTROPHIC_TREAD_THROW_OVER_40MPH",
+      "timestamp_relative": "YEAR_08_RETREAD_LOG_02",
+      "tags": [
+        "polymer",
+        "tires",
+        "pine_tar",
+        "adhesion",
+        "tread_throw"
+      ],
+      "prose": "Using unrefined pine pitch as an adhesive tackifier left terpene acid residues along the buffed carcass surface. At forty miles per hour, centrifugal force sheared the entire crown tread off, destroying the ambulance front fiberglass fender."
+    },
+    {
+      "id": "tire_retread_steel_belt_corrosion_blistering",
+      "tire_casing_id": "TRAILER_CARGO_TIRE_295_75R",
+      "rubber_compound_formula": "BRASS_CORD_CUSHION_GUM_RELOAD",
+      "vulcanization_temp_celsius": 150.0,
+      "road_wear_rating": "STEEL_CORD_RUST_BLISTER_BLOWOUT",
+      "timestamp_relative": "YEAR_11_RETREAD_LOG_04",
+      "tags": [
+        "polymer",
+        "tires",
+        "steel_belt",
+        "corrosion",
+        "blowout"
+      ],
+      "prose": "Water entering an unsealed nail hole corroded the brass-plated steel cord belts. Rust expansion pushed the overlying tread rubber outward into a fist-sized blister that exploded violently under an eight-ton trailer load."
+    },
+    {
+      "id": "tire_retread_reclaimed_crumb_rubber_hysteresis",
+      "tire_casing_id": "HEAVY_DUMP_TRUCK_TIRE_1200R24",
+      "rubber_compound_formula": "65_PERCENT_GROUND_CRUMB_RECLAIM",
+      "vulcanization_temp_celsius": 142.0,
+      "road_wear_rating": "HIGH_HYSTERESIS_THERMAL_MELTDOWN",
+      "timestamp_relative": "YEAR_14_RETREAD_LOG_01",
+      "tags": [
+        "polymer",
+        "tires",
+        "crumb_rubber",
+        "hysteresis",
+        "overheating"
+      ],
+      "prose": "Retread compound containing 65% coarse ground crumb rubber exhibited high internal friction (hysteresis loss). Continuous hauling at highway speeds caused the interior tread shoulder temperature to reach 170°C, melting the rubber core into a smoking liquid paste."
+    },
+    {
+      "id": "tire_retread_cold_cure_cushion_gum_delamination",
+      "tire_casing_id": "SNOW_RUNNER_UTILITY_TIRE_750R16",
+      "rubber_compound_formula": "COLD_CURE_SELF_VULCANIZING_CEMENT",
+      "vulcanization_temp_celsius": 20.0,
+      "road_wear_rating": "SUB_ZERO_COLD_DELAMINATION",
+      "timestamp_relative": "YEAR_17_RETREAD_LOG_03",
+      "tags": [
+        "polymer",
+        "tires",
+        "cold_cure",
+        "nuclear_winter",
+        "cement"
+      ],
+      "prose": "Attempting to cure pre-molded winter treads using chemical room-temperature cement in an unheated shop (4°C) prevented complete amine-promoted vulcanization. The treads separated cleanly from the tire casing during the first sub-zero snow patrol."
+    },
+    {
+      "id": "tire_retread_butyl_inner_tube_patch_permeation",
+      "tire_casing_id": "COMMUNAL_BICYCLE_INNER_TUBE_28IN",
+      "rubber_compound_formula": "NATURAL_GUM_ON_ISOBUTYLENE_TUBE",
+      "vulcanization_temp_celsius": 25.0,
+      "road_wear_rating": "SLOW_BOUNDARY_AIR_DIFFUSION",
+      "timestamp_relative": "YEAR_20_RETREAD_LOG_01",
+      "tags": [
+        "polymer",
+        "inner_tube",
+        "butyl",
+        "patch",
+        "air_loss"
+      ],
+      "prose": "Patching impermeable synthetic butyl inner tubes with natural gum rubber patches caused high boundary air diffusion. The patches held mechanically, but oxygen molecules migrated through the natural rubber matrix, requiring daily tire pumping."
+    }
+  ]
+}

@@ -61,6 +61,7 @@ namespace Ashfall.Core
         private int _currentDay;
 
         public ArchiveDeskState State => _state;
+        public IReadOnlyDictionary<string, InkMaterialDefinition> Catalog => _inkCatalog;
         public event Action<TranscriptionJob> OnJobCompleted;
         public event Action OnArchiveChanged;
 
@@ -69,7 +70,7 @@ namespace Ashfall.Core
             KnowledgeBase knowledge,
             Inventory.Inventory inventory,
             DutyRosterSystem roster,
-            ILog log = null!)
+ILog? log = null)
         {
             _journal = journal ?? throw new ArgumentNullException(nameof(journal));
             _knowledge = knowledge ?? throw new ArgumentNullException(nameof(knowledge));
@@ -176,12 +177,20 @@ namespace Ashfall.Core
 
         public bool IsEvidenceUnlocked(string evidenceId) => _state.unlockedEvidenceIds.Contains(evidenceId);
 
-        public ArchiveDeskState CaptureState() => _state;
+        public ArchiveDeskState CaptureState() => CloneState(_state);
+
         public void RestoreState(ArchiveDeskState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnArchiveChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static ArchiveDeskState CloneState(ArchiveDeskState src)
+        {
+            if (src == null) return new ArchiveDeskState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<ArchiveDeskState>(json) ?? new ArchiveDeskState();
         }
     }
 }

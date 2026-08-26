@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -50,7 +51,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public OralLoreEntry GetById(string loreId)
+        public OralLoreEntry? GetById(string loreId)
         {
             if (string.IsNullOrEmpty(loreId)) return null;
             _byLoreId.TryGetValue(loreId, out var song);

@@ -47,9 +47,9 @@ namespace Ashfall.Core.Radio
             return _channels.TryGetValue(factionId, out var ch) ? ch.Callsign : "UNKNOWN TRANSMITTER";
         }
 
-        public string TryFindFactionAtFrequency(float frequencyMhz, float toleranceMhz = 1.5f)
+        public string? TryFindFactionAtFrequency(float frequencyMhz, float toleranceMhz = 1.5f)
         {
-            string bestFaction = null;
+            string bestFaction = null!;
             float minDiff = float.MaxValue;
 
             foreach (var (fId, ch) in _channels)
@@ -146,8 +146,10 @@ namespace Ashfall.Core.Radio
             {
                 return rng.Next(0, count);
             }
-            // Deterministic hash fallback if rng is null
-            int hash = HashCode.Combine(day, (int)(seedModifier * 100));
+            // Deterministic hash fallback using StableHash (djb2/x33).
+            // HashCode.Combine is runtime-randomized in modern .NET and would
+            // break cross-host determinism. StableHash.Of is deterministic.
+            int hash = StableHash.Of(day.ToString() + ":" + ((int)(seedModifier * 100)).ToString());
             return Math.Abs(hash) % count;
         }
 
@@ -166,7 +168,7 @@ namespace Ashfall.Core.Radio
             {
                 foreach (var item in silenceProp.EnumerateArray())
                 {
-                    engine.AddSilenceEvent(item.GetString());
+                    engine.AddSilenceEvent(item.GetString()!);
                 }
             }
 

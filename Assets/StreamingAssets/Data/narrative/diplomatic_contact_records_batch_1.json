@@ -1,0 +1,362 @@
+{
+  "schema_version": 1,
+  "collection_id": "diplomatic_contact_records_batch_1",
+  "description": "Records of diplomatic contacts between the bunker and external individuals and settlements. First contact: the Cartographer (Day 220). These are not trade records (see bunker_trade_ledger_batch_2) or patrol debriefs (see patrol_debriefs) — they are records of meetings conducted face-to-face at a neutral location, with a protocol, for the purpose of establishing or maintaining a relationship.",
+  "contacts": [
+    {
+      "contact_id": "diplomatic_contact_001_cartographer_first_meeting",
+      "day": 220,
+      "location": "the Cartographer's cache (exp_report_stranger_cache_01, suburban shopping centre ruins)",
+      "bunker_representative": "the_courier",
+      "bunker_overwatch": "the_hunter (300m, concealed, rifle, no intervention unless the_courier signalled)",
+      "external_party": "the Cartographer",
+      "external_party_description": "Male, estimated 50s, walks alone. Layered cold-weather clothing, framed backpack, no visible weapon. Precise, unhurried movement. Hands visible at all times. Voice low, measured, with the cadence of a person who has spoken to himself for a long time and is remembering how to speak to another.",
+      "duration_hours": 3,
+      "protocol_followed": "the_therapist's protocol (council_minutes_023): the_courier arrived first, waited at the cache, did not approach. The Cartographer arrived at 10:15. The Cartographer set the distance at 4 metres. The_courier offered the gifts before the questions. The meeting lasted 3 hours. The Cartographer did not request entry to the bunker.",
+      "gifts_given_by_bunker": [
+        "2kg dried mushrooms (trade surplus)",
+        "1kg salt (260 days supply)",
+        "5 doses amoxicillin with dosing instructions (the_surgeon's gift, conservation protocol)",
+        "1 grow light tube T5 (the bunker has 12)",
+        "1 hand-drawn map of the bunker's known zone (the_historian)"
+      ],
+      "gifts_given_by_cartographer": [
+        "3 hand-drawn maps (fuel and water sources within 30km, low-dose zones, settlement map)",
+        "1 packet of heirloom seeds (10 varieties, spring planting, the Cartographer's cache stock)",
+        "1 iodine tablet (potassium iodide, the Cartographer's stock — 'for the next walker, which is you')"
+      ],
+      "questions_asked_by_bunker": [
+        {
+          "question": "Can the Cartographer share the maps of the fuel, water, low-dose zones, and the spring?",
+          "answer": "The Cartographer shared 3 maps (see gifts). The Cartographer stated: 'The maps are for the walker who walks after me. You are the walker. The maps are yours. I will make more. I always make more.'"
+        },
+        {
+          "question": "When will the surface be plantable, and which zones?",
+          "answer": "The Cartographer estimates Day 250-260 for the 4 low-dose zones within 20km. The zones are marked on the low-dose zone map. The Cartographer stated: 'The ash is thinning. The wind has shifted. The spring is coming. I have watched 4 springs. This is the first spring after the fire. The first spring after the fire is the spring that tells you if the ground remembers how to grow. I believe it remembers. I have seen the moss coming back on the south rocks. The moss is the first. The moss is always the first.'"
+        },
+        {
+          "question": "Will the wolf pack return, or is the southwest migration permanent?",
+          "answer": "The Cartographer stated: 'The wolves follow the deer. The deer follow the forage. The forage follows the ash. The ash is thinning southwest. The wolves will go southwest and they will not come back until the ash brings the forage back, which is not this year. The wolves are not your threat. The wolves are the thing that tells you where the forage is. The wolves are a map. I read the wolves the way you read a map. The wolves go where the ground is living. The ground is living southwest. You are northwest. The ground between you and the wolves is the ground that is waking up last. Be patient with your ground. It will wake.'"
+        },
+        {
+          "question": "What settlements exist, and what are their relations?",
+          "answer": "The Cartographer shared the settlement map (see gifts). 6 settlements within 50km: the Verge (40 people, dark, struggling), Settlement 2 / the Freeholders (60 people, salt trade, stable), the Shallows Market (3 merchants, transient, neutral), and 3 unknown settlements the Cartographer has observed but not contacted. The Cartographer stated: 'I do not contact settlements. I leave caches. The settlements that find the caches are the settlements that are walking. The settlements that do not find the caches are the settlements that are staying. The staying is not bad. The walking is not bad. They are different. You are a staying settlement that walks. That is rare. That is why I am here.'"
+        },
+        {
+          "question": "Does the Cartographer know the Verge, and can the bunker help?",
+          "answer": "The Cartographer stated: 'The Verge is 40 people on a frozen river. Their micro-hydro is dead. Their battery is dead. They have 2 weeks of fuel if they have any. They will not make the winter without power. The bunker can help if the bunker has fuel to share. The bunker has fuel. I know the bunker has fuel because I watched the bunker walk to the depot and carry the fuel back. I watched the bunker carry 80 litres. The bunker can carry 80 litres to the Verge. The Verge is 30km east. The bunker is 18km from the depot. The depot to the Verge is 22km. The bunker does not have to carry the fuel from the bunker. The bunker can carry the fuel from the depot. The depot is closer to the Verge than the bunker is. That is the thing the maps tell you. The maps tell you the shape of the help.'"
+        },
+        {
+          "question": "What does the Cartographer need that the bunker can offer?",
+          "answer": "The Cartographer stated: 'I need nothing that I do not have. I walk. I map. I leave caches. I have enough. The thing I need is the thing I cannot make. I need the bunker to continue. The bunker is the staying settlement that walks. The bunker is the thing that tells me the staying is not dying. If the bunker continues, the staying continues. That is what I need. I need the bunker to continue. The antibiotics are a gift I did not ask for and will not waste. The seeds are a gift I give because the spring is the thing I cannot give alone. The seeds need a place. The bunker is a place. I am not a place. I am a walker. The seeds are for the place. The bunker is the place. Plant the seeds. That is the thing I need the bunker to do. Plant the seeds.'"
+        }
+      ],
+      "agreements_reached": [
+        "The bunker leaves notes at the cache monthly.",
+        "The Cartographer returns to the cache on Day 250 with the spring planting maps.",
+        "The bunker offers the Cartographer standing access to 5 doses of antibiotics per visit (conservation protocol).",
+        "The bunker offers the Cartographer standing access to trade surplus (dried mushrooms, salt).",
+        "The Cartographer offers the bunker maps, intelligence, and spring planting knowledge.",
+        "The relationship is a mutual aid agreement — aid is given, not exchanged.",
+        "The Cartographer does not request entry to the bunker. The Cartographer may request entry in the future. The bunker will decide if and when the request is made."
+      ],
+      "meeting_summary": "The meeting lasted 3 hours. The_courier reports the Cartographer is the most careful person he has met — careful the way the Hunter is careful, watching before moving. The Cartographer spoke in long, unhurried sentences, often pausing for 10-20 seconds before answering. The Cartographer did not ask about the bunker's interior, its people, or its defenses. The Cartographer asked only about the bunker's continuation. The_courier reports the Cartographer's hands shook when he accepted the 5 doses of amoxicillin — the same tremor the_courier saw in the Surgeon's hands when the Surgeon wrote the target list (journal_raw_b3_17). The_courier did not mention the tremor to the Cartographer. The_courier states: 'The Cartographer is a person who has been alone for a long time and is not lonely. The Cartographer is a person who has been watching the bunker for a long time and is not threatening. The Cartographer is a person who carries the wasteland the way I carry the bunker. The Cartographer is the thing I am, outside the bunker. I am the thing the Cartographer is, inside the bunker. We are the same thing in different places. That is the relationship.'",
+      "cross_refs": [
+        "council_minutes_023",
+        "council_minutes_024",
+        "patrol_debrief_027",
+        "letter_b2_26",
+        "exp_report_stranger_cache_01",
+        "therapy_session_b3_016",
+        "therapy_session_b3_017"
+      ],
+      "tags": [
+        "diplomatic_contact",
+        "cartographer",
+        "first_meeting",
+        "mutual_aid",
+        "maps_exchanged",
+        "seeds_given",
+        "antibiotics_given",
+        "the_verge",
+        "spring_confirmed",
+        "day_250_return"
+      ]
+    },
+    {
+      "contact_id": "diplomatic_contact_002_cartographer_spring_return",
+      "day": 250,
+      "location": "the Cartographer's cache",
+      "bunker_representative": "the_courier",
+      "bunker_overwatch": "the_hunter (300m, concealed)",
+      "external_party": "the Cartographer",
+      "external_party_description": "Same as diplomatic_contact_001. The Cartographer appeared rested — the first time the_courier has seen him without the tension of a long walk. He carried a larger pack. His hands did not shake when he accepted the gift package this time. His hands shook when he read the letter.",
+      "duration_hours": 2,
+      "protocol_followed": "Same protocol as diplomatic_contact_001. The_courier arrived first, waited, the Cartographer arrived at 10:30. Distance 4 metres. Gifts before questions.",
+      "gifts_given_by_bunker": [
+        "2kg dried mushrooms (monthly standing gift)",
+        "1kg salt (monthly standing gift)",
+        "5 doses amoxicillin with dosing instructions (monthly standing gift, conservation protocol)",
+        "letter_b2_27 (the Courier's letter: 'You are not alone')"
+      ],
+      "gifts_given_by_cartographer": [
+        "3 spring planting maps (detailed: 4 low-dose zones, soil types, water access, planting recommendations)",
+        "1 packet wildflower seeds (10 varieties, for the bees — 'the bees will come when the flowers bloom, and the bees are the thing that pollinates the crops')",
+        "1 hand-drawn map of the depot-to-Verge route (22km, with water stops and rest points marked)",
+        "1 small carved wooden figure (a wolf, carved from pine — the Cartographer said, 'I carve when I rest. This is the pack. This is the 9. I watch them. I carve them. The carving is the watching in wood.')"
+      ],
+      "questions_asked_by_bunker": [
+        {
+          "question": "The spring planting maps — can the Cartographer confirm the zones and the timing?",
+          "answer": "The Cartographer confirmed the 4 low-dose zones and the Day 250-260 planting window. The Cartographer stated: 'Zone 1 is the first. Zone 1 is the south slope with the moss. The moss is the ground saying yes. Plant zone 1 first. Zone 2 is the valley, 4km north, plant Day 260. Zone 3 and Zone 4 are further, plant Day 270. The zones are the spring. The spring is the zones.'"
+        },
+        {
+          "question": "The bees — when will the bees come?",
+          "answer": "The Cartographer stated: 'The bees come when the flowers bloom. The flowers bloom when the ground is warm and the water is there. The ground is warm. The water is there (the spring melt, the streams). The flowers will bloom in 30-40 days. The bees will come after. The bees are the thing that comes after the flowers. The flowers are the thing that comes after the planting. The planting is the thing that comes after the spring. The spring is here. Plant. The bees will come.'"
+        },
+        {
+          "question": "The Verge — can the Cartographer confirm the depot-to-Verge route?",
+          "answer": "The Cartographer confirmed the route and provided the map (see gifts). The Cartographer stated: 'The route is 22km. The water stops are marked. The rest points are marked. The Verge is at the end. The Verge is 40 people. Wren is the leader. Wren is careful. Wren is the thing the Verge has instead of a General. Tell Wren the bunker is coming. Tell Wren the fuel is a gift. Wren will accept. Wren is the person who accepts.'"
+        }
+      ],
+      "agreements_reached": [
+        "The monthly standing gift continues (2kg mushrooms, 1kg salt, 5 doses amoxicillin).",
+        "The Cartographer returns to the cache on Day 280 with the summer maps and the bee report.",
+        "The bunker plants the wildflower seeds in zone 1 alongside the crops — the bees are the thing the bunker prepares for.",
+        "The Cartographer confirms the depot-to-Verge route for the Verge fuel assistance.",
+        "The Cartographer carves when he rests. The wolf carving is a gift. The carving is the watching in wood."
+      ],
+      "meeting_summary": "The meeting lasted 2 hours. The_courier reports the Cartographer was rested for the first time. The Cartographer read the letter (letter_b2_27) at the cache. The Cartographer did not speak for a long time after reading it. The Cartographer said, 'I am not alone.' The_courier says the Cartographer said it the way a man says a thing he has just learned. The_courier says the Cartographer's hands shook when he read the letter and did not shake when he accepted the antibiotics. The_courier says the letter was the thing that shook the Cartographer and the antibiotics were the thing that did not, and the difference is the thing that tells the_courier the letter was the right thing to write. The Cartographer gave the bunker the spring planting maps, the wildflower seeds, the depot-to-Verge route map, and a carved wooden wolf. The_courier says the wolf is the thing the Cartographer watches, carved in wood, and the wolf is the thing the Bouncer watches, and the Bouncer is the thing the bunker watches, and the watching is the thing that connects them. The_courier says the wolf carving will go to the Bouncer. The_courier says the Bouncer is the one who will understand the wolf.",
+      "cross_refs": [
+        "diplomatic_contact_001",
+        "letter_b2_27",
+        "council_minutes_025",
+        "courier_mission_b2_030",
+        "patrol_debrief_027"
+      ],
+      "tags": [
+        "diplomatic_contact",
+        "cartographer",
+        "second_meeting",
+        "spring_planting_maps",
+        "wildflower_seeds",
+        "the_bees",
+        "verge_route",
+        "wolf_carving",
+        "i_am_not_alone"
+      ]
+    },
+    {
+      "contact_id": "diplomatic_contact_003_cartographer_summer_return",
+      "day": 280,
+      "location": "the Cartographer's cache",
+      "bunker_representative": "the_courier",
+      "bunker_overwatch": "the_hunter (300m, concealed)",
+      "external_party": "the Cartographer",
+      "external_party_description": "Same as previous contacts. The Cartographer is tanned — the first time the_courier has seen him with colour. He has been walking in the sun. He carries a smaller pack. He moves with the ease of a man who has been walking in good weather. He is, the_courier says, the most relaxed he has seen him.",
+      "duration_hours": 2,
+      "protocol_followed": "Same protocol. The_courier arrived first, waited, the Cartographer arrived at 10:00. Distance 4 metres. Gifts before questions.",
+      "gifts_given_by_bunker": [
+        "2kg dried mushrooms (monthly standing gift)",
+        "1kg salt (monthly standing gift)",
+        "5 doses amoxicillin with dosing instructions (monthly standing gift, conservation protocol)",
+        "1 small jar of barley flour (the Chef's first surface-grain flour, a gift — the Cartographer said the bunker would share the first grain)",
+        "1 hand-drawn map of zone 1 (the Historian drew it — the bunker's first surface map, offered in return for the Cartographer's maps)"
+      ],
+      "gifts_given_by_cartographer": [
+        "3 summer maps (the 4 low-dose zones with summer water sources, the snowmelt streams marked, and the shade zones for the hot months)",
+        "1 bee report (a single hand-drawn page: the bees have been seen 12km southwest, on the wildflowers at the river bend — the bees are coming, the Cartographer estimates 10-20 days before they reach zone 1)",
+        "1 packet of medicinal herb seeds (echinacea, chamomile, yarrow — the Cartographer said, 'The Chemist will know these. The herbs are the thing that grows where the antibiotics do not. The herbs are the bridge between the garden and the clinic. The Chemist is the bridge.'",
+        "1 carved wooden bee (the companion to the wolf — the Cartographer said, 'The wolf was the winter. The bee is the summer. The watching and the pollination are the same. The Bouncer will know.')"
+      ],
+      "questions_asked_by_bunker": [
+        {
+          "question": "The bees — when will they reach zone 1?",
+          "answer": "The Cartographer stated: 'The bees are 12km southwest, on the wildflowers at the river bend. The bees are coming. The bees move at the speed of the flowers. The flowers are blooming. The bees will reach zone 1 in 10-20 days. The wildflowers in zone 1 are showing. The bees will find them. The bees are the thing that finds the flowers. The flowers are the thing that finds the bees. The finding is the thing that happens between them. The finding is the pollination. The pollination is the thing that makes the food the seed. The seed is the next. The bees are the thing between the plant and the seed. The bees are coming.'"
+        },
+        {
+          "question": "The summer — what does the bunker prepare for?",
+          "answer": "The Cartographer stated: 'The summer is the thing that comes after the spring. The spring is the planting. The summer is the growing. The growing is the thing that needs water and shade. The water is the snowmelt streams — they will run for 60-90 days, then they will slow. The shade is the thing the bunker does not have. The bunker is underground. The surface is the thing that needs shade. The crops in zone 1 are on a south slope — the south slope is the thing that gets the most sun. The most sun is the thing that makes the crops grow fast and the thing that makes the crops dry. The shade mesh (the agri depot recovery, exp_report_agri_supply_depot_02) is the thing the bunker has. The shade mesh is the thing the bunker drapes over the crops when the sun is too much. The shade mesh is the summer's grow light. The grow light is the winter's sun. The shade mesh is the summer's cloud. The bunker has the cloud. The bunker is the thing that makes the weather.'"
+        },
+        {
+          "question": "The medicinal herbs — what are they for?",
+          "answer": "The Cartographer stated: 'The medicinal herbs are the thing that grows where the antibiotics do not. The antibiotics are the thing the bunker has. The herbs are the thing the bunker grows. The antibiotics are the reserve. The herbs are the garden. The reserve is the thing that holds. The garden is the thing that grows. The Chemist is the bridge. The Chemist is the person who knows the herbs and the antibiotics and the thing that is the same and the thing that is different. The herbs are echinacea, chamomile, yarrow. The Chemist will know. The Chemist is the bridge between the garden and the clinic. The bridge is the thing the Chemist is.'"
+        },
+        {
+          "question": "The Cartographer's needs — has anything changed?",
+          "answer": "The Cartographer stated: 'My needs have not changed. I walk. I map. I leave caches. I have enough. The thing that has changed is the thing I carry. I used to carry the maps for the next walker. I now carry the maps for the bunker. The bunker is the next walker. The bunker is the walker that stays. The maps for the walker that stays are the maps that help the staying become a place. The bunker is a place. I carry the maps for the place. The place is the thing I walk for now. The walking is the same. The reason is different. The reason is the place.'"
+        }
+      ],
+      "agreements_reached": [
+        "The monthly standing gift continues (2kg mushrooms, 1kg salt, 5 doses amoxicillin).",
+        "The Cartographer returns to the cache on Day 310 with the autumn maps and the harvest report.",
+        "The bunker plants the medicinal herbs in a new bed adjacent to zone 1 — the Chemist manages the herb garden.",
+        "The Cartographer confirms the bees are coming in 10-20 days.",
+        "The bunker shares the first surface grain (barley flour) with the Cartographer — the first food the bunker has grown and given away.",
+        "The carved bee is the companion to the carved wolf. The Bouncer receives both."
+      ],
+      "meeting_summary": "The meeting lasted 2 hours. The_courier reports the Cartographer was tanned and relaxed — the first time he has seen him at ease. The Cartographer brought the summer maps, the bee report, the medicinal herb seeds, and a carved wooden bee. The_courier gave the Cartographer the barley flour — the first food the bunker has grown on the surface and given away. The Cartographer held the flour and did not speak for a long time. He said, 'This is the first grain from the place. The place grows grain. The grain is the thing the place does. The place is a farm. The farm is the thing the bunker became. I am the walker who walks to the farm. The walker and the farm are the same. The walking and the growing are the same. The grain is the thing between them.' The_courier says the Cartographer's hands did not shake when he held the flour. The_courier says the grain is the thing that did not shake the Cartographer and the letter was the thing that did (diplomatic_contact_002). The grain is the thing that is calm. The letter is the thing that is felt. The calm and the felt are the things the Cartographer carries now. The_courier says the Cartographer is the walker who walks to the farm, and the farm is the place, and the place is the bunker, and the bunker is the thing the Cartographer walks for now. The walking is the same. The reason is the place.",
+      "cross_refs": [
+        "diplomatic_contact_001",
+        "diplomatic_contact_002",
+        "council_minutes_026",
+        "exp_report_agri_supply_depot_02",
+        "letter_b2_27"
+      ],
+      "tags": [
+        "diplomatic_contact",
+        "cartographer",
+        "third_meeting",
+        "summer_maps",
+        "bee_report",
+        "medicinal_herbs",
+        "carved_bee",
+        "barley_flour_gift",
+        "first_grain_given_away",
+        "the_place"
+      ]
+    },
+    {
+      "contact_id": "diplomatic_contact_004_cartographer_autumn_return",
+      "day": 310,
+      "location": "the Cartographer's cache",
+      "bunker_representative": "the_courier",
+      "bunker_overwatch": "the_hunter (300m, concealed)",
+      "external_party": "the Cartographer",
+      "external_party_description": "Same as previous contacts. The Cartographer is weathered — the summer sun has darkened his skin further. He carries a full pack. He moves with the ease of a man who has been walking in the best weather the wasteland has had since before the exchange. He is, the_courier says, the most at-home he has seen him — at home in the walking, at home in the wasteland, at home in the autumn.",
+      "duration_hours": 3,
+      "protocol_followed": "Same protocol. The_courier arrived first, waited, the Cartographer arrived at 10:00. Distance 4 metres. Gifts before questions.",
+      "gifts_given_by_bunker": [
+        "2kg dried mushrooms (monthly standing gift)",
+        "1kg salt (monthly standing gift)",
+        "5 doses amoxicillin with dosing instructions (monthly standing gift, conservation protocol)",
+        "2kg barley flour (the community's first surface grain, shared again)",
+        "1 jar pickled radish (the Chef's first preserved surface food, a gift — the Cartographer said the community would share the first preserved food)",
+        "1 hand-drawn map of zone 1 and zone 2 (the Historian's updated surface map, offered in return for the Cartographer's autumn maps)"
+      ],
+      "gifts_given_by_cartographer": [
+        "3 autumn maps (the 4 low-dose zones with autumn water sources, the first frost dates estimated, and the winter wind patterns marked)",
+        "1 harvest report (a single hand-drawn page: the Cartographer's assessment of the community's zone 1 and zone 2 from his observations on the ridge — the Cartographer has been watching the community's farms from a distance, and the harvest report is his record of what he saw: 'The zone 1 is strong. The wheat is ready. The barley is ready. The radish is done. The wildflowers are seeding. The bees are pollinating. The zone 2 is growing. The oats are slow. The beans are strong. The lentils are slow. The community has 2 farms. The 2 farms are the thing the community has. The farms are the thing I have been watching. The watching is the thing I do. The farms are the thing the community does. The watching and the farming are the things that are the not-alone.')",
+        "1 packet of winter rye seeds (the Cartographer said, 'The winter rye is the thing that grows in the cold. The winter rye is the thing that grows when the other things do not. The winter rye is the winter's wheat. The winter rye is the thing the community plants in the autumn for the spring. The winter rye is the bridge between the autumn and the spring. The bridge is the thing the community has now.')",
+        "1 carved wooden wheat stalk (the companion to the wolf and the bee — the Cartographer said, 'The wolf was the winter. The bee was the summer. The wheat is the harvest. The watching, the pollination, and the harvest are the same. The Bouncer will know. The Bouncer holds the wolf and the bee. The Bouncer will hold the wheat.')"
+      ],
+      "questions_asked_by_bunker": [
+        {
+          "question": "The harvest — what has the Cartographer seen from the ridge?",
+          "answer": "The Cartographer stated: 'I have watched the community's farms from the ridge. The zone 1 is strong. The wheat is ready. The barley is ready. The radish is done. The wildflowers are seeding. The bees are pollinating. The zone 2 is growing. The oats are slow. The beans are strong. The lentils are slow. The community has 2 farms. The 2 farms are the thing the community has. The farms are the thing I have been watching. The watching is the thing I do. The farms are the thing the community does. The watching and the farming are the things that are the not-alone. The harvest is the thing the community does. The watching is the thing I do. The harvest and the watching are the things that are the not-alone.'"
+        },
+        {
+          "question": "The winter — what does the community prepare for?",
+          "answer": "The Cartographer stated: 'The winter is the thing that comes after the autumn. The autumn is the harvest. The winter is the thing that tests the harvest. The harvest is the thing the community has. The winter is the thing that tests the thing the community has. The test is the cold and the dark and the snow. The cold is the thing the wood stove answers. The dark is the thing the lamps answer. The snow is the thing the community answers by staying inside and eating the harvest. The harvest is the thing the winter is for. The winter is the thing the harvest is for. The winter and the harvest are the things that are for each other. The community has the harvest. The winter is coming. The community is ready. The community is ready because the community is a community. A shelter is not ready for the winter. A shelter survives the winter. A community is ready for the winter. A community lives the winter. The living is the thing the community does. The winter is the thing the community lives through. The living through is the thing the community does.'"
+        },
+        {
+          "question": "The winter rye — when and where does the community plant it?",
+          "answer": "The Cartographer stated: 'The winter rye is planted in the autumn, before the first frost. The first frost is estimated Day 340-350. The winter rye is planted in zone 1, in the rows where the radish was. The radish is done. The rows are empty. The winter rye goes in the empty rows. The winter rye grows in the cold. The winter rye grows slowly. The winter rye is the thing that grows when the other things do not. The winter rye is the thing that is ready in the early spring. The early spring is the thing the winter rye is for. The winter rye is the bridge between the autumn and the spring. The bridge is the thing the community has now. The community has the bridge. The bridge is the winter rye.'"
+        },
+        {
+          "question": "The Cartographer's needs — has anything changed?",
+          "answer": "The Cartographer stated: 'My needs have not changed. I walk. I map. I leave caches. I have enough. The thing that has changed is the thing I carry back. I used to carry the maps for the next walker. I now carry the maps for the community. The community is the next walker. The community is the walker that stays. The maps for the walker that stays are the maps that help the staying become a home. The community is a home. I carry the maps for the home. The home is the thing I walk for now. The walking is the same. The reason is the home.'"
+        }
+      ],
+      "agreements_reached": [
+        "The monthly standing gift continues (2kg mushrooms, 1kg salt, 5 doses amoxicillin).",
+        "The Cartographer returns to the cache on Day 340 with the winter maps and the first-frost report.",
+        "The community plants the winter rye in zone 1 before the first frost (Day 340-350).",
+        "The community shares the first preserved food (pickled radish) with the Cartographer.",
+        "The carved wheat stalk is the companion to the wolf and the bee. The Bouncer receives all three.",
+        "The Cartographer confirms the community is a home from his observations on the ridge."
+      ],
+      "meeting_summary": "The meeting lasted 3 hours. The_courier reports the Cartographer was weathered and at home in the walking. The Cartographer brought the autumn maps, the harvest report (his observations of the community's farms from the ridge), the winter rye seeds, and a carved wooden wheat stalk. The_courier gave the Cartographer the barley flour and the pickled radish — the first preserved food the community has shared. The Cartographer held the pickled radish and said, 'This is the thing that keeps. The keeping is the thing the community does. The shelter stores. The community keeps. The keeping is the thing the winter is for. The winter is the thing the keeping is for. The keeping and the winter are the things that are for each other.' The_courier says the Cartographer's hands did not shake when he held the pickled radish. The_courier says the pickled radish is the thing that is calm, like the grain. The letter was the thing that is felt. The calm and the felt are the things the Cartographer carries. The_courier says the Cartographer is the walker who walks for the home, and the home is the community, and the community is the thing the Cartographer walks for now. The walking is the same. The reason is the home. The_courier says the carved wheat stalk will go to the Bouncer. The_courier says the Bouncer is the one who will understand the wheat. The Bouncer holds the wolf and the bee. The Bouncer will hold the wheat. The wolf, the bee, and the wheat are the winter, the summer, and the harvest. The watching is the same.",
+      "cross_refs": [
+        "diplomatic_contact_001",
+        "diplomatic_contact_002",
+        "diplomatic_contact_003",
+        "council_minutes_028",
+        "patrol_debrief_034"
+      ],
+      "tags": [
+        "diplomatic_contact",
+        "cartographer",
+        "fourth_meeting",
+        "autumn_maps",
+        "harvest_report",
+        "winter_rye",
+        "carved_wheat",
+        "pickled_radish_gift",
+        "the_home",
+        "first_frost_estimated"
+      ]
+    },
+    {
+      "contact_id": "diplomatic_contact_005_cartographer_winter_return",
+      "day": 340,
+      "location": "the Cartographer's cache",
+      "bunker_representative": "the_courier",
+      "bunker_overwatch": "the_hunter (300m, concealed)",
+      "external_party": "the Cartographer",
+      "external_party_description": "The Cartographer in winter dress — heavier layers, fur-trimmed hood (he trades for furs with the Verge, he mentioned). His face is wind-burned. He moves with the deliberate care of a man walking in cold. He is, the_courier says, the most wintered he has seen him — at home in the cold the way he was at home in the summer.",
+      "duration_hours": 2,
+      "protocol_followed": "Same protocol. The_courier arrived first, waited, the Cartographer arrived at 11:00. Distance 4 metres. Gifts before questions.",
+      "gifts_given_by_bunker": [
+        "2kg dried mushrooms (monthly standing gift)",
+        "1kg salt (monthly standing gift)",
+        "5 doses amoxicillin with dosing instructions (monthly standing gift, conservation protocol)",
+        "1 jar pickled radish (the winter preserves, shared again)",
+        "1 pair wool socks (the Widow knitted them — the first hand-made gift the bunker has given the Cartographer)"
+      ],
+      "gifts_given_by_cartographer": [
+        "3 winter maps (the 4 low-dose zones with snow depth, wind patterns, and the wintering bee colony location marked — the bees are wintering in a hollow oak 3km southwest of zone 1)",
+        "1 first-frost report (the first frost arrived Day 348 — the Cartographer confirmed it on his walk; the meteorologist's estimate was accurate)",
+        "1 packet of clover seeds (the Cartographer said, 'The clover is the thing the bees need in the spring. The clover is the thing that feeds the bees when the wildflowers are done. The clover is the thing that keeps the bees. The bees are the thing that keeps the community. The clover is the thing that keeps the community.')",
+        "1 carved wooden snowflake (the Cartographer said, 'The wolf was the winter. The bee was the summer. The wheat was the harvest. The snowflake is the winter again — the second winter. The second winter is the winter the family lives through. The first winter was the winter the shelter survived. The second winter is the winter the family lives. The snowflake is the second winter. The Bouncer will know.')",
+        "1 report on the Verge (the Cartographer visited the Verge on his walk — the Verge has power, the river is melting at the edges, Wren is well, the Verge children are outside)"
+      ],
+      "questions_asked_by_bunker": [
+        {
+          "question": "The winter — what does the family prepare for in the second winter?",
+          "answer": "The Cartographer stated: 'The second winter is the winter the family lives. The first winter was the winter the shelter survived. The surviving was the closing. The living is the opening. The opening is the thing the family does in the winter. The family opens the doors and the windows and the vents and the family lives in the winter the way the family lives in the spring. The living is the same. The season is different. The living does not change. The season changes. The family does not change. The family is the 47. The 47 are the thing that lives in the winter. The second winter is the winter the 47 live. The living is the thing the 47 do. The second winter is the thing the 47 live through. The living through is the thing the family does. The first winter the shelter survived. The second winter the family lives. The living is the thing the family does.'"
+        },
+        {
+          "question": "The winter rye — how is it faring under the snow?",
+          "answer": "The Cartographer stated: 'The winter rye is under the snow. The snow is the blanket. The winter rye is the thing under the blanket. The blanket is cold but the thing under the blanket is warmer than the thing above the blanket. The winter rye is warmer under the snow than it would be above the snow. The snow is the thing that keeps the winter rye warm. The winter rye is the thing that grows in the cold. The cold is the thing the snow keeps out. The winter rye is the thing the snow keeps the cold from. The snow and the winter rye are the things that are for each other. The snow is the blanket. The winter rye is the thing under the blanket. The thing under the blanket is growing. I have seen the green under the snow. The green is the winter rye. The green is the bridge. The bridge is under the blanket. The blanket is the snow. The bridge goes to the spring. The spring is the thing the snow melts into. The spring is the thing the winter rye grows into. The winter rye is the bridge. The snow is the blanket. The bridge is under the blanket. The spring is coming.'"
+        },
+        {
+          "question": "The bees — where are they wintering?",
+          "answer": "The Cartographer stated: 'The bees are wintering in a hollow oak 3km southwest of zone 1. The hollow oak is the thing the bees chose. The bees chose the oak because the oak is hollow and the hollow is warm and the warm is the thing the bees need. The bees are the thing that chose. The oak is the thing that was chosen. The choosing is the thing between them. The choosing is the not-alone. The bees are not alone in the oak. The oak is not alone with the bees. The bees and the oak are the things that are not alone. The not-alone is the thing between them. The bees will come out in the spring. The spring is the thing the bees come out into. The spring is the thing the bees are for. The bees are the thing the spring is for. The bees and the spring are the things that are for each other. The bees are in the oak. The spring is coming. The bees will come.'"
+        },
+        {
+          "question": "The Verge — how is the Verge?",
+          "answer": "The Cartographer stated: 'The Verge has power. The Verge has lights. The Verge has children outside. Wren is well. The river is melting at the edges. The Verge is the thing the bunker gave fuel to. The fuel was the gift. The lights are the thing the gift made. The children are the thing the lights made. The Verge is the thing the children are. The Verge is the thing the bunker's gift made. The bunker is the thing the Verge's lights are from. The bunker and the Verge are the things that are for each other. The gift made the for-each-other. The for-each-other is the not-alone. The bunker and the Verge are not alone. The Verge is well.'"
+        }
+      ],
+      "agreements_reached": [
+        "The monthly standing gift continues (2kg mushrooms, 1kg salt, 5 doses amoxicillin).",
+        "The Cartographer returns to the cache on Day 370 with the late-winter maps and the snow-melt report.",
+        "The community plants the clover seeds in zone 1 in the early spring (Day 370-380) — the clover feeds the bees.",
+        "The carved snowflake is the companion to the wolf, the bee, the wheat. The Bouncer receives all four.",
+        "The Cartographer confirms the Verge is well.",
+        "The Cartographer confirms the winter rye is growing under the snow — the bridge holds."
+      ],
+      "meeting_summary": "The meeting lasted 2 hours. The_courier reports the Cartographer was wintered and at home in the cold. The Cartographer brought the winter maps, the first-frost report (Day 348, accurate), the clover seeds (for the bees), the carved snowflake (the fourth carving, for the Bouncer), and a report on the Verge. The_courier gave the Cartographer the pickled radish and the wool socks — the first hand-made gift the bunker has given the Cartographer. The Cartographer held the socks and did not speak for a long time. He said, 'The socks are the thing the hands made. The hands are the thing the family has. The hands make the things the family gives. The giving is the thing the hands do. The hands and the giving are the things the family is. The socks are the thing the hands made for the walker. The walker is the thing the hands made the socks for. The hands and the walker are the things that are not alone. The socks are the not-alone.' The_courier says the Cartographer's hands shook when he held the socks — the way they shook when he read the letter (diplomatic_contact_002) and the way they did not shake when he held the grain (diplomatic_contact_003) and the pickled radish (diplomatic_contact_004). The_courier says the socks are the thing that shook the Cartographer. The socks are the hand-made thing. The hand-made thing is the thing that shook the Cartographer. The_courier says the carved snowflake will go to the Bouncer. The Bouncer holds the wolf, the bee, the wheat, and the snowflake. The winter, the summer, the harvest, and the second winter. The watching is the same.",
+      "cross_refs": [
+        "diplomatic_contact_004",
+        "council_minutes_030",
+        "maint_log_b3_024",
+        "patrol_debrief_035"
+      ],
+      "tags": [
+        "diplomatic_contact",
+        "cartographer",
+        "fifth_meeting",
+        "winter_maps",
+        "first_frost_report",
+        "clover_seeds",
+        "carved_snowflake",
+        "wool_socks",
+        "verge_well",
+        "winter_rye_under_snow",
+        "second_winter"
+      ]
+    }
+  ]
+}

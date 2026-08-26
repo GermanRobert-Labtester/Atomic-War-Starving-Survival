@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Warlords
 {
     /// <summary>
@@ -95,7 +96,7 @@ namespace Ashfall.Core.Warlords
             return lines[n % lines.Count];
         }
 
-        public WarlordDoctrineDef GetDoctrine(string id)
+        public WarlordDoctrineDef? GetDoctrine(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < Doctrines.Count; i++)
@@ -104,7 +105,7 @@ namespace Ashfall.Core.Warlords
             return null;
         }
 
-        public WarlordTerritoryNodeDef GetNode(string locationId)
+        public WarlordTerritoryNodeDef? GetNode(string locationId)
         {
             if (string.IsNullOrEmpty(locationId)) return null;
             for (int i = 0; i < Territory.Count; i++)
@@ -331,17 +332,37 @@ namespace Ashfall.Core.Warlords
             {
                 string path = files.Combine(dataDir, names[f]);
                 if (!files.FileExists(path)) continue;
+                string text = files.ReadAllText(path);
                 try
                 {
-                    var list = json.Deserialize<List<WarlordIdProbe>>(files.ReadAllText(path));
-                    if (list == null) continue;
-                    for (int i = 0; i < list.Count; i++)
-                        if (list[i] != null && !string.IsNullOrEmpty(list[i].id))
-                            ids.Add(list[i].id);
+                    var list = CatalogLocator.LoadWrappedList<WarlordIdProbe>(text, SystemTextJsonSerializer.Options);
+                    if (list != null)
+                    {
+                        for (int i = 0; i < list.Count; i++)
+                            if (list[i] != null && !string.IsNullOrEmpty(list[i].id))
+                                ids.Add(list[i].id);
+                        continue;
+                    }
                 }
-                catch
+                catch (Exception) { /* Fallback below */ }
+
+                try
                 {
-                    // Not every catalog is a flat id list; skip it.
+                    var wrap = json.Deserialize<WarlordCatalogWrapperProbe>(text);
+                    if (wrap != null)
+                    {
+                        var list = (wrap.locations != null && wrap.locations.Count > 0) ? wrap.locations : wrap.items;
+                        if (list != null)
+                        {
+                            for (int i = 0; i < list.Count; i++)
+                                if (list[i] != null && !string.IsNullOrEmpty(list[i].id))
+                                    ids.Add(list[i].id);
+                        }
+                    }
+                }
+                catch (Exception ex_CATDIAG)
+                {
+                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
                 }
             }
             return ids;
@@ -354,13 +375,16 @@ namespace Ashfall.Core.Warlords
             if (!files.FileExists(path)) return ids;
             try
             {
-                var list = json.Deserialize<List<WarlordFactionProbe>>(files.ReadAllText(path));
+                var list = CatalogLocator.LoadWrappedList<WarlordFactionProbe>(files.ReadAllText(path), SystemTextJsonSerializer.Options);
                 if (list == null) return ids;
                 for (int i = 0; i < list.Count; i++)
                     if (list[i] != null && !string.IsNullOrEmpty(list[i].faction_id))
                         ids.Add(list[i].faction_id);
             }
-            catch { }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                }
             return ids;
         }
     }
@@ -376,5 +400,12 @@ namespace Ashfall.Core.Warlords
     public class WarlordFactionProbe
     {
         public string faction_id = string.Empty;
+    }
+
+    [Serializable]
+    public class WarlordCatalogWrapperProbe
+    {
+        public System.Collections.Generic.List<WarlordIdProbe> locations = new System.Collections.Generic.List<WarlordIdProbe>();
+        public System.Collections.Generic.List<WarlordIdProbe> items = new System.Collections.Generic.List<WarlordIdProbe>();
     }
 }

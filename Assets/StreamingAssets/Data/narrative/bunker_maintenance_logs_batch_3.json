@@ -1,0 +1,530 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "log_id": "maint_log_b3_001",
+      "day": 116,
+      "author": "the_plumber",
+      "system": "water_cistern_feed",
+      "period": "0700-1130",
+      "issue": "Cistern feed line frozen at foundation wall elbow. No flow to cistern from lower sump.",
+      "action_taken": "Hot-water pour on the elbow in three applications. Wrapped elbow in salvaged blanket and rubber pond liner pending proper insulation. Flow restored 10:15.",
+      "parts_used": [
+        "salvaged blanket x3",
+        "rubber pond liner (borrowed from botanist mushroom trays, to be replaced)"
+      ],
+      "follow_up": "Agricultural fleece recovered from agri supply depot (exp_report_agri_supply_depot_01) to be wrapped around the elbow as permanent insulation. Return pond liner to botanist. Inspect all foundation penetrations for similar exposure.",
+      "status": "resolved_temporary",
+      "tags": [
+        "water",
+        "freeze",
+        "cistern",
+        "insulation",
+        "near_miss"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_002",
+      "day": 119,
+      "author": "the_electrician",
+      "system": "generator_voltage_regulation",
+      "period": "0200-0340",
+      "issue": "Voltage brownout. 198V sustained for 11 minutes. Medical bay cold storage alarmed. Voltage regulator bypass down to one functional channel.",
+      "action_taken": "Shed load: greenhouse grow lights, radio standby, lower corridor heaters. Held medical bay cold storage and ventilation only. Voltage recovered to 214V by 02:51. Restored grow lights at 06:00.",
+      "parts_used": [],
+      "follow_up": "No replacement regulator channels available. Operating on single channel; next channel failure requires load shedding as standing procedure. Documented load-shed priority: 1) medical bay cold storage, 2) ventilation, 3) comms, 4) greenhouse, 5) corridor heat, 6) radio. The Architect to locate a pre-war electrical supply warehouse on the Cartographer's map.",
+      "status": "resolved_temporary",
+      "tags": [
+        "power",
+        "brownout",
+        "voltage_regulator",
+        "load_shed",
+        "critical"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_003",
+      "day": 122,
+      "author": "the_mechanic",
+      "system": "fuel_drum_handling",
+      "period": "0900-1500",
+      "issue": "Generator fuel drums dragging and bending floor plates under drum cradles during rotation.",
+      "action_taken": "Fabricated hand crane from tractor front axle and two lengths stainless pipe (recovered exp_report_geo_thermal_plant_01). Crane lifts drums clear of floor for rolling rotation. Tested with full drum (200L). Lift smooth, no floor plate deflection.",
+      "parts_used": [
+        "tractor front axle x1",
+        "stainless steel pipe 10cm dia x2m x2",
+        "chain block x1 (from train yard toolbox)"
+      ],
+      "follow_up": "None. Crane is permanent installation. The General requests a second crane for the salvage store if materials allow.",
+      "status": "resolved_permanent",
+      "tags": [
+        "fuel",
+        "handling",
+        "fabrication",
+        "floor_plates"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_004",
+      "day": 125,
+      "author": "the_plumber",
+      "system": "secondary_water_pump",
+      "period": "1400-1800",
+      "issue": "Secondary pump impeller damaged beyond local repair. Primary pump is sole water path; no redundancy.",
+      "action_taken": "No action possible with local stock. Logged requirement for replacement impeller. Expedited the water treatment works expedition (exp_report_water_treatment_works_01) to recover a municipal pump impeller.",
+      "parts_used": [],
+      "follow_up": "Impeller and volute recovered Day 137 from water treatment works. Modification required to fit bunker secondary pump housing. The Mechanic to machine the mating flange. Installation target Day 142.",
+      "status": "in_progress",
+      "tags": [
+        "water",
+        "pump",
+        "redundancy",
+        "expedition_triggered"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_005",
+      "day": 131,
+      "author": "the_electrician",
+      "system": "radio_transmitter_amplifier",
+      "period": "1100-1300",
+      "issue": "Transmitter output further reduced. Amplifier tube degradation now at 55 percent of rated output. Broadcasts audible but weak beyond 8km.",
+      "action_taken": "Re-biased the remaining tube to compensate. Output recovered to 70 percent. Tube life shortened by the re-bias — estimate 30 days at current duty cycle.",
+      "parts_used": [],
+      "follow_up": "The Lineman's Loop (142.5) offered vacuum tubes in trade for 10mm cable. The General authorised a trade expedition if contact can be arranged. No replacement tubes in local stock. When this tube fails, the bunker goes off the air.",
+      "status": "resolved_temporary",
+      "tags": [
+        "radio",
+        "transmitter",
+        "tube_degradation",
+        "trade_required",
+        "critical"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_006",
+      "day": 137,
+      "author": "the_mechanic",
+      "system": "secondary_water_pump_install",
+      "period": "0900-1600",
+      "issue": "Recovered municipal pump impeller requires mating flange modification to fit bunker secondary housing.",
+      "action_taken": "Machined mating flange using the lathe. Bolt circle did not match — redrilled the housing flange to the impeller's pattern. Installed impeller and volute. Dry-run test: no vibration, no leak. Wet-run test scheduled Day 139 with the Plumber.",
+      "parts_used": [
+        "municipal pump impeller and volute x1 (recovered exp_report_water_treatment_works_01)",
+        "gasket sheet x1 (compressed fibre, recovered same expedition)"
+      ],
+      "follow_up": "Wet-run test Day 139. If clean, secondary pump returns to standby redundancy. Primary pump can be taken offline for its scheduled seal inspection.",
+      "status": "in_progress",
+      "tags": [
+        "water",
+        "pump",
+        "installation",
+        "machining",
+        "redundancy_restored"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_007",
+      "day": 139,
+      "author": "the_plumber",
+      "system": "secondary_water_pump_wet_test",
+      "period": "0600-0800",
+      "issue": "Wet-run validation of reinstalled secondary pump.",
+      "action_taken": "Opened isolation valves. Started pump on the generator's night load. Pressure 2.4 bar at the cistern header. No leak at the modified flange. Ran 45 minutes. Shut down and returned to standby. Primary pump remains lead.",
+      "parts_used": [],
+      "follow_up": "Secondary pump redundancy restored. Primary pump seal inspection scheduled Day 145 — secondary will take lead during the inspection window (est. 4 hours).",
+      "status": "resolved_permanent",
+      "tags": [
+        "water",
+        "pump",
+        "wet_test",
+        "redundancy_confirmed"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_008",
+      "day": 145,
+      "author": "the_plumber",
+      "system": "primary_water_pump_seal",
+      "period": "0800-1200",
+      "issue": "Scheduled primary pump seal inspection. Secondary pump on lead.",
+      "action_taken": "Removed seal carrier. Seal lip worn but not failed. No scoring on the shaft. Reinstalled existing seal — estimated 20 days additional life. Did not replace: no replacement seal in stock. The water treatment works gasket sheet is not suitable for a dynamic seal.",
+      "parts_used": [],
+      "follow_up": "Replacement seal is now the priority water-system part. The agri supply depot may have irrigation pump seals — recommend a return visit. If the primary seal fails before a replacement is found, the secondary pump becomes lead with no redundancy.",
+      "status": "resolved_temporary",
+      "tags": [
+        "water",
+        "pump",
+        "seal",
+        "inspection",
+        "expedition_required"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_009",
+      "day": 150,
+      "author": "the_electrician",
+      "system": "hand_crank_radio_battery",
+      "period": "1300-1400",
+      "issue": "Hand-crank emergency radio recovered from fire lookout (exp_report_fire_lookout_01). Battery unknown condition.",
+      "action_taken": "Cranked for 5 minutes. Battery accepted a partial charge. The radio received the Apothecary's Hour on 155.8 clearly. The crank generator is functional. Battery capacity low — estimate 20 minutes receive per 5 minutes crank. No transmit capability.",
+      "parts_used": [],
+      "follow_up": "Assign to the Radio Host as a backup receiver for monitoring 155.8 (medical frequency) and 149.0 (Kilo settlement distress). The crank radio does not draw generator fuel. It is the only receiver that works if the generator is off.",
+      "status": "resolved_permanent",
+      "tags": [
+        "radio",
+        "backup_receiver",
+        "hand_crank",
+        "fuel_free"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_010",
+      "day": 156,
+      "author": "the_mechanic",
+      "system": "greenhouse_grow_light_bulb",
+      "period": "0700-0745",
+      "issue": "Grow light bed B (barley) bulb failed. No spare bulbs for the grow light fixtures.",
+      "action_taken": "Rotated a bulb from bed A (turnips) to bed B (barley) on the Botanist's instruction — barley is the higher-priority crop this cycle. Bed A now runs on a single bulb at extended hours. The Botanist will adjust the turnip cycle to compensate.",
+      "parts_used": [],
+      "follow_up": "Grow light bulbs are now the critical greenhouse consumable. No local source. The train yard locomotive headlight (if recoverable) is a possible substitute but voltage and fitting are wrong. The Electrician is investigating LED retrofit from the fire lookout hand-crank radio's indicator circuit — speculative. If grow lights fail entirely, greenhouse production drops to ambient light only — winter ambient is insufficient for the barley cycle.",
+      "status": "resolved_temporary",
+      "tags": [
+        "greenhouse",
+        "grow_lights",
+        "bulb_failure",
+        "critical",
+        "crop_priority"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_011",
+      "day": 180,
+      "author": "the_electrician",
+      "system": "generator_fuel_blend",
+      "period": "0600-0700",
+      "issue": "First introduction of recovered diesel (chem_lab_003) to the generator. Unknown if the blend (pre-war reserve + recovered) will run clean.",
+      "action_taken": "Introduced 10 litres of recovered diesel to the 175-litre reserve (5.7 percent blend). Started generator on the blend at 06:00. Monitored for 1 hour. No alarm. No smoke. No voltage fluctuation beyond the existing regulator tolerance. The generator accepted the blend.",
+      "parts_used": [
+        "recovered diesel 10 litres (chem_lab_003 confirmed)"
+      ],
+      "follow_up": "Continue the blend at 10 litres per day until the recovered diesel is integrated. the_mechanic to inspect the injector pump and lines at the next service window (the_chemist flagged slightly elevated sulphur, chem_lab_003). No immediate concern.",
+      "status": "resolved_permanent",
+      "tags": [
+        "generator",
+        "fuel_blend",
+        "recovered_diesel",
+        "accepted",
+        "monitor"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_012",
+      "day": 182,
+      "author": "the_electrician",
+      "system": "greenhouse_grow_light_led_research",
+      "period": "1400-1700",
+      "issue": "Grow light bed A on single bulb (maint_log_b3_010). No spare bulbs. LED retrofit research authorised (council_minutes_018).",
+      "action_taken": "Dismantled the fire lookout hand-crank radio indicator circuit (exp_report_fire_lookout_01). The circuit contains 6 low-output LEDs rated for 3V at 20mA each. Tested 3 LEDs in series on a 9V battery (scavenged from the radio's backup): functional but output is approximately 5 percent of a single grow light bulb. The LED retrofit is not a replacement. It is a supplement — may extend one bed by 10-20 percent if the main bulb fails. The Botanist says 10-20 percent is not enough for the barley cycle but may sustain the wheat seedlings (journal_raw_b3_12).",
+      "parts_used": [
+        "LEDs x6 (from hand-crank radio indicator circuit)",
+        "9V battery x1 (scavenged, low charge)"
+      ],
+      "follow_up": "The LED retrofit is a last resort, not a solution. The grow light bulb search is the priority. the_electrician to identify a possible source — the fire lookout had no bulbs, the train yard locomotive headlight is wrong voltage and fitting. The agri supply depot second store (unsearched, exp_report_agri_supply_depot_01) may contain grow light bulbs if it was an agricultural supply depot. Recommend a return visit. Report to council Day 188.",
+      "status": "in_progress",
+      "tags": [
+        "greenhouse",
+        "grow_lights",
+        "led_research",
+        "last_resort",
+        "bulb_search_required"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_013",
+      "day": 184,
+      "author": "the_plumber",
+      "system": "water_cistern_feed_insulation",
+      "period": "0800-1000",
+      "issue": "Permanent insulation of the cistern feed elbow (maint_log_b3_001). The agricultural fleece (exp_report_agri_supply_depot_01) has been on the elbow since Day 119. Inspection required.",
+      "action_taken": "Inspected the fleece wrap. Fleece intact, no moisture ingress, no freeze. The elbow is insulated. Removed the temporary blanket and pond liner (borrowed from the Botanist) and returned them. The pond liner goes back to the Botanist's mushroom trays. The blanket goes to the laundry. The fleece is the permanent insulation. The cistern feed has not frozen since Day 121.",
+      "parts_used": [],
+      "follow_up": "The fleece is permanent. Inspect the other foundation penetrations — the Architect has identified 3 more elbows with similar exposure. The remaining fleece (approximately 15 metres) is sufficient for 2 more elbows. The third will need an alternative. the_plumber says: water is the one resource we are not short on, and the insulation is the reason.",
+      "status": "resolved_permanent",
+      "tags": [
+        "water",
+        "cistern",
+        "insulation",
+        "fleece_permanent",
+        "pond_liner_returned"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_014",
+      "day": 188,
+      "author": "the_electrician",
+      "system": "greenhouse_grow_light_bed_b",
+      "period": "0600-0630",
+      "issue": "Last functional grow light bulb (bed B, barley + wheat) began flickering. Reported by the_botanist (journal_raw_b3_23).",
+      "action_taken": "Inspected the fixture. The flicker is in the tube, not the ballast — the tube ends are beginning to blacken, which is the failure mode of a fluorescent tube at end of life. The ballast is functioning. Swapping the tube is not possible — no spare tubes. The LED retrofit array (maint_log_b3_012) is on standby beside bed B. The flicker is intermittent — the tube may hold 3-7 days.",
+      "parts_used": [],
+      "follow_up": "When the tube fails, the LED array activates on the wheat seedlings (the_botanist's priority — the wheat is the proof). The barley reverts to ambient light. the_botanist documents the crop status. The agri depot return (courier_mission_b2_020) is the only source of replacement tubes within walking distance. The Electrician is going on the expedition to identify tubes and ballasts.",
+      "status": "in_progress",
+      "tags": [
+        "greenhouse",
+        "grow_lights",
+        "tube_failure",
+        "flicker",
+        "led_standby",
+        "critical"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_015",
+      "day": 191,
+      "author": "the_electrician",
+      "system": "greenhouse_led_array_install",
+      "period": "0500-0545",
+      "issue": "LED array installation on the wheat seedling bed before the agri depot expedition departure.",
+      "action_taken": "Installed the 6-LED array (maint_log_b3_012) on a bracket above the wheat seedling tray (bed B, west end). Wired to a 9V battery with a manual switch. The array provides 5 percent of a single grow light tube's output. The wheat seedlings are directly under the LEDs. The barley (bed B, east end) is under the flickering tube. When the tube fails, the LEDs remain on the wheat. the_botanist confirmed the placement. She said, 'The wheat is under the LEDs. The barley is under the nothing. That is the order.' I did not argue. The order is the proof and the practice and I am the practice and I am going to find the tubes.",
+      "parts_used": [
+        "LED array x1 (6 LEDs, 9V, manual switch — maint_log_b3_012)",
+        "9V battery x1 (low charge, estimated 40 hours continuous)"
+      ],
+      "follow_up": "The LED battery is the new consumable. 40 hours at 5 percent output. The battery will need replacement — the hand-crank radio's backup batteries are the source. The Electrician will assess battery supply on return from the agri depot.",
+      "status": "resolved_temporary",
+      "tags": [
+        "greenhouse",
+        "led_install",
+        "wheat_priority",
+        "battery_consumable",
+        "expedition_departure"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_016",
+      "day": 194,
+      "author": "the_electrician",
+      "system": "generator_fuel_countdown",
+      "period": "0600-0600",
+      "issue": "Fuel countdown to the Day 195 ceiling. Daily fuel ledger.",
+      "action_taken": "Daily fuel measurement: 145 litres remaining. Consumption 10 litres/day (unchanged). Days remaining: 14.5. The ceiling is now Day 208, not Day 195 — the recovered diesel (30L, chem_lab_003) extended the ceiling. Correction: the ceiling was projected at Day 195 on Day 180 (supply_audit_b3_014) based on 205 litres. Actual consumption has been 10L/day consistent. The ceiling is recalculated daily. Current ceiling: Day 208. The agri depot team (courier_mission_b2_020, b2_021) returns today. If they return with grow light tubes, the greenhouse continues. If they do not, the greenhouse drops to 5 percent and the food trajectory reverses. The generator does not know about the grow lights. The generator knows about the fuel. The fuel is 145 litres. The fuel is 14 days. The fuel is the number I report to the Quartermaster every morning. The number is going down. The number always goes down. That is what numbers do.",
+      "parts_used": [],
+      "follow_up": "Daily fuel ledger continues. The next fuel expedition is not yet planned — the train yard is exhausted (courier_mission_b2_016). The next fuel source is unknown. The Electrician recommends the council begin planning for the Day 208 ceiling — what runs, what does not, when the generator stops. The load-shed schedule (council_minutes_017 action item) is the document that will govern the final days. It must be written before it is needed.",
+      "status": "ongoing",
+      "tags": [
+        "generator",
+        "fuel_countdown",
+        "daily_ledger",
+        "ceiling_day_208",
+        "load_shed_required"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_017",
+      "day": 196,
+      "author": "the_electrician",
+      "system": "load_shed_implementation",
+      "period": "0800-1200",
+      "issue": "Load-shed schedule (load_shed_schedule_001) posted and implementation begun. Mess hall and laundry already shed (maint_log_b3_016). Next shed: corridor heat (Day 206).",
+      "action_taken": "Posted the load-shed schedule in the generator housing next to the fuel gauge. Posted the priority list in the mess hall and the clinic. Trained the manual ventilation rotation with the_plumber — 4-person roster, 2-hour shifts, north and south vent cranks. Tested the manual air-handling: 60 percent of powered ventilation, CO2 within tolerance. Tested the gravity-feed water fallback: cistern to kitchen tap, flow rate 4 litres per minute (adequate). Tested the cold storage passive window: 2-day window at 4-8C confirmed with the_surgeon's thermometer.",
+      "parts_used": [],
+      "follow_up": "The load-shed schedule is the governing document. The next shed is corridor heat on Day 206. The manual ventilation rotation begins when the generator stops. The_plumber holds the roster. The_surgeon holds the cold storage transfer plan. The Radio Host holds the hand-crank radio schedule. The_botanist holds the LED fallback. Everyone holds a piece. That is the schedule.",
+      "status": "ongoing",
+      "tags": [
+        "load_shed",
+        "implementation",
+        "manual_ventilation",
+        "gravity_feed",
+        "cold_storage_passive",
+        "trained"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_018",
+      "day": 199,
+      "author": "the_mechanic",
+      "system": "geo_thermal_fuel_recovery",
+      "period": "0600-1800",
+      "issue": "Geo-thermal plant maintenance shed fuel recovery (courier_mission_b2_023, b2_024).",
+      "action_taken": "Recovered 45 litres diesel from the maintenance shed backup tank (the tank was 80 percent full — the plant's startup backup, never used because the plant was running on geothermal when the exchange occurred). Recovered 8 litres lubricant (turbine-grade, the_electrician will assess for generator suitability). the_chemist confirmed the diesel is generator-grade on site (perimeter assessment) and confirmed again on return (chem_lab_005). The 45 litres extends the fuel reserve from Day 208 to Day 212.",
+      "parts_used": [
+        "sealed containers x4 (for diesel)",
+        "funnel (stainless pipe offcut)",
+        "cloth filter (coarse, for particulate)"
+      ],
+      "follow_up": "The geo-thermal plant maintenance shed is now exhausted — the backup tank is empty. The plant itself is not a fuel source. The 8 litres of lubricant is pending the_electrician's assessment — if generator-compatible, it extends the generator oil reserve (maint_log_b3_003 context). The next fuel source is the municipal fuel depot, 18km southeast (council_minutes_021).",
+      "status": "resolved_permanent",
+      "tags": [
+        "fuel",
+        "geo_thermal",
+        "maintenance_shed",
+        "45_litres",
+        "ceiling_day_212",
+        "lubricant"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_019",
+      "day": 206,
+      "author": "the_electrician",
+      "system": "corridor_heat_shed",
+      "period": "0600",
+      "issue": "Load-shed schedule Priority 5: corridor heat shed on Day 206 (load_shed_schedule_001).",
+      "action_taken": "Shed the lower corridor heat from the generator load. The lower corridor drops to ambient bunker temperature (estimated 8C). The cast-iron wood stove (forester's cabin, exp_report_foresters_cabin_01) is lit in the lower corridor by the_mechanic. Wood fuel from the bunker carpentry stock. Estimated 15C with the stove, 8C without. The upper level (mess hall, dormitory) retains heat better — estimated 12C. The Chef reports the kitchen is functional on the cast-iron stove. The bread bakes. The bread does not know the corridor is cold.",
+      "parts_used": [
+        "cast-iron wood stove x1 (forester's cabin)",
+        "wood fuel (carpentry stock, estimated 20 days at current burn rate)"
+      ],
+      "follow_up": "The wood fuel is the new consumable. 20 days at current burn rate. The carpentry stock is finite. The forester's cabin had a woodpile (exp_report_foresters_cabin_01) — a return visit for the woodpile is a future low-priority expedition. The corridor is cold. The bunker adapts. The Widow moved her towels from the laundry alcove to the lower corridor — she says the towels are warmer near the stove. The laundry alcove is empty. The towels are in a new place.",
+      "status": "resolved_temporary",
+      "tags": [
+        "load_shed",
+        "corridor_heat",
+        "wood_stove",
+        "wood_fuel_consumable",
+        "bread_bakes",
+        "widow_towels_moved"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_020",
+      "day": 215,
+      "author": "the_electrician",
+      "system": "generator_fuel_source_integration",
+      "period": "0600-0600",
+      "issue": "The fuel is a source. The load-shed schedule (load_shed_schedule_001) is no longer the primary planning document. The source is the primary planning document.",
+      "action_taken": "Updated the generator housing posting. The load-shed schedule remains posted as the fallback. The primary posting is now the fuel source schedule: standing monthly depot trip, 80 litres per trip, 10L/day consumption, 8 days per trip, depot holds 820 litres (10 trips). The generator is running on the integrated reserve (155 litres). The source is the depot. The load-shed is the fallback. The fallback is not the plan. The source is the plan.",
+      "parts_used": [],
+      "follow_up": "The load-shed schedule is the fallback. The source schedule is the plan. The plan is the thing the bunker does. The fallback is the thing the bunker does if the plan fails. The plan is the source. The fallback is the load-shed. The bunker has a plan and a fallback. That is the most the bunker has had.",
+      "status": "ongoing",
+      "tags": [
+        "generator",
+        "fuel_source",
+        "source_schedule",
+        "load_shed_fallback",
+        "plan_and_fallback"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_021",
+      "day": 228,
+      "author": "the_botanist",
+      "system": "greenhouse_seed_viability_test",
+      "period": "0800-0900",
+      "issue": "Cartographer heirloom seed viability test (journal_raw_b3_41). 10 varieties, germination test on wet paper, 7 days.",
+      "action_taken": "Tested 10 seeds of each of the 10 varieties on wet paper, 7 days, 18C under grow lights. Results: wheat (variety 1) — 8/10 germinated (80 percent, viable). Wheat (variety 2) — 7/10 (70 percent, viable). Barley — 9/10 (90 percent, viable). Rye — 6/10 (60 percent, viable). Oats — 5/10 (50 percent, viable). Peas — 8/10 (80 percent, viable). Beans — 7/10 (70 percent, viable). Lentils — 6/10 (60 percent, viable). Radish — 9/10 (90 percent, viable). Leafy green (unidentified) — 0/10 (0 percent, not viable). 8 of 10 varieties viable. The leafy green is dead. The seeds were too old or the storage was too dry. 8 varieties is enough. 8 varieties is the spring.",
+      "parts_used": [
+        "wet paper test sheets x10",
+        "grow light (bed B, the new T8 tube)"
+      ],
+      "follow_up": "8 viable varieties ready for the spring planting (Day 250). The Botanist to prepare the seedling trays for the greenhouse germination phase (24 trays recovered from the agri depot, exp_report_agri_supply_depot_02). The spring planting plan is the document the council requested (council_minutes_024). The plan is: germinate the 8 varieties in the greenhouse (Day 245), transplant to low-dose zone 1 (Day 250-260, patrol_debrief_029 confirmed soil), harvest in 60-90 days. The spring is the thing that turns the greenhouse from the destination to the bridge. The greenhouse is the bridge. The surface is the destination. The seeds are the crossing.",
+      "status": "resolved_permanent",
+      "tags": [
+        "greenhouse",
+        "seed_viability",
+        "8_of_10_viable",
+        "spring_planting",
+        "the_crossing",
+        "low_dose_zone_1"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_022",
+      "day": 250,
+      "author": "the_botanist",
+      "system": "greenhouse_to_surface_spring_planting",
+      "period": "0600-1400",
+      "issue": "The spring planting — the day the greenhouse becomes the bridge.",
+      "action_taken": "Planted 8 viable seed varieties (germinated in greenhouse trays, maint_log_b3_021) into low-dose zone 1 (patrol_debrief_029, 2km northwest, 1.6 uSv/h, south-facing loamy slope, moss confirmed). Planting team: the_botanist (lead), the_courier, the_naive_son, the_child_soldier, the_feral_orphan. Method: seedlings transplanted from greenhouse trays to prepared soil at 5cm depth, 15cm spacing, watered with carried cistern water. 4 rows of wheat (variety 1), 4 rows of wheat (variety 2), 4 rows of barley, 3 rows of rye, 3 rows of oats, 3 rows of peas, 3 rows of beans, 3 rows of lentils, 4 rows of radish. Wildflower seeds (Cartographer gift, diplomatic_contact_002) planted in a border row around the crop beds — for the bees. The bees will come when the flowers bloom. The flowers will bloom in 30-40 days. The bees are the thing that comes after.",
+      "parts_used": [
+        "germinated seedlings (8 varieties, greenhouse trays)",
+        "wildflower seeds (10 varieties, Cartographer gift)",
+        "cistern water (carried, 20 litres)",
+        "hand tools (the agri depot hand seeders, exp_report_agri_supply_depot_01)"
+      ],
+      "follow_up": "Monitor zone 1 daily for 7-14 days. First germination expected Day 257-264 (the radish first — the radish is the fastest, the strongest, the moss). Report to council. The greenhouse continues to run the grow lights for the wheat named for Tomas (journal_raw_b3_12) and the barley cycle. The greenhouse is the bridge. The surface is the destination. The bridge is crossed. The destination is planted.",
+      "status": "resolved_permanent",
+      "tags": [
+        "spring_planting",
+        "zone_1",
+        "8_varieties",
+        "wildflowers",
+        "the_bees",
+        "the_bridge_crossed",
+        "surface_destination"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_023",
+      "day": 295,
+      "author": "the_chemist",
+      "system": "herb_garden_planting",
+      "period": "0800-1000",
+      "issue": "Medicinal herb garden planting (diplomatic_contact_003, council_minutes_027). Echinacea, chamomile, yarrow — the herbs that grow where the antibiotics do not.",
+      "action_taken": "Planted 3 medicinal herb varieties in a prepared bed adjacent to zone 1 (south slope, loamy soil, 1.6 uSv/h). Echinacea (10 seeds), chamomile (10 seeds), yarrow (10 seeds). Watered with carried cistern water. The herb bed is marked with a stone border. The Chemist is the bridge between the garden and the clinic. The herbs are the bridge. The planting is the thing that makes the bridge. The Chemist went under the sky to plant the herbs (therapy_session_b3_013). The sky was above. The Chemist did not look up. The Chemist planted.",
+      "parts_used": [
+        "echinacea seeds x10 (Cartographer gift, diplomatic_contact_003)",
+        "chamomile seeds x10 (Cartographer gift)",
+        "yarrow seeds x10 (Cartographer gift)",
+        "cistern water (carried, 5 litres)",
+        "stone border (zone 1 field stones)"
+      ],
+      "follow_up": "Germination check Day 302. First harvest estimated Day 320. The herbs are the thing that extends the clinic. The antibiotics are the reserve. The herbs are the garden. The clinic uses both. The Chemist is the bridge. The bridge is the thing that connects. The connecting is the thing the Chemist does.",
+      "status": "in_progress",
+      "tags": [
+        "herb_garden",
+        "echinacea",
+        "chamomile",
+        "yarrow",
+        "the_bridge",
+        "chemist",
+        "clinic_extension",
+        "went_under_the_sky"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_024",
+      "day": 335,
+      "author": "the_botanist",
+      "system": "winter_rye_planting",
+      "period": "0800-1100",
+      "issue": "Winter rye planting (diplomatic_contact_004, council_minutes_029). The winter rye is the bridge between the autumn and the spring.",
+      "action_taken": "Planted winter rye seeds (the Cartographer's gift, diplomatic_contact_004) in zone 1, in the rows where the radish was (the radish is done, the rows are empty). 4 rows of winter rye, 10cm spacing, 2cm depth, watered with carried cistern water. The winter rye is the thing that grows in the cold. The winter rye is the thing that grows when the other things do not. The winter rye is the bridge. The bridge is planted. The spring is the thing the bridge goes to. Planting team: the_botanist (lead), the_courier, the_naive_son, the_feral_orphan.",
+      "parts_used": [
+        "winter rye seeds (Cartographer gift, diplomatic_contact_004)",
+        "cistern water (carried, 10 litres)",
+        "hand tools (the agri depot hand seeders)"
+      ],
+      "follow_up": "The winter rye grows in the cold. The first frost is estimated Day 340-350 (the_meteorologist). The winter rye will grow through the winter. The winter rye is the bridge to the early spring harvest. The early spring harvest is the thing the second year begins with. The bridge is planted. The spring is coming. The bridge goes to the spring.",
+      "status": "resolved_permanent",
+      "tags": [
+        "winter_rye",
+        "zone_1",
+        "the_bridge",
+        "autumn_to_spring",
+        "cartographer_gift",
+        "second_year_begins"
+      ]
+    },
+    {
+      "log_id": "maint_log_b3_025",
+      "day": 370,
+      "author": "the_botanist",
+      "system": "winter_rye_under_snow_check",
+      "period": "0900-1000",
+      "issue": "Winter rye germination check under the snow (council_minutes_031 action item, diplomatic_contact_005).",
+      "action_taken": "Went to zone 1. Brushed the snow from the winter rye rows. THE GREEN IS THERE. The winter rye is growing under the snow. The snow is the blanket. The winter rye is the thing under the blanket. The Cartographer said the green is under the snow (diplomatic_contact_005). The Cartographer was right. The green is the proof. The proof is under the snow. The bridge holds.",
+      "parts_used": [],
+      "follow_up": "The winter rye is the bridge. The bridge holds. The spring is the thing the bridge goes to. The spring is coming. The winter rye will be the first harvest of the second spring. The bridge is the thing the second spring begins with.",
+      "status": "resolved_permanent",
+      "tags": [
+        "winter_rye",
+        "under_snow",
+        "green_confirmed",
+        "the_bridge_holds",
+        "second_spring"
+      ]
+    }
+  ]
+}

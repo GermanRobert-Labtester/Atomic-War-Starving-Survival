@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -77,7 +78,7 @@ namespace Ashfall.Core
             return true;
         }
 
-        public SickBand GetBand(string survivorId) =>
+        public SickBand? GetBand(string survivorId) =>
             _bands.TryGetValue(survivorId, out var b) ? b : null;
 
         public SickListSystemState CaptureState()

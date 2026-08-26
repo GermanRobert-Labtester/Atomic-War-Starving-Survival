@@ -1,0 +1,13 @@
+[package]
+name = "agent-skill-manager"
+version = "0.1.0"
+edition = "2021"
+authors = ["Robert"]
+description = "Terminal TUI for managing and toggling AI agent skills across all installed harnesses"
+
+[dependencies]
+ratatui = "0.29.0"
+crossterm = "0.28.1"
+anyhow = "1.0"
+walkdir = "2.5"
+dirs = "5.0"

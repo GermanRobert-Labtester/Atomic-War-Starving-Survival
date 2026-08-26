@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "description": "Faction NPC dialogues triggered by moral threshold events. Each event fires once per save when the player crosses a moral band boundary overnight. These are the world acknowledging what you've become.",
+  "threshold_reactions": {
+    "moral_event_bounty_issued": {
+      "event_description": "Fires when the player enters VeryEvil band (-100 or below). Peacekeepers issue a bounty.",
+      "peacekeeper_dialogue": [
+        {
+          "speaker": "Peacekeeper Sergeant Veill",
+          "location": "Peacekeeper outpost notice board",
+          "lines": [
+            "Your face is on the board now. I put it there myself.",
+            "You had a chance to be something other than this. That chance is spent.",
+            "The bounty is alive. For now. Push further and I cross out the 'alive' with my own hand.",
+            "Every patrol from here to the southern corridor knows your description. Height, gait, the scar. All of it.",
+            "Run if you want. Hide if you can. But know this: someone in this wasteland wants the rations that come with your capture."
+          ]
+        },
+        {
+          "speaker": "Anonymous Peacekeeper recruit",
+          "location": "Camp perimeter",
+          "lines": [
+            "I saw the poster. Is that really you?",
+            "Look — I'm not going to try anything. I'm new. But the ones who aren't new? They're watching.",
+            "The sergeant says you're worse than the raiders. The raiders at least have a code."
+          ]
+        }
+      ],
+      "raider_dialogue": [
+        {
+          "speaker": "Raider lookout, unnamed",
+          "location": "Raider territory border",
+          "lines": [
+            "The Peacekeepers put a price on you. You know what that means to us?",
+            "It means you're interesting. And interesting people either trade with us or feed the dogs.",
+            "Relax. We don't collect Peacekeeper bounties. Bad for brand. But we respect the résumé.",
+            "You want to pass? You pass. Just know we're watching what you do with that freedom."
+          ]
+        }
+      ],
+      "knowledge_keeper_dialogue": [
+        {
+          "speaker": "Knowledge Keeper archivist",
+          "location": "Ruined library entrance",
+          "lines": [
+            "We record everything. You know that.",
+            "Your name has a page now. It's in the section between 'dangerous' and 'lost.' I'm not sure which side it'll land on.",
+            "The children ask about the bad names in the record. Yours came up yesterday.",
+            "I won't bar the door. Knowledge doesn't choose its subjects. But I'll watch my notes while you're here."
+          ]
+        }
+      ],
+      "journal_entry": "The Peacekeepers have issued a bounty with my face on it. The sergeant put it up himself. Every patrol knows my description now."
+    },
+
+    "moral_event_contract_taken": {
+      "event_description": "Fires when the player enters Positive band (+50 to +99). Peacekeepers offer a standing contract — protection for cooperation.",
+      "peacekeeper_dialogue": [
+        {
+          "speaker": "Peacekeeper Captain Osa",
+          "location": "Peacekeeper headquarters, back room",
+          "lines": [
+            "Sit. Please.",
+            "We've been watching you. Not the bad kind. The kind where we watch someone do good work and think: we could use that.",
+            "I'm offering you a contract. Not employment — a partnership. You keep doing what you're doing. We make sure the road stays clear for you.",
+            "The safehouses between here and the ridge? Open to you now. Patrols will nod, not draw.",
+            "You've earned something most people never earn out here: the benefit of the doubt. Don't spend it carelessly."
+          ]
+        }
+      ],
+      "raider_dialogue": [
+        {
+          "speaker": "Raider captain, scarred woman",
+          "location": "Raider outpost, edge of territory",
+          "lines": [
+            "I hear the Peacekeepers love you now. Contract and everything.",
+            "That means you're their problem, not ours. And problems get solved.",
+            "Don't come through our wire expecting the same welcome you used to get. The landscape changed.",
+            "We don't hate you. We just don't trust people who carry a Peacekeeper handshake."
+          ]
+        }
+      ],
+      "knowledge_keeper_dialogue": [
+        {
+          "speaker": "Knowledge Keeper elder",
+          "location": "Archive meeting hall",
+          "lines": [
+            "Your name appears in our records more often now. In the right section.",
+            "We've voted. You may access the restricted shelves. Not all of them. But more than most.",
+            "The world needs builders more than it needs scholars. You build well. Let us record what you build."
+          ]
+        }
+      ],
+      "journal_entry": "The Peacekeepers offered me a contract — not employment, a partnership. Their safehouses are open to me now. Patrols nod instead of drawing."
+    },
+
+    "moral_event_contract_raised": {
+      "event_description": "Fires when the player enters VeryPositive band (+100 or above). The contract deepens — the player becomes a recognized community figure.",
+      "peacekeeper_dialogue": [
+        {
+          "speaker": "Peacekeeper Captain Osa",
+          "location": "Peacekeeper headquarters, private quarters",
+          "lines": [
+            "I need to tell you something, and I need you to hear it straight.",
+            "People follow you now. Not in the 'I'm walking behind you' way — in the 'I'd walk where you point' way.",
+            "That's power. The kind we can't issue from a badge. The kind that just... grows.",
+            "Your contract is raised. Full logistics support: medical, ammunition, passage through every corridor we hold.",
+            "But I'm going to ask you for something in return. Not now. Soon. And it won't be small.",
+            "You've become something the wasteland rarely produces. Don't let them turn you into a flag."
+          ]
+        }
+      ],
+      "raider_dialogue": [
+        {
+          "speaker": "Raider lieutenant, young man with old eyes",
+          "location": "Raider border checkpoint",
+          "lines": [
+            "I know who you are. Everyone does.",
+            "My captain says to kill you on sight. Me? I think that's a waste.",
+            "You ever decide the Peacekeepers don't deserve you, come find us. We could use a real leader.",
+            "Until then — don't walk our roads at night. The order is the order, even if I disagree with it."
+          ]
+        }
+      ],
+      "knowledge_keeper_dialogue": [
+        {
+          "speaker": "Knowledge Keeper council leader",
+          "location": "Archive council chamber",
+          "lines": [
+            "We don't often do this. Almost never, in fact.",
+            "We're offering you a seat at the long table. Not as a Keeper — as a witness. Your story, told in your words, preserved in our archive.",
+            "The world forgets everything eventually. Let us remember you correctly.",
+            "Come when you're ready. The chair will be there."
+          ]
+        }
+      ],
+      "journal_entry": "The Peacekeepers raised my contract to full support — logistics, medical, passage through every corridor they hold. Captain Osa says I've become something the wasteland rarely produces. The Knowledge Keepers offered me a seat at their long table."
+    },
+
+    "moral_event_patrol_defense": {
+      "event_description": "Fires alongside contract_raised at VeryPositive. Patrols actively defend the player's shelter.",
+      "peacekeeper_dialogue": [
+        {
+          "speaker": "Peacekeeper patrol leader",
+          "location": "Outside player's shelter",
+          "lines": [
+            "Captain's orders. We're on rotation at your perimeter now.",
+            "Don't worry about the east approach — we've got eyes there from dusk to dawn.",
+            "Raiders tested us last week. They didn't test us twice.",
+            "You do what you do. We'll make sure you have a home to come back to."
+          ]
+        }
+      ],
+      "journal_entry": "A Peacekeeper patrol has taken position at my shelter perimeter. Captain's orders. They've got the east approach covered from dusk to dawn."
+    },
+
+    "moral_event_legend_positive": {
+      "event_description": "Fires when moral score overflows above +200 (clamped). The player has become a legend — the wasteland mythologizes them.",
+      "peacekeeper_dialogue": [
+        {
+          "speaker": "Peacekeeper Captain Osa",
+          "location": "Peacekeeper headquarters",
+          "lines": [
+            "I have to be honest with you about something uncomfortable.",
+            "You're not a person to most of them anymore. You're a story. Stories don't eat, don't bleed, don't fail.",
+            "That's dangerous. For you, and for them. When the story fails — and it will, because you're human — the fall is longer.",
+            "I'll keep supporting you. But I wanted you to hear it from someone who still sees the person."
+          ]
+        }
+      ],
+      "civilian_dialogue": [
+        {
+          "speaker": "Camp elder",
+          "location": "Central fire",
+          "lines": [
+            "I tell the children about you. Not as a person — as a lesson.",
+            "'Be like that one,' I say. 'Give when it costs. Listen when it hurts. Stay when it's easier to go.'",
+            "You don't have to be perfect. You just have to keep being you.",
+            "But they expect perfection now. Just... know that."
+          ]
+        },
+        {
+          "speaker": "Young survivor",
+          "location": "Camp perimeter",
+          "lines": [
+            "I named my daughter after you. I hope that's okay.",
+            "She's three months old. She'll grow up hearing what you did.",
+            "I just wanted you to know that. That's all."
+          ]
+        }
+      ],
+      "journal_entry": "I've become a legend to them — a story more than a person. Captain Osa warned me about it. Someone named their child after me. The fall, when it comes, will be longer."
+    },
+
+    "moral_event_legend_negative": {
+      "event_description": "Fires when moral score overflows below -200 (clamped). The player has become a monster in the wasteland's collective memory.",
+      "peacekeeper_dialogue": [
+        {
+          "speaker": "Peacekeeper Captain Osa",
+          "location": "Peacekeeper headquarters, via radio",
+          "lines": [
+            "I'm not going to waste words. You won't hear them anyway.",
+            "The bounty is now 'dead or alive.' I voted alive. I was outvoted.",
+            "If you come within visual range of any outpost, the standing order is fire. No warning. No parley.",
+            "I don't know what happened to you. I stopped trying to understand. Goodbye."
+          ]
+        }
+      ],
+      "raider_dialogue": [
+        {
+          "speaker": "Raider warlord",
+          "location": "Raider stronghold, throne room",
+          "lines": [
+            "You. I've been watching your work.",
+            "Most of my people are afraid of you. That's useful — to a point.",
+            "Past that point, you become a problem I have to solve instead of use.",
+            "So here's the arrangement: you stay south of the river, I stay north. We don't cross paths.",
+            "Cross the river, and I'll put fifty guns on you. Not because I hate you — because you're too dangerous to let roam."
+          ]
+        }
+      ],
+      "civilian_dialogue": [
+        {
+          "speaker": "Camp mother, whispering to children",
+          "location": "Camp interior, children's area",
+          "lines": [
+            "Shh. Be quiet now.",
+            "See that one? The one walking past? Don't look. Don't look at them.",
+            "If they ever come to our door, you hide. You hide and you don't make a sound.",
+            "That's what happens when someone stops being a person. Remember that."
+          ]
+        }
+      ],
+      "journal_entry": "The Peacekeepers changed the bounty to 'dead or alive.' The raider warlord drew a line at the river — south is mine, north is theirs. Mothers tell their children to hide when I pass. I've become the thing they warn about."
+    }
+  }
+}

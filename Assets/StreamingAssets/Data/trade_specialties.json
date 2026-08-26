@@ -1,46 +1,165 @@
-[
-  {
-    "profession_id": "electrician",
-    "display_name": "Electrician",
-    "milestones": [
-      { "tier": 1, "item_patterns": ["battery", "generator", "circuit"], "title": "Apprentice Spark", "narrative": "narrative_electrician_milestone_1", "skill_bonus": 0.05 },
-      { "tier": 2, "item_patterns": ["power", "solar", "turbine", "wire"], "title": "Journeyman Current", "narrative": "narrative_electrician_milestone_2", "skill_bonus": 0.05 },
-      { "tier": 3, "item_patterns": ["advanced"], "title": "Master of the Grid", "narrative": "narrative_electrician_mastery", "skill_bonus": 0.05 }
-    ],
-    "mastery_narrative": "narrative_trade_mastery_electrician",
-    "mastery_bonus_text": "{name} has mastered the pre-war trade of electrician. Their hands find the right wire by instinct. The bunker's lights flicker less often now."
-  },
-  {
-    "profession_id": "nurse",
-    "display_name": "Nurse",
-    "milestones": [
-      { "tier": 1, "item_patterns": ["bandage", "splint", "antiseptic"], "title": "Field Dressing", "narrative": "narrative_nurse_milestone_1", "skill_bonus": 0.05 },
-      { "tier": 2, "item_patterns": ["saline", "stitch", "tourniquet"], "title": "Triage Specialist", "narrative": "narrative_nurse_milestone_2", "skill_bonus": 0.05 },
-      { "tier": 3, "item_patterns": ["medical", "advanced"], "title": "Healer's Hands", "narrative": "narrative_nurse_mastery", "skill_bonus": 0.05 }
-    ],
-    "mastery_narrative": "narrative_trade_mastery_nurse",
-    "mastery_bonus_text": "{name}'s hands remember every patient. Every bandage, every stitch, every life. The bunker calls them 'Doc' now, and they answer to it."
-  },
-  {
-    "profession_id": "machinist",
-    "display_name": "Machinist",
-    "milestones": [
-      { "tier": 1, "item_patterns": ["tool", "gear", "spring"], "title": "Bench Hand", "narrative": "narrative_machinist_milestone_1", "skill_bonus": 0.05 },
-      { "tier": 2, "item_patterns": ["lever", "blade", "mechanism"], "title": "Precision Maker", "narrative": "narrative_machinist_milestone_2", "skill_bonus": 0.05 },
-      { "tier": 3, "item_patterns": ["lathe", "advanced"], "title": "Master Craftsman", "narrative": "narrative_machinist_mastery", "skill_bonus": 0.05 }
-    ],
-    "mastery_narrative": "narrative_trade_mastery_machinist",
-    "mastery_bonus_text": "The lathe hums under {name}'s touch like it remembers the old world too. Every part they make fits perfectly — no blueprints needed."
-  },
-  {
-    "profession_id": "teacher",
-    "display_name": "Teacher",
-    "milestones": [
-      { "tier": 1, "item_patterns": ["book", "chalk", "slate"], "title": "Lesson Planner", "narrative": "narrative_teacher_milestone_1", "skill_bonus": 0.05 },
-      { "tier": 2, "item_patterns": ["journal", "ink", "lesson"], "title": "Knowledge Keeper", "narrative": "narrative_teacher_milestone_2", "skill_bonus": 0.05 },
-      { "tier": 3, "item_patterns": ["diagram", "advanced"], "title": "Master Educator", "narrative": "narrative_teacher_mastery", "skill_bonus": 0.05 }
-    ],
-    "mastery_narrative": "narrative_trade_mastery_teacher",
-    "mastery_bonus_text": "{name} gathers the survivors in the common room. 'Class is in session,' they announce. For the first time in months, people take notes. Someone even laughs."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "profession_id": "electrician",
+      "display_name": "Electrician",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "battery",
+            "generator",
+            "circuit"
+          ],
+          "title": "Apprentice Spark",
+          "narrative": "narrative_electrician_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "power",
+            "solar",
+            "turbine",
+            "wire"
+          ],
+          "title": "Journeyman Current",
+          "narrative": "narrative_electrician_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "advanced"
+          ],
+          "title": "Master of the Grid",
+          "narrative": "narrative_electrician_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_electrician",
+      "mastery_bonus_text": "{name} has mastered the pre-war trade of electrician. Their hands find the right wire by instinct. The bunker's lights flicker less often now."
+    },
+    {
+      "profession_id": "nurse",
+      "display_name": "Nurse",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "bandage",
+            "splint",
+            "antiseptic"
+          ],
+          "title": "Field Dressing",
+          "narrative": "narrative_nurse_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "saline",
+            "stitch",
+            "tourniquet"
+          ],
+          "title": "Triage Specialist",
+          "narrative": "narrative_nurse_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "medical",
+            "advanced"
+          ],
+          "title": "Healer's Hands",
+          "narrative": "narrative_nurse_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_nurse",
+      "mastery_bonus_text": "{name}'s hands remember every patient. Every bandage, every stitch, every life. The bunker calls them 'Doc' now, and they answer to it."
+    },
+    {
+      "profession_id": "machinist",
+      "display_name": "Machinist",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "tool",
+            "gear",
+            "spring"
+          ],
+          "title": "Bench Hand",
+          "narrative": "narrative_machinist_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "lever",
+            "blade",
+            "mechanism"
+          ],
+          "title": "Precision Maker",
+          "narrative": "narrative_machinist_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "lathe",
+            "advanced"
+          ],
+          "title": "Master Craftsman",
+          "narrative": "narrative_machinist_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_machinist",
+      "mastery_bonus_text": "The lathe hums under {name}'s touch like it remembers the old world too. Every part they make fits perfectly — no blueprints needed."
+    },
+    {
+      "profession_id": "teacher",
+      "display_name": "Teacher",
+      "milestones": [
+        {
+          "tier": 1,
+          "item_patterns": [
+            "book",
+            "chalk",
+            "slate"
+          ],
+          "title": "Lesson Planner",
+          "narrative": "narrative_teacher_milestone_1",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 2,
+          "item_patterns": [
+            "journal",
+            "ink",
+            "lesson"
+          ],
+          "title": "Knowledge Keeper",
+          "narrative": "narrative_teacher_milestone_2",
+          "skill_bonus": 0.05
+        },
+        {
+          "tier": 3,
+          "item_patterns": [
+            "diagram",
+            "advanced"
+          ],
+          "title": "Master Educator",
+          "narrative": "narrative_teacher_mastery",
+          "skill_bonus": 0.05
+        }
+      ],
+      "mastery_narrative": "narrative_trade_mastery_teacher",
+      "mastery_bonus_text": "{name} gathers the survivors in the common room. 'Class is in session,' they announce. For the first time in months, people take notes. Someone even laughs."
+    }
+  ]
+}

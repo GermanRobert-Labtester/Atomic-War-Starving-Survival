@@ -163,7 +163,7 @@ namespace AtomicWar.GodotApp.UI
                 wrap.AddChild(inst);
                 mounted = inst;
             }
-            try { mounted.Call("Open"); } catch { }
+            try { mounted!.Call("Open"); } catch (Exception ex) { GD.PrintErr($"[SnapshotOrchestrator] Open call failed: {ex.Message}"); }
 
             var hostRoot = (Engine.GetMainLoop() as SceneTree)?.Root;
             if (hostRoot == null) { throw new Exception("no-SceneTree-root"); }

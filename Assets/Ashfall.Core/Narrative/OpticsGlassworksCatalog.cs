@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string prismPath = Path.Combine(directoryPath, "periscope_prism_delamination_logs.json");
             if (File.Exists(prismPath))
             {
-                var list = JsonSerializer.Deserialize<List<PeriscopePrismDelaminationEntry>>(File.ReadAllText(prismPath), options);
+                var list = CatalogLocator.LoadWrappedList<PeriscopePrismDelaminationEntry>(File.ReadAllText(prismPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string sightPath = Path.Combine(directoryPath, "borosilicate_sight_glass_thermal_shock.json");
             if (File.Exists(sightPath))
             {
-                var list = JsonSerializer.Deserialize<List<SightGlassThermalShockEntry>>(File.ReadAllText(sightPath), options);
+                var list = CatalogLocator.LoadWrappedList<SightGlassThermalShockEntry>(File.ReadAllText(sightPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string radPath = Path.Combine(directoryPath, "optical_coating_rad_browning_reports.json");
             if (File.Exists(radPath))
             {
-                var list = JsonSerializer.Deserialize<List<OpticalCoatingRadBrowningEntry>>(File.ReadAllText(radPath), options);
+                var list = CatalogLocator.LoadWrappedList<OpticalCoatingRadBrowningEntry>(File.ReadAllText(radPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string scintPath = Path.Combine(directoryPath, "lead_crystal_scintillator_aging_logs.json");
             if (File.Exists(scintPath))
             {
-                var list = JsonSerializer.Deserialize<List<ScintillatorAgingEntry>>(File.ReadAllText(scintPath), options);
+                var list = CatalogLocator.LoadWrappedList<ScintillatorAgingEntry>(File.ReadAllText(scintPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public PeriscopePrismDelaminationEntry GetPrism(string id)
+        public PeriscopePrismDelaminationEntry? GetPrism(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PeriscopePrismDelaminationEntry e ? e : null;
         }
 
-        public SightGlassThermalShockEntry GetSightGlass(string id)
+        public SightGlassThermalShockEntry? GetSightGlass(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is SightGlassThermalShockEntry e ? e : null;
         }
 
-        public OpticalCoatingRadBrowningEntry GetRadBrowning(string id)
+        public OpticalCoatingRadBrowningEntry? GetRadBrowning(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is OpticalCoatingRadBrowningEntry e ? e : null;
         }
 
-        public ScintillatorAgingEntry GetScintillator(string id)
+        public ScintillatorAgingEntry? GetScintillator(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ScintillatorAgingEntry e ? e : null;

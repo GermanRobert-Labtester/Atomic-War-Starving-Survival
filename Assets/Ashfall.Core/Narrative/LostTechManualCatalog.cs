@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -52,7 +53,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public LostTechManualEntry GetById(string manualId)
+        public LostTechManualEntry? GetById(string manualId)
         {
             if (string.IsNullOrEmpty(manualId)) return null;
             _byId.TryGetValue(manualId, out var entry);

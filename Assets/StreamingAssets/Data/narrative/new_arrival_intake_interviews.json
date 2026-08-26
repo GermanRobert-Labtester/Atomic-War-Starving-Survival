@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "collection_id": "new_arrival_intake_interviews",
+  "description": "Intake interview transcripts for new arrivals at the bunker. Conducted by the General (security assessment) and the Therapist (psychological screening). Names redacted for privacy.",
+  "interviews": [
+    {
+      "interview_id": "intake_b2_001",
+      "day": 43,
+      "interviewer": "the_general",
+      "designation": "New Arrival Alpha-7",
+      "origin": "Surface transit from the east (approximately 40 km). Travelling alone.",
+      "physical_condition": "Male, approximately 30 years old. Malnourished but ambulatory. Dosimeter reading: 0.9 Sv accumulated (within acceptable range). No visible injuries. Wearing a makeshift gas mask (charcoal filter - expired but functional). Carrying a rucksack with: 2 litres of water, 200g dried meat, a knife, a pre-war road atlas.",
+      "security_assessment": "Cooperative. Answered all questions without hesitation. States he was a long-distance courier for a settlement called The Verge (not in our data - needs cross-referencing with the Radio Host contact list). Claims The Verge was overrun by raiders 3 weeks ago. He fled east, then north. His story is internally consistent. He does not know the locations of other settlements he passed through, which is either cautious or suspicious. I am accepting him provisionally. He will be monitored.",
+      "therapist_note": "The Therapist notes: Patient exhibits hypervigilance, startle response, and difficulty making eye contact. These are consistent with recent trauma (raider attack) rather than deception. He flinched when the blast door closed behind him. He has not slept in what he estimates to be 3 days. I have assigned him to Bunk 19 (quiet corner, near the Therapist office for monitoring). Accepted.",
+      "admitted": true,
+      "bunk_assigned": 19,
+      "tags": [
+        "intake",
+        "courier",
+        "raider_attack",
+        "provisional"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_002",
+      "day": 46,
+      "interviewer": "the_general",
+      "designation": "New Arrival Group Bravo (3 persons)",
+      "origin": "Surface transit from the south (approximately 25 km). Family group: adult male, adult female, one child (approximately 5 years old).",
+      "physical_condition": "All three ambulatory. Adult male dosimeter: 1.4 Sv. Adult female: 1.1 Sv. Child: 0.7 Sv. The child shows signs of mild malnutrition (thin, quiet). The adults are protective and watchful. They carry minimal supplies.",
+      "security_assessment": "The adult male (designated Bravo-1) is forthcoming. He was a farmer before the war. He states his farm was 25 km south and was sustainable until the aquifer dried up 2 months ago. He has no reason to deceive us - he needs water and shelter for his family. The adult female (Bravo-2) did not speak during the interview. Bravo-1 says she has been mute since they left the farm. The child (Bravo-3) is hiding behind the mother and will not respond to questions. I am accepting all three. The family is not a security threat - they are desperate.",
+      "therapist_note": "The Therapist notes: The mother mutism is likely a dissociative response to prolonged stress. She is not psychotic - she makes eye contact, she responds to non-verbal cues, she holds her child protectively. She has simply stopped speaking. This is a survival strategy, not a pathology. I will not force speech. I will create conditions where she feels safe enough to choose to speak again. The child is withdrawn but not traumatised beyond what is normal for this environment. He watches everything. He is learning. Accepted.",
+      "admitted": true,
+      "bunk_assigned": 16,
+      "tags": [
+        "intake",
+        "family",
+        "drought_refugees",
+        "mute_parent"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_003",
+      "day": 50,
+      "interviewer": "the_general",
+      "designation": "New Arrival Charlie-1",
+      "origin": "Surface transit from the north (unknown distance). Travelling alone.",
+      "physical_condition": "Female, approximately 45 years old. Well-nourished (unusual for a surface traveller). Dosimeter reading: 0.3 Sv (very low - suggests she has been in a shielded environment until recently). Clean clothing. No visible injuries. Carrying: a leather satchel containing notebooks, a compass, a pre-war topographic map (heavily annotated), and a small sealed container (she refused to disclose contents).",
+      "security_assessment": "Charlie-1 is intelligent, articulate, and careful with her words. She identifies as a surveyor and says she has been mapping the terrain within 100 km of the bunker. Her map is detailed and accurate - I cross-referenced it with our existing charts and her data is superior. She says she works for The Overlay - an organisation I have not encountered before. She will not say where The Overlay is based. She will not say how many members it has. She says the sealed container is personal property and refuses to surrender it. I do not like this. However, her map data is valuable enough to accept her provisionally. The sealed container will be stored in the security safe.",
+      "therapist_note": "The Therapist notes: Charlie-1 is highly controlled in her presentation. She answers questions precisely and volunteers nothing extra. This is not typical of someone in distress - it is typical of someone operating under instructions. She may be an intelligence gatherer for an external organisation. Alternatively, she may simply be cautious. I recommend monitoring her interactions with other residents. She is not hostile but she is not transparent. Accepted with conditions.",
+      "admitted": true,
+      "bunk_assigned": 11,
+      "tags": [
+        "intake",
+        "surveyor",
+        "the_overlay",
+        "intelligence_concern"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_004",
+      "day": 53,
+      "interviewer": "the_general",
+      "designation": "New Arrival Delta-1",
+      "origin": "Surface transit from the west (approximately 15 km). Travelling alone.",
+      "physical_condition": "Male, approximately 55 years old. Physically fit (unusual for his age in this environment). Dosimeter reading: 0.6 Sv. Clean and well-equipped: proper gas mask (pre-war civil defence model, filters replaced recently), insulated clothing, a walking staff, and a hand-drawn map of the western terrain. He carries a sealed letter addressed to The Commander of This Shelter.",
+      "security_assessment": "Delta-1 is calm, direct, and confident. He says he was sent by The Salt Freeholders - a group I have heard the Radio Host mention. He is an emissary. The sealed letter contains a formal proposal: the Salt Freeholders wish to establish a trade relationship with our bunker. They offer salt (essential for food preservation and human health) in exchange for medical supplies and information about our water treatment systems. The letter is signed by the Freeholder Council. This is the first formal diplomatic contact we have received. I am accepting Delta-1 as a resident and as an unofficial liaison.",
+      "therapist_note": "The Therapist notes: Delta-1 is psychologically stable. He is not seeking refuge - he is on a mission. His confidence is genuine, not performative. He has the bearing of someone who has been in a leadership position. He may be a former military or government official. He is not a threat to the bunker internal dynamics, but he may attempt to influence our leadership toward the Freeholders interests. This is not inherently negative - trade is beneficial - but we should be aware of his dual role. Accepted.",
+      "admitted": true,
+      "bunk_assigned": 9,
+      "tags": [
+        "intake",
+        "emissary",
+        "salt_freeholders",
+        "diplomatic"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_005",
+      "day": 57,
+      "interviewer": "the_general",
+      "designation": "New Arrival Echo-1",
+      "origin": "Found collapsed 200 metres from the bunker south perimeter. Brought in by the sentry.",
+      "physical_condition": "Female, approximately 25 years old. Severely malnourished. Dosimeter reading: 2.8 Sv (high - recent exposure). Dehydration, hypothermia, possible concussion (bruising on the left temple). She is semi-conscious and muttering incoherently. Wearing: a hospital gown (no outer clothing), no shoes, no gas mask. She should be dead from radiation exposure within days. She is not. She is remarkably resilient.",
+      "security_assessment": "Unable to conduct a normal security interview. The patient is not lucid. She has no identification, no possessions, and no explanation for her presence near our perimeter. The hospital gown suggests she came from a medical facility. The nearest known facility is the abandoned hospital - 12 km to the east. If she escaped from there, she walked 12 km in a hospital gown through contaminated terrain. That requires either extraordinary determination or profound disorientation. I am accepting her on humanitarian grounds. She will be treated by the Surgeon first and interviewed when lucid.",
+      "therapist_note": "The Therapist notes: The patient is in a dissociative state. Her muttering is repetitive - she keeps saying a phrase I cannot yet make out. It may be a name or a number. She responds to her name when I try different options - she flinched at Elena so I will use that until she corrects me. She is not a security concern. She is a person in profound psychological distress. The fact that she walked 12 km in a hospital gown suggests she was fleeing something. I need to find out what. Accepted.",
+      "admitted": true,
+      "bunk_assigned": 21,
+      "tags": [
+        "intake",
+        "medical_emergency",
+        "dissociative",
+        "unknown_origin"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_006",
+      "day": 61,
+      "interviewer": "the_general",
+      "designation": "New Arrival Group Foxtrot (2 persons)",
+      "origin": "Surface transit from the northeast (approximately 30 km). Two adult males, known to each other.",
+      "physical_condition": "Both ambulatory. Foxtrot-1 (age 35): dosimeter 1.0 Sv, healthy. Foxtrot-2 (age 38): dosimeter 1.6 Sv, mild cough (possible early radiation pneumonitis - referred to the Surgeon). Both carry trade goods: 5 kg of dried fish, 2 litres of lamp oil, a box of pre-war matches (approximately 200 matches).",
+      "security_assessment": "Foxtrot-1 is the spokesperson. He says they are traders from a settlement called The Shallows Market (referenced in the Radio Host logs). They are here to trade. The fish and lamp oil are trade goods. The matches are a valuable commodity - pre-war matches that still light. Foxtrot-1 says The Shallows Market is a fishing settlement on a contaminated lake, approximately 30 km northeast. They have a population of approximately 60. They are looking for medical supplies (specifically antibiotics and bandages) and information about radiation levels to the south. I am accepting both as residents. The trade goods will be inventoried and negotiated.",
+      "therapist_note": "The Therapist notes: Both men are pragmatic and transactional. They are not traumatised - they are doing a job. Foxtrot-1 is the dominant personality; Foxtrot-2 defers to him. Their primary motivation is trade, not refuge. This makes them predictable and low-risk. Foxtrot-2 cough concerns me medically but not psychologically. Accepted.",
+      "admitted": true,
+      "bunk_assigned": 14,
+      "tags": [
+        "intake",
+        "traders",
+        "shallows_market",
+        "trade_goods"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_007",
+      "day": 65,
+      "interviewer": "the_general",
+      "designation": "New Arrival Golf-1",
+      "origin": "Surface transit from underground (claims to have walked through the sub-level transit tunnels from approximately 20 km away).",
+      "physical_condition": "Male, approximately 50 years old. Extremely pale (has not been on the surface in an unknown period). Dosimeter reading: 0.1 Sv (very low - consistent with prolonged underground residence). Malnourished but not emaciated. Wearing: homemade clothing from mixed materials, a headlamp (hand-crank powered), and carrying a hand-drawn map of the tunnel system.",
+      "security_assessment": "Golf-1 says he has been living in the sub-level transit tunnels for approximately 2 years. He was a municipal worker before the war and knows the tunnel system intimately. He says he survived by cultivating mushrooms in the tunnels and collecting condensation for water. He left because something is coming from the deep tunnels - he does not know what, but the rats are running from it. I do not know whether to believe this. His tunnel map is extraordinarily detailed and could be extremely valuable for future expeditions. I am accepting him. The something in the deep tunnels will be investigated.",
+      "therapist_note": "The Therapist notes: Golf-1 has been isolated for 2 years. His social skills are degraded - he avoids eye contact, speaks in a whisper, and startles at loud noises. He is not psychotic but he is profoundly adapted to solitude. Integrating him into a community of 47 people will be a significant psychological challenge. He says he wants human contact. His body language suggests he is terrified of it. I will start with one-on-one sessions and progress slowly. Accepted.",
+      "admitted": true,
+      "bunk_assigned": 20,
+      "tags": [
+        "intake",
+        "tunnel_dweller",
+        "isolation",
+        "valuable_knowledge"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_008",
+      "day": 69,
+      "interviewer": "the_general",
+      "designation": "New Arrival Hotel-1",
+      "origin": "Surface transit from the south (approximately 50 km). Travelling alone.",
+      "physical_condition": "Female, approximately 60 years old. Frail but determined. Dosimeter reading: 2.1 Sv (elevated - she has been travelling for an extended period). She carries a pre-war medical bag containing: a stethoscope (cracked diaphragm but functional), a blood pressure cuff, a set of surgical instruments (basic), and 6 sealed vials of an unidentified liquid (she says they are vaccines - pending verification by the Pharmacist).",
+      "security_assessment": "Hotel-1 says she was a nurse before the war and has been travelling between settlements providing medical care. She says she heard about our bunker from a patient she treated at The Shallows Market. She is offering her services in exchange for shelter. The medical instruments are real and in good condition. The vials are unlabeled - the Pharmacist is attempting to identify them. If she is who she says she is, she is the most medically qualified person in the bunker aside from the Surgeon. I am accepting her. The vials will be verified before use.",
+      "therapist_note": "The Therapist notes: Hotel-1 is warm, direct, and maternal. She asked about the children within five minutes of arrival. She has the bearing of someone who has spent a lifetime caring for others. She is not fleeing anything - she is coming toward something. She wants to be useful. This is the healthiest motivation I have seen in a new arrival. I have no concerns. Accepted.",
+      "admitted": true,
+      "bunk_assigned": 5,
+      "tags": [
+        "intake",
+        "medical_professional",
+        "nurse",
+        "vaccines"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_009",
+      "day": 73,
+      "interviewer": "the_general",
+      "designation": "New Arrival India-1",
+      "origin": "Surface transit from the east (approximately 15 km). Travelling alone.",
+      "physical_condition": "Male, approximately 22 years old. Physically fit. Dosimeter reading: 0.5 Sv. Carrying: a pre-war assault rifle with 12 rounds of ammunition, a military-style webbing set, and a field radio (non-functional - dead battery). He is clean-shaven and stands at attention when addressed.",
+      "security_assessment": "India-1 is a deserter. He states openly that he was a member of a militarised group called the Iron Garrison (referenced in the wiretap transcripts). He says he deserted because the Garrison leader ordered the raiding of a civilian settlement. He refused and fled. He has military training: weapons handling, fieldcraft, basic first aid, radio operation. He is offering his skills in exchange for shelter. The rifle and ammunition are significant - we have no firearms in the bunker. I am accepting him, but with conditions: the rifle is stored in the security safe. He does not carry it inside the bunker. He will be monitored for loyalty. A deserter may be pursued.",
+      "therapist_note": "The Therapist notes: India-1 is disciplined, controlled, and carrying significant guilt. He deserted because of a moral objection - this suggests a strong ethical framework. However, his military training means he is capable of violence. He is not currently a threat, but he is a person who has chosen to leave a violent organisation. The question is whether he has left the violence behind or merely the organisation. I will be watching. Accepted with conditions.",
+      "admitted": true,
+      "bunk_assigned": 3,
+      "tags": [
+        "intake",
+        "deserter",
+        "iron_garrison",
+        "firearm",
+        "conditional"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_010",
+      "day": 77,
+      "interviewer": "the_general",
+      "designation": "New Arrival Juliet-1",
+      "origin": "Found at the emergency hatch, banging. Claims to have been following the bunker radio broadcasts.",
+      "physical_condition": "Female, approximately 35 years old. Well-nourished, clean, equipped with a proper gas mask and insulated clothing. Dosimeter reading: 0.4 Sv. Carrying: a notebook filled with shorthand writing, a pen, and a pre-war press pass (expired, issued to a newspaper that no longer exists). She identifies as a journalist.",
+      "security_assessment": "Juliet-1 says she was a reporter before the war and has been documenting the post-impact world. She has been travelling between settlements, recording what she finds. She says her notebook contains the names, locations, and populations of 12 settlements within 200 km. She is offering this information in exchange for shelter. The information is extraordinarily valuable. However, a journalist who knows the locations of 12 settlements is also a security risk - if she can find us, others can find us through her. I am accepting her, but the notebook will be copied (the Architect will transcribe it) and the original sealed. She will not leave the bunker without my authorisation.",
+      "therapist_note": "The Therapist notes: Juliet-1 is driven by a compulsion to record. She took notes during the interview - I had to ask her to stop. She believes that documentation is a form of resistance against oblivion. This is not pathological, but it is intense. She may struggle with the bunker privacy norms - she is accustomed to asking questions and writing down answers. I will need to establish boundaries. Accepted with conditions.",
+      "admitted": true,
+      "bunk_assigned": 8,
+      "tags": [
+        "intake",
+        "journalist",
+        "settlement_intelligence",
+        "security_risk"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_011",
+      "day": 81,
+      "interviewer": "the_general",
+      "designation": "New Arrival Kilo-1",
+      "origin": "Surface transit from the north (unknown distance). Travelling alone.",
+      "physical_condition": "Male, approximately 40 years old. Large build, physically imposing. Dosimeter reading: 1.2 Sv. No possessions other than the clothes on his back and a knife (surrendered at intake). He has multiple scars on his hands and forearms (consistent with manual labour or fighting). He is calm and cooperative but his affect is flat.",
+      "security_assessment": "Kilo-1 says his name is not relevant and asks to be called K. He says he was a labourer at a settlement to the north that no longer exists. He will not say what happened to the settlement or why he left. He says he has no skills other than physical work. His flat affect and refusal to provide details are concerning. The Therapist has requested an extended psychological evaluation before final admission. I am holding him in the decon adit for 48 hours pending the evaluation.",
+      "therapist_note": "The Therapist notes: K is not refusing to cooperate - he is protecting something. His flat affect is a deliberate control mechanism. He is not psychotic, not traumatised in the conventional sense, and not hostile. He is hiding. The scars on his hands are not from labour - they are from impact trauma (punching). He was in a violent environment and he may have been a violent participant. I cannot determine whether he is a reformed aggressor or an active one. I recommend against admission until I have more information. The General disagrees - he says we need labourers. I have documented my concern. Admission deferred pending further evaluation.",
+      "admitted": false,
+      "bunk_assigned": null,
+      "tags": [
+        "intake",
+        "refused",
+        "security_concern",
+        "therapist_objection"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_012",
+      "day": 84,
+      "interviewer": "the_general",
+      "designation": "New Arrival Lima-1 (child, unaccompanied)",
+      "origin": "Found alone on the surface, 500 metres from the bunker. No adult accompanying.",
+      "physical_condition": "Female, approximately 8 years old. Small for her age. Dosimeter reading: 0.6 Sv. Wearing: a child-sized gas mask (makeshift), a large coat (adult-sized, sleeves rolled), and no shoes. She is carrying a plastic bag containing: a stuffed animal (one-eyed bear), a pre-war children book (heavily illustrated), and 3 iodine tablets. She is dehydrated but otherwise uninjured.",
+      "security_assessment": "The child is alone. She says her mother went to sleep and did not wake up at a location she describes as the place with the big door. This may refer to the government bunker (location: government_bunker) - but our records show no other occupants. She does not know where she is or how far she walked. She was found by the sentry at 07:00 this morning. There is no question of refusal - she is a child. She has been admitted immediately. The Therapist is with her now.",
+      "therapist_note": "The Therapist notes: The child is in acute grief but remarkably composed. She has attached to the stuffed bear and will not put it down. She answered my questions in single words. She knows her name (she whispered it). She knows her mother is dead. She does not know what happens next. She is brave in the way that only children who have had to be brave can be. I have placed her with the Fierce Mother, who has a child the same age. The Fierce Mother is already treating Lima-1 as her own. This is the best outcome I could hope for. Accepted immediately.",
+      "admitted": true,
+      "bunk_assigned": 17,
+      "tags": [
+        "intake",
+        "unaccompanied_child",
+        "orphan",
+        "immediate_admission"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_013",
+      "day": 87,
+      "interviewer": "the_general",
+      "designation": "New Arrival Mike-1",
+      "origin": "Surface transit from the west (approximately 10 km). Travelling alone.",
+      "physical_condition": "Male, approximately 70 years old. Frail. Dosimeter reading: 0.8 Sv. He carries a walking stick and a small bag of personal effects. He is lucid, articulate, and remarkably calm for his situation. He says he is a retired professor of history.",
+      "security_assessment": "Mike-1 is the most straightforward applicant we have received. He says he was living alone in a house 10 km west and decided to seek community because he is running out of reasons to stay alone. He has no trade skills, no medical training, no military experience. He says he can read, write, teach, and listen. He asks for a bunk, a ration, and a corner where I can be useful. I am accepting him. The bunker needs people who can teach the children. The Teacher is overloaded.",
+      "therapist_note": "The Therapist notes: Mike-1 is not depressed. He is tired. There is a difference. He has made a rational decision to join a community rather than die alone. His calm is not dissociation - it is acceptance. He is the most psychologically healthy person I have interviewed this month. He will be an asset to the children. He has already asked if he can read to them. Accepted.",
+      "admitted": true,
+      "bunk_assigned": 6,
+      "tags": [
+        "intake",
+        "elderly",
+        "teacher",
+        "straightforward"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_014",
+      "day": 89,
+      "interviewer": "the_general",
+      "designation": "New Arrival Group November (3 persons)",
+      "origin": "Surface transit from the southeast (approximately 20 km). Two adult males, one adult female.",
+      "physical_condition": "All three ambulatory. November-1 (male, 40): dosimeter 0.9 Sv. November-2 (male, 35): dosimeter 1.1 Sv, limping (sprained ankle, not fractured). November-3 (female, 28): dosimeter 0.7 Sv, pregnant (approximately 6 months). All three are well-equipped with trade goods: 10 kg of dried vegetables, 3 pre-war battery packs (AA, partially charged), a hand-crank grain mill.",
+      "security_assessment": "November-1 is the group spokesperson. He says they are from an agricultural settlement called The Allotments (location: loc_the_allotments - this is in our data). He says The Allotments is struggling with a crop failure and they are seeking trade partners. The pregnant female is his sister. The other male is his brother-in-law. They are not seeking permanent refuge - they want to establish a trade route and return. However, given the sister pregnancy, I am offering them temporary residence until the baby is born. The trade goods are valuable and will be negotiated. I am accepting all three provisionally.",
+      "therapist_note": "The Therapist notes: The group dynamic is healthy - mutual support, clear roles, shared purpose. The pregnant sister is the emotional centre of the group. Both men are protective of her. She is not a passive recipient of care - she is making decisions and directing the group. She will be an asset to the bunker community. The pregnancy is a medical consideration (the Surgeon will monitor) but also a morale boost - a new life in the bunker. Accepted provisionally.",
+      "admitted": true,
+      "bunk_assigned": 13,
+      "tags": [
+        "intake",
+        "trade_group",
+        "pregnancy",
+        "provisional"
+      ]
+    },
+    {
+      "interview_id": "intake_b2_015",
+      "day": 91,
+      "interviewer": "the_general",
+      "designation": "New Arrival Oscar-1",
+      "origin": "Returned resident. Left the bunker on Day 12 during an expedition. Presumed dead.",
+      "physical_condition": "Male, approximately 45 years old. Severely malnourished. Dosimeter reading: 4.1 Sv (dangerously high - acute radiation syndrome likely). Multiple healed fractures (left arm, right ribs). Significant scarring on the face and neck. He is alive but barely. He was found by the sentry at the south perimeter, crawling.",
+      "security_assessment": "Oscar-1 is a former resident who was part of Expedition 3. The expedition lost contact on Day 14. We presumed all members dead. Oscar-1 has survived for 77 days on the surface alone with catastrophic injuries. He says the expedition was ambushed. The other members were killed. He was left for dead. He crawled to a drainage pipe and survived by collecting rainwater and eating insects. He does not remember how he found his way back to the bunker. He is in no condition to be a security risk. He is being treated by the Surgeon. The dosimeter reading suggests he has weeks to live, not years. He will die in the bunker. He says that is what he wants.",
+      "therapist_note": "The Therapist notes: Oscar-1 is in profound physical and psychological pain. He has survived what should have killed him, and the survival has cost him everything. He is not suicidal - he fought to get back here. But he is at the end of a long, brutal journey and he knows it. I am sitting with him. There is nothing to fix. There is only to be present. Accepted. Palliative care.",
+      "admitted": true,
+      "bunk_assigned": 22,
+      "tags": [
+        "intake",
+        "returned_resident",
+        "presumed_dead",
+        "palliative"
+      ]
+    }
+  ]
+}

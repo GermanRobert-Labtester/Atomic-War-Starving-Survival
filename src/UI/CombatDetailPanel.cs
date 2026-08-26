@@ -38,6 +38,10 @@ namespace AtomicWar.GodotApp.UI
         public void RefreshView()
         {
             if (_combat == null || _battleInfo == null) return;
+            AshfallUiHelpers.EmptyChildren(_battleInfo);
+            AshfallUiHelpers.EmptyChildren(_tacticsData);
+            AshfallUiHelpers.EmptyChildren(_casualtyData);
+            AshfallUiHelpers.EmptyChildren(_outcomesData);
             var snap = _combat.Snapshot();
 
             AddLine(_battleInfo, "Encounter: " + (string.IsNullOrEmpty(snap.LocationName) ? "—" : snap.LocationName));
@@ -161,6 +165,15 @@ namespace AtomicWar.GodotApp.UI
                 OnClose?.Invoke();
                 GetViewport().SetInputAsHandled();
             }
+        }
+
+        public override void _ExitTree()
+        {
+            if (_combat != null)
+            {
+                _combat.StateChanged -= RefreshView;
+            }
+            base._ExitTree();
         }
     }
 }

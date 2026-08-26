@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string foundationPath = Path.Combine(directoryPath, "langstroth_hive_foundation_logs.json");
             if (File.Exists(foundationPath))
             {
-                var list = JsonSerializer.Deserialize<List<LangstrothHiveFoundationEntry>>(File.ReadAllText(foundationPath), options);
+                var list = CatalogLocator.LoadWrappedList<LangstrothHiveFoundationEntry>(File.ReadAllText(foundationPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string redLightPath = Path.Combine(directoryPath, "apiculture_red_light_audits.json");
             if (File.Exists(redLightPath))
             {
-                var list = JsonSerializer.Deserialize<List<ApicultureRedLightEntry>>(File.ReadAllText(redLightPath), options);
+                var list = CatalogLocator.LoadWrappedList<ApicultureRedLightEntry>(File.ReadAllText(redLightPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string extractorPath = Path.Combine(directoryPath, "honey_extractor_balance_reports.json");
             if (File.Exists(extractorPath))
             {
-                var list = JsonSerializer.Deserialize<List<HoneyExtractorBalanceEntry>>(File.ReadAllText(extractorPath), options);
+                var list = CatalogLocator.LoadWrappedList<HoneyExtractorBalanceEntry>(File.ReadAllText(extractorPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string waxPath = Path.Combine(directoryPath, "beeswax_rendering_dipping_assays.json");
             if (File.Exists(waxPath))
             {
-                var list = JsonSerializer.Deserialize<List<BeeswaxRenderingDippingEntry>>(File.ReadAllText(waxPath), options);
+                var list = CatalogLocator.LoadWrappedList<BeeswaxRenderingDippingEntry>(File.ReadAllText(waxPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public LangstrothHiveFoundationEntry GetFoundation(string id)
+        public LangstrothHiveFoundationEntry? GetFoundation(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LangstrothHiveFoundationEntry e ? e : null;
         }
 
-        public ApicultureRedLightEntry GetRedLight(string id)
+        public ApicultureRedLightEntry? GetRedLight(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ApicultureRedLightEntry e ? e : null;
         }
 
-        public HoneyExtractorBalanceEntry GetExtractor(string id)
+        public HoneyExtractorBalanceEntry? GetExtractor(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is HoneyExtractorBalanceEntry e ? e : null;
         }
 
-        public BeeswaxRenderingDippingEntry GetWax(string id)
+        public BeeswaxRenderingDippingEntry? GetWax(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BeeswaxRenderingDippingEntry e ? e : null;

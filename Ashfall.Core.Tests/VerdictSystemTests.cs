@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 using Ashfall.Core;
 using Ashfall.Core.Clock;
 using Ashfall.Core.Events;
@@ -599,7 +601,22 @@ namespace Ashfall.Core.Tests
             if (!io.FileExists(path)) return;
 
             string raw = io.ReadAllText(path);
-            var items = json.Deserialize<List<Ashfall.Core.Inventory.ItemDefinition>>(raw);
+            using var doc = JsonDocument.Parse(raw);
+            JsonElement array = doc.RootElement;
+            if (array.ValueKind == JsonValueKind.Object)
+            {
+                foreach (var prop in array.EnumerateObject())
+                {
+                    if (prop.Name.Equals("schema_version", StringComparison.OrdinalIgnoreCase))
+                        continue;
+                    if (prop.Value.ValueKind == JsonValueKind.Array)
+                    {
+                        array = prop.Value;
+                        break;
+                    }
+                }
+            }
+            var items = CatalogLocator.LoadWrappedList<Ashfall.Core.Inventory.ItemDefinition>(array.GetRawText(), SystemTextJsonSerializer.Options);
             Assert.NotNull(items);
             Assert.True(items.Count >= 15, $"expected >=15 verdict items, got {items?.Count ?? 0}");
 

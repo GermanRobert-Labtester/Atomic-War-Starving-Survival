@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -51,7 +52,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public DeadHandDirectiveEntry GetById(string directiveId)
+        public DeadHandDirectiveEntry? GetById(string directiveId)
         {
             if (string.IsNullOrEmpty(directiveId)) return null;
             _byId.TryGetValue(directiveId, out var entry);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -51,7 +52,7 @@ namespace Ashfall.Core
         public TravelingCaravanState State => _state;
         public int CaravanCount => _state.activeCaravans?.Count ?? 0;
 
-        public TravelingCaravanSystem(TravelingCaravanState state = null)
+        public TravelingCaravanSystem(TravelingCaravanState? state = null)
         {
             _state = state ?? new TravelingCaravanState();
             if (_state.activeCaravans == null)
@@ -85,7 +86,7 @@ namespace Ashfall.Core
             OnCaravanArrivedAtNode?.Invoke(caravan, caravan.currentNodeId);
         }
 
-        public CaravanEntry GetCaravanAtNode(string nodeId)
+        public CaravanEntry? GetCaravanAtNode(string nodeId)
         {
             return _state.activeCaravans.Find(c => c.currentNodeId == nodeId && !c.isRobbed);
         }

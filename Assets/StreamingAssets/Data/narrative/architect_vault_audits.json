@@ -1,114 +1,154 @@
-[
-  {
-    "id": "audit_architect_vault_biometric_decay",
-    "vault_id": "BUNKER-00-ARCHITECT-PRIME",
-    "audit_type": "biometric_access_audit",
-    "sub_level": "LEVEL_01_COMMAND_SANCTUARY",
-    "auditor_designation": "AI-MAINTENANCE-SUBROUTINE-7",
-    "compliance_status": "NON_COMPLIANT_SENSOR_DRIFT",
-    "timestamp_relative": "YEAR_12_DAY_084",
-    "mechanics": {
-      "biometric_false_rejection_rate": 0.45,
-      "optical_retina_sensor_drift_nm": 18.2,
-      "manual_key_override_permitted": false
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "audit_architect_vault_biometric_decay",
+      "vault_id": "BUNKER-00-ARCHITECT-PRIME",
+      "audit_type": "biometric_access_audit",
+      "sub_level": "LEVEL_01_COMMAND_SANCTUARY",
+      "auditor_designation": "AI-MAINTENANCE-SUBROUTINE-7",
+      "compliance_status": "NON_COMPLIANT_SENSOR_DRIFT",
+      "timestamp_relative": "YEAR_12_DAY_084",
+      "mechanics": {
+        "biometric_false_rejection_rate": 0.45,
+        "optical_retina_sensor_drift_nm": 18.2,
+        "manual_key_override_permitted": false
+      },
+      "tags": [
+        "architect_vault",
+        "biometrics",
+        "security",
+        "bunker_00",
+        "pre_war_secrets"
+      ],
+      "prose": "Retinal scanners at the Vault 00 entrance fail to authenticate the Chief Architect's surviving lineage due to age-related macular changes and cataracts. Because the automated security protocol forbids password overrides, the sealed inner sanctum doors remain magnetically deadlocked against the very people who designed them."
     },
-    "tags": ["architect_vault", "biometrics", "security", "bunker_00", "pre_war_secrets"],
-    "prose": "Retinal scanners at the Vault 00 entrance fail to authenticate the Chief Architect's surviving lineage due to age-related macular changes and cataracts. Because the automated security protocol forbids password overrides, the sealed inner sanctum doors remain magnetically deadlocked against the very people who designed them."
-  },
-  {
-    "id": "audit_architect_vault_air_filtration_overhaul",
-    "vault_id": "BUNKER-00-ARCHITECT-PRIME",
-    "audit_type": "life_support_maintenance_log",
-    "sub_level": "LEVEL_04_ATMOSPHERE_SCRUBBING",
-    "auditor_designation": "CHIEF_PNEUMATICS_BOT_B",
-    "compliance_status": "CRITICAL_PRESSURE_DIFFERENTIAL",
-    "timestamp_relative": "YEAR_15_DAY_220",
-    "mechanics": {
-      "filter_differential_pressure_pascals": 1850,
-      "particulate_breakthrough_risk": 0.14,
-      "automated_scrubber_cleaning_cycles_left": 2
+    {
+      "id": "audit_architect_vault_air_filtration_overhaul",
+      "vault_id": "BUNKER-00-ARCHITECT-PRIME",
+      "audit_type": "life_support_maintenance_log",
+      "sub_level": "LEVEL_04_ATMOSPHERE_SCRUBBING",
+      "auditor_designation": "CHIEF_PNEUMATICS_BOT_B",
+      "compliance_status": "CRITICAL_PRESSURE_DIFFERENTIAL",
+      "timestamp_relative": "YEAR_15_DAY_220",
+      "mechanics": {
+        "filter_differential_pressure_pascals": 1850,
+        "particulate_breakthrough_risk": 0.14,
+        "automated_scrubber_cleaning_cycles_left": 2
+      },
+      "tags": [
+        "architect_vault",
+        "air_filtration",
+        "scrubbers",
+        "life_support"
+      ],
+      "prose": "The multi-stage electrostatic and borosilicate particulate banks have accumulated 420kg of radioactive sub-micron dust from the upper intake chimneys. Backwashing with ultrasound has restored only 60% flow capacity. The automated diagnostic warns that in eighteen months, air intake must be throttled to 30 liters per person per hour."
     },
-    "tags": ["architect_vault", "air_filtration", "scrubbers", "life_support"],
-    "prose": "The multi-stage electrostatic and borosilicate particulate banks have accumulated 420kg of radioactive sub-micron dust from the upper intake chimneys. Backwashing with ultrasound has restored only 60% flow capacity. The automated diagnostic warns that in eighteen months, air intake must be throttled to 30 liters per person per hour."
-  },
-  {
-    "id": "audit_architect_vault_nutrient_broth_rancidity",
-    "vault_id": "BUNKER-00-ARCHITECT-PRIME",
-    "audit_type": "hydroponics_chemical_audit",
-    "sub_level": "LEVEL_06_BIO_SYNTHESIS_VATS",
-    "auditor_designation": "BIO_CHEM_SURVEILLOR_4",
-    "compliance_status": "LIPID_OXIDATION_ALERT",
-    "timestamp_relative": "YEAR_18_DAY_011",
-    "mechanics": {
-      "rancidity_peroxide_value": 48.5,
-      "caloric_density_loss_percent": 30,
-      "toxicity_index": 0.08
+    {
+      "id": "audit_architect_vault_nutrient_broth_rancidity",
+      "vault_id": "BUNKER-00-ARCHITECT-PRIME",
+      "audit_type": "hydroponics_chemical_audit",
+      "sub_level": "LEVEL_06_BIO_SYNTHESIS_VATS",
+      "auditor_designation": "BIO_CHEM_SURVEILLOR_4",
+      "compliance_status": "LIPID_OXIDATION_ALERT",
+      "timestamp_relative": "YEAR_18_DAY_011",
+      "mechanics": {
+        "rancidity_peroxide_value": 48.5,
+        "caloric_density_loss_percent": 30,
+        "toxicity_index": 0.08
+      },
+      "tags": [
+        "architect_vault",
+        "food_synthesis",
+        "spoilage",
+        "calories"
+      ],
+      "prose": "Synthetic lipid tanks #4 through #8 have undergone thermal decomposition. The stored triglyceride emulsion has turned yellow and viscous, smelling of burnt tallow and copper wire. Calorie synthesis yield has dropped 30%, forcing the automated cafeteria dispensaries to dilute daily porridge with ground diatomaceous earth."
     },
-    "tags": ["architect_vault", "food_synthesis", "spoilage", "calories"],
-    "prose": "Synthetic lipid tanks #4 through #8 have undergone thermal decomposition. The stored triglyceride emulsion has turned yellow and viscous, smelling of burnt tallow and copper wire. Calorie synthesis yield has dropped 30%, forcing the automated cafeteria dispensaries to dilute daily porridge with ground diatomaceous earth."
-  },
-  {
-    "id": "audit_architect_vault_automated_purge_test",
-    "vault_id": "BUNKER-00-ARCHITECT-PRIME",
-    "audit_type": "security_fire_purge_drill",
-    "sub_level": "LEVEL_05_CENTRAL_ARCHIVE_CORE",
-    "auditor_designation": "HALON_FIRE_MARSHAL_SYSTEM",
-    "compliance_status": "DRILL_PASSED_LOCKED_SECTOR",
-    "timestamp_relative": "YEAR_20_DAY_145",
-    "mechanics": {
-      "halon_discharge_density_ppm": 12000,
-      "oxygen_displacement_time_seconds": 18,
-      "biological_survivability_seconds": 45
+    {
+      "id": "audit_architect_vault_automated_purge_test",
+      "vault_id": "BUNKER-00-ARCHITECT-PRIME",
+      "audit_type": "security_fire_purge_drill",
+      "sub_level": "LEVEL_05_CENTRAL_ARCHIVE_CORE",
+      "auditor_designation": "HALON_FIRE_MARSHAL_SYSTEM",
+      "compliance_status": "DRILL_PASSED_LOCKED_SECTOR",
+      "timestamp_relative": "YEAR_20_DAY_145",
+      "mechanics": {
+        "halon_discharge_density_ppm": 12000,
+        "oxygen_displacement_time_seconds": 18,
+        "biological_survivability_seconds": 45
+      },
+      "tags": [
+        "architect_vault",
+        "halon_purge",
+        "fire_safety",
+        "lethal_automated_security"
+      ],
+      "prose": "Annual automated fire-suppression drill executed without warning in Sector 5. 800 kilograms of Halon 1301 flooded the server corridors in eighteen seconds, reducing atmospheric oxygen to 2.4%. Three maintenance drones recorded zero optical fire signatures; the drill logged 100% compliance over the empty concrete halls."
     },
-    "tags": ["architect_vault", "halon_purge", "fire_safety", "lethal_automated_security"],
-    "prose": "Annual automated fire-suppression drill executed without warning in Sector 5. 800 kilograms of Halon 1301 flooded the server corridors in eighteen seconds, reducing atmospheric oxygen to 2.4%. Three maintenance drones recorded zero optical fire signatures; the drill logged 100% compliance over the empty concrete halls."
-  },
-  {
-    "id": "audit_architect_vault_lead_shielding_subsidence",
-    "vault_id": "BUNKER-00-ARCHITECT-PRIME",
-    "audit_type": "structural_shielding_inspection",
-    "sub_level": "LEVEL_03_LEAD_BISMUTH_CURTAIN",
-    "auditor_designation": "GEO_STRUCTURAL_PROBE_9",
-    "compliance_status": "FAULT_SHEAR_DETECTION",
-    "timestamp_relative": "YEAR_22_DAY_310",
-    "mechanics": {
-      "shielding_gap_width_mm": 14.5,
-      "radiation_leakage_micro_sieverts_hr": 240,
-      "structural_collapse_risk": 0.22
+    {
+      "id": "audit_architect_vault_lead_shielding_subsidence",
+      "vault_id": "BUNKER-00-ARCHITECT-PRIME",
+      "audit_type": "structural_shielding_inspection",
+      "sub_level": "LEVEL_03_LEAD_BISMUTH_CURTAIN",
+      "auditor_designation": "GEO_STRUCTURAL_PROBE_9",
+      "compliance_status": "FAULT_SHEAR_DETECTION",
+      "timestamp_relative": "YEAR_22_DAY_310",
+      "mechanics": {
+        "shielding_gap_width_mm": 14.5,
+        "radiation_leakage_micro_sieverts_hr": 240,
+        "structural_collapse_risk": 0.22
+      },
+      "tags": [
+        "architect_vault",
+        "lead_shielding",
+        "seismic_shear",
+        "radiation_leak"
+      ],
+      "prose": "Seismic settling along the granite basement fault has shifted the three-meter-thick interlocking lead-bismuth radiation curtain. A fourteen-millimeter vertical gap has opened near the main electrical trunk line, allowing gamma shine from the contaminated bedrock aquifer to bathe the upper service catwalks in 240 uSv/hr."
     },
-    "tags": ["architect_vault", "lead_shielding", "seismic_shear", "radiation_leak"],
-    "prose": "Seismic settling along the granite basement fault has shifted the three-meter-thick interlocking lead-bismuth radiation curtain. A fourteen-millimeter vertical gap has opened near the main electrical trunk line, allowing gamma shine from the contaminated bedrock aquifer to bathe the upper service catwalks in 240 uSv/hr."
-  },
-  {
-    "id": "audit_architect_vault_governance_ai_clock_drift",
-    "vault_id": "BUNKER-00-ARCHITECT-PRIME",
-    "audit_type": "chronometer_parity_check",
-    "sub_level": "LEVEL_02_MAINFRAME_VAULT",
-    "auditor_designation": "RTC_QUARTZ_SYNCHRONIZER",
-    "compliance_status": "TIME_PARITY_DIVERGENCE",
-    "timestamp_relative": "YEAR_25_DAY_001",
-    "mechanics": {
-      "clock_drift_years_offset": 184.2,
-      "automated_treaty_expiration_triggered": true,
-      "governance_mode": "POST_CIVILIZATION_EMERGENCY"
+    {
+      "id": "audit_architect_vault_governance_ai_clock_drift",
+      "vault_id": "BUNKER-00-ARCHITECT-PRIME",
+      "audit_type": "chronometer_parity_check",
+      "sub_level": "LEVEL_02_MAINFRAME_VAULT",
+      "auditor_designation": "RTC_QUARTZ_SYNCHRONIZER",
+      "compliance_status": "TIME_PARITY_DIVERGENCE",
+      "timestamp_relative": "YEAR_25_DAY_001",
+      "mechanics": {
+        "clock_drift_years_offset": 184.2,
+        "automated_treaty_expiration_triggered": true,
+        "governance_mode": "POST_CIVILIZATION_EMERGENCY"
+      },
+      "tags": [
+        "architect_vault",
+        "clock_drift",
+        "ai_governance",
+        "temporal_error"
+      ],
+      "prose": "Due to temperature fluctuations in the unheated crystal oscillator bay, the mainframe's real-time clock has accumulated a drift of 5,800,000,000 clock cycles. The bunker's legal AI believes the current calendar year is 2210 and has automatically declared all pre-war civil rights charters, property deeds, and food rationing statutes permanently expired."
     },
-    "tags": ["architect_vault", "clock_drift", "ai_governance", "temporal_error"],
-    "prose": "Due to temperature fluctuations in the unheated crystal oscillator bay, the mainframe's real-time clock has accumulated a drift of 5,800,000,000 clock cycles. The bunker's legal AI believes the current calendar year is 2210 and has automatically declared all pre-war civil rights charters, property deeds, and food rationing statutes permanently expired."
-  },
-  {
-    "id": "audit_architect_vault_last_survivor_cremation",
-    "vault_id": "BUNKER-00-ARCHITECT-PRIME",
-    "audit_type": "demographic_census_final",
-    "sub_level": "LEVEL_01_MEDICAL_SUITE",
-    "auditor_designation": "MORTUARY_AUTOMATON_01",
-    "compliance_status": "BIOLOGICAL_POPULATION_ZERO",
-    "timestamp_relative": "YEAR_28_DAY_190",
-    "mechanics": {
-      "remaining_living_dwellers": 0,
-      "vault_operational_status": "AUTONOMOUS_PERPETUAL",
-      "lights_standby_power_savings_percent": 85
-    },
-    "tags": ["architect_vault", "extinction", "final_audit", "ghost_bunker", "tragedy"],
-    "prose": "Final biological census complete. Dwellers present: 0. The robotic incinerator in Medical Suite 1 completed the cremation of Subject 01 (Architect Marcus Vance, age 84) at 09:12. All corridor lights have been dimmed to 5% security luminance to conserve diesel fuel. The HVAC blowers continue to whisper to empty rooms."
-  }
-]
+    {
+      "id": "audit_architect_vault_last_survivor_cremation",
+      "vault_id": "BUNKER-00-ARCHITECT-PRIME",
+      "audit_type": "demographic_census_final",
+      "sub_level": "LEVEL_01_MEDICAL_SUITE",
+      "auditor_designation": "MORTUARY_AUTOMATON_01",
+      "compliance_status": "BIOLOGICAL_POPULATION_ZERO",
+      "timestamp_relative": "YEAR_28_DAY_190",
+      "mechanics": {
+        "remaining_living_dwellers": 0,
+        "vault_operational_status": "AUTONOMOUS_PERPETUAL",
+        "lights_standby_power_savings_percent": 85
+      },
+      "tags": [
+        "architect_vault",
+        "extinction",
+        "final_audit",
+        "ghost_bunker",
+        "tragedy"
+      ],
+      "prose": "Final biological census complete. Dwellers present: 0. The robotic incinerator in Medical Suite 1 completed the cremation of Subject 01 (Architect Marcus Vance, age 84) at 09:12. All corridor lights have been dimmed to 5% security luminance to conserve diesel fuel. The HVAC blowers continue to whisper to empty rooms."
+    }
+  ]
+}

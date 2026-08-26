@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Combat
 {
@@ -311,7 +312,7 @@ namespace Ashfall.Core.Combat
         }
 
         /// <summary>Deterministic secondary target: prefer an adjacent lane, then first living enemy there.</summary>
-        private static CombatantState PickSecondary(BallisticContext ctx, CombatantState current, ISeededRng rng)
+        private static CombatantState? PickSecondary(BallisticContext ctx, CombatantState current, ISeededRng rng)
         {
             if (ctx.RicochetTargets == null || ctx.RicochetTargets.Count == 0) return null;
 

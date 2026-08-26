@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Ashfall.Core.YearOfAsh;
 
+using Ashfall.Core.IO;
 namespace Ashfall.Core.Verdict
 {
     /// <summary>
@@ -38,7 +40,7 @@ namespace Ashfall.Core.Verdict
                 var quests = container?.quests;
                 if (quests == null || quests.Count == 0)
                 {
-                    quests = json.Deserialize<List<QuestlineDefinition>>(raw);
+                    quests = CatalogLocator.LoadWrappedList<QuestlineDefinition>(raw, SystemTextJsonSerializer.Options);
                 }
                 if (quests == null) return 0;
                 int count = 0;
@@ -50,10 +52,11 @@ namespace Ashfall.Core.Verdict
                 }
                 return count;
             }
-            catch
-            {
-                return 0;
-            }
+            catch (Exception ex_CATDIAG)
+                                {
+                                    CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
+                                    return 0;
+                                }
         }
     }
 }

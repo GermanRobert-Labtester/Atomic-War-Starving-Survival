@@ -15,6 +15,11 @@ namespace AtomicWar.GodotApp.Audio
         public const string Ui = "UI";
         public const string Voice = "Voice";
         public const string Alerts = "Alerts";
+        public const string Generator = "Generator";
+        public const string Ventilation = "Ventilation";
+        public const string Radio = "Radio";
+        public const string Medical = "Medical";
+        public const string Surface = "Surface";
     }
 
     /// <summary>
@@ -157,12 +162,12 @@ namespace AtomicWar.GodotApp.Audio
             Reg(WeatherWindGust, "res://assets/audio/sfx/sfx_wind_gust_harsh.mp3", AudioBusNames.Sfx, vol: -8f, cooldown: 3f);
 
             // Ambience
-            Reg(AmbBunker, "res://assets/audio/ambience/bunker_ambience.wav", AudioBusNames.Ambience, loop: true, vol: -3f);
-            Reg(AmbSurface, "res://assets/audio/ambience/surface_ambience.wav", AudioBusNames.Ambience, loop: true, vol: -4f);
+            Reg(AmbBunker, "res://assets/audio/ambience/bunker_ambience.ogg", AudioBusNames.Ambience, loop: true, vol: -3f);
+            Reg(AmbSurface, "res://assets/audio/ambience/surface_ambience.ogg", AudioBusNames.Ambience, loop: true, vol: -4f);
 
             // Music
-            Reg(MusicMenu, "res://assets/audio/music/main_menu.wav", AudioBusNames.Music, vol: -6f);
-            Reg(MusicGameplay, "res://assets/audio/music/gameplay_underscore.wav", AudioBusNames.Music, vol: -8f);
+            Reg(MusicMenu, "res://assets/audio/music/main_menu.ogg", AudioBusNames.Music, vol: -6f);
+            Reg(MusicGameplay, "res://assets/audio/music/gameplay_underscore.ogg", AudioBusNames.Music, vol: -8f);
 
             // Radio
             Reg(RadioStatic, "res://assets/audio/radio/radio_static_hiss.wav", AudioBusNames.Voice, vol: -8f, cooldown: 0.5f);
@@ -199,7 +204,7 @@ namespace AtomicWar.GodotApp.Audio
             Reg(DangerDebris, "res://assets/audio/sfx/sfx_debris_impact.mp3", AudioBusNames.Sfx, cooldown: 3f);
 
             // Game flow
-            Reg(GameOver, "res://assets/audio/music/main_menu.wav", AudioBusNames.Music, vol: -10f);
+            Reg(GameOver, "res://assets/audio/music/main_menu.ogg", AudioBusNames.Music, vol: -10f);
             Reg(SaveSuccess, "res://assets/audio/ui/ui_confirm.wav", AudioBusNames.Ui, vol: -10f, cooldown: 1f);
             Reg(DayTransition, "res://assets/audio/sfx/sfx_pipe_clang.mp3", AudioBusNames.Sfx, vol: -12f, cooldown: 2f);
         }

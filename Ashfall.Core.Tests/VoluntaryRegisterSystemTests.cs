@@ -80,7 +80,7 @@ namespace Ashfall.Core.Tests
             Assert.Single(sys.CaptureState().entries);
             // Live and saved must agree (no silent data loss on save).
             Assert.Single(sys.Entries);
-            Assert.Single(sys.CaptureState().entries);
+            Assert.Equal(1, sys.CaptureState().entries.Count);
         }
 
         [Fact]

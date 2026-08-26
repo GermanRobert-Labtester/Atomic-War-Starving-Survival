@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Legacy
 {
@@ -103,7 +104,7 @@ namespace Ashfall.Core.Legacy
             return true;
         }
 
-        public DwellerGenerationRecord GetRecord(string dwellerId)
+        public DwellerGenerationRecord? GetRecord(string dwellerId)
         {
             _records.TryGetValue(dwellerId, out var rec);
             return rec;

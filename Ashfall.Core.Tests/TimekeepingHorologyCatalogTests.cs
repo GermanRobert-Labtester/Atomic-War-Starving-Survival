@@ -6,7 +6,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public sealed class TimekeepingHorologyCatalogTests
-    {
+    : CatalogTestBase{
         private readonly string _narrativeDir;
 
         public TimekeepingHorologyCatalogTests()

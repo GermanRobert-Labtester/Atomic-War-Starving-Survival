@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string moundPath = Path.Combine(directoryPath, "charcoal_mound_pyrolysis_logs.json");
             if (File.Exists(moundPath))
             {
-                var list = JsonSerializer.Deserialize<List<CharcoalMoundPyrolysisEntry>>(File.ReadAllText(moundPath), options);
+                var list = CatalogLocator.LoadWrappedList<CharcoalMoundPyrolysisEntry>(File.ReadAllText(moundPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string retortPath = Path.Combine(directoryPath, "retort_wood_vinegar_audits.json");
             if (File.Exists(retortPath))
             {
-                var list = JsonSerializer.Deserialize<List<RetortWoodVinegarEntry>>(File.ReadAllText(retortPath), options);
+                var list = CatalogLocator.LoadWrappedList<RetortWoodVinegarEntry>(File.ReadAllText(retortPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string biocharPath = Path.Combine(directoryPath, "biochar_cation_exchange_reports.json");
             if (File.Exists(biocharPath))
             {
-                var list = JsonSerializer.Deserialize<List<BiocharCationExchangeEntry>>(File.ReadAllText(biocharPath), options);
+                var list = CatalogLocator.LoadWrappedList<BiocharCationExchangeEntry>(File.ReadAllText(biocharPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string forgePath = Path.Combine(directoryPath, "forge_charcoal_ash_assays.json");
             if (File.Exists(forgePath))
             {
-                var list = JsonSerializer.Deserialize<List<ForgeCharcoalAshEntry>>(File.ReadAllText(forgePath), options);
+                var list = CatalogLocator.LoadWrappedList<ForgeCharcoalAshEntry>(File.ReadAllText(forgePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CharcoalMoundPyrolysisEntry GetMound(string id)
+        public CharcoalMoundPyrolysisEntry? GetMound(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CharcoalMoundPyrolysisEntry e ? e : null;
         }
 
-        public RetortWoodVinegarEntry GetRetort(string id)
+        public RetortWoodVinegarEntry? GetRetort(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is RetortWoodVinegarEntry e ? e : null;
         }
 
-        public BiocharCationExchangeEntry GetBiochar(string id)
+        public BiocharCationExchangeEntry? GetBiochar(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is BiocharCationExchangeEntry e ? e : null;
         }
 
-        public ForgeCharcoalAshEntry GetForge(string id)
+        public ForgeCharcoalAshEntry? GetForge(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ForgeCharcoalAshEntry e ? e : null;

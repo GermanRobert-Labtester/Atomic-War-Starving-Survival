@@ -1,5 +1,6 @@
 using System.Text;
 
+#pragma warning disable CS8618
 namespace Ashfall.Core
 {
     /// <summary>Headless-report extension for the ledger slice.</summary>
@@ -23,7 +24,7 @@ namespace Ashfall.Core
     /// </summary>
     public static class LedgerDebtHeadlessDemo
     {
-        public static LedgerDebtHeadlessReport Run(ILog log = null)
+        public static LedgerDebtHeadlessReport Run(ILog? log = null)
         {
             CatalogLocator.UseInvariantCulture();
             log = log ?? NullLog.Instance;
@@ -78,15 +79,15 @@ namespace Ashfall.Core
             // Wyn's term runs out. The forfeit was named up front.
             for (int d = 0; d < 30; d++)
                 ledger.TickDaily(41 + d);
-            Check(ledger.GetContract(wyn).forfeited, "term expired → forfeit due");
+            Check(ledger.GetContract(wyn)!.forfeited, "term expired → forfeit due");
             Check(report.ForfeitCount == 1, "OnForfeitTriggered fired once");
-            Check(ledger.GetContract(wyn).forfeit == "the pledged grain", "forfeit is the named good");
+            Check(ledger.GetContract(wyn)!.forfeit == "the pledged grain", "forfeit is the named good");
             Check(!ledger.RenegotiateContract(wyn, 1f, 10, 0f, "anything"),
                 "no renegotiation while a forfeit pends");
 
             // The honoured path: pay the named good back.
             Check(ledger.PayContract(wyn, 71), "forfeited debt can still be honoured");
-            Check(ledger.GetContract(wyn).paid && !ledger.GetContract(wyn).forfeited, "paid in full");
+            Check(ledger.GetContract(wyn)!.paid && !ledger.GetContract(wyn)!.forfeited, "paid in full");
             Check(report.PaidCount == 1, "OnContractPaid fired once");
 
             // One strike on the ledger, once.
@@ -98,10 +99,10 @@ namespace Ashfall.Core
             var json = new SystemTextJsonSerializer();
             var blob = json.Serialize(ledger.CaptureState());
             var restored = new LedgerDebtSystem();
-            restored.RestoreState(json.Deserialize<LedgerDebtSystemState>(blob));
+            restored.RestoreState(json.Deserialize<LedgerDebtSystemState>(blob)!);
             Check(restored.Contracts.Count == 2, "roundtrip contracts");
-            Check(restored.GetContract(wyn).paid, "roundtrip paid");
-            Check(restored.GetContract(ivo).signed, "roundtrip ivo signed");
+            Check(restored.GetContract(wyn)!.paid, "roundtrip paid");
+            Check(restored.GetContract(ivo)!.signed, "roundtrip ivo signed");
             Check(restored.LedgerTampered, "roundtrip tamper");
 
             report.Ledger = ledger.CaptureState();

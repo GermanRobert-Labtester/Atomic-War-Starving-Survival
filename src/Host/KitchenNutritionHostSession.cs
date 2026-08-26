@@ -14,12 +14,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class KitchenNutritionHostSession
-    {
+    : HostSessionBase{
         public KitchenNutritionSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public KitchenNutritionHostSession(
             KitchenNutritionSystem system,
             Inventory inventory,
@@ -28,13 +25,13 @@ namespace AtomicWar.GodotApp
             System = system
                 ?? new KitchenNutritionSystem(new SeededRng(1986), inventory, needs, new GodotLog());
 
-            System.OnJobCompleted += _ => StateChanged?.Invoke();
+            System.OnJobCompleted += _ => RaiseStateChanged();
             System.OnMealServed += serving =>
             {
                 LastEvent = $"Meal served: {serving.recipeId} to {serving.survivorId} (+{serving.moraleBonus} morale)";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            System.OnKitchenChanged += () => StateChanged?.Invoke();
+            System.OnKitchenChanged += () => RaiseStateChanged();
         }
 
         public ActionResult StartPrepJob(string recipeId, string assignedCookId, Dictionary<string, int> inputRequirements)
@@ -43,7 +40,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Prep started: {recipeId} by {assignedCookId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -54,7 +51,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Meal served: {recipeId} to {survivorId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -62,7 +59,14 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
+        }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            KitchenNutritionSaveStore.TrySave(System.CaptureState());
+            base.Save();
         }
     }
 
@@ -77,11 +81,54 @@ namespace AtomicWar.GodotApp
     public static class KitchenNutritionSaveStore
     {
         public const string FileName = "kitchen_nutrition_save.json";
+        public const string SectionName = "kitchen_nutrition";
+
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(KitchenNutritionState state)
+        {
+            return TryCapture(state);
+        }
+
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static KitchenNutritionState? TryRestoreDirect(string json)
+        {
+            return TryRestore(json);
+        }
+
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(KitchenNutritionState state)
+        {
+            try
+            {
+                if (state == null) return string.Empty;
+                return s_json.Serialize(state);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[KitchenNutritionSaveStore] capture failed: " + e.Message);
+                return string.Empty;
+            }
+        }
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static KitchenNutritionState? TryRestore(string json)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(json)) return null;
+                return s_json.Deserialize<KitchenNutritionState>(json);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[KitchenNutritionSaveStore] restore failed: " + e.Message);
+                return null;
+            }
+        }
+
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
-        public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+        public static string SavePath => SaveSlotRoot.Resolve(FileName);
         public static bool Exists => s_files.FileExists(SavePath);
 
         public static bool TrySave(KitchenNutritionState state)

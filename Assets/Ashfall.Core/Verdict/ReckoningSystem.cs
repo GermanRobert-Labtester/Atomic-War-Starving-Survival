@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Verdict
 {
@@ -70,7 +71,7 @@ namespace Ashfall.Core.Verdict
         public event Action<int> OnReckoningCall;      // payload = observed living count
         public event Action<string> OnVerdictResolved; // payload = ending key
 
-        public ReckoningSystem(ReckoningState state = null)
+        public ReckoningSystem(ReckoningState? state = null)
         {
             _state = state ?? new ReckoningState();
         }

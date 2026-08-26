@@ -4,6 +4,7 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using Ashfall.Core.IO;
 namespace AtomicWar.GodotApp
 {
     /// <summary>
@@ -17,7 +18,6 @@ namespace AtomicWar.GodotApp
         public event Action? OnContinue;
         public event Action? OnSettings;
         public event Action? OnCodex;
-        public event Action? OnJournal;
         public event Action? OnQuit;
 
         private Button _btnNewGame = null!;
@@ -84,8 +84,9 @@ namespace AtomicWar.GodotApp
                 carousel.SetAnchorsPreset(LayoutPreset.FullRect);
                 AddChild(carousel);
             }
-            catch
+            catch (Exception ex_CATDIAG)
             {
+                CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
                 // Fall back to solid background
             }
 

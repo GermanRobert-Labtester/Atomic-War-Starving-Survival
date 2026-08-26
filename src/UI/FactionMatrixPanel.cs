@@ -8,6 +8,7 @@ using Ashfall.Core.UI;
 using AtomicWar.GodotApp.UI;
 using DesignTheme = Ashfall.Core.UI.Theme;
 
+using Ashfall.Core.IO;
 namespace AtomicWar.GodotApp.UI;
 
 /// <summary>
@@ -63,9 +64,17 @@ public partial class FactionMatrixPanel : Control
     /// The matrix survives even when the catalog has not loaded — the snapshot
     /// harness ships a deterministic fixture instead.
     /// </summary>
+    private static readonly List<(string Id, string Display, string Lore, string Ideology)> s_cachedFactions = new();
+
     private void LoadFactionsFromCatalog()
     {
         _factions.Clear();
+        if (s_cachedFactions.Count > 0)
+        {
+            _factions.AddRange(s_cachedFactions);
+            return;
+        }
+
         try
         {
             string osPath = ProjectSettings.GlobalizePath("res://Assets/StreamingAssets/Data/faction_lore.json");
@@ -81,11 +90,13 @@ public partial class FactionMatrixPanel : Control
                 string display = entry.TryGetProperty("display_name", out var dn) ? dn.GetString() ?? id : id;
                 string lore = entry.TryGetProperty("signature_quote", out var sq) ? sq.GetString() ?? "" : "";
                 string ideology = entry.TryGetProperty("ideology", out var ideo) ? ideo.GetString() ?? "" : "";
-                _factions.Add((id, display, lore, ideology));
+                s_cachedFactions.Add((id, display, lore, ideology));
             }
+            _factions.AddRange(s_cachedFactions);
         }
-        catch
+        catch (Exception ex_CATDIAG)
         {
+            CatalogDiagnostics.Warn("<unknown>", "unknown", ex_CATDIAG);
             // ignored — fixture data will be used at row render time
         }
     }
@@ -175,7 +186,7 @@ public partial class FactionMatrixPanel : Control
             var prop = t.GetProperty("IsFactionActive");
             if (prop?.GetValue(_stanceProvider) is bool b) return b;
         }
-        catch { }
+        catch (Exception ex) { GD.PrintErr($"[FactionMatrix] IsFactionActive probe failed: {ex.Message}"); }
         return true;
     }
 
@@ -453,5 +464,11 @@ public partial class FactionMatrixPanel : Control
             OnClose?.Invoke();
             GetViewport().SetInputAsHandled();
         }
+    }
+
+    public override void _ExitTree()
+    {
+        _factions.Clear();
+        base._ExitTree();
     }
 }

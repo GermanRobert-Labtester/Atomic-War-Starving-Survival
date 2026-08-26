@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "collection_id": "journal_entries_batch_1_raw_survivor_observations",
+  "description": "Raw journal entries loadable via TryAddRawEntry(). Covers location discoveries, faction encounters, medical observations, item finds, and expedition reports that extend the journal beyond the 14 hardcoded JournalVoice keys.",
+  "entries": [
+    {
+      "id": "journal_raw_01_geo_thermal_haze",
+      "text": "The geo-thermal plant is still venting. You can see the steam column from three clicks south — a grey-white pillar that doesn't move even when the wind is hard. Marcus says the turbines are probably seized but the geothermal wells are self-feeding. If we could route the steam to the bunker heat exchangers, we'd save forty litres of fuel a week. If we could get close enough to read the pressure gauges. The dosimeter clicked fast at eight hundred metres. Not fast enough to turn back. Fast enough to make you count your steps.",
+      "timestamp": "Day 47, 14h",
+      "author_name": "Elena Vasquez",
+      "author_id": "elena_vasquez",
+      "knowledge_key": "location_geo_thermal_plant_ruins",
+      "day": 47,
+      "hour": 14.0
+    },
+    {
+      "id": "journal_raw_02_silent_observatory_signal",
+      "text": "Bram showed me his bearing chart. The Silent Observatory has no dish, no antenna, no visible power — but his compass swings three degrees true when he passes within a kilometre of it. Something inside is still drawing current. He won't go back. He marked the perimeter on his map with a red pencil and wrote one word: 'LISTENING.' I asked him what for. He said: 'Whatever's still broadcasting.'",
+      "timestamp": "Day 52, 09h",
+      "author_name": "Marcus Olejnik",
+      "author_id": "marcus_olejnik",
+      "knowledge_key": "location_silent_observatory",
+      "day": 52,
+      "hour": 9.0
+    },
+    {
+      "id": "journal_raw_03_seed_vault_door",
+      "text": "The seed vault door was designed to outlast the building. Three metres of reinforced concrete capped with a steel plate that took us two days to unbolt. Inside, the cold was clean — no rad count above baseline. The shelves held labelled glass jars, hundreds of them, alphabetised by Latin name. Suki spent an hour reading the labels without touching anything. Then she picked up one jar of Triticum aestivum — common wheat — and held it to her chest. She said: 'This is older than the war. This is older than everything.'",
+      "timestamp": "Day 61, 11h",
+      "author_name": "Suki Tanaka",
+      "author_id": "suki_tanaka",
+      "knowledge_key": "location_subterranean_seed_vault",
+      "day": 61,
+      "hour": 11.0
+    },
+    {
+      "id": "journal_raw_04_icebreaker_rad_readings",
+      "text": "The icebreaker convoy is a graveyard of twisted steel on the frozen river. Two vessels, three support barges, all locked in ice thick enough to walk on. The hulls are split open like cans. Radiation at the bow read 85 microsieverts per hour — the highest I've logged outside the government bunker footprint. The cargo manifests are still in the wheelhouse, frozen to the chart table. I tore two pages free. They list medical supplies and industrial solvent. If the ice holds through the month, we can rig a sled and haul what's reachable.",
+      "timestamp": "Day 73, 16h",
+      "author_name": "Elena Vasquez",
+      "author_id": "elena_vasquez",
+      "knowledge_key": "location_crashed_icebreaker_convoy",
+      "day": 73,
+      "hour": 16.0
+    },
+    {
+      "id": "journal_raw_05_garrison_patrol_encounter",
+      "text": "They came out of the tree line in pairs — matching boots, matching webbing, pre-war rifles with the bluing still intact. The lead sergeant didn't raise his weapon but he didn't lower it either. He asked for our cargo manifest. I told him we were scavengers. He said scavengers pay a transit toll through Garrison territory. I said we didn't have anything to trade. He looked at my dosimeter, looked at the horizon, and said: 'Next time you'll have something to trade.' They didn't take anything. That was worse than if they had.",
+      "timestamp": "Day 38, 08h",
+      "author_name": "The Hunter",
+      "author_id": "the_hunter",
+      "knowledge_key": "faction_iron_garrison_patrol",
+      "day": 38,
+      "hour": 8.0
+    },
+    {
+      "id": "journal_raw_06_ash_sign_sermon_overheard",
+      "text": "A woman stood on the rubble pile where the overpass used to be, shouting to maybe thirty people gathered below. She held a cracked Geiger counter above her head like a reliquary. The clicks were slow — barely above background. She said: 'The ash judges. The ash remembers. Every grain carries the weight of what we built and what we broke.' The crowd was quiet. A man near the front was weeping. I watched for ten minutes. Nobody asked for food. Nobody asked for water. They came here to be told that the radiation is meaningful. I don't know if that's madness or mercy.",
+      "timestamp": "Day 44, 17h",
+      "author_name": "The Therapist",
+      "author_id": "the_therapist",
+      "knowledge_key": "faction_cult_sermon_observed",
+      "day": 44,
+      "hour": 17.0
+    },
+    {
+      "id": "journal_raw_07_frozen_river_barge_inventory",
+      "text": "The barge is listed fifteen degrees to port, frozen into the ice shelf. Below decks, the cargo hold is dry and cold — perfect storage temperature. We found forty-two crates of sealed ball bearings, six drums of industrial lubricant, and a locked steel cabinet marked 'MINISTRY — AUTHORIZED PERSONNEL ONLY.' Marcus has the angle grinder. We'll open it tomorrow. The ice is stable enough to work on for another six weeks before the spring thaw cracks the river.",
+      "timestamp": "Day 82, 10h",
+      "author_name": "Marcus Olejnik",
+      "author_id": "marcus_olejnik",
+      "knowledge_key": "location_frozen_river_barge",
+      "day": 82,
+      "hour": 10.0
+    },
+    {
+      "id": "journal_raw_08_dose_ledger_first_entry",
+      "text": "Started the dose ledger today. Every survivor, every exposure event, every iodine administration — recorded with date, time, estimated millisieverts, and treatment given. Elena reviewed the first page and said the format was clinically sound. Then she asked who would be making the decisions when the ledger told us someone had exceeded safe lifetime accumulation. I said I didn't know. She said: 'The ledger doesn't care. That's why we need it.'",
+      "timestamp": "Day 29, 20h",
+      "author_name": "The Surgeon",
+      "author_id": "the_surgeon",
+      "knowledge_key": "dose_ledger_initiated",
+      "day": 29,
+      "hour": 20.0
+    },
+    {
+      "id": "journal_raw_09_railway_guild_trader",
+      "text": "A man arrived at the south perimeter with a handcar on a section of salvaged rail. He pushed it himself — forty kilograms of steel rolling on greased axles. He wore a wool coat with a patch sewn on the shoulder: a wheel and a hammer, crosshatched in yellow thread. He said he was a 'transit agent' for the Railway Guild. He had three vacuum tubes and a coil of copper wiring to trade for clean water. He said the Guild's price list was fixed and non-negotiable. I asked what happened if someone negotiated anyway. He said: 'Then you don't have a schedule.' He left before dark.",
+      "timestamp": "Day 56, 13h",
+      "author_name": "The Bouncer",
+      "author_id": "the_bouncer",
+      "knowledge_key": "faction_railway_guild_contact",
+      "day": 56,
+      "hour": 13.0
+    },
+    {
+      "id": "journal_raw_10_arcology_scan",
+      "text": "Sector 4's arcology still has its skeleton intact — twelve storeys of poured concrete with the rebar exposed like black roots. The lower floors are flooded with standing water that reads 20 microsieverts. The upper floors are dry but structurally compromised: every load-bearing wall has at least one crack you can fit your fist in. The Warlords have claimed the eastern wing. We saw smoke from a cooking fire on the ninth floor. They've hung black fabric between the columns as a wind break. From a distance, it looks like a flag. From a distance, everything looks like a flag.",
+      "timestamp": "Day 68, 15h",
+      "author_name": "The Veteran",
+      "author_id": "the_veteran",
+      "knowledge_key": "location_arcology_sector_4",
+      "day": 68,
+      "hour": 15.0
+    },
+    {
+      "id": "journal_raw_11_pharmacist_shelf_audit",
+      "text": "Audited the medical shelf today. We have eleven bottles of iodine pills left — enough for forty-seven individual doses if we split them carefully. Three bottles of anti-rad, sealed. The morphine ampoules are down to four. The antibiotic course is half-expired; the Pharmacist says the efficacy drops maybe fifteen percent past date, but she won't guarantee it. I wrote it all down. The numbers are the numbers. What we do with them is the part that keeps me awake.",
+      "timestamp": "Day 35, 21h",
+      "author_name": "The Surgeon",
+      "author_id": "the_surgeon",
+      "knowledge_key": "medical_supply_audit",
+      "day": 35,
+      "hour": 21.0
+    },
+    {
+      "id": "journal_raw_12_salt_freeholders_marker",
+      "text": "Found a salt claim marker on the southern ridge — a wooden post driven into the scree with a tin plate nailed to it. The plate read: 'SALT FREEHOLDERS — THIS RIDGE IS CLAIMED UNDER THE BRINE ACCORD — NO EXTRACTION WITHOUT LEAVE.' Someone had hand-painted the letters in white on black tar. The post was new. The wood hadn't weathered yet. We're not the only ones who've been counting what's left.",
+      "timestamp": "Day 41, 12h",
+      "author_name": "The Hunter",
+      "author_id": "the_hunter",
+      "knowledge_key": "faction_salt_freeholders_claim",
+      "day": 41,
+      "hour": 12.0
+    },
+    {
+      "id": "journal_raw_13_ministry_of_truth_documents",
+      "text": "The Ministry bunker's filing room is intact. Three rows of steel cabinets, each drawer labelled by year and category. The documents inside are pre-war civil defense protocols — evacuation routes, shelter capacity tables, radiation monitoring schedules. Most of the routes are useless now; the roads they reference don't exist. But the shelter capacity tables match our own bunker's design specs almost exactly. Someone built this place from the same blueprints. The last entry in the log book is dated Day 3, Year 0. It reads: 'All stations dark. God help whoever opens this.'",
+      "timestamp": "Day 91, 14h",
+      "author_name": "Marcus Olejnik",
+      "author_id": "marcus_olejnik",
+      "knowledge_key": "location_ministry_of_truth_bunker",
+      "day": 91,
+      "hour": 14.0
+    },
+    {
+      "id": "journal_raw_14_vet_irradiated_pack",
+      "text": "The dogs came back. Three of them — the same pack that passed the perimeter last week, only thinner. One of them has lesions along the muzzle that match chronic beta exposure. The other two show no visible symptoms but their coat pattern is wrong — patches of white where the breed standard calls for solid brown. I gave the injured one water and a strip of dried meat. It ate without looking up. The other two watched me the entire time without blinking. I closed the hatch slowly.",
+      "timestamp": "Day 50, 07h",
+      "author_name": "The Vet",
+      "author_id": "the_vet",
+      "knowledge_key": "irradiated_wildlife_observed",
+      "day": 50,
+      "hour": 7.0
+    },
+    {
+      "id": "journal_raw_15_cop_precinct_lockbox",
+      "text": "The precinct lockbox opened with a key I found in the sergeant's desk — third drawer, under a stack of blank incident reports. Inside: a service pistol with two magazines, a box of shotgun shells, and a notebook. The notebook has names, dates, and short notes in pencil. Some of the names I recognize. Some I don't. The last entry is dated Day 1. It says: 'Sealed the doors. Lost the keys on purpose. If you're reading this, you found the spare.' I put the lockbox back. I locked it again. I threw the key into the sump.",
+      "timestamp": "Day 77, 23h",
+      "author_name": "The Cop",
+      "author_id": "the_cop",
+      "knowledge_key": "precinct_lockbox_opened",
+      "day": 77,
+      "hour": 23.0
+    },
+    {
+      "id": "journal_raw_16_undertaker_mass_grave_survey",
+      "text": "Surveyed the eastern field for the mass grave site. The ground is soft enough to dig — three days' work for two people if the weather holds. I drove stakes at the corners and ran a string line. The soil here has a faint metallic taste. Not radiation. Iron. The water table is high. We'll need to line the walls with clay or the spring runoff will wash everything back to the surface. I've done this before. Not like this. Never like this.",
+      "timestamp": "Day 33, 06h",
+      "author_name": "The Undertaker",
+      "author_id": "the_undertaker",
+      "knowledge_key": "mass_grave_site_selected",
+      "day": 33,
+      "hour": 6.0
+    },
+    {
+      "id": "journal_raw_17_black_ops_cache",
+      "text": "Found a cache behind the false wall in the sub-basement corridor. Someone bricked it up with mortar and left a single air vent pointing at the filtration intake. Inside: four sealed cases of 7.62mm ammunition, a hand-cranked radio that still tunes, and a laminated card with no name — just a frequency, a time window, and a six-digit code. The radio picks up nothing on that frequency. The code means nothing to us. But the cache was built to last, and whoever built it knew this bunker's layout. They were here before us. Or they knew we'd come.",
+      "timestamp": "Day 88, 19h",
+      "author_name": "The Veteran",
+      "author_id": "the_veteran",
+      "knowledge_key": "black_ops_cache_discovered",
+      "day": 88,
+      "hour": 19.0
+    },
+    {
+      "id": "journal_raw_18_quiet_house_runner",
+      "text": "A runner came through at dawn — young, maybe sixteen, wearing a grey cloak with no insignia. She said she was from the Quiet House. She had a sealed envelope addressed to 'Whoever Keeps the Journal.' Inside was a single sheet of paper with a list of seven names and a date next to each one. The dates spanned the last three months. I recognized two of the names. They're people who passed through our perimeter and moved on. The other five I've never heard of. At the bottom of the list, in smaller handwriting: 'We remember who walked. We remember who didn't.' She took a cup of water, nodded once, and left the way she came.",
+      "timestamp": "Day 95, 05h",
+      "author_name": "The Bouncer",
+      "author_id": "the_bouncer",
+      "knowledge_key": "faction_quiet_house_runner",
+      "day": 95,
+      "hour": 5.0
+    }
+  ]
+}

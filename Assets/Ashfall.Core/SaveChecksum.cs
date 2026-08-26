@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -148,23 +150,40 @@ namespace Ashfall.Core
             sb.Append('[').Append(count.ToString(CultureInfo.InvariantCulture)).Append(':').Append(items).Append(']');
         }
 
+        private static readonly ConcurrentDictionary<Type, FieldInfo[]> s_fieldCache = new();
+
+        private static FieldInfo[] GetSortedFields(Type type)
+        {
+            return s_fieldCache.GetOrAdd(type, t =>
+            {
+                FieldInfo[] raw = t.GetFields(BindingFlags.Public | BindingFlags.Instance);
+                var list = new List<FieldInfo>(raw.Length);
+                for (int i = 0; i < raw.Length; i++)
+                {
+                    // Attribute lookup rather than FieldInfo.IsNotSerialized, which is obsolete from
+                    // .NET 5 (SYSLIB0050) because it is tied to formatter-based serialization.
+                    if (!Attribute.IsDefined(raw[i], typeof(NonSerializedAttribute)))
+                        list.Add(raw[i]);
+                }
+                FieldInfo[] fields = list.ToArray();
+                Array.Sort(fields, CompareByName);
+                return fields;
+            });
+        }
+
         private static void WriteObject(StringBuilder sb, object value, Type type, int depth, bool isRoot)
         {
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            Array.Sort(fields, CompareByName);
+            FieldInfo[] fields = GetSortedFields(type);
 
             sb.Append('{');
             for (int i = 0; i < fields.Length; i++)
             {
                 FieldInfo field = fields[i];
-                // Attribute lookup rather than FieldInfo.IsNotSerialized, which is obsolete from
-                // .NET 5 (SYSLIB0050) because it is tied to formatter-based serialization.
-                if (Attribute.IsDefined(field, typeof(NonSerializedAttribute))) continue;
-                if (isRoot && field.Name == ChecksumFieldName) continue;
+                if (isRoot && (field.Name == ChecksumFieldName || string.Equals(field.Name, "checksum", StringComparison.OrdinalIgnoreCase))) continue;
 
                 // The name is part of the hash, so two fields swapping values is detected.
                 sb.Append(field.Name).Append('=');
-                WriteValue(sb, field.GetValue(value), field.FieldType, depth + 1, false);
+                WriteValue(sb, field.GetValue(value)!, field.FieldType, depth + 1, false);
                 sb.Append(',');
             }
 

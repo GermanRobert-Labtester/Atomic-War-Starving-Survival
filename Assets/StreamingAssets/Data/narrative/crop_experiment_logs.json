@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "log_id": "crop_log_001",
+      "day": 35,
+      "author": "the_botanist",
+      "crop": "turnip",
+      "action": "seed planting (Cycle 4)",
+      "details": "Planted 20 turnip seeds in greenhouse bed A. Soil: bunker compost mixed with surface soil (tested safe). Depth: 1cm. Spacing: 10cm. Watered with treated cistern water. Temperature: 18C under grow lights.",
+      "expected_timeline": "Germination 7-10 days. Harvest 45-60 days.",
+      "tags": [
+        "turnip",
+        "planting",
+        "cycle_4"
+      ]
+    },
+    {
+      "log_id": "crop_log_002",
+      "day": 42,
+      "author": "the_botanist",
+      "crop": "turnip",
+      "action": "germination check",
+      "details": "18 of 20 seeds germinated. 90 percent success rate. Seedlings are small but green. the_naive_son visited during school session and counted the seedlings. He said 18 was a good number.",
+      "expected_timeline": "First true leaves in 14 days. Harvest still on track for day 55.",
+      "tags": [
+        "turnip",
+        "germination",
+        "school_visit"
+      ]
+    },
+    {
+      "log_id": "crop_log_003",
+      "day": 48,
+      "author": "the_botanist",
+      "crop": "mushroom (oyster)",
+      "action": "first flush harvest",
+      "details": "Harvested 2.3 kg of oyster mushrooms from the inoculated acorn substrate logs. First successful mushroom crop. the_chef was present and immediately began recipe development. See recipe_dev_001 through recipe_dev_002.",
+      "expected_timeline": "Second flush expected in 14 days from same substrate.",
+      "tags": [
+        "mushroom",
+        "first_flush",
+        "harvest",
+        "chef_collaboration"
+      ]
+    },
+    {
+      "log_id": "crop_log_004",
+      "day": 50,
+      "author": "the_botanist",
+      "crop": "barley",
+      "action": "seed planting",
+      "details": "Planted 50 barley seeds from the seed vault source in greenhouse bed B. Soil: bunker compost. Depth: 2cm. Spacing: 5cm. Barley is a calorie crop. If successful, it will provide grain for porridge and flour.",
+      "expected_timeline": "Germination 5-7 days. Harvest 90-120 days. This is a long-term crop.",
+      "tags": [
+        "barley",
+        "planting",
+        "seed_vault",
+        "calorie_crop"
+      ]
+    },
+    {
+      "log_id": "crop_log_005",
+      "day": 55,
+      "author": "the_botanist",
+      "crop": "turnip",
+      "action": "first harvest",
+      "details": "Harvested 12 turnips from Cycle 4 planting. Total weight: 3.8 kg. Average size: 320g. Smaller than pre-war varieties but edible. the_chef prepared turnip mash (see recipe_dev_004). The bunker ate fresh vegetables for the first time in 55 days.",
+      "expected_timeline": "Cycle 5 planting scheduled day 60. Continuous harvest cycle established.",
+      "tags": [
+        "turnip",
+        "first_harvest",
+        "greenhouse",
+        "fresh_vegetables"
+      ]
+    },
+    {
+      "log_id": "crop_log_006",
+      "day": 58,
+      "author": "the_botanist",
+      "crop": "mushroom (oyster)",
+      "action": "second flush + inoculation expansion",
+      "details": "Second flush yielded 1.5 kg. Declining yield expected as substrate nutrients deplete. Inoculated 4 new substrate logs with spawn from the first culture. Expanding mushroom production to meet the_chef demand.",
+      "expected_timeline": "New logs will produce first flush in 21 days. Continuous mushroom production now established.",
+      "tags": [
+        "mushroom",
+        "second_flush",
+        "expansion",
+        "substrate"
+      ]
+    },
+    {
+      "log_id": "crop_log_007",
+      "day": 62,
+      "author": "the_botanist",
+      "crop": "herbs (mixed)",
+      "action": "herb harvest",
+      "details": "Harvested dried herbs: thyme, rosemary, and a wild nettle variety foraged by the_hunter from the surface. Total dried weight: 0.8 kg. Herbs are the most space-efficient crop. They provide flavour and trace nutrients. the_chef uses them in every recipe.",
+      "expected_timeline": "Continuous harvest. Herbs regrow quickly under grow lights.",
+      "tags": [
+        "herbs",
+        "harvest",
+        "surface_forage",
+        "flavour"
+      ]
+    },
+    {
+      "log_id": "crop_log_008",
+      "day": 65,
+      "author": "the_botanist",
+      "crop": "potato",
+      "action": "seed planting (expedition source)",
+      "details": "Planted 10 potato seed pieces from the expedition to The Allotments. Soil: bunker compost mixed with surface soil. Depth: 8cm. Spacing: 30cm. Potatoes are calorie-dense and store well. If successful, they will be the second major calorie crop after barley.",
+      "expected_timeline": "Germination 14-21 days. Harvest 90-120 days. First bunker-grown potatoes expected day 155.",
+      "tags": [
+        "potato",
+        "planting",
+        "expedition_source",
+        "calorie_crop"
+      ]
+    },
+    {
+      "log_id": "crop_log_009",
+      "day": 68,
+      "author": "the_botanist",
+      "crop": "barley",
+      "action": "germination check",
+      "details": "44 of 50 barley seeds germinated. 88 percent success rate. Seedlings are strong. the_naive_son measured the tallest seedling at 4cm. He is keeping a growth chart in his notebook.",
+      "expected_timeline": "Tillering in 21 days. Head formation in 60 days. Harvest day 140-150.",
+      "tags": [
+        "barley",
+        "germination",
+        "growth_tracking"
+      ]
+    },
+    {
+      "log_id": "crop_log_010",
+      "day": 72,
+      "author": "the_botanist",
+      "crop": "turnip",
+      "action": "powdery mildew outbreak",
+      "details": "Powdery mildew detected on 3 turnip plants in bed A. White powder on leaves. Isolated affected plants. Applied diluted vinegar solution (the_chemist formulation). Increased airflow by repositioning grow light baffles.",
+      "expected_timeline": "Treatment should resolve in 7 days. Monitor for spread. If contained, no crop loss expected.",
+      "tags": [
+        "turnip",
+        "disease",
+        "powdery_mildew",
+        "treatment"
+      ]
+    },
+    {
+      "log_id": "crop_log_011",
+      "day": 75,
+      "author": "the_botanist",
+      "crop": "turnip",
+      "action": "mildew resolved + Cycle 5 harvest",
+      "details": "Powdery mildew resolved. No spread beyond the 3 initial plants. Those 3 were smaller but still edible. Harvested Cycle 5 turnips: 15 turnips, 4.2 kg total. Yield increasing with each cycle. the_chef now has a reliable turnip supply.",
+      "expected_timeline": "Cycle 6 planting day 80. Yield trend: 3.8 kg, then 4.2 kg. Projecting 5 kg by Cycle 8.",
+      "tags": [
+        "turnip",
+        "mildew_resolved",
+        "harvest",
+        "yield_increasing"
+      ]
+    },
+    {
+      "log_id": "crop_log_012",
+      "day": 78,
+      "author": "the_botanist",
+      "crop": "mushroom (oyster)",
+      "action": "substrate exhaustion + new culture",
+      "details": "Original substrate logs exhausted after 3 flushes. Total yield: 5.1 kg over 30 days. New logs (inoculated day 58) producing first flush: 1.8 kg. Mushroom production is now the most reliable protein source in the bunker.",
+      "expected_timeline": "New logs will produce 2-3 flushes over 30 days. Continuous cycle maintained.",
+      "tags": [
+        "mushroom",
+        "substrate_exhaustion",
+        "continuous_cycle",
+        "protein_source"
+      ]
+    },
+    {
+      "log_id": "crop_log_013",
+      "day": 82,
+      "author": "the_botanist",
+      "crop": "honey (bee colony)",
+      "action": "first honey harvest",
+      "details": "Harvested 0.5 kg of honey from the bee colony (3000 bees, foraging on surface flora). the_botanist tested radiation: 12 Bq/kg, well below concern threshold. The honey is safe. It is the first sweetener produced in the bunker. the_chef used it for the Asha celebration cake (recipe_dev_018).",
+      "expected_timeline": "Bees forage actively in spring. Next harvest projected day 100, estimated 0.8 kg.",
+      "tags": [
+        "honey",
+        "bee_colony",
+        "first_harvest",
+        "radiation_tested"
+      ]
+    },
+    {
+      "log_id": "crop_log_014",
+      "day": 85,
+      "author": "the_botanist",
+      "crop": "seed vault ampoules",
+      "action": "viability assessment + planting",
+      "details": "Assessed 17 seed vault ampoules. 12 viable, 3 uncertain, 2 failed. Planted viable seeds: turnip (already growing), barley (already growing), potato (already growing), beans (2 varieties), cabbage, carrot, onion, radish, pea, lentil, squash. Plus wheat, rye, sunflower from second recovery. Total new plantings: 11 crop types.",
+      "expected_timeline": "Fast crops (radish, lettuce): 30 days. Medium (beans, pea): 60 days. Slow (cabbage, squash): 90 days. Wheat and rye: 120 days.",
+      "tags": [
+        "seed_vault",
+        "viability",
+        "planting",
+        "crop_diversity",
+        "11_new_types"
+      ]
+    },
+    {
+      "log_id": "crop_log_015",
+      "day": 88,
+      "author": "the_botanist",
+      "crop": "potato",
+      "action": "germination check",
+      "details": "8 of 10 potato seed pieces sprouted. 80 percent success. Shoots visible at soil surface. the_child_soldier asked if potatoes could grow in the dark. the_botanist said no, they need the grow lights. the_child_soldier said that was a tactical vulnerability. the_botanist agreed.",
+      "expected_timeline": "First tubers forming underground. Harvest day 155-165.",
+      "tags": [
+        "potato",
+        "germination",
+        "child_soldier_question"
+      ]
+    },
+    {
+      "log_id": "crop_log_016",
+      "day": 91,
+      "author": "the_botanist",
+      "crop": "lentil",
+      "action": "first harvest",
+      "details": "Harvested first lentil crop: 1.2 kg dried. the_chef prepared lentil stew (recipe_dev_019). Lentils are the highest protein crop in the greenhouse. They also fix nitrogen in the soil, improving conditions for other crops. the_quartermaster says lentils are the most important thing the greenhouse has produced.",
+      "expected_timeline": "Second planting day 95. Continuous lentil cycle established.",
+      "tags": [
+        "lentil",
+        "first_harvest",
+        "protein",
+        "nitrogen_fixation"
+      ]
+    },
+    {
+      "log_id": "crop_log_017",
+      "day": 95,
+      "author": "the_botanist",
+      "crop": "radish",
+      "action": "first harvest (fast crop)",
+      "details": "Harvested first radish crop: 2.1 kg. 30-day growth cycle. Radishes are the fastest crop in the greenhouse. They provide quick calories and the greens are edible. the_chef added radish greens to the nettle soup.",
+      "expected_timeline": "Continuous radish planting every 15 days for staggered harvest.",
+      "tags": [
+        "radish",
+        "fast_crop",
+        "first_harvest",
+        "continuous_cycle"
+      ]
+    },
+    {
+      "log_id": "crop_log_018",
+      "day": 100,
+      "author": "the_botanist",
+      "crop": "quarterly assessment",
+      "action": "comprehensive yield report",
+      "details": "Quarterly greenhouse yield summary. Total production: turnips 12.2 kg, barley (green, not yet harvested), mushrooms 6.9 kg, herbs 1.6 kg, potatoes (growing), lentils 1.2 kg, radishes 2.1 kg, honey 0.5 kg. Total caloric value: approximately 44,600 kcal. This represents 7 percent of bunker monthly caloric needs. Projection at full seed vault integration: 15 percent by month 4.",
+      "expected_timeline": "Greenhouse capacity expanding. Seed vault ampoules will add 11 new crop types over the next 90 days. Target: 20 percent caloric self-sufficiency by month 6.",
+      "tags": [
+        "quarterly_assessment",
+        "yield_summary",
+        "caloric_projection",
+        "7_percent"
+      ]
+    },
+    {
+      "log_id": "crop_log_019",
+      "day": 105,
+      "author": "the_botanist",
+      "crop": "beans (both varieties)",
+      "action": "first harvest",
+      "details": "Harvested both bean varieties from the seed vault. Variety 1: 1.8 kg dried. Variety 2: 1.4 kg fresh (shell beans). Total protein contribution is significant. the_chef is experimenting with bean stews. the_surgeon says beans plus barley is a complete protein.",
+      "expected_timeline": "Second bean planting day 110. Continuous bean cycle.",
+      "tags": [
+        "beans",
+        "first_harvest",
+        "protein",
+        "complete_protein"
+      ]
+    },
+    {
+      "log_id": "crop_log_020",
+      "day": 110,
+      "author": "the_botanist",
+      "crop": "cabbage",
+      "action": "first harvest (slow crop)",
+      "details": "Harvested first cabbage: 3 heads, total 2.8 kg. 90-day growth cycle. Cabbage stores well and provides vitamin C. the_chef says cabbage plus salt from the Salt Freeholders means coleslaw. The bunker is approaching culinary diversity that was unimaginable on day 1.",
+      "expected_timeline": "Second cabbage planting day 115. With 6 crop types now producing, the greenhouse is feeding the bunker in meaningful quantities.",
+      "tags": [
+        "cabbage",
+        "first_harvest",
+        "vitamin_c",
+        "culinary_diversity"
+      ]
+    }
+  ]
+}

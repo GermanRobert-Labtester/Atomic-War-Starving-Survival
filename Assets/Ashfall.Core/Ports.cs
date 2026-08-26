@@ -7,7 +7,7 @@ namespace Ashfall.Core
     public interface IJsonSerializer
     {
         string Serialize<T>(T value);
-        T Deserialize<T>(string json);
+        T? Deserialize<T>(string json) where T : class;
     }
 
     /// <summary>
@@ -21,6 +21,24 @@ namespace Ashfall.Core
         string ReadAllText(string path);
         void WriteAllText(string path, string contents);
         string Combine(params string[] parts);
+
+        /// <summary>
+        /// Enumerate files matching a search pattern. Default fallback uses System.IO.
+        /// Hosts that virtualize paths (e.g., Godot res:// PCK) should override.
+        /// </summary>
+        string[] EnumerateFiles(string directory, string searchPattern, System.IO.SearchOption searchOption)
+        {
+            if (string.IsNullOrEmpty(directory)) return new string[0];
+            if (!DirectoryExists(directory)) return new string[0];
+            try
+            {
+                return System.IO.Directory.GetFiles(directory, searchPattern, searchOption);
+            }
+            catch
+            {
+                return new string[0];
+            }
+        }
     }
 
     public interface ILog

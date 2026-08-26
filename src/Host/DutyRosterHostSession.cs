@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Ashfall.Core;
 
 namespace AtomicWar.GodotApp
@@ -12,7 +13,7 @@ namespace AtomicWar.GodotApp
     /// Spec: docs/expansions/expansion_02_the_duty_roster_plan.md §5.
     /// </summary>
     public sealed class DutyRosterHostSession
-    {
+    : HostSessionBase{
         public const int DefaultSeed = 908; // roster seed offset: _worldSeed + 1208 style
 
         public DutyRosterSystem Roster { get; }
@@ -34,9 +35,9 @@ namespace AtomicWar.GodotApp
             ShelterEncounterSystem encounters,
             DutyRosterCatalog catalog,
             SimClock clock,
-            DutyRosterQuestRuntime quests = null,
-            Ashfall.Core.Journal.JournalSystem journal = null,
-            ILog log = null)
+            DutyRosterQuestRuntime quests = null!,
+            Ashfall.Core.Journal.JournalSystem journal = null!,
+            ILog log = null!)
         {
             _log = log ?? NullLog.Instance;
             Roster = roster;
@@ -58,20 +59,20 @@ namespace AtomicWar.GodotApp
             Quests.OnQuestCompleted += p =>
             {
                 LastEvent = "quest complete: " + p.questId;
-                Quests.ApplyKnownEffects(Roster, Marks, p.completedDay, log);
+                Quests.ApplyKnownEffects(Roster, Marks, p.completedDay, log!);
                 BridgeQuestKnowledge(p);
             };
             Quests.OnQuestFailed += p =>
             {
                 LastEvent = "quest failed: " + p.questId;
-                Quests.ApplyKnownEffects(Roster, Marks, p.failedDay, log);
+                Quests.ApplyKnownEffects(Roster, Marks, p.failedDay, log!);
             };
 
             // Persistence: any system-level state change marks the save dirty.
-            Roster.OnStateChanged += _ => StateChanged?.Invoke();
-            Marks.OnStateChanged += _ => StateChanged?.Invoke();
-            Encounters.OnStateChanged += _ => StateChanged?.Invoke();
-            Quests.OnStateChanged += _ => StateChanged?.Invoke();
+            Roster.OnStateChanged += _ => RaiseStateChanged();
+            Marks.OnStateChanged += _ => RaiseStateChanged();
+            Encounters.OnStateChanged += _ => RaiseStateChanged();
+            Quests.OnStateChanged += _ => RaiseStateChanged();
         }
 
         private readonly Ashfall.Core.Journal.JournalSystem? _journal;
@@ -88,14 +89,12 @@ namespace AtomicWar.GodotApp
             // in the journal and KnowledgeBase dedupes on reload.
             string key = string.IsNullOrEmpty(def.knowledge_key) ? p.questId : def.knowledge_key;
             string text = def.briefing ?? key;
-            _journal.TryAddRawEntry(key, text, null, p.completedDay);
+            _journal.TryAddRawEntry(key, text, null!, p.completedDay);
         }
 
         /// <summary>Raised when any roster/mark/encounter state changes (save dirty flag).</summary>
-        public event Action StateChanged;
-
         public static DutyRosterHostSession Create(string dataDirectory, ILog? log = null,
-            Ashfall.Core.Journal.JournalSystem journal = null)
+            Ashfall.Core.Journal.JournalSystem journal = null!)
         {
             CatalogLocator.UseInvariantCulture();
             log ??= new GodotLog();
@@ -110,7 +109,7 @@ namespace AtomicWar.GodotApp
             var encounters = new ShelterEncounterSystem(DefaultSeed);
             var clock = new SimClock(1);
             return new DutyRosterHostSession(roster, marks, encounters, catalog, clock,
-                quests: null, journal: journal, log: log);
+                quests: null!, journal: journal, log: log);
         }
 
         public void Unlock(int day)
@@ -223,7 +222,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Player action: inspect the wall. Returns the roster card prose.</summary>
         public string InspectWall()
         {
-            var wall = Catalog.GetLocation(DutyRosterSystem.LocStackRosterWall);
+            var wall = Catalog.GetLocation(DutyRosterIds.LocStackRosterWall);
             if (!Roster.State.wallInspected)
                 Roster.NotifyWallInspected();
             return wall != null ? wall.inspect + "\n\n" + wall.description : "No chart here.";
@@ -277,10 +276,10 @@ namespace AtomicWar.GodotApp
             if (Roster.IsSecondWinterActive)
                 return "second winter already active";
             Roster.SetSecondWinterActive(true);
-            Encounters.SetSecondWinter(DutyRosterSystem.SecondWinterEncounterWeight, Clock.Day);
-            Marks.SetMark("mark_second_winter", null, Clock.Day);
+            Encounters.SetSecondWinter(DutyRosterIds.SecondWinterEncounterWeight, Clock.Day);
+            Marks.SetMark("mark_second_winter", null!, Clock.Day);
             LastEvent = "SECOND WINTER";
-            return "second winter active: windows 8-12d, encounters x" + DutyRosterSystem.SecondWinterEncounterWeight;
+            return "second winter active: windows 8-12d, encounters x" + DutyRosterIds.SecondWinterEncounterWeight;
         }
 
         // ── Overflow practice (bounded void, spec §2.4) ────────────────
@@ -299,9 +298,9 @@ namespace AtomicWar.GodotApp
 
         // ── Hatch-return bridge (owned magnitudes stay in ExpeditionSystem) ──
 
-        public string BridgeHatchReturn(string survivorId = null, bool crisis = false)
+        public string BridgeHatchReturn(string survivorId = null!, bool crisis = false)
         {
-            bool ok = Encounters.BridgeHatchReturn(Clock.Day, survivorId, null, crisis);
+            bool ok = Encounters.BridgeHatchReturn(Clock.Day, survivorId, null!, crisis);
             return ok ? "hatch return staged" : "no hatch scene tonight (one per night unless crisis)";
         }
 

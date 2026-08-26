@@ -299,7 +299,7 @@ namespace Ashfall.Core.Shelter
 
         public PowerGridRoom(string roomId, string displayName, float drawWatts,
             PowerGridRoomPriority defaultPriority = PowerGridRoomPriority.Standard,
-            string failureEffectId = null!)
+string? failureEffectId = null)
         {
             RoomId = roomId;
             DisplayName = displayName;
@@ -444,7 +444,7 @@ namespace Ashfall.Core.Shelter
         public PowerGridEvent() { }
 
         public PowerGridEvent(PowerGridEventKind kind, string roomId, int day,
-            string detail = null!, float numeric = 0f)
+string? detail = null, float numeric = 0f)
         {
             Kind = kind;
             RoomId = roomId ?? string.Empty;

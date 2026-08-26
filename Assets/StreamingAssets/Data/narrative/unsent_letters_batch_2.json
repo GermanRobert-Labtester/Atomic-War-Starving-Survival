@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "collection_id": "unsent_letters_batch_2",
+  "letters": [
+    {
+      "letter_id": "b2_38",
+      "day": 390,
+      "sender": "the_cartographer",
+      "recipient": "the_family",
+      "location": "the_cache",
+      "letter_type": "unsent",
+      "tone": "reflective",
+      "key_themes": [
+        "the_snowflake",
+        "the_hollow",
+        "the_bridge",
+        "the_living",
+        "the_16_words"
+      ],
+      "content": "To the 47,\n\nI left you a snowflake. It is the fourth carving. The first was the wolf. The second was the bee. The third was the wheat. The fourth is the snowflake. The wolf is the winter. The bee is the summer. The wheat is the harvest. The snowflake is the hollow.\n\nThe hollow is the place between the zones. The hollow is the place where the snowflake falls. The hollow is the place where the bridge is built. The bridge is the thing that connects the zones. The bridge is the thing that is the family.\n\nI have walked the hollow. It is a valley, 12km north of your zone 4. The valley is low. The snow stays late. The snowflake melts slow. The hollow is the place where the meltwater gathers. The meltwater is the thing that feeds the zones. The zones are the thing that feeds the family. The family is the thing that is the living.\n\nThe 16 words are the thing the family lives by. The words are: source, reserve, shelf, growing, farm, herb, trade, community, bees, medicine, pollination, bridge, clover, hollow, snowflake, living. The 16 words are the thing the family is. The family is the 16 words. The 16 words are the thing the family lives.\n\nI watch the wolves. I watch the bees. I watch the wheat. I watch the snowflakes. I watch the family. The watching is the thing I do. The thing I watch is the living. The living is the thing the family does. The family is the thing that is the 47. The 47 are the thing the living is for.\n\nDo not come to the hollow. The hollow is the place where the snowflake falls. The snowflake is the thing that is not the family. The family is the thing that is the zones. The zones are the thing the family farms. The family does not farm the hollow. The hollow is the place where the bridge begins. The bridge is the thing that connects the family to the next family. The next family is the thing that is not the 47. The 47 are the thing that is the family. The next family is the thing that is the living.\n\nI will leave you a map. The map is the thing that shows the hollow. The hollow is the place where the snowflake falls. The snowflake is the thing that is the fourth carving. The fourth carving is the thing that is the bridge. The bridge is the thing that is the living.\n\nWalk well,\nthe Cartographer",
+      "cross_refs": [
+        "diplomatic_contact_004",
+        "patrol_debrief_036",
+        "council_minutes_032",
+        "journal_raw_b3_78"
+      ],
+      "tags": [
+        "the_snowflake",
+        "the_hollow",
+        "the_bridge",
+        "the_16_words",
+        "the_fourth_carving",
+        "the_next_family",
+        "the_living"
+      ]
+    }
+  ]
+}

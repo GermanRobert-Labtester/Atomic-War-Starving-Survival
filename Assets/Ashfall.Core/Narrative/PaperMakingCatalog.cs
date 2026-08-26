@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string beaterPath = Path.Combine(directoryPath, "hollander_beater_pulping_logs.json");
             if (File.Exists(beaterPath))
             {
-                var list = JsonSerializer.Deserialize<List<HollanderBeaterPulpingEntry>>(File.ReadAllText(beaterPath), options);
+                var list = CatalogLocator.LoadWrappedList<HollanderBeaterPulpingEntry>(File.ReadAllText(beaterPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string mouldPath = Path.Combine(directoryPath, "deckle_mould_watermark_audits.json");
             if (File.Exists(mouldPath))
             {
-                var list = JsonSerializer.Deserialize<List<DeckleMouldWatermarkEntry>>(File.ReadAllText(mouldPath), options);
+                var list = CatalogLocator.LoadWrappedList<DeckleMouldWatermarkEntry>(File.ReadAllText(mouldPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string pressPath = Path.Combine(directoryPath, "screw_press_felt_reports.json");
             if (File.Exists(pressPath))
             {
-                var list = JsonSerializer.Deserialize<List<ScrewPressFeltEntry>>(File.ReadAllText(pressPath), options);
+                var list = CatalogLocator.LoadWrappedList<ScrewPressFeltEntry>(File.ReadAllText(pressPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string sizingPath = Path.Combine(directoryPath, "tub_sizing_gelatin_assays.json");
             if (File.Exists(sizingPath))
             {
-                var list = JsonSerializer.Deserialize<List<TubSizingGelatinEntry>>(File.ReadAllText(sizingPath), options);
+                var list = CatalogLocator.LoadWrappedList<TubSizingGelatinEntry>(File.ReadAllText(sizingPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public HollanderBeaterPulpingEntry GetBeater(string id)
+        public HollanderBeaterPulpingEntry? GetBeater(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is HollanderBeaterPulpingEntry e ? e : null;
         }
 
-        public DeckleMouldWatermarkEntry GetMould(string id)
+        public DeckleMouldWatermarkEntry? GetMould(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is DeckleMouldWatermarkEntry e ? e : null;
         }
 
-        public ScrewPressFeltEntry GetPress(string id)
+        public ScrewPressFeltEntry? GetPress(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is ScrewPressFeltEntry e ? e : null;
         }
 
-        public TubSizingGelatinEntry GetSizing(string id)
+        public TubSizingGelatinEntry? GetSizing(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TubSizingGelatinEntry e ? e : null;

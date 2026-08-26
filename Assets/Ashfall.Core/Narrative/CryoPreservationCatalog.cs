@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string germPath = Path.Combine(directoryPath, "cryo_germplasm_viability_audits.json");
             if (File.Exists(germPath))
             {
-                var list = JsonSerializer.Deserialize<List<CryoGermplasmViabilityEntry>>(File.ReadAllText(germPath), options);
+                var list = CatalogLocator.LoadWrappedList<CryoGermplasmViabilityEntry>(File.ReadAllText(germPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string compPath = Path.Combine(directoryPath, "liquid_nitrogen_compressor_failures.json");
             if (File.Exists(compPath))
             {
-                var list = JsonSerializer.Deserialize<List<LiquidNitrogenCompressorEntry>>(File.ReadAllText(compPath), options);
+                var list = CatalogLocator.LoadWrappedList<LiquidNitrogenCompressorEntry>(File.ReadAllText(compPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string permPath = Path.Combine(directoryPath, "permafrost_methane_eruption_logs.json");
             if (File.Exists(permPath))
             {
-                var list = JsonSerializer.Deserialize<List<PermafrostMethaneEruptionEntry>>(File.ReadAllText(permPath), options);
+                var list = CatalogLocator.LoadWrappedList<PermafrostMethaneEruptionEntry>(File.ReadAllText(permPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string genPath = Path.Combine(directoryPath, "crop_genome_degradation_reports.json");
             if (File.Exists(genPath))
             {
-                var list = JsonSerializer.Deserialize<List<CropGenomeDegradationEntry>>(File.ReadAllText(genPath), options);
+                var list = CatalogLocator.LoadWrappedList<CropGenomeDegradationEntry>(File.ReadAllText(genPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public CryoGermplasmViabilityEntry GetGermplasm(string id)
+        public CryoGermplasmViabilityEntry? GetGermplasm(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CryoGermplasmViabilityEntry e ? e : null;
         }
 
-        public LiquidNitrogenCompressorEntry GetCompressor(string id)
+        public LiquidNitrogenCompressorEntry? GetCompressor(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LiquidNitrogenCompressorEntry e ? e : null;
         }
 
-        public PermafrostMethaneEruptionEntry GetPermafrost(string id)
+        public PermafrostMethaneEruptionEntry? GetPermafrost(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PermafrostMethaneEruptionEntry e ? e : null;
         }
 
-        public CropGenomeDegradationEntry GetGenome(string id)
+        public CropGenomeDegradationEntry? GetGenome(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CropGenomeDegradationEntry e ? e : null;

@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "epitaph_b2_childs_shoe_cairn",
+      "grave_site": "EASTERN_FIELD_PLOT_28",
+      "marker_material": "CHILDS_RUBBER_BOOT_ON_STAKE",
+      "deceased_identity": "CHILD_UNKNOWN_AGE_EST_FOUR",
+      "cause_of_death": "ACUTE_RADIATION_SYNDROME",
+      "timestamp_relative": "YEAR_01_DAY_033",
+      "tags": [
+        "epitaph",
+        "grave",
+        "child",
+        "radiation",
+        "bunker_cemetery"
+      ],
+      "prose": "A small blue rubber boot nailed to a wooden stake no taller than a forearm. The boot is laced shut with twine. No name was ever spoken at the burial. The Undertaker placed a wildflower — yarrow, probably — in the boot before driving the stake into the earth. He said: 'If anyone knows this child's name, speak it now or it will be carried by the wind.' No one spoke."
+    },
+    {
+      "id": "epitaph_b2_geiger_counter_headstone",
+      "grave_site": "SOUTHERN_RIDGE_MARKER_04",
+      "marker_material": "GEIGER_COUNTER_MOUNTED_ON_STONE",
+      "deceased_identity": "SCOUT_POLINA",
+      "cause_of_death": "CHRONIC_INTERNAL_EMITTER_CS_137",
+      "timestamp_relative": "YEAR_04_DAY_178",
+      "tags": [
+        "epitaph",
+        "grave",
+        "scout",
+        "geiger",
+        "radiation"
+      ],
+      "prose": "A pre-war Geiger counter bolted to a flat river stone with copper wire. The device still clicks — slowly, irregularly — when the wind blows ash across its probe. Scratched into the stone beneath: 'Polina walked the perimeter every day for four years. She mapped every hot spot within ten kilometres. She knew which puddles were safe and which rocks would kill you. Her own body absorbed more than she ever recorded. The counter still clicks. She does not.'"
+    },
+    {
+      "id": "epitaph_b2_welding_rod_cross",
+      "grave_site": "WORKSHOP_CORRIDOR_NICHE",
+      "marker_material": "WELDING_RODS_CROSS_LAPPED",
+      "deceased_identity": "MASTER_OLEG_PETROV",
+      "cause_of_death": "MOLTEN_METAL_BURN_SEPSIS",
+      "timestamp_relative": "YEAR_06_DAY_201",
+      "tags": [
+        "epitaph",
+        "grave",
+        "machinist",
+        "foundry",
+        "work_death"
+      ],
+      "prose": "Two welding rods crossed and tack-welded at the centre, mounted on the concrete wall above a recessed niche. The rods are stained with red hematite dust. Below them, a small steel plaque reads: 'Oleg turned three truck axles into water pump shafts on the 1954 lathe. The bearings ran within four microns. He said that was better than anything from the Urals. The ladle cracked during the tap. He pushed the apprentices clear. The molten iron did not.' The lathe still runs. No one has matched his tolerances."
+    },
+    {
+      "id": "epitaph_b2_compass_rose_grave",
+      "grave_site": "NORTHERN_PERIMETER_POST_7",
+      "marker_material": "BRASS_COMPASS_SET_IN_CONCRETE",
+      "deceased_identity": "MAPMAKER_BRAM_OSTROWSKI",
+      "cause_of_death": "EXPOSURE_FALL_FROM_RIDGE",
+      "timestamp_relative": "YEAR_05_DAY_112",
+      "tags": [
+        "epitaph",
+        "grave",
+        "mapmaker",
+        "compass",
+        "ridge"
+      ],
+      "prose": "A brass surveyor's compass pressed face-up into a concrete pad at the base of the northern ridge trail. The needle still points north — or close to it; the glass is cracked and the pivot is bent. The concrete is scratched with bearing lines radiating from the compass like a star. Below: 'Bram mapped every road, every ridge, every water source within twenty kilometres. His maps saved more lives than any medicine in the bunker. He fell on the eastern escarpment while plotting a new route to the Cluster. The map he was carrying was found folded in his coat, complete to the last contour line.'"
+    },
+    {
+      "id": "epitaph_b2_ration_tin_memorial",
+      "grave_site": "MESS_HALL_WALL_NICHE",
+      "marker_material": "STACKED_RATION_TINS_WITH_CANDLE",
+      "deceased_identity": "BAKER_ANNA_IVANOVA",
+      "cause_of_death": "PULMONARY_FIBROSIS_CHRONIC",
+      "timestamp_relative": "YEAR_08_DAY_044",
+      "tags": [
+        "epitaph",
+        "grave",
+        "baker",
+        "food",
+        "bunker"
+      ],
+      "prose": "Seven empty ration tins stacked in a pyramid inside a wall niche beside the mess hall kitchen. A tallow candle sits in the top tin, lit every morning by the Chef. The tins are arranged with the label sides facing out — they read: PEACHES, BEEF, TURNIPS, RICE, BEANS, MACKEREL, MILK. Scratched on the wall behind them: 'Anna baked bread that smelled like the world before. She started a sourdough with dried yeast from her handbag. The whole bunker came to smell the crust. She died on a Tuesday. The bread she made on Monday was the last. The starter is still alive. The Chef feeds it every morning.'"
+    },
+    {
+      "id": "epitaph_b2_radio_antenna_memorial",
+      "grave_site": "COMMS_ROOM_ROOFTOP",
+      "marker_material": "SHORT_WIRE_ANTENNA_TIED_TO_MAST",
+      "deceased_identity": "RADIO_OPERATOR_MAYA_LIN",
+      "cause_of_death": "VOLUNTARY_EXPOSURE_SIGNAL_SOURCE",
+      "timestamp_relative": "YEAR_07_DAY_290",
+      "tags": [
+        "epitaph",
+        "grave",
+        "radio",
+        "signal",
+        "sacrifice"
+      ],
+      "prose": "A length of copper wire tied to the rooftop antenna mast, trailing down to a small stone cairn on the comms room roof. The wire hums in the wind — a low, almost musical tone. Below the cairn, etched into the mast base: 'Maya listened to the dying signal for three years. She traced her brother's voice to the communications array and found only an automated loop playing on a failing battery. She sat in the signal room for two days without speaking. Then she came back to the radio and started answering every distress call she could hear. She saved fourteen shelters. She never found her brother. The wire still hums. If you press your ear to the mast, you can almost hear 142.5.'"
+    },
+    {
+      "id": "epitaph_b2_sentry_rifle_cairn",
+      "grave_site": "SOUTH_PERIMETER_WATCHPOINT",
+      "marker_material": "BOLT_ACTION_RIFLE_STOCK_UPRIGHT_IN_STONE",
+      "deceased_identity": "SENTRY_STEPAN_VORONIN",
+      "cause_of_death": "HOSTILE_CONTACT_PERIMETER",
+      "timestamp_relative": "YEAR_09_DAY_066",
+      "tags": [
+        "epitaph",
+        "grave",
+        "sentry",
+        "rifle",
+        "perimeter"
+      ],
+      "prose": "A bolt-action rifle stood vertically in a cairn of black river stones, the stock resting on the ground, the barrel pointing at the grey sky. The action is open — the bolt removed and placed on top of the cairn like a coin on a dead man's eyes. Scratched on the bolt handle: 'Stepan stood the night watch for six years. He walked five kilometres on the treadmill every morning with a twenty-kilo pack, training for a walk to Smolensk that he never made. He died at his post, facing south, the rifle still warm. His fiancée's photograph was in his breast pocket next to his dosimeter. The ring was there too.'"
+    },
+    {
+      "id": "epitaph_b2_seed_jar_memorial",
+      "grave_site": "GREENHOUSE_CORNER_PLOT",
+      "marker_material": "SMALL_GLASS_SEED_JAR_ON_WOODEN_STAKE",
+      "deceased_identity": "SUKI_TANAKA",
+      "cause_of_death": "NATURAL_CAUSES_CARDIAC",
+      "timestamp_relative": "YEAR_12_DAY_155",
+      "tags": [
+        "epitaph",
+        "grave",
+        "farmer",
+        "seeds",
+        "greenhouse"
+      ],
+      "prose": "A small glass jar filled with wheat seeds, balanced on a wooden stake driven into the corner of the greenhouse garden bed. The jar is sealed with wax. The seeds inside are the descendants of the pre-war Triticum aestivum from the seed vault — the first batch Suki germinated in cold storage. Below the stake, a wooden tag reads: 'Suki held a jar of wheat to her chest and cried because it was older than the war. She planted every seed she could reach. The greenhouse exists because she believed dirt and water and patience were enough. They were.'"
+    },
+    {
+      "id": "epitaph_b2_ventilation_grate_memorial",
+      "grave_site": "SUB_LEVEL_2_INTAKE_CHAMBER",
+      "marker_material": "AIR_FILTER_ELEMENT_MOUNTED_ON_WALL",
+      "deceased_identity": "VENTILATION_TECHNICIAN_ILYA",
+      "cause_of_death": "ACUTE_CHEMICAL_EXPOSURE_INTAKE_FAILURE",
+      "timestamp_relative": "YEAR_05_DAY_089",
+      "tags": [
+        "epitaph",
+        "grave",
+        "ventilation",
+        "chemical",
+        "infrastructure"
+      ],
+      "prose": "A spent air filter element mounted in a frame on the intake chamber wall, the pleated media grey with accumulated particulate. Below it, a brass plate: 'Ilya changed the filters so the rest of us could breathe. When the chemical cloud came through the intake on Day 89, he sealed the secondary damper from inside the chamber. He knew the damper handle was on the wrong side. He knew he couldn't get out after. The damper held. Forty-seven people behind it lived. The filter caught what the damper missed. It is grey with the dust of the world we made.'"
+    },
+    {
+      "id": "epitaph_b2_water_pipe_cross",
+      "grave_site": "PUMP_ROOM_ALCOVE",
+      "marker_material": "COPPER_PIPE_CROSS_WITH_VALVE_WHEEL",
+      "deceased_identity": "PLUMBER_DENIS_KOVAL",
+      "cause_of_death": "FLOODING_SUB_LEVEL_4_BREACH",
+      "timestamp_relative": "YEAR_10_DAY_203",
+      "tags": [
+        "epitaph",
+        "grave",
+        "plumber",
+        "water",
+        "breach"
+      ],
+      "prose": "A cross made from two lengths of copper pipe — one horizontal, one vertical — welded together and mounted above the pump room alcove. A brass valve wheel is bolted to the intersection. Below: 'Denis kept the water flowing for ten years. Every pipe, every joint, every membrane — his hands knew them all. When the Sub-Level 4 wall breached at 03:00, he waded into the flood to close the isolation valve. The water was chest-deep and tasted of iron. The valve held. The wall held. Denis did not come out. The water in the bunker still runs clean. Turn a tap anywhere and think of him.'"
+    },
+    {
+      "id": "epitaph_b2_book_stack_memorial",
+      "grave_site": "SCHOOLROOM_WALL_NICHE",
+      "marker_material": "STACKED_TEXTBOOKS_BEHIND_GLASS",
+      "deceased_identity": "TEACHER_IRINA_FELD",
+      "cause_of_death": "CHRONIC_LEUKAEMIA_RADIATION",
+      "timestamp_relative": "YEAR_11_DAY_077",
+      "tags": [
+        "epitaph",
+        "grave",
+        "teacher",
+        "books",
+        "children"
+      ],
+      "prose": "Four pre-war textbooks stacked behind a salvaged glass panel in the schoolroom wall niche: Mathematics, Grade 3. Natural Science, Grade 4. World Geography, Grade 5. A children's atlas with a cracked spine. Below the glass, written in a child's handwriting on lined paper: 'Mrs Feld taught us the water cycle and division with turnips and the names of the planets even though we can't see them anymore. She said knowledge doesn't need electricity. She said remembering is a kind of light. She died on a Wednesday. We found her notebook. The last entry said: 'Petr can now do long division. Sonya knows all the continents. They will remember.' We do."
+    },
+    {
+      "id": "epitaph_b2_dog_collar_grave",
+      "grave_site": "SOUTHERN_PASTURE_EDGE",
+      "marker_material": "LEATHER_DOG_COLLAR_HUNG_ON_BRANCH",
+      "deceased_identity": "THERAPY_DOG_MASHA_THREE_LEGGED",
+      "cause_of_death": "OLD_AGE_COMPANION_ANIMAL",
+      "timestamp_relative": "YEAR_13_DAY_012",
+      "tags": [
+        "epitaph",
+        "grave",
+        "animal",
+        "therapy_dog",
+        "companionship"
+      ],
+      "prose": "A worn leather dog collar hung from a low branch of the dead apple tree at the edge of the southern pasture. The collar has a brass tag with two words stamped into it: MASHA THREE. Below the collar, a child's drawing on a scrap of paper — a three-legged dog with a pink ribbon, standing next to a smiling girl. Sonya drew it when she was seven. She is fourteen now. The drawing is laminated with salvaged plastic. The collar is dry and cracked but still buckled. Masha lived twelve years in a bunker and never had four legs. She ran faster than most of the dogs who did. The children still leave food scraps at the base of the tree. Just in case."
+    }
+  ]
+}

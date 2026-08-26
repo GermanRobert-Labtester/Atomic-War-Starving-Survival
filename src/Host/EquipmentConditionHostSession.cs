@@ -14,12 +14,9 @@ namespace AtomicWar.GodotApp
     /// and forwards StateChanged for host wiring. Engine-agnostic Core authority.
     /// </summary>
     public sealed class EquipmentConditionHostSession
-    {
+    : HostSessionBase{
         public EquipmentConditionSystem System { get; }
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action? StateChanged;
-
         public EquipmentConditionHostSession(
             EquipmentConditionSystem system,
             Inventory inventory,
@@ -28,9 +25,9 @@ namespace AtomicWar.GodotApp
             System = system
                 ?? new EquipmentConditionSystem(new SeededRng(1986), inventory, crafting, new GodotLog());
 
-            System.OnConditionChanged += _ => StateChanged?.Invoke();
-            System.OnMaintenanceCompleted += _ => StateChanged?.Invoke();
-            System.OnEquipmentChanged += () => StateChanged?.Invoke();
+            System.OnConditionChanged += _ => RaiseStateChanged();
+            System.OnMaintenanceCompleted += _ => RaiseStateChanged();
+            System.OnEquipmentChanged += () => RaiseStateChanged();
         }
 
         public ActionResult RegisterItem(string instanceId, string itemId, string ownerId, EquipmentFamily family, float maxCondition = 100f)
@@ -39,7 +36,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Equipment registered: {itemId} ({instanceId})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -50,7 +47,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Equipment used: {instanceId} (-{wearAmount} wear)";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -61,7 +58,7 @@ namespace AtomicWar.GodotApp
             if (res.IsSuccess)
             {
                 LastEvent = $"Maintenance started: {instanceId} ({type})";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             }
             return res;
         }
@@ -71,7 +68,14 @@ namespace AtomicWar.GodotApp
         public void TickDay(int day)
         {
             System.TickDay(day);
-            StateChanged?.Invoke();
+            RaiseStateChanged();
+        }
+
+        public override void Save()
+        {
+            if (!IsDirty) return;
+            EquipmentConditionSaveStore.TrySave(System.CaptureState());
+            base.Save();
         }
     }
 
@@ -86,11 +90,54 @@ namespace AtomicWar.GodotApp
     public static class EquipmentConditionSaveStore
     {
         public const string FileName = "equipment_condition_save.json";
+        public const string SectionName = "equipment_condition";
+
+        /// <summary>Direct aggregate capture: serialize state to JSON for the envelope.</summary>
+        public static string TryCaptureDirect(EquipmentConditionState state)
+        {
+            return TryCapture(state);
+        }
+
+        /// <summary>Direct aggregate restore: deserialize state from envelope JSON.</summary>
+        public static EquipmentConditionState? TryRestoreDirect(string json)
+        {
+            return TryRestore(json);
+        }
+
+        /// <summary>Capture state to JSON without writing to disk.</summary>
+        public static string TryCapture(EquipmentConditionState state)
+        {
+            try
+            {
+                if (state == null) return string.Empty;
+                return s_json.Serialize(state);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[EquipmentConditionSaveStore] capture failed: " + e.Message);
+                return string.Empty;
+            }
+        }
+
+        /// <summary>Restore state from JSON without reading from disk.</summary>
+        public static EquipmentConditionState? TryRestore(string json)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(json)) return null;
+                return s_json.Deserialize<EquipmentConditionState>(json);
+            }
+            catch (Exception e)
+            {
+                GD.PrintErr("[EquipmentConditionSaveStore] restore failed: " + e.Message);
+                return null;
+            }
+        }
+
         private static readonly FileSystemIO s_files = new FileSystemIO();
         private static readonly SystemTextJsonSerializer s_json = new SystemTextJsonSerializer();
 
-        public static string SavePath =>
-            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
+        public static string SavePath => SaveSlotRoot.Resolve(FileName);
         public static bool Exists => s_files.FileExists(SavePath);
 
         public static bool TrySave(EquipmentConditionState state)

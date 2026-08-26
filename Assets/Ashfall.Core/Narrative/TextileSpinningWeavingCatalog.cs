@@ -141,8 +141,7 @@ namespace Ashfall.Core.Narrative
         {
             var path = Path.Combine(dir, file);
             var json = File.ReadAllText(path);
-            return JsonSerializer.Deserialize<List<T>>(json, _opts)
-                   ?? throw new InvalidOperationException($"Failed to deserialize {file}");
+            return CatalogLocator.LoadWrappedList<T>(json, _opts);
         }
 
         // ── Queries ──────────────────────────────────────────────────────────────

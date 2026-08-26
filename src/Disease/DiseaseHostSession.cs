@@ -52,7 +52,7 @@ namespace AtomicWar.GodotApp
 
         public void TickDaily(int day)
         {
-            Engine.TickDaily(day, _populationProvider?.Invoke());
+            Engine.TickDaily(day, _populationProvider?.Invoke()!);
         }
 
         public DiseaseSnapshot Snapshot => Engine.GetSnapshot();

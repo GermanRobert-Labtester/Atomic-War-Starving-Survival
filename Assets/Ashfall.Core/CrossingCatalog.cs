@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
+using System.Text.Json;
 
 namespace Ashfall.Core
 {
@@ -116,14 +118,14 @@ namespace Ashfall.Core
         public List<CrossingEncounterEntry> Encounters { get; } = new List<CrossingEncounterEntry>();
         public List<CrossingCrisisEntry> Crises { get; } = new List<CrossingCrisisEntry>();
 
-        public CrossingFactionEntry GetFaction(string id) => Find(Factions, id, f => f.id);
-        public CrossingLocationEntry GetLocation(string id) => Find(Locations, id, e => e.id);
-        public CrossingQuestEntry GetQuest(string id) => Find(Quests, id, q => q.id);
-        public CrossingItemEntry GetItem(string id) => Find(Items, id, item => item.id);
-        public CrossingEncounterEntry GetEncounter(string id) => Find(Encounters, id, enc => enc.id);
-        public CrossingCrisisEntry GetCrisis(string id) => Find(Crises, id, c => c.id);
+        public CrossingFactionEntry? GetFaction(string id) => Find(Factions, id, f => f.id);
+        public CrossingLocationEntry? GetLocation(string id) => Find(Locations, id, e => e.id);
+        public CrossingQuestEntry? GetQuest(string id) => Find(Quests, id, q => q.id);
+        public CrossingItemEntry? GetItem(string id) => Find(Items, id, item => item.id);
+        public CrossingEncounterEntry? GetEncounter(string id) => Find(Encounters, id, enc => enc.id);
+        public CrossingCrisisEntry? GetCrisis(string id) => Find(Crises, id, c => c.id);
 
-        private static T Find<T>(List<T> list, string id, Func<T, string> getId) where T : class
+        private static T? Find<T>(List<T> list, string id, Func<T, string> getId) where T : class
         {
             if (string.IsNullOrEmpty(id) || list == null) return null;
             for (int i = 0; i < list.Count; i++)
@@ -160,7 +162,7 @@ namespace Ashfall.Core
         private readonly IJsonSerializer _json;
         private readonly ILog _log;
 
-        public CrossingCatalogLoader(IFileIO files, IJsonSerializer json, ILog log = null)
+        public CrossingCatalogLoader(IFileIO files, IJsonSerializer json, ILog? log = null)
         {
             _files = files ?? throw new ArgumentNullException(nameof(files));
             _json = json ?? throw new ArgumentNullException(nameof(json));
@@ -176,10 +178,10 @@ namespace Ashfall.Core
                 return catalog;
             }
 
-            LoadList(_files.Combine(dataDirectory, FactionsFile), catalog.Factions, "factions");
-            LoadList(_files.Combine(dataDirectory, LocationsFile), catalog.Locations, "locations");
-            LoadList(_files.Combine(dataDirectory, QuestsFile), catalog.Quests, "quests");
-            LoadList(_files.Combine(dataDirectory, ItemsFile), catalog.Items, "items");
+            catalog.Factions.AddRange(LoadList<CrossingFactionEntry>(_files.Combine(dataDirectory, FactionsFile), "factions"));
+            catalog.Locations.AddRange(LoadList<CrossingLocationEntry>(_files.Combine(dataDirectory, LocationsFile), "locations"));
+            catalog.Quests.AddRange(LoadList<CrossingQuestEntry>(_files.Combine(dataDirectory, QuestsFile), "quests"));
+            catalog.Items.AddRange(LoadList<CrossingItemEntry>(_files.Combine(dataDirectory, ItemsFile), "items"));
             LoadEncountersAndCrises(_files.Combine(dataDirectory, EncountersFile), catalog);
             return catalog;
         }
@@ -219,26 +221,41 @@ namespace Ashfall.Core
             }
         }
 
-        private void LoadList<T>(string path, List<T> dest, string label) where T : class
+        private List<T> LoadList<T>(string path, string label) where T : class
         {
             if (!_files.FileExists(path))
             {
                 _log.Warn("Crossing " + label + " file missing: " + path);
-                return;
+                return new List<T>();
             }
 
             try
             {
                 string json = _files.ReadAllText(path);
-                var items = _json.Deserialize<List<T>>(json);
-                if (items == null) return;
-                for (int i = 0; i < items.Count; i++)
-                    if (items[i] != null)
-                        dest.Add(items[i]);
+
+                // Support wrapped catalogs: {"schema_version": N, "items"/"locations"/"factions"/"quests": [...]}
+                using var doc = JsonDocument.Parse(json);
+                if (doc.RootElement.ValueKind == JsonValueKind.Object)
+                {
+                    foreach (var prop in doc.RootElement.EnumerateObject())
+                    {
+                        if (prop.Name.Equals("schema_version", StringComparison.OrdinalIgnoreCase))
+                            continue;
+                        if (prop.Value.ValueKind == JsonValueKind.Array)
+                        {
+                            var list = CatalogLocator.LoadWrappedList<T>(prop.Value.GetRawText(), SystemTextJsonSerializer.Options);
+                            return list ?? new List<T>();
+                        }
+                    }
+                }
+
+                var items = CatalogLocator.LoadWrappedList<T>(json, SystemTextJsonSerializer.Options);
+                return items;
             }
             catch (Exception e)
             {
                 _log.Error("Crossing " + label + " parse failed: " + e.Message);
+                return new List<T>();
             }
         }
     }

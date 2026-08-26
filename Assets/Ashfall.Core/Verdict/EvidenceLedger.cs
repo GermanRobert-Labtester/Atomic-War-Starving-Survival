@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Verdict
 {
@@ -41,7 +42,7 @@ namespace Ashfall.Core.Verdict
 
         public event Action<string> OnEnrolled;
 
-        public EvidenceLedger(EvidenceLedgerState state = null)
+        public EvidenceLedger(EvidenceLedgerState? state = null)
         {
             _state = state ?? new EvidenceLedgerState();
         }
@@ -52,7 +53,7 @@ namespace Ashfall.Core.Verdict
                 _catalog[def.id] = def;
         }
 
-        public EvidenceDefinition Get(string id)
+        public EvidenceDefinition? Get(string id)
             => string.IsNullOrEmpty(id) ? null : (_catalog.TryGetValue(id, out var d) ? d : null);
 
         public bool IsEnrolled(string id)

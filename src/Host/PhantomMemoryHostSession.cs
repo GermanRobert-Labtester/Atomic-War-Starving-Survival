@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Phantoms;
 
 namespace AtomicWar.GodotApp
 {
@@ -10,15 +12,12 @@ namespace AtomicWar.GodotApp
     /// Wraps PhantomMemoryEngine with demo rules, save/load, and a demo survivor.
     /// </summary>
     public sealed class PhantomMemoryHostSession
-    {
+    : HostSessionBase{
         public PhantomMemoryEngine Engine { get; }
         public List<PhantomSurvivorSnapshot> DemoSurvivors { get; }
 
         public string LastEvent { get; private set; } = string.Empty;
-
-        public event Action StateChanged;
-
-        public PhantomMemoryHostSession(PhantomMemoryEngine engine = null)
+        public PhantomMemoryHostSession(PhantomMemoryEngine engine = null!)
         {
             Engine = engine ?? new PhantomMemoryEngine();
             DemoSurvivors = CreateDemoSurvivors();
@@ -26,14 +25,14 @@ namespace AtomicWar.GodotApp
             Engine.OnPhantomTriggered += (svId, itemId, isMotivation) =>
             {
                 LastEvent = $"Phantom triggered for {svId}: {(isMotivation ? "motivation" : "breakdown")}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
             Engine.OnPhantomBreakdown += (svId, itemId) =>
             {
                 LastEvent = $"Breakdown for {svId}";
-                StateChanged?.Invoke();
+                RaiseStateChanged();
             };
-            Engine.OnStateChanged += _ => StateChanged?.Invoke();
+            Engine.OnStateChanged += _ => RaiseStateChanged();
         }
 
         /// <summary>Load the phantom_triggers.json catalog into the engine.</summary>
@@ -87,7 +86,7 @@ namespace AtomicWar.GodotApp
                 ? Engine.ResolveTriggerText(sv, itemId, outcome == TriggerOutcome.Motivation)
                 : "No memory triggered. The item is just an object.";
             LastEvent = text;
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return text;
         }
 
@@ -96,7 +95,7 @@ namespace AtomicWar.GodotApp
             for (int i = 0; i < DemoSurvivors.Count; i++)
                 Engine.TickHour(DemoSurvivors[i].survivorId, 1f);
             LastEvent = "Phantom timers ticked.";
-            StateChanged?.Invoke();
+            RaiseStateChanged();
             return LastEvent;
         }
 
@@ -141,7 +140,19 @@ namespace AtomicWar.GodotApp
                 string path = System.IO.Path.Combine(dataDir, "phantom_triggers.json");
                 if (!files.FileExists(path)) return;
 
-                var entries = json.Deserialize<List<PhantomTriggerJsonEntry>>(files.ReadAllText(path));
+                string text = files.ReadAllText(path);
+                List<PhantomTriggerJsonEntry>? entries = null;
+                try
+                {
+                    var catalog = json.Deserialize<PhantomTriggerCatalogJson>(text);
+                    entries = catalog?.items;
+                }
+                catch
+                {
+                    // Fallback in case of bare array JSON
+                    entries = json.Deserialize<List<PhantomTriggerJsonEntry>>(text);
+                }
+
                 if (entries == null) return;
 
                 for (int i = 0; i < entries.Count; i++)
@@ -169,22 +180,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        // ── JSON DTOs ────────────────────────────────────────────────
-
-        private class PhantomTriggerJsonEntry
-        {
-            public string background_id;
-            public List<PhantomTriggerRuleJson> triggers;
-        }
-
-        private class PhantomTriggerRuleJson
-        {
-            public string item_category;
-            public float motivation_chance;
-            public string description;
-            public string motivation_text;
-            public string breakdown_text;
-        }
+        // ── JSON DTOs: shared with Phase0HostSession (see Assets/Ashfall.Core/Phantoms/PhantomTriggerDto.cs) ─
 
         /// <summary>A11: ISeededRng adapter now delegates to the core SeededRng
         /// (deterministic xorshift64) — no System.Random in decision paths.</summary>

@@ -1,0 +1,432 @@
+{
+  "schema_version": 1,
+  "collection_id": "engineering_logs_expansion",
+  "description": "Maintenance and engineering logs from the shelter — generator, pumps, filters, hatches, wiring, ventilation, boiler, structure. Sounds like people doing actual work: plausible parts, symptoms, temporary repairs, substitutions, shortages. Not drowning in jargon. The log is the manual now.",
+  "logs": [
+    {
+      "log_id": "maint_gen_01_daily_check",
+      "recorded_day": 4,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "LOW",
+      "title": "Daily Check — Meridian 4-cyl, Model K",
+      "entry": "Daily round. Oil pressure nominal. Coolant n/a (air-cooled). Block temp stable. Cyl 1, 2, 4 nominal. Cyl 3: faint tick, not the knock yet, the tick before the knock. I know this tick. I have heard this tick in a generator that did not survive the tick. Injectors clean (second cleaning this week). Fuel: heating oil, grade 2. The generator does not know it is not diesel. The injectors know. I am the injectors.",
+      "parts_used": [
+        "None (inspection only)"
+      ],
+      "follow_up": "Listen to cyl 3 daily. The tick is the warning. The knock is the failure. The tick is the margin."
+    },
+    {
+      "log_id": "maint_gen_02_injector_clean",
+      "recorded_day": 15,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "LOW",
+      "title": "Injector Cleaning — Third This Week",
+      "entry": "Third injector cleaning this week. The heating oil is leaving a varnish on the nozzles. Cleaned with solvent (the last of the solvent, see stores). The nozzles are clean. The solvent is gone. Next cleaning will be with kerosene if I can find kerosene, or with nothing if I cannot. The nothing is not a cleaning. The nothing is a decision. I am writing the nothing in the log because the log is where the decisions are written and the nothing is a decision I am approaching.",
+      "parts_used": [
+        "Solvent (cleaning, 0.4L, last of stock)"
+      ],
+      "follow_up": "Source kerosene or equivalent. Without solvent the varnish will build. The varnish is the slow failure. The slow failure is the nothing."
+    },
+    {
+      "log_id": "maint_gen_03_gasket_boot",
+      "recorded_day": 15,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "MODERATE",
+      "title": "Injector Gasket — Boot Leather Substitute",
+      "entry": "The injector gasket is perishing. No gasket in stores. Cut a gasket from the leather of a boot, the left boot of the pair in the stores locker. The leather is not a gasket. The leather is a boot. A boot can be a gasket if the engineer says so and I am the engineer. Seated the gasket. No leak on restart. The generator runs on heating oil and a boot. I am writing the boot in the log. The log is the manual now. The back pages of the manual are gone. I am the back pages.",
+      "parts_used": [
+        "Leather, from salvaged boot (left, approx 12cm x 8cm)"
+      ],
+      "follow_up": "Monitor for leak. The leather will compress. The leather will not hold like rubber. The leather is the leather. I am the engineer."
+    },
+    {
+      "log_id": "maint_gen_04_knock",
+      "recorded_day": 24,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "HIGH",
+      "title": "Cylinder 3 — Bearing Knock Confirmed",
+      "entry": "The tick became the knock. Day 24. The knock is low, on cyl 3, not the knock of the fuel (that knock is sharp, that knock is the injectors, that knock I can clean). This knock is the bearing. The race is scored. I know this knock. I have heard this knock before, in a generator that did not survive the knock. I am running at half load now to buy time. Time is the only thing an engineer can buy. I have bought a week, maybe two. After that the cylinder seizes and the generator is a shape. I am writing this in the log because the log is the only place that will remember. The quartermaster counts the power as a supply. The power is a supply. The supply is a week, maybe two.",
+      "parts_used": [
+        "None (running at half load to buy time)"
+      ],
+      "follow_up": "BEARING, cyl 3. Source: none. Fabrication: attempted (pipe + clock brass, see maint_gen_05). Outcome: pending."
+    },
+    {
+      "log_id": "maint_gen_05_rebuild",
+      "recorded_day": 31,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "CRITICAL",
+      "title": "Cylinder 3 Rebuild — Pipe + Clock Brass Shim",
+      "entry": "I did not sleep. I pulled cyl 3 in the night, with the lamp, with the boy, the one who watches, he held the lamp. The bearing was gone, the race was scored. I have no bearing. I cut a pipe to the race and I shimmed it with the brass from a clock, the clock from the office, the one that does not keep time anymore. The brass is not a bearing. The brass is a shim. The generator runs. The knock is gone, or the knock is different, a softer sound, a sound I do not know, a sound I will listen for. The brass is in the generator. The clock is in the generator. The time is in the generator now.",
+      "parts_used": [
+        "Pipe (steel, offcut, sized to race)",
+        "Brass, from office clock (3 shims, approx 2mm each)"
+      ],
+      "follow_up": "Listen to the new sound. A new sound is a new generator. Learn the new sound. The boy held the lamp. The boy is asleep on the floor. I will let him sleep."
+    },
+    {
+      "log_id": "maint_gen_06_morning_after",
+      "recorded_day": 32,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "LOW",
+      "title": "Post-Rebuild Check — Brass Shim Holding",
+      "entry": "The generator ran all night. The sound is the same sound, the softer sound, the sound I do not know. I am learning the sound. The brass holds. The pipe holds. The clock is in the generator and the generator is keeping time now, in its own way, which is the only way it has. Block temp stable. Oil pressure nominal. The boy is awake. I gave him breakfast. He did not know he was part of the generator last night. He is part of the generator now. The log is the log.",
+      "parts_used": [
+        "None (inspection)"
+      ],
+      "follow_up": "Daily listen. The brass is a shim. The shim is a relationship. The relationship is the sound. I am learning the sound."
+    },
+    {
+      "log_id": "maint_pump_07_stiff_handle",
+      "recorded_day": 52,
+      "technician": "the_mechanic",
+      "system": "WATER",
+      "severity": "MODERATE",
+      "title": "South Corridor Pump — Stiff Handle",
+      "entry": "Pump handle stiff. Requires two hands where it required one. Flow reduced. The pump is the pump. The pump is older than the shelter. The pump is older than most of the people in the shelter. The handle gasket is worn. No gasket. I packed the gland with leather, the same boot-leather trick Tomas uses on the generator, which is not a gasket, which is a boot, but a boot can be a gasket if the mechanic says so and I am the mechanic. Handle improved. Flow improved. Not new, but improved. The pump is the pump. The boot is the pump now.",
+      "parts_used": [
+        "Leather, from salvaged boot (right, approx 10cm x 6cm)"
+      ],
+      "follow_up": "Monitor flow. The leather will compress. The boot is not forever. The boot is the margin."
+    },
+    {
+      "log_id": "maint_pump_08_artesian",
+      "recorded_day": 60,
+      "technician": "the_mechanic",
+      "system": "WATER",
+      "severity": "LOW",
+      "title": "Artesian Well — Flow Check",
+      "entry": "Artesian flow steady. The well is the well. The well is the only good thing. The water is clear, cold, no discoloration. I check the head pressure weekly. The head is the same. The well is the same. The well does not know the world ended. The well is the well. I am the mechanic. I check the well. The well is the thing I check that does not need checking, which is why I check it, because the not-needing is the relief and the relief is the margin.",
+      "parts_used": [
+        "None (inspection)"
+      ],
+      "follow_up": "Weekly. The well is the well."
+    },
+    {
+      "log_id": "maint_pump_09_leak",
+      "recorded_day": 18,
+      "technician": "the_mechanic",
+      "system": "WATER",
+      "severity": "MODERATE",
+      "title": "Sub-Level 1 Pump — Seal Leak",
+      "entry": "Seal leak on the sub-level 1 sump pump. Drip, not a flow, but a drip is a leak and a leak is a decision. Tightened the gland. The drip slowed. The drip did not stop. The drip is the seal. The seal is the age. I have no seal. I packed the gland with hemp fiber and tallow, which is not a seal, which is a packing, which is what we have. The drip slowed to a wet. The wet is not a drip. The wet is the margin. I will take the wet.",
+      "parts_used": [
+        "Hemp fiber (waste, from cordage offcuts)",
+        "Tallow (scraped from the rendering vat, approx 50g)"
+      ],
+      "follow_up": "Check daily. The wet is the wet. The wet is not the drip. The wet is acceptable. The drip was not."
+    },
+    {
+      "log_id": "maint_filter_10_sublevel3",
+      "recorded_day": 30,
+      "technician": "the_mechanic",
+      "system": "VENTILATION",
+      "severity": "HIGH",
+      "title": "Sub-Level 3 — Filter Bank 1 at 90% Occlusion",
+      "entry": "Sub-level 3 filter bank 1 at 90% occlusion. 90% is not air. 90% is the filter. The filter is the air. Replaced from reserve. Reserve after: 2 (bank-1), 1 (bank-2). The reserve is the reserve. The reserve is the number I am counting down. The number is going down. The filters are going down. The air is going down. I am replacing the air with the reserve and the reserve is going down. I am writing the reserve in the log because the log is where the reserve is counted and the counting is the margin.",
+      "parts_used": [
+        "Filter, bank-1 type (1, from reserve)"
+      ],
+      "follow_up": "Source 2 bank-2 filters or equivalent. Equivalent is not a filter. Equivalent is cloth. Cloth is not a filter. Cloth is what we have."
+    },
+    {
+      "log_id": "maint_filter_11_north_bank2",
+      "recorded_day": 37,
+      "technician": "the_mechanic",
+      "system": "VENTILATION",
+      "severity": "MODERATE",
+      "title": "North Intake — Bank 2 Replacement",
+      "entry": "North intake bank 2 at 78% occlusion. Replaced from reserve (last bank-2). Reserve after: 0 (bank-2). Zero. Zero is the number. Zero is the number I am writing in the log. The log is where the zero is written. The zero is the margin. The zero is the thing I am reporting to the quartermaster, who counts the air as a supply, which the air is, which the supply is, which the zero is. I have no more bank-2. The north intake has the last bank-2. The north intake is the last north intake.",
+      "parts_used": [
+        "Filter, bank-2 type (1, from reserve — LAST)"
+      ],
+      "follow_up": "Source bank-2 filters. There are no bank-2 filters. The cloth is the next filter. The cloth is not a filter."
+    },
+    {
+      "log_id": "maint_filter_12_cloth_substitute",
+      "recorded_day": 45,
+      "technician": "the_mechanic",
+      "system": "VENTILATION",
+      "severity": "HIGH",
+      "title": "South Intake — Cloth Substitute (No Filters Remaining)",
+      "entry": "South intake bank 1 at 70% occlusion. No filters. No bank-1. No bank-2. No filters. I layered four thicknesses of cotton cloth (from the stores, from the old uniforms) over the frame. The cloth is not a filter. The cloth is a cloth. The cloth catches the large particles. The cloth does not catch the small particles. The small particles are the rad. The cloth is not the rad. I am writing the cloth in the log because the cloth is the filter now and the filter is the cloth and the cloth is not the filter and I am the mechanic and I am honest in the log and the log is the honest place and the honest place says the cloth is not the filter.",
+      "parts_used": [
+        "Cotton cloth (4 layers, from salvaged uniforms, approx 60cm square)"
+      ],
+      "follow_up": "Monitor pressure. The cloth will load faster than the filter. The cloth is the cloth. Change weekly or on pressure drop. The cloth is the margin."
+    },
+    {
+      "log_id": "maint_vent_13_damper",
+      "recorded_day": 22,
+      "technician": "the_mechanic",
+      "system": "VENTILATION",
+      "severity": "LOW",
+      "title": "Main Damper — Stuck Open",
+      "entry": "Main ventilation damper stuck in the open position. The damper is the air. The air is the damper. The damper is open, which is good for the air and bad for the cold. The cold is coming in. The damper is the cold. I freed the damper with oil (the last of the oil, see stores). The damper moves now. The damper is the air and the cold and the oil. The oil is the damper now.",
+      "parts_used": [
+        "Oil (machine, 0.2L, last of stock)"
+      ],
+      "follow_up": "The damper moves. The oil will not last. The damper will stick again. The sticking is the age. The age is the damper."
+    },
+    {
+      "log_id": "maint_hatch_14_seal_perished",
+      "recorded_day": 18,
+      "technician": "the_gate_sentry",
+      "system": "STRUCTURE",
+      "severity": "HIGH",
+      "title": "Main Entrance Hatch — Outer Seal Perished",
+      "entry": "Outer hatch seal perished. Rubber cracked through. Wind audible through the seal at night. Wind audible is air audible. Air audible is rad audible. Rad audible is not acceptable. Secondary seal (rope + tar, see prior repair Day 9) holding but compressing. Re-applied rope and tar, second application. Tar is low. Rope is low. The rope is the seal. The tar is the seal. The seal is the rope and the tar. We are sealing the door with what we have. What we have is rope and tar.",
+      "parts_used": [
+        "Rope (jute, approx 1.5m)",
+        "Tar (scraped, approx 0.5kg, low)"
+      ],
+      "follow_up": "The rope and the tar are the door. The door is the shelter. We are the shelter. We are the rope and the tar. Source more tar. There is no more tar."
+    },
+    {
+      "log_id": "maint_hatch_15_wheel_stiff",
+      "recorded_day": 40,
+      "technician": "the_gate_sentry",
+      "system": "STRUCTURE",
+      "severity": "LOW",
+      "title": "Main Hatch Wheel — Stiff, Bent Mechanism",
+      "entry": "Hatch wheel stiff. Turns hard, then easy, then hard. The mechanism is bent, not broken. Someone has been opening this hatch regularly and has not been fixing it. They will be back. I oiled the spindle (lamp oil, the lamp oil is also a supply, I am borrowing from the lamp, the lamp is the hatch now). The wheel turns easier. Not easy. Easier. The easy is the margin. The easier is the margin. I will take the easier.",
+      "parts_used": [
+        "Lamp oil (0.1L, borrowed from lamp supply)"
+      ],
+      "follow_up": "The mechanism is bent. The bend is the age. The age is the hatch. The hatch is the door. The door is the shelter."
+    },
+    {
+      "log_id": "maint_wire_16_sublevel3_dark",
+      "recorded_day": 45,
+      "technician": "the_electrician",
+      "system": "ELECTRICAL",
+      "severity": "MODERATE",
+      "title": "Sub-Level 3 — Wired Lighting Failure (Day 34)",
+      "entry": "Sub-level 3 wired lighting failed Day 34 (see Incident IR-3-05). Traced the fault to the junction box on the sub-level 2 landing. The junction is corroded. The corrosion is the damp. The damp is the sub-level. The sub-level is the damp. I cleaned the contacts with a file. The file is the electrician. The contacts are cleaner. The light did not come back. The bulb is also gone. I have no bulb. The bulb is the candle now (see Requisition 7-L-12). The candle is the bulb. The bulb is the candle. The dark is the dark.",
+      "parts_used": [
+        "None (file-cleaned contacts, no replacement bulb)"
+      ],
+      "follow_up": "Source bulbs. There are no bulbs. The candle is the bulb. The candle is not the bulb. The dark is the dark."
+    },
+    {
+      "log_id": "maint_wire_17_substation_live",
+      "recorded_day": 50,
+      "technician": "the_electrician",
+      "system": "ELECTRICAL",
+      "severity": "HIGH",
+      "title": "Substation Omega — Still Live, Unidentified Load",
+      "entry": "Substation Omega is still live. The transformers hum. The hum is the grid that does not know it is over. I traced the load: the substation is feeding the relay mast on the ridge, and the relay mast is feeding the repeater, and the repeater is feeding the air. The air is the radio. The radio is the air. The substation is feeding the radio. The radio is the only thing on the grid that is still on. The grid is the radio now. The radio is the grid. I am leaving it on. The hum is the radio. The radio is the hum. The grid is not over. The grid is the radio.",
+      "parts_used": [
+        "None (inspection, left live)"
+      ],
+      "follow_up": "Leave live. The radio is the grid. The grid is the radio. The hum is the proof the grid is not over. Do not cut the hum."
+    },
+    {
+      "log_id": "maint_wire_18_railing_warm",
+      "recorded_day": 50,
+      "technician": "the_electrician",
+      "system": "ELECTRICAL",
+      "severity": "HIGH",
+      "title": "Substation Omega — Stair Railing Carrying Current",
+      "entry": "The stair railing at substation omega is warm. Warm from current. Something in the substation is finding a path through the steel of the building. The building has not been told it is abandoned. I grounded the railing to the earth strap with a jumper (salvaged copper, from the stores). The railing is cool now. The current is in the earth now. The earth is the ground. The ground is the current. The current is the earth. The building is the building. The building does not know. I am telling the log. The log is the telling.",
+      "parts_used": [
+        "Copper jumper (salvaged, approx 1m, from stores)",
+        "Earth strap (existing, re-attached)"
+      ],
+      "follow_up": "The railing is grounded. The current is in the earth. The earth is the ground. Do not touch the railing without the jumper. The jumper is the margin."
+    },
+    {
+      "log_id": "maint_boiler_19_pressure",
+      "recorded_day": 28,
+      "technician": "the_stoker",
+      "system": "HEATING",
+      "severity": "MODERATE",
+      "title": "Boiler — Pressure Drop, West Branch Isolated",
+      "entry": "Boiler pressure dropped overnight. The west branch is the drop. I isolated the west branch. The west branch is the corridor radiators, which are cold now, which is the cold in the corridor, which is the cold in the ward, which is the cold in the patient. The patient is the cold. I isolated the west branch to keep the pressure for the east branch, which is the ward, which is the patient. The patient is the east. The corridor is the west. The west is the cold. The east is the warm. The warm is the patient.",
+      "parts_used": [
+        "None (valve closed, west branch isolated)"
+      ],
+      "follow_up": "Find the leak in the west branch. The leak is the cold. The cold is the leak. The leak is in the corridor. The corridor is the cold."
+    },
+    {
+      "log_id": "maint_boiler_20_leak_found",
+      "recorded_day": 30,
+      "technician": "the_stoker",
+      "system": "HEATING",
+      "severity": "MODERATE",
+      "title": "West Branch Leak — Corridor Radiator, Pinhole",
+      "entry": "Found the leak. Pinhole in the corridor radiator, the third one from the end. The pinhole is the age. The age is the pinhole. I clamped the hole with a bicycle-patch rubber and a hose clamp (the clamp is from the stores, the rubber is from a bicycle inner tube, the bicycle is gone, the tube is the radiator now). The clamp holds. The pressure is back. The west branch is open. The corridor is warm. The corridor is not the cold. The cold is the patient no more. The patient is the warm.",
+      "parts_used": [
+        "Bicycle inner tube rubber (patch, approx 4cm square)",
+        "Hose clamp (1, salvaged)"
+      ],
+      "follow_up": "The patch is the patch. The patch is not the radiator. The patch is the margin. Replace the radiator when a radiator exists. A radiator does not exist."
+    },
+    {
+      "log_id": "maint_vent_21_fan_noise",
+      "recorded_day": 35,
+      "technician": "the_mechanic",
+      "system": "VENTILATION",
+      "severity": "LOW",
+      "title": "Main Fan — Bearing Noise (Not the Knock)",
+      "entry": "Main ventilation fan bearing noise. A whine, not a knock. The whine is the bearing. The bearing is the age. I oiled the bearing (the lamp oil again, I am borrowing from everything, everything is the lamp now, the lamp is the fan, the fan is the hatch, the hatch is the door, the door is the shelter, the shelter is the lamp). The whine is quieter. The whine is not gone. The whine is the margin. The margin is the whine. I will listen to the whine. The whine is the friend now. The whine is the fan telling me it is still a fan.",
+      "parts_used": [
+        "Lamp oil (0.05L, borrowed)"
+      ],
+      "follow_up": "Listen to the whine. The whine is the fan. The fan is the whine. When the whine stops, the fan has stopped. The whine is the proof."
+    },
+    {
+      "log_id": "maint_vent_22_duct_tape",
+      "recorded_day": 42,
+      "technician": "the_mechanic",
+      "system": "VENTILATION",
+      "severity": "LOW",
+      "title": "Duct Joint — Separation, Taped",
+      "entry": "Duct joint separation, main trunk, above the mess hall. The joint is the age. The age is the joint. The tape is the joint now. I do not have duct tape. I have electrical tape and cloth and tar. The electrical tape is the tape. The cloth is the strength. The tar is the seal. The joint is the tape and the cloth and the tar. The joint is not the joint. The joint is the margin. The margin is the tape. I am the mechanic. I am the tape.",
+      "parts_used": [
+        "Electrical tape (1 roll, low)",
+        "Cloth strip (cotton, approx 30cm)",
+        "Tar (scraped, approx 0.2kg)"
+      ],
+      "follow_up": "The tape will peel. The cloth will rot. The tar will crack. The joint is the margin. Check weekly. The weekly is the joint."
+    },
+    {
+      "log_id": "maint_gen_23_half_load_routine",
+      "recorded_day": 50,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "MODERATE",
+      "title": "Half-Load Regimen — Fuel Conservation",
+      "entry": "Running at half load since the knock (Day 24). The brass shim holds. The sound is the sound I know now, the softer sound, the sound I learned. Half load is the fuel. The fuel is the half. The half is the time. The time is the week. The week is the two. The two is the one now. The fuel is lower than the two. I am running at half to make the half into the two. The math is the margin. The margin is the engineer doing the math of the half and the two and the fuel and the time. I am the math. The math is not enough. The math is the math.",
+      "parts_used": [
+        "None (regimen change)"
+      ],
+      "follow_up": "The fuel is the time. The time is the fuel. Source fuel. There is no fuel. The half is the fuel."
+    },
+    {
+      "log_id": "maint_gen_24_oil_change",
+      "recorded_day": 32,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "LOW",
+      "title": "Oil Change — Black, Day 32",
+      "entry": "Oil changed. The oil was black. The oil is black because the heating oil is not diesel and the not-diesel is the varnish and the varnish is the oil. The new oil is the last of the new oil. The next oil is the old oil, filtered, through the cloth, which is not a filter, which is the cloth. The cloth is the oil filter now. The oil filter is the cloth. The cloth is the everything. I am the engineer. The everything is the engineer.",
+      "parts_used": [
+        "Engine oil (4L, last of new stock)",
+        "Cloth (for filtering next change, cotton, approx 40cm square)"
+      ],
+      "follow_up": "Filter the old oil through cloth for the next change. The cloth is the filter. The filter is the cloth. The oil is the cloth."
+    },
+    {
+      "log_id": "maint_hatch_25_concrete_crack",
+      "recorded_day": 55,
+      "technician": "the_mason",
+      "system": "STRUCTURE",
+      "severity": "MODERATE",
+      "title": "North Wall — Hairline Crack, Sealed",
+      "entry": "Hairline crack in the north wall, above the hatch. The crack is the age. The age is the concrete. The concrete is the crack. I sealed the crack with mortar (pozzolan, see stores, the last of the pozzolan). The mortar is the crack now. The crack is the mortar. The mortar is not the wall. The mortar is the margin. The wall is the wall. The margin is the mason. I am the mason. I am the margin between the wall and the crack.",
+      "parts_used": [
+        "Pozzolan mortar (approx 0.5kg, last of stock)",
+        "Water (for mix, 0.2L)"
+      ],
+      "follow_up": "Source pozzolan. There is no pozzolan. The next crack is the cloth. The cloth is not the wall. The cloth is the margin."
+    },
+    {
+      "log_id": "maint_hatch_26_blast_door_gauge",
+      "recorded_day": 62,
+      "technician": "the_mason",
+      "system": "STRUCTURE",
+      "severity": "LOW",
+      "title": "Blast Door — Depth Gauge, Scratched",
+      "entry": "The blast door has a depth gauge scratched into the inner face. I re-scratched it. The gauge is the door. The door is the gauge. The gauge is how far the door closed against the tests. The tests are the least interesting thing about the door now. The gauge is the interesting thing. The gauge is the margin. The margin is the mason scratching the gauge so the door remembers how far it closed. The door does not remember. The gauge remembers. I am the gauge. I am the mason. I scratch the gauge.",
+      "parts_used": [
+        "None (scratched gauge, no material)"
+      ],
+      "follow_up": "The gauge is the door. The door is the gauge. Scratch the gauge so the door remembers. The door does not remember. The gauge remembers."
+    },
+    {
+      "log_id": "maint_wire_27_lamp_ballast",
+      "recorded_day": 49,
+      "technician": "the_electrician",
+      "system": "ELECTRICAL",
+      "severity": "LOW",
+      "title": "Ward C Corridor Lamp — Ballast Failing",
+      "entry": "Ward C corridor lamp 3 ballast failing. Clicks every 6 seconds. Light discoloured, violet. The children say the corridor looks narrower when it flickers. The corridor is not narrower. The corridor is the same. The lamp is the corridor. The ballast is the lamp. I have no ballast. The lamp is on the list. The list is long. The list is the list. If the children stop using the corridor, the school stops. The school is the children. The lamp is the school. The ballast is the school.",
+      "parts_used": [
+        "None (no ballast, on the list)"
+      ],
+      "follow_up": "Escalate to the engineer if the children stop. The engineer is the generator. The generator is the knock. The knock is the list. Everything is the list."
+    },
+    {
+      "log_id": "maint_wire_28_junction_corrode",
+      "recorded_day": 58,
+      "technician": "the_electrician",
+      "system": "ELECTRICAL",
+      "severity": "MODERATE",
+      "title": "Sub-Level 2 Junction — Corrosion, Cleaned",
+      "entry": "Sub-level 2 junction box corrosion, recurring. The damp is the corrosion. The corrosion is the damp. The sub-level is the damp. I cleaned the contacts with the file again. The file is the electrician. The file is smaller now. The file is the margin. The file is the thing that is getting smaller while the corrosion is getting bigger. The corrosion is the age. The file is the electrician. The electrician is getting smaller. The corrosion is getting bigger. I am the file. The corrosion is the sub-level.",
+      "parts_used": [
+        "None (file-cleaned, file wearing)"
+      ],
+      "follow_up": "The file is the electrician. The electrician is the file. Source a file. There is no file. The file is the margin. The margin is getting smaller."
+    },
+    {
+      "log_id": "maint_pump_29_sump_wet",
+      "recorded_day": 65,
+      "technician": "the_mechanic",
+      "system": "WATER",
+      "severity": "LOW",
+      "title": "Sub-Level 1 Sump — Wet, Holding",
+      "entry": "The sump is wet. The wet is the seal (see maint_pump_09). The hemp-and-tallow packing is holding at wet, not drip. The wet is the margin. The margin is the wet. I am checking the wet daily. The wet is the same wet. The wet is not the drip. The drip is the failure. The wet is the holding. The holding is the hemp. The hemp is the tallow. The tallow is the packing. The packing is the seal. The seal is the wet. The wet is the margin. I am the mechanic. I am the wet.",
+      "parts_used": [
+        "None (inspection)"
+      ],
+      "follow_up": "The wet is the wet. The wet is not the drip. The wet is acceptable. The drip is not. Monitor the wet."
+    },
+    {
+      "log_id": "maint_pump_30_artsian_head",
+      "recorded_day": 70,
+      "technician": "the_mechanic",
+      "system": "WATER",
+      "severity": "LOW",
+      "title": "Artesian Well — Head Pressure Stable",
+      "entry": "Artesian head pressure stable. The well is the well. The well does not know. I am writing the well in the log because the log is where the good news is written and the good news is the well and the well is the good news and the good news is the margin. The margin is the mechanic writing the good news in the log and the good news is the well and the well is the well. I am the mechanic. I check the well. The well is the thing that does not need checking. I check it. The checking is the relief. The relief is the margin.",
+      "parts_used": [
+        "None (inspection)"
+      ],
+      "follow_up": "Weekly. The well is the well. The well is the good news. The good news is the margin."
+    },
+    {
+      "log_id": "maint_gen_31_brass_holds",
+      "recorded_day": 80,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "LOW",
+      "title": "Brass Shim — Day 80, Still Holding",
+      "entry": "The brass holds. Day 80. The clock has been in the generator for 49 days. The sound is the sound I know now. The sound is the sound of the clock in the generator, which is the sound of the time in the generator, which is the sound of the generator keeping time, which is the only time we have. The brass is the bearing. The bearing is the clock. The clock is the time. The time is the generator. The generator is the time. I am the engineer. I am the time. The time is the margin. The margin is the engineer listening to the clock in the generator and writing that the clock holds.",
+      "parts_used": [
+        "None (inspection)"
+      ],
+      "follow_up": "The brass holds. The clock holds. The time holds. I hold. The holding is the margin. The margin is the engineer. I am the engineer."
+    },
+    {
+      "log_id": "maint_gen_32_fuel_question",
+      "recorded_day": 90,
+      "technician": "Tomas (engineer)",
+      "system": "GENERATOR",
+      "severity": "MODERATE",
+      "title": "Fuel — The Question",
+      "entry": "The fuel is the question. The fuel is lower than the half. The half is the two. The two is the one. The one is the less than one. The fuel is the less than one. I am running at half to make the less than one into the one. The math is the margin. The margin is the engineer doing the math of the fuel and the time and the less than one. I am the math. The math is not enough. The math is the math. I am writing the question in the log because the log is where the question is written and the question is the fuel and the fuel is the question and the question is the margin and the margin is the engineer and the engineer is the question.",
+      "parts_used": [
+        "None (regimen review)"
+      ],
+      "follow_up": "Source fuel. There is no fuel. The half is the fuel. The less than one is the fuel. The question is the fuel. The fuel is the question."
+    }
+  ]
+}

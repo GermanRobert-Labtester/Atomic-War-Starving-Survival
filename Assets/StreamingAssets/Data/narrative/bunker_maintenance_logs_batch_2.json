@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "collection_id": "bunker_routine_maintenance_and_incident_logs",
+  "description": "Routine maintenance records and incident logs from the bunker's daily operations. Each entry records a specific maintenance task, fault, or incident — the unglamorous work of keeping 47 people alive underground.",
+  "logs": [
+    {
+      "log_id": "maint_air_filter_pressure_drop",
+      "recorded_day": 34,
+      "technician": "the_electrician",
+      "system": "VENTILATION",
+      "severity": "MODERATE",
+      "title": "Air Filter Bank 3 — Pressure Drop Below Threshold",
+      "entry": "Filter bank 3 (secondary intake) pressure differential dropped from 48 Pa to 31 Pa over 6 hours. Inspected the filter elements: the pre-filter stage is loaded with ash particulate but the HEPA stage shows no significant loading. This suggests the pre-filter is bypassing — air is going around the filter media rather than through it. Removed the filter frame and found the gasket on the intake side has compressed permanently. Air is leaking past the seal. Replaced the gasket with a strip cut from a salvaged rubber boot. Pressure restored to 46 Pa. Monitor for the next 48 hours. If it drops again, we need a proper gasket — the boot rubber won't hold forever.",
+      "parts_used": ["Rubber strip from salvaged boot (approx. 80cm x 3cm)"],
+      "follow_up": "Check pressure at Day 36. If stable, schedule full gasket replacement from scavenged stock."
+    },
+    {
+      "log_id": "maint_water_recycler_turbidity",
+      "recorded_day": 62,
+      "technician": "the_plumber",
+      "system": "WATER",
+      "severity": "MODERATE",
+      "title": "Water Recycler Secondary Membrane — Turbidity Rising",
+      "entry": "Output turbidity has risen from 0.2 NTU to 0.6 NTU over the past 7 days. Still within safe drinking limits (WHO emergency standard: 1.0 NTU) but trending upward. Inspected the secondary membrane housing: the membrane is original pre-war stock, estimated 15+ years of service. The pleats are fouled with mineral deposits — calcium carbonate, probably, from the hard groundwater. Attempted a chemical clean with diluted vinegar solution (5% acetic acid). Circulated for 2 hours, then flushed. Turbidity dropped to 0.35 NTU. Improvement but not a full restore. The membrane needs replacing. I've measured the housing dimensions and sketched a replacement from salvaged filter cloth. It won't match the original specification but it should bring turbidity below 0.5 NTU. Fabrication requires 2 days of workshop time.",
+      "parts_used": ["2 litres vinegar solution (5% acetic acid)", "Salvaged filter cloth (1 square metre)"],
+      "follow_up": "Fabricate replacement membrane. Install at next scheduled maintenance window (Day 65)."
+    },
+    {
+      "log_id": "maint_generator_voltage_regulator",
+      "recorded_day": 43,
+      "technician": "the_electrician",
+      "system": "POWER",
+      "severity": "HIGH",
+      "title": "Backup Generator Voltage Regulator Failure",
+      "entry": "Backup generator failed at 03:00 — voltage regulator burnt out on two of six channels. The medical bay and comms room lost power for 47 minutes before I diagnosed the fault and bypassed the damaged channels. The generator is now running on four channels, which provides adequate voltage but will fluctuate under heavy load. I've posted a notice: no simultaneous use of the electric stove and the water heater while on backup power. The voltage regulator board is a pre-war proprietary part — no replacement available. The bypass is a temporary fix. Long-term, we need to find a compatible board or build a solid-state replacement from scavenged components. The Architect says the electronics workshop has transistors and resistors that might work. I need 3 days of uninterrupted workshop time to prototype.",
+      "parts_used": ["4m copper wire (1.5mm²)", "2x salvaged terminal blocks", "Electrical tape (half roll)"],
+      "follow_up": "Prototype solid-state regulator. Scavenge for compatible board at next expedition to rural gas station or suburban houses."
+    },
+    {
+      "log_id": "maint_blast_door_seal_degradation",
+      "recorded_day": 78,
+      "technician": "the_architect",
+      "system": "STRUCTURAL",
+      "severity": "LOW",
+      "title": "Blast Door 1 Inner Seal — Compression Set Detected",
+      "entry": "During the quarterly airlock inspection, the inner seal on Blast Door 1 showed signs of compression set — the rubber has taken a permanent deformation from years of being compressed in the closed position. The seal still holds air pressure (tested at 25 Pa differential, no leaks detected) but the compression set means it will take progressively more force to achieve a seal. Estimated remaining service life: 2-3 years before the seal needs full replacement. The rubber profile is non-standard — a pre-war military specification. No scavenged replacement will match. Options: (1) machine a new seal from salvaged rubber stock, (2) build a metal backup ring that reduces the compression gap, extending the current seal's life. Option 2 is simpler and reversible. Scheduled for Day 85.",
+      "parts_used": ["None — inspection only"],
+      "follow_up": "Machine backup ring from scrap aluminium. Install at Day 85 maintenance window."
+    },
+    {
+      "log_id": "maint_lathe_bearing_replacement",
+      "recorded_day": 55,
+      "technician": "the_mechanic",
+      "system": "WORKSHOP",
+      "severity": "MODERATE",
+      "title": "Manual Lathe — Headstock Bearing Play Detected",
+      "entry": "The 1954 manual lathe in the workshop has developed 0.15mm of radial play in the headstock bearing. This is enough to cause chatter marks on turned parts finer than 50 microns tolerance. The bearing is a pre-war tapered roller type — no direct replacement available. Disassembled the headstock, inspected the rollers: two show spalling (small flakes broken from the race surface). Cleaned and re-greased with salvaged lithium grease. Reassembled with the good rollers redistributed to spread the load. Play reduced to 0.08mm — acceptable for most work but not for the fine tolerances Oleg used to hold. For precision work, we'll need to find a replacement bearing or learn to grind our own rollers. The machinist says it's possible with the surface plate and a lot of patience.",
+      "parts_used": ["Lithium grease (50g from salvaged drum)", "Cleaning solvent (200ml)"],
+      "follow_up": "Monitor bearing play monthly. Search for replacement bearing on expedition to industrial zone."
+    },
+    {
+      "log_id": "maint_concrete_spalling_sublevel2",
+      "recorded_day": 86,
+      "technician": "the_architect",
+      "system": "STRUCTURAL",
+      "severity": "MODERATE",
+      "title": "Sub-Level 2 East Corridor — Concrete Carbonation Spalling",
+      "entry": "Concrete surface in the Sub-Level 2 east corridor is spalling — small flakes breaking away where the rebar has started to corrode from carbonation of the concrete cover. Mapped seven affected areas along the east wall, total approximately 2 square metres. The spalling is cosmetic at this stage — no structural reinforcement is exposed — but it will worsen as the carbonation front advances. Repair procedure: chip away damaged concrete to sound material, clean the exposed rebar with a wire brush, apply a rust inhibitor, then patch with fresh concrete mix. We have concrete (salvaged cement + aggregate from the eastern tunnel). The labour requirement is 2 persons for 3 days. Prioritised the three worst spots (total 0.8 square metres) for immediate repair. Remaining four areas scheduled for next month.",
+      "parts_used": ["Cement (5kg)", "Aggregate (15kg)", "Wire brush (1)", "Rust inhibitor (100ml)"],
+      "follow_up": "Complete 3 priority patches by Day 89. Schedule remaining 4 patches for Day 100."
+    },
+    {
+      "log_id": "maint_comms_antenna_swro",
+      "recorded_day": 91,
+      "technician": "the_electrician",
+      "system": "COMMUNICATIONS",
+      "severity": "LOW",
+      "title": "Communications Antenna — SWR Check and Retune",
+      "entry": "The rooftop communications antenna SWR (standing wave ratio) has risen from 1.5:1 to 2.8:1 on the primary frequency (142.5 MHz). This means the antenna is no longer properly tuned — we're losing about 30% of transmitted power to reflected energy. Climbed to the roof (surface rad count: 12 uSv/h, 45-minute exposure limit) and inspected the antenna. The matching stub line has shifted — probably wind damage from the last ash storm. The solder joints on the gamma match are intact but the spacing has changed by about 15mm. Resoldered the stub to the original spacing using the calibration marks Oleg etched on the boom three years ago. SWR restored to 1.6:1. Acceptable. Applied salvaged silicone sealant to all exposed joints to prevent corrosion. The antenna should hold until the next major storm.",
+      "parts_used": ["Solder (5g)", "Silicone sealant (30ml)", "Flux paste (small amount)"],
+      "follow_up": "Recheck SWR after next ash storm. If it rises above 2.5:1 again, consider full antenna replacement."
+    },
+    {
+      "log_id": "maint_stove_flue_blockage",
+      "recorded_day": 47,
+      "technician": "the_plumber",
+      "system": "HEATING",
+      "severity": "HIGH",
+      "title": "Wood Stove Flue — Partial Blockage, Carbon Monoxide Risk",
+      "entry": "The Chef reported a 'funny smell' from the mess hall wood stove at 06:00. Investigated immediately with the chemist's gas detection kit: carbon monoxide reading in the mess hall was 18 ppm (safe limit: 9 ppm for continuous exposure). The flue is partially blocked — ash and creosote have accumulated at the junction where the stove pipe enters the main chimney stack. The blockage is about 60% of the flue cross-section. This is dangerous. Shut down the stove, ventilated the mess hall for 2 hours until CO dropped below 3 ppm. Disassembled the flue pipe and scraped out the blockage — approximately 2kg of hardened creosote and compacted ash. The creosote was damp, which means condensation is forming inside the flue — the insulation on the chimney stack is degraded. Without proper insulation, the flue gases cool too quickly and the creosote condenses on the inner wall. Long-term fix: re-insulate the chimney stack with salvaged mineral wool. Short-term: clean the flue every 14 days instead of the usual 30.",
+      "parts_used": ["Wire brush (flue cleaning)", "Mineral wool strip (temporary insulation patch, 30cm)"],
+      "follow_up": "Schedule full chimney re-insulation. Increase flue cleaning frequency to 14-day interval until insulation is repaired. Post CO safety notice in mess hall."
+    },
+    {
+      "log_id": "maint_emergency_lighting_battery",
+      "recorded_day": 69,
+      "technician": "the_electrician",
+      "system": "POWER",
+      "severity": "LOW",
+      "title": "Emergency Lighting Bank 2 — Battery Capacity Test",
+      "entry": "Quarterly capacity test on emergency lighting battery bank 2 (Sub-Level 1 and 2 corridor lights). Discharged the bank at rated load and measured the runtime. Result: 3 hours 12 minutes at full load, down from the original 4 hours. Capacity loss is approximately 20% — consistent with normal ageing for lead-acid batteries in year 3 of service. The batteries are still functional but the decline is accelerating. At this rate, they'll be below 50% capacity by year 5. No replacement batteries are available — we'd need to scavenge car batteries and rewire them in series, which would give us 6V instead of the original 12V and require rewiring the entire emergency circuit. Deferred for now. The current runtime is sufficient for emergency egress. Posted a notice: in a power failure, all residents should proceed to the main corridor within 10 minutes. The emergency lights will last long enough.",
+      "parts_used": ["None — test only"],
+      "follow_up": "Re-test at Day 105. Begin scavenging plan for car battery replacement if capacity drops below 60%."
+    },
+    {
+      "log_id": "maint_toilet_compost_system",
+      "recorded_day": 82,
+      "technician": "the_plumber",
+      "system": "SANITATION",
+      "severity": "MODERATE",
+      "title": "Compost Toilet System — Chamber 2 Full, Transfer Required",
+      "entry": "Compost toilet chamber 2 has reached capacity. The composting cycle requires 90 days per chamber, and chamber 2 was sealed on Day 352 of last year. The compost is mature — dark, crumbly, no offensive odour. Temperature in the core of the pile reached 55°C during active composting (pathogen kill stage confirmed). Transferred the finished compost to the external storage bins for use as greenhouse fertiliser. Chamber 2 is now cleaned and ready to receive waste from chamber 3, which is approaching capacity. The compost toilet system is working as designed — three chambers in rotation, 90 days per cycle. The Botanist has tested the finished compost on a sample of wheat seeds: germination rate 85%, comparable to commercial potting soil. The human waste cycle is feeding the food cycle. It's not elegant but it works.",
+      "parts_used": ["Lime (500g — for chamber cleaning)", "Water (10 litres — for rinse)"],
+      "follow_up": "Monitor chamber 3 fill rate. Transfer to chamber 1 estimated at Day 110."
+    }
+  ]
+}

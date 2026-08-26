@@ -1,0 +1,562 @@
+{
+  "schema_version": 1,
+  "collection_id": "childrens_folklore_expansion",
+  "description": "Children's folklore and shelter games — rhymes, counting games, playground songs, whispered stories, invented myths, the things children make up when the adults are not listening. Simple, repetitive, sometimes wrong, sometimes profound, never explaining why.",
+  "items": [
+    {
+      "id": "folklore_children_the_flour_counting_song",
+      "tradition_type": "MEALTIME_COUNTING_RHYME",
+      "origin_sector": "MESS_HALL",
+      "folk_theme": "RATION_RITUAL_HUMOR",
+      "timestamp_relative": "YEAR_01_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "rhyme",
+        "flour",
+        "counting",
+        "quartermaster"
+      ],
+      "prose": "'One for the baker, two for the bread, / three for the flour that the quartermaster said. / Four is the number that nobody knows, / five is the number that the book only shows. / Six is the hungry, seven is the thin, / eight is the number when the flour runs to nothing.' Sung by children at the midday meal, tapping the table with their spoons. The spoon is the beat. The beat is the spoon. The children do not know what the 'book only shows' means. The children know the rhyme is about the flour. The flour is the rhyme."
+    },
+    {
+      "id": "folklore_children_the_quiet_game_chant",
+      "tradition_type": "CLANDESTINE_COURAGE_GAME",
+      "origin_sector": "WARD_C",
+      "folk_theme": "SILENCE_DISCIPLINE",
+      "timestamp_relative": "YEAR_01_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "chant",
+        "quiet_game",
+        "boots",
+        "ward_c"
+      ],
+      "prose": "'Quiet quiet quiet, like the mouse in the wall, / quiet quiet quiet, when the boots walk the hall. / Quiet quiet quiet, do not breathe do not speak, / quiet quiet quiet, the game is for the weak. / The weak are the strong, the strong are the weak, / the quiet is the game and the game is the seek.' Chanted in whispers by children in Ward C before the boots come. The chant is the preparation. The preparation is the chant. The children who giggle lose. The children who do not giggle win. The winning is the not-giggling. The not-giggling is the winning. The children do not know why the boots come. The children know the quiet game."
+    },
+    {
+      "id": "folklore_children_the_sun_drawing_game",
+      "tradition_type": "PLAYGROUND_IMPROVISATION",
+      "origin_sector": "SHELTER_YARD",
+      "folk_theme": "MYTH_OF_THE_SURFACE_SUN",
+      "timestamp_relative": "YEAR_01_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "sun",
+        "drawing",
+        "face",
+        "chalk",
+        "teacher"
+      ],
+      "prose": "'Draw the sun, draw the sun, / draw the sun with a face for fun. / The face is smiling, the sun is not, / the sun is gone but the face is got. / Draw the sun, draw the sun, / the sun is the drawing, the drawing is the sun.' Chanted by children drawing on the shelter yard wall with chalk. The chalk is the sun. The sun is the chalk. The children draw the sun with a face because the teacher said to. The teacher said the sun has no face. The children draw the face anyway. The face is the smiling. The smiling is the face. The sun is not smiling. The drawing is smiling. The children know the difference. The children do not explain the difference."
+    },
+    {
+      "id": "folklore_children_the_vent_monster",
+      "tradition_type": "BEDTIME_NURSERY_TALE",
+      "origin_sector": "DORMITORY_B",
+      "folk_theme": "VENTILATION_MONSTER_MYTH",
+      "timestamp_relative": "YEAR_01_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "story",
+        "vent_monster",
+        "hum",
+        "pipe",
+        "bedtime"
+      ],
+      "prose": "'The vent monster lives in the big pipe. The big pipe goes up and the big pipe goes down. The vent monster hums when the lights go out. The hum is the vent monster breathing. The vent monster is not real. The vent monster is the air. The air is the vent monster. If you put your ear on the pipe, the vent monster sounds like singing. The singing is not real. The singing is the air. The air is the singing. If you put your ear on the pipe for too long, the vent monster gets in your head. The head is the vent monster. The vent monster is the head. The vent monster is not real. The vent monster is the air in your head. Do not put your ear on the pipe for too long.' Whispered by older children to younger children at bedtime. The younger children put their ears on the pipe anyway. The pipe is the vent monster. The vent monster is the pipe."
+    },
+    {
+      "id": "folklore_children_the_grey_rain",
+      "tradition_type": "BEDTIME_NURSERY_TALE",
+      "origin_sector": "DORMITORY_B",
+      "folk_theme": "SURFACE_WEATHER_MYTH",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "story",
+        "grey_rain",
+        "ash",
+        "sky",
+        "weather"
+      ],
+      "prose": "'The rain was clear before. The rain was clear and the rain was wet and the rain was the sky crying. The sky does not cry anymore. The sky is grey. The rain is grey. The grey is the ash. The ash is the sky. The sky is the ash. The rain is the sky falling. The sky is falling in the rain. The rain is grey because the sky is grey. The sky is grey because the sky fell. The sky fell into the rain. The rain is the sky. The sky is the rain. The grey is the sky and the rain and the ash and the all. The all is the grey.' Told by a child who has never seen clear rain. The child is nine. The child does not know the rain was clear. The child knows the rain is grey. The grey is the knowing. The knowing is the grey."
+    },
+    {
+      "id": "folklore_children_the_generator_heart",
+      "tradition_type": "HOPE_LEGEND",
+      "origin_sector": "BOILER_ROOM",
+      "folk_theme": "MACHINE_ANIMISM",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "legend",
+        "generator",
+        "heart",
+        "hum",
+        "engineer",
+        "clock_bone"
+      ],
+      "prose": "'The generator has a heart. The heart is the hum. The hum is the beating. The beating is the heart. The engineer is the doctor. The doctor is the engineer. The engineer gives the generator medicine. The medicine is the oil. The oil is the medicine. The engineer gives the generator a new bone. The bone is the brass. The brass is from a clock. The clock is the bone. The generator has a clock for a bone. The clock is the time. The time is the bone. The generator keeps time with the clock bone. The clock bone is the time. The time is the clock bone. The generator is alive because the heart is the hum. The hum is the alive. The alive is the hum.' Told by a child who visited the boiler room with the engineer. The child held the lamp. The child saw the clock become the bone. The bone is the story. The story is the bone."
+    },
+    {
+      "id": "folklore_children_the_pump_song",
+      "tradition_type": "JUMP_ROPE_RHYME",
+      "origin_sector": "SOUTH_CORRIDOR",
+      "folk_theme": "WATER_DISCIPLINE",
+      "timestamp_relative": "YEAR_01_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "song",
+        "pump",
+        "water",
+        "two_litres",
+        "jump_rope"
+      ],
+      "prose": "'Pump pump pump, two litres a day, / pump pump pump, drink it all away. / Pump pump pump, fill your cup, / pump pump pump, drink it all up. / Two for the morning, two for the night, / two for the children, two for the right. / The right is the ration, the ration is the right, / the pump is the water, the water is the life.' Sung by children jumping over a braided rope in the south corridor. The rope is the pump. The pump is the rope. The children jump the pump. The pump is the two. The two is the pump. The children do not know why two. The children know two."
+    },
+    {
+      "id": "folklore_children_the_filter_song",
+      "tradition_type": "SCHOOLROOM_CATECHISM_SONG",
+      "origin_sector": "WARD_C",
+      "folk_theme": "AIR_QUALITY_AWARENESS",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "song",
+        "filter",
+        "air",
+        "ninety_percent",
+        "mask"
+      ],
+      "prose": "'Filter filter filter, the air is the filter, / filter filter filter, the filter is the air. / Ninety percent is not air, / ninety percent is the filter. / Change the filter, change the air, / the air is the filter, the filter is the air. / The mask is the face, the face is the mask, / the mask is the filter, the filter is the face.' Sung by children in the school corner, clapping hands in a circle. The clapping is the filter. The filter is the clapping. The children clap the filter. The filter is the air. The air is the clapping. The children do not know what ninety percent means. The children know ninety percent is not air. Not air is the knowing. The knowing is the not-air."
+    },
+    {
+      "id": "folklore_children_the_door_knock_game",
+      "tradition_type": "PLAYGROUND_IMPROVISATION",
+      "origin_sector": "MAIN_CORRIDOR",
+      "folk_theme": "SHELTER_SECURITY",
+      "timestamp_relative": "YEAR_01_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "door",
+        "knock",
+        "boots",
+        "maybe",
+        "sin"
+      ],
+      "prose": "'Knock knock knock, who is there? / Not the wind, not the air. / Knock knock knock, who is it? / Not the friend, not the kit. / Knock knock knock, is it the boots? / The boots are the ones with the heavy foots. / Knock knock knock, is it the dark? / The dark is the one with the no spark. / Knock knock knock, let them in? / The letting is the maybe, the maybe is the sin.' Played by children at the main corridor, knocking on the wall and answering. The knocking is the game. The game is the knocking. The children do not know what the 'sin' means. The children know the maybe. The maybe is the sin. The sin is the maybe. The children knock and answer and knock again."
+    },
+    {
+      "id": "folklore_children_the_seed_woman",
+      "tradition_type": "HOPE_LEGEND",
+      "origin_sector": "ALLOTMENTS",
+      "folk_theme": "AGRICULTURAL_MYTH",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "myth",
+        "seed_woman",
+        "vault",
+        "47",
+        "spring",
+        "farmer"
+      ],
+      "prose": "'The seed woman lives in the vault. The vault is the cold. The cold is the vault. The seed woman has 47 seeds. The 47 is the spring. The spring is the 47. The seed woman sleeps in the cold and the seeds sleep with her. The seeds are the sleeping. The sleeping is the seeds. When the spring comes, the seed woman wakes up. The waking is the spring. The spring is the waking. The seed woman gives the seeds to the farmer. The farmer is the waker. The waker is the farmer. The farmer plants the seeds in the cold frame. The cold frame is the spring. The spring is the cold frame. The seed woman goes back to sleep. The sleeping is the waiting. The waiting is the sleeping. The seed woman waits for the next spring. The next spring is the waiting. The waiting is the next spring.' Told by children who visited the seed vault. The children saw the 47. The 47 is the story. The story is the 47."
+    },
+    {
+      "id": "folklore_children_the_ash_fairy",
+      "tradition_type": "BEDTIME_NURSERY_TALE",
+      "origin_sector": "DORMITORY_B",
+      "folk_theme": "ENVIRONMENTAL_DEGRADATION_MYTH",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "myth",
+        "ash_fairy",
+        "grey",
+        "sky",
+        "before",
+        "believing"
+      ],
+      "prose": "'The ash fairy is the grey. The grey is the ash fairy. The ash fairy makes the sky grey. The sky is the ash fairy. The ash fairy makes the rain grey. The rain is the ash fairy. The ash fairy makes the snow grey. The snow is the ash fairy. The ash fairy is not bad. The ash fairy is not good. The ash fairy is the grey. The grey is the ash fairy. The ash fairy was not here before. The before is the not-here. The not-here is the before. The ash fairy came when the sky fell. The sky fell and the ash fairy came. The ash fairy is the sky that fell. The sky that fell is the ash fairy. The ash fairy will go away when the sky comes back. The sky will come back. The ash fairy will go. The going is the sky. The sky is the going.' Told by a child who has never seen a blue sky. The child is seven. The child believes the ash fairy will go away. The believing is the story. The story is the believing."
+    },
+    {
+      "id": "folklore_children_the_quiet_mouse",
+      "tradition_type": "BEDTIME_NURSERY_TALE",
+      "origin_sector": "WARD_C",
+      "folk_theme": "SILENCE_DISCIPLINE",
+      "timestamp_relative": "YEAR_01_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "myth",
+        "quiet_mouse",
+        "quiet_game",
+        "wall",
+        "winner"
+      ],
+      "prose": "'The quiet mouse is the smallest. The smallest is the quiet mouse. The quiet mouse lives in the wall. The wall is the quiet mouse. The quiet mouse does not make a sound. The sound is the not-quiet mouse. The not-quiet mouse is the one who loses. The losing is the not-quiet. The not-quiet is the losing. The quiet mouse wins the game. The game is the quiet. The quiet is the game. The quiet mouse is the winner. The winner is the quiet mouse. If you are quiet like the mouse, you are the mouse. The mouse is the quiet. The quiet is the mouse. If you are not quiet, you are the not-mouse. The not-mouse is the one who giggles. The giggling is the not-mouse. The not-mouse loses. The quiet mouse wins.' Told by children to other children before the quiet game. The quiet game is the mouse. The mouse is the quiet game. The children want to be the mouse. The mouse is the winner. The winner is the mouse."
+    },
+    {
+      "id": "folklore_children_the_candle_counting",
+      "tradition_type": "MEALTIME_COUNTING_RHYME",
+      "origin_sector": "MESS_HALL",
+      "folk_theme": "RESOURCE_DEPLETION_AWARENESS",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "rhyme",
+        "candles",
+        "counting",
+        "dark",
+        "zero"
+      ],
+      "prose": "'One candle burning, two candles gone, / three candles waiting for the dawn. / Four candles melting, five candles thin, / six candles out and the dark comes in. / The dark is the candle, the candle is the dark, / the dark is the wick and the wick is the spark. / The spark is the last, the last is the spark, / the dark is the all and the all is the dark.' Counted by children at the evening meal, counting the candles on the mess hall table. The counting is the candles. The candles are the counting. The children count down. The down is the candles. The candles are the down. The children do not know what happens when the candles reach zero. The children know the zero is the dark. The dark is the zero."
+    },
+    {
+      "id": "folklore_children_the_gate_keeper_song",
+      "tradition_type": "SCHOOLROOM_CATECHISM_SONG",
+      "origin_sector": "MAIN_GATE",
+      "folk_theme": "SHELTER_SECURITY",
+      "timestamp_relative": "YEAR_01_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "song",
+        "gate",
+        "keeper",
+        "word",
+        "game"
+      ],
+      "prose": "'The gate is the door, the door is the gate, / the gate is the wall, the wall is the gate. / The keeper is the key, the key is the keeper, / the keeper is the one who says who goes. / Who goes? The friend. Who stays? The friend. / Who is the friend? The one who knows. / Knows what? The word. What word? The word. / The word is the gate, the gate is the word.' Sung by children near the gate, playing a game where one child is the keeper and the others must guess the word. The word is the gate. The gate is the word. The children do not know the real word. The children make up the word. The made-up is the game. The game is the made-up. The keeper is the child. The child is the keeper. The gate is the game. The game is the gate."
+    },
+    {
+      "id": "folklore_children_the_dose_meter_rhyme",
+      "tradition_type": "JUMP_ROPE_RHYME",
+      "origin_sector": "NORTH_CUPOLA",
+      "folk_theme": "GEIGER_COUNTER_AWARENESS",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "rhyme",
+        "dosimeter",
+        "tick",
+        "fast_slow",
+        "run",
+        "go"
+      ],
+      "prose": "'Tick tick tick, the meter is quick, / tick tick tick, the dust is thick. / Tick tick slow, the meter is low, / tick tick slow, the safe is the go. / Tick tick fast, the meter is past, / tick tick fast, the run is the last. / The meter is the bug, the bug is the meter, / the bug is the click, the click is the meter.' Chanted by children jumping rope in the north cupola, where the old sentries taught them to listen to the dosimeter. The dosimeter is the bug. The bug is the dosimeter. The children jump to the tick. The tick is the jump. The jump is the tick. The children do not know what the tick means. The children know the fast is the run. The run is the fast. The slow is the go. The go is the slow."
+    },
+    {
+      "id": "folklore_children_the_lady_in_the_well",
+      "tradition_type": "BEDTIME_NURSERY_TALE",
+      "origin_sector": "PUMP_ROOM",
+      "folk_theme": "WATER_SOURCE_MYTH",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "story",
+        "lady_well",
+        "water",
+        "thank_you",
+        "real"
+      ],
+      "prose": "'The lady in the well is the water. The water is the lady. The lady is deep. The deep is the lady. The lady is cold. The cold is the lady. The lady is clear. The clear is the lady. The lady gives the water. The water is the giving. The giving is the lady. If you say thank you to the well, the lady gives more. The more is the thank you. The thank you is the more. If you do not say thank you, the lady gives less. The less is the not-thank you. The not-thank you is the less. The lady is the well. The well is the lady. The lady is not real. The lady is the water. The water is the lady. The lady is the water that is not real but is the water. The water is real. The lady is the real water.' Told by children at the pump. The children say thank you to the well. The well is the lady. The lady is the well. The children do not know if the lady is real. The children know the water is real. The water is the lady. The lady is the water."
+    },
+    {
+      "id": "folklore_children_the_man_in_the_radio",
+      "tradition_type": "HOPE_LEGEND",
+      "origin_sector": "RIDGE_RELAY",
+      "folk_theme": "COMMUNICATION_MYTH",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "legend",
+        "man_radio",
+        "air",
+        "ridge",
+        "operator",
+        "voice"
+      ],
+      "prose": "'The man in the radio lives in the air. The air is the radio. The radio is the air. The man in the radio talks to the people who can hear. The hearing is the people. The people are the hearing. The man in the radio does not sleep. The not-sleeping is the man. The man is the not-sleeping. The man in the radio talks and talks and the talking is the proof the man is there. The talking is the proof. The proof is the talking. The man in the radio is alone. The alone is the man. The man is the alone. The man in the radio talks because the talking is the not-alone. The not-alone is the talking. The talking is the not-alone. The man in the radio is the ridge. The ridge is the man. The man is the ridge.' Told by children who heard the relay operator on the radio. The children know the man is the operator. The children call him the man in the radio. The man is the operator. The operator is the man. The children do not know his name. The children know his voice. The voice is the name. The name is the voice."
+    },
+    {
+      "id": "folklore_children_the_potato_fairy",
+      "tradition_type": "HOPE_LEGEND",
+      "origin_sector": "ALLOTMENTS",
+      "folk_theme": "AGRICULTURAL_MYTH",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "myth",
+        "potato_fairy",
+        "green",
+        "sprout",
+        "farmer",
+        "crying"
+      ],
+      "prose": "'The potato fairy is the green. The green is the potato fairy. The potato fairy comes when the farmer plants. The planting is the coming. The coming is the planting. The potato fairy makes the green come up. The green is the coming up. The coming up is the green. The potato fairy is the sprout. The sprout is the potato fairy. The farmer is the planter. The planter is the farmer. The potato fairy is the grower. The grower is the potato fairy. The farmer plants and the fairy grows. The planting and the growing are the two. The two are the potato. The potato is the two. The farmer cried when the green came up. The crying was the potato fairy. The potato fairy made the farmer cry. The crying was the green. The green was the crying. The farmer cried because the green was the first green in a long time. The first green is the potato fairy. The potato fairy is the first green.' Told by children who saw the farmer cry at the sprout. The children do not know why the farmer cried. The children know the green is the fairy. The fairy is the green. The crying is the green. The green is the crying."
+    },
+    {
+      "id": "folklore_children_the_shadow_game",
+      "tradition_type": "PLAYGROUND_IMPROVISATION",
+      "origin_sector": "MAIN_CORRIDOR",
+      "folk_theme": "LIGHT_AND_DARK_PLAY",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "shadow",
+        "lamp",
+        "dark",
+        "light",
+        "wall"
+      ],
+      "prose": "'The shadow is the you that is not you. The not-you is the shadow. The shadow is on the wall. The wall is the shadow. The shadow moves when you move. The move is the shadow. The shadow is the move. If the lamp goes out, the shadow goes. The going is the lamp. The lamp is the going. If the lamp comes back, the shadow comes back. The coming is the lamp. The lamp is the coming. The shadow is the lamp's. The lamp is the shadow's. The shadow is not the dark. The dark is the not-shadow. The shadow is the light's. The light is the shadow's. The dark has no shadow. The dark is the no-shadow. The no-shadow is the dark.' Played by children in the corridor, making shadows on the wall with the lamp. The lamp is the shadow-maker. The shadow-maker is the lamp. The children make shadows. The shadows are the children. The children are the shadows. The children are the not-dark. The not-dark is the children. The dark is the not-children. The not-children is the dark."
+    },
+    {
+      "id": "folklore_children_the_counting_children_game",
+      "tradition_type": "CLANDESTINE_COURAGE_GAME",
+      "origin_sector": "MESS_HALL",
+      "folk_theme": "POPULATION_AWARENESS",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "counting",
+        "children",
+        "missing",
+        "number",
+        "meal"
+      ],
+      "prose": "'Count the children, count the children, / one two three four five. / Count the children, count the children, / who is not alive? / Not the one who is eating, / not the one who is sleeping, / not the one who is playing, / not the one who is crying. / Count the children, count the children, / one is missing from the line. / The missing is the number, / the number is the missing. / Count the children, count the children, / the missing is the one who does not come to the meal.' Played by children at the mess hall, counting each other at the meal. The counting is the children. The children are the counting. The children count to see who is missing. The missing is the number. The number is the missing. The children do not say who is missing. The children know. The knowing is the not-saying. The not-saying is the knowing. The children count and the counting is the game and the game is the counting and the missing is the game and the game is the missing."
+    },
+    {
+      "id": "folklore_children_the_wall_tapping_game",
+      "tradition_type": "PLAYGROUND_IMPROVISATION",
+      "origin_sector": "SHELTER_YARD",
+      "folk_theme": "MEMORIAL_AWARENESS",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "wall",
+        "tapping",
+        "names",
+        "carved",
+        "third_hand"
+      ],
+      "prose": "'Tap the wall, tap the wall, / one tap for the name, two for the all. / Tap the wall, tap the wall, / the wall is the names, the names are the wall. / The first hand carved twelve, / the second hand carved twenty-three, / the third hand carved twelve and stopped. / The third hand is the one that is still here. / The third hand does not carve anymore. / The not-carving is the third hand. / The third hand is the not-carving. / Tap the wall for the names. / The names are the tapping. / The tapping is the names.' Played by children at the north wall of the shelter yard, tapping the carved names with their fingers. The tapping is the remembering. The remembering is the tapping. The children do not know the names. The children know the tapping. The tapping is the names. The names are the tapping. The third hand is the one who does not carve. The not-carving is the remembering. The remembering is the not-carving."
+    },
+    {
+      "id": "folklore_children_the_glow_monster",
+      "tradition_type": "BEDTIME_NURSERY_TALE",
+      "origin_sector": "DORMITORY_B",
+      "folk_theme": "RADIATION_FEAR_MYTH",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "myth",
+        "glow_monster",
+        "invisible",
+        "hair",
+        "teeth",
+        "breath",
+        "radiation"
+      ],
+      "prose": "'The glow monster is the invisible. The invisible is the glow monster. The glow monster is in the dirt. The dirt is the glow monster. The glow monster is in the water. The water is the glow monster. The glow monster is in the bone. The bone is the glow monster. The glow monster takes your hair first. The hair is the first. The first is the hair. The glow monster takes your teeth second. The teeth are the second. The second is the teeth. The glow monster takes your strength third. The strength is the third. The third is the strength. The glow monster takes your breath last. The breath is the last. The last is the breath. The glow monster is not real. The glow monster is the invisible. The invisible is real. The real is the invisible. The glow monster is the real invisible. The real invisible is the glow monster.' Told by older children to younger children. The younger children touch their hair. The hair is the first. The first is the hair. The younger children touch their teeth. The teeth are the second. The second is the teeth. The younger children do not know the glow monster is the radiation. The older children do not know either. The knowing is the not-knowing. The not-knowing is the knowing."
+    },
+    {
+      "id": "folklore_children_the_engineer_and_the_clock",
+      "tradition_type": "HOPE_LEGEND",
+      "origin_sector": "BOILER_ROOM",
+      "folk_theme": "MACHINE_ANIMISM",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "legend",
+        "engineer",
+        "generator",
+        "clock",
+        "bone",
+        "time",
+        "doctor"
+      ],
+      "prose": "'The engineer gave the generator a new heart. The heart was a clock. The clock was the heart. The clock did not tell time. The clock told the generator. The generator told the time. The time was the generator. The generator was the time. The engineer took the clock from the wall. The wall did not need the clock. The generator needed the clock. The clock was the bone. The bone was the clock. The engineer put the clock in the generator. The generator had a clock for a bone. The bone was the time. The time was the bone. The generator kept time with the clock bone. The clock bone was the time. The time was the clock bone. The engineer is the doctor. The doctor is the engineer. The engineer made the generator live. The living was the clock. The clock was the living. The generator is alive because the clock is the bone. The bone is the clock. The clock is the bone.' Told by children who visited the boiler room. The children know the engineer. The engineer is the doctor. The doctor is the engineer. The children know the clock is in the generator. The clock is the bone. The bone is the clock. The children do not know what a bone is for a generator. The children know the clock is the bone. The bone is the story. The story is the bone."
+    },
+    {
+      "id": "folklore_children_the_quietest_child",
+      "tradition_type": "CLANDESTINE_COURGE_GAME",
+      "origin_sector": "WARD_C",
+      "folk_theme": "SILENCE_DISCIPLINE",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "quietest",
+        "not_there",
+        "winning",
+        "quiet_game",
+        "ward_c"
+      ],
+      "prose": "'The quietest child is the one who wins. The winning is the quietest. The quietest is the winning. The quietest child is the one who does not giggle. The not-giggling is the quietest. The quietest is the not-giggling. The quietest child is the one who does not breathe. The not-breathing is the quietest. The quietest is the not-breathing. The quietest child is the one who does not move. The not-moving is the quietest. The quietest is the not-moving. The quietest child is the one who is not there. The not-there is the quietest. The quietest is the not-there. The not-there is the winning. The winning is the not-there. The quietest child wins by being not-there. The not-there is the winning. The winning is the not-there.' Told by children in Ward C before the quiet game. The children want to be the not-there. The not-there is the winning. The winning is the not-there. The children close their eyes. The closing is the not-there. The not-there is the closing. The children hold their breath. The holding is the not-there. The not-there is the holding. The children are the not-there. The not-there is the children."
+    },
+    {
+      "id": "folklore_children_the_bread_song",
+      "tradition_type": "MEALTIME_COUNTING_RHYME",
+      "origin_sector": "MESS_HALL",
+      "folk_theme": "RATION_RITUAL_HUMOR",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "rhyme",
+        "bread",
+        "flour",
+        "thin",
+        "sin",
+        "eating"
+      ],
+      "prose": "'Bread bread bread, the bread is the flour, / bread bread bread, the flour is the hour. / Bread bread bread, the slice is the thin, / bread bread bread, the thin is the in. / The in is the stomach, the stomach is the in, / the bread is the thin and the thin is the win. / The win is the eating, the eating is the win, / the bread is the flour and the flour is the sin. / The sin is the eating, the eating is the sin, / the bread is the thin and the thin is the in.' Sung by children at the evening meal, patting their stomachs. The patting is the bread. The bread is the patting. The children do not know what the 'sin' means. The children know the bread is the thin. The thin is the bread. The sin is the eating. The eating is the sin. The children eat and the eating is the sin and the sin is the bread and the bread is the thin and the thin is the in and the in is the stomach and the stomach is the in."
+    },
+    {
+      "id": "folklore_children_the_winter_counting",
+      "tradition_type": "SCHOOLROOM_CATECHISM_SONG",
+      "origin_sector": "WARD_C",
+      "folk_theme": "SEASONAL_AWARENESS",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "song",
+        "winter",
+        "counting",
+        "three",
+        "spring",
+        "over"
+      ],
+      "prose": "'One winter is the first, / two winter is the long, / three winter is the last, / three winter is the spring. / The spring is the after, the after is the spring, / the spring is the three, the three is the spring. / One is the cold, two is the colder, / three is the coldest, three is the over. / The over is the spring, the spring is the over, / the three is the over, the over is the three.' Sung by children in the school corner, counting the winters on their fingers. The fingers are the winters. The winters are the fingers. The children have three fingers up. The three is the spring. The spring is the three. The children do not know if three is the last. The children know three is the spring. The spring is the three. The three is the over. The over is the three."
+    },
+    {
+      "id": "folklore_children_the_name_game",
+      "tradition_type": "PLAYGROUND_IMPROVISATION",
+      "origin_sector": "SHELTER_YARD",
+      "folk_theme": "IDENTITY_AND_MEMORY",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "name",
+        "circle",
+        "secret",
+        "number",
+        "quartermaster",
+        "book"
+      ],
+      "prose": "'What is your name? My name is the name. / What is the name? The name is the me. / What is the me? The me is the here. / What is the here? The here is the now. / What is the now? The now is the meal. / What is the meal? The meal is the bread. / What is the bread? The bread is the flour. / What is the flour? The flour is the number. / What is the number? The number is the secret. / What is the secret? The secret is the quartermaster. / What is the quartermaster? The quartermaster is the book. / What is the book? The book is the name. / What is the name? My name is the name.' Played by children in the shelter yard, asking each other questions in a circle. The circle is the game. The game is the circle. The children go around. The around is the game. The game is the around. The children end where they begin. The begin is the name. The name is the begin. The children do not know what the secret is. The children know the secret is the number. The number is the secret. The secret is the quartermaster. The quartermaster is the book. The book is the name. The name is the game. The game is the name."
+    },
+    {
+      "id": "folklore_children_the_spring_rhyme",
+      "tradition_type": "JUMP_ROPE_RHYME",
+      "origin_sector": "ALLOTMENTS",
+      "folk_theme": "AGRICULTURAL_HOPE",
+      "timestamp_relative": "YEAR_03_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "rhyme",
+        "spring",
+        "green",
+        "sprout",
+        "potato",
+        "farmer",
+        "wall"
+      ],
+      "prose": "'Spring spring spring, the green is the spring, / spring spring spring, the sprout is the thing. / Spring spring spring, the potato is the up, / spring spring spring, the farmer is the cup. / The cup is the tea, the tea is the cup, / the spring is the green and the green is the up. / The up is the wall, the wall is the up, / the wall remembers the sun and the sun is the up. / The sun is the before, the before is the sun, / the spring is the after and the after is the one.' Chanted by children at the allotments, jumping over the irrigation hose. The hose is the rope. The rope is the hose. The children jump the spring. The spring is the jump. The jump is the spring. The children have seen the green. The green is the spring. The spring is the green. The children know the spring is real. The real is the spring. The spring is the real."
+    },
+    {
+      "id": "folklore_children_the_before_song",
+      "tradition_type": "BEDTIME_NURSERY_TALE",
+      "origin_sector": "DORMITORY_B",
+      "folk_theme": "PRE_EXCHANGE_NOSTALGIA",
+      "timestamp_relative": "YEAR_03_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "song",
+        "before",
+        "blue",
+        "gold",
+        "grey",
+        "spring",
+        "teacher",
+        "remembering"
+      ],
+      "prose": "'Before the grey, the sky was blue. / Before the grey, the rain was too. / Before the grey, the sun was gold. / Before the grey, the world was old. / The old is the before, the before is the old. / The blue is the before, the before is the blue. / The gold is the before, the before is the gold. / The grey is the now, the now is the grey. / The grey is the after, the after is the grey. / The before is the story, the story is the before. / The now is the real, the real is the now. / The after is the spring, the spring is the after. / The spring is the blue, the blue is the spring. / The spring is the gold, the gold is the spring. / The spring is the before that comes after. / The after is the before that comes spring.' Sung by children at bedtime, taught by the teacher who remembers the before. The teacher is the before. The before is the teacher. The children do not remember the before. The children know the song. The song is the before. The before is the song. The children sing the before they do not remember. The singing is the remembering. The remembering is the singing. The children remember by singing. The singing is the before. The before is the singing."
+    },
+    {
+      "id": "folklore_children_the_book_game",
+      "tradition_type": "PLAYGROUND_IMPROVISATION",
+      "origin_sector": "WARD_C",
+      "folk_theme": "LITERACY_AND_MEMORY",
+      "timestamp_relative": "YEAR_02_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "book",
+        "rima",
+        "seeing",
+        "writing",
+        "honest",
+        "school"
+      ],
+      "prose": "'I have a book. The book is the seeing. / I see the book. The book is the me. / I write the book. The book is the writing. / I write what I see. The seeing is the writing. / I see the wall. The wall is the porridge. / I see the spoon. The spoon is the pencil. / I see the sun. The sun is the drawing. / I see the count. The count is the number. / I see the number. The number is the not-saying. / I do not say the number. The number is the book. / The book is the not-saying. The not-saying is the book. / The book is the honest. The honest is the book. / The book is the me. The me is the book.' Played by Rima in the school corner, showing the other children her book. The book is the seeing. The seeing is the book. The other children do not have books. The other children have the game. The game is the book. The book is the game. Rima is the book. The book is Rima. The other children play the book. The book is the playing. The playing is the book."
+    },
+    {
+      "id": "folklore_children_the_tally_game",
+      "tradition_type": "PLAYGROUND_IMPROVISATION",
+      "origin_sector": "PLAZA",
+      "folk_theme": "MEMORIAL_AWARENESS",
+      "timestamp_relative": "YEAR_03_OBSERVED",
+      "tags": [
+        "folklore",
+        "children",
+        "game",
+        "tally",
+        "marks",
+        "hand",
+        "five",
+        "wall",
+        "thanks",
+        "forward"
+      ],
+      "prose": "'One mark is the one, / two marks is the two, / three marks is the three, / four marks is the four, / five marks is the hand. / The hand is the five. The five is the hand. / Close the hand. The closing is the five. / The five is the closing. / One mark is the one. / The one is the new hand. / The new hand is the one. / The one is the new. / The new is the one. / The hand is the people. The people are the hand. / The marks are the people. The people are the marks. / The wall is the marks. The marks are the wall. / The wall does not thank you. The not-thanking is the wall. / The wall does not need to. The not-needing is the wall. / The mark is the thanks. The thanks is the mark. / The mark is the forward. The forward is the mark.' Played by children at the tally wall in the plaza, making marks on a spare wall with chalk, in clusters of five. The five is the hand. The hand is the five. The children make the marks. The marks are the people. The people are the marks. The children do not know who the marks are for. The children know the marks are the thanks. The thanks are the marks. The marks are the forward. The forward is the marks."
+    }
+  ]
+}

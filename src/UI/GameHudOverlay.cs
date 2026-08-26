@@ -102,13 +102,13 @@ namespace AtomicWar.GodotApp
             _btnMenu = AshfallUiHelpers.MakeButton("MENU [Esc]", () => OnMenuRequested?.Invoke());
             _btnMenu.CustomMinimumSize = new Vector2(100, 28);
             AddChild(_btnMenu);
+
+            // Disable per-frame process polling as meters update reactively via UpdateState/UpdateHealth/UpdateRadiation.
+            SetProcess(false);
         }
 
         public override void _Process(double delta)
         {
-            // The HUD is retained as a lightweight diagnostics surface. The player
-            // shell uses GameDashboardPanel; keeping these flags avoids churn for
-            // older callers while the meters themselves remain immediately legible.
             _healthAnimating = false;
             _radAnimating = false;
         }

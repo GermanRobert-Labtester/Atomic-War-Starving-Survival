@@ -1,72 +1,117 @@
-[
-  {
-    "id": "carbon_adsorption_coconut_shell_iodine_number",
-    "carbon_filter_vessel_id": "PRIMARY_GAC_ADSORPTION_COLUMN_01",
-    "carbon_base_feedstock": "STEAM_ACTIVATED_COCONUT_SHELL",
-    "iodine_number_mg_g": 1150.0,
-    "bed_empty_bed_contact_time_min": 12.5,
-    "timestamp_relative": "YEAR_02_CARBON_LOG_01",
-    "tags": ["water_treatment", "activated_carbon", "coconut_shell", "iodine_number", "microporosity"],
-    "prose": "Laboratory quality assurance on virgin steam-activated coconut shell carbon confirmed an exceptional iodine number of 1,150 mg/g and surface area of 1,200 m²/g. The predominantly microporous structure demonstrated near-total removal of trace volatile radionuclides."
-  },
-  {
-    "id": "carbon_adsorption_trichloroethylene_breakthrough_front",
-    "carbon_filter_vessel_id": "INDUSTRIAL_SUMP_RECLAMATION_BED",
-    "carbon_base_feedstock": "BITUMINOUS_COAL_GRANULAR_CARBON",
-    "iodine_number_mg_g": 900.0,
-    "bed_empty_bed_contact_time_min": 15.0,
-    "timestamp_relative": "YEAR_05_CARBON_LOG_03",
-    "tags": ["water_treatment", "trichloroethylene", "breakthrough", "voc_adsorption", "solvent_leak"],
-    "prose": "After eight months of treating groundwater contaminated by a machine shop degreaser leak, the mass transfer zone reached the bed exit. Effluent trichloroethylene (TCE) jumped from nondetect to 24 ppb, signaling the need for immediate carbon replacement."
-  },
-  {
-    "id": "carbon_adsorption_backwash_bed_expansion_attrition",
-    "carbon_filter_vessel_id": "DUAL_MEDIA_SAND_CARBON_FILTER",
-    "carbon_base_feedstock": "REAGGLOMERATED_LIGNITE_CARBON",
-    "iodine_number_mg_g": 850.0,
-    "bed_empty_bed_contact_time_min": 10.0,
-    "timestamp_relative": "YEAR_08_CARBON_LOG_02",
-    "tags": ["water_treatment", "backwash", "bed_expansion", "carbon_attrition", "fine_washout"],
-    "prose": "Optimizing backwash water rate achieved a 35% fluidized bed expansion, scrubbing accumulated clay particles without overflowing 12x40 mesh carbon granules. Carbon mechanical attrition loss was held to less than 1.5% per annum."
-  },
-  {
-    "id": "carbon_adsorption_thermal_reactivation_furnace_burn",
-    "carbon_filter_vessel_id": "ROTARY_KILN_REACTIVATION_SKID",
-    "carbon_base_feedstock": "SPENT_MUNICIPAL_GAC_CHARGE",
-    "iodine_number_mg_g": 980.0,
-    "bed_empty_bed_contact_time_min": 0.0,
-    "timestamp_relative": "YEAR_11_CARBON_LOG_04",
-    "tags": ["water_treatment", "reactivation", "rotary_kiln", "thermal_desorption", "steam_activation"],
-    "prose": "Passing spent carbon through a direct-fired rotary kiln at 850°C under an injected steam blanket pyrolyzed and volatilized all adsorbed organic poisons. The reactivated carbon regained 92% of its virgin iodine number with only 6% total volume loss."
-  },
-  {
-    "id": "carbon_adsorption_radon_gas_pore_retention_decay",
-    "carbon_filter_vessel_id": "DEEP_BASEMENT_RADON_TRAP",
-    "carbon_base_feedstock": "HIGH_DENSITY_COCONUT_CARBON",
-    "iodine_number_mg_g": 1100.0,
-    "bed_empty_bed_contact_time_min": 20.0,
-    "timestamp_relative": "YEAR_14_CARBON_LOG_01",
-    "tags": ["water_treatment", "radon", "radioactive_decay", "gaseous_retention", "half_life"],
-    "prose": "Heavy 20-minute empty-bed contact time allowed the GAC vessel to physically retard dissolved Radon-222 gas transit. By the time water exited the carbon bed, the 3.8-day half-life of radon had elapsed, reducing radioactivity in drinking water by 98%."
-  },
-  {
-    "id": "carbon_adsorption_geosmin_earthy_taste_odor_strip",
-    "carbon_filter_vessel_id": "COMMISSARY_FINISHING_POLISHER",
-    "carbon_base_feedstock": "WOOD_BASED_CHEMICALLY_ACTIVATED",
-    "iodine_number_mg_g": 1050.0,
-    "bed_empty_bed_contact_time_min": 8.0,
-    "timestamp_relative": "YEAR_17_CARBON_LOG_03",
-    "tags": ["water_treatment", "geosmin", "mib", "taste_and_odor", "algal_metabolites"],
-    "prose": "Cyanobacterial blooms in the emergency surface reservoir released geosmin and 2-methylisoborneol (2-MIB), giving water a foul musty, earthy taste. A single pass through mesoporous wood-based GAC stripped both compounds below human olfactory thresholds (<5 ng/L)."
-  },
-  {
-    "id": "carbon_adsorption_biological_activated_carbon_bac",
-    "carbon_filter_vessel_id": "OZONE_BAC_HYBRID_COLUMN",
-    "carbon_base_feedstock": "BIOLOGICALLY_COLONIZED_GAC",
-    "iodine_number_mg_g": 750.0,
-    "bed_empty_bed_contact_time_min": 18.0,
-    "timestamp_relative": "YEAR_20_CARBON_LOG_01",
-    "tags": ["water_treatment", "bac", "biological_filtration", "biodegradation", "ozone_synergy"],
-    "prose": "Following ozone oxidation, biodegradable organic carbon fed dense colonies of aerobic nitrifying bacteria inside the macropores of the GAC bed. The biological action continually self-regenerated adsorption sites, extending physical carbon bed life past five years."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "carbon_adsorption_coconut_shell_iodine_number",
+      "carbon_filter_vessel_id": "PRIMARY_GAC_ADSORPTION_COLUMN_01",
+      "carbon_base_feedstock": "STEAM_ACTIVATED_COCONUT_SHELL",
+      "iodine_number_mg_g": 1150.0,
+      "bed_empty_bed_contact_time_min": 12.5,
+      "timestamp_relative": "YEAR_02_CARBON_LOG_01",
+      "tags": [
+        "water_treatment",
+        "activated_carbon",
+        "coconut_shell",
+        "iodine_number",
+        "microporosity"
+      ],
+      "prose": "Laboratory quality assurance on virgin steam-activated coconut shell carbon confirmed an exceptional iodine number of 1,150 mg/g and surface area of 1,200 m²/g. The predominantly microporous structure demonstrated near-total removal of trace volatile radionuclides."
+    },
+    {
+      "id": "carbon_adsorption_trichloroethylene_breakthrough_front",
+      "carbon_filter_vessel_id": "INDUSTRIAL_SUMP_RECLAMATION_BED",
+      "carbon_base_feedstock": "BITUMINOUS_COAL_GRANULAR_CARBON",
+      "iodine_number_mg_g": 900.0,
+      "bed_empty_bed_contact_time_min": 15.0,
+      "timestamp_relative": "YEAR_05_CARBON_LOG_03",
+      "tags": [
+        "water_treatment",
+        "trichloroethylene",
+        "breakthrough",
+        "voc_adsorption",
+        "solvent_leak"
+      ],
+      "prose": "After eight months of treating groundwater contaminated by a machine shop degreaser leak, the mass transfer zone reached the bed exit. Effluent trichloroethylene (TCE) jumped from nondetect to 24 ppb, signaling the need for immediate carbon replacement."
+    },
+    {
+      "id": "carbon_adsorption_backwash_bed_expansion_attrition",
+      "carbon_filter_vessel_id": "DUAL_MEDIA_SAND_CARBON_FILTER",
+      "carbon_base_feedstock": "REAGGLOMERATED_LIGNITE_CARBON",
+      "iodine_number_mg_g": 850.0,
+      "bed_empty_bed_contact_time_min": 10.0,
+      "timestamp_relative": "YEAR_08_CARBON_LOG_02",
+      "tags": [
+        "water_treatment",
+        "backwash",
+        "bed_expansion",
+        "carbon_attrition",
+        "fine_washout"
+      ],
+      "prose": "Optimizing backwash water rate achieved a 35% fluidized bed expansion, scrubbing accumulated clay particles without overflowing 12x40 mesh carbon granules. Carbon mechanical attrition loss was held to less than 1.5% per annum."
+    },
+    {
+      "id": "carbon_adsorption_thermal_reactivation_furnace_burn",
+      "carbon_filter_vessel_id": "ROTARY_KILN_REACTIVATION_SKID",
+      "carbon_base_feedstock": "SPENT_MUNICIPAL_GAC_CHARGE",
+      "iodine_number_mg_g": 980.0,
+      "bed_empty_bed_contact_time_min": 0.0,
+      "timestamp_relative": "YEAR_11_CARBON_LOG_04",
+      "tags": [
+        "water_treatment",
+        "reactivation",
+        "rotary_kiln",
+        "thermal_desorption",
+        "steam_activation"
+      ],
+      "prose": "Passing spent carbon through a direct-fired rotary kiln at 850°C under an injected steam blanket pyrolyzed and volatilized all adsorbed organic poisons. The reactivated carbon regained 92% of its virgin iodine number with only 6% total volume loss."
+    },
+    {
+      "id": "carbon_adsorption_radon_gas_pore_retention_decay",
+      "carbon_filter_vessel_id": "DEEP_BASEMENT_RADON_TRAP",
+      "carbon_base_feedstock": "HIGH_DENSITY_COCONUT_CARBON",
+      "iodine_number_mg_g": 1100.0,
+      "bed_empty_bed_contact_time_min": 20.0,
+      "timestamp_relative": "YEAR_14_CARBON_LOG_01",
+      "tags": [
+        "water_treatment",
+        "radon",
+        "radioactive_decay",
+        "gaseous_retention",
+        "half_life"
+      ],
+      "prose": "Heavy 20-minute empty-bed contact time allowed the GAC vessel to physically retard dissolved Radon-222 gas transit. By the time water exited the carbon bed, the 3.8-day half-life of radon had elapsed, reducing radioactivity in drinking water by 98%."
+    },
+    {
+      "id": "carbon_adsorption_geosmin_earthy_taste_odor_strip",
+      "carbon_filter_vessel_id": "COMMISSARY_FINISHING_POLISHER",
+      "carbon_base_feedstock": "WOOD_BASED_CHEMICALLY_ACTIVATED",
+      "iodine_number_mg_g": 1050.0,
+      "bed_empty_bed_contact_time_min": 8.0,
+      "timestamp_relative": "YEAR_17_CARBON_LOG_03",
+      "tags": [
+        "water_treatment",
+        "geosmin",
+        "mib",
+        "taste_and_odor",
+        "algal_metabolites"
+      ],
+      "prose": "Cyanobacterial blooms in the emergency surface reservoir released geosmin and 2-methylisoborneol (2-MIB), giving water a foul musty, earthy taste. A single pass through mesoporous wood-based GAC stripped both compounds below human olfactory thresholds (<5 ng/L)."
+    },
+    {
+      "id": "carbon_adsorption_biological_activated_carbon_bac",
+      "carbon_filter_vessel_id": "OZONE_BAC_HYBRID_COLUMN",
+      "carbon_base_feedstock": "BIOLOGICALLY_COLONIZED_GAC",
+      "iodine_number_mg_g": 750.0,
+      "bed_empty_bed_contact_time_min": 18.0,
+      "timestamp_relative": "YEAR_20_CARBON_LOG_01",
+      "tags": [
+        "water_treatment",
+        "bac",
+        "biological_filtration",
+        "biodegradation",
+        "ozone_synergy"
+      ],
+      "prose": "Following ozone oxidation, biodegradable organic carbon fed dense colonies of aerobic nitrifying bacteria inside the macropores of the GAC bed. The biological action continually self-regenerated adsorption sites, extending physical carbon bed life past five years."
+    }
+  ]
+}

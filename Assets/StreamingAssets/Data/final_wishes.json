@@ -1,106 +1,184 @@
-[
-  {
-    "archetype_id": "the_surgeon",
-    "wish_type": "teach_lesson",
-    "wish_title": "The Final Surgery",
-    "wish_description": "{name} asks for one last student. 'My hands won't be steady much longer,' they say. 'But someone needs to know how to close a wound properly.'",
-    "steps": [
-      { "step_id": "gather_surgical_tools", "description": "Gather a complete set of surgical tools from the wasteland.", "required_items": ["scalpel", "forceps", "surgical_suture"] },
-      { "step_id": "perform_demonstration", "description": "{name} performs a final demonstration surgery on a willing patient.", "requires_patient": true }
-    ],
-    "completion_text": "{name}'s final lesson is complete. The student nods — they understand. {name} sets down the scalpel for the last time. 'You'll do fine,' they say. 'You'll do fine.'",
-    "morale_bonus": 15,
-    "buff_id": "their_memory_lives_on"
-  },
-  {
-    "archetype_id": "the_soldier",
-    "wish_type": "build_memorial",
-    "wish_title": "The Fallen's Wall",
-    "wish_description": "{name} gathers scrap metal and concrete. 'Every unit has a memorial,' they say. 'This bunker should too.'",
-    "steps": [
-      { "step_id": "gather_materials", "description": "Collect scrap metal and concrete for the memorial.", "required_items": ["scrap_metal", "concrete_rubble"] },
-      { "step_id": "collect_dog_tags", "description": "Recover dog tags from fallen soldiers in the wasteland.", "required_items": ["dog_tags"] },
-      { "step_id": "inscribe_names", "description": "{name} spends hours inscribing names onto the memorial wall." }
-    ],
-    "completion_text": "The memorial stands in the corner of the bunker, names etched into salvaged steel. {name} salutes once, then turns away. 'That's everyone,' they say. 'That's everyone I remember.'",
-    "morale_bonus": 15,
-    "buff_id": "their_memory_lives_on"
-  },
-  {
-    "archetype_id": "the_nurse",
-    "wish_type": "teach_lesson",
-    "wish_title": "The Caregiver's Legacy",
-    "wish_description": "{name} calls the bunker's children to their bedside. 'Let me show you how to check a pulse,' they say. 'How to know when a fever is dangerous. How to hold someone's hand when they're scared.'",
-    "steps": [
-      { "step_id": "gather_teaching_aids", "description": "Find medical reference materials in the wasteland.", "required_items": ["medical_textbook", "anatomy_chart"] },
-      { "step_id": "teach_the_children", "description": "{name} teaches the bunker's children basic first aid and compassionate care." }
-    ],
-    "completion_text": "The children gather around {name}'s bed, practicing bandage wraps on each other's arms. {name} watches them with tired, proud eyes. 'You'll take care of each other,' they say. 'That's all I ever wanted.'",
-    "morale_bonus": 15,
-    "buff_id": "their_memory_lives_on"
-  },
-  {
-    "archetype_id": "the_mother",
-    "wish_type": "reconcile",
-    "wish_title": "The Last Letter",
-    "wish_description": "{name} asks for paper and a pencil. 'There's someone I need to write to,' they say. 'Someone I should have written to a long time ago.'",
-    "steps": [
-      { "step_id": "find_paper", "description": "Find clean paper and a working pen in the wasteland.", "required_items": ["clean_paper", "pen"] },
-      { "step_id": "deliver_letter", "description": "Deliver the letter — to a living survivor, or to a grave." }
-    ],
-    "completion_text": "{name} seals the letter with trembling hands. 'It says everything I should have said years ago,' they whisper. Whether the recipient ever reads it, {name} is at peace.",
-    "morale_bonus": 15,
-    "buff_id": "their_memory_lives_on"
-  },
-  {
-    "archetype_id": "the_mechanic",
-    "wish_type": "retrieve_heirloom",
-    "wish_title": "The Lost Wrench",
-    "wish_description": "{name} describes a specific wrench — their father's, their grandfather's before that. 'It's still in my old garage,' they say. 'If someone could bring it back...'",
-    "steps": [
-      { "step_id": "locate_garage", "description": "Find the mechanic's old garage in the ruined suburbs.", "requires_location": "ruined_garage" },
-      { "step_id": "retrieve_wrench", "description": "Recover the heirloom wrench from the garage." }
-    ],
-    "completion_text": "{name} holds the wrench like it's made of gold. Three generations of hands have worn the grip smooth. 'It still fits,' they say, turning it over. 'It still fits perfectly.'",
-    "morale_bonus": 15,
-    "buff_id": "their_memory_lives_on"
-  },
-  {
-    "archetype_id": "the_teacher",
-    "wish_type": "teach_lesson",
-    "wish_title": "The Last Period",
-    "wish_description": "{name} asks everyone in the bunker to gather. 'I have one more lesson to teach,' they say. 'It's not in any curriculum. It's about how to carry on when everything tells you to stop.'",
-    "steps": [
-      { "step_id": "prepare_lesson", "description": "Help {name} prepare their final lesson materials.", "required_items": ["chalk", "blank_journal"] },
-      { "step_id": "hold_class", "description": "Gather the bunker for {name}'s final class." }
-    ],
-    "completion_text": "The bunker is silent as {name} finishes speaking. Then, one by one, everyone stands. No one claps — that would feel wrong. They just stand, in quiet acknowledgment of a teacher who gave everything.",
-    "morale_bonus": 15,
-    "buff_id": "their_memory_lives_on"
-  },
-  {
-    "archetype_id": "the_refugee",
-    "wish_type": "see_the_sky",
-    "wish_title": "One Last Sunrise",
-    "wish_description": "{name} asks to be taken to the surface. 'Just once more,' they say. 'I want to see if the sun still rises the same way.'",
-    "steps": [
-      { "step_id": "escort_to_surface", "description": "Escort {name} to the surface at dawn, radiation suit and all." }
-    ],
-    "completion_text": "The sun breaks over the ash-choked horizon, painting the grey sky in shades of orange and pink that haven't been seen in months. {name} watches in silence, then smiles. 'It's still there,' they whisper. 'It's still there.'",
-    "morale_bonus": 15,
-    "buff_id": "their_memory_lives_on"
-  },
-  {
-    "archetype_id": "the_electrician",
-    "wish_type": "retrieve_heirloom",
-    "wish_title": "The Old Voltmeter",
-    "wish_description": "{name} mentions an old analog voltmeter — the first tool they ever owned. 'My mentor gave it to me when I was sixteen,' they say. 'It's still in the substation control room, if the roof hasn't caved in.'",
-    "steps": [
-      { "step_id": "reach_substation", "description": "Navigate to the old electrical substation through hazardous territory.", "requires_location": "electrical_substation" },
-      { "step_id": "retrieve_voltmeter", "description": "Find and recover the voltmeter from the control room." }
-    ],
-    "completion_text": "The voltmeter's needle still swings true when {name} tests it on a live circuit. They hold it for a long moment, then hang it on the bunker wall. 'So the next electrician knows where they came from,' they say.",
-    "morale_bonus": 15,
-    "buff_id": "their_memory_lives_on"
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "archetype_id": "the_surgeon",
+      "wish_type": "teach_lesson",
+      "wish_title": "The Final Surgery",
+      "wish_description": "{name} asks for one last student. 'My hands won't be steady much longer,' they say. 'But someone needs to know how to close a wound properly.'",
+      "steps": [
+        {
+          "step_id": "gather_surgical_tools",
+          "description": "Gather a complete set of surgical tools from the wasteland.",
+          "required_items": [
+            "scalpel",
+            "forceps",
+            "surgical_suture"
+          ]
+        },
+        {
+          "step_id": "perform_demonstration",
+          "description": "{name} performs a final demonstration surgery on a willing patient.",
+          "requires_patient": true
+        }
+      ],
+      "completion_text": "{name}'s final lesson is complete. The student nods — they understand. {name} sets down the scalpel for the last time. 'You'll do fine,' they say. 'You'll do fine.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_soldier",
+      "wish_type": "build_memorial",
+      "wish_title": "The Fallen's Wall",
+      "wish_description": "{name} gathers scrap metal and concrete. 'Every unit has a memorial,' they say. 'This bunker should too.'",
+      "steps": [
+        {
+          "step_id": "gather_materials",
+          "description": "Collect scrap metal and concrete for the memorial.",
+          "required_items": [
+            "scrap_metal",
+            "concrete_rubble"
+          ]
+        },
+        {
+          "step_id": "collect_dog_tags",
+          "description": "Recover dog tags from fallen soldiers in the wasteland.",
+          "required_items": [
+            "dog_tags"
+          ]
+        },
+        {
+          "step_id": "inscribe_names",
+          "description": "{name} spends hours inscribing names onto the memorial wall."
+        }
+      ],
+      "completion_text": "The memorial stands in the corner of the bunker, names etched into salvaged steel. {name} salutes once, then turns away. 'That's everyone,' they say. 'That's everyone I remember.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_nurse",
+      "wish_type": "teach_lesson",
+      "wish_title": "The Caregiver's Legacy",
+      "wish_description": "{name} calls the bunker's children to their bedside. 'Let me show you how to check a pulse,' they say. 'How to know when a fever is dangerous. How to hold someone's hand when they're scared.'",
+      "steps": [
+        {
+          "step_id": "gather_teaching_aids",
+          "description": "Find medical reference materials in the wasteland.",
+          "required_items": [
+            "medical_textbook",
+            "anatomy_chart"
+          ]
+        },
+        {
+          "step_id": "teach_the_children",
+          "description": "{name} teaches the bunker's children basic first aid and compassionate care."
+        }
+      ],
+      "completion_text": "The children gather around {name}'s bed, practicing bandage wraps on each other's arms. {name} watches them with tired, proud eyes. 'You'll take care of each other,' they say. 'That's all I ever wanted.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_mother",
+      "wish_type": "reconcile",
+      "wish_title": "The Last Letter",
+      "wish_description": "{name} asks for paper and a pencil. 'There's someone I need to write to,' they say. 'Someone I should have written to a long time ago.'",
+      "steps": [
+        {
+          "step_id": "find_paper",
+          "description": "Find clean paper and a working pen in the wasteland.",
+          "required_items": [
+            "clean_paper",
+            "pen"
+          ]
+        },
+        {
+          "step_id": "deliver_letter",
+          "description": "Deliver the letter — to a living survivor, or to a grave."
+        }
+      ],
+      "completion_text": "{name} seals the letter with trembling hands. 'It says everything I should have said years ago,' they whisper. Whether the recipient ever reads it, {name} is at peace.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_mechanic",
+      "wish_type": "retrieve_heirloom",
+      "wish_title": "The Lost Wrench",
+      "wish_description": "{name} describes a specific wrench — their father's, their grandfather's before that. 'It's still in my old garage,' they say. 'If someone could bring it back...'",
+      "steps": [
+        {
+          "step_id": "locate_garage",
+          "description": "Find the mechanic's old garage in the ruined suburbs.",
+          "requires_location": "ruined_garage"
+        },
+        {
+          "step_id": "retrieve_wrench",
+          "description": "Recover the heirloom wrench from the garage."
+        }
+      ],
+      "completion_text": "{name} holds the wrench like it's made of gold. Three generations of hands have worn the grip smooth. 'It still fits,' they say, turning it over. 'It still fits perfectly.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_teacher",
+      "wish_type": "teach_lesson",
+      "wish_title": "The Last Period",
+      "wish_description": "{name} asks everyone in the bunker to gather. 'I have one more lesson to teach,' they say. 'It's not in any curriculum. It's about how to carry on when everything tells you to stop.'",
+      "steps": [
+        {
+          "step_id": "prepare_lesson",
+          "description": "Help {name} prepare their final lesson materials.",
+          "required_items": [
+            "chalk",
+            "blank_journal"
+          ]
+        },
+        {
+          "step_id": "hold_class",
+          "description": "Gather the bunker for {name}'s final class."
+        }
+      ],
+      "completion_text": "The bunker is silent as {name} finishes speaking. Then, one by one, everyone stands. No one claps — that would feel wrong. They just stand, in quiet acknowledgment of a teacher who gave everything.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_refugee",
+      "wish_type": "see_the_sky",
+      "wish_title": "One Last Sunrise",
+      "wish_description": "{name} asks to be taken to the surface. 'Just once more,' they say. 'I want to see if the sun still rises the same way.'",
+      "steps": [
+        {
+          "step_id": "escort_to_surface",
+          "description": "Escort {name} to the surface at dawn, radiation suit and all."
+        }
+      ],
+      "completion_text": "The sun breaks over the ash-choked horizon, painting the grey sky in shades of orange and pink that haven't been seen in months. {name} watches in silence, then smiles. 'It's still there,' they whisper. 'It's still there.'",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    },
+    {
+      "archetype_id": "the_electrician",
+      "wish_type": "retrieve_heirloom",
+      "wish_title": "The Old Voltmeter",
+      "wish_description": "{name} mentions an old analog voltmeter — the first tool they ever owned. 'My mentor gave it to me when I was sixteen,' they say. 'It's still in the substation control room, if the roof hasn't caved in.'",
+      "steps": [
+        {
+          "step_id": "reach_substation",
+          "description": "Navigate to the old electrical substation through hazardous territory.",
+          "requires_location": "electrical_substation"
+        },
+        {
+          "step_id": "retrieve_voltmeter",
+          "description": "Find and recover the voltmeter from the control room."
+        }
+      ],
+      "completion_text": "The voltmeter's needle still swings true when {name} tests it on a live circuit. They hold it for a long moment, then hang it on the bunker wall. 'So the next electrician knows where they came from,' they say.",
+      "morale_bonus": 15,
+      "buff_id": "their_memory_lives_on"
+    }
+  ]
+}

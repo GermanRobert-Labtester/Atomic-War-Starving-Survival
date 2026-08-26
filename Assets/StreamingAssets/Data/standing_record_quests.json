@@ -1,558 +1,561 @@
-[
-  {
-    "id": "quest_record_the_plate",
-    "display_name": "The Plate on the Last Lamp",
-    "type": "expedition",
-    "briefing": "The last Sector 4 lamp has a brass plate over the stencil. Maren Holt is finishing a crate of spares. Ivy will not cross. Yara will not come south. The seam is the first room of the pack. The route cannot start in a menu.",
-    "prereq_quest_id": "",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "loc_cut_kilometre_19",
-    "complete_mutation": "mutation_km19_plated",
-    "fail_mutation": "mutation_km19_scraped",
-    "stages": [
-      {
-        "id": "stage_post",
-        "text": "Inspect the post. Plate vs stencil. Four screws, one of them the wrong metal."
-      },
-      {
-        "id": "stage_seam",
-        "text": "The seam. Ash on one side of a survey nail. Salt-white on the other."
-      },
-      {
-        "id": "stage_oil",
-        "text": "Inspect the oil tin. Leave, take, or split. Overlay pigment in a smaller pot."
-      },
-      {
-        "id": "stage_crate",
-        "text": "Open the plate crate or refuse. Dark until the post has been inspected."
-      },
-      {
-        "id": "stage_maren",
-        "text": "Speak to Maren, or to the empty crate."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_plate_screw",
-        "text": "Screw the plate. Brass over stencil.",
-        "set_flag": "mutation_km19_plated"
-      },
-      {
-        "id": "record_plate_scrape",
-        "text": "Scrape the plate. Stencil reads again in a day.",
-        "set_flag": "mutation_km19_scraped"
-      },
-      {
-        "id": "record_plate_both",
-        "text": "Leave both layers. The post means two things.",
-        "set_flag": "mutation_km19_palimpsest"
-      }
-    ]
-  },
-  {
-    "id": "quest_record_grease_pencil",
-    "display_name": "Under Glass",
-    "type": "expedition",
-    "briefing": "Convoy 12's hold is a blotter and a dead telephone. Overlay printed plates would replace the grease pencil. Copying the pencil discovers the grid convoy slots. Replacing it mutates the map. The hand will still be under there, paler.",
-    "prereq_quest_id": "quest_record_the_plate",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "loc_transit_authority_hq",
-    "complete_mutation": "mutation_transit_maps",
-    "fail_mutation": "mutation_transit_maps",
-    "stages": [
-      {
-        "id": "stage_lobby",
-        "text": "Enter the lobby. The published timetable is pre-Exchange and wrong."
-      },
-      {
-        "id": "stage_glass",
-        "text": "Inspect the map glass. Grease pencil: convoy slots, arrows, a circle twice around Convoy 12."
-      },
-      {
-        "id": "stage_dob",
-        "text": "Sit the DOB desk. The blotter: a child's birth year written twice, once crossed through."
-      },
-      {
-        "id": "stage_radio",
-        "text": "Radio gallery. The last turn-back order."
-      },
-      {
-        "id": "stage_bench",
-        "text": "Choose the overlay bench: install, crate, or palimpsest."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_transit_install",
-        "text": "Install Overlay print. The hand is paler under glass.",
-        "set_flag": "mutation_transit_maps"
-      },
-      {
-        "id": "record_transit_crate",
-        "text": "Crate the print. The grease pencil stays the document.",
-        "set_flag": "mutation_transit_maps"
-      },
-      {
-        "id": "record_transit_both",
-        "text": "Palimpsest. The map means two things, which is already its job.",
-        "set_flag": "mutation_transit_maps"
-      }
-    ]
-  },
-  {
-    "id": "quest_record_wrong_stacks",
-    "display_name": "Grey Brick",
-    "type": "expedition",
-    "briefing": "Garrison already searched for the Schedule. Overlay is filing site plates into municipal drawers. The brick may hold a field index. It will not hold households.",
-    "prereq_quest_id": "quest_record_grease_pencil",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "loc_municipal_archive",
-    "complete_mutation": "mutation_archive_dug",
-    "fail_mutation": "mutation_archive_sunk",
-    "stages": [
-      {
-        "id": "stage_vestibule",
-        "text": "Vestibule visitor book. Sign or don't."
-      },
-      {
-        "id": "stage_brick",
-        "text": "The grey brick. Dig hours: collapse risk. Or leave it. Or pull the half-sunk plate."
-      },
-      {
-        "id": "stage_cage",
-        "text": "Reading cage. Copy the field index or take it. Ira will know the difference."
-      },
-      {
-        "id": "stage_dock",
-        "text": "Loading dock. Crate stencilled RECORD / NOT SCHEDULE."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_archive_dig",
-        "text": "Dig. Free a field index, or sink the plate deeper.",
-        "set_flag": "mutation_archive_dug"
-      },
-      {
-        "id": "record_archive_leave",
-        "text": "Leave the brick. The Garrison looked twice.",
-        "set_flag": "mutation_archive_sunk"
-      },
-      {
-        "id": "record_archive_pull",
-        "text": "Pull the half-sunk plate. The index stays in the geology.",
-        "set_flag": "mutation_archive_sunk"
-      }
-    ]
-  },
-  {
-    "id": "quest_record_the_book",
-    "display_name": "The Visited Column",
-    "type": "expedition",
-    "briefing": "Ira Vell has the Standing Record. The visited column is empty until you have been. Overlay wants the book out. A photocopy in inventory does not fill the Vault cage. The book has a column for that. It is empty until the column is not a lie.",
-    "prereq_quest_id": "quest_record_wrong_stacks",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "location_ministry_of_truth_bunker",
-    "complete_mutation": "mutation_ministry_recast",
-    "fail_mutation": "mutation_ministry_recast",
-    "stages": [
-      {
-        "id": "stage_stair",
-        "text": "Stair authenticator."
-      },
-      {
-        "id": "stage_enquiry",
-        "text": "Enquiry memo."
-      },
-      {
-        "id": "stage_scoring",
-        "text": "Scoring floor. Occupation points. Frayne absent, clerks nine."
-      },
-      {
-        "id": "stage_registrar",
-        "text": "Registrar: see the book. Do not skip."
-      },
-      {
-        "id": "stage_annex",
-        "text": "Obstacle annex. D/9 paper, not a Dead Hand crawl."
-      },
-      {
-        "id": "stage_phone",
-        "text": "Dead phone blotter."
-      },
-      {
-        "id": "stage_choice",
-        "text": "Copy in place, take, Overlay receipt, or refuse."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_book_copy",
-        "text": "Copy in place. Incomplete copy. Ira knows.",
-        "set_flag": "mutation_ministry_recast"
-      },
-      {
-        "id": "record_book_take",
-        "text": "Take it. Overlay wants it out.",
-        "set_flag": "mutation_ministry_recast"
-      },
-      {
-        "id": "record_book_receipt",
-        "text": "Overlay receipt. The book leaves with a plate trail.",
-        "set_flag": "mutation_ministry_recast"
-      },
-      {
-        "id": "record_book_refuse",
-        "text": "Refuse. The visited column stays honest-empty.",
-        "set_flag": "mutation_ministry_recast"
-      }
-    ]
-  },
-  {
-    "id": "quest_record_mass_or_lot",
-    "display_name": "The Needle",
-    "type": "expedition",
-    "briefing": "Osric Tann prices mass. Overlay lots have no kilograms. Edor may be waiting. Stand on the scale or put a plate on it. It will read as mass. That is the only number Osric will write.",
-    "prereq_quest_id": "quest_record_the_book",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "loc_weighbridge",
-    "complete_mutation": "mutation_weigh_lots",
-    "fail_mutation": "mutation_weigh_mass_only",
-    "stages": [
-      {
-        "id": "stage_scale",
-        "text": "Stand on the scale. Osric will write a mass."
-      },
-      {
-        "id": "stage_hut",
-        "text": "Hut. Calibration weight on its hook, or not, if Overlay borrowed brass."
-      },
-      {
-        "id": "stage_receipts",
-        "text": "Receipts: copy, steal the white stack, or leave."
-      },
-      {
-        "id": "stage_lots",
-        "text": "Lot stack on the beam: install, crate, or palimpsest column."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_weigh_lots",
-        "text": "Install lots on the beam. District 8 can pathfind by number.",
-        "set_flag": "mutation_weigh_lots"
-      },
-      {
-        "id": "record_weigh_mass",
-        "text": "Mass only. The needle has no opinion.",
-        "set_flag": "mutation_weigh_mass_only"
-      },
-      {
-        "id": "record_weigh_both",
-        "text": "Both columns disagree. Clerks lose hours.",
-        "set_flag": "mutation_weigh_lots"
-      }
-    ]
-  },
-  {
-    "id": "quest_record_hands",
-    "display_name": "Plot 114",
-    "type": "expedition",
-    "briefing": "The Verge names places by hand and waiting list. Overlay names them by lot. Dara Mewn waters a plot. If levy took the caretaker, the hut is dark and Overlay has already been.",
-    "prereq_quest_id": "quest_record_mass_or_lot",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "loc_grange_hall",
-    "complete_mutation": "mutation_verge_names",
-    "fail_mutation": "mutation_verge_names",
-    "stages": [
-      {
-        "id": "stage_porch",
-        "text": "Grange porch. Leave weapons here. The sign has been relettered."
-      },
-      {
-        "id": "stage_ledger",
-        "text": "Ledger: names vs numbers. A rifle tag with a cross in the ledger inside."
-      },
-      {
-        "id": "stage_kitchen",
-        "text": "Kitchen notice. Overlay plated a notice for the drawer instead."
-      },
-      {
-        "id": "stage_gate",
-        "text": "Allotments gate."
-      },
-      {
-        "id": "stage_sleeve",
-        "text": "Noticeboard sleeve. Plot 114 is still 114."
-      },
-      {
-        "id": "stage_plot",
-        "text": "Named plot. A plate with a different 114. Dara waters this one."
-      },
-      {
-        "id": "stage_bin",
-        "text": "Brass bin. Plates mixed with fittings. Same metal."
-      },
-      {
-        "id": "stage_vote",
-        "text": "Vote, or leave the Overlay notice."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_verge_names",
-        "text": "The Verge keeps names. The plate does not go on the row.",
-        "set_flag": "mutation_verge_names"
-      },
-      {
-        "id": "record_verge_plate",
-        "text": "The plate goes on the plot. Two 114s in the dirt.",
-        "set_flag": "mutation_verge_names"
-      }
-    ]
-  },
-  {
-    "id": "quest_record_friendly_obstacle",
-    "display_name": "Listed Charges",
-    "type": "expedition",
-    "briefing": "Overlay clipboard: friendly obstacle. D/9 already marked the rail. Looking from the span is a room. Checking the detonator is a branch that mutates Toll access - not an action setpiece.",
-    "prereq_quest_id": "quest_record_hands",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "loc_bridge_seven",
-    "complete_mutation": "mutation_bridge_listed",
-    "fail_mutation": "mutation_bridge_disturbed",
-    "stages": [
-      {
-        "id": "stage_near",
-        "text": "Near bank."
-      },
-      {
-        "id": "stage_span",
-        "text": "Span. A stone on the marked side of a scupper. Do not move it. That is not mercy."
-      },
-      {
-        "id": "stage_charge",
-        "text": "Underside. Look, refuse, check the housing."
-      },
-      {
-        "id": "stage_survey",
-        "text": "Survey clipboard. Sign, scrape, or copy."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_bridge_listed",
-        "text": "Sign. The span is a listed charge in the Record.",
-        "set_flag": "mutation_bridge_listed"
-      },
-      {
-        "id": "record_bridge_disturbed",
-        "text": "Check the housing. The Tollman does not need to be present for the authority to work.",
-        "set_flag": "mutation_bridge_disturbed"
-      },
-      {
-        "id": "record_bridge_copy",
-        "text": "Copy the line. Ostrowski's sheet will match.",
-        "set_flag": "mutation_bridge_listed"
-      }
-    ]
-  },
-  {
-    "id": "quest_record_the_failure",
-    "display_name": "As Far As It Opened",
-    "type": "expedition",
-    "briefing": "COMPLETE plate vs mid-cycle gauges. Benno lives in the failure. Overlay cannot close a flood with brass. District 8 can file it closed. They can screw COMPLETE on the leaf. The leaf is still where it stopped.",
-    "prereq_quest_id": "quest_record_friendly_obstacle",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "loc_lock_gate_four",
-    "complete_mutation": "mutation_lock_complete_lie",
-    "fail_mutation": "mutation_lock_gauges_filed",
-    "stages": [
-      {
-        "id": "stage_towpath",
-        "text": "Towpath. Nomi etiquette if the Shallows were used."
-      },
-      {
-        "id": "stage_control",
-        "text": "Control wheel. The gate froze mid-cycle."
-      },
-      {
-        "id": "stage_benno",
-        "text": "Benno's bunk. Copy his rise-chart or not. Water-heights, dates."
-      },
-      {
-        "id": "stage_gauges",
-        "text": "Gauges. They believe the failure."
-      },
-      {
-        "id": "stage_leaf",
-        "text": "Gate leaf. Where it stopped."
-      },
-      {
-        "id": "stage_plate",
-        "text": "Reclaim plate. Leave, scrape, or palimpsest."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_lock_lie",
-        "text": "Leave COMPLETE. A flood becomes a closed file.",
-        "set_flag": "mutation_lock_complete_lie"
-      },
-      {
-        "id": "record_lock_gauges",
-        "text": "File the gauges. Honest. The Drown reads it.",
-        "set_flag": "mutation_lock_gauges_filed"
-      },
-      {
-        "id": "record_lock_plate_down",
-        "text": "Take the plate down. The leaf is still where it stopped.",
-        "set_flag": "mutation_lock_plate_down"
-      }
-    ]
-  },
-  {
-    "id": "quest_record_fallback",
-    "display_name": "Fourteen, a Gap, Six",
-    "type": "expedition",
-    "briefing": "Overlay refreshes 12-B as a finished overflow address. The kit is water. The stencil is a levy map. Pump Nine condemned keeps the Vault far; one dry motor is a room that changes travel.",
-    "prereq_quest_id": "quest_record_the_failure",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "loc_alloc_12b",
-    "complete_mutation": "mutation_12b_address",
-    "fail_mutation": "mutation_12b_kit_gone",
-    "stages": [
-      {
-        "id": "stage_stair",
-        "text": "Stair chalk. Fourteen marks, a gap, then six. Do not close the gap."
-      },
-      {
-        "id": "stage_hall",
-        "text": "Unprovisioned hall."
-      },
-      {
-        "id": "stage_kit",
-        "text": "Kit: leave, take, or copy notes only."
-      },
-      {
-        "id": "stage_cup",
-        "text": "Water cup. The kit is water."
-      },
-      {
-        "id": "stage_stencil",
-        "text": "Stencil: refresh, scrape, or original."
-      },
-      {
-        "id": "stage_pump",
-        "text": "Optional: Pump approach. Dry motor vs condemned tag."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_12b_address",
-        "text": "Refresh the stencil. 12-C can cite 12-B as a pool.",
-        "set_flag": "mutation_12b_address"
-      },
-      {
-        "id": "record_12b_original",
-        "text": "Keep the original. The gap stays part of the fallback.",
-        "set_flag": "mutation_12b_address"
-      },
-      {
-        "id": "record_pump_live",
-        "text": "Energise the dry motor. The Drown lowers a step.",
-        "set_flag": "mutation_pump_live"
-      },
-      {
-        "id": "record_pump_condemned",
-        "text": "Honour the tag. Sublevels stay shut.",
-        "set_flag": "mutation_pump_condemned"
-      }
-    ]
-  },
-  {
-    "id": "quest_record_which_gazetteer",
-    "display_name": "The Second Copy",
-    "type": "expedition",
-    "briefing": "Quil will not file plates without spoken site names. Sole will not enter ground on one testimony. Maren waits in the airlock with hats of brass. The player writes which gazetteer stands. Not from the bunker.",
-    "prereq_quest_id": "quest_record_fallback",
-    "min_day": 75,
-    "knowledge_key": "",
-    "target_location_id": "location_the_memory_vault",
-    "complete_mutation": "mutation_gazetteer_stands",
-    "fail_mutation": "mutation_gazetteer_scraped",
-    "stages": [
-      {
-        "id": "stage_window",
-        "text": "Window entry."
-      },
-      {
-        "id": "stage_dusted",
-        "text": "Dusted room. The crate undusted on purpose."
-      },
-      {
-        "id": "stage_names",
-        "text": "Name desk. Say sites or refuse. If you don't say it, you're only copying."
-      },
-      {
-        "id": "stage_crate",
-        "text": "Refused crate. String-tied. A plate is a copy that does not have a mouth."
-      },
-      {
-        "id": "stage_dock",
-        "text": "Vault dock. Etiquette."
-      },
-      {
-        "id": "stage_airlock",
-        "text": "Airlock plates. Maren's hats of brass."
-      },
-      {
-        "id": "stage_stacks",
-        "text": "Stacks."
-      },
-      {
-        "id": "stage_sole",
-        "text": "Sole's table. Two witnesses, or nothing."
-      },
-      {
-        "id": "stage_cage",
-        "text": "Second-copy cage. Filled only if the route was walked."
-      },
-      {
-        "id": "stage_file",
-        "text": "The book's place. File Record, lived map, both, or nothing."
-      }
-    ],
-    "choices": [
-      {
-        "id": "record_gazetteer_stands",
-        "text": "File the Record. Posts have numbers. Lived names are subtitles.",
-        "set_flag": "mutation_gazetteer_stands"
-      },
-      {
-        "id": "record_gazetteer_lived",
-        "text": "File the lived map. Plates in a crate, string-tied.",
-        "set_flag": "mutation_gazetteer_lived"
-      },
-      {
-        "id": "record_gazetteer_both",
-        "text": "File both. Nobody likes either.",
-        "set_flag": "mutation_gazetteer_palimpsest"
-      },
-      {
-        "id": "record_gazetteer_none",
-        "text": "File nothing. Benno's gauges are the only honest document.",
-        "set_flag": "mutation_gazetteer_scraped"
-      }
-    ]
-  }
-]
+{
+  "schema_version": 1,
+  "quests": [
+    {
+      "id": "quest_record_the_plate",
+      "display_name": "The Plate on the Last Lamp",
+      "type": "expedition",
+      "briefing": "The last Sector 4 lamp has a brass plate over the stencil. Maren Holt is finishing a crate of spares. Ivy will not cross. Yara will not come south. The seam is the first room of the pack. The route cannot start in a menu.",
+      "prereq_quest_id": "",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "loc_cut_kilometre_19",
+      "complete_mutation": "mutation_km19_plated",
+      "fail_mutation": "mutation_km19_scraped",
+      "stages": [
+        {
+          "id": "stage_post",
+          "text": "Inspect the post. Plate vs stencil. Four screws, one of them the wrong metal."
+        },
+        {
+          "id": "stage_seam",
+          "text": "The seam. Ash on one side of a survey nail. Salt-white on the other."
+        },
+        {
+          "id": "stage_oil",
+          "text": "Inspect the oil tin. Leave, take, or split. Overlay pigment in a smaller pot."
+        },
+        {
+          "id": "stage_crate",
+          "text": "Open the plate crate or refuse. Dark until the post has been inspected."
+        },
+        {
+          "id": "stage_maren",
+          "text": "Speak to Maren, or to the empty crate."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_plate_screw",
+          "text": "Screw the plate. Brass over stencil.",
+          "set_flag": "mutation_km19_plated"
+        },
+        {
+          "id": "record_plate_scrape",
+          "text": "Scrape the plate. Stencil reads again in a day.",
+          "set_flag": "mutation_km19_scraped"
+        },
+        {
+          "id": "record_plate_both",
+          "text": "Leave both layers. The post means two things.",
+          "set_flag": "mutation_km19_palimpsest"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_grease_pencil",
+      "display_name": "Under Glass",
+      "type": "expedition",
+      "briefing": "Convoy 12's hold is a blotter and a dead telephone. Overlay printed plates would replace the grease pencil. Copying the pencil discovers the grid convoy slots. Replacing it mutates the map. The hand will still be under there, paler.",
+      "prereq_quest_id": "quest_record_the_plate",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "loc_transit_authority_hq",
+      "complete_mutation": "mutation_transit_maps",
+      "fail_mutation": "mutation_transit_maps",
+      "stages": [
+        {
+          "id": "stage_lobby",
+          "text": "Enter the lobby. The published timetable is pre-Exchange and wrong."
+        },
+        {
+          "id": "stage_glass",
+          "text": "Inspect the map glass. Grease pencil: convoy slots, arrows, a circle twice around Convoy 12."
+        },
+        {
+          "id": "stage_dob",
+          "text": "Sit the DOB desk. The blotter: a child's birth year written twice, once crossed through."
+        },
+        {
+          "id": "stage_radio",
+          "text": "Radio gallery. The last turn-back order."
+        },
+        {
+          "id": "stage_bench",
+          "text": "Choose the overlay bench: install, crate, or palimpsest."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_transit_install",
+          "text": "Install Overlay print. The hand is paler under glass.",
+          "set_flag": "mutation_transit_maps"
+        },
+        {
+          "id": "record_transit_crate",
+          "text": "Crate the print. The grease pencil stays the document.",
+          "set_flag": "mutation_transit_maps"
+        },
+        {
+          "id": "record_transit_both",
+          "text": "Palimpsest. The map means two things, which is already its job.",
+          "set_flag": "mutation_transit_maps"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_wrong_stacks",
+      "display_name": "Grey Brick",
+      "type": "expedition",
+      "briefing": "Garrison already searched for the Schedule. Overlay is filing site plates into municipal drawers. The brick may hold a field index. It will not hold households.",
+      "prereq_quest_id": "quest_record_grease_pencil",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "loc_municipal_archive",
+      "complete_mutation": "mutation_archive_dug",
+      "fail_mutation": "mutation_archive_sunk",
+      "stages": [
+        {
+          "id": "stage_vestibule",
+          "text": "Vestibule visitor book. Sign or don't."
+        },
+        {
+          "id": "stage_brick",
+          "text": "The grey brick. Dig hours: collapse risk. Or leave it. Or pull the half-sunk plate."
+        },
+        {
+          "id": "stage_cage",
+          "text": "Reading cage. Copy the field index or take it. Ira will know the difference."
+        },
+        {
+          "id": "stage_dock",
+          "text": "Loading dock. Crate stencilled RECORD / NOT SCHEDULE."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_archive_dig",
+          "text": "Dig. Free a field index, or sink the plate deeper.",
+          "set_flag": "mutation_archive_dug"
+        },
+        {
+          "id": "record_archive_leave",
+          "text": "Leave the brick. The Garrison looked twice.",
+          "set_flag": "mutation_archive_sunk"
+        },
+        {
+          "id": "record_archive_pull",
+          "text": "Pull the half-sunk plate. The index stays in the geology.",
+          "set_flag": "mutation_archive_sunk"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_book",
+      "display_name": "The Visited Column",
+      "type": "expedition",
+      "briefing": "Ira Vell has the Standing Record. The visited column is empty until you have been. Overlay wants the book out. A photocopy in inventory does not fill the Vault cage. The book has a column for that. It is empty until the column is not a lie.",
+      "prereq_quest_id": "quest_record_wrong_stacks",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "location_ministry_of_truth_bunker",
+      "complete_mutation": "mutation_ministry_recast",
+      "fail_mutation": "mutation_ministry_recast",
+      "stages": [
+        {
+          "id": "stage_stair",
+          "text": "Stair authenticator."
+        },
+        {
+          "id": "stage_enquiry",
+          "text": "Enquiry memo."
+        },
+        {
+          "id": "stage_scoring",
+          "text": "Scoring floor. Occupation points. Frayne absent, clerks nine."
+        },
+        {
+          "id": "stage_registrar",
+          "text": "Registrar: see the book. Do not skip."
+        },
+        {
+          "id": "stage_annex",
+          "text": "Obstacle annex. D/9 paper, not a Dead Hand crawl."
+        },
+        {
+          "id": "stage_phone",
+          "text": "Dead phone blotter."
+        },
+        {
+          "id": "stage_choice",
+          "text": "Copy in place, take, Overlay receipt, or refuse."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_book_copy",
+          "text": "Copy in place. Incomplete copy. Ira knows.",
+          "set_flag": "mutation_ministry_recast"
+        },
+        {
+          "id": "record_book_take",
+          "text": "Take it. Overlay wants it out.",
+          "set_flag": "mutation_ministry_recast"
+        },
+        {
+          "id": "record_book_receipt",
+          "text": "Overlay receipt. The book leaves with a plate trail.",
+          "set_flag": "mutation_ministry_recast"
+        },
+        {
+          "id": "record_book_refuse",
+          "text": "Refuse. The visited column stays honest-empty.",
+          "set_flag": "mutation_ministry_recast"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_mass_or_lot",
+      "display_name": "The Needle",
+      "type": "expedition",
+      "briefing": "Osric Tann prices mass. Overlay lots have no kilograms. Edor may be waiting. Stand on the scale or put a plate on it. It will read as mass. That is the only number Osric will write.",
+      "prereq_quest_id": "quest_record_the_book",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "loc_weighbridge",
+      "complete_mutation": "mutation_weigh_lots",
+      "fail_mutation": "mutation_weigh_mass_only",
+      "stages": [
+        {
+          "id": "stage_scale",
+          "text": "Stand on the scale. Osric will write a mass."
+        },
+        {
+          "id": "stage_hut",
+          "text": "Hut. Calibration weight on its hook, or not, if Overlay borrowed brass."
+        },
+        {
+          "id": "stage_receipts",
+          "text": "Receipts: copy, steal the white stack, or leave."
+        },
+        {
+          "id": "stage_lots",
+          "text": "Lot stack on the beam: install, crate, or palimpsest column."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_weigh_lots",
+          "text": "Install lots on the beam. District 8 can pathfind by number.",
+          "set_flag": "mutation_weigh_lots"
+        },
+        {
+          "id": "record_weigh_mass",
+          "text": "Mass only. The needle has no opinion.",
+          "set_flag": "mutation_weigh_mass_only"
+        },
+        {
+          "id": "record_weigh_both",
+          "text": "Both columns disagree. Clerks lose hours.",
+          "set_flag": "mutation_weigh_lots"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_hands",
+      "display_name": "Plot 114",
+      "type": "expedition",
+      "briefing": "The Verge names places by hand and waiting list. Overlay names them by lot. Dara Mewn waters a plot. If levy took the caretaker, the hut is dark and Overlay has already been.",
+      "prereq_quest_id": "quest_record_mass_or_lot",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "loc_grange_hall",
+      "complete_mutation": "mutation_verge_names",
+      "fail_mutation": "mutation_verge_names",
+      "stages": [
+        {
+          "id": "stage_porch",
+          "text": "Grange porch. Leave weapons here. The sign has been relettered."
+        },
+        {
+          "id": "stage_ledger",
+          "text": "Ledger: names vs numbers. A rifle tag with a cross in the ledger inside."
+        },
+        {
+          "id": "stage_kitchen",
+          "text": "Kitchen notice. Overlay plated a notice for the drawer instead."
+        },
+        {
+          "id": "stage_gate",
+          "text": "Allotments gate."
+        },
+        {
+          "id": "stage_sleeve",
+          "text": "Noticeboard sleeve. Plot 114 is still 114."
+        },
+        {
+          "id": "stage_plot",
+          "text": "Named plot. A plate with a different 114. Dara waters this one."
+        },
+        {
+          "id": "stage_bin",
+          "text": "Brass bin. Plates mixed with fittings. Same metal."
+        },
+        {
+          "id": "stage_vote",
+          "text": "Vote, or leave the Overlay notice."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_verge_names",
+          "text": "The Verge keeps names. The plate does not go on the row.",
+          "set_flag": "mutation_verge_names"
+        },
+        {
+          "id": "record_verge_plate",
+          "text": "The plate goes on the plot. Two 114s in the dirt.",
+          "set_flag": "mutation_verge_names"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_friendly_obstacle",
+      "display_name": "Listed Charges",
+      "type": "expedition",
+      "briefing": "Overlay clipboard: friendly obstacle. D/9 already marked the rail. Looking from the span is a room. Checking the detonator is a branch that mutates Toll access - not an action setpiece.",
+      "prereq_quest_id": "quest_record_hands",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "loc_bridge_seven",
+      "complete_mutation": "mutation_bridge_listed",
+      "fail_mutation": "mutation_bridge_disturbed",
+      "stages": [
+        {
+          "id": "stage_near",
+          "text": "Near bank."
+        },
+        {
+          "id": "stage_span",
+          "text": "Span. A stone on the marked side of a scupper. Do not move it. That is not mercy."
+        },
+        {
+          "id": "stage_charge",
+          "text": "Underside. Look, refuse, check the housing."
+        },
+        {
+          "id": "stage_survey",
+          "text": "Survey clipboard. Sign, scrape, or copy."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_bridge_listed",
+          "text": "Sign. The span is a listed charge in the Record.",
+          "set_flag": "mutation_bridge_listed"
+        },
+        {
+          "id": "record_bridge_disturbed",
+          "text": "Check the housing. The Tollman does not need to be present for the authority to work.",
+          "set_flag": "mutation_bridge_disturbed"
+        },
+        {
+          "id": "record_bridge_copy",
+          "text": "Copy the line. Ostrowski's sheet will match.",
+          "set_flag": "mutation_bridge_listed"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_the_failure",
+      "display_name": "As Far As It Opened",
+      "type": "expedition",
+      "briefing": "COMPLETE plate vs mid-cycle gauges. Benno lives in the failure. Overlay cannot close a flood with brass. District 8 can file it closed. They can screw COMPLETE on the leaf. The leaf is still where it stopped.",
+      "prereq_quest_id": "quest_record_friendly_obstacle",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "loc_lock_gate_four",
+      "complete_mutation": "mutation_lock_complete_lie",
+      "fail_mutation": "mutation_lock_gauges_filed",
+      "stages": [
+        {
+          "id": "stage_towpath",
+          "text": "Towpath. Nomi etiquette if the Shallows were used."
+        },
+        {
+          "id": "stage_control",
+          "text": "Control wheel. The gate froze mid-cycle."
+        },
+        {
+          "id": "stage_benno",
+          "text": "Benno's bunk. Copy his rise-chart or not. Water-heights, dates."
+        },
+        {
+          "id": "stage_gauges",
+          "text": "Gauges. They believe the failure."
+        },
+        {
+          "id": "stage_leaf",
+          "text": "Gate leaf. Where it stopped."
+        },
+        {
+          "id": "stage_plate",
+          "text": "Reclaim plate. Leave, scrape, or palimpsest."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_lock_lie",
+          "text": "Leave COMPLETE. A flood becomes a closed file.",
+          "set_flag": "mutation_lock_complete_lie"
+        },
+        {
+          "id": "record_lock_gauges",
+          "text": "File the gauges. Honest. The Drown reads it.",
+          "set_flag": "mutation_lock_gauges_filed"
+        },
+        {
+          "id": "record_lock_plate_down",
+          "text": "Take the plate down. The leaf is still where it stopped.",
+          "set_flag": "mutation_lock_plate_down"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_fallback",
+      "display_name": "Fourteen, a Gap, Six",
+      "type": "expedition",
+      "briefing": "Overlay refreshes 12-B as a finished overflow address. The kit is water. The stencil is a levy map. Pump Nine condemned keeps the Vault far; one dry motor is a room that changes travel.",
+      "prereq_quest_id": "quest_record_the_failure",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "loc_alloc_12b",
+      "complete_mutation": "mutation_12b_address",
+      "fail_mutation": "mutation_12b_kit_gone",
+      "stages": [
+        {
+          "id": "stage_stair",
+          "text": "Stair chalk. Fourteen marks, a gap, then six. Do not close the gap."
+        },
+        {
+          "id": "stage_hall",
+          "text": "Unprovisioned hall."
+        },
+        {
+          "id": "stage_kit",
+          "text": "Kit: leave, take, or copy notes only."
+        },
+        {
+          "id": "stage_cup",
+          "text": "Water cup. The kit is water."
+        },
+        {
+          "id": "stage_stencil",
+          "text": "Stencil: refresh, scrape, or original."
+        },
+        {
+          "id": "stage_pump",
+          "text": "Optional: Pump approach. Dry motor vs condemned tag."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_12b_address",
+          "text": "Refresh the stencil. 12-C can cite 12-B as a pool.",
+          "set_flag": "mutation_12b_address"
+        },
+        {
+          "id": "record_12b_original",
+          "text": "Keep the original. The gap stays part of the fallback.",
+          "set_flag": "mutation_12b_address"
+        },
+        {
+          "id": "record_pump_live",
+          "text": "Energise the dry motor. The Drown lowers a step.",
+          "set_flag": "mutation_pump_live"
+        },
+        {
+          "id": "record_pump_condemned",
+          "text": "Honour the tag. Sublevels stay shut.",
+          "set_flag": "mutation_pump_condemned"
+        }
+      ]
+    },
+    {
+      "id": "quest_record_which_gazetteer",
+      "display_name": "The Second Copy",
+      "type": "expedition",
+      "briefing": "Quil will not file plates without spoken site names. Sole will not enter ground on one testimony. Maren waits in the airlock with hats of brass. The player writes which gazetteer stands. Not from the bunker.",
+      "prereq_quest_id": "quest_record_fallback",
+      "min_day": 75,
+      "knowledge_key": "",
+      "target_location_id": "location_the_memory_vault",
+      "complete_mutation": "mutation_gazetteer_stands",
+      "fail_mutation": "mutation_gazetteer_scraped",
+      "stages": [
+        {
+          "id": "stage_window",
+          "text": "Window entry."
+        },
+        {
+          "id": "stage_dusted",
+          "text": "Dusted room. The crate undusted on purpose."
+        },
+        {
+          "id": "stage_names",
+          "text": "Name desk. Say sites or refuse. If you don't say it, you're only copying."
+        },
+        {
+          "id": "stage_crate",
+          "text": "Refused crate. String-tied. A plate is a copy that does not have a mouth."
+        },
+        {
+          "id": "stage_dock",
+          "text": "Vault dock. Etiquette."
+        },
+        {
+          "id": "stage_airlock",
+          "text": "Airlock plates. Maren's hats of brass."
+        },
+        {
+          "id": "stage_stacks",
+          "text": "Stacks."
+        },
+        {
+          "id": "stage_sole",
+          "text": "Sole's table. Two witnesses, or nothing."
+        },
+        {
+          "id": "stage_cage",
+          "text": "Second-copy cage. Filled only if the route was walked."
+        },
+        {
+          "id": "stage_file",
+          "text": "The book's place. File Record, lived map, both, or nothing."
+        }
+      ],
+      "choices": [
+        {
+          "id": "record_gazetteer_stands",
+          "text": "File the Record. Posts have numbers. Lived names are subtitles.",
+          "set_flag": "mutation_gazetteer_stands"
+        },
+        {
+          "id": "record_gazetteer_lived",
+          "text": "File the lived map. Plates in a crate, string-tied.",
+          "set_flag": "mutation_gazetteer_lived"
+        },
+        {
+          "id": "record_gazetteer_both",
+          "text": "File both. Nobody likes either.",
+          "set_flag": "mutation_gazetteer_palimpsest"
+        },
+        {
+          "id": "record_gazetteer_none",
+          "text": "File nothing. Benno's gauges are the only honest document.",
+          "set_flag": "mutation_gazetteer_scraped"
+        }
+      ]
+    }
+  ]
+}

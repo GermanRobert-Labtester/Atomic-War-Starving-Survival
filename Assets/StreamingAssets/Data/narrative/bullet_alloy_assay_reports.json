@@ -1,72 +1,117 @@
-[
-  {
-    "id": "bullet_alloy_linotype_antimony_enrichment",
-    "alloy_batch_code": "ALLOY_BATCH_LINO_084",
-    "lead_percentage": 84.0,
-    "antimony_percentage": 12.0,
-    "brinell_hardness_bhn": 22.0,
-    "timestamp_relative": "YEAR_02_BALLISTICS_LOG_01",
-    "tags": ["metallurgy", "ballistics", "bullet_casting", "linotype", "antimony"],
-    "prose": "Scavenged typography metal from a ruined printing plant yielded an 84/12/4 Pb/Sb/Sn eutectic alloy. Cast 7.62mm rifle bullets measure 22 Brinell hardness; bullets engage rifling cleanly at 2,400 FPS without bore leading or gas blowby."
-  },
-  {
-    "id": "bullet_alloy_wheel_weight_arsenic_water_quench",
-    "alloy_batch_code": "ALLOY_BATCH_WW_029",
-    "lead_percentage": 95.0,
-    "antimony_percentage": 3.0,
-    "brinell_hardness_bhn": 28.0,
-    "timestamp_relative": "YEAR_05_BALLISTICS_LOG_03",
-    "tags": ["metallurgy", "ballistics", "wheel_weights", "water_quenching", "arsenic"],
-    "prose": "Clip-on automotive wheel weights melted with 0.5% trace arsenic. Dropping the freshly cast 9mm bullets directly from the steel mold into an ice-water bucket caused age-hardening precipitation, raising Brinell hardness from 12 to 28 BHN within one week."
-  },
-  {
-    "id": "bullet_alloy_pure_lead_barrel_leading_grooves",
-    "alloy_batch_code": "ALLOY_BATCH_ROOF_LEAD_012",
-    "lead_percentage": 99.5,
-    "antimony_percentage": 0.1,
-    "brinell_hardness_bhn": 5.0,
-    "timestamp_relative": "YEAR_08_BALLISTICS_LOG_02",
-    "tags": ["metallurgy", "ballistics", "soft_lead", "barrel_leading", "fouling"],
-    "prose": "Using pure un-alloyed roofing flashing lead (5 BHN) to cast high-velocity .308 Winchester rounds resulted in catastrophic barrel leading. After fifteen shots, lead foil completely stripped into the rifling grooves, raising chamber pressure to 65,000 PSI and sticking the bolt."
-  },
-  {
-    "id": "bullet_alloy_battery_grid_calcium_dross_slag",
-    "alloy_batch_code": "ALLOY_BATCH_BATT_CAL_061",
-    "lead_percentage": 97.0,
-    "antimony_percentage": 1.5,
-    "brinell_hardness_bhn": 9.5,
-    "timestamp_relative": "YEAR_11_BALLISTICS_LOG_04",
-    "tags": ["metallurgy", "ballistics", "battery_scrap", "calcium_lead", "dross"],
-    "prose": "Melting modern maintenance-free lead-calcium battery plates formed a thick, powdery grey dross that would not flux with beeswax. Trapped calcium oxide inclusions formed spongy porous cavities in cast bullet bases, causing wild 14 MOA accuracy dispersion."
-  },
-  {
-    "id": "bullet_alloy_babbitt_metal_copper_bearing_gas_check",
-    "alloy_batch_code": "ALLOY_BATCH_BABBITT_015",
-    "lead_percentage": 25.0,
-    "antimony_percentage": 15.0,
-    "brinell_hardness_bhn": 32.0,
-    "timestamp_relative": "YEAR_14_BALLISTICS_LOG_01",
-    "tags": ["metallurgy", "ballistics", "babbitt_metal", "copper_hardened", "gas_check"],
-    "prose": "Heavy machinery Babbitt bearing scrap containing 55% tin, 15% antimony, and 5% copper cast into .45-70 flat-nose bullets. The tough copper-tin needle crystals allow the bullets to punch through 6mm steel truck doors without fragmenting."
-  },
-  {
-    "id": "bullet_alloy_cadmium_soldering_scrap_fume_hazard",
-    "alloy_batch_code": "ALLOY_BATCH_CAD_FUME_004",
-    "lead_percentage": 70.0,
-    "antimony_percentage": 5.0,
-    "brinell_hardness_bhn": 16.0,
-    "timestamp_relative": "YEAR_17_BALLISTICS_LOG_03",
-    "tags": ["metallurgy", "ballistics", "cadmium_poisoning", "toxic_fumes", "hazard"],
-    "prose": "An armorer melted fifty pounds of scavenged low-temperature silver-cadmium brazing wire in an unventilated casting pot. Yellow cadmium oxide fumes filled the workshop; the caster suffered acute chemical pneumonitis and pulmonary edema forty-eight hours later."
-  },
-  {
-    "id": "bullet_alloy_pewter_tin_surface_tension_fill",
-    "alloy_batch_code": "ALLOY_BATCH_PEWTER_TIN_093",
-    "lead_percentage": 90.0,
-    "antimony_percentage": 6.0,
-    "brinell_hardness_bhn": 15.0,
-    "timestamp_relative": "YEAR_20_BALLISTICS_LOG_01",
-    "tags": ["metallurgy", "ballistics", "pewter", "tin_addition", "mold_fill"],
-    "prose": "Adding 4% scrap pewter tankard metal (92% Sn) reduced molten surface tension dramatically. The alloy completely filled micro-fine grease grooves and sharp driving bands on multi-cavity gang molds, cutting reject rates from 35% down to 2%."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "bullet_alloy_linotype_antimony_enrichment",
+      "alloy_batch_code": "ALLOY_BATCH_LINO_084",
+      "lead_percentage": 84.0,
+      "antimony_percentage": 12.0,
+      "brinell_hardness_bhn": 22.0,
+      "timestamp_relative": "YEAR_02_BALLISTICS_LOG_01",
+      "tags": [
+        "metallurgy",
+        "ballistics",
+        "bullet_casting",
+        "linotype",
+        "antimony"
+      ],
+      "prose": "Scavenged typography metal from a ruined printing plant yielded an 84/12/4 Pb/Sb/Sn eutectic alloy. Cast 7.62mm rifle bullets measure 22 Brinell hardness; bullets engage rifling cleanly at 2,400 FPS without bore leading or gas blowby."
+    },
+    {
+      "id": "bullet_alloy_wheel_weight_arsenic_water_quench",
+      "alloy_batch_code": "ALLOY_BATCH_WW_029",
+      "lead_percentage": 95.0,
+      "antimony_percentage": 3.0,
+      "brinell_hardness_bhn": 28.0,
+      "timestamp_relative": "YEAR_05_BALLISTICS_LOG_03",
+      "tags": [
+        "metallurgy",
+        "ballistics",
+        "wheel_weights",
+        "water_quenching",
+        "arsenic"
+      ],
+      "prose": "Clip-on automotive wheel weights melted with 0.5% trace arsenic. Dropping the freshly cast 9mm bullets directly from the steel mold into an ice-water bucket caused age-hardening precipitation, raising Brinell hardness from 12 to 28 BHN within one week."
+    },
+    {
+      "id": "bullet_alloy_pure_lead_barrel_leading_grooves",
+      "alloy_batch_code": "ALLOY_BATCH_ROOF_LEAD_012",
+      "lead_percentage": 99.5,
+      "antimony_percentage": 0.1,
+      "brinell_hardness_bhn": 5.0,
+      "timestamp_relative": "YEAR_08_BALLISTICS_LOG_02",
+      "tags": [
+        "metallurgy",
+        "ballistics",
+        "soft_lead",
+        "barrel_leading",
+        "fouling"
+      ],
+      "prose": "Using pure un-alloyed roofing flashing lead (5 BHN) to cast high-velocity .308 Winchester rounds resulted in catastrophic barrel leading. After fifteen shots, lead foil completely stripped into the rifling grooves, raising chamber pressure to 65,000 PSI and sticking the bolt."
+    },
+    {
+      "id": "bullet_alloy_battery_grid_calcium_dross_slag",
+      "alloy_batch_code": "ALLOY_BATCH_BATT_CAL_061",
+      "lead_percentage": 97.0,
+      "antimony_percentage": 1.5,
+      "brinell_hardness_bhn": 9.5,
+      "timestamp_relative": "YEAR_11_BALLISTICS_LOG_04",
+      "tags": [
+        "metallurgy",
+        "ballistics",
+        "battery_scrap",
+        "calcium_lead",
+        "dross"
+      ],
+      "prose": "Melting modern maintenance-free lead-calcium battery plates formed a thick, powdery grey dross that would not flux with beeswax. Trapped calcium oxide inclusions formed spongy porous cavities in cast bullet bases, causing wild 14 MOA accuracy dispersion."
+    },
+    {
+      "id": "bullet_alloy_babbitt_metal_copper_bearing_gas_check",
+      "alloy_batch_code": "ALLOY_BATCH_BABBITT_015",
+      "lead_percentage": 25.0,
+      "antimony_percentage": 15.0,
+      "brinell_hardness_bhn": 32.0,
+      "timestamp_relative": "YEAR_14_BALLISTICS_LOG_01",
+      "tags": [
+        "metallurgy",
+        "ballistics",
+        "babbitt_metal",
+        "copper_hardened",
+        "gas_check"
+      ],
+      "prose": "Heavy machinery Babbitt bearing scrap containing 55% tin, 15% antimony, and 5% copper cast into .45-70 flat-nose bullets. The tough copper-tin needle crystals allow the bullets to punch through 6mm steel truck doors without fragmenting."
+    },
+    {
+      "id": "bullet_alloy_cadmium_soldering_scrap_fume_hazard",
+      "alloy_batch_code": "ALLOY_BATCH_CAD_FUME_004",
+      "lead_percentage": 70.0,
+      "antimony_percentage": 5.0,
+      "brinell_hardness_bhn": 16.0,
+      "timestamp_relative": "YEAR_17_BALLISTICS_LOG_03",
+      "tags": [
+        "metallurgy",
+        "ballistics",
+        "cadmium_poisoning",
+        "toxic_fumes",
+        "hazard"
+      ],
+      "prose": "An armorer melted fifty pounds of scavenged low-temperature silver-cadmium brazing wire in an unventilated casting pot. Yellow cadmium oxide fumes filled the workshop; the caster suffered acute chemical pneumonitis and pulmonary edema forty-eight hours later."
+    },
+    {
+      "id": "bullet_alloy_pewter_tin_surface_tension_fill",
+      "alloy_batch_code": "ALLOY_BATCH_PEWTER_TIN_093",
+      "lead_percentage": 90.0,
+      "antimony_percentage": 6.0,
+      "brinell_hardness_bhn": 15.0,
+      "timestamp_relative": "YEAR_20_BALLISTICS_LOG_01",
+      "tags": [
+        "metallurgy",
+        "ballistics",
+        "pewter",
+        "tin_addition",
+        "mold_fill"
+      ],
+      "prose": "Adding 4% scrap pewter tankard metal (92% Sn) reduced molten surface tension dramatically. The alloy completely filled micro-fine grease grooves and sharp driving bands on multi-cavity gang molds, cutting reject rates from 35% down to 2%."
+    }
+  ]
+}

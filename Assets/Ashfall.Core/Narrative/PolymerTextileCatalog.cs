@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string gasketPath = Path.Combine(directoryPath, "neoprene_gasket_degradation_logs.json");
             if (File.Exists(gasketPath))
             {
-                var list = JsonSerializer.Deserialize<List<NeopreneGasketDegradationEntry>>(File.ReadAllText(gasketPath), options);
+                var list = CatalogLocator.LoadWrappedList<NeopreneGasketDegradationEntry>(File.ReadAllText(gasketPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string aramidPath = Path.Combine(directoryPath, "aramid_fiber_rot_reports.json");
             if (File.Exists(aramidPath))
             {
-                var list = JsonSerializer.Deserialize<List<AramidFiberRotEntry>>(File.ReadAllText(aramidPath), options);
+                var list = CatalogLocator.LoadWrappedList<AramidFiberRotEntry>(File.ReadAllText(aramidPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string tirePath = Path.Combine(directoryPath, "tire_retreading_compound_logs.json");
             if (File.Exists(tirePath))
             {
-                var list = JsonSerializer.Deserialize<List<TireRetreadCompoundEntry>>(File.ReadAllText(tirePath), options);
+                var list = CatalogLocator.LoadWrappedList<TireRetreadCompoundEntry>(File.ReadAllText(tirePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string filmPath = Path.Combine(directoryPath, "celluloid_film_decomposition_records.json");
             if (File.Exists(filmPath))
             {
-                var list = JsonSerializer.Deserialize<List<CelluloidFilmDecompositionEntry>>(File.ReadAllText(filmPath), options);
+                var list = CatalogLocator.LoadWrappedList<CelluloidFilmDecompositionEntry>(File.ReadAllText(filmPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public NeopreneGasketDegradationEntry GetGasket(string id)
+        public NeopreneGasketDegradationEntry? GetGasket(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is NeopreneGasketDegradationEntry e ? e : null;
         }
 
-        public AramidFiberRotEntry GetAramid(string id)
+        public AramidFiberRotEntry? GetAramid(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is AramidFiberRotEntry e ? e : null;
         }
 
-        public TireRetreadCompoundEntry GetTire(string id)
+        public TireRetreadCompoundEntry? GetTire(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is TireRetreadCompoundEntry e ? e : null;
         }
 
-        public CelluloidFilmDecompositionEntry GetFilm(string id)
+        public CelluloidFilmDecompositionEntry? GetFilm(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is CelluloidFilmDecompositionEntry e ? e : null;

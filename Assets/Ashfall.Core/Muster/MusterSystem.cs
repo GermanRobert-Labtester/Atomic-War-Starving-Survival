@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Muster
 {
@@ -57,7 +58,7 @@ namespace Ashfall.Core.Muster
         public event Action<MusterRecord> OnQuestlineResolved;
         public event Action<MusterState> OnStateChanged;
 
-        public MusterSystem(MusterState state = null)
+        public MusterSystem(MusterState? state = null)
         {
             _state = state ?? new MusterState();
             if (_state.systemId != SystemId) _state.systemId = SystemId;
@@ -92,7 +93,7 @@ namespace Ashfall.Core.Muster
             _catalog.Add(def);
         }
 
-        public MusterQuestlineDefinition FindDefinition(string questlineId)
+        public MusterQuestlineDefinition? FindDefinition(string questlineId)
         {
             foreach (var q in _catalog)
                 if (q.questlineId == questlineId) return q;
@@ -120,7 +121,7 @@ namespace Ashfall.Core.Muster
         {
             var def = FindDefinition(questlineId);
             if (def == null) return false;
-            ApproachOption option = null;
+            ApproachOption? option = null;
             for (int i = 0; i < def.approaches.Count; i++)
                 if (def.approaches[i].approach == approach) { option = def.approaches[i]; break; }
             if (option == null) return false;
@@ -402,7 +403,7 @@ namespace Ashfall.Core.Muster
             return r;
         }
 
-        public MusterRecord FindRecord(string questlineId)
+        public MusterRecord? FindRecord(string questlineId)
         {
             for (int i = 0; i < _state.records.Count; i++)
                 if (_state.records[i].questlineId == questlineId) return _state.records[i];

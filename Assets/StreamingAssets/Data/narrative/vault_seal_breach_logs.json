@@ -1,72 +1,117 @@
-[
-  {
-    "id": "vault_breach_thermal_lance_magnesium_slag",
-    "vault_sector_id": "VAULT_SEVEN_MAIN_DEPOSIT_DOOR",
-    "barrier_material": "COMPOSITE_HARDENED_CHROME_STEEL",
-    "breach_technique": "MAGNESIUM_OXYGEN_THERMIC_LANCE",
-    "breach_time_minutes": 45.0,
-    "timestamp_relative": "YEAR_03_BREACH_LOG_01",
-    "tags": ["military", "vault", "breach", "thermal_lance", "armory"],
-    "prose": "Raiders used a magnesium-rod thermic lance burning at 3,500°C to cut through the thirty-centimeter composite chrome-steel vault door. White-hot iron and alumina slag burned through three interior locking lugs, leaving a glowing fifty-centimeter jagged entry aperture."
-  },
-  {
-    "id": "vault_breach_cryogenic_liquid_nitrogen_shatter",
-    "vault_sector_id": "COMMISSARY_GOLD_RESERVE_CELL",
-    "barrier_material": "CAST_MANGANESE_STEEL_CASE",
-    "breach_technique": "CRYOGENIC_NITROGEN_BRITTLE_SHATTER",
-    "breach_time_minutes": 25.0,
-    "timestamp_relative": "YEAR_05_BREACH_LOG_03",
-    "tags": ["military", "vault", "cryogenic", "shatter", "liquid_nitrogen"],
-    "prose": "Infiltrators flooded the heavy combination lock casing with four hundred liters of liquid nitrogen (-196°C). The ductile manganese steel shifted below its ductile-to-brittle transition temperature; two blows from a twenty-pound sledgehammer shattered the lock housing like glass."
-  },
-  {
-    "id": "vault_breach_high_explosive_conical_cavity_breach",
-    "vault_sector_id": "REDACTED_PROJECT_CORE_VAULT",
-    "barrier_material": "DUAL_LAMINATE_TITANIUM_STEEL",
-    "breach_technique": "CONICAL_SHAPED_CHARGE_JET",
-    "breach_time_minutes": 2.0,
-    "timestamp_relative": "YEAR_08_BREACH_LOG_02",
-    "tags": ["military", "vault", "shaped_charge", "explosive", "penetration"],
-    "prose": "A copper-lined conical shaped charge containing twenty pounds of Octol was positioned against the vault hinge line. The supersonic copper plasma jet punched a three-inch hole clean through two five-centimeter titanium-steel plates, severing the interior locking bar mechanism."
-  },
-  {
-    "id": "vault_breach_rotary_diamond_core_lockout_bypass",
-    "vault_sector_id": "ARCHIVE_CIPHER_DOCUMENT_CHAMBER",
-    "barrier_material": "DRILL_RESISTANT_ALUMINA_CERAMIC",
-    "breach_technique": "DIAMOND_CORE_DRILL_ENDOSCOPE",
-    "breach_time_minutes": 180.0,
-    "timestamp_relative": "YEAR_11_BREACH_LOG_04",
-    "tags": ["military", "vault", "diamond_drill", "safecracking", "endoscope"],
-    "prose": "A water-cooled industrial diamond core drill bored a 12mm hole through the alumina ceramic matrix insert. The safecracker inserted an illuminated fiber-optic borescope to visually align the four wheel tumblers, opening the eight-ton door without triggering relockers."
-  },
-  {
-    "id": "vault_breach_acidic_aqua_regia_hinge_dissolution",
-    "vault_sector_id": "STRATEGIC_MEDICINE_RESERVE_CAGE",
-    "barrier_material": "NICKEL_CHROMIUM_FORGED_HINGE",
-    "breach_technique": "CONCENTRATED_AQUA_REGIA_DRIP",
-    "breach_time_minutes": 360.0,
-    "timestamp_relative": "YEAR_14_BREACH_LOG_01",
-    "tags": ["military", "vault", "aqua_regia", "acid_corrosion", "hinge_failure"],
-    "prose": "A gravity-fed glass siphon dripped a 3:1 mixture of concentrated hydrochloric and nitric acid directly into the upper pivot hinge bearing. Over six hours, the acid dissolved the fifty-millimeter nickel-chromium pin into green sludge, allowing the door to be jacked off its lower seat."
-  },
-  {
-    "id": "vault_breach_hydraulic_spreader_jamb_deformation",
-    "vault_sector_id": "PERIMETER_SENTRY_WEAPONS_LOCKER",
-    "barrier_material": "REINFORCED_CONCRETE_DOOR_FRAME",
-    "breach_technique": "100_TON_HYDRAULIC_SPREADER",
-    "breach_time_minutes": 15.0,
-    "timestamp_relative": "YEAR_17_BREACH_LOG_02",
-    "tags": ["military", "vault", "hydraulics", "jamb_spread", "forced_entry"],
-    "prose": "A portable hydraulic rescue tool rated at one hundred tons was positioned inside the door reveal. High-pressure oil pump drove the spreader jaws outward with four thousand PSI, bowing the reinforced concrete jamb four inches until the heavy locking bolts slipped out of their strike pockets."
-  },
-  {
-    "id": "vault_breach_emp_magnetic_interlock_solenoid_fail",
-    "vault_sector_id": "COMMUNICATIONS_CRYPTO_VAULT_03",
-    "barrier_material": "ELECTRONIC_MAGNETIC_INTERLOCK",
-    "breach_technique": "EMP_INDUCED_SOLENOID_WELDING",
-    "breach_time_minutes": 0.1,
-    "timestamp_relative": "YEAR_20_BREACH_LOG_01",
-    "tags": ["military", "vault", "emp", "solenoid_weld", "fail_open"],
-    "prose": "A close-proximity high-altitude nuclear EMP induced a 50,000-volt surge across the vault access control wiring. The current arc-welded the heavy magnetic locking solenoids in the retracted position, leaving the classified cipher safe permanently unlocked."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "vault_breach_thermal_lance_magnesium_slag",
+      "vault_sector_id": "VAULT_SEVEN_MAIN_DEPOSIT_DOOR",
+      "barrier_material": "COMPOSITE_HARDENED_CHROME_STEEL",
+      "breach_technique": "MAGNESIUM_OXYGEN_THERMIC_LANCE",
+      "breach_time_minutes": 45.0,
+      "timestamp_relative": "YEAR_03_BREACH_LOG_01",
+      "tags": [
+        "military",
+        "vault",
+        "breach",
+        "thermal_lance",
+        "armory"
+      ],
+      "prose": "Raiders used a magnesium-rod thermic lance burning at 3,500°C to cut through the thirty-centimeter composite chrome-steel vault door. White-hot iron and alumina slag burned through three interior locking lugs, leaving a glowing fifty-centimeter jagged entry aperture."
+    },
+    {
+      "id": "vault_breach_cryogenic_liquid_nitrogen_shatter",
+      "vault_sector_id": "COMMISSARY_GOLD_RESERVE_CELL",
+      "barrier_material": "CAST_MANGANESE_STEEL_CASE",
+      "breach_technique": "CRYOGENIC_NITROGEN_BRITTLE_SHATTER",
+      "breach_time_minutes": 25.0,
+      "timestamp_relative": "YEAR_05_BREACH_LOG_03",
+      "tags": [
+        "military",
+        "vault",
+        "cryogenic",
+        "shatter",
+        "liquid_nitrogen"
+      ],
+      "prose": "Infiltrators flooded the heavy combination lock casing with four hundred liters of liquid nitrogen (-196°C). The ductile manganese steel shifted below its ductile-to-brittle transition temperature; two blows from a twenty-pound sledgehammer shattered the lock housing like glass."
+    },
+    {
+      "id": "vault_breach_high_explosive_conical_cavity_breach",
+      "vault_sector_id": "REDACTED_PROJECT_CORE_VAULT",
+      "barrier_material": "DUAL_LAMINATE_TITANIUM_STEEL",
+      "breach_technique": "CONICAL_SHAPED_CHARGE_JET",
+      "breach_time_minutes": 2.0,
+      "timestamp_relative": "YEAR_08_BREACH_LOG_02",
+      "tags": [
+        "military",
+        "vault",
+        "shaped_charge",
+        "explosive",
+        "penetration"
+      ],
+      "prose": "A copper-lined conical shaped charge containing twenty pounds of Octol was positioned against the vault hinge line. The supersonic copper plasma jet punched a three-inch hole clean through two five-centimeter titanium-steel plates, severing the interior locking bar mechanism."
+    },
+    {
+      "id": "vault_breach_rotary_diamond_core_lockout_bypass",
+      "vault_sector_id": "ARCHIVE_CIPHER_DOCUMENT_CHAMBER",
+      "barrier_material": "DRILL_RESISTANT_ALUMINA_CERAMIC",
+      "breach_technique": "DIAMOND_CORE_DRILL_ENDOSCOPE",
+      "breach_time_minutes": 180.0,
+      "timestamp_relative": "YEAR_11_BREACH_LOG_04",
+      "tags": [
+        "military",
+        "vault",
+        "diamond_drill",
+        "safecracking",
+        "endoscope"
+      ],
+      "prose": "A water-cooled industrial diamond core drill bored a 12mm hole through the alumina ceramic matrix insert. The safecracker inserted an illuminated fiber-optic borescope to visually align the four wheel tumblers, opening the eight-ton door without triggering relockers."
+    },
+    {
+      "id": "vault_breach_acidic_aqua_regia_hinge_dissolution",
+      "vault_sector_id": "STRATEGIC_MEDICINE_RESERVE_CAGE",
+      "barrier_material": "NICKEL_CHROMIUM_FORGED_HINGE",
+      "breach_technique": "CONCENTRATED_AQUA_REGIA_DRIP",
+      "breach_time_minutes": 360.0,
+      "timestamp_relative": "YEAR_14_BREACH_LOG_01",
+      "tags": [
+        "military",
+        "vault",
+        "aqua_regia",
+        "acid_corrosion",
+        "hinge_failure"
+      ],
+      "prose": "A gravity-fed glass siphon dripped a 3:1 mixture of concentrated hydrochloric and nitric acid directly into the upper pivot hinge bearing. Over six hours, the acid dissolved the fifty-millimeter nickel-chromium pin into green sludge, allowing the door to be jacked off its lower seat."
+    },
+    {
+      "id": "vault_breach_hydraulic_spreader_jamb_deformation",
+      "vault_sector_id": "PERIMETER_SENTRY_WEAPONS_LOCKER",
+      "barrier_material": "REINFORCED_CONCRETE_DOOR_FRAME",
+      "breach_technique": "100_TON_HYDRAULIC_SPREADER",
+      "breach_time_minutes": 15.0,
+      "timestamp_relative": "YEAR_17_BREACH_LOG_02",
+      "tags": [
+        "military",
+        "vault",
+        "hydraulics",
+        "jamb_spread",
+        "forced_entry"
+      ],
+      "prose": "A portable hydraulic rescue tool rated at one hundred tons was positioned inside the door reveal. High-pressure oil pump drove the spreader jaws outward with four thousand PSI, bowing the reinforced concrete jamb four inches until the heavy locking bolts slipped out of their strike pockets."
+    },
+    {
+      "id": "vault_breach_emp_magnetic_interlock_solenoid_fail",
+      "vault_sector_id": "COMMUNICATIONS_CRYPTO_VAULT_03",
+      "barrier_material": "ELECTRONIC_MAGNETIC_INTERLOCK",
+      "breach_technique": "EMP_INDUCED_SOLENOID_WELDING",
+      "breach_time_minutes": 0.1,
+      "timestamp_relative": "YEAR_20_BREACH_LOG_01",
+      "tags": [
+        "military",
+        "vault",
+        "emp",
+        "solenoid_weld",
+        "fail_open"
+      ],
+      "prose": "A close-proximity high-altitude nuclear EMP induced a 50,000-volt surge across the vault access control wiring. The current arc-welded the heavy magnetic locking solenoids in the retracted position, leaving the classified cipher safe permanently unlocked."
+    }
+  ]
+}

@@ -1,0 +1,492 @@
+{
+  "schema_version": 1,
+  "collection_id": "faction_texts_expansion",
+  "description": "Faction documents — manifestos, decrees, propaganda, internal memos, territorial claims, ideological fragments. Ideology emerges from what they ration, forbid, and record, not from exposition. Contradictory documents within factions show internal disagreement. Material needs drive policy.",
+  "documents": [
+    {
+      "doc_id": "bunker_doc_garrison_ration",
+      "doc_type": "ration_decree",
+      "title": "General Order 17 — Ration Classification",
+      "posted_day": 14,
+      "posted_by": "Colonel Voss, Commanding",
+      "location": "Garrison mess hall",
+      "material": "Typed on field-issue paper, stamped PRIORITY",
+      "transcript": "GENERAL ORDER 17 — RATION CLASSIFICATION\n\nEffective immediately.\n\nAll personnel are assigned a ration class by labor category:\n\nCLASS A (combat-ready): full ration, double protein on duty days.\nCLASS B (essential labor — medical, engineering, water): full ration.\nCLASS C (support labor — kitchen, laundry, stores): three-quarter ration.\nCLASS D (dependents, unassigned, infirm): half ration.\n\nDependents under 12 receive Class D regardless of parent class. Children are dependents. The garrison does not feed children above its capacity to feed soldiers. The capacity is the capacity.\n\nLabor reassignment is at the discretion of the duty officer. A dependent who contributes labor may be reclassified. The contribution is the classification. The classification is the ration.\n\nSigned: Voss, Col., Commanding.\n\nHANDWRITTEN BELOW:\nWhat about the old? — D4\nOld is Class D, same as the young and the sick. The old worked their lives. The garrison does not pay pensions. — Supply Sgt.",
+      "tags": [
+        "garrison",
+        "ration",
+        "class",
+        "decree"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_garrison_desertion",
+      "doc_type": "decree",
+      "title": "General Order 4 — Desertion",
+      "posted_day": 3,
+      "posted_by": "Colonel Voss, Commanding",
+      "location": "Garrison gate, nailed to the post",
+      "material": "Typed on field-issue paper, stained",
+      "transcript": "GENERAL ORDER 4 — DESERTION\n\nDesertion from post is punishable by execution.\n\nDesertion is defined as: absence from assigned post for more than six hours without authorization; refusal of a direct order to hold position; abandonment of equipment; flight from the perimeter during contact.\n\nThe garrison does not execute without trial. The trial is summary. The summary is conducted by the senior officer present. The present is the present.\n\nThe penalty is execution. The execution is by firing detail drawn from the deserter's own unit. The unit remembers. The unit does not desert.\n\nNo appeal. No exception. No burial with honors. The body is stripped of insignia and buried outside the perimeter.\n\nSigned: Voss, Col.\n\nPAPERCLIPPED NOTE (different hand):\nThe boy from 3rd Platoon. He was nineteen. I was on the detail. I am writing this so someone knows: he was nineteen and he was afraid and I was on the detail. The unit remembers. I remember. — Cpl. K.",
+      "tags": [
+        "garrison",
+        "desertion",
+        "execution",
+        "decree"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_garrison_water",
+      "doc_type": "internal_memo",
+      "title": "Quartermaster's Annex — Water Allocation (CONFIDENTIAL)",
+      "posted_day": 30,
+      "posted_by": "Supply Sergeant, Garrison QM Corps",
+      "location": "Garrison supply office, filed",
+      "material": "Handwritten on ledger paper, marked CONFIDENTIAL",
+      "transcript": "CONFIDENTIAL — WATER ALLOCATION\n\nFor the Colonel's eyes only.\n\nThe aquifer pump at the checkpoint is running at 60% of rated flow. The pump is not broken. The aquifer is dropping. The hydro barons are drilling deeper on the far side of the ridge, and the water table is responding.\n\nCurrent allocation: Garrison 60%, civilian shelter 25%, hospital 15%. At current consumption, the civilian shelter runs dry in 40 days. At current consumption, the garrison runs dry in 90.\n\nRecommended: reduce civilian shelter to 15%. Increase garrison to 70%. The hospital is the hospital. The hospital stays at 15%.\n\nThe civilians will notice. They will ask. The answer is the pump. The pump is broken. The pump is not broken. The answer is the answer.\n\nDo not write this down elsewhere.\n\n— Sgt. K.\n\nCOLONEL'S MARGIN NOTE (red pencil):\nReduce to 20%. Not 15%. The civilians wash the linen for the hospital. The linen is the hospital. 20% is the margin. The margin is the Colonel's.\n— V.",
+      "tags": [
+        "garrison",
+        "water",
+        "aquifer",
+        "confidential",
+        "memo"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_garrison_propaganda",
+      "doc_type": "propaganda_poster",
+      "title": "THE GARRISON IS THE WALL",
+      "posted_day": 7,
+      "posted_by": "Garrison Information Office",
+      "location": "Garrison compound, every wall",
+      "material": "Stencilled in black paint on salvaged boards",
+      "transcript": "THE GARRISON IS THE WALL.\n\nBEFORE THE GARRISON: chaos, hunger, the road, the dark, the alone.\nAFTER THE GARRISON: order, the ration, the wall, the watch, the together.\n\nTHE GARRISON ASKS: your labor, your discipline, your obedience.\nTHE GARRISON GIVES: the wall, the watch, the meal, the morning.\n\nEVERY MOUTH EARNS ITS RATIONS.\nEVERY HAND HOLDS THE WALL.\nTHE WALL HOLDS EVERYONE.\n\nReport deserters. Report hoarders. Report the soft voice that says the wall is not worth the cost.\nTHE WALL IS THE COST. THE COST IS THE WALL.",
+      "tags": [
+        "garrison",
+        "propaganda",
+        "wall",
+        "labor"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_garrison_dissent",
+      "doc_type": "dissent_letter",
+      "title": "To the Colonel — from the 3rd Platoon (unsent)",
+      "posted_day": 45,
+      "posted_by": "Cpl. K. and seven others",
+      "location": "Garrison barracks, under a mattress",
+      "material": "Handwritten on torn paper, folded small",
+      "transcript": "Colonel,\n\nWe are writing because we cannot say. The ration for Class D was cut again. The children are thinner. The old man in Block 3 died yesterday, of nothing but thin. He was Class D. He was old. He was thin. The classification is the ration and the ration is the thin and the thin is the death.\n\nWe are not deserters. We are writing. We are the wall. We hold the wall. We are asking: does the wall hold the children? Does the wall hold the old? If it does not, what is the wall holding?\n\nWe will not stop holding. We are the garrison. We are writing because we cannot say and we will not desert and we are asking. The asking is not desertion. The asking is the garrison asking itself what it is.\n\n— Seven names (withheld).\n\nP.S. The boy from 3rd Platoon was nineteen. We remember. This is also the wall.",
+      "tags": [
+        "garrison",
+        "dissent",
+        "letter",
+        "children",
+        "unsent"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_quiet_rule",
+      "doc_type": "doctrine",
+      "title": "The Rule of the House",
+      "posted_day": 10,
+      "posted_by": "The Elder",
+      "location": "Quiet House, entrance wall",
+      "material": "Hand-lettered in charcoal on lime plaster",
+      "transcript": "THE RULE OF THE HOUSE\n\n1. Silence is not required. Quiet is required. The difference is the breath. Silence is empty. Quiet is full. Be full.\n\n2. Speak only when the word is needed. The word is needed when it feeds, heals, warns, or names. The word is not needed when it fills. Do not fill.\n\n3. Listen more than you speak. The house listens. The house hears the road, the wind, the knock, the child, the dying. The house hears. You are the house. Hear.\n\n4. No weapons inside the door. The quiet is the weapon. The weapon is the quiet. Lay down the other.\n\n5. Everyone who enters is a guest. Everyone who leaves is a guest. The guest is the rule. The rule is the guest. There are no members. There are no strangers. There are guests.\n\n6. Break the rule and the Elder will ask you to leave. The asking is not a punishment. The asking is the rule. The rule is the asking.\n\n— The Elder, Year 1 of the Quiet.",
+      "tags": [
+        "quiet_house",
+        "doctrine",
+        "silence",
+        "rule"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_quiet_visitor",
+      "doc_type": "visitor_log",
+      "title": "The Book of Guests — Week 4",
+      "posted_day": 28,
+      "posted_by": "The Elder",
+      "location": "Quiet House, by the door",
+      "material": "Handwritten in a bound ledger",
+      "transcript": "THE BOOK OF GUESTS — WEEK 4\n\nDay 22: A woman, alone, did not speak. Sat in the corner. Left at dawn. Left a candle.\nDay 23: A man, with a child. The child spoke. The man did not. The child asked about the rule. I told the child the rule is the quiet and the quiet is the listening. The child said: I am listening. I said: you are the house.\nDay 24: Three travelers, two days on the road. Slept. Left bread. Did not speak. The bread was the word.\nDay 25: A soldier, deserting. The house does not ask. He wept. The weeping was the word. The house held the weeping.\nDay 26: No one. The house was the house.\nDay 27: A woman with a wound. The medic came. The wound was cleaned. The cleaning was the word.\nDay 28: Two guests, in dispute. See mediation.\n\n— The Elder.",
+      "tags": [
+        "quiet_house",
+        "visitors",
+        "log",
+        "guests"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_quiet_schism",
+      "doc_type": "schism_letter",
+      "title": "To the Elder — from a former guest (unsent)",
+      "posted_day": 50,
+      "posted_by": "A former guest",
+      "location": "Quiet House, found in a book",
+      "material": "Handwritten on a scrap, folded into a book of poetry",
+      "transcript": "Elder,\n\nI was at the house for eleven days. I listened. I was quiet. I left because I could not stay quiet any longer.\n\nThe quiet is the rule and the rule is the quiet and the quiet is not enough. The road is loud. The road is the boots and the screaming and the dark. The house does not hear the road. The house hears the quiet. The road is not the quiet. The road is the thing the house is hiding from.\n\nI am not saying the house is wrong. I am saying the house is the quiet and the quiet is the house and the road is outside and the road is the thing we are all on. The house is not the road. The house is the place between the roads. The place between is not the place. The place is the road.\n\nI am going back to the road. I will carry the quiet. I will carry it on the road. The quiet is the rule. The rule is the quiet. The road is the test of the rule. I am taking the test.\n\n— A guest.",
+      "tags": [
+        "quiet_house",
+        "schism",
+        "dissent",
+        "road",
+        "letter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hydro_charter",
+      "doc_type": "charter",
+      "title": "Charter of the Hydro Barons — Deep Aquifer Rights",
+      "posted_day": 18,
+      "posted_by": "The Barons' Council",
+      "location": "Lock Gate Four, posted on the gate",
+      "material": "Typed on water-resistant paper, sealed with wax",
+      "transcript": "CHARTER OF THE HYDRO BARONS\n\nWe, the undersigned, claim exclusive drilling and distribution rights to the deep aquifer extending from Lock Gate Four to the ridgeline.\n\nArticle I: Water is property. The property is the water. The water belongs to those who can reach it and keep it. Reaching is the right. Keeping is the law.\n\nArticle II: All shelters within the claim must purchase water from the Barons at the Barons' rate. The rate is the cost of the drilling. The drilling is the cost of the water. The water is the cost of the shelter.\n\nArticle III: Unauthorized drilling is theft. Theft is answered by the Barons' guard. The guard is the law. The law is the guard.\n\nArticle IV: The Barons' Council shall consist of the three deepest wells. The deepest well is the chair. The chair is the deepest. The deepest is the chair.\n\nSigned: The Barons' Council (three names, illegible).\n\nPAPERCLIPPED NOTE:\nThey signed with a wax seal and no ink. The wax is the name. The name is the wax. The wax does not tell you who they are. — a reader.",
+      "tags": [
+        "hydro_barons",
+        "charter",
+        "water",
+        "aquifer",
+        "territorial"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hydro_notice",
+      "doc_type": "public_notice",
+      "title": "Notice — Water Rates, Winter Adjustment",
+      "posted_day": 60,
+      "posted_by": "The Barons' Council",
+      "location": "Lock Gate Four, over the old notice",
+      "material": "Hand-painted on a board",
+      "transcript": "WATER RATES — WINTER ADJUSTMENT\n\nEffective immediately:\n\nDrinking water: 2 litres of lamp oil per 20 litres of water. (Was 1.5. The winter is the reason. The reason is the winter.)\n\nWashing water: 1 litre of lamp oil per 40 litres. (Unchanged. The Barons are not unreasonable.)\n\nLivestock water: not available. The livestock is the livestock. The Barons do not water livestock.\n\nThe rate is the rate. The winter is the winter. The Barons do not negotiate with the season. The season negotiates with the Barons.\n\n— The Barons' Council.\n\nSCRAWLED BELOW:\nThe well was here before you. The water was here before you. The rate was not.\n— someone who remembers.",
+      "tags": [
+        "hydro_barons",
+        "notice",
+        "rate",
+        "winter",
+        "water"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_hydro_dissent",
+      "doc_type": "dissent_letter",
+      "title": "To the Council — from the Second-Deepest Well (unsent)",
+      "posted_day": 55,
+      "posted_by": "The Second-Deepest Well",
+      "location": "Barons' Council chamber, in a locked drawer",
+      "material": "Handwritten on ledger paper",
+      "transcript": "Council,\n\nI opposed the trade with the garrison. I was outvoted. The third-deepest sided with the deepest. The trade is made. The garrison has water. We have fuel.\n\nI am writing this not to reopen the vote. I am writing this so that when the garrison takes the wells — and they will take the wells, the garrison takes everything it needs and calls it martial necessity — I will have written that I opposed the trade. Not because the trade was wrong. Because the trade was the beginning of the garrison's interest in the aquifer. The interest is the first step. The first step is the garrison's. The garrison's is the taking.\n\nI am the second-deepest. I am outvoted. I am writing. The writing is the record. The record is the opposition. The opposition is the future, when the wells are garrison wells and the Barons are garrison Barons.\n\n— The Second-Deepest Well.",
+      "tags": [
+        "hydro_barons",
+        "dissent",
+        "trade",
+        "garrison",
+        "unsent"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_foundry_charter",
+      "doc_type": "guild_charter",
+      "title": "Charter of the Silent Foundry — Guild Rules",
+      "posted_day": 12,
+      "posted_by": "The Foundry Masters",
+      "location": "Foundry gate, cast in iron",
+      "material": "Cast-iron plate, bolted to the gate",
+      "transcript": "CHARTER OF THE SILENT FOUNDRY\n\nWe are the Foundry. We do not speak of the Foundry to outsiders. The silence is the guild. The guild is the silence.\n\nArticle I: Knowledge is the metal. The metal is the knowledge. Apprentices learn the metal. Journeymen shape the metal. Masters teach the metal. The teaching is the guild. The guild is the teaching.\n\nArticle II: The Foundry trades in iron, brass, copper, and steel. The Foundry does not trade in weapons. Weapons are the easy work. The easy work is the work anyone can do. The Foundry does the hard work. The hard work is the pipe, the pump, the hinge, the gear, the tool. The tool builds. The weapon destroys. The Foundry builds.\n\nArticle III: A master may take one apprentice. The apprentice serves seven years. The seven is the learning. The learning is the time. The time is the master's. The master's is the apprentice's.\n\nArticle IV: The Foundry is silent to outsiders. The silence is the protection. The protection is the silence. Break the silence and the Foundry is broken. The broken Foundry is the broken tool. The broken tool is the broken world.\n\n— The Masters (names not recorded; the silence is the name).",
+      "tags": [
+        "silent_foundry",
+        "charter",
+        "guild",
+        "metal",
+        "silence"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_foundry_trade",
+      "doc_type": "manifest",
+      "title": "Trade Manifest — Week 8",
+      "posted_day": 56,
+      "posted_by": "The Foundry Masters",
+      "location": "Foundry trade office",
+      "material": "Stamped in iron-oxide ink on salvaged paper",
+      "transcript": "TRADE MANIFEST — WEEK 8\n\nOutgoing:\n— 12 pump gaskets (brass) to the shelter at the grange.\n— 4 hinge sets (iron) to the garrison.\n— 1 gear train (steel) to the mill at the river.\n— 2 replacement valve stems (copper) to the water plant.\n\nIncoming (payment):\n— 40 kg flour from the grange.\n— 20 litres lamp oil from the garrison.\n— 6 kg salt from the mill.\n— 1 crate of medical supplies from the water plant (trade in kind — the valve stems were the emergency).\n\nNotes:\n— The garrison asked for weapon parts. Refused. The Foundry does not make weapons. The garrison was angry. The garrison is always angry. The anger is the garrison's. The refusal is the Foundry's.\n— The water plant paid in medicine. The medicine is the emergency. The Foundry accepts emergencies. The emergencies are not weapons. The emergencies are the valve stems.\n\n— Master K., Trade.",
+      "tags": [
+        "silent_foundry",
+        "trade",
+        "manifest",
+        "garrison",
+        "refusal"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_foundry_schism",
+      "doc_type": "schism_record",
+      "title": "Record of the Schism — Master T.'s Departure",
+      "posted_day": 72,
+      "posted_by": "Master K. (iron)",
+      "location": "Foundry archives, filed",
+      "material": "Handwritten on a salvaged blueprint, folded",
+      "transcript": "RECORD OF THE SCHISM\n\nMaster T. (copper) has left the Foundry. The departure was not silent. The silence was broken. The breaking was the schism.\n\nMaster T. argued the Foundry should make weapons. The garrison offered triple payment for pikes and shot. Master T. said the Foundry's purpose is to survive, and survival requires trade, and trade requires what the buyer will buy. The garrison will buy weapons. The garrison will not buy hinges.\n\nThe Council voted. Master T. was outvoted, five to one. Master T. said the vote was the cowardice of masters who had forgotten the world outside the Foundry gate. Master T. left. Three journeymen went with him. They took their tools.\n\nThe Foundry is five masters now. The silence is restored. The tools are fewer. The Foundry is fewer. The purpose is the same. The purpose is the metal. The metal is the purpose.\n\nMaster T. is at the garrison now. He makes pikes. He is well. The garrison pays well. The Foundry does not make pikes. The Foundry makes the world. The world is smaller now.\n\n— Master K.",
+      "tags": [
+        "silent_foundry",
+        "schism",
+        "weapons",
+        "garrison",
+        "departure"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_glow_liturgy",
+      "doc_type": "canticle",
+      "title": "The Liturgy of the Glow — First Canticle",
+      "posted_day": 30,
+      "posted_by": "The Speaker (name unknown)",
+      "location": "Cult gathering site, crater rim",
+      "material": "Hand-copied on irradiated paper, edges burned",
+      "transcript": "THE LITURGY OF THE GLOW — FIRST CANTICLE\n\nIn the beginning was the light. Not the sun — the sun is the old light, the dead light, the light that burned the world. The new light is the glow. The glow is the promise. The promise is the change. The change is the becoming.\n\nThe glow comes from below and from above and from within. The glow is in the soil and the water and the bone. The glow is the world remaking itself. We are the remade. The remade are the faithful. The faithful are the glow.\n\nDo not fear the glow. The glow fears nothing. The glow is the courage of the atom, the patience of the half-life, the warmth of the decay. The decay is not death. The decay is the slow fire that burns the old world away and leaves the new.\n\nYou will feel the glow in your blood. You will taste the glow in your water. You will dream the glow in your sleep. The glow is the calling. The calling is the glow.\n\n— The Speaker.\n\nSCRAWLED IN THE MARGIN (different hand):\nI felt it. My teeth fell out. The Speaker said that was the old body leaving. My new body has not come yet. I am waiting. The waiting is the faith. The faith is the waiting.",
+      "tags": [
+        "cult_of_the_glow",
+        "liturgy",
+        "radiation",
+        "faith"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_glow_warning",
+      "doc_type": "warning_notice",
+      "title": "Notice — The Glow Does Not Heal (posted by a former cultist)",
+      "posted_day": 60,
+      "posted_by": "A former cultist",
+      "location": "Crater rim, beside the gathering site",
+      "material": "Charcoal on a plank, driven into the ash",
+      "transcript": "THE GLOW DOES NOT HEAL.\n\nI was in the cult for forty days. I believed. I drank the water. I held the stone. I sang the canticle. My teeth fell out. The Speaker said it was the old body leaving. My gums bled. The Speaker said it was the old blood, making room.\n\nMy daughter is dead. She was seven. She believed because I believed. The glow took her hair first, then her strength, then her breath. The Speaker said she was becoming. She was not becoming. She was dying.\n\nI am leaving this here. I do not know if anyone will read it. The Speaker will tear it down. The Speaker tears down everything that is not the glow.\n\nThe glow is real. The radiation is real. The radiation is the glow. The glow is the radiation. The radiation does not care if you believe. It will take your teeth. It will take your daughter. It will take you. It does not care.\n\n— A former cultist.\n\nP.S. Her name was Lida. I am writing her name so the glow does not take her name too.",
+      "tags": [
+        "cult_of_the_glow",
+        "warning",
+        "radiation",
+        "former_cultist",
+        "daughter"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_glow_response",
+      "doc_type": "response_notice",
+      "title": "Response — The Speaker Answers the Former Cultist",
+      "posted_day": 62,
+      "posted_by": "The Speaker",
+      "location": "Crater rim, nailed over the warning",
+      "material": "Handwritten on the back of the warning notice",
+      "transcript": "THE SPEAKER ANSWERS\n\nThe former cultist speaks of death as if death were the end. Death is not the end. Death is the change. The change is the glow. The glow is the change.\n\nThe daughter is not dead. The daughter is becoming. The becoming is slow. The slow is the glow. The glow is the slow. The daughter is in the glow now. The glow is in the daughter. The daughter is not gone. The daughter is the glow.\n\nThe former cultist grieves. The grief is the old world holding on. The old world holds on. The old world will let go. The letting go is the faith. The faith is the letting go.\n\nWe do not tear down the warning. The warning is the test. The test is the faith. The faith is the warning. The warning is the Speaker's. The Speaker's is the glow.\n\n— The Speaker.\n\nBELOW, IN A THIRD HAND:\nI don't understand. I want to believe. I want my teeth back. — a listener.",
+      "tags": [
+        "cult_of_the_glow",
+        "response",
+        "theology",
+        "grief"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_glow_doubt",
+      "doc_type": "internal_letter",
+      "title": "To the Speaker — from a doubter (unsent)",
+      "posted_day": 52,
+      "posted_by": "A listener",
+      "location": "Cult gathering site, hidden in a rock crevice",
+      "material": "Handwritten on a scrap, folded tight",
+      "transcript": "Speaker,\n\nI have been in the cult for thirty days. I sing the canticle. I drink the water. I do not feel the glow. I feel sick. My stomach hurts. My hair is thinning. You say this is the old body leaving. I do not feel like a body leaving. I feel like a body dying.\n\nI want to believe. I want the glow to be the promise and not the sickness. I want my daughter — I have not told you about my daughter, she is not here, she is at the shelter, I told her to stay at the shelter — I want her to never come here. I want the glow to be real and I want her to never feel it.\n\nThese two wants are not the same. They cannot both be true. If the glow is the promise, I should bring her. If the glow is the sickness, I should never see her again so she is not tempted to follow me.\n\nI do not know which is true. I am writing because the not-knowing is the thing I cannot say aloud. The aloud is the faith. The faith is the aloud. I do not have the aloud. I have the writing. The writing is the doubt.\n\n— A listener.",
+      "tags": [
+        "cult_of_the_glow",
+        "doubt",
+        "internal",
+        "daughter",
+        "unsent"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_canal_charter",
+      "doc_type": "charter",
+      "title": "Charter of the Canal Salvage Syndicate",
+      "posted_day": 20,
+      "posted_by": "The Syndicate Council",
+      "location": "Canal lock office, nailed to the door",
+      "material": "Typed on salvaged ledger paper",
+      "transcript": "CHARTER OF THE CANAL SALVAGE SYNDICATE\n\nWe, the undersigned, claim salvage rights to the canal system from Lock One to Lock Twelve, including all vessels, cargoes, and structures within or adjacent to the canal.\n\nArticle I: What the water leaves, the Syndicate claims. The water is the giver. The Syndicate is the receiver. The receiver is the claim.\n\nArticle II: Salvage is shared by share. A Syndicate member receives one share per day of labor. The Council receives two shares for administration. The Syndicate fund receives one share for tools and maintenance. The share is the share. The share is the law.\n\nArticle III: Independent salvagers within the canal zone must pay the Syndicate a tithe: one item in five. The tithe is the recognition. The recognition is the Syndicate's. The Syndicate's is the canal.\n\nArticle IV: The Council is elected by the members every three months. The election is the voice. The voice is the member's. The member's is the vote.\n\n— The Syndicate Council (five names, legible).",
+      "tags": [
+        "canal_syndicate",
+        "charter",
+        "salvage",
+        "shares",
+        "canal"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_canal_manifest",
+      "doc_type": "salvage_manifest",
+      "title": "Salvage Manifest — Week 12",
+      "posted_day": 84,
+      "posted_by": "Syndicate Clerk",
+      "location": "Canal lock office, filed",
+      "material": "Handwritten in a waterproof notebook",
+      "transcript": "SALVAGE MANIFEST — WEEK 12\n\nLock Three:\n— 4 copper pipes (bent, salvageable)\n— 1 crate of sealed biscuits (water-damaged, half edible)\n— 1 ship's compass (working)\n— 1 body (unidentified, buried on the bank)\n\nLock Seven:\n— 2 barrels of machine oil (one intact, one leaking)\n— 1 crate of wool blankets (mildewed, drying)\n— 1 navigation chart (pre-war, useful)\n\nLock Nine:\n— 1 barge, half-sunk (the 'Svetlana'). Pumped and raised. Hull sound. Claimed by the Syndicate as a working vessel.\n— Cargo: 12 tonnes of gravel (low value, left on the barge for ballast).\n— 1 locker, locked. Contents: 1 pistol, 6 rounds, 1 photograph of a woman, 1 letter (unread, buried with the photograph).\n\nNotes:\n— The body at Lock Three was a man, older, no identification. Buried facing the canal. The canal is the home. The home is the canal.\n— The pistol was melted down. The Syndicate does not trade in weapons. The photograph and letter were buried. The locker is now a tool chest.\n— The 'Svetlana' is a good barge. She will carry salvage from the lower locks. The Syndicate has a working vessel. The vessel is the Syndicate's.\n\n— Clerk.",
+      "tags": [
+        "canal_syndicate",
+        "manifest",
+        "salvage",
+        "barge",
+        "bodies"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_canal_tithe",
+      "doc_type": "tithe_notice",
+      "title": "Notice — Independent Salvager Tithe, Revised",
+      "posted_day": 50,
+      "posted_by": "The Syndicate Council",
+      "location": "Canal path, every lock",
+      "material": "Stencilled on salvaged metal signs",
+      "transcript": "NOTICE — INDEPENDENT SALVAGER TITHE\n\nEffective immediately: the tithe is one item in four. Was one in five. The canal is picked cleaner. The cleaner is the reason. The reason is the tithe.\n\nThe Syndicate does not apologize for the tithe. The Syndicate maintains the locks. The locks make the canal. The canal makes the salvage. The salvage makes the tithe. The tithe makes the locks.\n\nIndependent salvagers who refuse the tithe will be asked to leave the canal zone. The asking is the first time. The second time is the guard. The guard is the asking with a pole.\n\nThe Syndicate prefers the asking. The asking is the canal. The canal is the asking.\n\n— The Council.",
+      "tags": [
+        "canal_syndicate",
+        "tithe",
+        "salvage",
+        "notice",
+        "canal"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_overlay_charter",
+      "doc_type": "charter",
+      "title": "The Overlay — Charter of Information",
+      "posted_day": 15,
+      "posted_by": "The Overlay Council",
+      "location": "Cluster office, filed in the archive",
+      "material": "Typed on thin paper, filed in a folder marked PUBLIC",
+      "transcript": "THE OVERLAY — CHARTER OF INFORMATION\n\nWe are the Overlay. We map the new world on the old maps. The old maps are wrong. The new maps are the Overlay's. The Overlay is the map.\n\nArticle I: Information is property. The property is the information. The information belongs to the one who records it first. The recording is the claim. The claim is the Overlay's.\n\nArticle II: The Overlay trades in information. The information is the trade. The trade is the information. We do not trade in goods, promises, or allegiances. We trade in what is true, what is reported, what is confirmed. The truth is the trade. The trade is the truth.\n\nArticle III: The Overlay does not take sides. The sides are the information. The information is the sides. We record the sides. We do not join them. The joining is the bias. The bias is the end of the Overlay.\n\nArticle IV: The Overlay's archive is open to all who can pay the reading fee. The fee is information. The information is the fee. You read the archive. The archive reads you. The reading is the trade.\n\n— The Overlay Council.",
+      "tags": [
+        "overlay",
+        "charter",
+        "information",
+        "archive",
+        "neutrality"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_overlay_report",
+      "doc_type": "field_report",
+      "title": "Field Report — Settlement Status, Sector 7",
+      "posted_day": 40,
+      "posted_by": "Overlay Field Agent (name withheld)",
+      "location": "Cluster office, filed",
+      "material": "Handwritten on waterproof paper, coded",
+      "transcript": "FIELD REPORT — SECTOR 7\n\nSettlement: the grange.\nStatus: occupied.\nHeadcount: 140 (estimated).\nLeadership: quartermaster (female, name Yelena).\nSupplies: flour low (estimated 14 days). Protein adequate. Water adequate (artesian well). Medicine: low (broad-spectrum, 8 courses remaining).\nDefenses: none. The grange is not fortified. The grange is the grange.\nThreats: the garrison to the east (trade relationship, strained). The hydro barons to the north (trade relationship, functional). The road to the south (raider activity, intermittent).\n\nNotes: The quartermaster is carrying two numbers. The public number is 42. The real number is lower. The real number is the information. The information is the Overlay's. The Overlay does not share the real number. The real number is the trade. The trade is the real number.\n\nRecommendation: monitor. Do not intervene. The Overlay does not intervene. The Overlay records. The recording is the intervention. The intervention is the record.\n\n— Agent.",
+      "tags": [
+        "overlay",
+        "field_report",
+        "grange",
+        "quartermaster",
+        "flour"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_underwrite_charter",
+      "doc_type": "charter",
+      "title": "The Underwrite — Charter of Debt",
+      "posted_day": 16,
+      "posted_by": "The Underwrite Council",
+      "location": "Cluster office, filed in a folder marked PRIVATE",
+      "material": "Typed on thin paper, filed in a locked drawer",
+      "transcript": "THE UNDERWRITE — CHARTER OF DEBT\n\nWe are the Underwrite. We keep the ledger of what is owed. The owing is the world. The world is the owing.\n\nArticle I: Debt is the first institution. Before the law, before the wall, before the ration — there was debt. Someone gave. Someone owes. The giving is the debt. The debt is the giving.\n\nArticle II: The Underwrite records all debts between parties who consent to the recording. The recording is the debt. The debt is the recording. We do not create debt. We witness it. The witnessing is the power. The power is the witnessing.\n\nArticle III: A debt recorded by the Underwrite is a debt that will be remembered. The memory is the enforcement. The enforcement is the memory. We do not enforce. We remember. The remembering is the enforcement.\n\nArticle IV: The Underwrite charges a fee for recording: one-tenth of the debt's value, payable by the debtor. The fee is the debt to the Underwrite. The debt to the Underwrite is the only debt the Underwrite will collect by force. The force is the memory. The memory is the force.\n\n— The Underwrite Council.",
+      "tags": [
+        "underwrite",
+        "charter",
+        "debt",
+        "ledger",
+        "memory"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_underwrite_collection",
+      "doc_type": "collection_notice",
+      "title": "Notice of Collection — Debt in Default",
+      "posted_day": 105,
+      "posted_by": "The Underwrite Council",
+      "location": "Cluster office, posted publicly",
+      "material": "Pre-printed form, fields filled in pen, stamped IN DEFAULT",
+      "transcript": "NOTICE OF COLLECTION\n\nDebtor: the grange (Yelena, quartermaster).\nDebt: 40kg flour to the garrison.\nDue date: Day 120.\nStatus: IN DEFAULT. Payment not received.\n\nThe Underwrite does not collect debts. The Underwrite records that the debt is in default. The recording is the collection. The collection is the recording.\n\nThis notice is posted publicly. The public is the witness. The witness is the enforcement. The enforcement is the public.\n\nThe debtor may settle the debt at any time. The settlement is the recording. The recording is the settlement. Until settled, this notice remains.\n\n— The Underwrite Council.\n\nHANDWRITTEN BELOW:\nThe flour was due. The flour was not there. The number was eleven. The number is the reason. The reason is the flour. The flour is the debt. The debt is the notice. The notice is the public. The public is the quartermaster. I am the quartermaster. The notice is on my door. — Y.",
+      "tags": [
+        "underwrite",
+        "collection",
+        "default",
+        "grange",
+        "flour"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_underwrite_conflict",
+      "doc_type": "conflict_record",
+      "title": "Conflict Record — Overlay vs. Underwrite",
+      "posted_day": 110,
+      "posted_by": "Joint Council (Overlay and Underwrite)",
+      "location": "Cluster office, filed in both archives",
+      "material": "Handwritten, signed by both councils",
+      "transcript": "CONFLICT RECORD — OVERLAY VS. UNDERWRITE\n\nThe Overlay and the Underwrite share the cluster office. The Overlay keeps the archive. The Underwrite keeps the ledger. The archive is the information. The ledger is the debt. The two are not the same.\n\nConflict: The Overlay recorded the grange's flour number as 11 (the real number). The Underwrite recorded the grange's flour debt as 40kg (the garrison's claim). The garrison learned of the Overlay's recording. The garrison now knows the grange cannot pay. The garrison has reduced the grange's credit. The grange is worse off than before.\n\nThe Overlay says: the information is the truth. The truth is the recording. The recording is the Overlay's duty. The duty is the truth.\n\nThe Underwrite says: the truth is the weapon. The weapon is the information. The information was used against the debtor. The debtor is the grange. The grange is the victim of the truth.\n\nResolution: none. The Overlay will not suppress truth. The Underwrite will not forgive debt. The conflict is recorded. The recording is the conflict. The conflict is the archive and the ledger. The archive and the ledger are the cluster office. The cluster office is the world.\n\n— Both Councils.",
+      "tags": [
+        "overlay",
+        "underwrite",
+        "conflict",
+        "truth",
+        "debt",
+        "grange"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_upland",
+      "doc_type": "manifesto",
+      "title": "The Upland Militia — Statement of Purpose",
+      "posted_day": 22,
+      "posted_by": "The Militia Captain",
+      "location": "Upland waystation, posted on the trail",
+      "material": "Hand-painted on a salvaged road sign",
+      "transcript": "THE UPLAND MILITIA\n\nWe are the upland. The upland is the high ground. The high ground is the seeing. The seeing is the warning. The warning is the upland.\n\nWe do not take territory. The territory is the valley. The valley is the low. The low is the taking. The taking is the valley's. We are the upland. We do not take.\n\nWe watch the passes. We watch the road. We watch the sky. We watch the smoke. We see what comes before it arrives. The seeing is the gift. The gift is the warning. The warning is the upland's.\n\nWe trade the warning for food, for fuel, for medicine. The warning is the trade. The trade is the warning. We do not trade in allegiance. The allegiance is the valley's. The valley is the taking. We do not take allegiance.\n\nThe upland is the high ground. The high ground is the seeing. The seeing is the upland. The upland is the militia.\n\n— The Captain.",
+      "tags": [
+        "upland_militia",
+        "manifesto",
+        "high_ground",
+        "seeing"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_remnant",
+      "doc_type": "manifesto",
+      "title": "The Military Remnants — Declaration of Continuity",
+      "posted_day": 5,
+      "posted_by": "Lt. Colonel (name illegible)",
+      "location": "Abandoned command post, nailed to the door",
+      "material": "Typed on field-issue paper, faded",
+      "transcript": "DECLARATION OF CONTINUITY\n\nWe are the remnants of the regional command. The command is gone. The command is not gone. The command is us. We are the command.\n\nWe declare the continuity of lawful authority under the pre-Exchange Compact charter. The charter is the law. The law is the charter. The charter has not been repealed. The repeal is the chaos. The chaos is the absence. The absence is not the law.\n\nWe claim authority over all former Compact military installations, supply depots, and personnel. The claim is the law. The law is the claim. Personnel who do not report to the remnants within 30 days are absent without leave. The absence is the desertion. The desertion is the law's.\n\nWe will restore order. The order is the law. The law is the order. We are the remnants. The remnants are the law.\n\n— Lt. Col., Commanding.\n\nPENCILED BELOW:\nThey have twelve men and one working radio. They are the law. The law has twelve men. I counted. — a passer.",
+      "tags": [
+        "military_remnants",
+        "manifesto",
+        "continuity",
+        "law"
+      ]
+    },
+    {
+      "doc_id": "bunker_doc_archivists",
+      "doc_type": "manifesto",
+      "title": "The Archivists — Why We Keep",
+      "posted_day": 10,
+      "posted_by": "The Head Archivist",
+      "location": "Municipal archive, entrance",
+      "material": "Hand-lettered on the archive door",
+      "transcript": "WHY WE KEEP\n\nWe keep the records. The records are the before. The before is the reason. The reason is the after. The after is the now. The now is the keeping.\n\nWe do not judge the records. The records judge themselves. We do not destroy the records. The destruction is the lie. The lie is the destruction. We do not alter the records. The alteration is the forgery. The forgery is the alteration.\n\nWe keep the census, the deed, the license, the report, the form, the letter, the map. The keeping is the trust. The trust is the keeping. We are trusted by the dead to keep what they wrote. We are trusted by the living to keep what they will need. We are trusted by the future to keep what the present forgets.\n\nThe archive is open. The archive is the open. The open is the keeping. The keeping is the archive.\n\n— The Archivists.",
+      "tags": [
+        "archivists",
+        "manifesto",
+        "records",
+        "keeping",
+        "archive"
+      ]
+    }
+  ]
+}

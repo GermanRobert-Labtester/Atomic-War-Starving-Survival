@@ -59,7 +59,7 @@ namespace Ashfall.Core.Tests
         public void Validate_RejectsNonCanonicalWeaponId()
         {
             string dir = TempDir();
-            WriteJson(dir, "{ \"schema_version\": 1, \"weapons\": [ { \"id\": \"boomstick\" } ], \"ammo\": [], \"materials\": [] }");
+            WriteJson(dir, "{ \"schema_version\": 1, \"weapons\": [ { \"id\": \"boomstick\", \"display_name\": \"Boom\" } ], \"ammo\": [], \"materials\": [] }");
             try { Assert.Throws<FormatException>(() => TryLoad(dir)); }
             finally { RestoreDefaults(); }
         }
@@ -69,7 +69,7 @@ namespace Ashfall.Core.Tests
         {
             string dir = TempDir();
             WriteJson(dir,
-                "{ \"schema_version\": 1, \"weapons\": [ { \"id\": \"weapon_x\", \"caliber\": \"ammo_nope\" } ], \"ammo\": [ { \"id\": \"ammo_357\" } ], \"materials\": [] }");
+                "{ \"schema_version\": 1, \"weapons\": [ { \"id\": \"weapon_x\", \"display_name\": \"X\", \"caliber\": \"ammo_nope\" } ], \"ammo\": [ { \"id\": \"ammo_357\", \"display_name\": \".357\" } ], \"materials\": [] }");
             try { Assert.Throws<FormatException>(() => TryLoad(dir)); }
             finally { RestoreDefaults(); }
         }
@@ -81,8 +81,8 @@ namespace Ashfall.Core.Tests
             WriteJson(dir, string.Join("\n",
                 "{ \"schema_version\": 1,",
                 "  \"weapons\": [ { \"id\": \"weapon_x\", \"display_name\": \"X\", \"caliber\": \"ammo_9\" } ],",
-                "  \"ammo\": [ { \"id\": \"ammo_9\" } ],",
-                "  \"materials\": [ { \"id\": \"material_rock\" } ] }"));
+                "  \"ammo\": [ { \"id\": \"ammo_9\", \"display_name\": \"9mm\" } ],",
+                "  \"materials\": [ { \"id\": \"material_rock\", \"display_name\": \"Rock\" } ] }"));
             try
             {
                 Assert.True(TryLoad(dir));

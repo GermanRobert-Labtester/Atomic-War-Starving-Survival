@@ -147,7 +147,7 @@ namespace Ashfall.Core.Narrative
             string meltPath = Path.Combine(directoryPath, "pot_furnace_glass_melts.json");
             if (File.Exists(meltPath))
             {
-                var list = JsonSerializer.Deserialize<List<PotFurnaceGlassMeltEntry>>(File.ReadAllText(meltPath), options);
+                var list = CatalogLocator.LoadWrappedList<PotFurnaceGlassMeltEntry>(File.ReadAllText(meltPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -163,7 +163,7 @@ namespace Ashfall.Core.Narrative
             string condPath = Path.Combine(directoryPath, "liebig_condenser_fracture_logs.json");
             if (File.Exists(condPath))
             {
-                var list = JsonSerializer.Deserialize<List<LiebigCondenserFractureEntry>>(File.ReadAllText(condPath), options);
+                var list = CatalogLocator.LoadWrappedList<LiebigCondenserFractureEntry>(File.ReadAllText(condPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -179,7 +179,7 @@ namespace Ashfall.Core.Narrative
             string greasePath = Path.Combine(directoryPath, "ground_glass_joint_greasing_audits.json");
             if (File.Exists(greasePath))
             {
-                var list = JsonSerializer.Deserialize<List<GroundGlassJointGreaseEntry>>(File.ReadAllText(greasePath), options);
+                var list = CatalogLocator.LoadWrappedList<GroundGlassJointGreaseEntry>(File.ReadAllText(greasePath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -195,7 +195,7 @@ namespace Ashfall.Core.Narrative
             string annealPath = Path.Combine(directoryPath, "annealing_lehr_birefringence_records.json");
             if (File.Exists(annealPath))
             {
-                var list = JsonSerializer.Deserialize<List<AnnealingLehrBirefringenceEntry>>(File.ReadAllText(annealPath), options);
+                var list = CatalogLocator.LoadWrappedList<AnnealingLehrBirefringenceEntry>(File.ReadAllText(annealPath), options);
                 if (list != null)
                 {
                     foreach (var item in list)
@@ -210,25 +210,25 @@ namespace Ashfall.Core.Narrative
             return catalog;
         }
 
-        public PotFurnaceGlassMeltEntry GetMelt(string id)
+        public PotFurnaceGlassMeltEntry? GetMelt(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is PotFurnaceGlassMeltEntry e ? e : null;
         }
 
-        public LiebigCondenserFractureEntry GetCondenser(string id)
+        public LiebigCondenserFractureEntry? GetCondenser(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is LiebigCondenserFractureEntry e ? e : null;
         }
 
-        public GroundGlassJointGreaseEntry GetGrease(string id)
+        public GroundGlassJointGreaseEntry? GetGrease(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is GroundGlassJointGreaseEntry e ? e : null;
         }
 
-        public AnnealingLehrBirefringenceEntry GetAnneal(string id)
+        public AnnealingLehrBirefringenceEntry? GetAnneal(string id)
         {
             if (string.IsNullOrEmpty(id)) return null;
             return _entriesById.TryGetValue(id, out var obj) && obj is AnnealingLehrBirefringenceEntry e ? e : null;

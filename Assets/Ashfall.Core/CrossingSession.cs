@@ -17,7 +17,7 @@ namespace Ashfall.Core
             Catalog = catalog ?? new CrossingCatalog();
         }
 
-        public static CrossingSession Load(string dataDirectory, ILog log = null)
+        public static CrossingSession Load(string dataDirectory, ILog? log = null)
         {
             var loader = new CrossingCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer(), log);
             return new CrossingSession(new VouchAccessSystem(), loader.Load(dataDirectory));

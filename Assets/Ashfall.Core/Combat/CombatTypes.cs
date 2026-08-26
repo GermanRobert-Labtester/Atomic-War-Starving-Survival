@@ -134,6 +134,7 @@ namespace Ashfall.Core.Combat
         public float AshFoul;            // persistent environmental fouling (ash/contamination)
         public string AmmoId = string.Empty;
         public int AmmoRemaining = 0;
+        public int MagazineCapacity;     // item 6: max rounds in one reload
         public int ScrapRepairCost;     // exposed to the UI
     }
 

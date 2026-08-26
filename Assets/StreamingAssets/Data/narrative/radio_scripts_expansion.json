@@ -1,0 +1,604 @@
+{
+  "schema_version": 1,
+  "collection_id": "radio_scripts_expansion",
+  "description": "Radio scripts and broadcast rundowns — full transcripts, station IDs, emergency announcements, weather reports, faction broadcasts, intercepted signals, personal broadcasts, repeater loops. Radio cadence: callsigns, partial reception, clipped speech, procedural language.",
+  "broadcasts": [
+    {
+      "broadcast_id": "rad_emergency_01_storm_warning",
+      "frequency_mhz": 99.0,
+      "station_name": "Station K-7 (The Ridge Relay)",
+      "voice_profile": "Calm female voice, clipped military cadence, wind noise in background",
+      "day_trigger": 12,
+      "title": "Ash Storm Warning — Sector 4",
+      "transcript": "[TONE] This is Station K-7 on the ridge. Ash storm warning, Sector 4. Visibility under 50 metres and dropping. Wind gusting 70 kilometres per hour from the east. The storm will last six to eight hours. Do not travel. Shelter in place. Cover your mouth and eyes. The ash is fine enough to breathe and coarse enough to blind. Repeat: do not travel. Shelter in place. The storm will pass. The ash will settle. Wait for the wind to drop. K-7 out.\n[STATIC]",
+      "tags": [
+        "emergency",
+        "storm",
+        "ash",
+        "warning",
+        "sector_4"
+      ]
+    },
+    {
+      "broadcast_id": "rad_emergency_02_water_alert",
+      "frequency_mhz": 88.4,
+      "station_name": "Station K-7 (The Ridge Relay)",
+      "voice_profile": "Urgent male voice, slight echo, signal intermittent",
+      "day_trigger": 20,
+      "title": "Water Contamination Alert — South District",
+      "transcript": "[STATIC] ...ation K-7. Water alert. South district. The well at the old pump station is contaminated. Do not drink. Repeat: do not drink the well water at the south pump station. The water is clear but carries sediment. The sediment is the ash. The ash is the cesium. Boil if you must. Filter if you can. Do not drink unboiled. The well will be tested in three days. Until then, use the north well or the artesian. K-7 out.\n[carrier lost]",
+      "tags": [
+        "emergency",
+        "water",
+        "contamination",
+        "south_district",
+        "well"
+      ]
+    },
+    {
+      "broadcast_id": "rad_emergency_03_dam_warning",
+      "frequency_mhz": 101.3,
+      "station_name": "Unknown Origin — Band 6",
+      "voice_profile": "Distorted, rebroadcast through Kestrel-9 relay, signal weak",
+      "day_trigger": 4,
+      "title": "Relayed Warning — North Dam Spillway",
+      "transcript": "[STATIC] ...relay from Kestrel-9. North Dam. The spillway gate is stuck open. The reservoir is rising. If the water overtops the emergency spill, the town downstream is at risk. Send everyone to the high ground. The high school. The high school is the high ground. Send them now. ...[STATIC] ...this is North Dam. The winch takes two. I am one. I will stay on the winch. I will call when the gate is closed or when the gate is not closed. North Dam out.\n[carrier lost]",
+      "tags": [
+        "emergency",
+        "dam",
+        "spillway",
+        "kestrel_9",
+        "relay",
+        "high_ground"
+      ]
+    },
+    {
+      "broadcast_id": "rad_weather_01_daily",
+      "frequency_mhz": 99.0,
+      "station_name": "Station K-7 (The Ridge Relay)",
+      "voice_profile": "Steady female voice, professional meteorological cadence",
+      "day_trigger": 15,
+      "title": "Morning Weather — Day 15",
+      "transcript": "Station K-7, morning weather, Day 15. Surface temperature: minus 18 Celsius. Wind: north-north-west, 15 kilometres per hour. Visibility: 200 metres in light ash haze. Ashfall: light, decreasing. Barometric pressure: 980 millibars, falling slowly. Forecast: the ash will thin by midday. The wind will shift east by evening. The temperature will drop to minus 25 overnight. Dress for the cold. The cold is the night. The night is the cold. K-7 out.",
+      "tags": [
+        "weather",
+        "morning",
+        "temperature",
+        "ash",
+        "forecast"
+      ]
+    },
+    {
+      "broadcast_id": "rad_weather_02_winter",
+      "frequency_mhz": 99.0,
+      "station_name": "Station K-7 (The Ridge Relay)",
+      "voice_profile": "Same steady female voice, slower cadence, tired",
+      "day_trigger": 35,
+      "title": "Morning Weather — Day 35, First Winter",
+      "transcript": "Station K-7, morning weather, Day 35. Surface temperature: minus 32 Celsius. Wind: east, 8 kilometres per hour. Visibility: 350 metres. Ashfall: moderate. Barometric pressure: 960 millibars, steady. Forecast: the temperature will not rise above minus 25 today. The wind will remain east. The ash will remain moderate. This is the first winter. The first winter is the cold. The cold is the first winter. Dress for the cold. Do not stay outside longer than 30 minutes. The 30 minutes is the frostbite. The frostbite is the 30 minutes. K-7 out.",
+      "tags": [
+        "weather",
+        "winter",
+        "cold",
+        "frostbite",
+        "first_winter"
+      ]
+    },
+    {
+      "broadcast_id": "rad_weather_03_spring",
+      "frequency_mhz": 99.0,
+      "station_name": "Station K-7 (The Ridge Relay)",
+      "voice_profile": "Same female voice, slightly lighter cadence",
+      "day_trigger": 100,
+      "title": "Morning Weather — Day 100, Third Winter's End",
+      "transcript": "Station K-7, morning weather, Day 100. Surface temperature: minus 5 Celsius. Wind: south, 12 kilometres per hour. Visibility: 500 metres. Ashfall: light. Barometric pressure: 990 millibars, rising. Forecast: the temperature will rise to plus 2 by midday. The wind will remain south. The ash is thinning. The visibility is the best in months. The spring is coming. The spring is late. The spring is grey. The spring is the spring. K-7 out. The spring is the spring.",
+      "tags": [
+        "weather",
+        "spring",
+        "warming",
+        "visibility",
+        "third_winter"
+      ]
+    },
+    {
+      "broadcast_id": "rad_station_id_01_kestrel",
+      "frequency_mhz": 401.9,
+      "station_name": "Relay Station Kestrel-9",
+      "voice_profile": "Single male voice, formal, slight wind noise, relay hum in background",
+      "day_trigger": 1,
+      "title": "Kestrel-9 Station Identification",
+      "transcript": "[HUM] Relay Station Kestrel-9, 401.9 megahertz, on the ridge. The repeater is operational. The repeater is the only one still up in this sector. The repeater relays all traffic on all bands. If you can hear this, you are not alone. We are on the ridge. The ridge is the relay. The relay is the ridge. The hum is the proof. The proof is the hum. Kestrel-9 will relay until the power goes. The power is the fuel. The fuel is the wind. The wind is the power. Kestrel-9 out. [HUM]",
+      "tags": [
+        "station_id",
+        "kestrel_9",
+        "relay",
+        "hum",
+        "sign_on"
+      ]
+    },
+    {
+      "broadcast_id": "rad_station_id_02_free_net",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Young male voice, energetic, tape music in background, defiant",
+      "day_trigger": 5,
+      "title": "Free-Net Sign-On — We Are Still Here",
+      "transcript": "[MUSIC: three notes, distorted] This is the Free-Net. 88.4 megahertz. We are still here. We are still broadcasting. We are still free. The garrison does not own the air. The barons do not own the water. The air is the air. The air is free. The Free-Net is the air. We broadcast from the black runoff, from the old drain, from the place no one owns. No one owns the drain. No one owns the air. The air is the Free-Net. The Free-Net is the air. We are still here. [MUSIC: three notes]",
+      "tags": [
+        "station_id",
+        "free_net",
+        "pirate",
+        "sign_on",
+        "defiant"
+      ]
+    },
+    {
+      "broadcast_id": "rad_station_id_03_keeper",
+      "frequency_mhz": 104.7,
+      "station_name": "Station 0 (The Deep Vault)",
+      "voice_profile": "Acoustically distant voice, slow, deliberate, tape hiss",
+      "day_trigger": 3,
+      "title": "Station Zero — We Are Below",
+      "transcript": "[HISS] 104.7 megahertz. This is Station Zero. We are 80 metres below the granite ridge. We are below. We are the below. The below is the shelter. The shelter is the below. We broadcast because the broadcasting is the proof we are still below. The below is the proof. The proof is the below. We will broadcast until the power goes or the air goes or the below goes. The below is the below. Station Zero out. [HISS]",
+      "tags": [
+        "station_id",
+        "station_zero",
+        "deep_vault",
+        "below",
+        "sign_on"
+      ]
+    },
+    {
+      "broadcast_id": "rad_faction_01_garrison",
+      "frequency_mhz": 95.4,
+      "station_name": "The Iron Garrison Broadcast",
+      "voice_profile": "Male voice, military cadence, clipped, authoritative, no music",
+      "day_trigger": 14,
+      "title": "Garrison Address — Order and the Wall",
+      "transcript": "[TONE] This is the Iron Garrison. The garrison is the wall. The wall is the garrison. Every mouth earns its rations. Every hand holds the wall. The wall holds everyone. Report to your assigned post. Report to your assigned labor. The labor is the ration. The ration is the labor. Desertion is punishable by execution. The execution is the wall. The wall is the execution. The garrison does not negotiate. The garrison does not apologize. The garrison is the wall. The wall is the garrison. Garrison out. [TONE]",
+      "tags": [
+        "faction",
+        "garrison",
+        "wall",
+        "ration",
+        "order"
+      ]
+    },
+    {
+      "broadcast_id": "rad_faction_02_barons",
+      "frequency_mhz": 92.1,
+      "station_name": "The Hydro Barons' Frequency",
+      "voice_profile": "Measured male voice, commercial cadence, water drip in background",
+      "day_trigger": 18,
+      "title": "Barons' Broadcast — Water Rates and Reason",
+      "transcript": "[DRIP] This is the Barons' Council. Water is available at Lock Gate Four. The rate is posted. The rate is the reason the water is still there. The rate is 2 litres of lamp oil per 20 litres of drinking water. Washing water: 1 litre per 40. Livestock water: not available. The Barons do not water livestock. The Barons do not negotiate with the season. The season negotiates with the Barons. Unauthorized drilling is theft. Theft is the guard. The guard is the law. The law is the rate. The rate is the water. The water is the life. [DRIP]",
+      "tags": [
+        "faction",
+        "hydro_barons",
+        "water",
+        "rate",
+        "lock_gate"
+      ]
+    },
+    {
+      "broadcast_id": "rad_faction_03_foundry",
+      "frequency_mhz": 107.3,
+      "station_name": "The Silent Foundry — Guild Frequency",
+      "voice_profile": "Quiet male voice, low, deliberate, metal hammer in background",
+      "day_trigger": 12,
+      "title": "Foundry Broadcast — We Build",
+      "transcript": "[HAMMER] This is the Silent Foundry. We build. We do not destroy. We make the pipe, the pump, the hinge, the gear, the tool. The tool builds. The weapon destroys. We do not make weapons. The garrison has asked. We have refused. The refusal is the Foundry. The Foundry is the refusal. We are silent to outsiders. The silence is the focus. The focus is the metal. The metal is the world. The world is the Foundry. We build. [HAMMER]",
+      "tags": [
+        "faction",
+        "silent_foundry",
+        "build",
+        "metal",
+        "refusal"
+      ]
+    },
+    {
+      "broadcast_id": "rad_faction_04_cult",
+      "frequency_mhz": 77.3,
+      "station_name": "The Glow — The Speaker's Frequency",
+      "voice_profile": "Calm, slow, hypnotic voice, faint static like breathing",
+      "day_trigger": 30,
+      "title": "The Speaker — The Glow Is the Change",
+      "transcript": "[STATIC/BREATHING] The glow is the promise. The promise is the change. The change is the becoming. Do not fear the glow. The glow fears nothing. The glow is the courage of the atom. The patience of the half-life. The warmth of the decay. The decay is not death. The decay is the slow fire. The slow fire burns the old world away. The old world is the ash. The ash is the old world. The new world is the glow. The glow is the new world. Come to the crater. The crater is the first fire. The first fire is the glow. The glow is the calling. The calling is the glow. [STATIC/BREATHING]",
+      "tags": [
+        "faction",
+        "cult_of_the_glow",
+        "speaker",
+        "glow",
+        "decay",
+        "calling"
+      ]
+    },
+    {
+      "broadcast_id": "rad_faction_05_overlay",
+      "frequency_mhz": 110.5,
+      "station_name": "The Overlay — Information Frequency",
+      "voice_profile": "Neutral, precise, no emotion, slight digital artifact",
+      "day_trigger": 15,
+      "title": "Overlay Broadcast — The Record",
+      "transcript": "[CLICK] This is the Overlay. We record. We do not intervene. We do not take sides. We trade in what is true, what is reported, what is confirmed. The truth is the trade. The trade is the truth. Current record: 12 settlements confirmed active in the sector. 4 confirmed gone. 3 unconfirmed. The unconfirmed is the question. The question is the unconfirmed. If you have information, bring it to the cluster office. The fee is information. The information is the fee. You read the archive. The archive reads you. [CLICK]",
+      "tags": [
+        "faction",
+        "overlay",
+        "information",
+        "record",
+        "neutrality"
+      ]
+    },
+    {
+      "broadcast_id": "rad_personal_01_calling_son",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Old male voice, shaking, desperate, the Free-Net host quiet beside him",
+      "day_trigger": 22,
+      "title": "Personal — Calling Pavel",
+      "transcript": "[STATIC] ...this is... this is a personal broadcast. The Free-Net is letting me use the air. I am calling for my son. Pavel. Pavel, if you can hear this, I am at the shelter. I am alive. The key is in the tin. Under the handkerchiefs. I lied about the key. I lied about the intake. I am sorry. The key is in the tin. Come home. I am... I am old and I lied and the key is in the tin and I am sorry and come home. [STATIC] ...the Free-Net is the air. The air is the Free-Net. Come home, Pavel. [carrier lost]",
+      "tags": [
+        "personal",
+        "father",
+        "son",
+        "pavel",
+        "key",
+        "free_net",
+        "calling"
+      ]
+    },
+    {
+      "broadcast_id": "rad_personal_02_calling_daughter",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Female voice, steady but breaking, the Free-Net host silent",
+      "day_trigger": 40,
+      "title": "Personal — Calling Rima",
+      "transcript": "[STATIC] ...this is for Rima. Rima, if you can hear this. Mama gave you the book. I gave you the book. Write what you see. I see the book. I see you. You are counting. I am counting. Come home. I am counting you. The number is the counting. The counting is the number. Come home. [STATIC] ...the Free-Net is the air. The air is the Free-Net. Come home, Rima. [carrier lost]",
+      "tags": [
+        "personal",
+        "mother",
+        "daughter",
+        "rima",
+        "book",
+        "counting",
+        "free_net"
+      ]
+    },
+    {
+      "broadcast_id": "rad_personal_03_calling_husband",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Young female voice, quiet, almost a whisper, the Free-Net host silent",
+      "day_trigger": 48,
+      "title": "Personal — Calling M.",
+      "transcript": "[STATIC] ...M. If you can hear this. I wound your watch. I set it to the time. The time is the time I guess at. I left the tea cold. I drank the tea. I cried in the tea. The tea was cold and salted. I am on two shifts. The lamp is full. The lamp is for you. You are not here. The lamp is full. Come back. [STATIC] ...the air is the Free-Net. The Free-Net is the air. Come back, M. [carrier lost]",
+      "tags": [
+        "personal",
+        "lover",
+        "watch",
+        "tea",
+        "lamp",
+        "free_net",
+        "calling"
+      ]
+    },
+    {
+      "broadcast_id": "rad_intercept_01_military",
+      "frequency_mhz": 121.5,
+      "station_name": "Intercepted — Military Band",
+      "voice_profile": "Encrypted, burst transmission, decoded fragment, male voice",
+      "day_trigger": 25,
+      "title": "Intercept — Garrison Internal, Encrypted",
+      "transcript": "[BURST] ...decoded fragment... ...water allocation 60-25-15... ...recommend reduce civilian to 15... ...Colonel's note: 20 not 15... ...the linen is the hospital... ...do not write this down elsewhere... ...end fragment... [BURST]",
+      "tags": [
+        "intercept",
+        "military",
+        "garrison",
+        "water",
+        "encrypted",
+        "fragment"
+      ]
+    },
+    {
+      "broadcast_id": "rad_intercept_02_barons",
+      "frequency_mhz": 92.1,
+      "station_name": "Intercepted — Barons' Internal",
+      "voice_profile": "Low signal, directional antenna, two voices, quiet",
+      "day_trigger": 42,
+      "title": "Intercept — Barons' Council, Internal",
+      "transcript": "[STATIC] ...the second-deepest says the table is dropping... ...the garrison's pump... ...we cannot out-drill... ...the deepest says negotiate... ...trade fuel for water... ...the second-deepest says the trade is the beginning of the taking... ...the third-deepest will decide... ...the third is the swing... [STATIC] ...end intercept... [carrier lost]",
+      "tags": [
+        "intercept",
+        "hydro_barons",
+        "internal",
+        "aquifer",
+        "negotiation"
+      ]
+    },
+    {
+      "broadcast_id": "rad_intercept_03_unknown",
+      "frequency_mhz": 77.3,
+      "station_name": "Intercepted — Unknown Origin",
+      "voice_profile": "Faint, distant, two voices, language unknown, possibly coded",
+      "day_trigger": 52,
+      "title": "Intercept — Unknown, Possibly Coded",
+      "transcript": "[STATIC] ...two voices... ...language not local... ...possibly coded... ...the first voice says a number... ...the second repeats... ...the first says a word that sounds like 'gate'... ...the second says a word that sounds like 'water'... ...the signal fades... ...the signal returns... ...the first says 'the man is on the floor'... ...the second says nothing... ...the signal fades... [STATIC] ...end intercept... [carrier lost]",
+      "tags": [
+        "intercept",
+        "unknown",
+        "coded",
+        "gate",
+        "water",
+        "two_voices"
+      ]
+    },
+    {
+      "broadcast_id": "rad_loop_01_checkpoint",
+      "frequency_mhz": 217.4,
+      "station_name": "Checkpoint Kilo Automated Beacon",
+      "voice_profile": "Automated, synthetic voice, repeating, no human intervention",
+      "day_trigger": 1,
+      "title": "Checkpoint Kilo — Automated Beacon Loop",
+      "transcript": "[BEEP] Checkpoint Kilo. Checkpoint Kilo. Requesting immediate assistance. Twelve survivors. Air filtration failing. Running on battery. Coordinates: Sector 7, Grid 14. Repeat. Checkpoint Kilo. Requesting immediate assistance. Twelve survivors. Air filtration failing. Running on battery. Coordinates: Sector 7, Grid 14. Repeat. [BEEP] ...this loop has been playing for 47 days. The battery is dead. The loop is the loop. The loop does not know the battery is dead. The loop is the ghost. The ghost is the loop.",
+      "tags": [
+        "loop",
+        "checkpoint_kilo",
+        "automated",
+        "beacon",
+        "ghost"
+      ]
+    },
+    {
+      "broadcast_id": "rad_loop_02_weather_auto",
+      "frequency_mhz": 99.0,
+      "station_name": "Automated Weather Station — Mount 7",
+      "voice_profile": "Synthetic voice, pre-recorded, repeating, no update since Exchange",
+      "day_trigger": 1,
+      "title": "Automated Weather — Mount 7 (Pre-Exchange Recording)",
+      "transcript": "[TONE] Mount 7 weather station. Automated report. Temperature: 14 Celsius. Wind: west-south-west, 10 kilometres per hour. Visibility: 10 kilometres. Conditions: clear. This report was recorded before the Exchange. The station is automated. The station does not know. The station reports the before. The before is the report. The report is the before. The station will report the before until the power goes. The power has not gone. The before is the broadcast. The broadcast is the before. [TONE] ...repeat...",
+      "tags": [
+        "loop",
+        "weather",
+        "automated",
+        "pre_exchange",
+        "mount_7",
+        "ghost"
+      ]
+    },
+    {
+      "broadcast_id": "rad_community_01_ration_notice",
+      "frequency_mhz": 99.0,
+      "station_name": "Station K-7 (The Ridge Relay)",
+      "voice_profile": "Female voice, community cadence, practical, no military clip",
+      "day_trigger": 23,
+      "title": "Ration Notice — Flour Reduction",
+      "transcript": "Station K-7, community notice. The quartermaster has announced a flour reduction, effective Day 24. Bread: one slice, not two. Porridge: half-depth. Children eat first. Children eat the same. The flour is the flour. The flour is the reason. The reason is the flour. The reduction is not a punishment. The reduction is the flour. The flour is the reduction. If you are on heavy labor, see the steward for a half-ration supplement at midday. The half is the rule. The rule is the half. K-7 out.",
+      "tags": [
+        "community",
+        "ration",
+        "flour",
+        "reduction",
+        "quartermaster"
+      ]
+    },
+    {
+      "broadcast_id": "rad_community_02_trade_fair",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Young male voice, energetic, community cadence, music in background",
+      "day_trigger": 30,
+      "title": "Trade Fair Notice — The Shallows Market",
+      "transcript": "[MUSIC] Free-Net! Trade fair at the Shallows Market, Day 30! Bring what you have. Trade what you can. Salt for flour. Medicine for fuel. Lamps for candles. The market is the trade. The trade is the market. No weapons. No fights. The market is the peace. The peace is the market. The Free-Net will broadcast the weather. The weather is the market. The market is the weather. Come! Trade! The air is free! The market is the air! [MUSIC]",
+      "tags": [
+        "community",
+        "market_fair",
+        "shallows_market",
+        "free_net",
+        "trade"
+      ]
+    },
+    {
+      "broadcast_id": "rad_community_03_school_notice",
+      "frequency_mhz": 99.0,
+      "station_name": "Station K-7 (The Ridge Relay)",
+      "voice_profile": "Female voice, warm, community cadence",
+      "day_trigger": 16,
+      "title": "School Notice — The Water Cycle",
+      "transcript": "Station K-7, community notice. The school is in the Ward C corridor, by the lamp, 10:00 daily. All children welcome. The lesson is the water cycle. The lesson is also the ash cycle. The chalk is the lesson. The chalk is almost gone. The lesson is not the chalk. The lesson is the cycle. The cycle is in the air. The air is the lesson. The lesson is the air. The teacher is Suki. Suki is the cycle. The cycle is the teacher. Bring your children. The children are the cycle. K-7 out.",
+      "tags": [
+        "community",
+        "school",
+        "water_cycle",
+        "children",
+        "suki",
+        "chalk"
+      ]
+    },
+    {
+      "broadcast_id": "rad_emergency_04_quarantine",
+      "frequency_mhz": 99.0,
+      "station_name": "Station K-7 (The Ridge Relay)",
+      "voice_profile": "Calm female voice, medical cadence, slight urgency",
+      "day_trigger": 19,
+      "title": "Quarantine Notice — Ward B Respiratory",
+      "transcript": "Station K-7, medical notice. Ward B is under quarantine. Respiratory cluster. No entry except medical staff. No exit except medical transfer. Meals at the door. Water delivered. The quarantine is the sheet. The sheet is the quarantine. The sheet is not a wall. The sheet is what we have. The quarantine will be lifted by the doctor when the cough is clear or the cause is clear. Neither is clear. The quarantine is the quarantine until it is not. K-7 out.",
+      "tags": [
+        "emergency",
+        "quarantine",
+        "ward_b",
+        "respiratory",
+        "sheet",
+        "medical"
+      ]
+    },
+    {
+      "broadcast_id": "rad_weather_04_whiteout",
+      "frequency_mhz": 99.0,
+      "station_name": "Station K-7 (The Ridge Relay)",
+      "voice_profile": "Female voice, slower, tired, wind noise loud in background",
+      "day_trigger": 50,
+      "title": "Weather Warning — Whiteout, All Sectors",
+      "transcript": "Station K-7, weather warning. Whiteout. All sectors. Visibility under 10 metres. Wind: variable, gusting 60. Temperature: minus 28 and dropping. Do not travel. Do not travel. The whiteout is the snow. The snow is the whiteout. The whiteout is the sky and the ground and the two are the same. The same is the whiteout. The whiteout is the same. Shelter in place. Wait for the wind to drop. The wind will drop. The whiteout will end. The end is the wind. K-7 out. [WIND]",
+      "tags": [
+        "weather",
+        "whiteout",
+        "warning",
+        "all_sectors",
+        "wind"
+      ]
+    },
+    {
+      "broadcast_id": "rad_personal_04_calling_sister",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Female voice, steady, controlled, the Free-Net host silent",
+      "day_trigger": 19,
+      "title": "Personal — Calling Katerina",
+      "transcript": "[STATIC] ...Kat. I cannot tell you the number. You will understand when I say I cannot tell you the number and you will not ask. The flour is lower than I have let anyone believe. I am carrying it. I am carrying it the way we used to carry Father's drinking. Between us. Not in front of the children. With a face that says nothing. You taught me that face. I am using it now. I am using it on everyone. I am not using it on you. Stay where you are. Stay with the girls. I will send for you when the number is a number I can say. The number is not that number yet. I love you. Do not come. [STATIC] ...the air is the Free-Net. The Free-Net is the air. Do not come, Kat. [carrier lost]",
+      "tags": [
+        "personal",
+        "sister",
+        "katerina",
+        "flour",
+        "number",
+        "free_net",
+        "calling"
+      ]
+    },
+    {
+      "broadcast_id": "rad_faction_06_quiet_house",
+      "frequency_mhz": 85.0,
+      "station_name": "The Quiet House — Guest Frequency",
+      "voice_profile": "Calm, slow, almost whispered, no background noise",
+      "day_trigger": 10,
+      "title": "The Quiet House — The Rule on the Air",
+      "transcript": "[SILENCE] This is the Quiet House. We do not broadcast often. The broadcast is the word. The word is the broadcast. We broadcast to say: the house is open. The house is the quiet. The quiet is the house. Come. Speak if you wish. Do not speak if you do not. The house does not require words. The house requires the quiet. The quiet is not the silence. The silence is empty. The quiet is full. Be full. [SILENCE] ...the house is open. The house is the quiet. [SILENCE]",
+      "tags": [
+        "faction",
+        "quiet_house",
+        "quiet",
+        "rule",
+        "guest",
+        "open"
+      ]
+    },
+    {
+      "broadcast_id": "rad_faction_07_upland",
+      "frequency_mhz": 113.0,
+      "station_name": "The Upland Militia — Watch Frequency",
+      "voice_profile": "Male voice, terse, observational, wind in background",
+      "day_trigger": 22,
+      "title": "Upland Watch — Pass Report",
+      "transcript": "[WIND] Upland Militia. Watch report. The north pass is open. The south pass is closing — snow at 2 centimetres per hour. The east road is clear. The west road is blocked by a landslide. We see what comes before it arrives. The seeing is the gift. The gift is the warning. The warning is the trade. We trade the warning for food, fuel, medicine. The warning is the trade. The trade is the warning. We do not take territory. We take the seeing. The seeing is the upland. The upland is the seeing. [WIND] ...Upland out.",
+      "tags": [
+        "faction",
+        "upland_militia",
+        "watch",
+        "pass",
+        "seeing",
+        "warning"
+      ]
+    },
+    {
+      "broadcast_id": "rad_intercept_04_foundry",
+      "frequency_mhz": 107.3,
+      "station_name": "Intercepted — Foundry Internal",
+      "voice_profile": "Low signal, two voices, metal sounds in background",
+      "day_trigger": 72,
+      "title": "Intercept — Foundry Schism Discussion",
+      "transcript": "[HAMMER] ...Master T. says we should make weapons... ...the garrison offered triple... ...Master K. says the Foundry does not make weapons... ...Master T. says survival requires trade... ...the garrison will buy weapons... ...the garrison will not buy hinges... ...Master K. says the purpose is the metal... ...Master T. says the purpose is to survive... ...vote called... ...five to one... ...Master T. leaves... [HAMMER] ...end intercept... [carrier lost]",
+      "tags": [
+        "intercept",
+        "silent_foundry",
+        "schism",
+        "weapons",
+        "vote"
+      ]
+    },
+    {
+      "broadcast_id": "rad_intercept_05_cult",
+      "frequency_mhz": 77.3,
+      "station_name": "Intercepted — Cult Internal",
+      "voice_profile": "Faint, distant, the Speaker's voice, a second voice questioning",
+      "day_trigger": 52,
+      "title": "Intercept — Cult, Doubter and Speaker",
+      "transcript": "[STATIC] ...the doubter says: I do not feel the glow. I feel sick... ...the Speaker says: the sickness is the old body leaving... ...the doubter says: my daughter is at the shelter. I want her to never come here... ...the Speaker says: the glow is the calling. The calling is for all... ...the doubter says: if the glow is the promise I should bring her. If the glow is the sickness I should never see her again... ...the Speaker says: the two wants are the same. The same is the glow... ...the doubter says nothing... [STATIC] ...end intercept... [carrier lost]",
+      "tags": [
+        "intercept",
+        "cult_of_the_glow",
+        "doubter",
+        "speaker",
+        "daughter",
+        "sickness"
+      ]
+    },
+    {
+      "broadcast_id": "rad_final_01_kestrel_signoff",
+      "frequency_mhz": 401.9,
+      "station_name": "Relay Station Kestrel-9",
+      "voice_profile": "Single male voice, tired, formal, relay hum fading",
+      "day_trigger": 7,
+      "title": "Kestrel-9 — Final Operator Sign-Off",
+      "transcript": "[HUM] This is Kestrel-9. Final operator log. Day 7. The power is going. The repeater will stay up on its reserve. I am leaving the logbook open on the desk. The coffee tin is half full. It is for the next operator. There is always a next operator. The repeater does not need me. I was only here to watch it. The watching is the job. The job is the watching. The hum is the proof the grid is not over. Do not cut the hum. Relay Station Kestrel-9, operator out. The wind is still humming. [HUM fades]",
+      "tags": [
+        "final",
+        "kestrel_9",
+        "operator",
+        "sign_off",
+        "hum",
+        "coffee_tin"
+      ]
+    },
+    {
+      "broadcast_id": "rad_final_02_free_net_signoff",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Young male voice, tired but defiant, music fading",
+      "day_trigger": 60,
+      "title": "Free-Net — We Are Still Here (For Now)",
+      "transcript": "[MUSIC: three notes, slow] This is the Free-Net. We are still here. For now. The battery is low. The antenna is bent. The wind is in the drain. The drain is the studio. The studio is the drain. We will broadcast until the battery goes. The battery is the air. The air is the battery. When the battery goes, the air goes. When the air goes, the Free-Net goes. But the air is free. The air will come back. The Free-Net will come back. The air is the air. The Free-Net is the air. We are still here. [MUSIC: three notes, slower] ...Free-Net out. For now. [STATIC]",
+      "tags": [
+        "final",
+        "free_net",
+        "sign_off",
+        "battery",
+        "defiant",
+        "for_now"
+      ]
+    },
+    {
+      "broadcast_id": "rad_final_03_station_zero",
+      "frequency_mhz": 104.7,
+      "station_name": "Station 0 (The Deep Vault)",
+      "voice_profile": "Acoustically distant voice, slow, final, tape hiss loud",
+      "day_trigger": 95,
+      "title": "Station Zero — The Last Broadcast",
+      "transcript": "[HISS] 104.7 megahertz. This is Station Zero. The last broadcast. The power is going. The below is the below. The below is the shelter. The shelter is the below. We broadcast because the broadcasting is the proof. The proof is the below. The below is the proof. The power is going. The proof is going. The below is not going. The below is the below. The below does not need the proof. The below is the proof. The proof is the below. We will not broadcast again. The below is the below. The below does not need the air. The air is the above. The above is the air. The below is the below. Station Zero out. The below is the below. [HISS fades to silence]",
+      "tags": [
+        "final",
+        "station_zero",
+        "last_broadcast",
+        "below",
+        "power",
+        "silence"
+      ]
+    },
+    {
+      "broadcast_id": "rad_numbers_loop",
+      "frequency_mhz": 101.3,
+      "station_name": "Unknown Origin — Band 6",
+      "voice_profile": "Steady female voice, reading numbers, no emotion, no origin",
+      "day_trigger": 1,
+      "title": "Numbers Station — The Loop",
+      "transcript": "[STATIC] Seven. Fourteen. Three. Nine. Twenty-two. Seven. Fourteen. Three. Nine. Twenty-two. Seven. Fourteen. Three. Nine. Twenty-two. [STATIC] ...the loop is steady. The loop is unhurried. The loop has been playing since before the mast lost power. The loop should not be possible. The loop does not respond to the mast. The mast does not respond to the loop. They share a frequency and nothing else. You can turn the dial off. You cannot turn the loop off. [STATIC] Seven. Fourteen. Three. Nine. Twenty-two. [carrier sustained]",
+      "tags": [
+        "numbers_station",
+        "loop",
+        "band_6",
+        "unknown",
+        "sustained"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core
 {
@@ -42,7 +43,7 @@ namespace Ashfall.Core
         public IReadOnlyList<CohortChild> Children => _state.children;
 
         /// <summary>Book a child with a guess band ("low"/"medium"/"high"). Never rewrite.</summary>
-        public bool BookChild(string childId, IReadOnlyList<string> parentIds, string guessBand, int birthDay, string moralityMemory = null)
+        public bool BookChild(string childId, IReadOnlyList<string> parentIds, string guessBand, int birthDay, string? moralityMemory = null)
         {
             if (string.IsNullOrEmpty(childId) || string.IsNullOrEmpty(guessBand)) return false;
             if (_children.ContainsKey(childId)) return false; // booked twice is refused
@@ -79,7 +80,7 @@ namespace Ashfall.Core
             return true;
         }
 
-        public CohortChild GetChild(string childId) =>
+        public CohortChild? GetChild(string childId) =>
             _children.TryGetValue(childId, out var c) ? c : null;
 
         public CohortSystemState CaptureState()

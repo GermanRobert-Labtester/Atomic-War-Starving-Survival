@@ -1,0 +1,369 @@
+{
+  "schema_version": 1,
+  "collection_id": "surgeons_casebook_batch_2",
+  "description": "Clinical case records from the bunker's medical station. Documented by the Surgeon with assistance from the Pharmacist and the Therapist.",
+  "cases": [
+    {
+      "case_id": "case_b2_001_acute_radiation_syndrome",
+      "patient": "Resident M. (age 34, new arrival)",
+      "admitted_day": 44,
+      "discharged_day": 61,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Nausea, vomiting, fatigue, erythema on forearms and neck. Dosimeter reading on arrival: 3.2 Sv accumulated. Lymphocyte count critically low.",
+      "diagnosis": "Acute Radiation Syndrome — Grade II (haematopoietic). Patient likely received acute exposure during surface transit without adequate shielding.",
+      "treatment": "Isolation in the low-background medical bay. IV fluids with electrolyte correction. Potassium iodide tablets (loading dose then maintenance). Anti-emetics for nausea. Bone marrow support with available iron and folate from the Pharmacist's stores. The Botanist provided fresh garlic (allicin content) as adjunct immune support. Daily blood counts via manual haemocytometer.",
+      "outcome": "SURVIVED. Lymphocyte count recovered to 800/μL by Day 58. Erythema faded to hyperpigmentation. Patient discharged with ongoing monitoring every 72 hours. Permanent dose record: 3.2 Sv. Prognosis: reduced life expectancy, elevated cancer risk. The Surgeon notes: 'He walked through a fallout corridor for two days without a mask. The dosimeter told him. He didn't listen.'",
+      "tags": [
+        "radiation",
+        "ARS",
+        "new_arrival",
+        "survived"
+      ]
+    },
+    {
+      "case_id": "case_b2_002_chronic_radiation_pneumonitis",
+      "patient": "the_veteran (age 58, long-term resident)",
+      "admitted_day": 52,
+      "discharged_day": null,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Progressive dry cough, exertional dyspnoea, low-grade fever (37.8°C). Chest auscultation: fine crackles bilaterally, right lower zone. Cumulative dosimeter reading: 1.8 Sv over 14 months.",
+      "diagnosis": "Chronic radiation pneumonitis progressing toward pulmonary fibrosis. The Veteran's cumulative dose, combined with age and pre-existing smoker's lung, has accelerated the fibrotic process.",
+      "treatment": "Corticosteroid equivalent from the Pharmacist's limited anti-inflammatory stock (willow bark extract, concentrated). Steam inhalation with eucalyptus from the greenhouse. Oxygen-conserving breathing exercises taught by the Therapist. Restricted from surface duty and heavy labour. The Botanist is investigating whether any greenhouse cultivars have anti-fibrotic properties.",
+      "outcome": "CHRONIC. Condition is stable but irreversible. The Veteran accepts the diagnosis with characteristic stoicism. He continues to train the younger sentries on perimeter observation from inside the bunker, using the periscope. The Surgeon notes: 'He knows what's coming. He's making peace with it the only way he knows how — by being useful until he isn't.'",
+      "tags": [
+        "radiation",
+        "pulmonary",
+        "chronic",
+        "terminal"
+      ]
+    },
+    {
+      "case_id": "case_b2_003_compound_fracture_mechanic",
+      "patient": "the_mechanic (age 41, resident)",
+      "admitted_day": 67,
+      "discharged_day": 89,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Open fracture of the left radius and ulna. Mechanism: the manual lathe's chuck slipped while turning a steel shaft, and the workpiece kicked, pinning his arm against the bench. Bone visible through wound. Severe pain, haemorrhage, shock.",
+      "diagnosis": "Compound (open) fracture, left forearm. Gustilo-Anderson Type IIIA. Contaminated wound (metal filings, machine oil). No tendon avulsion — confirmed by functional assessment once pain was managed.",
+      "treatment": "Immediate haemorrhage control with tourniquet and pressure dressing. Wound irrigation with boiled saline (2 litres). Debridement of contaminated tissue under improvised local anaesthetic (ethanol distillate from the greenhouse, filtered). Manual reduction of fracture. Splinting with flattened pipe sections and cloth bandages. The Watchmaker fashioned a precise external fixation device from clock springs and steel pins — holding the bones in alignment with remarkable accuracy. IV antibiotics from the Pharmacist's dwindling ciprofloxacin stock. Daily wound dressing changes.",
+      "outcome": "RECOVERED with residual stiffness. Bone healed in 6 weeks (confirmed by palpation and functional testing — no X-ray available). Full range of motion not restored — approximately 70% of normal. The Mechanic will not return to lathe work. He has transitioned to bench assembly and quality inspection. The Watchmaker's external fixator is now the standard of care for fractures in the bunker. The Surgeon notes: 'The Watchmaker saved his arm. Clock springs holding a man's bones together. We've come to this.'",
+      "tags": [
+        "fracture",
+        "surgical",
+        "workplace_injury",
+        "recovered"
+      ]
+    },
+    {
+      "case_id": "case_b2_004_dysentery_outbreak",
+      "patient": "Seven residents (Bunks 3, 7, 12, 15, 19, 22, 24)",
+      "admitted_day": 71,
+      "discharged_day": 79,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Acute watery diarrhoea (6-10 episodes/day), abdominal cramping, low-grade fever, dehydration. Onset within 24 hours across seven patients in different bunks. No common food source identified.",
+      "diagnosis": "Bacillary dysentery (Shigella suspected). Waterborne transmission likely. The water recycler's UV sterilization lamp was replaced 4 days prior — the replacement lamp may have been below specification.",
+      "treatment": "Oral rehydration solution (clean water + salt + sugar from kitchen stores). Isolation of affected patients in the east wing (temporary ward). Boiling all drinking water as interim measure. The Pharmacist prepared charcoal tablets (activated carbon from the air filter workshop) for toxin absorption. The Electrician tested the UV lamp — output was 40% below rated capacity. Lamp replaced with a verified unit from emergency stores. All water tanks flushed and re-sterilized.",
+      "outcome": "ALL RECOVERED. Last patient discharged Day 79. No deaths. The incident triggered a complete audit of the water treatment system. The Electrician now tests UV lamp output weekly. The Surgeon notes: 'Seven people nearly died because a light bulb was not bright enough. In the old world, you'd buy a pack of bulbs at the hardware store. Here, a bad bulb is a mass casualty event.'",
+      "tags": [
+        "infection",
+        "waterborne",
+        "outbreak",
+        "recovered",
+        "systemic"
+      ]
+    },
+    {
+      "case_id": "case_b2_005_therapist_somatic_flashback",
+      "patient": "the_bouncer (age 29, resident)",
+      "admitted_day": 55,
+      "discharged_day": null,
+      "attending": "the_therapist",
+      "presenting_symptoms": "Recurrent dissociative episodes (3-4 per week). Patient describes 'being back there' — the pre-war incident that led to his imprisonment. During episodes: unresponsive to external stimuli, muscle rigidity, diaphoresis, tachycardia. Episodes last 8-15 minutes. Post-episode: exhaustion, shame, amnesia for episode content.",
+      "diagnosis": "Post-Traumatic Stress Disorder with somatic flashback dissociation. The Therapist notes the episodes are triggered by physical contact from behind — a pattern consistent with the patient's history of assault-related trauma.",
+      "treatment": "Weekly talk therapy sessions (the Therapist's office, door closed, white noise from the ventilation for privacy). Grounding techniques taught: the 5-4-3-2-1 sensory method (name 5 things you see, 4 you hear, 3 you touch, 2 you smell, 1 you taste). The Bouncer has been assigned to the greenhouse — the Therapist believes repetitive physical work with plants provides a stabilising rhythm. No pharmacological intervention available (the Pharmacist has no anxiolytics). The Therapist is experimenting with chamomile-valerian tea from the greenhouse as a mild sedative.",
+      "outcome": "ONGOING. Episode frequency reduced from 3-4/week to 1-2/week after 6 weeks of therapy. The Bouncer has not had an episode in the greenhouse (6 weeks). He says the plants 'don't grab you from behind.' The Therapist notes: 'He is learning that not all touch is violence. The greenhouse is teaching him that. I am just helping him hear it.'",
+      "tags": [
+        "psychological",
+        "PTSD",
+        "dissociation",
+        "ongoing",
+        "therapy"
+      ]
+    },
+    {
+      "case_id": "case_b2_006_dental_abscess_child",
+      "patient": "Resident F. (age 9, bunker-born child)",
+      "admitted_day": 63,
+      "discharged_day": 66,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Severe left mandibular pain, facial swelling, fever (38.9°C), difficulty swallowing. Visual inspection: carious lesion on lower left first molar, periapical abscess with buccal swelling. Child is distressed and unable to eat.",
+      "diagnosis": "Dental abscess, left mandibular first molar. Likely progression of untreated dental caries. The child's diet is high in starch (turnip bread, barley) with no access to conventional dental hygiene supplies.",
+      "treatment": "Extraction under improvised local anaesthetic (clove oil from the greenhouse — eugenol is an effective dental analgesic). The Surgeon used salvaged dental forceps (found in a pre-war dental office during Expedition 7). The abscess was drained after extraction. Warm salt-water rinses every 4 hours. The Pharmacist provided the last of the amoxicillin (one course, 7 days) to prevent systemic spread. Post-extraction: soft diet (broth, mashed root vegetables) for 5 days.",
+      "outcome": "RESOLVED. Swelling subsided within 48 hours. Child eating normally by Day 66. The Surgeon conducted a dental survey of all bunker children: 4 of 7 children have active caries. The Chef is reformulating the Sunday Special to include less cariogenic ingredients. The Surgeon notes: 'In the old world, a cavity is a filling. Here, it's an extraction. The child didn't cry during the procedure. She asked if she could keep the tooth. I said yes. She put it in a small box and told her mother it was a treasure.'",
+      "tags": [
+        "dental",
+        "child",
+        "surgical",
+        "resolved",
+        "prevention"
+      ]
+    },
+    {
+      "case_id": "case_b2_007_chemists_self_experimentation",
+      "patient": "the_chemist (age 52, resident)",
+      "admitted_day": 78,
+      "discharged_day": 80,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Tremor, confusion, metallic taste, visual disturbances (colour shift — everything appears yellow). The Chemist presented voluntarily, stating: 'I think I've poisoned myself. Again.'",
+      "diagnosis": "Mild heavy metal poisoning — suspected thallium or lead exposure. The Chemist has been experimenting with soil decontamination using chemical extraction methods. He appears to have absorbed toxins through skin contact or inhalation of fumes.",
+      "treatment": "Chelation therapy attempted with available agents (the Pharmacist has a small stock of EDTA, pre-war, expired 3 years ago — efficacy uncertain). Activated charcoal from the air filter workshop. Forced hydration. The Chemist was ordered to cease all chemical work for 14 days and report to the medical bay for daily monitoring.",
+      "outcome": "RECOVERED. Symptoms resolved by Day 80. The Chemist returned to his work on Day 92 — against medical advice, but with improved ventilation and protective gloves fashioned from salvaged rubber. The Surgeon notes: 'He is either the bravest person in the bunker or the most reckless. I have decided he is both. He says the soil decontamination work is critical — if he can render irradiated soil farmable, it changes everything. He may be right. He may also be dead in ten years from cumulative exposure. He knows this. He does it anyway.'",
+      "tags": [
+        "toxicology",
+        "self_experimentation",
+        "chemical",
+        "resolved",
+        "ongoing_risk"
+      ]
+    },
+    {
+      "case_id": "case_b2_008_malnutrition_child",
+      "patient": "Resident S. (age 6, bunker-born child)",
+      "admitted_day": 82,
+      "discharged_day": null,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Weight below 5th percentile for age. Muscle wasting in limbs. Pale conjunctivae. Hair thinning and easy pluckability. Fatigue — child falls asleep during meals. The Teacher reported the child struggling to concentrate during lessons.",
+      "diagnosis": "Protein-energy malnutrition (marasmic type). The child's caloric intake is insufficient for growth. Dietary analysis reveals the child is consuming the standard ration but is a picky eater — leaving the protein portions (dried lentils, fish powder) uneaten. The Botanist's greenhouse produces adequate calories but the protein distribution is uneven.",
+      "treatment": "Supplemental feeding programme: additional protein-rich portions from the kitchen (fish bone broth, lentil paste, egg from the greenhouse chicken colony — yes, we have three chickens now). The Teacher is working with the child to address food selectivity through gradual exposure. The Therapist is monitoring for underlying anxiety around food (the child's parents experienced severe food insecurity before arriving at the bunker). Weekly weight measurements.",
+      "outcome": "ONGOING. Weight has increased by 0.4 kg over 3 weeks. Hair quality improving. The child has begun eating the lentil paste (the Chef adds a small amount of honey — a precious resource, but the Therapist considers it medically justified). The Surgeon notes: 'Three chickens. In the old world, a child with malnutrition gets formula and supplements. Here, she gets an extra spoon of lentil paste and a egg shell full of broth. We are keeping her alive by a margin of grams.'",
+      "tags": [
+        "nutrition",
+        "child",
+        "chronic",
+        "ongoing",
+        "dietary"
+      ]
+    },
+    {
+      "case_id": "case_b2_009_frostbite_extremities",
+      "patient": "the_courier (age 27, resident)",
+      "admitted_day": 59,
+      "discharged_day": 74,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Bilateral foot blistering, blackened toenails (3rd and 4th toes, left foot), numbness extending to the mid-foot. The Courier completed a 4-day winter surface run to the Cluster and back without adequate insulation in his boots. He did not report the symptoms until Day 3 post-return — by which time the tissue damage was established.",
+      "diagnosis": "Frostbite, bilateral feet. Left foot: superficial (2nd degree) with blister formation. Right foot: mild (1st degree) with numbness. No deep tissue necrosis — the Surgeon confirmed by capillary refill and pain response.",
+      "treatment": "Gradual rewarming in warm (not hot) water at 37-40°C for 30 minutes, twice daily. Blister debridement under sterile conditions. Aloe vera gel from the greenhouse applied to affected areas. Elevation of feet. The Courier was confined to bed rest for 10 days. The Pharmacist provided willow bark extract for pain. The Therapist conducted sessions addressing the Courier's tendency to minimise physical symptoms — 'He doesn't stop running, even when his body is telling him to.'",
+      "outcome": "RECOVERED with residual sensitivity. Left foot: toenails lost (will regrow slowly). Full sensation returned by Day 74. The Courier has been issued insulated boots lined with sheep's wool from the Tailor. He now carries a thermometer and reports any numbness immediately. The Surgeon notes: 'He lost three toenails and learned to stop. That's a fair trade.'",
+      "tags": [
+        "frostbite",
+        "extremities",
+        "surface_exposure",
+        "recovered"
+      ]
+    },
+    {
+      "case_id": "case_b2_010_allergic_reaction_unknown_plant",
+      "patient": "the_historian (age 61, resident)",
+      "admitted_day": 88,
+      "discharged_day": 90,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Generalised urticaria (hives), facial swelling, pruritus, mild wheezing. Onset 20 minutes after consuming a tea made from an unidentified plant found near the greenhouse's compost heap. The Historian believed the plant was chamomile. It was not.",
+      "diagnosis": "Acute allergic reaction (Type I hypersensitivity). The plant was identified by the Botanist as a mutated member of the Asteraceae family — superficially similar to chamomile but with elevated sesquiterpene lactone content (a known allergen). The mutation was caused by radiation-induced changes in the plant's secondary metabolite profile.",
+      "treatment": "Immediate removal of the plant material from the patient's system (induced emesis). The Pharmacist administered the bunker's last epinephrine autoinjector (pre-war stock, expired 2 years ago — the Pharmacist tested it on a dead rat first to confirm potency; it worked). Antihistamine equivalent: nettle leaf tea from the greenhouse (the Botanist confirmed histamine-modulating properties). Monitoring for biphasic reaction for 48 hours.",
+      "outcome": "RESOLVED. No biphasic reaction. The Historian was discharged with a strict warning: 'Do not eat anything the Botanist has not explicitly identified.' The Botanist has implemented a new protocol: all wild plants must be tested for allergenicity before human consumption. The test involves applying a small amount of plant extract to the inner forearm and waiting 24 hours. The Historian volunteered to be the test subject for future plants. The Surgeon notes: 'He is either very brave or very stupid. I think he is both. But he is also the only person in the bunker who reads books for pleasure, and I am not sure we can afford to lose him.'",
+      "tags": [
+        "allergic_reaction",
+        "botanical",
+        "emergency",
+        "resolved",
+        "protocol_change"
+      ]
+    },
+    {
+      "case_id": "case_b2_011_insomnia_cluster",
+      "patient": "Five residents (the_insomniac, the_hoarder, the_widow, the_exhausted_father, the_teacher)",
+      "admitted_day": 70,
+      "discharged_day": null,
+      "attending": "the_therapist",
+      "presenting_symptoms": "Chronic insomnia (sleep latency >90 minutes, total sleep time <4 hours). All five patients report the same trigger: the generator failed on Day 68 for 11 hours. During the blackout, the bunker was in complete darkness. The silence was described as 'oppressive.' Since the generator was restored, none of the five patients can sleep without the generator's hum.",
+      "diagnosis": "Conditioned insomnia — auditory dependence on the generator's vibration pattern for sleep onset. The Therapist identifies this as a form of environmental dependency: the patients' nervous systems have incorporated the generator's rhythm into their sleep architecture. Its absence triggered a primal fear response (darkness + silence = predator proximity, evolutionarily).",
+      "treatment": "The Therapist has designed a graduated desensitisation programme: Week 1 — sleep with a recording of the generator's hum (the Radio Host recorded it on a salvaged cassette player). Week 2 — reduce volume by 25%. Week 3 — replace with a rhythmic tapping sound (the Watchmaker built a metronome set to 62 BPM, matching the generator's pulse). Week 4 — reduce tapping volume. Week 5 — silence. Additionally: chamomile-valerian tea before bed, progressive muscle relaxation exercises, and a 'worry period' earlier in the evening where patients write down their anxieties and physically close the notebook.",
+      "outcome": "ONGOING. Three of five patients have progressed to Week 3. Two remain at Week 2. The Watchmaker's metronome is unexpectedly popular — three additional residents have requested one. The Therapist notes: 'We are dependent on a machine for sleep. When the machine stops, we stop. This is what the bunker has done to us — it has made our bodies subordinate to its systems. I am not sure we can fully reverse that. But I am trying.'",
+      "tags": [
+        "psychological",
+        "insomnia",
+        "cluster",
+        "ongoing",
+        "therapy"
+      ]
+    },
+    {
+      "case_id": "case_b2_012_appendicitis_improvised_surgery",
+      "patient": "the_firefighter (age 38, resident)",
+      "admitted_day": 75,
+      "discharged_day": 85,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Acute right lower quadrant abdominal pain (McBurney's point), rebound tenderness, fever (39.2°C), nausea, anorexia. Onset 18 hours prior to presentation. The patient initially self-diagnosed as 'something I ate' and delayed reporting.",
+      "diagnosis": "Acute appendicitis. The Surgeon is confident in the diagnosis based on clinical presentation (McBurney's, Rovsing's, and psoas signs all positive). No imaging available. No blood count available (the haemocytometer is reserved for radiation cases). Without surgical intervention, rupture is likely within 24-48 hours.",
+      "treatment": "Emergency appendectomy under spinal anaesthetic (the Surgeon's last procaine ampoule, injected at L3-L4). Surgical team: the Surgeon (operator), the Pharmacist (anaesthesia monitoring), the Vet (surgical assistant — the only other person in the bunker with animal surgery experience). Instruments: salvaged surgical kit from the abandoned hospital (sterilised by boiling). Lighting: four candles and the Pharmacist's flashlight. The abdomen was opened via McBurney's incision. The appendix was found inflined but not yet perforated. Removed. The stump was ligated with catgut (the Tailor made it from sheep intestine). Closure in layers.",
+      "outcome": "RECOVERED. No post-operative infection (the Pharmacist administered the last course of metronidazole). The Firefighter was mobilised on Day 5 post-op. Full activity by Day 10. The appendix was examined by the Botanist, who noted it contained a calcified faecolith — the obstructing agent. The Surgeon notes: 'I performed my 400th surgery by candlelight with a vet handing me instruments and a pharmacist watching a blood pressure cuff that may not be accurate. The appendix came out clean. The patient will live. In the old world, this was a routine procedure. Here, it was an event. I used my last procaine. My next spinal will have to be done without anaesthetic. I am not looking forward to that conversation.'",
+      "tags": [
+        "surgical",
+        "emergency",
+        "appendicitis",
+        "improvised",
+        "recovered",
+        "resource_depletion"
+      ]
+    },
+    {
+      "case_id": "case_b2_013_radiation_induced_cataract",
+      "patient": "the_hazmat_tech (age 45, resident)",
+      "admitted_day": 80,
+      "discharged_day": null,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Progressive bilateral visual blur over 6 months. Now unable to read the dosimeter dial at arm's length. Visual acuity estimated at 6/36 bilateral. Slit-lamp equivalent examination (magnifying lens + penlight): posterior subcapsular cataracts, bilateral. The Hazmat Tech's cumulative dose is 2.4 Sv — the highest in the bunker.",
+      "diagnosis": "Radiation-induced posterior subcapsular cataracts. This is a known deterministic effect of ionising radiation exposure to the lens. The threshold dose is approximately 2 Sv — the Hazmat Tech is above threshold. The condition is progressive and irreversible.",
+      "treatment": "No surgical treatment available (no intraocular lens implants, no microsurgical instruments). The Surgeon has prescribed magnifying lenses from the Watchmaker's workshop — the Watchmaker ground a pair of reading glasses from salvaged optical glass. The Hazmat Tech has been reassigned from surface hazmat duty to indoor work (sorting and cataloguing salvaged materials in the workshop). The Surgeon notes that the condition will continue to deteriorate. Within 2-3 years, the patient may be functionally blind.",
+      "outcome": "CHRONIC/PROGRESSIVE. The Hazmat Tech accepted the reassignment without complaint. He now works with the Mechanic on bench assembly. He says he can still feel the difference between a good weld and a bad one. The Surgeon notes: 'He gave his eyes to this bunker. Every surface run, every contaminated zone, every time the dosimeter clicked, he was spending his vision. He spent it so the rest of us could keep ours. I do not know how to thank him. I prescribed him glasses. It is not enough.'",
+      "tags": [
+        "radiation",
+        "ophthalmology",
+        "chronic",
+        "progressive",
+        "occupational"
+      ]
+    },
+    {
+      "case_id": "case_b2_014_childhood_Lead_poisoning",
+      "patient": "Resident T. (age 4, bunker-born child)",
+      "admitted_day": 85,
+      "discharged_day": null,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Developmental regression — the child was speaking in full sentences at 3.5 years but has now reverted to single words. Irritability, loss of appetite, abdominal pain. The Therapist noted the regression during a routine check-in and referred to the Surgeon.",
+      "diagnosis": "Suspected lead poisoning (plumbism). The child has been observed chewing on painted surfaces in the bunker's older corridor sections. The paint is pre-war and contains lead. Blood lead level cannot be measured (no laboratory equipment), but the clinical presentation is consistent. The Chemist confirmed that the bunker's original paint contains lead-based pigment.",
+      "treatment": "Removal of the exposure source: the Architect has sealed all painted surfaces in the child's living area with a coat of lime wash. The child is supervised at all times to prevent mouthing behaviour. The Pharmacist has prepared a calcium-iron supplement (crushed limestone for calcium, iron filings from the workshop for iron — both compete with lead for absorption). The Therapist is conducting developmental stimulation exercises with the child daily. The Chemist is investigating whether chelation therapy is possible with available materials — he believes he can produce a crude calcium disodium EDTA solution, but the risk of kidney damage is significant without proper monitoring.",
+      "outcome": "ONGOING. The child's speech has not improved but has not worsened. The Chemist's chelation protocol is under review — the Surgeon is reluctant to administer it without blood level monitoring. The Architect has begun a bunker-wide survey of all painted surfaces. The Surgeon notes: 'The bunker was built in the 1970s. The paint was safe then. Now it is poisoning a four-year-old. The world we inherited is toxic in ways we did not anticipate. Every corner of this place is a potential hazard. We are raising children in a poison museum.'",
+      "tags": [
+        "toxicology",
+        "child",
+        "lead",
+        "developmental",
+        "ongoing",
+        "environmental"
+      ]
+    },
+    {
+      "case_id": "case_b2_015_grief_reaction_widow",
+      "patient": "the_widow (age 54, resident)",
+      "admitted_day": 60,
+      "discharged_day": null,
+      "attending": "the_therapist",
+      "presenting_symptoms": "Persistent complicated grief. The Widow's husband died on Day 31 during a surface expedition (radiation exposure — he removed his mask to help a stranger). It is now Day 90. The Widow continues to set a place for him at meals. She talks to his empty bunk. She has begun collecting objects she believes belonged to him in other settlements — a watch, a comb, a pair of boots — none of which she can confirm were his. The Therapist identifies this as magical thinking driven by unresolved grief.",
+      "diagnosis": "Complicated grief disorder with magical thinking and hoarding behaviour. The Therapist notes the grief is compounded by the absence of a body — the husband was buried on the surface, and the Widow was not present. She has no closure ritual.",
+      "treatment": "Weekly therapy sessions. The Therapist has introduced a 'memory narrative' technique — the Widow is asked to tell the story of her husband aloud, in full, from beginning to end. This is done once per week. The first telling was fragmented and lasted 20 minutes. The fourth telling was coherent and lasted 45 minutes. The Therapist believes the narrative integration will help the Widow process the loss. Additionally: the Undertaker conducted a memorial service on Day 90 — a formal burial rite with an empty coffin (a wooden box). The Widow attended. She wept for the first time since her husband's death.",
+      "outcome": "ONGOING. The Widow has stopped collecting objects. She still sets a place at meals but now says it is 'for memory, not for him.' She has begun volunteering with the Undertaker at the cemetery. The Therapist notes: 'She is moving through the grief. Not past it — through it. There is no past it. But she is no longer stuck at the beginning. The empty coffin helped. Sometimes you need a ritual to make the absence real.'",
+      "tags": [
+        "psychological",
+        "grief",
+        "complicated",
+        "ongoing",
+        "therapy",
+        "ritual"
+      ]
+    },
+    {
+      "case_id": "case_b2_016_respiratory_infection_cluster",
+      "patient": "Twelve residents (various ages)",
+      "admitted_day": 91,
+      "discharged_day": null,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Productive cough (yellow-green sputum), fever (38.1-39.0°C), chest tightness, fatigue. Onset over 5 days across twelve patients in adjacent bunks. The bunker's ventilation system was found to have a mould colony in the Section C ductwork — Aspergillus species, confirmed by the Botanist.",
+      "diagnosis": "Acute bronchitis, likely fungal-triggered. The Aspergillus spores in the ventilation system are acting as both an infectious agent and an allergic trigger. Immunocompromised patients (the Veteran, the Hazmat Tech) are at highest risk for progression to invasive aspergillosis.",
+      "treatment": "Ventilation duct decontamination: the Plumber and the Mechanic removed the mould colony and flushed the ductwork with a bleach solution (sodium hypochlorite from the Chemist's production). All air filters replaced. Symptomatic patients: steam inhalation, rest, increased fluid intake. The Pharmacist prepared a tincture of mullein leaf (from the greenhouse) as an expectorant. The two immunocompromised patients are being monitored closely and given prophylactic garlic-alcohol extract (the best antifungal available).",
+      "outcome": "ONGOING. Ten of twelve patients improving. The Veteran's cough has not resolved — the Surgeon is watching for signs of invasive aspergillosis. The ventilation system has been cleaned but the Surgeon notes that mould will return — the bunker's humidity is consistently above 70%, which is ideal for fungal growth. The Architect is investigating dehumidification options. The Surgeon notes: 'Twelve people sick because of mould in a pipe. In the old world, you'd call a heating engineer. Here, it's a public health emergency.'",
+      "tags": [
+        "infection",
+        "respiratory",
+        "fungal",
+        "cluster",
+        "ventilation",
+        "ongoing"
+      ]
+    },
+    {
+      "case_id": "case_b2_017_self_amputation_toe",
+      "patient": "the_addict (age 33, resident)",
+      "admitted_day": 83,
+      "discharged_day": 90,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "The Addict presented with a bandaged right foot. Upon unwrapping: the little toe had been removed with what appeared to be a knife. The wound was crudely cauterised (burn marks consistent with a heated metal implement). The Addict was coherent but agitated. He stated: 'It was poisoned. I could feel it spreading. I had to get it out.'",
+      "diagnosis": "Self-amputation of the right fifth toe. The Addict's account suggests a delusional belief that the toe was 'poisoned' or 'contaminated.' The Therapist's assessment identifies this as a psychotic episode — the Addict has a history of substance-induced psychosis and has been off his pre-war medication for 11 months (the Pharmacist's supply ran out). The toe itself showed no signs of infection, necrosis, or radiation damage. It was healthy. The Addict removed a healthy toe.",
+      "treatment": "Wound debridement and proper closure under local anaesthetic (the Surgeon used the last of the lidocaine). Tetanus prophylaxis (the bunker has one dose of tetanus toxoid — it was given). Post-operative wound care daily. The Therapist has begun daily sessions with the Addict. The Pharmacist is investigating whether any greenhouse plants have antipsychotic properties — he believes certain Solanaceae species may contain compounds that could help, but the therapeutic window is narrow and the risk of poisoning is high.",
+      "outcome": "WOUND HEALED. The Addict's psychotic episode resolved after 5 days of supportive care and the Therapist's intervention. He has no memory of the self-amputation. When told what he did, he wept. The Therapist notes: 'He cut off a healthy toe because his mind told him it was poisoned. The bunker cannot treat his psychosis. We have one dose of tetanus vaccine and no antipsychotics. We are keeping him alive with conversation and bandages. I am not sure that is enough.'",
+      "tags": [
+        "psychiatric",
+        "self_harm",
+        "psychosis",
+        "surgical",
+        "resource_depletion"
+      ]
+    },
+    {
+      "case_id": "case_b2_018_burn_treatment_kitchen",
+      "patient": "the_chef (age 47, resident)",
+      "admitted_day": 77,
+      "discharged_day": 84,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "Partial-thickness burns to the right forearm (12% TBSA) and right hand (3% TBSA). Mechanism: the Chef's sleeve caught fire from the wood stove while transferring a pot of boiling broth. The fire was extinguished by the Mechanic using a fire blanket, but not before significant burns were sustained.",
+      "diagnosis": "Partial-thickness (2nd degree) thermal burns. Right forearm: intact blisters, erythematous base, painful. Right hand: smaller blisters, involving the dorsal surface. No full-thickness burns. No inhalation injury (the Chef was not breathing in the smoke).",
+      "treatment": "Burn wound management: blisters debrided under sterile conditions. Wounds dressed with honey-impregnated gauze (the honey is from the greenhouse bee colony — medical-grade honey has documented antimicrobial properties). The Botanist confirmed the honey's hydrogen peroxide content is adequate for wound care. Silver sulfadiazine equivalent: the Chemist produced a silver nitrate solution from salvaged silver coins and nitric acid — it is not pharmaceutical grade but has antimicrobial properties. Pain management: willow bark extract (the Pharmacist's standard analgesic). Elevation of the right arm. Daily dressing changes.",
+      "outcome": "HEALED with scarring. The burns closed by Day 84. The Chef has residual scarring on the right hand — the fingers have limited flexion. She can still cook but cannot grip heavy pots as before. The Mechanic has designed a pot-lifting rig (a small crane arm over the stove) so the Chef no longer needs to lift heavy vessels directly. The Surgeon notes: 'She burned her arm feeding forty-seven people. The honey that healed her was made by bees she insisted we keep when everyone else said insects were a luxury. She is stubborn. That stubbornness is keeping us alive.'",
+      "tags": [
+        "burns",
+        "kitchen",
+        "workplace_injury",
+        "healed",
+        "improvised_medicine"
+      ]
+    },
+    {
+      "case_id": "case_b2_019_panic_disorder_agoraphobia",
+      "patient": "the_exhausted_father (age 42, resident)",
+      "admitted_day": 65,
+      "discharged_day": null,
+      "attending": "the_therapist",
+      "presenting_symptoms": "Recurrent panic attacks (4-5 per week). Symptoms: tachycardia, hyperventilation, trembling, sense of impending doom, fear of dying. Attacks last 15-30 minutes. The Father has developed avoidance behaviour — he will not go near the emergency hatch, will not walk in the corridor leading to the surface access, and refuses to look through the periscope. He states: 'If I see the surface, I'll go out there. And if I go out there, I'll die.'",
+      "diagnosis": "Panic disorder with agoraphobia (bunker-specific variant). The Therapist notes the condition is an extension of the Father's pre-existing anxiety about his family's safety. The bunker is simultaneously his refuge and his prison — he needs it to survive but feels trapped by it. The panic attacks are a somatic expression of this conflict.",
+      "treatment": "Cognitive-behavioural approach adapted for the bunker environment. Psychoeducation: the Therapist explains the physiology of panic (adrenaline, fight-or-flight, the body's alarm system misfiring). Breathing retraining: 4-7-8 technique (inhale 4 seconds, hold 7, exhale 8) to activate the parasympathetic nervous system. Graduated exposure: Week 1 — stand in the corridor 10 metres from the hatch. Week 2 — stand 5 metres. Week 3 — touch the hatch. Week 4 — look through the periscope for 10 seconds. The Father's wife (the Fierce Mother) is coached as a 'safe person' to accompany him during exposure exercises.",
+      "outcome": "ONGOING. The Father has reached Week 3 — he can touch the hatch without a panic attack. He still cannot look through the periscope. The Therapist notes: 'He is not afraid of the surface. He is afraid of wanting the surface. He is afraid that if he sees the sky, he will choose it over his family. That is not agoraphobia. That is love, weaponised by trauma. I am not sure there is a treatment for that. But we are making progress.'",
+      "tags": [
+        "psychological",
+        "panic",
+        "agoraphobia",
+        "ongoing",
+        "therapy",
+        "exposure"
+      ]
+    },
+    {
+      "case_id": "case_b2_020_mass_casualty_radiation_storm",
+      "patient": "Six residents (the_hunter, the_courier, the_bouncer, the_firefighter, the_hazmat_tech, Resident K.)",
+      "admitted_day": 69,
+      "discharged_day": 76,
+      "attending": "the_surgeon",
+      "presenting_symptoms": "All six patients were on the surface when an unforecast fallout storm hit. They returned to the bunker with elevated dosimeter readings (range: 0.8-2.1 Sv acute). Symptoms: nausea (6/6), vomiting (4/6), headache (6/6), fatigue (6/6), erythema (3/6). The most severe case was the Hazmat Tech (2.1 Sv); the least severe was Resident K. (0.8 Sv).",
+      "diagnosis": "Acute radiation exposure (sub-syndromic to Grade I). The storm was not predicted by the Meteorologist — he attributes the miss to a sudden wind shift that redirected a fallout plume. All six patients received whole-body exposure. No localised burns or contamination.",
+      "treatment": "Mass decontamination protocol: all patients stripped, washed with soap and water (the kitchen's emergency shower — a bucket with holes drilled in the bottom), clothes sealed in bags for 72 hours (radioactive dust will decay). Symptomatic treatment: IV fluids, anti-emetics (the Pharmacist's last ondansetron — 6 doses, one per patient), rest. Serial dosimeter readings every 12 hours. Blood counts via haemocytometer at 48-hour intervals. The most severe patients (Hazmat Tech, Hunter, Courier) were placed in the low-background medical bay.",
+      "outcome": "ALL RECOVERED. No patient progressed to Grade II ARS. Blood counts nadired at Day 73 and recovered by Day 76. The Meteorologist has implemented a new weather monitoring protocol: hourly wind direction checks during any surface operation. The Surgeon notes: 'Six people walked into a fallout storm because the wind changed direction. In the old world, you'd check a weather app. Here, the weather kills you without warning. The Meteorologist has not slept in three days. He keeps saying he should have seen it. I think he's right. And I think he'll see it next time. We don't have the luxury of missing it twice.'",
+      "tags": [
+        "radiation",
+        "mass_casualty",
+        "storm",
+        "emergency",
+        "recovered",
+        "protocol_change"
+      ]
+    }
+  ]
+}

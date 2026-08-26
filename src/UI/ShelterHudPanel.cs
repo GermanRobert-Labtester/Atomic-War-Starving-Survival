@@ -120,6 +120,7 @@ public partial class ShelterHudPanel : Control
         _sidebar = _shell.SetSidebar(new[]
         {
             new AshfallSidebar.Item { Id = "overview",    Label = "Overview",            Hint = "DAY // LOCATION" },
+            new AshfallSidebar.Item { Id = "status",      Label = "Status",              Hint = "OPERATIONS" },
             new AshfallSidebar.Item { Id = "survivors",   Label = "Survivors",           Hint = "ROSTER STATUS" },
             new AshfallSidebar.Item { Id = "inventory",   Label = "Inventory",           Hint = "STORAGE" },
             new AshfallSidebar.Item { Id = "crafting",    Label = "Crafting",            Hint = "WORKSTATION" },
@@ -132,6 +133,9 @@ public partial class ShelterHudPanel : Control
             new AshfallSidebar.Item { Id = "trade",       Label = "Trade",               Hint = "CARAVAN LEDGER" },
             new AshfallSidebar.Item { Id = "factions",    Label = "Factions",            Hint = "STANCES" },
             new AshfallSidebar.Item { Id = "verdict",     Label = "Verdict",             Hint = "EVALUATION" },
+            new AshfallSidebar.Item { Id = "help",       Label = "Help & Controls",     Hint = "TUTORIAL" },
+            new AshfallSidebar.Item { Id = "afflictions", Label = "Afflictions",          Hint = "MEDICAL TRIAGE" },
+            new AshfallSidebar.Item { Id = "radiation_detail", Label = "Radiation",       Hint = "DOSIMETRY" },
         }, "BUNKER OPS", "overview");
 
         if (_sidebar != null)

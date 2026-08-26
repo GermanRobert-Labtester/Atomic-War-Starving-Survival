@@ -23,6 +23,11 @@ namespace AtomicWar.GodotApp.Audio
             AudioBusNames.Ui,
             AudioBusNames.Voice,
             AudioBusNames.Alerts,
+            AudioBusNames.Generator,
+            AudioBusNames.Ventilation,
+            AudioBusNames.Radio,
+            AudioBusNames.Medical,
+            AudioBusNames.Surface,
         };
 
         // ── Players ─────────────────────────────────────────────
@@ -47,6 +52,7 @@ namespace AtomicWar.GodotApp.Audio
         // ── Cooldown / dedup ────────────────────────────────────
 
         private readonly Dictionary<string, float> _cooldowns = new();
+        private readonly List<string> _expiredCooldowns = new();
         private const float CooldownEpsilon = 0.01f;
 
         // ── Headless detection ──────────────────────────────────
@@ -121,15 +127,20 @@ namespace AtomicWar.GodotApp.Audio
             }
 
             // Cooldown decay
-            var expired = new List<string>();
-            foreach (var kvp in _cooldowns)
+            if (_cooldowns.Count > 0)
             {
-                _cooldowns[kvp.Key] = kvp.Value - dt;
-                if (_cooldowns[kvp.Key] <= CooldownEpsilon)
-                    expired.Add(kvp.Key);
+                _expiredCooldowns.Clear();
+                foreach (var kvp in _cooldowns)
+                {
+                    float remaining = kvp.Value - dt;
+                    if (remaining <= CooldownEpsilon)
+                        _expiredCooldowns.Add(kvp.Key);
+                    else
+                        _cooldowns[kvp.Key] = remaining;
+                }
+                for (int i = 0; i < _expiredCooldowns.Count; i++)
+                    _cooldowns.Remove(_expiredCooldowns[i]);
             }
-            foreach (string key in expired)
-                _cooldowns.Remove(key);
 
             // Reclaim finished one-shots to pool
             for (int i = _activeOneShots.Count - 1; i >= 0; i--)
@@ -256,11 +267,16 @@ namespace AtomicWar.GodotApp.Audio
 
             SetBusVolume(AudioBusNames.Master, settings.MasterVolume, settings.MasterMute);
             SetBusVolume(AudioBusNames.Music, settings.MusicVolume, settings.MusicMute);
-            SetBusVolume(AudioBusNames.Ambience, settings.AmbienceVolume, settings.SfxMute);
+            SetBusVolume(AudioBusNames.Ambience, settings.AmbienceVolume, settings.AmbienceMute);
             SetBusVolume(AudioBusNames.Sfx, settings.SfxVolume, settings.SfxMute);
-            SetBusVolume(AudioBusNames.Ui, settings.UiVolume, settings.SfxMute);
+            SetBusVolume(AudioBusNames.Ui, settings.UiVolume, settings.UiMute);
             SetBusVolume(AudioBusNames.Voice, settings.VoiceVolume, settings.VoiceMute);
             SetBusVolume(AudioBusNames.Alerts, settings.AlertVolume, settings.AlertMute);
+            SetBusVolume(AudioBusNames.Generator, settings.GeneratorVolume, settings.GeneratorMute);
+            SetBusVolume(AudioBusNames.Ventilation, settings.VentilationVolume, settings.VentilationMute);
+            SetBusVolume(AudioBusNames.Radio, settings.RadioVolume, settings.RadioMute);
+            SetBusVolume(AudioBusNames.Medical, settings.MedicalVolume, settings.MedicalMute);
+            SetBusVolume(AudioBusNames.Surface, settings.SurfaceVolume, settings.SurfaceMute);
         }
 
         private void SetBusVolume(string bus, float percent, bool mute)
@@ -282,6 +298,11 @@ namespace AtomicWar.GodotApp.Audio
                 AudioBusNames.Ui => s.UiVolume,
                 AudioBusNames.Voice => s.VoiceVolume,
                 AudioBusNames.Alerts => s.AlertVolume,
+                AudioBusNames.Generator => s.GeneratorVolume,
+                AudioBusNames.Ventilation => s.VentilationVolume,
+                AudioBusNames.Radio => s.RadioVolume,
+                AudioBusNames.Medical => s.MedicalVolume,
+                AudioBusNames.Surface => s.SurfaceVolume,
                 _ => s.MasterVolume,
             };
             // Return 0 — bus volume is handled by AudioServer, not per-player offset
@@ -378,5 +399,43 @@ namespace AtomicWar.GodotApp.Audio
         public int ActiveOneShotCount => _activeOneShots.Count;
         public int PoolAvailable => _pool.Count;
         public bool IsHeadless => _headless;
+
+        // ── Core condition bridge ──────────────────────────────
+
+        /// <summary>
+        /// Route a Core AudioConditionSystem condition to the appropriate bus.
+        /// Called by the host session when Core raises audio events.
+        /// </summary>
+        public void RouteCondition(string audioKey, string bus, float intensity = 1f, bool loop = false)
+        {
+            if (string.IsNullOrEmpty(audioKey)) return;
+            var cue = AudioCueCatalog.Resolve(audioKey);
+            if (cue == null) return;
+
+            var stream = LoadStream(cue.ResourcePath);
+            if (stream == null) return;
+
+            float volumeDb = cue.DefaultVolumeDb + GetBusVolumeOffset(cue.Bus);
+            if (loop)
+                PlayLoopStream(stream, cue.Bus, volumeDb);
+            else
+                PlayOneShotStream(stream, cue.Bus, volumeDb);
+        }
+
+        public void StopCondition(string audioKey)
+        {
+            if (string.IsNullOrEmpty(audioKey)) return;
+            // Stop looped ambience by clearing the ambience player if it matches
+            var cue = AudioCueCatalog.Resolve(audioKey);
+            if (cue == null) return;
+
+            if (_ambiencePlayer.Playing && _ambiencePlayer.Stream != null)
+            {
+                // Only stop if this is the currently looping stream
+                var currentPath = _ambiencePlayer.Stream.ResourcePath;
+                if (currentPath == cue.ResourcePath)
+                    _ambiencePlayer.Stop();
+            }
+        }
     }
 }

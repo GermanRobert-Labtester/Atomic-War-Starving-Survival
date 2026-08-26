@@ -1,4 +1,5 @@
 using System;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.YearOfAsh
 {
@@ -30,7 +31,7 @@ namespace Ashfall.Core.YearOfAsh
         public event Action<float> OnTemperatureChanged;
         public event Action<string> OnFreezeAlarmTriggered;
 
-        public YearOfAshDeepFreezeSystem(YearOfAshDeepFreezeState state = null)
+        public YearOfAshDeepFreezeSystem(YearOfAshDeepFreezeState? state = null)
         {
             _state = state ?? new YearOfAshDeepFreezeState();
         }

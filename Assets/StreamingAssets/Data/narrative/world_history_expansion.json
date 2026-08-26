@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "era": "pre_exchange",
+      "year_month": "Exchange-28Y",
+      "title": "The Deep Bunker Program",
+      "body": "The Meridian Compact's Deep Bunker Program began not as defense but as resource policy. The first sub-level bunkers were dug beneath water-treatment plants, not military installations, because the planners believed the next war would be fought over aquifers, not borders. The civil-defense bunkers followed, retrofitted from transit tunnels and municipal archives. The program was sold to the public as preparedness. The planners called it, in internal memos, the Long Below.",
+      "discovery_location_id": "loc_civil_defense_bunker",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_pre_exchange_deep_bunker_program"
+    },
+    {
+      "era": "pre_exchange",
+      "year_month": "Exchange-22Y",
+      "title": "The Aquifer Treaties",
+      "body": "Three aquifer treaties were signed, broken, and re-signed in the two decades before the Exchange. Each treaty divided the deep groundwater between the Compact and its neighbors. Each treaty lasted until one side drilled deeper. The treaties are still on the books in the municipal archive, filed under 'resource,' which is where they were filed when they were still obeyed.",
+      "discovery_location_id": "loc_municipal_archive",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_pre_exchange_aquifer_treaties"
+    },
+    {
+      "era": "pre_exchange",
+      "year_month": "Exchange-18Y",
+      "title": "The Civil Defense Reforms",
+      "body": "The civil-defense reforms of Exchange-minus-eighteen standardized the shelter-assignment system: every citizen registered to a named bunker, every bunker stocked to a headcount, every headcount updated annually. The system was designed for a flood, a quake, a chemical spill. The system was not designed for what came. The assignment slips are still in the archive, the names still legible, the bunkers mostly still there, the citizens mostly not.",
+      "discovery_location_id": "loc_civil_defense_bunker",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_pre_exchange_civil_defense_reforms"
+    },
+    {
+      "era": "pre_exchange",
+      "year_month": "Exchange-15Y",
+      "title": "The First Iodine Stockpile",
+      "body": "The first national iodine stockpile was created in response to a reactor incident across the border — not the Compact's reactor, the neighbor's. The Compact stocked iodine for its own citizens because the neighbor's accident might drift. The stockpile was rotated annually. The last rotation before the Exchange was Exchange-minus-three. The iodine that reached the shelters was three years old. The iodine was still iodine.",
+      "discovery_location_id": "loc_regional_hospital",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_pre_exchange_iodine_stockpile"
+    },
+    {
+      "era": "pre_exchange",
+      "year_month": "Exchange-12Y",
+      "title": "The Transit Authority Merger",
+      "body": "The Transit Authority was merged with Civil Defense in Exchange-minus-twelve, which is why the transit headquarters has a hardened sub-level and a dispatch system that could be repurposed for evacuation. The merger was unpopular at the time — transit engineers resented being folded into a defense bureaucracy. After the Exchange, the merger was the reason the transit tunnels became shelters. The engineers who resented it became the shelter engineers. The resentment survived the merger. The engineers did not all survive.",
+      "discovery_location_id": "loc_transit_authority_hq",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_pre_exchange_transit_merger"
+    },
+    {
+      "era": "pre_exchange",
+      "year_month": "Exchange-8Y",
+      "title": "The Grain Reserve Act",
+      "body": "The Grain Reserve Act mandated that every district maintain a six-month grain reserve in a named silo, audited quarterly. The act was a response to a harvest failure two years prior, not to war fears. The reserves were real. The reserves were the reason the shelters had flour for the first months. The reserves were the reason the flour ran out. The act did not mandate rotation after the auditors stopped coming.",
+      "discovery_location_id": "loc_grain_silo",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_pre_exchange_grain_reserve_act"
+    },
+    {
+      "era": "pre_exchange",
+      "year_month": "Exchange-5Y",
+      "title": "The Conscription Office Registers",
+      "body": "The conscription office kept registers of every adult of age, updated yearly, with profession and next-of-kin. The registers were for a draft that was never called. After the Exchange, the registers became the headcount. The conscription office is still standing. The registers are still in the drawer. The names are still the names. The draft was never called. The names were called anyway, by a different office, for a different reason.",
+      "discovery_location_id": "loc_conscription_office",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_pre_exchange_conscription_registers"
+    },
+    {
+      "era": "early_crisis",
+      "year_month": "Exchange+0D",
+      "title": "The First Hour",
+      "body": "In the first hour, the civil-defense sirens ran on the automated system, which had been tested monthly for twenty years and which, on the day, ran for the full test duration and then stopped, as it always had, because the automated system did not know the test was real. The sirens stopped. The people who had drilled went to their bunkers. The people who had not drilled went to their phones. The phones did not work. The sirens had stopped. The drilling was the reason the drilling survived.",
+      "discovery_location_id": "loc_civil_defense_bunker",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_early_crisis_first_hour"
+    },
+    {
+      "era": "early_crisis",
+      "year_month": "Exchange+1D",
+      "title": "The Shelter Assignment Crisis",
+      "body": "On the first day, the shelter-assignment system collapsed under the weight of the unassigned: travelers, the displaced, those whose assigned bunker was gone. The system had no field for the unassigned. The duty clerks invented one: a line in a ledger, a number, a meal. The field was not in the form. The field was in the margin. The margin became the system. The system is still the margin.",
+      "discovery_location_id": "loc_civil_defense_bunker",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_early_crisis_assignment_crisis"
+    },
+    {
+      "era": "early_crisis",
+      "year_month": "Exchange+2D",
+      "title": "The Water Plant Standoff",
+      "body": "On the second day, the water-treatment plant became the first contested resource. The plant was the deep bunker the planners had built for. The plant was the aquifer. Three groups arrived within hours: the municipal staff who had run the plant, a displaced neighborhood, and a security detachment from the regional hospital. The standoff lasted a day. The standoff ended in a rationing protocol that is, with amendments, the protocol the plant still uses. The protocol is written on the wall in chalk. The chalk is the law.",
+      "discovery_location_id": "loc_water_treatment_plant",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_early_crisis_water_standoff"
+    },
+    {
+      "era": "early_crisis",
+      "year_month": "Exchange+3D",
+      "title": "The Hospital Triage Doctrine",
+      "body": "The regional hospital adopted, on the third day, a triage doctrine that had been drafted for a mass-casualty flood and never used. The doctrine assigned colors: red, yellow, green, black. The doctrine had no field for radiation, which the flood had not included. The doctors added the field in pencil. The pencil is still on the clipboard. The clipboard is still at the door. The doctrine is the doctrine with the pencil.",
+      "discovery_location_id": "loc_regional_hospital",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_early_crisis_triage_doctrine"
+    },
+    {
+      "era": "early_crisis",
+      "year_month": "Exchange+5D",
+      "title": "The Transit Tunnel Refugees",
+      "body": "By the fifth day, the transit tunnels held the largest refugee population in the district. The transit authority, which had resented its merger with civil defense, became the de facto shelter authority. The dispatch system became the ration system. The train schedule became the meal schedule. The engineers who had resented the merger ran the tunnels because they were the only ones who knew the ventilation. The resentment was the reason they knew. The resentment saved them.",
+      "discovery_location_id": "loc_metro_tunnel",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_early_crisis_transit_refugees"
+    },
+    {
+      "era": "early_crisis",
+      "year_month": "Exchange+7D",
+      "title": "The First Ration",
+      "body": "The first formal ration was issued on the seventh day, at the grange hall, by a woman who had been a schoolteacher and who, on the day, became a quartermaster because she was the only one who had counted the stores. The ration was a cup of grain, a strip of dried fruit, and a cup of water. The ration was the same for everyone. The ration was the first law of the shelter. The law is still the law. The cup is smaller now.",
+      "discovery_location_id": "loc_grange_hall",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_early_crisis_first_ration"
+    },
+    {
+      "era": "escalation",
+      "year_month": "Exchange+14D",
+      "title": "The Fuel Confiscation",
+      "body": "On the fourteenth day, the garrison at checkpoint gamma confiscated all private fuel within a five-kilometer radius, by emergency order. The order was signed by a captain who had no authority to sign it and who signed it anyway because no one with authority was left. The fuel was pooled at the depot. The fuel was the reason the generators ran. The captain was the reason the fuel was pooled. The captain was later, by the same authority, promoted.",
+      "discovery_location_id": "loc_garrison_checkpoint_gamma",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_escalation_fuel_confiscation"
+    },
+    {
+      "era": "escalation",
+      "year_month": "Exchange+18D",
+      "title": "The First Quarantine",
+      "body": "The first quarantine was declared at the regional hospital on the eighteenth day, for a respiratory cluster of unknown origin. The quarantine was a sheet. The sheet was the policy. The policy was the doctor. The doctor was the one who decided, because no one else would, that the sick would be behind the sheet and the well would be in front, and the sheet was the wall, and the wall was a sheet, and the doctor was the wall.",
+      "discovery_location_id": "loc_regional_hospital",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_escalation_first_quarantine"
+    },
+    {
+      "era": "escalation",
+      "year_month": "Exchange+21D",
+      "title": "The Bridge Seven Barricade",
+      "body": "On the twenty-first day, the residents of the suburban district barricaded bridge seven, the only crossing of the river for thirty kilometers. The barricade was not against raiders — there were no raiders yet. The barricade was against the refugees from the east bank, whose assigned shelters were gone. The barricade held for three days. The barricade came down on the twenty-fourth day, by agreement, and the refugees came across, and the ration was reduced, and the bridge is still there, and the agreement is still there, and the ration is still reduced.",
+      "discovery_location_id": "loc_bridge_seven",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_escalation_bridge_barricade"
+    },
+    {
+      "era": "escalation",
+      "year_month": "Exchange+25D",
+      "title": "The Toll House Agreement",
+      "body": "The toll house at lock gate four became, on the twenty-fifth day, the site of the first trade agreement between two shelter groups: the lock-side group, which had water, and the far-side group, which had fuel. The agreement was a chalkboard. The chalkboard listed the rate. The rate was the law. The toll house is still the site. The chalkboard is still the law. The rate has changed. The law has not.",
+      "discovery_location_id": "loc_toll_house",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_escalation_toll_house_agreement"
+    },
+    {
+      "era": "escalation",
+      "year_month": "Exchange+30D",
+      "title": "The Conscription Office Draft",
+      "body": "On the thirtieth day, the conscription office — which had never called a draft — called a draft. The draft was not for soldiers. The draft was for workers: water-plant operators, electricians, medics, anyone with a listed profession. The registers were the draft list. The registers had been kept for a war that never came. The registers were the reason the workers were found. The registers were the reason the workers could not hide. The conscription office is still standing. The registers are still in the drawer.",
+      "discovery_location_id": "loc_conscription_office",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_escalation_conscription_draft"
+    },
+    {
+      "era": "escalation",
+      "year_month": "Exchange+35D",
+      "title": "The First Winter",
+      "body": "The first winter after the Exchange came early and stayed late. The nuclear winter, the scientists had called it, in the papers no one read anymore. The papers had said it would be cold. The papers had not said it would be this cold. The first winter was the reason the fuel was the law and the food was the law and the shelter was the law. The first winter was the reason the law was the law. The winter is still here. The papers are not.",
+      "discovery_location_id": "player_shelter",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_escalation_first_winter"
+    },
+    {
+      "era": "post_exchange",
+      "year_month": "Exchange+60D",
+      "title": "The Allotment Charter",
+      "body": "On the sixtieth day, the allotment glasshouse complex was chartered by a group of former municipal workers who had no farming experience and a single elderly farmer who had nothing else. The charter was a single page: the glasshouse was communal, the harvest was shared, the seed was kept. The charter is still on the wall. The glasshouse is mostly gone. The harvest is still shared. The seed is still kept. The farmer is still there.",
+      "discovery_location_id": "loc_allotment_glasshouse_complex",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_post_exchange_allotment_charter"
+    },
+    {
+      "era": "post_exchange",
+      "year_month": "Exchange+75D",
+      "title": "The Apiary Accord",
+      "body": "The apiary rows were the subject of the first accord between three shelters, on the seventy-fifth day, because the bees did not respect shelter borders and the honey was the only medicine that did not require a prescription. The accord divided the honey by shelter headcount. The accord was the first treaty of the new time. The accord was written on the back of a pre-war form. The form was a ration denial. The accord is still on the back of the denial. The bees still do not respect borders.",
+      "discovery_location_id": "loc_apiary_rows",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_post_exchange_apiary_accord"
+    },
+    {
+      "era": "post_exchange",
+      "year_month": "Exchange+90D",
+      "title": "The Ash Sign Shrine",
+      "body": "By the ninetieth day, a shrine had grown at the crossroads where the ash-sign shrine now stands. The shrine was not built; it accumulated. The first token was a bus pass, left by someone who had used the last bus. The second was a ring of keys, left by someone who had no doors. The shrine became the place where people left the things they no longer had a use for, which was also the place where people left the things they could not carry. The shrine is still growing. The tokens are still accumulating. The rule — leave, do not take — is older than anyone remembers establishing.",
+      "discovery_location_id": "loc_ash_sign_shrine",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_post_exchange_ash_shrine"
+    },
+    {
+      "era": "post_exchange",
+      "year_month": "Exchange+120D",
+      "title": "The Ice Road",
+      "body": "By the hundred-and-twentieth day, the river had frozen thick enough to cross, and the ice road at lock gate four became the first reliable route between the north and south shelters. The ice road was marked with branches. The ice road was taxed at the toll house. The ice road was the reason the south had fuel and the north had medicine. The ice road is still the route. The ice is thinner now. The branches are still the markers. The tax is still the tax.",
+      "discovery_location_id": "loc_ice_road_gate",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_post_exchange_ice_road"
+    },
+    {
+      "era": "post_exchange",
+      "year_month": "Exchange+150D",
+      "title": "The Second Winter",
+      "body": "The second winter was longer than the first. The second winter was the winter the flour ran out at most shelters, the winter the ration became the bread that was thinner, the winter the children stopped growing. The second winter was the winter the farmer planted against the season, in the cold frame, because the spring was not coming and the ground was the only calendar left. The second winter was the winter the wall remembered. The second winter is still the winter.",
+      "discovery_location_id": "player_shelter",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_post_exchange_second_winter"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+1Y",
+      "title": "The Standing Record",
+      "body": "On the first anniversary of the Exchange, the municipal archive began the Standing Record: a single ledger, kept in the crossing records room, listing every person who was alive and where they were. The Standing Record was the first census of the new time. The Standing Record was the book that replaced the conscription registers. The Standing Record is still kept. The names are still the names. The where is still the where. The book is the book that is honest.",
+      "discovery_location_id": "loc_crossing_records_room",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_standing_record"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+1Y2M",
+      "title": "The Denial Cut Substation",
+      "body": "The substation at denial cut was, in the second month of the first year, the site of the first deliberate power-down: the garrison cut power to the suburban district to redirect it to the hospital, which was the triage doctrine, which was the policy, which was the doctor. The cut was the first time the grid was used as a tool of triage. The cut was the reason the suburb went dark. The cut was the reason the hospital stayed lit. The substation is still the cut. The suburb is still dark. The hospital is still lit.",
+      "discovery_location_id": "loc_denial_cut_substation",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_denial_cut"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+1Y4M",
+      "title": "The Cluster Office Court",
+      "body": "By the fourth month of the first year, the cluster office had become the de facto court for the district, hearing disputes over rations, theft, and shelter assignment. The court had no law except the forms, which were the pre-war forms, which had no field for the new disputes. The court wrote its decisions in the margin. The margin became the law. The court is still the court. The forms are still the forms. The margin is still the law.",
+      "discovery_location_id": "loc_cluster_office",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_cluster_court"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+1Y6M",
+      "title": "The Vessels Cell",
+      "body": "The vessels cell — a sub-level room beneath the civil-defense bunker, originally a water cistern — became, in the sixth month of the first year, the place where the quiet game was played: the shelter's children were sent there during the night, when the boots were outside, to be quiet. The cell was chosen for its acoustics: it absorbed sound. The cell was the reason the children were quiet. The children were the reason the cell was used. The cell is still the cell. The children are quieter now. The boots are still outside.",
+      "discovery_location_id": "loc_the_vessels_cell",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_vessels_cell"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+1Y9M",
+      "title": "The Second Harvest",
+      "body": "The second harvest, in the ninth month of the first year, was the first harvest that was not from the reserves. The harvest was four kilos of potato, from the cold frame, against the season, by the old farmer. The harvest was the first food that was new. The harvest was the reason the flour was not the only food. The harvest was the reason the children ate. The harvest was four kilos. The harvest was the spring. The spring came, in the autumn, because the farmer planted it there.",
+      "discovery_location_id": "player_shelter",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_second_harvest"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+2Y",
+      "title": "The Shelf Hearth",
+      "body": "By the second year, the shelf hearth — a cluster of four shelters in the cluster block — had become the model for shelter federation: shared stores, shared watches, shared rations, a single quartermaster, a single doctor. The federation was the reason the four shelters survived the second winter. The federation was the reason the ration held. The federation was the reason the doctor was not alone. The shelf hearth is still the model. The four shelters are still four. The ration is still shared.",
+      "discovery_location_id": "loc_shelf_hearth4",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_shelf_hearth"
+    },
+    {
+      "era": "pre_exchange",
+      "year_month": "Exchange-3Y",
+      "title": "The Last Iodine Rotation",
+      "body": "The last iodine rotation before the Exchange was in Exchange-minus-three. The rotation was routine. The rotation was the last routine thing. The iodine that was rotated in was three years from expiry on the day of the Exchange. The iodine was still iodine. The iodine was the reason the thyroids held. The iodine was late, by three years, and it was still the reason. The rotation is still on the schedule. The schedule is still on the wall. The rotation did not happen again.",
+      "discovery_location_id": "loc_regional_hospital",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_pre_exchange_last_iodine_rotation"
+    },
+    {
+      "era": "early_crisis",
+      "year_month": "Exchange+10D",
+      "title": "The First Death",
+      "body": "The first death in the shelter was on the tenth day, an elderly man, not of radiation, of cold. The death was the first entry in the ledger of the dead, which was a separate ledger from the living, which was kept by the duty clerk who had kept the living ledger and who, on the tenth day, began the dead ledger because the living ledger had no field for the gone. The dead ledger is still kept. The duty clerk is still the clerk. The ledgers are still two. The man was the first. He was not the last.",
+      "discovery_location_id": "player_shelter",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_early_crisis_first_death"
+    },
+    {
+      "era": "escalation",
+      "year_month": "Exchange+40D",
+      "title": "The Fuel Depot Fire",
+      "body": "On the fortieth day, the fuel depot at the garrison burned. The fire was not raiders. The fire was a lamp, dropped by a guard, in the dark, because the dark was the sub-level and the sub-level had no candles because the candles were in the quartermaster's office because the quartermaster had not issued them. The fire was the reason the fuel was half. The fire was the reason the generator ran at half load. The fire was the dark. The dark was the fire. The depot is half. The generator is half. The dark is still the dark.",
+      "discovery_location_id": "loc_fuel_depot",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_escalation_fuel_depot_fire"
+    },
+    {
+      "era": "post_exchange",
+      "year_month": "Exchange+100D",
+      "title": "The Dentists Row Clinic",
+      "body": "By the hundredth day, the dentists row — a street of dental surgeries — had become the de facto clinic for the suburban district, because the regional hospital was full and the dentists had the tools and the clean rooms and the habit of pain. The dentists became the doctors. The doctors became the dentists. The distinction, which had been the profession, became the margin. The margin was the clinic. The clinic is still the dentists row. The distinction is still the margin.",
+      "discovery_location_id": "loc_dentists_row",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_post_exchange_dentists_clinic"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+2Y3M",
+      "title": "The Hydro Baron Aqueduct",
+      "body": "By the third month of the second year, the hydro-baron aqueduct — a pre-war municipal water project, half-finished — had been finished by the shelter federation, by hand, with the conscription workers, because the water was the law and the aqueduct was the water. The aqueduct was the first new infrastructure. The aqueduct was the reason the south shelters had water. The aqueduct was the reason the conscription was the conscription. The aqueduct is still the water. The aqueduct is still new.",
+      "discovery_location_id": "loc_hydro_baron_aqueduct_manifold",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_aqueduct"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+2Y6M",
+      "title": "The Comm Array Relay",
+      "body": "By the sixth month of the second year, the comm array at the civil-defense bunker had been restored to partial function by the engineer who had kept the generator and who, now, kept the air, because the air was the radio and the radio was the air. The relay was the reason the shelters could speak. The relay was the reason the distress signals were heard. The relay was the reason the numbers-loop was heard. The relay is still partial. The relay is still the air. The engineer is still the engineer.",
+      "discovery_location_id": "loc_comm_array",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_comm_relay"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+2Y",
+      "title": "The Quiet Convoy",
+      "body": "In the second year, a caravan out of the eastern flats came back with a story instead of goods: a convoy of six trucks, running dark, no faction markings, no radio chatter on any band the caravan's scanner could find, moving in a straight line through territory the Garrison patrolled and the Rebuilders farmed without either side reporting it. The caravan filed the sighting as a curiosity. The garrison filed it as nothing, because nothing had asked. The rebuilders filed it as weather. Two more convoys were logged before the year was out, always straight lines, always silent, always gone by the time anyone thought to follow. No one gave them a name yet. Something was already moving through the wasteland that did not need the Garrison's permission or the Rebuilders' roads.",
+      "discovery_location_id": "loc_grain_silo",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_quiet_convoy"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+2Y4M",
+      "title": "The Checkpoint That Wasn't Theirs",
+      "body": "A Garrison supply run found a checkpoint on the old toll road that neither the Garrison nor the Rebuilders had built: a gate, a barrier, a sightline cut clean through the brush, and no one manning it when the runner passed, only a chalk mark on the barrier post that matched nothing in the Garrison's own signal codex. The runner reported it. The report was filed under unassigned infrastructure, a category the duty clerk invented for it, because there was no field for a checkpoint that belonged to neither side and was better built than either side's own. The gate is still there. The chalk mark has been repainted twice since, always the same mark, always by no one anyone has caught.",
+      "discovery_location_id": "loc_garrison_checkpoint_gamma",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_unclaimed_checkpoint"
+    },
+    {
+      "era": "late_survival",
+      "year_month": "Exchange+3Y",
+      "title": "The Third Winter",
+      "body": "The third winter was the winter the spring came back. The spring came late and the spring was short and the spring was grey, but the spring came. The spring was the reason the farmer planted again. The spring was the reason the children grew, a little. The spring was the reason the flour was not the only food, again. The third winter was the winter the wall remembered, and the wall was right. The third winter was the last winter that was only winter. The spring came back. The spring is still grey. The spring is still the spring.",
+      "discovery_location_id": "player_shelter",
+      "discovery_trigger": "journal",
+      "knowledge_key": "lore_late_survival_third_winter"
+    }
+  ]
+}

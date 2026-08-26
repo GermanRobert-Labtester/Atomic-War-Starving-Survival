@@ -6,7 +6,7 @@ using Xunit;
 namespace Ashfall.Core.Tests
 {
     public sealed class FermentationYeastCatalogTests
-    {
+    : CatalogTestBase{
         private readonly string _narrativeDir;
 
         public FermentationYeastCatalogTests()

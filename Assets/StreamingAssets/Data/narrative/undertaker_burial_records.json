@@ -1,0 +1,870 @@
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "burial_id": "burial_001",
+      "deceased_name": "Oscar-1",
+      "deceased_id": "oscar_1",
+      "day_of_death": 64,
+      "day_of_burial": 66,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Acute radiation syndrome. Estimated dose 4.1 Sv received prior to bunker arrival. Palliative care only. Died in medical bay surrounded by no one; he arrived alone.",
+      "age_estimate": "55-65 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-01",
+      "ceremony_type": "full_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_general",
+        "the_surgeon",
+        "the_therapist",
+        "the_undertaker",
+        "the_radio_host",
+        "the_priest",
+        "the_quartermaster"
+      ],
+      "epitaph": "He walked through the fire to get here. He made it. That was enough.",
+      "grave_marker": "Concrete slab with name and dates carved by the_mechanic. No dates available; marked with bunker day numbers.",
+      "personal_effects": [
+        "worn coat",
+        "empty water bottle",
+        "a photograph too damaged to identify"
+      ],
+      "ledger_entry": 1,
+      "notes": "First burial in the ash dune cemetery. the_undertaker established the plot numbering system. Surface-rated personnel only attended due to radiation precautions.",
+      "tags": [
+        "first_burial",
+        "radiation_death",
+        "palliative",
+        "unknown_family"
+      ]
+    },
+    {
+      "burial_id": "burial_002",
+      "deceased_name": "Alpha-7 courier",
+      "deceased_id": "alpha_7_courier",
+      "day_of_death": 35,
+      "day_of_burial": 36,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Blunt force trauma and hypothermia. Arrived at bunker entrance with severe injuries from the raid on The Verge. the_surgeon attempted intervention but the patient was beyond salvage. Died in the airlock.",
+      "age_estimate": "30-40 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-02",
+      "ceremony_type": "brief_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_general",
+        "the_surgeon",
+        "the_undertaker",
+        "the_priest"
+      ],
+      "epitaph": "He carried messages until he could not carry himself. The last message was: do not open the door.",
+      "grave_marker": "Wooden cross from salvaged packing crate. Name carved with the_chef knife.",
+      "personal_effects": [
+        "raided settlement pass",
+        "a sealed message tube (empty)",
+        "broken boots"
+      ],
+      "ledger_entry": 2,
+      "notes": "the_undertaker noted that the deceased had no name beyond his courier designation. Alpha-7 was his origin settlement. The courier number was his identity.",
+      "tags": [
+        "raid_casualty",
+        "airlock_death",
+        "unknown_name",
+        "brief_service"
+      ]
+    },
+    {
+      "burial_id": "burial_003",
+      "deceased_name": "Kilo-1",
+      "deceased_id": "kilo_1",
+      "day_of_death": 56,
+      "day_of_burial": 57,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Exposure and dehydration. Refused admission on day 55. the_therapist objected but the_general upheld the refusal due to resource constraints. Found deceased 200 meters from the bunker entrance the following morning by the_courier on patrol.",
+      "age_estimate": "40-50 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-03",
+      "ceremony_type": "memorial_only",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_general",
+        "the_therapist",
+        "the_undertaker",
+        "the_priest",
+        "the_empath"
+      ],
+      "epitaph": "We turned him away. This is the record of that.",
+      "grave_marker": "No marker. the_general ordered the plot remain unmarked. the_undertaker objected. Compromise: a small stone at ground level, no inscription.",
+      "personal_effects": [],
+      "ledger_entry": 3,
+      "notes": "This burial is also a confession. the_undertaker recorded it because someone must. the_therapist has not spoken to the_general since the decision.",
+      "tags": [
+        "refused_admission",
+        "exposure_death",
+        "unmarked_grave",
+        "moral_injury",
+        "contested"
+      ]
+    },
+    {
+      "burial_id": "burial_004",
+      "deceased_name": "the_widow husband",
+      "deceased_id": "widow_husband",
+      "day_of_death": 1,
+      "day_of_burial": 70,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. the_widow arrived on day 12. She says he died on the first day, the day of the event. She was not present. She learned of it from a neighbour three weeks later.",
+      "age_estimate": "50-60 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-04",
+      "ceremony_type": "cenotaph",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_widow",
+        "the_therapist",
+        "the_priest",
+        "the_undertaker",
+        "the_empath",
+        "the_fierce_mother"
+      ],
+      "epitaph": "He is not here. She is. That is the monument.",
+      "grave_marker": "Empty plot. the_widow placed her wedding ring on a stone at the head. She said she would put it back on when she is ready.",
+      "personal_effects": [
+        "the_widow wedding ring (placed on grave, not interred)"
+      ],
+      "ledger_entry": 4,
+      "notes": "This is a cenotaph burial. There is no body. the_undertaker conducted the ceremony because the_widow needed a ritual to mark the grief she has been carrying alone.",
+      "tags": [
+        "cenotaph",
+        "empty_grave",
+        "delayed_grief",
+        "therapeutic_burial"
+      ]
+    },
+    {
+      "burial_id": "burial_005",
+      "deceased_name": "Bravo group father",
+      "deceased_id": "bravo_father",
+      "day_of_death": 28,
+      "day_of_burial": 29,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Infection from untreated wound. Arrived with the Bravo group on day 22. The wound was a laceration on the lower leg, contaminated with fallout particulate. the_surgeon cleaned and dressed it but antibiotics were unavailable. Septicaemia developed on day 26.",
+      "age_estimate": "45-55 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-05",
+      "ceremony_type": "full_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "Bravo group mother",
+        "Bravo group children (2)",
+        "the_general",
+        "the_surgeon",
+        "the_undertaker",
+        "the_priest",
+        "the_therapist"
+      ],
+      "epitaph": "He carried his family across 40 kilometres of ash. The wound was small. The world is large and indifferent to small wounds.",
+      "grave_marker": "Stone from the frozen river bank. Smooth, grey, heavy. the_mechanic helped the_undertaker carry it.",
+      "personal_effects": [
+        "wedding band",
+        "a child drawing folded in his pocket"
+      ],
+      "ledger_entry": 5,
+      "notes": "His wife and two children are now in the bunker. The children do not understand death. The mother understands it completely.",
+      "tags": [
+        "infection_death",
+        "family_group",
+        "treatable_wound",
+        "antibiotic_absence"
+      ]
+    },
+    {
+      "burial_id": "burial_006",
+      "deceased_name": "Golf-1 tunnel companion",
+      "deceased_id": "golf_companion",
+      "day_of_death": 18,
+      "day_of_burial": 72,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. Golf-1 arrived on day 68 after two years of isolation in the underground transit tunnel. He spoke of a companion who died during the first year. He did not know the companion name. He called them only my friend.",
+      "age_estimate": "Unknown",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-06",
+      "ceremony_type": "memorial_only",
+      "officiant": "the_blind_preacher",
+      "attendees": [
+        "Golf-1",
+        "the_undertaker",
+        "the_blind_preacher",
+        "the_therapist"
+      ],
+      "epitaph": "My friend. That is all I know. That is enough.",
+      "grave_marker": "A piece of the transit tunnel wall. Golf-1 carried it in his pocket for two years. He placed it in the plot and did not speak for the rest of the ceremony.",
+      "personal_effects": [
+        "transit tunnel stone fragment"
+      ],
+      "ledger_entry": 6,
+      "notes": "This is a memorial for someone the_undertaker never met and may never have existed as Golf-1 remembers them. Two years of isolation can distort memory. But the stone is real and the grief is real.",
+      "tags": [
+        "memorial_only",
+        "tunnel_isolation",
+        "unknown_identity",
+        "delayed_burial"
+      ]
+    },
+    {
+      "burial_id": "burial_007",
+      "deceased_name": "the_hunter trap casualty",
+      "deceased_id": "hunter_trap_casualty",
+      "day_of_death": 48,
+      "day_of_burial": 49,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Fall from height. A lone survivor attempting to reach the bunker via the highway pileup route. the_hunter found them at the base of the collapsed overpass. Estimated fall of 8 meters.",
+      "age_estimate": "25-35 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-07",
+      "ceremony_type": "brief_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_hunter",
+        "the_undertaker",
+        "the_priest",
+        "the_general"
+      ],
+      "epitaph": "Found by the hunter. Named by no one. Buried by the undertaker. The bunker does not know your name but we know you were trying to get home.",
+      "grave_marker": "the_hunter carved a notch in a standing concrete fragment. No name. Just a mark that says someone stopped here.",
+      "personal_effects": [
+        "backpack with empty water containers",
+        "a hand-drawn map of the highway route",
+        "no identification"
+      ],
+      "ledger_entry": 7,
+      "notes": "the_hunter was affected by this death more than he expected. He said the deceased had the same type of boots as him.",
+      "tags": [
+        "surface_recovery",
+        "fall_death",
+        "unknown_identity",
+        "hunter_involved"
+      ]
+    },
+    {
+      "burial_id": "burial_008",
+      "deceased_name": "Lima-1 mother",
+      "deceased_id": "lima_mother",
+      "day_of_death": 3,
+      "day_of_burial": 75,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. Lima-1 arrived on day 74 as an unaccompanied child, age 8. She says her mother died on the third day after the event. She does not say how. She says her mother told her to walk north and not stop.",
+      "age_estimate": "30-40 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-08",
+      "ceremony_type": "cenotaph",
+      "officiant": "the_priest",
+      "attendees": [
+        "Lima-1",
+        "the_teacher",
+        "the_therapist",
+        "the_undertaker",
+        "the_priest",
+        "the_fierce_mother",
+        "the_empath"
+      ],
+      "epitaph": "She told her daughter to walk north. The daughter walked. The mother is the reason the daughter is alive.",
+      "grave_marker": "Lima-1 placed a drawing on the stone. It shows two figures, one tall and one small, holding hands. The tall figure has no face.",
+      "personal_effects": [
+        "Lima-1 drawing (placed on grave, copy kept in ledger)"
+      ],
+      "ledger_entry": 8,
+      "notes": "Another cenotaph. Lima-1 drew the picture during the ceremony. She did not cry. the_therapist says the child is in shock and has been since day 3.",
+      "tags": [
+        "cenotaph",
+        "child_orphan",
+        "delayed_burial",
+        "maternal_sacrifice"
+      ]
+    },
+    {
+      "burial_id": "burial_009",
+      "deceased_name": "the_meteorologist colleague",
+      "deceased_id": "meteorologist_colleague",
+      "day_of_death": 8,
+      "day_of_burial": 78,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. the_meteorologist arrived on day 15. He spoke once of a colleague at the weather station who did not survive the first week. He said they were running instruments until the end.",
+      "age_estimate": "Unknown",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-09",
+      "ceremony_type": "memorial_only",
+      "officiant": "the_meteorologist",
+      "attendees": [
+        "the_meteorologist",
+        "the_undertaker",
+        "the_radio_host"
+      ],
+      "epitaph": "They were reading the instruments. The instruments stopped. They did not.",
+      "grave_marker": "the_meteorologist brought a broken thermometer from his pre-war station. He placed it in the plot. It reads nothing. It will always read nothing.",
+      "personal_effects": [
+        "broken thermometer"
+      ],
+      "ledger_entry": 9,
+      "notes": "the_meteorologist officiated at his own colleague memorial. He spoke about atmospheric pressure and wind speed and the beauty of a well-calibrated barometer.",
+      "tags": [
+        "memorial_only",
+        "weather_station",
+        "delayed_grief",
+        "self_officiated"
+      ]
+    },
+    {
+      "burial_id": "burial_010",
+      "deceased_name": "the_surgeon patient",
+      "deceased_id": "surgeon_patient_zero",
+      "day_of_death": 50,
+      "day_of_burial": 51,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Complications from improvised appendicitis surgery. the_surgeon performed the procedure with sterilised kitchen knives and boiled thread. The appendix was removed. The patient survived 48 hours. Post-operative infection set in. No antibiotics.",
+      "age_estimate": "35-45 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-10",
+      "ceremony_type": "full_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_surgeon",
+        "the_undertaker",
+        "the_priest",
+        "the_general",
+        "the_therapist",
+        "the_chef",
+        "the_pharmacist"
+      ],
+      "epitaph": "The surgeon cut. The body fought. The body lost. The surgeon did not.",
+      "grave_marker": "the_surgeon carved the medical notation for appendectomy into the concrete slab. It is the only headstone with a technical inscription.",
+      "personal_effects": [],
+      "ledger_entry": 10,
+      "notes": "the_surgeon took this death hard. He has performed the procedure six times in his career. This is the first time he lost a patient. He said the antibiotics would have saved the patient.",
+      "tags": [
+        "surgical_death",
+        "infection",
+        "antibiotic_absence",
+        "surgeon_grief"
+      ]
+    },
+    {
+      "burial_id": "burial_011",
+      "deceased_name": "the_veteran squad mate",
+      "deceased_id": "veteran_squad_mate",
+      "day_of_death": 2,
+      "day_of_burial": 80,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. the_veteran arrived on day 10. He has never spoken of how his squad mate died. He carries a dog tag that is not his.",
+      "age_estimate": "25-35 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-11",
+      "ceremony_type": "memorial_only",
+      "officiant": "the_veteran",
+      "attendees": [
+        "the_veteran",
+        "the_undertaker",
+        "the_general"
+      ],
+      "epitaph": "He was with me on day 2. I am here on day 80. He asked me to remember. I am remembering.",
+      "grave_marker": "No marker. the_veteran said the plot is for the memory. He will visit it. He knows which one it is.",
+      "personal_effects": [],
+      "ledger_entry": 11,
+      "notes": "the_veteran officiated at his own memorial. He stood at the plot for ten minutes in silence. Then he walked away. All silence.",
+      "tags": [
+        "memorial_only",
+        "military_burial",
+        "dog_tag",
+        "self_officiated",
+        "silence"
+      ]
+    },
+    {
+      "burial_id": "burial_012",
+      "deceased_name": "the_botanist predecessor",
+      "deceased_id": "botanist_predecessor",
+      "day_of_death": 14,
+      "day_of_burial": 82,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. the_botanist arrived on day 20 with 47 seed packets and a notebook. She said the previous botanist at the seed vault died of exposure when the cryo-system failed. She said they planted the last seeds before they died.",
+      "age_estimate": "Unknown",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-12",
+      "ceremony_type": "memorial_only",
+      "officiant": "the_botanist",
+      "attendees": [
+        "the_botanist",
+        "the_undertaker",
+        "the_priest"
+      ],
+      "epitaph": "They planted the last seeds. I grew them. That is the continuity.",
+      "grave_marker": "the_botanist planted a single turnip seed in the plot. It grew. It is the only living thing in the cemetery.",
+      "personal_effects": [],
+      "ledger_entry": 12,
+      "notes": "This burial is also a planting. the_botanist said the deceased would have wanted something to grow. The turnip is a small green thing among grey stones.",
+      "tags": [
+        "memorial_only",
+        "seed_vault",
+        "living_memorial",
+        "botanist_officiated"
+      ]
+    },
+    {
+      "burial_id": "burial_013",
+      "deceased_name": "the_cop partner",
+      "deceased_id": "cop_partner",
+      "day_of_death": 1,
+      "day_of_burial": 85,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. the_cop arrived on day 12. He carries a badge that is not his. He has never spoken of his partner.",
+      "age_estimate": "30-40 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-13",
+      "ceremony_type": "memorial_only",
+      "officiant": "the_cop",
+      "attendees": [
+        "the_cop",
+        "the_undertaker",
+        "the_general"
+      ],
+      "epitaph": "We walked the beat together. I kept walking. You stopped. I am still walking. That is the job.",
+      "grave_marker": "the_cop placed his badge on the stone. He said it belongs to both of them. He will leave it.",
+      "personal_effects": [
+        "the_cop badge (placed on grave)"
+      ],
+      "ledger_entry": 13,
+      "notes": "the_cop gave up his badge. He said the badge was for a world that does not exist. The partner was for all time. The badge belongs with the partner.",
+      "tags": [
+        "memorial_only",
+        "police_partner",
+        "badge_burial",
+        "self_officiated",
+        "identity_release"
+      ]
+    },
+    {
+      "burial_id": "burial_014",
+      "deceased_name": "radiation storm casualty 1",
+      "deceased_id": "storm_casualty_1",
+      "day_of_death": 45,
+      "day_of_burial": 46,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Acute radiation exposure during the day 45 storm. A surface patrol member caught outside when the storm intensified faster than predicted. Dose estimated at 6 Sv by the_hazmat_tech. the_surgeon could only offer palliative care.",
+      "age_estimate": "40-50 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-14",
+      "ceremony_type": "full_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_general",
+        "the_surgeon",
+        "the_hazmat_tech",
+        "the_undertaker",
+        "the_priest",
+        "the_courier",
+        "the_hunter"
+      ],
+      "epitaph": "The storm came faster than the instruments said. The instruments were wrong. He paid for the error.",
+      "grave_marker": "Concrete slab with dosimeter reading carved into the surface. 6 Sv.",
+      "personal_effects": [
+        "dosimeter (reading 6 Sv)",
+        "surface patrol gear",
+        "personal ration pack (unopened)"
+      ],
+      "ledger_entry": 14,
+      "notes": "This death triggered a review of surface patrol weather protocols. the_meteorologist now has veto power over all surface operations.",
+      "tags": [
+        "radiation_storm",
+        "surface_casualty",
+        "patrol_death",
+        "protocol_change"
+      ]
+    },
+    {
+      "burial_id": "burial_015",
+      "deceased_name": "radiation storm casualty 2",
+      "deceased_id": "storm_casualty_2",
+      "day_of_death": 45,
+      "day_of_burial": 46,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Acute radiation exposure during the day 45 storm. Second patrol member caught in the same storm. Dose estimated at 5.2 Sv. Slightly lower exposure due to partial shelter behind a concrete barrier.",
+      "age_estimate": "35-45 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-15",
+      "ceremony_type": "joint_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_general",
+        "the_surgeon",
+        "the_hazmat_tech",
+        "the_undertaker",
+        "the_priest",
+        "the_courier",
+        "the_hunter"
+      ],
+      "epitaph": "Two from the same storm. The storm does not care that they were friends. They cared about each other. That was the difference.",
+      "grave_marker": "Single concrete slab shared between plots A-14 and A-15. Both dosimeter readings carved side by side.",
+      "personal_effects": [
+        "dosimeter (reading 5.2 Sv)",
+        "surface patrol gear",
+        "a hand-written note to the other casualty found in his pocket"
+      ],
+      "ledger_entry": 15,
+      "notes": "the_undertaker buried them together because they died together. The note in his pocket was addressed to the other casualty. It said: if you read this, you made it out. I did not.",
+      "tags": [
+        "radiation_storm",
+        "joint_burial",
+        "surface_casualty",
+        "friendship",
+        "note_in_ledger"
+      ]
+    },
+    {
+      "burial_id": "burial_016",
+      "deceased_name": "dysentery casualty",
+      "deceased_id": "dysentery_casualty",
+      "day_of_death": 52,
+      "day_of_burial": 53,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Severe dehydration from dysentery. One of seven cases in the outbreak. the_surgeon managed the other six. This patient was elderly and already weakened by months of marginal nutrition.",
+      "age_estimate": "65-75 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-16",
+      "ceremony_type": "brief_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_surgeon",
+        "the_undertaker",
+        "the_priest",
+        "the_quartermaster"
+      ],
+      "epitaph": "The water was not clean. The body was not strong enough. The surgeon did everything possible. Everything was not enough.",
+      "grave_marker": "Standard concrete slab. the_undertaker carved the cause of death as waterborne illness.",
+      "personal_effects": [
+        "reading glasses",
+        "a water cup (interred with the deceased)"
+      ],
+      "ledger_entry": 16,
+      "notes": "the_undertaker placed the water cup in the grave. It is a statement. The water that killed this person will be buried with them so no one else uses the cup.",
+      "tags": [
+        "dysentery",
+        "waterborne_death",
+        "elderly",
+        "water_cup_burial",
+        "systemic_change"
+      ]
+    },
+    {
+      "burial_id": "burial_017",
+      "deceased_name": "expedition casualty",
+      "deceased_id": "expedition_casualty",
+      "day_of_death": 88,
+      "day_of_burial": 90,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Structural collapse during seed vault expedition. A ceiling section in the access tunnel gave way. the_hazmat_tech was struck by falling concrete. the_courier and the_hunter extracted them but the injuries were incompatible with survival.",
+      "age_estimate": "40-50 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-17",
+      "ceremony_type": "full_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_general",
+        "the_surgeon",
+        "the_hunter",
+        "the_courier",
+        "the_undertaker",
+        "the_priest",
+        "the_botanist",
+        "the_quartermaster"
+      ],
+      "epitaph": "The vault held the seeds. The ceiling did not hold them. They died so the bunker could eat. The seeds are planted now. They are growing.",
+      "grave_marker": "Concrete slab with a pressed leaf from the first seedling planted from the recovered ampoules.",
+      "personal_effects": [
+        "expedition gear",
+        "dosimeter",
+        "a seed packet label found in their pocket"
+      ],
+      "ledger_entry": 17,
+      "notes": "the_undertaker noted that this death was not in vain. The seed vault expedition recovered 14 viable ampoules. The deceased name will be associated with the first harvest.",
+      "tags": [
+        "expedition_death",
+        "structural_collapse",
+        "seed_vault",
+        "sacrifice",
+        "living_legacy"
+      ]
+    },
+    {
+      "burial_id": "burial_018",
+      "deceased_name": "self-amputation patient",
+      "deceased_id": "self_amputation_patient",
+      "day_of_death": 60,
+      "day_of_burial": 61,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Haemorrhage following self-amputation of left hand. the_addict, during a psychotic episode, severed their own hand with a kitchen knife. the_surgeon attempted to control bleeding. The patient refused transfusion. They said the hand was contaminated and they could feel the radiation in it.",
+      "age_estimate": "30-40 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-18",
+      "ceremony_type": "brief_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_surgeon",
+        "the_undertaker",
+        "the_priest",
+        "the_therapist",
+        "the_addict",
+        "the_general"
+      ],
+      "epitaph": "They believed their hand was poisoned. They removed it. They did not believe the cure. The undertaker does not judge. The undertaker records.",
+      "grave_marker": "the_undertaker buried the severed hand separately in a small plot adjacent to the main grave. He thought this was appropriate.",
+      "personal_effects": [],
+      "ledger_entry": 18,
+      "notes": "the_undertaker made the decision to bury the hand with the deceased without consulting anyone. He thinks it was right. the_addict attended the burial and was silent.",
+      "tags": [
+        "self_amputation",
+        "psychotic_episode",
+        "refused_treatment",
+        "hand_burial",
+        "addict_witness"
+      ]
+    },
+    {
+      "burial_id": "burial_019",
+      "deceased_name": "the_undertaker predecessor",
+      "deceased_id": "undertaker_predecessor",
+      "day_of_death": 5,
+      "day_of_burial": 90,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. the_undertaker arrived on day 8. He found the Ledger of the Dead already started. Twenty-three entries. No one knew who had been burying the dead before the_undertaker arrived.",
+      "age_estimate": "Unknown",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-19",
+      "ceremony_type": "memorial_only",
+      "officiant": "the_undertaker",
+      "attendees": [
+        "the_undertaker"
+      ],
+      "epitaph": "Twenty-three names in the ledger before me. I do not know who wrote them. I do not know who buried them. I am the second hand. The first hand is buried somewhere in this ground.",
+      "grave_marker": "No marker. the_undertaker said the entire cemetery is the marker.",
+      "personal_effects": [],
+      "ledger_entry": 19,
+      "notes": "the_undertaker conducted this burial alone. No witnesses. He said it was between him and the ground. He has not spoken of it since.",
+      "tags": [
+        "memorial_only",
+        "predecessor",
+        "solo_burial",
+        "ledger_history",
+        "unknown_identity"
+      ]
+    },
+    {
+      "burial_id": "burial_020",
+      "deceased_name": "first bunker-born child (Asha)",
+      "deceased_id": "bunker_born_child",
+      "day_of_death": 95,
+      "day_of_burial": 96,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Congenital defect incompatible with life. Born on day 53 to universal celebration. Lived for 42 days. the_surgeon said the defect was not detectable without pre-war equipment. The child ate, slept, and was held. the_surgeon said the child did not suffer.",
+      "age_estimate": "42 days",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-20",
+      "ceremony_type": "full_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_mother",
+        "the_father",
+        "the_surgeon",
+        "the_therapist",
+        "the_undertaker",
+        "the_priest",
+        "the_teacher",
+        "the_empath",
+        "the_fierce_mother",
+        "the_botanist",
+        "the_chef"
+      ],
+      "epitaph": "You were here for 42 days. You were named Asha. You were loved. That is the entire record.",
+      "grave_marker": "the_botanist planted a second turnip seed. The first one, from plot A-12, has already sprouted. This one will grow beside it.",
+      "personal_effects": [
+        "a small blanket knitted by the_tailor",
+        "the_name_bead the_teacher made (wooden beads spelling ASHA)"
+      ],
+      "ledger_entry": 20,
+      "notes": "the_undertaker recorded this burial with the most care he has given to any entry. The child was the first bunker-born life. The child was also the first bunker-born death.",
+      "tags": [
+        "infant_death",
+        "congenital",
+        "first_bunker_born",
+        "shortest_life",
+        "community_grief"
+      ]
+    },
+    {
+      "burial_id": "burial_021",
+      "deceased_name": "the_historian book donor",
+      "deceased_id": "historian_donor",
+      "day_of_death": 10,
+      "day_of_burial": 95,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. the_historian arrived on day 14 with 12 paperbacks. He said they belonged to someone who gave them to him before they died. He said the person loved books and asked the_historian to keep reading.",
+      "age_estimate": "Unknown",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-21",
+      "ceremony_type": "memorial_only",
+      "officiant": "the_historian",
+      "attendees": [
+        "the_historian",
+        "the_undertaker",
+        "the_naive_son"
+      ],
+      "epitaph": "They gave him 12 books and asked him to keep reading. He has read each one three times. The books are the memorial. The reading is the ceremony.",
+      "grave_marker": "the_historian placed the first paperback in the plot. It is a pre-war novel. The title page is too faded to read.",
+      "personal_effects": [
+        "one paperback (interred)"
+      ],
+      "ledger_entry": 21,
+      "notes": "the_naive_son attended because he is the_historian student. He asked if he could read the remaining 11 books at the graveside over the coming weeks. the_historian said yes.",
+      "tags": [
+        "memorial_only",
+        "book_burial",
+        "ongoing_ceremony",
+        "historian_officiated"
+      ]
+    },
+    {
+      "burial_id": "burial_022",
+      "deceased_name": "the_chef assistant",
+      "deceased_id": "chef_assistant",
+      "day_of_death": 70,
+      "day_of_burial": 71,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Kitchen accident. Scalding burns from a ruptured steam pipe during meal preparation. the_plumber had flagged the pipe for repair but the kitchen needed to operate on schedule. the_chef authorised continued use. The pipe ruptured. the_chef assistant sustained 40 percent body burns. Burns became infected.",
+      "age_estimate": "25-35 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-22",
+      "ceremony_type": "full_service",
+      "officiant": "the_priest",
+      "attendees": [
+        "the_chef",
+        "the_surgeon",
+        "the_plumber",
+        "the_undertaker",
+        "the_priest",
+        "the_general",
+        "the_quartermaster"
+      ],
+      "epitaph": "The pipe was flagged. The kitchen needed to run. The pipe won. The undertaker notes that the pipe has since been replaced.",
+      "grave_marker": "the_chef placed a hand-forged spoon on the grave. He said the deceased was learning to cook and the spoon was their first tool.",
+      "personal_effects": [
+        "hand-forged spoon (interred)",
+        "kitchen apron (burned, included in burial)"
+      ],
+      "ledger_entry": 22,
+      "notes": "the_undertaker noted that this death was preventable. the_plumber had flagged the pipe. the_chef made a triage decision that cost a life. The record speaks for itself.",
+      "tags": [
+        "kitchen_accident",
+        "preventable_death",
+        "steam_pipe",
+        "spoon_burial",
+        "systemic_failure"
+      ]
+    },
+    {
+      "burial_id": "burial_023",
+      "deceased_name": "the_radio_host listener",
+      "deceased_id": "radio_listener",
+      "day_of_death": 85,
+      "day_of_burial": 86,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Unknown. the_radio_host received a transmission on the 40m band at 0340 on day 85. A male voice said: this is station KFRQ, we are still broadcasting, we are running out of power. the_transmission cut out. the_general dispatched a surface team. They found the transmitter. They did not find the operator.",
+      "age_estimate": "Unknown",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-23",
+      "ceremony_type": "memorial_only",
+      "officiant": "the_radio_host",
+      "attendees": [
+        "the_radio_host",
+        "the_undertaker",
+        "the_general"
+      ],
+      "epitaph": "They were still broadcasting. The power ran out. The operator did not wait for the power. I heard them. I am the record that someone heard them.",
+      "grave_marker": "the_radio_host placed the salvaged microphone from his pre-war station on the grave.",
+      "personal_effects": [
+        "salvaged microphone (interred)",
+        "transmitter log fragment (recovered by surface team)"
+      ],
+      "ledger_entry": 23,
+      "notes": "the_undertaker recorded this burial because the_radio_host asked him to. The operator may still be alive. But the_radio_host said the transmission was a goodbye and goodbyes deserve a grave.",
+      "tags": [
+        "memorial_only",
+        "radio_transmission",
+        "unknown_fate",
+        "microphone_burial",
+        "voice_in_the_dark"
+      ]
+    },
+    {
+      "burial_id": "burial_024",
+      "deceased_name": "the_undertaker (self-written entry)",
+      "deceased_id": "the_undertaker",
+      "day_of_death": null,
+      "day_of_burial": null,
+      "undertaker": null,
+      "cause_of_death": "Not yet. the_undertaker has written his own entry in the ledger. He leaves spaces for the details to be filled in by whoever comes after him.",
+      "age_estimate": "55-65 years",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "A-24",
+      "ceremony_type": "not_yet",
+      "officiant": "not_yet",
+      "attendees": [],
+      "epitaph": "He kept the ledger. He tended the graves. He planted the turnips. He buried the hand with the person. He did not judge. He recorded. The ledger is open. Read it.",
+      "grave_marker": "the_undertaker has placed a blank concrete slab at plot A-24. He will carve his own epitaph when the time comes.",
+      "personal_effects": [],
+      "ledger_entry": 24,
+      "notes": "the_undertaker showed this entry to no one. He is not afraid of dying. He is afraid of the ledger closing with entries unfinished. The ledger will continue. Someone will pick it up.",
+      "tags": [
+        "self_written",
+        "living_entry",
+        "ledger_continuity",
+        "blank_epitaph",
+        "the_undertaker"
+      ]
+    },
+    {
+      "burial_id": "burial_025",
+      "deceased_name": "the_cemetery itself (dedication)",
+      "deceased_id": "cemetery_memorial",
+      "day_of_death": null,
+      "day_of_burial": 100,
+      "undertaker": "the_undertaker",
+      "cause_of_death": "Not a death. the_undertaker created this entry on day 100 to mark the cemetery first 100 days of existence.",
+      "age_estimate": "100 days old",
+      "burial_location": "location_ash_dune_cemetery",
+      "plot_number": "cemetery_memorial_stone",
+      "ceremony_type": "dedication",
+      "officiant": "the_undertaker",
+      "attendees": [
+        "the_undertaker",
+        "the_priest",
+        "the_botanist",
+        "the_general",
+        "the_radio_host",
+        "the_teacher",
+        "Lima-1"
+      ],
+      "epitaph": "This cemetery is not for the dead. It is for the living. We tend it because tending something is how we know we are still here.",
+      "grave_marker": "A single large stone at the cemetery entrance. the_mechanic carved the inscription: ASH DUNE CEMETERY. ESTABLISHED DAY 36. TENDED BY THE UNDERTAKER. OPEN TO ALL WHO NEED TO REMEMBER.",
+      "personal_effects": [],
+      "ledger_entry": 25,
+      "notes": "the_undertaker dedicated the cemetery itself on day 100. Lima-1 placed a new drawing on the memorial stone. It shows the cemetery from above, with green spots where the turnips grow.",
+      "tags": [
+        "cemetery_dedication",
+        "living_memorial",
+        "day_100",
+        "community_ceremony",
+        "masterwork"
+      ]
+    }
+  ]
+}

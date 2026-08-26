@@ -30,7 +30,7 @@ namespace Ashfall.Core.Tests
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
             string raw = fileIO.ReadAllText(fileIO.Combine(dataDir, "world_history.json"));
-            var entries = json.Deserialize<WorldHistoryEntry[]>(raw);
+            var entries = CatalogLocator.LoadWrappedList<WorldHistoryEntry>(raw, SystemTextJsonSerializer.Options);
 
             string[] expected =
             {
@@ -55,7 +55,7 @@ namespace Ashfall.Core.Tests
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
             string raw = fileIO.ReadAllText(fileIO.Combine(dataDir, "world_history.json"));
-            var entries = json.Deserialize<WorldHistoryEntry[]>(raw);
+            var entries = CatalogLocator.LoadWrappedList<WorldHistoryEntry>(raw, SystemTextJsonSerializer.Options);
 
             foreach (var e in entries)
             {
@@ -79,7 +79,7 @@ namespace Ashfall.Core.Tests
             var fileIO = new FileSystemIO();
             var json = new SystemTextJsonSerializer();
             string raw = fileIO.ReadAllText(fileIO.Combine(dataDir, "world_history.json"));
-            var entries = json.Deserialize<WorldHistoryEntry[]>(raw);
+            var entries = CatalogLocator.LoadWrappedList<WorldHistoryEntry>(raw, SystemTextJsonSerializer.Options);
 
             var byKey = new System.Collections.Generic.Dictionary<string, WorldHistoryEntry>();
             foreach (var e in entries)

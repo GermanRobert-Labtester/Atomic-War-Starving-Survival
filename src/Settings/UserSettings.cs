@@ -179,7 +179,7 @@ namespace AtomicWar.GodotApp.Settings
             catch (Exception ex)
             {
                 GD.PrintErr($"[UserSettingsStore] Failed to save settings to {path}: {ex.Message}");
-                try { if (File.Exists(tempPath)) File.Delete(tempPath); } catch { }
+                try { if (File.Exists(tempPath)) File.Delete(tempPath); } catch (Exception cleanupEx) { GD.PrintErr($"[UserSettings] Failed to clean temp file: {cleanupEx.Message}"); }
                 return false;
             }
         }

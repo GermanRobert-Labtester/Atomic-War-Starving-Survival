@@ -1,56 +1,119 @@
-[
-  {
-    "id": "enc_dead_letter_office",
-    "title": "The Dead Letter Office",
-    "description": "An overturned postal van on the ring road. The driver died at the wheel, hands still gripping it. In the back: undelivered letters, supply packs, and one envelope addressed to someone at the Scavenger Camp.",
-    "category": "Discovery",
-    "baseWeight": 2.0,
-    "stealthWeightMultiplier": 0.5,
-    "speedWeightMultiplier": 1.5,
-    "minDangerLevel": 0.0,
-    "requiredLocationId": "",
-    "forceOnArrival": true,
-    "choices": [
-      { "choiceId": "read_letters", "text": "Read the undelivered letters", "moraleDelta": 3, "guiltDelta": 0 },
-      { "choiceId": "deliver_letter", "text": "Carry the Scavenger Camp envelope to its addressee", "moraleDelta": 5, "guiltDelta": 0 },
-      { "choiceId": "take_supplies", "text": "Take the supply packs and go", "moraleDelta": 2, "guiltDelta": 2 },
-      { "choiceId": "burn_van", "text": "Burn the van behind you", "moraleDelta": 0, "guiltDelta": 4 }
-    ]
-  },
-  {
-    "id": "enc_weather_station",
-    "title": "Automated Weather Station",
-    "description": "A pre-war weather station on a low hill, still running on a cracked solar panel. Its LED blinks green every twelve seconds. The data logger contains five days of barometric pressure, wind speed, and plume-drift readings.",
-    "category": "Discovery",
-    "baseWeight": 3.0,
-    "stealthWeightMultiplier": 0.5,
-    "speedWeightMultiplier": 1.5,
-    "minDangerLevel": 0.0,
-    "requiredLocationId": "",
-    "forceOnArrival": true,
-    "choices": [
-      { "choiceId": "extract_data", "text": "Copy the logger's five days of readings", "moraleDelta": 4, "guiltDelta": 0 },
-      { "choiceId": "take_solar_panel", "text": "Pry off the solar panel", "moraleDelta": 2, "guiltDelta": 1 },
-      { "choiceId": "scavenge_electronics", "text": "Strip the station for scrap", "moraleDelta": 1, "guiltDelta": 3 },
-      { "choiceId": "leave_running", "text": "Leave it running", "moraleDelta": 2, "guiltDelta": 0 }
-    ]
-  },
-  {
-    "id": "enc_pianist",
-    "title": "The Pianist",
-    "description": "Someone is playing a piano in a ruined conservatory on the east edge of town. The building has no roof. The piano is out of tune. The pianist is an old man named Matej who has been blind since the flash. He plays from muscle memory.",
-    "category": "Social",
-    "baseWeight": 1.5,
-    "stealthWeightMultiplier": 0.5,
-    "speedWeightMultiplier": 1.5,
-    "minDangerLevel": 0.0,
-    "requiredLocationId": "",
-    "forceOnArrival": false,
-    "choices": [
-      { "choiceId": "listen", "text": "Sit on the rubble and listen", "moraleDelta": 4, "guiltDelta": 0 },
-      { "choiceId": "share_food", "text": "Share what you are carrying", "moraleDelta": 5, "guiltDelta": 0 },
-      { "choiceId": "tell_about_bunker", "text": "Tell him about the bunker", "moraleDelta": 2, "guiltDelta": 1 },
-      { "choiceId": "destroy_piano", "text": "Cut the piano wire and go", "moraleDelta": 0, "guiltDelta": 5 }
-    ]
-  }
-]
+{
+  "schema_version": 1,
+  "encounters": [
+    {
+      "id": "enc_dead_letter_office",
+      "title": "The Dead Letter Office",
+      "description": "An overturned postal van on the ring road. The driver died at the wheel, hands still gripping it. In the back: undelivered letters, supply packs, and one envelope addressed to someone at the Scavenger Camp.",
+      "category": "Discovery",
+      "baseWeight": 2.0,
+      "stealthWeightMultiplier": 0.5,
+      "speedWeightMultiplier": 1.5,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": true,
+      "choices": [
+        {
+          "choiceId": "read_letters",
+          "text": "Read the undelivered letters",
+          "moraleDelta": 3,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "deliver_letter",
+          "text": "Carry the Scavenger Camp envelope to its addressee",
+          "moraleDelta": 5,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "take_supplies",
+          "text": "Take the supply packs and go",
+          "moraleDelta": 2,
+          "guiltDelta": 2
+        },
+        {
+          "choiceId": "burn_van",
+          "text": "Burn the van behind you",
+          "moraleDelta": 0,
+          "guiltDelta": 4
+        }
+      ]
+    },
+    {
+      "id": "enc_weather_station",
+      "title": "Automated Weather Station",
+      "description": "A pre-war weather station on a low hill, still running on a cracked solar panel. Its LED blinks green every twelve seconds. The data logger contains five days of barometric pressure, wind speed, and plume-drift readings.",
+      "category": "Discovery",
+      "baseWeight": 3.0,
+      "stealthWeightMultiplier": 0.5,
+      "speedWeightMultiplier": 1.5,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": true,
+      "choices": [
+        {
+          "choiceId": "extract_data",
+          "text": "Copy the logger's five days of readings",
+          "moraleDelta": 4,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "take_solar_panel",
+          "text": "Pry off the solar panel",
+          "moraleDelta": 2,
+          "guiltDelta": 1
+        },
+        {
+          "choiceId": "scavenge_electronics",
+          "text": "Strip the station for scrap",
+          "moraleDelta": 1,
+          "guiltDelta": 3
+        },
+        {
+          "choiceId": "leave_running",
+          "text": "Leave it running",
+          "moraleDelta": 2,
+          "guiltDelta": 0
+        }
+      ]
+    },
+    {
+      "id": "enc_pianist",
+      "title": "The Pianist",
+      "description": "Someone is playing a piano in a ruined conservatory on the east edge of town. The building has no roof. The piano is out of tune. The pianist is an old man named Matej who has been blind since the flash. He plays from muscle memory.",
+      "category": "Social",
+      "baseWeight": 1.5,
+      "stealthWeightMultiplier": 0.5,
+      "speedWeightMultiplier": 1.5,
+      "minDangerLevel": 0.0,
+      "requiredLocationId": "",
+      "forceOnArrival": false,
+      "choices": [
+        {
+          "choiceId": "listen",
+          "text": "Sit on the rubble and listen",
+          "moraleDelta": 4,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "share_food",
+          "text": "Share what you are carrying",
+          "moraleDelta": 5,
+          "guiltDelta": 0
+        },
+        {
+          "choiceId": "tell_about_bunker",
+          "text": "Tell him about the bunker",
+          "moraleDelta": 2,
+          "guiltDelta": 1
+        },
+        {
+          "choiceId": "destroy_piano",
+          "text": "Cut the piano wire and go",
+          "moraleDelta": 0,
+          "guiltDelta": 5
+        }
+      ]
+    }
+  ]
+}

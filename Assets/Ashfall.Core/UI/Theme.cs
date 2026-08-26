@@ -103,20 +103,20 @@ namespace Ashfall.Core.UI
 
         // ── Typography sizes (px) ───────────────────────────────────────
 
-        public const int FontSizeH1 = 28;
-        public const int FontSizeH2 = 22;
-        public const int FontSizeH3 = 18;
-        public const int FontSizeBody = 14;
-        public const int FontSizeSmall = 11;
-        public const int FontSizeMono = 12;
-        public const int FontSizeLabel = 10;
+        public const int FontSizeH1 = 30;
+        public const int FontSizeH2 = 24;
+        public const int FontSizeH3 = 19;
+        public const int FontSizeBody = 15;
+        public const int FontSizeSmall = 12;
+        public const int FontSizeMono = 13;
+        public const int FontSizeLabel = 11;
 
         // ── Diegetic HUD typography (matches USS) ───────────────────────
 
-        public const int DiegeticTitleSize = 12;
-        public const int DiegeticStatusSize = 11;
-        public const int DiegeticBodySize = 11;
-        public const int DiegeticHintSize = 10;
+        public const int DiegeticTitleSize = 13;
+        public const int DiegeticStatusSize = 12;
+        public const int DiegeticBodySize = 12;
+        public const int DiegeticHintSize = 11;
 
         // ── Panel sizing (px) ───────────────────────────────────────────
 

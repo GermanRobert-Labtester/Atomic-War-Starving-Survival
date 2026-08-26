@@ -1,82 +1,133 @@
-[
-  {
-    "id": "germplasm_audit_hard_red_winter_wheat",
-    "accession_number": "GERM-CRYO-RUS-0941",
-    "crop_species": "TRITICUM_AESTIVUM_WINTER",
-    "storage_temperature_kelvin": 77.0,
-    "germination_viability_pct": 88.5,
-    "timestamp_relative": "YEAR_03_CRYO_AUDIT_01",
-    "tags": ["cryo", "seed_bank", "wheat", "germplasm", "agriculture"],
-    "prose": "Hard red winter wheat accessions stored in liquid nitrogen vapor since pre-war commissioning. Thawing trial of five hundred seeds in agar substrate yielded 88.5% vigorous root germination with zero chromosomal abberation."
-  },
-  {
-    "id": "germplasm_audit_sweet_sorghum_drought_resistant",
-    "accession_number": "GERM-CRYO-SOR-0118",
-    "crop_species": "SORGHUM_BICOLOR_DROUGHT",
-    "storage_temperature_kelvin": 140.0,
-    "germination_viability_pct": 42.0,
-    "timestamp_relative": "YEAR_05_CRYO_AUDIT_03",
-    "tags": ["cryo", "seed_bank", "sorghum", "ice_damage", "viability"],
-    "prose": "A compressor outage in Storage Bay 2 caused temperatures to drift upward to 140K for fourteen days. Slow recooling induced intracellular ice crystal formation that ruptured embryonic cell walls in 58% of the sweet sorghum stock."
-  },
-  {
-    "id": "germplasm_audit_soybean_cryoprotectant_toxicity",
-    "accession_number": "GERM-CRYO-GLY-0402",
-    "crop_species": "GLYCINE_MAX_SOYBEAN",
-    "storage_temperature_kelvin": 77.0,
-    "germination_viability_pct": 28.5,
-    "timestamp_relative": "YEAR_08_CRYO_AUDIT_02",
-    "tags": ["cryo", "seed_bank", "soybean", "dmso_toxicity", "thawing"],
-    "prose": "Excessive exposure to 15% dimethyl sulfoxide (DMSO) cryoprotectant solution prior to plunging into liquid nitrogen caused chemical cytotoxicity. Thawed soybean cotyledons developed black necrotic margins with poor root elongation."
-  },
-  {
-    "id": "germplasm_audit_canary_island_date_palm",
-    "accession_number": "GERM-CRYO-PHO-0881",
-    "crop_species": "PHOENIX_CANARIENSIS_PALM",
-    "storage_temperature_kelvin": 77.0,
-    "germination_viability_pct": 92.0,
-    "timestamp_relative": "YEAR_11_CRYO_AUDIT_01",
-    "tags": ["cryo", "seed_bank", "date_palm", "pollen", "fertility"],
-    "prose": "Desiccated pollen grains stored in sealed ampoules at 77K showed exceptional viability. In vitro pollen tube growth assays demonstrated 92% active germination, ensuring future pollination for greenhouse date palm clusters."
-  },
-  {
-    "id": "germplasm_audit_heirloom_potato_meristem_tip",
-    "accession_number": "GERM-CRYO-SOL-0056",
-    "crop_species": "SOLANUM_TUBEROSUM_MERISTEM",
-    "storage_temperature_kelvin": 77.0,
-    "germination_viability_pct": 74.0,
-    "timestamp_relative": "YEAR_14_CRYO_AUDIT_04",
-    "tags": ["cryo", "seed_bank", "potato", "meristem", "tissue_culture"],
-    "prose": "Cryopreserved shoot-tip meristems (0.5mm) vitrified in Plant Vitrification Solution 2. Following rapid 40°C water bath warming and plating on hormone agar, 74% regenerated virus-free, vigorous potato plantlets within three weeks."
-  },
-  {
-    "id": "germplasm_audit_wild_emmer_radiation_hardened",
-    "accession_number": "GERM-CRYO-DIC-0994",
-    "crop_species": "TRITICUM_DICOCOIDES_WILD",
-    "storage_temperature_kelvin": 77.0,
-    "germination_viability_pct": 94.5,
-    "timestamp_relative": "YEAR_17_CRYO_AUDIT_02",
-    "tags": ["cryo", "seed_bank", "wild_emmer", "radiation_tolerant", "genetics"],
-    "prose": "Wild tetraploid wheat accessions collected from arid desert highlands. When seedlings were exposed to 25 Gy of chronic gamma radiation, they demonstrated rapid antioxidant enzyme synthesis and continued tillering with minimal leaf chlorosis."
-  },
-  {
-    "id": "germplasm_audit_mycorrhizal_spore_inoculant",
-    "accession_number": "GERM-CRYO-GLO-0012",
-    "crop_species": "GLOMUS_INTRARADICES_SPORES",
-    "storage_temperature_kelvin": 77.0,
-    "germination_viability_pct": 82.0,
-    "timestamp_relative": "YEAR_19_CRYO_AUDIT_01",
-    "tags": ["cryo", "seed_bank", "mycorrhizae", "symbiont", "soil_reclamation"],
-    "prose": "Arbuscular mycorrhizal fungal spores cryopreserved in glycerol. Inoculation of sterilized sub-soil with thawed spores increased root phosphorus uptake threefold, allowing barley crops to thrive in nutrient-stripped fallout soil."
-  },
-  {
-    "id": "germplasm_audit_nitrogen_fixing_rhizobium_nodules",
-    "accession_number": "GERM-CRYO-RHI-0330",
-    "crop_species": "RHIZOBIUM_LEGUMINOSARUM",
-    "storage_temperature_kelvin": 77.0,
-    "germination_viability_pct": 86.0,
-    "timestamp_relative": "YEAR_20_CRYO_AUDIT_03",
-    "tags": ["cryo", "seed_bank", "rhizobium", "nitrogen_fixing", "nodulation"],
-    "prose": "Lyophilized and cryopreserved root-nodule symbionts. Seed coating trials on field peas produced vigorous red leghemoglobin root nodules that fixed 140 kg of atmospheric nitrogen per hectare without synthetic fertilizer."
-  }
-]
+{
+  "schema_version": 1,
+  "items": [
+    {
+      "id": "germplasm_audit_hard_red_winter_wheat",
+      "accession_number": "GERM-CRYO-RUS-0941",
+      "crop_species": "TRITICUM_AESTIVUM_WINTER",
+      "storage_temperature_kelvin": 77.0,
+      "germination_viability_pct": 88.5,
+      "timestamp_relative": "YEAR_03_CRYO_AUDIT_01",
+      "tags": [
+        "cryo",
+        "seed_bank",
+        "wheat",
+        "germplasm",
+        "agriculture"
+      ],
+      "prose": "Hard red winter wheat accessions stored in liquid nitrogen vapor since pre-war commissioning. Thawing trial of five hundred seeds in agar substrate yielded 88.5% vigorous root germination with zero chromosomal abberation."
+    },
+    {
+      "id": "germplasm_audit_sweet_sorghum_drought_resistant",
+      "accession_number": "GERM-CRYO-SOR-0118",
+      "crop_species": "SORGHUM_BICOLOR_DROUGHT",
+      "storage_temperature_kelvin": 140.0,
+      "germination_viability_pct": 42.0,
+      "timestamp_relative": "YEAR_05_CRYO_AUDIT_03",
+      "tags": [
+        "cryo",
+        "seed_bank",
+        "sorghum",
+        "ice_damage",
+        "viability"
+      ],
+      "prose": "A compressor outage in Storage Bay 2 caused temperatures to drift upward to 140K for fourteen days. Slow recooling induced intracellular ice crystal formation that ruptured embryonic cell walls in 58% of the sweet sorghum stock."
+    },
+    {
+      "id": "germplasm_audit_soybean_cryoprotectant_toxicity",
+      "accession_number": "GERM-CRYO-GLY-0402",
+      "crop_species": "GLYCINE_MAX_SOYBEAN",
+      "storage_temperature_kelvin": 77.0,
+      "germination_viability_pct": 28.5,
+      "timestamp_relative": "YEAR_08_CRYO_AUDIT_02",
+      "tags": [
+        "cryo",
+        "seed_bank",
+        "soybean",
+        "dmso_toxicity",
+        "thawing"
+      ],
+      "prose": "Excessive exposure to 15% dimethyl sulfoxide (DMSO) cryoprotectant solution prior to plunging into liquid nitrogen caused chemical cytotoxicity. Thawed soybean cotyledons developed black necrotic margins with poor root elongation."
+    },
+    {
+      "id": "germplasm_audit_canary_island_date_palm",
+      "accession_number": "GERM-CRYO-PHO-0881",
+      "crop_species": "PHOENIX_CANARIENSIS_PALM",
+      "storage_temperature_kelvin": 77.0,
+      "germination_viability_pct": 92.0,
+      "timestamp_relative": "YEAR_11_CRYO_AUDIT_01",
+      "tags": [
+        "cryo",
+        "seed_bank",
+        "date_palm",
+        "pollen",
+        "fertility"
+      ],
+      "prose": "Desiccated pollen grains stored in sealed ampoules at 77K showed exceptional viability. In vitro pollen tube growth assays demonstrated 92% active germination, ensuring future pollination for greenhouse date palm clusters."
+    },
+    {
+      "id": "germplasm_audit_heirloom_potato_meristem_tip",
+      "accession_number": "GERM-CRYO-SOL-0056",
+      "crop_species": "SOLANUM_TUBEROSUM_MERISTEM",
+      "storage_temperature_kelvin": 77.0,
+      "germination_viability_pct": 74.0,
+      "timestamp_relative": "YEAR_14_CRYO_AUDIT_04",
+      "tags": [
+        "cryo",
+        "seed_bank",
+        "potato",
+        "meristem",
+        "tissue_culture"
+      ],
+      "prose": "Cryopreserved shoot-tip meristems (0.5mm) vitrified in Plant Vitrification Solution 2. Following rapid 40°C water bath warming and plating on hormone agar, 74% regenerated virus-free, vigorous potato plantlets within three weeks."
+    },
+    {
+      "id": "germplasm_audit_wild_emmer_radiation_hardened",
+      "accession_number": "GERM-CRYO-DIC-0994",
+      "crop_species": "TRITICUM_DICOCOIDES_WILD",
+      "storage_temperature_kelvin": 77.0,
+      "germination_viability_pct": 94.5,
+      "timestamp_relative": "YEAR_17_CRYO_AUDIT_02",
+      "tags": [
+        "cryo",
+        "seed_bank",
+        "wild_emmer",
+        "radiation_tolerant",
+        "genetics"
+      ],
+      "prose": "Wild tetraploid wheat accessions collected from arid desert highlands. When seedlings were exposed to 25 Gy of chronic gamma radiation, they demonstrated rapid antioxidant enzyme synthesis and continued tillering with minimal leaf chlorosis."
+    },
+    {
+      "id": "germplasm_audit_mycorrhizal_spore_inoculant",
+      "accession_number": "GERM-CRYO-GLO-0012",
+      "crop_species": "GLOMUS_INTRARADICES_SPORES",
+      "storage_temperature_kelvin": 77.0,
+      "germination_viability_pct": 82.0,
+      "timestamp_relative": "YEAR_19_CRYO_AUDIT_01",
+      "tags": [
+        "cryo",
+        "seed_bank",
+        "mycorrhizae",
+        "symbiont",
+        "soil_reclamation"
+      ],
+      "prose": "Arbuscular mycorrhizal fungal spores cryopreserved in glycerol. Inoculation of sterilized sub-soil with thawed spores increased root phosphorus uptake threefold, allowing barley crops to thrive in nutrient-stripped fallout soil."
+    },
+    {
+      "id": "germplasm_audit_nitrogen_fixing_rhizobium_nodules",
+      "accession_number": "GERM-CRYO-RHI-0330",
+      "crop_species": "RHIZOBIUM_LEGUMINOSARUM",
+      "storage_temperature_kelvin": 77.0,
+      "germination_viability_pct": 86.0,
+      "timestamp_relative": "YEAR_20_CRYO_AUDIT_03",
+      "tags": [
+        "cryo",
+        "seed_bank",
+        "rhizobium",
+        "nitrogen_fixing",
+        "nodulation"
+      ],
+      "prose": "Lyophilized and cryopreserved root-nodule symbionts. Seed coating trials on field peas produced vigorous red leghemoglobin root nodules that fixed 140 kg of atmospheric nitrogen per hectare without synthetic fertilizer."
+    }
+  ]
+}

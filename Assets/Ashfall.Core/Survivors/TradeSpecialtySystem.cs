@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Survivors
 {
@@ -147,7 +148,7 @@ namespace Ashfall.Core.Survivors
             OnSpecialtyMastered?.Invoke(survivorId, state.professionId);
 
             // Fire narrative event
-            string narrativeId = GetNarrativeEventId?.Invoke(state.professionId);
+            string narrativeId = GetNarrativeEventId?.Invoke(state.professionId)!;
             if (!string.IsNullOrEmpty(narrativeId))
                 FireNarrativeEvent?.Invoke(narrativeId, survivorId);
         }

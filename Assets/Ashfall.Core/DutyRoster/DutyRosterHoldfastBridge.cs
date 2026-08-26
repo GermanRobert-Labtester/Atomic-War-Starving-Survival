@@ -98,9 +98,9 @@ namespace Ashfall.Core
                 {
                     var row = roster.Rows[i];
                     if (row == null || string.IsNullOrEmpty(row.survivorId)) continue;
-                    if (row.status == DutyRosterSystem.StatusHome)
+                    if (row.status == DutyRosterIds.StatusHome)
                     {
-                        roster.SetStatus(row.survivorId, DutyRosterSystem.StatusLevy);
+                        roster.SetStatus(row.survivorId, DutyRosterIds.StatusLevy);
                         flipped++;
                     }
                 }
@@ -110,12 +110,12 @@ namespace Ashfall.Core
 
             // ── A.1 levy substitute: Kess marks it irregular; the ladle defaults. ──
             if (census != null && census.LevySubstitute && marks != null)
-                marks.SetMark(MarkLadleDefault, null, day);
+                marks.SetMark(MarkLadleDefault, null!, day);
 
             // ── A.1 levy refuse: Edor's stool; the road may run dark (11-day lamps). ──
             if (census != null && census.LevyRefuse)
             {
-                if (marks != null) marks.SetMark(MarkEdorStool, null, day);
+                if (marks != null) marks.SetMark(MarkEdorStool, null!, day);
                 if (encounters != null && encounters.IsUnlocked)
                     encounters.StartEncounter("se_edor_stool_levy_refuse", ShelterEncounterSystem.KindEdorStool, day,
                         ShelterEncounterSystem.VisitorEdor, "levy refused");
@@ -123,7 +123,7 @@ namespace Ashfall.Core
 
             // ── A.1 membrane strip: iodine/filters/brass short; filtration cough. ──
             if (brine != null && brine.State != null && brine.State.membraneSector4Strip && marks != null)
-                marks.SetMark(MarkFilterWho, null, day);
+                marks.SetMark(MarkFilterWho, null!, day);
 
             // ── A.1 waystation staffed: home watch is short. ──
             if (waystation != null
@@ -131,12 +131,12 @@ namespace Ashfall.Core
                 && waystation.State.watchSurvivorIds != null
                 && waystation.State.watchSurvivorIds.Length > 0
                 && marks != null)
-                marks.SetMark(MarkTamsinWatchShort, null, day);
+                marks.SetMark(MarkTamsinWatchShort, null!, day);
 
             // ── A.1 ice road dark (Yara withdrew): everyone home, crowd at the hatch. ──
             if (iceRoad != null && iceRoad.IsUnlocked && !iceRoad.IsOpen)
             {
-                if (marks != null) marks.SetMark(MarkHouseThinned, null, day);
+                if (marks != null) marks.SetMark(MarkHouseThinned, null!, day);
                 if (encounters != null && encounters.IsUnlocked)
                     encounters.StartEncounter("se_road_dark_crowd", ShelterEncounterSystem.KindRoadDarkCrowd, day,
                         payload: "ice road dark");
@@ -150,7 +150,7 @@ namespace Ashfall.Core
         /// </summary>
         public static DutyRosterHoldfastSnapshot SnapshotForHoldfast(DutyRosterSystem roster)
         {
-            return SnapshotForHoldfast(roster, null, null);
+            return SnapshotForHoldfast(roster, null!, null!);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Ashfall.Core
                 for (int i = 0; i < roster.Rows.Count; i++)
                 {
                     var row = roster.Rows[i];
-                    if (row != null && row.script != DutyRosterSystem.ScriptBlank)
+                    if (row != null && row.script != DutyRosterIds.ScriptBlank)
                         snap.LevyNames.Add(row.survivorId);
                 }
                 snap.LevyNames.Sort(string.CompareOrdinal);
@@ -203,18 +203,18 @@ namespace Ashfall.Core
 
             switch (roster.ChartScript)
             {
-                case DutyRosterSystem.ScriptInk: snap.Mutation = "mutation_roster_ink"; break;
-                case DutyRosterSystem.ScriptPencil: snap.Mutation = "mutation_roster_pencil"; break;
-                case DutyRosterSystem.ScriptBurned: snap.Mutation = "mutation_roster_burned"; break;
+                case DutyRosterIds.ScriptInk: snap.Mutation = "mutation_roster_ink"; break;
+                case DutyRosterIds.ScriptPencil: snap.Mutation = "mutation_roster_pencil"; break;
+                case DutyRosterIds.ScriptBurned: snap.Mutation = "mutation_roster_burned"; break;
                 default: snap.Mutation = "mutation_roster_blank"; break;
             }
 
-            var hadi = roster.GetRow(DutyRosterSystem.NpcHadiMorrow);
+            var hadi = roster.GetRow(DutyRosterIds.NpcHadiMorrow);
             if (hadi != null)
             {
-                if (hadi.status == DutyRosterSystem.StatusMissing || hadi.status == DutyRosterSystem.StatusDead)
+                if (hadi.status == DutyRosterIds.StatusMissing || hadi.status == DutyRosterIds.StatusDead)
                     snap.HadiStatus = "never_back";
-                else if (roster.IsValidLevyName(DutyRosterSystem.NpcHadiMorrow))
+                else if (roster.IsValidLevyName(DutyRosterIds.NpcHadiMorrow))
                     snap.HadiStatus = "listed";
                 else
                     snap.HadiStatus = "hidden";

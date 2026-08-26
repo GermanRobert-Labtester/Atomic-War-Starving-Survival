@@ -50,7 +50,7 @@ namespace Ashfall.Core
                 _byId[def.Id] = def;
         }
 
-        public HoldfastItemDefinition GetById(string id)
+        public HoldfastItemDefinition? GetById(string id)
             => string.IsNullOrEmpty(id) ? null : (_byId.TryGetValue(id, out var d) ? d : null);
 
         public bool Contains(string id) => GetById(id) != null;

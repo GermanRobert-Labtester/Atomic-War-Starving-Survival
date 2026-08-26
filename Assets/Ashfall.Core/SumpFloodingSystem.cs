@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
@@ -66,7 +67,7 @@ namespace Ashfall.Core
             WeatherSystem weather,
             PowerGridSystem powerGrid,
             YearOfAshDeepFreezeSystem deepFreeze,
-            ILog log = null)
+ILog? log = null)
         {
             _rng = rng ?? throw new ArgumentNullException(nameof(rng));
             _weather = weather ?? throw new ArgumentNullException(nameof(weather));
@@ -234,6 +235,12 @@ namespace Ashfall.Core
                     node.waterLevelCm = Math.Max(0, node.waterLevelCm - 2f);
                     if (node.waterLevelCm == 0)
                     {
+                        // Bug-08: when the node finishes draining, lift the
+                        // equipmentDisabled latch. Otherwise the node stays
+                        // unusable even when dry, forcing the player to call
+                        // DrainNode manually.
+                        node.equipmentDisabled = false;
+
                         var incident = new FloodIncident
                         {
                             day = day, nodeId = node.nodeId,
@@ -272,12 +279,20 @@ namespace Ashfall.Core
             return !node.isFlooded || !node.equipmentDisabled;
         }
 
-        public SumpFloodingState CaptureState() => _state;
+        public SumpFloodingState CaptureState() => CloneState(_state);
+
         public void RestoreState(SumpFloodingState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            OnFloodingChanged?.Invoke();
+            _state = CloneState(saved);
+        }
+
+        private static SumpFloodingState CloneState(SumpFloodingState src)
+        {
+            if (src == null) return new SumpFloodingState();
+            var s = new SystemTextJsonSerializer();
+            var json = s.Serialize(src);
+            return s.Deserialize<SumpFloodingState>(json) ?? new SumpFloodingState();
         }
     }
 }

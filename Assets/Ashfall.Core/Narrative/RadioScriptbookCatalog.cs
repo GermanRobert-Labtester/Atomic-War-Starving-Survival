@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Narrative
 {
@@ -50,7 +51,7 @@ namespace Ashfall.Core.Narrative
             }
         }
 
-        public RadioBroadcastEntry GetById(string broadcastId)
+        public RadioBroadcastEntry? GetById(string broadcastId)
         {
             if (string.IsNullOrEmpty(broadcastId)) return null;
             _byBroadcastId.TryGetValue(broadcastId, out var b);
@@ -71,10 +72,10 @@ namespace Ashfall.Core.Narrative
             return results;
         }
 
-        public RadioBroadcastEntry GetActiveBroadcast(float freqMhz, int currentDay, float tolerance = 0.15f)
+        public RadioBroadcastEntry? GetActiveBroadcast(float freqMhz, int currentDay, float tolerance = 0.15f)
         {
             var candidates = GetByFrequency(freqMhz, tolerance);
-            RadioBroadcastEntry best = null;
+            RadioBroadcastEntry? best = null;
             for (int i = 0; i < candidates.Count; i++)
             {
                 var c = candidates[i];

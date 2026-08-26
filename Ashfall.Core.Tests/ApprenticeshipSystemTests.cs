@@ -77,9 +77,9 @@ namespace Ashfall.Core.Tests
             var roster = new DutyRosterSystem();
             roster.Unlock(0);
             roster.WriteName("mentor_busy", displayName: "Mentor Busy",
-                occupationObserved: "medic", script: DutyRosterSystem.ScriptPencil,
+                occupationObserved: "medic", script: DutyRosterIds.ScriptPencil,
                 day: 1, sleptHere: true);
-            Assert.True(roster.Assign(DutyRosterSystem.AssignmentRoles[0], "mentor_busy"));
+            Assert.True(roster.Assign(DutyRosterIds.AssignmentRoles[0], "mentor_busy"));
             var a = new ApprenticeshipSystem(new SeededRng(42), skills, roster,
                 new SurvivorRelationsSystem(new SeededRng(42)));
             var r = a.StartPair("mentor_busy", "apprentice_1", "skill_medicine");
@@ -95,9 +95,9 @@ namespace Ashfall.Core.Tests
             var roster = new DutyRosterSystem();
             roster.Unlock(0);
             roster.WriteName("apprentice_busy", displayName: "Apprentice Busy",
-                occupationObserved: "labourer", script: DutyRosterSystem.ScriptPencil,
+                occupationObserved: "labourer", script: DutyRosterIds.ScriptPencil,
                 day: 1, sleptHere: true);
-            Assert.True(roster.Assign(DutyRosterSystem.AssignmentRoles[0], "apprentice_busy"));
+            Assert.True(roster.Assign(DutyRosterIds.AssignmentRoles[0], "apprentice_busy"));
             var a = new ApprenticeshipSystem(new SeededRng(42), skills, roster,
                 new SurvivorRelationsSystem(new SeededRng(42)));
             var r = a.StartPair("mentor_quals", "apprentice_busy", "skill_medicine");

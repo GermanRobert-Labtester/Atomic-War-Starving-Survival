@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+#pragma warning disable CS8618
 
 namespace Ashfall.Core.Economy
 {
@@ -82,7 +83,7 @@ namespace Ashfall.Core.Economy
         public event Action OnEconomyChanged;                     // any price-relevant change
         public event Action<MarketState> OnStateChanged;
 
-        public MarketSystem(MarketState state = null)
+        public MarketSystem(MarketState? state = null)
         {
             _state = state ?? new MarketState();
             if (_state.demand == null) _state.demand = new List<DemandEntry>();
@@ -100,7 +101,7 @@ namespace Ashfall.Core.Economy
             _catalog = catalog;
         }
 
-        public GoodDefinition FindGood(string itemId) =>
+        public GoodDefinition? FindGood(string itemId) =>
             _catalog != null ? _catalog.Find(itemId) : null;
 
         // ── Daily tick ────────────────────────────────────────────────
