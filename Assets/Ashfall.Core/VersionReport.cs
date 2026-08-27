@@ -1,20 +1,56 @@
-// SPDX-License-Identifier: MIT
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Ashfall.Core.Save;
 
 namespace Ashfall.Core
 {
+    /// <summary>
+    /// Classification of how a save section is persisted to disk.
+    /// </summary>
+    public enum SavePersistenceKind
+    {
+        /// <summary>
+        /// Dedicated Core save codec with version constant and V1->V2->V3 migration ladder.
+        /// </summary>
+        VersionedCodec,
+
+        /// <summary>
+        /// Generic { State, Checksum } envelope stamped by SaveChecksum.
+        /// </summary>
+        ChecksumEnvelope
+    }
+
+    /// <summary>
+    /// Inventory record for one registered save section's persistence architecture.
+    /// </summary>
+    public readonly struct PersistenceFormatEntry
+    {
+        public readonly string SectionKey;
+        public readonly SavePersistenceKind Kind;
+        public readonly int? Version;
+        public readonly string FormatDescription;
+
+        public PersistenceFormatEntry(string sectionKey, SavePersistenceKind kind, int? version, string formatDescription)
+        {
+            SectionKey = sectionKey;
+            Kind = kind;
+            Version = version;
+            FormatDescription = formatDescription;
+        }
+    }
+
     /// <summary>
     /// Engine-agnostic version report for the ASHFALL host CLI `--version`
     /// flag. Surfaces three version domains in one stable, greppable format:
     ///
     ///   1. build/game version     — supplied by the host (project settings)
     ///   2. data schema versions   — scanned live from the JSON data authority
-    ///   3. save schema versions   — the CurrentSaveVersion constants of every
-    ///                                versioned save codec in Core
+    ///   3. save schema versions   — inventory of all persistence formats,
+    ///                                distinguishing versioned Core codecs from
+    ///                                unversioned checksum envelopes
     ///
     /// Save-store versions are read from the codec constants themselves
     /// (never duplicated as literals here), so this report can never drift
@@ -49,6 +85,43 @@ namespace Ashfall.Core
             new SaveSchemaEntry("expansion_hub",     ExpansionHubSave.CurrentSaveVersion),
             new SaveSchemaEntry("expansion_quest",   ExpansionQuestSaveEnvelope.CurrentVersion),
         };
+
+        private static readonly Lazy<IReadOnlyList<PersistenceFormatEntry>> s_allFormats =
+            new Lazy<IReadOnlyList<PersistenceFormatEntry>>(BuildPersistenceFormats);
+
+        /// <summary>
+        /// Complete inventory of all registered save sections and their persistence format
+        /// (versioned Core codecs vs unversioned checksum envelopes).
+        /// </summary>
+        public static IReadOnlyList<PersistenceFormatEntry> AllPersistenceFormats => s_allFormats.Value;
+
+        private static IReadOnlyList<PersistenceFormatEntry> BuildPersistenceFormats()
+        {
+            var codecMap = SaveSchemaVersions.ToDictionary(s => s.Store, s => s.CurrentVersion, StringComparer.Ordinal);
+            var list = new List<PersistenceFormatEntry>();
+
+            foreach (var section in SaveSectionRegistry.All)
+            {
+                if (codecMap.TryGetValue(section.SectionKey, out int version))
+                {
+                    list.Add(new PersistenceFormatEntry(
+                        section.SectionKey,
+                        SavePersistenceKind.VersionedCodec,
+                        version,
+                        $"Versioned Core codec (v{version}) with migration ladder"));
+                }
+                else
+                {
+                    list.Add(new PersistenceFormatEntry(
+                        section.SectionKey,
+                        SavePersistenceKind.ChecksumEnvelope,
+                        null,
+                        "Unversioned { State, Checksum } envelope (SaveChecksum verified)"));
+                }
+            }
+
+            return list.AsReadOnly();
+        }
 
         /// <summary>Summary of schema_version values found across the data authority.</summary>
         public sealed class DataSchemaSummary
@@ -163,12 +236,36 @@ namespace Ashfall.Core
         }
 
         /// <summary>
-        /// Renders the one-line save schema summary, e.g.
-        /// "holdfast v5 · year_of_ash v4 · dose_ledger v2 · expansion_hub v4 · expansion_quest v1".
+        /// Renders the one-line save schema summary, distinguishing versioned codecs
+        /// from unversioned checksum envelopes.
+        /// e.g. "holdfast v5 · year_of_ash v4 · dose_ledger v2 · expansion_hub v4 · expansion_quest v1 (+55 checksum envelopes)".
         /// </summary>
         public static string FormatSaveSchemas()
         {
-            return string.Join(" · ", SaveSchemaVersions.Select(s => $"{s.Store} v{s.CurrentVersion}"));
+            var versioned = string.Join(" · ", SaveSchemaVersions.Select(s => $"{s.Store} v{s.CurrentVersion}"));
+            int checksumEnvelopes = AllPersistenceFormats.Count(f => f.Kind == SavePersistenceKind.ChecksumEnvelope);
+            return checksumEnvelopes > 0
+                ? $"{versioned} (+{checksumEnvelopes} checksum envelopes)"
+                : versioned;
+        }
+
+        /// <summary>
+        /// Renders a full inventory of all persistence formats across every save section,
+        /// distinguishing versioned Core codecs from unversioned checksum envelopes.
+        /// </summary>
+        public static string FormatPersistenceInventory()
+        {
+            int versionedCount = AllPersistenceFormats.Count(f => f.Kind == SavePersistenceKind.VersionedCodec);
+            int envelopeCount = AllPersistenceFormats.Count(f => f.Kind == SavePersistenceKind.ChecksumEnvelope);
+
+            var sb = new StringBuilder();
+            sb.AppendLine($"Save Persistence Inventory ({AllPersistenceFormats.Count} sections: {versionedCount} versioned codecs, {envelopeCount} checksum envelopes):");
+            foreach (var entry in AllPersistenceFormats)
+            {
+                string kindLabel = entry.Kind == SavePersistenceKind.VersionedCodec ? $"v{entry.Version}" : "envelope";
+                sb.AppendLine($"  {entry.SectionKey,-25} [{kindLabel,-8}] {entry.FormatDescription}");
+            }
+            return sb.ToString().TrimEnd();
         }
 
         /// <summary>
@@ -178,7 +275,7 @@ namespace Ashfall.Core
         /// ASHFALL version report
         /// game         : 1.0.0
         /// data schemas : 403 catalogs — v1: 401, v2: 2 (max v2)
-        /// save schemas : holdfast v5 · year_of_ash v4 · ...
+        /// save schemas : holdfast v5 · year_of_ash v4 · ... (+55 checksum envelopes)
         /// </code>
         /// </summary>
         public static string Compose(string gameVersion, string dataDir)

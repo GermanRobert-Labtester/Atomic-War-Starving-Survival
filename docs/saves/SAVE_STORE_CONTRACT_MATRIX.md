@@ -5,7 +5,7 @@
 **Total Static Persistence Methods:** 68 methods<br>
 **Checksum-Protected Stores:** 62/62 (100.0%)<br>
 **Slot-Root Isolated Stores:** 62/62 (100.0%)<br>
-**Tested Stores:** 21/62 (33.9%)
+**Tested Stores:** 22/62 (35.5%)
 
 > **GENERATED FILE — do not edit by hand.**
 > Source of truth: All save store classes under `src/` and `Assets/Ashfall.Core/`.
@@ -54,7 +54,7 @@
 | 26 | `HoldfastTradeSaveStore` | [`src/Host/HoldfastTradeSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/HoldfastTradeSaveStore.cs) | `holdfast_trade` | `holdfast_trade_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 27 | `HostEventSaveStore` | [`src/Host/HostEventSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/HostEventSaveStore.cs) | `host_event` | `host_event_save.json` | `TryLoad()` | ✅ | ✅ | `BareSaveStoreSealTests.cs` |
 | 28 | `InventorySaveStore` | [`src/Host/InventorySaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/InventorySaveStore.cs) | `inventory` | `inventory_save.json` | `TryLoad()` | ✅ | ✅ | `SaveAggregateContractTests.cs`, `SaveLoadFailurePathTests.cs` |
-| 29 | `JournalSaveStore` | [`src/Journal/JournalSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Journal/JournalSaveStore.cs) | `journal` | `journal_save.json` | `Load()`, `Save()` | ✅ | ✅ | — |
+| 29 | `JournalSaveStore` | [`src/Journal/JournalSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Journal/JournalSaveStore.cs) | `journal` | `journal_save.json` | `Load()`, `Save()` | ✅ | ✅ | `VersionReportContractTests.cs` |
 | 30 | `KitchenNutritionSaveStore` | [`src/Host/KitchenNutritionHostSession.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/KitchenNutritionHostSession.cs) | `kitchen_nutrition` | `kitchen_nutrition_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 31 | `LibraryStudySaveStore` | [`src/Host/LibraryStudyHostSession.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/LibraryStudyHostSession.cs) | `library_study` | `library_study_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 32 | `MaritimeSaveStore` | [`src/Host/MaritimeSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/MaritimeSaveStore.cs) | `maritime` | `maritime_save.json` | `TryLoad()` | ✅ | ✅ | — |
@@ -77,7 +77,7 @@
 | 49 | `StartingLevelSaveStore` | [`src/Host/StartingLevelHostSession.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/StartingLevelHostSession.cs) | `starting_level` | `starting_level_save.json` | `SaveExists()`, `TryLoad()` | ✅ | ✅ | — |
 | 50 | `SumpFloodingSaveStore` | [`src/Host/SumpFloodingHostSession.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/SumpFloodingHostSession.cs) | `sump_flooding` | `sump_flooding_save.json` | `TryLoad()` | ✅ | ✅ | `ExpandedShelterSavePersistenceTests.cs` |
 | 51 | `SurvivorRelationsSaveStore` | [`src/Host/SurvivorRelationsSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/SurvivorRelationsSaveStore.cs) | `survivor_relations` | `survivor_relations_save.json` | `TryLoad()` | ✅ | ✅ | — |
-| 52 | `SurvivorsSaveStore` | [`src/Host/SurvivorsSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/SurvivorsSaveStore.cs) | `survivors` | `survivors_save.json` | `TryLoad()` | ✅ | ✅ | `ProductionArtManifestTests.cs`, `SaveAggregateContractTests.cs` *(+1 more)* |
+| 52 | `SurvivorsSaveStore` | [`src/Host/SurvivorsSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/SurvivorsSaveStore.cs) | `survivors` | `survivors_save.json` | `TryLoad()` | ✅ | ✅ | `ProductionArtManifestTests.cs`, `SaveAggregateContractTests.cs` *(+2 more)* |
 | 53 | `ThirdonarySaveStore` | [`src/Host/ThirdonarySaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/ThirdonarySaveStore.cs) | `thirdonary` | `thirdonary_quest_save.json` | `Save()`, `TryLoad()` | ✅ | ✅ | — |
 | 54 | `VerdictSaveStore` | [`src/Host/VerdictSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/VerdictSaveStore.cs) | `verdict` | `verdict_save.json` | `TryLoad()` | ✅ | ✅ | — |
 | 55 | `VinylMoraleSaveStore` | [`src/Host/VinylMoraleSaveStore.cs`](file:////home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/src/Host/VinylMoraleSaveStore.cs) | `vinyl_morale` | `vinyl_morale_save.json` | `TryLoad()` | ✅ | ✅ | — |

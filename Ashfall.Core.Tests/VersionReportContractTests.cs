@@ -156,5 +156,51 @@ namespace Ashfall.Core.Tests
                 $"Expected at least 100 catalogs with schema_version, found {summary.WithSchemaVersion}");
             Assert.True(summary.MaxVersion >= 1, "Expected at least schema_version 1 in the data authority");
         }
+
+        // ── Persistence format inventory contract ─────────────────────────
+
+        [Fact]
+        public void AllPersistenceFormats_CoversAllSaveSectionRegistrySections()
+        {
+            var registryKeys = global::Ashfall.Core.Save.SaveSectionRegistry.All.Select(s => s.SectionKey).OrderBy(k => k).ToArray();
+            var inventoryKeys = VersionReport.AllPersistenceFormats.Select(f => f.SectionKey).OrderBy(k => k).ToArray();
+
+            Assert.Equal(registryKeys, inventoryKeys);
+        }
+
+        [Fact]
+        public void AllPersistenceFormats_DistinguishesVersionedCodecsAndChecksumEnvelopes()
+        {
+            var versioned = VersionReport.AllPersistenceFormats.Where(f => f.Kind == SavePersistenceKind.VersionedCodec).ToList();
+            var envelopes = VersionReport.AllPersistenceFormats.Where(f => f.Kind == SavePersistenceKind.ChecksumEnvelope).ToList();
+
+            // 5 versioned Core codecs
+            Assert.Equal(5, versioned.Count);
+            Assert.Contains(versioned, f => f.SectionKey == "holdfast" && f.Version == HoldfastSave.CurrentSaveVersion);
+            Assert.Contains(versioned, f => f.SectionKey == "year_of_ash" && f.Version == YearOfAsh.YearOfAshSave.CurrentSaveVersion);
+            Assert.Contains(versioned, f => f.SectionKey == "dose_ledger" && f.Version == DoseLedgerSave.CurrentSaveVersion);
+            Assert.Contains(versioned, f => f.SectionKey == "expansion_hub" && f.Version == ExpansionHubSave.CurrentSaveVersion);
+            Assert.Contains(versioned, f => f.SectionKey == "expansion_quest" && f.Version == ExpansionQuestSaveEnvelope.CurrentVersion);
+
+            // 55 unversioned checksum envelopes
+            Assert.Equal(55, envelopes.Count);
+            foreach (var envelope in envelopes)
+            {
+                Assert.Null(envelope.Version);
+                Assert.Contains("envelope", envelope.FormatDescription);
+            }
+        }
+
+        [Fact]
+        public void FormatPersistenceInventory_RendersSummaryAndEntries()
+        {
+            string inventory = VersionReport.FormatPersistenceInventory();
+
+            Assert.Contains("Save Persistence Inventory (60 sections: 5 versioned codecs, 55 checksum envelopes):", inventory);
+            Assert.Contains("holdfast", inventory);
+            Assert.Contains("dose_ledger", inventory);
+            Assert.Contains("journal", inventory);
+            Assert.Contains("survivors", inventory);
+        }
     }
 }
